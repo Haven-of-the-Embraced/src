@@ -1,0 +1,3158 @@
+/***************************************************************************
+ *  Original Diku Mud copyright (C) 1990, 1991 by Sebastian Hammer,        *
+ *  Michael Seifert, Hans Henrik St{rfeldt, Tom Madsen, and Katja Nyboe.   *
+ *                                                                         *
+ *  Merc Diku Mud improvments copyright (C) 1992, 1993 by Michael          *
+ *  Chastain, Michael Quan, and Mitchell Tse.                              *
+ *                                                                         *
+ *  In order to use any part of this Merc Diku Mud, you must comply with   *
+ *  both the original Diku license in 'license.doc' as well the Merc       *
+ *  license in 'license.txt'.  In particular, you may not remove either of *
+ *  these copyright notices.                                               *
+ *                                                                         *
+ *  Much time and thought has gone into this software and you are          *
+ *  benefitting.  We hope that you share your changes too.  What goes      *
+ *  around, comes around.                                                  *
+ **************************************************************************/
+
+/***************************************************************************
+*   ROM 2.4 is copyright 1993-1998 Russ Taylor             *
+*   ROM has been brought to you by the ROM consortium          *
+*       Russ Taylor (rtaylor@hypercube.org)                *
+*       Gabrielle Taylor (gtaylor@hypercube.org)               *
+*       Brian Moore (zump@rom.org)                     *
+*   By using this code, you have agreed to follow the terms of the     *
+*   ROM license, in the file Rom24/doc/rom.license             *
+***************************************************************************/
+
+#if defined(macintosh)
+#include <types.h>
+#else
+#include <sys/types.h>
+#include <sys/time.h>
+#endif
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <time.h>
+#include "merc.h"
+#include "interp.h"
+#include "recycle.h"
+#include "tables.h"
+
+bool RECORD_TO_REPLAYROOM;
+
+void check_unseen args ( (CHAR_DATA *ch, int type) );
+#define UNSEEN_TALK 0
+#define UNSEEN_MOVE 1
+
+void check_unseen(CHAR_DATA *ch, int type)
+{
+
+    if (IS_NPC(ch))
+        return;
+    if (!IS_VAMP(ch))
+        return;
+    if (!is_affected(ch, gsn_unseen))
+        return;
+
+    sh_int success, diff;
+    success = diff = 0;
+
+    diff = 4;
+    switch (type)
+    {
+        case UNSEEN_TALK: diff = 6;break;
+        case UNSEEN_MOVE: diff = 9;break;
+    }
+    success = godice(get_attribute(ch, WITS) + ch->pcdata->csabilities[CSABIL_STEALTH], diff);
+    if (success < 1)
+    {
+        affect_strip(ch, gsn_unseen);
+        act("You reveal yourself.", ch, NULL, NULL, TO_CHAR);
+        act("$n reveals $mself.", ch, NULL, NULL, TO_NOTVICT);
+    }
+    return;
+}
+
+/* RT code to delete yourself */
+
+void do_delet( CHAR_DATA *ch, char *argument)
+{
+    send_to_char("You must type the full command to delete yourself.\n\r",ch);
+}
+
+void do_delete( CHAR_DATA *ch, char *argument)
+{
+   char strsave[MAX_INPUT_LENGTH];
+
+   if (IS_NPC(ch))
+    return;
+
+   if (ch->pcdata->confirm_delete)
+   {
+    if (argument[0] != '\0')
+    {
+        send_to_char("{GDelete{x status removed.\n\r",ch);
+        ch->pcdata->confirm_delete = FALSE;
+        return;
+    }
+    else
+    {
+            sprintf( strsave, "%s%s", PLAYER_DIR, capitalize( ch->name ) );
+        wiznet("$N turns $Mself into line noise.",ch,NULL,0,0,0);
+        stop_fighting(ch,TRUE);
+        do_function(ch, &do_quit, "");
+        unlink(strsave);
+        sprintf( strsave, "%s%s", BK_PLAYER_DIR, capitalize( ch->name ) );
+        unlink(strsave);
+        return;
+    }
+    }
+
+    if (argument[0] != '\0')
+    {
+    send_to_char("Just type {rdelete{x. No argument.\n\r",ch);
+    return;
+    }
+
+    send_to_char("Type {rdelete{x again to confirm this command.\n\r",ch);
+    send_to_char("{RWARNING!{x: this command is {Birreversible{x.\n\r",ch);
+    send_to_char("Typing delete with an argument will undo delete status.\n\r",ch);
+    ch->pcdata->confirm_delete = TRUE;
+    wiznet("$N is contemplating deletion.",ch,NULL,0,0,get_trust(ch));
+}
+
+
+/* RT code to display channel status */
+
+void do_channels( CHAR_DATA *ch, char *argument)
+{
+    char buf[MAX_STRING_LENGTH];
+
+    /* lists all channels and their status */
+    send_to_char("   channel     status\n\r",ch);
+    send_to_char("---------------------\n\r",ch);
+
+    send_to_char("gossip         ",ch);
+    if (!IS_SET(ch->comm,COMM_NOGOSSIP))
+      send_to_char("ON\n\r",ch);
+    else
+      send_to_char("OFF\n\r",ch);
+
+/*    send_to_char("auction        ",ch);
+    if (!IS_SET(ch->comm,COMM_NOAUCTION))
+      send_to_char("ON\n\r",ch);
+    else
+      send_to_char("OFF\n\r",ch);
+*/
+    send_to_char("music          ",ch);
+    if (!IS_SET(ch->comm,COMM_NOMUSIC))
+      send_to_char("ON\n\r",ch);
+    else
+      send_to_char("OFF\n\r",ch);
+
+    send_to_char("Q/A            ",ch);
+    if (!IS_SET(ch->comm,COMM_NOQUESTION))
+      send_to_char("ON\n\r",ch);
+    else
+      send_to_char("OFF\n\r",ch);
+
+    send_to_char("OOC            ",ch);
+    if (!IS_SET(ch->comm,COMM_NOOOC))
+    send_to_char("ON\n\r",ch);
+    else
+    send_to_char("OFF\n\r",ch);
+    send_to_char("Chat           ",ch);
+    if (!IS_SET(ch->comm,COMM_NOCHAT))
+    send_to_char("ON\n\r",ch);
+    else
+    send_to_char("OFF\n\r",ch);
+
+    send_to_char("announce       ",ch);
+    if (!IS_SET(ch->comm,COMM_NOANNOUNCE))
+      send_to_char("ON\n\r",ch);
+    else
+      send_to_char("OFF\n\r",ch);
+
+   send_to_char("clan            ",ch);
+    if (!IS_SET(ch->comm,COMM_NOCLAN))
+      send_to_char("ON\n\r",ch);
+    else
+      send_to_char("OFF\n\r",ch);
+
+   send_to_char("sect            ",ch);
+    if (!IS_SET(ch->comm,COMM_NOSECT))
+      send_to_char("ON\n\r",ch);
+    else
+      send_to_char("OFF\n\r",ch);
+
+    if (IS_IMMORTAL(ch))
+    {
+      send_to_char("god channel    ",ch);
+      if(!IS_SET(ch->comm,COMM_NOWIZ))
+        send_to_char("ON\n\r",ch);
+      else
+        send_to_char("OFF\n\r",ch);
+    }
+    if (ch->level >= MAX_LEVEL)
+    {
+      send_to_char("imp channel    ",ch);
+      if(!IS_SET(ch->comm,COMM_NOWIZ))
+        send_to_char("ON\n\r",ch);
+      else
+        send_to_char("OFF\n\r",ch);
+    }
+
+
+    send_to_char("shouts         ",ch);
+    if (!IS_SET(ch->comm,COMM_SHOUTSOFF))
+      send_to_char("ON\n\r",ch);
+    else
+      send_to_char("OFF\n\r",ch);
+
+    send_to_char("tells          ",ch);
+    if (!IS_SET(ch->comm,COMM_DEAF))
+    send_to_char("ON\n\r",ch);
+    else
+    send_to_char("OFF\n\r",ch);
+
+    send_to_char("quiet mode     ",ch);
+    if (IS_SET(ch->comm,COMM_QUIET))
+      send_to_char("ON\n\r",ch);
+    else
+      send_to_char("OFF\n\r",ch);
+
+    if (IS_SET(ch->comm,COMM_AFK))
+    send_to_char("You are AFK.\n\r",ch);
+
+    if (IS_SET(ch->comm,COMM_SNOOP_PROOF))
+    send_to_char("You are immune to snooping.\n\r",ch);
+    if (IS_SET(ch->comm,COMM_AUTOOOC))
+    send_to_char("You automatically turn OOC on at login.\n\r", ch);
+
+    if (ch->lines != PAGELEN)
+    {
+    if (ch->lines)
+    {
+        sprintf(buf,"You display %d lines of scroll.\n\r",ch->lines+2);
+        send_to_char(buf,ch);
+    }
+    else
+        send_to_char("Scroll buffering is off.\n\r",ch);
+    }
+
+    if (ch->prompt != NULL)
+    {
+    sprintf(buf,"Your current prompt is: %s\n\r",ch->prompt);
+    send_to_char(buf,ch);
+    }
+
+    if (IS_SET(ch->comm,COMM_NOSHOUT))
+      send_to_char("You cannot shout.\n\r",ch);
+
+    if (IS_SET(ch->comm,COMM_NOTELL))
+      send_to_char("You cannot use tell.\n\r",ch);
+
+    if (IS_SET(ch->comm,COMM_NOCHANNELS))
+     send_to_char("You cannot use channels.\n\r",ch);
+
+    if (IS_SET(ch->comm,COMM_NOEMOTE))
+      send_to_char("You cannot show emotions.\n\r",ch);
+
+}
+
+//Matthew - Autoooc turns on ooc when you login.
+void do_nocondition( CHAR_DATA *ch, char *argument)
+{
+
+   if (!IS_SET(ch->act2,PLR2_NOCONDITION))
+   {
+     send_to_char("You will no longer see condition messages.\n\r",ch);
+     SET_BIT(ch->act2,PLR2_NOCONDITION);
+   }
+   else
+   {
+     send_to_char("From now on, you will see condition messages on ticks.\n\r",ch);
+     REMOVE_BIT(ch->act2,PLR2_NOCONDITION);
+   }
+}
+
+//Matthew - Autoooc turns on ooc when you login.
+void do_autoooc( CHAR_DATA *ch, char *argument)
+{
+
+   if (IS_SET(ch->comm,COMM_AUTOOOC))
+   {
+     send_to_char("You will no longer automatically turn OOC on.\n\r",ch);
+     REMOVE_BIT(ch->comm,COMM_AUTOOOC);
+   }
+   else
+   {
+     send_to_char("From now on, you will automatically turn OOC on at login.\n\r",ch);
+     SET_BIT(ch->comm,COMM_AUTOOOC);
+   }
+}
+
+/* RT deaf blocks out all shouts */
+
+void do_deaf( CHAR_DATA *ch, char *argument)
+{
+
+   if (IS_SET(ch->comm,COMM_DEAF))
+   {
+     send_to_char("You can now hear tells again.\n\r",ch);
+     REMOVE_BIT(ch->comm,COMM_DEAF);
+   }
+   else
+   {
+     send_to_char("From now on, you won't hear tells.\n\r",ch);
+     SET_BIT(ch->comm,COMM_DEAF);
+   }
+}
+
+/* RT quiet blocks out all communication */
+
+void do_quiet ( CHAR_DATA *ch, char * argument)
+{
+    if (IS_SET(ch->comm,COMM_QUIET))
+    {
+      send_to_char("Quiet mode removed.\n\r",ch);
+      REMOVE_BIT(ch->comm,COMM_QUIET);
+    }
+   else
+   {
+     send_to_char("From now on, you will only hear says and emotes.\n\r",ch);
+     SET_BIT(ch->comm,COMM_QUIET);
+   }
+}
+
+/* afk command */
+
+void do_afk ( CHAR_DATA *ch, char * argument)
+{
+    if (IS_SET(ch->comm,COMM_AFK))
+    {
+      send_to_char("AFK mode removed. Type 'replay' to see tells.\n\r",ch);
+      REMOVE_BIT(ch->comm,COMM_AFK);
+    }
+   else
+   {
+     send_to_char("You are now in AFK mode.\n\r",ch);
+     SET_BIT(ch->comm,COMM_AFK);
+   }
+}
+/*
+void do_replay (CHAR_DATA *ch, char *argument)
+{
+    if (IS_NPC(ch))
+    {
+    send_to_char("You can't replay.\n\r",ch);
+    return;
+    }
+
+    if (buf_string(ch->pcdata->buffer)[0] == '\0')
+    {
+    send_to_char("You have no tells to replay.\n\r",ch);
+    return;
+    }
+
+    page_to_char(buf_string(ch->pcdata->buffer),ch);
+    clear_buf(ch->pcdata->buffer);
+}
+*/
+/* RT auction rewritten in ROM style */
+void do_auction( CHAR_DATA *ch, char *argument )
+{
+    char buf[MAX_STRING_LENGTH];
+    DESCRIPTOR_DATA *d;
+
+    if (argument[0] == '\0' )
+    {
+      if (IS_SET(ch->comm,COMM_NOAUCTION))
+      {
+    send_to_char("Auction channel is now ON.\n\r",ch);
+    REMOVE_BIT(ch->comm,COMM_NOAUCTION);
+      }
+      else
+      {
+    send_to_char("Auction channel is now OFF.\n\r",ch);
+    SET_BIT(ch->comm,COMM_NOAUCTION);
+      }
+    }
+    else  /* auction message sent, turn auction on if it is off */
+    {
+    if (IS_SET(ch->comm,COMM_QUIET))
+    {
+      send_to_char("You must turn off quiet mode first.\n\r",ch);
+      return;
+    }
+
+    if (IS_SET(ch->comm,COMM_NOCHANNELS))
+    {
+      send_to_char("The gods have revoked your channel priviliges.\n\r",ch);
+      return;
+    }
+
+    REMOVE_BIT(ch->comm,COMM_NOAUCTION);
+    }
+
+    sprintf( buf, "You auction '%s'\n\r", argument );
+    channel_to_char( buf, ch );
+    for ( d = descriptor_list; d != NULL; d = d->next )
+    {
+    CHAR_DATA *victim;
+
+    victim = d->original ? d->original : d->character;
+
+    if ( d->connected == CON_PLAYING &&
+         d->character != ch &&
+         !IS_SET(victim->comm,COMM_NOAUCTION) &&
+         !IS_SET(victim->comm,COMM_QUIET) )
+    {
+        act_new("{y$n auctions '$t'{x",
+            ch,argument,d->character,TO_VICT,POS_DEAD, TRUE);
+    }
+    }
+}
+
+/* RT chat replaced with ROM gossip */
+void do_gossip( CHAR_DATA *ch, char *argument )
+{
+    char buf[MAX_STRING_LENGTH];
+    DESCRIPTOR_DATA *d;
+
+    if (argument[0] == '\0' )
+    {
+      if (IS_SET(ch->comm,COMM_NOGOSSIP))
+      {
+        send_to_char("Gossip channel is now ON.\n\r",ch);
+        REMOVE_BIT(ch->comm,COMM_NOGOSSIP);
+      }
+      else
+      {
+        send_to_char("Gossip channel is now OFF.\n\r",ch);
+        SET_BIT(ch->comm,COMM_NOGOSSIP);
+      }
+    }
+    else  /* gossip message sent, turn gossip on if it isn't already */
+    {
+        if (IS_SET(ch->comm,COMM_QUIET))
+        {
+          send_to_char("You must turn off quiet mode first.\n\r",ch);
+          return;
+        }
+
+        if (IS_SET(ch->comm,COMM_NOCHANNELS))
+        {
+          send_to_char("The gods have revoked your channel priviliges.\n\r",ch);
+          return;
+
+        }
+
+      REMOVE_BIT(ch->comm,COMM_NOGOSSIP);
+
+      sprintf( buf, "{xYou gossip '{C%s{x'\n\r", argument );
+      channel_to_char( buf, ch );
+      for ( d = descriptor_list; d != NULL; d = d->next )
+      {
+        CHAR_DATA *victim;
+
+        victim = d->original ? d->original : d->character;
+
+        if ( d->connected == CON_PLAYING &&
+             d->character != ch &&
+             !IS_SET(victim->comm,COMM_NOGOSSIP) &&
+             !IS_SET(victim->comm,COMM_QUIET) )
+        {
+          act_new( "{x$n gossips '{C$t{x'",
+           ch,argument, d->character, TO_VICT,POS_SLEEPING, TRUE );
+        }
+      }
+    }
+}
+
+void do_grats( CHAR_DATA *ch, char *argument )
+{
+    char buf[MAX_STRING_LENGTH];
+    DESCRIPTOR_DATA *d;
+
+    if (argument[0] == '\0' )
+    {
+      if (IS_SET(ch->comm,COMM_NOGRATS))
+      {
+        send_to_char("Grats channel is now ON.\n\r",ch);
+        REMOVE_BIT(ch->comm,COMM_NOGRATS);
+      }
+      else
+      {
+        send_to_char("Grats channel is now OFF.\n\r",ch);
+        SET_BIT(ch->comm,COMM_NOGRATS);
+      }
+    }
+    else  /* grats message sent, turn grats on if it isn't already */
+    {
+        if (IS_SET(ch->comm,COMM_QUIET))
+        {
+          send_to_char("You must turn off quiet mode first.\n\r",ch);
+          return;
+        }
+
+        if (IS_SET(ch->comm,COMM_NOCHANNELS))
+        {
+          send_to_char("The gods have revoked your channel priviliges.\n\r",ch);
+          return;
+
+        }
+
+      REMOVE_BIT(ch->comm,COMM_NOGRATS);
+
+      sprintf( buf, "You grats '%s'\n\r", argument );
+      channel_to_char( buf, ch );
+      for ( d = descriptor_list; d != NULL; d = d->next )
+      {
+        CHAR_DATA *victim;
+
+        victim = d->original ? d->original : d->character;
+
+        if ( d->connected == CON_PLAYING &&
+             d->character != ch &&
+             !IS_SET(victim->comm,COMM_NOGRATS) &&
+             !IS_SET(victim->comm,COMM_QUIET) )
+        {
+          act_new( "$n grats '$t'",
+                   ch,argument, d->character, TO_VICT,POS_SLEEPING, TRUE );
+        }
+      }
+    }
+}
+
+void do_ooc( CHAR_DATA *ch, char *argument )
+{
+    char buf[MAX_STRING_LENGTH];
+    DESCRIPTOR_DATA *d;
+
+    if (argument[0] == '\0' )
+    {
+      if (IS_SET(ch->comm,COMM_NOOOC))
+      {
+        send_to_char("OOC channel is now ON.\n\r",ch);
+        REMOVE_BIT(ch->comm,COMM_NOOOC);
+      }
+      else
+      {
+        send_to_char("OOC channel is now OFF.\n\r",ch);
+        SET_BIT(ch->comm,COMM_NOOOC);
+      }
+    }
+   else  /* OOC message sent, turn OOC on if it isn't already */
+    {
+        if (IS_SET(ch->comm,COMM_QUIET))
+        {
+          send_to_char("You must turn off quiet mode first.\n\r",ch);
+          return;
+        }
+    if(ch->move <= 0)
+    {
+        send_to_char("You are too tired to use the OOC channel.\n\r",ch);
+        return;
+    }
+
+        if (IS_SET(ch->comm,COMM_NOCHANNELS))
+        {
+          send_to_char("The gods have revoked your channel priviliges.\n\r",ch);
+          return;
+
+        }
+/*
+    if(!IS_IMMORTAL(ch))
+    {
+        ch->move -= 1;
+        if(ch->level > 10)
+            ch->move -=5;
+        if(ch->level >= 50)
+            ch->move -=5;
+    }
+*/
+      REMOVE_BIT(ch->comm,COMM_NOOOC);
+    if (IS_AFFECTED2(ch, AFF2_UMBRA))
+        sprintf( buf, "{xYou OOC ({mUmbra{x) '{Y%s{x'\n\r", argument );
+    else
+      sprintf( buf, "{xYou OOC '{Y%s{x'\n\r", argument );
+      channel_to_char( buf, ch );
+      for ( d = descriptor_list; d != NULL; d = d->next )
+      {
+        CHAR_DATA *victim;
+
+        victim = d->original ? d->original : d->character;
+
+        if ( d->connected == CON_PLAYING &&
+             d->character != ch &&
+             !IS_SET(victim->comm,COMM_NOOOC) &&
+             !IS_SET(victim->comm,COMM_QUIET) )
+        {
+/*      if (!can_see(d->character, ch))
+    {
+    if (IS_AFFECTED2(ch, AFF2_UMBRA))
+        sprintf( buf, "{xAn {mUmbral{x voice OOCs '{Y%s{x'\n\r",
+argument);
+    else
+             sprintf( buf, "{xSomeone OOCs '{Y%s{x'\n\r", argument);
+    }
+      else
+      {
+         if(!IS_NPC(ch))
+            sprintf( buf, "{x%s OOCs '{Y%s{x'\n\r", ch->name,argument);
+         else
+            sprintf( buf,"{x%s OOCs '{Y%s{x'\n\r", ch->short_descr, argument);
+      }
+      send_to_char( buf, d->character );*/
+          act_new( "{x$n OOCs '{Y$t{x'",
+                   ch,argument, d->character, TO_VICT,POS_TORPOR, TRUE );
+        }
+      }
+    }
+}
+//3/28/12 Matthew's 'chat' channel.
+
+void do_chat( CHAR_DATA *ch, char *argument )
+{
+    char buf[MAX_STRING_LENGTH];
+    DESCRIPTOR_DATA *d;
+
+    if (argument[0] == '\0' )
+    {
+      if (IS_SET(ch->comm,COMM_NOCHAT))
+      {
+        send_to_char("{cChat{x channel is now ON.\n\r",ch);
+        REMOVE_BIT(ch->comm,COMM_NOCHAT);
+      }
+      else
+      {
+        send_to_char("{cChat{x channel is now OFF.\n\r",ch);
+        SET_BIT(ch->comm,COMM_NOCHAT);
+      }
+    }
+   else  /* chat message sent, turn chat on if it isn't already */
+    {
+        if (IS_SET(ch->comm,COMM_QUIET))
+        {
+          send_to_char("You must turn off quiet mode first.\n\r",ch);
+          return;
+        }
+
+        if (IS_SET(ch->comm,COMM_NOCHANNELS))
+        {
+          send_to_char("The gods have revoked your channel priviliges.\n\r",ch);
+          return;
+
+        }
+
+      REMOVE_BIT(ch->comm,COMM_NOCHAT);
+
+      sprintf( buf, "{xYou Chat '{c%s{x'\n\r", argument );
+      channel_to_char( buf, ch );
+      for ( d = descriptor_list; d != NULL; d = d->next )
+      {
+        CHAR_DATA *victim;
+
+        victim = d->original ? d->original : d->character;
+
+        if ( d->connected == CON_PLAYING &&
+             d->character != ch &&
+             !IS_SET(victim->comm,COMM_NOCHAT) &&
+             !IS_SET(victim->comm,COMM_QUIET) )
+        {
+/*      if (!can_see(d->character, ch))
+    {
+    if (IS_AFFECTED2(ch, AFF2_UMBRA))
+        sprintf( buf, "{xAn {mUmbral{x voice Chats '{c%s{x'\n\r",
+argument);
+    else
+             sprintf( buf, "{xSomeone Chats '{c%s{x'\n\r", argument);
+    }
+      else
+      {
+         if(!IS_NPC(ch))
+            sprintf( buf, "{x%s Chats '{c%s{x'\n\r", ch->name,argument);
+         else
+            sprintf( buf,"{x%s Chats '{c%s{x'\n\r", ch->short_descr, argument);
+      }
+      send_to_char( buf, d->character );
+      */
+        act_new( "{x$n Chats '{c$t{x'", ch, argument, d->character, TO_VICT, POS_TORPOR, TRUE );
+
+        }
+      }
+    }
+}
+
+/* RT question channel */
+void do_question( CHAR_DATA *ch, char *argument )
+{
+    char buf[MAX_STRING_LENGTH];
+    DESCRIPTOR_DATA *d;
+
+    if (argument[0] == '\0' )
+    {
+      if (IS_SET(ch->comm,COMM_NOQUESTION))
+      {
+        send_to_char("Q/A channel is now ON.\n\r",ch);
+        REMOVE_BIT(ch->comm,COMM_NOQUESTION);
+      }
+      else
+      {
+        send_to_char("Q/A channel is now OFF.\n\r",ch);
+        SET_BIT(ch->comm,COMM_NOQUESTION);
+      }
+    }
+    else  /* question sent, turn Q/A on if it isn't already */
+    {
+        if (IS_SET(ch->comm,COMM_QUIET))
+        {
+          send_to_char("You must turn off quiet mode first.\n\r",ch);
+          return;
+        }
+
+        if (IS_SET(ch->comm,COMM_NOCHANNELS))
+        {
+          send_to_char("The gods have revoked your channel priviliges.\n\r",ch);
+          return;
+    }
+
+        REMOVE_BIT(ch->comm,COMM_NOQUESTION);
+
+      sprintf( buf, "{xYou question '{G%s{x'\n\r", argument );
+      channel_to_char( buf, ch );
+      for ( d = descriptor_list; d != NULL; d = d->next )
+      {
+        CHAR_DATA *victim;
+
+        victim = d->original ? d->original : d->character;
+
+        if ( d->connected == CON_PLAYING &&
+             d->character != ch &&
+             !IS_SET(victim->comm,COMM_NOQUESTION) &&
+             !IS_SET(victim->comm,COMM_QUIET) )
+        {
+      act_new("{x$n questions '{G$t{x'",
+          ch,argument,d->character,TO_VICT,POS_SLEEPING, TRUE);
+        }
+      }
+    }
+}
+
+/* RT answer channel - uses same line as questions */
+void do_answer( CHAR_DATA *ch, char *argument )
+{
+    char buf[MAX_STRING_LENGTH];
+    DESCRIPTOR_DATA *d;
+
+    if (argument[0] == '\0' )
+    {
+      if (IS_SET(ch->comm,COMM_NOQUESTION))
+      {
+        send_to_char("Q/A channel is now ON.\n\r",ch);
+        REMOVE_BIT(ch->comm,COMM_NOQUESTION);
+      }
+      else
+      {
+        send_to_char("Q/A channel is now OFF.\n\r",ch);
+        SET_BIT(ch->comm,COMM_NOQUESTION);
+      }
+    }
+    else  /* answer sent, turn Q/A on if it isn't already */
+    {
+        if (IS_SET(ch->comm,COMM_QUIET))
+        {
+          send_to_char("You must turn off quiet mode first.\n\r",ch);
+          return;
+        }
+
+        if (IS_SET(ch->comm,COMM_NOCHANNELS))
+        {
+          send_to_char("The gods have revoked your channel priviliges.\n\r",ch);
+          return;
+    }
+
+        REMOVE_BIT(ch->comm,COMM_NOQUESTION);
+
+      sprintf( buf, "{xYou answer '{G%s{x'\n\r", argument );
+      channel_to_char( buf, ch );
+      for ( d = descriptor_list; d != NULL; d = d->next )
+      {
+        CHAR_DATA *victim;
+
+        victim = d->original ? d->original : d->character;
+
+        if ( d->connected == CON_PLAYING &&
+             d->character != ch &&
+             !IS_SET(victim->comm,COMM_NOQUESTION) &&
+             !IS_SET(victim->comm,COMM_QUIET) )
+        {
+      act_new("$n answers '{G$t{x'",
+          ch,argument,d->character,TO_VICT,POS_SLEEPING, TRUE);
+        }
+      }
+    }
+}
+
+/* RT music channel */
+void do_music( CHAR_DATA *ch, char *argument )
+{
+    char buf[MAX_STRING_LENGTH];
+    DESCRIPTOR_DATA *d;
+
+    if (argument[0] == '\0' )
+    {
+      if (IS_SET(ch->comm,COMM_NOMUSIC))
+      {
+        send_to_char("Music channel is now ON.\n\r",ch);
+        REMOVE_BIT(ch->comm,COMM_NOMUSIC);
+      }
+      else
+      {
+        send_to_char("Music channel is now OFF.\n\r",ch);
+        SET_BIT(ch->comm,COMM_NOMUSIC);
+      }
+    }
+    else  /* music sent, turn music on if it isn't already */
+    {
+        if (IS_SET(ch->comm,COMM_QUIET))
+        {
+          send_to_char("You must turn off quiet mode first.\n\r",ch);
+          return;
+        }
+
+        if (IS_SET(ch->comm,COMM_NOCHANNELS))
+        {
+          send_to_char("The gods have revoked your channel priviliges.\n\r",ch);
+          return;
+    }
+
+        REMOVE_BIT(ch->comm,COMM_NOMUSIC);
+
+      sprintf( buf, "{xYou music: '{M%s{x'\n\r", argument );
+      channel_to_char( buf, ch );
+      sprintf( buf, "{x$n musics: '{M%s{x'", argument );
+      for ( d = descriptor_list; d != NULL; d = d->next )
+      {
+        CHAR_DATA *victim;
+
+        victim = d->original ? d->original : d->character;
+
+        if ( d->connected == CON_PLAYING &&
+             d->character != ch &&
+             !IS_SET(victim->comm,COMM_NOMUSIC) &&
+             !IS_SET(victim->comm,COMM_QUIET) )
+        {
+        act_new("{x$n musics: '{M$t{x'",
+            ch,argument,d->character,TO_VICT,POS_SLEEPING, TRUE);
+        }
+      }
+    }
+}
+
+/* clan channels */
+void do_clantalk( CHAR_DATA *ch, char *argument )
+{
+    char buf[MAX_STRING_LENGTH];
+    DESCRIPTOR_DATA *d;
+
+    if(IS_NPC(ch)) return;
+    if (!is_clan(ch))
+    {
+    send_to_char("You aren't in a clan.\n\r",ch);
+    return;
+    }
+    if ( argument[0] == '\0' )
+    {
+      if (IS_SET(ch->comm,COMM_NOCLAN))
+      {
+        send_to_char("Clan channel is now ON\n\r",ch);
+        REMOVE_BIT(ch->comm,COMM_NOCLAN);
+      }
+      else
+      {
+        send_to_char("Clan channel is now OFF\n\r",ch);
+        SET_BIT(ch->comm,COMM_NOCLAN);
+      }
+      return;
+    }
+
+        if (IS_SET(ch->comm,COMM_NOCHANNELS))
+        {
+         send_to_char("The gods have revoked your channel priviliges.\n\r",ch);
+          return;
+        }
+
+        REMOVE_BIT(ch->comm,COMM_NOCLAN);
+
+      sprintf( buf, "You tell your clan '{Y%s{x'\n\r", argument );
+      channel_to_char( buf, ch );
+      sprintf( buf, "$n tells the clan '{Y%s{x'", argument );
+    for ( d = descriptor_list; d != NULL; d = d->next )
+    {
+        if ( d->connected == CON_PLAYING &&
+             d->character != ch &&
+         is_same_clan(ch,d->character) &&
+             !IS_SET(d->character->comm,COMM_NOCLAN) &&
+         !IS_SET(d->character->comm,COMM_QUIET) )
+        {
+            act_new("$n tells the clan '{Y$t{x'",ch,argument,d->character,TO_VICT,POS_DEAD, TRUE);
+        }
+    }
+
+    return;
+}
+
+void do_traditiontalk( CHAR_DATA *ch, char *argument )
+{
+    char buf[MAX_STRING_LENGTH];
+    DESCRIPTOR_DATA *d;
+
+    if(IS_NPC(ch)) return;
+    if (!is_clan(ch))
+    {
+    send_to_char("You aren't in a Tradition.\n\r",ch);
+    return;
+    }
+    if ( argument[0] == '\0' )
+    {
+      if (IS_SET(ch->comm,COMM_NOCLAN))
+      {
+        send_to_char("Tradition channel is now ON\n\r",ch);
+        REMOVE_BIT(ch->comm,COMM_NOCLAN);
+      }
+      else
+      {
+        send_to_char("Tradition channel is now OFF\n\r",ch);
+        SET_BIT(ch->comm,COMM_NOCLAN);
+      }
+      return;
+    }
+
+        if (IS_SET(ch->comm,COMM_NOCHANNELS))
+        {
+         send_to_char("The gods have revoked your channel priviliges.\n\r",ch);
+          return;
+        }
+
+        REMOVE_BIT(ch->comm,COMM_NOCLAN);
+
+      sprintf( buf, "You tell your Tradition '{Y%s{x'\n\r", argument );
+      channel_to_char( buf, ch );
+      sprintf( buf, "%s tells the Tradition '{Y%s{x'", ch->name, argument );
+    for ( d = descriptor_list; d != NULL; d = d->next )
+    {
+        if ( d->connected == CON_PLAYING &&
+             d->character != ch &&
+         is_same_clan(ch,d->character) &&
+             !IS_SET(d->character->comm,COMM_NOCLAN) &&
+         !IS_SET(d->character->comm,COMM_QUIET) )
+        {
+            sprintf(buf,"%s tells the Tradition '{Y$t{x'",ch->name);
+            act_new(buf,ch,argument,d->character,TO_VICT,POS_DEAD, TRUE);
+        }
+    }
+
+    return;
+}
+void do_tribetalk( CHAR_DATA *ch, char *argument )
+{
+    char buf[MAX_STRING_LENGTH];
+    DESCRIPTOR_DATA *d;
+
+    if(IS_NPC(ch)) return;
+    if (!is_clan(ch))
+    {
+    send_to_char("You aren't in a Tribe.\n\r",ch);
+    return;
+    }
+    if ( argument[0] == '\0' )
+    {
+      if (IS_SET(ch->comm,COMM_NOCLAN))
+      {
+        send_to_char("Tribe channel is now ON\n\r",ch);
+        REMOVE_BIT(ch->comm,COMM_NOCLAN);
+      }
+      else
+      {
+        send_to_char("Tribe channel is now OFF\n\r",ch);
+        SET_BIT(ch->comm,COMM_NOCLAN);
+      }
+      return;
+    }
+
+        if (IS_SET(ch->comm,COMM_NOCHANNELS))
+        {
+         send_to_char("The gods have revoked your channel priviliges.\n\r",ch);
+          return;
+        }
+
+        REMOVE_BIT(ch->comm,COMM_NOCLAN);
+
+      sprintf( buf, "You tell your Tribe '{Y%s{x'\n\r", argument );
+      channel_to_char( buf, ch );
+      sprintf( buf, "%s tells the Tribe '{Y%s{x'", ch->name, argument );
+    for ( d = descriptor_list; d != NULL; d = d->next )
+    {
+        if ( d->connected == CON_PLAYING &&
+             d->character != ch &&
+         is_same_clan(ch,d->character) &&
+             !IS_SET(d->character->comm,COMM_NOCLAN) &&
+         !IS_SET(d->character->comm,COMM_QUIET) )
+        {
+            sprintf(buf,"%s tells the Tribe '{Y$t{x'",ch->name);
+            act_new(buf,ch,argument,d->character,TO_VICT,POS_DEAD, TRUE);
+        }
+    }
+
+    return;
+}
+
+
+void do_immtalk( CHAR_DATA *ch, char *argument )
+{
+    char buf[MAX_STRING_LENGTH];
+    DESCRIPTOR_DATA *d;
+
+    if (!IS_IMMORTAL(ch) && !IS_SET(ch->act, PLR_IMMTALK))
+    {
+        send_to_char("Huh?", ch);
+        return;
+    }
+
+    if ( argument[0] == '\0' )
+    {
+      if (IS_SET(ch->comm,COMM_NOWIZ))
+      {
+    send_to_char("Immortal channel is now ON\n\r",ch);
+    REMOVE_BIT(ch->comm,COMM_NOWIZ);
+      }
+      else
+      {
+    send_to_char("Immortal channel is now OFF\n\r",ch);
+    SET_BIT(ch->comm,COMM_NOWIZ);
+      }
+      return;
+    }
+
+    REMOVE_BIT(ch->comm,COMM_NOWIZ);
+
+    sprintf( buf, "{c[{y$n{c]: {w%s{x", argument );
+    act_new("{c[{y$n{c]: {w$t{x",ch,argument,NULL,TO_CHAR,POS_DEAD, TRUE);
+    for ( d = descriptor_list; d != NULL; d = d->next )
+    {
+    if ( d->connected == CON_PLAYING &&
+         (IS_IMMORTAL(d->character) || IS_SET(d->character->act, PLR_IMMTALK)) &&
+             !IS_SET(d->character->comm,COMM_NOWIZ) )
+    {
+        act_new("{c[{y$n{c]: {w$t{x",ch,argument,d->character,TO_VICT,POS_DEAD, TRUE);
+    }
+    }
+
+    return;
+}
+
+void do_admintalk( CHAR_DATA *ch, char *argument )
+{
+    DESCRIPTOR_DATA *d;
+    d = ch->desc;
+
+    if (str_cmp(d->character->name, "Zelan") &&
+             str_cmp(d->character->name, "Matthew") &&
+             str_cmp(d->character->name, "Ygolonac")&&
+             str_cmp(d->character->name, "Maat")&&
+             str_cmp(d->character->name, "Ma'at"))
+             {
+                 send_to_char("Huh?\n\r", ch);
+                 return;
+             }
+
+    if ( argument[0] == '\0' )
+    {
+      if (IS_SET(ch->comm,COMM_NOADMIN))
+      {
+    send_to_char("Admin channel is now ON\n\r",ch);
+    REMOVE_BIT(ch->comm,COMM_NOADMIN);
+      }
+      else
+      {
+    send_to_char("Admin channel is now OFF\n\r",ch);
+    SET_BIT(ch->comm,COMM_NOADMIN);
+      }
+      return;
+    }
+
+    REMOVE_BIT(ch->comm,COMM_NOADMIN);
+
+    act_new("{g<{w$n{g>: {c$t{x",ch,argument,NULL,TO_CHAR,POS_DEAD, TRUE);
+    for ( d = descriptor_list; d != NULL; d = d->next )
+    {
+    if ( d->connected == CON_PLAYING &&
+         (d->character->level >= L3) &&
+             !IS_SET(d->character->comm,COMM_NOADMIN) &&
+             (!str_cmp(d->character->name, "Zelan") ||
+             !str_cmp(d->character->name, "Matthew") ||
+             !str_cmp(d->character->name, "Ygolonac")||
+             !str_cmp(d->character->name, "Maat")||
+             !str_cmp(d->character->name, "Ma'at")) )
+    {
+        act_new("{g<{w$n{g>: {c$t{x",ch,argument,d->character,TO_VICT,POS_DEAD, TRUE);
+    }
+    }
+
+    return;
+}
+
+
+
+void do_imptalk( CHAR_DATA *ch, char *argument )
+{
+    DESCRIPTOR_DATA *d;
+
+    if ( argument[0] == '\0' )
+    {
+      if (IS_SET(ch->comm,COMM_NOIMP))
+      {
+    send_to_char("Imp channel is now ON\n\r",ch);
+    REMOVE_BIT(ch->comm,COMM_NOIMP);
+      }
+      else
+      {
+    send_to_char("Imp channel is now OFF\n\r",ch);
+    SET_BIT(ch->comm,COMM_NOIMP);
+      }
+      return;
+    }
+
+    REMOVE_BIT(ch->comm,COMM_NOIMP);
+    act_new("{c*{R$n{c*: {w$t{x",ch,argument,NULL,TO_CHAR,POS_DEAD, TRUE);
+    for ( d = descriptor_list; d != NULL; d = d->next )
+    {
+    if ( d->connected == CON_PLAYING &&
+         (get_trust(d->character) >= MAX_LEVEL) &&
+             !IS_SET(d->character->comm,COMM_NOIMP) )
+    {
+        act_new("{c*{R$n{c*: {w$t{x",ch,argument,d->character,TO_VICT,POS_DEAD, TRUE);
+    }
+    }
+
+    return;
+}
+
+
+void do_say( CHAR_DATA *ch, char *argument )
+{
+    if ( argument[0] == '\0' )
+    {
+    send_to_char( "Say what?\n\r", ch );
+    return;
+    }
+    if(is_affected(ch, gsn_unseen) && ch->pcdata->discipline[OBFUSCATE] < 2)
+    affect_strip( ch, gsn_unseen );
+
+    check_unseen(ch, UNSEEN_TALK );
+    RECORD_TO_REPLAYROOM=TRUE;
+    act( "{x$n says '{w$T{x'", ch, NULL, argument, TO_ROOM );
+    act( "{xYou say '{w$T{x'", ch, NULL, argument, TO_CHAR );
+    RECORD_TO_REPLAYROOM=FALSE;
+    if (!IS_NPC(ch) && IS_SET(ch->act, PLR_IC))
+        ch->pcdata->last_pose = 0;
+    if ( !IS_NPC(ch) )
+    {
+    CHAR_DATA *mob, *mob_next;
+    for ( mob = ch->in_room->people; mob != NULL; mob = mob_next )
+    {
+        mob_next = mob->next_in_room;
+        if (!IS_NPC(mob) && IS_SET(mob->act, PLR_IC))
+        mob->pcdata->room_last_pose = 0;
+
+        if ( IS_NPC(mob) && HAS_TRIGGER( mob, TRIG_SPEECH )
+        &&   mob->position == mob->pIndexData->default_pos )
+        mp_act_trigger( argument, mob, ch, NULL, NULL, TRIG_SPEECH );
+    }
+    }
+
+    return;
+}
+
+void do_osay( CHAR_DATA *ch, char *argument )
+{
+    if ( argument[0] == '\0' )
+    {
+    send_to_char( "Say what OOCly?\n\r", ch );
+    return;
+    }
+
+    check_unseen(ch, UNSEEN_TALK );
+
+    act_new( "{x$n says OOCly '{C$T{x'", ch, NULL, argument, TO_ROOM, POS_RESTING, TRUE );
+    act_new( "{xYou say OOCly '{C$T{x'", ch, NULL, argument, TO_CHAR, POS_RESTING, TRUE );
+    return;
+}
+
+
+
+void do_shout( CHAR_DATA *ch, char *argument )
+{
+    DESCRIPTOR_DATA *d;
+
+    if (IS_SET(ch->comm,COMM_NOCHANNELS))
+    {
+      send_to_char("The gods have revoked your channel priviliges.\n\r",ch);
+      return;
+    }
+
+    if (argument[0] == '\0' )
+    {
+        if (IS_SET(ch->comm,COMM_SHOUTSOFF))
+        {
+            send_to_char("You can hear shouts again.\n\r",ch);
+            REMOVE_BIT(ch->comm,COMM_SHOUTSOFF);
+        }
+        else
+        {
+            send_to_char("You will no longer hear shouts.\n\r",ch);
+            SET_BIT(ch->comm,COMM_SHOUTSOFF);
+        }
+        return;
+    }
+
+    if ( IS_SET(ch->comm, COMM_NOSHOUT) )
+    {
+        send_to_char( "You can't shout.\n\r", ch );
+        return;
+    }
+
+    REMOVE_BIT(ch->comm,COMM_SHOUTSOFF);
+
+    WAIT_STATE( ch, 12 );
+
+    act_new( "{xYou shout '{R$T{x'", ch, NULL, argument, TO_CHAR, POS_RESTING, TRUE );
+    for ( d = descriptor_list; d != NULL; d = d->next )
+    {
+    CHAR_DATA *victim;
+
+    victim = d->original ? d->original : d->character;
+
+    if ( d->connected == CON_PLAYING &&
+         d->character != ch &&
+         !IS_SET(victim->comm, COMM_SHOUTSOFF) &&
+         !IS_SET(victim->comm, COMM_QUIET) )
+    {
+        act_new ("{x$n shouts '{R$t{x'",ch,argument,d->character,TO_VICT, POS_SLEEPING, TRUE);
+    }
+    }
+
+    return;
+}
+
+void do_whisper( CHAR_DATA *ch, char *argument )
+{
+    char arg[MAX_INPUT_LENGTH], buf[MSL];
+    CHAR_DATA *victim, *dch;
+    DESCRIPTOR_DATA *d;
+
+    argument = one_argument(argument, arg);
+
+    if (arg[0] == '\0' || argument[0] == '\0')
+    {
+        sendch("Whisper whom what?\n\r", ch);
+        return;
+    }
+
+    if ((victim = get_char_room(ch, arg)) == NULL) //Get character from ch->in_room.
+    {
+        sendch("How do you expect to whisper to someone who isn't here?!\n\r", ch);
+        return;
+    }
+
+    sprintf(buf,"{xYou whisper to %s '{w%s{x'\n\r", PERS2(victim,ch),argument);
+    sendch(buf, ch);
+    record_replay_event(ch, buf);//Record to replay buffer.
+
+    sprintf(buf, "{x%s whispers to you '{w%s{x'\n\r", PERS2(ch, victim), argument);
+    sendch(buf, victim);
+    record_replay_event(ch, buf);
+
+    for (d = descriptor_list; d != NULL; d = d->next) // Loop through descriptor list.
+    {
+        dch = d->character; // shorthand pointer so we don't have to type d->character over and over.
+
+        if (d->connected != CON_PLAYING || dch == ch || dch == victim
+            || dch->in_room != ch->in_room)
+            continue;
+            // If d isn't fully online, or dch is ch or victim, or dch isn't in the same room,
+            // go on to next char in descriptor_list.
+            int resistance = (godice(get_attribute(ch, WITS) + ch->pcdata->csabilities[CSABIL_SUBTERFUGE], 7));
+            int challenge = (godice(get_attribute(dch, WITS) + dch->pcdata->csabilities[CSABIL_ALERTNESS], 7));
+            int listsuccess = challenge - resistance;
+        if  (listsuccess > 3)// 1 in 10 chance of overhearing.
+        // To add a diceroll you could do if(godice(ch's perception + ch's alertness, diff 9))
+        // That would do a perc+alert roll diff 9 and allow the listener to overhear on a success.
+        {
+            sprintf(buf, "{xYou overhear %s whisper to %s '{w%s{x'", PERS2(ch, dch), PERS2(victim, dch), argument);
+            sendch(buf, dch);
+            record_replay_event(dch, buf);
+            return;
+        } //if
+            if ((listsuccess == 1) || (listsuccess ==2))
+            {
+                sprintf(buf, "You notice %s whispering to %s, but can't make out what was said.", PERS2(ch, dch), PERS2(victim, dch));
+                sendch(buf,dch);
+            }
+    }//for
+}// do_whisper
+
+
+
+void do_tell( CHAR_DATA *ch, char *argument )
+{
+    char arg[MAX_INPUT_LENGTH],buf[MAX_STRING_LENGTH];
+    char buf2[MAX_STRING_LENGTH];
+    CHAR_DATA *victim;
+
+    if ( IS_SET(ch->comm, COMM_NOTELL) || IS_SET(ch->comm,COMM_DEAF))
+    {
+    send_to_char( "Your message didn't get through.\n\r", ch );
+    return;
+    }
+
+    if ( IS_SET(ch->comm, COMM_QUIET) )
+    {
+    send_to_char( "You must turn off quiet mode first.\n\r", ch);
+    return;
+    }
+
+    if (IS_SET(ch->comm,COMM_DEAF))
+    {
+    send_to_char("You must turn off deaf mode first.\n\r",ch);
+    return;
+    }
+
+    argument = one_argument( argument, arg );
+
+    if ( arg[0] == '\0' || argument[0] == '\0' )
+    {
+    send_to_char( "Tell whom what?\n\r", ch );
+    return;
+    }
+
+    /*
+     * Can tell to PC's anywhere, but NPC's only in same room.
+     * -- Furey
+     */
+    if ( ( victim = get_char_world( ch, arg ) ) == NULL
+    || ( IS_NPC(victim) && victim->in_room != ch->in_room ) )
+    {
+    send_to_char( "They aren't here.\n\r", ch );
+    return;
+    }
+
+    if ( victim->desc == NULL && !IS_NPC(victim))
+    {
+    act("$N seems to have misplaced $S link...try again later.",
+        ch,NULL,victim,TO_CHAR);
+        sprintf(buf,"{x%s tells you '{Y%s{x'\n\r",PERS(ch,victim, TRUE),argument);
+        buf[0] = UPPER(buf[0]);
+        record_replay_event(victim, buf);
+    return;
+    }
+
+/*
+    if ( !(IS_IMMORTAL(ch) && ch->level > LEVEL_IMMORTAL) && !IS_AWAKE(victim) )
+    {
+    act( "$E can't hear you.", ch, 0, victim, TO_CHAR );
+    return;
+    }
+*/
+    if ((IS_SET(victim->comm,COMM_QUIET) || IS_SET(victim->comm,COMM_DEAF))
+    && !IS_IMMORTAL(ch))
+    {
+    act( "$E is not receiving tells.", ch, 0, victim, TO_CHAR );
+    return;
+    }
+
+    if (IS_SET(victim->comm,COMM_AFK))
+    {
+    if (IS_NPC(victim))
+    {
+        act("$E is AFK, and not receiving tells.",ch,NULL,victim,TO_CHAR);
+        return;
+    }
+
+    act("$E is AFK, but your tell will go through when $E returns.",
+        ch,NULL,victim,TO_CHAR);
+    sprintf(buf,"{x%s tells you '{Y%s{x'\n\r",PERS(ch,victim, TRUE),argument);
+    buf[0] = UPPER(buf[0]);
+    record_replay_event(victim, buf);
+    sendch(buf, victim);
+    return;
+    }
+
+    sprintf(buf2,"{xYou tell %s '{Y%s{x'\n\r", PERS(victim,ch, TRUE),argument);
+    send_to_char(buf2,ch);
+    record_replay_event(ch, buf2);
+    sprintf(buf2,"{x%s tells you '{Y%s{x'\n\r", PERS(ch,victim, TRUE),argument);
+    send_to_char(buf2,victim);
+    record_replay_event(victim, buf2);
+/*    act( "{xYou tell $N '{Y$t{x'", ch, argument, victim, TO_CHAR );
+    act_new("{x$n tells you '{Y$t{x'",ch,argument,victim,TO_VICT,POS_DEAD);
+*/
+    victim->reply   = ch;
+
+    if ( !IS_NPC(ch) && IS_NPC(victim) && HAS_TRIGGER(victim,TRIG_SPEECH) )
+        mp_act_trigger( argument, victim, ch, NULL, NULL, TRIG_SPEECH );
+
+
+    return;
+}
+
+
+
+void do_reply( CHAR_DATA *ch, char *argument )
+{
+    CHAR_DATA *victim;
+    char buf[MAX_STRING_LENGTH];
+    char buf2[MAX_STRING_LENGTH];
+
+    if ( IS_SET(ch->comm, COMM_NOTELL) )
+    {
+    send_to_char( "Your message didn't get through.\n\r", ch );
+    return;
+    }
+
+    if ( ( victim = ch->reply ) == NULL )
+    {
+    send_to_char( "They aren't here.\n\r", ch );
+    return;
+    }
+
+    if ( victim->desc == NULL && !IS_NPC(victim))
+    {
+        act("$N seems to have misplaced $S link...try again later.",
+            ch,NULL,victim,TO_CHAR);
+        sprintf(buf,"%s tells you '{Y%s{x'\n\r",PERS(ch,victim, TRUE),argument);
+        buf[0] = UPPER(buf[0]);
+        record_replay_event(victim, buf);
+        return;
+    }
+
+
+
+    if ((IS_SET(victim->comm,COMM_QUIET) || IS_SET(victim->comm,COMM_DEAF))
+    &&  !IS_IMMORTAL(ch) && !IS_IMMORTAL(victim))
+    {
+        act_new( "$E is not receiving tells.", ch, 0, victim, TO_CHAR,POS_DEAD, TRUE);
+        return;
+    }
+
+    if (IS_SET(victim->comm,COMM_AFK))
+    {
+        if (IS_NPC(victim))
+        {
+            act_new("$E is AFK, and not receiving tells.",
+        ch,NULL,victim,TO_CHAR,POS_DEAD, TRUE);
+            return;
+        }
+
+        act_new("$E is AFK, but your tell will go through when $E returns.",
+            ch,NULL,victim,TO_CHAR,POS_DEAD, TRUE);
+        sprintf(buf,"%s tells you  '{Y%s{x'\n\r",PERS(ch,victim, TRUE),argument);
+    buf[0] = UPPER(buf[0]);
+        record_replay_event(victim, buf);
+        sendch(buf, victim);
+        return;
+    }
+
+    sprintf(buf2,"{xYou tell %s '{Y%s{x'\n\r", PERS(victim,ch, TRUE),argument);
+    send_to_char(buf2,ch);
+    record_replay_event(ch, buf2);
+    sprintf(buf2,"{x%s tells you '{Y%s{x'\n\r", PERS(ch,victim, TRUE),argument);
+    send_to_char(buf2,victim);
+    record_replay_event(victim, buf2);
+
+/*
+    act_new("You tell $N '{Y$t{x'",ch,argument,victim,TO_CHAR,POS_DEAD);
+    act_new("$n tells you '{Y$t{x'",ch,argument,victim,TO_VICT,POS_DEAD);
+*/
+    victim->reply   = ch;
+
+    return;
+}
+
+
+
+void do_yell( CHAR_DATA *ch, char *argument )
+{
+    DESCRIPTOR_DATA *d;
+
+    if (IS_SET(ch->comm,COMM_NOCHANNELS))
+    {
+      send_to_char("The gods have revoked your channel priviliges.\n\r",ch);
+      return;
+    }
+
+    if ( IS_SET(ch->comm, COMM_NOSHOUT) )
+    {
+        send_to_char( "You can't yell.\n\r", ch );
+        return;
+    }
+
+    if ( argument[0] == '\0' )
+    {
+    send_to_char( "Yell what?\n\r", ch );
+    return;
+    }
+    if(is_affected(ch, gsn_unseen) && ch->pcdata->discipline[OBFUSCATE] < 2)
+    affect_strip( ch, gsn_unseen );
+
+    check_unseen(ch, UNSEEN_TALK );
+    RECORD_TO_REPLAYROOM = TRUE;
+    act("{xYou yell '{r$t{x'",ch,argument,NULL,TO_CHAR);
+    RECORD_TO_REPLAYROOM = FALSE;
+    for ( d = descriptor_list; d != NULL; d = d->next )
+    {
+    if ( d->connected == CON_PLAYING
+    &&   d->character != ch
+    &&   d->character->in_room != NULL
+    &&   d->character->in_room->area == ch->in_room->area
+        &&   !IS_SET(d->character->comm,COMM_QUIET) )
+    {
+        RECORD_TO_REPLAYROOM = TRUE;
+        act("{x$n yells '{r$t{x'",ch,argument,d->character,TO_VICT);
+        RECORD_TO_REPLAYROOM = FALSE;
+    }
+    }
+
+    return;
+}
+
+
+void do_emote( CHAR_DATA *ch, char *argument )
+{
+    if ( !IS_NPC(ch) && IS_SET(ch->comm, COMM_NOEMOTE) )
+    {
+        send_to_char( "You can't show your emotions.\n\r", ch );
+        return;
+    }
+
+    if ( argument[0] == '\0' )
+    {
+        send_to_char( "Emote what?\n\r", ch );
+        return;
+    }
+    if(is_affected(ch, gsn_unseen) && ch->pcdata->discipline[OBFUSCATE] < 2)
+    affect_strip( ch, gsn_unseen );
+
+    check_unseen(ch, UNSEEN_MOVE );
+    MOBtrigger = FALSE;
+    RECORD_TO_REPLAYROOM=TRUE;
+    act( "$n $T", ch, NULL, argument, TO_ROOM );
+    act( "$n $T", ch, NULL, argument, TO_CHAR );
+    RECORD_TO_REPLAYROOM=FALSE;
+    MOBtrigger = TRUE;
+    CHAR_DATA *mob, *mob_next;
+    for ( mob = ch->in_room->people; mob != NULL; mob = mob_next )
+    {
+        mob_next = mob->next_in_room;
+        if (!IS_NPC(mob) && IS_SET(mob->act, PLR_IC) && mob != ch)
+        mob->pcdata->room_last_pose = 0;
+    }
+    if (!IS_NPC(ch) && IS_SET(ch->act, PLR_IC))
+        ch->pcdata->last_pose = 0;
+
+    return;
+}
+
+
+void do_pmote( CHAR_DATA *ch, char *argument )
+{
+    CHAR_DATA *vch;
+    char *letter,*name;
+    char last[MAX_INPUT_LENGTH], temp[MAX_STRING_LENGTH];
+    int matches = 0;
+
+    if ( !IS_NPC(ch) && IS_SET(ch->comm, COMM_NOEMOTE) )
+    {
+        send_to_char( "You can't show your emotions.\n\r", ch );
+        return;
+    }
+
+    if ( argument[0] == '\0' )
+    {
+        send_to_char( "Emote what?\n\r", ch );
+        return;
+    }
+    if(is_affected(ch, gsn_unseen) && ch->pcdata->discipline[OBFUSCATE] < 2)
+    affect_strip( ch, gsn_unseen );    act( "$n $t", ch, argument, NULL, TO_CHAR );
+
+    for (vch = ch->in_room->people; vch != NULL; vch = vch->next_in_room)
+    {
+    if (vch->desc == NULL || vch == ch)
+        continue;
+
+    if ((letter = strstr(argument,vch->name)) == NULL)
+    {
+        MOBtrigger = FALSE;
+        RECORD_TO_REPLAYROOM=TRUE;
+        act("$N $t",vch,argument,ch,TO_CHAR);
+        RECORD_TO_REPLAYROOM=FALSE;
+        MOBtrigger = TRUE;
+        continue;
+    }
+
+    strcpy(temp,argument);
+    temp[strlen(argument) - strlen(letter)] = '\0';
+    last[0] = '\0';
+    name = vch->name;
+
+    for (; *letter != '\0'; letter++)
+    {
+        if (*letter == '\'' && matches == strlen(vch->name))
+        {
+        strcat(temp,"r");
+        continue;
+        }
+
+        if (*letter == 's' && matches == strlen(vch->name))
+        {
+        matches = 0;
+        continue;
+        }
+
+        if (matches == strlen(vch->name))
+        {
+        matches = 0;
+        }
+
+        if (*letter == *name)
+        {
+        matches++;
+        name++;
+        if (matches == strlen(vch->name))
+        {
+            strcat(temp,"you");
+            last[0] = '\0';
+            name = vch->name;
+            continue;
+        }
+        strncat(last,letter,1);
+        continue;
+        }
+
+        matches = 0;
+        strcat(temp,last);
+        strncat(temp,letter,1);
+        last[0] = '\0';
+        name = vch->name;
+    }
+    MOBtrigger = FALSE;
+    RECORD_TO_REPLAYROOM=TRUE;
+    act("$N $t",vch,temp,ch,TO_CHAR);
+    RECORD_TO_REPLAYROOM=FALSE;
+    MOBtrigger = TRUE;
+    CHAR_DATA *mob, *mob_next;
+    for ( mob = ch->in_room->people; mob != NULL; mob = mob_next )
+    {
+        mob_next = mob->next_in_room;
+        if (!IS_NPC(mob) && IS_SET(mob->act, PLR_IC) && mob != ch)
+        mob->pcdata->room_last_pose = 0;
+    }
+    if (!IS_NPC(ch) && IS_SET(ch->act, PLR_IC))
+        ch->pcdata->last_pose = 0;
+
+    }
+
+    return;
+}
+
+
+/*
+ * All the posing stuff.
+ */
+struct  pose_table_type
+{
+    char *  message[2*MAX_CLASS];
+};
+
+const   struct  pose_table_type pose_table  []  =
+{
+    {
+    {
+        "You sizzle with energy.",
+        "$n sizzles with energy.",
+        "You feel very holy.",
+        "$n looks very holy.",
+        "You perform a small card trick.",
+        "$n performs a small card trick.",
+        "You show your bulging muscles.",
+        "$n shows $s bulging muscles."
+    }
+    },
+
+    {
+    {
+        "You turn into a butterfly, then return to your normal shape.",
+        "$n turns into a butterfly, then returns to $s normal shape.",
+        "You nonchalantly turn wine into water.",
+        "$n nonchalantly turns wine into water.",
+        "You wiggle your ears alternately.",
+        "$n wiggles $s ears alternately.",
+        "You crack nuts between your fingers.",
+        "$n cracks nuts between $s fingers."
+    }
+    },
+
+    {
+    {
+        "Blue sparks fly from your fingers.",
+        "Blue sparks fly from $n's fingers.",
+        "A halo appears over your head.",
+        "A halo appears over $n's head.",
+        "You nimbly tie yourself into a knot.",
+        "$n nimbly ties $mself into a knot.",
+        "You grizzle your teeth and look mean.",
+        "$n grizzles $s teeth and looks mean."
+    }
+    },
+
+    {
+    {
+        "Little red lights dance in your eyes.",
+        "Little red lights dance in $n's eyes.",
+        "You recite words of wisdom.",
+        "$n recites words of wisdom.",
+        "You juggle with daggers, apples, and eyeballs.",
+        "$n juggles with daggers, apples, and eyeballs.",
+        "You hit your head, and your eyes roll.",
+        "$n hits $s head, and $s eyes roll."
+    }
+    },
+
+    {
+    {
+        "A slimy green monster appears before you and bows.",
+        "A slimy green monster appears before $n and bows.",
+        "Deep in prayer, you levitate.",
+        "Deep in prayer, $n levitates.",
+        "You steal the underwear off every person in the room.",
+        "Your underwear is gone!  $n stole it!",
+        "Crunch, crunch -- you munch a bottle.",
+        "Crunch, crunch -- $n munches a bottle."
+    }
+    },
+
+    {
+    {
+        "You turn everybody into a little pink elephant.",
+        "You are turned into a little pink elephant by $n.",
+        "An angel consults you.",
+        "An angel consults $n.",
+        "The dice roll ... and you win again.",
+        "The dice roll ... and $n wins again.",
+        "... 98, 99, 100 ... you do pushups.",
+        "... 98, 99, 100 ... $n does pushups."
+    }
+    },
+
+    {
+    {
+        "A small ball of light dances on your fingertips.",
+        "A small ball of light dances on $n's fingertips.",
+        "Your body glows with an unearthly light.",
+        "$n's body glows with an unearthly light.",
+        "You count the money in everyone's pockets.",
+        "Check your money, $n is counting it.",
+        "Arnold Schwarzenegger admires your physique.",
+        "Arnold Schwarzenegger admires $n's physique."
+    }
+    },
+
+    {
+    {
+        "Smoke and fumes leak from your nostrils.",
+        "Smoke and fumes leak from $n's nostrils.",
+        "A spot light hits you.",
+        "A spot light hits $n.",
+        "You balance a pocket knife on your tongue.",
+        "$n balances a pocket knife on your tongue.",
+        "Watch your feet, you are juggling granite boulders.",
+        "Watch your feet, $n is juggling granite boulders."
+    }
+    },
+
+    {
+    {
+        "The light flickers as you rap in magical languages.",
+        "The light flickers as $n raps in magical languages.",
+        "Everyone levitates as you pray.",
+        "You levitate as $n prays.",
+        "You produce a coin from everyone's ear.",
+        "$n produces a coin from your ear.",
+        "Oomph!  You squeeze water out of a granite boulder.",
+        "Oomph!  $n squeezes water out of a granite boulder."
+    }
+    },
+
+    {
+    {
+        "Your head disappears.",
+        "$n's head disappears.",
+        "A cool breeze refreshes you.",
+        "A cool breeze refreshes $n.",
+        "You step behind your shadow.",
+        "$n steps behind $s shadow.",
+        "You pick your teeth with a spear.",
+        "$n picks $s teeth with a spear."
+    }
+    },
+
+    {
+    {
+        "A fire elemental singes your hair.",
+        "A fire elemental singes $n's hair.",
+        "The sun pierces through the clouds to illuminate you.",
+        "The sun pierces through the clouds to illuminate $n.",
+        "Your eyes dance with greed.",
+        "$n's eyes dance with greed.",
+        "Everyone is swept off their foot by your hug.",
+        "You are swept off your feet by $n's hug."
+    }
+    },
+
+    {
+    {
+        "The sky changes color to match your eyes.",
+        "The sky changes color to match $n's eyes.",
+        "The ocean parts before you.",
+        "The ocean parts before $n.",
+        "You deftly steal everyone's weapon.",
+        "$n deftly steals your weapon.",
+        "Your karate chop splits a tree.",
+        "$n's karate chop splits a tree."
+    }
+    },
+
+    {
+    {
+        "The stones dance to your command.",
+        "The stones dance to $n's command.",
+        "A thunder cloud kneels to you.",
+        "A thunder cloud kneels to $n.",
+        "The Grey Mouser buys you a beer.",
+        "The Grey Mouser buys $n a beer.",
+        "A strap of your armor breaks over your mighty thews.",
+        "A strap of $n's armor breaks over $s mighty thews."
+    }
+    },
+
+    {
+    {
+        "The heavens and grass change colour as you smile.",
+        "The heavens and grass change colour as $n smiles.",
+        "The Burning Man speaks to you.",
+        "The Burning Man speaks to $n.",
+        "Everyone's pocket explodes with your fireworks.",
+        "Your pocket explodes with $n's fireworks.",
+        "A boulder cracks at your frown.",
+        "A boulder cracks at $n's frown."
+    }
+    },
+
+    {
+    {
+        "Everyone's clothes are transparent, and you are laughing.",
+        "Your clothes are transparent, and $n is laughing.",
+        "An eye in a pyramid winks at you.",
+        "An eye in a pyramid winks at $n.",
+        "Everyone discovers your dagger a centimeter from their eye.",
+        "You discover $n's dagger a centimeter from your eye.",
+        "Mercenaries arrive to do your bidding.",
+        "Mercenaries arrive to do $n's bidding."
+    }
+    },
+
+    {
+    {
+        "A black hole swallows you.",
+        "A black hole swallows $n.",
+        "Valentine Michael Smith offers you a glass of water.",
+        "Valentine Michael Smith offers $n a glass of water.",
+        "Where did you go?",
+        "Where did $n go?",
+        "Four matched Percherons bring in your chariot.",
+        "Four matched Percherons bring in $n's chariot."
+    }
+    },
+
+    {
+    {
+        "The world shimmers in time with your whistling.",
+        "The world shimmers in time with $n's whistling.",
+        "The great god Ugha gives you a staff.",
+        "The great god Ugha gives $n a staff.",
+        "Click.",
+        "Click.",
+        "Atlas asks you to relieve him.",
+        "Atlas asks $n to relieve him."
+    }
+    }
+};
+
+
+
+void do_pose( CHAR_DATA *ch, char *argument )
+{
+    DESCRIPTOR_DATA *d;
+
+    if ( argument[0] == '\0' )
+    {
+    send_to_char( "Pose what?\n\r", ch );
+
+    return;
+    }
+
+    for ( d = descriptor_list; d; d = d->next )
+    {
+    if ( d->connected == CON_PLAYING
+    &&   d->character->in_room == ch->in_room )
+    {
+            cprintf(d->character, "%s> %s\n\r", ch->name, argument);
+
+    }
+    }
+        CHAR_DATA *mob, *mob_next;
+    for ( mob = ch->in_room->people; mob != NULL; mob = mob_next )
+    {
+        mob_next = mob->next_in_room;
+        if (!IS_NPC(mob) && IS_SET(mob->act, PLR_IC) && mob != ch)
+        mob->pcdata->room_last_pose = 0;
+    }
+    if (!IS_NPC(ch) && IS_SET(ch->act, PLR_IC))
+        ch->pcdata->last_pose = 0;
+
+    return;
+}
+
+
+
+void do_dictionary( CHAR_DATA *ch, char *argument )
+{
+    char word [MAX_INPUT_LENGTH];
+    char arg2 [MAX_INPUT_LENGTH];
+    char buf [MAX_INPUT_LENGTH];
+    char buf2 [MAX_INPUT_LENGTH];
+
+    argument = one_argument( argument, word );
+    argument = one_argument( argument, arg2 );
+
+    if(word[0] == '\0')
+    {
+        if(IS_IMMORTAL(ch))
+        {
+            send_to_char( "Syntax is: dictionary <word>\n\rTo add a word to the dictionary: dictionary <word> add\n\r", ch );
+            return;
+        }
+        else
+        {
+            send_to_char( "Search for which word?\n\r", ch );
+            return;
+        }
+    }
+
+    send_to_char( "Searching...\n\r", ch );
+
+    sprintf(buf,"grep -i %s dictionary.lst",word);
+    if(0==system(buf))
+    {
+        sprintf( buf2, "The word '%s' is in the Dictionary.\n\r", word );
+        send_to_char(buf2,ch);
+        return;
+    }
+    else
+    {
+        if(!str_cmp(arg2, "add") && IS_IMMORTAL(ch))
+        {
+            append_file( ch, DICT_FILE, word, FALSE );
+            sprintf( buf2, "The word '%s' has been added to the Dictionary.\n\r", word );
+            send_to_char(buf2,ch);
+            return;
+        }
+        send_to_char( "Word is not in the Dictionary.\n\r", ch );
+        return;
+    }
+}
+
+void do_bug( CHAR_DATA *ch, char *argument )
+{
+    append_file( ch, BUG_FILE, argument, TRUE );
+    send_to_char( "Bug logged.\n\r", ch );
+    return;
+}
+
+void do_typo( CHAR_DATA *ch, char *argument )
+{
+    append_file( ch, TYPO_FILE, argument, TRUE );
+    send_to_char( "Typo logged.\n\r", ch );
+    return;
+}
+
+void do_rent( CHAR_DATA *ch, char *argument )
+{
+    send_to_char( "There is no rent here.  Just save and quit.\n\r", ch );
+    return;
+}
+
+
+void do_qui( CHAR_DATA *ch, char *argument )
+{
+    send_to_char( "If you want to QUIT, you have to spell it out.\n\r", ch );
+    return;
+}
+
+
+
+void do_quit( CHAR_DATA *ch, char *argument )
+{
+    DESCRIPTOR_DATA *d,*d_next;
+    ROOM_INDEX_DATA *location;
+    int id;
+    int quote;
+
+    if ( IS_NPC(ch) )
+    return;
+
+    if ( ch->position == POS_FIGHTING )
+    {
+    send_to_char( "No way! You are fighting.\n\r", ch );
+    return;
+    }
+
+    if ( ch->position  < POS_TORPOR  )
+    {
+    send_to_char( "You're not DEAD yet.\n\r", ch );
+    return;
+    }
+    if(IS_SET(ch->in_room->room_flags, ROOM_NO_QUIT))
+    {
+        if(ch->desc != NULL)
+        {
+            send_to_char("A mystical force prevents you from exiting the realm.\n\r",ch);
+            return;
+        }
+        if ( ( location = get_room_index( ROOM_VNUM_TEMPLE ) ) == NULL )
+            return;
+        stop_fighting( ch, TRUE );
+        REMOVE_BIT(ch->act,PLR_ARENA);
+        REMOVE_BIT(ch->act,PLR_SPEC);
+        char_from_room( ch );
+        char_to_room( ch, location );
+    }
+   /*
+   if ( IS_AFFECTED(ch, AFF_SHIFT))
+    {
+        if ( !IS_AFFECTED(ch, AFF_FANGS))
+        SET_BIT(ch->affected_by, AFF_FANGS);
+
+        do_function(ch, &do_shift, "");
+    }
+    if(ch->changed > 0)
+        do_function(ch, &do_changeform, "homid");
+
+    if (is_affected( ch, gsn_vicissitude_horrid ))
+    {
+        if ( !IS_AFFECTED(ch, AFF_FANGS))
+        SET_BIT(ch->affected_by, AFF_FANGS);
+
+        do_function(ch, &do_horrid, "");
+    }
+*/
+   REMOVE_BIT(ch->act,PLR_ARENA);
+       affect_strip(ch,gsn_meditation);
+    if(is_affected( ch, gsn_chant ))
+    {
+        send_to_char( "You stop your chanting.\n\r", ch );
+        act( "$n stops chanting to $s God.",  ch, NULL, NULL, TO_ROOM );
+        affect_strip(ch,gsn_chant);
+    }
+    if (is_affected( ch, gsn_vampire_regen))
+    {
+    send_to_char( "You stop regenerating.\n\r", ch);
+    act( "$n stops regenerating.", ch, NULL, NULL, TO_ROOM);
+    affect_strip(ch, gsn_vampire_regen);
+    }
+    REMOVE_BIT(ch->comm, COMM_DEAF);
+    REMOVE_BIT(ch->comm, COMM_QUIET);
+    REMOVE_BIT(ch->act, PLR_IC);
+/*  commented out by Ugha
+    if(is_affected( ch, gsn_bloodofpotency))
+    {
+        if( get_affect_level( ch, gsn_bloodofpotency ) < 0 )
+            ch->max_pblood += 20;
+
+        if( get_affect_level( ch, gsn_bloodofpotency ) >= 1 )
+            ch->max_pblood -= 10;
+    }
+*/
+    quote = number_range(1,9);
+    if(quote == 1)
+        send_to_char("Sex is a good cure for headaches, repeat as needed\n\r - Hatchet, Creator of MERC\n\r",ch);
+    if(quote == 2)
+        send_to_char("Think for yourself, or you're better off dead. Either way, I'm satisfied\n\r - Unknown Brujah\n\r",ch);
+    if(quote == 3)
+        send_to_char("Shadows? Hah! I wield Darkness itself, not mere shadows! Tell me - could a shadow do this?\n\r - Lasombra Prince\n\r",ch);
+    if(quote == 4)
+        send_to_char("Caine, son of Adam, you are cursed to ever walk the night. You will ever repeat your crimes throughout time.\n\r - God speaking to Caine, the first Vampire.\n\r",ch);
+    if(quote == 5)
+        send_to_char("Help me Child, help me wash away my sorrows with the sweetness of your blood.\n\r - Unknown Kindred\n\r",ch);
+    if(quote == 6)
+        send_to_char("I have walked the paths; the shadowed roads that led to terror's breast.\n\r I have plumbed the depths of Hatred's womb and scaled Destruction's crest.\n\r\n\rFor every secret left unveiled, for every power learned,\n\r I'd sell the remnants of my soul, regardless how it burned.\n\rAnd still I sought a higher wisdom few could have attained.\n\rThough I found it, it would leave me - broken, damned and drained.\n\r\n\rFor now I find this power gained is more unto a curse.\n\rMy spirit burns with every spell and each irreverent verse.\n\rDespite this strength and knowledge earned, I have paid a heavy toll,\n\rNever should've traded power for my own immortal soul.\n\r - Unknown Kindred\n\r",ch);
+    if(quote == 7)
+        send_to_char("You've impressed me.  And I'm not often impressed.  Oh, hey look!  A rabbit!\n\r - Anonymous Malkavian\n\r",ch);
+    if(quote == 8)
+        send_to_char("My childe, you dreamt of immortality?  Come, let me show you what nightmares forever holds.\n\r - Lasombra Elder\n\r",ch);
+    if(quote == 9)
+        send_to_char("Soaring through the skies on tattered wings I look down upon\n\ryou and wonder. Wonder if you would call me a monster, or\n\rwelcome me into your heart. Wonder if my face would bring\n\rforth fear or sorrow. I wonder if my deeds would sicken you,\n\ror cause pity.\n\r\n\rI look down and wonder if I could be near you without becoming\n\rthat monster you fear. Becoming that face of horror, commiting\n\rthose sickening deeds..\n\r\n\rI wonder if.. No. I suppose not.\n\r",ch);
+
+
+
+/*   send_to_char("Alas, all good things must come to an end.\n\r",ch); */
+
+    act( "$n has left the game.", ch, NULL, NULL, TO_ROOM );
+    sprintf( log_buf, "%s has quit.", ch->name );
+    log_string( log_buf );
+     wiznet("$N rejoins the real world.",ch,NULL,WIZ_LOGINS,0,get_trust(ch));
+    announce(ch, NULL, WIZ_SITES);
+    /*
+     * After extract_char the ch is no longer valid!
+     */
+    save_char_obj( ch );
+    id = ch->id;
+    d = ch->desc;
+    extract_char( ch, TRUE );
+    if ( d != NULL )
+    close_socket( d );
+
+    /* toast evil cheating bastards */
+    for (d = descriptor_list; d != NULL; d = d_next)
+    {
+    CHAR_DATA *tch;
+
+    d_next = d->next;
+    tch = d->original ? d->original : d->character;
+    if (tch && tch->id == id)
+    {
+        extract_char(tch,TRUE);
+        close_socket(d);
+    }
+    }
+
+    return;
+}
+
+
+
+void do_save( CHAR_DATA *ch, char *argument )
+{
+    if ( IS_NPC(ch) )
+    return;
+    save_char_obj( ch );
+/*    restore_affects( ch ); */
+    send_to_char("Saving. Remember that Haven automatically saves.\n\r", ch);
+    return;
+}
+
+
+
+void do_follow( CHAR_DATA *ch, char *argument )
+{
+/* RT changed to allow unlimited following and follow the NOFOLLOW rules */
+    char arg[MAX_INPUT_LENGTH];
+    CHAR_DATA *victim;
+
+    one_argument( argument, arg );
+
+    if ( arg[0] == '\0' )
+    {
+    send_to_char( "Follow whom?\n\r", ch );
+    return;
+    }
+    if(IS_SET(ch->act,PLR_ARENA))
+    {
+    send_to_char("No following in the Arena!\n\r",ch);
+    return;
+    }
+
+    if ( ( victim = get_char_room( ch, arg ) ) == NULL )
+    {
+    send_to_char( "They aren't here.\n\r", ch );
+    return;
+    }
+
+    if ( IS_AFFECTED(ch, AFF_CHARM) && ch->master != NULL )
+    {
+    act( "But you'd rather follow $N!", ch, NULL, ch->master, TO_CHAR );
+    return;
+    }
+
+    if ( victim == ch )
+    {
+    if ( ch->master == NULL )
+    {
+        send_to_char( "You already follow yourself.\n\r", ch );
+        return;
+    }
+    stop_follower(ch);
+    return;
+    }
+
+    if (!IS_NPC(victim) && IS_SET(victim->act,PLR_NOFOLLOW) && !IS_IMMORTAL(ch))
+    {
+    act("$N doesn't seem to want any followers.\n\r",
+             ch,NULL,victim, TO_CHAR);
+        return;
+    }
+   if ( victim->master != NULL )
+    {
+        send_to_char( "But they are already following someone else!\n\r", ch );
+        return;
+    }
+
+
+    REMOVE_BIT(ch->act,PLR_NOFOLLOW);
+
+    if ( ch->master != NULL )
+    stop_follower( ch );
+
+    add_follower( ch, victim );
+    return;
+}
+
+
+void do_dismiss( CHAR_DATA *ch, char *argument )
+{
+/*    char arg[MAX_INPUT_LENGTH];
+    CHAR_DATA *victim;
+
+    one_argument( argument, arg );
+
+    if ( arg[0] == '\0' )
+    {
+    send_to_char( "Dismiss whom?\n\r", ch );
+    return;
+    }
+
+    if ( ( victim = get_char_room( ch, arg ) ) == NULL )
+    {
+    send_to_char( "They aren't here.\n\r", ch );
+    return;
+    }
+
+    if ( !IS_AFFECTED(victim, AFF_CHARM) || victim->master != ch || ch->pet != victim)
+    {
+    act( "You cannot dismiss $N!", ch, NULL, victim, TO_CHAR );
+    return;
+    }
+
+    stop_follower( ch );
+*/
+    nuke_pets(ch);
+    return;
+}
+
+
+void add_follower( CHAR_DATA *ch, CHAR_DATA *master )
+{
+    if ( ch->master != NULL )
+    {
+    bug( "Add_follower: non-null master.", 0 );
+    return;
+    }
+
+    ch->master        = master;
+    ch->leader        = NULL;
+
+    if ( can_see( master, ch ) )
+    act( "$n now follows you.", ch, NULL, master, TO_VICT );
+
+    act( "You now follow $N.",  ch, NULL, master, TO_CHAR );
+
+    return;
+}
+
+
+
+void stop_follower( CHAR_DATA *ch )
+{
+    if ( ch->master == NULL )
+    {
+    bug( "Stop_follower: null master.", 0 );
+    return;
+    }
+
+    if ( IS_AFFECTED(ch, AFF_CHARM) )
+    {
+    REMOVE_BIT( ch->affected_by, AFF_CHARM );
+    affect_strip( ch, gsn_charm_person );
+    }
+
+    if ( can_see( ch->master, ch ) && ch->in_room != NULL)
+    {
+    act( "$n stops following you.",     ch, NULL, ch->master, TO_VICT    );
+        act( "You stop following $N.",      ch, NULL, ch->master, TO_CHAR    );
+    }
+    if (ch->master->pet == ch)
+    ch->master->pet = NULL;
+
+    ch->master = NULL;
+    ch->leader = NULL;
+    return;
+}
+
+/* nukes charmed monsters and pets */
+void nuke_pets( CHAR_DATA *ch )
+{
+    CHAR_DATA *pet;
+
+/*    if(!IS_NPC(ch)) return; */
+
+    if ((pet = ch->pet) != NULL)
+    {
+        stop_follower(pet);
+        if (pet->in_room != NULL)
+            act("$N slowly fades away.",ch,NULL,pet,TO_NOTVICT);
+        extract_char(pet,TRUE);
+    }
+    ch->pet = NULL;
+
+    if ( ch->mount && (ch->mount->in_room == ch->in_room || ch->mount->in_room==NULL) )
+    {
+        pet = ch->mount;
+        do_dismount(ch, "");
+        if (pet->in_room != NULL)
+            act("$N slowly fades away.",ch,NULL,pet,TO_NOTVICT);
+        else
+            log_string("void nuke_pets: Extracting null pet");
+        ch->mount = NULL;
+        ch->riding = FALSE;
+        extract_char(pet, TRUE);
+    }
+    else if (ch->mount)
+    {
+        ch->mount->mount = NULL;
+        ch->mount->riding = FALSE;
+    }
+    ch->mount = NULL;
+
+    return;
+}
+
+
+
+void die_follower( CHAR_DATA *ch )
+{
+    CHAR_DATA *fch;
+
+    if ( ch->master != NULL )
+    {
+        if (ch->master->pet == ch)
+            ch->master->pet = NULL;
+    stop_follower( ch );
+    }
+
+    ch->leader = NULL;
+
+    for ( fch = char_list; fch != NULL; fch = fch->next )
+    {
+    if ( fch->master == ch )
+        stop_follower( fch );
+    if ( fch->leader == ch )
+        fch->leader = fch;
+    }
+
+    return;
+}
+
+
+
+void do_order( CHAR_DATA *ch, char *argument )
+{
+    char buf[MAX_STRING_LENGTH];
+    char arg[MAX_INPUT_LENGTH],arg2[MAX_INPUT_LENGTH];
+    CHAR_DATA *victim;
+    CHAR_DATA *och;
+    CHAR_DATA *och_next;
+    bool found;
+    bool fAll;
+
+    argument = one_argument( argument, arg );
+    one_argument(argument,arg2);
+
+    if (!str_cmp(arg2,"delete") || !str_prefix(arg2,"mob") || !str_prefix(arg2,"quaff"))
+    {
+        send_to_char("That will NOT be done.\n\r",ch);
+        return;
+    }
+
+    if ( arg[0] == '\0' || argument[0] == '\0' )
+    {
+    send_to_char( "Order whom to do what?\n\r", ch );
+    return;
+    }
+
+    if ( IS_AFFECTED( ch, AFF_CHARM ) )
+    {
+    send_to_char( "You feel like taking, not giving, orders.\n\r", ch );
+    return;
+    }
+
+    if ( !str_cmp( arg, "all" ) )
+    {
+    fAll   = TRUE;
+    victim = NULL;
+    }
+    else
+    {
+    fAll   = FALSE;
+
+    if (!strcmp(arg, "mount"))
+    {
+        if (!ch->mount)
+        {
+            send_to_char("Your don't have a mount.\n\r", ch);
+            return;
+        }
+
+        if (ch->mount->in_room != ch->in_room)
+        {
+            send_to_char("Your mount isn't here!\n\r", ch);
+            return;
+        }
+        else
+        {
+            victim = ch->mount;
+        }
+    }
+
+    else if ( ( victim = get_char_room( ch, arg ) ) == NULL )
+    {
+        send_to_char( "They aren't here.\n\r", ch );
+        return;
+    }
+
+    if ( victim == ch )
+    {
+        send_to_char( "Aye aye, right away!\n\r", ch );
+        return;
+    }
+
+    if ( victim->mount == ch )
+    {
+        if ( !mount_success(ch, victim, FALSE) )
+        {
+            act("$N ignores your orders.", ch, NULL, victim, TO_CHAR);
+            return;
+        }
+        else
+        {
+        sprintf(buf,"%s orders you to \'%s\'.", ch->name, argument);
+        send_to_char(buf, victim);
+        interpret( victim, argument );
+            return;
+        }
+    }
+    else if (!IS_AFFECTED(victim, AFF_CHARM) || victim->master != ch
+    ||  (IS_IMMORTAL(victim) && victim->trust >= ch->trust))
+    {
+        send_to_char( "Do it yourself!\n\r", ch );
+        return;
+    }
+    }
+
+    found = FALSE;
+    for ( och = ch->in_room->people; och != NULL; och = och_next )
+    {
+    och_next = och->next_in_room;
+
+    if ( IS_AFFECTED(och, AFF_CHARM)
+    &&   och->master == ch
+    && ( fAll || och == victim ) )
+    {
+        found = TRUE;
+        sprintf( buf, "$n orders you to '%s'.", argument );
+        act( buf, ch, NULL, och, TO_VICT );
+        interpret( och, argument );
+    }
+    }
+
+    if ( found )
+    {
+    WAIT_STATE(ch,PULSE_VIOLENCE);
+    send_to_char( "Ok.\n\r", ch );
+    }
+    else
+    send_to_char( "You have no followers here.\n\r", ch );
+    return;
+}
+
+
+
+void do_group( CHAR_DATA *ch, char *argument )
+{
+    char buf[MAX_STRING_LENGTH];
+    char arg[MAX_INPUT_LENGTH];
+    CHAR_DATA *victim;
+    CHAR_DATA *groupie;
+
+    one_argument( argument, arg );
+
+    if (IS_SET(ch->act,PLR_ARENA))
+    {
+    send_to_char( "No grouping in the arena!\n\r", ch );
+    return;
+    }
+
+    if ( arg[0] == '\0' )
+    {
+    CHAR_DATA *gch;
+    CHAR_DATA *leader;
+
+    leader = (ch->leader != NULL) ? ch->leader : ch;
+    sprintf( buf, "%s's group:\n\r", PERS(leader, ch,TRUE) );
+    send_to_char( buf, ch );
+
+    for ( gch = char_list; gch != NULL; gch = gch->next )
+    {
+        if ( is_same_group( gch, ch ) )
+        {
+        sprintf( buf,
+        "[%2d %s] %-16s %4d/%4d hp %4d/%4d mana %4d/%4d mv %5d xp\n\r",
+            gch->level,
+            IS_NPC(gch) ? "Mob" : class_table[gch->class].who_name,
+            capitalize( PERS(gch, ch, TRUE) ),
+            gch->hit,   gch->max_hit,
+            gch->mana,  gch->max_mana,
+            gch->move,  gch->max_move,
+            gch->exp    );
+        send_to_char( buf, ch );
+        }
+    }
+    return;
+    }
+
+    if ( ( victim = get_char_room( ch, arg ) ) == NULL )
+    {
+    send_to_char( "They aren't here.\n\r", ch );
+    return;
+    }
+
+    if ( ch->master != NULL || ( ch->leader != NULL && ch->leader != ch ) )
+    {
+    send_to_char( "But you are following someone else!\n\r", ch );
+    return;
+    }
+
+    if ( victim->master != ch && ch != victim )
+    {
+    act_new("$N isn't following you.",ch,NULL,victim,TO_CHAR,POS_SLEEPING, FALSE);
+    return;
+    }
+
+    if (IS_AFFECTED(victim,AFF_CHARM))
+    {
+        send_to_char("You can't remove charmed mobs from your group.\n\r",ch);
+        return;
+    }
+
+    if (IS_AFFECTED(ch,AFF_CHARM))
+    {
+        act_new("You like your master too much to leave $m!",
+        ch,NULL,victim,TO_VICT,POS_SLEEPING, FALSE);
+        return;
+    }
+
+    if ( is_same_group( victim, ch ) && ch != victim )
+    {
+    victim->leader = NULL;
+    act_new("$n removes $N from $s group.",
+        ch,NULL,victim,TO_NOTVICT,POS_RESTING, FALSE);
+    act_new("$n removes you from $s group.",
+        ch,NULL,victim,TO_VICT,POS_SLEEPING, FALSE);
+    act_new("You remove $N from your group.",
+        ch,NULL,victim,TO_CHAR,POS_SLEEPING, FALSE);
+    return;
+    }
+
+    for ( groupie = char_list; groupie != NULL; groupie = groupie->next )
+    {
+        if ( is_same_group( groupie, ch ) && !IN_LEVEL(victim,groupie))
+        {
+            send_to_char("That person is unable to join this group.\n\r",ch);
+            return;
+        }
+    }
+
+    if (!IN_LEVEL(ch,victim))
+    {
+      act_new("$n tries to group $N but $n fails.",
+        ch,NULL,victim,TO_NOTVICT,POS_RESTING, FALSE);
+      act_new("$n is unable to add you to $s group.",
+        ch,NULL,victim,TO_VICT,POS_SLEEPING, FALSE);
+      act_new("You are unable to add $N to your group.",
+        ch,NULL,victim,TO_CHAR,POS_SLEEPING, FALSE);
+      return;
+    }
+
+    if(!IS_NPC(ch))
+    {
+        CHAR_DATA *gch;
+        int members;
+
+        members = 0;
+        for ( gch = char_list; gch != NULL; gch = gch->next )
+        {
+            if ( is_same_group( gch, ch) && gch != ch)
+            members++;
+        }
+
+        if(members+1 > (ch->pcdata->csabilities[CSABIL_LEADERSHIP]*2)+1)
+        {
+            send_to_char("You do not have the skills needed to lead so many people.\n\r",ch);
+            return;
+        }
+    }
+
+    victim->leader = ch;
+    act_new("$N joins $n's group.",ch,NULL,victim,TO_NOTVICT,POS_RESTING, FALSE);
+    act_new("You join $n's group.",ch,NULL,victim,TO_VICT,POS_SLEEPING, FALSE);
+    act_new("$N joins your group.",ch,NULL,victim,TO_CHAR,POS_SLEEPING, FALSE);
+    return;
+
+}
+
+
+
+/*
+ * 'Split' originally by Gnort, God of Chaos.
+ */
+void do_split( CHAR_DATA *ch, char *argument )
+{
+    char buf[MAX_STRING_LENGTH];
+    char arg1[MAX_INPUT_LENGTH],arg2[MAX_INPUT_LENGTH];
+    CHAR_DATA *gch;
+    int members;
+    int amount_gold = 0, amount_silver = 0;
+    int share_gold, share_silver;
+    int extra_gold, extra_silver;
+
+    argument = one_argument( argument, arg1 );
+           one_argument( argument, arg2 );
+
+    if ( arg1[0] == '\0' )
+    {
+    send_to_char( "Split how much?\n\r", ch );
+    return;
+    }
+
+    amount_silver = atoi( arg1 );
+
+    if (arg2[0] != '\0')
+    amount_gold = atoi(arg2);
+
+    if ( amount_gold < 0 || amount_silver < 0)
+    {
+    send_to_char( "Your group wouldn't like that.\n\r", ch );
+    return;
+    }
+
+    if ( amount_gold == 0 && amount_silver == 0 )
+    {
+    send_to_char( "You hand out zero coins, but no one notices.\n\r", ch );
+    return;
+    }
+
+    if ( ch->gold <  amount_gold || ch->silver < amount_silver)
+    {
+    send_to_char( "You don't have that much to split.\n\r", ch );
+    return;
+    }
+
+    members = 0;
+    for ( gch = ch->in_room->people; gch != NULL; gch = gch->next_in_room )
+    {
+    if ( is_same_group( gch, ch ) && !IS_AFFECTED(gch,AFF_CHARM))
+        members++;
+    }
+
+    if ( members < 2 )
+    {
+    send_to_char( "Just keep it all.\n\r", ch );
+    return;
+    }
+
+    share_silver = amount_silver / members;
+    extra_silver = amount_silver % members;
+
+    share_gold   = amount_gold / members;
+    extra_gold   = amount_gold % members;
+
+    if ( share_gold == 0 && share_silver == 0 )
+    {
+    send_to_char( "Don't even bother, cheapskate.\n\r", ch );
+    return;
+    }
+
+    ch->silver  -= amount_silver;
+    ch->silver  += share_silver + extra_silver;
+    ch->gold    -= amount_gold;
+    ch->gold    += share_gold + extra_gold;
+
+    if (share_silver > 0)
+    {
+    sprintf(buf,
+        "You split %d silver coins. Your share is %d silver.\n\r",
+        amount_silver,share_silver + extra_silver);
+    send_to_char(buf,ch);
+    }
+
+    if (share_gold > 0)
+    {
+    sprintf(buf,
+        "You split %d gold coins. Your share is %d gold.\n\r",
+         amount_gold,share_gold + extra_gold);
+    send_to_char(buf,ch);
+    }
+
+    if (share_gold == 0)
+    {
+    sprintf(buf,"$n splits %d silver coins. Your share is %d silver.",
+        amount_silver,share_silver);
+    }
+    else if (share_silver == 0)
+    {
+    sprintf(buf,"$n splits %d gold coins. Your share is %d gold.",
+        amount_gold,share_gold);
+    }
+    else
+    {
+    sprintf(buf,
+"$n splits %d silver and %d gold coins, giving you %d silver and %d gold.\n\r",
+     amount_silver,amount_gold,share_silver,share_gold);
+    }
+
+    for ( gch = ch->in_room->people; gch != NULL; gch = gch->next_in_room )
+    {
+    if ( gch != ch && is_same_group(gch,ch) && !IS_AFFECTED(gch,AFF_CHARM))
+    {
+        act( buf, ch, NULL, gch, TO_VICT );
+        gch->gold += share_gold;
+        gch->silver += share_silver;
+    }
+    }
+
+    return;
+}
+
+
+void do_gtell( CHAR_DATA *ch, char *argument )
+{
+    CHAR_DATA *gch;
+
+    if ( argument[0] == '\0' )
+    {
+    send_to_char( "Tell your group what?\n\r", ch );
+    return;
+    }
+
+    if ( IS_SET( ch->comm, COMM_NOTELL ) )
+    {
+    send_to_char( "Your message didn't get through!\n\r", ch );
+    return;
+    }
+
+    act_new("$n tells the group '{Y$t{x'",
+    ch,argument,NULL,TO_CHAR,POS_SLEEPING, TRUE);
+
+    for ( gch = char_list; gch != NULL; gch = gch->next )
+    {
+    if ( is_same_group( gch, ch ) )
+        act_new("$n tells the group '{Y$t{x'",
+        ch,argument,gch,TO_VICT,POS_SLEEPING, TRUE);
+    }
+
+    return;
+}
+
+
+
+/*
+ * It is very important that this be an equivalence relation:
+ * (1) A ~ A
+ * (2) if A ~ B then B ~ A
+ * (3) if A ~ B  and B ~ C, then A ~ C
+ */
+bool is_same_group( CHAR_DATA *ach, CHAR_DATA *bch )
+{
+    if ( ach == NULL || bch == NULL)
+    return FALSE;
+
+    if ( ach->leader != NULL ) ach = ach->leader;
+    if ( bch->leader != NULL ) bch = bch->leader;
+    return ach == bch;
+}
+
+/*
+ * Colour setting and unsetting, way cool, Lope Oct '94
+ */
+void do_colour( CHAR_DATA *ch, char *argument )
+{
+    char    arg[ MAX_STRING_LENGTH ];
+
+    argument = one_argument( argument, arg );
+    if(IS_NPC(ch)) return;
+    if( !*arg )
+    {
+/*  if( IS_SET( ch->act, PLR_PUEBLO ) )
+    {
+        send_to_char("Pueblo disabled.\n\r",ch);
+        REMOVE_BIT( ch->act, PLR_PUEBLO );
+    }
+*/
+    if( !IS_SET( ch->act, PLR_COLOUR ) )
+    {
+        SET_BIT( ch->act, PLR_COLOUR );
+        send_to_char( "{bC{ro{yl{co{mu{gr{x is now {rON{x, Way Cool!\n\r", ch );
+    }
+    else
+    {
+        send_to_char_bw( "Colour is now OFF, <sigh>\n\r", ch );
+        REMOVE_BIT( ch->act, PLR_COLOUR );
+    }
+    return;
+    }
+    else
+    {
+    send_to_char_bw( "Colour Configuration is unavailable in this\n\r", ch );
+    send_to_char_bw( "version of colour, sorry\n\r", ch );
+    }
+
+    return;
+}
+void do_pueblo( CHAR_DATA *ch, char *argument )
+{
+    char    arg[ MAX_STRING_LENGTH ];
+
+    argument = one_argument( argument, arg );
+
+/*  send_to_char("Pueblo has been disabled due to bugs.\n\r",ch);
+    return;
+*/
+    if( !*arg )
+    {
+/*  if( IS_SET( ch->act, PLR_COLOUR ) )
+    {
+        send_to_char("Colour disabled.\n\r",ch);
+        REMOVE_BIT( ch->act, PLR_COLOUR );
+    }
+*/
+    if( !IS_SET( ch->act, PLR_PUEBLO ) )
+    {
+        SET_BIT( ch->act, PLR_PUEBLO );
+        send_to_char( "Pueblo activated.\n\r", ch );
+    }
+    else
+    {
+        send_to_char_bw( "Pueblo deactivated\n\r", ch );
+        REMOVE_BIT( ch->act, PLR_PUEBLO );
+    }
+    return;
+    }
+    else
+    {
+        send_to_char("</xch_mudtext><xch_page clear=text><body bgcolor=black text=white><xch_page clear=text><xch_mudtext>",ch);
+        return;
+    }
+
+    return;
+}
+/**/
+void do_announce(CHAR_DATA *ch, char *argument )
+{
+   char buf[MAX_STRING_LENGTH];
+   DESCRIPTOR_DATA *d;
+
+    if(get_trust(ch) >= (MAX_LEVEL - 4) && argument[0] != '\0' )
+    {
+          sprintf( buf, "{xYou {R*{YAnnounce{R* {w%s{x\n\r", argument );
+          send_to_char( buf, ch );
+
+        for ( d = descriptor_list; d != NULL; d = d->next )
+        {
+            CHAR_DATA *victim;
+
+            victim = d->original ? d->original : d->character;
+
+            if ( d->connected == CON_PLAYING && d->character != ch)
+            {
+                sprintf( buf, "{R*{YAnnouncement{R*{w %s{x\n\r", argument);
+                send_to_char( buf, d->character );
+            }
+        }
+
+    }
+    else
+    {
+        if (IS_SET(ch->comm,COMM_NOANNOUNCE))
+        {
+            send_to_char("Announcement channel is now ON.\n\r",ch);
+            REMOVE_BIT(ch->comm,COMM_NOANNOUNCE);
+        }
+        else
+        {
+            send_to_char("Announcement channel is now OFF.\n\r",ch);
+            SET_BIT(ch->comm,COMM_NOANNOUNCE);
+        }
+    }
+return;
+}
+
+void announce( CHAR_DATA *ch, CHAR_DATA *victim, long flag )
+{
+    char buf[MAX_STRING_LENGTH];
+    CHAR_DATA *target;
+    DESCRIPTOR_DATA *d;
+
+    if(flag == WIZ_NEWBIE)
+        sprintf( buf, "{R*{YAnnouncement{R*{w Haven of the Embraced welcomes it's newest player, %s!{x\n\r", ch->name);
+    if(flag == WIZ_LOGINS)
+        sprintf( buf, "{R*{YAnnouncement{R*{w %s leaves the real world behind to seek sanctuary in the Haven.{x\n\r", ch->name);
+    if(flag == WIZ_SITES)
+        sprintf( buf, "{R*{YAnnouncement{R*{w %s bravely leaves the Haven in search of adventure in the real world.{x\n\r", ch->name);
+    if(flag == WIZ_DEATHS)
+        sprintf( buf, "{R*{YAnnouncement{R*{w %s has fallen to the wrath of %s!{x\n\r", ch->name, IS_NPC(victim) ? victim->short_descr : victim->name);
+    if(flag == WIZ_MOBDEATHS)
+        sprintf( buf, "{R*{YAnnouncement{R*{w %s has been killed by %s in {RArena{w!{x\n\r", ch->name, IS_NPC(victim) ? victim->short_descr : victim->name);
+    if(flag == WIZ_LOAD)
+        sprintf( buf, "{R*{YAnnouncement{R*{w %s has entered the {RArena{w!{x\n\r", ch->name);
+    if(flag == WIZ_LEVELS)
+        sprintf( buf, "{R*{YAnnouncement{R*{w %s has reached level %d!{x\n\r", ch->name, ch->level);
+
+    for ( d = descriptor_list; d != NULL; d = d->next )
+    {
+        target = d->original ? d->original : d->character;
+
+        if ( d->connected == CON_PLAYING &&
+/*        d->character != ch && */
+          !IS_SET(target->comm,COMM_NOANNOUNCE) &&
+          (can_see(target,ch) || flag == WIZ_DEATHS) &&
+          !IS_IMMORTAL(ch))
+            send_to_char( buf, d->character );
+    }
+return;
+}
+
+void do_tsect( CHAR_DATA *ch, char *argument )
+{
+    char buf[MAX_STRING_LENGTH];
+    DESCRIPTOR_DATA *d;
+
+    if(IS_NPC(ch))
+        return;
+
+    if (ch->pcdata->sect == 0)
+    {
+    send_to_char("You aren't in a sect.\n\r",ch);
+    return;
+    }
+    if ( argument[0] == '\0' )
+    {
+      if (IS_SET(ch->comm,COMM_NOSECT))
+      {
+        send_to_char("Sect channel is now ON\n\r",ch);
+        REMOVE_BIT(ch->comm,COMM_NOSECT);
+      }
+      else
+      {
+        send_to_char("Sect channel is now OFF\n\r",ch);
+        SET_BIT(ch->comm,COMM_NOSECT);
+      }
+      return;
+    }
+
+        if (IS_SET(ch->comm,COMM_NOCHANNELS))
+        {
+         send_to_char("The gods have revoked your channel priviliges.\n\r",ch);
+          return;
+        }
+
+        REMOVE_BIT(ch->comm,COMM_NOSECT);
+
+      sprintf( buf, "You tell the %s '{G%s{x'\n\r", sect_table[ch->pcdata->sect].cname, argument );
+      send_to_char( buf, ch );
+      sprintf( buf, "%s tells the %s '{G%s{x'", ch->name, sect_table[ch->pcdata->sect].cname, argument );
+    for ( d = descriptor_list; d != NULL; d = d->next )
+    {
+        if ( d->connected == CON_PLAYING &&
+             d->character != ch &&
+         ch->pcdata->sect == d->character->pcdata->sect &&
+             !IS_SET(d->character->comm,COMM_NOSECT) &&
+             !IS_NPC(d->character) &&
+         !IS_SET(d->character->comm,COMM_QUIET) )
+        {
+/*      send_to_char(buf,d->character); */
+            act_new(buf,ch,NULL,d->character,TO_VICT,POS_DEAD, TRUE);
+        }
+    }
+
+    return;
+}
+
+void do_huh(CHAR_DATA *ch, char *argument)
+{
+    send_to_char( "Huh?\n\r", ch );
+    return;
+}
+
+/**************************************************************************/
+// Kal - April 03
+void do_replayroom(CHAR_DATA *ch, char *argument)
+{
+    if (!ch && IS_NPC(ch))
+            return;
+
+    if(!ch->pcdata){
+        println( "Uncontrolled mobs can't replay room events.", ch);
+        return;
+    }
+
+    bool found=FALSE;
+    int i;
+    BUFFER *buffer;
+    buffer = new_buf();
+    int end=(ch->pcdata->next_replayroom-1+MAX_REPLAYROOM)%MAX_REPLAYROOM;
+    for(i=ch->pcdata->next_replayroom; i!=end; i= (i+1)%MAX_REPLAYROOM){
+        if(!IS_NULLSTR(ch->pcdata->replayroom_text[i])){
+            if(!found){
+                titlebar(ch);
+            }
+            add_buf(buffer, ch->pcdata->replayroom_text[i]);
+            found=TRUE;
+        }
+    }
+    if(!IS_NULLSTR(ch->pcdata->replayroom_text[end])){
+        if(!found){
+                add_buf(buffer, "{D-===========================================================================-{x\n\r");
+        }
+        add_buf(buffer, ch->pcdata->replayroom_text[end]);
+        found=TRUE;
+    }
+    if(!found){
+        println("You haven't seen/heard any room events since you logged on.", ch);
+        free_buf(buffer);
+        return;
+    }
+
+    if(IS_NEWBIE(ch)){
+        add_buf(buffer, "note: you can also replay your tells by typing 'replay'\n\r");
+        add_buf(buffer, "      and replay channel events by typing 'replaychannels'\n\r");
+    }
+    page_to_char(buf_string(buffer),ch);
+    free_buf(buffer);
+}
+/**************************************************************************/
+// Adapted from code by Kal - Sept 20
+void do_replaychannels(CHAR_DATA *ch, char *argument)
+{
+    if (!ch && IS_NPC(ch))
+            return;
+
+    if(!ch->pcdata){
+        println( "Uncontrolled mobs can't replay room events.", ch);
+        return;
+    }
+    BUFFER *buffer;
+    buffer = new_buf();
+    bool found=FALSE;
+    int i;
+    int end=(ch->pcdata->next_replaychannels-1+MAX_REPLAYCHANNELS)%MAX_REPLAYCHANNELS;
+    for(i=ch->pcdata->next_replaychannels; i!=end; i= (i+1)%MAX_REPLAYCHANNELS){
+        if(!IS_NULLSTR(ch->pcdata->replaychannels_text[i])){
+            if(!found){
+                add_buf(buffer, "{D-===========================================================================-{x\n\r");
+
+            }
+            add_buf(buffer, ch->pcdata->replaychannels_text[i]);
+            found=TRUE;
+        }
+    }
+    if(!IS_NULLSTR(ch->pcdata->replaychannels_text[end])){
+        if(!found){
+                add_buf(buffer, "{D-===========================================================================-{x\n\r");
+        }
+        add_buf(buffer, ch->pcdata->replaychannels_text[end]);
+        found=TRUE;
+    }
+    if(!found){
+        println("You haven't seen/heard any channels since you logged on.", ch);
+        return;
+    }
+
+    if(IS_NEWBIE(ch)){
+        add_buf(buffer, "note: you can also replay your tells by typing 'replay'\n\r");
+        add_buf(buffer, "      and replay room events by typing 'replayroom'\n\r");
+    }
+    page_to_char(buf_string(buffer),ch);
+    free_buf(buffer);
+    return;
+}
+/**************************************************************************/
+// Adapted from code by Kal - Sept 20
+void do_replay(CHAR_DATA *ch, char *argument)
+{
+    if (!ch && IS_NPC(ch))
+            return;
+
+    if(!ch->pcdata){
+        println( "Uncontrolled mobs can't replay room events.", ch);
+        return;
+    }
+
+    bool found=FALSE;
+    int i;
+    BUFFER *buffer;
+    buffer = new_buf();
+    int end=(ch->pcdata->next_replaytell-1+MAX_REPLAYTELL)%MAX_REPLAYTELL;
+    for(i=ch->pcdata->next_replaytell; i!=end; i= (i+1)%MAX_REPLAYTELL){
+        if(!IS_NULLSTR(ch->pcdata->replaytell_text[i])){
+            if(!found){
+                add_buf(buffer, "\n\r");
+                add_buf(buffer, "{D-===========================================================================-{x\n\r");
+            }
+            add_buf(buffer, ch->pcdata->replaytell_text[i]);
+            found=TRUE;
+        }
+    }
+    if(!IS_NULLSTR(ch->pcdata->replaytell_text[end])){
+        if(!found){
+        add_buf(buffer, ch->pcdata->replaytell_text[end]);
+        found=TRUE;
+    }
+    if(!found){
+        println("You haven't received any tells since you logged on.", ch);
+        free_buf(buffer);
+        return;
+    }
+
+    if(IS_NEWBIE(ch)){
+        add_buf(buffer, "note: you can also replay your tells by typing 'replay'\n\r");
+        add_buf(buffer, "      and replay room events by typing 'replayroom'\n\r");
+    }
+
+    }
+    page_to_char(buf_string(buffer),ch);
+    free_buf(buffer);
+}
+/**************************************************************************/

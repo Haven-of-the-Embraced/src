@@ -135,7 +135,7 @@ void do_channels( CHAR_DATA *ch, char *argument)
     send_to_char("---------------------\n\r",ch);
 
     send_to_char("IC         ",ch);
-    if (!IS_SET(ch->comm,COMM_IC))
+    if (!IS_SET(ch->comm,COMM_NOIC))
       send_to_char("ON\n\r",ch);
     else
       send_to_char("OFF\n\r",ch);
@@ -462,7 +462,7 @@ void do_ictalk( CHAR_DATA *ch, char *argument )
 
         if ( d->connected == CON_PLAYING &&
              d->character != ch &&
-             !IS_SET(victim->comm,COMM_NOGOSSIP) &&
+             !IS_SET(victim->comm,COMM_NOIC) &&
              !IS_SET(victim->comm,COMM_QUIET) )
         {
           act_new( "{x$n ICs '{C$t{x'",

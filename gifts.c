@@ -1216,7 +1216,8 @@ void spell_gift_heightenedsenses( int sn, int level, CHAR_DATA *ch, void *vo, in
     return;
     }
     ch->pcdata->gnosis[TEMP]--;
-    
+    sendch("You senses increase tenfold and you take notice of things you missed before...\n\r",ch);
+	
     af.where     = TO_AFFECTS;
     af.type      = sn;
     af.level     = level;
@@ -1329,17 +1330,58 @@ void spell_gift_songofthegreatbeast( int sn, int level, CHAR_DATA *ch, void *vo,
 //Roll:Manipulation + Stealth (diff 7)
 //The garou’s form becomes blurred and indistinct, as if viewed through the tired vision of a crone, allowing him to pass unnoticed among others. (Hide skill.)
 //Cost:none.
+void spell_gift_blurofthemilkyeye( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    
+    AFFECT_DATA af;
+    int success;
+    if (is_affected(ch, gsn_gift_blurofthemilkyeye))
+    {
+    sendch("You cannot blur your form again so soon.\n\r", ch);
+    return;
+    }
+    success = godice(get_attribute(ch, MANIPULATION)+get_ability(ch, CSABIL_STEALTH), 7);
+		
+    if (success < 1)
+    {
+    sendch("You fail to blur your form and remain in plain sight.\n\r", ch);
+    af.type      = sn;
+    af.level     = level;
+    af.duration  = 15 - ch->pcdata->gnosis[PERM];
+    af.modifier  = 0;
+    af.location  = APPLY_NONE;
+    af.bitvector = 0;
+    affect_to_char( ch, &af ); 
+    return;
+    }
+    sendch("Your form becomes blurry and indistinct.\n\r", ch);
+    af.where     = TO_AFFECTS;
+    af.type      = sn;
+    af.level     = level;
+    af.duration  = ch->pcdata->gnosis[PERM] * success;
+    af.modifier  = 0;
+    af.location  = APPLY_NONE;
+    af.bitvector = AFF_HIDE;
+    affect_to_char( ch, &af );    
+	
+	return;
+}
 //
 //“Scent of Running Water”
 //fox spirit
 //Roll:None.
 //The garou can mask her scent completely, making her difficult to track. Once learned, gift is innate and always active unless the garou wishes to leave a scent. (We don’t have any sort of tracking system.. Find another gift.)
+void spell_gift_scentofrunningwater( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //
 //“Snow Running”
 //arctic hare spirit
 //Roll:None
 //The deep snows of winter in much of Europe bring privation at best and starvation at worst to the unprepared and snowbound. This gift allows the garou to travel with ease across the surface of ice and snow. (Halve movement costs based on terrain. lasts a day)
 //Cost: 1 gnosis
+void spell_gift_snowrunning( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //
 //Rank 2
 //“Blissful Ignorance”
@@ -1366,17 +1408,26 @@ void spell_gift_blissfulignorance( int sn, int level, CHAR_DATA *ch, void *vo, i
 //wolf
 //perception + enigmas (wits+stealth / gnosis / 6)
 //If the garou knows something about her intended prey, even part of a name or a description, , she can find it anywhere in the world. (scry/telepathy affect.)
+void spell_gift_senseofprey( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //
 //Rank 3
 //“Open Moon Bridge”
 //lune
 //cost: 1 gnosis
 //The garou has the ability to open a moon bridge with or without the permission of the totem of the Caern. (Allows the garou to create a permenant bridge between Caerns. Will have to re-code caerns.)
+void spell_gift_openmoonbridge( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //
 //“Reynards Lie”
 //fox spirit
 //wits + subterfuge (wits+subterfuge)
 //The garou can pass off a lie, no matter how ridiculous, as credible fact and utter truth. For a short while. (No idea. Find something else.)
+void spell_gift_reynardslie( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //
 //Rank 4
 //“Leper’s Curse”
@@ -1384,11 +1435,19 @@ void spell_gift_blissfulignorance( int sn, int level, CHAR_DATA *ch, void *vo, i
 //cost: 1 gnosis
 //roll: gnosis (willpower) vs Gnosis/stamina (garou’s gnosis)
 //The garou can invoke a dabilitating curse on her enemy, afflicting her foe with bodily weakness and diseased, insensate patches of skin and pelt. (Causes negative physical attributes as well as aggravated damage every tick like poison. )
+void spell_gift_leperscurse( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
+
 //
 //“Luna’s Blessing”
 //lune spirit
 //cost: 1 gnosis
 //This gift is a mighty token of Luna’s favor. The light of the moon upon the garou protects her from the damage of silver. The protection is so complete that the attacker’s blows might even be turned back against him. (Immunity to silver, “radiant” type aura that only works at night, when the moon is out (Not new moon))
+void spell_gift_lunasblessing( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
+
 //
 //Rank 5
 //“Thieving Talons of the Magpie”
@@ -1396,6 +1455,9 @@ void spell_gift_blissfulignorance( int sn, int level, CHAR_DATA *ch, void *vo, i
 //wits + stealth (willpower)
 //recurring gnosis cost to hold affect
 //The garou who learns this gift becomes as gleeful a thief as the magpie, capable of stealing the magical abilities of others. (Allows the garou to steal disciplines/rotes/etc that the target has. May be able to code that. Short duration.)
+void spell_gift_thievingtalonsofthemagpie( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //
 //“Chimerical Form”
 //chimerling spirit
@@ -1403,6 +1465,9 @@ void spell_gift_blissfulignorance( int sn, int level, CHAR_DATA *ch, void *vo, i
 //intelligence + animal ken (6)
 //The garou with this gift can change his shape at will to the form of any animal he wishes to be. 
 //(Can take the form of an animal mob. Maybe add a few forms like protean)
+void spell_gift_chimericalform( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //
 //Theurge
 //Rank 1
@@ -1411,14 +1476,21 @@ void spell_gift_blissfulignorance( int sn, int level, CHAR_DATA *ch, void *vo, i
 //1 gnosis
 //intelligence + empathy (difficulty 5)
 //The garou can channel healing energy through her hands, easing the wounds of any living creature, even aggrevated. Does not work on the undead or spirits. (powerful healing affect)
+void spell_gift_motherstouch( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //
 //“Sense Wyrm”
 //See Metis Gift
+
 //
 //“Spirit Speech”
 //any
 //int + enigmas roll diff by storyteller to puzzle out riddles from spirits
 //the garou gains an intuitive understanding of the language of spirits
+void spell_gift_spiritspeech( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //
 //Rank Two
 //
@@ -1427,11 +1499,17 @@ void spell_gift_blissfulignorance( int sn, int level, CHAR_DATA *ch, void *vo, i
 //1 wp
 //char + leadership (diff spirit gnosis)
 //gives commands to spirits, botch makes the spirit attack the garou
+void spell_gift_commandspirit( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //
 //“Sight from Beyond”
 //crow / snake spirit
 //wits + occult diff 7
 //the garou becomes an oracle, she receives visions that strike without warning
+void spell_gift_sightfrombeyond( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //
 //Rank Three
 //
@@ -1439,6 +1517,9 @@ void spell_gift_blissfulignorance( int sn, int level, CHAR_DATA *ch, void *vo, i
 //any incarna avatar
 //man + intimidation (diff spirit wp) must concentrate for 3 turns
 //the garou forces a spirit to go from place to place, to get it out of a fetish diff is 9
+void spell_gift_expelspirit( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //
 //“Pulse of the Invisible”
 //any spirit
@@ -1483,11 +1564,17 @@ void spell_gift_pulseoftheinvisible( int sn, int level, CHAR_DATA *ch, void *vo,
 //“Grasp the Beyond”
 //wp burning depending on size of item (1 small ‘knife’, 2 medium ‘rucksack’, 3 large ‘a person, nothing larger than can be held in two hands’)
 //gnosis diff gauntlet rating to step sideways, if successful the garou bring that item/person with them, if person wants to resist then is wp diff 7 (each success from victim takes away one success from gauntlet roll, must have 3 successes minimum to ‘force’ someone through)
+void spell_gift_graspthebeyond( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //
 //“Spirit Wassail”
 //rat spirit
 //resisted gnosis roll
 //drains power from a spirit, if successful the spirit loses one essense point per success, for every 2 points drained the char gains a temp wp pt, extra wp is lost at end of scene
+void spell_gift_spiritwassail( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //
 //Rank Five
 //
@@ -1496,11 +1583,17 @@ void spell_gift_pulseoftheinvisible( int sn, int level, CHAR_DATA *ch, void *vo,
 //Wyldling spirit
 //wits + empathy diff target’ wp + 3 max 10
 //the garou called up a wyld spirit and binds it to its target which causes intelligence to be lost, no memories, no intellect
+void spell_gift_nightmarepossession( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //
 //“Malleable Spirit”
 //Chimerling
 //resisted gnosis roll against spirit diff (6 for wp/rage/gnosis - 1 pt gnosis changed per success of spirit) (8 for disposition [friendly, neutral, hostile] or element type [water, fire, earth, etc]) (10 for type, [Naturae, Elemental, Bane, etc]
 //changes spirit’s innate nature
+void spell_gift_malleablespirit( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //Philodox
 //
 //Rank One
@@ -1544,11 +1637,18 @@ void spell_gift_resistpain( int sn, int level, CHAR_DATA *ch, void *vo, int targ
 //vulture
 //can smell kinfolk or fellow werewolf immediatly, others roll per + primal-urge diff 6
 //1 success = humans, 2 successes = vampire, faerie, other shapeshifter, 4 = mage / fomor
+void spell_gift_scentofthetrueform( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //
 //“Truth of Gaia”
 //gaffling of falcon
 //int + empathy diff subjects man + subterfuge
 //reveals which words are true and which are false
+void spell_gift_truthofgaia( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
+
 //
 //Rank Two
 //“Call of Duty”
@@ -1557,10 +1657,16 @@ void spell_gift_resistpain( int sn, int level, CHAR_DATA *ch, void *vo, int targ
 //char + leadership diff spirit’s wp
 //summon any spirit to you and command it to do one thing
 //
+void spell_gift_callofduty( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //“Strength of Purpose”
 //wolf spirit
 //stamina + rituals diff 7 every 2 successes the char recovers 1 wp pt up to his max, useable once per scene
 //
+void spell_gift_strengthofpurpose( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //Rank Three
 //
 //“Spirit Witness”
@@ -1568,23 +1674,35 @@ void spell_gift_resistpain( int sn, int level, CHAR_DATA *ch, void *vo, int targ
 //find spirit first then char + investigation diff 7 (tree/rock spirit unmmobile) diff 8 (roaming freely) diff 9 (past year) diff 10 (past century or more)   -1 to diff if spirit is brought to site, non-gaia spirits can resist wp diff garou’s wp .. spirit’s successes take away garou’s succeses
 //a way to study/view something in the past
 //
+void spell_gift_spiritwitness( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //“Warrior’s Eye”
 //wind-spirits
 //full turn - per + brawl or melee diff 8
 //each success gives the player one bonus die to add to attack or damage rolls against their opponent, can split the dice ie 4 successes gives you 3 to attack and 1 to damage, cannot change where these dice are set and only useable once per scene
 //ability to exploit weakness of opponent
 //
+void spell_gift_warriorseye( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //Rank Four
 //
 //“Roll Over”
 //wolf spirit
 //extended wp contest, when a player has scored three or more successes than an opponent that opponent loses, losers will not take ANY action without approval of the victor
 //
+void spell_gift_rollover( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //“Scent of Beyond”
 //bird spirit
 //per + enigmas diff 8
 //the wolf can send her senses to any place with which she is familiar, umbra diff is 8 or gauntlet rating whichever is HIGHER, body is left senseless
 //
+void spell_gift_scentofbeyond( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //Rank Five
 //
 //“Earthfriend’s Pact”
@@ -1594,11 +1712,17 @@ void spell_gift_resistpain( int sn, int level, CHAR_DATA *ch, void *vo, int targ
 //earthquake (must make dex + athletics diff 7 roll to or fall to the ground and suffer five levels of bashing damage) THEN those who are left standing make a dex + dodge diff 6 roll fo avoid falling into a hole in the earth, if they fail they get 10 levels of bashing damage as the crack in the earth closes on them, survivors must claw their way out or die
 //if 4 or more successes are given on initial roll then extra above 4 can be used to extend the tremors or increase the violence one per round
 //
+void spell_gift_earthfriendspact( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //“Geas”
 //1 gnosis pt
 //incarna avatar
 //man + leadership diff opponent’s wp (if a group use highest wp)
 //compulsion on a person or group to pledge an oath, cannot act against the task given, will not kill themselves with it (like you can’t dominate someone to stab themselves) lasts until the task is finished or target is incapacitated too much to be able to continue on the quest
+void spell_gift_geas( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //Galliard
 //
 //Rank One
@@ -1607,6 +1731,9 @@ void spell_gift_resistpain( int sn, int level, CHAR_DATA *ch, void *vo, int targ
 //any animal spirit
 //charisma + animal ken
 //allows you to speak with animals, not influence them
+void spell_gift_beastspirit( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //
 //“Call of the Wyld”
 //wolf spirit
@@ -1675,6 +1802,9 @@ void spell_gift_callofthewyld( int sn, int level, CHAR_DATA *ch, void *vo, int t
 //Chimerling
 //manipulation + empathy diff target’s wp (roll only required if target is unwilling)
 //can enter the dream and interact/battle with no harm done; if want to interact with their immobile body then +2 penalty to dice pools
+void spell_gift_wakingdream( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //
 //Rank Two
 //
@@ -1682,23 +1812,35 @@ void spell_gift_callofthewyld( int sn, int level, CHAR_DATA *ch, void *vo, int t
 //spirit servant of gaia spirit
 //resisted Manipulation + performance diff 7 against wyrm creature’s wp roll diff 7
 //if wyrm loses it must come to the person who calls it
+void spell_gift_callofthewyrm( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //
 //“Distractions”
 //wolf spirit
 //wits + performance diff target wp
 //each success takes one from target’s dice pool on next turn
 //
+void spell_gift_distractions( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //Rank Three
 //
 //“Eye of the Asp”
 //venomous snake spirit
 //apperance + enigmas diff victom’s wp
 //3 successes needed to bring target to the garou
+void spell_gift_eyeoftheasp( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //
 //“Song of Rage”
 //wolverine spirit
 //manipulation + leadership diff target’s wp
 //victim flies into a rage or frenzy for one turn per success
+void spell_gift_songofrage( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //
 //Rank Four
 //
@@ -1707,11 +1849,17 @@ void spell_gift_callofthewyld( int sn, int level, CHAR_DATA *ch, void *vo, int t
 //ancestor spirit
 //manipulation  + performance (diff victims’ wp) only if unwilling
 //puppets the target through a scene or until the actor isa ttacked
+void spell_gift_shadowsbythefirelight( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //
 //“Song of Mockery”
 //mockingbird spirit
 //wits + investigation diff 8
 //helps learn their rivals secrets, must be sung before a crowd
+void spell_gift_songofmockery( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //
 //Rank Five
 //
@@ -1720,11 +1868,18 @@ void spell_gift_callofthewyld( int sn, int level, CHAR_DATA *ch, void *vo, int t
 //1 gnosis per turn to keep the false image up
 //extended inte + performance diff 8 roll
 //like chimerstry, you create a creature if roll is botched creature gets to eat you
+void spell_gift_dreamgolems( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
+
 //
 //“Call for Vengeance”
 //ancestor spirit
 //stamin + performance diff 7
 //20 mile radius call, garou who hear it do nto have to join the hunt but their wp increases by 2 up to 10 for the duration, if a criminal can hear the howl her wp is reduced by 2 pts for next week… cant use this gift again until that criminal is found and brought to justice (ie target mob maybe?)
+void spell_gift_callforvengeance( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //Ahroun
 //
 //Rank One
@@ -1733,6 +1888,10 @@ void spell_gift_callofthewyld( int sn, int level, CHAR_DATA *ch, void *vo, int t
 //any flying spirit
 //dex + medicine diff victim’s stamin + athletics
 //sends their foe sprawling with a touch
+void spell_gift_fallingtouch( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
+
 //
 //“Inspiration”
 //1 gnosis
@@ -1740,6 +1899,9 @@ void spell_gift_callofthewyld( int sn, int level, CHAR_DATA *ch, void *vo, int t
 //no roll
 //any allies who can see the ahroun receive one auto success on all wp rolls made during the scene (not the ahroun who did the gift gets it)
 //
+void spell_gift_inspiration( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //“Razor Claws”
 //one rage pt
 //cat spirit
@@ -1794,11 +1956,17 @@ void spell_gift_razorclaws( int sn, int level, CHAR_DATA *ch, void *vo, int targ
 //no roll
 //player adds 10 to all initiative rolls, cannot spend rage for extra actions when this is activated
 //
+void spell_gift_spiritofthefray( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
+
 //“True Fear”
 //spirit of fear
 //str + intimidation diff target wp
 //each success cows the target for one rturn, they cannot attack but can defend
-//
+void spell_gift_truefear( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}//
 //Rank Three
 //
 //“Heart of Fury”
@@ -1806,6 +1974,9 @@ void spell_gift_razorclaws( int sn, int level, CHAR_DATA *ch, void *vo, int targ
 //wp diff victim’s perm rage rating
 //every 2 successes adds one to frenzy diff, at the end of the scene the victim must spend a wp or immedialyt check for frenzy
 //
+void spell_gift_heartoffury( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //“Silver Claws”
 //luna spirits
 //gnosis diff 7
@@ -1859,6 +2030,9 @@ void spell_gift_silverclaws( int sn, int level, CHAR_DATA *ch, void *vo, int tar
 //lunes
 //no roll
 //anyone who is against the pack glows, can go against those who are obfuscated or have magic that hides them but only if the target is trying to harm the pack
+void spell_gift_fullmoonslight( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //
 //“Stoking Fury’s Furnace”
 //1 rage pt
@@ -1866,6 +2040,10 @@ void spell_gift_silverclaws( int sn, int level, CHAR_DATA *ch, void *vo, int tar
 //no roll
 //rage pt spent when doing damage, this rage does not cause a frenzy check, can spend one rage pt per turn without losing temp rage, if more than one is spent per turn then all are taken off the temp rage
 //
+void spell_gift_stokingfurysfurnace( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
+
 //Rank Five
 //
 //“Kiss of Helios”
@@ -1873,11 +2051,17 @@ void spell_gift_silverclaws( int sn, int level, CHAR_DATA *ch, void *vo, int tar
 //servant of helios spirit
 //rest of the scene char is unharmed by any natural source of fire (even lava), supernatural fire inflicts 1/4th damage and is treacted as bashing; the char inflicts 2 additional dice of aggy damage if she attacks with flaming fists/claws/fangs
 //
+void spell_gift_kissofhelios( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //“Strength of Will”
 //1 wp
 //wolf spirit or incarna avatar
 //char + leadership diff 8
 //each success grants all garou allies within 100 ft (and packmates within 100 miles) an extra pt of wp, lasts the scene and can go above 10 wp, only useable once per scene
+void spell_gift_strengthofwill( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //Tribes
 //Black Furies
 //Rank One
@@ -1888,14 +2072,21 @@ void spell_gift_silverclaws( int sn, int level, CHAR_DATA *ch, void *vo, int tar
 //must touch the person
 //grants one extra die on all mental rolls for the next scene, also adds one to the diff of rage rolls (no work on dead creatures)
 //
+void spell_gift_breathofthewyld( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //“Man’s Skin”
 //ancestor spirit
 //char + subterfuge diff 7
 //illusion to make your female self look like a man for a scene or until you shift forms
 //
+
 //“Sense Wyrm” duplicate gift
 //same as Metis Gift
 //
+void spell_gift_mansskin( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //Rank Two
 //
 //“Curse of Aeolus”
@@ -1903,6 +2094,9 @@ void spell_gift_silverclaws( int sn, int level, CHAR_DATA *ch, void *vo, int tar
 //gnosis roll diff (4 water, 6 temperate climate, 9 in desert)
 //covers you and pack with fog (exactly like obfusc 5)
 //
+void spell_gift_curseoftheaeolus( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //“Sense of the Prey” duplicate gift
 //same as ragabash gift
 //
@@ -1914,12 +2108,19 @@ void spell_gift_silverclaws( int sn, int level, CHAR_DATA *ch, void *vo, int tar
 //Perception + brawl diff 6 / target rolls per + subterfuge diff 6
 //if player rolls more successes than target the player doubled the damage dice rolled on next successful attack on target
 //
+void spell_gift_coupdegrace( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //“Flames of Hestia”
 //1 gnosis
 //hestia (purity/healing) spirit
 //roll gnosis dif 7
 //each success removes taint from a barrel’s worth of water or enough food to fill a trencher; each success heals one health level of damage inflicted by disease or poison; if touching a bane with this then flames cause one health level of aggy damage per success
 //
+void spell_gift_flamesofhestia( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
+
 //Rank Four
 //
 //“Body Wrack”
@@ -1928,11 +2129,17 @@ void spell_gift_silverclaws( int sn, int level, CHAR_DATA *ch, void *vo, int tar
 //rolls gnosis diff target’s stam + 3
 //target is left stunned and convulsing for one round per success, also subtracts one die per success from all attribute rolls for the rest of the scene
 //
+void spell_gift_bodywrack( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //“Bow of Pegasus”
 //1 gnosis
 //pegasus
 //roll gnosis diff 6
 //success allows the character to shoot arrows that travel instantly to any target in the range of visibility, target cannot dodg attack and diff to hit the target drops by 4 while gift activated, lasts one turn per success
+void spell_gift_bowofpegasus( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //
 //Rank Five
 //
@@ -1941,11 +2148,17 @@ void spell_gift_silverclaws( int sn, int level, CHAR_DATA *ch, void *vo, int tar
 //per + occult diff target’s wp
 //successes = how many rounds the target is turned to stone
 //
+void spell_gift_gazeofthegorgon( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //“Wyld Warp”
 //1 gnosis 1 rage
 //wyldling
 //wits + enigmas diff local gauntlet
 //summons wyldlings that helps the player, examples - fly into a frenzy to harm enemies; increase all rage in garou around them, etc is unpredictable
+void spell_gift_wyldwarp( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //Bone Gnawers
 //Rank One
 //
@@ -1954,17 +2167,26 @@ void spell_gift_silverclaws( int sn, int level, CHAR_DATA *ch, void *vo, int tar
 //wits + survival diff 6 for inedible not poisonous ingrediants to 10 for hot cinders or rusted iron
 //must have pot and ladle or spoon and water
 //takes inedible stuff and makes it into an edible stew
+void spell_gift_cookery( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //
 //“Resist Toxin”
 //rat
 //stamin + survival diff 6
 //successes add 3 dice to chars stamina for the purpose of resisting poisons that are supernatural in nature, lasts one scene
+void spell_gift_resisttoxin( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //
 //“Scent of the Honeycomb”
 //1 gnosis
 //air elemental
 //wits + subterfuge diff 6
 //choose a target and a swarm of biting insects will cover them, bite them, annoy them
+void spell_gift_scentofthehoneycomb( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //
 //Rank Two
 //
@@ -1973,12 +2195,18 @@ void spell_gift_silverclaws( int sn, int level, CHAR_DATA *ch, void *vo, int tar
 //rat or badger
 //rage diff 8
 //forces their rage to go into frenzy
+void spell_gift_corneredrat( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //
 //“Plague Visage”
 //rat
 //manipul + medicine diff 6
 //illusion lasts one scene, makes them look like  a leper
 //humans have to roll humanity diff 8 or risk running way from them, supernaturals diff 6
+void spell_gift_plaguevisage( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //
 //Rank Three
 //
@@ -1987,12 +2215,18 @@ void spell_gift_silverclaws( int sn, int level, CHAR_DATA *ch, void *vo, int tar
 //water elemental
 //wits + crafts diff dependant ont eh amoutn of metal being affected
 //each success allows the werewolf to coorode one ferrous metal object into uselessness, detailed work will count as 2 successes, does not have to touch it, only see it
+void spell_gift_calltherust( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //
 //“Friend in Need”
 //1 wp
 //dog
 //wp diff 7
 //lends a packmate rage, wp, health levels or any gift the char knows for one scene (cannot lend gifts that are of a higher rank than the recipiant, cannot lend abilities or attributes either)
+void spell_gift_friendinneed( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //
 //Rank Four
 //
@@ -2001,12 +2235,18 @@ void spell_gift_silverclaws( int sn, int level, CHAR_DATA *ch, void *vo, int tar
 //rat
 //man + steatlh diff 6
 //can duck into shadow and pop out somewhere else up to 20 yards away per success, cannot pop out of thin air, must be able to pop out of a ‘logical’ hiding place
+void spell_gift_blink( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //
 //“Claws of the Glassblower”
 //1 gnosis
 //sand or lightening spirit
 //no roll
 //if hit target with claws, claws break off with shards of glass in teh wound; glass causes an additional aggy health level of damage as long as it remains within teh flesh, removal takes a whole turn and has to focus on only taking it out
+void spell_gift_clawsoftheglassblower( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //
 //Rank Five
 //
@@ -2015,12 +2255,18 @@ void spell_gift_silverclaws( int sn, int level, CHAR_DATA *ch, void *vo, int tar
 //stamina + primal-urge diff 8
 //can resist being swalloed by dex + dodge roll
 //the werewolf can open their jaws wider to be able to swallow objects or beings whole, it ‘stores’ them in the umbra, can store them for up to hours equal to his stamina before it automatically vomits them back up, UNHARMED, nto the physical world...if object is large like a horse or person, the successes needed is one extra per every health level (so 8 for humans)
+void spell_gift_mawofthewhale( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //
 //“Survivor”
 //1 gnosis
 //tortoise
 //stamin + survival diff 7
 //does not have to eat/drink/sleep for the duration of teh gifts affects; gains 3 pts to stamina (can go over 10), natural disease and poisons ahve no affect and those of supernatural variety half damage
+void spell_gift_survivor( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //
 //Children of Gaia
 //Rank One
@@ -2029,6 +2275,9 @@ void spell_gift_silverclaws( int sn, int level, CHAR_DATA *ch, void *vo, int tar
 //1 gnosis
 //cow
 //putting their hands on a pregnant mother’s belly gives tit and child are given an extra dog in stamina each for the purposes of surviving childbirth/carrying to term/resisting illness and infection, lasts for a week, the garou auto learns how many children are going to be born and fi used on a wolf it affects all cubs
+void spell_gift_evesblessing( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //
 //“Mother’s Touch” duplicate gift of theurge
 //
@@ -2038,12 +2287,19 @@ void spell_gift_silverclaws( int sn, int level, CHAR_DATA *ch, void *vo, int tar
 //
 //“Grandmother’s Touch”
 //same as Mother’s touch but can heal yourself as well
+void spell_gift_grandmotherstouch( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //
 //“Luna’s Armor”
 //1 gnosis
 //lune
 //stamin + survival diff 6
 //each success allows the garou to add one die of stamina for purposes of soaking damage including silver but only lets you soak with teh successes gotten by the roll, does NOT include yoru current stam to soak silver
+void spell_gift_lunasarmor( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
+
 //
 //Rank Three
 //
@@ -2051,11 +2307,17 @@ void spell_gift_silverclaws( int sn, int level, CHAR_DATA *ch, void *vo, int tar
 //unicorn
 //charisma + empathy diff target’s wp
 //is like awe, can do nothing but go ooo shiny for the remainder of the scene
+void spell_gift_dazzle( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //
 //“Spirit Friend”
 //unicorn
 //charisma + expression diff 7
 //each success adds one dice to ALL garou’s dice pools for interacting with spirits (not banes) lasts one scene
+void spell_gift_spiritfriend( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //
 //Rank Four
 //
@@ -2064,6 +2326,9 @@ void spell_gift_silverclaws( int sn, int level, CHAR_DATA *ch, void *vo, int tar
 //hope spirit
 //no roll
 //like passion mixed with dreadgaze but in reverse, instead of fear and panic it is awe and bliss and yeah rawr we can do this!!! of delierium responses on the target
+void spell_gift_angelssemblance( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //
 //“Beast Life” duplicate of the Lupus gift
 //
@@ -2074,12 +2339,18 @@ void spell_gift_silverclaws( int sn, int level, CHAR_DATA *ch, void *vo, int tar
 //sunbeam spirit
 //no roll
 //receive 2 extra dice to damage of any hand to hand attacks and causes aggy damage when in homid or glabro forms, anyone facing garou directly adds three to attack diffs because of glare of the halo and vampires within 20 yards suffer damage as if exposed to true sunlight (3 health levels per turn)
+void spell_gift_haloofthesun( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //
 //“The Living Wood”
 //1 gnosis
 //glade child spirit
 //charisma + survival duff 8
 //the character animates one tree for each success rolled, trees will block/restrain/even fight for teh garou
+void spell_gift_thelivingwood( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 //
 //
 
@@ -2108,309 +2379,7 @@ void spell_gift_catfeet( int sn, int level, CHAR_DATA *ch, void *vo, int target 
 }
 
 
-void spell_gift_blurofthemilkyeye( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
 
-void spell_gift_scentofrunningwater( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_snowrunning( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_senseofprey( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_openmoonbridge( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_reynardslie( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_leperscurse( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_lunasblessing( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_thievingtalonsofthemagpie( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_chimericalform( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_motherstouch( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_spiritspeech( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_commandspirit( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_sightfrombeyond( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_expelspirit( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_graspthebeyond( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_spiritwassail( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_nightmarepossession( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_malleablespirit( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_scentofthetrueform( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_truthofgaia( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_callofduty( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_strengthofpurpose( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_spiritwitness( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_warriorseye( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_rollover( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_scentofbeyond( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_earthfriendspact( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_geas( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_beastspirit( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_wakingdream( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_callofthewyrm( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_distractions( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_eyeoftheasp( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_songofrage( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_shadowsbythefirelight( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_songofmockery( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_dreamgolems( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_callforvengeance( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_fallingtouch( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_inspiration( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_spiritofthefray( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_truefear( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_heartoffury( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_fullmoonslight( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_stokingfurysfurnace( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_kissofhelios( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_strengthofwill( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_breathofthewyld( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_mansskin( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_curseoftheaeolus( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_coupdegrace( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_flamesofhestia( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_bodywrack( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_bowofpegasus( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_gazeofthegorgon( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_wyldwarp( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_cookery( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_resisttoxin( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_scentofthehoneycomb( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_corneredrat( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_plaguevisage( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_calltherust( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_friendinneed( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_blink( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_clawsoftheglassblower( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_mawofthewhale( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_survivor( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_evesblessing( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_grandmotherstouch( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_lunasarmor( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_dazzle( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_spiritfriend( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_angelssemblance( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_haloofthesun( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-
-void spell_gift_thelivingwood( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
 
 void spell_gift_huntersharmony( int sn, int level, CHAR_DATA *ch, void *vo, int target){
     return;

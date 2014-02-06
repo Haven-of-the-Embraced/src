@@ -134,8 +134,8 @@ void do_channels( CHAR_DATA *ch, char *argument)
     send_to_char("   channel     status\n\r",ch);
     send_to_char("---------------------\n\r",ch);
 
-    send_to_char("gossip         ",ch);
-    if (!IS_SET(ch->comm,COMM_NOGOSSIP))
+    send_to_char("IC         ",ch);
+    if (!IS_SET(ch->comm,COMM_IC))
       send_to_char("ON\n\r",ch);
     else
       send_to_char("OFF\n\r",ch);
@@ -417,22 +417,22 @@ void do_auction( CHAR_DATA *ch, char *argument )
 }
 
 /* RT chat replaced with ROM gossip */
-void do_gossip( CHAR_DATA *ch, char *argument )
+void do_ictalk( CHAR_DATA *ch, char *argument )
 {
     char buf[MAX_STRING_LENGTH];
     DESCRIPTOR_DATA *d;
 
     if (argument[0] == '\0' )
     {
-      if (IS_SET(ch->comm,COMM_NOGOSSIP))
+      if (IS_SET(ch->comm,COMM_NOIC))
       {
-        send_to_char("Gossip channel is now ON.\n\r",ch);
-        REMOVE_BIT(ch->comm,COMM_NOGOSSIP);
+        send_to_char("IC channel is now ON.\n\r",ch);
+        REMOVE_BIT(ch->comm,COMM_NOIC);
       }
       else
       {
-        send_to_char("Gossip channel is now OFF.\n\r",ch);
-        SET_BIT(ch->comm,COMM_NOGOSSIP);
+        send_to_char("IC channel is now OFF.\n\r",ch);
+        SET_BIT(ch->comm,COMM_NOIC);
       }
     }
     else  /* gossip message sent, turn gossip on if it isn't already */
@@ -450,9 +450,9 @@ void do_gossip( CHAR_DATA *ch, char *argument )
 
         }
 
-      REMOVE_BIT(ch->comm,COMM_NOGOSSIP);
+      REMOVE_BIT(ch->comm,COMM_NOIC);
 
-      sprintf( buf, "{xYou gossip '{C%s{x'\n\r", argument );
+      sprintf( buf, "{xYou IC '{C%s{x'\n\r", argument );
       channel_to_char( buf, ch );
       for ( d = descriptor_list; d != NULL; d = d->next )
       {
@@ -465,7 +465,7 @@ void do_gossip( CHAR_DATA *ch, char *argument )
              !IS_SET(victim->comm,COMM_NOGOSSIP) &&
              !IS_SET(victim->comm,COMM_QUIET) )
         {
-          act_new( "{x$n gossips '{C$t{x'",
+          act_new( "{x$n ICs '{C$t{x'",
            ch,argument, d->character, TO_VICT,POS_SLEEPING, TRUE );
         }
       }

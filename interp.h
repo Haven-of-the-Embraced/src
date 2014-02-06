@@ -160,7 +160,7 @@ DECLARE_DO_FUN( do_gain     );
 DECLARE_DO_FUN( do_game     );
 DECLARE_DO_FUN( do_get      );
 DECLARE_DO_FUN( do_give     );
-DECLARE_DO_FUN( do_gossip   );
+DECLARE_DO_FUN( do_ictalk   );
 DECLARE_DO_FUN( do_goto     );
 DECLARE_DO_FUN( do_grats    );
 DECLARE_DO_FUN( do_group    );

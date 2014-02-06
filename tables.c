@@ -446,7 +446,7 @@ const struct flag_type comm_flags[] =
     {   "nowiz",        COMM_NOWIZ,     TRUE    },
     {   "noimp",        COMM_NOIMP,     TRUE    },
     {   "noclangossip",     COMM_NOAUCTION,     TRUE    },
-    {   "nogossip",     COMM_NOGOSSIP,      TRUE    },
+    {   "noic",     COMM_NOIC,      TRUE    },
     {   "noquestion",       COMM_NOQUESTION,    TRUE    },
     {   "nomusic",      COMM_NOMUSIC,       TRUE    },
     {   "noclan",       COMM_NOCLAN,        TRUE    },

@@ -1796,7 +1796,7 @@ struct  kill_data
 #define COMM_DEAF               (B)
 #define COMM_NOWIZ              (C)
 #define COMM_NOAUCTION          (D)
-#define COMM_NOGOSSIP           (E)
+#define COMM_NOIC          (E)
 #define COMM_NOQUESTION         (F)
 #define COMM_NOMUSIC            (G)
 #define COMM_NOCLAN     (H)

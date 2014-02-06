@@ -3146,7 +3146,7 @@ char *comm_bit_name(int comm_flags)
     if (comm_flags & COMM_NOWIZ     ) strcat(buf, " no_wiz");
     if (comm_flags & COMM_NOIMP     ) strcat(buf, " no_imp");
     if (comm_flags & COMM_NOAUCTION ) strcat(buf, " no_auction");
-    if (comm_flags & COMM_NOGOSSIP  ) strcat(buf, " no_gossip");
+    if (comm_flags & COMM_NOIC  ) strcat(buf, " no_ic");
     if (comm_flags & COMM_NOQUESTION    ) strcat(buf, " no_question");
     if (comm_flags & COMM_NOMUSIC   ) strcat(buf, " no_music");
     if (comm_flags & COMM_NOOOC ) strcat(buf, " no_ooc");

@@ -185,6 +185,7 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "ignisfatuus", do_ignis_fatuus},
 
 /* for human guilds */
+    { "ictalk", do_ictalk},
     { "traditiontalk",      do_traditiontalk},
     { "tdtalk",     do_traditiontalk }, // DOES NOT MATCH. create do_tdtalk(ch,argument); call do_function(ch, &do_traditiontalk, argument);
     { "tribetalk",      do_tribetalk },
@@ -290,7 +291,8 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "delet",      do_delet },
     { "delete",     do_delete },
     { "nofollow",   do_nofollow },
-    { "ic",     do_ic},
+    { "icmode",     do_ic},
+    { "goic",       do_ic},
     { "noloot",     do_noloot},
     { "nosummon",   do_nosummon },
 	{ "nocondition", do_nocondition },
@@ -315,7 +317,7 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "deaf",       do_deaf},
     /* emote moved above embrace */
     { "pmote",      do_pmote},
-    { "gossip",     do_gossip},
+    { "ictalk",     do_ictalk},
 /*    { "grats",        do_grats}, */
     { "gtell",      do_gtell},
 /*  { "music",      do_music}, */

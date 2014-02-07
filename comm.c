@@ -3641,7 +3641,7 @@ void act_new( const char *format, CHAR_DATA *ch, const void *arg1,
             }
 
 
-                if ( !IS_NPC(ch) && IS_NPC(to) && MOBtrigger )
+                if ( IS_NPC(to) && MOBtrigger )
                     mp_act_trigger( buf, to, ch, arg1, arg2, TRIG_ACT );
 
         }

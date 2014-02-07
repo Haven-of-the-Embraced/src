@@ -318,6 +318,7 @@ void do_mpasound( CHAR_DATA *ch, char *argument )
       	{
 	    ch->in_room = pexit->u1.to_room;
 //	    MOBtrigger  = FALSE;
+            MOBtrigger = TRUE;
 	    act( argument, ch, NULL, NULL, TO_ROOM );
 //	    MOBtrigger  = TRUE;
 	}

@@ -4540,7 +4540,7 @@ void do_mset( CHAR_DATA *ch, char *argument )
     return;
     }
 
-    if ( !str_prefix( arg2, "hp" ) )
+    if ( !str_prefix( arg2, "max_hp" ) )
     {
     if ( value < -10 || value > 30000 )
     {
@@ -4553,6 +4553,19 @@ void do_mset( CHAR_DATA *ch, char *argument )
     return;
     }
 
+    if ( !str_prefix( arg2, "hp" ) )
+    {
+    if ( value < -10 || value > 30000 )
+    {
+        send_to_char( "Hp range is -10 to 30,000 hit points.\n\r", ch );
+        return;
+    }
+    victim->hit = value;
+    update_pos(victim);
+    return;
+    }
+
+    
     if ( !str_prefix( arg2, "mana" ) )
     {
     if ( value < 0 || value > 30000 )

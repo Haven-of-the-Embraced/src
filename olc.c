@@ -300,6 +300,7 @@ const struct olc_cmd_type redit_table[] =
     {   "owner",    redit_owner },
     {   "room",     redit_room  },
     {   "sector",   redit_sector    },
+    {   "copy", redit_copy },
 
     {   "?",        show_help   },
     {   "version",  show_version    },
@@ -338,6 +339,7 @@ const struct olc_cmd_type oedit_table[] =
     {   "level",        oedit_level     },  /* ROM */
     {   "condition",    oedit_condition },  /* ROM */
     {   "timer",    oedit_timer },
+    {   "copy", oedit_copy },
     {   "?",        show_help   },
     {   "version",  show_version    },
 
@@ -387,7 +389,7 @@ const struct olc_cmd_type medit_table[] =
     {   "group",    medit_group },  /* ROM */
     {   "addmprog", medit_addmprog  },  /* ROM */
     {   "delmprog", medit_delmprog  },  /* ROM */
-
+    {   "copy", medit_copy },
     {   "?",        show_help   },
     {   "version",  show_version    },
 

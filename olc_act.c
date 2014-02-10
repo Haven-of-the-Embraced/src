@@ -544,6 +544,60 @@ REDIT( redit_mshow )
     return FALSE;
 }
 
+REDIT( redit_copy )
+{
+    ROOM_INDEX_DATA	*pRoom;
+    ROOM_INDEX_DATA	*pRoom2; /* Room to copy */
+    int vnum;
+
+    if ( argument[0] == '\0' )
+    {
+      send_to_char("Syntax: copy <vnum> \n\r",ch);
+      return FALSE;
+    }
+
+    if ( !is_number(argument) )
+    {
+      send_to_char("REdit: You must enter a number (vnum).\n\r",ch);
+      return FALSE;
+    }
+    else /* argument is a number */
+    {
+      vnum = atoi(argument);
+      if( !( pRoom2 = get_room_index(vnum) ) )
+      {
+	send_to_char("REdit: That room does not exist.\n\r",ch);
+	return FALSE;
+      }
+    }
+
+    EDIT_ROOM(ch, pRoom);
+
+    free_string( pRoom->description );
+    pRoom->description = str_dup( pRoom2->description );
+    
+    free_string( pRoom->name );
+    pRoom->name = str_dup( pRoom2->name );
+
+    /* sector flags */
+    pRoom->sector_type = pRoom2->sector_type;
+
+    /* room flags */
+    pRoom->room_flags = pRoom2->room_flags;
+
+    pRoom->heal_rate = pRoom2->heal_rate;
+    pRoom->mana_rate = pRoom2->mana_rate;
+
+    pRoom->clan = pRoom2->clan;
+
+    free_string( pRoom->owner );
+    pRoom->owner = str_dup( pRoom2->owner );
+
+    pRoom->extra_descr = pRoom2->extra_descr;
+
+    send_to_char( "Room info copied.", ch );
+    return TRUE;
+}
 
 
 REDIT( redit_oshow )
@@ -3115,6 +3169,76 @@ OEDIT( oedit_show )
 
 
 /*
+ * oedit_copy function thanks to Zanthras of Mystical Realities MUD.
+ */
+OEDIT( oedit_copy )
+{
+    OBJ_INDEX_DATA *pObj;
+    OBJ_INDEX_DATA *pObj2; /* The object to copy */
+    int vnum, i;
+
+    if ( argument[0] == '\0' )
+    {
+      send_to_char("Syntax: copy <vnum> \n\r",ch);
+      return FALSE;
+    }
+
+    if ( !is_number(argument) )
+    {
+      send_to_char("OEdit: You must enter a number (vnum).\n\r",ch);
+      return FALSE;
+    }
+    else /* argument is a number */
+    {
+      vnum = atoi(argument);
+      if( !( pObj2 = get_obj_index(vnum) ) )
+      {
+	send_to_char("OEdit: That object does not exist.\n\r",ch);
+	return FALSE;
+      }
+    }
+
+    EDIT_OBJ(ch, pObj);
+
+    free_string( pObj->name );
+    pObj->name = str_dup( pObj2->name );
+
+    pObj->item_type = pObj2->item_type;
+
+    pObj->level = pObj2->level;
+
+    pObj->wear_flags  = pObj2->wear_flags;
+    pObj->extra_flags = pObj2->extra_flags;
+
+    free_string( pObj->material );
+    pObj->material = str_dup( pObj2->material );
+    
+    pObj->condition = pObj2->condition;
+
+    pObj->weight = pObj2->weight;
+    pObj->cost   = pObj2->cost;
+
+    pObj->extra_descr = pObj2->extra_descr;
+
+    free_string( pObj->short_descr );
+    pObj->short_descr = str_dup( pObj2->short_descr );
+
+    free_string( pObj->description );
+    pObj->description = str_dup( pObj2->description );
+
+    pObj->affected = pObj2->affected;
+
+    for (i = 0; i < 5; i++)
+    {
+      pObj->value[i] = pObj2->value[i];
+    }
+
+    send_to_char( "Object info copied.", ch );
+    return TRUE;
+}
+
+
+/*
  * Need to issue warning if flag isn't valid. -- does so now -- Hugin.
  */
 OEDIT( oedit_addaffect )
@@ -4426,6 +4550,157 @@ MEDIT( medit_shop )
     }
 
     medit_shop( ch, "" );
+    return FALSE;
+}
+
+
+/*
+ * medit_copy function thanks to Zanthras of Mystical Realities MUD.
+ * Thanks to Ivan for what there is of the incomplete mobprog part.
+ * Hopefully it will be finished in a later release of this snippet.
+ */
+MEDIT( medit_copy )
+{
+    MOB_INDEX_DATA *pMob;
+    MOB_INDEX_DATA *pMob2; /* The mob to copy */
+    int vnum;
+
+    /* MPROG_LIST *list; */ /* Used for the mob prog for loop */
+
+    if ( argument[0] == '\0' )
+    {
+      send_to_char("Syntax: copy <vnum> \n\r",ch);
+      return FALSE;
+    }
+
+    if ( !is_number(argument) )
+    {
+      send_to_char("MEdit: You must enter a number (vnum).\n\r",ch);
+      return FALSE;
+    }
+    else /* argument is a number */
+    {
+      vnum = atoi(argument);
+      if( !( pMob2 = get_mob_index(vnum) ) )
+      {
+	send_to_char("MEdit: That mob does not exist.\n\r",ch);
+	return FALSE;
+      }
+    }
+
+    EDIT_MOB(ch, pMob);
+
+    free_string( pMob->player_name );
+    pMob->player_name = str_dup( pMob2->player_name );
+
+    pMob->new_format = pMob2->new_format;
+    pMob->act = pMob2->act;
+    pMob->sex = pMob2->sex;
+ 
+    pMob->race = pMob2->race;
+
+    pMob->level = pMob2->level;
+    
+    pMob->alignment = pMob2->alignment;
+    
+    pMob->hitroll = pMob2->hitroll;
+    
+    pMob->dam_type = pMob2->dam_type;
+
+    pMob->group = pMob2->group;
+
+    pMob->hit[DICE_NUMBER] = pMob2->hit[DICE_NUMBER];
+    pMob->hit[DICE_TYPE]   = pMob2->hit[DICE_TYPE];
+    pMob->hit[DICE_BONUS]  = pMob2->hit[DICE_BONUS];
+
+    pMob->damage[DICE_NUMBER] = pMob2->damage[DICE_NUMBER];
+    pMob->damage[DICE_TYPE]   = pMob2->damage[DICE_TYPE];
+    pMob->damage[DICE_BONUS]  = pMob2->damage[DICE_BONUS];
+    
+    pMob->mana[DICE_NUMBER] = pMob2->mana[DICE_NUMBER];
+    pMob->mana[DICE_TYPE]   = pMob2->mana[DICE_TYPE];
+    pMob->mana[DICE_BONUS]  = pMob2->mana[DICE_BONUS];
+
+    pMob->affected_by = pMob2->affected_by;
+    
+    pMob->ac[AC_PIERCE] = pMob2->ac[AC_PIERCE];
+    pMob->ac[AC_BASH]   = pMob2->ac[AC_BASH];
+    pMob->ac[AC_SLASH]  = pMob2->ac[AC_SLASH];
+    pMob->ac[AC_EXOTIC] = pMob2->ac[AC_EXOTIC];
+    
+
+    pMob->form  = pMob2->form;
+    pMob->parts = pMob2->parts;
+
+    pMob->imm_flags  = pMob2->imm_flags;
+    pMob->res_flags  = pMob2->res_flags;
+    pMob->vuln_flags = pMob2->vuln_flags;
+    pMob->off_flags  = pMob2->off_flags;
+
+    pMob->size     = pMob2->size;
+
+    free_string( pMob->material );
+    pMob->material = str_dup( pMob2->material ); 
+
+    pMob->start_pos   = pMob2->start_pos;
+    pMob->default_pos = pMob2->default_pos;
+
+    pMob->wealth = pMob2->wealth;
+
+    pMob->spec_fun = pMob2->spec_fun;
+
+    free_string( pMob->short_descr );
+    pMob->short_descr = str_dup( pMob2->short_descr );
+
+    free_string( pMob->long_descr );
+    pMob->long_descr = str_dup( pMob2->long_descr   );
+
+    free_string( pMob->description );
+    pMob->description = str_dup( pMob2->description );
+
+    /* Hopefully get the shop data to copy later
+     * This is the fields here if you get it copying send me
+     * a copy and I'll add it to the snippet with credit to
+     * you of course :) same with the mobprogs for loop :)
+     */
+
+/*
+    if ( pMob->pShop )
+    {
+	SHOP_DATA *pShop, *pShop2;
+
+	pShop =  pMob->pShop;
+	pShop2 = pMob2->pShop;
+ 
+	pShop->profit_buy = pShop2->profit_buy;
+	pShop->profit_sell = pShop2->profit_sell;
+	
+	pShop->open_hour = pShop2->open_hour;
+	pShop->close_hour = pShop2->close_hour;
+	
+	pShop->buy_type[iTrade] = pShop2->buy_type[iTrade];
+    }
+*/
+/*  for loop thanks to Ivan, still needs work though
+
+    for (list = pMob->mprogs; list; list = list->next )
+    {
+      MPROG_LIST *newp = new_mprog();
+      newp->trig_type = list->trig_type;
+
+      free_string( newp->trig_phrase );
+      newp->trig_phrase = str_dup( list->trig_phrase );
+
+      newp->vnum = list->vnum;
+
+      free_string( newp->code )
+      newp->code = str_dup( list->code );
+
+      pMob->mprogs = newp;
+    }
+*/
+
+    send_to_char( "Mob info copied.", ch );
     return FALSE;
 }
 

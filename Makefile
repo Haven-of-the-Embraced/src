@@ -29,15 +29,17 @@ SRC_FILES := $(wildcard *.c)
 OBJ_DIR = obj
 OBJ_FILES := $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRC_FILES))
 
+.ONESHELL:
 rom: $(OBJ_FILES)
-	$(RM) -f $(EXE)
-	$(CC) -o $(EXE) $(OBJ_FILES) $(L_FLAGS)
+	sudo -u haven $(RM) -f $(EXE)
+	sudo -u haven $(CC) -o $(EXE) $(OBJ_FILES) $(L_FLAGS)
+	sudo -u haven chmod u+s rom
 
 $(OBJ_DIR)/%.o: %.c
-	$(CC) $(C_FLAGS) -c -o $@ $<
+	sudo -u haven $(CC) $(C_FLAGS) -c -o $@ $<
 
 clean:
-	$(RM) -f $(OBJ_FILES) $(EXE) *~ *.bak *.orig *.rej
+	sudo -u haven $(RM) -f $(OBJ_FILES) $(EXE) *~ *.bak *.orig *.rej
 
 new:
 	make clean

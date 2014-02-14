@@ -3568,11 +3568,11 @@ void do_register(CHAR_DATA *ch, char *argument)
     argument = one_argument( argument, arg1 );
 
     if(IS_NPC(ch)) return;
-
+    /*
     sendch("Registration is currently disabled. If you need to recover a lost password,\n\r", ch);
     sendch("speak with an Immortal level107+. We apologize for any problems this may cause.\n\r", ch);
     return;
-
+*/
     if(!ch->pcdata->registered)
     {
         if ( arg1[0] == '\0')

@@ -2726,6 +2726,9 @@ bool can_see( CHAR_DATA *ch, CHAR_DATA *victim )
     return FALSE;
 
 
+    if (IS_NPC(victim) && IS_AFFECTED2(victim, AFF2_UNSEEN) && !IS_IMMORTAL(ch))
+        return FALSE;
+    
     if (IS_NPC(ch) && IS_AFFECTED2(ch,  AFF2_DETECT_UNSEEN))
         return TRUE;
     if (get_trust(ch) < victim->incog_level && ch->in_room != victim->in_room)

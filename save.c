@@ -418,6 +418,7 @@ void fwrite_char( CHAR_DATA *ch, FILE *fp )
     if (ch->trust != 0)
     fprintf( fp, "Tru  %d\n",   ch->trust   );
     fprintf( fp, "Sec  %d\n",    ch->pcdata->security   );  /* OLC */
+    fprintf( fp, "Iclass %d\n", ch->pcdata->immclass);
     fprintf( fp, "Plyd %d\n",
     ch->played + (int) (current_time - ch->logon)   );
     fprintf( fp, "Not  %ld %ld %ld %ld %ld\n",
@@ -894,6 +895,7 @@ bool load_char_obj( DESCRIPTOR_DATA *d, char *name )
     ch->pcdata->last_pose = 5;
     ch->pcdata->room_last_pose = 5;
     ch->pcdata->security        = 0;    /* OLC */
+    ch->pcdata->immclass = 0;
     ch->pcdata->sect        = 0;
     ch->clan = 0;
     ch->roleplaying = 0;
@@ -1614,6 +1616,7 @@ void fread_char( CHAR_DATA *ch, FILE *fp )
         KEY( "Invi",    ch->invis_level,    fread_number( fp ) );
         KEYS( "Immtitle",   ch->pcdata->immtitle,    fread_string(fp) );
         KEY( "Immnote",    ch->pcdata->last_immnote,  fread_number( fp ) );
+        KEY( "Iclass", ch->pcdata->immclass, fread_number( fp) );
         KEY( "Immun",     ch->imm_flags,        fread_flag( fp ) );
 
         break;

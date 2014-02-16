@@ -2037,11 +2037,9 @@ void do_mstat( CHAR_DATA *ch, char *argument )
     }
     if (ch->clan)
     {
-        sendch("{Y-----------------------------------------------------------------{x\n\r",ch);
-
-        sprintf(buf,"{cClan:{W %-27s{x",clan_table[ch->clan].name);
+        sprintf(buf,"{cClan:{W %-27s{x",clan_table[victim->clan].name);
         sendch(buf, ch);
-        if (IS_SET(ch->act2, PLR2_LEADER))
+        if (IS_SET(victim->act2, PLR2_LEADER))
             sendch("{cLeader    :{W Yes{x\n\r",ch);
     }
 
@@ -2113,7 +2111,8 @@ void do_mstat( CHAR_DATA *ch, char *argument )
 
     return;
 }
-
+// Old Pstat
+/*
 void do_pstat( CHAR_DATA *ch, char *argument )
 {
     char buf[MAX_STRING_LENGTH];
@@ -2170,6 +2169,7 @@ void do_pstat( CHAR_DATA *ch, char *argument )
     victim->perm_stat[STAT_CON],
     get_curr_stat(victim,STAT_CON) );
     send_to_char( buf, ch );
+    
     sprintf( buf,"Age: %d(%dhrs)  Hit: %d  Dam: %d  Saves: %d  Trains: %d  Pracs: %d\n\r",
     get_age(victim),
     (int) (victim->played + current_time - victim->logon) / 3600,
@@ -2335,6 +2335,224 @@ void do_pstat( CHAR_DATA *ch, char *argument )
         paf->modifier,
         paf->duration,
         affect_bit_name( paf->bitvector ),
+        paf->level
+        );
+    send_to_char( buf, ch );
+    }
+
+    if (!IS_NPC(victim) && victim->pcdata->kill_target != NULL && str_cmp(victim->pcdata->kill_target, "null") &&
+        str_cmp(victim->pcdata->kill_target, "(null)"))
+    {
+        sprintf(buf,"\n\r{R%s has player killing permission on %s!{x\n\r",victim->name,victim->pcdata->kill_target);
+        send_to_char(buf,ch);
+    }
+    return;
+}
+*/
+
+
+void do_pstat( CHAR_DATA *ch, char *argument )
+{
+    char buf[MAX_STRING_LENGTH];
+    char arg[MAX_INPUT_LENGTH];
+    AFFECT_DATA *paf;
+    CHAR_DATA *victim;
+
+    one_argument( argument, arg );
+
+    if ( arg[0] == '\0' )
+    {
+    send_to_char( "Stat whom?\n\r", ch );
+    return;
+    }
+
+    if ( ( victim = get_char_world( ch, argument ) ) == NULL )
+    {
+    send_to_char( "They aren't here.\n\r", ch );
+    return;
+    }
+    if(IS_NPC(victim))
+    {
+        send_to_char( "That isn't a player.\n\r",ch);
+        return;
+    }
+    
+        send_to_char("\n\r{g----Char Flags:{x\n\r",ch);
+
+    sprintf( buf, "Fighting: %s\n\r",
+    victim->fighting ? victim->fighting->name : "(none)" );
+    send_to_char( buf, ch );
+
+    sprintf(buf, "Act: %s\n\r",act_bit_name(victim->act));
+    send_to_char(buf,ch);
+
+    sprintf(buf, "Act2: %s\n\r", act2_bit_name(victim->act2));
+    sendch(buf, ch);
+
+    if (victim->comm)
+    {
+        sprintf(buf,"Comm: %s\n\r",comm_bit_name(victim->comm));
+        send_to_char(buf,ch);
+    }
+
+    if (victim->imm_flags)
+    {
+    sprintf(buf, "Immune: %s\n\r",imm_bit_name(victim->imm_flags));
+    send_to_char(buf,ch);
+    }
+
+    if (victim->res_flags)
+    {
+    sprintf(buf, "Resist: %s\n\r", imm_bit_name(victim->res_flags));
+    send_to_char(buf,ch);
+    }
+
+    if (victim->vuln_flags)
+    {
+    sprintf(buf, "Vulnerable: %s\n\r", imm_bit_name(victim->vuln_flags));
+    send_to_char(buf,ch);
+    }
+
+    if (victim->affected_by)
+    {
+    sprintf(buf, "Affected by %s\n\r",
+        affect_bit_name(victim->affected_by));
+    send_to_char(buf,ch);
+    }
+
+    if (victim->affected2_by)
+    {
+         sprintf(buf, "Also affected by %s\n\r",
+            affect2_bit_name(victim->affected2_by) );
+        send_to_char(buf,ch);
+    }
+    sendch("{m----Basic Info:{x\n\r", ch);
+    sprintf( buf, "Name: {W%s{x (%s[%d])     Clan: %s\n\r",
+    victim->name,
+    IS_IMMORTAL(victim) ? "an Immortal" : "a Player", victim->level, clan_table[victim->clan].name);
+    send_to_char( buf, ch );
+
+    sprintf( buf,"Race: %s  Class: %s  Sex: %s Exp: %d  Room: %d\n\r",
+    race_table[victim->race].name,class_table[victim->class].name,
+    sex_table[victim->sex].name, victim->exp,
+    victim->in_room == NULL    ?        0 : victim->in_room->vnum);
+    send_to_char( buf, ch );
+
+    sprintf( buf, "Hp: %d/%d  Mana: %d/%d  Move: %d/%d  Agg: %d\n\r",
+    victim->hit,         victim->max_hit,
+    victim->mana,        victim->max_mana,
+    victim->move,        victim->max_move,
+    victim->agg_dam );
+    send_to_char( buf, ch );
+    
+    sprintf( buf,"Age: %d(%dhrs)  Hit: %d  Dam: %d  Saves: %d  Trains: %d  Pracs: %d\n\r",
+    get_age(victim),
+    (int) (victim->played + current_time - victim->logon) / 3600,
+    GET_HITROLL(victim), GET_DAMROLL(victim), victim->saving_throw,
+    victim->train, victim->practice);
+    send_to_char( buf, ch );
+
+    sprintf(buf,"Armor: pierce: %d  bash: %d  slash: %d  magic: %d\n\r",
+        GET_AC(victim,AC_PIERCE), GET_AC(victim,AC_BASH),
+        GET_AC(victim,AC_SLASH),  GET_AC(victim,AC_EXOTIC));
+    send_to_char(buf,ch);
+
+    sprintf(buf, "Wimpy: %d  LLevel: %d  Remorts: %d  Freebies: %d  QP: %d\n\r",
+    victim->wimpy, victim->pcdata->last_level, victim->remorts, victim->freebie,
+    victim->qpoints);
+    send_to_char( buf, ch );
+
+    sprintf( buf, "Thirst: %d  Hunger: %d  Full: %d  Drunk: %d  Carry: %d Weight: %ld\n\r",
+    victim->pcdata->condition[COND_THIRST],
+    victim->pcdata->condition[COND_HUNGER],
+    victim->pcdata->condition[COND_FULL],
+    victim->pcdata->condition[COND_DRUNK],
+    victim->carry_number,
+    get_carry_weight(victim) / 10);
+    send_to_char( buf, ch );
+
+    sprintf( buf, "Gold: %ld  Silver: %ld  Group leader: %s  Timer: %d\n\r",
+    victim->gold, victim->silver,
+    victim->leader ? victim->leader->name   : "(none)", victim->timer);
+    send_to_char( buf, ch );
+
+    sprintf (buf, "IC Hours: %ld  Bank: %d\n\r", victim->pcdata->IC_total/60, victim->pcdata->bank );
+    send_to_char(buf, ch);
+
+
+    if (!IS_NPC(victim) && victim->pcdata->immclass > 0)
+        cprintf(ch, "ImmClass: %d\n\r", victim->pcdata->immclass);
+    
+    if(IS_IMMORTAL(victim))
+    {
+        send_to_char("{W------Imm Info:{x",ch);
+        sprintf(buf, "Security: %d     Trust: %d     Wizinvis: %d     Incog: %d\n\r",
+        victim->pcdata->security,        get_trust(victim),        victim->invis_level,
+        victim->incog_level);
+        send_to_char( buf, ch );
+        sprintf(buf, "Wiziname: %s     Immtitle: %s\n\r", victim->pcdata->wiziname, victim->pcdata->immtitle);
+    }
+    if(victim->pcdata->breed > 0 && victim->pcdata->auspice > 0)
+    {
+        send_to_char("{g----Garou Info:{x",ch);
+        sprintf(buf,"Breed: %s  Auspice: %s  Tribe: %s\n\r",
+            victim->pcdata->breed == LUPUS ? "Lupus" : victim->pcdata->breed == METIS ? "Metis" :
+            "Homid", victim->pcdata->auspice == RAGABASH ? "Ragabash" : victim->pcdata->auspice == THEURGE ?
+            "Theurge" : victim->pcdata->auspice == PHILODOX ? "Philodox" : victim->pcdata->auspice == GALLIARD ?
+            "Galliard" : "Ahroun", capitalize(clan_table[victim->clan].name));
+        send_to_char(buf,ch);
+    }
+
+    if (victim->race == race_lookup("vampire") || victim->race == race_lookup("methuselah"))
+    {
+        send_to_char("{r--Vampire Info:{x",ch);
+        sprintf(buf,"Clan: %s  Generation: %d  Sire: %s Childer: %d Blood: %d/%d\n\r",
+        capitalize(clan_table[victim->clan].name),
+        victim->gen,
+        victim->sire,
+        victim->childer,
+        victim->pblood/10,
+        victim->max_pblood/10);
+        send_to_char(buf,ch);
+    }
+
+    if (victim->race == race_lookup("ghoul"))
+    {
+        send_to_char("{r----Ghoul Info:{x",ch);
+        sprintf(buf,"Generation: %d  Master: %s  Dpoints: %d  Blood: %d/%d\n\r",
+        victim->gen,
+        victim->vamp_master,
+        victim->dpoints,
+        victim->pblood/10,
+        victim->max_pblood/10);
+        send_to_char(buf,ch);
+    }
+    if (victim->avatar > 0)
+    {
+        send_to_char("{c-----Mage Info:{x",ch);
+        sprintf(buf,"Tradition: %s  Mentor: %s  Apprentice: %s  Rank: %s\n\r",
+        capitalize(tradition_table[victim->tradition].name),
+        victim->sire ? victim->sire : "none",
+// new haven fix    victim->apprentice == "(null)" ? "none" : victim->apprentice ? "none" : victim->apprentice,
+        victim->apprentice ? "none" : victim->apprentice,
+        victim->rank == 1 ? "Apprentice" : 
+        victim->rank == 2 ? "Disciple" : 
+        victim->rank == 8 ? "Master" : 
+        victim->rank == 9 ? "Mentor" : "Leader");
+        send_to_char(buf,ch);
+    }
+    if(victim->affected != NULL)
+        send_to_char("{y-------Affects:{x\n\r",ch);
+
+    for ( paf = victim->affected; paf != NULL; paf = paf->next )
+    {
+    sprintf( buf,
+        "Spell: '%s' modifies %s by %d for %d hours with bits %s, level %d.\n\r",
+        skill_table[(int) paf->type].name,
+        affect_loc_name( paf->location ),
+        paf->modifier,
+        paf->duration,
+        paf->where == TO_AFFECTS ? affect_bit_name( paf->bitvector ) : affect2_bit_name( paf->bitvector ),
         paf->level
         );
     send_to_char( buf, ch );
@@ -5343,7 +5561,23 @@ void do_mset( CHAR_DATA *ch, char *argument )
     victim->rage = value;
     return;
     }
-
+    
+    if ( !str_prefix( arg2, "immclass" ))
+    {
+        if (IS_NPC(victim))
+        {
+            sendch("Not on NPCs!\n\r", ch);
+            return;
+        }
+        if (value < 0 || value > 3 )
+        {
+            send_to_char("Immclass range is 0 to 3.\n\r",ch);
+            return;
+        }
+        victim->pcdata->immclass = value;
+        return;
+    }
+    
     if ( !str_prefix( arg2, "freebie" ))
     {
         if (value < 0 || value > 1000 )

@@ -2744,17 +2744,13 @@ bool can_see( CHAR_DATA *ch, CHAR_DATA *victim )
     if ( IS_AFFECTED2(victim, AFF2_VEIL) )
     return FALSE;
 
-    if ( ch->in_room != NULL && victim->in_room != NULL
-         && ch->in_room->area == victim->in_room->area
-         && is_affected(victim, gsn_unseen)
+    if (  is_affected(victim, gsn_unseen)
          && !IS_AFFECTED2(ch, AFF2_DETECT_UNSEEN)
          && !is_affected(ch, gsn_reveal)
          && victim->fighting == NULL)
     return FALSE;
 
-    if ( ch->in_room != NULL && victim->in_room != NULL
-         && ch->in_room->area == victim->in_room->area
-         && is_affected(victim, gsn_unseen)
+    if ( is_affected(victim, gsn_unseen)
          && !IS_AFFECTED2(ch, AFF2_DETECT_UNSEEN)
          && is_affected(ch, gsn_reveal)
          && victim->fighting == NULL)

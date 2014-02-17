@@ -2179,6 +2179,7 @@ struct  pc_data
     char *      alias[MAX_ALIAS];
     char *      alias_sub[MAX_ALIAS];
     int         security;   /* OLC */ /* Builder security */
+    int         immclass;
     sh_int      sect;
     int                  bank;
     char *      kill_target;

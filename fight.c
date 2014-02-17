@@ -36,6 +36,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
+#include <math.h>
 #include "merc.h"
 #include "interp.h"
 
@@ -3414,7 +3415,7 @@ void group_gain( CHAR_DATA *ch, CHAR_DATA *victim )
  */
 int xp_compute( CHAR_DATA *gch, CHAR_DATA *victim, int total_levels )
 {
-    int xp,base_exp,bxp;
+    int xp,base_exp,bxp, ixp;
     int level_range;
     int playerbonus;
     double dBonus;
@@ -3519,9 +3520,23 @@ int xp_compute( CHAR_DATA *gch, CHAR_DATA *victim, int total_levels )
 
     if ( IS_SET(gch->act2, PLR2_NEWBIE))
     xp =  bxp + xp;
+    
+    if (!IS_NPC(gch) && gch->pcdata->immclass > 0 )
+    {
+        double ixp;
+        switch (gch->pcdata->immclass)
+        {
+            case 1: ixp = (5 * (double) base_exp/100); break;
+            case 2: ixp = (15 * (double) base_exp/100); break;
+            case 3: ixp = (50 * (double) base_exp/100); break;
+        }
+        cprintf(gch, "xp%d ixp%f", xp, ixp);
+        ixp += 0.5;
+        xp += (int) ixp;
+    }
 
     if(victim->leader != NULL)
-        return 0;
+        return xp/10;
     else
     {
         if(doubleexp) return xp*2;

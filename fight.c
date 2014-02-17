@@ -3530,7 +3530,7 @@ int xp_compute( CHAR_DATA *gch, CHAR_DATA *victim, int total_levels )
             case 2: ixp = (15 * (double) base_exp/100); break;
             case 3: ixp = (50 * (double) base_exp/100); break;
         }
-        cprintf(gch, "xp%d ixp%f", xp, ixp);
+        //cprintf(gch, "xp%d ixp%f", xp, ixp);
         ixp += 0.5;
         xp += (int) ixp;
     }

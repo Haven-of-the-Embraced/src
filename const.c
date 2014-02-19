@@ -621,19 +621,19 @@ const   struct  pc_race_type    pc_race_table   []  =
  */
 const   struct  class_type  class_table [MAX_CLASS] =
 {             //Name     whoname    primeattr       begin weapon         guild rooms  max prac tha0 tha0 hpm hpx  mana     skills          groups
- /*0*/    {    "mage", " Mag",      STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER,   { 3018, 9618 },  75,  20,   6,   5,   15,  TRUE,   "mage basics", "mage default"},
- /*1*/    {    "cleric", " Cle",    STAT_WIS,  OBJ_VNUM_SCHOOL_MACE,     { 3003, 9619 },  75,  20,   2,   5,   15, TRUE,   "cleric basics", "cleric default"},
- /*2*/    {    "thief", " Thi",     STAT_DEX,  OBJ_VNUM_SCHOOL_DAGGER,   { 3028, 9639 },  75,  20,  -4,   5,   15, FALSE,  "thief basics", "thief default"},
- /*3*/    {    "warrior", " War",   STAT_STR,  OBJ_VNUM_SCHOOL_SWORD,    { 3022, 9633 },  75,  20,  -10,  5,   15, FALSE,  "warrior basics", "warrior default"},
- /*4*/    {    "bandit", "Ban",     STAT_DEX,  OBJ_VNUM_SCHOOL_DAGGER,   { 3028, 9639 },  50,  20,  -5,   20,  30, FALSE,  "rogue basics", "bandit basic"    },
- /*5*/    {    "assassin", "Asn",   STAT_DEX,  OBJ_VNUM_SCHOOL_DAGGER,   { 3028, 9639 },  50,  20,  -15,  10,  20, FALSE,  "rogue basics", "assassin basic"    },
- /*6*/    {    "trickster", "Tri",  STAT_DEX,  OBJ_VNUM_SCHOOL_DAGGER,   { 3028, 9639 },  50,  20,  -5,   15,  25, FALSE,  "rogue basics", "trickster basic"    },
- /*7*/    {    "mercenary", "Mer",  STAT_STR,  OBJ_VNUM_SCHOOL_SWORD,    { 3022, 9633 },  50,  20,  -15,  15,  25, FALSE,  "swordsman basics", "mercenary basic"    },
- /*8*/    {    "guardsman", "Gua",  STAT_CON,  OBJ_VNUM_SCHOOL_SWORD,    { 3022, 9633 },  50,  20,  -10,  35,  45, FALSE,  "swordsman basics", "guardsman basic"    },
- /*9*/    {    "knight", "Kni",     STAT_STR,  OBJ_VNUM_SCHOOL_SWORD,    { 3022, 9633 },  50,  20,  -10,  20,  30, FALSE,  "swordsman basics", "knight basic"    },
- /*10*/   {    "priest", "Pri",     STAT_WIS,  OBJ_VNUM_SCHOOL_MACE,     { 3003, 9619 },  50,  20,   -5,  10,  20,  TRUE,   "clergy basics", "priest basic"    },
- /*11*/   {    "monk", "Mon",       STAT_CON,  OBJ_VNUM_SCHOOL_MACE,     { 3003, 9619 },  50,  20,   -5,  15,  25, TRUE,   "clergy basics", "monk basic"    },
- /*12*/   {    "crusader", "Cru",   STAT_WIS,  OBJ_VNUM_SCHOOL_MACE,     { 3003, 9619 },  50,  20,  -10,  20,  30, TRUE,   "clergy basics", "crusader basic"    }
+ /*0*/    {    "none", " ",      STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER,   { 3003, 9619 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
+ /*1*/    {    "cleric", " ",    STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER,   { 3003, 9619 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
+ /*2*/    {    "thief", " ",     STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER,   { 3003, 9619 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
+ /*3*/    {    "warrior", " ",   STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER,   { 3003, 9619 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
+ /*4*/    {    "bandit", "",     STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER,   { 3003, 9619 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
+ /*5*/    {    "assassin", "",   STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER,   { 3003, 9619 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
+ /*6*/    {    "trickster", "",  STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER,   { 3003, 9619 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
+ /*7*/    {    "mercenary", "",  STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER,   { 3003, 9619 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
+ /*8*/    {    "guardsman", "",  STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER,   { 3003, 9619 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
+ /*9*/    {    "knight", "",     STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER,   { 3003, 9619 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
+ /*10*/   {    "priest", "",     STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER,   { 3003, 9619 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
+ /*11*/   {    "monk", "",       STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER,   { 3003, 9619 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
+ /*12*/   {    "crusader", "",   STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER,   { 3003, 9619 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
 };
 
 
@@ -1858,6 +1858,273 @@ const   struct  crafted_type    crafted_table   []  =
     { NULL  }
 };
 
+#define ATTR 0
+#define ABIL 1
+#define SECA 2
+
+const struct cs_skill_type csskill_table [] =
+{
+    {"assassinate", &gsn_assassinate, 50,
+    {CSABIL_MELEE, 5, ABIL}, {CSABIL_MEDICINE, 3, ABIL} },
+    
+    {"backstab", &gsn_backstab, 10,
+    {CSABIL_MELEE, 3, ABIL}, {CSABIL_STEALTH, 1, ABIL} },
+    
+    {"bandage", &gsn_bandage, 1, 
+    {CSABIL_MEDICINE, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
+    
+    {"berserk", &gsn_berserk, 40, 
+    {CSABIL_INTIMIDATION, 3, ABIL}, {CSABIL_HEARTHWISDOM, 1, ABIL} },
+    
+    {"blast", &gsn_blast, 50, 
+    {CSABIL_LEGERDEMAIN, 4, ABIL}, {CSABIL_NONE, 0, ABIL} },
+    
+    {"block", &gsn_block, 1, 
+    {CSABIL_BRAWL, 2, ABIL}, {CSABIL_NONE, 0, ABIL} },
+    
+    {"brew", &gsn_brew, 10, 
+    {CSABIL_HEARTHWISDOM, 2, ABIL}, {CSABIL_NONE, 0, ABIL} },
+    
+    {"chant", &gsn_chant, 10, 
+    {CSABIL_NONE, 0, ABIL}, {CSABIL_NONE, 0, ABIL} },
+    
+    {"critical strike", &gsn_critical_strike, 60, 
+    {CSABIL_MEDICINE, 3, ABIL}, {CSABIL_MELEE, 2, ABIL} },
+    
+    {"dirt kick", &gsn_dirt, 5, 
+    {CSABIL_BRAWL, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
+    
+    {"disarm", &gsn_disarm,20, 
+    {CSABIL_MELEE, 2, ABIL}, {CSABIL_NONE, 0, ABIL} },
+    
+    {"divine strength", &gsn_divine_strength, 50, 
+    {CSABIL_THEOLOGY, 4, ABIL}, {CSABIL_NONE, 0, ABIL} },
+    
+    {"dodge", &gsn_dodge, 1, 
+    {CSABIL_DODGE, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
+    
+    {"enhanced damage", &gsn_enhanced_damage, 50,
+    {STRENGTH, 5, ATTR}, {CSABIL_NONE, 0, ABIL} },
+    
+    {"enhanced speed", &gsn_enhanced_speed, 50,
+    {DEXTERITY, 5, ATTR}, {CSABIL_NONE, 0, ABIL} },
+    
+    {"envenom", &gsn_envenom, 45, 
+    {CSABIL_HEARTHWISDOM, 2, ABIL}, {CSABIL_NONE, 0, ABIL} },
+    
+//    {"alertness", &gsn_alertness, 0
+//    {CSABIL_ALERTNESS, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
+    
+    {"fortress", &gsn_fortress, 55, 
+    {CSABIL_CRAFTS, 3, ABIL}, {CSABIL_SURVIVAL, 1, ABIL} },
+    
+    {"waylay", &gsn_waylay, 55, 
+    {CSABIL_STEALTH, 3, ABIL}, {CSABIL_MELEE, 1, ABIL} },
+    
+    {"ground", &gsn_ground, 20, 
+    {CSABIL_BRAWL, 3, ABIL}, {CSABIL_NONE, 0, ABIL} },
+    
+    {"haggle", &gsn_haggle, 5, 
+    {CSABIL_COMMERCE, 2, ABIL}, {CSABIL_SUBTERFUGE, 1, ABIL} },
+    
+    {"headbutt", &gsn_headbutt, 50, 
+    {CSABIL_BRAWL, 4, ABIL}, {CSABIL_NONE, 0, ABIL} },
+    
+    {"hide", &gsn_hide, 20, 
+    {CSABIL_STEALTH, 3, ABIL}, {CSABIL_NONE, 0, ABIL} },
+    
+    {"knights training", &gsn_knight_training, 50, 
+    {CSABIL_MELEE, 5, ABIL}, {CSABIL_ETIQUETTE, 1, ABIL} },
+    
+    {"lore", &gsn_lore, 15, 
+    {CSABIL_HEARTHWISDOM, 2, ABIL}, {CSABIL_ACADEMICS, 1, ABIL} },
+    
+    {"meditation", &gsn_meditation, 1,
+    {CSABIL_MEDITATION, 1, SECA}, {CSABIL_NONE, 0, ABIL} },
+    
+    {"parry", &gsn_parry, 1, 
+    {CSABIL_MELEE, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
+    
+    {"peek", &gsn_peek, 15, 
+    {CSABIL_STEALTH, 2, ABIL}, {CSABIL_LEGERDEMAIN, 1, ABIL} },
+    
+    {"pick lock", &gsn_pick_lock, 5, 
+    {CSABIL_LEGERDEMAIN, 3, ABIL}, {CSABIL_ACADEMICS, 1, ABIL} },
+    
+    {"renown", &gsn_renown, 70, 
+    {CSABIL_SURVIVAL, 3, ABIL}, {CSABIL_ATHLETICS, 1, ABIL} },
+    
+    {"rescue", &gsn_rescue, 10, 
+    {CSABIL_BRAWL, 2, ABIL}, {CSABIL_LEADERSHIP, 1, ABIL} },
+    
+    {"riding", &gsn_riding, 1, 
+    {CSABIL_RIDING, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
+    
+    {"scrolls", &gsn_scrolls, 1, 
+    {CSABIL_OCCULT, 2, ABIL}, {CSABIL_ACADEMICS, 1, ABIL} },
+    
+    {"second attack", &gsn_second_attack, 15,
+    {DEXTERITY, 2, ATTR}, {CSABIL_NONE, 0, ABIL} },
+    
+    {"shield block", &gsn_shield_block, 1, 
+    {CSABIL_MELEE, 2, ABIL}, {CSABIL_ATHLETICS, 1, ABIL} },
+    
+    {"skin", &gsn_skin, 10, 
+    {CSABIL_SURVIVAL, 2, ABIL}, {CSABIL_CRAFTS, 1, ABIL} },
+    
+    {"slip", &gsn_slip,70, 
+    {CSABIL_STEALTH, 4, ABIL}, {CSABIL_LEGERDEMAIN, 2, ABIL} },
+    
+    {"sneak", &gsn_sneak,10, 
+    {CSABIL_STEALTH, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
+    
+    {"staves", &gsn_staves, 1, 
+    {CSABIL_THEOLOGY, 2, ABIL}, {CSABIL_NONE, 0, ABIL} },
+    
+    {"steal", &gsn_steal, 10, 
+    {CSABIL_LEGERDEMAIN, 4, ABIL}, {CSABIL_NONE, 0, ABIL} },
+    
+    {"study", &gsn_study, 10, 
+    {CSABIL_HEARTHWISDOM, 2, ABIL}, {CSABIL_OCCULT, 1, ABIL} },
+    
+    {"third attack", &gsn_third_attack, 30,
+    {DEXTERITY, 3, ATTR}, {CSABIL_NONE, 0, ABIL} },
+    
+    {"trip", &gsn_trip, 30, 
+    {CSABIL_BRAWL, 2, ABIL}, {CSABIL_ATHLETICS, 1, ABIL} },
+    
+    {"vigor", &gsn_vigor,10, 
+    {CSABIL_ATHLETICS, 2, ABIL}, {CSABIL_NONE, 0, ABIL} },
+    
+    {"wands", &gsn_wands, 1, 
+    {CSABIL_HEARTHWISDOM, 2, ABIL}, {CSABIL_OCCULT, 1, ABIL} },
+    
+    {"warcry", &gsn_warcry, 65, 
+    {CSABIL_INTIMIDATION, 4, ABIL}, {CSABIL_LEADERSHIP, 2, ABIL} },
+    
+    {"kick", &gsn_kick, 1, 
+    {CSABIL_BRAWL, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
+    
+    {"bash", &gsn_bash, 1, 
+    {CSABIL_MELEE, 2, ABIL}, {CSABIL_NONE, 0, ABIL} },
+
+    {"axe", &gsn_axe,  1, 
+    {CSABIL_MELEE, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
+
+    {"dagger", &gsn_dagger, 1, 
+    {CSABIL_MELEE, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
+
+    {"flail", &gsn_flail, 1, 
+    {CSABIL_MELEE, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
+
+    {"mace", &gsn_mace, 1, 
+    {CSABIL_MELEE, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
+
+    {"polearm", &gsn_polearm, 1, 
+    {CSABIL_MELEE, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
+
+    {"whip", &gsn_whip, 1, 
+    {CSABIL_MELEE, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
+
+    {"spear", &gsn_spear, 1, 
+    {CSABIL_MELEE, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
+
+    {"sword", &gsn_sword, 1, 
+    {CSABIL_MELEE, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
+
+    {"lance", &gsn_lance, 1, 
+    {CSABIL_MELEE, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
+
+    {"hand to hand", &gsn_hand_to_hand, 1, 
+    {CSABIL_BRAWL, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
+
+    { NULL, 0, 0, {-1, 0, ABIL}, {-1, 0, ABIL}}
+    
+    
+};
+int cskill_lookup (int gsn)
+{
+    int i;
+    for (i = 0; csskill_table[i].name != NULL; i++)
+    {
+    if (*csskill_table[i].gsn == gsn)
+    return i;
+    }
+    return -1;
+}
+#define STAT 0
+#define DOT 1
+#define TYPE 2
+void cskill_update(CHAR_DATA *ch) 
+{
+
+    int i;
+    bool primary, secondary;
+    primary = FALSE;
+    secondary = FALSE;
+    
+    for (i = 0; csskill_table[i].name != NULL; i++)
+    {
+        primary = FALSE;
+        secondary = FALSE;    
+        switch (csskill_table[i].primary[TYPE])
+        {
+            case ABIL:
+                if (ch->pcdata->csabilities[csskill_table[i].primary[STAT]] >= csskill_table[i].primary[DOT])
+                    primary = TRUE;
+                break;
+            case ATTR:
+                if (ch->pcdata->csattributes[csskill_table[i].primary[STAT]] >= csskill_table[i].primary[DOT])
+                    primary = TRUE;
+                break;
+            case SECA:
+                if (ch->pcdata->cssec_abil[csskill_table[i].primary[STAT]] >= csskill_table[i].primary[DOT])
+                    primary = TRUE;
+                break;
+            default: 
+                bug("csskill_update: Invalid primary cs type.", 0);
+                return;
+        }
+
+        switch (csskill_table[i].secondary[TYPE])
+        {
+            case ABIL:
+                if (csskill_table[i].secondary[STAT] == CSABIL_NONE || 
+                (ch->pcdata->csabilities[csskill_table[i].secondary[STAT]] >= 1 && 
+                ch->pcdata->csabilities[csskill_table[i].secondary[STAT]] >= csskill_table[i].secondary[DOT]))
+                    secondary = TRUE;
+                break;
+            case ATTR:
+                if (csskill_table[i].secondary[STAT] == CSABIL_NONE || 
+                (ch->pcdata->csattributes[csskill_table[i].secondary[STAT]] >= 1 && 
+                ch->pcdata->csattributes[csskill_table[i].secondary[STAT]] >= csskill_table[i].secondary[DOT]))                    secondary = TRUE;
+                break;
+            case SECA:
+                if (csskill_table[i].secondary[STAT] == CSABIL_NONE || 
+                (ch->pcdata->cssec_abil[csskill_table[i].secondary[STAT]] >= 1 && 
+                ch->pcdata->cssec_abil[csskill_table[i].secondary[STAT]] >= csskill_table[i].secondary[DOT]))                    secondary = TRUE;
+                break;
+            default: 
+                bug("csskill_update: Invalid secondary cs type.", 0);
+                return;
+        }        
+        
+                
+                
+        if (primary == FALSE || secondary == FALSE)
+                continue;
+            else
+            {
+            if (ch->pcdata->learned[*csskill_table[i].gsn] < 10) {
+                ch->pcdata->learned[*csskill_table[i].gsn] = 50;
+                cprintf(ch, "Learning the %s skill!\n\r", csskill_table[i].name);
+                }
+            }
+            
+
+    }
+
+}
 
 /*
  * The skill and spell table.
@@ -1873,10 +2140,10 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
  */
 
     {    "reserved", { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102}, 0, TAR_IGNORE, POS_STANDING,
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, 0, TAR_IGNORE, POS_STANDING,
     NULL, SLOT( 0),    0,  0,    "",         "",     ""    },
 
-    {    "acid blast", { 28, 102, 35, 32, 102, 102, 102, 102, 102, 102, 102, 102, 102},    
+    {    "acid blast", { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },    
     { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_acid_blast, TAR_CHAR_OFFENSIVE, POS_FIGHTING,
     NULL, SLOT(70),   20, 12, "acid blast",       "!Acid Blast!"    },
 
@@ -2061,7 +2328,7 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
     NULL,           SLOT(73),   12, 12, "faerie fog",       "!Faerie Fog!",     "" },
 
     { "farsight",     { 14, 16, 16, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },   
-	{ 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_farsight,     TAR_IGNORE,     POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_farsight,     TAR_IGNORE,     POS_STANDING,
     NULL,           SLOT(521),  36, 20, "farsight",     "!Farsight!",       "" },
 
     { "fireball",     { 22, 102, 30, 26, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
@@ -2069,7 +2336,7 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
     NULL,           SLOT(26),   15, 12, "fireball",     "!Fireball!",       "" },
 
     { "fireproof",        { 13, 12, 19, 18, 102, 102, 102, 102, 102, 102, 102, 102, 102 },    
-	{ 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_fireproof,    TAR_OBJ_INV,        POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_fireproof,    TAR_OBJ_INV,        POS_STANDING,
     NULL,           SLOT(523),  10, 12, "",         "", "$p's protective aura fades." },
 
     { "flamestrike",      { 102, 20, 102, 27, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
@@ -2081,7 +2348,7 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
     NULL,           SLOT(56),   10, 18, "",         "You slowly float to the ground.",  "" },
 
     { "floating disc",    {  4, 10, 7, 16, 102, 102, 102, 102, 102, 102, 102, 102, 102 }, 
-	{ 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_floating_disc,    TAR_IGNORE,     POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_floating_disc,    TAR_IGNORE,     POS_STANDING,
     NULL,           SLOT(522),  40, 24, "",         "!Floating disc!",  "" },
 
     { "frenzy",               { 102, 24, 102, 26, 102, 102, 102, 102, 102, 102, 75, 102, 102 },     
@@ -2105,7 +2372,7 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
     NULL,           SLOT(502),  30, 12, "",         "You feel yourself slow down.", "" },
 //xp boost
     { "XP Boost",  { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_xp_boost,    TAR_CHAR_DEFENSIVE,      POS_RESTING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_xp_boost,    TAR_CHAR_DEFENSIVE,      POS_RESTING,
     &gsn_xp_boost,           SLOT(0),     0, 12, "",         "",  "" },
 
     { "heal",         { 102, 21, 33, 30, 102, 102, 102, 102, 102, 102, 50, 102, 102 },     
@@ -2285,274 +2552,274 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
     &gsn_quintessentialbond,    SLOT(0),    0,  12, "", "!quintessentialbond!", "" }, */
 
 /* combat and weapons skills */
-    { "axe",          { 1, 1, 1,  1, 102, 102, 102, 1, 1, 1, 102, 102, 1 },   
-	{ 6, 6, 5, 4, 0, 0, 0, 2, 2, 2, 0, 0, 2}, spell_null,             TAR_IGNORE,             POS_FIGHTING,
+    { "axe",{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },   
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_FIGHTING,
     &gsn_axe,               SLOT( 0),       0,      0, "",                     "!Axe!",        "" },
 
-    { "dagger",               {  1, 1, 1, 1, 1, 1, 1, 102, 102, 102, 102, 102, 102 },     
-	{ 2, 3, 2, 2, 4, 4, 4, 0, 0, 0, 0, 0, 0}, spell_null,             TAR_IGNORE,             POS_FIGHTING,
+    { "dagger",{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },   
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_FIGHTING,
     &gsn_dagger,            SLOT( 0),       0,      0, "",                     "!Dagger!",     "" },
 
-    { "flail",        { 1, 1, 1, 1, 102, 102, 102, 1, 1, 1, 1, 1, 1 },    
-	{ 6, 3, 6, 4, 0, 0, 0, 2, 2, 2, 2, 2, 2}, spell_null,             TAR_IGNORE,             POS_FIGHTING,
+    { "flail",{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },   
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_FIGHTING,
     &gsn_flail,             SLOT( 0),       0,      0, "",                     "!Flail!",      "" },
 
-    { "mace",         { 1,  1,  1,  1, 102, 102, 102, 1, 1, 1, 1, 1, 1 }, 
-	{ 5, 2, 3, 3, 0, 0, 0, 2, 2, 2, 2, 2, 2}, spell_null,             TAR_IGNORE,             POS_FIGHTING,
+    { "mace",         { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },   
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_FIGHTING,
     &gsn_mace,              SLOT( 0),       0,      0, "",                     "!Mace!",       "" },
 
-    { "polearm",      { 1, 1, 1,  1, 102, 102, 102, 102, 102, 1, 102, 102, 102 }, 
-	{ 6, 6, 6, 4, 0, 0, 0, 0, 0, 2, 0, 0, 0}, spell_null,             TAR_IGNORE,             POS_FIGHTING,
+    { "polearm",      { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },   
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_FIGHTING,
     &gsn_polearm,           SLOT( 0),       0,      0, "",                     "!Polearm!",        "" },
 
-    { "lance expertise",      { 102, 102, 102, 102, 102, 102, 102, 102, 102, 1, 102, 102, 102 },  
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0}, spell_null,             TAR_IGNORE,             POS_FIGHTING,
+    { "lance expertise",      { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },   
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_FIGHTING,
     &gsn_lance,           SLOT( 0),       0,      0, "",                     "!Lance Expertise!",        "" },
 
-    { "shield block",     { 1,  1, 1,  1, 102, 102, 102, 1, 1, 1, 102, 102, 1},   
-	{ 6, 4, 6, 2, 0, 0, 0, 2, 2, 2, 0, 0, 2}, spell_null,     TAR_IGNORE,     POS_FIGHTING,
+    { "shield block",     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },   
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,     TAR_IGNORE,     POS_FIGHTING,
     &gsn_shield_block,  SLOT(0),    0,  0, "",         "!Shield!",     "" },
 
-    { "spear",        {  1,  1,  1,  1, 102, 102, 102, 1, 1, 1, 102, 102, 102 },  
-	{ 4, 4, 4, 3, 0, 0, 0, 2, 2, 2, 0, 0, 0}, spell_null,             TAR_IGNORE,             POS_FIGHTING,
+    { "spear",        { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },  
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_FIGHTING,
     &gsn_spear,             SLOT( 0),       0,      0, "",                     "!Spear!",      "" },
 
-    { "sword",        { 1, 1,  1,  1, 102, 102, 102, 1, 1, 1, 102, 102, 102}, 
-	{ 5, 6, 3, 2, 0, 0, 0, 2, 2, 2, 0, 0, 0}, spell_null,             TAR_IGNORE,             POS_FIGHTING,
+    { "sword",        { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, 
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_FIGHTING,
     &gsn_sword,             SLOT( 0),       0,      0, "",                     "!sword!",      "" },
 
-    { "whip",         { 1, 1,  1,  1, 102, 102, 102, 1, 1, 1, 102, 102, 1},   
-	{ 6, 5, 5, 4, 0, 0, 0, 2, 2, 2, 0, 0, 2}, spell_null,             TAR_IGNORE,             POS_FIGHTING,
+    { "whip",         { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },  
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_FIGHTING,
     &gsn_whip,              SLOT( 0),       0,      0, "",                     "!Whip!",   "" },
 
-    { "backstab",             { 102, 102,  1, 102, 10, 10, 10, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 5, 0, 5, 5, 5, 0, 0, 0, 0, 0, 0}, spell_null,             TAR_IGNORE,             POS_STANDING,
+    { "backstab",             { 10, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },   
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
     &gsn_backstab,          SLOT( 0),        0,     24, "backstab",             "!Backstab!",       "" },
 
-    { "bash",         { 102, 102, 102,  1, 102, 102, 102, 25, 15, 30, 102, 102, 30 }, 
-	{ 0, 0, 0, 4, 0, 0, 0, 3, 3, 3, 0, 0, 4}, spell_null,             TAR_IGNORE,             POS_FIGHTING,
+    { "bash",        { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_FIGHTING,
     &gsn_bash,              SLOT( 0),       0,      24, "shield bash",                 "!Shield Bash!",     "" },
 
-    { "berserk",      { 102, 102, 102, 18, 40, 102, 102, 40, 102, 102, 102, 102, 102 },   
-	{ 0, 0, 0, 5, 5, 0, 0, 5, 0, 0, 0, 0, 0}, spell_null,             TAR_IGNORE,             POS_FIGHTING,
+    { "berserk",      { 40, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_FIGHTING,
     &gsn_berserk,           SLOT( 0),       0,      24, "",                     "You feel your pulse slow down.",   "" },
 
-    { "dirt kicking",     { 102, 102,  3,  3, 5, 3, 8, 102, 102, 102, 102, 102, 102 },    
-	{ 0, 0, 4, 4, 2, 2, 2, 0, 0, 0, 0, 0, 0}, spell_null,     TAR_IGNORE,     POS_FIGHTING,
+    { "dirt kicking",      { 5, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },    
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,     TAR_IGNORE,     POS_FIGHTING,
     &gsn_dirt,      SLOT( 0),   0,  24, "kicked dirt",      "You rub the dirt out of your eyes.",   "" },
 
-    { "disarm",               { 102, 102, 12, 11, 102, 50, 15, 35, 23, 15, 50, 23, 50 },     
-	{ 0, 0, 6, 4, 0, 2, 2, 2, 2, 2, 2, 2, 2}, spell_null,             TAR_IGNORE,             POS_FIGHTING,
+    { "disarm",              { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_FIGHTING,
     &gsn_disarm,            SLOT( 0),        0,     24, "",                     "!Disarm!",     "" },
 
-    { "dodge",                { 20, 22,  1, 13, 15, 23, 28, 30, 13, 18, 25, 10, 25 },     
-	{ 8, 8, 4, 6, 2, 2, 2, 2, 2, 2, 6, 6, 2}, spell_null,             TAR_IGNORE,             POS_FIGHTING,
+    { "dodge",                { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },    
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_FIGHTING,
     &gsn_dodge,             SLOT( 0),        0,     0, "",                     "!Dodge!",      "" },
 
-    { "block",                { 20, 22,  1, 13, 102, 102, 102, 102, 25, 50, 102, 102, 65 },     
-	{ 8, 8, 4, 6, 0, 0, 0, 0, 10, 10, 0, 0, 10}, spell_null,             TAR_IGNORE,             POS_FIGHTING,
+    { "block",                { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },     
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_FIGHTING,
     &gsn_block,             SLOT( 0),        0,     0, "",                     "!Block!",      "" },
 
-    { "enhanced damage",      { 45, 30, 25,  1, 50, 38, 102, 20, 25, 25, 102, 70, 25 },     
-	{ 10, 9, 5, 3, 3, 3, 0, 3, 3, 3, 0, 3, 3}, spell_null,             TAR_IGNORE,             POS_FIGHTING,
+    { "enhanced damage",      { 125, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },   
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_FIGHTING,
     &gsn_enhanced_damage,   SLOT( 0),        0,     0, "",                     "!Enhanced Damage!",    "" },
 
-    { "retreat",      { 102, 102, 102,  102, 10, 15, 20, 35, 102, 75, 25, 35, 50 },     
-	{ 0, 0, 0, 0, 3, 3, 3, 3, 0, 3, 3, 3, 3}, spell_null,             TAR_IGNORE,             POS_FIGHTING,
+    { "retreat",      { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },    
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_FIGHTING,
     &gsn_retreat,   SLOT( 0),        0,     0, "",                     "!Retreat!",    "" },
 
-    { "critical strike",      { 102, 102, 102, 102, 60, 60, 60, 60, 60, 60, 60, 70, 60 },     
-	{ 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3}, spell_null,             TAR_IGNORE,             POS_FIGHTING,
+    { "critical strike",     { 60, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_FIGHTING,
     &gsn_critical_strike,   SLOT( 0),        0,     0, "",                     "!Critical Strike!",    "" },
 
-    { "knight's training",      { 45, 30, 25,  1, 102, 102, 102, 102, 102, 50, 102, 102, 102 },     
-	{ 10, 9, 5, 3, 0, 0, 0, 0, 0, 10, 0, 0, 0}, spell_null,             TAR_IGNORE,             POS_FIGHTING,
+    { "knight's training",     { 50, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_FIGHTING,
     &gsn_knight_training,   SLOT( 0),        0,     0, "",                     "!Knight's Training!",  "" },
 
-    { "envenom",      { 102, 102, 10, 102, 102, 45, 45, 102, 102, 102, 102, 102, 102 },   
-	{ 0, 0, 4, 0, 0, 5, 5, 0, 0, 0, 0, 0, 0 }, spell_null,     TAR_IGNORE,     POS_RESTING,
+    { "envenom",      { 145, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, 
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },spell_null,     TAR_IGNORE,     POS_RESTING,
     &gsn_envenom,       SLOT(0),    0,  36, "",         "!Envenom!",        "" },
 
     { "hand to hand",     { 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },  
-	{ 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 1, 2}, spell_null,     TAR_IGNORE,     POS_FIGHTING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,     TAR_IGNORE,     POS_FIGHTING,
     &gsn_hand_to_hand,  SLOT( 0),   0,  0, "",         "!Hand to Hand!",   "" },
 
-    { "kick",                 { 102, 12, 14,  8, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 4, 6, 3, 2, 0, 2, 2, 2, 2, 0, 1, 1}, spell_null,             TAR_CHAR_OFFENSIVE,     POS_FIGHTING,
+    { "kick",                 { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },     
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_CHAR_OFFENSIVE,     POS_FIGHTING,
     &gsn_kick,              SLOT( 0),        0,     12, "kick",                 "!Kick!",       "" },
 
-    { "parry",                { 22, 20, 13,  1, 8, 20, 23, 18, 10, 15, 30, 20, 20 },     
-	{ 8, 8, 6, 4, 4, 4, 4, 1, 1, 1, 6, 6, 2}, spell_null,             TAR_IGNORE,             POS_FIGHTING,
+    { "parry",                { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },     
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_FIGHTING,
     &gsn_parry,             SLOT( 0),        0,     0, "",                     "!Parry!",      "" },
 
-    { "rescue",               { 102, 102, 102,  1, 102, 102, 102, 102, 10, 10, 102, 102, 23 },     
-	{ 0, 0, 0, 4, 0, 0, 0, 0, 1, 1, 0, 0, 2}, spell_null,             TAR_IGNORE,             POS_FIGHTING,
+    { "rescue",               { 10, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },    
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_FIGHTING,
     &gsn_rescue,            SLOT( 0),        0,     12, "",                     "!Rescue!",     "" },
 
-    { "trip",         { 102, 102,  1, 15, 102, 30, 33, 28, 102, 102, 102, 35, 102 },  
-	{ 0, 0, 4, 8, 0, 2, 2, 2, 0, 0, 0, 2, 0}, spell_null,     TAR_IGNORE,     POS_FIGHTING,
+    { "trip",         { 30, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },  
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,     TAR_IGNORE,     POS_FIGHTING,
     &gsn_trip,      SLOT( 0),   0,  24, "trip",         "!Trip!",       "" },
 
-    { "second attack",        { 30, 24, 12,  5, 20, 25, 30, 20, 28, 20, 102, 25, 18 },     
-	{ 10, 8, 5, 3, 3, 3, 3, 2, 3, 3, 0, 3, 3}, spell_null,             TAR_IGNORE,             POS_FIGHTING,
+    { "second attack",        { 20, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },  
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_FIGHTING,
     &gsn_second_attack,     SLOT( 0),        0,     0, "",                     "!Second Attack!",  "" },
 
-    { "third attack",         { 102, 102, 24, 12, 30, 60, 102, 25, 40, 35, 102, 30, 38 },     
-	{ 0, 0, 10, 4, 5, 5, 0, 5, 5, 5, 0, 5, 5}, spell_null,             TAR_IGNORE,             POS_FIGHTING,
+    { "third attack",         { 25, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, 
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_FIGHTING,
     &gsn_third_attack,      SLOT( 0),        0,     0, "",                     "!Third Attack!",   "" },
 
-    { "fourth attack",        { 30, 24, 12,  5, 102, 102, 102, 35, 45, 45, 102, 102, 45 },     
-	{ 10, 8, 5, 3, 0, 0, 0, 8, 10, 10, 0, 0, 10}, spell_null,             TAR_IGNORE,             POS_FIGHTING,
+    { "fourth attack",        { 35, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_FIGHTING,
     &gsn_fourth_attack,     SLOT( 0),        0,     0, "",                     "!Fourth Attack!",  "" },
 
-    { "fifth attack",        { 30, 24, 12,  5, 102, 102, 102, 50, 102, 102, 102, 102, 102 },     
-	{ 10, 8, 5, 3, 0, 0, 0, 10, 0, 0, 0, 0, 0}, spell_null,             TAR_IGNORE,             POS_FIGHTING,
+    { "fifth attack",       { 50, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_FIGHTING,
     &gsn_fifth_attack,     SLOT( 0),        0,     0, "",                     "!Fifth Attack!",   "" },
 
 /* non-combat skills */
-    { "fast healing",     { 15, 9, 16,  6, 30, 30, 30, 30, 18, 28, 30, 30, 28 }, 
-	{ 8, 5, 6, 4, 2, 2, 2, 2, 2, 2, 2, 2, 2}, spell_null,     TAR_IGNORE,     POS_SLEEPING,
+    { "fast healing",     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, 
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,     TAR_IGNORE,     POS_SLEEPING,
     &gsn_fast_healing,  SLOT( 0),   0,  0, "",         "!Fast Healing!",   "" },
 
-    { "haggle",       { 7, 18,  1, 14, 5, 102, 5, 28, 102, 102, 102, 102, 102 },  
-	{ 5, 8, 3, 6, 2, 0, 2, 1, 0, 0, 0, 0, 0}, spell_null,     TAR_IGNORE,     POS_RESTING,
+    { "haggle",       { 5, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },  
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,     TAR_IGNORE,     POS_RESTING,
     &gsn_haggle,        SLOT( 0),   0,  0, "",         "!Haggle!",     "" },
 
-    { "hide",         { 102, 102,  1,  12, 102, 40, 45, 102, 102, 102, 102, 102, 102 },   
-	{ 0, 0, 4, 6, 0, 5, 5, 0, 0, 0, 0, 0, 0}, spell_null,     TAR_IGNORE,     POS_RESTING,
+    { "hide",         { 30, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },   
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,     TAR_IGNORE,     POS_RESTING,
     &gsn_hide,      SLOT( 0),    0, 12, "",         "You feel exposed.",        "" },
 
-    { "lore",         { 10, 10,  6, 20, 40, 40, 40, 40, 40, 40, 15, 40, 40 },    
-	{ 6, 6, 4, 8, 10, 10, 10, 10, 10, 2, 1, 2, 2}, spell_null,     TAR_IGNORE,     POS_RESTING,
+    { "lore",         { 15, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },    
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,     TAR_IGNORE,     POS_RESTING,
     &gsn_lore,      SLOT( 0),   0,  36, "",         "!Lore!",       "" },
 
-    { "study",            { 10, 10,  10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 },   
-	{ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5}, spell_null,     TAR_IGNORE,     POS_RESTING,
+    { "study",            { 10, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },  
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,     TAR_IGNORE,     POS_RESTING,
     &gsn_study,     SLOT( 0),   0,  36, "",         "!Study!",      "" },
 
-    { "meditation",       {  6,  6, 15, 15, 102, 102, 102, 102, 102, 102, 38, 38, 38 },   
-	{ 5, 5, 8, 8, 0, 0, 0, 0, 0, 0, 1, 2, 2}, spell_null,     TAR_IGNORE,     POS_SLEEPING,
+    { "meditation",       { 30, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },  
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,     TAR_IGNORE,     POS_SLEEPING,
     &gsn_meditation,    SLOT( 0),   0,  0, "",         "Meditation",       "" },
 
-    { "peek",         {  8, 21,  1, 14, 30, 15, 35, 35, 102, 102, 102, 102, 102 },    
-	{ 5, 7, 3, 6, 2, 2, 1, 2, 0, 0, 0, 0, 0}, spell_null,     TAR_IGNORE,     POS_STANDING,
+    { "peek",         { 10, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },    
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,     TAR_IGNORE,     POS_STANDING,
     &gsn_peek,      SLOT( 0),    0,  0, "",         "!Peek!",       "" },
 
-    { "pick lock",        { 25, 25,  7, 25, 30, 5, 13, 102, 102, 102, 102, 102, 102 },    
-	{ 8, 8, 4, 8, 2, 2, 1, 0, 0, 0, 0, 0, 0}, spell_null,     TAR_IGNORE,     POS_STANDING,
+    { "pick lock",        { 5, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },    
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,     TAR_IGNORE,     POS_STANDING,
     &gsn_pick_lock,     SLOT( 0),    0, 12, "",         "!Pick!",       "" },
 
-    { "sneak",        { 102, 102,  4,  10, 10, 10, 10, 102, 102, 102, 102, 102, 102 },    
-	{ 0, 0, 4, 6, 4, 4, 4, 0, 0, 0, 0, 0, 0}, spell_null,     TAR_IGNORE,     POS_STANDING,
+    { "sneak",       { 10, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },   
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,     TAR_IGNORE,     POS_STANDING,
     &gsn_sneak,     SLOT( 0),    0, 12, "",         "You no longer feel stealthy.", "" },
 
-    { "steal",        { 102, 102,  5, 102, 35, 102, 40, 102, 102, 102, 102, 102, 102 },   
-	{ 0, 0, 4, 0, 2, 0, 2, 0, 0, 0, 0, 0, 0}, spell_null,     TAR_IGNORE,     POS_STANDING,
+    { "steal",{ 40, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,     TAR_IGNORE,     POS_STANDING,
     &gsn_steal,     SLOT( 0),    0, 24, "",         "!Steal!",      "" },
 
-    { "scrolls",      {  1,  1,  1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },  
-	{ 2, 3, 5, 8, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_null,     TAR_IGNORE,     POS_STANDING,
+    { "scrolls",  { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,     TAR_IGNORE,     POS_STANDING,
     &gsn_scrolls,       SLOT( 0),   0,  24, "",         "!Scrolls!",        "" },
 
     { "staves",       {  1,  1,  1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },  
-	{ 2, 3, 5, 8, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_null,     TAR_IGNORE,     POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,     TAR_IGNORE,     POS_STANDING,
     &gsn_staves,        SLOT( 0),   0,  12, "",         "!Staves!",     "" },
 
     { "wands",        {  1,  1,  1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },  
-	{ 2, 3, 5, 8, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_null,     TAR_IGNORE,     POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,     TAR_IGNORE,     POS_STANDING,
     &gsn_wands,     SLOT( 0),   0,  12, "",         "!Wands!",      "" },
 
     { "recall",       {  1,  1,  1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },  
-	{ 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2}, spell_null,     TAR_IGNORE,     POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,     TAR_IGNORE,     POS_STANDING,
     &gsn_recall,        SLOT( 0),   0,  12, "",         "!Recall!",     "" },
 
-    { "behead",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },    
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, spell_null, TAR_IGNORE,     POS_STANDING,
+    { "behead",   { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },  
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_IGNORE,     POS_STANDING,
     &gsn_behead,    SLOT( 0),   0,  12, "attempted beheading",      "!Behead!",     "" },
 
-    { "riding",       {  102,  102,  102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },    
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_null,     TAR_IGNORE,     POS_STANDING,
+    { "riding",       { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },    
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,     TAR_IGNORE,     POS_STANDING,
     &gsn_riding,        SLOT( 0),   0,  12, "",         "!Riding!",     "" },
 	
     { "garou frenzy", { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, garou_frenzy,   TAR_CHAR_SELF,      POS_SLEEPING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, garou_frenzy,   TAR_CHAR_SELF,      POS_SLEEPING,
     &gsn_garou_frenzy,          SLOT(403),   0, 12, "frenzy",           "Your frenzy slowly fades away.", "" },
 	
     { "blood rage",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, thaumaturgy_frenzy, TAR_CHAR_SELF,      POS_SLEEPING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, thaumaturgy_frenzy, TAR_CHAR_SELF,      POS_SLEEPING,
     &gsn_thaumaturgy_frenzy,            SLOT(405),   0, 12, "frenzy",           "Your frenzy slowly fades away.", "" },
 	
     { "ignis fatuus",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_null, TAR_CHAR_SELF,      POS_SLEEPING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_SLEEPING,
     &gsn_ignis_fatuus,            SLOT(405),   0, 12, "ignis",           "Your confusion fades away", "" },
 	
     { "blood of potency", { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_null, TAR_CHAR_SELF,      POS_SLEEPING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_SLEEPING,
     &gsn_bloodofpotency,            SLOT(405),   0, 12, "",         "You feel suddenly weaker as the potency of your blood returns to normal.", "" },
 	
     { "theft of vitae",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_null, TAR_CHAR_SELF,      POS_SLEEPING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_SLEEPING,
     &gsn_theft,         SLOT(406),   0, 12, "theft",            "", "" },
 	
     { "cauldron of blood",    { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_null, TAR_CHAR_SELF,      POS_SLEEPING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_SLEEPING,
     &gsn_cauldron,          SLOT(406),   0, 12, "boiling blood",            "", "" },
 	
     { "arms of the abyss",    { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_null, TAR_CHAR_SELF,      POS_SLEEPING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_SLEEPING,
     &gsn_armsoftheabyss,            SLOT(405),   0, 12, "",         "The shadowy Tendrils fade away.", "" },
 
 /* Vampire crap */
     { "shadowplay",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_null, TAR_CHAR_SELF,      POS_SLEEPING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_SLEEPING,
     &gsn_shadowplay,            SLOT(403),   0, 12, "shadowplay",         "The shadows smothering you fade away.", "" },
 	
     { "vampire frenzy",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, vamp_frenzy,    TAR_CHAR_SELF,      POS_SLEEPING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, vamp_frenzy,    TAR_CHAR_SELF,      POS_SLEEPING,
     &gsn_vamp_frenzy,           SLOT(403),   0, 12, "frenzy",           "Your frenzy slowly fades away.", "" },
 	
     { "claws",    { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
     &gsn_claws,         SLOT(0),     0, 12, "",         "Your claws slide back under your nails.",  "" },
 	
     { "celerity", { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
     &gsn_celbuff,           SLOT(0),     0, 12, "",         "The world suddenly seems to stand still as your vitae enhanced speed fades away.", "" },
 
     { "gleam",    { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
     &gsn_gleam,         SLOT(0),     0, 12, "",         "Your eyes cease to glow as your vitae enhanced vision returns to normal.", "" },
 	
     { "shift",    { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
     &gsn_shift,                     SLOT(0),     0, 12, "",      "You loose control over your shifted form.",   "" },
 	
     { "horrid form",  { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
     &gsn_vicissitude_horrid,                     SLOT(0),    0, 12, "",      "Your form shrinks and you slowly return to your 'normal' form.",  "" },
 
     { "change form",  { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
     &gsn_change,                     SLOT(0),    0, 12, "",      "You loose control over your current form.",   "" },
 	
     { "rage", { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
     &gsn_rage,                     SLOT(0),  0, 12, "",      "Your rage slowly fades.", "" },
 	
     { "touch",    { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
     &gsn_touch,                     SLOT(0),     0, 12, "",      "Ugha's powers fade from your body...",    "" },
 	
     { "wrath of god", { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_wrath_of_god, TAR_CHAR_OFFENSIVE,     POS_FIGHTING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_wrath_of_god, TAR_CHAR_OFFENSIVE,     POS_FIGHTING,
     NULL,                     SLOT(666),     0, 12, "wrath of god",      "!wrath of god!",  "" },
 	
     { "awe",  { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
     &gsn_awe,           SLOT(0),     0, 12, "",         "The impressive social mystique you bolstered slowly fades away.",  "" },
 
     { "botched presence", { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },    
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
     &gsn_botched_presence,      SLOT(0),    0,  12, "botched presence",         "You feel prepared to show your face in public again.", "" },
 
     { "torpor",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },    
@@ -2568,23 +2835,23 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
     &gsn_unseen,        SLOT(0),    0,  12, "",     "Your power to vanish from the minds of other fades and you become visible.",   "" },
 	
     { "majesty",  { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
     &gsn_majesty,           SLOT(0),     0, 12, "",         "Your aura of greatness fades away.",   "" },
 	
     { "weakness", { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
     &gsn_quietus_weakness,          SLOT(0),     0, 12, "",         "Your strength returns as the weakness fades.", "" },
 	
     { "blood curse",  { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
     &gsn_quietus_bloodcurse,            SLOT(0),     0, 12, "",         "You sigh in relief as your blood purifys the curse away.", "" },
 	
     { "shroud of night",  { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
     &gsn_cloakshadow,           SLOT(0),     0, 12, "",         "Your cloak of shadows fades away...",  "" },
 	
     { "cloak the gathering",  { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
     &gsn_cloak_the_gathering,           SLOT(0),     0, 12, "",         "Your cloak of shadows fades away...",  "" },
 	
     { "track",    { 102, 102, 102, 102, 30, 30, 30, 30, 30, 30, 30, 30, 30 },     
@@ -2592,11 +2859,11 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
     &gsn_track,         SLOT(0),     0, 12, "",         "!Track!",  "" },
 
     { "acidblood",    { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
     &gsn_acidblood,         SLOT(0),     0, 12, "acidic blood",         "!acid blood!", "" },
 
     { "regenerate",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
     &gsn_regen,         SLOT(0),     0, 12, "",         "Your body has rested enough to heal aggravated damage again.", "" },
 
     { "blood buff",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },    
@@ -2604,47 +2871,47 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
     &gsn_blood_buff,        SLOT(0),    0,  8, "buffed blood",     "The enhanced power coursing through your veins slowly subsides.",  "" },
 
     { "reveal",       {  102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
     &gsn_reveal,            SLOT(0),     0, 12, "",         "Your heightened senses fade away, leaving you aware of only the mundane world once again.",    "" },
 	
     { "forgetful mind",       {  102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
     &gsn_forget,            SLOT(0),     0, 12, "",         "Your memory slowly returns...", "" },
 	
     { "earthmeld",        {  102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
     &gsn_earthmeld,         SLOT(0),     0, 12, "",         "You emerge from the earth in a shower of dirt.", "" },
 	
     { "shadowform",       {  102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
     &gsn_shadowform,            SLOT(0),     0, 12, "",         "Your shadowy form fades away.", "" },
 	
     { "mask",     {  102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
     &gsn_mask,          SLOT(0),     0, 12, "",         "Your Mask of a Thousand Faces fades away revealing your true guise.", "" },
 
     { "elemental soul",       {  102, 102,102,102, 50, 50, 50, 50, 50, 50, 50, 50, 50 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
     &gsn_elemental,         SLOT(0),     0, 12, "",         "Your link with the powers of the Elements fades away.", "" },
 
     { "fireshield", {  102, 102,102,102, 50, 50, 50, 50, 50, 50, 50, 50, 50 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
     &gsn_fireshield,            SLOT(0),     0, 12, "fireshield",           "Your fireshield fizzles and disappears...", "" },
 	
     { "radiant aura",     {  102, 102,102,102, 102, 102, 102, 102, 102, 102, 40, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0}, spell_holyshield,   TAR_CHAR_SELF,      POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_holyshield,   TAR_CHAR_SELF,      POS_STANDING,
     &gsn_holyshield,            SLOT(0),     0, 12, "radiant aura",         "Your Radiant blessing slowly slips away...", "" },
 	
     { "dark aura",        {  102, 102,102,102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_darkshield,   TAR_CHAR_SELF,      POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_darkshield,   TAR_CHAR_SELF,      POS_STANDING,
     &gsn_darkshield,            SLOT(0),     0, 12, "dark aura",            "Your evil aura of darkness slowly slips away...", "" },
 
     { "static charge",        {  102, 102,102,102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_shockshield,  TAR_CHAR_SELF,      POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_shockshield,  TAR_CHAR_SELF,      POS_STANDING,
     &gsn_shockshield,           SLOT(0),     0, 12, "lightning touch",          "The static field around your body fades away...", "" },
 
     { "chant",    { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 10, 60, 70 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 3, 4}, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
     &gsn_chant,         SLOT(0),     0, 12, "",         "!chant!",  "" },
 
     { "vampire regen",        { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
@@ -2652,122 +2919,122 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
     &gsn_vampire_regen,           SLOT(502),  30, 12, "",         "You stop regenerating.", "" },
 
     { "mana", { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_mana, TAR_CHAR_SELF,      POS_RESTING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_mana, TAR_CHAR_SELF,      POS_RESTING,
     NULL,           SLOT(0),     0, 12, "",         "!Mana!",   "" },
 	
     { "blood potion", { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_blood,    TAR_CHAR_SELF,      POS_RESTING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_blood,    TAR_CHAR_SELF,      POS_RESTING,
     NULL,           SLOT(0),     0, 12, "",         "!Blood!",  "" },
 	
     //Matthew adding random skills.
     { "human blood",  { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_blood,    TAR_CHAR_SELF,      POS_RESTING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_blood,    TAR_CHAR_SELF,      POS_RESTING,
     NULL,           SLOT(0),     0, 12, "",         "!Blood!",  "" },
 	
     { "kindred vitae",    { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_vampire_blood,    TAR_CHAR_SELF,      POS_RESTING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_vampire_blood,    TAR_CHAR_SELF,      POS_RESTING,
     NULL,           SLOT(0),     0, 12, "",         "!Blood!",  "" },
 	
     { "botched allies",       {  102, 102,102,102, 1, 1, 1, 1, 1, 1, 1, 1, 1 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
     &gsn_botched_allies,            SLOT(0),     0, 12, "boched allies",            "Your allies are once again receptive to your requests for aid.", "" },
 
     { "summoned illusion",       {  102, 102,102,102, 1, 1, 1, 1, 1, 1, 1, 1, 1 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
     &gsn_summoned_illusion,            SLOT(0),     0, 12, "summoned illusion",            "Your illusion loses coherence and dissipates", "" },
 	
     { "allies",       {  102, 102,102,102, 1, 1, 1, 1, 1, 1, 1, 1, 1 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
     &gsn_allies,            SLOT(0),     0, 12, "allies",           "Your allies are once again receptive to your requests for aid.", "" },
 
     { "sanctus lucis",        {  102, 102,102,102, 1, 1, 1, 1, 1, 1, 1, 1, 1 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
     &gsn_sanctus,           SLOT(0),     0, 12, "botched prayer",           "The darkness of the world once again creeps into your soul as you feel Heaven's protection lifting from your body.", "" },
 
     { "scry",     {  102, 102,102,102, 50, 50, 50, 50, 50, 50, 50, 50, 50 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
     &gsn_scry,          SLOT(0),     0, 12, "",         "!Scry!", "" },
 
     { "brew",     {  10, 10,10,10, 10, 10, 10, 10, 10, 10, 10, 10, 10 },     
 	{ 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,5 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
     &gsn_brew,          SLOT(0),     0, 36, "explosion",            "!Brew!", "" },
 	
-    { "skin",     {  102, 102,102,102, 10, 10, 10, 10, 10, 10, 10, 10, 10 },     
-	{ 0, 0, 0, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5}, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+    { "skin",     { 10, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },    
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
     &gsn_skin,          SLOT(0),     0, 240, "slip",         "!SKIN!", "" },
 	
-    { "bandage",             { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_null,             TAR_IGNORE,             POS_STANDING,
+    { "bandage",             { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },     
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
     &gsn_bandage,          SLOT( 0),        0,     24, "failure",             "You remove your bloody bandages to make room for clean ones.",      "" },
 
 /* advanced class stuff */
-    { "divine strength",             { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 50, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0}, spell_null,             TAR_IGNORE,             POS_STANDING,
+    { "divine strength",             { 150, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 50, 102 },     
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
     &gsn_divine_strength,          SLOT( 0),        0,     24, "",             "Your divine blessing slowly fades away.",      "" },
 	
-    { "assassinate",             { 102, 102,  102, 102, 102, 50, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0}, spell_null,             TAR_IGNORE,             POS_STANDING,
+    { "assassinate",             { 50, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },    
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
     &gsn_assassinate,          SLOT( 0),        0,     24, "assassination",             "!Assassinate!",       "" },
 	
-    { "ground",                 { 102, 12, 14,  8, 102, 60, 20, 50, 50, 50, 102, 80, 60 },     
-	{ 0, 4, 6, 3, 0, 0, 2, 2, 2, 2, 0, 1, 0}, spell_null,             TAR_CHAR_OFFENSIVE,     POS_FIGHTING,
+    { "ground",                 { 30, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, 
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_CHAR_OFFENSIVE,     POS_FIGHTING,
     &gsn_ground,              SLOT( 0),        0,     12, "ground",                 "!Ground!",       "" },
 	
-    { "warcry",                 { 102, 12, 14,  8, 102, 102, 102, 102, 102, 65, 102, 102, 102 },     
-	{ 0, 4, 6, 3, 0, 0, 0, 0, 0, 2, 0, 0, 0}, spell_null,             TAR_CHAR_OFFENSIVE,     POS_STANDING,
+    { "warcry",                 { 55, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },  
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_CHAR_OFFENSIVE,     POS_STANDING,
     &gsn_warcry,              SLOT( 0),        0,     12, "warcry",                 "!Warcry!",       "" },
 	
-    { "headbutt",                 { 102, 102, 102,  102, 70, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 4, 6, 3, 3, 0, 0, 0, 0, 0, 0, 0, 0}, spell_null,             TAR_CHAR_OFFENSIVE,     POS_STANDING,
+    { "headbutt",                { 50, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },  
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_CHAR_OFFENSIVE,     POS_STANDING,
     &gsn_headbutt,              SLOT( 0),        0,     24, "headbutt",                 "The soreness in your head fades away...",      "" },
 	
-    { "blast",                 { 102, 102, 102,  102, 102, 102, 50, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 4, 6, 3, 0, 0, 3, 0, 0, 0, 0, 0, 0}, spell_null,             TAR_CHAR_OFFENSIVE,     POS_STANDING,
+    { "blast",           { 50, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },  
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_CHAR_OFFENSIVE,     POS_STANDING,
     &gsn_blast,              SLOT( 0),        0,     12, "blast",                 "!Blast!",     "" },
 	
-    { "slip",                 { 102, 102, 102,  102, 102, 102, 70, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 4, 6, 3, 0, 0, 2, 0, 0, 0, 0, 0, 0}, spell_null,             TAR_CHAR_OFFENSIVE,     POS_FIGHTING,
+    { "slip",           { 60, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_CHAR_OFFENSIVE,     POS_FIGHTING,
     &gsn_slip,              SLOT( 0),        0,     24, "",                 "!Slip!",       "" },
 	
-    { "enhanced speed",                 { 102, 102, 102,  102, 102, 102, 102, 75, 102, 102, 102, 102, 102 },     
-	{ 0, 4, 6, 3, 0, 0, 0, 4, 0, 0, 0, 0, 0}, spell_null,             TAR_CHAR_OFFENSIVE,     POS_STANDING,
+    { "enhanced speed",            { 75, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, 
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_CHAR_OFFENSIVE,     POS_STANDING,
     &gsn_enhanced_speed,              SLOT( 0),        0,     0, "",                 "!Enhanced Speed!",     "" },
 	
-    { "renown",                 { 102, 102, 102,  102, 102, 102, 102, 102, 102, 70, 102, 102, 102 },     
-	{ 0, 4, 6, 3, 0, 0, 0, 0, 0, 4, 0, 0, 0}, spell_null,             TAR_CHAR_OFFENSIVE,     POS_STANDING,
+    { "renown",            { 70, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_CHAR_OFFENSIVE,     POS_STANDING,
     &gsn_renown,              SLOT( 0),        0,     0, "",                 "!Renown!",     "" },
 	
-    { "second kick",                 { 102, 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 45, 102 },     
-	{ 0, 4, 6, 3, 0, 0, 0, 0, 0, 0, 0, 2, 0}, spell_null,             TAR_CHAR_OFFENSIVE,     POS_STANDING,
+    { "second kick",              { 25, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },    
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_CHAR_OFFENSIVE,     POS_STANDING,
     &gsn_second_kick,              SLOT( 0),        0,     0, "",                 "!Second Kick!",        "" },
 	
-    { "vigor",        {  102, 102,102,102, 102, 102, 102, 10, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0}, spell_null,     TAR_CHAR_SELF,      POS_STANDING,
+    { "vigor",       { 10, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },    
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,     TAR_CHAR_SELF,      POS_STANDING,
     &gsn_vigor,         SLOT(0),     0, 12, "",         "You feel yourself slowing down.", "" },
 	
-    { "waylay",       {  102, 102,102,102, 56, 102, 102, 56, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 5, 0, 0, 5, 0, 0, 0, 0, 0}, spell_null,     TAR_CHAR_SELF,      POS_STANDING,
+    { "waylay",     { 55, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },   
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,     TAR_CHAR_SELF,      POS_STANDING,
     &gsn_waylay,        SLOT(0),     0, 12, "",         "!Waylay!", "" },
 	
-    { "fortress",     {  102, 102,102,102, 102, 102, 102, 102, 55, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0}, spell_null,     TAR_IGNORE,     POS_STANDING,
+    { "fortress",     { 55, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },    
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,     TAR_IGNORE,     POS_STANDING,
     &gsn_fortress,          SLOT(0),     0, 12, "",         "The enhancement of your shield fades away.", "" },\
 	
     { "arena",             { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_null,             TAR_IGNORE,             POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
     &gsn_arena,          SLOT( 0),        0,     24, "",             "You may now recall from the {RArena{x.",       "" },
 
 /* ritual stuff */
     { "Stored: Inferno",             { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_null,             TAR_IGNORE,             POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
     &gsn_store_inferno,          SLOT( 0),        0,     24, "Inferno",             "You loose control on your stored Ritual: Inferno",      "" },
 	
     { "Stored: Assamite Acid",             { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_null,             TAR_IGNORE,             POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
     &gsn_store_assamiteacid,          SLOT( 0),        0,     24, "Acidic Blast",             "You loose control on your stored Ritual: Assamite Acid",       "" },
 	
     { "blood magic",             { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_null,             TAR_IGNORE,             POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
     &gsn_blood_magic,          SLOT( 0),        0,     24, "blood magic",             "You feel your blood magic fading away.",        "" },
 	
     { "incorporeal passage",      { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },    
@@ -2775,11 +3042,11 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
     &gsn_incorporeal_passage,   SLOT( 0),   0,  12, "smashed mirror",   "Your body slowly solidifies as the ritual wears off.",     "" },
 
     { "bonecrafting",     { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_null,             TAR_CHAR_SELF,             POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_CHAR_SELF,             POS_STANDING,
     &gsn_vicissitude_bonecraft,          SLOT( 0),        0,     48, "bone spikes",             "Your body slowly reforms into its normal skeletal structure.",      "" },
 
     { "fetish",             { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_null,             TAR_IGNORE,             POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
     &gsn_fetish,          SLOT( 0),        0,     24, "",             "!Fetish!",     "" },
 
     { "spirit totem",     { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },    
@@ -2787,686 +3054,686 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
     &gsn_spirit_totem,  SLOT(0),    0,  16, "Spirit Totem", "As the blessing of the Totem leaves your body, you give praise to the Spirit.",    "" },
 
     { "staredown",        { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_staredown,             TAR_CHAR_OFFENSIVE,             POS_FIGHTING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_staredown,             TAR_CHAR_OFFENSIVE,             POS_FIGHTING,
     NULL,          SLOT( 0),        0,     12, "",             "!STAREDOWN!",      "" },
 
     { "gift of the porcupine",        { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_porcupine,             TAR_CHAR_SELF,             POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_porcupine,             TAR_CHAR_SELF,             POS_STANDING,
     &gsn_gift_porcupine,          SLOT( 0),        0,     24, "quills",             "Your skin prickles as your fur returns to normal.",      "" },
 	
     { "blissful ignorance",   { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_blissfulignorance,             TAR_CHAR_SELF,             POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_blissfulignorance,             TAR_CHAR_SELF,             POS_STANDING,
     &gsn_gift_blissfulignorance,          SLOT( 0),        0,     12, "",             "You cease to hide yourself from others.",      "" },
 	
     { "pulse of the invisible",               { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_pulseoftheinvisible,             TAR_CHAR_SELF,             POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_pulseoftheinvisible,             TAR_CHAR_SELF,             POS_STANDING,
     &gsn_gift_pulseoftheinvisible,          SLOT( 0),        0,     12, "",             "Your perception of the unseen blurs until it finally fades away.",     "" },
 	
     { "catfeet",              { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_catfeet,             TAR_CHAR_SELF,             POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_catfeet,             TAR_CHAR_SELF,             POS_STANDING,
     &gsn_gift_catfeet,          SLOT( 0),        0,     12, "",             "You feel your attunement to the feline spirits fade away.",         "" },
 	
     { "resist pain",              { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_resistpain,             TAR_CHAR_SELF,             POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_resistpain,             TAR_CHAR_SELF,             POS_STANDING,
     &gsn_gift_resistpain,          SLOT( 0),        0,     12, "",             "You now have the courage to resist your wounds.",      "" },
 	
     { "call of the wyld",             { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_callofthewyld,             TAR_IGNORE,             POS_FIGHTING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_callofthewyld,             TAR_IGNORE,             POS_FIGHTING,
     &gsn_gift_callofthewyld,          SLOT( 0),        0,     12, "",             "You feel your bloodlust subsiding.",       "" },
 	
     { "razor claws",              { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_razorclaws,             TAR_CHAR_SELF,             POS_FIGHTING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_razorclaws,             TAR_CHAR_SELF,             POS_FIGHTING,
     &gsn_gift_razorclaws,          SLOT( 0),        0,     24, "",             "Your claws dull from battle back to their original sharpness.",        "" },
 	
     { "silver claws",             { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_silverclaws,             TAR_CHAR_SELF,             POS_FIGHTING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_silverclaws,             TAR_CHAR_SELF,             POS_FIGHTING,
     &gsn_gift_silverclaws,          SLOT( 0),        0,     24, "",             "You sigh in relief as the silver fades from your claws.",      "" },
 	
     { "sense wyrm",               { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_sensewyrm,             TAR_CHAR_SELF,             POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_sensewyrm,             TAR_CHAR_SELF,             POS_STANDING,
     &gsn_gift_sensewyrm,          SLOT( 0),        0,     12, "",             "Your perception of the Taint around you ebbs away.",       "" },
 	
     { "inner strength",               { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_innerstrength,             TAR_CHAR_SELF,             POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_innerstrength,             TAR_CHAR_SELF,             POS_STANDING,
     &gsn_gift_innerstrength,          SLOT( 0),        0,     48, "",             "Your resolve has strengthened to the point that you can summon your Inner Strength again.",        "" },
 	
     { "bloody feast",             { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_bloodyfeast,             TAR_IGNORE,             POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_bloodyfeast,             TAR_IGNORE,             POS_STANDING,
     &gsn_gift_bloodyfeast,          SLOT( 0),        0,     12, "",             "The flesh you consumed loses it's power over you.",        "" },
 	
     { "master of fire",             { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_masteroffire,             TAR_IGNORE,             POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_masteroffire,             TAR_IGNORE,             POS_STANDING,
     &gsn_gift_masteroffire,          SLOT( 0),        0,     12, "",             "The blessing of the Elemental spirits of Fire leaves you.",        "" },
 	
      {   "persuasion", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 }, 
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_persuasion,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_persuasion,  TAR_IGNORE, POS_STANDING, 
      &gsn_gift_persuasion,          SLOT( 0),        0,     12, "",             "Your enhanced pursuasive abilities wear off.",        "" },
  
  {   "speech of the world", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 }, 
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_speechoftheworld,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_speechoftheworld,  TAR_IGNORE, POS_STANDING, 
      &gsn_gift_speechoftheworld,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "calm the savage beast", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 }, 
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_calmthesavagebeast,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_calmthesavagebeast,  TAR_IGNORE, POS_STANDING, 
      &gsn_gift_calmthesavagebeast,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "reshape object", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 }, 
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_reshapeobject,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_reshapeobject,  TAR_IGNORE, POS_STANDING, 
      &gsn_gift_reshapeobject,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "bury the wolf", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 }, 
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_burythewolf,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_burythewolf,  TAR_IGNORE, POS_STANDING, 
      &gsn_gift_burythewolf,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "spirit ward", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 }, 
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_spiritward,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_spiritward,  TAR_IGNORE, POS_STANDING, 
      &gsn_gift_spiritward,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "assimilation", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 }, 
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_assimilation,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_assimilation,  TAR_IGNORE, POS_STANDING, 
      &gsn_gift_assimilation,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "false comfort", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 }, 
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_falsecomfort,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_falsecomfort,  TAR_IGNORE, POS_STANDING, 
      &gsn_gift_falsecomfort,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "create element", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_createelement,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_createelement,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_createelement,          SLOT( 0),        0,     24, "elemental blast",             "!!Wearoffmsg!!",        "" },
 
     {   "shed", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_shed,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_shed,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_shed,          SLOT( 0),        0,     12, "",             "Your fur will no longer slough off in combat.",        "" },
 
     {   "curse of hatred", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_curseofhatred,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_curseofhatred,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_curseofhatred,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     {   "sense silver", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_sensesilver,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_sensesilver,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_sensesilver,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     {   "eyes of the cat", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_eyesofthecat,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_eyesofthecat,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_eyesofthecat,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     {   "mental speech", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_mentalspeech,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_mentalspeech,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_mentalspeech,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     {   "wither limb", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_witherlimb,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_witherlimb,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_witherlimb,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     {   "madness", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_madness,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_madness,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_madness,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     {   "totem gift", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_totemgift,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_totemgift,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_totemgift,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     {   "hares leap", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_haresleap,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_haresleap,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_haresleap,          SLOT( 0),        0,     12, "",             "The blessing of the Hare spirits wears off.",        "" },
 
     {   "heightened senses", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_heightenedsenses,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_heightenedsenses,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_heightenedsenses,          SLOT( 0),        0,     12, "",             "Your senses return to normal.",        "" },
 
     {   "ley lines", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_leylines,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_leylines,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_leylines,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     {   "scent of sight", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_scentofsight,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_scentofsight,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_scentofsight,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     {   "sense the unnatural", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_sensetheunnatural,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_sensetheunnatural,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_sensetheunnatural,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     {   "devils child", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_devilschild,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_devilschild,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_devilschild,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     {   "name the spirit", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_namethespirit,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_namethespirit,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_namethespirit,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     {   "beast life", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_beastlife,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_beastlife,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_beastlife,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     {   "gnaw", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_gnaw,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_gnaw,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_gnaw,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     {   "elemental gift", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_elementalgift,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_elementalgift,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_elementalgift,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     {   "song of the great beast", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_songofthegreatbeast,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_songofthegreatbeast,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_songofthegreatbeast,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     {   "blur of the milky eye", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_blurofthemilkyeye,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_blurofthemilkyeye,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_blurofthemilkyeye,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "scent of running water", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_scentofrunningwater,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_scentofrunningwater,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_scentofrunningwater,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "snow running", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_snowrunning,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_snowrunning,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_snowrunning,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "sense of prey", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_senseofprey,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_senseofprey,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_senseofprey,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "open moon bridge", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_openmoonbridge,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_openmoonbridge,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_openmoonbridge,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "reynards lie", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_reynardslie,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_reynardslie,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_reynardslie,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "lepers curse", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_leperscurse,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_leperscurse,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_leperscurse,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "lunas blessing", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_lunasblessing,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_lunasblessing,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_lunasblessing,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "thieving talons of the magpie", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_thievingtalonsofthemagpie,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_thievingtalonsofthemagpie,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_thievingtalonsofthemagpie,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "chimerical form", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_chimericalform,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_chimericalform,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_chimericalform,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "mothers touch", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_motherstouch,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_motherstouch,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_motherstouch,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "spirit speech", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_spiritspeech,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_spiritspeech,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_spiritspeech,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "command spirit", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_commandspirit,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_commandspirit,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_commandspirit,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "sight from beyond", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_sightfrombeyond,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_sightfrombeyond,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_sightfrombeyond,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "expel spirit", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_expelspirit,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_expelspirit,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_expelspirit,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "grasp the beyond", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_graspthebeyond,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_graspthebeyond,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_graspthebeyond,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "spirit wassail", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_spiritwassail,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_spiritwassail,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_spiritwassail,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "nightmare possession", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_nightmarepossession,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_nightmarepossession,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_nightmarepossession,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "malleable spirit", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_malleablespirit,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_malleablespirit,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_malleablespirit,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "scent of the true form", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_scentofthetrueform,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_scentofthetrueform,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_scentofthetrueform,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "truth of gaia", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_truthofgaia,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_truthofgaia,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_truthofgaia,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "call of duty", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_callofduty,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_callofduty,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_callofduty,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "strength of purpose", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_strengthofpurpose,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_strengthofpurpose,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_strengthofpurpose,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "spirit witness", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_spiritwitness,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_spiritwitness,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_spiritwitness,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "warriors eye", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_warriorseye,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_warriorseye,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_warriorseye,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "roll over", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_rollover,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_rollover,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_rollover,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "scent of beyond", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_scentofbeyond,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_scentofbeyond,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_scentofbeyond,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "earthfriends pact", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_earthfriendspact,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_earthfriendspact,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_earthfriendspact,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "geas", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_geas,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_geas,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_geas,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "beast spirit", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_beastspirit,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_beastspirit,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_beastspirit,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "walking dream", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_wakingdream,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_wakingdream,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_wakingdream,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "call of the wyrm", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_callofthewyrm,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_callofthewyrm,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_callofthewyrm,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "distractions", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_distractions,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_distractions,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_distractions,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "eye of the asp", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_eyeoftheasp,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_eyeoftheasp,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_eyeoftheasp,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "song of rage", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_songofrage,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_songofrage,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_songofrage,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "shadows by the firelight", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_shadowsbythefirelight,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_shadowsbythefirelight,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_shadowsbythefirelight,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "song of mockery", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_songofmockery,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_songofmockery,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_songofmockery,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "dream golems", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_dreamgolems,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_dreamgolems,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_dreamgolems,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "call for vengeance", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_callforvengeance,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_callforvengeance,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_callforvengeance,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "falling touch", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_fallingtouch,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_fallingtouch,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_fallingtouch,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "inspiration", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_inspiration,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_inspiration,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_inspiration,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "spirit of the fray", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_spiritofthefray,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_spiritofthefray,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_spiritofthefray,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "true fear", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_truefear,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_truefear,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_truefear,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "heart of fury", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_heartoffury,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_heartoffury,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_heartoffury,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "full moons light", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_fullmoonslight,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_fullmoonslight,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_fullmoonslight,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "stoking furys furnace", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_stokingfurysfurnace,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_stokingfurysfurnace,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_stokingfurysfurnace,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "kiss of helios", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_kissofhelios,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_kissofhelios,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_kissofhelios,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "strength of will", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_strengthofwill,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_strengthofwill,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_strengthofwill,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "breath of the wyld", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_breathofthewyld,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_breathofthewyld,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_breathofthewyld,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "mans skin", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_mansskin,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_mansskin,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_mansskin,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "curse of the aeolus", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_curseoftheaeolus,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_curseoftheaeolus,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_curseoftheaeolus,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "coup de grace", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_coupdegrace,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_coupdegrace,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_coupdegrace,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "flames of hestia", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_flamesofhestia,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_flamesofhestia,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_flamesofhestia,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "body wrack", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_bodywrack,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_bodywrack,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_bodywrack,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "bow of pegasus", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_bowofpegasus,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_bowofpegasus,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_bowofpegasus,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "gaze of the gorgon", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_gazeofthegorgon,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_gazeofthegorgon,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_gazeofthegorgon,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "wyld warp", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_wyldwarp,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_wyldwarp,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_wyldwarp,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "cookery", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_cookery,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_cookery,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_cookery,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "resist toxin", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_resisttoxin,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_resisttoxin,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_resisttoxin,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "scent of the honeycomb", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_scentofthehoneycomb,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_scentofthehoneycomb,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_scentofthehoneycomb,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "cornered rat", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_corneredrat,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_corneredrat,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_corneredrat,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "plague visage", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_plaguevisage,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_plaguevisage,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_plaguevisage,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "call the rust", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_calltherust,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_calltherust,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_calltherust,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "friend in need", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_friendinneed,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_friendinneed,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_friendinneed,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "blink", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_blink,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_blink,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_blink,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     {   "claws of the glass blower", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_clawsoftheglassblower,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_clawsoftheglassblower,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_clawsoftheglassblower,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     {   "maw of the whale", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_mawofthewhale,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_mawofthewhale,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_mawofthewhale,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     {   "survivor", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_survivor,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_survivor,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_survivor,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     {   "eves blessing", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_evesblessing,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_evesblessing,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_evesblessing,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     {   "grandmothers touch", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_grandmotherstouch,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_grandmotherstouch,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_grandmotherstouch,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     {   "lunas armor", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_lunasarmor,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_lunasarmor,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_lunasarmor,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     {   "dazzle", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_dazzle,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_dazzle,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_dazzle,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     {   "spirit friend", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_spiritfriend,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_spiritfriend,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_spiritfriend,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     {   "angels semblance", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_angelssemblance,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_angelssemblance,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_angelssemblance,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     {   "halo of the sun", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_haloofthesun,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_haloofthesun,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_haloofthesun,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     {   "the living wood", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_thelivingwood,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_thelivingwood,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_thelivingwood,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     {   "hunters harmony", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_huntersharmony,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_huntersharmony,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_huntersharmony,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     {   "visage of fenris", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_visageoffenris,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_visageoffenris,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_visageoffenris,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     {   "halt the cowards flight", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_haltthecowardsflight,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_haltthecowardsflight,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_haltthecowardsflight,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     {   "sense guilt", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_senseguilt,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_senseguilt,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_senseguilt,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     {   "might of thor", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_mightofthor,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_mightofthor,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_mightofthor,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     {   "berserkers song", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_berserkerssong,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_berserkerssong,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_berserkerssong,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     {   "iron cannot pierce", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_ironcannotpierce,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_ironcannotpierce,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_ironcannotpierce,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     {   "blaze of glory", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_blazeofglory,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_blazeofglory,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_blazeofglory,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     {   "horde of valhalla", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_hordeofvalhalla,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_hordeofvalhalla,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_hordeofvalhalla,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     {   "distract the fool", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_distractthefool,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_distractthefool,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_distractthefool,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     {   "faerie light", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_faerielight,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_faerielight,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_faerielight,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     {   "howl of the banshee", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_howlofthebanshee,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_howlofthebanshee,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_howlofthebanshee,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     {   "warriors draught", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_warriorsdraught,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_warriorsdraught,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_warriorsdraught,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     {   "faerie aid", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_faerieaid,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_faerieaid,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_faerieaid,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     {   "woadling", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_woadling,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_woadling,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_woadling,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     {   "balors gaze", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_balorsgaze,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_balorsgaze,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_balorsgaze,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     {   "semblance", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_semblance,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_semblance,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_semblance,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     {   "fog on the moor", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_fogonthemoor,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_fogonthemoor,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_fogonthemoor,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     {   "gift of the spriggan", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_giftofthespriggan,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_giftofthespriggan,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_giftofthespriggan,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     {   "aura of confidence", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_auraofconfidence,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_auraofconfidence,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_auraofconfidence,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     {   "fatal flaw", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_fatalflaw,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_fatalflaw,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_fatalflaw,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     {   "seizing the edge", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_seizingtheedge,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_seizingtheedge,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_seizingtheedge,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     {   "clap of thunder", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_clapofthunder,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_clapofthunder,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_clapofthunder,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     {   "ravens curse", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_ravenscurse,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_ravenscurse,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_ravenscurse,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     {   "shadow cutting", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_shadowcutting,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_shadowcutting,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_shadowcutting,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     {   "dolorous stroke", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_dolorousstroke,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_dolorousstroke,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_dolorousstroke,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     {   "strength of the dominator", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_strengthofthedominator,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_strengthofthedominator,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_strengthofthedominator,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
     
      {   "shadow pack", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_shadowpack,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_shadowpack,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_shadowpack,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
     
      {   "obedience", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_obedience,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_obedience,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_obedience,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
     
      {   "eye of the falcon", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_eyeofthefalcon,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_eyeofthefalcon,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_eyeofthefalcon,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
     
      {   "lambent fire", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_lambentfire,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_lambentfire,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_lambentfire,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
     
      {   "empathy", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_empathy,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_empathy,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_empathy,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
     
      {   "exceptional wordplay", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_exceptionalswordplay,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_exceptionalswordplay,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_exceptionalswordplay,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
     
      {   "wrath of gaia", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_wrathofgaia,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_wrathofgaia,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_wrathofgaia,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
     
      {   "lordly will", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_lordlywill,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_lordlywill,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_lordlywill,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
     
      {   "sidestep death", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_sidestepdeath,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_sidestepdeath,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_sidestepdeath,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
     
      {   "lunas avenger", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_lunasavenger,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_lunasavenger,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_lunasavenger,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
     
      {   "paws of the newborn cub", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_pawsofthenewborncub,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_pawsofthenewborncub,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_pawsofthenewborncub,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
     
      {   "artisans command", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_artisanscommand,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_artisanscommand,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_artisanscommand,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
     
      {   "gift of salt", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_giftofsalt,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_giftofsalt,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_giftofsalt,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
     
      {   "mask the predator", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_maskthepredator,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_maskthepredator,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_maskthepredator,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
     
      {   "tongues", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_tongues,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_tongues,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_tongues,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
     
      {   "attunement", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_attunement,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_attunement,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_attunement,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
     
      {   "doppelganger", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_doppelganger,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_doppelganger,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_doppelganger,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
     
      {   "command the blaze", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_gift_commandtheblaze,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_commandtheblaze,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_commandtheblaze,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     
 
 /* Mage rotes */
     { "empower",              { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_null,             TAR_IGNORE,             POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
     &gsn_empower,          SLOT( 0),        0,     24, "",             "Your mind seems to dim as the forces of reality wash away your clarity of thought.",       "" },
 	
     { "control randomness",               { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_null,             TAR_IGNORE,             POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
     &gsn_controlrandomness,          SLOT( 0),        0,     24, "",             "You feel your power to control random events slowly fade.",        "" },
 	
     { "precognition",             { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_null,             TAR_IGNORE,             POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
     &gsn_precognition,          SLOT( 0),        0,     24, "",             "Your foresight of time fades away as you lose focus.",     "" },
 	
     { "time alteration",          { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_null,             TAR_IGNORE,             POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
     &gsn_timealteration,          SLOT( 0),        0,     24, "",             "Your pattern can no longer take the stress of such time dilation.",        "" },
 	
     { "sidestep time",            { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_null,             TAR_IGNORE,             POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
     &gsn_sidesteptime,          SLOT( 0),        0,     24, "",             "You step back into the normal stream of time.",        "" },
 	
     { "kinetic shield",           { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     \
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_null,             TAR_IGNORE,             POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
     &gsn_kineticshield,          SLOT( 0),        0,     24, "",             "Your ability to deflect physical blows fades away.",       "" },
 	
     { "negation field",           { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_null,             TAR_IGNORE,             POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
     &gsn_negationfield,          SLOT( 0),        0,     24, "",             "You sense your ability to negate the magicks of others fading.",       "" },
 	
     { "magick",               { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_null,             TAR_IGNORE,             POS_STANDING,
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
     &gsn_magick,          SLOT( 0),        0,     24, "magick",             "The magick infusing you slowly fades...",        "" },
 
 // END OF TABLE.
@@ -3478,7 +3745,7 @@ const   struct  group_type      group_table     [MAX_GROUP]     =
 
     {
     "rom basics",       { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-    { "scrolls", "staves", "wands", "recall" }
+    { "recall" }
     },
 
     {

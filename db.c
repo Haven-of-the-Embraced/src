@@ -1867,12 +1867,12 @@ void reset_room( ROOM_INDEX_DATA *pRoom )
             }
         }
     }
-
+    OBJ_DATA *tree;
+    
     if(pRoom->sector_type == SECT_FOREST && tree_count < 250 &&
-	number_percent() < 10)
+	number_percent() < 10 && (tree = get_obj_list2(NULL, "tree", pRoom->contents)) == NULL)
     {
         /* spawn */
-        OBJ_DATA *tree;
         int tree_type;
 
         tree_type = OBJ_VNUM_TREE + number_range(0, 4);

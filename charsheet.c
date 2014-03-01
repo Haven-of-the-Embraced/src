@@ -33,6 +33,14 @@ void do_freebie(CHAR_DATA *ch, char *argument)
     if (IS_NPC(ch)) return;
 
 
+    if (ch->pcdata->progress < 8)
+    {
+        sendch("\n\rYou cannot use freebies until you complete the creation process using the 'create'\n\r", ch);
+        sendch("command. Please do this now as many of your character's stats affect gameplay and\n\r", ch);
+        sendch("leaving them at their default state will negatively impact your playing experience.\n\r", ch);
+        return;
+    }
+    
     if ( arg[0] == '\0')
     {
         send_to_char("The freebie costs are as follows:\n\r",ch);

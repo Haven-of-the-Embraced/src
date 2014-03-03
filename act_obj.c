@@ -5040,7 +5040,7 @@ void do_donate( CHAR_DATA *ch, char *argument)
    }
    else
    {
-      if (!can_drop_obj(ch, obj) && ch->level < 91)
+      if (!can_drop_obj(ch, obj) && ch->level < 101)
       {
          send_to_char("Its stuck to you.\n\r",ch);
          return;
@@ -5056,37 +5056,17 @@ void do_donate( CHAR_DATA *ch, char *argument)
          send_to_char("You cannot donate that.\n\r",ch);
          return;
       }
-      if (ch->in_room != get_room_index(ROOM_VNUM_ALTAR))
-         act("$n donates {Y$p{x.",ch,obj,NULL,TO_ROOM);
-      act("You donate {Y$p{x.",ch,obj,NULL,TO_CHAR);
+      act("$n donates $p.",ch,obj,NULL,TO_ROOM);
+      act("You donate $p.",ch,obj,NULL,TO_CHAR);
 
-      if ((!IS_OBJ_STAT(obj ,ITEM_ANTI_EVIL) && IS_EVIL(ch)) ||
-         (!IS_OBJ_STAT(obj ,ITEM_ANTI_GOOD) && IS_GOOD(ch)) ||
-         IS_NEUTRAL(ch))
-        /* if (obj->cost > 0 && obj->level > 0)
-         {
-            amount = UMAX(1, obj->cost/2);
-            if (amount == 1)
-            {
-               sprintf(buf, "You receive {Mone silver{x for your donation.");
-               send_to_char(buf,ch);
-            }
-            else
-            {
-               sprintf( buf, "You receive {M%d silver{x for your donation.",amount);
-               send_to_char(buf,ch);
-            }
-
-            ch->silver += amount;
-         } */
-
-         char_from_room(ch);
-         char_to_room(ch,get_room_index(ROOM_VNUM_ALTAR));
-         pit = get_obj_list(ch, "pit", ch->in_room->contents);
-         obj_from_char(obj);
-         obj_to_obj(obj, pit);
-         char_from_room(ch);
-         char_to_room(ch,original);
-         return;
+      char_from_room(ch);
+      char_to_room(ch,get_room_index(ROOM_VNUM_DONATE));
+      pit = get_obj_list(ch, "donation", ch->in_room->contents);
+      obj_from_char(obj);
+      obj_to_obj(obj, pit);
+      //Return to original room.
+      char_from_room(ch);
+      char_to_room(ch,original);
+      return;
      }
 }

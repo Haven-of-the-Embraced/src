@@ -1012,8 +1012,8 @@ void init_descriptor( int control )
         );
     sprintf( log_buf, "Sock.sinaddr:  %s", buf );
     log_string( log_buf );
-  from = gethostbyaddr( (char *) &sock.sin_addr,
-      sizeof(sock.sin_addr), AF_INET );
+  from = NULL; //gethostbyaddr( (char *) &sock.sin_addr,
+     // sizeof(sock.sin_addr), AF_INET );
     dnew->host = str_dup( from ? from->h_name : buf );
     }
 

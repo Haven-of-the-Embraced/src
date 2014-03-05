@@ -958,19 +958,13 @@ void spell_call_lightning( int sn, int level,CHAR_DATA *ch,void *vo,int target)
     return;
     }
 
-    if ( weather_info.sky < SKY_RAINING )
-    {
-    send_to_char( "You need bad weather.\n\r", ch );
-    return;
-    }
-
     dam = dice(level/2, 8);
 
     /* spell enhancing code */
     dam += 20+level;
 
-    send_to_char( "Ugha's lightning strikes your foes!\n\r", ch );
-    act( "$n calls Ugha's lightning to strike $s foes!",
+    send_to_char( "You pay homage to the Old Gods of Asgard and the mighty Thor strikes down your enemies!\n\r", ch );
+    act( "$n invokes the might of Thor to strike down $s foes!",
     ch, NULL, NULL, TO_ROOM );
 
     for ( vch = char_list; vch != NULL; vch = vch_next )
@@ -1658,9 +1652,12 @@ void spell_cure_critical( int sn, int level, CHAR_DATA *ch, void *vo,int target)
 {
     CHAR_DATA *victim = (CHAR_DATA *) vo;
     int heal;
+    int aggheal;
 
-    heal = level * 2 + 5;
+    heal = (level + 5) * 4;
+    aggheal = heal/100;
     victim->hit = UMIN( victim->hit + heal, victim->max_hit );
+    victim->agg_dam = UMAX(victim->agg - aggheal, 0);
     update_pos( victim );
     send_to_char( "You feel better!\n\r", victim );
     if ( ch != victim )
@@ -1698,7 +1695,7 @@ void spell_cure_light( int sn, int level, CHAR_DATA *ch, void *vo,int target)
     CHAR_DATA *victim = (CHAR_DATA *) vo;
     int heal;
 
-    heal = (2 * level / 3) + 5;
+    heal = (level + 5) * 2;
     victim->hit = UMIN( victim->hit + heal, victim->max_hit );
     update_pos( victim );
     send_to_char( "You feel a small rush through your body!\n\r", victim );
@@ -1735,9 +1732,12 @@ void spell_cure_serious( int sn, int level, CHAR_DATA *ch, void *vo,int target )
 {
     CHAR_DATA *victim = (CHAR_DATA *) vo;
     int heal;
+    int aggheal;
 
-    heal = level * 4 / 3 + 5;
+    heal = (level + 5) * 3;
+    aggheal = heal/100;
     victim->hit = UMIN( victim->hit + heal, victim->max_hit );
+    victim->agg_dam = UMAX(victim->agg - aggheal, 0);
     update_pos( victim );
     send_to_char( "You feel better!\n\r", victim );
     if ( ch != victim )
@@ -1811,7 +1811,7 @@ void spell_curse( int sn, int level, CHAR_DATA *ch, void *vo,int target )
     if(IS_NPC(ch)) af.duration  = level/2;
     else af.duration  = 2*level;
     af.location  = APPLY_HITROLL;
-    af.modifier  = -1 * (level);
+    af.modifier  = -3 * (level);
     af.bitvector = AFF_CURSE;
     affect_to_char( victim, &af );
 
@@ -2091,6 +2091,8 @@ void spell_dispel_magic( int sn, int level, CHAR_DATA *ch, void *vo,int target )
     CHAR_DATA *victim = (CHAR_DATA *) vo;
     bool found = FALSE;
 
+    level *= 2;
+    
     if (saves_spell(level, victim,DAM_OTHER))
     {
     send_to_char( "You feel a brief tingling sensation.\n\r",victim);
@@ -2961,7 +2963,7 @@ void spell_frenzy(int sn, int level, CHAR_DATA *ch, void *vo,int target)
     af.type      = sn;
     af.level     = level;
     af.duration  = level / 3;
-    af.modifier  = level / 6;
+    af.modifier  = 3*level/2;
     af.bitvector = 0;
 
     af.location  = APPLY_HITROLL;
@@ -2970,7 +2972,7 @@ void spell_frenzy(int sn, int level, CHAR_DATA *ch, void *vo,int target)
     af.location  = APPLY_DAMROLL;
     affect_to_char(victim,&af);
 
-    af.modifier  = 10 * (level / 12);
+    af.modifier  = 5 * (level / 12);
     af.location  = APPLY_AC;
     affect_to_char(victim,&af);
 
@@ -3071,7 +3073,7 @@ void spell_giant_strength(int sn,int level,CHAR_DATA *ch,void *vo,int target)
 void spell_harm( int sn, int level, CHAR_DATA *ch, void *vo,int target)
 {
     CHAR_DATA *victim = (CHAR_DATA *) vo;
-    int dam = ch->level * 12;
+    int dam = ch->level * 10;
 /*
     dam = UMAX(  20, victim->hit - dice(1,4) );
     if ( saves_spell( level, victim,DAM_HARM) )
@@ -3179,9 +3181,13 @@ void spell_xp_boost( int sn, int level, CHAR_DATA *ch, void *vo,int target )
 void spell_heal( int sn, int level, CHAR_DATA *ch, void *vo,int target )
 {
     CHAR_DATA *victim = (CHAR_DATA *) vo;
-    victim->hit = UMIN( victim->hit + 500, victim->max_hit );
-    victim->agg_dam -= 5;
-    if(victim->agg_dam < 0) victim->agg_dam = 0;
+    int heal;
+    int aggheal;
+
+    heal = (level + 5) * 10;
+    aggheal = heal/100;
+    victim->hit = UMIN( victim->hit + heal, victim->max_hit );
+    victim->agg_dam = UMAX(victim->agg - aggheal, 0);
     update_pos( victim );
     send_to_char( "A warm feeling fills your body.\n\r", victim );
     if ( ch != victim )
@@ -4176,7 +4182,7 @@ void spell_ray_of_truth (int sn, int level, CHAR_DATA *ch, void *vo,int target)
         dam /= 2;
 
 
-    damage( ch, victim, dam, sn, DAM_HOLY ,TRUE);
+    damage( ch, victim, dam*2, sn, DAM_HOLY ,TRUE);
     spell_blindness(gsn_blindness,
     3 * level / 4, ch, (void *) victim,TARGET_CHAR);
 
@@ -4185,7 +4191,7 @@ void spell_ray_of_truth (int sn, int level, CHAR_DATA *ch, void *vo,int target)
     {
         act("The purity of your attack sends repercussions throughout your tainted body.", ch, NULL, victim, TO_CHAR);
         act("$n lets out a brief shriek of ecstasy mixed with pain.", ch, victim, NULL, TO_ROOM);
-        damage( ch, ch, ch->level / 8, sn, DAM_HOLY, TRUE);
+        damage( ch, ch, dam/10, sn, DAM_HOLY, TRUE);
     }
 
 }
@@ -4358,7 +4364,7 @@ void spell_sanctuary( int sn, int level, CHAR_DATA *ch, void *vo,int target)
     af.level     = level;
     if(ch->class == class_lookup("priest") || ch->class == class_lookup("crusader") ||
        ch->class == class_lookup("monk") )
-    af.duration = 20;
+    af.duration = 20 + number_range(5,10);
     else
     af.duration = number_range(8, 10);
     af.location  = APPLY_NONE;
@@ -4699,7 +4705,15 @@ void spell_weaken( int sn, int level, CHAR_DATA *ch, void *vo,int target)
     af.location  = APPLY_STR;
     af.modifier  = -1 * (level/2);
     af.bitvector = AFF_WEAKEN;
-    affect_to_char( victim, &af );
+    affect_to_char( victim, &af);
+    if (IS_NPC(victim)) 
+    {
+        af.location = APPLY_HITROLL;
+        af.modifier = -10 * level;
+        affect_to_char( victim, &af);
+        af.location = APPLY_DAMROLL;
+        affect_to_char( victim, &af);
+    }
     send_to_char( "You feel your strength slip away.\n\r", victim );
     act("$n looks tired and weak.",victim,NULL,NULL,TO_ROOM);
     return;

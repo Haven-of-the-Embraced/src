@@ -276,7 +276,7 @@ void spell_holyshield( int sn, int level, CHAR_DATA *ch, void *vo, int target )
     af.where	 = TO_AFFECTS2;
     af.type      = sn;
     af.level	 = level;
-    af.duration  = 3;
+    af.duration  = number_range(3, 8);
     af.modifier  = 0;
     af.location  = APPLY_NONE;
     af.bitvector = AFF2_HOLYSHIELD;
@@ -285,7 +285,6 @@ void spell_holyshield( int sn, int level, CHAR_DATA *ch, void *vo, int target )
     af.where	 = TO_RESIST;
     af.type      = sn;
     af.level	 = level;
-    af.duration  = 3;
     af.modifier  = 0;
     af.location  = APPLY_NONE;
     af.bitvector = RES_HOLY;

@@ -1337,6 +1337,13 @@ void do_asave( CHAR_DATA *ch, char *argument )
             send_to_char("Command table saved.\n\r", ch);
             return;
         }
+    
+    if (!str_cmp( arg1, "config") )
+    {
+        save_config( );
+        sendch("Config file saved.", ch);
+        return;
+    }
     /* Save area being edited, if authorized. */
     /* -------------------------------------- */
     if ( !str_cmp( arg1, "area" ) )

@@ -7688,6 +7688,7 @@ void do_globalpower( CHAR_DATA *ch, char *argument )
     extern bool nosun;
     extern bool doubleexp;
     extern bool doubledam;
+    extern bool resolver;
 
 
     int i;
@@ -7800,6 +7801,18 @@ void do_globalpower( CHAR_DATA *ch, char *argument )
         }
         return;
     }
+if(!str_cmp(arg,"resolver"))
+    {
+
+        if(resolver)
+            resolver = FALSE;
+        else
+            resolver = TRUE;
+
+        resolver ? sendch("Resolver is now on.\n\r", ch) : sendch("Resolver is now off.\n\r", ch);
+        
+        return;
+    }
     
     if(!str_cmp(arg,"doubledam"))
     {
@@ -7843,13 +7856,17 @@ void do_globalpower( CHAR_DATA *ch, char *argument )
         doubleexp ? send_to_char("{GON{x\n\r", ch) : send_to_char("{ROFF{x\n\r", ch);
         sendch("Nosun is ", ch);
         nosun ? sendch("{GON{x\n\r", ch) : sendch("{ROFF{x\n\r", ch);
+        sendch("Resolver is ", ch);
+        resolver ? sendch("{GON{x\n\r", ch) : sendch("{ROFF{x\n\r", ch);
         sendch("The Arena is ", ch);
         arena ? sendch("{RCLOSED{x\n\r", ch) : sendch("{GOPEN{x\n\r", ch);
-            send_to_char("\n\r{wValid options are: {Darena{w, {Ddoubleexp{w, {Ddoubledam{w, {Dslaughterfest{w, {Dstatus{x\n\r",ch);
+        send_to_char("\n\r{wValid options are: {Darena{w, {Ddoubleexp{w, {Ddoubledam{w, {Dnosun{w,\n\r", ch);
+        send_to_char("{Dslaughterfest{w, {Dresolver{w, {Dstatus{x\n\r",ch);
 
         return;
     }
-    send_to_char("{wValid options are: {Darena{w, {Ddoubleexp{w, {Ddoubledam{w, {Dslaughterfest{w, {Dstatus{x\n\r",ch);
+            send_to_char("\n\r{wValid options are: {Darena{w, {Ddoubleexp{w, {Ddoubledam{w, {Dnosun{w,\n\r", ch);
+        send_to_char("{Dslaughterfest{w, {Dresolver{w, {Dstatus{x\n\r",ch);
     return;
 }
 void do_portal( CHAR_DATA *ch, char *argument )

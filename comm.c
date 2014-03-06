@@ -317,12 +317,13 @@ int             most_players = 0;   /* most players on since reboot */
 int             tree_count = 0;
 int             vein_count = 0;
 
-/* imm toy globals */
+/* Imm globals */
 bool            arena;              /* Arena is closed      */
 bool            nosun=FALSE;        /* No sun damage for vamps  */
 bool            doubleexp=FALSE;    /* Double exp and cap   */
 bool            slaughter=FALSE;        /* Removes damcap and quad damage */
 bool            doubledam=FALSE;    /* double damage for players */
+bool            resolver=TRUE;
 
 /* config file (config.cfg in the area directory) */
 CONFIG_DATA     *config;
@@ -456,12 +457,11 @@ int main( int argc, char **argv )
     sprintf( log_buf, "ROM is ready to rock on port %d.", port );
     log_string( log_buf );
 
+    load_config( );
+    
     if (fCopyOver)
         copyover_recover();
 
-    /* config file loading - Ugha*/
-    config = alloc_perm(sizeof(*config));
-    load_config();
 
     game_loop_unix( control );
     close (control);
@@ -1012,8 +1012,11 @@ void init_descriptor( int control )
         );
     sprintf( log_buf, "Sock.sinaddr:  %s", buf );
     log_string( log_buf );
-  from = NULL; //gethostbyaddr( (char *) &sock.sin_addr,
-     // sizeof(sock.sin_addr), AF_INET );
+    if (!resolver)
+    {from = NULL;}
+    else
+    {from = gethostbyaddr( (char *) &sock.sin_addr, sizeof(sock.sin_addr), AF_INET );}
+    
     dnew->host = str_dup( from ? from->h_name : buf );
     }
 
@@ -4057,112 +4060,6 @@ void bugf (char * fmt, ...)
     bug (buf, 0);
 }
 
-
-void load_config( void )
-{
-    FILE *fp;
-    char *word;
-    int i;
-    int number;
-
-// Erase config state before load attempt. MAKE SURE YOU SAVE CONFIG BEFORE LOADING!
-    for(i = 0;i < MAX_TOTEM;i++)
-    {
-        config->totem_power[i] = 0;
-    }
-
-
-    fclose(fpReserve);
-
-    if((fp = fopen(CONFIG_FILE, "r")) == NULL)
-    {
-        bug("load_config: Config file does not exist. Creating new.",0);
-        fpReserve = fopen(NULL_FILE, "r");
-        write_config();
-        return;
-    }
-
-    word = fread_word(fp);
-    if(!str_cmp(word, "Totem_power"))
-    {
-        for(i = 0;i < MAX_TOTEM;i++)
-        {
-            number = fread_number(fp);
-            if (number == -1) break;
-            else config->totem_power[i] = number;
-        }
-    }
-
-    fclose(fp);
-    fpReserve = fopen(NULL_FILE, "r");
-
-    return;
-}
-
-// result added for no reason other than getting rid of the warning message. Dumb new compiler rules. - Ugha
-
-void write_config( void )
-{
-    FILE *fp;
-//  char buf[MAX_STRING_LENGTH];
-    int i;
-    int result;
-
-    fclose(fpReserve);
-
-    if((fp = fopen(CONFIG_FILE, "r+")) == NULL)
-    {
-
-        bug("write_config: Config file doesn't exist. Restoring from backup.",0);
-        result = system("cp config.bk config.cfg");
-        if((fp = fopen(CONFIG_FILE, "r+")) == NULL)
-        {
-            bug("write_config: Backup doesn't exist. Creating new config file.",0);
-            if((fp = fopen(CONFIG_FILE, "w")) == NULL)
-            {
-                bug("write_config: Unable to create config file. Aborting.",0);
-                fpReserve = fopen(NULL_FILE, "r");
-                return;
-            }
-        }
-    }
-    // lazy way to create backup
-
-    result = system("cp config.cfg config.bk");
-
-    fprintf(fp,"Totem_power ");
-    for(i = 0;i < MAX_TOTEM;i++)
-        fprintf(fp,"%d ", config->totem_power[i]);
-    fprintf(fp, "-1");
-    fprintf(fp, "\n");
-    fclose(fp);
-    fpReserve = fopen(NULL_FILE, "r");
-    return;
-}
-/*
-int assign_abil(int num, int cnt)
-{
-    int abil[30];
-    int i;
-
-    for (i = 0; i < MAX_CSABIL; i++)
-    {
-        abil[i] = i;
-    }
-
-    return abil[0];
-}
-
-
-for(num = 0; num < MAX_CSABIL; num++)
-    ch->pcdata->csabilities[i] = cr_abil_table[num].abil[i];
-
-int num, i;
-
-for(i = 0; i < MAX_CSABIL; i++)
-    ch->pcdata->csabilities[i] = cr_abil_table[num].abil[i];
-
-*/
 void init_signals()
 {
   signal(SIGBUS,sig_handler);
@@ -4207,4 +4104,104 @@ void titlebar(CHAR_DATA *ch)
 {
         sendch("{D-===========================================================================-{x\n\r", ch);
         return;
+}
+
+
+void save_config( void )
+{
+    FILE *fp;
+
+    fclose( fpReserve );
+    if ( !( fp = fopen( CONFIG_FILE, "w" ) ) )
+    {
+    bug( "save_config: fopen", 0 );
+    perror( CONFIG_FILE );
+    }
+
+    fprintf( fp, "Slaughter %d\n",      slaughter);
+    fprintf( fp, "Doubledam %d\n",      doubledam);
+    fprintf( fp, "Doubleexp %d\n",      doubleexp);
+    fprintf( fp, "Nosun %d\n",          nosun);
+    fprintf( fp, "Arena %d\n",          arena);
+    fprintf( fp, "Resolver %d\n",       resolver);
+
+    fprintf( fp, "End\n\n\n\n" );
+    fclose( fp );
+    fpReserve = fopen( NULL_FILE, "r" );
+    return;
+}
+
+
+
+#if defined(KEY)
+#undef KEY
+#endif
+
+#define KEY( literal, field, value )                \
+                if ( !str_cmp( word, literal ) )    \
+                {                                   \
+                    field  = value;                 \
+                    fMatch = TRUE;                  \
+                    break;                          \
+                                }
+
+#define SKEY( string, field )                       \
+                if ( !str_cmp( word, string ) )     \
+                {                                   \
+                    free_string( field );           \
+                    field = fread_string( fp );     \
+                    fMatch = TRUE;                  \
+                    break;                          \
+                                }
+
+
+void load_config( void )
+{
+    char      *word;
+    bool      fMatch;
+    FILE *fp;
+
+    fclose( fpReserve );
+    if ( !( fp = fopen( CONFIG_FILE, "r" ) ) )
+    {
+    bug( "load_config: fopen", 0 );
+    perror( CONFIG_FILE );
+    }
+    
+    
+    for ( ; ; )
+    {
+       word   = feof( fp ) ? "End" : fread_word( fp );
+       fMatch = FALSE;
+
+       switch ( UPPER(word[0]) )
+       {
+          case 'A':
+               KEY( "Arena", arena, fread_number(fp) );
+               break;
+           case 'R': 
+               KEY("Resolver", resolver, fread_number(fp) );
+               break;
+           case 'N':
+               KEY("Nosun", nosun, fread_number(fp) );
+               break;
+          case 'D':
+                KEY( "Doubleexp", doubleexp, fread_number(fp) );
+                KEY( "Doubledam", doubledam, fread_number(fp) );
+                break;
+           case 'S':
+               KEY( "Slaughter", slaughter, fread_number(fp) );
+               break;
+               
+           case 'E':
+                if ( !str_cmp( word, "End" ) )
+                {
+                    fMatch = TRUE;
+                    fclose( fp );
+                    fpReserve = fopen( NULL_FILE, "r" );
+                    return;
+                }
+          
+        }
+    }
 }

@@ -457,7 +457,7 @@ int main( int argc, char **argv )
     sprintf( log_buf, "ROM is ready to rock on port %d.", port );
     log_string( log_buf );
 
-    load_config( );
+    load_config();
     
     if (fCopyOver)
         copyover_recover();
@@ -466,7 +466,7 @@ int main( int argc, char **argv )
     game_loop_unix( control );
     close (control);
 #endif
-
+    save_config();
     /*
      * That's all, folks.
      */

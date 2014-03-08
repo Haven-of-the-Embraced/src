@@ -1499,7 +1499,8 @@ bool damage(CHAR_DATA *ch,CHAR_DATA *victim,int dam,int dt,int dam_type,
                         }
 
             stop_fighting( victim, TRUE );
-            if(IS_NPC(ch)) grudge_update(ch,victim);
+            if(IS_NPC(victim)) do_function(victim, &do_visible, "" );
+	    if(IS_NPC(ch)) grudge_update(ch,victim);
             if(IS_NPC(victim)) grudge_update(victim,ch);
 
             for ( d = descriptor_list; d != NULL; d = d->next )

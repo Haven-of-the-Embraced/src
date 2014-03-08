@@ -4191,7 +4191,7 @@ void spell_ray_of_truth (int sn, int level, CHAR_DATA *ch, void *vo,int target)
     {
         act("The purity of your attack sends repercussions throughout your tainted body.", ch, NULL, victim, TO_CHAR);
         act("$n lets out a brief shriek of ecstasy mixed with pain.", ch, victim, NULL, TO_ROOM);
-        damage( ch, ch, dam/10, sn, DAM_HOLY, TRUE);
+        damage( ch, ch, dam/5, sn, DAM_HOLY, TRUE);
     }
 
 }

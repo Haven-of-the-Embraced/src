@@ -3428,37 +3428,33 @@ int xp_compute( CHAR_DATA *gch, CHAR_DATA *victim, int total_levels )
     switch (level_range)
     {
         default:    base_exp =  1;  break;
-        case -9:    base_exp =  17;  break;
-        case -8:    base_exp =  25; break;
-        case -7:    base_exp =  40; break;
-        case -6:    base_exp =  55; break;
-        case -5:    base_exp =  60; break;
-        case -4:    base_exp =  75; break;
-        case -3:    base_exp =  90; break;
-        case -2:    base_exp =  105; break;
-        case -1:    base_exp =  120;    break;
-        case 0:     base_exp =  135;    break;
-        case 1:     base_exp =  145;    break;
-        case 2:     base_exp =  155;    break;
-        case 3:     base_exp =  165;    break;
-        case 4:     base_exp =  175;    break;
-        case 5:     base_exp =  185;    break;
-        case 6:     base_exp =  195;    break;
-        case 7:     base_exp =  205;    break;
-        case 8:     base_exp =  215;    break;
-        case 9:     base_exp =  225;    break;
-        case 10:    base_exp =  235;    break;
+        case -10:   base_exp =  3;  break;
+        case -9:    base_exp =  6;  break;
+        case -8:    base_exp =  12; break;
+        case -7:    base_exp =  25; break;
+        case -6:    base_exp =  50; break;
+        case -5:    base_exp =  100; break;
+        case -4:    base_exp =  120; break;
+        case -3:    base_exp =  140; break;
+        case -2:    base_exp =  160; break;
+        case -1:    base_exp =  180;    break;
+        case 0:     base_exp =  200;    break;
+        case 1:     base_exp =  210;    break;
+        case 2:     base_exp =  220;    break;
+        case 3:     base_exp =  230;    break;
+        case 4:     base_exp =  240;    break;
+        case 5:     base_exp =  250;    break;
+        case 6:     base_exp =  255;    break;
+        case 7:     base_exp =  260;    break;
+        case 8:     base_exp =  265;    break;
+        case 9:     base_exp =  270;    break;
+        case 10:    base_exp =  275;    break;
     }
 
     if (level_range > 10)
-    base_exp = 235 + 6 * (level_range - 10);
-
-
-
-/* more curve test code :(
-    if (level_range > 10)
-    base_exp = 150;
-*/
+        base_exp = 275 + 4 * (level_range - 10);
+    if (level_range > 20)
+        base_exp = 275 + 2 * (level_range - 10);
 
 
     xp = base_exp;
@@ -3493,21 +3489,23 @@ int xp_compute( CHAR_DATA *gch, CHAR_DATA *victim, int total_levels )
 
     
 /*Sengir altered extra xp if you are leader*/
-    if ((gch->leader == NULL) && (level_range >= -9))
+    if ((gch->leader == NULL) && (level_range >= -10))
         xp += gch->pcdata->csabilities[CSABIL_LEADERSHIP] * 5;
 
 /*Sengir remort bonus xp code*/
-    if (level_range >= -9)
+    if (level_range >= -10)
         xp += gch->remorts / 2;
 
-    if(gch->sphere[SPHERE_MIND] > 0  && level_range > -9)
+    if(gch->sphere[SPHERE_MIND] > 0  && level_range > -10)
         xp += 4*gch->sphere[SPHERE_MIND];
 
-    /* standard exp cap for all levels.. try it out */
+    /* standard exp cap */
     if(gch->wimpy == 0)
     {
-        if(gch->sphere[SPHERE_MIND] > 0 && xp > (370+gch->remorts+gch->sphere[SPHERE_MIND]*4)) xp = (370+gch->remorts+gch->sphere[SPHERE_MIND]*4);
-        if(xp > 370+gch->remorts) xp = 370+gch->remorts; //get out there and get some!
+        if(gch->sphere[SPHERE_MIND] > 0 && xp > (370+gch->remorts+gch->sphere[SPHERE_MIND]*4)) 
+            xp = (370+gch->remorts+gch->sphere[SPHERE_MIND]*4);
+        if(xp > 370+gch->remorts) 
+            xp = 370+gch->remorts;
     }
     else if(xp > 350) xp = 350; //keep e'm from being pansies
 

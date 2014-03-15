@@ -3435,12 +3435,14 @@ void do_shroudofnight(CHAR_DATA *ch, char *argument)
     af.type      = gsn_cloakshadow;
     af.level     = ch->level;
     af.duration  = 20-ch->gen;
+    if (ch->clan == clan_lookup("Lasombra"))
+        af.duration += 12;
     af.location  = 0;
     af.modifier  = 0;
     af.bitvector = IMM_SUNLIGHT;
     affect_to_char( ch, &af );
     send_to_char( "You call darkness to protect you against the sun.\n\r", ch );
-
+    WAIT_STATE(ch, 8);
     return;
 }
 

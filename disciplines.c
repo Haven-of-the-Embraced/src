@@ -6768,7 +6768,7 @@ void do_fleshcraft(CHAR_DATA *ch, char *argument)
             send_to_char( "You are not skilled enough in Vicissitude to perform this fleshcrafting.\n\r", ch );
             return;
         }
-        if (mob->race != race_lookup("human") && mob->race != ghoul)
+        if (mob->race != race_lookup("human") && mob->race != race_lookup("ghoul"))
         {
             send_to_char( "You can only fleshcraft a human into a warghoul!\n\r", ch );
             return;
@@ -7396,7 +7396,7 @@ void do_horrid(CHAR_DATA *ch, char *argument)
     af.level    = ch->level;
     af.duration = -1;
     af.location = APPLY_CS_DEX;
-    af.modifier = 3
+    af.modifier = 3;
     if (ch->clan == clan_lookup("Tzimisce"))
         af.modifier++;
     af.bitvector    = 0;

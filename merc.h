@@ -352,7 +352,8 @@ struct buf_type
 #define INTELLIGENCE            7
 #define WITS                    8
 
-/* abilities */
+/* abilities */ 
+#define CSABIL_NONE             -1
 #define CSABIL_EXPRESSION       0
 #define CSABIL_ALERTNESS        1
 #define CSABIL_ATHLETICS        2

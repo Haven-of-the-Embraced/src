@@ -3435,12 +3435,14 @@ void do_shroudofnight(CHAR_DATA *ch, char *argument)
     af.type      = gsn_cloakshadow;
     af.level     = ch->level;
     af.duration  = 20-ch->gen;
+    if (ch->clan == clan_lookup("Lasombra"))
+        af.duration += 12;
     af.location  = 0;
     af.modifier  = 0;
     af.bitvector = IMM_SUNLIGHT;
     affect_to_char( ch, &af );
     send_to_char( "You call darkness to protect you against the sun.\n\r", ch );
-
+    WAIT_STATE(ch, 8);
     return;
 }
 
@@ -3554,25 +3556,17 @@ void do_awe(CHAR_DATA *ch, char *argument)
             send_to_char("...and notice a few people regarding you with approval.\n\r", ch);
         act("You turn and notice $n, whose very presence seems to fill you with awe.", ch, NULL, NULL, TO_NOTVICT);
 
-        af.where    = TO_AFFECTS;
-        af.type     = gsn_awe;
-        af.level    = ch->pcdata->discipline[PRESENCE];
-        af.duration = dicesuccess * 9;
-        af.location = APPLY_NONE;
-        af.modifier = 0;
-        af.bitvector    = 0;
-        affect_to_char( ch, &af );
 
         af.where    = TO_AFFECTS;
         af.type     = gsn_awe;
         af.level    = ch->pcdata->discipline[PRESENCE];
         af.duration = dicesuccess * 9;
         af.location = APPLY_HITROLL;
-        af.modifier = ch->level / 2 + 10;
+        af.modifier = ((dicesuccess/2)+1)*ch->level/3 + 10;
         af.bitvector    = 0;
         affect_to_char( ch, &af );
 
-        gain_exp(ch, dicesuccess * 3);
+        gain_exp(ch, dicesuccess * 6);
     }
     return;
 }
@@ -3865,7 +3859,7 @@ void do_dreadgaze(CHAR_DATA *ch, char *argument)
 
     if (ch->pcdata->discipline[PRESENCE] < 2)
     {
-        send_to_char( "You are not skilled enough in Presence!.\n\r", ch );
+        send_to_char( "You are not skilled enough in Presence!\n\r", ch );
         return;
     }
     if ( IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
@@ -3889,7 +3883,7 @@ void do_dreadgaze(CHAR_DATA *ch, char *argument)
         send_to_char( "Frighten whom?\n\r", ch );
         return;
     }
-    if(victim->level > ch->level)
+    if(victim->level > 3*ch->level/2)
     {
         send_to_char("You are not powerful enough to force them to flee!\n\r",ch);
         return;
@@ -4059,16 +4053,18 @@ void do_claws(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if (ch->pblood < 20)
+    if (ch->pblood < 30)
     {
         send_to_char( "You do not have enough blood.\n\r", ch );
         return;
     }
-    ch->pblood -= 10;
+    ch->pblood -= 20;
     claws = create_object(get_obj_index(OBJ_VNUM_CLAWS), 0);
     claws->level = ch->level;
-    claws->value[1] = ch->level/2 + (ch->gen <= 8 ? 20:15);
-    claws->value[2] = ch->pcdata->discipline[PROTEAN] + 1;
+    claws->value[1] = 3*ch->level/5 + (ch->gen <= 8 ? 30:20);
+    claws->value[2] = ch->pcdata->discipline[PROTEAN];
+    if (ch->clan == clan_lookup("Gangrel"))
+        claws->value[2]++;
     obj_to_char(claws,ch);
     equip_char( ch, claws, WEAR_WIELD );
 
@@ -4240,7 +4236,7 @@ void do_shift(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    WAIT_STATE(ch, 10);
+    WAIT_STATE(ch, 80);
 
     if ( !str_prefix( arg, "bat" ) )
     {
@@ -4249,7 +4245,7 @@ void do_shift(CHAR_DATA *ch, char *argument)
             send_to_char( "You must return to vampire form first!\n\r", ch );
             return;
         }
-        if (ch->pblood < 15)
+        if (ch->pblood < 20)
         {
             send_to_char( "You don't have enough blood!\n\r", ch );
             return;
@@ -4363,7 +4359,7 @@ void do_shift(CHAR_DATA *ch, char *argument)
             send_to_char( "You must return to vampire form first!\n\r", ch );
             return;
         }
-        if (ch->pblood < 15)
+        if (ch->pblood < 20)
         {
             send_to_char( "You don't have enough blood!\n\r", ch );
             return;
@@ -4458,7 +4454,7 @@ void do_shift(CHAR_DATA *ch, char *argument)
             send_to_char( "You must return to vampire form first!.\n\r", ch );
             return;
         }
-        if (ch->pblood < 15)
+        if (ch->pblood < 50)
         {
             send_to_char( "You don't have enough blood!\n\r", ch );
             return;
@@ -4473,7 +4469,7 @@ void do_shift(CHAR_DATA *ch, char *argument)
 
         act( "Your body slowly shifts forms into a wolf.", ch, NULL, NULL, TO_CHAR );
         act( "$n shifts their form into that of a wolf.", ch, NULL, NULL, TO_NOTVICT );
-        ch->pblood -= 10;
+        ch->pblood -= 40;
 
 /*      ch->pcdata->perm_hit = ch->max_hit;
         ch->max_hit += ch->max_hit;
@@ -4570,7 +4566,7 @@ void do_shift(CHAR_DATA *ch, char *argument)
             send_to_char( "You must return to vampire form first!.\n\r", ch );
             return;
         }
-        if (ch->pblood < 15)
+        if (ch->pblood < 50)
         {
             send_to_char( "You don't have enough blood!\n\r", ch );
             return;
@@ -4585,7 +4581,7 @@ void do_shift(CHAR_DATA *ch, char *argument)
 
         act( "Your body slowly shifts forms into a tiger.", ch, NULL, NULL, TO_CHAR );
         act( "$n shifts their form into that of a tiger.", ch, NULL, NULL, TO_NOTVICT );
-        ch->pblood -= 10;
+        ch->pblood -= 40;
 
 /*      ch->pcdata->perm_hit = ch->max_hit;
         ch->max_hit += ch->max_hit;
@@ -4681,7 +4677,7 @@ void do_shift(CHAR_DATA *ch, char *argument)
             send_to_char( "You must return to vampire form first!.\n\r", ch );
             return;
         }
-        if (ch->pblood < 15)
+        if (ch->pblood < 30)
         {
             send_to_char( "You don't have enough blood!\n\r", ch );
             return;
@@ -4696,7 +4692,7 @@ void do_shift(CHAR_DATA *ch, char *argument)
 
         act( "Your body slowly shifts forms into a raven.", ch, NULL, NULL, TO_CHAR );
         act( "$n shifts their form into that of a raven.", ch, NULL, NULL, TO_NOTVICT );
-        ch->pblood -= 10;
+        ch->pblood -= 20;
 
 /*      ch->pcdata->perm_hit = ch->max_hit;
         ch->max_hit += ch->max_hit;
@@ -4790,7 +4786,7 @@ void do_shift(CHAR_DATA *ch, char *argument)
             send_to_char( "You must return to vampire form first!.\n\r", ch );
             return;
         }
-        if (ch->pblood < 15)
+        if (ch->pblood < 90)
         {
             send_to_char( "You don't have enough blood!\n\r", ch );
             return;
@@ -4805,7 +4801,7 @@ void do_shift(CHAR_DATA *ch, char *argument)
 
         act( "Your body slowly shifts forms into a bear.", ch, NULL, NULL, TO_CHAR );
         act( "$n shifts their form into that of a bear.", ch, NULL, NULL, TO_NOTVICT );
-        ch->pblood -= 10;
+        ch->pblood -= 80;
 
 /*      ch->pcdata->perm_hit = ch->max_hit;
         ch->max_hit += ch->max_hit;
@@ -6714,7 +6710,7 @@ void do_fleshcraft(CHAR_DATA *ch, char *argument)
     if (is_safe (ch, mob))
         return; //is_safe has its own mesasges. easiest that way!
 
-    if (mob->level > ch->level)
+    if (mob->level > 10+ch->level)
     {
         send_to_char( "That creature is too strong for your fleshcraft.\n\r", ch );
         return;
@@ -6740,9 +6736,9 @@ void do_fleshcraft(CHAR_DATA *ch, char *argument)
         mob->long_descr = str_dup(buf);
         mob->short_descr = str_dup("A Hellhound");
         mob->level = ch->level;
-        mob->max_hit += 5000;
+        mob->max_hit = UMIN(mob->max_hit+5000, 30000);
         mob->hit = mob->max_hit;
-        mob->hitroll += 25;
+        mob->hitroll += 100;
         mob->damroll += 25;
         mob->armor[0] -= 100;
         mob->armor[1] -= 100;
@@ -6772,7 +6768,7 @@ void do_fleshcraft(CHAR_DATA *ch, char *argument)
             send_to_char( "You are not skilled enough in Vicissitude to perform this fleshcrafting.\n\r", ch );
             return;
         }
-        if (mob->race != race_lookup("human"))
+        if (mob->race != race_lookup("human") && mob->race != ghoul)
         {
             send_to_char( "You can only fleshcraft a human into a warghoul!\n\r", ch );
             return;
@@ -6791,10 +6787,10 @@ void do_fleshcraft(CHAR_DATA *ch, char *argument)
         sprintf(buf,"A vicious creature that slighty resembles %s snarls in rage at its current form.\n\r",mob->short_descr);
         mob->long_descr = str_dup(buf);
         mob->short_descr = str_dup("A Szlachta Warghoul");
-        mob->max_hit += 10000;
+        mob->max_hit = UMIN(mob->max_hit+10000, 30000);
         mob->hit = mob->max_hit;
-        mob->hitroll += 50;
-        mob->damroll += 50;
+        mob->hitroll += 500;
+        mob->damroll += 500;
         mob->armor[0] -= 500;
         mob->armor[1] -= 500;
         mob->armor[2] -= 500;
@@ -6845,14 +6841,14 @@ void do_fleshcraft(CHAR_DATA *ch, char *argument)
         sprintf(buf,"A vicious bone-armored and spiked version of %s snarls and barely holds back it's urge to kill.\n\r",mob->short_descr);
         mob->long_descr = str_dup(buf);
         mob->short_descr = str_dup("A Vozhd Warghoul");
-        mob->max_hit = 20000;
+        mob->max_hit = UMIN(mob->max_hit+20000, 30000);
         mob->hit = mob->max_hit;
-        mob->hitroll += 100;
-        mob->damroll += 100;
-        mob->armor[0] -= 1000;
-        mob->armor[1] -= 1000;
-        mob->armor[2] -= 1000;
-        mob->armor[3] -= 1000;
+        mob->hitroll += 1000;
+        mob->damroll += 1000;
+        mob->armor[0] -= 2000;
+        mob->armor[1] -= 2000;
+        mob->armor[2] -= 2000;
+        mob->armor[3] -= 2000;
 
         add_follower( mob, ch );
         mob->leader = ch;
@@ -7362,7 +7358,9 @@ void do_horrid(CHAR_DATA *ch, char *argument)
     af.modifier  = 3*ch->level/2;
     af.bitvector = 0;
     affect_to_char( ch, &af );
-
+    
+    if (ch->clan == clan_lookup("Tzimisce"))
+    {
     af.where     = TO_AFFECTS;
     af.type      = gsn_vicissitude_horrid;
     af.level     = ch->level;
@@ -7371,6 +7369,7 @@ void do_horrid(CHAR_DATA *ch, char *argument)
     af.modifier  = ch->pcdata->perm_hit/2;
     af.bitvector = 0;
     affect_to_char( ch, &af );
+    }
 
     af.where     = TO_AFFECTS;
     af.type      = gsn_vicissitude_horrid;
@@ -7387,6 +7386,8 @@ void do_horrid(CHAR_DATA *ch, char *argument)
     af.duration = -1;
     af.location = APPLY_CS_STR;
     af.modifier = 3;
+    if (ch->clan == clan_lookup("Tzimisce"))
+        af.modifier++;
     af.bitvector    = 0;
     affect_to_char( ch, &af );
 
@@ -7395,7 +7396,9 @@ void do_horrid(CHAR_DATA *ch, char *argument)
     af.level    = ch->level;
     af.duration = -1;
     af.location = APPLY_CS_DEX;
-    af.modifier = 3;
+    af.modifier = 3
+    if (ch->clan == clan_lookup("Tzimisce"))
+        af.modifier++;
     af.bitvector    = 0;
     affect_to_char( ch, &af );
 

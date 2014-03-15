@@ -3554,25 +3554,17 @@ void do_awe(CHAR_DATA *ch, char *argument)
             send_to_char("...and notice a few people regarding you with approval.\n\r", ch);
         act("You turn and notice $n, whose very presence seems to fill you with awe.", ch, NULL, NULL, TO_NOTVICT);
 
-        af.where    = TO_AFFECTS;
-        af.type     = gsn_awe;
-        af.level    = ch->pcdata->discipline[PRESENCE];
-        af.duration = dicesuccess * 9;
-        af.location = APPLY_NONE;
-        af.modifier = 0;
-        af.bitvector    = 0;
-        affect_to_char( ch, &af );
 
         af.where    = TO_AFFECTS;
         af.type     = gsn_awe;
         af.level    = ch->pcdata->discipline[PRESENCE];
         af.duration = dicesuccess * 9;
         af.location = APPLY_HITROLL;
-        af.modifier = ch->level / 2 + 10;
+        af.modifier = ((dicesuccess/2)+1)*ch->level/3 + 10;
         af.bitvector    = 0;
         affect_to_char( ch, &af );
 
-        gain_exp(ch, dicesuccess * 3);
+        gain_exp(ch, dicesuccess * 6);
     }
     return;
 }
@@ -3865,7 +3857,7 @@ void do_dreadgaze(CHAR_DATA *ch, char *argument)
 
     if (ch->pcdata->discipline[PRESENCE] < 2)
     {
-        send_to_char( "You are not skilled enough in Presence!.\n\r", ch );
+        send_to_char( "You are not skilled enough in Presence!\n\r", ch );
         return;
     }
     if ( IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
@@ -3889,7 +3881,7 @@ void do_dreadgaze(CHAR_DATA *ch, char *argument)
         send_to_char( "Frighten whom?\n\r", ch );
         return;
     }
-    if(victim->level > ch->level)
+    if(victim->level > 3*ch->level/2)
     {
         send_to_char("You are not powerful enough to force them to flee!\n\r",ch);
         return;

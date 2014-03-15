@@ -6710,7 +6710,7 @@ void do_fleshcraft(CHAR_DATA *ch, char *argument)
     if (is_safe (ch, mob))
         return; //is_safe has its own mesasges. easiest that way!
 
-    if (mob->level > ch->level)
+    if (mob->level > 10+ch->level)
     {
         send_to_char( "That creature is too strong for your fleshcraft.\n\r", ch );
         return;
@@ -6736,9 +6736,9 @@ void do_fleshcraft(CHAR_DATA *ch, char *argument)
         mob->long_descr = str_dup(buf);
         mob->short_descr = str_dup("A Hellhound");
         mob->level = ch->level;
-        mob->max_hit += 5000;
+        mob->max_hit = UMIN(mob->max_hit+5000, 30000);
         mob->hit = mob->max_hit;
-        mob->hitroll += 25;
+        mob->hitroll += 100;
         mob->damroll += 25;
         mob->armor[0] -= 100;
         mob->armor[1] -= 100;
@@ -6768,7 +6768,7 @@ void do_fleshcraft(CHAR_DATA *ch, char *argument)
             send_to_char( "You are not skilled enough in Vicissitude to perform this fleshcrafting.\n\r", ch );
             return;
         }
-        if (mob->race != race_lookup("human"))
+        if (mob->race != race_lookup("human") && mob->race != ghoul)
         {
             send_to_char( "You can only fleshcraft a human into a warghoul!\n\r", ch );
             return;
@@ -6787,10 +6787,10 @@ void do_fleshcraft(CHAR_DATA *ch, char *argument)
         sprintf(buf,"A vicious creature that slighty resembles %s snarls in rage at its current form.\n\r",mob->short_descr);
         mob->long_descr = str_dup(buf);
         mob->short_descr = str_dup("A Szlachta Warghoul");
-        mob->max_hit += 10000;
+        mob->max_hit = UMIN(mob->max_hit+10000, 30000);
         mob->hit = mob->max_hit;
-        mob->hitroll += 50;
-        mob->damroll += 50;
+        mob->hitroll += 500;
+        mob->damroll += 500;
         mob->armor[0] -= 500;
         mob->armor[1] -= 500;
         mob->armor[2] -= 500;
@@ -6841,14 +6841,14 @@ void do_fleshcraft(CHAR_DATA *ch, char *argument)
         sprintf(buf,"A vicious bone-armored and spiked version of %s snarls and barely holds back it's urge to kill.\n\r",mob->short_descr);
         mob->long_descr = str_dup(buf);
         mob->short_descr = str_dup("A Vozhd Warghoul");
-        mob->max_hit = 20000;
+        mob->max_hit = UMIN(mob->max_hit+20000, 30000);
         mob->hit = mob->max_hit;
-        mob->hitroll += 100;
-        mob->damroll += 100;
-        mob->armor[0] -= 1000;
-        mob->armor[1] -= 1000;
-        mob->armor[2] -= 1000;
-        mob->armor[3] -= 1000;
+        mob->hitroll += 1000;
+        mob->damroll += 1000;
+        mob->armor[0] -= 2000;
+        mob->armor[1] -= 2000;
+        mob->armor[2] -= 2000;
+        mob->armor[3] -= 2000;
 
         add_follower( mob, ch );
         mob->leader = ch;

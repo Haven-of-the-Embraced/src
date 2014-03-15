@@ -4059,16 +4059,18 @@ void do_claws(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if (ch->pblood < 20)
+    if (ch->pblood < 30)
     {
         send_to_char( "You do not have enough blood.\n\r", ch );
         return;
     }
-    ch->pblood -= 10;
+    ch->pblood -= 20;
     claws = create_object(get_obj_index(OBJ_VNUM_CLAWS), 0);
     claws->level = ch->level;
-    claws->value[1] = ch->level/2 + (ch->gen <= 8 ? 20:15);
-    claws->value[2] = ch->pcdata->discipline[PROTEAN] + 1;
+    claws->value[1] = 3*ch->level/5 + (ch->gen <= 8 ? 30:20);
+    claws->value[2] = ch->pcdata->discipline[PROTEAN];
+    if (ch->clan == clan_lookup("Gangrel"))
+        claws->value[2]++;
     obj_to_char(claws,ch);
     equip_char( ch, claws, WEAR_WIELD );
 
@@ -4240,7 +4242,7 @@ void do_shift(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    WAIT_STATE(ch, 10);
+    WAIT_STATE(ch, 80);
 
     if ( !str_prefix( arg, "bat" ) )
     {
@@ -4249,7 +4251,7 @@ void do_shift(CHAR_DATA *ch, char *argument)
             send_to_char( "You must return to vampire form first!\n\r", ch );
             return;
         }
-        if (ch->pblood < 15)
+        if (ch->pblood < 20)
         {
             send_to_char( "You don't have enough blood!\n\r", ch );
             return;
@@ -4363,7 +4365,7 @@ void do_shift(CHAR_DATA *ch, char *argument)
             send_to_char( "You must return to vampire form first!\n\r", ch );
             return;
         }
-        if (ch->pblood < 15)
+        if (ch->pblood < 20)
         {
             send_to_char( "You don't have enough blood!\n\r", ch );
             return;
@@ -4458,7 +4460,7 @@ void do_shift(CHAR_DATA *ch, char *argument)
             send_to_char( "You must return to vampire form first!.\n\r", ch );
             return;
         }
-        if (ch->pblood < 15)
+        if (ch->pblood < 50)
         {
             send_to_char( "You don't have enough blood!\n\r", ch );
             return;
@@ -4473,7 +4475,7 @@ void do_shift(CHAR_DATA *ch, char *argument)
 
         act( "Your body slowly shifts forms into a wolf.", ch, NULL, NULL, TO_CHAR );
         act( "$n shifts their form into that of a wolf.", ch, NULL, NULL, TO_NOTVICT );
-        ch->pblood -= 10;
+        ch->pblood -= 40;
 
 /*      ch->pcdata->perm_hit = ch->max_hit;
         ch->max_hit += ch->max_hit;
@@ -4570,7 +4572,7 @@ void do_shift(CHAR_DATA *ch, char *argument)
             send_to_char( "You must return to vampire form first!.\n\r", ch );
             return;
         }
-        if (ch->pblood < 15)
+        if (ch->pblood < 50)
         {
             send_to_char( "You don't have enough blood!\n\r", ch );
             return;
@@ -4585,7 +4587,7 @@ void do_shift(CHAR_DATA *ch, char *argument)
 
         act( "Your body slowly shifts forms into a tiger.", ch, NULL, NULL, TO_CHAR );
         act( "$n shifts their form into that of a tiger.", ch, NULL, NULL, TO_NOTVICT );
-        ch->pblood -= 10;
+        ch->pblood -= 40;
 
 /*      ch->pcdata->perm_hit = ch->max_hit;
         ch->max_hit += ch->max_hit;
@@ -4681,7 +4683,7 @@ void do_shift(CHAR_DATA *ch, char *argument)
             send_to_char( "You must return to vampire form first!.\n\r", ch );
             return;
         }
-        if (ch->pblood < 15)
+        if (ch->pblood < 30)
         {
             send_to_char( "You don't have enough blood!\n\r", ch );
             return;
@@ -4696,7 +4698,7 @@ void do_shift(CHAR_DATA *ch, char *argument)
 
         act( "Your body slowly shifts forms into a raven.", ch, NULL, NULL, TO_CHAR );
         act( "$n shifts their form into that of a raven.", ch, NULL, NULL, TO_NOTVICT );
-        ch->pblood -= 10;
+        ch->pblood -= 20;
 
 /*      ch->pcdata->perm_hit = ch->max_hit;
         ch->max_hit += ch->max_hit;
@@ -4790,7 +4792,7 @@ void do_shift(CHAR_DATA *ch, char *argument)
             send_to_char( "You must return to vampire form first!.\n\r", ch );
             return;
         }
-        if (ch->pblood < 15)
+        if (ch->pblood < 90)
         {
             send_to_char( "You don't have enough blood!\n\r", ch );
             return;
@@ -4805,7 +4807,7 @@ void do_shift(CHAR_DATA *ch, char *argument)
 
         act( "Your body slowly shifts forms into a bear.", ch, NULL, NULL, TO_CHAR );
         act( "$n shifts their form into that of a bear.", ch, NULL, NULL, TO_NOTVICT );
-        ch->pblood -= 10;
+        ch->pblood -= 80;
 
 /*      ch->pcdata->perm_hit = ch->max_hit;
         ch->max_hit += ch->max_hit;

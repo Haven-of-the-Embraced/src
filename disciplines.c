@@ -4062,9 +4062,7 @@ void do_claws(CHAR_DATA *ch, char *argument)
     claws = create_object(get_obj_index(OBJ_VNUM_CLAWS), 0);
     claws->level = ch->level;
     claws->value[1] = 3*ch->level/5 + (ch->gen <= 8 ? 30:20);
-    claws->value[2] = ch->pcdata->discipline[PROTEAN];
-    if (ch->clan == clan_lookup("Gangrel"))
-        claws->value[2]++;
+    claws->value[2] = 1 + ch->pcdata->discipline[PROTEAN];
     obj_to_char(claws,ch);
     equip_char( ch, claws, WEAR_WIELD );
 

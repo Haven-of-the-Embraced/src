@@ -244,11 +244,11 @@ void do_freebie(CHAR_DATA *ch, char *argument)
                 }
                 count = CSBACK_GENERATION;
                 switch (ch->pcdata->csbackgrounds[CSBACK_GENERATION]) {
-                case 0: minimictime = 30; minimage = 150; cost = 10; break;
-                case 1: minimictime = 60; minimage = 200; cost = 20; break;
-                case 2: minimictime = 90; minimage = 250; cost = 40; break;
-                case 3: minimictime = 120; minimage = 350; cost = 60; break;
-                case 4: minimictime = 150; minimage = 500; cost = 80; break; }
+                case 0: minimictime = 15; minimage = 100; cost = 10; break;
+                case 1: minimictime = 30; minimage = 200; cost = 20; break;
+                case 2: minimictime = 60; minimage = 300; cost = 40; break;
+                case 3: minimictime = 120; minimage = 400; cost = 60; break;
+                case 4: minimictime = 240; minimage = 500; cost = 80; break; }
 
                 if (get_age(ch) < minimage) {
                     send_to_char("You have not spent enough time on this character to purchase that level of Generation.\n\r", ch);

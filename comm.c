@@ -2914,6 +2914,19 @@ case CON_DEFAULT_CHOICE:
         send_to_char("Time to get killing, {RSlaughterfest{x is running!\n\r", ch);
     if (doubleexp)
         send_to_char("{CDoubleexp{x is turned on!{x", ch);
+    
+    if (IS_VAMP(ch) && ch->gen < 10)
+    {
+        switch (ch->gen)
+        {
+        case 1: case 2: case 3: case 4: 
+        case 5: ch->pcdata->csbackgrounds[CSBACK_GENERATION] = 5; break;
+        case 6: ch->pcdata->csbackgrounds[CSBACK_GENERATION] = 4; break;
+        case 7: ch->pcdata->csbackgrounds[CSBACK_GENERATION] = 3; break;
+        case 8: ch->pcdata->csbackgrounds[CSBACK_GENERATION] = 2; break;
+        case 9: ch->pcdata->csbackgrounds[CSBACK_GENERATION] = 1; break;
+        }
+    }
 
     if (is_clan(ch) && !IS_SET(ch->act2, PLR2_LEADER) && !str_cmp(clan_table[ch->clan].leader, ch->name))
     {

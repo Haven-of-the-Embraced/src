@@ -228,6 +228,37 @@ void do_freebie(CHAR_DATA *ch, char *argument)
     }
     }
 }*/
+    if (!str_prefix(arg, "generation"))
+            {
+                if (!IS_VAMP(ch)) {
+                    send_to_char("You cannot purchase this background.\n\r", ch);
+                    return;
+                }
+                step = 19;
+                sh_int minimictime;
+                sh_int minimage;
+                if (ch->pcdata->csbackgrounds[CSBACK_GENERATION] == 5)
+                {
+                    send_to_char("Your blood is already as potent as it can be.\n\r", ch);;
+                    return;
+                }
+                count = CSBACK_GENERATION;
+                switch (ch->pcdata->csbackgrounds[CSBACK_GENERATION]) {
+                case 0: minimictime = 30; minimage = 150; cost = 10; break;
+                case 1: minimictime = 60; minimage = 200; cost = 20; break;
+                case 2: minimictime = 90; minimage = 250; cost = 40; break;
+                case 3: minimictime = 120; minimage = 350; cost = 60; break;
+                case 4: minimictime = 150; minimage = 500; cost = 80; break; }
+
+                if (get_age(ch) < minimage) {
+                    send_to_char("You have not spent enough time on this character to purchase that level of Generation.\n\r", ch);
+                    return;
+                }
+                if ((ch->pcdata->IC_total/60) < minimictime) {
+                    send_to_char("You have not spent enough time in the IC affairs on Haven to purchase that level of Generation.\n\r", ch);
+            }
+    }
+                
     if(!str_prefix( arg, "conscience"))
     {
         if(ch->pcdata->csvirtues[CSVIRT_CONSCIENCE] == 5)
@@ -828,7 +859,8 @@ void do_freebie(CHAR_DATA *ch, char *argument)
                     if (count == CSBACK_GENERATION)
                     {
                         ch->gen--;
-                        ch->max_pblood += 10;
+                        if (ch->max_pblood+10 <= 200)
+                          ch->max_pblood += 10;
                     }
                     if (count == CSBACK_FOUNT)
                         ch->max_quintessence += 10;

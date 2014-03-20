@@ -31,15 +31,14 @@ OBJ_FILES := $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRC_FILES))
 
 .ONESHELL:
 rom: $(OBJ_FILES)
-	sudo -u matthew $(RM) -f $(EXE)
-	sudo -u matthew $(CC) -o $(EXE) $(OBJ_FILES) $(L_FLAGS)
-	sudo -u matthew chmod u+s rom
+	$(RM) -f $(EXE)
+	$(CC) -o $(EXE) $(OBJ_FILES) $(L_FLAGS)
 
 $(OBJ_DIR)/%.o: %.c
-	sudo -u matthew $(CC) $(C_FLAGS) -c -o $@ $<
+	$(CC) $(C_FLAGS) -c -o $@ $<
 
 clean:
-	sudo -u matthew $(RM) -f $(OBJ_FILES) $(EXE) *~ *.bak *.orig *.rej
+	$(RM) -f $(OBJ_FILES) $(EXE) *~ *.bak *.orig *.rej
 
 new:
 	make clean

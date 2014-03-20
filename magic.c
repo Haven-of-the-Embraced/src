@@ -2032,7 +2032,7 @@ void spell_dispel_evil( int sn, int level, CHAR_DATA *ch, void *vo,int target)
 
     if ( IS_GOOD(victim) )
     {
-    act( "Ugha protects $N.", ch, NULL, victim, TO_ROOM );
+    act("The Gods protects $N.", ch, NULL, victim, TO_ROOM );
     return;
     }
 

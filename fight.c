@@ -1597,7 +1597,7 @@ bool damage(CHAR_DATA *ch,CHAR_DATA *victim,int dam,int dt,int dam_type,
             send_to_char( "{RAs your life blood slips away, your last sight in this\n\r",victim);
             send_to_char( "{Rworld is of your enemy, gloating over your beaten corpse.\n\r",victim);
             send_to_char( "{RSuddenly, you feel your soul ripped away from your body...\n\r\n\r",victim);
-            send_to_char( "{RAnd the Great God Ugha places you within a new whole and healthy body.{x\n\r\n\r", victim );
+            send_to_char( "{RAnd the Great God Zelan places you within a new whole and healthy body.{x\n\r\n\r", victim );
         }
     break;
 
@@ -2440,7 +2440,7 @@ bool d10_damage(CHAR_DATA *ch, CHAR_DATA *victim, int damsuccess, int modifier, 
             send_to_char( "{RAs your life blood slips away, your last sight in this\n\r",victim);
             send_to_char( "{Rworld is of your enemy, gloating over your beaten corpse.\n\r",victim);
             send_to_char( "{RSuddenly, you feel your soul ripped away from your body...\n\r\n\r",victim);
-            send_to_char( "{RAnd the Great God Ugha places you within a new whole and healthy body.{x\n\r\n\r", victim );
+            send_to_char( "{RAnd the Great God Zelan places you within a new whole and healthy body.{x\n\r\n\r", victim );
         }
     break;
 
@@ -2576,7 +2576,7 @@ bool is_safe(CHAR_DATA *ch, CHAR_DATA *victim)
     ||  IS_SET(victim->act,ACT_IS_HEALER)
     ||  IS_SET(victim->act,ACT_IS_CHANGER))
     {
-        send_to_char("I don't think Ugha would approve.\n\r",ch);
+        send_to_char("I don't think Matthew would approve.\n\r",ch);
         return TRUE;
     }
 
@@ -5269,7 +5269,7 @@ void kill_em(CHAR_DATA *ch,CHAR_DATA *victim)
                 REMOVE_BIT(victim->act,PLR_ARENA);
                 victim->position = POS_STANDING;
                 act( "{BYou are victorious!{x\n\r{YThe room fills with the scent of wild flowers as an unseen presence\n\r takes the soul of $N to a better place.{x",  ch, NULL, victim, TO_CHAR    );
-                act( "{RSorry, you are dead!{x\n\r\n\r{YYou are magically saved from death by the mercy of Jasmine.{x", ch, NULL, victim, TO_VICT    );
+                act( "{RSorry, you are dead!{x\n\r\n\r{YYou are magically saved from death by the mercy of Ma'at.{x", ch, NULL, victim, TO_VICT    );
                 act( "{YThe room fills with the scent of wild flowers as an unseen presence\n\r takes the soul of $N to a better place.{x",  ch, NULL, victim, TO_NOTVICT );
                 if (victim->in_room != NULL)
                         char_from_room( victim );

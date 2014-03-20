@@ -282,7 +282,8 @@ void do_invoke(CHAR_DATA *ch, char *argument)
             return;
         }
     }
-
+*/
+    /*
     if (!str_prefix(arg1,"blood magic"))
     {
         act("$n starts to chant and dance in a circle!", ch,NULL,NULL,TO_ROOM);
@@ -513,7 +514,8 @@ void do_invoke(CHAR_DATA *ch, char *argument)
         send_to_char( "You fail to invoke the Ritual!\n\r", ch );
         return;
     }
-
+*/
+    /*
     if (!str_prefix(arg1,"blood curse"))
     {
         act("$n starts to chant and dance in a circle!", ch,NULL,NULL,TO_ROOM);
@@ -591,7 +593,9 @@ void do_invoke(CHAR_DATA *ch, char *argument)
             return;
         }
     }
-    if (!str_prefix(arg1,"firestick"))
+     */
+    /*
+     if (!str_prefix(arg1,"firestick"))
     {
         for ( obj = ch->carrying; obj != NULL; obj = obj_next )
         {
@@ -750,7 +754,7 @@ void do_invoke(CHAR_DATA *ch, char *argument)
         }
     }
 */
-    if (!str_prefix(arg1,"Ughas Touch"))
+    if (!str_prefix(arg1,"matthews touch"))
     {
         for ( obj = ch->carrying; obj != NULL; obj = obj_next )
         {
@@ -766,18 +770,13 @@ void do_invoke(CHAR_DATA *ch, char *argument)
     if(acount == 1)
     {
         if(!IS_IMMORTAL(ch))
-            WAIT_STATE( ch, PULSE_TICK/2 );
+            WAIT_STATE( ch, PULSE_TICK/3 );
 
-        if( chance <= 30 - get_curr_stat(ch,STAT_INT))
-        {
-            act("$n curses as they mispronounce a syllable and fails the ritual!", ch,NULL,NULL,TO_ROOM);
-            act("You mispronounce a syllable and fail to invoke the ritual!", ch,NULL,NULL,TO_CHAR);
-            return;
-        }
-        act("$n's eyes glaze over in awe as the power of Ugha fills them.", ch,NULL,NULL,TO_ROOM);
-        act("You are totally awed as Ugha honors you with his touch.", ch,NULL,NULL,TO_CHAR);
+        act("$n looks completely refreshed as they call down Matthew's touch.", ch,NULL,NULL,TO_ROOM);
+        act("You are totally awed as Matthew restores your wounds.", ch,NULL,NULL,TO_CHAR);
 
         restore_one(ch, ch, FALSE);
+        /*
         af.where     = TO_AFFECTS;
         af.type      = gsn_touch;
         af.level     = ch->level;
@@ -816,7 +815,8 @@ void do_invoke(CHAR_DATA *ch, char *argument)
         af.modifier  = 0;
         af.bitvector = AFF_HASTE;
         affect_to_char( ch, &af );
-
+        */
+        af.duration  = number_range(20, 25);
         af.where     = TO_AFFECTS;
         af.type      = gsn_touch;
         af.level     = ch->level;
@@ -829,7 +829,7 @@ void do_invoke(CHAR_DATA *ch, char *argument)
         }
         else
         {
-            send_to_char( "You fail to invoke the Ritual!\n\r", ch );
+            send_to_char( "You do have have the required shiny sacrifice!\n\r", ch );
             return;
         }
     }

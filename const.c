@@ -2541,7 +2541,7 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
 	
     { "touch",    { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
 	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_null, TAR_CHAR_SELF,      POS_STANDING,
-    &gsn_touch,                     SLOT(0),     0, 12, "",      "Ugha's powers fade from your body...",    "" },
+    &gsn_touch,                     SLOT(0),     0, 12, "",      "The touch of the Gods fades from your body...",    "" },
 	
     { "wrath of god", { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
 	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_wrath_of_god, TAR_CHAR_OFFENSIVE,     POS_FIGHTING,

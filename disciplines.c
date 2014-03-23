@@ -7497,3 +7497,89 @@ void do_essence(CHAR_DATA *ch, char *argument)
 
 
 
+/*******************************************************************************
+ *                                                                             *
+ *                        Beginning of Combo Disciplines.                      *
+ *                                                                             *
+ *******************************************************************************/
+
+
+
+void do_mortalterrors( CHAR_DATA *ch, char *argument)
+{
+ 
+    int door;
+    EXIT_DATA       *pexit;
+    ROOM_INDEX_DATA *original_room;
+    ROOM_INDEX_DATA *pRoom;
+    CHAR_DATA *victim;
+    CHAR_DATA *victim_next;
+    
+    if (IS_NPC(ch))
+        return;
+    
+    if (!IS_VAMP(ch))
+    {
+        sendch("You are not a Vampire!\n\r", ch);
+        return;
+    }
+    if (ch->pcdata->discipline[PRESENCE] < 2 ||
+        ch->pcdata->discipline[OBTENEBRATION] < 3)
+    {
+        sendch("You do not know that ability!\n\r", ch);
+        return;
+    }
+    if (ch->gen > 9)
+    {
+        sendch("Your blood is not potent enough to perform that ability.\n\r", ch);
+        return;
+    }
+    if (ch->pblood < 30)
+    {
+        sendch("You do not have enough blood to perform that!", ch);
+        return;
+    }
+    
+    if (IS_SET(ch->in_room->room_flags, ROOM_SAFE))
+    {
+        sendch("That would not be wise.\n\r", ch);
+        return;
+    }
+    
+    original_room = ch->in_room;
+    for ( door = 0; door < 6; door++ )
+    {
+          if ( ( pexit = ch->in_room->exit[door] ) != NULL
+	  &&   pexit->u1.to_room != NULL
+	  &&   pexit->u1.to_room != original_room
+          &&   !IS_SET(pexit->exit_info, EX_CLOSED) )
+      	{
+              pRoom = pexit->u1.to_room;
+              if (IS_SET(pRoom->room_flags, ROOM_SAFE))
+              continue;
+              
+	    //force all mobs into room with ch. //
+              for (victim = pRoom->people; victim != NULL; victim = victim_next)
+              {
+                  victim_next = victim->next;
+                  
+                   if (
+                           !can_see(ch, victim)
+                           || !IS_NPC(victim) 
+                           ||   victim->in_room == NULL || victim == ch
+                           ||   (IS_NPC(victim) && IS_SET(victim->act,ACT_AGGRESSIVE))
+                           ||   victim->fighting != NULL
+                           ||   (IS_NPC(victim) && victim->pIndexData->pShop != NULL)
+                           ||   victim->level > ch->level+10
+                           ||   is_safe_spell(ch, victim, TRUE)
+                     )
+                      continue;
+                  
+                  char_from_room( victim );
+                  char_to_room( victim, ch->in_room );
+                  act( "$n runs in from nearby, screaming in terror!", victim, NULL, NULL, TO_NOTVICT );
+                  }
+              }
+	}
+    return;
+    };

@@ -588,6 +588,9 @@ void parse_note( CHAR_DATA *ch, char *argument, int type )
     char *list_name;
     int vnum;
     int anum;
+    DESCRIPTOR_DATA *fd;
+    DESCRIPTOR_DATA *fd_next;
+    CHAR_DATA *fch;
 
     if ( IS_NPC(ch) )
     return;
@@ -1012,9 +1015,20 @@ void parse_note( CHAR_DATA *ch, char *argument, int type )
     strtime[strlen(strtime)-1]  = '\0';
     ch->pnote->date         = str_dup( strtime );
     ch->pnote->date_stamp       = current_time;
-
     append_note(ch->pnote);
+
+    for (fd = descriptor_list; fd != NULL; fd = fd_next)
+    {
+        fd_next = fd->next;
+        fch = fd->character;
+        fch = fd->original ? fd->original : fd->character;
+
+        if (fch != NULL && fd->connected == CON_PLAYING && 
+                fch != ch && is_note_to(fch, ch->pnote) )
+            do_function(fch, &do_unread, "");
+    }
     ch->pnote = NULL;
+    sendch("Posted.\n\r", ch);
     return;
     }
 

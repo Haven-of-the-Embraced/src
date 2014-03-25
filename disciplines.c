@@ -7514,6 +7514,11 @@ void do_mortalterrors( CHAR_DATA *ch, char *argument)
     ROOM_INDEX_DATA *pRoom;
     CHAR_DATA *victim;
     CHAR_DATA *victim_next;
+    char arg1[MIL];
+    bool hit = FALSE;
+    int dicepool, success, diff;
+    
+    argument = one_argument( argument, arg1 );
     
     if (IS_NPC(ch))
         return;
@@ -7540,46 +7545,84 @@ void do_mortalterrors( CHAR_DATA *ch, char *argument)
         return;
     }
     
-    if (IS_SET(ch->in_room->room_flags, ROOM_SAFE))
+    if (IS_NULLSTR(arg1))
     {
-        sendch("That would not be wise.\n\r", ch);
+        sendch("Send shades to terrorize which direction?\n\r", ch);
         return;
     }
     
-    original_room = ch->in_room;
-    for ( door = 0; door < 6; door++ )
+       if ( !str_prefix( arg1, "n" ) || !str_prefix( arg1, "north" ) ) door = 0;
+    else if ( !str_prefix( arg1, "e" ) || !str_prefix( arg1, "east"  ) ) door = 1;
+    else if ( !str_prefix( arg1, "s" ) || !str_prefix( arg1, "south" ) ) door = 2;
+    else if ( !str_prefix( arg1, "w" ) || !str_prefix( arg1, "west"  ) ) door = 3;
+    else if ( !str_prefix( arg1, "u" ) || !str_prefix( arg1, "up"    ) ) door = 4;
+    else if ( !str_prefix( arg1, "d" ) || !str_prefix( arg1, "down"  ) ) door = 5;
+    else
     {
-          if ( ( pexit = ch->in_room->exit[door] ) != NULL
-	  &&   pexit->u1.to_room != NULL
-	  &&   pexit->u1.to_room != original_room
-          &&   !IS_SET(pexit->exit_info, EX_CLOSED) )
-      	{
-              pRoom = pexit->u1.to_room;
-              if (IS_SET(pRoom->room_flags, ROOM_SAFE))
-              continue;
-              
-	    //force all mobs into room with ch. //
+    send_to_char( "In which direction do you wish to send your shades?\n\r", ch );
+    return;
+    }
+    // Is it a legal exit and the door open?
+    if ( (pexit = ch->in_room->exit[door] ) == NULL || IS_SET(pexit->exit_info, EX_CLOSED))
+    {
+    send_to_char( "You cannot send shades in that direction.\n\r", ch );
+    return;
+    }
+    original_room = ch->in_room;
+    pRoom = ch->in_room->exit[door]->u1.to_room;
+    //Does the exit lead anywhere?
+    if (!pRoom)
+    {
+        sendch("Something went wrong... Contact an Immortal.\n\r", ch);
+        return;
+    }
+    if (pRoom->people == NULL)
+    {
+        sendch("There's nobody there!\n\r", ch);
+        return;
+    }
+    ch->pblood -= 20;
+    act("$n summons forth terrible nightshades and sends them off to strike fear in the hearts of mortals.", ch, NULL, NULL, TO_NOTVICT);
+    
+    // We have a legal room, with mobs in it. Now check for terrors.
               for (victim = pRoom->people; victim != NULL; victim = victim_next)
               {
-                  victim_next = victim->next;
+                  victim_next = victim->next_in_room;
                   
-                   if (
+                   if ( // Some limiters.. May change later.
                            !can_see(ch, victim)
                            || !IS_NPC(victim) 
                            ||   victim->in_room == NULL || victim == ch
                            ||   (IS_NPC(victim) && IS_SET(victim->act,ACT_AGGRESSIVE))
                            ||   victim->fighting != NULL
                            ||   (IS_NPC(victim) && victim->pIndexData->pShop != NULL)
-                           ||   victim->level > ch->level+10
+                           ||   victim->level > ch->level+20
                            ||   is_safe_spell(ch, victim, TRUE)
                      )
                       continue;
                   
+                  //Have a mob we can influence. Roll for terror!
+                  dicepool = get_attribute(ch, MANIPULATION) + get_ability(ch, CSABIL_INTIMIDATION);
+                  diff = victim->level / 12;
+                  if (diff > 10) diff = 10;
+                  if (diff < 4)  diff = 4;
+                  success = godice(dicepool, diff);
+                  if (success < 0)
+                  {
+                      sendch("Your shades recoil and disappear back to the Abyss.\n\r", ch);
+                      break;
+                  } else if (success == 0)
+                      continue;
+                  
                   char_from_room( victim );
                   char_to_room( victim, ch->in_room );
+                  hit = TRUE;
                   act( "$n runs in from nearby, screaming in terror!", victim, NULL, NULL, TO_NOTVICT );
                   }
-              }
-	}
+    if (!hit)
+    {
+        sendch("You fail to terrorize anyone.\n\r", ch);
+        return;
+    }
     return;
     };

@@ -783,6 +783,19 @@ void do_mptransfer( CHAR_DATA *ch, char *argument )
 	for ( victim = ch->in_room->people; victim != NULL; victim = victim_next )
 	{
 	    victim_next = victim->next_in_room;
+            sprintf( buf, "%s %s", victim->name, arg2 );
+	    do_mptransfer( ch, buf );
+	}
+	return;
+    }
+    
+        if ( !str_cmp( arg1, "players" ) )
+    {
+	CHAR_DATA *victim_next;
+
+	for ( victim = ch->in_room->people; victim != NULL; victim = victim_next )
+	{
+	    victim_next = victim->next_in_room;
 	    if ( !IS_NPC(victim) )
 	    {
 		sprintf( buf, "%s %s", victim->name, arg2 );

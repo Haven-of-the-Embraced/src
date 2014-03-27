@@ -981,7 +981,7 @@ void char_update( void )
         ch->move -= dam;
         damage( ch, ch, dam, gsn_plague,DAM_DISEASE,FALSE);
         }
-    else */ if ( IS_AFFECTED(ch, AFF_POISON) && ch != NULL
+    else if ( IS_AFFECTED(ch, AFF_POISON) && ch != NULL
          &&   !IS_AFFECTED(ch,AFF_SLOW))
 
     {
@@ -995,9 +995,9 @@ void char_update( void )
             send_to_char( "You shiver and suffer as the poison wracks your body.\n\r", ch );
           if(ch->position != POS_TORPOR)
             damage(ch,ch,UMIN(ch->hit - 1, ch->max_hit/20),gsn_poison,DAM_POISON,FALSE);
-            /* damage(ch,ch,poison->level*3,gsn_poison, DAM_POISON,FALSE); */
+            /* damage(ch,ch,poison->level*3,gsn_poison, DAM_POISON,FALSE); 
         }
-    }
+    } */
 
 if (is_affected(ch, gsn_shadowplay) && ch != NULL)
 

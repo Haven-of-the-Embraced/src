@@ -99,8 +99,8 @@ void spells_update (void) {
    
 
 //EMERGOD POISON ACTUALLY SUCKS NOW CODE
-//    if ( IS_AFFECTED (ch, AFF_POISON) )
-//        damage(ch,ch,(ch->hit/(50*get_attribute(ch, STAMINA))),gsn_poison,DAM_POISON,FALSE);
+    if ( IS_AFFECTED (ch, AFF_POISON) && ch->hit > (ch->max_hit / 20) )
+        damage(ch,ch,(ch->hit/(50*get_attribute(ch, STAMINA))),gsn_poison,DAM_POISON,FALSE);
 
 
 }

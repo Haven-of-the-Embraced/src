@@ -6944,7 +6944,7 @@ void do_horrid(CHAR_DATA *ch, char *argument)
     af.level     = ch->level;
     af.duration  = -1;
     af.location  = APPLY_HITROLL;
-    af.modifier  = 3*ch->level/2;
+    af.modifier  = ch->level;
     af.bitvector = 0;
     affect_to_char( ch, &af );
 
@@ -6953,28 +6953,26 @@ void do_horrid(CHAR_DATA *ch, char *argument)
     af.level     = ch->level;
     af.duration  = -1;
     af.location  = APPLY_DAMROLL;
-    af.modifier  = 3*ch->level/2;
+    af.modifier  = ch->level;
     af.bitvector = 0;
     affect_to_char( ch, &af );
     
-    if (ch->clan == clan_lookup("Tzimisce"))
-    {
+
     af.where     = TO_AFFECTS;
     af.type      = gsn_vicissitude_horrid;
     af.level     = ch->level;
     af.duration  = -1;
     af.location  = APPLY_HIT;
-    af.modifier  = ch->pcdata->perm_hit/2;
+    af.modifier  = ch->pcdata->perm_hit/3;
     af.bitvector = 0;
     affect_to_char( ch, &af );
-    }
 
     af.where     = TO_AFFECTS;
     af.type      = gsn_vicissitude_horrid;
     af.level     = ch->level;
     af.duration  = -1;
     af.location  = APPLY_AC;
-    af.modifier  = -(8*ch->level);
+    af.modifier  = -(3*ch->level);
     af.bitvector = 0;
     affect_to_char( ch, &af );
 
@@ -6984,8 +6982,6 @@ void do_horrid(CHAR_DATA *ch, char *argument)
     af.duration = -1;
     af.location = APPLY_CS_STR;
     af.modifier = 3;
-    if (ch->clan == clan_lookup("Tzimisce"))
-        af.modifier++;
     af.bitvector    = 0;
     affect_to_char( ch, &af );
 
@@ -6995,8 +6991,6 @@ void do_horrid(CHAR_DATA *ch, char *argument)
     af.duration = -1;
     af.location = APPLY_CS_DEX;
     af.modifier = 3;
-    if (ch->clan == clan_lookup("Tzimisce"))
-        af.modifier++;
     af.bitvector    = 0;
     affect_to_char( ch, &af );
 

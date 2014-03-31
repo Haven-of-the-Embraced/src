@@ -6708,14 +6708,16 @@ void do_fleshcraft(CHAR_DATA *ch, char *argument)
     if (is_safe (ch, mob))
         return; //is_safe has its own mesasges. easiest that way!
 
-    if (mob->level > 10+ch->level)
+    if (mob->level > 25+ch->level)
     {
         send_to_char( "That creature is too strong for your fleshcraft.\n\r", ch );
         return;
     }
     if ( !str_prefix(arg,"hellhound"))
     {
-        if(mob->race != race_lookup("wolf") && mob->race != race_lookup("fido"))
+        if(mob->race != race_lookup("wolf") && 
+                mob->race != race_lookup("fido") &&
+                mob->race != race_lookup("dog"))
         {
             send_to_char("This must be preformed upon a Canine.\n\r",ch);
             return;
@@ -6734,7 +6736,7 @@ void do_fleshcraft(CHAR_DATA *ch, char *argument)
         mob->long_descr = str_dup(buf);
         mob->short_descr = str_dup("A Hellhound");
         mob->level = ch->level;
-        mob->max_hit = UMIN(mob->max_hit+5000, 30000);
+        mob->max_hit = UMIN(mob->max_hit+1000, 2000 * ch->pcdata->discipline[VICISSITUDE]);
         mob->hit = mob->max_hit;
         mob->hitroll += 100;
         mob->damroll += 25;
@@ -6785,10 +6787,10 @@ void do_fleshcraft(CHAR_DATA *ch, char *argument)
         sprintf(buf,"A vicious creature that slighty resembles %s snarls in rage at its current form.\n\r",mob->short_descr);
         mob->long_descr = str_dup(buf);
         mob->short_descr = str_dup("A Szlachta Warghoul");
-        mob->max_hit = UMIN(mob->max_hit+10000, 30000);
+        mob->max_hit = UMIN(mob->max_hit+5000, 3000 * ch->pcdata->discipline[VICISSITUDE]);
         mob->hit = mob->max_hit;
-        mob->hitroll += 500;
-        mob->damroll += 500;
+        mob->hitroll += 100;
+        mob->damroll += 100;
         mob->armor[0] -= 500;
         mob->armor[1] -= 500;
         mob->armor[2] -= 500;
@@ -6807,7 +6809,6 @@ void do_fleshcraft(CHAR_DATA *ch, char *argument)
         af.bitvector = AFF_CHARM;
         affect_to_char(mob,&af);
 
-        SET_BIT(mob->affected_by, AFF_SANCTUARY);
         WAIT_STATE( ch, 300 );
         return;
     }
@@ -6839,14 +6840,14 @@ void do_fleshcraft(CHAR_DATA *ch, char *argument)
         sprintf(buf,"A vicious bone-armored and spiked version of %s snarls and barely holds back it's urge to kill.\n\r",mob->short_descr);
         mob->long_descr = str_dup(buf);
         mob->short_descr = str_dup("A Vozhd Warghoul");
-        mob->max_hit = UMIN(mob->max_hit+20000, 30000);
+        mob->max_hit = UMIN(mob->max_hit+5000, 20000);
         mob->hit = mob->max_hit;
-        mob->hitroll += 1000;
-        mob->damroll += 1000;
-        mob->armor[0] -= 2000;
-        mob->armor[1] -= 2000;
-        mob->armor[2] -= 2000;
-        mob->armor[3] -= 2000;
+        mob->hitroll += 400;
+        mob->damroll += 400;
+        mob->armor[0] -= 1000;
+        mob->armor[1] -= 1000;
+        mob->armor[2] -= 1000;
+        mob->armor[3] -= 1000;
 
         add_follower( mob, ch );
         mob->leader = ch;
@@ -6860,8 +6861,6 @@ void do_fleshcraft(CHAR_DATA *ch, char *argument)
         af.modifier  = 0;
         af.bitvector = AFF_CHARM;
         affect_to_char(mob,&af);
-
-        SET_BIT(mob->affected_by, AFF_SANCTUARY);
 
         af.where     = TO_AFFECTS;
         af.type      = gsn_vicissitude_bonecraft;

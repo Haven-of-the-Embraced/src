@@ -6938,24 +6938,6 @@ void do_horrid(CHAR_DATA *ch, char *argument)
 
     act( "Your body slowly shifts into that of a horrible Zulo.", ch, NULL, NULL, TO_CHAR );
     act( "$n's size doubles as their body is altered into that of a horrible Zulo.", ch, NULL, NULL,TO_NOTVICT );
-
-    af.where     = TO_AFFECTS;
-    af.type      = gsn_vicissitude_horrid;
-    af.level     = ch->level;
-    af.duration  = -1;
-    af.location  = APPLY_HITROLL;
-    af.modifier  = ch->level;
-    af.bitvector = 0;
-    affect_to_char( ch, &af );
-
-    af.where     = TO_AFFECTS;
-    af.type      = gsn_vicissitude_horrid;
-    af.level     = ch->level;
-    af.duration  = -1;
-    af.location  = APPLY_DAMROLL;
-    af.modifier  = ch->level;
-    af.bitvector = 0;
-    affect_to_char( ch, &af );
     
 
     af.where     = TO_AFFECTS;
@@ -6963,25 +6945,17 @@ void do_horrid(CHAR_DATA *ch, char *argument)
     af.level     = ch->level;
     af.duration  = -1;
     af.location  = APPLY_HIT;
-    af.modifier  = ch->pcdata->perm_hit/3;
+    af.modifier  = 8 * ch->level;
     af.bitvector = 0;
     affect_to_char( ch, &af );
 
-    af.where     = TO_AFFECTS;
-    af.type      = gsn_vicissitude_horrid;
-    af.level     = ch->level;
-    af.duration  = -1;
-    af.location  = APPLY_AC;
-    af.modifier  = -(3*ch->level);
-    af.bitvector = 0;
-    affect_to_char( ch, &af );
 
     af.where    = TO_AFFECTS;
     af.type     = gsn_vicissitude_horrid;
     af.level    = ch->level;
     af.duration = -1;
     af.location = APPLY_CS_STR;
-    af.modifier = 3;
+    af.modifier = 4;
     af.bitvector    = 0;
     affect_to_char( ch, &af );
 
@@ -6990,7 +6964,7 @@ void do_horrid(CHAR_DATA *ch, char *argument)
     af.level    = ch->level;
     af.duration = -1;
     af.location = APPLY_CS_DEX;
-    af.modifier = 3;
+    af.modifier = 4;
     af.bitvector    = 0;
     affect_to_char( ch, &af );
 

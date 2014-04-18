@@ -1473,8 +1473,8 @@ void do_skin(CHAR_DATA *ch, char *argument )
         }
         send_to_char("fail horribly, tearing the skin into useless shreds.\n\r",ch);
         check_improve(ch,gsn_skin,FALSE,1);
-        extract_obj(corpse);
         act( "$n attempts to skin $p but fails miserably, tearing the skin into useless shreds.", ch, corpse, ch, TO_NOTVICT );
+        extract_obj(corpse);
         WAIT_STATE(ch, 36);
         return;
     }

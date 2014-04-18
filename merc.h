@@ -623,7 +623,7 @@ struct  con_app_type
 
 #define MSL MAX_STRING_LENGTH
 #define MIL MAX_INPUT_LENGTH
-#define HELPS_SEC 7
+#define HELPS_SEC 4
 /*
  * Help table types.
  */

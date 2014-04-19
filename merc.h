@@ -772,7 +772,7 @@ struct config_data
 #define NOTE_PENALTY    2
 #define NOTE_NEWS   3
 #define NOTE_CHANGES    4
-#define NOTE_IMMNOTE    5
+#define NOTE_RPNOTE    5
 struct  note_data
 {
     NOTE_DATA * next;
@@ -2173,7 +2173,7 @@ struct  pc_data
     time_t              last_penalty;
     time_t              last_news;
     time_t              last_changes;
-    time_t              last_immnote;
+    time_t              last_rpnote;
     sh_int      perm_hit;
     sh_int      perm_mana;
     sh_int      perm_move;
@@ -3207,6 +3207,7 @@ char *  crypt       args( ( const char *key, const char *salt ) );
 #define NEWS_FILE   "news.not"
 #define CHANGES_FILE    "chang.not"
 #define IMMNOTE_FILE    "immnote.not"
+#define RPNOTE_FILE     "rpnote.not"
 #define SHUTDOWN_FILE   "shutdown.txt"/* For 'shutdown'*/
 #define BAN_FILE    "ban.txt"
 #define SYSTEM_LOG  "../log/current/system.log"

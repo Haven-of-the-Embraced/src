@@ -231,7 +231,7 @@ DECLARE_DO_FUN( do_peace    );
 DECLARE_DO_FUN( do_pecho    );
 DECLARE_DO_FUN( do_sendhtml    );
 DECLARE_DO_FUN( do_penalty  );
-DECLARE_DO_FUN( do_immnote  );
+DECLARE_DO_FUN( do_rpnote  );
 DECLARE_DO_FUN( do_permban  );
 DECLARE_DO_FUN( do_pick );
 DECLARE_DO_FUN( do_play     );

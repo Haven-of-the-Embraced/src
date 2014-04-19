@@ -885,7 +885,7 @@ bool load_char_obj( DESCRIPTOR_DATA *d, char *name )
     ch->pcdata->wiziname        = str_dup( "" );
     ch->pcdata->immtitle        = str_dup( "" );
     ch->pcdata->pretitle        = str_dup( "" );
-    ch->pcdata->last_immnote            = current_time;
+    ch->pcdata->last_rpnote            = current_time;
 
     for (stat =0; stat < MAX_STATS; stat++)
     ch->perm_stat[stat]     = 13;
@@ -1615,7 +1615,7 @@ void fread_char( CHAR_DATA *ch, FILE *fp )
         KEY( "Inco",    ch->incog_level,    fread_number( fp ) );
         KEY( "Invi",    ch->invis_level,    fread_number( fp ) );
         KEYS( "Immtitle",   ch->pcdata->immtitle,    fread_string(fp) );
-        KEY( "Immnote",    ch->pcdata->last_immnote,  fread_number( fp ) );
+        KEY( "Immnote",    ch->pcdata->last_rpnote,  fread_number( fp ) );
         KEY( "Iclass", ch->pcdata->immclass, fread_number( fp) );
         KEY( "Immun",     ch->imm_flags,        fread_flag( fp ) );
 

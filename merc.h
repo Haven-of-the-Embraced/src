@@ -1787,9 +1787,10 @@ struct  kill_data
 #define PLR2_WHOLOCQUIET (H) //Show area name on who when Quiet.
 #define PLR2_WHOLOCALWAYS (I) // Always show location on who.
 #define PLR2_WHOSHOWLEVEL (J) // Show level tags on 'who'.
-#define PLR2_IMMSHOWLOC   (K)
-#define PLR2_NOCONDITION  (L)
-#define PLR2_NOSHORTDESC  (M)
+#define PLR2_IMMSHOWLOC   (K) // Show player location regardless of player setting.
+#define PLR2_NOCONDITION  (L) // don't show hungry/thirsty messages
+#define PLR2_NOSHORTDESC  (M) // Do not show shifted descs for other players
+#define PLR2_BATTLEPROMPT (N) // Show battle prompt in combat.
 
 
 

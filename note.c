@@ -56,7 +56,7 @@ NOTE_DATA *note_list;
 NOTE_DATA *idea_list;
 NOTE_DATA *penalty_list;
 NOTE_DATA *news_list;
-NOTE_DATA *immnote_list;
+NOTE_DATA *rpnote_list;
 NOTE_DATA *changes_list;
 
 int count_spool(CHAR_DATA *ch, NOTE_DATA *spool)
@@ -101,11 +101,10 @@ void do_unread(CHAR_DATA *ch)
         count, count > 1 ? "s" : "");
     send_to_char(buf,ch);
     }
-    if ((IS_IMMORTAL(ch) || IS_TRUSTED(ch, MAX_LEVEL - 8)) &&
-     (count = count_spool(ch,immnote_list)) > 0)
+    if ((count = count_spool(ch,rpnote_list)) > 0)
     {
     found = TRUE;
-    sprintf(buf,"You have %d new immnote%s waiting.\n\r",
+    sprintf(buf,"You have %d new roleplay note%s waiting.\n\r",
         count, count > 1 ? "s" : "");
     send_to_char(buf,ch);
     }
@@ -133,9 +132,9 @@ void do_note(CHAR_DATA *ch,char *argument)
     parse_note(ch,argument,NOTE_NOTE);
 }
 
-void do_immnote(CHAR_DATA *ch, char *argument)
+void do_rpnote(CHAR_DATA *ch, char *argument)
 {
-    parse_note(ch, argument, NOTE_IMMNOTE);
+    parse_note(ch, argument, NOTE_RPNOTE);
 }
 
 void do_idea(CHAR_DATA *ch,char *argument)
@@ -188,9 +187,9 @@ void save_notes(int type)
         name = CHANGES_FILE;
         pnote = changes_list;
         break;
-    case NOTE_IMMNOTE:
-        name = IMMNOTE_FILE;
-        pnote = immnote_list;
+    case NOTE_RPNOTE:
+        name = RPNOTE_FILE;
+        pnote = rpnote_list;
         break;
         }
 
@@ -218,12 +217,12 @@ void save_notes(int type)
 #define  SECONDS_PER_MONTH   2592000
 void load_notes(void)
 {                                                                   /*Note purge times*/
-    load_thread(NOTE_FILE,&note_list, NOTE_NOTE, 2*SECONDS_PER_MONTH); // Two months
-    load_thread(IDEA_FILE,&idea_list, NOTE_IDEA, 2*SECONDS_PER_MONTH);// two months
+    load_thread(NOTE_FILE,&note_list, NOTE_NOTE, 3*SECONDS_PER_MONTH); // three months
+    load_thread(IDEA_FILE,&idea_list, NOTE_IDEA, 6*SECONDS_PER_MONTH);// six months
     load_thread(PENALTY_FILE,&penalty_list, NOTE_PENALTY, 6*SECONDS_PER_MONTH);//six months
-    load_thread(NEWS_FILE,&news_list, NOTE_NEWS, 12*SECONDS_PER_MONTH);//one year
-    load_thread(CHANGES_FILE,&changes_list,NOTE_CHANGES, 6*SECONDS_PER_MONTH);//six months
-    load_thread(IMMNOTE_FILE,&immnote_list, NOTE_IMMNOTE, 6*SECONDS_PER_MONTH);//six months
+    load_thread(NEWS_FILE,&news_list, NOTE_NEWS, 24*SECONDS_PER_MONTH);// two years
+    load_thread(CHANGES_FILE,&changes_list,NOTE_CHANGES, 24*SECONDS_PER_MONTH);//twoyears 
+    load_thread(RPNOTE_FILE,&rpnote_list, NOTE_RPNOTE, 6*SECONDS_PER_MONTH);//six months
 }
 
 void load_thread(char *name, NOTE_DATA **list, int type, time_t free_time)
@@ -332,9 +331,9 @@ void append_note(NOTE_DATA *pnote)
          name = CHANGES_FILE;
          list = &changes_list;
          break;
-    case NOTE_IMMNOTE:
-        name = IMMNOTE_FILE;
-        list = &immnote_list;
+    case NOTE_RPNOTE:
+        name = RPNOTE_FILE;
+        list = &rpnote_list;
         break;
     }
 
@@ -385,9 +384,6 @@ bool is_note_to( CHAR_DATA *ch, NOTE_DATA *pnote )
     return TRUE;
 
     if (is_exact_name( ch->name, pnote->to_list ) )
-    return TRUE;
-
-    if (( IS_TRUSTED(ch, MAX_LEVEL - 8) || IS_IMMORTAL(ch)) && pnote->type == NOTE_IMMNOTE)
     return TRUE;
 
     return FALSE;
@@ -454,8 +450,8 @@ void note_remove( CHAR_DATA *ch, NOTE_DATA *pnote, bool delete)
     case NOTE_NOTE:
         list = &note_list;
         break;
-    case NOTE_IMMNOTE:
-        list = &immnote_list;
+    case NOTE_RPNOTE:
+        list = &rpnote_list;
         break;
     case NOTE_IDEA:
         list = &idea_list;
@@ -514,8 +510,8 @@ bool hide_note (CHAR_DATA *ch, NOTE_DATA *pnote)
     case NOTE_NOTE:
         last_read = ch->pcdata->last_note;
         break;
-    case NOTE_IMMNOTE:
-        last_read = ch->pcdata->last_immnote;
+    case NOTE_RPNOTE:
+        last_read = ch->pcdata->last_rpnote;
         break;
     case NOTE_IDEA:
         last_read = ch->pcdata->last_idea;
@@ -560,8 +556,8 @@ void update_read(CHAR_DATA *ch, NOTE_DATA *pnote)
         ch->pcdata->last_note = UMAX(ch->pcdata->last_note,stamp);
             break;
 
-        case NOTE_IMMNOTE:
-        ch->pcdata->last_immnote = UMAX(ch->pcdata->last_immnote, stamp);
+        case NOTE_RPNOTE:
+        ch->pcdata->last_rpnote = UMAX(ch->pcdata->last_rpnote, stamp);
         break;
         case NOTE_IDEA:
         ch->pcdata->last_idea = UMAX(ch->pcdata->last_idea,stamp);
@@ -603,9 +599,9 @@ void parse_note( CHAR_DATA *ch, char *argument, int type )
             list = &note_list;
         list_name = "notes";
             break;
-        case NOTE_IMMNOTE:
-            list = &immnote_list;
-            list_name = "immnotes";
+        case NOTE_RPNOTE:
+            list = &rpnote_list;
+            list_name = "rpnotes";
             break;
         case NOTE_IDEA:
             list = &idea_list;
@@ -733,8 +729,8 @@ void parse_note( CHAR_DATA *ch, char *argument, int type )
         case NOTE_CHANGES:
             send_to_char("There are no changes for you.\n\r",ch);
             break;
-        case NOTE_IMMNOTE:
-            sendch("There are no immnotes for you.\n\r", ch);
+        case NOTE_RPNOTE:
+            sendch("There are no roleplay notes for you.\n\r", ch);
             break;
         }
     }
@@ -798,8 +794,8 @@ void parse_note( CHAR_DATA *ch, char *argument, int type )
         case NOTE_NOTE:
         ch->pcdata->last_note = current_time;
         break;
-        case NOTE_IMMNOTE:
-        ch->pcdata->last_immnote = current_time;
+        case NOTE_RPNOTE:
+        ch->pcdata->last_rpnote = current_time;
         break;
         case NOTE_IDEA:
         ch->pcdata->last_idea = current_time;

@@ -323,7 +323,7 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "gtell",      do_gtell},
 /*  { "music",      do_music}, */
     { "note",       do_note},
-    { "immnote",    do_immnote},
+    { "rpnote",    do_rpnote},
     { "pose",       do_pose},
     { "quest",      do_quest},
     { "question",   do_question},

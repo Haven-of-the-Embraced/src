@@ -1381,6 +1381,10 @@ bool process_output( DESCRIPTOR_DATA *d, bool fPrompt )
         write_to_buffer( d, "\n\r", 2 );
 
 
+            if (ch->fighting && ch->leader && IS_SET(ch->act2, PLR2_BATTLEPROMPT))
+            {
+                cprintf(ch, "[%s] Hp:%d% Mv:%d%\n\r", ch->leader->name, (100*ch->leader->hit)/(ch->leader->max_hit), (100*ch->leader->move)/(ch->leader->max_move));
+            }
         if ( IS_SET(ch->comm, COMM_PROMPT) )
             bust_a_prompt( d->character );
 

@@ -1138,6 +1138,22 @@ void do_noshortdesc(CHAR_DATA *ch, char *argument)
     }
 }
 
+void do_battleprompt(CHAR_DATA *ch, char *argument)
+{
+    if (IS_NPC(ch))
+      return;
+
+    if (!IS_SET(ch->act2,PLR2_BATTLEPROMPT))
+    {
+      send_to_char("Battle prompt will now be displayed when in combat.\n\r",ch);
+      SET_BIT(ch->act2,PLR2_BATTLEPROMPT);
+    }
+    else
+    {
+      send_to_char("Battle prompt will no longer be displayed in combat.\n\r",ch);
+      REMOVE_BIT(ch->act2,PLR2_BATTLEPROMPT);
+    }
+}
 
 
 void do_nosummon(CHAR_DATA *ch, char *argument)

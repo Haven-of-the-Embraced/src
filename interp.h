@@ -77,6 +77,7 @@ DECLARE_DO_FUN( do_allow    );
 DECLARE_DO_FUN( do_answer   );
 DECLARE_DO_FUN( do_areas    );
 DECLARE_DO_FUN( do_mortalterrors);
+DECLARE_DO_FUN( do_battleprompt);
 DECLARE_DO_FUN( do_at       );
 DECLARE_DO_FUN( do_auction  );
 DECLARE_DO_FUN( do_autoassist   );

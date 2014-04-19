@@ -372,6 +372,7 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "junk",           do_sacrifice},
 /*  { "unlock",     do_unlock}, */
     { "value",      do_value},
+    { "battleprompt", do_battleprompt},
     { "wear",       do_wear},
     { "zap",        do_zap},
     { "donate",     do_donate},

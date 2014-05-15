@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#!/usr/bin/env python
 import string
 import os
 import sys
@@ -9,7 +9,7 @@ from time import gmtime, strftime
 #Make If you enter a port, use that instead.
 
 pid = str(os.getpid())
-pidfile = "/tmp/startcode.pid"
+pidfile = "/tmp/startbuild.pid"
 
 if os.path.isfile(pidfile):
 #    print "%s already exists, exiting" % pidfile
@@ -23,9 +23,9 @@ if (len(sys.argv) > 1):
 try:
     port = int(argument)
 except:
-    port = 2002
+    port = 2001
 #
-os.chdir('/home/havendev/area')
+os.chdir('/home/havenbuild/area')
 
 if (os.path.exists('shutdown.txt')):
     os.system('rm -f shutdown.txt')
@@ -35,16 +35,16 @@ while True:
     #set limits.
     os.system('ulimit -c unlimited')
     os.system('ulimit -s unlimited')
-    #Run the MUD, logging to ../log/current/system.log.
-    os.system('(/home/havendev/src/rom {0} 2>&1) > /home/havendev/log/current/system.log'.format(port))
+    #Run the MUD, logging to /home/haven/haven/log/current/system.log.
+    os.system('(/home/havenbuild/src/rom {0} 2>&1) > /home/havenbuild/log/current/system.log'.format(port))
     #Get the date, turn it into a filename for the daily logs.
     #filename = date.log ie: 14-jun-2011.log
     date = strftime("%d-%b-%Y", gmtime())
     filename = date+'.log'
     #Create the file, if it doesn't exist.
-    os.system('touch /home/havendev/log/{0}'.format(filename))
+    os.system('touch /home/havenbuild/log/{0}'.format(filename))
     #appent system.log to daily log.
-    os.system('cat /home/havendev/log/current/system.log >> /home/havendev/log/{0}'.format(filename))
+    os.system('cat /home/havenbuild/log/current/system.log >> /home/havenbuild/log/{0}'.format(filename))
 
 
     if (os.path.exists('shutdown.txt')):
@@ -53,6 +53,3 @@ while True:
         exit()
 
     os.system('sleep 5s')
-
-
-

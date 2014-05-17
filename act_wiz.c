@@ -6599,6 +6599,8 @@ void do_copyover (CHAR_DATA *ch, char * argument)
         return;
     }
 
+    write_to_descriptor (ch->desc->descriptor, "Starting Copyover Procedures...\n\r", 0);
+    
     fp = fopen (COPYOVER_FILE, "w");
 
     if (!fp)
@@ -6610,14 +6612,7 @@ void do_copyover (CHAR_DATA *ch, char * argument)
         return;
     }
 
-    /* Consider changing all saved areas here, if you use OLC */
-    send_to_char("Auto-saving Areas, Helps, Clans and Commands.\n\r", ch);
-    do_asave(ch, "changed");
-    do_asave(ch, "helps");
-    do_asave(ch, "commands");
-    influence_update();
-
-    send_to_char("Proceeding to copyover...\n\r", ch);
+    write_to_descriptor (ch->desc->descriptor, "Proceeding to copyover...\n\r", 0);
     /* autosave changed lists */
 
 

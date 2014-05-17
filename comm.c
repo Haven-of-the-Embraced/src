@@ -1380,10 +1380,23 @@ bool process_output( DESCRIPTOR_DATA *d, bool fPrompt )
     if (!IS_SET(ch->comm, COMM_COMPACT) )
         write_to_buffer( d, "\n\r", 2 );
 
+    CHAR_DATA *target;
+    int tarmove;
+    int tarhit;
+    if (victim && IS_SET(ch->act2, PLR2_BATTLEPROMPT))
+    {
+        target = victim->fighting;
+        if (target)
+        {
+            tarhit = (100*target->hit)/(target->max_hit);
+            tarmove = (100*target->move)/(target->max_move);
+        }
+    }
 
-            if (ch->fighting && ch->leader && IS_SET(ch->act2, PLR2_BATTLEPROMPT))
+            if (ch->fighting && target && target != ch && IS_SET(ch->act2, PLR2_BATTLEPROMPT))
             {
-                cprintf(ch, "[%s] Hp:%d% Mv:%d%\n\r", ch->leader->name, (100*ch->leader->hit)/(ch->leader->max_hit), (100*ch->leader->move)/(ch->leader->max_move));
+                cprintf(ch, "[%s] Hp:%d% Mv:%d%\n\r", IS_NPC(target) ? target->short_descr : target->name, 
+                        tarhit, tarmove);
             }
         if ( IS_SET(ch->comm, COMM_PROMPT) )
             bust_a_prompt( d->character );

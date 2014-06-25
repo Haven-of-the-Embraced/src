@@ -841,10 +841,19 @@ void game_loop_unix( int control )
         if (d->character != NULL && d->character->daze > 0)
         --d->character->daze;
 
-        if ( d->character != NULL && d->character->wait > 0 && !IS_IMMORTAL(d->character))
+        if ( d->character != NULL && d->character->wait > 0 )
         {
         --d->character->wait;
-        continue;
+        if (!IS_IMMORTAL(d->character))
+            continue;
+        }
+        
+        if ( d->character != NULL && d->character->stopped > 0 )
+        {
+        --d->character->stopped;
+        
+        if (!IS_IMMORTAL(d->character))
+            continue;
         }
 
         read_from_buffer( d );

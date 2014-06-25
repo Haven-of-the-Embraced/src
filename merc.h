@@ -2917,6 +2917,7 @@ void    channel_to_char args( (const char *txt, CHAR_DATA*ch) );
 
 #define WAIT_STATE(ch, npulse)  ((ch)->wait = UMAX((ch)->wait, (npulse)))
 #define DAZE_STATE(ch, npulse)  ((ch)->daze = UMAX((ch)->daze, (npulse)))
+#define STOPPED(ch, npulse)     ((ch)->stopped = UMAX((ch)->stopped, (npulse)))
 #define get_carry_weight(ch)    ((ch)->carry_weight + (ch)->silver/1000 +  \
                               (ch)->gold/100)
 #define MOUNTED(ch) \

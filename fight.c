@@ -267,7 +267,8 @@ void multi_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt )
     /* decrement the wait */
     if (ch->desc == NULL)
     ch->wait = UMAX(0,ch->wait - PULSE_VIOLENCE);
-
+    if (ch->desc == NULL)
+    ch->stopped = UMAX(0,ch->stopped - PULSE_VIOLENCE);
     if (ch->desc == NULL)
     ch->daze = UMAX(0,ch->daze - PULSE_VIOLENCE);
 
@@ -279,11 +280,7 @@ void multi_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt )
     if (ch->position < POS_RESTING)
     return;
 
-    if (ch->stopped > 0)
-    {
-        ch->stopped--;
-        return;
-    }
+
     if (IS_NPC(ch))
     {
     mob_hit(ch,victim,dt);
@@ -497,7 +494,7 @@ void mob_hit (CHAR_DATA *ch, CHAR_DATA *victim, int dt)
 
     /* oh boy!  Fun stuff! */
 
-    if (ch->wait > 0)
+    if (ch->wait > 0 || ch->stopped > 0)
     return;
 
     if((success = number_range(0,ch->level/10)) != 0)
@@ -716,6 +713,10 @@ void one_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt )
     return;
 
 
+    if (ch->stopped > 0)
+    {
+        return;
+    }
     //garou_hit(ch,victim, dt);
     //return;
 	
@@ -3937,6 +3938,7 @@ void do_bash( CHAR_DATA *ch, char *argument )
     act("You swing $p, forcefully colliding with $N.", ch, shield, victim, TO_CHAR);
     act("$n smashes you with $p.", ch, shield, victim, TO_VICT);
     act("$n slams $p into $N.", ch, shield, victim, TO_NOTVICT);
+    STOPPED(victim, PULSE_VIOLENCE);
 
     if (dicesuccess >= 4)
     {
@@ -3944,6 +3946,7 @@ void do_bash( CHAR_DATA *ch, char *argument )
         act("$n's $p connects with your head, rattling your brain.", ch, shield, victim, TO_VICT);
         act("$N appears to be a bit dazed after being hit with $p.", ch, shield, victim, TO_NOTVICT);
         DAZE_STATE(victim, 3 * PULSE_VIOLENCE);
+        STOPPED(victim, 3* PULSE_VIOLENCE);
     }
 
     damagesuccess = godice(get_attribute(ch,STRENGTH) + 1 + ch->pcdata->discipline[POTENCE], 6);
@@ -4232,7 +4235,7 @@ void do_trip( CHAR_DATA *ch, char *argument )
     act("$n trips $N, sending $M to the ground.",ch,NULL,victim,TO_NOTVICT);
     check_improve(ch,gsn_trip,TRUE,1);
 
-    DAZE_STATE(victim,2 * PULSE_VIOLENCE);
+    STOPPED(victim,2 * PULSE_VIOLENCE);
         WAIT_STATE(ch,skill_table[gsn_trip].beats);
     victim->position = POS_RESTING;
     damage(ch,victim,number_range(2, ch->level / 3 + victim->size),gsn_trip, DAM_BASH,TRUE);
@@ -4949,7 +4952,7 @@ void do_kick(CHAR_DATA *ch, char *argument)
             act("$N doubles over as the wind is knocked out of $M.", ch, NULL, victim, TO_NOTVICT);
             if (!IS_NPC(victim))
                 act("You feel the wind knocked out of you!", ch, NULL, victim, TO_VICT);
-            victim->stopped = 2;
+            STOPPED(victim, PULSE_VIOLENCE);
         }
 
         gain_exp(ch, dicesuccess*2);
@@ -5727,6 +5730,7 @@ void do_ground( CHAR_DATA *ch, char *argument )
                 {
                         affect_strip(victim,gsn_fly);
                         REMOVE_BIT(victim->affected_by,AFF_FLYING);
+                        STOPPED(victim, PULSE_VIOLENCE);
                         act( "And knock $N out of the sky!",  ch, NULL, victim, TO_CHAR    );
                         act( "$n knocks you out of the sky!", ch, NULL, victim, TO_VICT    );
                         act( "$n knocks $N out of the sky!",  ch, NULL, victim, TO_NOTVICT );
@@ -5828,6 +5832,7 @@ void do_headbutt( CHAR_DATA *ch, char *argument )
         act( "$n slams $s head into $N's.", ch, NULL, victim, TO_ROOM );
 
     gain_exp(ch, dicesuccess);
+    STOPPED(victim, damagesuccess * PULSE_VIOLENCE);
 
     damage(ch, victim, damagesuccess * ch->level / 2, gsn_headbutt, DAM_BASH, TRUE);
 
@@ -5914,6 +5919,7 @@ void do_blast( CHAR_DATA *ch, char *argument )
                 act( "You cough and gag as your blast misfires, blinding yourself briefly.", ch, NULL, victim, TO_CHAR );
                 act( "$n coughs and gags as smoke fills $s eyes.", ch, NULL, victim, TO_VICT );
                 act( "$n coughs and gags as smoke fills $s eyes.", ch, NULL, victim, TO_NOTVICT );
+                STOPPED(victim, 2*PULSE_VIOLENCE);
 
         damage(ch,ch,ch->level/2,gsn_blast,DAM_FIRE,TRUE);
         fire_effect(ch,ch->level,ch->level,TARGET_CHAR);

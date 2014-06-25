@@ -690,7 +690,7 @@ void rote_dischargestatic(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DAT
     damage( ch, victim, success*ch->level*3, gsn_magick, DAM_LIGHTNING, TRUE);
     if (success > 4 )
     {
-        victim->stopped = success - 4;
+        STOPPED(victim, 2*PULSE_VIOLENCE);
         act("The static shock overloads the impulses in your brain!",ch, NULL, victim, TO_VICT);
         act("The {Ystatic jolt{x surges through $N's body!", ch, NULL, victim, TO_NOTVICT);
     }
@@ -1599,14 +1599,15 @@ void rote_stoptheclock(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *
     if (IS_NPC(ch)) return;
 
     if(victim->stopped > 0)
+    {
         send_to_char("You have already frozen time around this being.\n\r",ch);
         return;
+    }
 
     act( "$n waves a hand at $N who suddenly seems frozen!",  ch, NULL, victim, TO_NOTVICT    );
     act( "You suddenly find time rushing by too fast to perceive.",  ch, NULL, victim, TO_VICT );
     act( "You feel the strain of the world bending to your whim as you stop the flow of time itself around $N.", ch, NULL, victim, TO_CHAR );
-
-    victim->stopped = success;
+    victim->stopped = success*10;
     damage( ch, victim, 0, gsn_magick, DAM_MENTAL, FALSE);
     return;
 }

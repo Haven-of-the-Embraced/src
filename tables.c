@@ -1147,7 +1147,7 @@ const struct    gift_type   gift_table  [MAX_GIFTS_CODED]  =
     {   "Catfeet",                  	0,     24, 0,     LUPUS,  0,          0,        5,   0}, 
     {   "Resist Pain",              	0,     24, 0,     0,      PHILODOX,   CHILDREN_OF_GAIA, 1,   0},//Fenrir
     {   "Call of the Wyld",         	0,     24, 0,     0,      GALLIARD,   0,        1,   0},
-    {   "Razor Claws",              	0,     24, 0,     0,      AHROUN,     0,        1,   0},
+    {   "Razor Claws",              	0,     24, 0,     0,      AHROUN,     FENRIR,        1,   0},
     {   "Silver Claws",             	0,     24, 0,     0,      AHROUN,     SILVER_FANG,   3,   0},
     {   "Sense Wyrm",         	     	0,     24, 0,     METIS,  THEURGE,    BLACK_FURY, 1,   0},//Silver Fang 
     {   "Inner Strength",    	     	0,     24, 0,     0,      0,          0,        5,   0},

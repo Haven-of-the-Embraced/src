@@ -439,7 +439,7 @@ void mob_hit (CHAR_DATA *ch, CHAR_DATA *victim, int dt)
 
     one_hit(ch,victim,dt);
 
-    if (ch->fighting != victim)
+    if (ch->fighting != victim || ch->stopped > 0)
     return;
 
     /* Area attack -- BALLS nasty! */
@@ -493,7 +493,7 @@ void mob_hit (CHAR_DATA *ch, CHAR_DATA *victim, int dt)
 
     /* oh boy!  Fun stuff! */
 
-    if (ch->wait > 0 || ch->stopped > 0)
+    if (ch->wait > 0)
     return;
 
     if((success = number_range(0,ch->level/10)) != 0)
@@ -3823,11 +3823,10 @@ void do_bash( CHAR_DATA *ch, char *argument )
     OBJ_DATA *shield;
     int chance;
     int dicesuccess = 0, damagesuccess = 0;
-
+    int mobdice = 2;
+    int extradamage = 0;
     one_argument(argument,arg);
 
-    if (IS_NPC(ch))
-        return;
 
     if ( (chance = get_skill(ch,gsn_bash)) == 0
     ||   (IS_NPC(ch) && !IS_SET(ch->off_flags,OFF_BASH))
@@ -3838,7 +3837,7 @@ void do_bash( CHAR_DATA *ch, char *argument )
     return;
     }
 
-    if (( shield = get_eq_char(ch, WEAR_SHIELD)) == NULL)
+    if (!IS_NPC(ch) && ( shield = get_eq_char(ch, WEAR_SHIELD)) == NULL)
     {
         send_to_char("You must have a shield equipped in order to shield bash.\n\r", ch);
         return;
@@ -3909,6 +3908,61 @@ void do_bash( CHAR_DATA *ch, char *argument )
         return;
     }
 
+
+    if (IS_NPC(ch) )
+    {
+        if (!IS_SET(ch->off_flags, OFF_BASH))
+            return;
+
+        WAIT_STATE(ch, 13);
+
+        if (ch->race == race_lookup("garou"))
+        {
+            mobdice++;      /*Garou mobs gain +1 to attack*/
+            extradamage = 2;
+            if (number_range(1, 5) != 1)    /*80% chance shifted form, +1 */
+                mobdice++;
+        }
+
+        if (IS_VAMP(ch))
+        {
+            mobdice++;      /*Vampire blooded get +1*/
+            extradamage = 1;
+            if (number_range(1, 3) != 1)    /*66% chance of Potence, +1*/               mobdice++;
+        }
+
+        dicesuccess = godice(mobdice, 6);
+
+        if (dicesuccess < 0)
+        {
+            act("$n tries to bash your brains in but trips and falls as you deftly step away.", ch, NULL, victim, TO_VICT);
+            act("$n trips and falls while attempting to bash $N over the head.", ch, NULL, victim, TO_NOTVICT);
+            ch->stopped = 2;
+            ch->position = POS_RESTING;
+            return;
+        }
+
+        if (dicesuccess == 0)
+        {
+            act("A gentle breeze caresses your cheek as $n very nearly bashes your brains in.", ch, NULL, victim, TO_VICT);
+            act("$n attempts to bash $N over the head but misses by a hair.", ch, NULL, victim, TO_NOTVICT);
+            return;
+        }
+
+        if (dicesuccess > 0)
+        {
+            act("$n bashes you over the head, knocking the sense out of you!", ch, NULL, victim, TO_VICT);
+            act("$n bashes $N over the head and $N looks quite dazed.", ch, NULL, victim, TO_NOTVICT);
+
+            extradamage += dicesuccess -1;
+            damagesuccess = godice(mobdice + extradamage, 6);
+            if (damagesuccess < 0)
+                damagesuccess = 0;
+            damage(ch, victim, damagesuccess * ch->level / 2, gsn_bash, DAM_BASH, TRUE);
+            STOPPED(victim, 2*PULSE_VIOLENCE);
+            return;
+        }
+    }
 
     WAIT_STATE(ch, 12);
     dicesuccess = godice(get_attribute(ch, DEXTERITY) + ch->pcdata->csabilities[CSABIL_MELEE], 6);

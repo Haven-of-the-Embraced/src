@@ -771,7 +771,7 @@ void char_update( void )
 
     ch_next = ch->next;
 
-        if ( ch->timer > 30 )
+        if ( ch->timer > 30 && !IS_IMMORTAL(ch))
             ch_quit = ch;
 
     if ( ch->position >= POS_STUNNED )
@@ -815,12 +815,12 @@ void char_update( void )
     if ( ch->position == POS_STUNNED )
         update_pos( ch );
 
-    if ( !IS_NPC(ch) && ch->level < LEVEL_IMMORTAL )
+    if ( !IS_NPC(ch) /*&& ch->level < LEVEL_IMMORTAL*/ )
     {
         OBJ_DATA *obj;
 
         if ( ( obj = get_eq_char( ch, WEAR_LIGHT ) ) != NULL
-        &&   obj->item_type == ITEM_LIGHT
+        &&   obj->item_type == ITEM_LIGHT && !IS_IMMORTAL(ch)
         &&   obj->value[2] > 0 )
         {
         if ( --obj->value[2] == 0 && ch->in_room != NULL )
@@ -834,10 +834,10 @@ void char_update( void )
             act("$p flickers briefly, struggling to continue illuminating.",ch,obj,NULL,TO_CHAR);
         }
 
-        if (IS_IMMORTAL(ch))
-        ch->timer = 0;
+        //if (IS_IMMORTAL(ch))
+        //ch->timer = 0;
 
-        if ( ++ch->timer >= 18 )
+        if ( ++ch->timer >= 18 && !IS_IMMORTAL(ch))
         {
         if ( ch->was_in_room == NULL && ch->in_room != NULL )
         {
@@ -869,7 +869,7 @@ void char_update( void )
     }
 /* New ifcheck code added by Sengir, if player is IC they no longer
    get hungrier/thirstier or lose fullness */
-		if (!IS_SET(ch->act, PLR_IC))
+		if (!IS_SET(ch->act, PLR_IC) && !IS_IMMORTAL(ch))
 		{
 			if (ch->race == race_lookup("vampire"))
 			gain_condition( ch, COND_FULL, -8 );

@@ -3156,3 +3156,76 @@ void do_replay(CHAR_DATA *ch, char *argument)
     free_buf(buffer);
 }
 /**************************************************************************/
+
+void do_promote_leader( CHAR_DATA *ch, char *argument )
+{
+    char buf[MAX_STRING_LENGTH];
+    char arg[MAX_INPUT_LENGTH];
+    CHAR_DATA *victim;
+    CHAR_DATA *groupie;
+
+    one_argument( argument, arg );
+
+    if (IS_SET(ch->act,PLR_ARENA))
+    {
+    send_to_char( "No grouping in the arena!\n\r", ch );
+    return;
+    }
+
+
+    if ( ch->master != NULL || ( ch->leader != NULL && ch->leader != ch ) )
+    {
+    send_to_char( "But you are following someone else!\n\r", ch );
+    return;
+    }
+    
+    if ( ( victim = get_char_room( ch, arg ) ) == NULL )
+    {
+    send_to_char( "Promote whom to lead your group?\n\r", ch );
+    return;
+    }
+
+
+
+    if (IS_NPC(victim))
+    {
+        sendch("You cannot promote an NPC to group leader!\n\r", ch);
+        return;
+    }
+
+        CHAR_DATA *gch;
+        int members;
+
+        members = 0;
+        for ( gch = char_list; gch != NULL; gch = gch->next )
+        {
+            if ( is_same_group( gch, ch) && gch != ch)
+            members++;
+        }
+
+        if(members+1 > (victim->pcdata->csabilities[CSABIL_LEADERSHIP]*2)+1)
+        {
+            send_to_char("They do not have the skills needed to lead so many people.\n\r",ch);
+            return;
+        }
+
+        for ( gch = char_list; gch != NULL; gch = gch->next )
+        {
+            if ( gch->leader == ch && gch != victim)
+            {
+                gch->leader = victim;
+                gch->master = victim;
+            }
+        }
+        
+        ch->leader = victim;
+        ch->master = victim;
+        victim->leader = NULL;
+        victim->master = NULL;
+    act_new("$n transfers leadership of their group to $N.",ch,NULL,victim,TO_NOTVICT,POS_RESTING, FALSE);
+    act_new("You are now the leader of $n's group.",ch,NULL,victim,TO_VICT,POS_SLEEPING, FALSE);
+    act_new("$N now leads your group.",ch,NULL,victim,TO_CHAR,POS_SLEEPING, FALSE);
+    return;
+
+}
+

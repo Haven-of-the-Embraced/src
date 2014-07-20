@@ -829,7 +829,7 @@ void do_invoke(CHAR_DATA *ch, char *argument)
         }
         else
         {
-            send_to_char( "You do have have the required shiny sacrifice!\n\r", ch );
+            send_to_char( "You do not have the required shiny sacrifice!\n\r", ch );
             return;
         }
     }

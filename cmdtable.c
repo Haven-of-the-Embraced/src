@@ -194,6 +194,7 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "invite",     do_invite },
     { "rank",       do_rank},
     { "promote",    do_promote},
+    { "lpromote",   do_promote_leader},
     { "sanctus",        do_sanctus},
     { "endow",      do_endow },
     { "expel",      do_expel},

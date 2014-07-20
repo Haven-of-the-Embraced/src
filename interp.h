@@ -558,6 +558,7 @@ DECLARE_DO_FUN( do_checkbugs);
 DECLARE_DO_FUN( do_systemlog);
 DECLARE_DO_FUN( do_funlist);
 DECLARE_DO_FUN( do_cmdedit  );
+DECLARE_DO_FUN( do_promote_leader);
 DECLARE_DO_FUN(do_potency);
 DECLARE_DO_FUN(do_gogarou);
 DECLARE_DO_FUN(do_wield);

@@ -3048,9 +3048,6 @@ extern  const   struct  skill_type  skill_table [MAX_SKILL];
 extern  const   struct  cs_skill_type csskill_table[];
 extern  const   struct  group_type      group_table [MAX_GROUP];
 extern          struct social_type      social_table    [MAX_SOCIALS];
-extern  char *  const           title_table [MAX_CLASS]
-                            [MAX_LEVEL+1]
-                            [2];
 
 
 

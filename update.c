@@ -89,11 +89,7 @@ void advance_level( CHAR_DATA *ch, bool hide )
 
     ch->pcdata->last_level =
     ( ch->played + (int) (current_time - ch->logon) ) / 3600;
-/*
-    sprintf( buf, "the %s",
-    title_table [ch->class] [ch->level] [ch->sex == SEX_FEMALE ? 1 : 0] );
-    set_title( ch, buf );
-*/
+
     add_hp  = con_app[get_curr_stat(ch,STAT_CON)].hitp + number_range(
             class_table[ch->class].hp_min,
             class_table[ch->class].hp_max );

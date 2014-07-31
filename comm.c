@@ -2524,7 +2524,6 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
     if ( ch->level == 0 )
     {
 
-        ch->perm_stat[class_table[ch->class].attr_prime] += 3;
 
         ch->level   = 1;
         ch->exp = exp_per_level(ch,ch->pcdata->points);

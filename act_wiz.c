@@ -3914,8 +3914,8 @@ void restore_one(CHAR_DATA *ch, CHAR_DATA *victim, bool show) {
 
         if (!IS_NPC(victim)) {
             if (victim->race == race_lookup("garou")) {
+                if(victim->pcdata->rage[TEMP] < victim->pcdata->rage[PERM])
                     victim->pcdata->rage[TEMP] = victim->pcdata->rage[PERM];
-                    victim->pcdata->gnosis[TEMP] = victim->pcdata->gnosis[PERM];
             }
             victim->pcdata->cswillpower = victim->pcdata->csmax_willpower;
         }

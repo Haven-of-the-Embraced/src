@@ -452,12 +452,6 @@ struct buf_type
 #define CSABIL_RITUALS          12
 #define CSABIL_MEDITATION       13
 #define CSABIL_BODYCRAFTS       14
-#define CSABIL_LIGHT			15
-#define CSABIL_BLUNT			16
-#define	CSABIL_HEAVY			17
-#define CSABIL_POLEARM			18
-
-
 /*
  * Time and weather stuff.
  */
@@ -2583,14 +2577,7 @@ struct  command_type
 
 
 
-struct cs_skill_type
-{
-char * name; // Name of skill.
-sh_int * gsn; // Pointer to gsn.
-sh_int level;
-sh_int primary[3]; // primary[stat] primary[dot], primary[type].
-sh_int secondary[3]; //secondary[stat], secondary[dot], secondary[type].
-};
+
 
 
 /*
@@ -3033,7 +3020,6 @@ extern  const   struct  liq_type    liq_table   [];
 extern  const   struct  tool_type   tool_table  [];
 extern  const   struct  crafted_type    crafted_table   [];
 extern  const   struct  skill_type  skill_table [MAX_SKILL];
-extern  const   struct  cs_skill_type csskill_table[];
 extern  const   struct  group_type      group_table [MAX_GROUP];
 extern          struct social_type      social_table    [MAX_SOCIALS];
 extern  char *  const           title_table [MAX_CLASS]
@@ -3248,7 +3234,6 @@ void    die_follower    args( ( CHAR_DATA *ch ) );
 bool    is_same_group   args( ( CHAR_DATA *ach, CHAR_DATA *bch ) );
 void  announce      args( ( CHAR_DATA *ch, CHAR_DATA *victim, long flag ) );
 
-int cskill_lookup args( (int gsn) );
 
 /* act_enter.c */
 RID  *get_random_room   args ( (CHAR_DATA *ch) );

@@ -338,9 +338,14 @@ bool update_csstats(CHAR_DATA *ch)
 
     if(ch->clan == clan_lookup("Nosferatu"))
         ch->pcdata->csattributes[CSATTRIB_APPEARANCE] = 0;
-    
-    cskill_update(ch);
-    
+
+/*
+    ch->pcdata->csattributes[CSATTRIB_STRENGTH] = get_curr_stat(ch,STAT_STR);
+    ch->pcdata->csattributes[CSATTRIB_INTELLIGENCE] = get_curr_stat(ch,STAT_INT);
+    ch->pcdata->csattributes[CSATTRIB_STAMINA] = get_curr_stat(ch,STAT_CON);
+    ch->pcdata->csattributes[CSATTRIB_DEXTERITY] = get_curr_stat(ch,STAT_DEX);
+    ch->pcdata->csattributes[CSATTRIB_WITS] = get_curr_stat(ch,STAT_WIS);
+*/
     return TRUE;
 }
 
@@ -374,7 +379,7 @@ int get_skill(CHAR_DATA *ch, int sn)
 
     else if (!IS_NPC(ch))
     {
-    if (ch->level < csskill_table[cskill_lookup(sn)].level)
+    if (ch->level < skill_table[sn].skill_level[ch->class])
         skill = 0;
     else
         skill = ch->pcdata->learned[sn];
@@ -2739,17 +2744,13 @@ bool can_see( CHAR_DATA *ch, CHAR_DATA *victim )
     if ( IS_AFFECTED2(victim, AFF2_VEIL) )
     return FALSE;
 
-    if ( ch->in_room != NULL && victim->in_room != NULL
-         && ch->in_room->area == victim->in_room->area
-         && is_affected(victim, gsn_unseen)
+    if (  is_affected(victim, gsn_unseen)
          && !IS_AFFECTED2(ch, AFF2_DETECT_UNSEEN)
          && !is_affected(ch, gsn_reveal)
          && victim->fighting == NULL)
     return FALSE;
 
-    if ( ch->in_room != NULL && victim->in_room != NULL
-         && ch->in_room->area == victim->in_room->area
-         && is_affected(victim, gsn_unseen)
+    if ( is_affected(victim, gsn_unseen)
          && !IS_AFFECTED2(ch, AFF2_DETECT_UNSEEN)
          && is_affected(ch, gsn_reveal)
          && victim->fighting == NULL)

@@ -4889,16 +4889,8 @@ void do_charsheet3 (CHAR_DATA * ch, char *argument)
         row++;
     }
 
-	if (ch->pcdata->csabilities[CSABIL_MELEE] > 0)
-    {
-        sprintf(name[row], "  Weapon Skills   ");
-        sprintf(sec1[row], "Light        %s", dots(ch->pcdata->cssec_abil[CSABIL_LIGHT], FALSE));
-        sprintf(sec2[row], "Heavy        %s", dots(ch->pcdata->cssec_abil[CSABIL_HEAVY], FALSE));
-        sprintf(sec3[row], "Blunt        %s", dots(ch->pcdata->cssec_abil[CSABIL_BLUNT], FALSE));
-        sprintf(sec4[row], "Polearms     %s", dots(ch->pcdata->cssec_abil[CSABIL_POLEARM], FALSE));
-        sprintf(sec5[row], "                  ");
-        row++;
-    }
+
+
 
 
     if(ch->pcdata->cssec_abil[CSABIL_MINING] > 0)

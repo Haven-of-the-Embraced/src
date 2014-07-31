@@ -99,7 +99,6 @@ void advance_level( CHAR_DATA *ch, bool hide )
     add_mana /= 2;
     add_move    = number_range( 1, (get_curr_stat(ch,STAT_CON)
                   + get_curr_stat(ch,STAT_DEX))/6 );
-    add_prac    = wis_app[get_curr_stat(ch,STAT_WIS)].practice;
 
     add_hp = add_hp * 9/10;
     add_mana = add_mana * 9/10;
@@ -119,21 +118,15 @@ void advance_level( CHAR_DATA *ch, bool hide )
     ch->max_hit     += add_hp;
     ch->max_mana    += add_mana;
     ch->max_move    += add_move;
-    ch->practice    += add_prac;
-    ch->train       += 1;
 
     ch->pcdata->perm_hit    += add_hp;
     ch->pcdata->perm_mana   += add_mana;
     ch->pcdata->perm_move   += add_move;
 
     if (!hide)
-    {
-        sprintf(buf,
-        "You gain {R%d{x hit point%s, {M%d{x mana, {B%d{x move, and {Y%d{x practice%s.\n\r",
-        add_hp, add_hp == 1 ? "" : "s", add_mana, add_move,
-        add_prac, add_prac == 1 ? "" : "s");
-    send_to_char( buf, ch );
-    }
+        cprintf(ch,
+        "You gain {R%d/%d{x hit point%s, {M%d/%d{x mana, and {B%d/%d{x movement.\n\r",
+        add_hp, ch->max_hit, add_hp == 1 ? "" : "s", add_mana, ch->max_mana, add_move, ch->max_move);
     return;
 }
 

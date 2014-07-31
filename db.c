@@ -146,7 +146,19 @@ sh_int          gsn_sanctuary;
 sh_int          gsn_fly;
 sh_int          gsn_teleport;
 sh_int          gsn_retreat;
-
+sh_int          gsn_call_lightning;
+sh_int          gsn_cause_light;
+sh_int          gsn_create_food;
+sh_int          gsn_create_water;
+sh_int          gsn_create_spring;
+sh_int          gsn_cure_blindness;
+sh_int          gsn_cure_poison;
+sh_int          gsn_dispel;
+sh_int          gsn_earthquake;
+sh_int          gsn_lightning_bolt;
+sh_int          gsn_ray_of_truth;
+sh_int          gsn_remove_curse;
+sh_int          gsn_zeal;
 /* new gsns */
 
 sh_int          gsn_axe;

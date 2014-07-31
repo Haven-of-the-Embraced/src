@@ -2165,7 +2165,7 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
 
     { "call lightning",   { 26, 18, 31, 22, 102, 102, 102, 102, 102, 102, 39, 102, 30 },
     { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 4, 4, 4}, spell_call_lightning,   TAR_IGNORE,     POS_FIGHTING,
-    NULL,           SLOT( 6),   15, 12, "lightning bolt",   "!Call Lightning!", "" },
+    &gsn_call_lightning,           SLOT( 6),   15, 12, "lightning bolt",   "!Call Lightning!", "" },
 
     {   "calm",         { 48, 16, 50, 20 , 102, 102, 102, 102, 102, 102, 21, 25, 16},
     { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 2, 2, 2}, spell_calm,     TAR_IGNORE,     POS_FIGHTING,
@@ -2181,7 +2181,7 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
 
     { "cause light",      { 102,  1, 102, 3, 102, 102, 102, 102, 102, 102, 1, 102, 102 },     
 	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_cause_light,  TAR_CHAR_OFFENSIVE, POS_FIGHTING,
-    NULL,           SLOT(62),   15, 12, "spell",        "!Cause Light!",    "" },
+    &gsn_cause_light,           SLOT(62),   15, 12, "spell",        "!Cause Light!",    "" },
 
     { "cause serious",    { 102,  7, 102, 10, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
 	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_cause_serious,    TAR_CHAR_OFFENSIVE, POS_FIGHTING,
@@ -2221,7 +2221,7 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
 
     { "create food",      { 10, 5, 11, 12, 102, 102, 102, 102, 102, 102, 1, 1, 102 },     
 	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 2, 2, 2}, spell_create_food,  TAR_IGNORE,     POS_STANDING,
-    NULL,           SLOT(12),    5, 12, "",         "!Create Food!",    "" },
+    &gsn_create_food,           SLOT(12),    5, 12, "",         "!Create Food!",    "" },
 
     { "create rose",      { 16, 11, 10, 24, 102, 102, 102, 102, 102, 102, 29, 102, 102 },     
 	{ 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 2, 2, 2 }, spell_create_rose,  TAR_IGNORE,     POS_STANDING,
@@ -2229,15 +2229,15 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
 
     { "create spring",    { 14, 17, 23, 20, 102, 102, 102, 102, 102, 102, 27, 102, 102 },     
 	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 2, 2, 2}, spell_create_spring,    TAR_IGNORE,     POS_STANDING,
-    NULL,           SLOT(80),   20, 12, "",         "!Create Spring!",  "" },
+    &gsn_create_spring,           SLOT(80),   20, 12, "",         "!Create Spring!",  "" },
 
     { "create water",     { 8,  3, 12, 11, 102, 102, 102, 102, 102, 102, 3, 5, 102 },     
 	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 2, 2, 2}, spell_create_water, TAR_OBJ_INV,        POS_STANDING,
-    NULL,           SLOT(13),    5, 12, "",         "!Create Water!",   "" },
+    &gsn_create_water,           SLOT(13),    5, 12, "",         "!Create Water!",   "" },
 
     { "cure blindness",   { 102,  6, 102, 8 , 102, 102, 102, 102, 102, 102, 7, 102, 102},     
 	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 2, 2}, spell_cure_blindness,   TAR_CHAR_DEFENSIVE, POS_FIGHTING,
-    NULL,           SLOT(14),    5, 12, "",         "!Cure Blindness!", "" },
+    &gsn_cure_blindness,           SLOT(14),    5, 12, "",         "!Cure Blindness!", "" },
 
     { "cure critical",    { 102,  13, 102, 19, 102, 102, 102, 102, 102, 102, 41, 102, 102 },     
 	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_cure_critical,    TAR_CHAR_DEFENSIVE, POS_FIGHTING,
@@ -2245,7 +2245,7 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
 
     { "zeal",     {  102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 5},     
 	{ 1,  1,  2,  2 , 1, 1, 1, 1, 1, 1, 1, 1, 3}, spell_zeal,     TAR_CHAR_SELF,  POS_STANDING,
-    NULL,           SLOT( 49),   40,    12, "",         "The glory of God slowly fades from your body.",    "" },
+    &gsn_zeal,           SLOT( 49),   40,    12, "",         "The glory of God slowly fades from your body.",    "" },
 
     { "cure light",       { 102,  1, 102, 3, 102, 102, 102, 102, 102, 102, 5, 30, 1 },     
 	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 2, 2}, spell_cure_light,   TAR_CHAR_DEFENSIVE, POS_FIGHTING,
@@ -2253,7 +2253,7 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
 
     { "cure poison",      { 102,  14, 102, 16, 102, 102, 102, 102, 102, 102, 13, 102, 102 },     
 	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 2, 2, 2}, spell_cure_poison,  TAR_CHAR_DEFENSIVE, POS_STANDING,
-    NULL,           SLOT(43),    5, 12, "",         "!Cure Poison!",    "" },
+    &gsn_cure_poison,           SLOT(43),    5, 12, "",         "!Cure Poison!",    "" },
 
     { "cure serious",     { 102,  7, 102, 10, 102, 102, 102, 102, 102, 102, 25, 102, 102 },     
 	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_cure_serious, TAR_CHAR_DEFENSIVE, POS_FIGHTING,
@@ -2301,11 +2301,11 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
 
     { "dispel magic",     { 16, 24, 30, 30, 102, 102, 102, 102, 102, 102, 70, 102, 102 },     
 	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 2, 1, 1}, spell_dispel_magic, TAR_CHAR_OFFENSIVE, POS_FIGHTING,
-    NULL,           SLOT(59),   15, 12, "",         "!Dispel Magic!",   "" },
+    &gsn_dispel,           SLOT(59),   15, 12, "",         "!Dispel Magic!",   "" },
 
     { "earthquake",       { 102,  10, 102, 14, 102, 102, 102, 102, 102, 102, 45, 102, 45 },     
 	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 4, 4, 4}, spell_earthquake,   TAR_IGNORE,     POS_FIGHTING,
-    NULL,           SLOT(23),   15, 12, "earthquake",       "!Earthquake!",     "" },
+    &gsn_earthquake,           SLOT(23),   15, 12, "earthquake",       "!Earthquake!",     "" },
 
     { "enchant armor",    { 16, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 }, 
 	{ 2,  2,  4,  4, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_enchant_armor,    TAR_OBJ_INV,        POS_STANDING,
@@ -2409,7 +2409,7 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
 
     { "lightning bolt",   {  13, 23, 18, 16, 102, 102, 102, 102, 102, 102, 37, 102, 25 },     
 	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 4, 4, 4}, spell_lightning_bolt,   TAR_CHAR_OFFENSIVE, POS_FIGHTING,
-    NULL,           SLOT(30),   15, 12, "lightning bolt",   "!Lightning Bolt!", "" },
+    &gsn_lightning_bolt,           SLOT(30),   15, 12, "lightning bolt",   "!Lightning Bolt!", "" },
 
     { "locate object",    {  9, 15, 11, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     
 	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_locate_object,    TAR_IGNORE,     POS_STANDING,
@@ -2457,7 +2457,7 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
 
     { "ray of truth",         { 102, 35, 102, 47, 102, 102, 102, 102, 102, 102, 47, 102, 102 },     
 	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 5, 5, 5}, spell_ray_of_truth,     TAR_CHAR_OFFENSIVE,     POS_FIGHTING,
-    NULL,                   SLOT(518),      20,     12, "ray of truth",         "!Ray of Truth!",   "" },
+    &gsn_ray_of_truth,                   SLOT(518),      20,     12, "ray of truth",         "!Ray of Truth!",   "" },
 
     { "recharge",     { 9, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },  
 	{ 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_recharge,     TAR_OBJ_INV,        POS_STANDING,
@@ -2469,7 +2469,7 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
 
     { "remove curse",     { 102, 18, 102, 22, 102, 102, 102, 102, 102, 102, 17, 102, 102 },     
 	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 2, 2, 2}, spell_remove_curse, TAR_OBJ_CHAR_DEF,   POS_STANDING,
-    NULL,           SLOT(35),    5, 12, "",         "!Remove Curse!",   "" },
+    &gsn_remove_curse,           SLOT(35),    5, 12, "",         "!Remove Curse!",   "" },
 
     { "sanctuary",        { 36, 20, 42, 30, 102, 102, 102, 102, 102, 102, 50, 50, 50 },     
 	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 5, 5, 5}, spell_sanctuary,    TAR_CHAR_DEFENSIVE, POS_STANDING,

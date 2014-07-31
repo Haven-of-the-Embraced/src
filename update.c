@@ -90,31 +90,19 @@ void advance_level( CHAR_DATA *ch, bool hide )
     ch->pcdata->last_level =
     ( ch->played + (int) (current_time - ch->logon) ) / 3600;
 
-    add_hp  = con_app[get_curr_stat(ch,STAT_CON)].hitp + number_range(
-            class_table[ch->class].hp_min,
-            class_table[ch->class].hp_max );
-    add_mana    = number_range(get_curr_stat(ch,STAT_INT),(2*get_curr_stat(ch,STAT_INT)
-                  + get_curr_stat(ch,STAT_WIS))/2);
-    if (!class_table[ch->class].fMana)
-    add_mana /= 2;
-    add_move    = number_range( 1, (get_curr_stat(ch,STAT_CON)
-                  + get_curr_stat(ch,STAT_DEX))/6 );
-
-    add_hp = add_hp * 9/10;
-    add_mana = add_mana * 9/10;
-    add_move = add_move * 9/10;
+    add_hp      = dice(8, 3) + 6;
+    add_mana    = dice(4, 3) + 4;
+    add_move    = dice(4, 3) + 4;
 
     add_hp  = UMAX(  2, add_hp   );
     add_mana    = UMAX(  2, add_mana );
     add_move    = UMAX(  6, add_move );
 
     if(ch->sphere[SPHERE_LIFE] > 0)
+    {
         add_hp += ch->sphere[SPHERE_LIFE]*2;
-    if(ch->sphere[SPHERE_SPIRIT] > 0)
-        add_mana += ch->sphere[SPHERE_SPIRIT]*2;
-    if(ch->sphere[SPHERE_CORRESPONDENCE] > 0)
-        add_move += ch->sphere[SPHERE_CORRESPONDENCE]*2;
-
+        add_move += ch->sphere[SPHERE_LIFE];
+    }
     ch->max_hit     += add_hp;
     ch->max_mana    += add_mana;
     ch->max_move    += add_move;
@@ -125,7 +113,7 @@ void advance_level( CHAR_DATA *ch, bool hide )
 
     if (!hide)
         cprintf(ch,
-        "You gain {R%d/%d{x hit point%s, {M%d/%d{x mana, and {B%d/%d{x movement.\n\r",
+        "You gain {R%d{r/%d{x hit point%s, {M%d{m/%d{x mana, and {G%d{g/%d{x movement.\n\r",
         add_hp, ch->max_hit, add_hp == 1 ? "" : "s", add_mana, ch->max_mana, add_move, ch->max_move);
     return;
 }

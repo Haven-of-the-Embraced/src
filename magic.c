@@ -77,18 +77,17 @@ int find_spell( CHAR_DATA *ch, const char *name )
     if (IS_NPC(ch))
     return skill_lookup(name);
 
-    for ( sn = 0; sn < MAX_SKILL; sn++ )
+    for (sn = 0; csskill_table[sn].name != NULL; sn++)
     {
-    if (skill_table[sn].name == NULL)
-        break;
-    if (LOWER(name[0]) == LOWER(skill_table[sn].name[0])
-    &&  !str_prefix(name,skill_table[sn].name))
+
+    if (LOWER(name[0]) == LOWER(csskill_table[sn].name[0])
+    &&  !str_prefix(name,csskill_table[sn].name))
     {
         if ( found == -1)
-        found = sn;
-        if (ch->level >= skill_table[sn].skill_level[ch->class]
+        found = *csskill_table[sn].gsn;
+        if (ch->level >= csskill_table[sn].level
         &&  ch->pcdata->learned[sn] > 0)
-            return sn;
+            return *csskill_table[sn].gsn;
     }
     }
     return found;
@@ -322,9 +321,7 @@ void do_cast( CHAR_DATA *ch, char *argument )
     }
 
     if ((sn = find_spell(ch,arg1)) < 1
-    ||  skill_table[sn].spell_fun == spell_null
-    || (!IS_NPC(ch) && (ch->level < skill_table[sn].skill_level[ch->class]
-    ||           ch->pcdata->learned[sn] == 0)))
+    ||  skill_table[sn].spell_fun == spell_null)
     {
     send_to_char( "You don't know any spells of that name.\n\r", ch );
     return;

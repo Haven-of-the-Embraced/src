@@ -3175,7 +3175,7 @@ void do_buy( CHAR_DATA *ch, char *argument )
 }
 
  /*Influence, another 1% off per dot of influence.*/
- if (!IS_NPC(ch) && !IS_OBJ_STAT(obj, ITEM_SELL_EXTRACT) && ch->pcdata->csbackgrounds[CSBACK_INFLUENCE] > 0)
+ if (!IS_OBJ_STAT(obj, ITEM_SELL_EXTRACT) && ch->pcdata->csbackgrounds[CSBACK_INFLUENCE] > 0)
         cost = (100-ch->pcdata->csbackgrounds[CSBACK_INFLUENCE])*cost/100;
 
 

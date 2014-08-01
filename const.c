@@ -1057,11 +1057,56 @@ const struct cs_skill_type csskill_table [] =
     {"sword", &gsn_sword, 1, 
     {CSABIL_MELEE, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
 
-    {"lance", &gsn_lance, 1, 
+    {"lance", &gsn_lance, 1,  
     {CSABIL_MELEE, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
-
-    {"hand to hand", &gsn_hand_to_hand, 1, 
+    
+    {"hand to hand", &gsn_hand_to_hand,  1,  
     {CSABIL_BRAWL, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
+    
+    {"blindness", &gsn_blindness, 30, 
+    {CSABIL_OCCULT, 3, ABIL}, {CSABIL_HEARTHWISDOM, 1, ABIL} },
+    
+    {"call lightning", &gsn_call_lightning, 40, 
+    {CSABIL_THEOLOGY, 3, ABIL}, {CSABIL_NONE, 0, ABIL} },
+    
+    {"cause light", &gsn_cause_light, 5, 
+    {CSABIL_OCCULT, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
+    
+    {"create food", &gsn_create_food, 1, 
+    {CSABIL_HEARTHWISDOM, 3, ABIL}, {CSABIL_SURVIVAL, 1, ABIL} },
+    
+    {"create spring", &gsn_create_spring, 25, 
+    {CSABIL_HEARTHWISDOM, 4, ABIL}, {CSABIL_SURVIVAL, 2, ABIL} },
+    
+    {"create water", &gsn_create_water, 5, 
+    {CSABIL_THEOLOGY, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
+    
+    {"cure blindness", &gsn_cure_blindness, 10, 
+    {CSABIL_THEOLOGY, 2, ABIL}, {CSABIL_NONE, 0, ABIL} },
+    
+    {"cure poison", &gsn_cure_poison, 15, 
+    {CSABIL_HEARTHWISDOM, 1, ABIL}, {CSABIL_OCCULT, 1, ABIL} },
+    
+    {"curse", &gsn_curse, 45, 
+    {CSABIL_OCCULT, 4, ABIL}, {CSABIL_HEARTHWISDOM, 2, ABIL} },
+    
+    {"dispel", &gsn_dispel, 70, 
+    {CSABIL_OCCULT, 5, ABIL}, {CSABIL_ACADEMICS, 2, ABIL} },
+    
+    {"earthquake", &gsn_earthquake, 45, 
+    {CSABIL_HEARTHWISDOM, 5, ABIL}, {CSABIL_OCCULT, 2, ABIL} },
+    
+    {"lightning bolt", &gsn_lightning_bolt, 35, 
+    {CSABIL_OCCULT, 2, ABIL}, {CSABIL_NONE, 0, ABIL} },
+    
+    {"ray of truth", &gsn_ray_of_truth, 50, 
+    {CSABIL_THEOLOGY, 5, ABIL}, {CSABIL_LINGUISTICS, 2, ABIL} },
+    
+    {"remove curse", &gsn_remove_curse, 20, 
+    {CSABIL_THEOLOGY, 4, ABIL}, {CSABIL_HEARTHWISDOM, 1, ABIL} },
+    
+    {"zeal", &gsn_zeal, 5, 
+    {CSABIL_THEOLOGY, 3, ABIL}, {CSABIL_EXPRESSION, 3, ABIL} },
 
     { NULL, 0, 0, {-1, 0, ABIL}, {-1, 0, ABIL}}
     

@@ -324,19 +324,23 @@ void do_spells(CHAR_DATA *ch, char *argument)
 
     for (sn = 0; sn < MAX_SKILL; sn++)
     {
+        int csn;
         if (skill_table[sn].name == NULL )
 	    break;
 
-	if ((level = skill_table[sn].skill_level[ch->class]) < LEVEL_HERO + 1
+        if ( (csn = cskill_lookup(sn)) < 0)
+            continue;
+        
+	if ((level = csskill_table[csn].level) < LEVEL_HERO + 1
 	&&  (fAll || level <= ch->level)
 	&&  level >= min_lev && level <= max_lev
 	&&  skill_table[sn].spell_fun != spell_null
 	&&  ch->pcdata->learned[sn] > 0)
         {
 	    found = TRUE;
-	    level = skill_table[sn].skill_level[ch->class];
+	    level = csskill_table[csn].level;
 	    if (ch->level < level)
-	    	sprintf(buf,"%-18s n/a      ", skill_table[sn].name);
+	    	sprintf(buf,"%-18s   n/a      ", skill_table[sn].name);
 	    else
 	    {
 		mana = UMAX(skill_table[sn].min_mana,
@@ -348,7 +352,7 @@ void do_spells(CHAR_DATA *ch, char *argument)
           	sprintf(spell_list[level],"\n\rLevel %2d: %s",level,buf);
 	    else /* append */
 	    {
-          	if ( ++spell_columns[level] % 2 == 0)
+          	if ( ++spell_columns[level] % 1 == 0)
 		    strcat(spell_list[level],"\n\r          ");
           	strcat(spell_list[level],buf);
 	    }

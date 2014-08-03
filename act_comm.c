@@ -1086,14 +1086,7 @@ void do_admintalk( CHAR_DATA *ch, char *argument )
     act_new("{g<{w$n{g>: {c$t{x",ch,argument,NULL,TO_CHAR,POS_DEAD, TRUE);
     for ( d = descriptor_list; d != NULL; d = d->next )
     {
-    if ( d->connected == CON_PLAYING &&
-         (d->character->level >= L3) &&
-             !IS_SET(d->character->comm,COMM_NOADMIN) &&
-             (!str_cmp(d->character->name, "Zelan") ||
-             !str_cmp(d->character->name, "Matthew") ||
-             !str_cmp(d->character->name, "Ygolonac")||
-             !str_cmp(d->character->name, "Maat")||
-             !str_cmp(d->character->name, "Ma'at")) )
+    if ( d->connected == CON_PLAYING && IS_ADMIN(d->character) )
     {
         act_new("{g<{w$n{g>: {c$t{x",ch,argument,d->character,TO_VICT,POS_DEAD, TRUE);
     }

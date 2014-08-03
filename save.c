@@ -192,6 +192,7 @@ void fwrite_char( CHAR_DATA *ch, FILE *fp )
     }
     fprintf( fp, "Vers %d\n",   ch->version > 0 ? ch->version : 6);
     fprintf( fp, "Home %d\n", ch->pcdata->home );
+    fprintf( fp, "Admin %d\n",ch->pcdata->admin);
     fprintf( fp, "qpoints %d\n", ch->qpoints );
     fprintf( fp, "pblood %d\n", ch->pblood );
     fprintf( fp, "unlockp %d\n", ch->unlocksspent);
@@ -1177,6 +1178,7 @@ void fread_char( CHAR_DATA *ch, FILE *fp )
         KEY( "Affected2By", ch->affected2_by,   fread_flag( fp ) );
         KEY( "AfBy",    ch->affected_by,    fread_flag( fp ) );
         KEY( "Af2By",   ch->affected2_by,   fread_flag( fp ) );
+        KEY( "Admin",      ch->pcdata->admin,         fread_number( fp ) );
         KEY( "Agg", ch->agg,    fread_number( fp ) );
         KEY( "Agg_dam", ch->agg_dam,    fread_number( fp ) );
         KEY( "Alignment",   ch->alignment,      fread_number( fp ) );

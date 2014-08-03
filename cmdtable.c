@@ -489,6 +489,7 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "brew",   do_brew},
 /*    { "settime",      do_settime}, */
     { "allow",      do_allow},
+    { "allowadmintalk", do_allowadmintalk},
     { "ban",        do_ban},
     { "beep",       do_beep},
     { "roll",       do_roll},

@@ -2156,6 +2156,7 @@ struct  pc_data
     PC_DATA *       next;
     BUFFER *        buffer;
     bool        valid;
+    bool        admin;
     char *      pwd;
     char *      bamfin;
     char *      bamfout;
@@ -2860,6 +2861,7 @@ void    channel_to_char args( (const char *txt, CHAR_DATA*ch) );
 #define TRUE_CH(ch)             (ch->desc ? \
     (ch->desc->original ? ch->desc->original : SAFE_DESC_CHARACTER(ch)):ch)
 #define IS_VALID(data)      ((data) != NULL && (data)->valid)
+#define IS_ADMIN(ch)        ((ch) != NULL && (ch)->pcdata != NULL && ch->pcdata->admin)
 #define VALIDATE(data)      ((data)->valid = TRUE)
 #define INVALIDATE(data)    ((data)->valid = FALSE)
 #define UMIN(a, b)      ((a) < (b) ? (a) : (b))

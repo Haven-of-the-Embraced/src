@@ -8545,6 +8545,44 @@ void do_ticks (CHAR_DATA *ch, char *argument)
     return;
 }
 
+void do_allowadmintalk (CHAR_DATA *ch, char *argument)
+{
+CHAR_DATA *victim;
+char arg[MIL];
+
+    if (str_cmp(ch->name, "Zelan") &&
+             str_cmp(ch->name, "Matthew")) 
+             {
+                 send_to_char("Huh?\n\r", ch);
+                 return;
+             }
+
+    one_argument( argument, arg );
+  if ( ( victim = get_char_world( ch, arg  ) ) == NULL )
+  {
+    send_to_char( "They aren't here.\n\r", ch );
+    return;
+  }
+    if (IS_NPC(victim))
+    {
+        sendch("That would be unwise...\n\r", ch);
+        return;
+    }
+
+if (IS_ADMIN(victim))
+    {
+    victim->pcdata->admin = FALSE;
+    send_to_char("They can no longer use Admintalk.\n\r", ch);
+    }
+    else {
+    victim->pcdata->admin = TRUE;
+    send_to_char("They may now use the Admintalk channel.\n\r", ch);
+    send_to_char("You have been bestowed the Admintalk channel!\n\r", victim);
+    }
+    
+    return;
+    }
+
 void do_allowimmtalk (CHAR_DATA *ch, char *argument)
 {
 CHAR_DATA *victim;

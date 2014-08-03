@@ -1060,11 +1060,7 @@ void do_admintalk( CHAR_DATA *ch, char *argument )
     DESCRIPTOR_DATA *d;
     d = ch->desc;
 
-    if (str_cmp(d->character->name, "Zelan") &&
-             str_cmp(d->character->name, "Matthew") &&
-             str_cmp(d->character->name, "Ygolonac")&&
-             str_cmp(d->character->name, "Maat")&&
-             str_cmp(d->character->name, "Ma'at"))
+    if (!IS_ADMIN(ch)) 
              {
                  send_to_char("Huh?\n\r", ch);
                  return;

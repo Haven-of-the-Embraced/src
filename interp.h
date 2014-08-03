@@ -118,6 +118,7 @@ DECLARE_DO_FUN( do_claim);
 DECLARE_DO_FUN( do_channels );
 DECLARE_DO_FUN( do_clone    );
 DECLARE_DO_FUN( do_close    );
+DECLARE_DO_FUN( do_allowadmintalk);
 DECLARE_DO_FUN( do_colour       );  /* Colour Command By Lope */
 DECLARE_DO_FUN( do_pueblo   );
 DECLARE_DO_FUN( do_commands );

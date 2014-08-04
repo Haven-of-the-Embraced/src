@@ -1128,7 +1128,7 @@ int cskill_lookup (int gsn)
 void cskill_update(CHAR_DATA *ch) 
 {
 
-    int i;
+    int i, c;
     bool primary, secondary;
     primary = FALSE;
     secondary = FALSE;
@@ -1182,7 +1182,13 @@ void cskill_update(CHAR_DATA *ch)
                 
                 
         if (primary == FALSE || secondary == FALSE)
-                continue;
+        {
+            if (ch->pcdata->learned[*csskill_table[i].gsn] > 0)
+            {
+                ch->pcdata->learned[*csskill_table[i].gsn] = 0;
+            cprintf(ch, "Losing the %s skill.\n\r", csskill_table[i].name);
+            }
+        }
             else
             {
             if (ch->pcdata->learned[*csskill_table[i].gsn] < 10) {
@@ -1192,6 +1198,11 @@ void cskill_update(CHAR_DATA *ch)
             }
             
 
+        for (c = 0; c < MAX_SKILL; c++)
+        {
+            if (cskill_lookup(c) == -1)
+                ch->pcdata->learned[c] == 0;
+        }
     }
 
 }

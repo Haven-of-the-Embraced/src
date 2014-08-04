@@ -576,7 +576,7 @@ IC mode to fight.\n\r", ch );
     else if ( number_percent( ) > get_skill(ch,sn) )
     {
     send_to_char( "You lost your concentration.\n\r", ch );
-    check_improve(ch,sn,FALSE,1);
+    check_improve(ch,sn,FALSE,2);
     ch->mana -= mana / 2;
     }
     else

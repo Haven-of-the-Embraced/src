@@ -1072,7 +1072,7 @@ void do_pick( CHAR_DATA *ch, char *argument )
     if ( !IS_NPC(ch) && number_percent( ) > get_skill(ch,gsn_pick_lock))
     {
     send_to_char( "You failed.\n\r", ch);
-    check_improve(ch,gsn_pick_lock,FALSE,2);
+    check_improve(ch,gsn_pick_lock,FALSE,4);
     return;
     }
 
@@ -1108,7 +1108,7 @@ void do_pick( CHAR_DATA *ch, char *argument )
         REMOVE_BIT(obj->value[1],EX_LOCKED);
         act("You pick the lock on $p.",ch,obj,NULL,TO_CHAR);
         act("$n picks the lock on $p.",ch,obj,NULL,TO_ROOM);
-        check_improve(ch,gsn_pick_lock,TRUE,2);
+        check_improve(ch,gsn_pick_lock,TRUE,4);
         return;
     }
 
@@ -1131,7 +1131,7 @@ void do_pick( CHAR_DATA *ch, char *argument )
     REMOVE_BIT(obj->value[1], CONT_LOCKED);
         act("You pick the lock on $p.",ch,obj,NULL,TO_CHAR);
         act("$n picks the lock on $p.",ch,obj,NULL,TO_ROOM);
-    check_improve(ch,gsn_pick_lock,TRUE,2);
+    check_improve(ch,gsn_pick_lock,TRUE,4);
     return;
     }
 
@@ -1155,7 +1155,7 @@ void do_pick( CHAR_DATA *ch, char *argument )
     REMOVE_BIT(pexit->exit_info, EX_LOCKED);
     send_to_char( "*Click*\n\r", ch );
     act( "$n picks the $d.", ch, NULL, pexit->keyword, TO_ROOM );
-    check_improve(ch,gsn_pick_lock,TRUE,2);
+    check_improve(ch,gsn_pick_lock,TRUE,4);
 
     /* pick the other side */
     if ( ( to_room   = pexit->u1.to_room            ) != NULL
@@ -1947,7 +1947,7 @@ void do_recall( CHAR_DATA *ch, char *argument )
 
     if ( number_percent() < 80 * skill / 100 )
     {
-        check_improve(ch,gsn_recall,FALSE,6);
+        check_improve(ch,gsn_recall,FALSE,1);
         WAIT_STATE( ch, 4 );
         sprintf( buf, "You failed!.\n\r");
         send_to_char( buf, ch );
@@ -1956,7 +1956,7 @@ void do_recall( CHAR_DATA *ch, char *argument )
 
     lose = (ch->desc != NULL) ? 25 : 50;
     gain_exp( ch, 0 - lose );
-    check_improve(ch,gsn_recall,TRUE,4);
+    check_improve(ch,gsn_recall,TRUE,1);
     sprintf( buf, "You recall from combat!  You lose %d exps.\n\r", lose );
     send_to_char( buf, ch );
     stop_fighting( ch, TRUE );

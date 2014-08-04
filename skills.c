@@ -921,6 +921,7 @@ void check_improve( CHAR_DATA *ch, int sn, bool success, int multiplier )
 {
     int chance;
     char buf[100];
+    int skill;
 
     if (IS_NPC(ch))
 	return;
@@ -930,15 +931,21 @@ void check_improve( CHAR_DATA *ch, int sn, bool success, int multiplier )
     ||  ch->pcdata->learned[sn] == 100)
 	return;  /* skill is not known */
     
-    if (sn == gsn_whip || sn == gsn_sword ||
-        sn == gsn_axe  || sn == gsn_flail ||
-        sn == gsn_lance || sn == gsn_mace ||
-        sn == gsn_dagger || sn == gsn_spear ||
-        sn == gsn_polearm)
-        {
-        if (ch->pcdata->learned[sn] >= 50)
-            return;
-        }
+    if (sn == gsn_whip || sn == gsn_dagger) skill = CSABIL_LIGHT;
+    if (sn == gsn_axe || sn == gsn_sword) skill = CSABIL_HEAVY;
+    if (sn == gsn_flail || sn == gsn_mace) skill = CSABIL_BLUNT;
+    if (sn == gsn_lance || sn == gsn_spear || sn == gsn_polearm) skill = CSABIL_POLEARM;
+   
+    
+    switch (ch->pcdata->cssec_abil[skill])
+    {
+        case 0: if (ch->pcdata->learned[sn] >= 50) return; break;
+        case 1: if (ch->pcdata->learned[sn] >= 60) return; break;
+        case 2: if (ch->pcdata->learned[sn] >= 70) return; break;
+        case 3: if (ch->pcdata->learned[sn] >= 80) return; break;
+        case 4: if (ch->pcdata->learned[sn] >= 90) return; break;
+    }
+    
 
 
     /* check to see if the character has a chance to learn */

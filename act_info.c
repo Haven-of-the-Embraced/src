@@ -1693,10 +1693,10 @@ void do_score( CHAR_DATA *ch, char *argument )
     if (IS_SET(ch->act2, PLR2_PVP))
         send_to_char("You are {RACTIVE{x.\n\r", ch);
 
-    sprintf(buf, "Race: %s  Sex: %s  Class: %s  Remorts: %d  Freebies: %d\n\r",
+    sprintf(buf, "Race: %s  Sex: %s  Remorts: %d  Freebies: %d\n\r",
     race_table[ch->race].name,
     ch->sex == 0 ? "sexless" : ch->sex == 1 ? "male" : "female",
-    IS_NPC(ch) ? "mobile" : class_table[ch->class].name, ch->remorts, ch->freebie);
+     ch->remorts, ch->freebie);
     send_to_char(buf,ch);
     if(ch->breed > 0 && ch->auspice > 0)
     {
@@ -2435,7 +2435,7 @@ void do_who( CHAR_DATA *ch, char *argument )
 
     int iClass;
     int iRace;
-    int iClan;
+    int iClan;s
     int iLevelLower;
     int iLevelUpper;
     int nNumber;

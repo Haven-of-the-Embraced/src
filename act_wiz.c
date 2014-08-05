@@ -6303,10 +6303,9 @@ void do_copyover (CHAR_DATA *ch, char * argument)
                 sprintf(bcolor, "{W");
 
     /*Format it up.*/
-            sprintf(buf3, "%s[ %s %3d %-6.6s %-3.3s %3d %3d %3d> {D<{w%2d{D> %s%s@%s{x\n\r",
+            sprintf(buf3, "%s[ %s %3d %-6.6s %3d %3d %3d> {D<{w%2d{D> %s%s@%s{x\n\r",
             bcolor, (wch->pcdata->true_sex == 1) ? "M" : "F",
             wch->level, pc_race_table[wch->race].who_name,
-            class_table[wch->class].who_name,
             (int) wch->hit*100/(wch->max_hit==0?1:wch->max_hit),
             (int) wch->mana*100/(wch->max_mana==0?1:wch->max_mana),
             (int) wch->move*100/(wch->max_move==0?1:wch->max_move),

@@ -2435,7 +2435,7 @@ void do_who( CHAR_DATA *ch, char *argument )
 
     int iClass;
     int iRace;
-    int iClan;s
+    int iClan;
     int iLevelLower;
     int iLevelUpper;
     int nNumber;

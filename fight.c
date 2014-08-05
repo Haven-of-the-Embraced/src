@@ -5725,8 +5725,7 @@ void do_ground( CHAR_DATA *ch, char *argument )
 {
     CHAR_DATA *victim;
 
-        if ( !IS_NPC(ch)
-        &&   ch->level < skill_table[gsn_ground].skill_level[ch->class] )
+        if ( get_skill(ch, gsn_ground) == 0)
         {
                 send_to_char(
                         "Your better off sticking to your own arts.\n\r", ch );

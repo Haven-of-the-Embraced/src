@@ -891,7 +891,7 @@ void one_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt )
 
 
 
-    if(ch->class == class_lookup("knight") && get_skill(ch,gsn_lance) > 1 && MOUNTED(ch))
+    if(get_skill(ch, gsn_knight_training) && get_skill(ch,gsn_lance) > 1 && MOUNTED(ch))
     {
         if(get_skill(ch,gsn_lance) > number_range(1, 100) && wield->value[0] == WEAPON_POLEARM)
             dam += get_skill(ch,gsn_lance)/2;
@@ -899,7 +899,7 @@ void one_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt )
 
     if (MOUNTED(ch))
     {
-        if(ch->class == class_lookup("knight") || ch->class == class_lookup("crusader"))
+        if(get_skill(ch, gsn_knight_training ) )
             dam += number_range(dam/8, dam);
         else
             dam += number_range(1, dam/8);

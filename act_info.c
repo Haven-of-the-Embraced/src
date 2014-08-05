@@ -3329,9 +3329,10 @@ void do_report( CHAR_DATA *ch, char *argument )
 }
 
 
-
+// Practice is now completely unnecessary.
 void do_practice( CHAR_DATA *ch, char *argument )
-{
+{ return; };
+/*
     char buf[MAX_STRING_LENGTH];
     int sn;
 
@@ -3348,7 +3349,7 @@ void do_practice( CHAR_DATA *ch, char *argument )
         if ( skill_table[sn].name == NULL )
         break;
         if ( ch->level < skill_table[sn].skill_level[ch->class]
-          || ch->pcdata->learned[sn] < 1 /* skill is not known */)
+          || ch->pcdata->learned[sn] < 1 /* skill is not known )
         continue;
 
         sprintf( buf, "%-18s %3d%%  ",
@@ -3397,7 +3398,7 @@ void do_practice( CHAR_DATA *ch, char *argument )
     if ( ( sn = find_spell( ch,argument ) ) < 0
     || ( !IS_NPC(ch)
     &&   (ch->level < skill_table[sn].skill_level[ch->class]
-    ||    ch->pcdata->learned[sn] < 1 /* skill is not known */
+    ||    ch->pcdata->learned[sn] < 1 /* skill is not known 
     ||    skill_table[sn].rating[ch->class] == 0)))
     {
         send_to_char( "You can't practice that.\n\r", ch );
@@ -3433,7 +3434,7 @@ void do_practice( CHAR_DATA *ch, char *argument )
     }
     return;
 }
-
+*/
 
 
 /*

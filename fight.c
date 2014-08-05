@@ -4168,9 +4168,7 @@ void do_trip( CHAR_DATA *ch, char *argument )
     one_argument(argument,arg);
 
     if ( (chance = get_skill(ch,gsn_trip)) == 0
-    ||   (IS_NPC(ch) && !IS_SET(ch->off_flags,OFF_TRIP))
-    ||   (!IS_NPC(ch)
-      && ch->level < skill_table[gsn_trip].skill_level[ch->class]))
+    ||   (IS_NPC(ch) && !IS_SET(ch->off_flags,OFF_TRIP)))
     {
     send_to_char("Tripping?  What's that?\n\r",ch);
     return;

@@ -4716,19 +4716,8 @@ void do_flee( CHAR_DATA *ch, char *argument )
     if ( !IS_NPC(ch) )
     {
         send_to_char( "You flee from combat!\n\r", ch );
-    if( (ch->class == 2)
-        && (number_percent() < 3*(ch->level/2) ) )
-        send_to_char( "You snuck away safely.\n\r", ch);
-    else
-        {
         send_to_char( "You lost 10 exp.\n\r", ch);
         gain_exp( ch, -10 );
-        if (ch->race == race_lookup("garou") && ch->pcdata->rank == 0)
-        {
-            send_to_char("The shame and humiliation of fleeing from a fight only adds fuel to your anger!\n\r", ch);
-            ch->rage += 3;
-        }
-        }
     }
 
     stop_fighting( ch, TRUE );

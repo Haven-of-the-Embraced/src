@@ -1896,9 +1896,8 @@ void do_mstat( CHAR_DATA *ch, char *argument )
     send_to_char( buf, ch );
 
     sprintf( buf,
-    "Lv: %d  Class: %s  Align: %d  Gold: %ld  Silver: %ld  Exp: %d\n\r",
+    "Lv: %d    Align: %d  Gold: %ld  Silver: %ld  Exp: %d\n\r",
     victim->level,
-    IS_NPC(victim) ? "mobile" : class_table[victim->class].name,
     victim->alignment,
     victim->gold, victim->silver, victim->exp );
     send_to_char( buf, ch );
@@ -2432,8 +2431,8 @@ void do_pstat( CHAR_DATA *ch, char *argument )
     IS_IMMORTAL(victim) ? "an Immortal" : "a Player", victim->level, clan_table[victim->clan].name);
     send_to_char( buf, ch );
 
-    sprintf( buf,"Race: %s  Class: %s  Sex: %s Exp: %d  Room: %d\n\r",
-    race_table[victim->race].name,class_table[victim->class].name,
+    sprintf( buf,"Race: %s    Sex: %s Exp: %d  Room: %d\n\r",
+    race_table[victim->race].name,
     sex_table[victim->sex].name, victim->exp,
     victim->in_room == NULL    ?        0 : victim->in_room->vnum);
     send_to_char( buf, ch );

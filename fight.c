@@ -3723,9 +3723,7 @@ void do_berserk( CHAR_DATA *ch, char *argument)
     int chance, hp_percent;
 
     if ((chance = get_skill(ch,gsn_berserk)) == 0
-    ||  (IS_NPC(ch) && !IS_SET(ch->off_flags,OFF_BERSERK))
-    ||  (!IS_NPC(ch)
-    &&   ch->level < skill_table[gsn_berserk].skill_level[ch->class]))
+    ||  (IS_NPC(ch) && !IS_SET(ch->off_flags,OFF_BERSERK)))
     {
     send_to_char("You turn red in the face, but nothing happens.\n\r",ch);
     return;

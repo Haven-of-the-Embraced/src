@@ -936,7 +936,9 @@ void check_improve( CHAR_DATA *ch, int sn, bool success, int multiplier )
     if (sn == gsn_flail || sn == gsn_mace) skill = CSABIL_BLUNT;
     if (sn == gsn_lance || sn == gsn_spear || sn == gsn_polearm) skill = CSABIL_POLEARM;
    
-    
+    if (sn == gsn_whip || sn == gsn_dagger || sn == gsn_axe || sn == gsn_sword ||
+        sn == gsn_flail || sn == gsn_mace || sn == gsn_lance || 
+        sn == gsn_spear || sn == gsn_polearm)  {  
     switch (ch->pcdata->cssec_abil[skill])
     {
         case 0: if (ch->pcdata->learned[sn] >= 50) return; break;
@@ -944,6 +946,7 @@ void check_improve( CHAR_DATA *ch, int sn, bool success, int multiplier )
         case 2: if (ch->pcdata->learned[sn] >= 70) return; break;
         case 3: if (ch->pcdata->learned[sn] >= 80) return; break;
         case 4: if (ch->pcdata->learned[sn] >= 90) return; break;
+    } 
     }
     
 

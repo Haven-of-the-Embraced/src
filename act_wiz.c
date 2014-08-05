@@ -4545,7 +4545,7 @@ void do_mset( CHAR_DATA *ch, char *argument )
     send_to_char("Syntax:\n\r",ch);
     send_to_char("  set char <name> <field> <value>\n\r",ch);
     send_to_char( "  Field being one of:\n\r",          ch );
-    send_to_char( "    str int wis dex con sex class level\n\r",    ch );
+    send_to_char( "    str int wis dex con sex level\n\r",    ch );
     send_to_char( "    race group gold silver hp mana move prac\n\r",ch);
     send_to_char( "    align train thirst hunger drunk full home\n\r",  ch );
     send_to_char( "    max_blood blood security inhumanity gen rank discipline\n\r",    ch );
@@ -4661,38 +4661,6 @@ void do_mset( CHAR_DATA *ch, char *argument )
     victim->sex = value;
     if (!IS_NPC(victim))
         victim->pcdata->true_sex = value;
-    return;
-    }
-
-    if ( !str_prefix( arg2, "class" ) )
-    {
-    int class;
-
-    if (IS_NPC(victim))
-    {
-        send_to_char("Mobiles have no class.\n\r",ch);
-        return;
-    }
-
-    class = class_lookup(arg3);
-    if ( class == -1 )
-    {
-        char buf[MAX_STRING_LENGTH];
-
-            strcpy( buf, "Possible classes are: " );
-            for ( class = 0; class < MAX_CLASS; class++ )
-            {
-                    if ( class > 0 )
-                        strcat( buf, " " );
-                    strcat( buf, class_table[class].name );
-            }
-            strcat( buf, ".\n\r" );
-
-        send_to_char(buf,ch);
-        return;
-    }
-
-    victim->class = class;
     return;
     }
 

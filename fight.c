@@ -6047,8 +6047,7 @@ void do_warcry( CHAR_DATA *ch, char *argument )
     CHAR_DATA *victim;
     CHAR_DATA *vict_next;
 
-        if ( !IS_NPC(ch)
-        &&   ch->level < skill_table[gsn_warcry].skill_level[ch->class] )
+        if ( get_skill(ch, gsn_warcry) == 0)
         {
                 send_to_char("You are better off sticking to your own arts.\n\r", ch );
                 return;

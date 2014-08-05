@@ -774,8 +774,8 @@ void one_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt )
     }
     else
     {
-    thac0_00 = class_table[ch->class].thac0_00;
-    thac0_32 = class_table[ch->class].thac0_32;
+    thac0_00 = 20;
+    thac0_32 = -20;
     }
     thac0  = interpolate( ch->level, thac0_00, thac0_32 );
 

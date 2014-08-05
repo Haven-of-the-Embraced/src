@@ -4158,25 +4158,25 @@ void do_gwho(CHAR_DATA *ch, char *argument )
     {
         sprintf(buf,"Members of clan {W%s{x:\n\r", capitalize(clan_table[ch->clan].name));
         send_to_char(buf,ch);
-        send_to_char("[Lvl  Class | Name   | Gen | Hit Points |  Mana   | Movement | Blood ]\n\r", ch);
+        send_to_char("[Lvl  | Name   | Gen | Hit Points |  Mana   | Movement | Blood ]\n\r", ch);
     }
     else if(ch->race == race_lookup("garou"))
     {
         sprintf( buf, "Your brothers and sisters in the {W%s tribe{x:\n\r", capitalize(clan_table[ch->clan].name));
         send_to_char(buf,ch);
-        send_to_char("[Lvl  Class | Name   | Rank | Hit Points |  Mana   | Movement | Rage | Renown]\n\r", ch);
+        send_to_char("[Lvl  | Name   | Rank | Hit Points |  Mana   | Movement | Rage | Renown]\n\r", ch);
     }
     else if(ch->clan == clan_lookup("watcher"))
     {
         sprintf( buf, "Your silent brethren of the {W%s{x sect of the Inquisition{x:\n\r", capitalize(clan_table[ch->clan].name));
         send_to_char(buf,ch);
-        send_to_char("[Lvl  Class | Name   | Rank | Hit Points |  Mana   | Movement ]\n\r", ch);
+        send_to_char("[Lvl  | Name   | Rank | Hit Points |  Mana   | Movement ]\n\r", ch);
     }
     else
     {
         sprintf( buf, "Members of the %s guild:\n\r", capitalize(clan_table[ch->clan].name));
         send_to_char(buf,ch);
-        send_to_char("[Lvl  Class |  Tradition  | Name   | Rank | Hit Points |  Mana   | Movement ]\n\r", ch);
+        send_to_char("[Lvl  |  Tradition  | Name   | Rank | Hit Points |  Mana   | Movement ]\n\r", ch);
     }
 
     for ( d = descriptor_list; d != NULL; d = d->next )
@@ -4186,10 +4186,9 @@ void do_gwho(CHAR_DATA *ch, char *argument )
         if ( d->connected == CON_PLAYING && ch->clan == victim->clan && !IS_IMMORTAL(victim))
         {
             if(victim->race == race_lookup("vampire") || victim->race == race_lookup("methuselah"))
-                sprintf( buf, "[%d%s %s | %s: | %d | %d/%d | %d/%d | %d/%d | %d ]\n\r",
+                sprintf( buf, "[%d%s | %s: | %d | %d/%d | %d/%d | %d/%d | %d ]\n\r",
                     victim->level,
                     victim->level < 100 ? " " : "",
-                    class_table[victim->class].who_name,
                     victim->name,
                     victim->gen,
                     victim->hit, victim->max_hit,
@@ -4197,10 +4196,9 @@ void do_gwho(CHAR_DATA *ch, char *argument )
                     victim->move, victim->max_move,
                     victim->pblood/10);
             else if(victim->race == race_lookup("ghoul"))
-                sprintf( buf, "[%d%s %s | %s: | %s | %d/%d | %d/%d | %d/%d | %d ]\n\r",
+                sprintf( buf, "[%d%s | %s: | %s | %d/%d | %d/%d | %d/%d | %d ]\n\r",
                     victim->level,
                     victim->level < 100 ? " " : "",
-                    class_table[victim->class].who_name,
                     victim->name,
                     "{rG{x",
                     victim->hit, victim->max_hit,
@@ -4208,10 +4206,9 @@ void do_gwho(CHAR_DATA *ch, char *argument )
                     victim->move, victim->max_move,
                     victim->pblood/10);
             else if(victim->race == race_lookup("garou"))
-                sprintf( buf, "[%d%s %s | %s: | %d | %d/%d | %d/%d | %d/%d | %d |  %d  ]\n\r",
+                sprintf( buf, "[%d%s | %s: | %d | %d/%d | %d/%d | %d/%d | %d |  %d  ]\n\r",
                     victim->level,
                     victim->level < 100 ? " " : "",
-                    class_table[victim->class].who_name,
                     victim->name,
                     victim->rank,
                     victim->hit, victim->max_hit,
@@ -4221,20 +4218,18 @@ void do_gwho(CHAR_DATA *ch, char *argument )
                     victim->renown);
 
             else if(victim->clan == clan_lookup("watcher"))
-                sprintf( buf, "[%d%s %s | %s | %s | %d/%d | %d/%d | %d/%d]\n\r",
+                sprintf( buf, "[%d%s | %s | %s | %d/%d | %d/%d | %d/%d]\n\r",
                     victim->level,
                     victim->level < 100 ? " " : "",
-                    class_table[victim->class].who_name,
                     victim->name,
                     victim->rank == 1 ? "Init" : victim-> rank == 2 ? "Aclyt" : victim->rank == 7 ? "Counc" : victim->rank == 8 ? "ProFi" : victim->rank == 9 ? "SupCn" : victim->rank == 10 ? "GrInq" : "Disciple",
                     victim->hit, victim->max_hit,
                     victim->mana, victim->max_mana,
                     victim->move, victim->max_move);
             else
-                sprintf( buf, "[%d%s %s | %s | %s: | %s | %d/%d | %d/%d | %d/%d]\n\r",
+                sprintf( buf, "[%d%s | %s | %s: | %s | %d/%d | %d/%d | %d/%d]\n\r",
                     victim->level,
                     victim->level < 100 ? " " : "",
-                    class_table[victim->class].who_name,
                     tradition_table[victim->tradition].name,
                     victim->name,
                     victim->rank == 1 ? "Appr" : victim->rank == 2 ? "Disc" : victim->rank == 8 ? "Mast" : victim->rank == 9 ? "Ment" : "Lead",

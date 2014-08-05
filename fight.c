@@ -3822,9 +3822,7 @@ void do_bash( CHAR_DATA *ch, char *argument )
 
 
     if ( (chance = get_skill(ch,gsn_bash)) == 0
-    ||   (IS_NPC(ch) && !IS_SET(ch->off_flags,OFF_BASH))
-    ||   (!IS_NPC(ch)
-    &&    ch->level < skill_table[gsn_bash].skill_level[ch->class]))
+    ||   (IS_NPC(ch) && !IS_SET(ch->off_flags,OFF_BASH)))
     {
     send_to_char("Bashing? What's that?\n\r",ch);
     return;

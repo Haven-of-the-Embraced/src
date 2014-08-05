@@ -4011,9 +4011,7 @@ void do_dirt( CHAR_DATA *ch, char *argument )
     one_argument(argument,arg);
 
     if ( (chance = get_skill(ch,gsn_dirt)) == 0
-    ||   (IS_NPC(ch) && !IS_SET(ch->off_flags,OFF_KICK_DIRT))
-    ||   (!IS_NPC(ch)
-    &&    ch->level < skill_table[gsn_dirt].skill_level[ch->class]))
+    ||   (IS_NPC(ch) && !IS_SET(ch->off_flags,OFF_KICK_DIRT)))
     {
     send_to_char("You get your feet dirty.\n\r",ch);
     return;

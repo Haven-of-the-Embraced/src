@@ -2336,7 +2336,6 @@ void do_who( CHAR_DATA *ch, char *argument )
     BUFFER *output;
     DESCRIPTOR_DATA *d;
 
-    int iClass;
     int iRace;
     int iClan;
     int iLevelLower;
@@ -2345,10 +2344,8 @@ void do_who( CHAR_DATA *ch, char *argument )
     int nMatch;
     int vMatch;
     extern int most_players;
-    bool rgfClass[MAX_CLASS];
     bool rgfRace[MAX_PC_RACE];
     bool rgfClan[top_clan];
-    bool fClassRestrict = FALSE;
     bool fClanRestrict = FALSE;
     bool fClan = FALSE;
     bool fRaceRestrict = FALSE;
@@ -2360,8 +2357,6 @@ void do_who( CHAR_DATA *ch, char *argument )
      */
     iLevelLower    = 0;
     iLevelUpper    = MAX_LEVEL;
-    for ( iClass = 0; iClass < MAX_CLASS; iClass++ )
-        rgfClass[iClass] = FALSE;
     for ( iRace = 0; iRace < MAX_PC_RACE; iRace++ )
         rgfRace[iRace] = FALSE;
     for (iClan = 0; iClan < MAX_CLAN; iClan++)
@@ -2392,54 +2387,9 @@ void do_who( CHAR_DATA *ch, char *argument )
         }
         else
         {
+            sendch("Who display no longer supports class or race specifier.\n\r", ch);
+            return;
 
-            /*
-             * Look for classes to turn on.
-             */
-            if (!str_prefix(arg,"immortals"))
-            {
-                fImmortalOnly = TRUE;
-            }
-            else
-            {
-                iClass = class_lookup(arg);
-                if (iClass == -1)
-                {
-                    iRace = race_lookup(arg);
-
-                    if (iRace == 0 || iRace >= MAX_PC_RACE)
-            {
-            if (!str_prefix(arg,"clan"))
-                fClan = TRUE;
-            else
-                {
-                iClan = clan_lookup(arg);
-                if (iClan)
-                {
-                fClanRestrict = TRUE;
-                rgfClan[iClan] = TRUE;
-                }
-                else
-                {
-                            send_to_char(
-                                "That's not a valid class, or clan.\n\r",
-                   ch);
-                                return;
-                }
-                        }
-            }
-                    else
-                    {
-                        fRaceRestrict = TRUE;
-                        rgfRace[iRace] = TRUE;
-                    }
-                }
-                else
-                {
-                    fClassRestrict = TRUE;
-                    rgfClass[iClass] = TRUE;
-                }
-            }
         }
     }
 
@@ -2478,7 +2428,6 @@ void do_who( CHAR_DATA *ch, char *argument )
         if ( wch->level < iLevelLower
         ||   wch->level > iLevelUpper
         || ( fImmortalOnly  && wch->level < LEVEL_IMMORTAL )
-        || ( fClassRestrict && !rgfClass[wch->class] )
         || ( fRaceRestrict && !rgfRace[wch->race])
     || ( fClan && !is_clan(wch))
     || ( fClanRestrict && !rgfClan[wch->clan]))
@@ -2510,7 +2459,11 @@ void do_who( CHAR_DATA *ch, char *argument )
         if (IS_SET(wch->comm, COMM_QUIET)) {sprintf(tags, "{w |  {c<{yQuiet Mode{c>{w  |");}
 
 
-        if (IS_IMMORTAL(ch) || IS_SET(ch->act2, PLR2_WHOSHOWLEVEL)) {sprintf(buf2, "{w[{m%3d{w]{x", wch->level); strcat(buf, buf2);}
+        if (IS_IMMORTAL(ch) || IS_SET(ch->act2, PLR2_WHOSHOWLEVEL)) 
+        {
+            sprintf(buf2, "{w[{m%3d{w]{x", wch->level); 
+            strcat(buf, buf2);
+        }
 
         if (wch->incog_level >= LEVEL_HERO || wch->invis_level >= LEVEL_HERO)
            {if (wch->incog_level >= LEVEL_HERO)

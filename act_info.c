@@ -2598,10 +2598,10 @@ void do_who( CHAR_DATA *ch, char *argument )
             }
         if (IS_SET(wch->comm, COMM_AFK)){
                 if (!IS_IMMORTAL(ch)) {sprintf(tags, "{w |    {D**{GAFK{D**     {w|"); }
-                else { sprintf(tags, "{w |   {D**{GAFK{D** {r({w%2d{r) {w|", wch->timer); }}
+                else { sprintf(tags, "{w |  {D**{GAFK{D** {r({w%3d{r) {w|", wch->timer); }}
         if (wch->timer >= 18){
                 if (!IS_IMMORTAL(ch)) {sprintf(tags, "{w |    {D**{RIDLE{D**    {w|"); }
-                else { sprintf(tags, "{w |  {D**{RIDLE{D** {r({w%2d{r) {w|", wch->timer); }}
+                else { sprintf(tags, "{w | {D**{RIDLE{D** {r({w%3d{r) {w|", wch->timer); }}
 
         if (IS_SET(wch->act, PLR_IC)) {sprintf(tags, "{w | {w({CIn-Character{w){w |");}
         if (IS_SET(wch->comm, COMM_QUIET)) {sprintf(tags, "{w |  {c<{yQuiet Mode{c>{w  |");}

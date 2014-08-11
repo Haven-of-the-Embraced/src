@@ -3915,7 +3915,6 @@ void do_bash( CHAR_DATA *ch, char *argument )
         if (!IS_SET(ch->off_flags, OFF_BASH))
             return;
 
-        WAIT_STATE(ch, 13);
 
         if (ch->race == race_lookup("garou"))
         {
@@ -3965,7 +3964,6 @@ void do_bash( CHAR_DATA *ch, char *argument )
         }
     }
 
-    WAIT_STATE(ch, 12);
     dicesuccess = godice(get_attribute(ch, DEXTERITY) + ch->pcdata->csabilities[CSABIL_MELEE], 6);
 
     if(dicesuccess < 0)
@@ -3984,7 +3982,7 @@ void do_bash( CHAR_DATA *ch, char *argument )
         act("$p glances off of $N.", ch, shield, victim, TO_CHAR);
         act("$n's swing with $p glances off of you.", ch, shield, victim, TO_VICT);
         act("$n tries to slam $p into $N, but it merely glances away.", ch, shield, victim, TO_NOTVICT);
-        WAIT_STATE(ch, 6);
+        WAIT_STATE(ch, PULSE_VIOLENCE);
         return;
     }
 
@@ -3992,17 +3990,17 @@ void do_bash( CHAR_DATA *ch, char *argument )
     act("You swing $p, forcefully colliding with $N.", ch, shield, victim, TO_CHAR);
     act("$n smashes you with $p.", ch, shield, victim, TO_VICT);
     act("$n slams $p into $N.", ch, shield, victim, TO_NOTVICT);
-    STOPPED(victim, PULSE_VIOLENCE);
 
-    if (dicesuccess >= 4)
+    if (dicesuccess >= 5)
     {
         act("$p connects solidly with $N's head, causing a mild concussion.", ch, shield, victim, TO_CHAR);
         act("$n's $p connects with your head, rattling your brain.", ch, shield, victim, TO_VICT);
         act("$N appears to be a bit dazed after being hit with $p.", ch, shield, victim, TO_NOTVICT);
         DAZE_STATE(victim, 3 * PULSE_VIOLENCE);
-        STOPPED(victim, 3* PULSE_VIOLENCE);
+        STOPPED(victim, PULSE_VIOLENCE);
     }
-
+    
+    WAIT_STATE(ch, 2*PULSE_VIOLENCE);
     damagesuccess = godice(get_attribute(ch,STRENGTH) + 1 + ch->pcdata->discipline[POTENCE], 6);
     if (damagesuccess < 0)
         damagesuccess = 0;

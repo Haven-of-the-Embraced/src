@@ -452,6 +452,11 @@ struct buf_type
 #define CSABIL_RITUALS          12
 #define CSABIL_MEDITATION       13
 #define CSABIL_BODYCRAFTS       14
+#define CSABIL_LIGHT                   15
+#define CSABIL_BLUNT                   16
+#define        CSABIL_HEAVY                    17
+#define CSABIL_POLEARM                 18
+
 /*
  * Time and weather stuff.
  */
@@ -2576,6 +2581,14 @@ struct  command_type
     sh_int              cat;
 };
 
+struct cs_skill_type
+ {
+    char * name; // Name of skill.
+    sh_int * gsn; // Pointer to gsn.
+    sh_int level;
+    sh_int primary[3]; // primary[stat] primary[dot], primary[type].
+    sh_int secondary[3]; //secondary[stat], secondary[dot], secondary[type].
+};
 
 
 
@@ -3030,6 +3043,7 @@ extern  const   struct  attack_type attack_table    [];
 extern  const   struct  race_type   race_table  [];
 extern  const   struct  pc_race_type    pc_race_table   [];
 extern  const   struct  spec_type   spec_table  [];
+extern  const   struct  cs_skill_type csskill_table[];
 extern  const   struct  liq_type    liq_table   [];
 extern  const   struct  tool_type   tool_table  [];
 extern  const   struct  crafted_type    crafted_table   [];
@@ -3241,6 +3255,7 @@ void    check_sex   args( ( CHAR_DATA *ch) );
 void    add_follower    args( ( CHAR_DATA *ch, CHAR_DATA *master ) );
 void    stop_follower   args( ( CHAR_DATA *ch ) );
 void    nuke_pets   args( ( CHAR_DATA *ch ) );
+int cskill_lookup args( (int gsn) );
 void    die_follower    args( ( CHAR_DATA *ch ) );
 bool    is_same_group   args( ( CHAR_DATA *ach, CHAR_DATA *bch ) );
 void  announce      args( ( CHAR_DATA *ch, CHAR_DATA *victim, long flag ) );

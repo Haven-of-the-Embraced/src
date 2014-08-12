@@ -884,7 +884,7 @@ void do_freebie(CHAR_DATA *ch, char *argument)
         return;
     }
     sprintf(buf,"You have %d freebies remaining.\n\r",ch->freebie);
-
+    cskill_update(ch);
     send_to_char(buf,ch);
     return;
 }
@@ -2141,6 +2141,7 @@ void do_create( CHAR_DATA *ch, char *argument )
                 send_to_char("When you've finished setting your backgrounds, you use the freebie command to spend freebies\n\r", ch);
                 send_to_char(" to further increase your traits!\n\r",ch);
                 ch->pcdata->progress = 8;
+                cskill_update(ch);
             }
             else do_function(ch, &do_create, "" );
         }

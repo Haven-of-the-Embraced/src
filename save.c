@@ -1573,7 +1573,7 @@ void fread_char( CHAR_DATA *ch, FILE *fp )
                     bug( "Fread_char: unknown group. ", 0 );
                 }
                 else
-            gn_add(ch,gn);
+            //gn_add(ch,gn); Quietly ignore. =D Goodbye Groups. - Matthew.
                 fMatch = TRUE;
             }
         break;

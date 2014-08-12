@@ -2146,64 +2146,11 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
     }
 
     write_to_buffer( d, echo_on_str, 0 );
-/*  write_to_buffer(d,"The following races are available:\n\r  ",0);
-    for ( race = 1; race_table[race].name != NULL; race++ )
-    {
-        if (!race_table[race].pc_race)
-        break;
-               if (pc_race_table[race].points < 0)
-                               break;
-        write_to_buffer(d,race_table[race].name,0);
-        write_to_buffer(d," ",1);
-    }
-    write_to_buffer(d,"\n\r",0);
-    write_to_buffer(d,"What is your race (help for more information)? ",0);
-    d->connected = CON_GET_NEW_RACE;
-    break;
-
-    case CON_GET_NEW_RACE:
-    one_argument(argument,arg);
-
-    if (!strcmp(arg,"help"))
-    {
-        argument = one_argument(argument,arg);
-        if (argument[0] == '\0')
-        do_function(ch, &do_help, "race help");
-        else
-        do_function(ch, &do_help, argument);
-            write_to_buffer(d,
-        "What is your race (help for more information)? ",0);
-        break;
-    }
-
-    race = race_lookup(argument);
-
-    if (race == 0 || !race_table[race].pc_race)
-    {
-        write_to_buffer(d,"That is not a valid race.\n\r",0);
-            write_to_buffer(d,"The following races are available:\n\r  ",0);
-            for ( race = 1; race_table[race].name != NULL; race++ )
-            {
-                if (!race_table[race].pc_race)
-                    break;
-                if (pc_race_table[race].points < 0)
-                                                 break;
-                write_to_buffer(d,race_table[race].name,0);
-                write_to_buffer(d," ",1);
-            }
-            write_to_buffer(d,"\n\r",0);
-            write_to_buffer(d,
-        "What is your race? (help for more information) ",0);
-        break;
-    } */
 
 
         race = race_lookup("human");
         ch->race = race_lookup("human");
-    /* initialize -and roll- stats
-    for (i = 0; i < MAX_STATS; i++)
-        ch->perm_stat[i] = pc_race_table[race].stats[i] + roll_stats();
-*/
+
     for (i = 0; i < MAX_STATS; i++)
         ch->perm_stat[i] = 15;
 
@@ -2274,193 +2221,19 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
         return;
     }
 
-/*  write_to_buffer( d, "\r\nNote: Clergy can no longer become Vampires!\r\n", 0 ); */
-    write_to_buffer( d, "\r\nSelect one of the following classes:\n\rRogue    Swordsman    Clergy\n\r\n\rYour class?[help for more info]: ", 0 );
-    d->connected = CON_GET_NEW_GROUP;
-    break;
-
-    case CON_GET_NEW_GROUP:
-    one_argument(argument,arg);
-    if (!strcmp(arg,"help"))
-    {
-        argument = one_argument(argument,arg);
-        ch->lines = 0;
-        if (argument[0] == '\0')
-        do_function(ch, &do_help, "class");
-        else
-        do_function(ch, &do_help, argument);
-        ch->lines = 22;
-        send_to_char( "\n\rYour class?[help for more info]: ", ch );
-        break;
-    }
-    group = classgroup_lookup(argument);
-
-    if ( group == -1 )
-    {
-        write_to_buffer( d,
-        "That's not a class.\n\rWhat IS your class? ", 0 );
-        return;
-    }
-    if ( group == 1 )
-    {
-        write_to_buffer( d, "\n\rHere at Haven we have added the addition of Professions\n\r", 0 );
-        write_to_buffer( d, "to our class structure. A Profession is a character's job\n\r", 0 );
-        write_to_buffer( d, "or skill-focus. For example, a if your a smith you may\n\r", 0 );
-        write_to_buffer( d, "only wish to be a silversmith, and not a blacksmith.\n\r\n\r", 0 );
-
-        write_to_buffer( d, "Each Profession is unique in it's skills and settings to\n\r", 0 );
-        write_to_buffer( d, "allow you to have a more customized character. To learn\n\r", 0 );
-        write_to_buffer( d, "more information about each Profession, type help followed\n\r", 0 );
-        write_to_buffer( d, "by the name of the profession. Ex: help bandit\n\r\n\r", 0 );
-        write_to_buffer( d, "The Rogue class has the following professions:\n\rBandit    Assassin    Trickster\n\r\n\r", 0 );
-        write_to_buffer( d, "Your profession?[help for more info]: ", 0 );
-    }
-    if ( group == 2 )
-    {
-        write_to_buffer( d, "\n\rHere at Haven we have added the addition of Professions\n\r", 0 );
-        write_to_buffer( d, "to our class structure. A Profession is a character's job\n\r", 0 );
-        write_to_buffer( d, "or skill-focus. For example, a if your a smith you may\n\r", 0 );
-        write_to_buffer( d, "only wish to be a silversmith, and not a blacksmith.\n\r\n\r", 0 );
-
-        write_to_buffer( d, "Each Profession is unique in it's skills and settings to\n\r", 0 );
-        write_to_buffer( d, "allow you to have a more customized character. To learn\n\r", 0 );
-        write_to_buffer( d, "more information about each Profession, type help followed\n\r", 0 );
-        write_to_buffer( d, "by the name of the profession. Ex: help mercenary\n\r\n\r", 0 );
-        write_to_buffer( d, "The Swordsman class has the following professions:\n\rMercenary    Guardsman    Knight\n\r\n\r", 0 );
-        write_to_buffer( d, "Your profession?[help for more info]: ", 0 );
-    }
-    if ( group == 3 )
-    {
-        write_to_buffer( d, "\n\rHere at Haven we have added the addition of Professions\n\r", 0 );
-        write_to_buffer( d, "to our class structure. A Profession is a character's job\n\r", 0 );
-        write_to_buffer( d, "or skill-focus. For example, a if your a smith you may\n\r", 0 );
-        write_to_buffer( d, "only wish to be a silversmith, and not a blacksmith.\n\r\n\r", 0 );
-
-        write_to_buffer( d, "Each Profession is unique in it's skills and settings to\n\r", 0 );
-        write_to_buffer( d, "allow you to have a more customized character. To learn\n\r", 0 );
-        write_to_buffer( d, "more information about each Profession, type help followed\n\r", 0 );
-        write_to_buffer( d, "by the name of the profession. Ex: help priest\n\r\n\r", 0 );
-        write_to_buffer( d, "The Clergy class has the following professions:\n\rPriest    Monk    Crusader\n\r\n\r", 0 );
-        write_to_buffer( d, "Your profession?[help for more info]: ", 0 );
-    }
-    d->connected = CON_GET_NEW_CLASS;
-    break;
-
-    case CON_GET_NEW_CLASS:
-    one_argument(argument,arg);
-
-    if (!strcmp(arg,"help"))
-    {
-        argument = one_argument(argument,arg);
-        ch->lines = 0;
-        if (argument[0] == '\0')
-        do_function(ch, &do_help, "profession help");
-        else
-        do_function(ch, &do_help, argument);
-        ch->lines = 22;
-        send_to_char( "\n\rYour profession?[help for more info]: ", ch );
-        break;
-    }
-
-    iClass = class_lookup(argument);
-
-    if ( iClass == -1 )
-    {
-        write_to_buffer( d,
-        "That's not a valid profession.\n\rWhat IS your profession? ", 0 );
-        return;
-    }
-
-        ch->class = iClass;
-
-    sprintf( log_buf, "%s@%s new player.", ch->name, d->host );
-    log_string( log_buf );
     wiznet("Newbie alert!  $N sighted.",ch,NULL,WIZ_NEWBIE,0,0);
         wiznet(log_buf,NULL,NULL,WIZ_SITES,0,get_trust(ch));
 
-    write_to_buffer( d, "\n\r", 2 );
-    write_to_buffer( d, "You may be good, neutral, or evil.\n\r",0);
-    write_to_buffer( d, "Which alignment (G/N/E)? ",0);
-    d->connected = CON_GET_ALIGNMENT;
-    break;
 
-case CON_GET_ALIGNMENT:
-    switch( argument[0])
-    {
-        case 'g' : case 'G' : ch->alignment = 750;  break;
-        case 'n' : case 'N' : ch->alignment = 0;    break;
-        case 'e' : case 'E' : ch->alignment = -750; break;
-        default:
-        write_to_buffer(d,"That's not a valid alignment.\n\r",0);
-        write_to_buffer(d,"Which alignment (G/N/E)? ",0);
-        return;
-    }
-
-    write_to_buffer(d,"\n\r",0);
-
-        group_add(ch,"rom basics",FALSE);
-        group_add(ch,class_table[ch->class].base_group,FALSE);
-        ch->pcdata->learned[gsn_recall] = 50;
-/* Cindi changed customization */
-/*  write_to_buffer(d,"Do you wish to customize this character?\n\r",0);
-    write_to_buffer(d,"Customization takes time, but allows a wider range of skills and
-abilities.\n\r",0);
-    write_to_buffer(d,"Customize (Y/N)? ",0); */
-/*  write_to_buffer(d,"Is this your first time playing on Haven of the Embraced? (Y/N) ",0);
-    d->connected = CON_DEFAULT_CHOICE;
-    break;
-
-case CON_DEFAULT_CHOICE:
-
-    switch(argument[0])
-    {
-        case 'y' : case 'Y' : newch = TRUE;  break;
-        case 'n' : case 'N' : newch = FALSE; break;
-        default:
-            write_to_buffer(d," \n\rThat is not a valid choice. Are you new to Haven? (Y/N) ",0);
-            d->connected = CON_DEFAULT_CHOICE;
-            return;
-    }
-    write_to_buffer(d,"\n\r",2);
-*/
-    group_add(ch,class_table[ch->class].default_group,TRUE);
-    if(ch->class == class_lookup("priest")) group_add(ch, "priest prayers", TRUE);
-    if(ch->class == class_lookup("monk")) group_add(ch, "monk prayers", TRUE);
-    if(ch->class == class_lookup("crusader")) group_add(ch, "crusader prayers", TRUE);
-    write_to_buffer( d, "\n\r", 2 );
-    ch->pcdata->csmax_willpower = ch->pcdata->csvirtues[COURAGE];
-    ch->pcdata->cshumanity = ch->pcdata->csvirtues[CONSCIENCE]+ch->pcdata->csvirtues[SELF_CONTROL];
-    ch->pcdata->cswillpower = ch->pcdata->csmax_willpower;
-
-    write_to_buffer(d,"Haven of the Embraced is focused on Vampires but you may choose to start the game as a human\n\r",0);
-    write_to_buffer(d,"if you wish. You may later be Embraced as a vampire if you choose, or your character may\n\r",0);
-    write_to_buffer(d,"continue life as a human. Vampires are far more powerful and have more customization than\n\r",0);
-    write_to_buffer(d,"a human, but humans have several gameplay options that Vampires do not. Starting as a human\n\r",0);
-    write_to_buffer(d,"is also a great way to learn the game if this is your first time playing a ROM-based MUD.\n\r\n\r",0);
-
-    write_to_buffer(d,"Do you wish to start the game as a Vampire [Y/N]? ",0);
-    d->connected = CON_CHOICE_VAMP;
-    break;
-// bypass til vamps are fixed and stats are assigned.
-/*
-    for ( i = 0; weapon_table[i].name != NULL; i++)
-    if (ch->pcdata->learned[*weapon_table[i].gsn] > 0)
-    {
-        strcat(buf,weapon_table[i].name);
-        strcat(buf," ");
-    }
-    strcat(buf,"\n\rYour choice? ");
-    write_to_buffer(d,buf,0);
-    d->connected = CON_PICK_WEAPON;
-    break;
-*/
-// end of bypass
-/*
-    write_to_buffer(d,"Haven uses Stereotypes to assign your Character's starting attributes and\n\r",0);
+    write_to_buffer(d,"Haven provides character Stereotypes to assign your starting attributes and\n\r",0);
     write_to_buffer(d,"abilities. This will give your Character a preset Character Sheet to get you\n\r",0);
     write_to_buffer(d,"started. Afterwards a few random points will be added to your Character to\n\r",0);
     write_to_buffer(d,"ensure that every Character is unique. You may then spend 'Freebie' points\n\r",0);
-    write_to_buffer(d,"to further customize your character.\n\r",0);
+    write_to_buffer(d,"to further customize your character.\n\r\n\r",0);
+
+    write_to_buffer(d,"Or, you may skip this step and create a completely custom character sheet\n\r", 0);
+    write_to_buffer(d,"in-game. *Warning* You will have NO SKILLS until you complete the creation\n\r", 0);
+    write_to_buffer(d,"process in-game using the 'create' command.\n\r", 0);
 
     write_to_buffer(d,"\n\rAvailable stereotypes:\n\r\n\r",0);
     write_to_buffer(d,"[0] The Popular One                     [5] The Artist\n\r",0);
@@ -2469,15 +2242,31 @@ case CON_DEFAULT_CHOICE:
     write_to_buffer(d,"[3] The Prankster                       [8] The Smart One\n\r",0);
     write_to_buffer(d,"[4] The Bully                           [9] The Wild Child\n\r\n\r",0);
 
-    write_to_buffer(d,"Please select the number of the stereotype that best fits you Character's childhood: ",0);
+    write_to_buffer(d,"Please select the number of the stereotype that best fits you Character's\n\r",0);
+    write_to_buffer(d,"childhood. Or, enter 'custom' to skip this step and create a custom sheet later:\n\r",0);
     d->connected = CON_PICK_CHILDHOOD;
     break;
 
     case CON_PICK_CHILDHOOD:
     if(is_number(argument))
         num = atoi(argument);
-    else
-        num = 99;
+    else {
+        if (!str_cmp(argument, "custom"))
+            {
+                 write_to_buffer(d,"\n\rHaven of the Embraced is focused on Vampires but you may choose to start the game as a human\n\r",0);
+                write_to_buffer(d,"if you wish. You may later be Embraced as a vampire if you choose, or your character may\n\r",0);
+                write_to_buffer(d,"continue life as a human. Vampires are far more powerful and have more customization than\n\r",0);
+                write_to_buffer(d,"a human, but humans have several gameplay options that Vampires do not. Starting as a human\n\r",0);
+                write_to_buffer(d,"is also a great way to learn the game if this is your first time playing a ROM-based MUD.\n\r\n\r",0);
+
+                write_to_buffer(d,"Do you wish to start the game as a Vampire [Y/N]? ",0);
+                d->connected = CON_CHOICE_VAMP;
+                ch->pcdata->progress = 0;
+                break;
+
+            } else
+                num = 99;
+        }
     if(num < 0 || num > 9)
     {
         write_to_buffer(d,"That is not a valid choice.\n\r\n\r",0);
@@ -2488,14 +2277,14 @@ case CON_DEFAULT_CHOICE:
         write_to_buffer(d,"[3] The Prankster                       [8] The Smart One\n\r",0);
         write_to_buffer(d,"[4] The Bully                           [9] The Wild Child\n\r\n\r",0);
 
-        write_to_buffer(d,"Please select the number of the stereotype that best fits you Character's childhood: ",0);
+        write_to_buffer(d,"Please select the number of the stereotype that best fits you Character's\n\r",0);
+        write_to_buffer(d,"childhood. Or, enter 'custom' to skip this step and create a custom sheet later:\n\r",0);
         d->connected = CON_PICK_CHILDHOOD;
         break;
     }
     for(i = 0; i <= MAX_CSATTRIBUTES; i++)
         ch->pcdata->csattributes[i] = cr_attribute_table[num].attribute[i];
 
-/* Random attribute
     for(;;)
     {
         num = number_range(0,MAX_CSATTRIBUTES);
@@ -2565,19 +2354,24 @@ case CON_DEFAULT_CHOICE:
             break;
         }
     }
+    ch->pcdata->progress = 8;
+    write_to_buffer(d,"\n\r\n\rYou've finished setting your charsheet archetypes and have been given 5 'background' points\n\r",0);
+    write_to_buffer(d,"that you can spend on background traits in-game. Once you've done that, you may use the 'freebie'\n\r", 0);
+    write_to_buffer(d,"command to further increase your traits using experience points called 'freebies'.\n\r",0);
+
     ch->pcdata->csmax_willpower = ch->pcdata->csvirtues[COURAGE];
     ch->pcdata->cshumanity = ch->pcdata->csvirtues[CONSCIENCE]+ch->pcdata->csvirtues[SELF_CONTROL];
     ch->pcdata->cswillpower = ch->pcdata->csmax_willpower;
 
-    write_to_buffer(d,"Haven of the Embraced is focused on Vampires but you may choose to start the game as a human\n\r",0);
-    write_to_buffer(d,"if you wish. You may later be Embraced as a vampire if you choose, or your character may\n\r",0);
-    write_to_buffer(d,"continue life as a human. Vampires are far more powerful and have more customization than\n\r",0);
-    write_to_buffer(d,"a human, but humans have several gameplay options that Vampires do not. Starting as a human\n\r",0);
-    write_to_buffer(d,"is also a great way to learn the game if this is your first time playing a ROM-based MUD.\n\r\n\r",0);
+    write_to_buffer(d,"\n\rHaven of the Embraced is focused on Vampires but you may choose to start the game as a human\n\r",0);
+    write_to_buffer(d,"if you wish. Starting as a human is a great way to become familiar with Haven and the other races we\n\r", 0);
+    write_to_buffer(d,"offer before deciding what your character will become. It is also required if you wish to join\n\r", 0);
+    write_to_buffer(d,"any of the 'High Clans', as these Vampire clans are far more selective.\n\r\n\r",0);
 
     write_to_buffer(d,"Do you wish to start the game as a Vampire [Y/N]? ",0);
     d->connected = CON_CHOICE_VAMP;
-    break;*/
+    break;
+        
 
     case CON_CHOICE_VAMP:
 
@@ -2601,18 +2395,15 @@ case CON_DEFAULT_CHOICE:
     }
     else if(argument[0] == 'N' || argument[0] == 'n')
     {
-        write_to_buffer(d,"Please pick a starting weapon from the following choices:\n\r",0);
-        buf[0] = '\0';
-        for ( i = 0; weapon_table[i].name != NULL; i++)
-        if (ch->pcdata->learned[*weapon_table[i].gsn] > 0)
-        {
-            strcat(buf,weapon_table[i].name);
-            strcat(buf," ");
-        }
-        strcat(buf,"\n\rYour choice? ");
-        write_to_buffer(d,buf,0);
-        d->connected = CON_PICK_WEAPON;
-        break;
+    ch->freebie = 15;
+        ch->class = 0;
+    update_csstats(ch);
+    write_to_buffer(d,"\n\r",2);
+    SET_BIT( ch->act, PLR_AUTOEXIT );
+    do_function(ch, &do_help, "motd");
+    if(d->character->max_pblood < 100) d->character->max_pblood = 100;
+    d->connected = CON_READ_MOTD;
+    break;
     }
     write_to_buffer(d,"That is not a valid choice. Please type either Y or N.\n\rDo you wish to start the game as a Vampire? [Y/N]? ",0);
     d->connected = CON_CHOICE_VAMP;
@@ -2640,43 +2431,13 @@ case CON_DEFAULT_CHOICE:
     }
     if(!make_vamp(ch,buf))
         write_to_buffer(d,"ERROR! make_vamp() returning FALSE\n\r",0);
-    write_to_buffer(d,"Please pick a starting weapon from the following choices:\n\r",0);
-    buf[0] = '\0';
-    for ( i = 0; weapon_table[i].name != NULL; i++)
-    if (ch->pcdata->learned[*weapon_table[i].gsn] > 0)
-    {
-        strcat(buf,weapon_table[i].name);
-        strcat(buf," ");
-    }
-    strcat(buf,"\n\rYour choice? ");
-    write_to_buffer(d,buf,0);
-    d->connected = CON_PICK_WEAPON;
-    break;
+    
 
 
-    case CON_PICK_WEAPON:
-    write_to_buffer(d,"\n\r",2);
-    weapon = weapon_lookup(argument);
-    if (weapon == -1 || ch->pcdata->learned[*weapon_table[weapon].gsn] <= 0)
-    {
-        write_to_buffer(d,
-        "That's not a valid selection. Choices are:\n\r",0);
-            buf[0] = '\0';
-            for ( i = 0; weapon_table[i].name != NULL; i++)
-                if (ch->pcdata->learned[*weapon_table[i].gsn] > 0)
-                {
-                    strcat(buf,weapon_table[i].name);
-            strcat(buf," ");
-                }
-            strcat(buf,"\n\rYour choice? ");
-            write_to_buffer(d,buf,0);
-        return;
-    }
+    
     ch->freebie = 15;
-    ch->pcdata->progress = 0;
-    ch->dam_type = attack_lookup("punch");
+    ch->class = 0;
     update_csstats(ch);
-    ch->pcdata->learned[*weapon_table[weapon].gsn] = 10;
     write_to_buffer(d,"\n\r",2);
     SET_BIT( ch->act, PLR_AUTOEXIT );
     do_function(ch, &do_help, "motd");

@@ -1002,7 +1002,7 @@ void do_envenom(CHAR_DATA *ch, char *argument)
     if (!obj->value[3])
     {
         obj->value[3] = 1;
-        check_improve(ch,gsn_envenom,TRUE,4);
+        check_improve(ch,gsn_envenom,TRUE,2);
     }
     gain_exp(ch, dicesuccess-1);
     return;
@@ -1064,7 +1064,7 @@ void do_envenom(CHAR_DATA *ch, char *argument)
 
             act("$n coats $p with deadly venom.",ch,obj,NULL,TO_ROOM);
         act("You coat $p with venom.",ch,obj,NULL,TO_CHAR);
-        check_improve(ch,gsn_envenom,TRUE,3);
+        check_improve(ch,gsn_envenom,TRUE,2);
         gain_exp(ch, dicesuccess + 1);
             return;
     }

@@ -89,55 +89,32 @@ void advance_level( CHAR_DATA *ch, bool hide )
 
     ch->pcdata->last_level =
     ( ch->played + (int) (current_time - ch->logon) ) / 3600;
-/*
-    sprintf( buf, "the %s",
-    title_table [ch->class] [ch->level] [ch->sex == SEX_FEMALE ? 1 : 0] );
-    set_title( ch, buf );
-*/
-    add_hp  = con_app[get_curr_stat(ch,STAT_CON)].hitp + number_range(
-            class_table[ch->class].hp_min,
-            class_table[ch->class].hp_max );
-    add_mana    = number_range(get_curr_stat(ch,STAT_INT),(2*get_curr_stat(ch,STAT_INT)
-                  + get_curr_stat(ch,STAT_WIS))/2);
-    if (!class_table[ch->class].fMana)
-    add_mana /= 2;
-    add_move    = number_range( 1, (get_curr_stat(ch,STAT_CON)
-                  + get_curr_stat(ch,STAT_DEX))/6 );
-    add_prac    = wis_app[get_curr_stat(ch,STAT_WIS)].practice;
 
-    add_hp = add_hp * 9/10;
-    add_mana = add_mana * 9/10;
-    add_move = add_move * 9/10;
+    add_hp      = dice(8, 3) + 6;
+    add_mana    = dice(4, 3) + 4;
+    add_move    = dice(4, 3) + 4;
 
     add_hp  = UMAX(  2, add_hp   );
     add_mana    = UMAX(  2, add_mana );
     add_move    = UMAX(  6, add_move );
 
     if(ch->sphere[SPHERE_LIFE] > 0)
+    {
         add_hp += ch->sphere[SPHERE_LIFE]*2;
-    if(ch->sphere[SPHERE_SPIRIT] > 0)
-        add_mana += ch->sphere[SPHERE_SPIRIT]*2;
-    if(ch->sphere[SPHERE_CORRESPONDENCE] > 0)
-        add_move += ch->sphere[SPHERE_CORRESPONDENCE]*2;
-
+        add_move += ch->sphere[SPHERE_LIFE];
+    }
     ch->max_hit     += add_hp;
     ch->max_mana    += add_mana;
     ch->max_move    += add_move;
-    ch->practice    += add_prac;
-    ch->train       += 1;
 
     ch->pcdata->perm_hit    += add_hp;
     ch->pcdata->perm_mana   += add_mana;
     ch->pcdata->perm_move   += add_move;
 
     if (!hide)
-    {
-        sprintf(buf,
-        "You gain {R%d{x hit point%s, {M%d{x mana, {B%d{x move, and {Y%d{x practice%s.\n\r",
-        add_hp, add_hp == 1 ? "" : "s", add_mana, add_move,
-        add_prac, add_prac == 1 ? "" : "s");
-    send_to_char( buf, ch );
-    }
+        cprintf(ch,
+        "You gain {R%d{r/%d{x hit point%s, {M%d{m/%d{x mana, and {G%d{g/%d{x movement.\n\r",
+        add_hp, ch->max_hit, add_hp == 1 ? "" : "s", add_mana, ch->max_mana, add_move, ch->max_move);
     return;
 }
 

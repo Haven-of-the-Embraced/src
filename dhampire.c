@@ -481,13 +481,13 @@ void do_chant(CHAR_DATA *ch, char *argument )
     if( get_skill(ch,gsn_chant) < number_percent())
     {
         send_to_char( "You fail to get in touch with your God.\n\r", ch );
-        check_improve(ch,gsn_chant,FALSE,1);
+        check_improve(ch,gsn_chant,FALSE,2);
         return;
     }
 
     act( "$n sits down and starts to chant to $s God.",  ch, NULL, NULL, TO_ROOM );
     send_to_char( "You start to chant to your God.\n\r", ch );
-    check_improve(ch,gsn_chant,TRUE,1);
+    check_improve(ch,gsn_chant,TRUE,2);
 
     af.where    = TO_AFFECTS;
     af.type     = gsn_chant;
@@ -521,7 +521,7 @@ void do_vigor(CHAR_DATA *ch, char *argument)
     {
         send_to_char( "You fail to enhanced your speed.\n\r", ch );
         return;
-        check_improve(ch,gsn_vigor,FALSE,1);
+        check_improve(ch,gsn_vigor,FALSE,4);
     }
 
     ch->mana -= 50;
@@ -543,7 +543,7 @@ void do_vigor(CHAR_DATA *ch, char *argument)
     affect_to_char( ch, &af );
     send_to_char( "You feel your speed and stamina increasing!\n\r", ch );
     act("$n huffs and puffs and suddenly seems to be moving much quicker.",ch,NULL,ch,TO_NOTVICT);
-    check_improve(ch,gsn_vigor,TRUE,1);
+    check_improve(ch,gsn_vigor,TRUE,4);
     return;
 }
 
@@ -605,7 +605,7 @@ void do_waylay(CHAR_DATA *ch, char *argument)
     multi_hit( ch, victim, TYPE_UNDEFINED );
     multi_hit( ch, victim, TYPE_UNDEFINED );
     ch->move -= ch->level;
-    check_improve(ch,gsn_waylay,TRUE,1);
+    check_improve(ch,gsn_waylay,TRUE,2);
     return;
 }
 
@@ -636,7 +636,7 @@ void do_fortress(CHAR_DATA *ch, char *argument)
     {
         send_to_char( "You fail to fortify the object.\n\r", ch );
         return;
-        check_improve(ch,gsn_fortress,FALSE,1);
+        check_improve(ch,gsn_fortress,FALSE,4);
     }
 
     ch->mana -= 100;
@@ -651,7 +651,7 @@ void do_fortress(CHAR_DATA *ch, char *argument)
     obj->affected   = af;
     act("You fortify $p's protection.",ch,obj,NULL,TO_CHAR);
     act("$n fortifies $p's protection.",ch,obj,NULL,TO_NOTVICT);
-    check_improve(ch,gsn_fortress,TRUE,1);
+    check_improve(ch,gsn_fortress,TRUE,4);
     return;
 }
 

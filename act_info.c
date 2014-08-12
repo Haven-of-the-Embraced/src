@@ -1693,10 +1693,10 @@ void do_score( CHAR_DATA *ch, char *argument )
     if (IS_SET(ch->act2, PLR2_PVP))
         send_to_char("You are {RACTIVE{x.\n\r", ch);
 
-    sprintf(buf, "Race: %s  Sex: %s  Class: %s  Remorts: %d  Freebies: %d\n\r",
+    sprintf(buf, "Race: %s  Sex: %s  Remorts: %d  Freebies: %d\n\r",
     race_table[ch->race].name,
     ch->sex == 0 ? "sexless" : ch->sex == 1 ? "male" : "female",
-    IS_NPC(ch) ? "mobile" : class_table[ch->class].name, ch->remorts, ch->freebie);
+     ch->remorts, ch->freebie);
     send_to_char(buf,ch);
     if(ch->breed > 0 && ch->auspice > 0)
     {
@@ -2320,104 +2320,7 @@ void do_help( CHAR_DATA *ch, char *argument )
 
 /* whois command */
 void do_whois (CHAR_DATA *ch, char *argument)
-{
-    char arg[MAX_INPUT_LENGTH];
-    BUFFER *output;
-    char buf[MAX_STRING_LENGTH];
-    char award[MAX_STRING_LENGTH];
-    DESCRIPTOR_DATA *d;
-    bool found = FALSE;
-
-    one_argument(argument,arg);
-
-    if (arg[0] == '\0')
-    {
-    send_to_char("You must provide a name.\n\r",ch);
-    return;
-    }
-
-    output = new_buf();
-
-    for (d = descriptor_list; d != NULL; d = d->next)
-    {
-    CHAR_DATA *wch;
-    char const *class;
-
-    if (d->connected != CON_PLAYING || !can_see(ch,d->character))
-        continue;
-
-    wch = ( d->original != NULL ) ? d->original : d->character;
-
-    if (!can_see(ch,wch))
-        continue;
-
-    if (!str_prefix(arg,wch->name))
-    {
-        found = TRUE;
-
-        /* work out the printing */
-        class = class_table[wch->class].who_name;
-        switch(wch->level)
-        {
-        case MAX_LEVEL - 0 : class = "{YGOD{x";     break;
-        case MAX_LEVEL - 1 : class = "{ySER{x"; break;
-        case MAX_LEVEL - 2 : class = "{yCHE{x"; break;
-        case MAX_LEVEL - 3 : class = "{WPRA{x"; break;
-        case MAX_LEVEL - 4 : class = "{WWAT{x"; break;
-        case MAX_LEVEL - 5 : class = "{WWAR{x"; break;
-        case MAX_LEVEL - 6 : class = "{WVET{x"; break;
-        case MAX_LEVEL - 7 : class = "{wDEV{x"; break;
-        case MAX_LEVEL - 8 : class = "{wCRE{x"; break;
-            case MAX_LEVEL - 9 : class = "{wNOV{x";     break;
-        }
-
-
-    if(wch->remorts < 10) sprintf(award,"{Y     {x");
-    else if(wch->remorts >= 10 && wch->remorts < 20) sprintf(award,"{Y*    {x");
-    else if(wch->remorts >= 20 && wch->remorts < 30) sprintf(award,"{Y**   {x");
-    else if(wch->remorts >= 30 && wch->remorts < 40) sprintf(award,"{Y***  {x");
-    else if(wch->remorts >= 40 && wch->remorts < 50) sprintf(award,"{Y**** {x");
-    else if(wch->remorts >= 50 && wch->remorts < 60) sprintf(award,"{Y*****{x");
-    else if(wch->remorts >= 60 && wch->remorts < 100) sprintf(award,"{Y %s%d {x",wch->remorts < 100 ? " " : "", wch->remorts);
-    else if(wch->remorts >= 100) sprintf(award,"{YELDER{x");
-
-        /* a little formatting */
-        sprintf(buf, "[%s %2d %s%s %s] %s%s%s%s%s%s%s%s%s%s{x\n\r",
-        award,
-        wch->level,
-/*      wch->race < MAX_PC_RACE ? pc_race_table[wch->race].who_name
-                    : "     ", */
-        wch->level < 100 ? " " : "",
-        class,
-        wch->pcdata->sect > 0 ? sect_table[wch->pcdata->sect].who_name
-        : "---",
-         wch->incog_level >= LEVEL_HERO ? "{x({CIncog{x) ": "",
-         wch->invis_level >= LEVEL_HERO ? "{x({CWizi{x) " : "",
-/*       clan_table[wch->clan].who_name, */
-         IS_SET(wch->comm, COMM_AFK) ? "{x[{yAFK{x] " : "",
-             IS_SET(wch->act,PLR_KILLER) ? "{x({RKILLER{x) " : "",
-             IS_SET(wch->act,PLR_THIEF) ? "{x({RTHIEF{x) " : "",
-         IS_SET(wch->act,PLR_IC) ? "{x({CIC{x) " : "",
-         IS_SET(wch->act,PLR_ARENA) ? "{x({RArena{x) " : "",
-         IS_SET(wch->act,PLR_SPEC) ? "{x({GSpec{x) " : "",
-/*       IS_SET(wch->act,PLR_CAMARILLA) ? "{x[{CCamarilla{x] " : "", */
-        wch->name,
-         IS_NPC(wch) ? "" : wch->pcdata->title);
-        add_buf(output,buf);
-    }
-    }
-
-    if (!found)
-    {
-    send_to_char("No one of that name is playing.\n\r",ch);
-    return;
-    }
-
-    page_to_char(buf_string(output),ch);
-    free_buf(output);
-}
-
-
+{ return; }
 /*
  * New 'who' command originally by Alander of Rivers of Mud.
  */
@@ -2433,7 +2336,6 @@ void do_who( CHAR_DATA *ch, char *argument )
     BUFFER *output;
     DESCRIPTOR_DATA *d;
 
-    int iClass;
     int iRace;
     int iClan;
     int iLevelLower;
@@ -2442,10 +2344,8 @@ void do_who( CHAR_DATA *ch, char *argument )
     int nMatch;
     int vMatch;
     extern int most_players;
-    bool rgfClass[MAX_CLASS];
     bool rgfRace[MAX_PC_RACE];
     bool rgfClan[top_clan];
-    bool fClassRestrict = FALSE;
     bool fClanRestrict = FALSE;
     bool fClan = FALSE;
     bool fRaceRestrict = FALSE;
@@ -2457,8 +2357,6 @@ void do_who( CHAR_DATA *ch, char *argument )
      */
     iLevelLower    = 0;
     iLevelUpper    = MAX_LEVEL;
-    for ( iClass = 0; iClass < MAX_CLASS; iClass++ )
-        rgfClass[iClass] = FALSE;
     for ( iRace = 0; iRace < MAX_PC_RACE; iRace++ )
         rgfRace[iRace] = FALSE;
     for (iClan = 0; iClan < MAX_CLAN; iClan++)
@@ -2489,54 +2387,9 @@ void do_who( CHAR_DATA *ch, char *argument )
         }
         else
         {
+            sendch("Who display no longer supports class or race specifier.\n\r", ch);
+            return;
 
-            /*
-             * Look for classes to turn on.
-             */
-            if (!str_prefix(arg,"immortals"))
-            {
-                fImmortalOnly = TRUE;
-            }
-            else
-            {
-                iClass = class_lookup(arg);
-                if (iClass == -1)
-                {
-                    iRace = race_lookup(arg);
-
-                    if (iRace == 0 || iRace >= MAX_PC_RACE)
-            {
-            if (!str_prefix(arg,"clan"))
-                fClan = TRUE;
-            else
-                {
-                iClan = clan_lookup(arg);
-                if (iClan)
-                {
-                fClanRestrict = TRUE;
-                rgfClan[iClan] = TRUE;
-                }
-                else
-                {
-                            send_to_char(
-                                "That's not a valid class, or clan.\n\r",
-                   ch);
-                                return;
-                }
-                        }
-            }
-                    else
-                    {
-                        fRaceRestrict = TRUE;
-                        rgfRace[iRace] = TRUE;
-                    }
-                }
-                else
-                {
-                    fClassRestrict = TRUE;
-                    rgfClass[iClass] = TRUE;
-                }
-            }
         }
     }
 
@@ -2575,7 +2428,6 @@ void do_who( CHAR_DATA *ch, char *argument )
         if ( wch->level < iLevelLower
         ||   wch->level > iLevelUpper
         || ( fImmortalOnly  && wch->level < LEVEL_IMMORTAL )
-        || ( fClassRestrict && !rgfClass[wch->class] )
         || ( fRaceRestrict && !rgfRace[wch->race])
     || ( fClan && !is_clan(wch))
     || ( fClanRestrict && !rgfClan[wch->clan]))
@@ -2607,7 +2459,11 @@ void do_who( CHAR_DATA *ch, char *argument )
         if (IS_SET(wch->comm, COMM_QUIET)) {sprintf(tags, "{w |  {c<{yQuiet Mode{c>{w  |");}
 
 
-        if (IS_IMMORTAL(ch) || IS_SET(ch->act2, PLR2_WHOSHOWLEVEL)) {sprintf(buf2, "{w[{m%3d{w]{x", wch->level); strcat(buf, buf2);}
+        if (IS_IMMORTAL(ch) || IS_SET(ch->act2, PLR2_WHOSHOWLEVEL)) 
+        {
+            sprintf(buf2, "{w[{m%3d{w]{x", wch->level); 
+            strcat(buf, buf2);
+        }
 
         if (wch->incog_level >= LEVEL_HERO || wch->invis_level >= LEVEL_HERO)
            {if (wch->incog_level >= LEVEL_HERO)
@@ -3329,112 +3185,9 @@ void do_report( CHAR_DATA *ch, char *argument )
 }
 
 
-
+// Practice is now completely unnecessary.
 void do_practice( CHAR_DATA *ch, char *argument )
-{
-    char buf[MAX_STRING_LENGTH];
-    int sn;
-
-    if ( IS_NPC(ch) )
-    return;
-
-    if ( argument[0] == '\0' )
-    {
-    int col;
-
-    col    = 0;
-    for ( sn = 0; sn < MAX_SKILL; sn++ )
-    {
-        if ( skill_table[sn].name == NULL )
-        break;
-        if ( ch->level < skill_table[sn].skill_level[ch->class]
-          || ch->pcdata->learned[sn] < 1 /* skill is not known */)
-        continue;
-
-        sprintf( buf, "%-18s %3d%%  ",
-        skill_table[sn].name, ch->pcdata->learned[sn] );
-        send_to_char( buf, ch );
-        if ( ++col % 3 == 0 )
-        send_to_char( "\n\r", ch );
-    }
-
-    if ( col % 3 != 0 )
-        send_to_char( "\n\r", ch );
-
-    sprintf( buf, "You have %d practice sessions left.\n\r",
-        ch->practice );
-    send_to_char( buf, ch );
-    }
-    else
-    {
-    CHAR_DATA *mob;
-    int adept;
-
-    if ( !IS_AWAKE(ch) )
-    {
-        send_to_char( "In your dreams, or what?\n\r", ch );
-        return;
-    }
-
-    for ( mob = ch->in_room->people; mob != NULL; mob = mob->next_in_room )
-    {
-        if ( IS_NPC(mob) && IS_SET(mob->act, ACT_PRACTICE) )
-        break;
-    }
-
-    if ( mob == NULL )
-    {
-        send_to_char( "You can't do that here.\n\r", ch );
-        return;
-    }
-
-    if ( ch->practice <= 0 )
-    {
-        send_to_char( "You have no practice sessions left.\n\r", ch );
-        return;
-    }
-
-    if ( ( sn = find_spell( ch,argument ) ) < 0
-    || ( !IS_NPC(ch)
-    &&   (ch->level < skill_table[sn].skill_level[ch->class]
-    ||    ch->pcdata->learned[sn] < 1 /* skill is not known */
-    ||    skill_table[sn].rating[ch->class] == 0)))
-    {
-        send_to_char( "You can't practice that.\n\r", ch );
-        return;
-    }
-
-    adept = IS_NPC(ch) ? 100 : class_table[ch->class].skill_adept;
-
-    if ( ch->pcdata->learned[sn] >= adept )
-    {
-        sprintf( buf, "You are already learned at %s.\n\r",
-        skill_table[sn].name );
-        send_to_char( buf, ch );
-    }
-    else
-    {
-        ch->practice--;
-        ch->pcdata->learned[sn] +=
-        int_app[get_curr_stat(ch,STAT_INT)].learn /
-            skill_table[sn].rating[ch->class];
-        if ( ch->pcdata->learned[sn] < adept )
-        {
-        act( "You practice $T.",
-            ch, NULL, skill_table[sn].name, TO_CHAR );
-        }
-        else
-        {
-        ch->pcdata->learned[sn] = adept;
-        act( "You are now learned at $T.",
-            ch, NULL, skill_table[sn].name, TO_CHAR );
-        }
-    }
-    }
-    return;
-}
-
-
+{ return; };
 
 /*
  * 'Wimpy' originally by Dionysos.
@@ -4157,25 +3910,25 @@ void do_gwho(CHAR_DATA *ch, char *argument )
     {
         sprintf(buf,"Members of clan {W%s{x:\n\r", capitalize(clan_table[ch->clan].name));
         send_to_char(buf,ch);
-        send_to_char("[Lvl  Class | Name   | Gen | Hit Points |  Mana   | Movement | Blood ]\n\r", ch);
+        send_to_char("[Lvl  | Name   | Gen | Hit Points |  Mana   | Movement | Blood ]\n\r", ch);
     }
     else if(ch->race == race_lookup("garou"))
     {
         sprintf( buf, "Your brothers and sisters in the {W%s tribe{x:\n\r", capitalize(clan_table[ch->clan].name));
         send_to_char(buf,ch);
-        send_to_char("[Lvl  Class | Name   | Rank | Hit Points |  Mana   | Movement | Rage | Renown]\n\r", ch);
+        send_to_char("[Lvl  | Name   | Rank | Hit Points |  Mana   | Movement | Rage | Renown]\n\r", ch);
     }
     else if(ch->clan == clan_lookup("watcher"))
     {
         sprintf( buf, "Your silent brethren of the {W%s{x sect of the Inquisition{x:\n\r", capitalize(clan_table[ch->clan].name));
         send_to_char(buf,ch);
-        send_to_char("[Lvl  Class | Name   | Rank | Hit Points |  Mana   | Movement ]\n\r", ch);
+        send_to_char("[Lvl  | Name   | Rank | Hit Points |  Mana   | Movement ]\n\r", ch);
     }
     else
     {
         sprintf( buf, "Members of the %s guild:\n\r", capitalize(clan_table[ch->clan].name));
         send_to_char(buf,ch);
-        send_to_char("[Lvl  Class |  Tradition  | Name   | Rank | Hit Points |  Mana   | Movement ]\n\r", ch);
+        send_to_char("[Lvl  |  Tradition  | Name   | Rank | Hit Points |  Mana   | Movement ]\n\r", ch);
     }
 
     for ( d = descriptor_list; d != NULL; d = d->next )
@@ -4185,10 +3938,9 @@ void do_gwho(CHAR_DATA *ch, char *argument )
         if ( d->connected == CON_PLAYING && ch->clan == victim->clan && !IS_IMMORTAL(victim))
         {
             if(victim->race == race_lookup("vampire") || victim->race == race_lookup("methuselah"))
-                sprintf( buf, "[%d%s %s | %s: | %d | %d/%d | %d/%d | %d/%d | %d ]\n\r",
+                sprintf( buf, "[%d%s | %s: | %d | %d/%d | %d/%d | %d/%d | %d ]\n\r",
                     victim->level,
                     victim->level < 100 ? " " : "",
-                    class_table[victim->class].who_name,
                     victim->name,
                     victim->gen,
                     victim->hit, victim->max_hit,
@@ -4196,10 +3948,9 @@ void do_gwho(CHAR_DATA *ch, char *argument )
                     victim->move, victim->max_move,
                     victim->pblood/10);
             else if(victim->race == race_lookup("ghoul"))
-                sprintf( buf, "[%d%s %s | %s: | %s | %d/%d | %d/%d | %d/%d | %d ]\n\r",
+                sprintf( buf, "[%d%s | %s: | %s | %d/%d | %d/%d | %d/%d | %d ]\n\r",
                     victim->level,
                     victim->level < 100 ? " " : "",
-                    class_table[victim->class].who_name,
                     victim->name,
                     "{rG{x",
                     victim->hit, victim->max_hit,
@@ -4207,10 +3958,9 @@ void do_gwho(CHAR_DATA *ch, char *argument )
                     victim->move, victim->max_move,
                     victim->pblood/10);
             else if(victim->race == race_lookup("garou"))
-                sprintf( buf, "[%d%s %s | %s: | %d | %d/%d | %d/%d | %d/%d | %d |  %d  ]\n\r",
+                sprintf( buf, "[%d%s | %s: | %d | %d/%d | %d/%d | %d/%d | %d |  %d  ]\n\r",
                     victim->level,
                     victim->level < 100 ? " " : "",
-                    class_table[victim->class].who_name,
                     victim->name,
                     victim->rank,
                     victim->hit, victim->max_hit,
@@ -4220,20 +3970,18 @@ void do_gwho(CHAR_DATA *ch, char *argument )
                     victim->renown);
 
             else if(victim->clan == clan_lookup("watcher"))
-                sprintf( buf, "[%d%s %s | %s | %s | %d/%d | %d/%d | %d/%d]\n\r",
+                sprintf( buf, "[%d%s | %s | %s | %d/%d | %d/%d | %d/%d]\n\r",
                     victim->level,
                     victim->level < 100 ? " " : "",
-                    class_table[victim->class].who_name,
                     victim->name,
                     victim->rank == 1 ? "Init" : victim-> rank == 2 ? "Aclyt" : victim->rank == 7 ? "Counc" : victim->rank == 8 ? "ProFi" : victim->rank == 9 ? "SupCn" : victim->rank == 10 ? "GrInq" : "Disciple",
                     victim->hit, victim->max_hit,
                     victim->mana, victim->max_mana,
                     victim->move, victim->max_move);
             else
-                sprintf( buf, "[%d%s %s | %s | %s: | %s | %d/%d | %d/%d | %d/%d]\n\r",
+                sprintf( buf, "[%d%s | %s | %s: | %s | %d/%d | %d/%d | %d/%d]\n\r",
                     victim->level,
                     victim->level < 100 ? " " : "",
-                    class_table[victim->class].who_name,
                     tradition_table[victim->tradition].name,
                     victim->name,
                     victim->rank == 1 ? "Appr" : victim->rank == 2 ? "Disc" : victim->rank == 8 ? "Mast" : victim->rank == 9 ? "Ment" : "Lead",

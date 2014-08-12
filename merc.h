@@ -2689,7 +2689,19 @@ extern  sh_int  gsn_sleep;
 extern  sh_int  gsn_fly;
 extern  sh_int  gsn_sanctuary;
 extern  sh_int  gsn_teleport;
-
+extern  sh_int          gsn_call_lightning;
+extern  sh_int          gsn_cause_light;
+extern  sh_int          gsn_create_food;
+extern  sh_int          gsn_create_water;
+extern  sh_int          gsn_create_spring;
+extern  sh_int          gsn_cure_blindness;
+extern  sh_int          gsn_cure_poison;
+extern  sh_int          gsn_dispel;
+extern  sh_int          gsn_earthquake;
+extern  sh_int          gsn_lightning_bolt;
+extern  sh_int          gsn_ray_of_truth;
+extern  sh_int          gsn_remove_curse;
+extern  sh_int          gsn_zeal;
 /* new gsns */
 extern sh_int  gsn_axe;
 extern sh_int  gsn_dagger;
@@ -3024,9 +3036,6 @@ extern  const   struct  crafted_type    crafted_table   [];
 extern  const   struct  skill_type  skill_table [MAX_SKILL];
 extern  const   struct  group_type      group_table [MAX_GROUP];
 extern          struct social_type      social_table    [MAX_SOCIALS];
-extern  char *  const           title_table [MAX_CLASS]
-                            [MAX_LEVEL+1]
-                            [2];
 
 
 

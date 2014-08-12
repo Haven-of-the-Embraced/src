@@ -365,7 +365,7 @@ void multi_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt )
         one_hit( ch, victim, dt );
         one_hit( ch, victim, dt );
         one_hit( ch, victim, dt );
-        check_improve(ch,gsn_enhanced_speed,TRUE,1);
+        check_improve(ch,gsn_enhanced_speed,TRUE,6);
     }
     if (IS_AFFECTED(ch,AFF_HASTE))
     one_hit(ch,victim,dt);
@@ -381,7 +381,7 @@ void multi_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt )
     if ( number_percent( ) < chance )
     {
     one_hit( ch, victim, dt );
-    check_improve(ch,gsn_second_attack,TRUE,5);
+    check_improve(ch,gsn_second_attack,TRUE,4);
     if ( ch->fighting != victim )
         return;
     }
@@ -407,7 +407,7 @@ void multi_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt )
     if ( number_percent( ) < chance )
     {
     one_hit( ch, victim, dt );
-    check_improve(ch,gsn_fourth_attack,TRUE,6);
+    check_improve(ch,gsn_fourth_attack,TRUE,8);
     if ( ch->fighting != victim )
         return;
     }
@@ -420,7 +420,7 @@ void multi_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt )
     if ( number_percent( ) < chance )
     {
     one_hit( ch, victim, dt );
-    check_improve(ch,gsn_fifth_attack,TRUE,6);
+    check_improve(ch,gsn_fifth_attack,TRUE,10);
     if ( ch->fighting != victim )
         return;
     }
@@ -775,8 +775,8 @@ void one_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt )
     }
     else
     {
-    thac0_00 = class_table[ch->class].thac0_00;
-    thac0_32 = class_table[ch->class].thac0_32;
+    thac0_00 = 20;
+    thac0_32 = -20;
     }
     thac0  = interpolate( ch->level, thac0_00, thac0_32 );
 
@@ -844,7 +844,7 @@ void one_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt )
     else
     {
     if (sn != -1)
-        check_improve(ch,sn,TRUE,2);
+        check_improve(ch,sn,TRUE,3);
     if ( wield != NULL )
     {
         if (wield->pIndexData->new_format)
@@ -885,14 +885,14 @@ void one_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt )
         diceroll = number_percent();
         if (diceroll <= get_skill(ch,gsn_knight_training))
         {
-            check_improve(ch,gsn_knight_training,TRUE,6);
+            check_improve(ch,gsn_knight_training,TRUE,8);
             dam += 3 * ( dam * diceroll/300);
         }
     }
 
 
 
-    if(ch->class == class_lookup("knight") && get_skill(ch,gsn_lance) > 1 && MOUNTED(ch))
+    if(get_skill(ch, gsn_knight_training) && get_skill(ch,gsn_lance) > 1 && MOUNTED(ch))
     {
         if(get_skill(ch,gsn_lance) > number_range(1, 100) && wield->value[0] == WEAPON_POLEARM)
             dam += get_skill(ch,gsn_lance)/2;
@@ -900,18 +900,13 @@ void one_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt )
 
     if (MOUNTED(ch))
     {
-        if(ch->class == class_lookup("knight") || ch->class == class_lookup("crusader"))
+        if(get_skill(ch, gsn_knight_training ) )
             dam += number_range(dam/8, dam);
         else
             dam += number_range(1, dam/8);
     }
      if ( (get_eq_char( ch, WEAR_WIELD ) == NULL || wield->pIndexData->vnum == OBJ_VNUM_CLAWS) && !IS_NPC(ch))
-     {
-        if(ch->class == class_lookup("monk"))
-            dam += number_range( 5, ch->level+get_skill(ch,gsn_hand_to_hand)/5 );
-        else
             dam += number_range( 5, ch->level/2+get_skill(ch,gsn_hand_to_hand)/10 );
-     }
 
     if ( !IS_AWAKE(victim) )
     dam *= 2;
@@ -954,7 +949,7 @@ void one_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt )
     if ( number_percent( ) < get_skill(victim,gsn_renown))
     {
         dam -= dam/10;
-        check_improve(victim,gsn_renown,TRUE,3);
+        check_improve(victim,gsn_renown,TRUE,4);
     }
     /* vampire anti-bless junk */
     if (wield != NULL && IS_OBJ_STAT(wield,ITEM_BLESS) && (victim->race == race_lookup("vampire") || victim->race == race_lookup("methuselah")))
@@ -1889,7 +1884,7 @@ void garou_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt)
 
 		//Increase skill?
 		if (sn != -1 && number_percent() > 95 )
-			check_improve(ch,sn,TRUE,1);
+			check_improve(ch,sn,TRUE,3);
 
         if (wield)
 		{
@@ -3729,9 +3724,7 @@ void do_berserk( CHAR_DATA *ch, char *argument)
     int chance, hp_percent;
 
     if ((chance = get_skill(ch,gsn_berserk)) == 0
-    ||  (IS_NPC(ch) && !IS_SET(ch->off_flags,OFF_BERSERK))
-    ||  (!IS_NPC(ch)
-    &&   ch->level < skill_table[gsn_berserk].skill_level[ch->class]))
+    ||  (IS_NPC(ch) && !IS_SET(ch->off_flags,OFF_BERSERK)))
     {
     send_to_char("You turn red in the face, but nothing happens.\n\r",ch);
     return;
@@ -3786,7 +3779,7 @@ void do_berserk( CHAR_DATA *ch, char *argument)
 
     send_to_char("Your pulse races as you are consumed by rage!\n\r",ch);
     act("$n gets a wild look in $s eyes.",ch,NULL,NULL,TO_ROOM);
-    check_improve(ch,gsn_berserk,TRUE,2);
+    check_improve(ch,gsn_berserk,TRUE,6);
 
     af.where    = TO_AFFECTS;
     af.type     = gsn_berserk;
@@ -3813,7 +3806,7 @@ void do_berserk( CHAR_DATA *ch, char *argument)
     ch->move -= ch->level / 5;
 
     send_to_char("Your pulse speeds up, but nothing happens.\n\r",ch);
-    check_improve(ch,gsn_berserk,FALSE,2);
+    check_improve(ch,gsn_berserk,FALSE,6);
     }
 }
 
@@ -3830,9 +3823,7 @@ void do_bash( CHAR_DATA *ch, char *argument )
 
 
     if ( (chance = get_skill(ch,gsn_bash)) == 0
-    ||   (IS_NPC(ch) && !IS_SET(ch->off_flags,OFF_BASH))
-    ||   (!IS_NPC(ch)
-    &&    ch->level < skill_table[gsn_bash].skill_level[ch->class]))
+    ||   (IS_NPC(ch) && !IS_SET(ch->off_flags,OFF_BASH)))
     {
     send_to_char("Bashing? What's that?\n\r",ch);
     return;
@@ -4019,9 +4010,7 @@ void do_dirt( CHAR_DATA *ch, char *argument )
     one_argument(argument,arg);
 
     if ( (chance = get_skill(ch,gsn_dirt)) == 0
-    ||   (IS_NPC(ch) && !IS_SET(ch->off_flags,OFF_KICK_DIRT))
-    ||   (!IS_NPC(ch)
-    &&    ch->level < skill_table[gsn_dirt].skill_level[ch->class]))
+    ||   (IS_NPC(ch) && !IS_SET(ch->off_flags,OFF_KICK_DIRT)))
     {
     send_to_char("You get your feet dirty.\n\r",ch);
     return;
@@ -4178,9 +4167,7 @@ void do_trip( CHAR_DATA *ch, char *argument )
     one_argument(argument,arg);
 
     if ( (chance = get_skill(ch,gsn_trip)) == 0
-    ||   (IS_NPC(ch) && !IS_SET(ch->off_flags,OFF_TRIP))
-    ||   (!IS_NPC(ch)
-      && ch->level < skill_table[gsn_trip].skill_level[ch->class]))
+    ||   (IS_NPC(ch) && !IS_SET(ch->off_flags,OFF_TRIP)))
     {
     send_to_char("Tripping?  What's that?\n\r",ch);
     return;
@@ -4653,7 +4640,7 @@ void do_backstab( CHAR_DATA *ch, char *argument )
     if ( number_percent( ) < get_skill(ch,gsn_backstab)
     || ( get_skill(ch,gsn_backstab) >= 2 && !IS_AWAKE(victim) ) )
     {
-    check_improve(ch,gsn_backstab,TRUE,1);
+    check_improve(ch,gsn_backstab,TRUE,2);
 
     one_hit( ch, victim, gsn_backstab );
     check = number_percent();
@@ -4673,7 +4660,7 @@ void do_backstab( CHAR_DATA *ch, char *argument )
     }
     else
     {
-    check_improve(ch,gsn_backstab,FALSE,1);
+    check_improve(ch,gsn_backstab,FALSE,2);
     damage( ch, victim, 0, gsn_backstab,DAM_NONE,TRUE);
     }
 
@@ -4728,19 +4715,8 @@ void do_flee( CHAR_DATA *ch, char *argument )
     if ( !IS_NPC(ch) )
     {
         send_to_char( "You flee from combat!\n\r", ch );
-    if( (ch->class == 2)
-        && (number_percent() < 3*(ch->level/2) ) )
-        send_to_char( "You snuck away safely.\n\r", ch);
-    else
-        {
         send_to_char( "You lost 10 exp.\n\r", ch);
         gain_exp( ch, -10 );
-        if (ch->race == race_lookup("garou") && ch->pcdata->rank == 0)
-        {
-            send_to_char("The shame and humiliation of fleeing from a fight only adds fuel to your anger!\n\r", ch);
-            ch->rage += 3;
-        }
-        }
     }
 
     stop_fighting( ch, TRUE );
@@ -5175,7 +5151,7 @@ void do_disarm( CHAR_DATA *ch, char *argument )
 		{
 			WAIT_STATE( ch, skill_table[gsn_disarm].beats );
 		disarm( ch, victim );
-		check_improve(ch,gsn_disarm,TRUE,1);
+		check_improve(ch,gsn_disarm,TRUE,2);
 		}
 		else
 		{
@@ -5183,7 +5159,7 @@ void do_disarm( CHAR_DATA *ch, char *argument )
 		act("You fail to disarm $N.",ch,NULL,victim,TO_CHAR);
 		act("$n tries to disarm you, but fails.",ch,NULL,victim,TO_VICT);
 		act("$n tries to disarm $N, but fails.",ch,NULL,victim,TO_NOTVICT);
-		check_improve(ch,gsn_disarm,FALSE,1);
+		check_improve(ch,gsn_disarm,FALSE,2);
 		}
 		return;
 	} else 
@@ -5211,13 +5187,13 @@ void do_disarm( CHAR_DATA *ch, char *argument )
 			{
 				WAIT_STATE( ch, skill_table[gsn_disarm].beats );
 				disarm( ch, victim );
-				check_improve(ch,gsn_disarm,TRUE,1);
+				check_improve(ch,gsn_disarm,TRUE,2);
 			} else
 				{
 				act("You fail to disarm $N, hitting $M instead.", ch, NULL, victim, TO_CHAR);
 				WAIT_STATE(ch,skill_table[gsn_disarm].beats);
 				one_hit( ch, victim, TYPE_UNDEFINED );
-				check_improve(ch,gsn_disarm,FALSE,1);
+				check_improve(ch,gsn_disarm,FALSE,2);
 				return;
 				}
 		} else {
@@ -5225,7 +5201,7 @@ void do_disarm( CHAR_DATA *ch, char *argument )
 			act("You fail to disarm $N.",ch,NULL,victim,TO_CHAR);
 			act("$n tries to disarm you, but fails.",ch,NULL,victim,TO_VICT);
 			act("$n tries to disarm $N, but fails.",ch,NULL,victim,TO_NOTVICT);
-			check_improve(ch,gsn_disarm,FALSE,1);
+			check_improve(ch,gsn_disarm,FALSE,2);
 		}
 		
 	}
@@ -5612,13 +5588,13 @@ void do_assassinate( CHAR_DATA *ch, char *argument )
         return;
     }
 */
-    check_improve(ch,gsn_assassinate,TRUE,1);
+    check_improve(ch,gsn_assassinate,TRUE,4);
     do_function(ch, &do_backstab, victim->name);
 /*  multi_hit( ch, victim, gsn_assassinate ); */
     }
     else
     {
-    check_improve(ch,gsn_assassinate,FALSE,1);
+    check_improve(ch,gsn_assassinate,FALSE,4);
     damage( ch, victim, 0, gsn_assassinate,DAM_NONE,TRUE);
     }
 
@@ -5642,7 +5618,7 @@ void do_divine_strength(CHAR_DATA *ch, char *argument )
     {
         act( "$n invokes the power of $s God!",  ch, NULL, NULL, TO_ROOM );
         send_to_char( "You pray to your God to give you strength to smite your foes!\n\r", ch );
-        check_improve(ch,gsn_divine_strength,TRUE,1);
+        check_improve(ch,gsn_divine_strength,TRUE,4);
 
         af.where    = TO_AFFECTS;
         af.type     = gsn_divine_strength;
@@ -5666,7 +5642,7 @@ void do_divine_strength(CHAR_DATA *ch, char *argument )
     {
         act( "$n fails to invoke the power of $s God!",  ch, NULL, NULL, TO_ROOM );
         send_to_char( "You fail to summon a Divine Blessing for Strength!\n\r", ch );
-        check_improve(ch,gsn_divine_strength,FALSE,1);
+        check_improve(ch,gsn_divine_strength,FALSE,4);
     }
 return;
 }
@@ -5725,7 +5701,7 @@ bool check_critical(CHAR_DATA *ch, CHAR_DATA *victim)
         act2("$n {Rcritically{x strikes $N!",ch,NULL,victim,TO_NOTVICT);
         act2("Your skill with {Y$p{x allows you to {Rcritically{x strike $N!",ch,obj,victim,TO_CHAR);
         act2("$n {Rcritically{x strikes you!",ch,NULL,victim,TO_VICT);
-        check_improve(ch,gsn_critical_strike,TRUE,6);
+        check_improve(ch,gsn_critical_strike,TRUE,8);
         return TRUE;
 }
 
@@ -5748,8 +5724,7 @@ void do_ground( CHAR_DATA *ch, char *argument )
 {
     CHAR_DATA *victim;
 
-        if ( !IS_NPC(ch)
-        &&   ch->level < skill_table[gsn_ground].skill_level[ch->class] )
+        if ( get_skill(ch, gsn_ground) == 0)
         {
                 send_to_char(
                         "Your better off sticking to your own arts.\n\r", ch );
@@ -5862,7 +5837,7 @@ void do_headbutt( CHAR_DATA *ch, char *argument )
         ch->position = POS_RESTING;
         WAIT_STATE(ch, 4);
         damage(ch, ch, ch->level, gsn_headbutt, DAM_BASH, TRUE);
-        check_improve(ch,gsn_headbutt,FALSE,1);
+        check_improve(ch,gsn_headbutt,FALSE,5);
         return;
     }
 
@@ -5871,7 +5846,7 @@ void do_headbutt( CHAR_DATA *ch, char *argument )
         act("You miss your headbutt!", ch, NULL, victim, TO_CHAR);
         act("$n tries to headbutt you and misses!", ch, NULL, victim, TO_VICT);
         act("$n tries to headbutt $N.", ch, NULL, victim, TO_NOTVICT);
-        check_improve(ch,gsn_headbutt,FALSE,1);
+        check_improve(ch,gsn_headbutt,FALSE,5);
         return;
     }
 
@@ -5912,7 +5887,7 @@ void do_headbutt( CHAR_DATA *ch, char *argument )
 
         victim->position = POS_SLEEPING;
     }
-    else  check_improve(ch,gsn_headbutt,TRUE,2);
+    else  check_improve(ch,gsn_headbutt,TRUE,5);
 
     return;
 }
@@ -6071,8 +6046,7 @@ void do_warcry( CHAR_DATA *ch, char *argument )
     CHAR_DATA *victim;
     CHAR_DATA *vict_next;
 
-        if ( !IS_NPC(ch)
-        &&   ch->level < skill_table[gsn_warcry].skill_level[ch->class] )
+        if ( get_skill(ch, gsn_warcry) == 0)
         {
                 send_to_char("You are better off sticking to your own arts.\n\r", ch );
                 return;

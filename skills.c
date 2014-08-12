@@ -324,19 +324,23 @@ void do_spells(CHAR_DATA *ch, char *argument)
 
     for (sn = 0; sn < MAX_SKILL; sn++)
     {
+        int csn;
         if (skill_table[sn].name == NULL )
 	    break;
 
-	if ((level = skill_table[sn].skill_level[ch->class]) < LEVEL_HERO + 1
+        if ( (csn = cskill_lookup(sn)) < 0)
+            continue;
+        
+	if ((level = csskill_table[csn].level) < LEVEL_HERO + 1
 	&&  (fAll || level <= ch->level)
 	&&  level >= min_lev && level <= max_lev
 	&&  skill_table[sn].spell_fun != spell_null
 	&&  ch->pcdata->learned[sn] > 0)
         {
 	    found = TRUE;
-	    level = skill_table[sn].skill_level[ch->class];
+	    level = csskill_table[csn].level;
 	    if (ch->level < level)
-	    	sprintf(buf,"%-18s n/a      ", skill_table[sn].name);
+	    	sprintf(buf,"%-18s   n/a      ", skill_table[sn].name);
 	    else
 	    {
 		mana = UMAX(skill_table[sn].min_mana,
@@ -348,7 +352,7 @@ void do_spells(CHAR_DATA *ch, char *argument)
           	sprintf(spell_list[level],"\n\rLevel %2d: %s",level,buf);
 	    else /* append */
 	    {
-          	if ( ++spell_columns[level] % 2 == 0)
+          	if ( ++spell_columns[level] % 1 == 0)
 		    strcat(spell_list[level],"\n\r          ");
           	strcat(spell_list[level],buf);
 	    }
@@ -447,14 +451,14 @@ void do_skills(CHAR_DATA *ch, char *argument)
         if (skill_table[sn].name == NULL )
 	    break;
 
-	if ((level = skill_table[sn].skill_level[ch->class]) < LEVEL_HERO + 1
+	if ((level = csskill_table[cskill_lookup(sn)].level) < LEVEL_HERO + 1
 	&&  (fAll || level <= ch->level)
 	&&  level >= min_lev && level <= max_lev
 	&&  skill_table[sn].spell_fun == spell_null
 	&&  ch->pcdata->learned[sn] > 0)
         {
 	    found = TRUE;
-	    level = skill_table[sn].skill_level[ch->class];
+	    level = csskill_table[cskill_lookup(sn)].level;
 	    if (ch->level < level)
 	    	sprintf(buf,"%-18s n/a      ", skill_table[sn].name);
 	    else
@@ -917,20 +921,40 @@ void check_improve( CHAR_DATA *ch, int sn, bool success, int multiplier )
 {
     int chance;
     char buf[100];
+    int skill;
 
     if (IS_NPC(ch))
 	return;
 
-    if (ch->level < skill_table[sn].skill_level[ch->class]
-    ||  skill_table[sn].rating[ch->class] == 0
+    if (ch->level < csskill_table[cskill_lookup(sn)].level
     ||  ch->pcdata->learned[sn] == 0
     ||  ch->pcdata->learned[sn] == 100)
 	return;  /* skill is not known */
+    
+    if (sn == gsn_whip || sn == gsn_dagger) skill = CSABIL_LIGHT;
+    if (sn == gsn_axe || sn == gsn_sword) skill = CSABIL_HEAVY;
+    if (sn == gsn_flail || sn == gsn_mace) skill = CSABIL_BLUNT;
+    if (sn == gsn_lance || sn == gsn_spear || sn == gsn_polearm) skill = CSABIL_POLEARM;
+   
+    if (sn == gsn_whip || sn == gsn_dagger || sn == gsn_axe || sn == gsn_sword ||
+        sn == gsn_flail || sn == gsn_mace || sn == gsn_lance || 
+        sn == gsn_spear || sn == gsn_polearm)  {  
+    switch (ch->pcdata->cssec_abil[skill])
+    {
+        case 0: if (ch->pcdata->learned[sn] >= 50) return; break;
+        case 1: if (ch->pcdata->learned[sn] >= 60) return; break;
+        case 2: if (ch->pcdata->learned[sn] >= 70) return; break;
+        case 3: if (ch->pcdata->learned[sn] >= 80) return; break;
+        case 4: if (ch->pcdata->learned[sn] >= 90) return; break;
+    } 
+    }
+    
+
 
     /* check to see if the character has a chance to learn */
-    chance = 10 * int_app[get_curr_stat(ch,STAT_INT)].learn;
+    chance = 10 * 50;
     chance /= (		multiplier
-		*	skill_table[sn].rating[ch->class]
+		*	2
 		*	4);
     chance += ch->level;
 
@@ -948,7 +972,7 @@ void check_improve( CHAR_DATA *ch, int sn, bool success, int multiplier )
 	    sprintf(buf,"You have become better at %s! (%d)\n\r",
 		    skill_table[sn].name,ch->pcdata->learned[sn]);
 	    send_to_char(buf,ch);
-	    gain_exp(ch,2 * skill_table[sn].rating[ch->class]);
+	    gain_exp(ch, ch->pcdata->learned[sn]);
 
 	}
     }
@@ -964,7 +988,7 @@ void check_improve( CHAR_DATA *ch, int sn, bool success, int multiplier )
 		"You learn from your mistakes, and your %s skill improves. (%d)\n\r",
 		skill_table[sn].name, ch->pcdata->learned[sn]);
 	    send_to_char(buf,ch);
-	    gain_exp(ch,2 * skill_table[sn].rating[ch->class]);
+	    gain_exp(ch, ch->pcdata->learned[sn]);
 	}
     }
 }

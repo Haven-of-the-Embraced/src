@@ -161,21 +161,8 @@ void move_char( CHAR_DATA *ch, int door, bool follow )
 
     if ( !IS_NPC(ch) )
     {
-    int iClass, iGuild;
     int move;
 
-    for ( iClass = 0; iClass < MAX_CLASS; iClass++ )
-    {
-        for ( iGuild = 0; iGuild < MAX_GUILD; iGuild ++)
-        {
-            if ( iClass != ch->class
-            &&   to_room->vnum == class_table[iClass].guild[iGuild] )
-            {
-            send_to_char( "You aren't allowed in there.\n\r", ch );
-            return;
-        }
-        }
-    }
 
     if ( in_room->sector_type == SECT_AIR
     ||   to_room->sector_type == SECT_AIR )
@@ -1072,7 +1059,7 @@ void do_pick( CHAR_DATA *ch, char *argument )
     if ( !IS_NPC(ch) && number_percent( ) > get_skill(ch,gsn_pick_lock))
     {
     send_to_char( "You failed.\n\r", ch);
-    check_improve(ch,gsn_pick_lock,FALSE,2);
+    check_improve(ch,gsn_pick_lock,FALSE,4);
     return;
     }
 
@@ -1108,7 +1095,7 @@ void do_pick( CHAR_DATA *ch, char *argument )
         REMOVE_BIT(obj->value[1],EX_LOCKED);
         act("You pick the lock on $p.",ch,obj,NULL,TO_CHAR);
         act("$n picks the lock on $p.",ch,obj,NULL,TO_ROOM);
-        check_improve(ch,gsn_pick_lock,TRUE,2);
+        check_improve(ch,gsn_pick_lock,TRUE,4);
         return;
     }
 
@@ -1131,7 +1118,7 @@ void do_pick( CHAR_DATA *ch, char *argument )
     REMOVE_BIT(obj->value[1], CONT_LOCKED);
         act("You pick the lock on $p.",ch,obj,NULL,TO_CHAR);
         act("$n picks the lock on $p.",ch,obj,NULL,TO_ROOM);
-    check_improve(ch,gsn_pick_lock,TRUE,2);
+    check_improve(ch,gsn_pick_lock,TRUE,4);
     return;
     }
 
@@ -1155,7 +1142,7 @@ void do_pick( CHAR_DATA *ch, char *argument )
     REMOVE_BIT(pexit->exit_info, EX_LOCKED);
     send_to_char( "*Click*\n\r", ch );
     act( "$n picks the $d.", ch, NULL, pexit->keyword, TO_ROOM );
-    check_improve(ch,gsn_pick_lock,TRUE,2);
+    check_improve(ch,gsn_pick_lock,TRUE,4);
 
     /* pick the other side */
     if ( ( to_room   = pexit->u1.to_room            ) != NULL
@@ -1947,7 +1934,7 @@ void do_recall( CHAR_DATA *ch, char *argument )
 
     if ( number_percent() < 80 * skill / 100 )
     {
-        check_improve(ch,gsn_recall,FALSE,6);
+        check_improve(ch,gsn_recall,FALSE,1);
         WAIT_STATE( ch, 4 );
         sprintf( buf, "You failed!.\n\r");
         send_to_char( buf, ch );
@@ -1956,7 +1943,7 @@ void do_recall( CHAR_DATA *ch, char *argument )
 
     lose = (ch->desc != NULL) ? 25 : 50;
     gain_exp( ch, 0 - lose );
-    check_improve(ch,gsn_recall,TRUE,4);
+    check_improve(ch,gsn_recall,TRUE,1);
     sprintf( buf, "You recall from combat!  You lose %d exps.\n\r", lose );
     send_to_char( buf, ch );
     stop_fighting( ch, TRUE );
@@ -1989,174 +1976,7 @@ void do_recall( CHAR_DATA *ch, char *argument )
 
 
 void do_train( CHAR_DATA *ch, char *argument )
-{
-    char buf[MAX_STRING_LENGTH];
-    CHAR_DATA *mob;
-    sh_int stat = - 1;
-    char *pOutput = NULL;
-    int cost;
-
-    if ( IS_NPC(ch) )
-    return;
-
-    /*
-     * Check for trainer.
-     */
-    for ( mob = ch->in_room->people; mob; mob = mob->next_in_room )
-    {
-    if ( IS_NPC(mob) && IS_SET(mob->act, ACT_TRAIN) )
-        break;
-    }
-
-    if ( mob == NULL )
-    {
-    send_to_char( "You can't do that here.\n\r", ch );
-    return;
-    }
-
-    if ( argument[0] == '\0' )
-    {
-    sprintf( buf, "You have %d training sessions.\n\r", ch->train );
-    send_to_char( buf, ch );
-    argument = "foo";
-    }
-
-    cost = 1;
-
-    if ( !str_cmp( argument, "str" ) )
-    {
-    if ( class_table[ch->class].attr_prime == STAT_STR )
-        cost    = 1;
-    stat        = STAT_STR;
-    pOutput     = "strength";
-    }
-
-    else if ( !str_cmp( argument, "int" ) )
-    {
-    if ( class_table[ch->class].attr_prime == STAT_INT )
-        cost    = 1;
-    stat        = STAT_INT;
-    pOutput     = "intelligence";
-    }
-
-    else if ( !str_cmp( argument, "wis" ) )
-    {
-    if ( class_table[ch->class].attr_prime == STAT_WIS )
-        cost    = 1;
-    stat        = STAT_WIS;
-    pOutput     = "wisdom";
-    }
-
-    else if ( !str_cmp( argument, "dex" ) )
-    {
-    if ( class_table[ch->class].attr_prime == STAT_DEX )
-        cost    = 1;
-    stat        = STAT_DEX;
-    pOutput     = "dexterity";
-    }
-
-    else if ( !str_cmp( argument, "con" ) )
-    {
-    if ( class_table[ch->class].attr_prime == STAT_CON )
-        cost    = 1;
-    stat        = STAT_CON;
-    pOutput     = "constitution";
-    }
-
-    else if ( !str_cmp(argument, "hp" ) )
-    cost = 1;
-
-    else if ( !str_cmp(argument, "mana" ) )
-    cost = 1;
-
-    else
-    {
-    strcpy( buf, "You can train:" );
-    if ( ch->perm_stat[STAT_STR] < get_max_train(ch,STAT_STR))
-        strcat( buf, " str" );
-    if ( ch->perm_stat[STAT_INT] < get_max_train(ch,STAT_INT))
-        strcat( buf, " int" );
-    if ( ch->perm_stat[STAT_WIS] < get_max_train(ch,STAT_WIS))
-        strcat( buf, " wis" );
-    if ( ch->perm_stat[STAT_DEX] < get_max_train(ch,STAT_DEX))
-        strcat( buf, " dex" );
-    if ( ch->perm_stat[STAT_CON] < get_max_train(ch,STAT_CON))
-        strcat( buf, " con" );
-    strcat( buf, " hp mana");
-
-    if ( buf[strlen(buf)-1] != ':' )
-    {
-        strcat( buf, ".\n\r" );
-        send_to_char( buf, ch );
-    }
-    else
-    {
-        /*
-         * This message dedicated to Jordan ... you big stud!
-         */
-        act( "You have nothing left to train, you $T!",
-        ch, NULL,
-        ch->sex == SEX_MALE   ? "big stud" :
-        ch->sex == SEX_FEMALE ? "hot babe" :
-                    "wild thing",
-        TO_CHAR );
-    }
-
-    return;
-    }
-
-    if (!str_cmp("hp",argument))
-    {
-        if ( cost > ch->train )
-        {
-            send_to_char( "You don't have enough training sessions.\n\r", ch );
-            return;
-        }
-
-    ch->train -= cost;
-        ch->pcdata->perm_hit += 10;
-        ch->max_hit += 10;
-        ch->hit +=10;
-        act( "Your durability increases!",ch,NULL,NULL,TO_CHAR);
-/*        act( "$n's durability increases!",ch,NULL,NULL,TO_ROOM); */
-        return;
-    }
-
-    if (!str_cmp("mana",argument))
-    {
-        if ( cost > ch->train )
-        {
-            send_to_char( "You don't have enough training sessions.\n\r", ch );
-            return;
-        }
-
-    ch->train -= cost;
-        ch->pcdata->perm_mana += 10;
-        ch->max_mana += 10;
-        ch->mana += 10;
-        act( "Your power increases!",ch,NULL,NULL,TO_CHAR);
-/*        act( "$n's power increases!",ch,NULL,NULL,TO_ROOM); */
-        return;
-    }
-
-    if ( ch->perm_stat[stat]  >= get_max_train(ch,stat) )
-    {
-    act( "Your $T is already at maximum.", ch, NULL, pOutput, TO_CHAR );
-    return;
-    }
-
-    if ( cost > ch->train )
-    {
-    send_to_char( "You don't have enough training sessions.\n\r", ch );
-    return;
-    }
-
-    ch->train       -= cost;
-
-    ch->perm_stat[stat]     += 1;
-    act( "Your $T increases!", ch, NULL, pOutput, TO_CHAR );
-/*    act( "$n's $T increases!", ch, NULL, pOutput, TO_ROOM ); */
-    update_csstats(ch);
+{ 
     return;
 }
 

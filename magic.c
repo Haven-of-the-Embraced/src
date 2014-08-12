@@ -77,18 +77,17 @@ int find_spell( CHAR_DATA *ch, const char *name )
     if (IS_NPC(ch))
     return skill_lookup(name);
 
-    for ( sn = 0; sn < MAX_SKILL; sn++ )
+    for (sn = 0; csskill_table[sn].name != NULL; sn++)
     {
-    if (skill_table[sn].name == NULL)
-        break;
-    if (LOWER(name[0]) == LOWER(skill_table[sn].name[0])
-    &&  !str_prefix(name,skill_table[sn].name))
+
+    if (LOWER(name[0]) == LOWER(csskill_table[sn].name[0])
+    &&  !str_prefix(name,csskill_table[sn].name))
     {
         if ( found == -1)
-        found = sn;
-        if (ch->level >= skill_table[sn].skill_level[ch->class]
+        found = *csskill_table[sn].gsn;
+        if (ch->level >= csskill_table[sn].level
         &&  ch->pcdata->learned[sn] > 0)
-            return sn;
+            return *csskill_table[sn].gsn;
     }
     }
     return found;
@@ -200,7 +199,7 @@ void say_spell( CHAR_DATA *ch, int sn )
     for ( rch = ch->in_room->people; rch; rch = rch->next_in_room )
     {
     if ( rch != ch )
-        act((!IS_NPC(rch) && ch->class==rch->class) ? buf : buf2,
+        act(buf2,
             ch, NULL, rch, TO_VICT );
     }
 
@@ -228,8 +227,7 @@ bool saves_spell( int level, CHAR_DATA *victim, int dam_type )
     case IS_VULNERABLE: save -= 2;  break;
     }
 
-    if (!IS_NPC(victim) && class_table[victim->class].fMana)
-    save = 9 * save / 10;
+
     save = URANGE( 5, save, 95 );
     return number_percent( ) < save;
 }
@@ -322,9 +320,7 @@ void do_cast( CHAR_DATA *ch, char *argument )
     }
 
     if ((sn = find_spell(ch,arg1)) < 1
-    ||  skill_table[sn].spell_fun == spell_null
-    || (!IS_NPC(ch) && (ch->level < skill_table[sn].skill_level[ch->class]
-    ||           ch->pcdata->learned[sn] == 0)))
+    ||  skill_table[sn].spell_fun == spell_null)
     {
     send_to_char( "You don't know any spells of that name.\n\r", ch );
     return;
@@ -579,7 +575,7 @@ IC mode to fight.\n\r", ch );
     else if ( number_percent( ) > get_skill(ch,sn) )
     {
     send_to_char( "You lost your concentration.\n\r", ch );
-    check_improve(ch,sn,FALSE,1);
+    check_improve(ch,sn,FALSE,2);
     ch->mana -= mana / 2;
     }
     else

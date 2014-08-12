@@ -236,7 +236,7 @@ int pulse_mana_gain( CHAR_DATA *ch )
         {
             gain += number * gain / 200;
             if (ch->mana < ch->max_mana)
-            check_improve(ch,gsn_meditation,TRUE,1);
+            check_improve(ch,gsn_meditation,TRUE,4);
         }
 		
 		if (is_affected(ch, gsn_meditation))

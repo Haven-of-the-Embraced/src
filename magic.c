@@ -301,7 +301,7 @@ void do_cast( CHAR_DATA *ch, char *argument )
     OBJ_DATA *obj;
     void *vo;
     int mana;
-    int sn;
+    int sn, csn;
     int target;
 
     /*
@@ -325,19 +325,19 @@ void do_cast( CHAR_DATA *ch, char *argument )
     send_to_char( "You don't know any spells of that name.\n\r", ch );
     return;
     }
-
+    csn = cskill_lookup(sn);
     if ( ch->position < skill_table[sn].minimum_position )
     {
     send_to_char( "You can't concentrate enough.\n\r", ch );
     return;
     }
 
-    if (ch->level + 2 == skill_table[sn].skill_level[ch->class])
+    if (ch->level + 2 == csskill_table[csn].level)
     mana = 50;
     else
         mana = UMAX(
         skill_table[sn].min_mana,
-        100 / ( 2 + ch->level - skill_table[sn].skill_level[ch->class] ) );
+        100 / ( 2 + ch->level - csskill_table[csn].level) );
 
     /*
      * Locate targets.

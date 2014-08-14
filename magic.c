@@ -581,11 +581,7 @@ IC mode to fight.\n\r", ch );
     else
     {
         ch->mana -= mana;
-        if (IS_NPC(ch) || class_table[ch->class].fMana)
-    /* class has spells */
-            (*skill_table[sn].spell_fun) ( sn, ch->level, ch, vo,target);
-        else
-            (*skill_table[sn].spell_fun) (sn, 3 * ch->level/4, ch, vo,target);
+        (*skill_table[sn].spell_fun) ( sn, ch->level, ch, vo,target);
         check_improve(ch,sn,TRUE,2);
     }
 
@@ -4358,11 +4354,10 @@ void spell_sanctuary( int sn, int level, CHAR_DATA *ch, void *vo,int target)
     af.where     = TO_AFFECTS;
     af.type      = sn;
     af.level     = level;
-    if(ch->class == class_lookup("priest") || ch->class == class_lookup("crusader") ||
-       ch->class == class_lookup("monk") )
-    af.duration = 20 + number_range(5,10);
+    if(ch->level > 50)
+    af.duration = 10 + number_range(5,15);
     else
-    af.duration = number_range(8, 10);
+    af.duration = number_range(8, 15);
     af.location  = APPLY_NONE;
     af.modifier  = 0;
     af.bitvector = AFF_SANCTUARY;

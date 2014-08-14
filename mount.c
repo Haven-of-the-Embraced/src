@@ -202,13 +202,7 @@ void do_buy_mount( CHAR_DATA *ch, char *argument )
     send_to_char("How do you expect to buy a horse when you can't even ride?\n\r", ch);
         return;
     }
-    /*
-    if(ch->class != class_lookup("knight") && ch->class != class_lookup("crusader"))
-    {
-        send_to_char("The shopkeeper smirks at you and says '{wEh? You? Ha! I don't think so! I'm saving these horses for the Noble Knights and the Holy Paladins!\n\r",ch);
-        return;
-    }
-    */
+
     argument = one_argument(argument,arg);
 
     pRoomIndexNext = get_room_index( ch->in_room->vnum + 1 );

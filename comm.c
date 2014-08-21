@@ -1829,7 +1829,7 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
     CHAR_DATA *ch;
     char *pwdnew;
     char *p;
-    int group,iClass,race,i,weapon, num;
+    int group,iClass,race,i,weapon, num, num1;
     bool fOld;
 
     while ( isspace(*argument) )
@@ -2154,7 +2154,6 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
     for (i = 0; i < MAX_STATS; i++)
         ch->perm_stat[i] = 15;
 
-    update_csstats(ch);
 
     ch->affected_by = ch->affected_by|race_table[race].aff;
     ch->imm_flags   = ch->imm_flags|race_table[race].imm;
@@ -2225,25 +2224,22 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
         wiznet(log_buf,NULL,NULL,WIZ_SITES,0,get_trust(ch));
 
 
-    write_to_buffer(d,"Haven provides character Stereotypes to assign your starting attributes and\n\r",0);
+    write_to_buffer(d,"Haven provides character Archetypes to assign your starting attributes and\n\r",0);
     write_to_buffer(d,"abilities. This will give your Character a preset Character Sheet to get you\n\r",0);
-    write_to_buffer(d,"started. Afterwards a few random points will be added to your Character to\n\r",0);
-    write_to_buffer(d,"ensure that every Character is unique. You may then spend 'Freebie' points\n\r",0);
-    write_to_buffer(d,"to further customize your character.\n\r\n\r",0);
+    write_to_buffer(d,"started. Afterwards You may then spend 'Freebie' points to further customize \n\r",0);
+    write_to_buffer(d,"your character.\n\r\n\r",0);
 
     write_to_buffer(d,"Or, you may skip this step and create a completely custom character sheet\n\r", 0);
     write_to_buffer(d,"in-game. *Warning* You will have NO SKILLS until you complete the creation\n\r", 0);
     write_to_buffer(d,"process in-game using the 'create' command.\n\r", 0);
 
-    write_to_buffer(d,"\n\rAvailable stereotypes:\n\r\n\r",0);
-    write_to_buffer(d,"[0] The Popular One                     [5] The Artist\n\r",0);
-    write_to_buffer(d,"[1] The Loner                           [6] The Drama Queen\n\r",0);
-    write_to_buffer(d,"[2] The Rich Kid                        [7] The Weirdo\n\r",0);
-    write_to_buffer(d,"[3] The Prankster                       [8] The Smart One\n\r",0);
-    write_to_buffer(d,"[4] The Bully                           [9] The Wild Child\n\r\n\r",0);
+    write_to_buffer(d,"\n\rAvailable Archetypes:\n\r\n\r",0);
+    write_to_buffer(d,"[0] Warrior\n\r",0);
+    write_to_buffer(d,"[1] Rogue\n\r",0);
+    write_to_buffer(d,"[2] Clergy\n\r",0);
 
-    write_to_buffer(d,"Please select the number of the stereotype that best fits you Character's\n\r",0);
-    write_to_buffer(d,"childhood. Or, enter 'custom' to skip this step and create a custom sheet later:\n\r",0);
+    write_to_buffer(d,"Please select the number of the archetype that best fits you Character.\n\r",0);
+    write_to_buffer(d,"Or, enter 'CUSTOM' to skip this step and create a custom sheet later:\n\r",0);
     d->connected = CON_PICK_CHILDHOOD;
     break;
 
@@ -2253,7 +2249,7 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
     else {
         if (!str_cmp(argument, "custom"))
             {
-                 write_to_buffer(d,"\n\rHaven of the Embraced is focused on Vampires but you may choose to start the game as a human\n\r",0);
+                write_to_buffer(d,"\n\rHaven of the Embraced is focused on Vampires but you may choose to start the game as a human\n\r",0);
                 write_to_buffer(d,"if you wish. You may later be Embraced as a vampire if you choose, or your character may\n\r",0);
                 write_to_buffer(d,"continue life as a human. Vampires are far more powerful and have more customization than\n\r",0);
                 write_to_buffer(d,"a human, but humans have several gameplay options that Vampires do not. Starting as a human\n\r",0);
@@ -2270,15 +2266,12 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
     if(num < 0 || num > 9)
     {
         write_to_buffer(d,"That is not a valid choice.\n\r\n\r",0);
-        write_to_buffer(d,"\n\rAvailable stereotypes:\n\r\n\r",0);
-        write_to_buffer(d,"[0] The Popular One                     [5] The Artist\n\r",0);
-        write_to_buffer(d,"[1] The Loner                           [6] The Drama Queen\n\r",0);
-        write_to_buffer(d,"[2] The Rich Kid                        [7] The Weirdo\n\r",0);
-        write_to_buffer(d,"[3] The Prankster                       [8] The Smart One\n\r",0);
-        write_to_buffer(d,"[4] The Bully                           [9] The Wild Child\n\r\n\r",0);
-
-        write_to_buffer(d,"Please select the number of the stereotype that best fits you Character's\n\r",0);
-        write_to_buffer(d,"childhood. Or, enter 'custom' to skip this step and create a custom sheet later:\n\r",0);
+        write_to_buffer(d,"\n\rAvailable Archetypes:\n\r\n\r",0);
+        write_to_buffer(d,"[0] Warrior\n\r",0);
+        write_to_buffer(d,"[1] Rogue\n\r",0);
+        write_to_buffer(d,"[2] Clergy\n\r\n\r",0);
+        write_to_buffer(d,"Please select the number of the archetype that best fits you Character.\n\r",0);
+        write_to_buffer(d,"Or, enter 'CUSTOM' to skip this step and create a custom sheet later:\n\r",0);
         d->connected = CON_PICK_CHILDHOOD;
         break;
     }
@@ -2287,86 +2280,51 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
 
     for(;;)
     {
-        num = number_range(0,MAX_CSATTRIBUTES);
-        if(ch->pcdata->csattributes[num] != 5)
+        num1 = number_range(0,MAX_CSATTRIBUTES);
+        if(ch->pcdata->csattributes[num1] < 4)
         {
-            ch->pcdata->csattributes[num]++;
+            ch->pcdata->csattributes[num1]++;
             break;
         }
     }
 
-
-    write_to_buffer(d,"\n\rNow its time to choose the stereotype for your adult life.\n\r\n\rValid choices are:\n\r",0);
-    write_to_buffer(d,"[0] Woodsman                 [7] Scholar                     [14] Merchant\n\r",0);
-    write_to_buffer(d,"[1] The Seducer              [8] The Artist                  [15] The Criminal\n\r",0);
-    write_to_buffer(d,"[2] Holy Crusader            [9] Explorer                    [16] Hired Thug\n\r",0);
-    write_to_buffer(d,"[3] The Performer           [10] Professional Soldier        [17] Tortured Soul\n\r",0);
-    write_to_buffer(d,"[4] The Serf                [11] The Loner                   [18] Heartless Killer\n\r",0);
-    write_to_buffer(d,"[5] The Courtier            [12] Craftsman                   [19] Con Artist\n\r",0);
-    write_to_buffer(d,"[6] The Clergyman           [13] Minor Noble                 [20] Herbalist\n\r",0);
-
-    write_to_buffer(d,"\n\rPlease select the number of the stereotype that best fits your Character: ",0);
-
-    d->connected = CON_PICK_ADULT;
-    break;
-
-    case CON_PICK_ADULT:
-    if(is_number(argument))
-        num = atoi(argument);
-    else
-        num = 99;
-    if(num < 0 || num > 20)
-    {
-        write_to_buffer(d,"That is not a valid choice.\n\r\n\r",0);
-        write_to_buffer(d,"Now its time to choose the stereotype for your adult life.\n\r\n\rValid choices are:\n\r",0);
-        write_to_buffer(d,"[0] Woodsman                 [7] Scholar                     [14] Merchant\n\r",0);
-        write_to_buffer(d,"[1] The Seducer              [8] The Artist                  [15] The Criminal\n\r",0);
-        write_to_buffer(d,"[2] Holy Crusader            [9] Explorer                    [16] Hired Thug\n\r",0);
-        write_to_buffer(d,"[3] The Performer           [10] Professional Soldier        [17] Tortured Soul\n\r",0);
-        write_to_buffer(d,"[4] The Serf                [11] The Loner                   [18] Heartless Killer\n\r",0);
-        write_to_buffer(d,"[5] The Courtier            [12] Craftsman                   [19] Con Artist\n\r",0);
-        write_to_buffer(d,"[6] The Clergyman           [13] Minor Noble                 [20] Herbalist\n\r",0);
-
-        write_to_buffer(d,"\n\rPlease select the number of the stereotype that best fits your Character: ",0);
-        d->connected = CON_PICK_ADULT;
-        break;
-    }
     for(i = 0; i <= MAX_CSABIL; i++)
         ch->pcdata->csabilities[i] = cr_abil_table[num].abil[i];
 
     for(i = 0; i <= 2;i++)
         ch->pcdata->csvirtues[i] = cr_abil_table[num].virtue[i];
-    num = 2;
-    while (num > 0)
+    num1 = 2;
+    while (num1 > 0)
     {
-        if(ch->pcdata->csabilities[(i = number_range(0,MAX_CSABIL))] != 5)
+        if(ch->pcdata->csabilities[(i = number_range(0,MAX_CSABIL))] < 4)
         {
             ch->pcdata->csabilities[i]++;
-            num--;
+            num1--;
         }
     }
     for(;;)
     {
-        num = number_range(0,2);
-        if(ch->pcdata->csvirtues[num] != 5)
+        num1 = number_range(0,2);
+        if(ch->pcdata->csvirtues[num1] < 4)
         {
-            ch->pcdata->csvirtues[num]++;
+            ch->pcdata->csvirtues[num1]++;
             break;
         }
     }
     ch->pcdata->progress = 8;
-    write_to_buffer(d,"\n\r\n\rYou've finished setting your charsheet archetypes and have been given 5 'background' points\n\r",0);
-    write_to_buffer(d,"that you can spend on background traits in-game. Once you've done that, you may use the 'freebie'\n\r", 0);
-    write_to_buffer(d,"command to further increase your traits using experience points called 'freebies'.\n\r",0);
-
+    write_to_buffer(d,"\n\r\n\rYou've finished setting your charsheet archetypes and have been given 5\n\r",0);
+    write_to_buffer(d,"'background' points that you can spend on background traits in-game. Once you've \n\r", 0);
+    write_to_buffer(d,"done that, you may use the 'freebie' command to further increase your traits using \n\r",0);
+    write_to_buffer(d,"experience points called 'freebies'.\n\r", 0);
     ch->pcdata->csmax_willpower = ch->pcdata->csvirtues[COURAGE];
     ch->pcdata->cshumanity = ch->pcdata->csvirtues[CONSCIENCE]+ch->pcdata->csvirtues[SELF_CONTROL];
     ch->pcdata->cswillpower = ch->pcdata->csmax_willpower;
 
     write_to_buffer(d,"\n\rHaven of the Embraced is focused on Vampires but you may choose to start the game as a human\n\r",0);
-    write_to_buffer(d,"if you wish. Starting as a human is a great way to become familiar with Haven and the other races we\n\r", 0);
-    write_to_buffer(d,"offer before deciding what your character will become. It is also required if you wish to join\n\r", 0);
-    write_to_buffer(d,"any of the 'High Clans', as these Vampire clans are far more selective.\n\r\n\r",0);
+    write_to_buffer(d,"if you wish. You may later be Embraced as a vampire if you choose, or your character may\n\r",0);
+    write_to_buffer(d,"continue life as a human. Vampires are far more powerful and have more customization than\n\r",0);
+    write_to_buffer(d,"a human, but humans have several gameplay options that Vampires do not. Starting as a human\n\r",0);
+    write_to_buffer(d,"is also a great way to learn the game if this is your first time playing a ROM-based MUD.\n\r\n\r",0);
 
     write_to_buffer(d,"Do you wish to start the game as a Vampire [Y/N]? ",0);
     d->connected = CON_CHOICE_VAMP;

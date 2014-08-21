@@ -214,8 +214,8 @@ extern  const   struct  gift_type   gift_table  [MAX_GIFTS_CODED];
 extern  const   struct  disc_type   disc_table  [MAX_DISC];
 extern  const   struct  disc_type   sphere_table [MAX_SPHERE+1];
 extern  const   struct  csback_type csback_table    [MAX_CSBACK];
-extern  const   struct  cr_abil_type    cr_abil_table   [21];
-extern  const   struct  cr_attribute_type   cr_attribute_table  [10];
+extern  const   struct  cr_abil_type    cr_abil_table   [3];
+extern  const   struct  cr_attribute_type   cr_attribute_table  [3];
 
 /* flag tables */
 extern  const   struct  flag_type   act_flags[];

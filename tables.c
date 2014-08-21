@@ -37,7 +37,7 @@
 #include "tables.h"
 
 
-const struct cr_abil_type cr_abil_table[21] =
+const struct cr_abil_type cr_abil_table[3] =
 {
     /*   */
 
@@ -46,7 +46,7 @@ const struct cr_abil_type cr_abil_table[21] =
     {{ 0,1,0,1,1,2,0,2,0,0,2,0,2,0,0,0,0,1,0,0,1,0,0,0,3,0,3,0,3,3 }, { 4, 3, 2}}
 };
 
-const struct cr_attribute_type cr_attribute_table[10] =
+const struct cr_attribute_type cr_attribute_table[3] =
 {
     /*
 #define CSATTRIB_STRENGTH       0

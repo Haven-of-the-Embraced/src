@@ -2236,7 +2236,7 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
     write_to_buffer(d,"\n\rAvailable Archetypes:\n\r\n\r",0);
     write_to_buffer(d,"[0] Warrior\n\r",0);
     write_to_buffer(d,"[1] Rogue\n\r",0);
-    write_to_buffer(d,"[2] Clergy\n\r",0);
+    write_to_buffer(d,"[2] Clergy\n\r\n\r",0);
 
     write_to_buffer(d,"Please select the number of the archetype that best fits you Character.\n\r",0);
     write_to_buffer(d,"Or, enter 'CUSTOM' to skip this step and create a custom sheet later:\n\r",0);

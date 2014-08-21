@@ -2480,15 +2480,9 @@ void deduct_cost(CHAR_DATA *ch, int cost)
     ch->silver -= silver;
 
     if (ch->gold < 0)
-    {
-    bug("deduct costs: gold %d < 0",ch->gold);
     ch->gold = 0;
-    }
     if (ch->silver < 0)
-    {
-    bug("deduct costs: silver %d < 0",ch->silver);
     ch->silver = 0;
-    }
 }
 /*
  * Create a 'money' obj.

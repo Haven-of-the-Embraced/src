@@ -192,6 +192,7 @@ void fwrite_char( CHAR_DATA *ch, FILE *fp )
     }
     fprintf( fp, "Vers %d\n",   ch->version > 0 ? ch->version : 6);
     fprintf( fp, "Home %d\n", ch->pcdata->home );
+    fprintf( fp, "Hometown %d\n", ch->pcdata->hometown);
     fprintf( fp, "Admin %d\n",ch->pcdata->admin);
     fprintf( fp, "qpoints %d\n", ch->qpoints );
     fprintf( fp, "pblood %d\n", ch->pblood );
@@ -1580,6 +1581,7 @@ void fread_char( CHAR_DATA *ch, FILE *fp )
 
     case 'H':
         KEY( "Home",    ch->pcdata->home,   fread_number( fp ) );
+	KEY( "Hometown",ch->pcdata->hometown, fread_number(fp) );
         KEY( "Hitroll", ch->hitroll,        fread_number( fp ) );
         KEY( "Hit",     ch->hitroll,        fread_number( fp ) );
 

@@ -184,7 +184,7 @@ typedef void VAMP_FUN   args( ( CHAR_DATA *ch ) );
 #define LEVEL_HERO         (MAX_LEVEL - 10)
 #define LEVEL_IMMORTAL         (MAX_LEVEL - 9)
 #define MAX_LANGUAGE               12 /* Number of languages */
-
+#define MAX_HOMETOWN 		3
 
 #define PULSE_PER_SECOND        4
 #define PULSE_VIOLENCE        ( 3 * PULSE_PER_SECOND)
@@ -2183,7 +2183,8 @@ struct  pc_data
     char *      kill_target;
 
 /* New home/haven code */
-    int     home;
+    int         home;
+    int         hometown;
 
 /* Immortal Stuff */
     bool        admin;

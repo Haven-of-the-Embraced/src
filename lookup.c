@@ -272,6 +272,30 @@ int brew_lookup(const char *name)
     return 0;
 }
 
+int get_hometown_num (const char *name)
+{
+    int hometown;
+
+    for (hometown = 0; hometown < MAX_HOMETOWN; hometown++)
+    {
+        if (LOWER(name[0]) == LOWER(hometown_table[hometown].name[0])
+        &&  !str_prefix(name,hometown_table[hometown].name))
+            return hometown;
+    }
+
+    return -1;
+};
+
+int get_hometown( int num)
+{
+    if (num >= 0 && num < MAX_HOMETOWN &&
+            hometown_table[num].vnum > 0)
+        return hometown_table[num].vnum;
+    else
+        return ROOM_VNUM_TEMPLE;
+};
+
+
 int like_lookup(CHAR_DATA *mob, CHAR_DATA *ch)
 {
     int i;

@@ -36,6 +36,12 @@
 #include "rote.h"
 #include "tables.h"
 
+const struct hometown_type hometown_table[MAX_HOMETOWN] =
+{
+	{"None", 10995},
+	{"Chester", 701},
+	{"Geneva",  10995}
+};
 
 const struct cr_abil_type cr_abil_table[3] =
 {

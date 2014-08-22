@@ -2154,27 +2154,18 @@ struct  char_data
  // bm_pc_data -- bookmark to pc_data
 struct  pc_data
 {
-            // Language stuff
-    int                 language        [ MAX_LANGUAGE ];
-    int                 speaking;
-    int                 learn;
     PC_DATA *       next;
     BUFFER *        buffer;
     bool        valid;
-    bool        admin;
     char *      pwd;
-    char *      bamfin;
-    char *      bamfout;
     char *      title;
-    char *      wiziname;
-    char *      immtitle;
     char *      pretitle;
-    time_t              last_note;
-    time_t              last_idea;
-    time_t              last_penalty;
-    time_t              last_news;
-    time_t              last_changes;
-    time_t              last_rpnote;
+    time_t      last_note;
+    time_t      last_idea;
+    time_t      last_penalty;
+    time_t      last_news;
+    time_t      last_changes;
+    time_t      last_rpnote;
     sh_int      perm_hit;
     sh_int      perm_mana;
     sh_int      perm_move;
@@ -2184,36 +2175,42 @@ struct  pc_data
     sh_int      learned     [MAX_SKILL];
     bool        group_known [MAX_GROUP];
     sh_int      points;
-    bool                confirm_delete;
+    bool        confirm_delete;
     char *      alias[MAX_ALIAS];
     char *      alias_sub[MAX_ALIAS];
+    sh_int      sect;
+    int         bank;
+    char *      kill_target;
+
+/* New home/haven code */
+    int     home;
+
+/* Immortal Stuff */
+    bool        admin;
+    char *      wiziname;
+    char *      immtitle;
+    char *      bamfin;
+    char *      bamfout;
     int         security;   /* OLC */ /* Builder security */
     int         immclass;
-    sh_int      sect;
-    int                  bank;
-    char *      kill_target;
-    /* Domain influence code.*/
-    int      influenced; // Influence timer.
 
-        // replay tell buffers
-    unsigned int next_replaytell;
-    char *replaytell_text[MAX_REPLAYTELL];
+/* Imm-set player IC notes. */
+    char *  playernotes;
 
-    // replay room buffers
-    unsigned int next_replayroom;
-    char *replayroom_text[MAX_REPLAYROOM];
-    sh_int replayroom_lastevent_roomvnum;
-
-    // replay channels buffers
-    unsigned int next_replaychannels;
-    char *replaychannels_text[MAX_REPLAYCHANNELS];
-/* Charsheet code */
+/* Roleplay Code  */
     long        IC_total;
     long        IC_rank;
     long        IC_goal;
+
+/* Domain influence timer*/
+    int      influenced;
+
+/*Registration */
     char *      email;
     bool        registered;
     int         reg_num;
+
+/* Charsheet Stats */
     char *      csname;
     char *      cschronicle;
     char *      csclan;
@@ -2243,6 +2240,7 @@ struct  pc_data
     int         tertiary;
     int         progress;
     int         stat[MAX_CREATE];
+
 /* New Garou data */
     int         primal_urge;
     int         shiftform;
@@ -2258,6 +2256,7 @@ struct  pc_data
     int         auspice;
     int         favor[25];
     int         gift[MAX_GIFT];
+
 /* Quest journal shit - ugha */
     char *      quest_name[MAX_QUEST];
     char *      quest_string[MAX_QUEST];
@@ -2268,12 +2267,19 @@ struct  pc_data
     int         last_pose;
     int         room_last_pose;
 
-/* New home/haven code */
-    int     home;
+// replay buffers
+    unsigned int        next_replaytell;
+    char     *          replaytell_text[MAX_REPLAYTELL];
+    unsigned int        next_replayroom;
+    char     *          replayroom_text[MAX_REPLAYROOM];
+    sh_int              replayroom_lastevent_roomvnum;
+    unsigned int        next_replaychannels;
+    char     *          replaychannels_text[MAX_REPLAYCHANNELS];
 
-/* Imm-set player IC notes. */
-    char *  playernotes;
-
+// Language stuff
+    int                 language        [ MAX_LANGUAGE ];
+    int                 speaking;
+    int                 learn;
 };
 
 /* Data for generating characters -- only used during generation */

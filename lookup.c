@@ -288,7 +288,7 @@ int get_hometown_num (const char *name)
 
 int get_hometown( int num)
 {
-    if (num >= 0 && num < MAX_HOMETOWN &&
+    if (num > 0 && num < MAX_HOMETOWN &&
             hometown_table[num].vnum > 0)
         return hometown_table[num].vnum;
     else

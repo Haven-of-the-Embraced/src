@@ -1862,8 +1862,9 @@ void do_recall( CHAR_DATA *ch, char *argument )
     char buf[MAX_STRING_LENGTH];
     CHAR_DATA *victim;
     ROOM_INDEX_DATA *location;
+    int vnum;
 
-    if (IS_NPC(ch) && !IS_AFFECTED(ch, AFF_CHARM) )
+    if (IS_NPC(ch) )
     {
     send_to_char("Only players can recall.\n\r",ch);
     return;
@@ -1871,7 +1872,12 @@ void do_recall( CHAR_DATA *ch, char *argument )
 
     act( "$n calls out to the heavens for safe transportation!", ch, 0, 0, TO_ROOM );
 
-    if ( ( location = get_room_index( ROOM_VNUM_TEMPLE ) ) == NULL )
+    if (!IS_NPC(ch) && ch->pcdata->hometown && ch->pcdata->hometown < MAX_HOMETOWN)
+	    vnum = get_hometown(ch->pcdata->hometown);
+    else
+	    vnum = ROOM_VNUM_TEMPLE;
+
+    if ( ( location = get_room_index( vnum ) ) == NULL )
     {
     send_to_char( "You are completely lost.\n\r", ch );
     return;
@@ -1964,11 +1970,15 @@ void do_recall( CHAR_DATA *ch, char *argument )
     do_function(ch, &do_look, "auto" );
 
     if (ch->pet != NULL)
-    do_function(ch->pet, &do_recall, "");
-
+    {
+        char_from_room(ch->pet);
+	char_to_room(ch->pet, location);
+    }
     if (ch->mount != NULL)
-    do_function(ch->mount, &do_recall, "");
-
+    {
+        char_from_room(ch->mount);
+	char_to_room(ch->mount, location);
+    }
 
     return;
 }

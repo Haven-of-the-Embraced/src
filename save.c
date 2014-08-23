@@ -888,7 +888,7 @@ bool load_char_obj( DESCRIPTOR_DATA *d, char *name )
     ch->pcdata->immtitle        = str_dup( "" );
     ch->pcdata->pretitle        = str_dup( "" );
     ch->pcdata->last_rpnote            = current_time;
-
+    ch->pcdata->hometown 		= 0;
     for (stat =0; stat < MAX_STATS; stat++)
     ch->perm_stat[stat]     = 13;
     ch->pcdata->condition[COND_THIRST]  = 48;

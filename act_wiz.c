@@ -4643,6 +4643,26 @@ void do_mset( CHAR_DATA *ch, char *argument )
         return;
     }
 
+    if (!str_prefix( arg2, "hometown"))
+    {
+    int hometown;
+    hometown = get_hometown_num(arg3);
+
+    if (IS_NPC(victim))
+    {
+    sendch("Not on NPCs!\n\r", ch);
+    return;
+    }
+
+    if (hometown < 0)
+    {
+    sendch("Invalid hometown.\n\r", ch);
+    return;
+    }
+    victim->pcdata->hometown = hometown;
+    return;
+    }
+
     if (!str_prefix( arg2, "race" ) )
     {
     int race;

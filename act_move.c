@@ -2097,6 +2097,7 @@ void do_hometown (CHAR_DATA *ch, char *argument)
     if (IS_NULLSTR(arg1))
     {
         sendch("Syntax:          hometown <city>\n\r", ch);
+        sendch("                 hometown list\n\r", ch);
         sendch("\n\r", ch);
         sendch("Hometown may only be set once, you will be asked to confirm your choice.\n\r", ch);
         return;
@@ -2104,7 +2105,7 @@ void do_hometown (CHAR_DATA *ch, char *argument)
 
     if (ch->pcdata->hometown > 0)
     {
-        sendch("Your hometown has already been set! See an Immortal to change it again.\n\r", ch);
+        sendch("Your hometown has already been set! See an Immortal if this is an error.\n\r", ch);
         return;
     }
 
@@ -2112,6 +2113,7 @@ void do_hometown (CHAR_DATA *ch, char *argument)
     {
         int i, col;
         col = 0;
+        sendch("Hometowns Available: \n\r", ch);
         for (i = 1; i < MAX_HOMETOWN; i++)
         {
             cprintf(ch, "%s ", hometown_table[i].name);

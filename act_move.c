@@ -36,7 +36,7 @@
 #include <string.h>
 #include "merc.h"
 #include "interp.h"
-
+#include "tables.h"
 char *  const   dir_name    []      =
 {
     "north", "east", "south", "west", "up", "down"
@@ -2083,4 +2083,64 @@ void do_meditate(CHAR_DATA *ch, char *argument )
     af.bitvector    = 0;
     affect_to_char( ch, &af );
 return;
+}
+
+void do_hometown (CHAR_DATA *ch, char *argument)
+{
+    int hn;
+    char arg1[MSL];
+    char arg2[MSL];
+
+    argument = one_argument(argument, arg1);
+    argument = one_argument(argument, arg2);
+
+    if (IS_NULLSTR(arg1))
+    {
+        sendch("Syntax:          hometown <city>\n\r", ch);
+        sendch("\n\r", ch);
+        sendch("Hometown may only be set once, you will be asked to confirm your choice.\n\r", ch);
+        return;
+    }
+
+    if (ch->pcdata->hometown > 0)
+    {
+        sendch("Your hometown has already been set! See an Immortal to change it again.\n\r", ch);
+        return;
+    }
+
+    if (!str_prefix(arg1, "list"))
+    {
+        int i, col;
+        col = 0;
+        for (i = 1; i < MAX_HOMETOWN; i++)
+        {
+            cprintf(ch, "%s ", hometown_table[i].name);
+            if (++col > 5)
+            {
+                sendch("\n\r", ch);
+                col = 0;
+            }
+        }
+        return;
+    }   
+
+    if ( (hn = get_hometown_num(arg1)) < 0 || hn > MAX_HOMETOWN )
+    {
+        sendch("That is not a valid hometown. Type 'hometown list' to see choices.\n\r", ch);
+        return;
+    }
+
+    if (!str_cmp(arg2, "confirm"))
+    {
+        cprintf(ch, "Setting hometown to %s.\n\r", hometown_table[hn].name);
+        ch->pcdata->hometown = hn;
+        return;
+    }
+    else
+    {
+        cprintf(ch, "To set your recall location to %s, type 'hometown %s confirm'\n\r",
+                hometown_table[hn].name, hometown_table[hn].name);
+        return;
+    }
+
 }

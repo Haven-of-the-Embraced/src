@@ -461,6 +461,7 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "where",      do_where},
     { "mount",      do_mount},
     { "dismount",   do_dismount},
+    { "hometown",   do_hometown},
     { "changeform", do_changeform},
     { "fury",   do_fury},
     { "rite",   do_rite},

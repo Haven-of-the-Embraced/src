@@ -81,6 +81,7 @@ DECLARE_DO_FUN( do_battleprompt);
 DECLARE_DO_FUN( do_at       );
 DECLARE_DO_FUN( do_auction  );
 DECLARE_DO_FUN( do_autoassist   );
+DECLARE_DO_FUN( do_hometown     );
 DECLARE_DO_FUN( do_autoexit );
 DECLARE_DO_FUN( do_autogold );
 DECLARE_DO_FUN( do_huh      );

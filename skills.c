@@ -250,7 +250,6 @@ void do_skills(CHAR_DATA *ch, char *argument)
 	if ((level = csskill_table[cskill_lookup(sn)].level) < LEVEL_HERO + 1
 	&&  (fAll || level <= ch->level)
 	&&  level >= min_lev && level <= max_lev
-	&&  skill_table[sn].spell_fun == spell_null
 	&&  ch->pcdata->learned[sn] > 0)
         {
 	    found = TRUE;

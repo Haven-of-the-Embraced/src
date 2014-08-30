@@ -824,6 +824,9 @@ int get_curr_stat( CHAR_DATA *ch, int stat )
 
 int get_attribute( CHAR_DATA *ch, int stat )
 {
+    if (IS_NPC(ch))
+        return 1 + ch->level/24;
+
     if(ch->pcdata->csattributes[stat]+ch->pcdata->csattrib_mod[stat] > 10)
         return 10;
 
@@ -835,6 +838,9 @@ int get_attribute( CHAR_DATA *ch, int stat )
 
 int get_ability( CHAR_DATA *ch, int stat )
 {
+    if (IS_NPC(ch))
+        return 1 + ch->level/24;
+
     return ch->pcdata->csabilities[stat];
 }
 

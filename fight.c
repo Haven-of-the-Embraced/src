@@ -991,7 +991,7 @@ void one_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt )
             af.where     = TO_AFFECTS;
             af.type      = gsn_poison;
             af.level     = level;
-            af.duration  = level / 2 + 1;
+            af.duration  = level / 10 + 1;
             af.location  = APPLY_STR;
             af.modifier  = -1;
             af.bitvector = AFF_POISON;
@@ -999,13 +999,16 @@ void one_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt )
         }
 
         /* weaken the poison if it's temporary */
-        if (poison != NULL)
+        if (poison != NULL && number_percent() < 40)
         {
             poison->level = UMAX(0,poison->level - 2);
             poison->duration = UMAX(0,poison->duration - 1);
 
-            if (poison->level == 0 || poison->duration == 0)
+            if (poison->level == 0 && poison->duration == 0)
+            {
             act("The poison on $p has worn off.",ch,wield,victim,TO_CHAR);
+            affect_remove_obj(wield, poison);
+            }
         }
     }
 
@@ -1975,7 +1978,7 @@ void garou_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt)
             af.where     = TO_AFFECTS;
             af.type      = gsn_poison;
             af.level     = level;
-            af.duration  = level / 2 + 1;
+            af.duration  = level / 10 + 1;
             af.location  = APPLY_STR;
             af.modifier  = -1;
             af.bitvector = AFF_POISON;
@@ -1983,13 +1986,16 @@ void garou_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt)
         }
 
         /* weaken the poison if it's temporary */
-        if (poison != NULL)
+        if (poison != NULL && number_percent() < 40)
         {
             poison->level = UMAX(0,poison->level - 2);
             poison->duration = UMAX(0,poison->duration - 1);
 
-            if (poison->level == 0 || poison->duration == 0)
+            if (poison->level == 0 && poison->duration == 0)
+            {
             act("The poison on $p has worn off.",ch,wield,victim,TO_CHAR);
+            affect_remove_obj(wield, poison);
+            }
         }
     }
 

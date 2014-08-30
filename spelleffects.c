@@ -27,6 +27,12 @@ void spells_update (void) {
     {
     ch_next = ch->next;
 
+    //EMERGOD POISON ACTUALLY SUCKS NOW CODE
+    if ( IS_AFFECTED (ch, AFF_POISON) && ch->hit > (ch->max_hit / 20) )
+        damage(ch,ch,
+            (ch->hit/(50*get_attribute(ch, STAMINA) > 0 ? get_attribute(ch, STAMINA) : 1 )),
+            gsn_poison,DAM_POISON,FALSE);
+
     if (IS_NPC(ch))
         continue;
         
@@ -93,16 +99,8 @@ void spells_update (void) {
             affect_strip(ch, gsn_vampire_regen);
             }
     }
- 
+
 // End of new regen code
-    
-   
-
-//EMERGOD POISON ACTUALLY SUCKS NOW CODE
-    if ( IS_AFFECTED (ch, AFF_POISON) && ch->hit > (ch->max_hit / 20) )
-        damage(ch,ch,(ch->hit/(50*get_attribute(ch, STAMINA) > 0 ? get_attribute(ch, STAMINA) : 1 )),gsn_poison,DAM_POISON,FALSE);
-
-
 }
 
 

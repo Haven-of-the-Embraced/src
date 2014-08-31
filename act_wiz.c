@@ -6361,7 +6361,7 @@ void do_copyover (CHAR_DATA *ch, char * argument)
 
     write_to_descriptor (ch->desc->descriptor, "Proceeding to copyover...\n\r", 0);
     /* autosave changed lists */
-
+    save_config();
 
     sprintf (buf, "\n\r *** COPYOVER by %s - please remain seated!\n\r", ch->name);
 

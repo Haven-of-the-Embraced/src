@@ -3827,6 +3827,8 @@ void save_config( void )
     fprintf( fp, "Nosun %d\n",          nosun);
     fprintf( fp, "Arena %d\n",          arena);
     fprintf( fp, "Resolver %d\n",       resolver);
+    fprintf (fp, "Wizlock %d\n",        wizlock);
+    fprintf (fp, "Newlock %d\n",        newlock);
 
     fprintf( fp, "End\n\n\n\n" );
     fclose( fp );
@@ -3887,6 +3889,7 @@ void load_config( void )
                break;
            case 'N':
                KEY("Nosun", nosun, fread_number(fp) );
+               KEY("Newlock", newlock, fread_number(fp));
                break;
           case 'D':
                 KEY( "Doubleexp", doubleexp, fread_number(fp) );
@@ -3904,6 +3907,9 @@ void load_config( void )
                     fpReserve = fopen( NULL_FILE, "r" );
                     return;
                 }
+           case 'W':
+               KEY("Wizlock", wizlock, fread_number(fp));
+               break;
           
         }
     }

@@ -901,37 +901,37 @@ const struct cs_skill_type csskill_table [] =
     {"berserk", &gsn_berserk, 40, 
     {CSABIL_INTIMIDATION, 3, ABIL}, {CSABIL_HEARTHWISDOM, 1, ABIL} },
     
-    {"blast", &gsn_blast, 50, 
+    {"blast", &gsn_blast, 40,
     {CSABIL_LEGERDEMAIN, 4, ABIL}, {CSABIL_NONE, 0, ABIL} },
     
-    {"block", &gsn_block, 1, 
+    {"block", &gsn_block, 5,
     {CSABIL_BRAWL, 2, ABIL}, {CSABIL_NONE, 0, ABIL} },
     
-    {"brew", &gsn_brew, 10, 
+    {"brew", &gsn_brew, 35,
     {CSABIL_HEARTHWISDOM, 2, ABIL}, {CSABIL_NONE, 0, ABIL} },
     
-    {"chant", &gsn_chant, 10, 
+    {"chant", &gsn_chant, 15,
     {CSABIL_NONE, 0, ABIL}, {CSABIL_NONE, 0, ABIL} },
     
-    {"critical strike", &gsn_critical_strike, 60, 
+    {"critical strike", &gsn_critical_strike, 70,
     {CSABIL_MEDICINE, 3, ABIL}, {CSABIL_MELEE, 2, ABIL} },
     
     {"dirt kick", &gsn_dirt, 5, 
     {CSABIL_BRAWL, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
     
-    {"disarm", &gsn_disarm,20, 
+    {"disarm", &gsn_disarm,30,
     {CSABIL_MELEE, 2, ABIL}, {CSABIL_NONE, 0, ABIL} },
     
-    {"divine strength", &gsn_divine_strength, 50, 
+    {"divine strength", &gsn_divine_strength, 55,
     {CSABIL_THEOLOGY, 4, ABIL}, {CSABIL_NONE, 0, ABIL} },
     
     {"dodge", &gsn_dodge, 1, 
     {CSABIL_DODGE, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
     
-    {"enhanced damage", &gsn_enhanced_damage, 50,
+    {"enhanced damage", &gsn_enhanced_damage, 55,
     {STRENGTH, 5, ATTR}, {CSABIL_NONE, 0, ABIL} },
     
-    {"enhanced speed", &gsn_enhanced_speed, 50,
+    {"enhanced speed", &gsn_enhanced_speed, 55,
     {DEXTERITY, 5, ATTR}, {CSABIL_NONE, 0, ABIL} },
     
     {"envenom", &gsn_envenom, 45, 
@@ -940,16 +940,16 @@ const struct cs_skill_type csskill_table [] =
 //    {"alertness", &gsn_alertness, 0
 //    {CSABIL_ALERTNESS, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
     
-    {"fortress", &gsn_fortress, 55, 
+    {"fortress", &gsn_fortress, 60,
     {CSABIL_CRAFTS, 3, ABIL}, {CSABIL_SURVIVAL, 1, ABIL} },
     
     {"waylay", &gsn_waylay, 55, 
     {CSABIL_STEALTH, 3, ABIL}, {CSABIL_MELEE, 1, ABIL} },
     
-    {"ground", &gsn_ground, 20, 
+    {"ground", &gsn_ground, 30,
     {CSABIL_BRAWL, 3, ABIL}, {CSABIL_NONE, 0, ABIL} },
     
-    {"haggle", &gsn_haggle, 5, 
+    {"haggle", &gsn_haggle, 20,
     {CSABIL_COMMERCE, 2, ABIL}, {CSABIL_SUBTERFUGE, 1, ABIL} },
     
     {"headbutt", &gsn_headbutt, 50, 
@@ -958,43 +958,43 @@ const struct cs_skill_type csskill_table [] =
     {"hide", &gsn_hide, 20, 
     {CSABIL_STEALTH, 3, ABIL}, {CSABIL_NONE, 0, ABIL} },
     
-    {"knights training", &gsn_knight_training, 50, 
+    {"knights training", &gsn_knight_training, 65,
     {CSABIL_MELEE, 5, ABIL}, {CSABIL_ETIQUETTE, 1, ABIL} },
     
     {"lore", &gsn_lore, 15, 
     {CSABIL_HEARTHWISDOM, 2, ABIL}, {CSABIL_ACADEMICS, 1, ABIL} },
     
-    {"meditation", &gsn_meditation, 1,
+    {"meditation", &gsn_meditation, 5,
     {CSABIL_MEDITATION, 1, SECA}, {CSABIL_NONE, 0, ABIL} },
     
-    {"parry", &gsn_parry, 1, 
+    {"parry", &gsn_parry, 15,
     {CSABIL_MELEE, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
     
     {"peek", &gsn_peek, 15, 
     {CSABIL_STEALTH, 2, ABIL}, {CSABIL_LEGERDEMAIN, 1, ABIL} },
     
-    {"pick lock", &gsn_pick_lock, 5, 
+    {"pick lock", &gsn_pick_lock, 20,
     {CSABIL_LEGERDEMAIN, 3, ABIL}, {CSABIL_ACADEMICS, 1, ABIL} },
     
-    {"renown", &gsn_renown, 70, 
+    {"renown", &gsn_renown, 75,
     {CSABIL_SURVIVAL, 3, ABIL}, {CSABIL_ATHLETICS, 1, ABIL} },
     
-    {"rescue", &gsn_rescue, 10, 
+    {"rescue", &gsn_rescue, 25,
     {CSABIL_BRAWL, 2, ABIL}, {CSABIL_LEADERSHIP, 1, ABIL} },
     
-    {"riding", &gsn_riding, 1, 
+    {"riding", &gsn_riding, 30,
     {CSABIL_RIDING, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
     
-    {"scrolls", &gsn_scrolls, 1, 
+    {"scrolls", &gsn_scrolls, 5,
     {CSABIL_OCCULT, 2, ABIL}, {CSABIL_ACADEMICS, 1, ABIL} },
     
-    {"second attack", &gsn_second_attack, 15,
+    {"second attack", &gsn_second_attack, 30,
     {DEXTERITY, 2, ATTR}, {CSABIL_NONE, 0, ABIL} },
     
-    {"shield block", &gsn_shield_block, 1, 
+    {"shield block", &gsn_shield_block, 25,
     {CSABIL_MELEE, 2, ABIL}, {CSABIL_ATHLETICS, 1, ABIL} },
     
-    {"skin", &gsn_skin, 10, 
+    {"skin", &gsn_skin, 20,
     {CSABIL_SURVIVAL, 2, ABIL}, {CSABIL_CRAFTS, 1, ABIL} },
     
     {"slip", &gsn_slip,70, 
@@ -1003,25 +1003,25 @@ const struct cs_skill_type csskill_table [] =
     {"sneak", &gsn_sneak,10, 
     {CSABIL_STEALTH, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
     
-    {"staves", &gsn_staves, 1, 
+    {"staves", &gsn_staves, 5,
     {CSABIL_THEOLOGY, 2, ABIL}, {CSABIL_NONE, 0, ABIL} },
     
-    {"steal", &gsn_steal, 10, 
+    {"steal", &gsn_steal, 45,
     {CSABIL_LEGERDEMAIN, 4, ABIL}, {CSABIL_NONE, 0, ABIL} },
     
-    {"study", &gsn_study, 10, 
+    {"study", &gsn_study, 25,
     {CSABIL_HEARTHWISDOM, 2, ABIL}, {CSABIL_OCCULT, 1, ABIL} },
     
-    {"third attack", &gsn_third_attack, 30,
-    {DEXTERITY, 3, ATTR}, {CSABIL_NONE, 0, ABIL} },
+    {"third attack", &gsn_third_attack, 60,
+    {DEXTERITY, 4, ATTR}, {CSABIL_NONE, 0, ABIL} },
     
     {"trip", &gsn_trip, 30, 
     {CSABIL_BRAWL, 2, ABIL}, {CSABIL_ATHLETICS, 1, ABIL} },
     
-    {"vigor", &gsn_vigor,10, 
+    {"vigor", &gsn_vigor,20,
     {CSABIL_ATHLETICS, 2, ABIL}, {CSABIL_NONE, 0, ABIL} },
     
-    {"wands", &gsn_wands, 1, 
+    {"wands", &gsn_wands, 5,
     {CSABIL_HEARTHWISDOM, 2, ABIL}, {CSABIL_OCCULT, 1, ABIL} },
     
     {"warcry", &gsn_warcry, 65, 
@@ -1030,67 +1030,67 @@ const struct cs_skill_type csskill_table [] =
     {"kick", &gsn_kick, 1, 
     {CSABIL_BRAWL, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
     
-    {"bash", &gsn_bash, 1, 
+    {"bash", &gsn_bash, 10,
     {CSABIL_MELEE, 2, ABIL}, {CSABIL_NONE, 0, ABIL} },
 
-    {"axe", &gsn_axe,  1, 
+    {"axe", &gsn_axe,  10,
     {CSABIL_MELEE, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
 
     {"dagger", &gsn_dagger, 1, 
     {CSABIL_MELEE, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
 
-    {"flail", &gsn_flail, 1, 
+    {"flail", &gsn_flail, 5,
     {CSABIL_MELEE, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
 
     {"mace", &gsn_mace, 1, 
     {CSABIL_MELEE, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
 
-    {"polearm", &gsn_polearm, 1, 
+    {"polearm", &gsn_polearm, 5,
     {CSABIL_MELEE, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
 
-    {"whip", &gsn_whip, 1, 
+    {"whip", &gsn_whip, 5,
     {CSABIL_MELEE, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
 
-    {"spear", &gsn_spear, 1, 
+    {"spear", &gsn_spear, 5,
     {CSABIL_MELEE, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
 
     {"sword", &gsn_sword, 1, 
     {CSABIL_MELEE, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
 
-    {"lance", &gsn_lance, 1,  
+    {"lance", &gsn_lance, 10,
     {CSABIL_MELEE, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
     
     {"hand to hand", &gsn_hand_to_hand,  1,  
     {CSABIL_BRAWL, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
     
-    {"blindness", &gsn_blindness, 30, 
+    {"blindness", &gsn_blindness, 45,
     {CSABIL_OCCULT, 3, ABIL}, {CSABIL_HEARTHWISDOM, 1, ABIL} },
     
     {"call lightning", &gsn_call_lightning, 40, 
     {CSABIL_THEOLOGY, 3, ABIL}, {CSABIL_NONE, 0, ABIL} },
     
-    {"cause light", &gsn_cause_light, 5, 
+    {"cause light", &gsn_cause_light, 10,
     {CSABIL_OCCULT, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
     
-    {"create food", &gsn_create_food, 1, 
+    {"create food", &gsn_create_food, 5,
     {CSABIL_HEARTHWISDOM, 3, ABIL}, {CSABIL_SURVIVAL, 1, ABIL} },
     
-    {"create spring", &gsn_create_spring, 25, 
+    {"create spring", &gsn_create_spring, 30,
     {CSABIL_HEARTHWISDOM, 4, ABIL}, {CSABIL_SURVIVAL, 2, ABIL} },
     
-    {"create water", &gsn_create_water, 5, 
+    {"create water", &gsn_create_water, 20,
     {CSABIL_THEOLOGY, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
     
-    {"cure blindness", &gsn_cure_blindness, 10, 
+    {"cure blindness", &gsn_cure_blindness, 25,
     {CSABIL_THEOLOGY, 2, ABIL}, {CSABIL_NONE, 0, ABIL} },
     
     {"cure poison", &gsn_cure_poison, 15, 
     {CSABIL_HEARTHWISDOM, 1, ABIL}, {CSABIL_OCCULT, 1, ABIL} },
     
-    {"curse", &gsn_curse, 45, 
+    {"curse", &gsn_curse, 60,
     {CSABIL_OCCULT, 4, ABIL}, {CSABIL_HEARTHWISDOM, 2, ABIL} },
     
-    {"dispel", &gsn_dispel, 70, 
+    {"dispel", &gsn_dispel, 75,
     {CSABIL_OCCULT, 5, ABIL}, {CSABIL_ACADEMICS, 2, ABIL} },
     
     {"earthquake", &gsn_earthquake, 45, 
@@ -1099,13 +1099,13 @@ const struct cs_skill_type csskill_table [] =
     {"lightning bolt", &gsn_lightning_bolt, 35, 
     {CSABIL_OCCULT, 2, ABIL}, {CSABIL_NONE, 0, ABIL} },
     
-    {"ray of truth", &gsn_ray_of_truth, 50, 
+    {"ray of truth", &gsn_ray_of_truth, 60,
     {CSABIL_THEOLOGY, 5, ABIL}, {CSABIL_LINGUISTICS, 2, ABIL} },
     
-    {"remove curse", &gsn_remove_curse, 20, 
+    {"remove curse", &gsn_remove_curse, 40,
     {CSABIL_THEOLOGY, 4, ABIL}, {CSABIL_HEARTHWISDOM, 1, ABIL} },
     
-    {"zeal", &gsn_zeal, 5, 
+    {"zeal", &gsn_zeal, 15,
     {CSABIL_THEOLOGY, 3, ABIL}, {CSABIL_EXPRESSION, 3, ABIL} },
 
     { NULL, 0, 0, {-1, 0, ABIL}, {-1, 0, ABIL}}

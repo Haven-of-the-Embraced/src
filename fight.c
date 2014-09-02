@@ -26,7 +26,6 @@
 *   ROM license, in the file Rom24/doc/rom.license             *
 ***************************************************************************/
 
-//#define DEBUG_MESSAGES
 
 #if defined(macintosh)
 #include <types.h>
@@ -70,6 +69,8 @@ char    *slash_dam_noun args((int dam,bool plural));
 int     get_armor_diff  args(( CHAR_DATA *ch, CHAR_DATA *victim, int dam_type));
 void    garou_hit           args( ( CHAR_DATA *ch, CHAR_DATA *victim, int dt ) );
 bool    garou_damage        args( ( CHAR_DATA *ch,CHAR_DATA *victim,int claw_dam,int bite_dam,int claw_dam_type,int bite_dam_type ) );
+
+extern bool DEBUG_MESSAGES;
 /*
  * Control the fights going on.
  * Called periodically by update_handler.
@@ -1316,32 +1317,24 @@ bool damage(CHAR_DATA *ch,CHAR_DATA *victim,int dam,int dt,int dam_type,
     {
         if(dam_type == DAM_PIERCE || dam_type == DAM_BASH || dam_type == DAM_SLASH)
         {
-					#ifdef DEBUG_MESSAGES	
-			//Debug Message
-            sprintf( buf, "B4E: %d ", dam);
-            send_to_char( buf, victim );
-			#endif
+            if (DEBUG_MESSAGES)
+            cprintf( ch, "B4E: %d ", dam);
+
             dam -= (dam/100)*(6*ch->sphere[SPHERE_ENTROPY]);
-				#ifdef DEBUG_MESSAGES	
-			//Debug Message
-            sprintf( buf, "AE: %d\n\r", dam);
-            send_to_char( buf, victim );
-			#endif
+				if (DEBUG_MESSAGES)
+            cprintf(ch, "AE: %d\n\r", dam);
         }
     } 
 
   if(victim->sphere[SPHERE_FORCES] > 0)
     {
         if(dam_type != DAM_PIERCE && dam_type != DAM_BASH && dam_type != DAM_SLASH)
-		#ifdef DEBUG_MESSAGES	
-			//Debug Message
+		if (DEBUG_MESSAGES)
 		cprintf(ch, "B4F: %d ", dam);
-		#endif
+
             dam -= (dam/100)*(4*ch->sphere[SPHERE_FORCES]);
-			#ifdef DEBUG_MESSAGES	
-			//Debug Message
+			if (DEBUG_MESSAGES)
 		cprintf(ch, "AF: %d\n\r", dam);
-		#endif
     } 
 
     if ( is_affected( victim, gsn_sanctus ) )
@@ -1812,12 +1805,10 @@ void garou_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt)
 
 	if (dt == gsn_backstab || dt == gsn_waylay)
 		dice *= 2;
-
-		#ifdef DEBUG_MESSAGES	
-//Debug Message
+if (DEBUG_MESSAGES){
 	cprintf(ch, "hp{r%d{x ", dice);
-	if (IS_NPC(ch)) cprintf(victim, "hp{r%d{x ", dice);
-#endif
+	if (IS_NPC(ch)) cprintf(victim, "hp{r%d{x ", dice);}
+
 			
 				
 		//Moment of excitement!
@@ -1837,11 +1828,10 @@ void garou_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt)
 			check_shield_block(ch, victim) )
 		tohit = 0;
 
-	#ifdef DEBUG_MESSAGES	
+	if (DEBUG_MESSAGES){
 		//Debug Message
 		cprintf(ch, "t{R%d{x ", tohit);
-		if (IS_NPC(ch)) cprintf(victim, "t{R%d{x ", tohit);
-	#endif
+		if (IS_NPC(ch)) cprintf(victim, "t{R%d{x ", tohit);}
 
 
 
@@ -1945,11 +1935,11 @@ void garou_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt)
 			dice += get_attribute(ch, STRENGTH);
 			
         damsuccess += godice(dice, 5);
-		#ifdef DEBUG_MESSAGES	
-//Debug Message
-	cprintf(ch, "dp{r%d{x ", dice);
-	if (IS_NPC(ch)) cprintf(victim, "dp{r%d{x ", dice);
-#endif
+
+		if (DEBUG_MESSAGES)	{
+            cprintf(ch, "dp{r%d{x ", dice);
+            if (IS_NPC(ch)) cprintf(victim, "dp{r%d{x ", dice);
+        }
 
 	result = d10_damage(ch, victim, damsuccess, modifier, dt, dam_type, TRUE);
 	
@@ -2187,12 +2177,11 @@ bool d10_damage(CHAR_DATA *ch, CHAR_DATA *victim, int damsuccess, int modifier, 
             if (check_dodge( ch, victim ))
                 return FALSE;
         }
-		#ifdef DEBUG_MESSAGES	
-
-       cprintf(ch, "d{W%d{x ", damsuccess);
+		if (DEBUG_MESSAGES)	{
+            cprintf(ch, "d{W%d{x ", damsuccess);
         if (IS_NPC(ch))
         cprintf(victim, "d{W%d{x ", damsuccess);
-#endif
+        }
 		
 		//Soak dice, subtracts successes from damage.
         if (!IS_NPC(victim))
@@ -2251,12 +2240,12 @@ bool d10_damage(CHAR_DATA *ch, CHAR_DATA *victim, int damsuccess, int modifier, 
                 dam *= 2;
                 break;
         }
-#ifdef DEBUG_MESSAGES  
-        /*Debug Messages.*/ 
+if (DEBUG_MESSAGES)	{
         cprintf(ch, "M{D%d{x Ar{c%d{x sd{c%d{x s{c%d{x ", modifier, armordice, soakdice, soak, dam);
         if (IS_NPC(ch))
         cprintf(victim, "{xm{D%d Ar{c%d {xsd{c%d{x s{c%d{x ", modifier, armordice, soakdice, soak, dam);
-#endif
+}
+
 	/* damage reduction */
     //    if ( dam > 5)
     //    dam = (dam - 5)/2 + 5;

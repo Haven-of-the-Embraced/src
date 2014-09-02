@@ -318,12 +318,13 @@ int             tree_count = 0;
 int             vein_count = 0;
 
 /* Imm globals */
-bool            arena;              /* Arena is closed      */
+bool            arena=FALSE;              /* Arena is closed      */
 bool            nosun=FALSE;        /* No sun damage for vamps  */
 bool            doubleexp=FALSE;    /* Double exp and cap   */
 bool            slaughter=FALSE;        /* Removes damcap and quad damage */
 bool            doubledam=FALSE;    /* double damage for players */
 bool            resolver=TRUE;
+bool            DEBUG_MESSAGES=FALSE;
 
 /* config file (config.cfg in the area directory) */
 CONFIG_DATA     *config;

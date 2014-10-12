@@ -2888,8 +2888,8 @@ void clear_char( CHAR_DATA *ch )
     for (i = 0; i < 4; i++)
         ch->armor[i]        = 100;
     ch->position        = POS_STANDING;
-    ch->hit         = 20;
-    ch->max_hit         = 20;
+    ch->hit         = 100;
+    ch->max_hit         = 100;
     ch->mana            = 100;
     ch->max_mana        = 100;
     ch->move            = 100;

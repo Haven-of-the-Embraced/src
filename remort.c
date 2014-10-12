@@ -134,7 +134,7 @@ void do_remort(CHAR_DATA *ch, char *argument)
         ch->tradition = 0;
         ch->size = pc_race_table[ch->race].size;
         if(ch->pcdata->points < 30) ch->pcdata->points = 30;
-        ch->max_hit  = 20;
+        ch->max_hit  = 100;
         ch->max_mana = 100;
         ch->max_move = 100;
         ch->pcdata->perm_hit = ch->max_hit;
@@ -257,7 +257,7 @@ void do_remort(CHAR_DATA *ch, char *argument)
         ch->tradition = 0;
         ch->size = pc_race_table[ch->race].size;
         if(ch->pcdata->points < 30) ch->pcdata->points = 30;
-        ch->max_hit  = 20;
+        ch->max_hit  = 100;
         ch->max_mana = 100;
         ch->max_move = 100;
         ch->pcdata->perm_hit = ch->max_hit;
@@ -406,7 +406,7 @@ void do_remort(CHAR_DATA *ch, char *argument)
         ch->train = 3;
         ch->level    = 1;
         if(ch->pcdata->points < 30) ch->pcdata->points = 30;
-        ch->max_hit  = 20;
+        ch->max_hit  = 100;
         ch->max_mana = 100;
         ch->max_move = 100;
         ch->pcdata->perm_hit = ch->max_hit;
@@ -466,7 +466,7 @@ void do_remort(CHAR_DATA *ch, char *argument)
         ch->train = 3;
         ch->level    = 1;
         if(ch->pcdata->points < 30) ch->pcdata->points = 30;
-        ch->max_hit  = 20;
+        ch->max_hit  = 100;
         ch->max_mana = 100;
         ch->max_move = 100;
         ch->pcdata->perm_hit = ch->max_hit;

@@ -1738,7 +1738,7 @@ void do_incorporealpassage( CHAR_DATA *ch, char *argument )
 void do_arise( CHAR_DATA *ch, char *argument )
 {
     AFFECT_DATA af;
-
+    int diff = 0;
     int dicesuccess = 0;
 
     if (IS_NPC(ch))
@@ -1772,9 +1772,17 @@ void do_arise( CHAR_DATA *ch, char *argument )
         return;
     }
 
-    dicesuccess = godice(ch->pcdata->cshumanity, 8);
+    if (IS_NEWBIE(ch))
+        diff = 3;
+    else
+        diff = 6;
+
+    dicesuccess = godice(ch->pcdata->cshumanity, diff);
     ch->pblood -= 5;
     act_new("You gather up your reserves of determination, ", ch, NULL, NULL, TO_CHAR, POS_DEAD, FALSE);
+
+    if (IS_NEWBIE(ch))
+        dicesuccess++;
 
     if (dicesuccess < 0)
     {

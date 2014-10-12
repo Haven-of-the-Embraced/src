@@ -102,7 +102,6 @@ const   struct  spec_type    spec_table[] =
     {   "spec_troll_member",        spec_troll_member   },
     {   "spec_ogre_member",     spec_ogre_member    },
     {   "spec_patrolman",       spec_patrolman      },
-    {   "spec_jarjar",          spec_jarjar     },
     {   "spec_cast_lightning",  spec_cast_lightning},
     {   "spec_cast_acid",       spec_cast_acid},
     {   "spec_cast_cold",       spec_cast_cold},

@@ -2880,8 +2880,11 @@ void update_pos( CHAR_DATA *victim )
             if(victim->race == race_lookup("methuselah") || victim->race == race_lookup("vampire"))
             {
             victim->position = POS_TORPOR;
-            if (!IS_NPC(victim))
-                torporduration = 40 - (victim->pcdata->cshumanity * 3);
+            if (!IS_NPC(victim)) {
+                torporduration = 31 - (victim->pcdata->cshumanity * 3);
+                torporduration = UMAX(1, torporduration);
+                torporduration = number_range(1, torporduration);
+            }
             if (IS_NPC(victim))
                 torporduration = victim->level / 20 + 5;
 

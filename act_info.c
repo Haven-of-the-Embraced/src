@@ -1875,6 +1875,16 @@ void do_score( CHAR_DATA *ch, char *argument )
         GET_HITROLL(ch), GET_DAMROLL(ch) );
     add_buf(output,buf);
 
+    sprintf( buf, "Total Kills: %d\n\r",ch->totalkills);
+    add_buf(output, buf);
+    sprintf( buf, "Current Kills: %d\n\r",ch->currentkills);
+    add_buf(output, buf);
+    sprintf( buf, "Current IP: %d\n\r",ch->pcdata->ip);
+    add_buf(output, buf);
+
+    sprintf( buf, "Highest Damage: %d\n\r",ch->maxdamage);
+    add_buf(output,buf);
+
         if (ch->clan)
     {
         sprintf(buf,"Clan:{D %s {xLeader:{D %s{x\n\rClan Bank Balance:{D %d{x\n\r",clan_table[ch->clan].name,clan_table[ch->clan].leader,clan_table[ch->clan].bank);
@@ -2250,6 +2260,7 @@ void do_who( CHAR_DATA *ch, char *argument )
     BUFFER *output;
     DESCRIPTOR_DATA *d;
 
+    extern bool doubleexp;
     int iRace;
     int iClan;
     int iLevelLower;
@@ -2432,8 +2443,11 @@ void do_who( CHAR_DATA *ch, char *argument )
     sprintf( buf2, "{w |           {GPlayers found{w: %2d          |      {WMost on since update{w: %2d       |\n\r", vMatch,most_players );
     add_buf(output,buf2);
     add_buf(output, "{w<==============================================================================>{x\n\r");
-
-    page_to_char( buf_string(output), ch );
+    sprintf( buf2, "Global {WXP{x:%d | Global {MQP{x:%d\n",global_xp,global_qp);
+    add_buf(output,buf2);
+    if (doubleexp)sprintf( buf2, "Double XP is ON!\n");
+    if (doubleexp)add_buf(output,buf2);
+page_to_char( buf_string(output), ch );
     free_buf(output);
     return;
 }
@@ -2987,6 +3001,9 @@ void do_report( CHAR_DATA *ch, char *argument )
     ch->mana, ch->max_mana,
     ch->move, ch->max_move,
     ch->exp   );
+    
+    if (ch->aget == 0) 
+    ch->aget =   17 + ( ch->played + (int) (current_time - ch->logon) ) / 14400; 
 
     send_to_char( buf, ch );
 

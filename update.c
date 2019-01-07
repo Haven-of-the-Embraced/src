@@ -732,7 +732,8 @@ void char_update( void )
     extern bool doubleexp;
     int         qpgain;
     int         ichours;
-
+    int         bqp;
+    int         qpaward;
     ch_quit = NULL;
 
     /* update save counter */
@@ -814,7 +815,7 @@ void char_update( void )
         //if (IS_IMMORTAL(ch))
         //ch->timer = 0;
 
-        if ( ++ch->timer >= 18 && !IS_IMMORTAL(ch))
+     /*   if ( ++ch->timer >= 18 && !IS_IMMORTAL(ch))
         {
         if ( ch->was_in_room == NULL && ch->in_room != NULL )
         {
@@ -844,6 +845,7 @@ void char_update( void )
             char_to_room( ch, get_room_index( ROOM_VNUM_LIMBO ) );
         }
     }
+*/
 /* New ifcheck code added by Sengir, if player is IC they no longer
    get hungrier/thirstier or lose fullness */
 		if (!IS_SET(ch->act, PLR_IC) && !IS_IMMORTAL(ch))
@@ -898,6 +900,15 @@ void char_update( void )
 
         affect_remove( ch, paf );
         }
+if (ch->qpoints > 30000)
+    ch->qpoints = 30000;
+/*int r = arc4random_uniform(500);
+if ((r > 499) && (ch->tagged == 1) && (!IS_IMMORTAL(ch)))
+{
+ch->move = 1;
+send_to_char("Pesky being tagged as it isn't it?\n\r", ch);
+send_to_char("You probably should {Ytag{x someone else!\n\r",ch);
+} */
     }
 
     /*
@@ -1144,10 +1155,42 @@ if (is_affected(ch, gsn_shadowplay) && ch != NULL)
            case 4: case 5: qpgain = qpgain/2;break;
            default: qpgain = 4;break;
        }
-       if (ch->pcdata->last_pose < 9)
-        ch->qpoints += UMIN(200+ch->remorts, qpgain);
+        // Doing math ahead of time so variables match
+        qpaward = UMIN(200+ch->remorts, qpgain);
 
-       if (doubleexp) ch->qpoints += UMIN(200+ch->remorts, qpgain)*2;
+       if (ch->pcdata->last_pose < 5)
+        {
+        
+        // Line for this into gxp as well
+             global_xp += qpaward*xpmult;
+             ch->qpoints += qpaward;
+        }
+             
+       if (doubleexp)
+           {
+           qpaward = qpaward*2;
+           ch->qpoints += qpaward;
+           global_xp += qpaward*2;
+           }
+       if (global_qp < 20000)
+          {
+          qpaward = qpaward*2;
+          ch->qpoints += qpaward;
+          global_qp -= qpaward/2;
+          }
+       if (global_qp > 20000)
+          {
+          qpaward = qpaward*4;
+          ch->qpoints += qpaward;
+          global_qp -= qpaward/4;
+          }
+
+        if (global_qp > 40000)
+          {
+             qpaward = qpaward*6;
+             ch->qpoints += qpaward;
+             global_qp -= qpaward/6;
+          }
        if (ch->qpoints > 30000)
             ch->qpoints = 30000;
         }
@@ -1173,7 +1216,7 @@ if (is_affected(ch, gsn_shadowplay) && ch != NULL)
 */
         }
 
-        if(ch->pblood != 0 && !IS_IMMORTAL(ch) && !is_affected(ch,gsn_earthmeld) && !IS_SET(ch->act,PLR_IC))
+        if(ch->pblood != 0 && !IS_IMMORTAL(ch) && !is_affected(ch,gsn_earthmeld) && !IS_SET(ch->act,PLR_IC) && (!is_safe))
         {
             if(number_range(1,6) % 2 == 0)
             ch->pblood--;

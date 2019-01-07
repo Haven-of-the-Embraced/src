@@ -794,7 +794,7 @@ int IS_VAMP( CHAR_DATA *ch )
 int get_age( CHAR_DATA *ch )
 {
 /*    return 17 + ( ch->played + (int) (current_time - ch->logon) ) / 72000; */
-    return 17 + ( ch->played + (int) (current_time - ch->logon) ) / 14400;
+    return ch->aget;
 
 }
 

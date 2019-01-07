@@ -86,9 +86,9 @@ void do_remort(CHAR_DATA *ch, char *argument)
             send_to_char( "Only True Blood humans may become Garou.\n\r", ch );
             return;
         }
-        if(ch->level < 100)
+        if(ch->level < 1)
         {
-            send_to_char( "You must be level 100 to remort into a Garou.\n\r", ch );
+            send_to_char( "Something is seriously wrong, contact an immortal..\n\r", ch );
             return;
         }
 
@@ -97,7 +97,7 @@ void do_remort(CHAR_DATA *ch, char *argument)
             send_to_char( "You are already a Garou.\n\r", ch );
             return;
         }
-        if(ch->remorts < 3)
+        if(ch->remorts < 0)
         {
             send_to_char( "You have not struggled enough in this life to earn the honor of being one of Gaia's Chosen.\n\r",ch);
             return;
@@ -270,6 +270,7 @@ void do_remort(CHAR_DATA *ch, char *argument)
         ch->gen = 0;
         ch->bonded = 0;
         ch->embraced = 0;
+	ch->aget = 0;
         ch->unlocksspent = 0;
             for(i = 0; i < MAX_DISC; i++)
             ch->pcdata->discipline[i] = 0;

@@ -16,6 +16,722 @@
 #include "tables.h"
 #include "lookup.h"
 
+void do_demeanor(CHAR_DATA *ch, char *argument)
+{
+    char buf[MAX_STRING_LENGTH];
+    char arg[MAX_INPUT_LENGTH];
+
+    argument = one_argument( argument, arg);
+
+    if (IS_NPC(ch)) return;
+
+    if ( arg[0] == '\0')
+    {
+       if (ch->cslock == 1)
+       {
+       sprintf(buf,"Your demeanor is set to %s.\n\r",ch->pcdata->csdemeanor);
+       send_to_char(buf,ch);
+       send_to_char("If you wish to see a list, see HELP DEMEANOR.\n\rTo change it, contact an immortal\n\r",ch);
+       return;
+       }
+
+       if (ch->cslock == 0)
+       {
+       send_to_char("You have yet to set your demeanor. See HELP DEMEANOR for a list of possible choices.\n\r",ch);
+       send_to_char("Type demeanor # to set your demeanor. Once set, you will need an immortal to change it.\n\r",ch);
+       return;
+       }
+
+    }
+    if (!str_prefix(arg,"Architect"))
+    {
+    ch->pcdata->csdemeanor = "Architect";
+    send_to_char("You have selected Architect as your demeanor.\n\r",ch);
+    return;
+    }
+    if (!str_prefix(arg,"Autocrat"))
+    {
+    ch->pcdata->csdemeanor = "Autocrat";
+    send_to_char("You have selected Autocrat as your demeanor.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Autist"))
+    {
+    ch->pcdata->csdemeanor = "Autist";
+    send_to_char("You have selected Autist as your demeanor.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Avant-Garde"))
+    {
+    ch->pcdata->csdemeanor = "Avant-Garde";
+    send_to_char("You have selected Avant-Garde as your demeanor.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Barbarian"))
+    {
+    ch->pcdata->csdemeanor = "Barbarian";
+    send_to_char("You have selected Barbarian as your demeanor.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Bon Vivant"))
+    {
+    ch->pcdata->csdemeanor = "Bon Vivant";
+    send_to_char("You have selected Bon Vivant as your demeanor.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Bravo"))
+    {
+    ch->pcdata->csdemeanor = "Bravo";
+    send_to_char("You have selected Bravo as your demeanor.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Caregiver"))
+    {
+    ch->pcdata->csdemeanor = "Caregiver";
+    send_to_char("You have selected Caregiver as your demeanor.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Cavalier"))
+    {
+    ch->pcdata->csdemeanor = "Cavalier";
+    send_to_char("You have selected Cavalier as your demeanor.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Child"))
+    {
+    ch->pcdata->csdemeanor = "Child";
+    send_to_char("You have selected Child as your demeanor.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Celebrant"))
+    {
+    ch->pcdata->csdemeanor = "Celebrant";
+    send_to_char("You have selected Celebrant as your demeanor.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Competitor"))
+    {
+    ch->pcdata->csdemeanor = "Competitor";
+    send_to_char("You have selected Competitor as your demeanor.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Confidant"))
+    {
+    ch->pcdata->csdemeanor = "Confidant";
+    send_to_char("You have selected Confidant as your demeanor.\n\r",ch);
+    return;
+    }
+    if (!str_prefix(arg,"Conformist"))
+    {
+    ch->pcdata->csdemeanor = "Conformist";
+    send_to_char("You have selected Conformist as your demeanor.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Conniver"))
+    {
+    ch->pcdata->csdemeanor = "Conniver";
+    send_to_char("You have selected Conniver as your demeanor.\n\r",ch);
+    return;
+    }
+    if (!str_prefix(arg,"Critic"))
+    {
+    ch->pcdata->csdemeanor = "Critic";
+    send_to_char("You have selected Critic as your demeanor.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Curmudgeon"))
+    {
+    ch->pcdata->csdemeanor = "Curmudgeon";
+    send_to_char("You have selected Curmudgeon as your demeanor.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Defender"))
+    {
+    ch->pcdata->csdemeanor = "Defender";
+    send_to_char("You have selected Defender as your demeanor.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Deviant"))
+    {
+    ch->pcdata->csdemeanor = "Deviant";
+    send_to_char("You have selected Deviant as your demeanor.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Director"))
+    {
+    ch->pcdata->csdemeanor = "Director";
+    send_to_char("You have selected Director as your demeanor.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Fanatic"))
+    {
+    ch->pcdata->csdemeanor = "Fanatic";
+    send_to_char("You have selected Fanatic as your demeanor.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Gallant"))
+    {
+    ch->pcdata->csdemeanor = "Gallant";
+    send_to_char("You have selected Gallant as your demeanor.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Honest-Abe"))
+    {
+    ch->pcdata->csdemeanor = "Honest-Abe";
+    send_to_char("You have selected Honest-Abe as your demeanor.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Jester"))
+    {
+    ch->pcdata->csdemeanor = "Jester";
+    send_to_char("You have selected Jester as your demeanor.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Jobsworth"))
+    {
+    ch->pcdata->csdemeanor = "Jobsworth";
+    send_to_char("You have selected Jobsworth as your demeanor.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Judge"))
+    {
+    ch->pcdata->csdemeanor = "Judge";
+    send_to_char("You have selected Judge as your demeanor.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Loner"))
+    {
+    ch->pcdata->csdemeanor = "Loner";
+    send_to_char("You have selected Loner as your demeanor.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Manipulator"))
+    {
+    ch->pcdata->csdemeanor = "Manipulator";
+    send_to_char("You have selected Manipulator as your demeanor.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Martyr"))
+    {
+    ch->pcdata->csdemeanor = "Martyr";
+    send_to_char("You have selected Martyr as your demeanor.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Masochist"))
+    {
+    ch->pcdata->csdemeanor = "Masochist";
+    send_to_char("You have selected Masochist as your demeanor.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Mediator"))
+    {
+    ch->pcdata->csdemeanor = "Mediator";
+    send_to_char("You have selected Mediator as your demeanor.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Monsters"))
+    {
+    ch->pcdata->csdemeanor = "Monsters";
+    send_to_char("You have selected Monsters as your demeanor.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Optimist"))
+    {
+    ch->pcdata->csdemeanor = "Optimist";
+    send_to_char("You have selected Optimist as your demeanor.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Pedagogue"))
+    {
+    ch->pcdata->csdemeanor = "Pedagogue";
+    send_to_char("You have selected Pedagogue as your demeanor.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Penitent"))
+    {
+    ch->pcdata->csdemeanor = "Penitent";
+    send_to_char("You have selected Penitent as your demeanor.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Perfectionist"))
+    {
+    ch->pcdata->csdemeanor = "Perfectionist";
+    send_to_char("You have selected Perfectionist as your demeanor.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Plotter"))
+    {
+    ch->pcdata->csdemeanor = "Plotter";
+    send_to_char("You have selected Plotter as your demeanor.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Poltroon"))
+    {
+    ch->pcdata->csdemeanor = "Poltroon";
+    send_to_char("You have selected Poltroon as your demeanor.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Praise-Seeker"))
+    {
+    ch->pcdata->csdemeanor = "Praise-Seeker";
+    send_to_char("You have selected Praise-Seeker as your demeanor.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Rebel"))
+    {
+    ch->pcdata->csdemeanor = "Rebel";
+    send_to_char("You have selected Rebel as your demeanor.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Rogue"))
+    {
+    ch->pcdata->csdemeanor = "Rogue";
+    send_to_char("You have selected Rogue as your demeanor.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Survivor"))
+    {
+    ch->pcdata->csdemeanor = "Survivor";
+    send_to_char("You have selected Survivor as your demeanor.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Sycophant"))
+    {
+    ch->pcdata->csdemeanor = "Sycophatn";
+    send_to_char("You have selected Sycophant as your demeanor.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Traditionalist"))
+    {
+    ch->pcdata->csdemeanor = "Traditionalist";
+    send_to_char("You have selected Traditionalist as your demeanor.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Thrill-Seeker"))
+    {
+    ch->pcdata->csdemeanor = "Thrill-Seeker";
+    send_to_char("You have selected Thrill-Seeker as your demeanor.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Trickster"))
+    {
+    ch->pcdata->csdemeanor = "Trickster";
+    send_to_char("You have selected Trickster as your demeanor.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Visionary"))
+    {
+    ch->pcdata->csdemeanor = "Visionary";
+    send_to_char("You have selected Visonary as your demeanor.\n\r",ch);
+    return;
+    }
+
+    send_to_char("What? Are you trying to break Zelan's code?\n\r",ch);
+
+    return;
+}
+
+void do_nature(CHAR_DATA *ch, char *argument)
+{
+    char buf[MAX_STRING_LENGTH];
+    char arg[MAX_INPUT_LENGTH];
+
+    argument = one_argument( argument, arg);
+
+    if (IS_NPC(ch)) return;
+
+    if ( arg[0] == '\0')
+    {
+       if (ch->cslock == 1)
+       {
+       sprintf(buf,"Your nature is set to %s.\n\r",ch->pcdata->csnature);
+       send_to_char(buf,ch);
+       send_to_char("If you wish to see a list, see HELP NATURE.\n\rTo change it, contact an immortal\n\r",ch);
+       return;
+       }
+
+       if (ch->cslock == 0)
+       {
+       send_to_char("You have yet to set your nature. See HELP nature for a list of possible choices.\n\r",ch);
+       send_to_char("Type nature <name> to set your nature. Once set, you will need an immortal to change it.\n\r",ch);
+       return;
+       }
+
+    }
+    if (!str_prefix(arg,"Architect"))
+    {
+    ch->pcdata->csnature = "Architect";
+    send_to_char("You have selected Architect as your nature.\n\r",ch);
+    return;
+    }
+    if (!str_prefix(arg,"Autocrat"))
+    {
+    ch->pcdata->csnature = "Autocrat";
+    send_to_char("You have selected Autocrat as your nature.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Autist"))
+    {
+    ch->pcdata->csnature = "Autist";
+    send_to_char("You have selected Autist as your nature.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Avant-Garde"))
+    {
+    ch->pcdata->csnature = "Avant-Garde";
+    send_to_char("You have selected Avant-Garde as your nature.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Barbarian"))
+    {
+    ch->pcdata->csnature = "Barbarian";
+    send_to_char("You have selected Barbarian as your nature.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Bon Vivant"))
+    {
+    ch->pcdata->csnature = "Bon Vivant";
+    send_to_char("You have selected Bon Vivant as your nature.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Bravo"))
+    {
+    ch->pcdata->csnature = "Bravo";
+    send_to_char("You have selected Bravo as your nature.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Caregiver"))
+    {
+    ch->pcdata->csnature = "Caregiver";
+    send_to_char("You have selected Caregiver as your nature.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Cavalier"))
+    {
+    ch->pcdata->csnature = "Cavalier";
+    send_to_char("You have selected Cavalier as your nature.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Child"))
+    {
+    ch->pcdata->csnature = "Child";
+    send_to_char("You have selected Child as your nature.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Celebrant"))
+    {
+    ch->pcdata->csnature = "Celebrant";
+    send_to_char("You have selected Celebrant as your nature.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Competitor"))
+    {
+    ch->pcdata->csnature = "Competitor";
+    send_to_char("You have selected Competitor as your nature.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Confidant"))
+    {
+    ch->pcdata->csnature = "Confidant";
+    send_to_char("You have selected Confidant as your nature.\n\r",ch);
+    return;
+    }
+    if (!str_prefix(arg,"Conformist"))
+    {
+    ch->pcdata->csnature = "Conformist";
+    send_to_char("You have selected Conformist as your nature.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Conniver"))
+    {
+    ch->pcdata->csnature = "Conniver";
+    send_to_char("You have selected Conniver as your nature.\n\r",ch);
+    return;
+    }
+    if (!str_prefix(arg,"Critic"))
+    {
+    ch->pcdata->csnature = "Critic";
+    send_to_char("You have selected Critic as your nature.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Curmudgeon"))
+    {
+    ch->pcdata->csnature = "Curmudgeon";
+    send_to_char("You have selected Curmudgeon as your nature.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Defender"))
+    {
+    ch->pcdata->csnature = "Defender";
+    send_to_char("You have selected Defender as your nature.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Deviant"))
+    {
+    ch->pcdata->csnature = "Deviant";
+    send_to_char("You have selected Deviant as your nature.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Director"))
+    {
+    ch->pcdata->csnature = "Director";
+    send_to_char("You have selected Director as your nature.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Fanatic"))
+    {
+    ch->pcdata->csnature = "Fanatic";
+    send_to_char("You have selected Fanatic as your nature.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Gallant"))
+    {
+    ch->pcdata->csnature = "Gallant";
+    send_to_char("You have selected Gallant as your nature.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Honest-Abe"))
+    {
+    ch->pcdata->csnature = "Honest-Abe";
+    send_to_char("You have selected Honest-Abe as your nature.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Jester"))
+    {
+    ch->pcdata->csnature = "Jester";
+    send_to_char("You have selected Jester as your nature.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Jobsworth"))
+    {
+    ch->pcdata->csnature = "Jobsworth";
+    send_to_char("You have selected Jobsworth as your nature.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Judge"))
+    {
+    ch->pcdata->csnature = "Judge";
+    send_to_char("You have selected Judge as your nature.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Loner"))
+    {
+    ch->pcdata->csnature = "Loner";
+    send_to_char("You have selected Loner as your nature.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Manipulator"))
+    {
+    ch->pcdata->csnature = "Manipulator";
+    send_to_char("You have selected Manipulator as your nature.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Martyr"))
+    {
+    ch->pcdata->csnature = "Martyr";
+    send_to_char("You have selected Martyr as your nature.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Masochist"))
+    {
+    ch->pcdata->csnature = "Masochist";
+    send_to_char("You have selected Masochist as your nature.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Mediator"))
+    {
+    ch->pcdata->csnature = "Mediator";
+    send_to_char("You have selected Mediator as your nature.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Monsters"))
+    {
+    ch->pcdata->csnature = "Monsters";
+    send_to_char("You have selected Monsters as your nature.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Optimist"))
+    {
+    ch->pcdata->csnature = "Optimist";
+    send_to_char("You have selected Optimist as your nature.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Pedagogue"))
+    {
+    ch->pcdata->csnature = "Pedagogue";
+    send_to_char("You have selected Pedagogue as your nature.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Penitent"))
+    {
+    ch->pcdata->csnature = "Penitent";
+    send_to_char("You have selected Penitent as your nature.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Perfectionist"))
+    {
+    ch->pcdata->csnature = "Perfectionist";
+    send_to_char("You have selected Perfectionist as your nature.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Plotter"))
+    {
+    ch->pcdata->csnature = "Plotter";
+    send_to_char("You have selected Plotter as your nature.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Poltroon"))
+    {
+    ch->pcdata->csnature = "Poltroon";
+    send_to_char("You have selected Poltroon as your nature.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Praise-Seeker"))
+    {
+    ch->pcdata->csnature = "Praise-Seeker";
+    send_to_char("You have selected Praise-Seeker as your nature.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Rebel"))
+    {
+    ch->pcdata->csnature = "Rebel";
+    send_to_char("You have selected Rebel as your nature.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Rogue"))
+    {
+    ch->pcdata->csnature = "Rogue";
+    send_to_char("You have selected Rogue as your nature.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Survivor"))
+    {
+    ch->pcdata->csnature = "Survivor";
+    send_to_char("You have selected Survivor as your nature.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Sycophant"))
+    {
+    ch->pcdata->csnature = "Sycophant";
+    send_to_char("You have selected Sycophant as your nature.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Traditionalist"))
+    {
+    ch->pcdata->csnature = "Traditionalist";
+    send_to_char("You have selected Traditionalist as your nature.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Thrill-Seeker"))
+    {
+    ch->pcdata->csnature = "Thrill-Seeker";
+    send_to_char("You have selected Thrill-Seeker as your nature.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Trickster"))
+    {
+    ch->pcdata->csnature = "Trickster";
+    send_to_char("You have selected Trickster as your nature.\n\r",ch);
+    return;
+    }
+
+    if (!str_prefix(arg,"Visionary"))
+    {
+    ch->pcdata->csnature = "Visionary";
+    send_to_char("You have selected Visonary as your nature.\n\r",ch);
+    return;
+    }
+
+    send_to_char("What? Are you trying to break Zelan's code?\n\r",ch);
+
+    return;
+}
+
 
 void do_freebie(CHAR_DATA *ch, char *argument)
 {
@@ -24,6 +740,8 @@ void do_freebie(CHAR_DATA *ch, char *argument)
     int max_unlock = ch->remorts / 10;
     int unlockpoints = max_unlock - ch->unlocksspent;
     int i, count=0, cost=0, step=0, tolearn=0;
+    int costcounter;
+    costcounter = (ch->pcdata->csbackgrounds[CSBACK_GENERATION])*30;
     bool mentor = FALSE;
 	int li = 0;
 	int gn = 0;
@@ -67,6 +785,13 @@ void do_freebie(CHAR_DATA *ch, char *argument)
         send_to_char("New Discipline:          10\n\r",ch);
         send_to_char("Clan Discipline:         Current Rating*5\n\r",ch);
         send_to_char("Out Of Clan Discipline:  Current Rating*6\n\r",ch);
+        if (ch->pcdata->csbackgrounds[CSBACK_GENERATION] == 0)
+        send_to_char("{YGeneration{x:              10\n\r",ch);
+        if ((ch->pcdata->csbackgrounds[CSBACK_GENERATION] > 0) && (ch->pcdata->csbackgrounds[CSBACK_GENERATION] < 5))
+        {
+        sprintf(buf,"Generation:              {Y%d{x\n\r",costcounter);
+        send_to_char(buf,ch);
+        }    
         send_to_char("Unlock costs:\n\r",ch);
         send_to_char("Combat Discipline:       1 Unlock point\n\r",ch);
         send_to_char("Common Disciplines:      2 Unlock points\n\r",ch);
@@ -81,7 +806,7 @@ void do_freebie(CHAR_DATA *ch, char *argument)
         send_to_char("Other Discipline:        Current Rating*10\n\r",ch);
     }
 
-        if( ch->pcdata->rank > 0)
+        if(( ch->pcdata->rank > 0) && (ch->race == race_lookup("garou")))
         {
             if(ch->pcdata->primal_urge == 0) 
         send_to_char("Primal-Urge              4\n\r",ch);
@@ -237,6 +962,26 @@ void do_freebie(CHAR_DATA *ch, char *argument)
                 step = 19;
                 sh_int minimictime;
                 sh_int minimage;
+                if ((ch->pcdata->csbackgrounds[CSBACK_GENERATION] == 1) && (ch->remorts < 100))
+                {
+                   send_to_char("You require at least {Y100{x remorts to lower your generation further.\n\r",ch);
+                   return;
+                }
+                if ((ch->pcdata->csbackgrounds[CSBACK_GENERATION] == 2) && (ch->remorts < 200))
+                {
+                   send_to_char("You require at least {Y200{x remorts to lower your generation further.\n\r",ch);
+                   return;
+                }
+                if ((ch->pcdata->csbackgrounds[CSBACK_GENERATION] == 3) && (ch->remorts < 300))
+                {
+                   send_to_char("You require at least {Y300{x remorts to lower your generation further.\n\r",ch);
+                   return;
+                }
+                if ((ch->pcdata->csbackgrounds[CSBACK_GENERATION] == 4) && (ch->remorts < 400))
+                {
+                   send_to_char("You require at least {Y400{x remorts to lower your generation further.\n\r",ch);
+                   return;
+                }
                 if (ch->pcdata->csbackgrounds[CSBACK_GENERATION] == 5)
                 {
                     send_to_char("Your blood is already as potent as it can be.\n\r", ch);;
@@ -244,11 +989,11 @@ void do_freebie(CHAR_DATA *ch, char *argument)
                 }
                 count = CSBACK_GENERATION;
                 switch (ch->pcdata->csbackgrounds[CSBACK_GENERATION]) {
-                case 0: minimictime = 15; minimage =  75; cost = 10; break;
-                case 1: minimictime = 30; minimage = 150; cost = 20; break;
-                case 2: minimictime = 60; minimage = 300; cost = 40; break;
-                case 3: minimictime = 120; minimage = 400; cost = 60; break;
-                case 4: minimictime = 240; minimage = 500; cost = 80; break; }
+                case 0: minimictime = 0; minimage = 0 ; cost = 10; break;
+                case 1: minimictime = 0; minimage = 0; cost = 30; break;
+                case 2: minimictime = 0; minimage = 0; cost = 60; break;
+                case 3: minimictime = 0; minimage = 0; cost = 90; break;
+                case 4: minimictime = 0; minimage = 0; cost = 120; break; }
 
                 if (get_age(ch) < minimage) {
                     send_to_char("You have not spent enough time on this character to purchase that level of Generation.\n\r", ch);
@@ -639,6 +1384,11 @@ void do_freebie(CHAR_DATA *ch, char *argument)
                 disc == VICISSITUDE || disc == CHIMERSTRY || disc == DEMENTATION)
                  {
                      unlockneeded = 3;
+                     if (disc == VICISSITUDE)
+                     {
+                     send_to_char("One does not simply 'learn' Vicissitude.\n\r",ch);
+                     return;
+                     }
 
                 }
                 if (disc == ANIMALISM || disc == AUSPEX || disc == DOMINATE ||
@@ -2137,7 +2887,7 @@ void do_create( CHAR_DATA *ch, char *argument )
                 send_to_char("given 5 'background freebie' points to be spent on backgrounds using that command.\n\r", ch);
                 /*if(ch->freebie < (ch->remorts*3)/4) ch->freebie = (ch->remorts*3)/4;
                 ch->freebie += 5;*/
-                ch->dpoints = 5;
+                ch->dpoints = 0;
                 send_to_char("When you've finished setting your backgrounds, you use the freebie command to spend freebies\n\r", ch);
                 send_to_char(" to further increase your traits!\n\r",ch);
                 ch->pcdata->progress = 8;

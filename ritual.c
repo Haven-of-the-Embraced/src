@@ -193,8 +193,8 @@ void do_invoke(CHAR_DATA *ch, char *argument)
     AFFECT_DATA af;
     char arg1[MAX_INPUT_LENGTH];
     char arg2[MAX_INPUT_LENGTH];
-//    char *str1;
-//    char *str2;
+    char *str1;
+    char *str2;
     int acount;
     int bcount;
     int ccount;
@@ -287,10 +287,10 @@ void do_invoke(CHAR_DATA *ch, char *argument)
     if (!str_prefix(arg1,"blood magic"))
     {
         act("$n starts to chant and dance in a circle!", ch,NULL,NULL,TO_ROOM);
-        act("You place the compents in a circle and begin to chant.", ch,NULL,NULL,TO_CHAR);
+        act("You place the components in a circle and begin to chant.", ch,NULL,NULL,TO_CHAR);
         if((obj = get_obj_carry( ch, arg2, ch )) == NULL)
         {
-            send_to_char( "You fail to invoke the Ritual!\n\r", ch );
+            send_to_char( "You failed to invoke the Ritual!\n\r", ch );
             return;
         }
         str1 = str_dup(obj->name);
@@ -519,7 +519,7 @@ void do_invoke(CHAR_DATA *ch, char *argument)
     if (!str_prefix(arg1,"blood curse"))
     {
         act("$n starts to chant and dance in a circle!", ch,NULL,NULL,TO_ROOM);
-        act("You place the compents in a circle and begin to chant.", ch,NULL,NULL,TO_CHAR);
+        act("You place the components in a circle and begin to chant.", ch,NULL,NULL,TO_CHAR);
         if((obj = get_obj_carry( ch, arg2, ch )) == NULL)
         {
             send_to_char( "You fail to invoke the Ritual!\n\r", ch );
@@ -632,7 +632,7 @@ void do_invoke(CHAR_DATA *ch, char *argument)
             }
         }
         act("$n starts to chant and dance in a circle!", ch,NULL,NULL,TO_ROOM);
-        act("You place the compents in a circle and begin to chant.", ch,NULL,NULL,TO_CHAR);
+        act("You place the components in a circle and begin to chant.", ch,NULL,NULL,TO_CHAR);
         if(acount == 1 && bcount == 1 && ccount == 1 && dcount == 1 && ecount == 1 && fcount == 1)
         {
             if(!IS_IMMORTAL(ch))
@@ -684,7 +684,7 @@ void do_invoke(CHAR_DATA *ch, char *argument)
         }
 
     act("$n starts to chant and dance in a circle!", ch,NULL,NULL,TO_ROOM);
-    act("You place the compents in a circle and begin to chant.", ch,NULL,NULL,TO_CHAR);
+    act("You place the components in a circle and begin to chant.", ch,NULL,NULL,TO_CHAR);
     if(acount == 1)
     {
         if(!IS_IMMORTAL(ch))
@@ -723,7 +723,7 @@ void do_invoke(CHAR_DATA *ch, char *argument)
         }
 
     act("$n starts to chant and dance in a circle!", ch,NULL,NULL,TO_ROOM);
-    act("You place the compents in a circle and begin to chant.", ch,NULL,NULL,TO_CHAR);
+    act("You place the components in a circle and begin to chant.", ch,NULL,NULL,TO_CHAR);
     if(ch->dpoints == 0 || ch->thaumaturgy == 5)
     {
         act("$n sudden grabs their head and winces in pain!", ch,NULL,NULL,TO_ROOM);

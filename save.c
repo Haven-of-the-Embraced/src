@@ -197,7 +197,17 @@ void fwrite_char( CHAR_DATA *ch, FILE *fp )
     fprintf( fp, "qpoints %d\n", ch->qpoints );
     fprintf( fp, "pblood %d\n", ch->pblood );
     fprintf( fp, "unlockp %d\n", ch->unlocksspent);
-
+    fprintf( fp, "aget %d\n", ch->aget);
+    fprintf( fp, "totalkills %d\n", ch->totalkills);
+    fprintf( fp, "currentkills %d\n", ch->currentkills);
+    fprintf( fp, "maxdamage %d\n", ch->maxdamage);
+    fprintf( fp, "cheater %d\n", ch->cheater);
+    fprintf( fp, "cslock %d\n", ch->cslock);
+    fprintf( fp, "smited %d\n", ch->smited);
+    fprintf( fp, "csdemeanor %s~\n", ch->pcdata->csdemeanor);
+    fprintf( fp, "csnature %s~\n", ch->pcdata->csnature);
+    fprintf( fp, "ip %d\n", ch->pcdata->ip);
+    fprintf( fp, "tagged %d\n", ch->tagged);
         fprintf( fp, "max_pblood %d\n", ch->max_pblood );
         fprintf( fp, "gen %d\n", ch->gen );
 
@@ -299,8 +309,6 @@ void fwrite_char( CHAR_DATA *ch, FILE *fp )
     fprintf( fp, "CSname %s~\n",    ch->pcdata->csname);
     fprintf( fp, "CSchronicle %s~\n",   ch->pcdata->cschronicle);
     fprintf( fp, "CSclan %s~\n",    ch->pcdata->csclan);
-    fprintf( fp, "CSnature %s~\n",  ch->pcdata->csnature);
-    fprintf( fp, "CSdemeanor %s~\n",    ch->pcdata->csdemeanor);
     fprintf( fp, "CSconcept %s~\n", ch->pcdata->csconcept);
     fprintf( fp, "CSsect %s~\n",    ch->pcdata->cssect);
     fprintf( fp, "CSsire %s~\n",    ch->pcdata->cssire);
@@ -1189,6 +1197,7 @@ void fread_char( CHAR_DATA *ch, FILE *fp )
         KEY( "Auspex",  ch->auspex,     fread_number( fp ) );
         KEY( "Auspice", ch->auspice,        fread_number( fp ) );
         KEY( "Apprentice",  ch->apprentice,         fread_string( fp ) );
+	KEY( "Aget", ch->aget, 			fread_number( fp ) );
         if (!str_cmp( word, "Alia"))
         {
         if (count >= MAX_ALIAS)
@@ -1324,6 +1333,12 @@ void fread_char( CHAR_DATA *ch, FILE *fp )
         KEY( "Class",   ch->class,      fread_number( fp ) );
         KEY( "Cla",     ch->class,      fread_number( fp ) );
         KEY( "Chimerstry", ch->chimerstry, fread_number (fp ) );
+        KEY( "currentkills",   ch->currentkills,   fread_number ( fp ) );
+        KEY( "cslock", ch->cslock,      fread_number( fp ) );
+        KEY( "csdemeanor",  ch->pcdata->csdemeanor, fread_string( fp ) );
+        KEY( "csnature",    ch->pcdata->csnature,   fread_string( fp ) );
+        KEY( "cheater", ch->cheater, fread_number (fp) );
+
                 if ( !str_cmp( word, "Clan" ) ) {
                     char *tmp = fread_string(fp);
                     ch->clan = clan_lookup(tmp);
@@ -1622,6 +1637,7 @@ void fread_char( CHAR_DATA *ch, FILE *fp )
         KEY( "Immnote",    ch->pcdata->last_rpnote,  fread_number( fp ) );
         KEY( "Iclass", ch->pcdata->immclass, fread_number( fp) );
         KEY( "Immun",     ch->imm_flags,        fread_flag( fp ) );
+        KEY( "Ip", ch->pcdata->ip,    fread_number( fp) );
 
         break;
 
@@ -1644,6 +1660,7 @@ void fread_char( CHAR_DATA *ch, FILE *fp )
         KEY( "max_pblood",       ch->max_pblood,      fread_number( fp ) );
         KEY( "Maxquint",       ch->max_quintessence, fread_number( fp ) );
         KEY( "Mortis",  ch->mortis,     fread_number( fp ) );
+        KEY( "maxdamage",   ch->maxdamage,   fread_number ( fp ) );
         break;
 
     case 'N':
@@ -1798,6 +1815,8 @@ void fread_char( CHAR_DATA *ch, FILE *fp )
         KEY( "Trai",    ch->train,      fread_number( fp ) );
         KEY( "Trust",   ch->trust,      fread_number( fp ) );
         KEY( "Tru",     ch->trust,      fread_number( fp ) );
+        KEY( "totalkills",   ch->totalkills,   fread_number ( fp ) );
+        KEY( "tagged", ch->tagged, fread_number ( fp ) );
 
         if ( !str_cmp( word, "Title" )  || !str_cmp( word, "Titl"))
         {

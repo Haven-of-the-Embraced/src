@@ -51,6 +51,13 @@ int system();
 #define DECLARE_REPEAT_FUN(fun, repeat) void fun (CHAR_DATA *ch, char *argument) \
         {do_function(ch, repeat, argument);}
 
+
+
+// Special XP global and QP
+int global_qp;
+int global_xp;
+int qpmult; //Sets rate that QP is added to global qp
+int xpmult; //sets rate that XP is added to global qp
 /*
  * Short scalar types.
  * Diavolo reports AIX compiler has bugs with short types.
@@ -2029,6 +2036,14 @@ struct  char_data
     int         bloodtick;
     int         unlockpoints;
     int         unlocksspent;
+    int		cslock;
+    int		smited;
+    int 	aget;
+    int 	currentkills;
+    int 	totalkills;
+    int         cheater;
+    int		maxdamage;
+    int         tagged;
     int         airtick;
     int     qpoints;
     int       gen;
@@ -2215,8 +2230,6 @@ struct  pc_data
     char *      csname;
     char *      cschronicle;
     char *      csclan;
-    char *      csnature;
-    char *      csdemeanor;
     char *      csconcept;
     char *      cssect;
     char *      cssire;
@@ -2257,7 +2270,9 @@ struct  pc_data
     int         auspice;
     int         favor[25];
     int         gift[MAX_GIFT];
-
+    char *      csdemeanor;
+    char *      csnature;
+    int         ip;
 /* Quest journal shit - ugha */
     char *      quest_name[MAX_QUEST];
     char *      quest_string[MAX_QUEST];

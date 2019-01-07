@@ -53,6 +53,135 @@ ROOM_INDEX_DATA *   find_location   args( ( CHAR_DATA *ch, char *arg ) );
 void restore_one            args ( (CHAR_DATA *ch, CHAR_DATA *victim, bool show) );
 //void write_wizlist            args( ( CHAR_DATA *ch, CHAR_DATA *victim ) );
 
+void do_cheater(CHAR_DATA *ch, char *argument)
+{
+CHAR_DATA *victim;
+char arg1[MAX_INPUT_LENGTH], arg2[MAX_INPUT_LENGTH];
+char buf[MAX_STRING_LENGTH];
+
+
+argument = one_argument( argument, arg1);
+
+   if((victim = get_char_world(ch, arg1)) == NULL)
+    {
+        send_to_char("Who?\n\r",ch);
+        return;
+    }
+    if(victim->cheater == 1)
+      {
+        send_to_char("Character is currently flagged as a cheater!\n\r",ch);
+        send_to_char("Switching off cheater flag.\n\r",ch);
+        victim->cheater = 0;
+        return;
+      }
+   if(victim->cheater == 0)
+      {
+        send_to_char("Character is not flagged as a cheater.\n\r",ch);
+        send_to_char("Character now flagged as a cheater!\n\r",ch);
+        victim->cheater = 1;
+        return;
+      }
+}
+
+void do_qpmult(CHAR_DATA *ch,char *argument)
+{
+char arg1[MAX_INPUT_LENGTH];
+char buf [MAX_STRING_LENGTH];
+
+argument = one_argument( argument, arg1);
+if ( arg1[0] == '\0' )
+{
+ sprintf(buf, "Current rate of gain for global quest points is {W%d{Yx{x.\n\r",qpmult);
+ send_to_char(buf,ch);
+ return;
+}
+qpmult = atoi(arg1);
+
+sprintf(buf,"Adjusting global QP multiper to {W%d{Yx{x.\n\r",qpmult);
+send_to_char(buf,ch);
+}
+
+void do_xpmult(CHAR_DATA *ch,char *argument)
+{
+char arg1[MAX_INPUT_LENGTH];
+char buf [MAX_STRING_LENGTH];
+
+argument = one_argument( argument, arg1);
+if ( arg1[0] == '\0' )
+{
+ sprintf(buf,"Current rate of global XP gain is at {W%d{Yx{x.\n\r",xpmult);
+ send_to_char(buf,ch);
+ return;
+}
+xpmult = atoi(arg1);
+
+sprintf(buf,"Adjusting global XP multiper to {W%d{Yx{x.\n\r",xpmult);
+send_to_char(buf,ch);
+}
+
+
+void do_tag(CHAR_DATA *ch, char *argument)
+{
+    CHAR_DATA *victim;
+    char arg1[MAX_INPUT_LENGTH],arg2[MAX_INPUT_LENGTH];
+    char buf[MAX_STRING_LENGTH];
+    int tag;
+
+    argument = one_argument( argument, arg1 );
+
+
+       if ( arg1 == '\0' )
+    {
+    send_to_char( "Tag who?\n\r", ch );
+    return;
+    }
+
+    if ( ( victim = get_char_room( ch, arg1 ) ) == NULL )
+    {
+    send_to_char( "They aren't here.\n\r", ch );
+    return;
+    }
+
+    if(ch->tagged == 1)
+    {
+        send_to_char("You are currently tagged!\n\r",ch);
+        send_to_char("Syntax: tag <person> to tag someone else!\n\r",ch);
+    }
+   if(ch->tagged == 0)
+        {
+        send_to_char("You are not currently tagged.\n\r",ch);
+        send_to_char("Syntax: tag <person>\n\r",ch);
+        return;
+        }
+    
+
+   if(IS_NPC(victim))
+
+   {
+   send_to_char("Do not try to break ma shit! Not on NPCS!\n\r",ch);
+   return;
+   }
+
+   if (ch->tagged == 0)
+   {
+   send_to_char("You can't tag someone! You're not it!\n\r", ch); 
+   return;
+   }
+
+    if ( IS_AFFECTED(victim, AFF_FAERIE_FIRE) )
+    {
+    send_to_char("No tag backs! Either find a new victim or an immortal.\n\r",ch);
+    return;
+    }
+
+   ch->tagged = 0;
+   victim->tagged = 1;
+   sprintf(buf,"You tag %s! They are IT!\n\r",victim->name);
+   send_to_char(buf,ch);
+   sprintf(buf,"%s has tagged you! You are it!\n\r",ch->name);
+   send_to_char(buf,victim);
+
+}
 void do_wiznet( CHAR_DATA *ch, char *argument )
 {
     int flag;
@@ -4198,10 +4327,71 @@ void do_set( CHAR_DATA *ch, char *argument )
     do_function(ch, &do_settime, argument);
     return;
     }
+    if (!str_prefix(arg, "lock"))
+    {
+    do_function(ch, &do_lockset, argument);
+    return;
+    }
     /* echo syntax */
     do_function(ch, &do_set, "");
 }
 
+void do_lockset( CHAR_DATA *ch, char *argument)
+{
+char arg1 [MAX_INPUT_LENGTH];
+char arg2 [MAX_INPUT_LENGTH];
+char buf  [MAX_INPUT_LENGTH];
+CHAR_DATA *victim;
+int value;
+
+argument = one_argument( argument, arg1 );
+argument = one_argument( argument, arg2 );
+
+    if ( ( victim = get_char_world( ch, arg1 ) ) == NULL )
+    {
+    send_to_char( "They aren't here.\n\r", ch );
+    return;
+    }
+
+    if ( IS_NPC(victim) )
+    {
+    send_to_char( "Not on NPC's.\n\r", ch );
+    return;
+    }
+
+    if ( arg1[0] == '\0' || arg2[0] == '\0')
+    {
+    send_to_char("Syntax:\n\r set lock <name> <1 or 0>\n\r0 = unlocked\n\r1 = locked\n\r",ch);
+    return;
+    }
+
+    value = atoi( arg2 );
+    if ( value < 0 || value > 1 )
+    {
+    send_to_char( "Value range is 0 or 1.\n\r", ch );
+    return;
+    }
+
+    if (value == 1)
+    {
+    victim->cslock = 1;
+    sprintf(buf,"%s has had their CS locked.\n\r", victim->name);
+    send_to_char(buf,ch);
+    sprintf(buf,"%s has locked your CS.\n\r",ch->name);
+    send_to_char(buf,ch);
+    return;
+    }
+
+   if (value == 0)
+   {
+   victim->cslock = 0;
+   sprintf(buf,"%s has had their CS unlocked.\n\r", victim->name);
+   send_to_char(buf,ch);
+   sprintf(buf,"%s has unlocked your CS.\n\r",ch->name);
+   send_to_char(buf,victim);
+   return;
+   }
+}
 
 void do_sset( CHAR_DATA *ch, char *argument )
 {
@@ -7269,6 +7459,118 @@ void do_spectate( CHAR_DATA *ch, char *argument )
     act( "{G$N suddenly disappears as they go to witness the {RARENA!{x",  ch, NULL, ch, TO_ROOM );
     return;
 }
+void do_gxp(CHAR_DATA *ch, char *argument)
+{
+char arg1[MAX_INPUT_LENGTH];
+char buf[MAX_INPUT_LENGTH];
+int gxp;
+
+argument = one_argument (argument, arg1);
+gxp = atoi(arg1);
+sprintf(buf,"Adding %d to global XP\n", gxp);
+send_to_char(buf,ch);
+
+global_xp += gxp;
+}
+
+void do_gqp(CHAR_DATA *ch, char *argument)
+{
+char arg1[MAX_INPUT_LENGTH];
+char buf[MAX_INPUT_LENGTH];
+int gqp;
+
+argument = one_argument (argument, arg1);
+gqp = atoi(arg1);
+sprintf(buf,"Adding %d to global QP\n", gqp);
+send_to_char(buf,ch);
+
+global_qp += gqp;
+}
+
+void do_ipoint(CHAR_DATA *ch, char *argument)
+{
+    CHAR_DATA *victim;
+    char arg1[MAX_INPUT_LENGTH],arg2[MAX_INPUT_LENGTH];
+    char buf[MAX_STRING_LENGTH];
+    int ipoints;
+    argument = one_argument( argument, arg1 );
+    argument = one_argument( argument, arg2 );
+
+
+    if((victim = get_char_world(ch, arg1)) == NULL)
+    {
+        send_to_char("Who?\n\r",ch);
+        send_to_char("Syntax: ipoint <name> <value>\n\r Set value to 0 to view player's current immortal points\n\r",ch);
+        return;
+    }
+    if(IS_NPC(victim))
+    {
+        send_to_char("Not on mobs!\n\r",ch);
+        return;
+    }
+
+    if(!is_number(arg2))
+    {
+        send_to_char("That is an invalid value.\n\r",ch);
+        send_to_char("Syntax: ipoint <name> <value>\n\r Set value to 0 to view player's current immortal points\n\r", ch);
+        return;
+    }
+     ipoints = atoi(arg2);
+    if(ipoints == 0)
+    {
+        sprintf(buf, "{W%s {xhas {Y%d {ximmortal points.\n\r", victim->name, victim->pcdata->ip);
+        send_to_char(buf,ch);
+        return;
+    }
+    if(ipoints > 0)
+    {
+        sprintf(buf, "You have been rewarded {Y%d {ximmortal points!\n\r", ipoints);
+        send_to_char(buf,victim);
+    }
+    if(ipoints < 0)
+    {
+        sprintf(buf, "{R%d {ximmortal points have been removed from you!\n\r", abs(ipoints));
+        send_to_char(buf,victim);
+    }
+
+    
+
+   
+    victim->pcdata->ip += ipoints;
+    sprintf(buf, "{W%s {xnow has {Y%d {ximmortal points.\n\r", victim->name, victim->pcdata->ip);
+    send_to_char(buf,ch);
+    sprintf(buf, "You now have {Y%d {ximmortal points\n\r", victim->pcdata->ip);
+    send_to_char(buf, victim);
+    return;
+}
+
+void do_resetkill(CHAR_DATA *ch, char *argument)
+{
+CHAR_DATA *victim;
+char arg1[MAX_INPUT_LENGTH];
+char buf[MAX_INPUT_LENGTH];
+
+argument = one_argument( argument, arg1);
+
+if((victim = get_char_world(ch, arg1)) == NULL)
+{
+	send_to_char("Who?\n\r",ch);
+	send_to_char("Syntax: resetkill <target>\n\r",ch);
+        return;
+}
+if(IS_NPC(victim))
+{
+	send_to_char("Not on mobs, what is wrong with you?\n\r",ch);
+	return;
+}
+victim->currentkills = 0;
+
+	sprintf(buf, "Your current kills have been reset.\n\r" );
+	send_to_char(buf,victim);
+
+        sprintf(buf, "You have reset the current kills of %s.\n\r", victim->name);
+        send_to_char(buf,ch);
+}
 
 void do_qpoint(CHAR_DATA *ch, char *argument)
 {
@@ -7276,6 +7578,9 @@ void do_qpoint(CHAR_DATA *ch, char *argument)
     char arg1[MAX_INPUT_LENGTH],arg2[MAX_INPUT_LENGTH];
     char buf[MAX_STRING_LENGTH];
     int points;
+
+    if ((IS_NPC(ch)) || (!IS_IMMORTAL(ch)))
+    return;
 
     argument = one_argument( argument, arg1 );
     argument = one_argument( argument, arg2 );

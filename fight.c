@@ -3310,6 +3310,8 @@ void group_gain( CHAR_DATA *ch, CHAR_DATA *victim )
     CHAR_DATA *lch;
     int xp;
     int qp;
+    int fakexp;
+    int fakeqp;
     int members;
     int group_levels;
 
@@ -3364,7 +3366,21 @@ void group_gain( CHAR_DATA *ch, CHAR_DATA *victim )
         xp = 5;
     }*/
     if(xp <= 0) xp = 1;
+    ch->totalkills ++;
+    ch->currentkills ++;
+    // Adds QP to global QP from fights
+    global_qp += qp*qpmult;
+    //Added line for people caught cheating.
+    if (gch->cheater == 0)
     sprintf( buf, "You receive {g%d{x experience and {c%d{x quest points.\n\r", xp, qp );
+    if (gch->cheater == 1)
+    {
+    fakexp = xp;
+    fakeqp = qp;
+    xp = 0;
+    qp = 0;
+    sprintf( buf, "You receive {g%d{x experience and {c%d{x quest points.\n\r", fakexp, fakeqp );
+    }
     send_to_char( buf, gch );
     gain_exp( gch, xp );
     gch->qpoints += qp;
@@ -3410,10 +3426,11 @@ void group_gain( CHAR_DATA *ch, CHAR_DATA *victim )
  */
 int xp_compute( CHAR_DATA *gch, CHAR_DATA *victim, int total_levels )
 {
-    int xp,base_exp,bxp, ixp;
+    int xp,base_exp,bxp, ixp,gloxp, xpcl;
     int level_range;
     int playerbonus;
     double dBonus;
+    int xpawardmult;
     extern bool doubleexp;
 
     level_range = victim->level - gch->level;
@@ -3456,15 +3473,39 @@ int xp_compute( CHAR_DATA *gch, CHAR_DATA *victim, int total_levels )
 
     /* randomize the rewards */
     xp = number_range (xp , xp * 5/4);
-
-
+    /* Disabled code for qp xp swap.
+     Get global XP for rping, get global rp for fighting
+     gloxp = (xp * 10) / 100 + 1;
+     global_xp += gloxp;
+   if (global_xp < 1000)
+	doubleexp = FALSE;
+   if (global_xp > 100000)
+	doubleexp = TRUE;
+      */
     if( IS_AFFECTED2(victim, AFF2_DOUBLE_EXP))
         xp = xp*2;
-
-
-
-
-
+// Code to drain from global XP and award it
+        xpawardmult = 1;
+   if (global_xp > 2000)
+       {
+        if (global_xp < 60000)
+        {
+        global_xp -= xp;
+        xpawardmult = 2;
+        }
+        if( (global_xp > 60001) && (global_xp < 120000))
+        {
+        global_xp -= xp*2;
+        xpawardmult = 4;
+        }
+        if (global_xp > 120000)
+        {
+        global_xp -= xp*3;
+        xpawardmult = 6;
+        }
+        xp *= xpawardmult;
+       }
+       xp = xp + (xp*2 / 8);
 /* pack hunting code
     if (gch->race == race_lookup("garou"))
     {
@@ -3496,10 +3537,12 @@ int xp_compute( CHAR_DATA *gch, CHAR_DATA *victim, int total_levels )
     /* standard exp cap */
     if(gch->wimpy == 0)
     {
-        if(gch->sphere[SPHERE_MIND] > 0 && xp > (370+gch->remorts+gch->sphere[SPHERE_MIND]*4)) 
-            xp = (370+gch->remorts+gch->sphere[SPHERE_MIND]*4);
-        if(xp > 370+gch->remorts) 
-            xp = 370+gch->remorts;
+        if(xp > 462+gch->remorts && (gch->sphere[SPHERE_MIND] < 1))
+            xp = ((462+gch->remorts)*xpawardmult);
+
+        if(gch->sphere[SPHERE_MIND] > 0 && xp > (462+gch->remorts+gch->sphere[SPHERE_MIND]*4)) 
+            xp = (462+gch->remorts+gch->sphere[SPHERE_MIND]*4)*xpawardmult;
+
     }
     else if(xp > 350) xp = 350; //keep e'm from being pansies
 
@@ -3532,7 +3575,13 @@ int xp_compute( CHAR_DATA *gch, CHAR_DATA *victim, int total_levels )
         return xp/10;
     else
     {
-        if(doubleexp) return xp*2;
+        if(doubleexp)
+	{
+        xpcl = xp/3;
+        if(xpcl > 150) xpcl = 150;
+	global_xp -= xpcl;
+	return xp*2;
+	}
         else return xp;
     }
 
@@ -3671,7 +3720,8 @@ void dam_message( CHAR_DATA *ch, CHAR_DATA *victim,int dam,int dt,bool immune )
 		if(dam > 1 || !IS_SET(victim->comm,COMM_COMBAT_BRIEF))
         act( buf3, ch, NULL, victim, TO_VICT );
     }
-
+if (ch->maxdamage < dam)
+   ch->maxdamage = dam;
     return;
 }
 

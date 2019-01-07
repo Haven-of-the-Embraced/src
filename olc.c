@@ -1804,9 +1804,13 @@ void do_hedit( CHAR_DATA *ch, char *argument )
     char arg1[MIL];
     char argall[MAX_INPUT_LENGTH],argone[MAX_INPUT_LENGTH];
     bool found = FALSE;
-
+    if (ch->pcdata->ip < 10)
+    {
+    send_to_char("You do not have enough immortal points to access this command.\n\r", ch);
+    return;
+    }
     strcpy(arg1,argument);
-
+    ch->pcdata->ip -= 10;
     if(argument[0] != '\0')
     {
         /* Taken from do_help */

@@ -815,6 +815,9 @@ void do_freebie(CHAR_DATA *ch, char *argument)
         send_to_char("Rage:                    Current Rating*2\n\r",ch);
         send_to_char("Gnosis:                  Current Rating*2\n\r",ch);
         send_to_char("Renown:                  Current Rating*2 + 10 Temp Renown.\n\r",ch);
+        send_to_char("Gifts:                   Rank of Gift * 3\n\r",ch);
+        send_to_char("\n\r{WNote:{x Gift name must be enclosed in '' quotes.\n\r", ch);
+        send_to_char("      ex: freebie 'pulse of the invisible'\n\r", ch);
         }
         send_to_char("\n\rTo increase a trait type 'freebie <trait>'\n\rExample: freebie animal_ken\n\r",ch);
         sprintf(buf,"You have %d freebies remaining.\n\r",ch->freebie);

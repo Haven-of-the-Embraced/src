@@ -2887,7 +2887,7 @@ void do_create( CHAR_DATA *ch, char *argument )
                 send_to_char("given 5 'background freebie' points to be spent on backgrounds using that command.\n\r", ch);
                 /*if(ch->freebie < (ch->remorts*3)/4) ch->freebie = (ch->remorts*3)/4;
                 ch->freebie += 5;*/
-                ch->dpoints = 0;
+                ch->dpoints = 5;
                 send_to_char("When you've finished setting your backgrounds, you use the freebie command to spend freebies\n\r", ch);
                 send_to_char(" to further increase your traits!\n\r",ch);
                 ch->pcdata->progress = 8;

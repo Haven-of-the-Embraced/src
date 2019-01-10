@@ -312,11 +312,6 @@ void show_char_to_char_0( CHAR_DATA *victim, CHAR_DATA *ch )
     return;
     }
 
-    if ( IS_AFFECTED(victim, AFF_SHIFT) || victim->changed > 0 || is_affected( victim, gsn_mask ) || is_affected(victim,gsn_shadowform) || is_affected(victim,gsn_vicissitude_horrid))
-    strcat( buf, PERS2( victim, ch ) );
-    else if ( is_affected(victim, gsn_unseen) )
-    strcat(buf, PERS2 (victim, ch));
-    else
     strcat( buf, PERS( victim, ch, FALSE ) );
     if ( !IS_NPC(victim) && !IS_SET(ch->comm, COMM_BRIEF)
     &&   victim->position == POS_STANDING && ch->on == NULL )

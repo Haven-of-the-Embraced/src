@@ -401,7 +401,7 @@ DECLARE_DO_FUN( do_veil     );
 DECLARE_DO_FUN( do_earthmeld);
 DECLARE_DO_FUN( do_vanish   );
 DECLARE_DO_FUN( do_mask );
-DECLARE_DO_FUN( do_sweetwhispers    );
+DECLARE_DO_FUN( do_feralspeech    );
 DECLARE_DO_FUN( do_beckoning    );
 DECLARE_DO_FUN( do_songofserenity   );
 DECLARE_DO_FUN( do_drawingoutthebeast   );

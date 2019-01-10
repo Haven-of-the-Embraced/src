@@ -134,7 +134,7 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "veil",       do_veil},
     { "vanish",     do_vanish },
     { "mask",       do_mask },
-    { "sweetwhispers",       do_sweetwhispers },
+    { "feralspeech",       do_feralspeech },
     { "beckoning",      do_beckoning },
     { "songofserenity",     do_songofserenity },
     { "drawingouthebeast",      do_drawingoutthebeast },

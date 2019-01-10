@@ -19,7 +19,7 @@
 /* Local prototype for can_use_disc(). If we need it in other files, move it to merc.h */
 bool can_use_disc(CHAR_DATA *ch, int disc, int dot, int blood, bool message);
 
-void do_sweetwhispers(CHAR_DATA *ch, char *argument)
+void do_feralspeech(CHAR_DATA *ch, char *argument)
 {
    char arg[MAX_INPUT_LENGTH];
    char buf[MAX_STRING_LENGTH];
@@ -28,6 +28,12 @@ void do_sweetwhispers(CHAR_DATA *ch, char *argument)
     argument = one_argument( argument, arg );
 
     if (IS_NPC(ch)) return;
+    
+    if (!IS_VAMP(ch))
+    {
+        send_to_char("Huh?\n\r", ch);
+        return;
+    }
     if ( arg[0] == '\0')
     {
         send_to_char("To what creature do you wish to speak to?\n\r", ch );
@@ -136,14 +142,19 @@ void do_sweetwhispers(CHAR_DATA *ch, char *argument)
         act( "$n stares into the eyes of $N... then frowns suddenly as $N snubs them.",  ch, NULL, victim, TO_NOTVICT );
         return;
     }
-
-    if(number_range(1,100) < 20)
+    int success;
+    if ((success = godice(get_attribute(ch, MANIPULATION) + ch->pcdata->csabilities[CSABIL_ANIMAL_KEN], 6)) < 0)
     {
         act( "$N ignores you a moment before it suddenly takes offense and attacks!",  ch, NULL, victim, TO_CHAR );
         act( "$n stares into the eyes of $N a moment... $N suddenly takes offense and attacks!",  ch, NULL, victim, TO_NOTVICT );
         multi_hit( victim, ch, TYPE_UNDEFINED );
         return;
+    }else if (success == 0) {
+        act( "$N refuses to heed to your will.",  ch, NULL, victim, TO_CHAR );
+        act( "$n stares into the eyes of $N... then frowns suddenly as $N snubs them.",  ch, NULL, victim, TO_NOTVICT );
+        return; 
     }
+    
     sprintf( buf, "$n speaks to your mind, asking you to '%s'.\n\r", argument );
     act(buf,ch,NULL,victim,TO_VICT);
     sprintf( buf, "You look into the eyes of $N and ask them to '%s'.\n\r", argument );

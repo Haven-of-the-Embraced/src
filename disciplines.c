@@ -389,12 +389,12 @@ void do_songofserenity(CHAR_DATA *ch, char *argument)
         send_to_char( "Yeah, right.\n\r", ch );
         return;
     }
-    if ( ch->pblood < 90 )
+    if ( ch->pblood < 20 )
     {
         send_to_char( "You don't have enough blood.\n\r", ch );
         return;
     }
-    ch->pblood -= 35;
+    ch->pblood -= 10;
     send_to_char("You lift your voice in a sweet song of peace and serenity.\n\r",ch);
     if ( IS_AFFECTED(victim, AFF_CHARM)
     ||   IS_AFFECTED(ch, AFF_CHARM)

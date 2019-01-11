@@ -427,6 +427,15 @@ void do_songofserenity(CHAR_DATA *ch, char *argument)
     act( "$n sings a soft and sweet song to $N who seems calmed by it.",  ch, NULL, victim, TO_NOTVICT );
     REMOVE_BIT(victim->act, ACT_AGGRESSIVE);
     
+    if (success > 2) {
+    affect_strip(victim, gsn_berserk);
+    affect_strip(victim, gsn_vamp_frenzy);
+    affect_strip(victim, gsn_garou_frenzy);
+    affect_strip(victim, gsn_thaumaturgy_frenzy);
+    affect_strip(victim, gsn_vigor);
+    affect_strip(victim, gsn_zeal);
+    }
+    
     af.where = TO_AFFECTS;
     af.type = skill_lookup("calm");
     af.level = success*20;

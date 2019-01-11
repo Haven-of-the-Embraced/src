@@ -336,6 +336,7 @@ void do_songofserenity(CHAR_DATA *ch, char *argument)
 {
    char arg[MAX_INPUT_LENGTH];
    CHAR_DATA *victim;
+   int success;
 
     argument = one_argument( argument, arg );
 
@@ -405,14 +406,21 @@ void do_songofserenity(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if(number_range(1,100) < 20)
+    WAIT_STATE( ch, 24 );
+    success = godice(get_attribute(ch,MANIPULATION)+ch->pcdata->csabilities[CSABIL_EMPATHY],7);
+    if(success < 0)
     {
         act( "$N ignores you a moment before it suddenly takes offense and attacks!",  ch, NULL, victim, TO_CHAR );
         act( "$n sings softly to $N a moment... $N suddenly takes offense and attacks!",  ch, NULL, victim, TO_NOTVICT );
         multi_hit( victim, ch, TYPE_UNDEFINED );
         return;
     }
-    WAIT_STATE( ch, 24 );
+    if (success == 0) {
+        act( "$N seems utterly unaffected by your song.", ch, NULL, victim, TO_CHAR);
+        act( "$n sings a sweet song to $N, which seems to completely ignore it..",  ch, NULL, victim, TO_NOTVICT );
+        return;
+    }
+        
     act("Your song seems to sway the heart of $N",ch,NULL,victim,TO_CHAR);
     act( "$n sings a soft and sweet song to $N who seems calmed by it.",  ch, NULL, victim, TO_NOTVICT );
     REMOVE_BIT(victim->act, ACT_AGGRESSIVE);

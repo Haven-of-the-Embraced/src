@@ -625,6 +625,7 @@ void do_auraperception( CHAR_DATA *ch, char *argument )
     char arg1 [MAX_INPUT_LENGTH];
     char buf[MAX_STRING_LENGTH];
     CHAR_DATA *victim;
+    int success;
     argument = one_argument( argument, arg1 );
 
     if (IS_NPC(ch)) return;
@@ -663,8 +664,15 @@ void do_auraperception( CHAR_DATA *ch, char *argument )
         return;
     }
 
-
+    success = godice(get_attribute(ch, PERCEPTION) + ch->pcdata->csabilities[CSABIL_EMPATHY], 8);
+        
     ch->pblood -= 10;
+    
+    if (success < 0)
+    { send_to_char("You are unable to read their aura.\n\r", ch);
+    return;
+    }
+ 
     sprintf( buf, "%s is %d years old.\n\r", victim->name, get_age(victim));
     send_to_char( buf, ch );
 
@@ -673,8 +681,8 @@ void do_auraperception( CHAR_DATA *ch, char *argument )
     victim->sex == 0 ? "sexless" : victim->sex == 1 ? "male" : "female",
     race_table[victim->race].name);
     send_to_char(buf,ch);
-
-    if(ch->pcdata->discipline[AUSPEX] >= 3)
+    
+    if(success > 1)
     {
         sprintf( buf,
         "They have %d/%d hit, %d/%d mana and %d/%d movement.\n\r",
@@ -697,7 +705,7 @@ void do_auraperception( CHAR_DATA *ch, char *argument )
         get_curr_stat(victim,STAT_CON) );
         send_to_char( buf, ch );
     }
-    if(ch->pcdata->discipline[AUSPEX] >= 4)
+    if(success > 2)
     {
         switch ( victim->position )
         {
@@ -747,7 +755,7 @@ void do_auraperception( CHAR_DATA *ch, char *argument )
         sprintf( buf, "Their alignment is %d.\n\r", victim->alignment );
         send_to_char( buf, ch );
     }
-    if(ch->pcdata->discipline[AUSPEX] >= 5)
+    if(success > 3)
     {
         if(IS_VAMP(victim))
         {
@@ -757,10 +765,6 @@ void do_auraperception( CHAR_DATA *ch, char *argument )
         send_to_char(buf,ch);
         sprintf(buf, "They have %d Blood Points.\n\r", victim->pblood);
         send_to_char(buf,ch);
-        if (IS_AFFECTED(victim,AFF_FANGS))
-        {
-            send_to_char("They have their fangs extended.\n\r" ,ch);
-        }
         }
     }
     return;

@@ -514,6 +514,119 @@ void do_drawingoutthebeast( CHAR_DATA *ch, char *argument)
     return;
 }
 
+void do_quelltheherd(CHAR_DATA *ch, char *argument)
+{
+   char arg[MAX_INPUT_LENGTH];
+   CHAR_DATA *victim;
+   CHAR_DATA *vict_next;
+   AFFECT_DATA af;
+   int success;
+
+    argument = one_argument( argument, arg );
+
+    if (IS_NPC(ch)) return;
+
+    if ( IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
+    {
+        send_to_char("Your blood curse prevents it!\n\r" ,ch);
+        return;
+    }
+
+    if (ch->pcdata->discipline[ANIMALISM] < 6)
+    {
+        send_to_char( "You are not skilled enough in Animalism!.\n\r", ch );
+        return;
+    }
+
+    if(!IS_VAMP(ch))
+    {
+        send_to_char("You are not a vampire!\n\r" ,ch);
+        return;
+    }
+
+    if ( ch->pblood < 40 )
+    {
+        send_to_char( "You don't have enough blood.\n\r", ch );
+        return;
+    }
+    ch->pblood -= 30;
+    send_to_char("You lift your voice in a sweet song of peace and serenity.\n\r",ch);
+    
+    WAIT_STATE( ch, 24 );
+    success = godice(get_attribute(ch,STRENGTH)+ch->pcdata->csabilities[CSABIL_INTIMIDATION],7);
+    
+    if (success == 0) {
+        act( "And it seems to have no effect..", ch, NULL, victim, TO_CHAR);
+        act( "$n sings a sweet song of peace and serenity, which seems to go completely ignored..",  ch, NULL, victim, TO_NOTVICT );
+        return;
+    }
+    
+    if(success < 0)
+        {
+        for ( victim = char_list; victim != NULL; victim = vict_next )
+        {
+            vict_next       = victim->next;
+            if(!IS_NPC(victim) || victim->in_room == NULL || victim->pIndexData->pShop != NULL || victim == ch)
+            continue;
+
+            if ( victim->in_room == ch->in_room )
+                {
+                    act( "Instead of quelling the herd your song enrages $N!",  ch, NULL, victim, TO_CHAR );
+                    act( "$n sings a soft, calming song... which drives $N to attack!",  ch, NULL, victim, TO_NOTVICT );
+                    multi_hit( victim, ch, TYPE_UNDEFINED);
+                }
+                continue;
+            }
+            return;
+        }
+    
+    
+    act( "$n sings a soft and sweet song, a sense of calm descending over the room.",  ch, NULL, victim, TO_NOTVICT );
+    
+    for ( victim = char_list; victim != NULL; victim = vict_next )
+    {
+        vict_next       = victim->next;
+        if(!IS_NPC(victim))
+            continue;
+        if ( victim->in_room == NULL || victim == ch)
+            continue;
+        if ( victim->in_room == ch->in_room && victim->level < ch->level+25 )
+        {
+
+            REMOVE_BIT(victim->act, ACT_AGGRESSIVE);
+            act("Your song seems to sway the heart of $N.",ch,NULL,victim,TO_CHAR);
+            if (success > 2) {
+                affect_strip(victim, gsn_berserk);
+                affect_strip(victim, gsn_vamp_frenzy);
+                affect_strip(victim, gsn_garou_frenzy);
+                affect_strip(victim, gsn_thaumaturgy_frenzy);
+                affect_strip(victim, gsn_vigor);
+                affect_strip(victim, gsn_zeal);
+            }
+
+            af.where = TO_AFFECTS;
+            af.type = skill_lookup("calm");
+            af.level = success*20;
+            af.duration = success*4;
+            af.bitvector = AFF_CALM;
+            
+            af.location = APPLY_HITROLL;
+            af.modifier = -success * 25;
+            affect_to_char(victim,&af);
+
+            af.location = APPLY_DAMROLL;
+            affect_to_char(victim,&af);
+
+            af.location = APPLY_AC;
+            af.modifier = success * 50;
+            affect_to_char(victim, &af);
+                    
+                
+            continue;
+        }
+    }
+    return;
+}
 
 void do_reveal(CHAR_DATA *ch, char *argument)
 {

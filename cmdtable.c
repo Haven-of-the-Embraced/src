@@ -138,6 +138,7 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "beckoning",      do_beckoning },
     { "songofserenity",     do_songofserenity },
     { "drawingouthebeast",      do_drawingoutthebeast },
+    { "quelltheherd",           do_quelltheherd },
     { "forgetful",      do_forgetful},
     { "cloakthegathering",     do_cloakthegathering },//DNM
     { "dreadgaze",      do_dreadgaze},

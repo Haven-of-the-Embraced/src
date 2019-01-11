@@ -405,6 +405,7 @@ DECLARE_DO_FUN( do_feralspeech    );
 DECLARE_DO_FUN( do_beckoning    );
 DECLARE_DO_FUN( do_songofserenity   );
 DECLARE_DO_FUN( do_drawingoutthebeast   );
+DECLARE_DO_FUN( do_quelltheherd );
 DECLARE_DO_FUN( do_forgetful    );
 DECLARE_DO_FUN( do_regenerate   );
 DECLARE_DO_FUN( do_command  );

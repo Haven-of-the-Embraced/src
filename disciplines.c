@@ -134,9 +134,7 @@ void do_feralspeech(CHAR_DATA *ch, char *argument)
 
     if ( IS_AFFECTED(victim, AFF_CHARM)
     ||   IS_AFFECTED(ch, AFF_CHARM)
-    ||   ch->level < victim->level
-    ||   IS_SET(victim->imm_flags,IMM_CHARM)
-    ||   saves_spell( ch->level, victim,DAM_CHARM))
+    ||   IS_SET(victim->imm_flags,IMM_CHARM))
     {
         act( "$N refuses to heed to your will.",  ch, NULL, victim, TO_CHAR );
         act( "$n stares into the eyes of $N... then frowns suddenly as $N snubs them.",  ch, NULL, victim, TO_NOTVICT );

@@ -1613,6 +1613,7 @@ void do_freebie(CHAR_DATA *ch, char *argument)
                     if (count == CSBACK_GENERATION)
                     {
                         ch->gen--;
+                        ch->pcdata->csgeneration = ch->gen;
                         if (ch->max_pblood+10 <= 200)
                           ch->max_pblood += 10;
                     }
@@ -3606,6 +3607,7 @@ void do_backgrounds (CHAR_DATA *ch, char *argument)
         if (trait == CSBACK_GENERATION)
         {
             ch->gen--;
+            ch->pcdata->csgeneration = ch->gen;
             ch->max_pblood += 10;
             if (ch->max_pblood > 200)
                 ch->max_pblood = 200;

@@ -6032,16 +6032,16 @@ void thaumaturgy_frenzy( int sn, int level, CHAR_DATA *ch, void *vo, int target 
     af.level     = ch->level;
     af.duration  = level;
     af.location  = APPLY_HITROLL;
-    af.modifier  = -level * 10;
+    af.modifier  = -level * 25;
     af.bitvector = 0;
     affect_to_char( ch, &af );
 
     af.location  = APPLY_DAMROLL;
-    af.modifier  = -(level * 2) * 10;
+    af.modifier  = -(level * 2) * 25;
     affect_to_char( ch, &af );
 
     af.location = APPLY_AC;
-    af.modifier = (level * 3) * 10;
+    af.modifier = (level * 3) * 25;
     affect_to_char( ch, &af );
 
     return;

@@ -15,7 +15,7 @@ if os.path.isfile(pidfile):
 #    print "%s already exists, exiting" % pidfile
     sys.exit()
 else:
-    file(pidfile, 'w').write(pid)
+    open(pidfile, 'w').write(pid)
 
 if (len(sys.argv) > 1):
     argument = sys.argv[1]

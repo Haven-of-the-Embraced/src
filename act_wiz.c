@@ -2165,7 +2165,7 @@ void do_mstat( CHAR_DATA *ch, char *argument )
     }
     if (ch->clan)
     {
-        sprintf(buf,"{cClan:{W %-27s{x",clan_table[victim->clan].name);
+        sprintf(buf,"{cClan:{W %-27s{x\n\r",clan_table[victim->clan].name);
         sendch(buf, ch);
         if (IS_SET(victim->act2, PLR2_LEADER))
             sendch("{cLeader    :{W Yes{x\n\r",ch);

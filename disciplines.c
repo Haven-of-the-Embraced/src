@@ -421,6 +421,7 @@ void do_songofserenity(CHAR_DATA *ch, char *argument)
 void do_drawingoutthebeast( CHAR_DATA *ch, char *argument)
 {
     CHAR_DATA *victim;
+    int success;
 
     if (IS_NPC(ch)) return;
 
@@ -457,13 +458,21 @@ void do_drawingoutthebeast( CHAR_DATA *ch, char *argument)
         send_to_char("You fear that it may hinder your future purchases.\n\r",ch);
         return;
     }
+    success = godice(get_attribute(ch, MANIPULATION) + ch->pcdata->csabilities[CSABIL_ANIMAL_KEN], 8);
+    
+    if (success < 2)
+    {
+        send_to_char("You are unable to draw their beastial nature to the surface.\n\r", ch);
+        return;
+    }
     
     ch->pblood -= 20;
     act( "$n stares at $N. $N suddenly starts to twitch then seems to enter a Frenzy!",  ch, NULL, victim, TO_NOTVICT );
     act( "$n stares at you... you are suddenly overcome by Frenzy!",  ch, NULL, victim, TO_VICT );
     act( "You draw forth $N's beast to the surface!",  ch, NULL, victim, TO_CHAR );
-    thaumaturgy_frenzy( gsn_thaumaturgy_frenzy, victim->level, victim, victim, TARGET_CHAR);
+    thaumaturgy_frenzy( gsn_thaumaturgy_frenzy, success, victim, victim, TARGET_CHAR);
     multi_hit( victim, ch, TYPE_UNDEFINED );
+    WAIT_STATE(ch, PULSE_VIOLENCE*2);
     return;
 }
 

@@ -5386,7 +5386,7 @@ void do_mset( CHAR_DATA *ch, char *argument )
         return;
     }
     victim->gen = value;
-    victim->pcdata->csgeneration;
+    victim->pcdata->csgeneration = value;
     return;
     }
     if ( !str_prefix( arg2, "rank" ) )

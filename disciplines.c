@@ -6145,7 +6145,7 @@ void do_bloodrage( CHAR_DATA *ch, char *argument)
         return;
     }
 
-    thaumaturgy_frenzy( gsn_thaumaturgy_frenzy, dicesuccess * 2, victim, victim, TARGET_CHAR);
+    thaumaturgy_frenzy( gsn_thaumaturgy_frenzy, dicesuccess, victim, victim, TARGET_CHAR);
 
     act("You smile with delight as $N spends precious vitae and enters a Frenzy.", ch, NULL, victim, TO_CHAR);
     if (!IS_NPC(victim))

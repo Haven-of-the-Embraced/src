@@ -2168,9 +2168,10 @@ void do_mstat( CHAR_DATA *ch, char *argument )
     {
         if(!IS_NPC(victim))
         {
-            sprintf(buf,"Vampire information:\n\r Clan: %s  Generation: %d  Sire: %s  Dpoints: %d  Childer: %d Blood: %d/%d\n\r",
+            sprintf(buf,"Vampire information:\n\r Clan: %s  Generation: %d(%d)  Sire: %s  Dpoints: %d  Childer: %d Blood: %d/%d\n\r",
             capitalize(clan_table[victim->clan].name),
             victim->gen,
+            victim->pcdata->csgeneration,
             victim->sire,
             victim->dpoints,
             victim->childer,
@@ -2184,8 +2185,9 @@ void do_mstat( CHAR_DATA *ch, char *argument )
     {
         if(!IS_NPC(victim))
         {
-            sprintf(buf,"Ghoul information:\n\r Generation: %d  Master: %s  Dpoints: %d  Blood: %d/%d\n\r",
+            sprintf(buf,"Ghoul information:\n\r Generation: %d(%d)  Master: %s  Dpoints: %d  Blood: %d/%d\n\r",
             victim->gen,
+            victim->pcdata->csgeneration,
             victim->vamp_master,
             victim->dpoints,
             victim->pblood/10,
@@ -2385,12 +2387,13 @@ void do_pstat( CHAR_DATA *ch, char *argument )
         send_to_char(buf,ch);
     }
 
-    if (victim->race == race_lookup("vampire") || victim->race == race_lookup("methuselah"))
+    if (!IS_NPC(victim) && victim->race == race_lookup("vampire") || victim->race == race_lookup("methuselah"))
     {
         send_to_char("{r--Vampire Info:{x",ch);
-        sprintf(buf,"Clan: %s  Generation: %d  Sire: %s Childer: %d Blood: %d/%d\n\r",
+        sprintf(buf,"Clan: %s  Generation: %d(%d)  Sire: %s Childer: %d Blood: %d/%d\n\r",
         capitalize(clan_table[victim->clan].name),
         victim->gen,
+        victim->pcdata->csgeneration,    
         victim->sire,
         victim->childer,
         victim->pblood/10,
@@ -2398,11 +2401,12 @@ void do_pstat( CHAR_DATA *ch, char *argument )
         send_to_char(buf,ch);
     }
 
-    if (victim->race == race_lookup("ghoul"))
+    if (!IS_NPC(victim) && victim->race == race_lookup("ghoul"))
     {
         send_to_char("{r----Ghoul Info:{x",ch);
-        sprintf(buf,"Generation: %d  Master: %s  Dpoints: %d  Blood: %d/%d\n\r",
+        sprintf(buf,"Generation: %d(%d)  Master: %s  Dpoints: %d  Blood: %d/%d\n\r",
         victim->gen,
+        victim->pcdata->csgeneration,
         victim->vamp_master,
         victim->dpoints,
         victim->pblood/10,
@@ -5382,6 +5386,7 @@ void do_mset( CHAR_DATA *ch, char *argument )
         return;
     }
     victim->gen = value;
+    victim->pcdata->csgeneration;
     return;
     }
     if ( !str_prefix( arg2, "rank" ) )

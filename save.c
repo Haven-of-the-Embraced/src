@@ -912,6 +912,7 @@ bool load_char_obj( DESCRIPTOR_DATA *d, char *name )
     ch->bloodtick = 0;
     ch->airtick = 0;
     ch->pcdata->influenced = 0;
+    ch->pcdata->csgeneration = 0;
     ch->max_quintessence   = 100;
     for (stat = 0; stat < MAX_GIFT; stat ++)
         ch->pcdata->gift[stat] = FALSE;
@@ -1120,6 +1121,13 @@ if (ch->version <=10)
 //Matthew haaccckk. See Load_char_obj for csbackgrounds.
 if (ch->version <=11)
     ch->version++;
+    
+    if (ch->version < 13)
+    {
+        ch->version++;
+        if (IS_VAMP(ch))
+            ch->pcdata->csgeneration = 10 - ch->pcdata->csbackgrounds[CSBACK_GENERATION];
+    }
 
     return found;
 }

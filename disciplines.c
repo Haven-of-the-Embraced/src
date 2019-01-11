@@ -336,6 +336,7 @@ void do_songofserenity(CHAR_DATA *ch, char *argument)
 {
    char arg[MAX_INPUT_LENGTH];
    CHAR_DATA *victim;
+   AFFECT_DATA af;
    int success;
 
     argument = one_argument( argument, arg );
@@ -421,6 +422,25 @@ void do_songofserenity(CHAR_DATA *ch, char *argument)
     act("Your song seems to sway the heart of $N",ch,NULL,victim,TO_CHAR);
     act( "$n sings a soft and sweet song to $N who seems calmed by it.",  ch, NULL, victim, TO_NOTVICT );
     REMOVE_BIT(victim->act, ACT_AGGRESSIVE);
+    
+    af.where = TO_AFFECTS;
+    af.type = skill_lookup("calm");
+    af.level = success*20;
+    af.duration = success*4;
+    af.location = APPLY_HITROLL;
+    if (!IS_NPC(victim))
+      af.modifier = -success * 10;
+    else
+      af.modifier = -success * 25;
+    af.bitvector = AFF_CALM;
+    affect_to_char(victim,&af);
+
+    af.location = APPLY_DAMROLL;
+    affect_to_char(victim,&af);
+    
+    af.location = APPLY_AC;
+    af.modifier = success * 50;
+    affect_to_char(victim, &af);
     return;
 }
 void do_drawingoutthebeast( CHAR_DATA *ch, char *argument)

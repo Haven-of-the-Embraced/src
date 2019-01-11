@@ -1448,7 +1448,7 @@ void do_freebie(CHAR_DATA *ch, char *argument)
 
         if (ch->race == race_lookup("vampire") || ch->race == race_lookup("methuselah"))
         {
-            if(ch->pcdata->discipline[i] == 5 && ch->gen > 7)
+            if(ch->pcdata->discipline[i] == 5 && ch->pcdata->csgeneration > 7)
             {
                 send_to_char("You must be of 7th generation or lower to achieve this. Please seek a way to better your generation first.\n\r",ch);
                 return;
@@ -1473,13 +1473,13 @@ void do_freebie(CHAR_DATA *ch, char *argument)
         {
             int max;
             int num;
-            if (ch->gen > 10)
+            if (ch->pcdata->csgeneration > 10)
                 max = 1;
-            if (ch->gen <= 10)
+            if (ch->pcdata->csgeneration <= 10)
                 max = 2;
-            if (ch->gen <= 8)
+            if (ch->pcdata->csgeneration <= 8)
                 max = 3;
-            if (ch->gen <= 6)
+            if (ch->pcdata->csgeneration <= 6)
                 max = 4;
 
             if (ch->pcdata->discipline[i] >= max) {
@@ -2968,10 +2968,10 @@ if(ch->race == race_lookup("vampire"))
 {
     sprintf(buf," |  Sire:   %s  ",center(ch->sire,21," "));
     send_to_char(buf,sch);
-    sprintf(buf,"  %s :Generation |\n\r",center(ch->gen == 1 ? "First" : ch->gen == 2 ? "Second" : ch->gen == 3 ? "Third" :
-        ch->gen == 4 ? "Fourth" : ch->gen == 5 ? "Fifth" : ch->gen == 6 ? "Sixth" : ch->gen == 7 ? "Seventh" :
-        ch->gen == 8 ? "Eighth" : ch->gen == 9 ? "Ninth" : ch->gen == 10 ? "Tenth" : ch->gen == 11 ? "Eleventh" :
-        ch->gen == 12 ? "Twelfth" : ch->gen == 13 ? "Thirteenth" : "Unknown",20," "));
+    sprintf(buf,"  %s :Generation |\n\r",center(ch->pcdata->csgeneration == 1 ? "First" : ch->pcdata->csgeneration == 2 ? "Second" : ch->pcdata->csgeneration == 3 ? "Third" :
+        ch->pcdata->csgeneration == 4 ? "Fourth" : ch->pcdata->csgeneration == 5 ? "Fifth" : ch->pcdata->csgeneration == 6 ? "Sixth" : ch->pcdata->csgeneration == 7 ? "Seventh" :
+        ch->pcdata->csgeneration == 8 ? "Eighth" : ch->pcdata->csgeneration == 9 ? "Ninth" : ch->pcdata->csgeneration == 10 ? "Tenth" : ch->pcdata->csgeneration == 11 ? "Eleventh" :
+        ch->pcdata->csgeneration == 12 ? "Twelfth" : ch->pcdata->csgeneration == 13 ? "Thirteenth" : "Unknown",20," "));
     send_to_char(buf,sch);
     sprintf(buf," |  Clan:   %s   ",center(capitalize(clan_table[ch->clan].name),19," "));
     send_to_char(buf,sch);
@@ -2983,7 +2983,7 @@ if(ch->race == race_lookup("ghoul"))
 {
     sprintf(buf," |  Domitor:  %s  ",center(ch->vamp_master,19," "));
     send_to_char(buf,sch);
-    sprintf(buf,"  %s :Domitor Gen |\n\r",center(ch->gen == 4 ? "Methuselah" : ch->gen == 5 ? "Fifth" : ch->gen == 6 ? "Sixth" : ch->gen == 7 ? "Seventh" : ch->gen == 8 ? "Eighth" : ch->gen == 9 ? "Ninth" : ch->gen == 10 ? "Tenth" : ch->gen == 11 ? "Eleventh" : ch->gen == 12 ? "Twelvth" : ch->gen == 13 ? "Thirteenth" : "Negligent",19," "));
+    sprintf(buf,"  %s :Domitor Gen |\n\r",center(ch->pcdata->csgeneration == 4 ? "Methuselah" : ch->pcdata->csgeneration == 5 ? "Fifth" : ch->pcdata->csgeneration == 6 ? "Sixth" : ch->pcdata->csgeneration == 7 ? "Seventh" : ch->pcdata->csgeneration == 8 ? "Eighth" : ch->pcdata->csgeneration == 9 ? "Ninth" : ch->pcdata->csgeneration == 10 ? "Tenth" : ch->pcdata->csgeneration == 11 ? "Eleventh" : ch->pcdata->csgeneration == 12 ? "Twelvth" : ch->pcdata->csgeneration == 13 ? "Thirteenth" : "Negligent",19," "));
     send_to_char(buf,sch);
     sprintf(buf," |  Domitor Clan:   %s  ",center(capitalize(clan_table[ch->clan].name),12," "));
     send_to_char(buf,sch);
@@ -3594,7 +3594,7 @@ void do_backgrounds (CHAR_DATA *ch, char *argument)
             send_to_char("You cannot set that trait any higher at creation.\n\r",ch);
             return;
         }
-        if ((trait == CSBACK_GENERATION) && (ch->gen <= 9))
+        if ((trait == CSBACK_GENERATION) && (ch->pcdata->csgeneration <= 9))
         {
             send_to_char("You cannot purchase any further points in Generation without seeking Admin approval.\n\r",ch);
             return;

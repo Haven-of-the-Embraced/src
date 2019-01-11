@@ -151,7 +151,7 @@ void do_vampire(CHAR_DATA *ch, char *argument)
     if(ch->pcdata->csgeneration == 19) send_to_char("You are a Vampire of the Nineteenth Generation.\n\r" ,ch);
     if(ch->pcdata->csgeneration > 19)
     {
-        sprintf(buf, "You are a Vampire of the %d Generation.\n\r", ch->gen);
+        sprintf(buf, "You are a Vampire of the %d Generation.\n\r", ch->pcdata->csgeneration);
         send_to_char(buf,ch);
     }
     sprintf(buf, "You are the Childe of %s.\n\r", ch->sire);
@@ -402,7 +402,8 @@ void do_feed(CHAR_DATA *ch, char *argument)
             sprintf(buf,"You commit your life and soul to the immortal service of %s!\n\r",victim->name);
             send_to_char(buf,ch);
                 ch->race = race_lookup("ghoul");
-                ch->gen = victim->gen;
+                ch->gen = victim->pcdata->csgeneration;
+                ch->pcdata->csgeneration = victim->pcdata->csgeneration;
                 ch->clan = victim->clan;
                 ch->dpoints = 0;
                 ch->pblood = 100;
@@ -1845,6 +1846,7 @@ bool make_vamp(CHAR_DATA *ch, char *argument)
     ch->race = race_lookup("vampire");
     ch->embraced++;
     ch->gen = 10;
+    ch->pcdata->csgeneration = 10;
     ch->clan = clan_lookup(clan);
     ch->sire = str_dup("Unknown");
     ch->max_pblood = 100;

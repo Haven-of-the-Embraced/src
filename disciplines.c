@@ -396,10 +396,7 @@ void do_songofserenity(CHAR_DATA *ch, char *argument)
     ch->pblood -= 10;
     send_to_char("You lift your voice in a sweet song of peace and serenity.\n\r",ch);
     if ( IS_AFFECTED(victim, AFF_CHARM)
-    ||   IS_AFFECTED(ch, AFF_CHARM)
-    ||   ch->level+10 < victim->level
-    ||   IS_SET(victim->imm_flags,IMM_CHARM)
-    ||   saves_spell( ch->level, victim,DAM_CHARM))
+    ||   ch->level+25 < victim->level)
     {
         act( "$N ignores your sweet song.",  ch, NULL, victim, TO_CHAR );
         act( "$n sings a sweet song to $N, which seems to completely ignore it..",  ch, NULL, victim, TO_NOTVICT );

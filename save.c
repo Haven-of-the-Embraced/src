@@ -305,16 +305,16 @@ void fwrite_char( CHAR_DATA *ch, FILE *fp )
         fprintf( fp, "tertiary %d\n", ch->pcdata->tertiary );
         fprintf( fp, "cscreate %d %d %d %d %d %d\n", ch->pcdata->stat[PHYSICAL], ch->pcdata->stat[SOCIAL], ch->pcdata->stat[MENTAL], ch->pcdata->stat[SKILLS], ch->pcdata->stat[TALENTS], ch->pcdata->stat[KNOWLEDGES]);
     }
-/*
-    fprintf( fp, "CSname %s~\n",    ch->pcdata->csname);
-    fprintf( fp, "CSchronicle %s~\n",   ch->pcdata->cschronicle);
-    fprintf( fp, "CSclan %s~\n",    ch->pcdata->csclan);
-    fprintf( fp, "CSconcept %s~\n", ch->pcdata->csconcept);
-    fprintf( fp, "CSsect %s~\n",    ch->pcdata->cssect);
-    fprintf( fp, "CSsire %s~\n",    ch->pcdata->cssire);
+
+//    fprintf( fp, "CSname %s~\n",    ch->pcdata->csname);
+//    fprintf( fp, "CSchronicle %s~\n",   ch->pcdata->cschronicle);
+//    fprintf( fp, "CSclan %s~\n",    ch->pcdata->csclan);
+//    fprintf( fp, "CSconcept %s~\n", ch->pcdata->csconcept);
+//    fprintf( fp, "CSsect %s~\n",    ch->pcdata->cssect);
+//    fprintf( fp, "CSsire %s~\n",    ch->pcdata->cssire);
     fprintf( fp, "CSgeneration %d\n", ch->pcdata->csgeneration );
-    fprintf( fp, "CShaven %s~\n",   ch->pcdata->cshaven);
-*/
+//    fprintf( fp, "CShaven %s~\n",   ch->pcdata->cshaven);
+
     if (ch->nextquest != 0)
         fprintf( fp, "QuestNext %d\n",  ch->nextquest   );
     else if (ch->countdown != 0)
@@ -1393,18 +1393,18 @@ void fread_char( CHAR_DATA *ch, FILE *fp )
             break;
         }
 
-/*
-        KEY( "CSname",  ch->pcdata->csname, fread_string( fp ) );
-        KEY( "CSchronicle", ch->pcdata->cschronicle,    fread_string( fp ) );
-        KEY( "CSclan",  ch->pcdata->csclan, fread_string( fp ) );
-        KEY( "CSnature",    ch->pcdata->csnature,   fread_string( fp ) );
-        KEY( "CSdemeanor",  ch->pcdata->csdemeanor, fread_string( fp ) );
-        KEY( "CSconcept",   ch->pcdata->csconcept,  fread_string( fp ) );
-        KEY( "CSsect",  ch->pcdata->cssect, fread_string( fp ) );
-        KEY( "CSsire",  ch->pcdata->cssire, fread_string( fp ) );
+
+//        KEY( "CSname",  ch->pcdata->csname, fread_string( fp ) );
+//        KEY( "CSchronicle", ch->pcdata->cschronicle,    fread_string( fp ) );
+//        KEY( "CSclan",  ch->pcdata->csclan, fread_string( fp ) );
+//       KEY( "CSnature",    ch->pcdata->csnature,   fread_string( fp ) );
+//        KEY( "CSdemeanor",  ch->pcdata->csdemeanor, fread_string( fp ) );
+//        KEY( "CSconcept",   ch->pcdata->csconcept,  fread_string( fp ) );
+//        KEY( "CSsect",  ch->pcdata->cssect, fread_string( fp ) );
+//        KEY( "CSsire",  ch->pcdata->cssire, fread_string( fp ) );
         KEY( "CSgeneration",    ch->pcdata->csgeneration,       fread_number( fp ) );
-        KEY( "CShaven", ch->pcdata->cshaven,    fread_string( fp ) );
-*/      if ( !str_cmp( word, "CSattributes"  ))
+//        KEY( "CShaven", ch->pcdata->cshaven,    fread_string( fp ) );
+      if ( !str_cmp( word, "CSattributes"  ))
         {
         int i;
         for (i = 0; i <= MAX_CSATTRIBUTES; i ++)

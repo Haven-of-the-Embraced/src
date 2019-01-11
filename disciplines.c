@@ -457,7 +457,7 @@ void do_drawingoutthebeast( CHAR_DATA *ch, char *argument)
         send_to_char("You fear that it may hinder your future purchases.\n\r",ch);
         return;
     }
-
+    
     ch->pblood -= 20;
     act( "$n stares at $N. $N suddenly starts to twitch then seems to enter a Frenzy!",  ch, NULL, victim, TO_NOTVICT );
     act( "$n stares at you... you are suddenly overcome by Frenzy!",  ch, NULL, victim, TO_VICT );
@@ -6032,16 +6032,16 @@ void thaumaturgy_frenzy( int sn, int level, CHAR_DATA *ch, void *vo, int target 
     af.level     = ch->level;
     af.duration  = level;
     af.location  = APPLY_HITROLL;
-    af.modifier  = -(ch->level * 2) - 10;
+    af.modifier  = -level * 10;
     af.bitvector = 0;
     affect_to_char( ch, &af );
 
     af.location  = APPLY_DAMROLL;
-    af.modifier  = -(ch->level * 2) - 10;
+    af.modifier  = -(level * 2) * 10;
     affect_to_char( ch, &af );
 
     af.location = APPLY_AC;
-    af.modifier = (ch->level * 3) - 10;
+    af.modifier = (level * 3) * 10;
     affect_to_char( ch, &af );
 
     return;

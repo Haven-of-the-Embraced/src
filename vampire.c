@@ -130,26 +130,26 @@ void do_vampire(CHAR_DATA *ch, char *argument)
         send_to_char("You are not a vampire!\n\r" ,ch);
         return;
     }
-    if(ch->gen == 1) send_to_char("You are a Vampire of the First Generation.\n\r" ,ch);
-    if(ch->gen == 2) send_to_char("You are a Vampire of the Second Generation.\n\r" ,ch);
-    if(ch->gen == 3) send_to_char("You are a Vampire of the Third Generation.\n\r" ,ch);
-    if(ch->gen == 4) send_to_char("You are a Vampire of the Fourth Generation.\n\r" ,ch);
-    if(ch->gen == 5) send_to_char("You are a Vampire of the Fifth Generation.\n\r" ,ch);
-    if(ch->gen == 6) send_to_char("You are a Vampire of the Sixth Generation.\n\r" ,ch);
-    if(ch->gen == 7) send_to_char("You are a Vampire of the Seventh Generation.\n\r" ,ch);
-    if(ch->gen == 8) send_to_char("You are a Vampire of the Eighth Generation.\n\r" ,ch);
-    if(ch->gen == 9) send_to_char("You are a Vampire of the Ninth Generation.\n\r" ,ch);
-    if(ch->gen == 10) send_to_char("You are a Vampire of the Tenth Generation.\n\r" ,ch);
-    if(ch->gen == 11) send_to_char("You are a Vampire of the Eleventh Generation.\n\r" ,ch);
-    if(ch->gen == 12) send_to_char("You are a Vampire of the Twelfth Generation.\n\r" ,ch);
-    if(ch->gen == 13) send_to_char("You are a Vampire of the Thirteenth Generation.\n\r" ,ch);
-    if(ch->gen == 14) send_to_char("You are a Vampire of the Fourteenth Generation.\n\r" ,ch);
-    if(ch->gen == 15) send_to_char("You are a Vampire of the Fifteenth Generation.\n\r" ,ch);
-    if(ch->gen == 16) send_to_char("You are a Vampire of the Sixteenth Generation.\n\r" ,ch);
-    if(ch->gen == 17) send_to_char("You are a Vampire of the Seventeenth Generation.\n\r" ,ch);
-    if(ch->gen == 18) send_to_char("You are a Vampire of the Eightteenth Generation.\n\r" ,ch);
-    if(ch->gen == 19) send_to_char("You are a Vampire of the Nineteenth Generation.\n\r" ,ch);
-    if(ch->gen > 19)
+    if(ch->pcdata->csgeneration == 1) send_to_char("You are a Vampire of the First Generation.\n\r" ,ch);
+    if(ch->pcdata->csgeneration == 2) send_to_char("You are a Vampire of the Second Generation.\n\r" ,ch);
+    if(ch->pcdata->csgeneration == 3) send_to_char("You are a Vampire of the Third Generation.\n\r" ,ch);
+    if(ch->pcdata->csgeneration == 4) send_to_char("You are a Vampire of the Fourth Generation.\n\r" ,ch);
+    if(ch->pcdata->csgeneration == 5) send_to_char("You are a Vampire of the Fifth Generation.\n\r" ,ch);
+    if(ch->pcdata->csgeneration == 6) send_to_char("You are a Vampire of the Sixth Generation.\n\r" ,ch);
+    if(ch->pcdata->csgeneration == 7) send_to_char("You are a Vampire of the Seventh Generation.\n\r" ,ch);
+    if(ch->pcdata->csgeneration == 8) send_to_char("You are a Vampire of the Eighth Generation.\n\r" ,ch);
+    if(ch->pcdata->csgeneration == 9) send_to_char("You are a Vampire of the Ninth Generation.\n\r" ,ch);
+    if(ch->pcdata->csgeneration == 10) send_to_char("You are a Vampire of the Tenth Generation.\n\r" ,ch);
+    if(ch->pcdata->csgeneration == 11) send_to_char("You are a Vampire of the Eleventh Generation.\n\r" ,ch);
+    if(ch->pcdata->csgeneration == 12) send_to_char("You are a Vampire of the Twelfth Generation.\n\r" ,ch);
+    if(ch->pcdata->csgeneration == 13) send_to_char("You are a Vampire of the Thirteenth Generation.\n\r" ,ch);
+    if(ch->pcdata->csgeneration == 14) send_to_char("You are a Vampire of the Fourteenth Generation.\n\r" ,ch);
+    if(ch->pcdata->csgeneration == 15) send_to_char("You are a Vampire of the Fifteenth Generation.\n\r" ,ch);
+    if(ch->pcdata->csgeneration == 16) send_to_char("You are a Vampire of the Sixteenth Generation.\n\r" ,ch);
+    if(ch->pcdata->csgeneration == 17) send_to_char("You are a Vampire of the Seventeenth Generation.\n\r" ,ch);
+    if(ch->pcdata->csgeneration == 18) send_to_char("You are a Vampire of the Eightteenth Generation.\n\r" ,ch);
+    if(ch->pcdata->csgeneration == 19) send_to_char("You are a Vampire of the Nineteenth Generation.\n\r" ,ch);
+    if(ch->pcdata->csgeneration > 19)
     {
         sprintf(buf, "You are a Vampire of the %d Generation.\n\r", ch->gen);
         send_to_char(buf,ch);

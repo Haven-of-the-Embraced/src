@@ -368,6 +368,10 @@ void do_songofserenity(CHAR_DATA *ch, char *argument)
         send_to_char("Your blood curse prevents it!\n\r" ,ch);
         return;
     }
+    if ( IS_AFFECTED(victim, AFF_CALM)) {
+        send_to_char("They are already pretty calm!\n\r", ch);
+        return;
+    }
     if (ch->pcdata->discipline[ANIMALISM] < 3)
     {
         send_to_char( "You are not skilled enough in Animalism!.\n\r", ch );

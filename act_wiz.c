@@ -2149,7 +2149,7 @@ void do_mstat( CHAR_DATA *ch, char *argument )
     send_to_char( buf, ch );                    /* OLC */
     }
 
-    sprintf( buf, "Short description: %s\n\rLong  description: %s",
+    sprintf( buf, "Short description: %s\n\rLong  description: %s\n\r",
     victim->short_descr,
     victim->long_descr[0] != '\0' ? victim->long_descr : "(none)\n\r" );
     send_to_char( buf, ch );
@@ -2162,13 +2162,6 @@ void do_mstat( CHAR_DATA *ch, char *argument )
             "Theurge" : victim->auspice == AUSPICE_PHILODOX ? "Philodox" : victim->auspice == AUSPICE_GALLIARD ?
             "Galliard" : "Ahroun", capitalize(clan_table[victim->clan].name), victim->renown);
         send_to_char(buf,ch);
-    }
-    if (ch->clan)
-    {
-        sprintf(buf,"{cClan:{W %-27s{x\n\r",clan_table[victim->clan].name);
-        sendch(buf, ch);
-        if (IS_SET(victim->act2, PLR2_LEADER))
-            sendch("{cLeader    :{W Yes{x\n\r",ch);
     }
 
     if (victim->race == race_lookup("vampire") || victim->race == race_lookup("methuselah"))

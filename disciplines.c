@@ -943,8 +943,6 @@ void do_project(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if(ch->clan != clan_lookup("watcher"))
-    {
         if(!IS_VAMP(ch))
         {
             send_to_char("You are not a vampire!\n\r" ,ch);
@@ -974,25 +972,7 @@ void do_project(CHAR_DATA *ch, char *argument)
             send_to_char( "You should know better then to spy on your betters.\n\r", ch );
             return;
         }
-    }
-    else
-    {
-        if(ch->mana < 50)
-        {
-            send_to_char( "You don't have enough mana.\n\r", ch );
-            return;
-        }
-        if(ch->rank < 6)
-        {
-            send_to_char( "You aren't powerful enough yet.\n\r", ch );
-            return;
-        }
-        if(victim->clan == clan_lookup("watcher") && victim->rank > ch->rank)
-        {
-            send_to_char( "You should know better then to spy on your leaders.\n\r", ch );
-            return;
-        }
-    }
+   
     if ( argument[0] == '\0' )
     {
         send_to_char( "Scry whom?\n\r", ch );
@@ -1008,20 +988,9 @@ void do_project(CHAR_DATA *ch, char *argument)
         send_to_char( "They are too powerful.\n\r", ch );
         return;
     }
-    if(ch->clan == clan_lookup("watcher"))
-    {
-        ch->mana -= 50;
-        if ( get_skill(ch,gsn_scry) < number_percent())
-        {
-            send_to_char( "You fail your attempt.\n\r", ch );
-            check_improve(ch,gsn_scry,FALSE,1);
-            return;
-        }
-        else
-            check_improve(ch,gsn_scry,TRUE,1);
-    }
-    else
-        ch->pblood -= 20;
+
+    ch->pblood -= 20;
+
     WAIT_STATE( ch, skill_table[gsn_scry].beats );
     was_room = ch->in_room;
     char_from_room( ch );

@@ -1002,6 +1002,12 @@ void do_project(CHAR_DATA *ch, char *argument)
         WAIT_STATE(ch, 400);
         return;
     }
+    if (success == 0)
+    {
+        send_to_char("You are unable to leave your body.\n\r", ch);
+        WAIT_STATE( ch, 24);
+        return;
+    }
     
     WAIT_STATE( ch, 24 );
     was_room = ch->in_room;

@@ -938,11 +938,7 @@ void do_project(CHAR_DATA *ch, char *argument)
     int success;
 
     if (IS_NPC(ch)) return;
-    if ( (victim = get_char_world(ch, argument)) == NULL)
-    {
-        send_to_char( "You do not sense that person.\n\r", ch );
-        return;
-    }
+
 
         if(!IS_VAMP(ch))
         {
@@ -968,6 +964,13 @@ void do_project(CHAR_DATA *ch, char *argument)
             send_to_char( "You don't have enough blood.\n\r", ch );
             return;
         }
+    
+        if ( (victim = get_char_world(ch, argument)) == NULL)
+        {
+            send_to_char( "You do not sense that person.\n\r", ch );
+            return;
+        }
+    
         if(!IS_NPC(victim) && victim->gen >= 1 && ch->gen < victim->gen+2)
         {
             send_to_char( "You should know better then to spy on your betters.\n\r", ch );

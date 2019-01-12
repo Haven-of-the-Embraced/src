@@ -1039,6 +1039,7 @@ void do_touch( CHAR_DATA *ch, char *argument )
     char buf[MAX_STRING_LENGTH];
     char arg[MAX_INPUT_LENGTH];
     AFFECT_DATA *paf;
+    int success;
 
     if (IS_NPC(ch)) return;
 
@@ -1082,6 +1083,14 @@ void do_touch( CHAR_DATA *ch, char *argument )
     act( "$n gently touches $p.",  ch, obj, NULL, TO_ROOM );
     act( "You gently touch $p and gain insight on the object.",  ch, obj, NULL, TO_CHAR );
 
+    success = godice(get_attribute(ch,PERCEPTION)+ch->pcdata->csabilities[CSABIL_EMPATHY],7);
+    
+    if (success < 1)
+    {
+        send_to_char("You fail to discern any impressions left on this item.\n\r", ch);
+        return;
+    }
+    
     sprintf( buf,
         "Object '%s' is type %s, extra flags %s.\n\rWeight is %d, value is %d, level is %d.\n\r",
         obj->name,
@@ -1092,206 +1101,211 @@ void do_touch( CHAR_DATA *ch, char *argument )
         obj->level
         );
     send_to_char( buf, ch );
-    switch ( obj->item_type )
+    if (success > 1)
     {
-        case ITEM_SCROLL:
-        case ITEM_POTION:
-        case ITEM_PILL:
-            sprintf( buf, "Level %d spells of:", obj->value[0] );
-            send_to_char( buf, ch );
-            if ( obj->value[1] >= 0 && obj->value[1] < MAX_SKILL )
-            {
-                send_to_char( " '", ch );
-                send_to_char( skill_table[obj->value[1]].name, ch );
-                send_to_char( "'", ch );
-            }
-
-            if ( obj->value[2] >= 0 && obj->value[2] < MAX_SKILL )
-            {
-                send_to_char( " '", ch );
-                send_to_char( skill_table[obj->value[2]].name, ch );
-                send_to_char( "'", ch );
-            }
-
-            if ( obj->value[3] >= 0 && obj->value[3] < MAX_SKILL )
-            {
-                send_to_char( " '", ch );
-                send_to_char( skill_table[obj->value[3]].name, ch );
-                send_to_char( "'", ch );
-            }
-
-            if (obj->value[4] >= 0 && obj->value[4] < MAX_SKILL)
-            {
-                send_to_char(" '",ch);
-                send_to_char(skill_table[obj->value[4]].name,ch);
-                send_to_char("'",ch);
-            }
-
-            send_to_char( ".\n\r", ch );
-        break;
-
-        case ITEM_WAND:
-        case ITEM_STAFF:
-            sprintf( buf, "Has %d charges of level %d",
-            obj->value[2], obj->value[0] );
-            send_to_char( buf, ch );
-            if ( obj->value[3] >= 0 && obj->value[3] < MAX_SKILL )
-            {
-                send_to_char( " '", ch );
-                send_to_char( skill_table[obj->value[3]].name, ch );
-                send_to_char( "'", ch );
-            }
-            send_to_char( ".\n\r", ch );
-        break;
-        case ITEM_DRINK_CON:
-            sprintf(buf,"It holds %s-colored %s.\n\r",
-            liq_table[obj->value[2]].liq_color,
-            liq_table[obj->value[2]].liq_name);
-            send_to_char(buf,ch);
-        break;
-
-        case ITEM_CONTAINER:
-            sprintf(buf,"Capacity: %d#  Maximum weight: %d#  flags: %s\n\r",
-            obj->value[0], obj->value[3], cont_bit_name(obj->value[1]));
-            send_to_char(buf,ch);
-            if (obj->value[4] != 100)
-            {
-                sprintf(buf,"Weight multiplier: %d%%\n\r",
-                obj->value[4]);
-                send_to_char(buf,ch);
-            }
-        break;
-
-        case ITEM_WEAPON:
-            send_to_char("Weapon type is ",ch);
-            switch (obj->value[0])
-            {
-                case(WEAPON_EXOTIC) : send_to_char("exotic.\n\r",ch);   break;
-                case(WEAPON_SWORD)  : send_to_char("sword.\n\r",ch);    break;
-                case(WEAPON_DAGGER) : send_to_char("dagger.\n\r",ch);   break;
-                case(WEAPON_SPEAR)  : send_to_char("spear/staff.\n\r",ch);  break;
-                case(WEAPON_MACE)   : send_to_char("mace/club.\n\r",ch);    break;
-                case(WEAPON_AXE)    : send_to_char("axe.\n\r",ch);      break;
-                case(WEAPON_FLAIL)  : send_to_char("flail.\n\r",ch);    break;
-                case(WEAPON_WHIP)   : send_to_char("whip.\n\r",ch);     break;
-                case(WEAPON_POLEARM): send_to_char("polearm.\n\r",ch);  break;
-                case(WEAPON_LANCE): send_to_char("lance.\n\r",ch);  break;
-            default     : send_to_char("unknown.\n\r",ch);  break;
-            }
-            if (obj->pIndexData->new_format)
-                sprintf(buf,"Damage is %dd%d (average %d).\n\r",
-                obj->value[1],obj->value[2],
-                (1 + obj->value[2]) * obj->value[1] / 2);
-            else
-                sprintf( buf, "Damage is %d to %d (average %d).\n\r",
-                obj->value[1], obj->value[2],
-                ( obj->value[1] + obj->value[2] ) / 2 );
-            send_to_char( buf, ch );
-            if (obj->value[4])  /* weapon flags */
-            {
-                sprintf(buf,"Weapons flags: %s\n\r",weapon_bit_name(obj->value[4]));
-                send_to_char(buf,ch);
-            }
-        break;
-        case ITEM_ARMOR:
-            sprintf( buf,
-            "Armor class is %d pierce, %d bash, %d slash, and %d vs. magic.\n\r",
-            obj->value[0], obj->value[1], obj->value[2], obj->value[3] );
-            send_to_char( buf, ch );
-        break;
-    }
-
-    if (!obj->enchanted)
-        for ( paf = obj->pIndexData->affected; paf != NULL; paf = paf->next )
+        switch ( obj->item_type )
         {
-            if ( paf->location != APPLY_NONE && paf->modifier != 0 )
-            {
-                sprintf( buf, "Affects %s by %d.\n\r",
-                affect_loc_name( paf->location ), paf->modifier );
-                send_to_char(buf,ch);
-                if (paf->bitvector)
-                {
-                    switch(paf->where)
-                    {
-                        case TO_AFFECTS:
-                            sprintf(buf,"Adds %s affect.\n",
-                            affect_bit_name(paf->bitvector));
-                        break;
-                        case TO_OBJECT:
-                            sprintf(buf,"Adds %s object flag.\n",
-                            extra_bit_name(paf->bitvector));
-                        break;
-                        case TO_IMMUNE:
-                            sprintf(buf,"Adds immunity to %s.\n",
-                            imm_bit_name(paf->bitvector));
-                        break;
-                        case TO_RESIST:
-                            sprintf(buf,"Adds resistance to %s.\n\r",
-                            imm_bit_name(paf->bitvector));
-                        break;
-                        case TO_VULN:
-                            sprintf(buf,"Adds vulnerability to %s.\n\r",
-                            imm_bit_name(paf->bitvector));
-                        break;
-                        default:
-                            sprintf(buf,"Unknown bit %d: %d\n\r",
-                            paf->where,paf->bitvector);
-                        break;
-                    }
-                    send_to_char( buf, ch );
-                }
-            }
-        }
-
-        for ( paf = obj->affected; paf != NULL; paf = paf->next )
-        {
-            if ( paf->location != APPLY_NONE && paf->modifier != 0 )
-            {
-                sprintf( buf, "Affects %s by %d",
-                affect_loc_name( paf->location ), paf->modifier );
+            case ITEM_SCROLL:
+            case ITEM_POTION:
+            case ITEM_PILL:
+                sprintf( buf, "Level %d spells of:", obj->value[0] );
                 send_to_char( buf, ch );
-                if ( paf->duration > -1)
-                    sprintf(buf,", %d hours.\n\r",paf->duration);
-                else
-                    sprintf(buf,".\n\r");
-                    send_to_char(buf,ch);
-                if (paf->bitvector)
+                if ( obj->value[1] >= 0 && obj->value[1] < MAX_SKILL )
                 {
-                    switch(paf->where)
-                    {
-                        case TO_AFFECTS:
-                            sprintf(buf,"Adds %s affect.\n",
-                            affect_bit_name(paf->bitvector));
-                        break;
-                        case TO_OBJECT:
-                            sprintf(buf,"Adds %s object flag.\n",
-                            extra_bit_name(paf->bitvector));
-                        break;
-                        case TO_WEAPON:
-                            sprintf(buf,"Adds %s weapon flags.\n",
-                            weapon_bit_name(paf->bitvector));
-                        break;
-                        case TO_IMMUNE:
-                            sprintf(buf,"Adds immunity to %s.\n",
-                            imm_bit_name(paf->bitvector));
-                        break;
-                        case TO_RESIST:
-                            sprintf(buf,"Adds resistance to %s.\n\r",
-                            imm_bit_name(paf->bitvector));
-                        break;
-                        case TO_VULN:
-                            sprintf(buf,"Adds vulnerability to %s.\n\r",
-                            imm_bit_name(paf->bitvector));
-                        break;
-                        default:
-                            sprintf(buf,"Unknown bit %d: %d\n\r",
-                            paf->where,paf->bitvector);
-                        break;
-                    }
+                    send_to_char( " '", ch );
+                    send_to_char( skill_table[obj->value[1]].name, ch );
+                    send_to_char( "'", ch );
+                }
+
+                if ( obj->value[2] >= 0 && obj->value[2] < MAX_SKILL )
+                {
+                    send_to_char( " '", ch );
+                    send_to_char( skill_table[obj->value[2]].name, ch );
+                    send_to_char( "'", ch );
+                }
+
+                if ( obj->value[3] >= 0 && obj->value[3] < MAX_SKILL )
+                {
+                    send_to_char( " '", ch );
+                    send_to_char( skill_table[obj->value[3]].name, ch );
+                    send_to_char( "'", ch );
+                }
+
+                if (obj->value[4] >= 0 && obj->value[4] < MAX_SKILL)
+                {
+                    send_to_char(" '",ch);
+                    send_to_char(skill_table[obj->value[4]].name,ch);
+                    send_to_char("'",ch);
+                }
+
+                send_to_char( ".\n\r", ch );
+            break;
+
+            case ITEM_WAND:
+            case ITEM_STAFF:
+                sprintf( buf, "Has %d charges of level %d",
+                obj->value[2], obj->value[0] );
+                send_to_char( buf, ch );
+                if ( obj->value[3] >= 0 && obj->value[3] < MAX_SKILL )
+                {
+                    send_to_char( " '", ch );
+                    send_to_char( skill_table[obj->value[3]].name, ch );
+                    send_to_char( "'", ch );
+                }
+                send_to_char( ".\n\r", ch );
+            break;
+            case ITEM_DRINK_CON:
+                sprintf(buf,"It holds %s-colored %s.\n\r",
+                liq_table[obj->value[2]].liq_color,
+                liq_table[obj->value[2]].liq_name);
                 send_to_char(buf,ch);
+            break;
+
+            case ITEM_CONTAINER:
+                sprintf(buf,"Capacity: %d#  Maximum weight: %d#  flags: %s\n\r",
+                obj->value[0], obj->value[3], cont_bit_name(obj->value[1]));
+                send_to_char(buf,ch);
+                if (obj->value[4] != 100)
+                {
+                    sprintf(buf,"Weight multiplier: %d%%\n\r",
+                    obj->value[4]);
+                    send_to_char(buf,ch);
+                }
+            break;
+
+            case ITEM_WEAPON:
+                send_to_char("Weapon type is ",ch);
+                switch (obj->value[0])
+                {
+                    case(WEAPON_EXOTIC) : send_to_char("exotic.\n\r",ch);   break;
+                    case(WEAPON_SWORD)  : send_to_char("sword.\n\r",ch);    break;
+                    case(WEAPON_DAGGER) : send_to_char("dagger.\n\r",ch);   break;
+                    case(WEAPON_SPEAR)  : send_to_char("spear/staff.\n\r",ch);  break;
+                    case(WEAPON_MACE)   : send_to_char("mace/club.\n\r",ch);    break;
+                    case(WEAPON_AXE)    : send_to_char("axe.\n\r",ch);      break;
+                    case(WEAPON_FLAIL)  : send_to_char("flail.\n\r",ch);    break;
+                    case(WEAPON_WHIP)   : send_to_char("whip.\n\r",ch);     break;
+                    case(WEAPON_POLEARM): send_to_char("polearm.\n\r",ch);  break;
+                    case(WEAPON_LANCE): send_to_char("lance.\n\r",ch);  break;
+                default     : send_to_char("unknown.\n\r",ch);  break;
+                }
+                if (obj->pIndexData->new_format)
+                    sprintf(buf,"Damage is %dd%d (average %d).\n\r",
+                    obj->value[1],obj->value[2],
+                    (1 + obj->value[2]) * obj->value[1] / 2);
+                else
+                    sprintf( buf, "Damage is %d to %d (average %d).\n\r",
+                    obj->value[1], obj->value[2],
+                    ( obj->value[1] + obj->value[2] ) / 2 );
+                send_to_char( buf, ch );
+                if (obj->value[4])  /* weapon flags */
+                {
+                    sprintf(buf,"Weapons flags: %s\n\r",weapon_bit_name(obj->value[4]));
+                    send_to_char(buf,ch);
+                }
+            break;
+            case ITEM_ARMOR:
+                sprintf( buf,
+                "Armor class is %d pierce, %d bash, %d slash, and %d vs. magic.\n\r",
+                obj->value[0], obj->value[1], obj->value[2], obj->value[3] );
+                send_to_char( buf, ch );
+            break;
+        }
+    }
+    if (success > 2)
+    {
+        if (!obj->enchanted)
+            for ( paf = obj->pIndexData->affected; paf != NULL; paf = paf->next )
+            {
+                if ( paf->location != APPLY_NONE && paf->modifier != 0 )
+                {
+                    sprintf( buf, "Affects %s by %d.\n\r",
+                    affect_loc_name( paf->location ), paf->modifier );
+                    send_to_char(buf,ch);
+                    if (paf->bitvector)
+                    {
+                        switch(paf->where)
+                        {
+                            case TO_AFFECTS:
+                                sprintf(buf,"Adds %s affect.\n",
+                                affect_bit_name(paf->bitvector));
+                            break;
+                            case TO_OBJECT:
+                                sprintf(buf,"Adds %s object flag.\n",
+                                extra_bit_name(paf->bitvector));
+                            break;
+                            case TO_IMMUNE:
+                                sprintf(buf,"Adds immunity to %s.\n",
+                                imm_bit_name(paf->bitvector));
+                            break;
+                            case TO_RESIST:
+                                sprintf(buf,"Adds resistance to %s.\n\r",
+                                imm_bit_name(paf->bitvector));
+                            break;
+                            case TO_VULN:
+                                sprintf(buf,"Adds vulnerability to %s.\n\r",
+                                imm_bit_name(paf->bitvector));
+                            break;
+                            default:
+                                sprintf(buf,"Unknown bit %d: %d\n\r",
+                                paf->where,paf->bitvector);
+                            break;
+                        }
+                        send_to_char( buf, ch );
+                    }
                 }
             }
-        }
+
+            for ( paf = obj->affected; paf != NULL; paf = paf->next )
+            {
+                if ( paf->location != APPLY_NONE && paf->modifier != 0 )
+                {
+                    sprintf( buf, "Affects %s by %d",
+                    affect_loc_name( paf->location ), paf->modifier );
+                    send_to_char( buf, ch );
+                    if ( paf->duration > -1)
+                        sprintf(buf,", %d hours.\n\r",paf->duration);
+                    else
+                        sprintf(buf,".\n\r");
+                        send_to_char(buf,ch);
+                    if (paf->bitvector)
+                    {
+                        switch(paf->where)
+                        {
+                            case TO_AFFECTS:
+                                sprintf(buf,"Adds %s affect.\n",
+                                affect_bit_name(paf->bitvector));
+                            break;
+                            case TO_OBJECT:
+                                sprintf(buf,"Adds %s object flag.\n",
+                                extra_bit_name(paf->bitvector));
+                            break;
+                            case TO_WEAPON:
+                                sprintf(buf,"Adds %s weapon flags.\n",
+                                weapon_bit_name(paf->bitvector));
+                            break;
+                            case TO_IMMUNE:
+                                sprintf(buf,"Adds immunity to %s.\n",
+                                imm_bit_name(paf->bitvector));
+                            break;
+                            case TO_RESIST:
+                                sprintf(buf,"Adds resistance to %s.\n\r",
+                                imm_bit_name(paf->bitvector));
+                            break;
+                            case TO_VULN:
+                                sprintf(buf,"Adds vulnerability to %s.\n\r",
+                                imm_bit_name(paf->bitvector));
+                            break;
+                            default:
+                                sprintf(buf,"Unknown bit %d: %d\n\r",
+                                paf->where,paf->bitvector);
+                            break;
+                        }
+                    send_to_char(buf,ch);
+                    }
+                }
+            }
+    }
 return;
 }
 

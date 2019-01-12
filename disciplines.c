@@ -935,6 +935,7 @@ void do_project(CHAR_DATA *ch, char *argument)
 {
     CHAR_DATA *victim;
     ROOM_INDEX_DATA *was_room;
+    int success;
 
     if (IS_NPC(ch)) return;
     if ( (victim = get_char_world(ch, argument)) == NULL)
@@ -983,19 +984,33 @@ void do_project(CHAR_DATA *ch, char *argument)
         IS_SET(victim->in_room->room_flags, ROOM_SAFE) ||
         room_is_private(victim->in_room) ||
         (victim->level > ch->level*2) ||
-        (victim->pcdata->discipline[OBFUSCATE] >= 4))
+        (!IS_NPC(victim) && victim->pcdata->discipline[OBFUSCATE] >= 4))
     {
         send_to_char( "They are too powerful.\n\r", ch );
         return;
     }
 
     ch->pblood -= 20;
-
-    WAIT_STATE( ch, skill_table[gsn_scry].beats );
+    success = godice(get_attribute(ch, PERCEPTION) + ch->pcdata->csabilities[CSABIL_OCCULT], 7);
+    
+    if (success < 0)
+    {
+        send_to_char("You get lost in the Astral Plane and struggle to make your way back to your body.\n\r", ch);
+        WAIT_STATE(ch, 400);
+        return;
+    }
+    
+    WAIT_STATE( ch, 24 );
     was_room = ch->in_room;
     char_from_room( ch );
     char_to_room( ch, victim->in_room );
     do_function(ch, &do_look, "auto" );
+    
+    if (success > 2)
+    {
+        do_function(ch, &do_scan, "" );
+    }
+    
     char_from_room( ch );
     char_to_room( ch, was_room );
     return;

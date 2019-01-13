@@ -342,6 +342,11 @@ void do_songofserenity(CHAR_DATA *ch, char *argument)
     argument = one_argument( argument, arg );
 
     if (IS_NPC(ch)) return;
+    if(!IS_VAMP(ch))
+    {
+        send_to_char("You are not a vampire!\n\r" ,ch);
+        return;
+    }
     if ( arg[0] == '\0')
     {
         send_to_char("To whom do you wish to calm?\n\r", ch );
@@ -382,11 +387,7 @@ void do_songofserenity(CHAR_DATA *ch, char *argument)
         send_to_char( "Your already pretty calm!\n\r", ch );
         return;
     }
-    if(!IS_VAMP(ch))
-    {
-        send_to_char("You are not a vampire!\n\r" ,ch);
-        return;
-    }
+
 
     if ( IS_IMMORTAL(victim))
     {
@@ -525,7 +526,11 @@ void do_quelltheherd(CHAR_DATA *ch, char *argument)
     argument = one_argument( argument, arg );
 
     if (IS_NPC(ch)) return;
-
+    if(!IS_VAMP(ch))
+    {
+        send_to_char("You are not a vampire!\n\r" ,ch);
+        return;
+    }
     if ( IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
     {
         send_to_char("Your blood curse prevents it!\n\r" ,ch);
@@ -538,11 +543,7 @@ void do_quelltheherd(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if(!IS_VAMP(ch))
-    {
-        send_to_char("You are not a vampire!\n\r" ,ch);
-        return;
-    }
+
 
     if ( ch->pblood < 40 )
     {

@@ -90,11 +90,6 @@ void do_feralspeech(CHAR_DATA *ch, char *argument)
         send_to_char( "You get a headache trying to control yourself.\n\r", ch );
         return;
     }
-    if(!IS_VAMP(ch))
-    {
-        send_to_char("You are not a vampire!\n\r" ,ch);
-        return;
-    }
 
     if ( IS_IMMORTAL(victim))
     {

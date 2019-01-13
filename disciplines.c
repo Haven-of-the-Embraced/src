@@ -3635,7 +3635,11 @@ void do_awe(CHAR_DATA *ch, char *argument)
 
     if (IS_NPC(ch))
         return;
-
+    if (!IS_VAMP(ch))
+    {
+        send_to_char("You are not a vampire!", ch);
+        return;
+    }
     if (is_affected(ch, gsn_awe))
     {
         send_to_char("You have already affected your social magnetism.\n\r", ch);

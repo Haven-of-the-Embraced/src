@@ -5921,7 +5921,7 @@ void do_headbutt( CHAR_DATA *ch, char *argument )
                 return;
         }
 
-        if ( ( victim = get_char_room( ch, argument ) ) == NULL )
+        if (( victim = get_char_room( ch, argument ) ) == NULL && (victim = ch->fighting ) == NULL )
         {
                 send_to_char( "There is no one here to butt heads with!\n\r", ch );
                 return;
@@ -6035,7 +6035,7 @@ void do_blast( CHAR_DATA *ch, char *argument )
                 return;
         }
 
-        if ( ( victim = get_char_room( ch, argument ) ) == NULL )
+        if ( ( victim = get_char_room( ch, argument ) ) == NULL && (victim = ch->fighting ) == NULL)
         {
                 send_to_char( "Noone here to blast!\n\r", ch );
                 return;

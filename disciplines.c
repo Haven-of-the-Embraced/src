@@ -1730,6 +1730,27 @@ void do_command(CHAR_DATA *ch, char *argument)
     argument = one_argument( argument, arg2 );
 
     if (IS_NPC(ch)) return;
+    
+        if(!IS_VAMP(ch))
+    {
+        send_to_char("You are not a vampire!\n\r" ,ch);
+        return;
+    }
+    if ( IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
+    {
+        send_to_char("Your blood curse prevents it!\n\r" ,ch);
+        return;
+    }
+    if (ch->pcdata->discipline[DOMINATE] < 1)
+    {
+        send_to_char( "You are not trained in Domination!.\n\r", ch );
+        return;
+    }    
+        if (ch->pblood < 20)
+    {
+        send_to_char( "You don't have enough blood.\n\r", ch );
+        return;
+    }
     if ( arg1[0] == '\0' || arg2[0] == '\0')
     {
         send_to_char("Command whom to do what?\n\r", ch );
@@ -1751,16 +1772,6 @@ void do_command(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if ( IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
-    {
-        send_to_char("Your blood curse prevents it!\n\r" ,ch);
-        return;
-    }
-    if (ch->pcdata->discipline[DOMINATE] < 1)
-    {
-        send_to_char( "You are not trained in Domination!.\n\r", ch );
-        return;
-    }
     if (!str_prefix(arg2,"delete"))
     {
         send_to_char("That will NOT be done.\n\r",ch);
@@ -1783,22 +1794,13 @@ void do_command(CHAR_DATA *ch, char *argument)
         send_to_char( "You get a headache trying to command yourself.\n\r", ch );
         return;
     }
-    if((!IS_VAMP(ch)) && (ch->race != race_lookup("garou")))
-    {
-        send_to_char("You are not a vampire!\n\r" ,ch);
-        return;
-    }
 
     if ( IS_IMMORTAL(victim))
     {
         send_to_char( "Yeah, right.\n\r", ch );
         return;
     }
-    if ((ch->pblood < 20) && (ch->race != race_lookup("garou")))
-    {
-        send_to_char( "You don't have enough blood.\n\r", ch );
-        return;
-    }
+
     if (victim->race != race_lookup("human")
      && victim->race != race_lookup("vampire")
      && victim->race != race_lookup("ghoul")

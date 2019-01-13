@@ -3761,18 +3761,19 @@ void do_majesty(CHAR_DATA *ch, char *argument)
    AFFECT_DATA af;
 
     if (IS_NPC(ch)) return;
-
+    
+   if(!IS_VAMP(ch))
+    {
+        send_to_char("You are not a vampire!\n\r" ,ch);
+        return;
+    }
     if ( is_affected( ch, gsn_majesty ) )
     {
         send_to_char( "You can already bend nearly any heart to your whim, what more could you want?\n\r", ch );
         return;
     }
 
-    if(!IS_VAMP(ch))
-    {
-        send_to_char("You are not a vampire!\n\r" ,ch);
-        return;
-    }
+
 
     if ( IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
     {
@@ -3827,6 +3828,11 @@ void do_entrancement(CHAR_DATA *ch, char *argument)
     argument = one_argument( argument, arg );
 
     if (IS_NPC(ch)) return;
+        if(!IS_VAMP(ch))
+    {
+        send_to_char("You are not a vampire!\n\r" ,ch);
+        return;
+    }
     if ( arg[0] == '\0')
     {
         send_to_char("Entrance whom to do what?\n\r", ch );
@@ -3920,11 +3926,6 @@ void do_entrancement(CHAR_DATA *ch, char *argument)
         send_to_char( "You get a headache trying to entrance yourself.\n\r", ch );
         return;
     }
-    if(!IS_VAMP(ch))
-    {
-        send_to_char("You are not a vampire!\n\r" ,ch);
-        return;
-    }
 
     if ( IS_IMMORTAL(victim))
     {
@@ -3969,6 +3970,11 @@ void do_entrancement(CHAR_DATA *ch, char *argument)
 void do_summon(CHAR_DATA *ch, char *argument)
 {
    CHAR_DATA *victim;
+    if(!IS_VAMP(ch))
+    {
+        send_to_char("You are not a vampire!\n\r" ,ch);
+        return;
+    }
     if (ch->pcdata->discipline[PRESENCE] < 4)
     {
         send_to_char( "You are not skilled enough in Presence!\n\r", ch );
@@ -3979,11 +3985,7 @@ void do_summon(CHAR_DATA *ch, char *argument)
         send_to_char("Your blood curse prevents it!\n\r" ,ch);
         return;
     }
-    if(!IS_VAMP(ch))
-    {
-        send_to_char("You are not a vampire!\n\r" ,ch);
-        return;
-    }
+
  
     if ( ch->pblood < 70 )
     {
@@ -4040,7 +4042,12 @@ void do_dreadgaze(CHAR_DATA *ch, char *argument)
    CHAR_DATA *victim;
 
     if (IS_NPC(ch)) return;
-
+    
+   if(!IS_VAMP(ch))
+    {
+        send_to_char("You are not a vampire!\n\r" ,ch);
+        return;
+    }
     if (ch->pcdata->discipline[PRESENCE] < 2)
     {
         send_to_char( "You are not skilled enough in Presence!\n\r", ch );
@@ -4051,11 +4058,7 @@ void do_dreadgaze(CHAR_DATA *ch, char *argument)
         send_to_char("Your blood curse prevents it!\n\r" ,ch);
         return;
     }
-    if(!IS_VAMP(ch))
-    {
-        send_to_char("You are not a vampire!\n\r" ,ch);
-        return;
-    }
+
 
     if ( ch->pblood < 25 )
     {
@@ -5734,17 +5737,17 @@ void do_clotblood(CHAR_DATA *ch, char *argument)
 
     argument = one_argument( argument, arg );
     chance = number_range(1, 100);
-
-    if ( ( victim = get_char_room( ch, arg ) ) == NULL )
-    {
-        send_to_char( "Who?\n\r", ch );
-        return;
-    }
     if(!IS_VAMP(ch))
     {
         send_to_char("You are not a vampire!\n\r" ,ch);
         return;
     }
+    if ( ( victim = get_char_room( ch, arg ) ) == NULL )
+    {
+        send_to_char( "Who?\n\r", ch );
+        return;
+    }
+
     if ( IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
     {
         send_to_char("Your blood curse prevents it!\n\r" ,ch);

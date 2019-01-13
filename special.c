@@ -111,6 +111,7 @@ const   struct  spec_type    spec_table[] =
     {   "spec_lag",     spec_lag        },
     {   "spec_celerity",        spec_celerity       },
     {   "spec_questmaster",     spec_questmaster},
+    {   "spec_jarjar",          spec_jarjar},
     {   NULL,               NULL            }
 };
 

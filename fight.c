@@ -5032,6 +5032,7 @@ void do_kick(CHAR_DATA *ch, char *argument)
         }
 
         gain_exp(ch, dicesuccess*2);
+        check_improve(ch,gsn_kick,TRUE,2);
     }
 
     extradamage = dicesuccess - 1;

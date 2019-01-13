@@ -3432,6 +3432,7 @@ int xp_compute( CHAR_DATA *gch, CHAR_DATA *victim, int total_levels )
     double dBonus;
     int xpawardmult;
     extern bool doubleexp;
+    DESCRIPTOR_DATA *d;
 
     level_range = victim->level - gch->level;
 
@@ -3480,6 +3481,17 @@ int xp_compute( CHAR_DATA *gch, CHAR_DATA *victim, int total_levels )
 // Returns double XP to its default state when it ends
    if (global_xp <= 0)
 	{
+	if (doubleexp == TRUE)
+		{
+		            for ( d = descriptor_list; d; d = d->next )
+            {
+                if ( d->connected == CON_PLAYING )
+                {
+                    send_to_char( "{G****[{YDouble Exp has ended {y:-( {G]****{x\n\r", d->character );
+                }
+            }
+		}
+
 	global_xp = 0;
 	doubleexp = FALSE;
 	xpstat = 0;
@@ -3495,6 +3507,14 @@ if (xpstat == 0 && global_xp > 149999)
 		{
 		 doubleexp = TRUE;
 		 xpawardmult = 2;
+		 for ( d = descriptor_list; d; d = d->next )
+            {
+                if ( d->connected == CON_PLAYING )
+                {
+                    send_to_char( "{G****{YIt's {RD{Go{Mu{Yb{Bl{Ce {RE{Gx{Mp{Y time!{G****{x\n\r", d->character );
+                }
+            }
+
 		}
 	}
 if (xpstat == 1 && global_xp > 199999)
@@ -3504,6 +3524,14 @@ if (xpstat == 1 && global_xp > 199999)
 		{
 		 doubleexp = TRUE;
 		 xpawardmult = 2;
+		 for ( d = descriptor_list; d; d = d->next )
+            {
+                if ( d->connected == CON_PLAYING )
+                {
+                    send_to_char( "{G****{YIt's {RD{Go{Mu{Yb{Bl{Ce {RE{Gx{Mp{Y time!{G****{x\n\r", d->character );
+                }
+            }
+
 		}
 	}
 if (xpstat == 2 && global_xp > 249999)
@@ -3519,6 +3547,14 @@ if (xpstat == 3 && global_xp > 300000)
 	{
 	 doubleexp = TRUE;
 	 xpawardmult = 3;
+	 for ( d = descriptor_list; d; d = d->next )
+            {
+                if ( d->connected == CON_PLAYING )
+                {
+                    send_to_char( "{G****{YIt's {RD{Go{Mu{Yb{Bl{Ce {RE{Gx{Mp{Y time!{G****{x\n\r", d->character );
+                }
+            }
+
 	}
 
     if( IS_AFFECTED2(victim, AFF2_DOUBLE_EXP))

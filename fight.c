@@ -3541,6 +3541,14 @@ if (xpstat == 2 && global_xp > 249999)
 		{
 		 doubleexp = TRUE;
 		 xpawardmult = 2;
+		 for ( d = descriptor_list; d; d = d->next )
+            {
+                if ( d->connected == CON_PLAYING )
+                {
+                    send_to_char( "{G****{YIt's {RD{Go{Mu{Yb{Bl{Ce {RE{Gx{Mp{Y time!{G****{x\n\r", d->character );
+                }
+            }
+
 		}
 	}
 if (xpstat == 3 && global_xp > 300000)
@@ -3616,6 +3624,11 @@ if (xpstat == 3 && global_xp > 300000)
     /*Zelan added bonus XP spells and a newbie xp boost here */
     if ( IS_AFFECTED(gch, AFF_XP_BOOST))
     xp = bxp + xp;
+ 
+    // Zelan steals XP here to add to global_xp
+ 
+    if (doubleexp == FALSE)
+    global_xp += (global_xp + xp)/10;
 
     if ( IS_SET(gch->act2, PLR2_NEWBIE))
     xp =  bxp + xp;

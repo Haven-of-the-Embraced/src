@@ -495,15 +495,6 @@ struct  weather_data
     int     sky;
     int     sunlight;
 };
-/* Database code that won't work
-struct  database_data
-{
-    char *  header;
-    char *  sub;
-    char *  chars[200];
-    int     ints[200];
-};
-*/
 
 /*
  * Connected state for a channel.
@@ -514,7 +505,6 @@ struct  database_data
 #define CON_CONFIRM_NEW_NAME         3
 #define CON_GET_NEW_PASSWORD         4
 #define CON_CONFIRM_NEW_PASSWORD     5
-/* #define CON_GET_NEW_RACE      6 */
 #define CON_GET_COLOUR           6
 #define CON_GET_NEW_SEX          7
 #define CON_GET_NEW_GROUP        8

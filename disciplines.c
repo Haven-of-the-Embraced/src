@@ -1848,12 +1848,6 @@ void do_forgetful (CHAR_DATA *ch, char *argument)
 
     if (IS_NPC(ch)) return;
 
-    if ( (victim = get_char_room(ch, argument)) == NULL)
-    {
-        send_to_char( "Dominate whom?\n\r", ch );
-        return;
-    }
-
     if(!IS_VAMP(ch))
     {
         send_to_char("You are not a vampire!\n\r" ,ch);
@@ -1868,6 +1862,11 @@ void do_forgetful (CHAR_DATA *ch, char *argument)
     if (ch->pcdata->discipline[DOMINATE] < 3)
     {
         send_to_char( "You are not skilled enough in your powers of Dominate!.\n\r", ch );
+        return;
+    }
+       if ( (victim = get_char_room(ch, argument)) == NULL)
+    {
+        send_to_char( "Dominate whom?\n\r", ch );
         return;
     }
     if (IS_NPC(victim) && victim->pIndexData->pShop != NULL)
@@ -1912,6 +1911,22 @@ void do_mesmerize(CHAR_DATA *ch, char *argument)
     argument = one_argument( argument, arg2 );
 
     if (IS_NPC(ch)) return;
+    
+    if(!IS_VAMP(ch))
+    {
+        send_to_char("You are not a vampire!\n\r" ,ch);
+        return;
+    }
+    if ( IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
+    {
+        send_to_char("Your blood curse prevents it!\n\r" ,ch);
+        return;
+    }
+    if (ch->pcdata->discipline[DOMINATE] < 2)
+    {
+        send_to_char( "You are not trained in Domination!.\n\r", ch );
+        return;
+    }
     if ( arg1[0] == '\0' || arg2[0] == '\0')
     {
         send_to_char("Mesmerize whom to do what?\n\r", ch );
@@ -1933,16 +1948,6 @@ void do_mesmerize(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if ( IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
-    {
-        send_to_char("Your blood curse prevents it!\n\r" ,ch);
-        return;
-    }
-    if (ch->pcdata->discipline[DOMINATE] < 2)
-    {
-        send_to_char( "You are not trained in Domination!.\n\r", ch );
-        return;
-    }
     if (!str_prefix(arg2,"delete"))
     {
         send_to_char("That will NOT be done.\n\r",ch);
@@ -1963,11 +1968,6 @@ void do_mesmerize(CHAR_DATA *ch, char *argument)
     if ( victim == ch )
     {
         send_to_char( "You get a headache trying to command yourself.\n\r", ch );
-        return;
-    }
-    if(!IS_VAMP(ch))
-    {
-        send_to_char("You are not a vampire!\n\r" ,ch);
         return;
     }
     if ( IS_IMMORTAL(victim))
@@ -2029,7 +2029,21 @@ void do_conditioning(CHAR_DATA *ch, char *argument)
     argument = one_argument( argument, arg );
 
     if (IS_NPC(ch)) return;
-
+    if(!IS_VAMP(ch))
+    {
+        send_to_char("You are not a vampire!\n\r" ,ch);
+        return;
+    }
+    if (ch->pcdata->discipline[DOMINATE] < 4)
+    {
+        send_to_char( "You are not skilled enough in Dominate!.\n\r", ch );
+        return;
+    }    
+    if ( IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
+    {
+        send_to_char("Your blood curse prevents it!\n\r" ,ch);
+        return;
+    }
     if ( ( victim = get_char_room( ch, arg ) ) == NULL )
     {
         send_to_char( "Nobody here by that name.\n\r", ch );
@@ -2042,27 +2056,11 @@ void do_conditioning(CHAR_DATA *ch, char *argument)
                 return;
         }
     if (is_safe(ch,victim)) return;
-    if ( IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
-    {
-        send_to_char("Your blood curse prevents it!\n\r" ,ch);
-        return;
-    }
 
     if ( victim == ch )
     {
     send_to_char( "You cannot Condition yourself.\n\r", ch );
     return;
-    }
-
-    if (ch->pcdata->discipline[DOMINATE] < 4)
-    {
-        send_to_char( "You are not skilled enough in Dominate!.\n\r", ch );
-        return;
-    }
-    if(!IS_VAMP(ch))
-    {
-        send_to_char("You are not a vampire!\n\r" ,ch);
-        return;
     }
     if(ch->pet != NULL)
     {
@@ -2162,20 +2160,36 @@ void do_possession( CHAR_DATA *ch, char *argument )
 
     one_argument( argument, arg );
 
+        if ( IS_NPC(ch) || ch->desc == NULL )
+        return;
+    
+        if(!IS_VAMP(ch))
+    {
+        send_to_char("You are not a vampire!\n\r" ,ch);
+        return;
+    }
+    if ( IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
+    {
+        send_to_char("Your blood curse prevents it!\n\r" ,ch);
+        return;
+    }
+
+    if (ch->pcdata->discipline[DOMINATE] < 5)
+    {
+        send_to_char( "You are not skilled enough in your powers of Dominate!.\n\r", ch );
+        return;
+    }
+        if ( ch->desc->original != NULL )
+    {
+    send_to_char( "You are already possessing a victim.\n\r", ch );
+    return;
+    }
     if ( arg[0] == '\0' )
     {
     send_to_char( "Possess whom?\n\r", ch );
     return;
     }
 
-    if ( ch->desc == NULL )
-    return;
-
-    if ( ch->desc->original != NULL )
-    {
-    send_to_char( "You are already possessing a victim.\n\r", ch );
-    return;
-    }
 
     if ( ( victim = get_char_room( ch, arg ) ) == NULL )
     {
@@ -2193,22 +2207,6 @@ void do_possession( CHAR_DATA *ch, char *argument )
     {
     send_to_char("That person's mind is too powerful to possess.\n\r",ch);
     return;
-    }
-    if(!IS_VAMP(ch))
-    {
-        send_to_char("You are not a vampire!\n\r" ,ch);
-        return;
-    }
-    if ( IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
-    {
-        send_to_char("Your blood curse prevents it!\n\r" ,ch);
-        return;
-    }
-
-    if (ch->pcdata->discipline[DOMINATE] < 5)
-    {
-        send_to_char( "You are not skilled enough in your powers of Dominate!.\n\r", ch );
-        return;
     }
     if(ch->pblood < 110)
     {

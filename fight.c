@@ -3477,9 +3477,11 @@ int xp_compute( CHAR_DATA *gch, CHAR_DATA *victim, int total_levels )
     /* Disabled code for qp xp swap.
      Get global XP for rping, get global rp for fighting
      gloxp = (xp * 10) / 100 + 1;
+    
      global_xp += gloxp; */
 // Returns double XP to its default state when it ends
-   if (global_xp <= 0)
+/* Okay it's fucking broken, disabling      
+ if (global_xp <= 0)
 	{
 	if (doubleexp == TRUE)
 		{
@@ -3497,9 +3499,10 @@ int xp_compute( CHAR_DATA *gch, CHAR_DATA *victim, int total_levels )
 	xpstat = 0;
 	xpawardmult = 1;
 	}
-
+*/
 // Do I turn on double XP? Let's check.
 // Rates check as well to lock in multiplier
+/* Broken and disabled
 if (xpstat == 0 && global_xp > 149999)
 	{
 	xpstat = xpstat+1;
@@ -3566,15 +3569,15 @@ if (xpstat == 3 && global_xp > 300000)
 	}
 
     if( IS_AFFECTED2(victim, AFF2_DOUBLE_EXP))
-        xp = xp*2;
-// Code to drain from global XP and award it
+        xp = xp*2; */
+/* Code to drain from global XP and award it Brooooken...
         
    if (global_xp > 0 && doubleexp == TRUE)
        {
            global_xp -= (xp*xpawardmult) - xp;
        }
        
-        xp *= xpawardmult;
+        xp *= xpawardmult; */
        
        xp = xp + (xp*2 / 8);
 /* pack hunting code

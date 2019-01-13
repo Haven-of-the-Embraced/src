@@ -555,8 +555,6 @@ void reset_char(CHAR_DATA *ch)
                 case APPLY_MANA:    ch->max_mana    -= mod;     break;
                 case APPLY_HIT: ch->max_hit -= mod;     break;
                 case APPLY_MOVE:    ch->max_move    -= mod;     break;
-                case APPLY_GENERATION: ch->gen += mod;  break;
-                case APPLY_MAX_BLOOD: ch->max_pblood -= mod;    break;
             }
         }
 
@@ -569,8 +567,6 @@ void reset_char(CHAR_DATA *ch)
                     case APPLY_MANA:    ch->max_mana    -= mod;         break;
                     case APPLY_HIT:     ch->max_hit     -= mod;         break;
                     case APPLY_MOVE:    ch->max_move    -= mod;         break;
-                    case APPLY_GENERATION: ch->gen += mod;  break;
-            case APPLY_MAX_BLOOD:   ch->max_pblood -= mod;  break;
                 }
             }
     }
@@ -609,8 +605,7 @@ void reset_char(CHAR_DATA *ch)
     ch->hitroll     = 0;
     ch->damroll     = 0;
     ch->saving_throw    = 0;
-    if (IS_VAMP(ch))
-        ch->gen = ch->pcdata->csgeneration;
+
 
     /* now start adding back the effects */
     for (loc = 0; loc < MAX_WEAR; loc++)
@@ -637,7 +632,6 @@ void reset_char(CHAR_DATA *ch)
         case APPLY_MANA:    ch->max_mana        += mod; break;
         case APPLY_HIT:     ch->max_hit     += mod; break;
         case APPLY_MOVE:    ch->max_move        += mod; break;
-        case APPLY_GENERATION: ch->gen -= mod; break;
         case APPLY_CS_STR:      ch->pcdata->csattrib_mod[CSATTRIB_STRENGTH]  += mod; break;
         case APPLY_CS_DEX:      ch->pcdata->csattrib_mod[CSATTRIB_DEXTERITY]  += mod; break;
         case APPLY_CS_STA:      ch->pcdata->csattrib_mod[CSATTRIB_STAMINA]  += mod; break;
@@ -647,8 +641,6 @@ void reset_char(CHAR_DATA *ch)
         case APPLY_CS_PER:      ch->pcdata->csattrib_mod[CSATTRIB_PERCEPTION]  += mod; break;
         case APPLY_CS_INT:      ch->pcdata->csattrib_mod[CSATTRIB_INTELLIGENCE]  += mod; break;
         case APPLY_CS_WIT:      ch->pcdata->csattrib_mod[CSATTRIB_WITS]  += mod; break;
-
-        case APPLY_MAX_BLOOD:   ch->max_pblood      += mod; break;
 
         case APPLY_AC:
             for (i = 0; i < 4; i ++)
@@ -725,7 +717,6 @@ void reset_char(CHAR_DATA *ch)
                 case APPLY_MANA:        ch->max_mana            += mod; break;
                 case APPLY_HIT:         ch->max_hit             += mod; break;
                 case APPLY_MOVE:        ch->max_move            += mod; break;
-                case APPLY_GENERATION:  ch->gen                 += mod; break;
                 case APPLY_CS_STR:      ch->pcdata->csattrib_mod[CSATTRIB_STRENGTH]  += mod; break;
                 case APPLY_CS_DEX:      ch->pcdata->csattrib_mod[CSATTRIB_DEXTERITY]  += mod; break;
                 case APPLY_CS_STA:      ch->pcdata->csattrib_mod[CSATTRIB_STAMINA]  += mod; break;
@@ -735,8 +726,6 @@ void reset_char(CHAR_DATA *ch)
                 case APPLY_CS_PER:      ch->pcdata->csattrib_mod[CSATTRIB_PERCEPTION]  += mod; break;
                 case APPLY_CS_INT:      ch->pcdata->csattrib_mod[CSATTRIB_INTELLIGENCE]  += mod; break;
                 case APPLY_CS_WIT:      ch->pcdata->csattrib_mod[CSATTRIB_WITS]  += mod; break;
-
-        case APPLY_MAX_BLOOD:   ch->max_pblood      += mod; break;
 
                 case APPLY_AC:
                     for (i = 0; i < 4; i ++)

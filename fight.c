@@ -4397,7 +4397,7 @@ void do_trip( CHAR_DATA *ch, char *argument )
     if (number_percent() < chance)
     {
     act("$n trips you and you go down!",ch,NULL,victim,TO_VICT);
-    act("You trip $N and $S goes down!",ch,NULL,victim,TO_CHAR);
+    act("You trip $N and $E goes down!",ch,NULL,victim,TO_CHAR);
     act("$n trips $N, sending $M to the ground.",ch,NULL,victim,TO_NOTVICT);
     check_improve(ch,gsn_trip,TRUE,1);
 

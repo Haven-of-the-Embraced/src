@@ -3476,35 +3476,62 @@ int xp_compute( CHAR_DATA *gch, CHAR_DATA *victim, int total_levels )
     /* Disabled code for qp xp swap.
      Get global XP for rping, get global rp for fighting
      gloxp = (xp * 10) / 100 + 1;
-     global_xp += gloxp;
-   if (global_xp < 1000)
+     global_xp += gloxp; */
+// Returns double XP to its default state when it ends
+   if (global_xp <= 0)
+	{
+	global_xp = 0;
 	doubleexp = FALSE;
-   if (global_xp > 100000)
-	doubleexp = TRUE;
-      */
+	xpstat = 0;
+	xpawardmult =0;
+	}
+
+// Do I turn on double XP? Let's check.
+// Rates check as well to lock in multiplier
+if (xpstat == 0 && global_xp > 149999)
+	{
+	xpstat = xpstat+1;
+	if (number_range(1,100) <= (xpstat*10))
+		{
+		 doubleexp = TRUE;
+		 xpawardmult = 2;
+		}
+	}
+if (xpstat == 1 && global_xp > 199999)
+	{
+	xpstat = 2;
+	if (number_range(1,100) <= (xpstat*10))
+		{
+		 doubleexp = TRUE;
+		 xpawardmult = 2;
+		}
+	}
+if (xpstat == 2 && global_xp > 249999)
+	{
+	xpstat = 3;
+	if (number_range(1,100) <= (xpstat*10))
+		{
+		 doubleexp = TRUE;
+		 xpawardmult = 2;
+		}
+	}
+if (xpstat == 3 && global_xp > 300000)
+	{
+	 doubleexp = TRUE;
+	 xpawardmult = 3;
+	}
+
     if( IS_AFFECTED2(victim, AFF2_DOUBLE_EXP))
         xp = xp*2;
 // Code to drain from global XP and award it
-        xpawardmult = 1;
-   if (global_xp > 2000)
+        
+   if (global_xp > 0 && doubleexp == TRUE)
        {
-        if (global_xp < 60000)
-        {
-        global_xp -= xp;
-        xpawardmult = 2;
-        }
-        if( (global_xp > 60001) && (global_xp < 120000))
-        {
-        global_xp -= xp*2;
-        xpawardmult = 4;
-        }
-        if (global_xp > 120000)
-        {
-        global_xp -= xp*3;
-        xpawardmult = 6;
-        }
-        xp *= xpawardmult;
+           global_xp -= (xp*xpawardmult) - xp;
        }
+       
+        xp *= xpawardmult;
+       
        xp = xp + (xp*2 / 8);
 /* pack hunting code
     if (gch->race == race_lookup("garou"))

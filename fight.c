@@ -4408,6 +4408,7 @@ void do_trip( CHAR_DATA *ch, char *argument )
     }
     else
     {
+    send_to_char("They avoid your trip!\n\r",ch);
     damage(ch,victim,0,gsn_trip,DAM_BASH,TRUE);
     WAIT_STATE(ch,skill_table[gsn_trip].beats*2/3);
     check_improve(ch,gsn_trip,FALSE,1);

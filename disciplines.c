@@ -31,7 +31,7 @@ void do_feralspeech(CHAR_DATA *ch, char *argument)
     
     if (!IS_VAMP(ch))
     {
-        send_to_char("Huh?\n\r", ch);
+        send_to_char("You are not a vampire!\n\r", ch);
         return;
     }
     if ( arg[0] == '\0')

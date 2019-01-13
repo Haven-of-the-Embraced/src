@@ -3495,7 +3495,7 @@ int xp_compute( CHAR_DATA *gch, CHAR_DATA *victim, int total_levels )
 	global_xp = 0;
 	doubleexp = FALSE;
 	xpstat = 0;
-	xpawardmult =0;
+	xpawardmult = 1;
 	}
 
 // Do I turn on double XP? Let's check.

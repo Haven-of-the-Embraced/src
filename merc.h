@@ -58,6 +58,7 @@ int global_qp;
 int global_xp;
 int qpmult; //Sets rate that QP is added to global qp
 int xpmult; //sets rate that XP is added to global qp
+int xpawardmult; // Set double xp multiplier
 int xpstat; //Sets the milestone status for firing double xp
 /*
  * Short scalar types.

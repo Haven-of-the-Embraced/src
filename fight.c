@@ -25,7 +25,7 @@
 *   By using this code, you have agreed to follow the terms of the     *
 *   ROM license, in the file Rom24/doc/rom.license             *
 ***************************************************************************/
-/* just a test */
+
 
 #if defined(macintosh)
 #include <types.h>
@@ -3430,7 +3430,6 @@ int xp_compute( CHAR_DATA *gch, CHAR_DATA *victim, int total_levels )
     int level_range;
     int playerbonus;
     double dBonus;
-    int xpawardmult;
     extern bool doubleexp;
     DESCRIPTOR_DATA *d;
 
@@ -3480,7 +3479,7 @@ int xp_compute( CHAR_DATA *gch, CHAR_DATA *victim, int total_levels )
     
      global_xp += gloxp; */
 // Returns double XP to its default state when it ends
-/* Okay it's fucking broken, disabling      
+      
  if (global_xp <= 0)
 	{
 	if (doubleexp == TRUE)
@@ -3499,13 +3498,13 @@ int xp_compute( CHAR_DATA *gch, CHAR_DATA *victim, int total_levels )
 	xpstat = 0;
 	xpawardmult = 1;
 	}
-*/
+
 // Do I turn on double XP? Let's check.
 // Rates check as well to lock in multiplier
-/* Broken and disabled
+
 if (xpstat == 0 && global_xp > 149999)
 	{
-	xpstat = xpstat+1;
+	xpstat = 1;
 	if (number_range(1,100) <= (xpstat*10))
 		{
 		 doubleexp = TRUE;
@@ -3557,6 +3556,7 @@ if (xpstat == 2 && global_xp > 249999)
 if (xpstat == 3 && global_xp > 300000)
 	{
 	 doubleexp = TRUE;
+	 xpstat = 4;
 	 xpawardmult = 3;
 	 for ( d = descriptor_list; d; d = d->next )
             {
@@ -3569,15 +3569,15 @@ if (xpstat == 3 && global_xp > 300000)
 	}
 
     if( IS_AFFECTED2(victim, AFF2_DOUBLE_EXP))
-        xp = xp*2; */
-/* Code to drain from global XP and award it Brooooken...
+        xp = xp*2; 
+// Code to drain from global XP and award it.
         
    if (global_xp > 0 && doubleexp == TRUE)
        {
            global_xp -= (xp*xpawardmult) - xp;
        }
        
-        xp *= xpawardmult; */
+        xp = (xp * xpawardmult); 
        
        xp = xp + (xp*2 / 8);
 /* pack hunting code
@@ -3628,14 +3628,15 @@ if (xpstat == 3 && global_xp > 300000)
     if ( IS_AFFECTED(gch, AFF_XP_BOOST))
     xp = bxp + xp;
  
-    // Zelan steals XP here to add to global_xp
- 
-    if (doubleexp == FALSE)
-    global_xp += (global_xp + xp)/10;
+   
 
     if ( IS_SET(gch->act2, PLR2_NEWBIE))
     xp =  bxp + xp;
-    
+       // Zelan steals XP here to add to global_xp
+
+    if (doubleexp == FALSE)
+    global_xp += xp/10;
+ 
     if (!IS_NPC(gch) && gch->pcdata->immclass > 0 )
     {
         double ixp;

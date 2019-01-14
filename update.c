@@ -1813,6 +1813,7 @@ CHAR_DATA   *ch;
 /* number_range( PULSE_TICK / 2, 3 * PULSE_TICK / 2 ); */
     char_update ( );
     obj_update  ( );
+    save_config();
     }
 
     sleep_update ();

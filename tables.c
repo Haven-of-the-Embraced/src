@@ -1475,7 +1475,7 @@ const struct    rote_type   rote_table  [MAX_ROTE]  =
     {   "Touch of Helios",      rote_touchofhelios,         2, 0, 4, 0, 0, 0, 4, 0, 0, TARGET_CHAR, 15, 5, TRUE},
     {   "Spatial Perceptions",  rote_spatialperceptions,    1, 0, 0, 0, 0, 0, 0, 0, 0, TARGET_NONE, 1, 1, FALSE},
     {   "Correspondence Perceptions",rote_correspondenceperceptions,2, 0, 0, 0, 0, 0, 0, 0, 0, TARGET_ROOM, 2, 2, FALSE},
-    {   "The Seven League Stride",rote_thesevenleaguestride,3, 0, 0, 0, 0, 0, 0, 0, 0, TARGET_ROOM, 3, 3, TRUE},
+    {   "The Seven League Stride",rote_sevenleaguestride,3, 0, 0, 0, 0, 0, 0, 0, 0, TARGET_ROOM, 3, 3, TRUE},
     {   "Conjoin Localities",   rote_conjoinlocalities,     4, 0, 0, 0, 0, 0, 0, 0, 0, TARGET_ROOM, 4, 4, TRUE},
     {   "Merge Localities",     rote_mergelocalities,       5, 0, 0, 0, 0, 0, 0, 0, 0, TARGET_ROOM, 50,7, TRUE},
     {   "Sense Life",           rote_senselife,             0, 0, 0, 1, 0, 0, 0, 0, 0, TARGET_CHAR, 1, 1, FALSE},

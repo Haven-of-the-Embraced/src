@@ -826,7 +826,7 @@ void rote_correspondenceperceptions(CHAR_DATA *ch, int success, CHAR_DATA *victi
     return;
 }
 
-void rote_thesevenleaguestride(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
+void rote_sevenleaguestride(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
 {
     if(victim == ch)
     {

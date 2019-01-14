@@ -43,7 +43,7 @@ DECLARE_ROTE_FUN(	rote_crushofmountains			);
 DECLARE_ROTE_FUN(	rote_touchofhelios				);
 DECLARE_ROTE_FUN(	rote_spatialperceptions			);
 DECLARE_ROTE_FUN(	rote_correspondenceperceptions	);
-DECLARE_ROTE_FUN(	rote_thesevenleaguestride		);
+DECLARE_ROTE_FUN(	rote_sevenleaguestride		);
 DECLARE_ROTE_FUN(	rote_conjoinlocalities			);
 DECLARE_ROTE_FUN(	rote_mergelocalities			);
 DECLARE_ROTE_FUN(	rote_senselife					);

@@ -406,6 +406,11 @@ int main( int argc, char **argv )
 
     //Initialize xp multiplier.
     xpawardmult = 1;
+    xpstat = 0;
+    qpmult = 1;
+    xpmult = 1;
+    global_xp = 0;
+    global_qp = 0;
     
     /*
      * Reserve one channel for our use.

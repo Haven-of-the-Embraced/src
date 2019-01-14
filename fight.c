@@ -4398,7 +4398,7 @@ void do_trip( CHAR_DATA *ch, char *argument )
     if (number_percent() < chance)
     {
     act("$n trips you and you go down!",ch,NULL,victim,TO_VICT);
-    act("You trip $N and $S goes down!",ch,NULL,victim,TO_CHAR);
+    act("You trip $N and $E goes down!",ch,NULL,victim,TO_CHAR);
     act("$n trips $N, sending $M to the ground.",ch,NULL,victim,TO_NOTVICT);
     check_improve(ch,gsn_trip,TRUE,1);
 
@@ -4409,6 +4409,7 @@ void do_trip( CHAR_DATA *ch, char *argument )
     }
     else
     {
+    send_to_char("They avoid your trip!\n\r",ch);
     damage(ch,victim,0,gsn_trip,DAM_BASH,TRUE);
     WAIT_STATE(ch,skill_table[gsn_trip].beats*2/3);
     check_improve(ch,gsn_trip,FALSE,1);
@@ -5922,7 +5923,7 @@ void do_headbutt( CHAR_DATA *ch, char *argument )
                 return;
         }
 
-        if ( ( victim = get_char_room( ch, argument ) ) == NULL )
+        if (( victim = get_char_room( ch, argument ) ) == NULL && (victim = ch->fighting ) == NULL )
         {
                 send_to_char( "There is no one here to butt heads with!\n\r", ch );
                 return;
@@ -6036,7 +6037,7 @@ void do_blast( CHAR_DATA *ch, char *argument )
                 return;
         }
 
-        if ( ( victim = get_char_room( ch, argument ) ) == NULL )
+        if ( ( victim = get_char_room( ch, argument ) ) == NULL && (victim = ch->fighting ) == NULL)
         {
                 send_to_char( "Noone here to blast!\n\r", ch );
                 return;

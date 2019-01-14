@@ -3655,14 +3655,15 @@ if (xpstat == 3 && global_xp > 300000)
         return xp/10;
     else
     {
+       /* bye bye old double XP code. 
         if(doubleexp)
 	{
         xpcl = xp/3;
         if(xpcl > 150) xpcl = 150;
 	global_xp -= xpcl;
-	return xp*2;
-	}
-        else return xp;
+	return xp*2; 
+	} */
+         return xp;
     }
 
 }

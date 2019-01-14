@@ -404,6 +404,9 @@ int main( int argc, char **argv )
     cecho2file( "log file", 1, stderr );
 #endif
 
+    //Initialize xp multiplier.
+    xpawardmult = 1;
+    
     /*
      * Reserve one channel for our use.
      */
@@ -3832,6 +3835,7 @@ void save_config( void )
     fprintf (fp, "Newlock %d\n",        newlock);
     fprintf (fp, "Gxp %d\n",            global_xp);
     fprintf (fp, "Gqp %d\n",            global_qp);
+    fprintf (fp, "Xpmult %d\n",         xpawardmult);
 
     fprintf( fp, "End\n\n\n\n" );
     fclose( fp );
@@ -3901,6 +3905,10 @@ void load_config( void )
            case 'G':
                KEY("Gxp", global_xp, fread_number(fp) );
                KEY("Gqp", global_qp, fread_number(fp) );
+               break;
+           case 'X':
+               KEY("Xpmult", xpawardmult, fread_number(fp));
+               break;
            case 'S':
                KEY( "Slaughter", slaughter, fread_number(fp) );
                break;

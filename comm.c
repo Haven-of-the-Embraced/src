@@ -3830,6 +3830,8 @@ void save_config( void )
     fprintf( fp, "Resolver %d\n",       resolver);
     fprintf (fp, "Wizlock %d\n",        wizlock);
     fprintf (fp, "Newlock %d\n",        newlock);
+    fprintf (fp, "Gxp %d\n",            global_xp);
+    fprintf (fp, "Gqp %d\n",            global_qp);
 
     fprintf( fp, "End\n\n\n\n" );
     fclose( fp );
@@ -3896,6 +3898,9 @@ void load_config( void )
                 KEY( "Doubleexp", doubleexp, fread_number(fp) );
                 KEY( "Doubledam", doubledam, fread_number(fp) );
                 break;
+           case 'G':
+               KEY("Gxp", global_xp, fread_number(fp) );
+               KEY("Gqp", global_qp, fread_number(fp) );
            case 'S':
                KEY( "Slaughter", slaughter, fread_number(fp) );
                break;

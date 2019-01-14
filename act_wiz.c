@@ -7921,6 +7921,10 @@ if(!str_cmp(arg,"resolver"))
         DEBUG_MESSAGES ? sendch("{GON{x\n\r", ch) : sendch("{ROFF{x\n\r", ch);
         sendch("The Arena is ", ch);
         arena ? sendch("{RCLOSED{x\n\r", ch) : sendch("{GOPEN{x\n\r", ch);
+        sprintf(buf, "Global XP: %d\n\r", global_xp);
+        send_to_char(buf, ch);    
+        sprintf(buf, "Global QP: %d\n\r", global_qp);
+        send_to_char(buf, ch);
         send_to_char("\n\r{wValid options are: {Darena{w, {Ddoubleexp{w, {Ddoubledam{w, {Dnosun{w,\n\r", ch);
         send_to_char("{Dslaughterfest{w, {Dresolver{w, {Ddebug{w, {Dstatus{x\n\r",ch);
 

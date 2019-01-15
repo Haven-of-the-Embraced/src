@@ -99,7 +99,7 @@ int rote_lookup(const char *name)
     for (rote = 0; rote < MAX_ROTE; rote++)
     {
     if (LOWER(name[0]) == LOWER(rote_table[rote].name[0])
-    &&  !str_prefix(name,rote_table[rote].name))
+    &&  !str_prefix(name,rote_table[rote].name) && rote_table[rote].rote_fun != 0)
         return rote;
     }
 

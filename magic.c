@@ -326,6 +326,11 @@ void do_cast( CHAR_DATA *ch, char *argument )
     return;
     }
     csn = cskill_lookup(sn);
+    if (ch->level < csskill_table[csn].level)
+    {
+        send_to_char("You are not strong enough to use this spell yet.\n\r", ch);
+    return;
+    }
     if ( ch->position < skill_table[sn].minimum_position )
     {
     send_to_char( "You can't concentrate enough.\n\r", ch );

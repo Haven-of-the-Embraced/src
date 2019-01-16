@@ -212,13 +212,12 @@ bool shiftform(CHAR_DATA *ch, int desired, bool rage)
 
 void do_garouconvert(CHAR_DATA *ch, char *argument)
 {
-    char arg [MAX_INPUT_LENGTH];
     char buf [MAX_STRING_LENGTH];
     OBJ_DATA *obj;
     OBJ_DATA *obj_next;
     int i;
 
-    argument = one_argument( argument, arg );
+
 
     if (IS_NPC(ch))
         return;
@@ -236,26 +235,26 @@ void do_garouconvert(CHAR_DATA *ch, char *argument)
 
     if(ch->pcdata->breed == 0)
     {
-        if(arg[0] == '\0')
+        if(argument[0] == '\0')
         {
             send_to_char("You must now pick a Breed. Valid Breeds are Homid, Metis and Lupus.\n\rSee the helpfile for each before deciding.\n\rType gogarou <breed> to continue.\n\r",ch);
             return;
         }
-        if(!str_prefix( arg, "homid" ))
+        if(!str_prefix( argument, "homid" ))
         {
             send_to_char("Alright. You are now a Homid Garou.\n\r",ch);
             ch->pcdata->breed = HOMID;
             ch->pcdata->gnosis[PERM] = 1;
             ch->pcdata->gnosis[TEMP] = 1;
         }
-        else if(!str_prefix(arg, "metis"))
+        else if(!str_prefix(argument, "metis"))
         {
             send_to_char("Alright. You are now a Metis Garou.\n\r",ch);
             ch->pcdata->breed = METIS;
             ch->pcdata->gnosis[PERM] = 3;
             ch->pcdata->gnosis[TEMP] = 3;
         }
-        else if(!str_prefix(arg, "lupus"))
+        else if(!str_prefix(argument, "lupus"))
         {
             send_to_char("Alright. You are now a Lupus Garou.\n\r",ch);
             ch->pcdata->breed = LUPUS;
@@ -272,12 +271,12 @@ void do_garouconvert(CHAR_DATA *ch, char *argument)
     }
     if(ch->pcdata->auspice == 0)
     {
-        if(arg[0] == '\0')
+        if(argument[0] == '\0')
         {
             send_to_char("You must pick an Auspice. Valid Auspices are Ragabash, Theurge, Philodox, Galliard and Ahroun.\n\rSee the helpfile for each before deciding.\n\rType gogarou <auspice> to continue.\n\r",ch);
             return;
         }
-        if(!str_prefix( arg, "ragabash" ))
+        if(!str_prefix( argument, "ragabash" ))
         {
             send_to_char("Alright. Your Auspice is Ragabash.\n\r",ch);
             ch->pcdata->rage[PERM] = 1;
@@ -287,7 +286,7 @@ void do_garouconvert(CHAR_DATA *ch, char *argument)
             ch->pcdata->renown[GLORY] = 1;
             ch->pcdata->auspice = RAGABASH;
         }
-        else if(!str_prefix( arg, "theurge"))
+        else if(!str_prefix( argument, "theurge"))
         {
             send_to_char("Alright. Your Auspice is Theurge.\n\r",ch);
             ch->pcdata->rage[PERM] = 2;
@@ -295,7 +294,7 @@ void do_garouconvert(CHAR_DATA *ch, char *argument)
             ch->pcdata->renown[WISDOM] = 3;
             ch->pcdata->auspice = THEURGE;
         }
-        else if(!str_prefix( arg, "philodox"))
+        else if(!str_prefix( argument, "philodox"))
         {
             send_to_char("Alright. Your Auspice is Philodox.\n\r",ch);
             ch->pcdata->rage[PERM] = 3;
@@ -303,7 +302,7 @@ void do_garouconvert(CHAR_DATA *ch, char *argument)
             ch->pcdata->renown[HONOR] = 3;
             ch->pcdata->auspice = PHILODOX;
         }
-        else if(!str_prefix( arg, "galliard"))
+        else if(!str_prefix( argument, "galliard"))
         {
             send_to_char("Alright. Your Auspice is Galliard.\n\r",ch);
             ch->pcdata->rage[PERM] = 4;
@@ -312,7 +311,7 @@ void do_garouconvert(CHAR_DATA *ch, char *argument)
             ch->pcdata->renown[WISDOM] = 1;
             ch->pcdata->auspice = GALLIARD;
         }
-        else if(!str_prefix( arg, "ahroun"))
+        else if(!str_prefix( argument, "ahroun"))
         {
             send_to_char("Alright. Your Auspice is Ahroun.\n\r",ch);
             ch->pcdata->rage[PERM] = 5;
@@ -331,54 +330,54 @@ void do_garouconvert(CHAR_DATA *ch, char *argument)
     }
     if(ch->pcdata->tribe == 0)
     {
-        if(arg[0] == '\0')
+        if(argument[0] == '\0')
         {
             send_to_char("You must pick a Tribe. Valid Tribes are Black Furies, Children of Gaia, Fianna,\n\rFenrir, Shadow Lords, Bone Gnawers, Silver Fangs and Warders of Men.\n\rSee the helpfile for each before deciding.\n\rType gogarou <tribe> to continue.\n\r",ch);
             return;
         }
-        if(!str_prefix( arg, "black furies"))
+        if(!str_prefix( argument, "black furies"))
         {
             send_to_char("Alright. You are now a Black Fury.\n\r",ch);
             ch->pcdata->tribe = BLACK_FURY;
             ch->clan = clan_lookup("blackfury");
         }
-        else if(!str_prefix( arg, "children of gaia"))
+        else if(!str_prefix( argument, "children of gaia"))
         {
             send_to_char("Alright. You are now a Child of Gaia.\n\r",ch);
             ch->pcdata->tribe = CHILDREN_OF_GAIA;
             ch->clan = clan_lookup("childrenofgaia");
         }
-        else if(!str_prefix( arg, "fianna"))
+        else if(!str_prefix( argument, "fianna"))
         {
             send_to_char("Alright. You are now a Fianna.\n\r",ch);
             ch->pcdata->tribe = FIANNA;
             ch->clan = clan_lookup("fianna");
         }
-        else if(!str_prefix( arg, "fenrir"))
+        else if(!str_prefix( argument, "fenrir"))
         {
             send_to_char("Alright. You are now a Fenrir.\n\r",ch);
             ch->pcdata->tribe = FENRIR;
             ch->clan = clan_lookup("fenrir");
         }
-        else if(!str_prefix( arg, "shadow lords"))
+        else if(!str_prefix( argument, "shadow lords"))
         {
             send_to_char("Alright. You are now a Shadow Lord.\n\r",ch);
             ch->pcdata->tribe = SHADOW_LORD;
             ch->clan = clan_lookup("shadowlord");
         }
-        else if(!str_prefix( arg, "bone gnawer"))
+        else if(!str_prefix( argument, "bone gnawer"))
         {
             send_to_char("Alright. You are now a Bone Gnawer.\n\r",ch);
             ch->pcdata->tribe = BONE_GNAWER;
             ch->clan = clan_lookup("bonegnawer");
         }
-        else if(!str_prefix( arg, "silver fangs"))
+        else if(!str_prefix( argument, "silver fangs"))
         {
             send_to_char("Alright. You are now a Silver Fang.\n\r",ch);
             ch->pcdata->tribe = SILVER_FANG;
             ch->clan = clan_lookup("silverfang");
         }
-        else if(!str_prefix( arg, "warders of men"))
+        else if(!str_prefix( argument, "warders of men"))
         {
             send_to_char("Alright. You are now a Warders of Men.\n\r",ch);
             ch->pcdata->tribe = WARDERSOFMEN;
@@ -395,12 +394,12 @@ void do_garouconvert(CHAR_DATA *ch, char *argument)
 
     if(ch->pcdata->garou_fur == NULL || !str_cmp(ch->pcdata->garou_fur, "(null)"))
     {
-        if(arg[0] == '\0')
+        if(argument[0] == '\0')
         {
             send_to_char("You must pick a fur color. Type gogarou <fur color>. Remember, you cannot undo this. Choose wisely.\n\r",ch);
             return;
         }
-        ch->pcdata->garou_fur = str_dup( arg );
+        ch->pcdata->garou_fur = str_dup( argument );
     }
 
     if(ch->pcdata->rank == 0)

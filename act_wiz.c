@@ -4493,13 +4493,12 @@ void do_mset( CHAR_DATA *ch, char *argument )
     send_to_char("Syntax:\n\r",ch);
     send_to_char("  set char <name> <field> <value>\n\r",ch);
     send_to_char( "  Field being one of:\n\r",          ch );
-    send_to_char( "    str int wis dex con sex level\n\r",    ch );
-    send_to_char( "    race group gold silver hp mana move prac\n\r",ch);
-    send_to_char( "    align train thirst hunger drunk full home\n\r",  ch );
-    send_to_char( "    max_blood blood security inhumanity gen rank discipline\n\r",    ch );
-    send_to_char( "    drains embraced childer rage remorts renown paradox\n\r",    ch );
-    send_to_char( "    quintessence avatar arete freebie csstr csdex cssta\n\r",    ch );
-    send_to_char( "    cscha csman csapp csper csint cswit agg gnosis primal-urge\n\r", ch );
+    send_to_char( "    sex level race group gold silver hp mana move\n\r",    ch );
+    send_to_char( "    thirst hunger drunk full home max_blood blood\n\r",  ch );
+    send_to_char( "    security gen rank discipline drains embraced \n\r",    ch );
+    send_to_char( "    childer rage remorts renown paradox quintessence\n\r",    ch );
+    send_to_char( "    avatar arete freebie csstr csdex cssta cscha csman\n\r",    ch );
+    send_to_char( "    csapp csper csint cswit agg gnosis primal-urge\n\r", ch );
     send_to_char( "    sphere background prenown trenown fur\n\r", ch);
     }
 
@@ -4520,84 +4519,6 @@ void do_mset( CHAR_DATA *ch, char *argument )
     /*
      * Set something.
      */
-    if ( !str_cmp( arg2, "str" ) )
-    {
-    if ( value < 3 || value > get_max_train(victim,STAT_STR) )
-    {
-        sprintf(buf,
-        "Strength range is 3 to %d\n\r.",
-        get_max_train(victim,STAT_STR));
-        send_to_char(buf,ch);
-        return;
-    }
-
-    victim->perm_stat[STAT_STR] = value;
-    update_csstats(victim);
-    return;
-    }
-
-    if ( !str_cmp( arg2, "int" ) )
-    {
-        if ( value < 3 || value > get_max_train(victim,STAT_INT) )
-        {
-            sprintf(buf,
-        "Intelligence range is 3 to %d.\n\r",
-        get_max_train(victim,STAT_INT));
-            send_to_char(buf,ch);
-            return;
-        }
-
-        victim->perm_stat[STAT_INT] = value;
-        update_csstats(victim);
-        return;
-    }
-
-    if ( !str_cmp( arg2, "wis" ) )
-    {
-    if ( value < 3 || value > get_max_train(victim,STAT_WIS) )
-    {
-        sprintf(buf,
-        "Wisdom range is 3 to %d.\n\r",get_max_train(victim,STAT_WIS));
-        send_to_char( buf, ch );
-        return;
-    }
-
-    victim->perm_stat[STAT_WIS] = value;
-    update_csstats(victim);
-    return;
-    }
-
-    if ( !str_cmp( arg2, "dex" ) )
-    {
-    if ( value < 3 || value > get_max_train(victim,STAT_DEX) )
-    {
-        sprintf(buf,
-        "Dexterity range is 3 to %d.\n\r",
-        get_max_train(victim,STAT_DEX));
-        send_to_char( buf, ch );
-        return;
-    }
-
-    victim->perm_stat[STAT_DEX] = value;
-    update_csstats(victim);
-    return;
-    }
-
-    if ( !str_cmp( arg2, "con" ) )
-    {
-    if ( value < 3 || value > get_max_train(victim,STAT_CON) )
-    {
-        sprintf(buf,
-        "Constitution range is 3 to %d.\n\r",
-        get_max_train(victim,STAT_CON));
-        send_to_char( buf, ch );
-        return;
-    }
-
-    victim->perm_stat[STAT_CON] = value;
-    update_csstats(victim);
-    return;
-    }
 
     if ( !str_prefix( arg2, "sex" ) )
     {
@@ -4725,39 +4646,6 @@ void do_mset( CHAR_DATA *ch, char *argument )
     return;
     }
 
-    if ( !str_prefix( arg2, "practice" ) )
-    {
-    if ( value < 0 || value > 250 )
-    {
-        send_to_char( "Practice range is 0 to 250 sessions.\n\r", ch );
-        return;
-    }
-    victim->practice = value;
-    return;
-    }
-
-    if ( !str_prefix( arg2, "train" ))
-    {
-    if (value < 0 || value > 50 )
-    {
-        send_to_char("Training session range is 0 to 50 sessions.\n\r",ch);
-        return;
-    }
-    victim->train = value;
-    return;
-    }
-
-    if ( !str_prefix( arg2, "align" ) )
-    {
-    if ( value < -1000 || value > 1000 )
-    {
-        send_to_char( "Alignment range is -1000 to 1000.\n\r", ch );
-        return;
-    }
-    victim->alignment = value;
-    return;
-    }
-
     if ( !str_prefix( arg2, "thirst" ) )
     {
     if ( IS_NPC(victim) )
@@ -4880,22 +4768,6 @@ void do_mset( CHAR_DATA *ch, char *argument )
         return;
     }
     victim->group = value;
-    return;
-    }
-    if ( !str_prefix( arg2, "inhumanity" ) )
-    {
-    if ( IS_NPC(victim) )
-    {
-        send_to_char( "Not on NPC's.\n\r", ch );
-        return;
-    }
-
-    if ( value < 0 || value > 1000 )
-    {
-        send_to_char("Inhumanity range is 0 to 1000.\n\r", ch);
-        return;
-    }
-    victim->inhumanity = value;
     return;
     }
 

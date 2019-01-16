@@ -203,7 +203,6 @@ void fwrite_char( CHAR_DATA *ch, FILE *fp )
     fprintf( fp, "maxdamage %d\n", ch->maxdamage);
     fprintf( fp, "cheater %d\n", ch->cheater);
     fprintf( fp, "cslock %d\n", ch->cslock);
-    fprintf( fp, "smited %d\n", ch->smited);
     fprintf( fp, "csdemeanor %s~\n", ch->pcdata->csdemeanor);
     fprintf( fp, "csnature %s~\n", ch->pcdata->csnature);
     fprintf( fp, "ip %d\n", ch->pcdata->ip);

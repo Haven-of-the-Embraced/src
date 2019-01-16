@@ -4500,7 +4500,7 @@ void do_mset( CHAR_DATA *ch, char *argument )
     send_to_char( "    drains embraced childer rage remorts renown paradox\n\r",    ch );
     send_to_char( "    quintessence avatar arete freebie csstr csdex cssta\n\r",    ch );
     send_to_char( "    cscha csman csapp csper csint cswit agg gnosis primal-urge\n\r", ch );
-    send_to_char( "    sphere background prenown trenown \n\r", ch);
+    send_to_char( "    sphere background prenown trenown fur\n\r", ch);
     }
 
     if ( ( victim = get_char_world( ch, arg1 ) ) == NULL )
@@ -4992,7 +4992,21 @@ void do_mset( CHAR_DATA *ch, char *argument )
 	victim->pcdata->auspice = desired;
 	return;
 	}
-
+    if (!str_prefix (arg2, "fur"))
+    {
+        if (IS_NPC(victim))
+        {
+            send_to_char("Not on NPCs.\n\r", ch);
+            return;
+        }
+            smash_tilde( argument );
+            free_string( victim->pcdata->garou_fur );
+            victim->pcdata->garou_fur = str_dup( argument );
+            send_to_char("Fur color set.\n\r", ch);
+            send_to_char("Your fur color has been changed.\n\r", victim);
+            send_to_char("Will take effect on your next shift.\n\r", victim);
+            return;   
+    }
     if ( !str_prefix ( arg2, "willpower" ))
     {
         if ( IS_NPC(victim) )

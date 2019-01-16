@@ -1777,6 +1777,8 @@ void fread_char( CHAR_DATA *ch, FILE *fp )
         value = fread_number( fp );
         temp = fread_word( fp ) ;
         sn = skill_lookup(temp);
+        if (sn == skill_lookup("knight's training"))
+            fread_to_eol( fp );
         /* sn    = skill_lookup( fread_word( fp ) ); */
         if ( sn < 0 )
         {

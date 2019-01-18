@@ -1366,7 +1366,7 @@ bool damage(CHAR_DATA *ch,CHAR_DATA *victim,int dam,int dt,int dam_type,
 
 /* new damcap code.. may cause major unbalance */
 
-    if ( !slaughter && dam > 3000)
+    if ( (!slaughter && !doubledam) && dam > 3000)
     {
     bug( "Damage: %d: more than 3000 points!", dam );
     dam = 3000;

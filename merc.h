@@ -339,7 +339,7 @@ struct buf_type
 /* charsheet code */
 #define MAX_CSATTRIBUTES        8
 #define MAX_CSABIL              29
-#define MAX_DISC            20
+#define MAX_DISC            18
 /* attributes */
 #define CSATTRIB_STRENGTH       0
 #define CSATTRIB_DEXTERITY      1

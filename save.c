@@ -368,14 +368,13 @@ void fwrite_char( CHAR_DATA *ch, FILE *fp )
             fprintf( fp, " %d", ch->pcdata->discipline[i]);
         fprintf( fp, "\n");
 */
-        fprintf( fp, "Disciplines %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d\n",
+        fprintf( fp, "Disciplines %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d\n",
         ch->pcdata->discipline[0], ch->pcdata->discipline[1], ch->pcdata->discipline[2],
         ch->pcdata->discipline[3], ch->pcdata->discipline[4], ch->pcdata->discipline[5],
         ch->pcdata->discipline[6], ch->pcdata->discipline[7], ch->pcdata->discipline[8],
         ch->pcdata->discipline[9], ch->pcdata->discipline[10], ch->pcdata->discipline[11],
         ch->pcdata->discipline[12], ch->pcdata->discipline[13], ch->pcdata->discipline[14],
-        ch->pcdata->discipline[15], ch->pcdata->discipline[16], ch->pcdata->discipline[17],
-        ch->pcdata->discipline[18]);
+        ch->pcdata->discipline[15], ch->pcdata->discipline[16], ch->pcdata->discipline[17]);
     }
 
     fprintf( fp, "CSbackgrounds %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d\n",

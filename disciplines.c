@@ -2608,6 +2608,7 @@ void do_homunculusservant(CHAR_DATA *ch, char *argument)
     CHAR_DATA *mob;
     OBJ_DATA *obj;
     AFFECT_DATA af;
+    int dicesuccess;
 
     if (IS_NPC(ch)) return;
 
@@ -2626,7 +2627,11 @@ void do_homunculusservant(CHAR_DATA *ch, char *argument)
         send_to_char( "That is not an acceptable corpse.\n\r", ch );
         return;
     }
-
+    if ( obj->timer < 2)
+    {
+        send_to_char( "This corpse is too far gone to animate.\n\r", ch );
+        return;
+    }
     if(ch->pet != NULL)
     {
         send_to_char( "You can control only one servant at a time.\n\r",ch );
@@ -2639,14 +2644,36 @@ void do_homunculusservant(CHAR_DATA *ch, char *argument)
     }
 
     ch->pblood -= 20;
+    dicesuccess = godice(get_attribute(ch, DEXTERITY) + ch->pcdata->csabilities[CSABIL_OCCULT], 7);
+    
+    if (dicesuccess < 0)
+    {
+        act("You dribble vitae on $p and it smokes and sizzles, destroying the remnants of life left within the corpse!", ch, obj, NULL, TO_CHAR);
+        act("$N dribbles vitae on $p and it smokes and sizzles!", ch, obj, NULL, TO_NOTVICT);
+        obj->timer = 0;
+        WAIT_STATE( ch, 5*PULSE_VIOLENCE );
+        return;
+    }
+    if (dicesuccess == 0)
+    {
+        act("You dribble vitae upon $p... and nothing happens.", ch, obj, NULL, TO_CHAR);
+        act("$N dribbles vitae upon $p... and nothing happens.", ch, obj, NULL, TO_NOTVICT);
+        return;
+        WAIT_STATE( ch, 5*PULSE_VIOLENCE );
+    }
+    
+    WAIT_STATE( ch, 2*PULSE_VIOLENCE );
+    obj->timer = 1;
     mob = create_mobile( pMobIndex );
     char_to_room( mob, ch->in_room );
     mob->leader = ch;
     mob->level  = ch->level;
-    mob->max_hit = ch->max_hit/5;
+    mob->max_hit = ch->max_hit/5 + ((ch->pcdata->discipline[ANIMALISM] + dicesuccess) * 50);
     mob->hit = mob->max_hit;
-    mob->hitroll = mob->level/2;
-    mob->damroll = mob->level/4;
+    mob->hitroll = mob->level/2 + (ch->pcdata->discipline[MORTIS] * dicesuccess) * 4;
+    mob->damroll = mob->level/4 + (ch->pcdata->discipline[MORTIS] * dicesuccess) * 2;
+    mob->damage[DICE_NUMBER] = 3*ch->level/10;
+    mob->damage[DICE_TYPE] = 3;
     ch->pet = mob;
     add_follower( mob, ch );
 

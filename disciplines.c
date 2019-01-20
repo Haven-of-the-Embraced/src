@@ -2668,7 +2668,7 @@ void do_homunculusservant(CHAR_DATA *ch, char *argument)
     char_to_room( mob, ch->in_room );
     mob->leader = ch;
     mob->level  = ch->level;
-    mob->max_hit = ch->max_hit/5 + ((ch->pcdata->discipline[ANIMALISM] + dicesuccess) * 50);
+    mob->max_hit = ch->max_hit/10;
     mob->hit = mob->max_hit;
     mob->hitroll = mob->level/2 + (ch->pcdata->discipline[MORTIS] * dicesuccess) * 4;
     mob->damroll = mob->level/4 + (ch->pcdata->discipline[MORTIS] * dicesuccess) * 2;

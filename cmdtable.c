@@ -655,7 +655,6 @@ const   struct  cmdfun_type cmdfun_table    [] =
 
 /* to parse first insted of resets */
     { "resettime",      do_resettime},
-    { "test",       do_test},
 /*    { "fixme",        do_fixme}, */
     { "create",     do_create},
     { "freebie",    do_freebie},

@@ -465,7 +465,6 @@ DECLARE_DO_FUN( do_headbutt );
 DECLARE_DO_FUN( do_warcry   );
 DECLARE_DO_FUN( do_blast    );
 DECLARE_DO_FUN( do_slip     );
-DECLARE_DO_FUN( do_test     );
 DECLARE_DO_FUN( do_announce );
 DECLARE_DO_FUN( do_sect     );
 DECLARE_DO_FUN( do_lagem    );

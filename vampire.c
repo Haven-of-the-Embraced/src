@@ -956,7 +956,7 @@ void upgrade_disc(CHAR_DATA *ch, char *argument)
 bool can_use_disc(CHAR_DATA *ch, int disc, int dot, int blood, bool message)
 {
     char buf[MAX_STRING_LENGTH];
-    if(dot > 5 || dot < 0)
+    if(dot > 6 || dot < 0)
         return FALSE;
 
     if(!IS_VAMP(ch))
@@ -967,11 +967,6 @@ bool can_use_disc(CHAR_DATA *ch, int disc, int dot, int blood, bool message)
     if ( IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
     {
         if(message) send_to_char("Your blood curse prevents it!\n\r" ,ch);
-        return FALSE;
-    }
-    if (!IS_AFFECTED(ch,AFF_FANGS) && ch->race != race_lookup("ghoul"))
-    {
-        if(message) send_to_char( "Your fangs aren't extended.\n\r", ch );
         return FALSE;
     }
 

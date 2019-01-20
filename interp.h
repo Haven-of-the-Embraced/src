@@ -428,6 +428,7 @@ DECLARE_DO_FUN( do_freebie  );
 DECLARE_DO_FUN( do_entrancement     );
 DECLARE_DO_FUN( do_majesty  );
 DECLARE_DO_FUN( do_spiritsummoning  );
+DECLARE_DO_FUN( do_homunculusservant );
 DECLARE_DO_FUN( do_summon   );
 DECLARE_DO_FUN( do_resurrection );
 DECLARE_DO_FUN( do_animatedead  );

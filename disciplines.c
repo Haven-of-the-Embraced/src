@@ -2602,6 +2602,68 @@ void do_spiritsummoning(CHAR_DATA *ch, char *argument)
     return;
 }
 
+void do_homunculusservant(CHAR_DATA *ch, char *argument)
+{
+    MOB_INDEX_DATA *pMobIndex;
+    CHAR_DATA *mob;
+    OBJ_DATA *obj;
+    AFFECT_DATA af;
+
+    if (IS_NPC(ch)) return;
+
+
+    if(!can_use_disc(ch,MORTIS,2,20,TRUE))
+            return;
+    
+    if((obj = get_obj_here( ch, argument )) == NULL)
+    {
+        send_to_char( "You require a fresh corpse to craft a Homunculus.\n\r", ch );
+        return;
+    }
+    
+    if( obj->item_type != ITEM_CORPSE_NPC )
+    {
+        send_to_char( "That is not an acceptable corpse.\n\r", ch );
+        return;
+    }
+
+    if(ch->pet != NULL)
+    {
+        send_to_char( "You can control only one servant at a time.\n\r",ch );
+        return;
+    }
+    if ( (pMobIndex = get_mob_index(MOB_VNUM_HOMUNCULUS)) == NULL )
+    {
+        send_to_char( "{RError: {Wplease inform the Coders!{x\n\r", ch );
+        return;
+    }
+
+    ch->pblood -= 20;
+    mob = create_mobile( pMobIndex );
+    char_to_room( mob, ch->in_room );
+    mob->leader = ch;
+    mob->level  = ch->level;
+    mob->max_hit = ch->max_hit/5;
+    mob->hit = mob->max_hit;
+    mob->hitroll = mob->level/2;
+    mob->damroll = mob->level/4;
+    ch->pet = mob;
+    add_follower( mob, ch );
+
+    act( "$n dribbles some vitae upon $p and $N sloughs off and starts moving around!", ch, obj, mob, TO_NOTVICT );
+    act( "You dribble some vitae upon $p and $N sloughs off and awaits your bidding.", ch, obj, mob, TO_CHAR);
+
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_charm_person;
+    af.level     = ch->pcdata->discipline[MORTIS];
+    af.duration  = ch->pcdata->discipline[MORTIS]+ch->pcdata->csabilities[CSABIL_OCCULT]+20;  /*tmp hack while I fix time code */
+    af.location  = 0;
+    af.modifier  = 0;
+    af.bitvector = AFF_CHARM;
+    affect_to_char( mob, &af );
+    return;
+}
+
 void do_animatedead(CHAR_DATA *ch, char *argument)
 {
     MOB_INDEX_DATA *pMobIndex;

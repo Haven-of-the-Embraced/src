@@ -2237,7 +2237,7 @@ void do_blight(CHAR_DATA *ch, char *argument)
    char arg[MAX_INPUT_LENGTH];
    CHAR_DATA *victim;
    AFFECT_DATA af;
-//  int dicesuccess = 0;
+  int dicesuccess = 0;
    int chance;
 
     if (IS_NPC(ch)) return;
@@ -2272,82 +2272,71 @@ void do_blight(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    ch->pblood -= 10;
-
-/*  dicesuccess = godice(get_attribute(ch, DEXTERITY) + ch->pcdata->csabilities[CSABIL_BRAWL], 5);
-
-    act("Lunging quickly forward, you attempt to grasp $N.", ch, NULL, victim, TO_CHAR);
-    act("$n lunges and tries to grab you.", ch, NULL, victim, TO_NOTVICT);
-    act("$n lunges quickly towards $N.", ch, NULL, victim, TO_NOTVICT);
+   dicesuccess = godice(get_attribute(ch, DEXTERITY) + ch->pcdata->csabilities[CSABIL_BRAWL], 6);
 
     if (dicesuccess < 0)
     {
-        act("Botch", ch, NULL, victim, TO_CHAR);
-        act("Botch", ch, NULL, victim, TO_VICT);
-        act("Botch", ch, NULL, victim, TO_NOTVICT);
+        multi_hit( victim, ch, TYPE_UNDEFINED );
+        act("You fail to grab $N and they attack!", ch, NULL, victim, TO_CHAR);
+        act("$n attempts to grab you!", ch, NULL, victim, TO_VICT);
+        act("$n fails to grab on to $N and $E attacks $m!", ch, NULL, victim, TO_NOTVICT);
         return;
     }
 
     if (dicesuccess == 0)
     {
-        act("Fail", ch, NULL, victim, TO_CHAR);
-        act("Fail", ch, NULL, victim, TO_VICT);
-        act("Fail", ch, NULL, victim, TO_NOTVICT);
+        act("You miss grabbing $N.", ch, NULL, victim, TO_CHAR);
+        act("$n tries to grab you and misses by inches.", ch, NULL, victim, TO_VICT);
+        act("$n tries to grab $N and misses $M by inches.", ch, NULL, victim, TO_NOTVICT);
         return;
     }
 
-    act("Success", ch, NULL, victim, TO_CHAR);
-    act("Success", ch, NULL, victim, TO_VICT);
-    act("Success", ch, NULL, victim, TO_NOTVICT);
+    act("You grab on to $N and focus your vitae into your curse...", ch, NULL, victim, TO_CHAR);
+    act("$n grabs on to you and seems to focus for a moment...", ch, NULL, victim, TO_VICT);
+    act("$n grabs on to $N and seems to focus for a moment...", ch, NULL, victim, TO_NOTVICT);
 
     dicesuccess = godice(get_attribute(ch, MANIPULATION) + ch->pcdata->csabilities[CSABIL_MEDICINE], 6);
-
+    ch->pblood -= 10;
+    
     if (dicesuccess < 0)
     {
-        act("Botch", ch, NULL, victim, TO_CHAR);
-            act("Botch", ch, NULL, victim, TO_VICT);
-        act("Botch", ch, NULL, victim, TO_NOTVICT);
+        act("... and Blight yourself instead!", ch, NULL, victim, TO_CHAR);
+        act("... and $e recoils in pain!", ch, NULL, victim, TO_VICT);
+        act("... and $n recoils in pain!", ch, NULL, victim, TO_NOTVICT);
+        WAIT_STATE(ch,48);
+        af.where     = TO_AFFECTS;
+        af.type      = gsn_quietus_weakness;
+        af.level     = ch->level;
+        af.duration  = 6 - ch->pcdata->discipline[MORTIS];
+        af.location  = APPLY_CS_STR;
+        af.modifier  = -ch->pcdata->discipline[MORTIS];
+        af.bitvector = AFF_SLOW;
+        affect_to_char( ch, &af );
         return;
     }
 
-    if (dicesuccess = 0)
+    if (dicesuccess == 0)
     {
-        act("Fail", ch, NULL, victim, TO_CHAR);
-        act("Fail", ch, NULL, victim, TO_VICT);
-        act("Fail", ch, NULL, victim, TO_NOTVICT);
-    }
-
-    act("Success", ch, NULL, victim, TO_CHAR);
-    act("Success", ch, NULL, victim, TO_VICT);
-    act("Success", ch, NULL, victim, TO_NOTVICT);
-
-
-*/
-
-    if(get_curr_stat(victim,STAT_DEX) > get_curr_stat(ch,STAT_DEX) && chance < 50)
-    {
-        sprintf(buf, "%s attempts to grasp you and fails!\n\r", ch->name);
-        send_to_char(buf,victim);
-        sprintf(buf, "You fail to grasp %s!\n\r", victim->name);
-        send_to_char(buf,ch);
-        multi_hit( victim, ch, TYPE_UNDEFINED );
+        act("... and nothing happens.", ch, NULL, victim, TO_CHAR);
+        act("... and nothing happens.", ch, NULL, victim, TO_VICT);
+        act("... and nothing happens.", ch, NULL, victim, TO_NOTVICT);
+        WAIT_STATE(ch, 24);
         return;
     }
+
+    act("... and you curse them with the weakness of death!", ch, NULL, victim, TO_CHAR);
+    act("... and you suddenly feel weak and sluggish!", ch, NULL, victim, TO_VICT);
+    act("... and $N suddenly seems weak and sluggish.", ch, NULL, victim, TO_NOTVICT);
+
     WAIT_STATE(ch,24);
     af.where     = TO_AFFECTS;
     af.type      = gsn_quietus_weakness;
     af.level     = ch->level;
     af.duration  = (5+(ch->pcdata->discipline[MORTIS]*10))-ch->gen;
-    af.location  = APPLY_STR;
-    af.modifier  = -5;
-    af.bitvector = 0;
+    af.location  = APPLY_CS_STR;
+    af.modifier  = -ch->pcdata->discipline[MORTIS];
+    af.bitvector = AFF_SLOW;
     affect_to_char( victim, &af );
-
-    sprintf(buf, "%s touches you and you suddenly feel ill!\n\r", ch->name);
-    send_to_char(buf,victim);
-    sprintf(buf, "You grasp %s and blight them with your curse!\n\r", victim->name);
-    send_to_char(buf,ch);
-    act( "$N is suddenly weakened by $n's touch.",  ch, NULL, victim, TO_NOTVICT );
     multi_hit( victim, ch, TYPE_UNDEFINED );
     return;
 }

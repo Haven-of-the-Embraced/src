@@ -78,6 +78,7 @@ const	struct	mob_cmd_type	mob_cmd_table	[] =
 	{	"flee",		do_mpflee	},
 	{	"remove",	do_mpremove	},
 	{	"quest",	do_mpquest	},
+    {   "qpoint",   do_mpqpoint },
 	{	"",		0		}
 };
 
@@ -1368,6 +1369,57 @@ void do_mpremove( CHAR_DATA *ch, char *argument )
 	     extract_obj( obj );
 	}
     }
+}
+void do_mpqpoint(CHAR_DATA *ch, char *argument)
+{
+    CHAR_DATA *victim;
+    char arg1[MAX_INPUT_LENGTH];
+    char arg2[MAX_INPUT_LENGTH];
+    char buf[MAX_STRING_LENGTH];
+    char log_buf[MAX_STRING_LENGTH];
+    int points;
+
+
+    argument = one_argument( argument, arg1 );
+    argument = one_argument( argument, arg2 );
+
+    if((victim = get_char_room(ch, arg1)) == NULL)
+        return;
+    
+    if(IS_NPC(victim))
+        return;
+
+    if(!is_number(arg2))
+    {
+        bug ( "MpQpoint: Invalid QP amount from vnum %d.",
+		IS_NPC(ch) ? ch->pIndexData->vnum : 0 );
+        return;
+    }
+    points = atoi(arg2);
+
+    if(points > 30000 || points < 0)
+    {
+        bug ( "MpQpoint: Invalid QP amount from vnum %d.",
+		IS_NPC(ch) ? ch->pIndexData->vnum : 0 );
+        return;
+    }
+
+    if(victim->qpoints+points > 30000)
+        points = 30000 - victim->qpoints;
+
+
+
+    if(points > 0)
+    {
+        sprintf(buf, "You have been rewarded {Y%d {xquest points!\n\r", points);
+        send_to_char(buf,victim);
+    }
+
+    victim->qpoints += points;
+    sprintf(log_buf, "%s was awarded %d Qpoints by mob %d (Now has %d)",victim->name, points, IS_NPC(ch) ? ch->pIndexData->vnum : 0, victim->qpoints);
+    wiznet(log_buf,ch,NULL,WIZ_SECURE,0,0);
+    log_string(log_buf);
+    return;
 }
 
 

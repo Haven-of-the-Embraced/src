@@ -76,4 +76,5 @@ DECLARE_DO_FUN(	do_mpcall	);
 DECLARE_DO_FUN(	do_mpflee	);
 DECLARE_DO_FUN(	do_mpotransfer	);
 DECLARE_DO_FUN(	do_mpremove	);
+DECLARE_DO_FUN( do_mpqpoint     );
 DECLARE_DO_FUN(	do_mpquest	);

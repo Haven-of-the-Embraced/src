@@ -2241,33 +2241,22 @@ void do_blight(CHAR_DATA *ch, char *argument)
    int chance;
 
     if (IS_NPC(ch)) return;
+   
+    if(!can_use_disc(ch,MORTIS,1,15,TRUE))
+            return;
 
     argument = one_argument( argument, arg );
     chance = number_range(1, 100);
 
-    if(!IS_VAMP(ch))
-    {
-        send_to_char("You are not a vampire!\n\r" ,ch);
-        return;
-    }
     if ( ( victim = get_char_room( ch, arg ) ) == NULL )
     {
         send_to_char( "Who?\n\r", ch );
         return;
     }
-    if ( IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
-    {
-        send_to_char("Your blood curse prevents it!\n\r" ,ch);
-        return;
-    }
+
     if(victim == ch)
     {
         send_to_char( "You cannot do this to yourself!\n\r", ch );
-        return;
-    }
-    if (ch->pcdata->discipline[MORTIS] < 2)
-    {
-        send_to_char( "You are not skilled enough in Mortis!\n\r", ch );
         return;
     }
 
@@ -2283,11 +2272,6 @@ void do_blight(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if ( ch->pblood < 15 )
-    {
-        send_to_char( "You don't have enough blood.\n\r", ch );
-        return;
-    }
     ch->pblood -= 10;
 
 /*  dicesuccess = godice(get_attribute(ch, DEXTERITY) + ch->pcdata->csabilities[CSABIL_BRAWL], 5);

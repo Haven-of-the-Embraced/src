@@ -2662,24 +2662,38 @@ void do_homunculusservant(CHAR_DATA *ch, char *argument)
         WAIT_STATE( ch, 5*PULSE_VIOLENCE );
     }
     
+    mob = create_mobile( pMobIndex );
+    act( "$n dribbles some vitae upon $p and $N sloughs off and starts moving around!", ch, obj, mob, TO_NOTVICT );
+    act( "You dribble some vitae upon $p and $N sloughs off and awaits your bidding.", ch, obj, mob, TO_CHAR);
+    
     WAIT_STATE( ch, 2*PULSE_VIOLENCE );
     obj->timer = 1;
-    mob = create_mobile( pMobIndex );
+    
     char_to_room( mob, ch->in_room );
-    mob->leader = ch;
     mob->level  = ch->level;
     mob->max_hit = ch->max_hit/10;
     mob->hit = mob->max_hit;
     mob->hitroll = mob->level/2 + (ch->pcdata->discipline[MORTIS] * dicesuccess) * 4;
     mob->damroll = mob->level/4 + (ch->pcdata->discipline[MORTIS] * dicesuccess) * 2;
-    mob->damage[DICE_NUMBER] = 3*ch->level/10;
+    // Dice curve so mobs don't suck at level 1.
+    int dicenum;
+    if (mob->level < 10)
+        dicenum = 10;
+    if (mob->level >= 10 && mob->level < 15)
+        dicenum = 9;
+    if (mob->level >= 15 && mob->level < 20)
+        dicenum = 8;
+    if (mob->level >= 20 && mob->level < 25)
+        dicenum = 7;
+    if (mob->level >= 25)
+        dicenum = mob->level/4;
+    mob->damage[DICE_NUMBER] = dicenum;
     mob->damage[DICE_TYPE] = 3;
-    ch->pet = mob;
+    mob->damage[DICE_BONUS] = mob->level;
     add_follower( mob, ch );
-
-    act( "$n dribbles some vitae upon $p and $N sloughs off and starts moving around!", ch, obj, mob, TO_NOTVICT );
-    act( "You dribble some vitae upon $p and $N sloughs off and awaits your bidding.", ch, obj, mob, TO_CHAR);
-
+    ch->pet = mob;
+    mob->leader = ch;
+    
     af.where     = TO_AFFECTS;
     af.type      = gsn_charm_person;
     af.level     = ch->pcdata->discipline[MORTIS];
@@ -2688,6 +2702,7 @@ void do_homunculusservant(CHAR_DATA *ch, char *argument)
     af.modifier  = 0;
     af.bitvector = AFF_CHARM;
     affect_to_char( mob, &af );
+    
     return;
 }
 
@@ -3533,15 +3548,14 @@ void do_nightshades(CHAR_DATA *ch, char *argument)
     if(!is_affected(ch,gsn_shadowform)) ch->pblood -= 15;
     mob = create_mobile( pMobIndex );
     char_to_room( mob, ch->in_room );
-    add_follower( mob, ch );
-    mob->leader = ch;
     mob->level  = ch->level;
     mob->max_hit = ch->max_hit;
     mob->hitroll = ch->hitroll;
     mob->damroll = ch->damroll;
     mob->hit = mob->max_hit;
     ch->pet = mob;
-
+    add_follower( mob, ch );
+    mob->leader = ch;
     act( "$n weaves and tugs at the darkness of the Abyss, summonning forth $N!", ch, NULL, mob, TO_NOTVICT );
     send_to_char("You extend your will, pulling tangible darkness from the Abyss itself, and form it into a willing doppleganger.\n\r", ch);
 

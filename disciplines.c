@@ -2625,40 +2625,27 @@ void do_animatedead(CHAR_DATA *ch, char *argument)
 
     if (IS_NPC(ch)) return;
 
-    if(!IS_VAMP(ch))
-    {
-        send_to_char("You are not a vampire!\n\r" ,ch);
-        return;
-    }
-
-    if ( IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
-    {
-        send_to_char("Your blood curse prevents it!\n\r" ,ch);
-        return;
-    }
-
+    if(!can_use_disc(ch,MORTIS,3,30,TRUE))
+            return;
+    
     if((obj = get_obj_here( ch, argument )) == NULL)
     {
         send_to_char( "Animate what?.\n\r", ch );
         return;
     }
-    if (ch->pcdata->discipline[MORTIS] < 4)
-    {
-        send_to_char( "You are not skilled enough in your powers of Mortis!\n\r", ch );
-        return;
-    }
 
-    if( obj->item_type == ITEM_CORPSE_PC )
+    if( obj->item_type != ITEM_CORPSE_NPC )
     {
         send_to_char( "This corpse cannot be animated.\n\r", ch );
         return;
     }
-    if(obj->level > (ch->level+20))
+    if(obj->level > (ch->level+30))
     {
         send_to_char("This creature's spirit is too powerful to control.\n\r",ch);
         return;
     }
-    if(obj->level < 10)
+    
+    if(obj->level < 5)
     {
         send_to_char( "The spirit of this corpse is not strong enough to reanimate.\n\r", ch );
         return;
@@ -2668,11 +2655,7 @@ void do_animatedead(CHAR_DATA *ch, char *argument)
         send_to_char( "This corpse is too far gone to animate.\n\r", ch );
         return;
     }
-    if ( ch->pblood < 40 )
-    {
-        send_to_char( "You don't have enough blood.\n\r", ch );
-        return;
-    }
+
     if(ch->pet != NULL)
     {
         send_to_char( "You cannot control two creatures at once!\n\r",ch );
@@ -2690,21 +2673,21 @@ void do_animatedead(CHAR_DATA *ch, char *argument)
     str1 = one_argument( str1, str2 );
     str1 = one_argument( str1, str2 );
 
-    ch->pblood -= 25;
+    ch->pblood -= 30;
     obj->level = obj->level/2;
     mob = create_mobile( pMobIndex );
     char_to_room( mob, ch->in_room );
     mob->level  = obj->level;
-    mob->max_hit = (ch->level *obj->level) + 100;
+    mob->max_hit = (ch->level + obj->level) * 100;
     mob->hit = mob->max_hit;
-    mob->hitroll = obj->level/2;
-    mob->damroll = obj->level/2;
+    mob->hitroll = obj->level/4;
+    mob->damroll = obj->level/8;
     mob->damage[DICE_NUMBER] = obj->level/2;
-    mob->damage[DICE_TYPE] = 10;
-    mob->armor[0] -= ch->level*3;
-    mob->armor[1] -= ch->level*3;
-    mob->armor[2] -= ch->level*3;
-    mob->armor[3] -= ch->level*3;
+    mob->damage[DICE_TYPE] = 3;
+    mob->armor[0] -= ch->level*10;
+    mob->armor[1] -= ch->level*10;
+    mob->armor[2] -= ch->level*10;
+    mob->armor[3] -= ch->level*10;
 
     sprintf(buf, "The walking corpse of %s", str1);
     mob->short_descr = str_dup(buf);

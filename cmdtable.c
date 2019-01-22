@@ -160,7 +160,6 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "entrancement",       do_entrancement },
     { "earthmeld",      do_earthmeld},
     { "majesty",        do_majesty},
-    { "spiritsummoning",     do_spiritsummoning },//dnm
     { "homunculusservant", do_homunculusservant },
     { "summon",     do_summon},
     { "resurrection",       do_resurrection},

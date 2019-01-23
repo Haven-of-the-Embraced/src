@@ -164,6 +164,7 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "summon",     do_summon},
     { "resurrection",       do_resurrection},
     { "animatedead",        do_animatedead},
+    { "callathanatos",      do_callathanatos},
     { "weakness",       do_weakness},
     { "blight",     do_blight},
     { "blackdeath",     do_blackdeath},

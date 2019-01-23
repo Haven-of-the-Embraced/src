@@ -431,6 +431,7 @@ DECLARE_DO_FUN( do_homunculusservant );
 DECLARE_DO_FUN( do_summon   );
 DECLARE_DO_FUN( do_resurrection );
 DECLARE_DO_FUN( do_animatedead  );
+DECLARE_DO_FUN( do_callathanatos );
 DECLARE_DO_FUN( do_weakness );
 DECLARE_DO_FUN( do_blight   );
 DECLARE_DO_FUN( do_blackdeath   );

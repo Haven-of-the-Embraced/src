@@ -2786,23 +2786,19 @@ void do_callathanatos(CHAR_DATA *ch, char *argument)
         return;
     }
     
-
-    act( "... and $p begins transforming into a nightmarish monster!", ch, obj, mob, TO_NOTVICT );
-    act( "... and you summon forth Athanatos, an assassin of death.", ch, obj, mob, TO_CHAR);
-    
     mob = create_mobile( pMobIndex );
     char_to_room( mob, ch->in_room );
     mob->level  = ch->level;
-    mob->max_hit = (ch->level + mob->level) * 100;
+    mob->max_hit = UMAX( 500, (mob->level) * 80);
     mob->hit = mob->max_hit;
     mob->hitroll = mob->level * 5;
     mob->damage[DICE_NUMBER] = UMAX(25, mob->level);
     mob->damage[DICE_TYPE] = 3;
-    mob->damage[DICE_BONUS] = mob->level/2;
-    mob->armor[0] -= ch->level*20;
-    mob->armor[1] -= ch->level*20;
-    mob->armor[2] -= ch->level*20;
-    mob->armor[3] -= ch->level*20;
+    mob->damage[DICE_BONUS] = mob->level;
+    mob->armor[0] -= ch->level*10;
+    mob->armor[1] -= ch->level*10;
+    mob->armor[2] -= ch->level*10;
+    mob->armor[3] -= ch->level*10;
 
     if (dicesuccess < 0) 
     {

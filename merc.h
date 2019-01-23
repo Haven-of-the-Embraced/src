@@ -840,6 +840,7 @@ struct  kill_data
 #define MOB_VNUM_MORTIS_ZOMBIE   29
 #define MOB_VNUM_OBTEN_SERVANT   30
 #define MOB_VNUM_HOMUNCULUS     32
+#define MOB_VNUM_ATHANATOS      33
 #define MOB_VNUM_FIDO           711
 #define MOB_VNUM_CITYGUARD      708
 //#define MOB_VNUM_VAMPIRE     3404

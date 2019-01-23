@@ -2622,7 +2622,8 @@ void do_animatedead(CHAR_DATA *ch, char *argument)
     char buf[MAX_STRING_LENGTH];
     char *str1;
     char *str2;
-
+    int dicesuccess;
+    
     if (IS_NPC(ch)) return;
 
     if(!can_use_disc(ch,MORTIS,3,30,TRUE))
@@ -2666,6 +2667,30 @@ void do_animatedead(CHAR_DATA *ch, char *argument)
         send_to_char( "{RError: {Wplease inform the Coders!{x\n\r", ch );
         return;
     }
+    WAIT_STATE(ch, 48);
+    act( "$n dribbles some vitae into the mouth of $p and begins chanting...", ch, obj, NULL, TO_NOTVICT );
+    act( "You dribble some vitae into the mouth of $p and begin chanting...", ch, obj, NULL, TO_CHAR);
+    
+    dicesuccess = godice(get_attribute(ch, STAMINA) + ch->pcdata->csabilities[CSABIL_OCCULT], 6);
+    
+    if (dicesuccess < 0)
+    {
+        act( "... and $p is devoured in unholy black flames!", ch, obj, mob, TO_NOTVICT );
+        act( "... and $p is devoured in unholy black flames!", ch, obj, mob, TO_CHAR);
+        extract_obj(obj);
+        return;
+    }
+    if (dicesuccess == 0)
+    {
+        act( "... and nothing happens.", ch, NULL, NULL, TO_NOTVICT );
+        act( "... and nothing happens.", ch, NULL, NULL, TO_CHAR);
+        return;
+    }
+    
+
+    act( "... and $p begins moving, standing up to do $n's bidding!", ch, obj, mob, TO_NOTVICT );
+    act( "... and $p is animated into your undead servant!", ch, obj, mob, TO_CHAR);
+    
     str1 = str_dup(obj->short_descr);
     str2 = str_dup("none");
     str1 = one_argument( str1, str2 );
@@ -2698,7 +2723,6 @@ void do_animatedead(CHAR_DATA *ch, char *argument)
     mob->leader = ch;
     ch->pet = mob;
     extract_obj(obj);
-    act( "$n animates a corpse into $N!", ch, NULL, mob, TO_NOTVICT );
 
     af.where     = TO_AFFECTS;
     af.type      = gsn_charm_person;

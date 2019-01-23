@@ -2734,6 +2734,103 @@ void do_animatedead(CHAR_DATA *ch, char *argument)
     return;
 }
 
+
+void do_callathanatos(CHAR_DATA *ch, char *argument)
+{
+    MOB_INDEX_DATA *pMobIndex;
+    CHAR_DATA *mob;
+    OBJ_DATA *obj;
+    AFFECT_DATA af;
+    char buf[MAX_STRING_LENGTH];
+    char *str1;
+    char *str2;
+    int dicesuccess;
+    
+    if (IS_NPC(ch)) return;
+
+    if(!can_use_disc(ch,MORTIS,4,40,TRUE))
+            return;
+    
+    if((obj = get_obj_here( ch, argument )) == NULL)
+    {
+        send_to_char( "Animate what?.\n\r", ch );
+        return;
+    }
+
+    if( obj->item_type != ITEM_CORPSE_NPC )
+    {
+        send_to_char( "This corpse cannot be animated.\n\r", ch );
+        return;
+    }
+
+    if(ch->pet != NULL)
+    {
+        send_to_char( "You cannot control two creatures at once!\n\r",ch );
+        return;
+    }
+    if ( (pMobIndex = get_mob_index(MOB_VNUM_ATHANATOS)) == NULL )
+    {
+        send_to_char( "{RError: {Wplease inform the Coders!{x\n\r", ch );
+        return;
+    }
+    WAIT_STATE(ch, 48);
+    act( "$n dribbles some vitae onto $p and begins chanting...", ch, obj, NULL, TO_NOTVICT );
+    act( "You dribble some vitae onto $p and begin chanting...", ch, obj, NULL, TO_CHAR);
+    
+    dicesuccess = godice(get_attribute(ch, STAMINA) + ch->pcdata->csabilities[CSABIL_OCCULT], 6);
+    
+    if (dicesuccess == 0)
+    {
+        act( "... and nothing happens.", ch, NULL, NULL, TO_NOTVICT );
+        act( "... and nothing happens.", ch, NULL, NULL, TO_CHAR);
+        return;
+    }
+    
+
+    act( "... and $p begins transforming into a nightmarish monster!", ch, obj, mob, TO_NOTVICT );
+    act( "... and you summon forth Athanatos, an assassin of death.", ch, obj, mob, TO_CHAR);
+    
+    mob = create_mobile( pMobIndex );
+    char_to_room( mob, ch->in_room );
+    mob->level  = ch->level;
+    mob->max_hit = (ch->level + mob->level) * 100;
+    mob->hit = mob->max_hit;
+    mob->hitroll = mob->level * 5;
+    mob->damage[DICE_NUMBER] = UMAX(25, mob->level);
+    mob->damage[DICE_TYPE] = 3;
+    mob->damage[DICE_BONUS] = mob->level/2;
+    mob->armor[0] -= ch->level*20;
+    mob->armor[1] -= ch->level*20;
+    mob->armor[2] -= ch->level*20;
+    mob->armor[3] -= ch->level*20;
+
+    if (dicesuccess < 0) 
+    {
+        act( "... and $p begins transforming into a nightmarish monster that turns and attacks $m!", ch, obj, mob, TO_NOTVICT );
+        act( "... and you summon forth a corpse knight, that immediately turns on you!", ch, obj, mob, TO_CHAR);
+        multi_hit(mob, ch, TYPE_UNDEFINED);        
+    } else {
+        act( "... and $p begins transforming into a nightmarish monster!", ch, obj, mob, TO_NOTVICT );
+        act( "... and you summon forth a corpse knight to slay your foes.", ch, obj, mob, TO_CHAR);    
+        add_follower( mob, ch );
+        mob->leader = ch;
+        ch->pet = mob;
+
+        af.where     = TO_AFFECTS;
+        af.type      = gsn_charm_person;
+        af.level     = ch->level;
+        af.duration  = -1;
+        af.location  = 0;
+        af.modifier  = 0;
+        af.bitvector = AFF_CHARM;
+        affect_to_char( mob, &af );
+    }
+    
+    extract_obj(obj);
+    return;
+}
+
+
 void do_mask(CHAR_DATA *ch, char *argument)
 {
     char buf[MAX_STRING_LENGTH];

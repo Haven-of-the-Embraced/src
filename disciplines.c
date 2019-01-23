@@ -2794,7 +2794,6 @@ void do_callathanatos(CHAR_DATA *ch, char *argument)
     mob->hitroll = mob->level * 5;
     mob->damage[DICE_NUMBER] = UMAX(25, mob->level);
     mob->damage[DICE_TYPE] = 3;
-    mob->damage[DICE_BONUS] = mob->level;
     mob->armor[0] -= ch->level*10;
     mob->armor[1] -= ch->level*10;
     mob->armor[2] -= ch->level*10;

@@ -2670,7 +2670,7 @@ void do_animatedead(CHAR_DATA *ch, char *argument)
     WAIT_STATE(ch, 48);
     act( "$n dribbles some vitae into the mouth of $p and begins chanting...", ch, obj, NULL, TO_NOTVICT );
     act( "You dribble some vitae into the mouth of $p and begin chanting...", ch, obj, NULL, TO_CHAR);
-    
+    ch->pblood -= 30;
     dicesuccess = godice(get_attribute(ch, STAMINA) + ch->pcdata->csabilities[CSABIL_OCCULT], 6);
     
     if (dicesuccess < 0)
@@ -2698,7 +2698,6 @@ void do_animatedead(CHAR_DATA *ch, char *argument)
     str1 = one_argument( str1, str2 );
     str1 = one_argument( str1, str2 );
 
-    ch->pblood -= 30;
     obj->level = obj->level/2;
     mob = create_mobile( pMobIndex );
     char_to_room( mob, ch->in_room );

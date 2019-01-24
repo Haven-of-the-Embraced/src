@@ -483,19 +483,9 @@ void do_claim (CHAR_DATA *ch, char *argument)
         sendch("This area cannot be claimed as a domain.\n\r", ch);
         return;
     }
-    if (dom->clan == 0 && dom->influence[ch->clan] < 49)
-    {
-        sendch("Your clan does not have enough influence in this domain to claim it.\n\r", ch);
-        return;
-    } else if (dom->clan > 1 && dom->influence[ch->clan] < 50 &&
-                dom->influence[ch->clan] + 30 < dom->influence[dom->clan] )
-    {
-        sendch("Your clan does not have enough influence in this domain to oust the ruling clan.\n\r", ch);
-        return;
-    }
     argument = one_argument(argument, arg);
 
-    if (IS_NULLSTR(argument) || str_cmp(arg, "confirm"))
+    if (str_cmp(arg, "confirm"))
     {
      if (dom->clan == 0)
      {
@@ -509,6 +499,17 @@ void do_claim (CHAR_DATA *ch, char *argument)
          dom->influence[ch->clan], dom->influence[dom->clan] + 30);
          return;
      }
+    }
+    
+    if (dom->clan == 0 && dom->influence[ch->clan] < 49)
+    {
+        sendch("Your clan does not have enough influence in this domain to claim it.\n\r", ch);
+        return;
+    } else if (dom->clan > 1 && dom->influence[ch->clan] < 50 &&
+                dom->influence[ch->clan] + 30 < dom->influence[dom->clan] )
+    {
+        sendch("Your clan does not have enough influence in this domain to oust the ruling clan.\n\r", ch);
+        return;
     }
     int i;
     DESCRIPTOR_DATA *d;

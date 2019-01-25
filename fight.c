@@ -438,11 +438,10 @@ void mob_hit (CHAR_DATA *ch, CHAR_DATA *victim, int dt)
     OBJ_DATA *obj;
     AFFECT_DATA af;
 
-
-    one_hit(ch,victim,dt);
-
     if (ch->fighting != victim || ch->stopped > 0)
     return;
+    
+    one_hit(ch,victim,dt);
 
     /* Area attack -- BALLS nasty! */
 

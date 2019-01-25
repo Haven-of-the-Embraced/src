@@ -1607,7 +1607,7 @@ void rote_stoptheclock(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *
     act( "$n waves a hand at $N who suddenly seems frozen!",  ch, NULL, victim, TO_NOTVICT    );
     act( "You suddenly find time rushing by too fast to perceive.",  ch, NULL, victim, TO_VICT );
     act( "You feel the strain of the world bending to your whim as you stop the flow of time itself around $N.", ch, NULL, victim, TO_CHAR );
-    victim->stopped = success*10;
+    victim->stopped = success*PULSE_VIOLENCE;
     damage( ch, victim, 0, gsn_magick, DAM_MENTAL, FALSE);
     return;
 }

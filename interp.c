@@ -551,8 +551,17 @@ char *one_argument( char *argument, char *arg_first )
     argument++;
 
     cEnd = ' ';
-    if ( *argument == '\'' || *argument == '"' )
-    cEnd = *argument++;
+   
+    if ( *argument == '\'' || *argument == '"'
+      || *argument == '(' )
+    {
+        if ( *argument == '(' )
+        {
+            cEnd = ')';
+            argument++;
+        }
+        else cEnd = *argument++;
+    }
 
     while ( *argument != '\0' )
     {

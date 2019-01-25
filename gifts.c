@@ -27,6 +27,7 @@
  *
  * Go to the gift spell_fun below and write the function.
  *
+ * Change the level of the gift from level0 to level1
  */
 /* garou gifts */
 sh_int          gsn_gift_porcupine;
@@ -220,7 +221,7 @@ void do_gifts(CHAR_DATA *ch, char *argument)
 
     
     int i;
-    int col = 0;
+    int col = 1;
     BUFFER *buffer;
     buffer = new_buf();
     if (str_cmp(argument, "all"))
@@ -233,9 +234,15 @@ void do_gifts(CHAR_DATA *ch, char *argument)
 				continue;
 			else {
 				if (col < 2)
+                    if (gift_table[ch->pcdata->gift[i]].level == 0)
+                    sprintf(buf, "{r%-30s{x", capitalize(gift_table[ch->pcdata->gift[i]].name));
+                    else
 					sprintf(buf, "%-30s", capitalize(gift_table[ch->pcdata->gift[i]].name));
 				else if (col == 2)
 				{
+                    if (gift_table[ch->pcdata->gift[i]].level == 0)
+                    sprintf(buf, "{r%-30s{x\n\r", capitalize(gift_table[ch->pcdata->gift[i]].name));
+                    else
 					sprintf(buf, "%s\n\r", capitalize(gift_table[ch->pcdata->gift[i]].name));
 					col = 0;
 					}
@@ -264,9 +271,17 @@ void do_gifts(CHAR_DATA *ch, char *argument)
 					
 			else {
 				if (col < 2)
+                {
+                    if (gift_table[i].level == 0)
+                    sprintf(buf, "{r%-30s{x", capitalize(gift_table[i].name));
+                    else
 					sprintf(buf, "%-30s", capitalize(gift_table[i].name));
-				else
+				}
+                    else
 				{
+                    if (gift_table[i].level == 0)
+                    sprintf(buf, "{r%-30s{x\n\r", capitalize(gift_table[i].name));
+                    else
 					sprintf(buf, "%s\n\r", capitalize(gift_table[i].name));
 					col = 0;
 					}
@@ -278,6 +293,7 @@ void do_gifts(CHAR_DATA *ch, char *argument)
 	}
     
     page_to_char(buf_string(buffer), ch);
+    send_to_char("\n\rNote: Gifts marked in {rred{x are not currently coded.\n\r", ch);
     return;
 }
 

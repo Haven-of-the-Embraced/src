@@ -709,28 +709,30 @@ void do_wizhelp( CHAR_DATA *ch, char *argument )
 void do_wizhelp( CHAR_DATA *ch, char *argument )
 {
     char buf[MAX_STRING_LENGTH];
+    BUFFER *output;
     int cmd;
     int col;
     int clevel;
     int start;
     int finish;
     CMD_DATA *pCmd;
+    output = new_buf();
     
-    if (is_number(argument))
+    if (is_number(argument) && (atoi(argument) <= get_trust(ch)))
     {
         start = atoi(argument);
         finish = start+1;
     } else
     {
         start = LEVEL_HERO + 1;
-        finish = MAX_LEVEL + 1;
+        finish = get_trust(ch) + 1;
     }
 
     
     for( clevel = start; clevel < finish; clevel++ )
     {
         sprintf(buf, "\n\r{m------------------------------ {w[Level {D%d{w] {m------------------------------{x\n\r", clevel);
-        send_to_char(buf, ch);
+        add_buf(output, buf);
         col = 0;
         for(pCmd = cmd_first ; pCmd ; pCmd = pCmd->next )
     {
@@ -740,15 +742,17 @@ void do_wizhelp( CHAR_DATA *ch, char *argument )
         &&   pCmd->level == clevel)
         {
             sprintf( buf, "{c[{x%-3d{c] %-19s{x", pCmd->level, pCmd->name );
-            send_to_char( buf, ch );
+            add_buf(output, buf);
             if ( ++col % 3 == 0 )
-            send_to_char( "\n\r", ch );
+            add_buf(output, "\n\r");
         }
     }
     }
 
     if ( col % 3 != 0 )
-    send_to_char( "\n\r", ch );
+    add_buf(output, "\n\r");
+    page_to_char(buf_string(output), ch);
+    free_buf(output);
     return;
 }
 

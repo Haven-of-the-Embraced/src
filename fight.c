@@ -437,9 +437,6 @@ void mob_hit (CHAR_DATA *ch, CHAR_DATA *victim, int dt)
     CHAR_DATA *vch, *vch_next;
     OBJ_DATA *obj;
     AFFECT_DATA af;
-
-    if (ch->stopped > 0)
-        return;
     
     one_hit(ch,victim,dt);
 

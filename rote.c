@@ -746,7 +746,7 @@ void rote_kineticshield(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA 
     affect_to_char( victim, &af );
 
     act( "You bend the forces of kinetic energy to surround your body in a defensive field.",  ch, NULL, victim, TO_CHAR    );
-    act( "$n focuses as a shimmering bubble of energy surrounds $M.",  ch, NULL, victim, TO_NOTVICT );
+    act( "$n focuses as a shimmering bubble of energy surrounds $m.",  ch, NULL, victim, TO_NOTVICT );
 
     return;
 }

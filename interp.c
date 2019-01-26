@@ -712,27 +712,42 @@ void do_wizhelp( CHAR_DATA *ch, char *argument )
     int cmd;
     int col;
     int clevel;
-    col = 0;
+    int start;
+    int finish;
     CMD_DATA *pCmd;
-
-    for( clevel = LEVEL_HERO + 1; clevel < MAX_LEVEL + 1; clevel++ )
+    
+    if (is_number(argument))
     {
+        start = atoi(argument);
+        finish = start+1;
+    } else
+    {
+        start = LEVEL_HERO + 1;
+        finish = MAX_LEVEL + 1;
+    }
+
+    
+    for( clevel = start; clevel < finish; clevel++ )
+    {
+        sprintf(buf, "\n\r{m------------------------------ {w[Level {D%d{w] {m------------------------------{x\n\r", clevel);
+        send_to_char(buf, ch);
+        col = 0;
         for(pCmd = cmd_first ; pCmd ; pCmd = pCmd->next )
     {
             if ( pCmd->level >= LEVEL_HERO
             &&   pCmd->level <= get_trust( ch )
-            &&   pCmd->show
+            &&   (pCmd->show || ch->level == MAX_LEVEL)
         &&   pCmd->level == clevel)
         {
-            sprintf( buf, "{c[{x%-3d{c] %-12s{x", pCmd->level, pCmd->name );
+            sprintf( buf, "{c[{x%-3d{c] %-19s{x", pCmd->level, pCmd->name );
             send_to_char( buf, ch );
-            if ( ++col % 5 == 0 )
+            if ( ++col % 3 == 0 )
             send_to_char( "\n\r", ch );
         }
     }
     }
 
-    if ( col % 5 != 0 )
+    if ( col % 3 != 0 )
     send_to_char( "\n\r", ch );
     return;
 }

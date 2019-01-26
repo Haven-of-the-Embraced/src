@@ -392,7 +392,7 @@ void do_garouconvert(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if(ch->pcdata->garou_fur == NULL || !str_cmp(ch->pcdata->garou_fur, "(null)"))
+    if(ch->pcdata->garou_fur == NULL)
     {
         if(argument[0] == '\0')
         {

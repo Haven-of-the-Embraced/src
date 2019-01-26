@@ -3714,7 +3714,7 @@ char *center( char *argument, int width, char *fill )
         return log_buf;
     }
 
-    length = strlen( argument );
+    length = strlen_color( argument );
 
     if( length >= width )
         return argument;

@@ -1176,9 +1176,10 @@ void do_osay( CHAR_DATA *ch, char *argument )
     }
 
     check_unseen(ch, UNSEEN_TALK );
-
-    act_new( "{x$n says OOCly '{C$T{x'", ch, NULL, argument, TO_ROOM, POS_RESTING, TRUE );
-    act_new( "{xYou say OOCly '{C$T{x'", ch, NULL, argument, TO_CHAR, POS_RESTING, TRUE );
+    RECORD_TO_REPLAYROOM = TRUE;
+    act_new( "{x$n says OOCly '{C$T{x'", ch, NULL, argument, TO_ROOM, POS_RESTING, FALSE );
+    act_new( "{xYou say OOCly '{C$T{x'", ch, NULL, argument, TO_CHAR, POS_RESTING, FALSE );
+    RECORD_TO_REPLAYROOM = FALSE;
     return;
 }
 

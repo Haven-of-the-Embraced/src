@@ -2311,9 +2311,9 @@ void do_pstat( CHAR_DATA *ch, char *argument )
         send_to_char(buf,ch);
     }
     sendch("{m----Basic Info:{x\n\r", ch);
-    sprintf( buf, "Name: {W%s{x (%s[%d])     Clan: %s\n\r",
-    victim->name,
-    IS_IMMORTAL(victim) ? "an Immortal" : "a Player", victim->level, clan_table[victim->clan].name);
+    sprintf( buf, "Name: {W%s{x %s(%s[%d])  Clan: %s\n\r",
+    victim->name, victim->cheater ? "{R({DCheater!{R){x " : "",
+    IS_IMMORTAL(victim) ? "an Immortal" : "a Player", victim->level,  clan_table[victim->clan].name);
     send_to_char( buf, ch );
 
     sprintf( buf,"Race: %s    Sex: %s Exp: %d  Room: %d\n\r",

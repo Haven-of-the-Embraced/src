@@ -2393,8 +2393,9 @@ void do_who( CHAR_DATA *ch, char *argument )
         if (!IS_NULLSTR(wch->pcdata->pretitle))
             {sprintf(buf2, " {w%s", wch->pcdata->pretitle); strcat(buf, buf2);}
 
-        sprintf(buf2, "%s%s{x%s%s%s", IS_IMMORTAL(ch) ? (IS_SET(wch->act, PLR_IMMTALK) ? " {y" : " {w") : " {w",
+        sprintf(buf2, "%s%s{x%s%s%s%s", IS_IMMORTAL(ch) ? (IS_SET(wch->act, PLR_IMMTALK) ? " {y" : " {w") : " {w",
 		 wch->name, wch->pcdata->title,
+            IS_IMMORTAL(ch) ? (wch->cheater ? " {R({DCheater{R){x" : "") : "",
                 IS_IMMORTAL(ch) ? (IS_AFFECTED2(wch, AFF2_UMBRA) ? " {D({mUmbra{D){x" : "") : "",
                 IS_SET(wch->act, PLR_ARENA) ? " {w({RArena{w){x" : "",
                 IS_SET(wch->act, PLR_SPEC)  ? " {w({rSpec{w){x" : "");

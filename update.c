@@ -69,6 +69,7 @@ int     pulse_influence;
 int     pulse_influence_fade;
 // Spells pulse for over time effects
 int pulse_spells;
+int pulse_regen;
 //int     pulse_bank_offline;
 int     pulse_bank;
 int     pulse_weather;
@@ -1773,6 +1774,12 @@ CHAR_DATA   *ch;
     {
     pulse_spells = PULSE_SPELLS;
     spells_update ( );
+    }
+
+    if ( --pulse_regen <= 0)
+    {
+        pulse_regen = PULSE_REGEN;
+        regen_update();
     }
 
     if ( --pulse_underwater    <= 0 )

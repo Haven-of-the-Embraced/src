@@ -213,6 +213,8 @@ typedef void VAMP_FUN   args( ( CHAR_DATA *ch ) );
 #define INFLUENCE_RP_CHANCE         15
 // Defines spell pulse
 #define PULSE_SPELLS    ( 3 * PULSE_PER_SECOND)
+#define PULSE_REGEN     ( 3 * PULSE_PER_SECOND)
+#define PULSE_
 
 #define IMPLEMENTOR     MAX_LEVEL
 #define CREATOR         (MAX_LEVEL - 1)
@@ -4037,6 +4039,7 @@ extern  int     pulse_influence_fade;
 extern  int     pulse_bank;
 extern  int     pulse_weather;
 extern  int     pulse_spells;
+extern  int     pulse_regen;
 
 extern      char            str_empty       [1];
 

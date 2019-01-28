@@ -2005,10 +2005,32 @@ void do_score( CHAR_DATA *ch, char *argument )
 			sprintf(buf,"{D     |%s{D|{x\n\r",center(buf2,69," "));
 			add_buf(output, buf);
 		}
+        if (ch->race == race_lookup("human") && ch->avatar > 0)
+        {
+			add_buf(output,"     {D|>--------------------------------{WMage{D-------------------------------<|{x\n\r");
+			sprintf(buf2, "{wYou are a %d year old %s Mage of the %s.{x", get_age(ch), 
+                ch->sex == 0 ? "sexless" : ch->sex == 1 ? "male" : "female", capitalize(clan_table[ch->clan].name));
+			sprintf(buf,"{D     |%s{D|{x\n\r",center(buf2,69," "));
+			add_buf(output, buf);
+				sprintf(buf2,"{wAvatar: {W%d  {wArete: {W%d  {wQuintessence: {C%d  {wParadox: {R%d{x ",ch->avatar,ch->arete,
+					ch->quintessence,ch->paradox);
+				sprintf(buf,"{D     |%s{D|{x\n\r",center(buf2,69," "));
+                add_buf(output, buf);
+                sprintf(buf2,"{wRank: {D%s  {wMentor: {D%s{w  Apprentice: {D%s {wLeader: {D%s {x", 
+                    ch->rank == 1 ? "Apprentice" : ch->rank == 2 ? "Disciple" : ch->rank == 8 ? "Master" : ch->rank == 9 ? "Mentor" : "Leader",
+                    ch->sire != NULL ? ch->sire : "none", ch->apprentice == NULL ? "None" : ch->apprentice, 
+                    capitalize(clan_table[ch->clan].leader)
+                    );
+				sprintf(buf,"{D     |%s{D|{x\n\r",center(buf2,69," "));
+                add_buf(output, buf);     
+                sprintf(buf2,"{wYour Tradition has {Y%d{w in the bank.{x",clan_table[ch->clan].bank);
+				sprintf(buf,"{D     |%s{D|{x\n\r",center(buf2,69," "));
+				add_buf(output,buf);
+        }
 
 		/* What should be displayed for humans? "Oh no, you're a boring human. Sorry about that. Go die now loser, you shoulda
 			created a vamp."*/
-		if (ch->race == race_lookup("human"))
+		if (ch->race == race_lookup("human") && ch->avatar == 0)
 		{
 			add_buf(output,"     {D|>-------------------------------{wHuman{D-------------------------------<|{x\n\r");
 			sprintf(buf2,"{wYou are a %d year old %s human.{x",get_age(ch),ch->sex == 0 ? "sexless" : ch->sex == 1 ? "male" : "female");

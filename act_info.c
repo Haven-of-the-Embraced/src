@@ -1935,7 +1935,7 @@ void do_score( CHAR_DATA *ch, char *argument )
 	add_buf(output,buf);
 	sprintf(buf,"{D     |  {w  Move: {y%5d{x/{y%5d{w    Damroll:    {c%5d{w   Freebies:     {c%4d      {D|{x\n\r", ch->move,ch->max_move, GET_DAMROLL(ch), ch->freebie);
 	add_buf(output,buf);
-	sprintf(buf,"{D     |{w    Armor:     {wPierce: {D%d{w Bash: {D%d{w  Slash: {D%d{w Magic: {D%d      {D|{x\n\r", GET_AC(ch,AC_PIERCE),GET_AC(ch,AC_BASH),GET_AC(ch,AC_SLASH),GET_AC(ch,AC_EXOTIC));
+	sprintf(buf,"{D     |{w    Armor:     {wPierce:{D%5d{w Bash:{D%5d{w  Slash:{D%5d{w Magic:{D%5d      {D|{x\n\r", GET_AC(ch,AC_PIERCE),GET_AC(ch,AC_BASH),GET_AC(ch,AC_SLASH),GET_AC(ch,AC_EXOTIC));
 	add_buf(output,buf);
 	add_buf(output,"{D     |    {wGold:      Silver:   In Bank:     Carried:     Weight:           {D|{x\n\r");
 	sprintf(buf,"{D     |    {y%-9d{x",ch->gold);

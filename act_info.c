@@ -2007,7 +2007,7 @@ void do_score( CHAR_DATA *ch, char *argument )
 		}
         if (ch->race == race_lookup("human") && ch->avatar > 0)
         {
-			add_buf(output,"     {D|>--------------------------------{WMage{D-------------------------------<|{x\n\r");
+			add_buf(output,"     {D|>--------------------------------{cMage{D-------------------------------<|{x\n\r");
 			sprintf(buf2, "{wYou are a %d year old %s Mage of the %s.{x", get_age(ch), 
                 ch->sex == 0 ? "sexless" : ch->sex == 1 ? "male" : "female", capitalize(clan_table[ch->clan].name));
 			sprintf(buf,"{D     |%s{D|{x\n\r",center(buf2,69," "));

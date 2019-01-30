@@ -1678,30 +1678,30 @@ void do_score( CHAR_DATA *ch, char *argument )
 	output = new_buf();
 	int hours = (ch->played + (int) (current_time - ch->logon) ) / 3600;
 	
-	add_buf(output, "{w                          __, _, ____,__  _,____,_,  _,{x\n\r");
+	add_buf(output, "\n\r{w                          __, _, ____,__  _,____,_,  _,{x\n\r");
 	add_buf(output, "{w                         (-|__| (-/_|(-\\  /(-|_,(-|\\ | {x\n\r");
 	add_buf(output, "{D     |      _____________/{w_|  |,_/  |, _\\/  _|__,_| \\|,{D\\_____________      |{x\n\r");
 	sprintf(buf2,"{W%s{D",ch->name);
 	sprintf(buf,"{D     |\\____/  %s  \\____/|\n\r",center(buf2,53,"_"));
 	add_buf(output,buf);
-	sprintf(buf,"{D     |  _____/   {wLevel: {D%3d{w    Exp TNL: {D%8d{w   Remorts: {D%d{D   \\_____  |{x\n\r",ch->level,IS_NPC(ch) ? 0 : ((ch->level + 1) * exp_per_level(ch,ch->pcdata->points) - ch->exp),ch->remorts);
+	sprintf(buf,"{D     |  _____/   {wLevel: {D%3d{w    Exp TNL: {D%8d{w   Remorts: {D%4d{D   \\_____  |{x\n\r",(int) ch->level,IS_NPC(ch) ? 0 : ((ch->level + 1) * exp_per_level(ch,ch->pcdata->points) - ch->exp),ch->remorts);
 	add_buf(output,buf);
-	sprintf(buf,"{D     | |{w  HP:   {g%5d{x/{g%5d{w    Agg Damage: {r%5d{w   Hours Played: {D%4d {D  | |{x\n\r",ch->hit,ch->max_hit,ch->agg_dam,hours);
+	sprintf(buf,"{D     | |{w  HP:   {g%5d{x/{g%5d{w    Agg Damage: {r%5d{w   Play Hours:  {D%5d   {D | |{x\n\r",(int) ch->hit,(int) ch->max_hit,(int) ch->agg_dam,hours);
 	add_buf(output,buf);
-	sprintf(buf,"{D     |/ {w  Mana: {c%5d{x/{c%5d{w    Hitroll:    {c%5d{w   Hours IC:   {c%4d       {D\\|{x\n\r",ch->mana,ch->max_mana, GET_HITROLL(ch),IS_NPC(ch) ? 0 : ch->pcdata->IC_total/60);
+	sprintf(buf,"{D     |/ {w  Mana: {c%5d{x/{c%5d{w    Hitroll:    {c%5d{w   Hours IC:    {c%5d     {D\\|{x\n\r",(int) ch->mana, (int)ch->max_mana, GET_HITROLL(ch),IS_NPC(ch) ? 0 : ch->pcdata->IC_total/60);
 	add_buf(output,buf);
-	sprintf(buf,"{D     |  {w  Move: {y%5d{x/{y%5d{w    Damroll:    {c%5d{w   Freebies:     {c%4d      {D|{x\n\r", ch->move,ch->max_move, GET_DAMROLL(ch), ch->freebie);
+	sprintf(buf,"{D     |  {w  Move: {y%5d{x/{y%5d{w    Damroll:    {c%5d{w   Freebies:    {c%5d      {D|{x\n\r", (int) ch->move,(int) ch->max_move, GET_DAMROLL(ch), ch->freebie);
 	add_buf(output,buf);
 	sprintf(buf,"{D     |{w    Armor:     {wPierce:{D%5d{w Bash:{D%5d{w  Slash:{D%5d{w Magic:{D%5d      {D|{x\n\r", GET_AC(ch,AC_PIERCE),GET_AC(ch,AC_BASH),GET_AC(ch,AC_SLASH),GET_AC(ch,AC_EXOTIC));
 	add_buf(output,buf);
 	add_buf(output,"{D     |    {wGold:      Silver:   In Bank:     Carried:     Weight:           {D|{x\n\r");
 	sprintf(buf,"{D     |    {y%-9d{x",ch->gold);
 	add_buf(output,buf);
-	sprintf(buf,"  {w%-9d{x",ch->silver);
+	sprintf(buf,"  {w%-9ld{x",ch->silver);
 	add_buf(output,buf);
 	sprintf(buf," {y%-9d{x",ch->pcdata->bank);
 	add_buf(output,buf);
-	sprintf(buf,"    {c%-5d{x/{D%-4d   {c%-7ld{w/{D%-7d{D   {D|{x\n\r",ch->carry_number,can_carry_n(ch),get_carry_weight(ch)/10, can_carry_w(ch)/10);
+	sprintf(buf,"    {c%5hd{x/{D%-4d   {c%7ld{w/{D%-7d{D   {D|{x\n\r",ch->carry_number,can_carry_n(ch),get_carry_weight(ch)/10, can_carry_w(ch)/10);
 	add_buf(output,buf);
 
 	/* A check for NPCs preventing any additional info from showing up for mobs. If you want this to show up later for some reason,

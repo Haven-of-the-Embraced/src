@@ -1724,7 +1724,7 @@ void do_score( CHAR_DATA *ch, char *argument )
 				capitalize(clan_table[ch->clan].name), get_age(ch));
 			sprintf(buf,"{D     |%s{D|{x\n\r",center(buf2,69," "));
 			add_buf(output,buf);
-			sprintf(buf2,"{wYour clan leader is %s. There is {Y%d{w Gold in the Clan bank.{x",capitalize(clan_table[ch->clan].leader),clan_table[ch->clan].bank);
+			sprintf(buf2,"{w%s leads your Clan. There is {Y%d{w in the Clan bank.{x",capitalize(clan_table[ch->clan].leader),clan_table[ch->clan].bank);
 			sprintf(buf,"{D     |%s{D|{x\n\r",center(buf2,69," "));
 			add_buf(output,buf);
 		}
@@ -1744,7 +1744,7 @@ void do_score( CHAR_DATA *ch, char *argument )
 					"Galliard" : "Ahroun",  capitalize(clan_table[ch->clan].name));
 				sprintf(buf,"{D     |%s{D|{x\n\r",center(buf2,69," "));
 				add_buf(output,buf);
-				sprintf(buf2,"{wYour Tribe leader is %s. Your Tribe has {Y%d{w in the bank.{x",capitalize(clan_table[ch->clan].leader),clan_table[ch->clan].bank);
+				sprintf(buf2,"{w%s leads your Tribe. There is {Y%d{w in the tribe bank.{x",capitalize(clan_table[ch->clan].leader),clan_table[ch->clan].bank);
 				sprintf(buf,"{D     |%s{D|{x\n\r",center(buf2,69," "));
 				add_buf(output,buf);
 			}

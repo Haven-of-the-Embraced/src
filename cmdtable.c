@@ -551,6 +551,7 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "unseal",     do_unseal},
     { "fatamorgana", do_fatamorgana},
     { "sendhtml",       do_sendhtml}, //DNM
+    { "d10combat",      do_d10combat},
 
     /* Language stuff*/
         /*

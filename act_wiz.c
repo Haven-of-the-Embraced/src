@@ -8437,6 +8437,31 @@ if (IS_SET(victim->act, PLR_NEWBIEHELP))
     return;
     }
 
+void do_d10combat (CHAR_DATA *ch, char *argument)
+{
+CHAR_DATA *victim;
+char arg[MIL];
+one_argument( argument, arg );
+  if ( ( victim = get_char_world( ch, arg  ) ) == NULL )
+  {
+    send_to_char( "They aren't here.\n\r", ch );
+    return;
+  }
+
+if (IS_SET(victim->act, PLR_D10COMBAT))
+    {
+    REMOVE_BIT(victim->act, PLR_D10COMBAT);
+    send_to_char("D10 Combat tag removed.\n\r", ch);
+    send_to_char("You are no longer using d10 combat.\n\r", victim);
+    }
+    else {
+    SET_BIT(victim->act, PLR_D10COMBAT);
+    send_to_char("D10 combat tag set.\n\r", ch);
+    send_to_char("You have been set to use d10 combat!\n\r", victim);
+    }
+    return;
+    }
+
 //Matthew - added to change all pfiles back to encrypted passwords.
 void recrypt_pfiles( CHAR_DATA *ch, char *argument )
 {

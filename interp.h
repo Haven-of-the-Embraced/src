@@ -98,6 +98,7 @@ DECLARE_DO_FUN( do_bash     );
 DECLARE_DO_FUN( do_beep     );
 DECLARE_DO_FUN( do_roll     );
 DECLARE_DO_FUN( do_dice     );
+DECLARE_DO_FUN( do_d10combat );
 DECLARE_DO_FUN(do_nocondition);
 DECLARE_DO_FUN(do_noshortdesc);
 DECLARE_DO_FUN( do_copyover );

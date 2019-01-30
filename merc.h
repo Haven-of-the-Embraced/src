@@ -1783,6 +1783,7 @@ struct  kill_data
 #define PLR_NEWBIEHELP  (bb)
 #define PLR_IMMTALK     (cc)
 #define PLR_ARENA       (ee)
+#define PLR_D10COMBAT   (ff) // Flag for testing d10 combat on non-garou.
 
 /*extra act bits for PLayer flags. Needed more flags! -Matthew*/
 #define PLR2_NEWBIE     (A)

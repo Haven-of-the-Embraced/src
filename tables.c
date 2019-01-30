@@ -251,6 +251,7 @@ const struct flag_type plr_flags[] =
     {   "killer",       aa, FALSE   },
     {   "newbiehelper", bb, FALSE   },
     {   "arena",        ee, FALSE   },
+    {   "d10combat",    ff, TRUE    },
     {   NULL,           0,  0   }
 };
 

@@ -1684,13 +1684,13 @@ void do_score( CHAR_DATA *ch, char *argument )
 	sprintf(buf2,"{W%s{D",ch->name);
 	sprintf(buf,"{D     |\\____/  %s  \\____/|\n\r",center(buf2,53,"_"));
 	add_buf(output,buf);
-	sprintf(buf,"{D     |  _____/   {wLevel: {D%3d{w    Exp TNL: {D%8d{w   Remorts: {D%4d{D   \\_____  |{x\n\r",(int) ch->level,IS_NPC(ch) ? 0 : ((ch->level + 1) * exp_per_level(ch,ch->pcdata->points) - ch->exp),ch->remorts);
+	sprintf(buf,"{D     |  _____/   {wLevel: {D%3d{w    Exp TNL: {D%8d{w    Remorts: {D%4d{D  \\_____  |{x\n\r",(int) ch->level,IS_NPC(ch) ? 0 : ((ch->level + 1) * exp_per_level(ch,ch->pcdata->points) - ch->exp),ch->remorts);
 	add_buf(output,buf);
-	sprintf(buf,"{D     | |{w  HP:   {g%5d{x/{g%5d{w    Agg Damage: {r%5d{w   Play Hours:  {D%5d   {D | |{x\n\r",(int) ch->hit,(int) ch->max_hit,(int) ch->agg_dam,hours);
+	sprintf(buf,"{D     | |{w  HP:   {g%5d{x/{g%5d{w    Agg Damage: {r%5d{w    Play Hours:   {D%5d {D | |{x\n\r",(int) ch->hit,(int) ch->max_hit,(int) ch->agg_dam,hours);
 	add_buf(output,buf);
-	sprintf(buf,"{D     |/ {w  Mana: {c%5d{x/{c%5d{w    Hitroll:    {c%5d{w   Hours IC:    {c%5d     {D\\|{x\n\r",(int) ch->mana, (int)ch->max_mana, GET_HITROLL(ch),IS_NPC(ch) ? 0 : ch->pcdata->IC_total/60);
+	sprintf(buf,"{D     |/ {w  Mana: {c%5d{x/{c%5d{w    Hitroll:    {c%5d{w    Hours IC:     {c%5d   {D\\|{x\n\r",(int) ch->mana, (int)ch->max_mana, GET_HITROLL(ch),IS_NPC(ch) ? 0 : ch->pcdata->IC_total/60);
 	add_buf(output,buf);
-	sprintf(buf,"{D     |  {w  Move: {y%5d{x/{y%5d{w    Damroll:    {c%5d{w   Freebies:    {c%5d      {D|{x\n\r", (int) ch->move,(int) ch->max_move, GET_DAMROLL(ch), ch->freebie);
+	sprintf(buf,"{D     |  {w  Move: {y%5d{x/{y%5d{w    Damroll:    {c%5d{w    Freebies:     {c%5d    {D|{x\n\r", (int) ch->move,(int) ch->max_move, GET_DAMROLL(ch), ch->freebie);
 	add_buf(output,buf);
 	sprintf(buf,"{D     |{w    Armor:     {wPierce:{D%5d{w Bash:{D%5d{w  Slash:{D%5d{w Magic:{D%5d      {D|{x\n\r", GET_AC(ch,AC_PIERCE),GET_AC(ch,AC_BASH),GET_AC(ch,AC_SLASH),GET_AC(ch,AC_EXOTIC));
 	add_buf(output,buf);
@@ -1701,7 +1701,7 @@ void do_score( CHAR_DATA *ch, char *argument )
 	add_buf(output,buf);
 	sprintf(buf," {y%-9d{x",ch->pcdata->bank);
 	add_buf(output,buf);
-	sprintf(buf,"    {c%5hd{x/{D%-4d   {c%7ld{w/{D%-7d{D   {D|{x\n\r",ch->carry_number,can_carry_n(ch),get_carry_weight(ch)/10, can_carry_w(ch)/10);
+	sprintf(buf,"  {c%5hd{x/{D%-4d   {c%7ld{w/{D%-7d{D     {D|{x\n\r",ch->carry_number,can_carry_n(ch),get_carry_weight(ch)/10, can_carry_w(ch)/10);
 	add_buf(output,buf);
 
 	/* A check for NPCs preventing any additional info from showing up for mobs. If you want this to show up later for some reason,
@@ -1719,7 +1719,7 @@ void do_score( CHAR_DATA *ch, char *argument )
 			IS_VAMP() cause I didn't want dhamps and ghouls to be shown this info. */
 		if(ch->race == race_lookup("vampire") || ch->race == race_lookup("methuselah"))
 		{
-			add_buf(output,"     {D|>------------------------------{rVampire{D------------------------------<|{x\n\r");
+			add_buf(output,"     {D|>------------------------------{WVampire{D------------------------------<|{x\n\r");
 			sprintf(buf2,"{wYou have been a %s member of Clan %s for %d years.{x",ch->sex == 0 ? "sexless" : ch->sex == 1 ? "male" : "female",
 				capitalize(clan_table[ch->clan].name), get_age(ch));
 			sprintf(buf,"{D     |%s{D|{x\n\r",center(buf2,69," "));
@@ -1732,7 +1732,7 @@ void do_score( CHAR_DATA *ch, char *argument )
 		/* Garou stuff. Seems like more info is needed. */
 		if(ch->race == race_lookup("garou"))
 		{
-			add_buf(output,"     {D|>-------------------------------{gGarou{D-------------------------------<|{x\n\r");
+			add_buf(output,"     {D|>-------------------------------{WGarou{D-------------------------------<|{x\n\r");
 			if(ch->pcdata->breed == 0 && ch->pcdata->auspice == 0)
 				add_buf(output,"          {rFinish Garou creation in order to see your Garou stats.{x\n\r");
 			else
@@ -1753,7 +1753,7 @@ void do_score( CHAR_DATA *ch, char *argument )
 		/* Do ghouls even exist anymore? What info do they need in score? */
 		if (ch->race == race_lookup("ghoul"))
 		{
-			add_buf(output,"     {D|>-------------------------------{DGhoul{D-------------------------------<|\n\r");
+			add_buf(output,"     {D|>-------------------------------{WGhoul{D-------------------------------<|\n\r");
 			sprintf(buf2, "{wYou are a %d year old %s Ghoul in service to clan %s.{x", get_age(ch), ch->sex == 0 ? "sexless" : ch->sex == 1 ? "male" : "female",
 				capitalize(clan_table[ch->clan].name));
 			sprintf(buf,"{D     |%s{D|{x\n\r",center(buf2,69," "));
@@ -1764,7 +1764,7 @@ void do_score( CHAR_DATA *ch, char *argument )
 		}
         if (ch->race == race_lookup("human") && ch->avatar > 0)
         {
-			add_buf(output,"     {D|>--------------------------------{cMage{D-------------------------------<|{x\n\r");
+			add_buf(output,"     {D|>--------------------------------{WMage{D-------------------------------<|{x\n\r");
 			sprintf(buf2, "{wYou are a %d year old %s Mage of the %s.{x", get_age(ch), 
                 ch->sex == 0 ? "sexless" : ch->sex == 1 ? "male" : "female", capitalize(clan_table[ch->clan].name));
 			sprintf(buf,"{D     |%s{D|{x\n\r",center(buf2,69," "));
@@ -1789,7 +1789,7 @@ void do_score( CHAR_DATA *ch, char *argument )
 			created a vamp."*/
 		if (ch->race == race_lookup("human") && ch->avatar == 0)
 		{
-			add_buf(output,"     {D|>-------------------------------{wHuman{D-------------------------------<|{x\n\r");
+			add_buf(output,"     {D|>-------------------------------{WHuman{D-------------------------------<|{x\n\r");
 			sprintf(buf2,"{wYou are a %d year old %s human.{x",get_age(ch),ch->sex == 0 ? "sexless" : ch->sex == 1 ? "male" : "female");
 			sprintf(buf,"{D     |%s{D|{x\n\r",center(buf2,69," "));
 			add_buf(output, buf);

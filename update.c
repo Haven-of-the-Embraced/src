@@ -750,7 +750,7 @@ void char_update( void )
 
     ch_next = ch->next;
 
-        if ( ch->timer > 30 && !IS_IMMORTAL(ch))
+        if ( ch->timer > 45 && !IS_IMMORTAL(ch))
             ch_quit = ch;
 
     if ( ch->position >= POS_STUNNED )
@@ -816,7 +816,7 @@ void char_update( void )
         //if (IS_IMMORTAL(ch))
         //ch->timer = 0;
 
-     /*   if ( ++ch->timer >= 18 && !IS_IMMORTAL(ch))
+        if ( ++ch->timer >= 30 && !IS_IMMORTAL(ch))
         {
         if ( ch->was_in_room == NULL && ch->in_room != NULL )
         {
@@ -846,7 +846,7 @@ void char_update( void )
             char_to_room( ch, get_room_index( ROOM_VNUM_LIMBO ) );
         }
     }
-*/
+
 /* New ifcheck code added by Sengir, if player is IC they no longer
    get hungrier/thirstier or lose fullness */
 		if (!IS_SET(ch->act, PLR_IC) && !IS_IMMORTAL(ch))

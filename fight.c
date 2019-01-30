@@ -726,7 +726,7 @@ void one_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt )
     wield = get_eq_char( ch, WEAR_WIELD );
 
 /*  if(!IS_NPC(ch) && wield == NULL && ch->pcdata->shiftform >= CRINOS) */
-    if(!IS_NPC(ch) && ch->race == race_lookup("garou"))
+    if(!IS_NPC(ch) && (ch->race == race_lookup("garou") || IS_SET(ch->act, PLR_D10COMBAT)))
     {
         garou_hit(ch,victim, dt);
         return;

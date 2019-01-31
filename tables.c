@@ -1174,7 +1174,7 @@ const struct    gift_type   gift_table  [MAX_GIFTS_CODED]  =
     {   "song of the great beast", 		0,     24, 0,     LUPUS,  0,          0,        5,   0},
     {   "blur of the milky eye", 		1,     24, 0,     0,      RAGABASH,   0,        1,   0},
     {   "scent of running water", 		0,     24, 0,     0,      RAGABASH,   0,        1,   0},
-    {   "snow running", 				0,     24, 0,     0,      RAGABASH,   0,        1,   0},
+    {   "snow running", 				1,     24, 0,     0,      RAGABASH,   0,        1,   0},
     {   "sense of prey", 				0,     24, 0,     0,      RAGABASH,   BLACK_FURY, 2,   0},
     {   "open moon bridge", 			0,     24, 0,     0,      RAGABASH,   0,        3,   0},
     {   "reynards lie", 				0,     24, 0,     0,      RAGABASH,   0,        3,   0},

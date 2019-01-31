@@ -1406,13 +1406,6 @@ void spell_gift_blurofthemilkyeye( int sn, int level, CHAR_DATA *ch, void *vo, i
     if (success < 1)
     {
     sendch("You fail to blur your form and remain in plain sight.\n\r", ch);
-    af.type      = sn;
-    af.level     = level;
-    af.duration  = 15 - ch->pcdata->gnosis[PERM];
-    af.modifier  = 0;
-    af.location  = APPLY_NONE;
-    af.bitvector = 0;
-    affect_to_char( ch, &af ); 
     return;
     }
     sendch("Your form becomes blurry and indistinct.\n\r", ch);
@@ -1442,7 +1435,31 @@ void spell_gift_scentofrunningwater( int sn, int level, CHAR_DATA *ch, void *vo,
 //The deep snows of winter in much of Europe bring privation at best and starvation at worst to the unprepared and snowbound. This gift allows the garou to travel with ease across the surface of ice and snow. (Halve movement costs based on terrain. lasts a day)
 //Cost: 1 gnosis
 void spell_gift_snowrunning( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
+        AFFECT_DATA af;
+
+        if (is_affected(ch, sn))
+        {
+        sendch("You are already able to travel any terrain with ease.\n\r", ch);
+        return;
+        }
+        if (ch->pcdata->gnosis[TEMP] < 1)
+        {
+            send_to_char("You do not possess the spiritual reserves to activate this gift.\n\r", ch);
+        }
+
+        ch->pcdata->gnosis[TEMP]--;
+        af.where     = TO_AFFECTS;
+        af.type      = sn;
+        af.level     = ch->level;
+        af.modifier  = 0;
+        af.location  = APPLY_NONE;
+        af.bitvector    = 0;
+        af.duration  = 12 + ch->pcdata->gnosis[PERM];
+        affect_to_char( ch, &af );
+        send_to_char( "You feel light and sure-footed, like you could pass any terrain with ease.\n\r", ch );
+        act("$n seems lighter and more sure-footed.",ch,NULL,ch,TO_NOTVICT);
+
+        return;
 }
 //
 //Rank 2

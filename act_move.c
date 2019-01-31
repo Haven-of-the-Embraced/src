@@ -240,6 +240,9 @@ void move_char( CHAR_DATA *ch, int door, bool follow )
         /* conditional effects */
         if (IS_AFFECTED(ch,AFF_FLYING) || IS_AFFECTED(ch,AFF_HASTE))
         move /= 2;
+        
+        if (is_affected(ch, gsn_gift_snowrunning))
+            move /= 2;
 
         if (IS_AFFECTED(ch,AFF_SLOW) || ch->in_room->sector_type == SECT_COLD)
         move *= 2;

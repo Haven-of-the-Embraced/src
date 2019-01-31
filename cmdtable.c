@@ -102,9 +102,7 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "wield",      do_wear }, // DOES NOT MATCH.
     { "emote",      do_emote },
     { "vampire",        do_vampire  },
-    { "dhampire",       do_dhampire},
     { "magecast",       do_magecast },
-/*  { "gomage",     do_gomage}, */ // DOES NOT MATCH.
     { "gogarou",        do_garouconvert }, // DOES NOT MATCH.
     { "mage",       do_mage },
     { "embrace",        do_embrace },
@@ -197,8 +195,6 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "rank",       do_rank},
     { "promote",    do_promote},
     { "lpromote",   do_promote_leader},
-    { "sanctus",        do_sanctus},
-    { "endow",      do_endow },
     { "expel",      do_expel},
 /* Garou commands */
     { "induct",     do_induct},
@@ -464,8 +460,6 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "mount",      do_mount},
     { "dismount",   do_dismount},
     { "hometown",   do_hometown},
-    { "changeform", do_changeform},
-    { "fury",   do_fury},
     { "rite",   do_rite},
     { "learn",  do_learn},
     { "qlog",       do_qlog},
@@ -511,7 +505,6 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "shutdown",   do_shutdown},
     { "nuk",    do_nuk},
     { "nuke",   do_nuke},
-/*    { "setdhampire",  do_setdhampire}, */
     { "clearaff",   do_clearaff},
 /*  { "sockets",    do_sockets}, */
     { "wizlock",    do_wizlock},

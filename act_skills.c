@@ -181,7 +181,7 @@ void do_bandage(CHAR_DATA *ch, char *argument)
             act("and manages to stop the blood flowing from your wounds.",ch,NULL,victim,TO_VICT);
             act("and manages to stop the bleeding.",ch,NULL,victim,TO_NOTVICT);
 
-            if (victim->race != race_lookup('garou'))
+            if (victim->race != race_lookup("garou"))
                 victim->hit += dicesuccess*ch->level+7;
             else
                 victim->hit += (dicesuccess*ch->level/2)+10;

@@ -2990,6 +2990,8 @@ void    channel_to_char args( (const char *txt, CHAR_DATA*ch) );
                || strstr(clan_table[Clan].banker, "All" )   \
                || strstr(clan_table[Clan].banker, "None" )  \
                || !str_cmp(ch->name, clan_table[Clan].leader)))
+#define IS_DEBUGGING(ch)    (!IS_NPC((ch)) && IS_SET((ch)->act2, PLR2_DEBUG) \
+                            && IS_SET((ch)->act2, PLR2_DEBUGMSG))
 
 
 /*

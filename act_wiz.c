@@ -8401,6 +8401,11 @@ void do_forceinfluence(CHAR_DATA *ch, char *argument) {
     sendch("Done.\n\r", ch);
     return;
 }
+void do_forcetick(CHAR_DATA *ch, char *argument) {
+    pulse_point = 1;
+    sendch("Done.\n\r", ch);
+    return;
+}
 
 void do_forcebank(CHAR_DATA *ch, char *argument)
 {

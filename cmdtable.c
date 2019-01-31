@@ -520,6 +520,7 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "resetkill", do_resetkill},
     { "frpoint", do_frpoint},
     { "force",      do_force},
+    { "forcetick",  do_forcetick},
     { "load",       do_load},
     { "newlock",    do_newlock},
     { "nature",     do_nature},

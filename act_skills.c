@@ -143,14 +143,13 @@ void do_bandage(CHAR_DATA *ch, char *argument)
         act("and tear the bandage as you wrap the wound!", ch, NULL, victim, TO_CHAR);
         act("and tears the bandage on your wound!", ch, NULL, victim, TO_VICT);
         act("and tears the bandage while wrapping $N's wound!", ch, NULL,victim,TO_NOTVICT);
-        duration = 2;
+        return;
     }
     else if (dicesuccess < 0)               /*Checks to see if total successes are negative*/
     {                   /*meaning rolled more 1's than successes*/
         act("and only succeed in making the wound worse!",ch,NULL,victim,TO_CHAR);      /*Botching*/
         act("and only succeeds in making the wound worse!",ch,NULL,victim,TO_VICT);
         act("and only succeeds in making the wound worse!",ch,NULL,victim,TO_NOTVICT);
-        duration = 1;
 
         if (victim->hit - (60 - (10*ch->pcdata->csabilities[CSABIL_MEDICINE]) ) <= 0)
         {               /*If botch would kill victim, instead sets to hp 1*/
@@ -160,6 +159,7 @@ void do_bandage(CHAR_DATA *ch, char *argument)
 
         victim->hit -= 60-(10*ch->pcdata->csabilities[CSABIL_MEDICINE]);
                 /*^^^---Damage is 60 minus10*Medicine rating*/
+        return;
     }
     else
     {

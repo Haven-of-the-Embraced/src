@@ -2300,7 +2300,7 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
 
     {   "blur of the milky eye", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
      { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_blurofthemilkyeye,  TAR_IGNORE, POS_STANDING, 
-    &gsn_gift_blurofthemilkyeye,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+    &gsn_gift_blurofthemilkyeye,          SLOT( 0),        0,     12, "",             "Your form becomes solid once again.",        "" },
 
      {   "scent of running water", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
      { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_scentofrunningwater,  TAR_IGNORE, POS_STANDING, 

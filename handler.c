@@ -3120,6 +3120,16 @@ char *act2_bit_name( int act_flags )
     if (act_flags & PLR2_QUESTOR  ) strcat(buf, " questor");
     if (act_flags & PLR2_LEADER  ) strcat(buf, " leader");
     if (act_flags & PLR2_AUTODOORS) strcat(buf, " autodoors");
+    if (act_flags & PLR2_WHOLOCIC) strcat(buf, " wholocic");
+    if (act_flags & PLR2_WHOLOCQUIET) strcat(buf, " wholocquiet");
+    if (act_flags & PLR2_WHOLOCALWAYS) strcat(buf, " wholocalways");
+    if (act_flags & PLR2_WHOSHOWLEVEL) strcat(buf, " whoshowlevel");
+    if (act_flags & PLR2_IMMSHOWLOC) strcat(buf, " immshowloc");
+    if (act_flags & PLR2_NOCONDITION) strcat(buf, " nocondition");
+    if (act_flags & PLR2_NOSHORTDESC) strcat(buf, " noshortdesc");
+    if (act_flags & PLR2_BATTLEPROMPT) strcat(buf, " battleprompt");
+    if (act_flags & PLR2_DEBUG) strcat(buf, " debug");
+    if (act_flags & PLR2_DEBUGMSG) strcat(buf, " debugmsg");
     }
     return ( buf[0] != '\0' ) ? buf+1 : "none";
 }

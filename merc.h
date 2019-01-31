@@ -1800,7 +1800,8 @@ struct  kill_data
 #define PLR2_NOCONDITION  (L) // don't show hungry/thirsty messages
 #define PLR2_NOSHORTDESC  (M) // Do not show shifted descs for other players
 #define PLR2_BATTLEPROMPT (N) // Show battle prompt in combat.
-
+#define PLR2_DEBUG        (O) // Flag char a debugger
+#define PLR2_DEBUGMSG     (P) // Show debug messages
 
 
 /* RT comm flags -- may be used on both mobs and chars */

@@ -2992,6 +2992,8 @@ void    channel_to_char args( (const char *txt, CHAR_DATA*ch) );
                || !str_cmp(ch->name, clan_table[Clan].leader)))
 #define IS_DEBUGGING(ch)    (!IS_NPC((ch)) && IS_SET((ch)->act2, PLR2_DEBUG) \
                             && IS_SET((ch)->act2, PLR2_DEBUGMSG))
+#define SAME_UMBRA(a, b)    ((IS_AFFECTED2((a), AFF2_UMBRA) && IS_AFFECTED2((b), AFF2_UMBRA)) \
+                        || (!IS_AFFECTED2((a), AFF2_UMBRA) && !IS_AFFECTED2((b), AFF2_UMBRA)))
 
 
 /*

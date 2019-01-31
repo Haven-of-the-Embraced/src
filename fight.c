@@ -6190,7 +6190,7 @@ void do_warcry( CHAR_DATA *ch, char *argument )
                             continue;
                         if ( victim->in_room == NULL )
                                 continue;
-                        if ( victim->in_room == ch->in_room )
+                        if ( victim->in_room == ch->in_room && SAME_UMBRA(ch, victim))
                         {
                                 if ( victim != ch && !is_safe_spell(ch,victim,TRUE))
                                 {

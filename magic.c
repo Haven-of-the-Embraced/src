@@ -969,9 +969,9 @@ void spell_call_lightning( int sn, int level,CHAR_DATA *ch,void *vo,int target)
     vch_next    = vch->next;
     if ( vch->in_room == NULL )
         continue;
-    if ( vch->in_room == ch->in_room )
+    if ( vch->in_room == ch->in_room && SAME_UMBRA(ch, vch))
     {
-        if ( vch != ch && !is_same_group(vch, ch) && ( IS_NPC(ch) ? !IS_NPC(vch) : IS_NPC(vch) ) )
+        if ( vch != ch && !is_same_group(vch, ch) && ( IS_NPC(ch) ? !IS_NPC(vch) : IS_NPC(vch) ))
         damage( ch, vch, saves_spell( level,vch,DAM_LIGHTNING)
         ? dam / 2 : dam, sn,DAM_LIGHTNING,TRUE);
         continue;
@@ -2289,7 +2289,7 @@ void spell_earthquake( int sn, int level, CHAR_DATA *ch, void *vo,int target )
     vch_next    = vch->next;
     if ( vch->in_room == NULL )
         continue;
-    if ( vch->in_room == ch->in_room )
+    if ( vch->in_room == ch->in_room && SAME_UMBRA(ch, vch))
     {               /*Code change by Sengir, earthquake misses flying mobs properly*/
         if ( vch != ch && !is_same_group(vch, ch) && IS_NPC(vch) && !is_safe_spell(ch,vch,TRUE))
             {

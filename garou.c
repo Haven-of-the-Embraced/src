@@ -1199,3 +1199,45 @@ void do_totem( CHAR_DATA *ch, char *argument )
 }
 
 
+void garou_frenzy( int sn, int level, CHAR_DATA *ch, void *vo, int target )
+{
+  AFFECT_DATA af;
+  CHAR_DATA *tch;
+  char buf[MAX_STRING_LENGTH];
+  bool fdone = FALSE;
+
+    if (IS_NPC(ch)) return;
+    if ( is_affected( ch, gsn_garou_frenzy ) )
+    {
+        act( "$n snarls as $e enters a frenzy!",  ch, NULL, NULL, TO_NOTVICT );
+        send_to_char( "Your bloodlust overcomes you and you enter a Frenzy!\n\r", ch );
+    }
+
+    for (tch = ch->in_room->people; tch != NULL; tch = tch->next_in_room)
+    {
+        if (fdone) /* fdone = TRUE, break out of the for, else keep going */
+            break;
+
+        if (tch == ch || !IS_NPC(tch)) /* stop icky victim == ch in dmg code */
+            continue;
+
+        if (number_range(1, 100) <= 10 && tch != NULL)
+        {
+            fdone = TRUE;
+            act( "$n throws $sself into a frenzy and attacks $N!",  ch, NULL, tch, TO_NOTVICT );
+            sprintf(buf, "Frenzy overwelms you and you attack %s!\n\r", tch->name);
+            send_to_char(buf,ch);
+            multi_hit( ch, tch, TYPE_UNDEFINED );
+        }
+    }
+
+    af.where     = TO_AFFECTS2;
+    af.type      = gsn_garou_frenzy;
+    af.level     = ch->level;
+    af.duration  = ch->level/10;
+    af.location  = APPLY_HITROLL;
+    af.modifier  = -100;
+    af.bitvector = 0;
+    affect_to_char( ch, &af );
+    return;
+}

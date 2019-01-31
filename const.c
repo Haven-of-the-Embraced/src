@@ -2308,7 +2308,7 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
 
      {   "snow running", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
      { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_snowrunning,  TAR_IGNORE, POS_STANDING, 
-    &gsn_gift_snowrunning,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+    &gsn_gift_snowrunning,          SLOT( 0),        0,     12, "",             "Your spirit enhanced lightness and dexterity fades.",        "" },
 
      {   "sense of prey", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
      { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_senseofprey,  TAR_IGNORE, POS_STANDING, 

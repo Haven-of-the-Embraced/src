@@ -1350,8 +1350,6 @@ void do_stake(CHAR_DATA *ch, char *argument)
             SET_BIT(victim->affected_by, AFF_FANGS);
             do_function(victim, &do_shift, "");
         }
-        if(victim->changed != CHANGED_HOMID)
-            do_function(victim, &do_changeform, "homid");
 
         while ( victim->affected )
             affect_remove( victim, victim->affected );

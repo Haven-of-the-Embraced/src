@@ -230,8 +230,6 @@ void do_remort(CHAR_DATA *ch, char *argument)
             SET_BIT(ch->affected_by, AFF_FANGS);
             do_function(ch, &do_shift, "");
         }
-        if(ch->changed != CHANGED_HOMID)
-            do_function(ch, &do_changeform, "homid");
 
         while ( ch->affected )
             affect_remove( ch, ch->affected );

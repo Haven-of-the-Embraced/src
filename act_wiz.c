@@ -7179,8 +7179,6 @@ void do_setarena( CHAR_DATA *ch, char *argument )
     if (victim->in_room != NULL)
         char_from_room( victim );
     char_to_room( victim, get_room_index( 26500+room ) );
-    if ( ch->changed > 0)
-        do_function(ch, &do_changeform, "homid");
     if ( is_affected( victim, gsn_claws ) )
         do_function(victim, &do_claws, "");
     while ( victim->affected )
@@ -7258,8 +7256,7 @@ void do_arename( CHAR_DATA *ch, char *argument )
     send_to_char( "{BYou fill a rush of adrenaline as YOUR name is called to enter the {RArena!{x\n\r", ch );
     if ( is_affected( ch, gsn_claws ) )
         do_function(ch, &do_claws, "");
-    if ( ch->changed > 0)
-        do_function(ch, &do_changeform, "homid");
+
 
     while ( ch->affected )
         affect_remove( ch, ch->affected );

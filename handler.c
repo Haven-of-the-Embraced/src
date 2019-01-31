@@ -2083,8 +2083,7 @@ void extract_char( CHAR_DATA *ch, bool fPull )
 
     if(ch->mount != NULL)
         do_function(ch->mount, &do_dismount, "");
-    if(!IS_NPC(ch) && ch->changed > CHANGED_HOMID)
-        do_function(ch, &do_changeform, "homid");
+
 
     nuke_pets(ch);
     ch->pet = NULL; /* just in case */

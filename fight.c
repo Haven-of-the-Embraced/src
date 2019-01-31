@@ -5460,9 +5460,6 @@ void kill_em(CHAR_DATA *ch,CHAR_DATA *victim)
                 }
 
 /* garou stuff */
-        if ( is_affected( victim, gsn_change ) )
-            do_function(victim, &do_changeform, "homid");
-        victim->rage = 0;
                 nuke_pets(ch);
                 while ( victim->affected )
                         affect_remove( victim, victim->affected );
@@ -5504,9 +5501,6 @@ void kill_em(CHAR_DATA *ch,CHAR_DATA *victim)
         do_function(victim, &do_fangs, "");
     }
 /* garou stuff */
-    if (victim->changed > 0)
-        do_function(victim, &do_changeform, "homid");
-    victim->rage = 0;
     if(!IS_NPC(victim) && victim->race == race_lookup("ghoul"))
         victim->pblood = victim->max_pblood;
 

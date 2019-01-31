@@ -8459,6 +8459,52 @@ if (IS_SET(victim->act, PLR_D10COMBAT))
     return;
     }
 
+void do_debugger (CHAR_DATA *ch, char *argument)
+{
+CHAR_DATA *victim;
+char arg[MIL];
+one_argument( argument, arg );
+  if ( ( victim = get_char_world( ch, arg  ) ) == NULL )
+  {
+    send_to_char( "They aren't here.\n\r", ch );
+    return;
+  }
+
+if (IS_SET(victim->act2, PLR2_DEBUG))
+    {
+    REMOVE_BIT(victim->act2, PLR2_DEBUG);
+    send_to_char("They are no longer flagged as a Debugger.\n\r", ch);
+    send_to_char("You are no longer a Debugger.\n\r", victim);
+    }
+    else {
+    SET_BIT(victim->act2, PLR2_DEBUG);
+    send_to_char("They are now flagged as a Debugger.\n\r", ch);
+    send_to_char("You have been flagged as a Debugger!\n\r", victim);
+    }
+    return;
+    }
+
+void do_debugmsg (CHAR_DATA *ch, char *argument)
+{
+
+    if (!IS_SET(ch->act2, PLR2_DEBUG))
+    {
+        send_to_char("Huh?\n\r", ch);
+        return;
+    }
+    if (IS_SET(ch->act2, PLR2_DEBUGMSG))
+        {
+        REMOVE_BIT(ch->act2, PLR2_DEBUGMSG);
+        send_to_char("You will no longer see debug messages.\n\r", ch);
+        }
+        else {
+        SET_BIT(ch->act2, PLR2_DEBUGMSG);
+        send_to_char("You will now see debug messages.\n\r", ch);
+        }
+
+    return;
+    }
+
 //Matthew - added to change all pfiles back to encrypted passwords.
 void recrypt_pfiles( CHAR_DATA *ch, char *argument )
 {

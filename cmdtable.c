@@ -578,6 +578,8 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "invis",      do_invis},
     { "log",        do_log},
     { "debug",      do_debug},
+    { "debugger",   do_debugger},
+    { "debugmsg",   do_debugmsg},
     { "memory",     do_memory},
     { "mwhere",     do_mwhere},
     { "owhere",     do_owhere},

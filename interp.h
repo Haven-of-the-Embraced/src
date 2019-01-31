@@ -132,6 +132,8 @@ DECLARE_DO_FUN( do_count    );
 DECLARE_DO_FUN( do_credits  );
 DECLARE_DO_FUN( do_deaf     );
 DECLARE_DO_FUN( do_debug    );
+DECLARE_DO_FUN( do_debugger );
+DECLARE_DO_FUN( do_debugmsg );
 DECLARE_DO_FUN( do_delet    );
 DECLARE_DO_FUN( do_delete   );
 DECLARE_DO_FUN( do_deny     );

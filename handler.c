@@ -835,6 +835,14 @@ int get_ability( CHAR_DATA *ch, int stat )
     return ch->pcdata->csabilities[stat];
 }
 
+int get_ability2( CHAR_DATA *ch, int stat )
+{
+    if (IS_NPC(ch))
+        return 1 + ch->level/24;
+
+    return ch->pcdata->cssec_abil[stat];
+}
+
 /* command for returning max training score */
 int get_max_train( CHAR_DATA *ch, int stat )
 {

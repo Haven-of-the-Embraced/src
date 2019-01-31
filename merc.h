@@ -3747,6 +3747,7 @@ int get_trust   args( ( CHAR_DATA *ch ) );
 int get_curr_stat   args( ( CHAR_DATA *ch, int stat ) );
 int get_attribute   args( ( CHAR_DATA *ch, int stat ) );
 int get_ability     args( ( CHAR_DATA *ch, int stat ) );
+int get_ability2    args( ( CHAR_DATA *ch, int stat ) );
 int get_gauntlet    args( ( CHAR_DATA *ch ) );
 char *wordwrap args( (int desired_line, int length, char *argument, int alignment ) );
 //char *wordwrap args( ( int line, int length, const char *argument ) );

@@ -1316,11 +1316,11 @@ bool damage(CHAR_DATA *ch,CHAR_DATA *victim,int dam,int dt,int dam_type,
     {
         if(dam_type == DAM_PIERCE || dam_type == DAM_BASH || dam_type == DAM_SLASH)
         {
-            if (DEBUG_MESSAGES)
+            if (DEBUG_MESSAGES || IS_DEBUGGING(ch))
             cprintf( ch, "B4E: %d ", dam);
 
             dam -= (dam/100)*(6*ch->sphere[SPHERE_ENTROPY]);
-				if (DEBUG_MESSAGES)
+				if (DEBUG_MESSAGES || IS_DEBUGGING(ch))
             cprintf(ch, "AE: %d\n\r", dam);
         }
     } 
@@ -1328,11 +1328,11 @@ bool damage(CHAR_DATA *ch,CHAR_DATA *victim,int dam,int dt,int dam_type,
   if(victim->sphere[SPHERE_FORCES] > 0)
     {
         if(dam_type != DAM_PIERCE && dam_type != DAM_BASH && dam_type != DAM_SLASH)
-		if (DEBUG_MESSAGES)
+		if (DEBUG_MESSAGES || IS_DEBUGGING(ch))
 		cprintf(ch, "B4F: %d ", dam);
 
             dam -= (dam/100)*(4*ch->sphere[SPHERE_FORCES]);
-			if (DEBUG_MESSAGES)
+			if (DEBUG_MESSAGES || IS_DEBUGGING(ch))
 		cprintf(ch, "AF: %d\n\r", dam);
     } 
 
@@ -1804,7 +1804,7 @@ void garou_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt)
 
 	if (dt == gsn_backstab || dt == gsn_waylay)
 		dice *= 2;
-if (DEBUG_MESSAGES){
+if (DEBUG_MESSAGES || IS_DEBUGGING(ch)){
 	cprintf(ch, "hp{r%d{x ", dice);
 	if (IS_NPC(ch)) cprintf(victim, "hp{r%d{x ", dice);}
 
@@ -1827,7 +1827,7 @@ if (DEBUG_MESSAGES){
 			check_shield_block(ch, victim) )
 		tohit = 0;
 
-	if (DEBUG_MESSAGES){
+	if (DEBUG_MESSAGES || IS_DEBUGGING(ch)){
 		//Debug Message
 		cprintf(ch, "t{R%d{x ", tohit);
 		if (IS_NPC(ch)) cprintf(victim, "t{R%d{x ", tohit);}
@@ -1935,7 +1935,7 @@ if (DEBUG_MESSAGES){
 			
         damsuccess += godice(dice, 5);
 
-		if (DEBUG_MESSAGES)	{
+		if (DEBUG_MESSAGES || IS_DEBUGGING(ch))	{
             cprintf(ch, "dp{r%d{x ", dice);
             if (IS_NPC(ch)) cprintf(victim, "dp{r%d{x ", dice);
         }
@@ -2176,7 +2176,7 @@ bool d10_damage(CHAR_DATA *ch, CHAR_DATA *victim, int damsuccess, int modifier, 
             if (check_dodge( ch, victim ))
                 return FALSE;
         }
-		if (DEBUG_MESSAGES)	{
+		if (DEBUG_MESSAGES || IS_DEBUGGING(ch))	{
             cprintf(ch, "d{W%d{x ", damsuccess);
         if (IS_NPC(ch))
         cprintf(victim, "d{W%d{x ", damsuccess);
@@ -2239,7 +2239,7 @@ bool d10_damage(CHAR_DATA *ch, CHAR_DATA *victim, int damsuccess, int modifier, 
                 dam *= 2;
                 break;
         }
-if (DEBUG_MESSAGES)	{
+if (DEBUG_MESSAGES || IS_DEBUGGING(ch))	{
         cprintf(ch, "M{D%d{x Ar{c%d{x sd{c%d{x s{c%d{x ", modifier, armordice, soakdice, soak, dam);
         if (IS_NPC(ch))
         cprintf(victim, "{xm{D%d Ar{c%d {xsd{c%d{x s{c%d{x ", modifier, armordice, soakdice, soak, dam);

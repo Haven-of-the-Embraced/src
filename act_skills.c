@@ -169,19 +169,22 @@ void do_bandage(CHAR_DATA *ch, char *argument)
             act("and succeeds in cleaning your wound, but your undead flesh doesn't heal naturally anymore.",ch,NULL,victim,TO_VICT);
             act("and patches up the wounds with a bandage.",ch,NULL,victim,TO_NOTVICT);
         }
-        else if(victim->race == race_lookup("garou"))
-        {               /*Check for garou, bandaging doesn't really help their already accelerated healing*/
+        /*else if(victim->race == race_lookup("garou"))
+        {               
             act("and manage to place a clean bandage just as the wounds begin to heal.",ch,NULL,victim,TO_CHAR);
             act("and manages to place the bandage just as your accelerated healing kicks in, rendering the bandage pointless.",ch,NULL,victim,TO_VICT);
             act("and manages to place a bandage on $N.",ch,NULL,victim,TO_NOTVICT);
-        }
+        }*/
         else
-        {               /*Bandages victim if not garou/vamp/meth*/
+        {               /*Bandages victim if not vamp/meth*/
             act("and manage to staunch the bleeding from the wound.",ch,NULL,victim,TO_CHAR);
             act("and manages to stop the blood flowing from your wounds.",ch,NULL,victim,TO_VICT);
             act("and manages to stop the bleeding.",ch,NULL,victim,TO_NOTVICT);
 
-            victim->hit += dicesuccess*ch->level+7;
+            if (victim->race != race_lookup('garou'))
+                victim->hit += dicesuccess*ch->level+7;
+            else
+                victim->hit += (dicesuccess*ch->level/2)+10;
 
             if (ch->pcdata->csabilities[CSABIL_MEDICINE] >= 4)   /*If Medicine 4 or higher, heals a little agg damage*/
             {

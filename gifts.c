@@ -1255,6 +1255,52 @@ void spell_gift_heightenedsenses( int sn, int level, CHAR_DATA *ch, void *vo, in
 //This gift allows the garou to instinctively sense where the nearest caern is. (If successful, tells the garou whether or not there is a Caern/node in the area. If 3 or more successes, allows them to see the room itself (like telepathy)
 //Cost: 1 Gnosis
 void spell_gift_leylines( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    ROOM_INDEX_DATA *pRoomIndex;
+    AREA_DATA       *pArea;
+    int             vnum;
+    BUFFER          *output;
+    char            buf  [ MAX_STRING_LENGTH   ];
+    int             dicesuccess;
+    int             found;
+    
+    if (ch->pcdata->gnosis[TEMP] < 1)
+    {
+        sendch("You do not possess the spiritual reserves to activate this gift.\n\r", ch);
+        return;
+        }            
+    
+    ch->pcdata->gnosis[TEMP]--;
+    dicesuccess = godice(get_attribute(ch, PERCEPTION) + get_ability2(ch, CSABIL_ENIGMAS), 7);
+
+    if (dicesuccess < 1)
+    {
+        send_to_char("You are unable to sense the lies of energy passing through here.\n\r", ch);
+        return;
+    }
+    
+    send_to_char("You open your eyes to seeing the lines of energy in the area..\n\r", ch);
+    pArea = ch->in_room->area;
+    output = new_buf();
+    found = 0;
+    
+    for ( vnum = pArea->min_vnum; vnum <= pArea->max_vnum; vnum++ )
+        {
+            if ( ( pRoomIndex = get_room_index( vnum ) ) && pRoomIndex->sector_type == SECT_NODE )
+            {
+                sprintf( buf, "%s\n\r", pRoomIndex->name );
+                add_buf(output, buf);
+                found++;
+
+            }
+        }
+    if (found)
+    {
+        sprintf(buf, "..and you detect %d %s in this area.\n\r", found, found == 1 ? "Caern" : "Caerns");
+        send_to_char(buf,ch);
+        page_to_char(buf_string(output), ch);        
+    } else
+        send_to_char("..but there are no Caerns to be found.\n\r", ch);
+    
     return;
 }
 //

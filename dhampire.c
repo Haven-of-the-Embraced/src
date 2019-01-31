@@ -214,40 +214,6 @@ void do_bandage(CHAR_DATA *ch, char *argument)
 
     return;
 }
-//New regen code
-void do_vampire_regen(CHAR_DATA *ch, char *argument )
-{
-    AFFECT_DATA af;
-
-    if((ch->race != race_lookup("vampire")) & (ch->race != race_lookup("ghoul")))
-    {
-        send_to_char( "You are not a vampire!\n\r", ch );
-        return;
-    }
-    if ( IS_AFFECTED2( ch, AFF2_VAMPIRE_REGEN ))
-    {
-        send_to_char( "You are already regenerating.\n\r", ch );
-        return;
-    }
-    if(ch->position > POS_SITTING)
-    {
-        send_to_char( "You cannot do this standing!\n\r", ch );
-        return;
-    }
-
-    act( "$n begins to regenerate their body.",  ch, NULL, NULL, TO_ROOM );
-    send_to_char( "You begin to regenerate your body.\n\r", ch );
-
-    af.where    = TO_AFFECTS2;
-    af.type     = gsn_vampire_regen;
-    af.level    = ch->level;
-    af.duration = -1;
-    af.modifier = 0;
-    af.location = APPLY_NONE;
-    af.bitvector    = AFF2_VAMPIRE_REGEN;
-    affect_to_char( ch, &af );
-}
-// Regen code
 
 void do_chant(CHAR_DATA *ch, char *argument )
 {

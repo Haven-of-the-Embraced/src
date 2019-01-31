@@ -536,7 +536,6 @@ DECLARE_DO_FUN( do_contact);
 //XP Boost code / vampire regen by Zelan
 DECLARE_DO_FUN( do_xp_boost);
 DECLARE_DO_FUN( do_fatamorgana);
-DECLARE_DO_FUN( do_vampire_regen);
 DECLARE_DO_FUN( do_ignis_fatuus);
 // New dice code
 DECLARE_DO_FUN( do_newdice);

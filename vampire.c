@@ -989,117 +989,38 @@ bool can_use_disc(CHAR_DATA *ch, int disc, int dot, int blood, bool message)
     return TRUE;
 }
 
-void do_regenerate(CHAR_DATA *ch, char *argument)
+//New regen code
+void do_regenerate(CHAR_DATA *ch, char *argument )
 {
-    char arg1[MAX_INPUT_LENGTH];
-    char buf[MAX_STRING_LENGTH];
     AFFECT_DATA af;
-    int i, count = 1;
-    bool full = FALSE;
 
-
-    if(IS_NPC(ch)) return;
-
-
-    argument = one_argument(argument,arg1);
-
-
-    if(ch->position == POS_FIGHTING || ch->position < POS_RESTING)
+    if((ch->race != race_lookup("vampire")) & (ch->race != race_lookup("ghoul")))
     {
-        send_to_char("You are unable to do that right now.\n\r",ch);
+        send_to_char( "You are not a vampire!\n\r", ch );
+        return;
+    }
+    if ( IS_AFFECTED2( ch, AFF2_VAMPIRE_REGEN ))
+    {
+        send_to_char( "You are already regenerating.\n\r", ch );
+        return;
+    }
+    if(ch->position > POS_SITTING)
+    {
+        send_to_char( "You cannot do this standing!\n\r", ch );
         return;
     }
 
+    act( "$n begins to regenerate their body.",  ch, NULL, NULL, TO_ROOM );
+    send_to_char( "You begin to regenerate your body.\n\r", ch );
 
-    if(arg1[0] != '\0')
-    {
-        if(!str_prefix(arg1,"full"))
-            full = TRUE;
-
-        if(!str_prefix(arg1, "aggravated"))
-        {
-            if(!can_use_disc(ch,NONE,0,50,TRUE))
-                return;
-
-            if(is_affected(ch,gsn_regen))
-            {
-                send_to_char("You cannot heal any more Aggravated damage right now.\n\r",ch);
-                return;
-            }
-
-            if(ch->position != POS_RESTING)
-            {
-                send_to_char("You must be resting to regenerate Aggravated damage.\n\r",ch);
-                return;
-            }
-            ch->agg_dam -= ch->max_hit/7;
-            if(ch->agg_dam < 0)
-                ch->agg_dam = 0;
-
-            ch->pblood -= 50;
-
-            af.where     = TO_AFFECTS;
-            af.type      = gsn_regen;
-            af.level     = ch->level;
-            af.duration  = 24;
-            af.location  = APPLY_NONE;
-            af.modifier  = 0;
-            af.bitvector = 0;
-            affect_to_char( ch, &af );
-
-            WAIT_STATE(ch,120);
-            return;
-        }
-
-        if(is_number(arg1))
-            count = atoi(arg1);
-    }
-
-    send_to_char("You attempt to regenerate your body...\n\r",ch);
-    for(i = 0;count > 0;count--, i++)
-    {
-        if (ch->hit == (ch->max_hit-ch->agg_dam) && ch->move == ch->max_move && ch->mana == ch->max_mana)
-        {
-            send_to_char("You are fully regenerated.\n\r",ch);
-            break;
-        }
-
-        if(!can_use_disc(ch,NONE,0,1,TRUE))
-            break;
-
-        if(ch->race == race_lookup("dhampire"))
-        {
-            ch->hit += ch->level*3;
-            ch->move += ch->level*3;
-            ch->mana += ch->level;
-        }
-        else
-        {
-            ch->hit += ch->level/5 + 10*(20-ch->gen);
-            ch->move += ch->level/5 + 10*(20-ch->gen);
-            ch->mana += ch->level/5 + 8*(20-ch->gen);
-        }
-
-
-        if (ch->hit > (ch->max_hit - ch->agg_dam))
-            ch->hit = (ch->max_hit-ch->agg_dam);
-        if(ch->move > ch->max_move)
-            ch->move = ch->max_move;
-        if(ch->mana > ch->max_mana)
-            ch->mana = ch->max_mana;
-        ch->pblood--;
-
-        if(full) count = 100; // Keep looping until full.
-    }
-    if(i > 0)
-    {
-        WAIT_STATE(ch,12*i);
-
-        sprintf(buf,"You regenerated your body %d time%s.\n\r",i, i > 1 ? "s" : "");
-        send_to_char(buf,ch);
-    }
-
-    return;
+    af.where    = TO_AFFECTS2;
+    af.type     = gsn_vampire_regen;
+    af.level    = ch->level;
+    af.duration = -1;
+    af.modifier = 0;
+    af.location = APPLY_NONE;
+    af.bitvector    = AFF2_VAMPIRE_REGEN;
+    affect_to_char( ch, &af );
 }
 
 /*Sengir coding Blood Buff to rais Phys CS stats for Vamps*/

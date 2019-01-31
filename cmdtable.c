@@ -111,6 +111,7 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "sense",      do_sense },
     { "fangs",      do_fangs },
     { "feed",       do_feed  },
+    { "regenerate", do_regenerate },
     { "smell",      do_smell  },
     { "nourish", do_nourish },
     { "reveal",     do_reveal },
@@ -140,7 +141,6 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "forgetful",      do_forgetful},
     { "cloakthegathering",     do_cloakthegathering },//DNM
     { "dreadgaze",      do_dreadgaze},
-    { "vampire regen", do_vampire_regen},
     { "bloodbuff",      do_bloodbuff},//dnm
     { "command",        do_command },
     { "mesmerize",      do_mesmerize},

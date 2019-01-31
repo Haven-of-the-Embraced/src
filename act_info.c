@@ -1738,9 +1738,9 @@ void do_score( CHAR_DATA *ch, char *argument )
 			else
 			{
 				sprintf(buf2,"{wYou are a %d year old %s %s %s of Tribe %s.{x",get_age(ch),ch->sex == 0 ? "sexless" : ch->sex == 1 ? "male" : "female",
-					ch->pcdata->breed == BREED_LUPUS ? "Lupus" : ch->pcdata->breed == BREED_METIS ? "Metis" : "Homid",
-					ch->pcdata->auspice == AUSPICE_RAGABASH ? "Ragabash" : ch->pcdata->auspice == AUSPICE_THEURGE ?
-					"Theurge" : ch->pcdata->auspice == AUSPICE_PHILODOX ? "Philodox" : ch->pcdata->auspice == AUSPICE_GALLIARD ?
+					ch->pcdata->breed == LUPUS ? "Lupus" : ch->pcdata->breed == METIS ? "Metis" : "Homid",
+					ch->pcdata->auspice == RAGABASH ? "Ragabash" : ch->pcdata->auspice == THEURGE ?
+					"Theurge" : ch->pcdata->auspice == PHILODOX ? "Philodox" : ch->pcdata->auspice == GALLIARD ?
 					"Galliard" : "Ahroun",  capitalize(clan_table[ch->clan].name));
 				sprintf(buf,"{D     |%s{D|{x\n\r",center(buf2,69," "));
 				add_buf(output,buf);

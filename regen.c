@@ -184,8 +184,8 @@ int pulse_hit_gain( CHAR_DATA *ch )
 
         if( get_affect_level(ch, gsn_bandage) >= 2)
             gain += gain;
-        if( get_affect_level(ch, gsn_bandage) >= 5 && 
-            number_percent() > 85 && ch->agg_dam > 0)
+        if( get_affect_level(ch, gsn_bandage) >= 4 && 
+            number_percent() > 90 && ch->agg_dam > 0)
             ch->agg_dam--;
     }     //ENDIF NOTVAMP
 

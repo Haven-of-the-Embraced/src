@@ -2171,58 +2171,65 @@ bool d10_damage(CHAR_DATA *ch, CHAR_DATA *victim, int damsuccess, int modifier, 
     }
 	
 	
-        if (ch != victim)
-        {
-            if (check_dodge( ch, victim ))
-                return FALSE;
-        }
-		if (DEBUG_MESSAGES || IS_DEBUGGING(ch))	{
-            cprintf(ch, "d{W%d{x ", damsuccess);
-        if (IS_NPC(ch))
-        cprintf(victim, "d{W%d{x ", damsuccess);
-        }
-		
-		//Soak dice, subtracts successes from damage.
-        if (!IS_NPC(victim))
-        {
-        soakdice = get_attribute(victim, STAMINA);
-        if (IS_VAMP(victim)) //vamps add fortitude.
-            soakdice += victim->pcdata->discipline[FORTITUDE];
+    if (ch != victim)
+    {
+        if (check_dodge( ch, victim ))
+            return FALSE;
+    }
+    if (DEBUG_MESSAGES || IS_DEBUGGING(ch))	{
+        cprintf(ch, "d{W%d{x ", damsuccess);
+    if (IS_NPC(ch))
+    cprintf(victim, "d{W%d{x ", damsuccess);
+    }
 
-        } else {// IS NPC
-            soakdice = victim->level/50;
-         if (IS_VAMP(victim) || victim->race == race_lookup("garou"))
-            soakdice++;
-        }
-		
-        if (dam_type > DAM_BASH && (victim->race == race_lookup("human") ||
-                victim->race == race_lookup("ghoul")) )
-            soakdice = 0;//humans can't soak lethal.
-        if ((dam_type > DAM_SLASH || dt == attack_lookup("claws") ) && victim->race != race_lookup("garou"))
-            soakdice = 0;// vamps can't soak agg.
-	    if (!IS_NPC(victim) && (dam_type > DAM_SLASH || dt == attack_lookup("claws") ) && 
-			victim->race != race_lookup("garou") && 
-			(victim->pcdata->shiftform == HOMID || victim->pcdata->shiftform == LUPUS) )
-			soakdice = 0;// Garou can't soak agg in homid or lupus.
+    //Soak dice, subtracts successes from damage.
+    if (!IS_NPC(victim))
+    {
+    soakdice = get_attribute(victim, STAMINA);
+    if (IS_VAMP(victim)) //vamps add fortitude.
+        soakdice += victim->pcdata->discipline[FORTITUDE];
 
-		// Armor, applied to physical damage and garou claws.
-		if (dam_type <= DAM_SLASH || dt == attack_lookup("claws") )
-			armordice += get_armor_diff(ch, victim, dam_type);
-			
-		soak = godice(armordice+soakdice, 6);
+    } else {// IS NPC
+        soakdice = victim->level/50;
+     if (IS_VAMP(victim) || victim->race == race_lookup("garou"))
+        soakdice++;
+    }
 
-			
-		if (soak < 0)
-			soak = 0;
-			
-		damsuccess -= soak;
-		
-        //turn successes into real damage via the modifier.
-		dam = damsuccess*modifier;
-	// Bashing damage is halved.
-		if (dam_type == DAM_BASH && IS_VAMP(victim))
-			dam /= 2;
-		
+    if (dam_type > DAM_BASH && (victim->race == race_lookup("human") ||
+            victim->race == race_lookup("ghoul")) )
+        soakdice = 0;//humans can't soak lethal.
+    if ((dam_type > DAM_SLASH || dt == attack_lookup("claws") ) && victim->race != race_lookup("garou"))
+        soakdice = 0;// vamps can't soak agg.
+    if (!IS_NPC(victim) && (dam_type > DAM_SLASH || dt == attack_lookup("claws") ) && 
+        victim->race != race_lookup("garou") && 
+        (victim->pcdata->shiftform == HOMID || victim->pcdata->shiftform == LUPUS) )
+        soakdice = 0;// Garou can't soak agg in homid or lupus.
+
+    // Armor, applied to physical damage and garou claws.
+    if (dam_type <= DAM_SLASH || dt == attack_lookup("claws") )
+        armordice += get_armor_diff(ch, victim, dam_type);
+
+    //Protective Spells go here!
+    if (IS_AFFECTED(victim, AFF_SANCTUARY))
+        if (armordice > 2)
+            armordice *=2;
+        else
+            armordice = 4;
+
+    soak = godice(armordice+soakdice, 6);
+
+
+    if (soak < 0)
+        soak = 0;
+
+    damsuccess -= soak;
+
+    //turn successes into real damage via the modifier.
+    dam = damsuccess*modifier;
+    // Bashing damage is halved.
+    if (dam_type == DAM_BASH && IS_VAMP(victim))
+        dam /= 2;
+
 	if (dam < 1)
 		dam = 0;
 		

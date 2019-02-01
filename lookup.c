@@ -295,6 +295,19 @@ int get_hometown( int num)
         return ROOM_VNUM_TEMPLE;
 };
 
+int gift_lookup( const char *name )
+{
+    int gn;
+    for ( gn = 1; gn < MAX_GIFTS_CODED; gn++ )
+
+    {
+    if ( LOWER(name[0]) == LOWER(gift_table[gn].name[0])
+    &&   !str_prefix( name, gift_table[gn].name ) )
+        return gn;
+    }
+
+    return -1;
+}
 
 int like_lookup(CHAR_DATA *mob, CHAR_DATA *ch)
 {

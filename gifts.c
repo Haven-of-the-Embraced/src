@@ -29,573 +29,8 @@
  *
  * Change the level of the gift from level0 to level1
  */
-/* garou gifts */
-sh_int          gsn_gift_porcupine;
-sh_int          gsn_gift_blissfulignorance;
-sh_int          gsn_gift_pulseoftheinvisible;
-sh_int          gsn_gift_catfeet;
-sh_int          gsn_gift_resistpain;
-sh_int          gsn_gift_callofthewyld;
-sh_int          gsn_gift_razorclaws;
-sh_int          gsn_gift_silverclaws;
-sh_int          gsn_gift_sensewyrm;
-sh_int          gsn_gift_innerstrength;
-sh_int          gsn_gift_bloodyfeast;
-sh_int          gsn_gift_masteroffire;
-sh_int  gsn_gift_persuasion;
-sh_int  gsn_gift_speechoftheworld;
-sh_int  gsn_gift_calmthesavagebeast;
-sh_int  gsn_gift_reshapeobject;
-sh_int  gsn_gift_burythewolf;
-sh_int  gsn_gift_spiritward;
-sh_int  gsn_gift_assimilation;
-sh_int  gsn_gift_falsecomfort;
-sh_int  gsn_gift_createelement;
-sh_int  gsn_gift_shed;
-sh_int  gsn_gift_curseofhatred;
-sh_int  gsn_gift_sensesilver;
-sh_int  gsn_gift_eyesofthecat;
-sh_int  gsn_gift_mentalspeech;
-sh_int  gsn_gift_witherlimb;
-sh_int  gsn_gift_madness;
-sh_int  gsn_gift_totemgift;
-sh_int  gsn_gift_haresleap;
-sh_int  gsn_gift_heightenedsenses;
-sh_int  gsn_gift_leylines;
-sh_int  gsn_gift_scentofsight;
-sh_int  gsn_gift_sensetheunnatural;
-sh_int  gsn_gift_devilschild;
-sh_int  gsn_gift_namethespirit;
-sh_int  gsn_gift_beastlife;
-sh_int  gsn_gift_gnaw;
-sh_int  gsn_gift_elementalgift;
-sh_int  gsn_gift_songofthegreatbeast;
-sh_int  gsn_gift_blurofthemilkyeye;
-sh_int  gsn_gift_scentofrunningwater;
-sh_int  gsn_gift_snowrunning;
-sh_int  gsn_gift_senseofprey;
-sh_int  gsn_gift_openmoonbridge;
-sh_int  gsn_gift_reynardslie;
-sh_int  gsn_gift_leperscurse;
-sh_int  gsn_gift_lunasblessing;
-sh_int  gsn_gift_thievingtalonsofthemagpie;
-sh_int  gsn_gift_chimericalform;
-sh_int  gsn_gift_motherstouch;
-sh_int  gsn_gift_spiritspeech;
-sh_int  gsn_gift_commandspirit;
-sh_int  gsn_gift_sightfrombeyond;
-sh_int  gsn_gift_expelspirit;
-sh_int  gsn_gift_graspthebeyond;
-sh_int  gsn_gift_spiritwassail;
-sh_int  gsn_gift_nightmarepossession;
-sh_int  gsn_gift_malleablespirit;
-sh_int  gsn_gift_scentofthetrueform;
-sh_int  gsn_gift_truthofgaia;
-sh_int  gsn_gift_callofduty;
-sh_int  gsn_gift_strengthofpurpose;
-sh_int  gsn_gift_spiritwitness;
-sh_int  gsn_gift_warriorseye;
-sh_int  gsn_gift_rollover;
-sh_int  gsn_gift_scentofbeyond;
-sh_int  gsn_gift_earthfriendspact;
-sh_int  gsn_gift_geas;
-sh_int  gsn_gift_beastspirit;
-sh_int  gsn_gift_wakingdream;
-sh_int  gsn_gift_callofthewyrm;
-sh_int  gsn_gift_distractions;
-sh_int  gsn_gift_eyeoftheasp;
-sh_int  gsn_gift_songofrage;
-sh_int  gsn_gift_shadowsbythefirelight;
-sh_int  gsn_gift_songofmockery;
-sh_int  gsn_gift_dreamgolems;
-sh_int  gsn_gift_callforvengeance;
-sh_int  gsn_gift_fallingtouch;
-sh_int  gsn_gift_inspiration;
-sh_int  gsn_gift_spiritofthefray;
-sh_int  gsn_gift_truefear;
-sh_int  gsn_gift_heartoffury;
-sh_int  gsn_gift_fullmoonslight;
-sh_int  gsn_gift_stokingfurysfurnace;
-sh_int  gsn_gift_kissofhelios;
-sh_int  gsn_gift_strengthofwill;
-sh_int  gsn_gift_breathofthewyld;
-sh_int  gsn_gift_mansskin;
-sh_int  gsn_gift_curseoftheaeolus;
-sh_int  gsn_gift_coupdegrace;
-sh_int  gsn_gift_flamesofhestia;
-sh_int  gsn_gift_bodywrack;
-sh_int  gsn_gift_bowofpegasus;
-sh_int  gsn_gift_gazeofthegorgon;
-sh_int  gsn_gift_wyldwarp;
-sh_int  gsn_gift_cookery;
-sh_int  gsn_gift_resisttoxin;
-sh_int  gsn_gift_scentofthehoneycomb;
-sh_int  gsn_gift_corneredrat;
-sh_int  gsn_gift_plaguevisage;
-sh_int  gsn_gift_calltherust;
-sh_int  gsn_gift_friendinneed;
-sh_int  gsn_gift_blink;
-sh_int  gsn_gift_clawsoftheglassblower;
-sh_int  gsn_gift_mawofthewhale;
-sh_int  gsn_gift_survivor;
-sh_int  gsn_gift_evesblessing;
-sh_int  gsn_gift_grandmotherstouch;
-sh_int  gsn_gift_lunasarmor;
-sh_int  gsn_gift_dazzle;
-sh_int  gsn_gift_spiritfriend;
-sh_int  gsn_gift_angelssemblance;
-sh_int  gsn_gift_haloofthesun;
-sh_int  gsn_gift_thelivingwood;
-sh_int  gsn_gift_huntersharmony;
-sh_int  gsn_gift_visageoffenris;
-sh_int  gsn_gift_haltthecowardsflight;
-sh_int  gsn_gift_senseguilt;
-sh_int  gsn_gift_mightofthor;
-sh_int  gsn_gift_berserkerssong;
-sh_int  gsn_gift_ironcannotpierce;
-sh_int  gsn_gift_blazeofglory;
-sh_int  gsn_gift_hordeofvalhalla;
-sh_int  gsn_gift_distractthefool;
-sh_int  gsn_gift_faerielight;
-sh_int  gsn_gift_howlofthebanshee;
-sh_int  gsn_gift_warriorsdraught;
-sh_int  gsn_gift_faerieaid;
-sh_int  gsn_gift_woadling;
-sh_int  gsn_gift_balorsgaze;
-sh_int  gsn_gift_semblance;
-sh_int  gsn_gift_fogonthemoor;
-sh_int  gsn_gift_giftofthespriggan;
-sh_int  gsn_gift_auraofconfidence;
-sh_int  gsn_gift_fatalflaw;
-sh_int  gsn_gift_seizingtheedge;
-sh_int  gsn_gift_clapofthunder;
-sh_int  gsn_gift_ravenscurse;
-sh_int  gsn_gift_shadowcutting;
-sh_int  gsn_gift_dolorousstroke;
-sh_int  gsn_gift_strengthofthedominator;
-sh_int  gsn_gift_shadowpack;
-sh_int  gsn_gift_obedience;
-sh_int  gsn_gift_eyeofthefalcon;
-sh_int  gsn_gift_lambentfire;
-sh_int  gsn_gift_empathy;
-sh_int  gsn_gift_exceptionalswordplay;
-sh_int  gsn_gift_wrathofgaia;
-sh_int  gsn_gift_lordlywill;
-sh_int  gsn_gift_sidestepdeath;
-sh_int  gsn_gift_lunasavenger;
-sh_int  gsn_gift_pawsofthenewborncub;
-sh_int  gsn_gift_artisanscommand;
-sh_int  gsn_gift_giftofsalt;
-sh_int  gsn_gift_maskthepredator;
-sh_int  gsn_gift_tongues;
-sh_int  gsn_gift_attunement;
-sh_int  gsn_gift_doppelganger;
-sh_int  gsn_gift_commandtheblaze;
-
-int gift_lookup( const char *name )
-{
-    int gn;
-    for ( gn = 1; gn < MAX_GIFTS_CODED; gn++ )
-
-    {
-    if ( LOWER(name[0]) == LOWER(gift_table[gn].name[0])
-    &&   !str_prefix( name, gift_table[gn].name ) )
-        return gn;
-    }
-
-    return -1;
-}
-
-void do_gifts(CHAR_DATA *ch, char *argument)
-{
-    char buf[MAX_STRING_LENGTH];
-
-
-    if(IS_NPC(ch)) return;
-
-    if(ch->race != race_lookup("garou"))
-    {
-        send_to_char("You are not one of Gaia's chosen!\n\r",ch);
-        return;
-    }
-
-    
-    int i;
-    int col = 1;
-    BUFFER *buffer;
-    buffer = new_buf();
-    if (str_cmp(argument, "all"))
-	{
-		send_to_char("Your Gifts from Gaia:\n\r",ch);
-		
-		for (i = 0; i < MAX_GIFT; i++)
-		{
-			if (ch->pcdata->gift[i] == 0)
-				continue;
-			else {
-				if (col < 2)
-                    if (gift_table[ch->pcdata->gift[i]].level == 0)
-                    sprintf(buf, "{r%-30s{x", capitalize(gift_table[ch->pcdata->gift[i]].name));
-                    else
-					sprintf(buf, "%-30s", capitalize(gift_table[ch->pcdata->gift[i]].name));
-				else if (col == 2)
-				{
-                    if (gift_table[ch->pcdata->gift[i]].level == 0)
-                    sprintf(buf, "{r%-30s{x\n\r", capitalize(gift_table[ch->pcdata->gift[i]].name));
-                    else
-					sprintf(buf, "%s\n\r", capitalize(gift_table[ch->pcdata->gift[i]].name));
-					col = 0;
-					}
-				
-				add_buf(buffer, buf);
-				col++;
-			}
-		}
-	} else {
-	    send_to_char("Gifts you may learn:\n\r",ch);
-		
-		for (i = 1; i < MAX_GIFTS_CODED; i++)
-		{
-			if (ch->pcdata->rank < gift_table[i].rank ||
-					(gift_table[i].breed != ch->pcdata->breed &&
-					gift_table[i].auspice != ch->pcdata->auspice &&
-					gift_table[i].tribe != ch->pcdata->tribe))
-				continue;
-				int gn;
-				bool learned = FALSE;
-				for (gn = 0; gn < MAX_GIFT; gn++)
-					if (ch->pcdata->gift[gn] == i) learned = TRUE;
-				
-				if (learned)
-					continue;
-					
-			else {
-				if (col < 2)
-                {
-                    if (gift_table[i].level == 0)
-                    sprintf(buf, "{r%-30s{x", capitalize(gift_table[i].name));
-                    else
-					sprintf(buf, "%-30s", capitalize(gift_table[i].name));
-				}
-                    else
-				{
-                    if (gift_table[i].level == 0)
-                    sprintf(buf, "{r%-30s{x\n\r", capitalize(gift_table[i].name));
-                    else
-					sprintf(buf, "%s\n\r", capitalize(gift_table[i].name));
-					col = 0;
-					}
-				
-				add_buf(buffer, buf);
-				col++;
-			}
-		}
-	}
-    
-    page_to_char(buf_string(buffer), ch);
-    send_to_char("\n\rNote: Gifts marked in {rred{x are not currently coded.\n\r", ch);
-    return;
-}
-
 char *target_name;
 char *trueargs;
-void do_beseech(CHAR_DATA *ch, char *argument)
-{
-    char arg1[MAX_INPUT_LENGTH];
-    char arg2[MAX_INPUT_LENGTH];
-    CHAR_DATA *victim;
-    OBJ_DATA *obj;
-    void *vo;
-    int sn;
-    int gn;
-    int target;
-    int i;
-    bool learned=FALSE;
-    bool pass=FALSE;
-
-	
-    target_name = one_argument( argument, arg1 );
-    one_argument( target_name, arg2 );
-
-    if ( arg1[0] == '\0' )
-    {
-    send_to_char( "Beseech Gaia to bestow you what gift?\n\r", ch );
-    return;
-    }
-
-    if ((sn = skill_lookup(arg1)) < 1 || (gn = gift_lookup(arg1)) < 0)
-    {
-    send_to_char( "There are no Gifts by that name..\n\r", ch );
-    return;
-    }
-
-    if(str_cmp(skill_table[sn].name,gift_table[gn].name))
-    {
-    send_to_char( "There are no Gifts by that name..\n\r", ch );
-    return;
-    }
-
-    if ( ch->position < skill_table[sn].minimum_position )
-    {
-    send_to_char( "You can't concentrate enough.\n\r", ch );
-    return;
-    }
-
-    for (i = 0; i < MAX_GIFT; i++)
-    {
-        if (ch->pcdata->gift[i] == gn)
-            learned = TRUE;
-    }
-    if (!learned)
-    {
-        send_to_char("The spirits have not yet taught you this Gift of Gaia.\n\r",ch);
-        return;
-    }
-    
-/*
-    if(ch->level < gift_table[gn].level)
-    {
-        send_to_char("You are not yet worthy to use that Gift.\n\r",ch);
-        return;
-    }
-*/
-    if(ch->pcdata->rank < gift_table[gn].rank)
-    {
-        send_to_char("You are not known enough to Gaia and your brothers and sisters to use this Gift.\n\r",ch);
-        return;
-    }
-
-
-    if(ch->pcdata->breed == gift_table[gn].breed) pass=TRUE;
-    if(ch->pcdata->auspice == gift_table[gn].auspice) pass=TRUE;
-    if(ch->pcdata->tribe == gift_table[gn].tribe) pass=TRUE;
-
-    if(!pass)
-    {
-        send_to_char("You were not born into this gift.\n\r",ch);
-        return;
-    }
-
-    /*
-     * Locate targets.
-     */
-    victim  = NULL;
-    obj     = NULL;
-    vo      = NULL;
-    target  = TARGET_NONE;
-
-    switch ( skill_table[sn].target )
-    {
-    default:
-    bug( "Do_cast: bad target for sn %d.", sn );
-    return;
-
-    case TAR_IGNORE:
-    break;
-
-    case TAR_CHAR_OFFENSIVE:
-    if ( arg2[0] == '\0' )
-    {
-        if ( ( victim = ch->fighting ) == NULL )
-        {
-        send_to_char( "Beseech this upon whom?\n\r", ch );
-        return;
-        }
-    }
-    else
-    {
-        if ( ( victim = get_char_room( ch, target_name ) ) == NULL )
-        {
-        send_to_char( "They aren't here.\n\r", ch );
-        return;
-        }
-    }
-
-    if ( IS_AFFECTED2(ch, AFF2_MIST) || is_affected(ch,gsn_shadowform))
-    {
-        send_to_char("Not in this form you don't!\n\r",ch);
-        return;
-    }
-    if (IS_SET(victim->act,PLR_SPEC) && !IS_NPC(victim))
-    {
-        send_to_char("I don't think so!\n\r",ch);
-        return;
-    }
-
-    if ( !IS_NPC(victim) && !IS_NPC(ch) && !IN_LEVEL(ch, victim))
-    {
-        send_to_char( "You cannot harm them, they are not in level to you!\n\r", ch );
-        return;
-    }
-
-    if ( !IS_NPC(ch) )
-    {
-
-            if (is_safe(ch,victim) && victim != ch)
-        {
-        send_to_char("Not on that target.\n\r",ch);
-        return;
-        }
-
-        if ( !IS_NPC(victim) && !IS_NPC(ch) && !IN_LEVEL(ch, victim))
-        {
-            send_to_char( "You cannot harm them, they are not in level to you!\n\r", ch );
-            return;
-        }
-
-    }
-
-    if ( IS_AFFECTED(ch, AFF_CHARM) && ch->master == victim )
-    {
-        send_to_char( "You can't do that on your own follower.\n\r",
-        ch );
-        return;
-    }
-
-    vo = (void *) victim;
-    target = TARGET_CHAR;
-    break;
-
-    case TAR_CHAR_DEFENSIVE:
-    if ( arg2[0] == '\0' )
-    {
-        victim = ch;
-    }
-    else
-    {
-        if ( ( victim = get_char_room( ch, target_name ) ) == NULL )
-        {
-        send_to_char( "They aren't here.\n\r", ch );
-        return;
-        }
-    }
-
-    vo = (void *) victim;
-    target = TARGET_CHAR;
-    break;
-
-    case TAR_CHAR_SELF:
-    if ( arg2[0] != '\0' && !is_name( target_name, ch->name ) )
-    {
-        send_to_char( "You cannot grant this to another.\n\r", ch );
-        return;
-    }
-
-    vo = (void *) ch;
-    target = TARGET_CHAR;
-    break;
-
-    case TAR_OBJ_INV:
-    if ( arg2[0] == '\0' )
-    {
-        send_to_char( "What shall this be used upon?\n\r", ch );
-        return;
-    }
-
-    if ( ( obj = get_obj_carry( ch, target_name, ch ) ) == NULL )
-    {
-        send_to_char( "You are not carrying that.\n\r", ch );
-        return;
-    }
-
-    vo = (void *) obj;
-    target = TARGET_OBJ;
-    break;
-
-    case TAR_OBJ_CHAR_OFF:
-    if (arg2[0] == '\0')
-    {
-        if ((victim = ch->fighting) == NULL)
-        {
-        send_to_char("Do this to whom or what?\n\r",ch);
-        return;
-        }
-
-        target = TARGET_CHAR;
-    }
-    else if ((victim = get_char_room(ch,target_name)) != NULL)
-    {
-        target = TARGET_CHAR;
-    }
-
-    if (target == TARGET_CHAR) /* check the sanity of the attack */
-    {
-        if(is_safe_spell(ch,victim,FALSE) && victim != ch)
-        {
-        send_to_char("Not on that target.\n\r",ch);
-        return;
-        }
-
-            if ( IS_AFFECTED(ch, AFF_CHARM) && ch->master == victim )
-            {
-                send_to_char( "You can't do that on your own follower.\n\r",
-                    ch );
-                return;
-            }
-
-        vo = (void *) victim;
-    }
-    else if ((obj = get_obj_here(ch,target_name)) != NULL)
-    {
-        vo = (void *) obj;
-        target = TARGET_OBJ;
-    }
-    else
-    {
-        send_to_char("You don't see that here.\n\r",ch);
-        return;
-    }
-    break;
-
-    case TAR_OBJ_CHAR_DEF:
-        if (arg2[0] == '\0')
-        {
-            vo = (void *) ch;
-            target = TARGET_CHAR;
-        }
-        else if ((victim = get_char_room(ch,target_name)) != NULL)
-        {
-            vo = (void *) victim;
-            target = TARGET_CHAR;
-    }
-    else if ((obj = get_obj_carry(ch,target_name,ch)) != NULL)
-    {
-        vo = (void *) obj;
-        target = TARGET_OBJ;
-    }
-    else
-    {
-        send_to_char("You don't see that here.\n\r",ch);
-        return;
-    }
-    break;
-    }
-
-    WAIT_STATE( ch, skill_table[sn].beats );
-
-    (*skill_table[sn].spell_fun) ( sn, ch->level, ch, vo,target);
-
-
-    if ((skill_table[sn].target == TAR_CHAR_OFFENSIVE
-    ||   (skill_table[sn].target == TAR_OBJ_CHAR_OFF && target == TARGET_CHAR))
-    &&   victim != ch
-    &&   victim->master != ch)
-    {
-    CHAR_DATA *vch;
-    CHAR_DATA *vch_next;
-
-    for ( vch = ch->in_room->people; vch; vch = vch_next )
-    {
-        vch_next = vch->next_in_room;
-        if ( victim == vch && victim->fighting == NULL )
-        {
-        multi_hit( victim, ch, TYPE_UNDEFINED );
-        break;
-        }
-    }
-    }
-    return;
-}
 
 void spell_gift_innerstrength( int sn, int level, CHAR_DATA *ch, void *vo, int target )
 {
@@ -2641,3 +2076,391 @@ void spell_gift_commandtheblaze( int sn, int level, CHAR_DATA *ch, void *vo, int
 }
 
 
+void do_beseech(CHAR_DATA *ch, char *argument)
+{
+    char arg1[MAX_INPUT_LENGTH];
+    char arg2[MAX_INPUT_LENGTH];
+    CHAR_DATA *victim;
+    OBJ_DATA *obj;
+    void *vo;
+    int sn;
+    int gn;
+    int target;
+    int i;
+    bool learned=FALSE;
+    bool pass=FALSE;
+
+	
+    target_name = one_argument( argument, arg1 );
+    one_argument( target_name, arg2 );
+
+    if ( arg1[0] == '\0' )
+    {
+    send_to_char( "Beseech Gaia to bestow you what gift?\n\r", ch );
+    return;
+    }
+
+    if ((sn = skill_lookup(arg1)) < 1 || (gn = gift_lookup(arg1)) < 0)
+    {
+    send_to_char( "There are no Gifts by that name..\n\r", ch );
+    return;
+    }
+
+    if(str_cmp(skill_table[sn].name,gift_table[gn].name))
+    {
+    send_to_char( "There are no Gifts by that name..\n\r", ch );
+    return;
+    }
+
+    if ( ch->position < skill_table[sn].minimum_position )
+    {
+    send_to_char( "You can't concentrate enough.\n\r", ch );
+    return;
+    }
+
+    for (i = 0; i < MAX_GIFT; i++)
+    {
+        if (ch->pcdata->gift[i] == gn)
+            learned = TRUE;
+    }
+    if (!learned)
+    {
+        send_to_char("The spirits have not yet taught you this Gift of Gaia.\n\r",ch);
+        return;
+    }
+    
+/*
+    if(ch->level < gift_table[gn].level)
+    {
+        send_to_char("You are not yet worthy to use that Gift.\n\r",ch);
+        return;
+    }
+*/
+    if(ch->pcdata->rank < gift_table[gn].rank)
+    {
+        send_to_char("You are not known enough to Gaia and your brothers and sisters to use this Gift.\n\r",ch);
+        return;
+    }
+
+
+    if(ch->pcdata->breed == gift_table[gn].breed) pass=TRUE;
+    if(ch->pcdata->auspice == gift_table[gn].auspice) pass=TRUE;
+    if(ch->pcdata->tribe == gift_table[gn].tribe) pass=TRUE;
+
+    if(!pass)
+    {
+        send_to_char("You were not born into this gift.\n\r",ch);
+        return;
+    }
+
+    /*
+     * Locate targets.
+     */
+    victim  = NULL;
+    obj     = NULL;
+    vo      = NULL;
+    target  = TARGET_NONE;
+
+    switch ( skill_table[sn].target )
+    {
+    default:
+    bug( "Do_cast: bad target for sn %d.", sn );
+    return;
+
+    case TAR_IGNORE:
+    break;
+
+    case TAR_CHAR_OFFENSIVE:
+    if ( arg2[0] == '\0' )
+    {
+        if ( ( victim = ch->fighting ) == NULL )
+        {
+        send_to_char( "Beseech this upon whom?\n\r", ch );
+        return;
+        }
+    }
+    else
+    {
+        if ( ( victim = get_char_room( ch, target_name ) ) == NULL )
+        {
+        send_to_char( "They aren't here.\n\r", ch );
+        return;
+        }
+    }
+
+    if ( IS_AFFECTED2(ch, AFF2_MIST) || is_affected(ch,gsn_shadowform))
+    {
+        send_to_char("Not in this form you don't!\n\r",ch);
+        return;
+    }
+    if (IS_SET(victim->act,PLR_SPEC) && !IS_NPC(victim))
+    {
+        send_to_char("I don't think so!\n\r",ch);
+        return;
+    }
+
+    if ( !IS_NPC(victim) && !IS_NPC(ch) && !IN_LEVEL(ch, victim))
+    {
+        send_to_char( "You cannot harm them, they are not in level to you!\n\r", ch );
+        return;
+    }
+
+    if ( !IS_NPC(ch) )
+    {
+
+            if (is_safe(ch,victim) && victim != ch)
+        {
+        send_to_char("Not on that target.\n\r",ch);
+        return;
+        }
+
+        if ( !IS_NPC(victim) && !IS_NPC(ch) && !IN_LEVEL(ch, victim))
+        {
+            send_to_char( "You cannot harm them, they are not in level to you!\n\r", ch );
+            return;
+        }
+
+    }
+
+    if ( IS_AFFECTED(ch, AFF_CHARM) && ch->master == victim )
+    {
+        send_to_char( "You can't do that on your own follower.\n\r",
+        ch );
+        return;
+    }
+
+    vo = (void *) victim;
+    target = TARGET_CHAR;
+    break;
+
+    case TAR_CHAR_DEFENSIVE:
+    if ( arg2[0] == '\0' )
+    {
+        victim = ch;
+    }
+    else
+    {
+        if ( ( victim = get_char_room( ch, target_name ) ) == NULL )
+        {
+        send_to_char( "They aren't here.\n\r", ch );
+        return;
+        }
+    }
+
+    vo = (void *) victim;
+    target = TARGET_CHAR;
+    break;
+
+    case TAR_CHAR_SELF:
+    if ( arg2[0] != '\0' && !is_name( target_name, ch->name ) )
+    {
+        send_to_char( "You cannot grant this to another.\n\r", ch );
+        return;
+    }
+
+    vo = (void *) ch;
+    target = TARGET_CHAR;
+    break;
+
+    case TAR_OBJ_INV:
+    if ( arg2[0] == '\0' )
+    {
+        send_to_char( "What shall this be used upon?\n\r", ch );
+        return;
+    }
+
+    if ( ( obj = get_obj_carry( ch, target_name, ch ) ) == NULL )
+    {
+        send_to_char( "You are not carrying that.\n\r", ch );
+        return;
+    }
+
+    vo = (void *) obj;
+    target = TARGET_OBJ;
+    break;
+
+    case TAR_OBJ_CHAR_OFF:
+    if (arg2[0] == '\0')
+    {
+        if ((victim = ch->fighting) == NULL)
+        {
+        send_to_char("Do this to whom or what?\n\r",ch);
+        return;
+        }
+
+        target = TARGET_CHAR;
+    }
+    else if ((victim = get_char_room(ch,target_name)) != NULL)
+    {
+        target = TARGET_CHAR;
+    }
+
+    if (target == TARGET_CHAR) /* check the sanity of the attack */
+    {
+        if(is_safe_spell(ch,victim,FALSE) && victim != ch)
+        {
+        send_to_char("Not on that target.\n\r",ch);
+        return;
+        }
+
+            if ( IS_AFFECTED(ch, AFF_CHARM) && ch->master == victim )
+            {
+                send_to_char( "You can't do that on your own follower.\n\r",
+                    ch );
+                return;
+            }
+
+        vo = (void *) victim;
+    }
+    else if ((obj = get_obj_here(ch,target_name)) != NULL)
+    {
+        vo = (void *) obj;
+        target = TARGET_OBJ;
+    }
+    else
+    {
+        send_to_char("You don't see that here.\n\r",ch);
+        return;
+    }
+    break;
+
+    case TAR_OBJ_CHAR_DEF:
+        if (arg2[0] == '\0')
+        {
+            vo = (void *) ch;
+            target = TARGET_CHAR;
+        }
+        else if ((victim = get_char_room(ch,target_name)) != NULL)
+        {
+            vo = (void *) victim;
+            target = TARGET_CHAR;
+    }
+    else if ((obj = get_obj_carry(ch,target_name,ch)) != NULL)
+    {
+        vo = (void *) obj;
+        target = TARGET_OBJ;
+    }
+    else
+    {
+        send_to_char("You don't see that here.\n\r",ch);
+        return;
+    }
+    break;
+    }
+
+    WAIT_STATE( ch, skill_table[sn].beats );
+
+    (*skill_table[sn].spell_fun) ( sn, ch->level, ch, vo,target);
+
+
+    if ((skill_table[sn].target == TAR_CHAR_OFFENSIVE
+    ||   (skill_table[sn].target == TAR_OBJ_CHAR_OFF && target == TARGET_CHAR))
+    &&   victim != ch
+    &&   victim->master != ch)
+    {
+    CHAR_DATA *vch;
+    CHAR_DATA *vch_next;
+
+    for ( vch = ch->in_room->people; vch; vch = vch_next )
+    {
+        vch_next = vch->next_in_room;
+        if ( victim == vch && victim->fighting == NULL )
+        {
+        multi_hit( victim, ch, TYPE_UNDEFINED );
+        break;
+        }
+    }
+    }
+    return;
+}
+
+void do_gifts(CHAR_DATA *ch, char *argument)
+{
+    char buf[MAX_STRING_LENGTH];
+
+
+    if(IS_NPC(ch)) return;
+
+    if(ch->race != race_lookup("garou"))
+    {
+        send_to_char("You are not one of Gaia's chosen!\n\r",ch);
+        return;
+    }
+
+    
+    int i;
+    int col = 1;
+    BUFFER *buffer;
+    buffer = new_buf();
+    if (str_cmp(argument, "all"))
+	{
+		send_to_char("Your Gifts from Gaia:\n\r",ch);
+		
+		for (i = 0; i < MAX_GIFT; i++)
+		{
+			if (ch->pcdata->gift[i] == 0)
+				continue;
+			else {
+				if (col < 2)
+                    if (gift_table[ch->pcdata->gift[i]].level == 0)
+                    sprintf(buf, "{r%-30s{x", capitalize(gift_table[ch->pcdata->gift[i]].name));
+                    else
+					sprintf(buf, "%-30s", capitalize(gift_table[ch->pcdata->gift[i]].name));
+				else if (col == 2)
+				{
+                    if (gift_table[ch->pcdata->gift[i]].level == 0)
+                    sprintf(buf, "{r%-30s{x\n\r", capitalize(gift_table[ch->pcdata->gift[i]].name));
+                    else
+					sprintf(buf, "%s\n\r", capitalize(gift_table[ch->pcdata->gift[i]].name));
+					col = 0;
+					}
+				
+				add_buf(buffer, buf);
+				col++;
+			}
+		}
+	} else {
+	    send_to_char("Gifts you may learn:\n\r",ch);
+		
+		for (i = 1; i < MAX_GIFTS_CODED; i++)
+		{
+			if (ch->pcdata->rank < gift_table[i].rank ||
+					(gift_table[i].breed != ch->pcdata->breed &&
+					gift_table[i].auspice != ch->pcdata->auspice &&
+					gift_table[i].tribe != ch->pcdata->tribe))
+				continue;
+				int gn;
+				bool learned = FALSE;
+				for (gn = 0; gn < MAX_GIFT; gn++)
+					if (ch->pcdata->gift[gn] == i) learned = TRUE;
+				
+				if (learned)
+					continue;
+					
+			else {
+				if (col < 2)
+                {
+                    if (gift_table[i].level == 0)
+                    sprintf(buf, "{r%-30s{x", capitalize(gift_table[i].name));
+                    else
+					sprintf(buf, "%-30s", capitalize(gift_table[i].name));
+				}
+                    else
+				{
+                    if (gift_table[i].level == 0)
+                    sprintf(buf, "{r%-30s{x\n\r", capitalize(gift_table[i].name));
+                    else
+					sprintf(buf, "%s\n\r", capitalize(gift_table[i].name));
+					col = 0;
+					}
+				
+				add_buf(buffer, buf);
+				col++;
+			}
+		}
+	}
+    
+    page_to_char(buf_string(buffer), ch);
+    send_to_char("\n\rNote: Gifts marked in {rred{x are not currently coded.\n\r", ch);
+    return;
+}

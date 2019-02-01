@@ -737,6 +737,7 @@ void do_freebie(CHAR_DATA *ch, char *argument)
 {
     char buf[MAX_STRING_LENGTH];
     char arg[MAX_INPUT_LENGTH];
+    char arg2[MIL];
     int max_unlock = ch->remorts / 10;
     int unlockpoints = max_unlock - ch->unlocksspent;
     int i, count=0, cost=0, step=0, tolearn=0;
@@ -747,6 +748,7 @@ void do_freebie(CHAR_DATA *ch, char *argument)
 	int gn = 0;
 
     argument = one_argument( argument, arg );
+    argument = one_argument( argument, arg2 );
 
     if (IS_NPC(ch)) return;
 
@@ -816,8 +818,12 @@ void do_freebie(CHAR_DATA *ch, char *argument)
         send_to_char("Gnosis:                  Current Rating*2\n\r",ch);
         send_to_char("Renown:                  Current Rating*2 + 10 Temp Renown.\n\r",ch);
         send_to_char("Gifts:                   Rank of Gift * 3\n\r",ch);
-        send_to_char("\n\r{WNote:{x Gift name must be enclosed in '' quotes.\n\r", ch);
-        send_to_char("      ex: freebie 'pulse of the invisible'\n\r", ch);
+        send_to_char("\n\r", ch);
+        send_to_char("{WNote:{R Gifts do not follow the usual purchase syntax.{x\n\r", ch);
+        send_to_char("      {RYou must use the following syntax to purchase gifts.{x\n\r", ch);
+        send_to_char("      {R(Including '' quotes or () parentheses for mobile users.){x\n\r", ch);
+        send_to_char("      ex: freebie gift 'pulse of the invisible'\n\r", ch);
+        send_to_char("      ex: freebie gift (razor claws)\n\r", ch);
         }
         send_to_char("\n\rTo increase a trait type 'freebie <trait>'\n\rExample: freebie animal_ken\n\r",ch);
         sprintf(buf,"You have %d freebies remaining.\n\r",ch->freebie);
@@ -1123,11 +1129,13 @@ void do_freebie(CHAR_DATA *ch, char *argument)
             cost = ch->pcdata->renown[WISDOM]*2;
             step = 18;
         }
-		    
+		
+        if (!str_cmp(arg, "gift"))
+        {
 		for ( gn = 1; gn < MAX_GIFTS_CODED; gn++ )
 
 		{
-			if ( !str_cmp( arg, gift_table[gn].name ) )
+			if ( !str_cmp( arg2, gift_table[gn].name ) )
 			{
 				for (i = 0; i < MAX_GIFT; i++)
 				{
@@ -1187,7 +1195,7 @@ void do_freebie(CHAR_DATA *ch, char *argument)
 			break;
 			}
 		}
-		
+		}
 
     }
 

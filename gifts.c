@@ -991,6 +991,52 @@ void spell_gift_chimericalform( int sn, int level, CHAR_DATA *ch, void *vo, int 
 //intelligence + empathy (difficulty 5)
 //The garou can channel healing energy through her hands, easing the wounds of any living creature, even aggrevated. Does not work on the undead or spirits. (powerful healing affect)
 void spell_gift_motherstouch( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    CHAR_DATA *victim = (CHAR_DATA *) vo;
+    int heal;
+    int aggheal;
+    int dicesuccess;
+
+    if (ch->pcdata->gnosis[TEMP] < 1) {
+        send_to_char("You do not possess the spiritual reserves to activate this gift.\n\r", ch);
+        return;
+    }
+    
+    if( victim->race == race_lookup("MIB") ||
+        victim->race == race_lookup("spirit") ||
+        victim->race == race_lookup("wraith") ||
+        victim->race == race_lookup("bane") ||
+        victim->race == race_lookup("vampire") ||
+        victim->race == race_lookup("methuselah")) {
+        
+        send_to_char("The touch of Gaia will not heal this creature.\n\r", ch);
+        return;
+    }
+    
+    dicesuccess = godice(get_attribute(ch, INTELLIGENCE) + get_ability(ch, CSABIL_EMPATHY), 5);
+    ch->pcdata->gnosis[TEMP]--;
+    if (dicesuccess > 1)
+    {      
+        if ( ch != victim ) {
+            act("You lay hands upon $N and channel Gaia's love into healing their body.",ch,NULL,victim,TO_CHAR);
+            act("$n lays their hands upon $N and $N's wounds begin to close before your eyes!",ch,NULL,victim,TO_NOTVICT);
+            act("$n lays their hands upon you and your wounds begin to close before your eyes!", ch, NULL, victim, TO_VICT);
+            heal = dicesuccess * 1000;
+        } else
+        {
+            act("You feel Gaia's embrace and your wounds heal by the power of Mother's Touch.", ch, NULL, NULL, TO_CHAR);
+            act("$n closes their eyes for a moment and $s wounds begin to close before your eyes!", ch, NULL, NULL, TO_ROOM);
+            heal = dicesuccess * 500;
+        }
+        aggheal = heal/100;
+        victim->hit = UMIN( victim->hit + heal, victim->max_hit );
+        victim->agg_dam = UMAX(victim->agg - aggheal, 0);
+        update_pos( victim );
+       
+    } else {
+        send_to_char("You fail to channel Gaia's love through yourself.\n\r", ch);
+        return;
+    }
+    
     return;
 }
 //

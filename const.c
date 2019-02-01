@@ -2339,7 +2339,7 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
     &gsn_gift_chimericalform,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "mothers touch", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_motherstouch,  TAR_IGNORE, POS_STANDING, 
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_motherstouch,  TAR_CHAR_DEFENSIVE, POS_STANDING, 
     &gsn_gift_motherstouch,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "spirit speech", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },

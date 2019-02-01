@@ -7,14 +7,6 @@
 #include <string.h>
 #include <time.h>
 #include "merc.h"
-#include "interp.h"
-#include "music.h"
-#include "recycle.h"
-#include "tables.h"
-// Local definitions.
-int pulse_hit_gain args( ( CHAR_DATA *ch ) );
-int pulse_mana_gain args( ( CHAR_DATA *ch ) );
-int pulse_move_gain args( ( CHAR_DATA *ch ) );
 
 void spells_update (void) {
     CHAR_DATA *ch;
@@ -36,20 +28,6 @@ void spells_update (void) {
     if (IS_NPC(ch))
         continue;
         
-
-    
-/* Zelan's cheat patch code - updates to fix
-small errors without rewriting all the code. */
-
-if  (ch->max_quintessence  > 1)
-{
-int normq;
-int bonusq;
-
-normq = 100;
-bonusq = ch->pcdata->csbackgrounds[12]*10;
-ch->max_quintessence = (normq + bonusq);
-}
 //Making people being IT annoying. /*
 /* Disabling random code for now
 int r = arc4random_uniform(500);

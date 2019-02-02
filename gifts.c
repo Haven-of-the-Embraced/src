@@ -562,6 +562,12 @@ void spell_gift_porcupine( int sn, int level, CHAR_DATA *ch, void *vo, int targe
         send_to_char("The Goddess Luna reaches out and whaps you on the head and says '{WWhat fur?{x'\n\r",ch);
         return;
     }
+    if (ch->pcdata->gnosis[TEMP] < 1)
+    {
+        sendch("You do not possess the spiritual reserves to activate this gift.\n\r", ch);
+        return;
+        }
+	ch->pcdata->gnosis[TEMP]--;
 
     af.where     = TO_RESIST;
     af.type      = gsn_gift_porcupine;
@@ -619,19 +625,12 @@ void spell_gift_totemgift( int sn, int level, CHAR_DATA *ch, void *vo, int targe
 void spell_gift_haresleap( int sn, int level, CHAR_DATA *ch, void *vo, int target){
     AFFECT_DATA af;
     
-    if (ch->pcdata->gnosis[TEMP] < 1)
-    {
-        sendch("You do not possess the spiritual reserves to activate this gift.\n\r", ch);
-        return;
-        }
         
      if (is_affected(ch, gsn_gift_haresleap))
      {
         sendch("Your leaps are already enhanced by the Hare spirits.\n\r", ch);
         return;
         }
-    
-	ch->pcdata->gnosis[TEMP]--;
 	
     af.where        = TO_AFFECTS;
     af.type         = gsn_gift_haresleap;

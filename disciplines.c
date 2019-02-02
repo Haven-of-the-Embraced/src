@@ -6432,8 +6432,13 @@ void do_bloodofpotency(CHAR_DATA *ch, char *argument)
     if (dicesuccess == 1)
         dicesuccess++;
 
-    af.modifier = -(dicesuccess - 1);
-    af.duration = dicesuccess * (10*dicesuccess);
+    int genmod;
+    genmod = -(dicesuccess -1);
+    if ((ch->gen + genmod) < 4)
+        genmod = -(ch->gen - 4);
+        
+    af.modifier = genmod;
+    af.duration = (10*dicesuccess);
     af.where     = TO_AFFECTS;
     af.type      = gsn_bloodofpotency;
     af.level     = ch->pcdata->discipline[THAUMATURGY];
@@ -6444,9 +6449,9 @@ void do_bloodofpotency(CHAR_DATA *ch, char *argument)
     af.where    = TO_AFFECTS;
     af.type     = gsn_bloodofpotency;
     af.level    = ch->pcdata->discipline[THAUMATURGY];
-    af.duration = dicesuccess * (10*dicesuccess);
+    af.duration = (10*dicesuccess);
     af.location = APPLY_MAX_BLOOD;
-    af.modifier = 10*dicesuccess;
+    af.modifier = 10*(-genmod);
     af.bitvector    = 0;
     affect_to_char( ch, &af );
 

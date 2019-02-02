@@ -2455,8 +2455,8 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
     &gsn_gift_callforvengeance,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "falling touch", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_fallingtouch,  TAR_IGNORE, POS_STANDING, 
-    &gsn_gift_fallingtouch,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_fallingtouch,  TAR_CHAR_OFFENSIVE, POS_FIGHTING, 
+    &gsn_gift_fallingtouch,          SLOT( 0),        0,     12, "touch",             "!!Wearoffmsg!!",        "" },
 
      {   "inspiration", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
      { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_inspiration,  TAR_IGNORE, POS_STANDING, 

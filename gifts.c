@@ -1448,6 +1448,66 @@ void spell_gift_callforvengeance( int sn, int level, CHAR_DATA *ch, void *vo, in
 //dex + medicine diff victim’s stamin + athletics
 //sends their foe sprawling with a touch
 void spell_gift_fallingtouch( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    CHAR_DATA *victim = (CHAR_DATA *) vo;
+    int dicesuccess = 0;
+    int diff = 0;
+
+        if (IS_NPC(ch))
+                return;
+
+        if (ch == victim)
+        {
+                send_to_char("You wisely reconsider that.\n\r", ch );
+                return;
+        }
+
+    if(IS_AFFECTED2(ch,AFF2_MIST) || IS_AFFECTED2(victim,AFF2_MIST))
+    {
+        send_to_char("Your hand passes right through!\n\r",ch);
+        return;
+    }
+
+    if(victim->position == POS_SLEEPING || victim->position == POS_TORPOR)
+    {
+            send_to_char("They are already incapacitated!\n\r", ch );
+            return;
+    }
+
+    if (IS_NPC(victim))
+    {
+        diff = victim->level / 12;
+        if (diff < 4)
+            diff = 4;
+        if (diff > 9)
+            diff = 9;
+    } else
+    {
+        diff = get_attribute(victim, STAMINA) + get_ability(victim, CSABIL_ATHLETICS);
+    }
+    
+    dicesuccess = godice(get_attribute(ch, DEXTERITY) + ch->pcdata->csabilities[CSABIL_MEDICINE], diff);
+
+
+    if(dicesuccess <= 0)
+    {
+        act("You miss $N!", ch, NULL, victim, TO_CHAR);
+        act("$n tries to reach out and touch you and misses!", ch, NULL, victim, TO_VICT);
+        act("$n tries to reach out and touch $N, but misses.", ch, NULL, victim, TO_NOTVICT);
+        return;
+    }
+
+
+        act( "You reach out and touch $N, sending $M sprawling!", ch, NULL, victim, TO_CHAR );
+        act( "$n reaches out and touches you, and you are sent sprawling!", ch, NULL, victim, TO_VICT );
+        act( "$n reaches out and touches $N, sending $M sprawling!", ch, NULL, victim, TO_ROOM );
+
+    STOPPED(victim, UMAX(2, dicesuccess) * PULSE_VIOLENCE);
+
+    damage(ch, victim, dicesuccess*UMAX(5, ch->level/2), gsn_gift_fallingtouch, DAM_ENERGY, TRUE);
+    victim->position = POS_RESTING;
+    
+
+
     return;
 }
 
@@ -2393,7 +2453,7 @@ void do_beseech(CHAR_DATA *ch, char *argument)
     break;
     }
 
-    WAIT_STATE( ch, skill_table[sn].beats );
+    WAIT_STATE( ch, gift_table[gn].lag );
 
     (*skill_table[sn].spell_fun) ( sn, ch->level, ch, vo,target);
 

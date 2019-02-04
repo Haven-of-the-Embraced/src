@@ -594,8 +594,9 @@ void boot_db()
      */
     {
     long lhour, lday, lmonth;
-
-    lhour       = (current_time - 723290493)
+    
+    // 896255250 corresponds to approximately 800 years ago, to the hour.
+    lhour       = (current_time - 896255250)
             / (PULSE_TICK / PULSE_PER_SECOND);
     time_info.hour  = lhour  % 24;
     lday        = lhour  / 24;

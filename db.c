@@ -3826,6 +3826,122 @@ void do_memory( CHAR_DATA *ch, char *argument )
     return;
 }
 
+void do_showdump( CHAR_DATA *ch, char *argument )
+{
+    int count,count2,num_pcs,aff_count;
+    CHAR_DATA *fch;
+    MOB_INDEX_DATA *pMobIndex;
+    PC_DATA *pc;
+    OBJ_DATA *obj;
+    OBJ_INDEX_DATA *pObjIndex;
+    ROOM_INDEX_DATA *room;
+    EXIT_DATA *exit;
+    DESCRIPTOR_DATA *d;
+    AFFECT_DATA *af;
+    int vnum,nMatch = 0;
+    char *strtime;
+    char output[MSL];
+
+    /* report use of data structures */
+
+    num_pcs = 0;
+    aff_count = 0;
+    
+    strtime             = ctime( &current_time );
+    strtime[strlen(strtime)-1]  = '\0';
+    sprintf(output, "-------- Memory Dump: %s --------\n", strtime);
+    sendch(output, ch);
+    /* mobile prototypes */
+    sprintf(output,"MobProt %4d (%8u bytes)\n",
+    top_mob_index, top_mob_index * (sizeof(*pMobIndex)));
+    sendch(output, ch);
+
+    /* mobs */
+    count = 0;  count2 = 0;
+    for (fch = char_list; fch != NULL; fch = fch->next)
+    {
+    count++;
+    if (fch->pcdata != NULL)
+        num_pcs++;
+    for (af = fch->affected; af != NULL; af = af->next)
+        aff_count++;
+    }
+    for (fch = char_free; fch != NULL; fch = fch->next)
+    count2++;
+
+    sprintf(output,"Mobs    %4d (%8u bytes), %2d free (%u bytes)\n",
+    count, count * (sizeof(*fch)), count2, count2 * (sizeof(*fch)));
+    sendch(output, ch);
+
+    /* pcdata */
+    count = 0;
+    for (pc = pcdata_free; pc != NULL; pc = pc->next)
+    count++;
+
+    sprintf(output,"Pcdata  %4d (%8u bytes), %2d free (%u bytes)\n",
+    num_pcs, num_pcs * (sizeof(*pc)), count, count * (sizeof(*pc)));
+    sendch(output, ch);
+
+    /* descriptors */
+    count = 0; count2 = 0;
+    for (d = descriptor_list; d != NULL; d = d->next)
+    count++;
+    for (d= descriptor_free; d != NULL; d = d->next)
+    count2++;
+
+    sprintf(output, "Descs  %4d (%8u bytes), %2d free (%u bytes)\n",
+    count, count * (sizeof(*d)), count2, count2 * (sizeof(*d)));
+    sendch(output, ch);
+
+    /* object prototypes */
+    for ( vnum = 0; nMatch < top_obj_index; vnum++ )
+        if ( ( pObjIndex = get_obj_index( vnum ) ) != NULL )
+        {
+        for (af = pObjIndex->affected; af != NULL; af = af->next)
+        aff_count++;
+            nMatch++;
+        }
+
+    sprintf(output,"ObjProt %4d (%8u bytes)\n",
+    top_obj_index, top_obj_index * (sizeof(*pObjIndex)));
+    sendch(output, ch);
+
+    /* objects */
+    count = 0;  count2 = 0;
+    for (obj = object_list; obj != NULL; obj = obj->next)
+    {
+    count++;
+    for (af = obj->affected; af != NULL; af = af->next)
+        aff_count++;
+    }
+    for (obj = obj_free; obj != NULL; obj = obj->next)
+    count2++;
+
+    sprintf(output,"Objs    %4d (%8u bytes), %2d free (%u bytes)\n",
+    count, count * (sizeof(*obj)), count2, count2 * (sizeof(*obj)));
+    sendch(output, ch);
+
+    /* affects */
+    count = 0;
+    for (af = affect_free; af != NULL; af = af->next)
+    count++;
+
+    sprintf(output,"Affects %4d (%8u bytes), %2d free (%u bytes)\n",
+    aff_count, aff_count * (sizeof(*af)), count, count * (sizeof(*af)));
+    sendch(output, ch);
+
+    /* rooms */
+    sprintf(output,"Rooms   %4d (%8u bytes)\n",
+    top_room, top_room * (sizeof(*room)));
+    sendch(output, ch);
+
+     /* exits */
+    sprintf(output,"Exits   %4d (%8u bytes)\n",
+    top_exit, top_exit * (sizeof(*exit)));
+    sendch(output, ch);
+    return;
+}
+
 void do_dump( CHAR_DATA *ch, char *argument )
 {
     int count,count2,num_pcs,aff_count;
@@ -3840,16 +3956,20 @@ void do_dump( CHAR_DATA *ch, char *argument )
     AFFECT_DATA *af;
     FILE *fp;
     int vnum,nMatch = 0;
+    char *strtime;
 
     /* open file */
     fclose(fpReserve);
-    fp = fopen("mem.dmp","w");
+    fp = fopen("../memdump/mem.dmp","w");
 
     /* report use of data structures */
 
     num_pcs = 0;
     aff_count = 0;
-
+    
+    strtime             = ctime( &current_time );
+    strtime[strlen(strtime)-1]  = '\0';
+    fprintf(fp, "-------- Memory Dump: %s --------\n", strtime);
     /* mobile prototypes */
     fprintf(fp,"MobProt %4d (%8u bytes)\n",
     top_mob_index, top_mob_index * (sizeof(*pMobIndex)));
@@ -3934,7 +4054,7 @@ void do_dump( CHAR_DATA *ch, char *argument )
     fclose(fp);
 
     /* start printing out mobile data */
-    fp = fopen("mob.dmp","w");
+    fp = fopen("../memdump/mob.dmp","w");
 
     fprintf(fp,"\nMobile Analysis\n");
     fprintf(fp,  "---------------\n");
@@ -3950,7 +4070,7 @@ void do_dump( CHAR_DATA *ch, char *argument )
     fclose(fp);
 
     /* start printing out object data */
-    fp = fopen("obj.dmp","w");
+    fp = fopen("../memdump/obj.dmp","w");
 
     fprintf(fp,"\nObject Analysis\n");
     fprintf(fp,  "---------------\n");

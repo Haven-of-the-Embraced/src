@@ -581,6 +581,7 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "debug",      do_debug},
     { "debugger",   do_debugger},
     { "debugmsg",   do_debugmsg},
+    { "showdump",   do_showdump},
     { "memory",     do_memory},
     { "mwhere",     do_mwhere},
     { "owhere",     do_owhere},

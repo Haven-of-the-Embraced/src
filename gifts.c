@@ -1320,7 +1320,7 @@ void spell_gift_callofthewyld( int sn, int level, CHAR_DATA *ch, void *vo, int t
         af.where     = TO_AFFECTS;
         af.type      = gsn_gift_callofthewyld;
         af.level     = level;
-        af.duration  = level;
+        af.duration  = 5 + level/4;
         af.location  = APPLY_CS_STR;
         af.modifier  = 1;
         af.bitvector = 0;
@@ -1329,7 +1329,7 @@ void spell_gift_callofthewyld( int sn, int level, CHAR_DATA *ch, void *vo, int t
         af.where     = TO_AFFECTS;
         af.type      = gsn_gift_callofthewyld;
         af.level     = level;
-        af.duration  = level;
+        af.duration  = 5 + level/4;
         af.location  = APPLY_CS_STA;
         af.modifier  = 2;
         af.bitvector = 0;
@@ -1338,7 +1338,7 @@ void spell_gift_callofthewyld( int sn, int level, CHAR_DATA *ch, void *vo, int t
         af.where     = TO_AFFECTS;
         af.type      = gsn_gift_callofthewyld;
         af.level     = level;
-        af.duration  = level;
+        af.duration  = 5 + level/4;
         af.location  = APPLY_AC;
         af.modifier  = -(level);
         af.bitvector = 0;
@@ -1347,7 +1347,7 @@ void spell_gift_callofthewyld( int sn, int level, CHAR_DATA *ch, void *vo, int t
         af.where     = TO_AFFECTS;
         af.type      = gsn_gift_callofthewyld;
         af.level     = level;
-        af.duration  = level;
+        af.duration  = 5 + level/4;
         af.location  = APPLY_SAVES;
         af.modifier  = -(level/10);
         af.bitvector = 0;

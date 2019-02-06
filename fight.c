@@ -1834,67 +1834,70 @@ if (DEBUG_MESSAGES || IS_DEBUGGING(ch)){
 
 
 
-		if(tohit < 1) 
-		{ // Miss.
-			d10_damage(ch, victim, 0, modifier, dt, dam_type, TRUE);
-			tail_chain( );
-			return;
-		} 
+    if(tohit < 1) 
+    { // Miss.
+        d10_damage(ch, victim, 0, modifier, dt, dam_type, TRUE);
+        tail_chain( );
+        return;
+    } 
 
-		//Hit! Calculate dicepool for damage.
-			//Exceptional rolls on hit add to damage dice. 
-		//if (tohit > 4)
-		//	dice += (tohit - 4);
+    //Hit! Calculate dicepool for damage.
+        //Exceptional rolls on hit add to damage dice. 
+    //if (tohit > 4)
+    //	dice += (tohit - 4);
 
-		//Garou rage regeneration. Placed here so it only fires on
-		//successful hit.
-		if (!IS_NPC(ch) && ch->race == race_lookup("garou"))
-		{
-			int hppercent;	
-			
-			//Calc HP percent. more injured = less difficulty.
-			hppercent = ch->hit*10 / ch->max_hit;
-			if (hppercent > 6)
-				hppercent = 6;
-		    if (hppercent < 2)
-				hppercent = 2;
-			// Cake in the code Ohno!
-			//1% chance of rolling primal per hit, if less than full rage.
-			// primal diff 4 + hpperc min/max 6/10 
-			if( ch->pcdata->rage[TEMP] < ch->pcdata->rage[PERM] && number_range(1, 200) == 42 &&
-				godice(ch->pcdata->primal_urge,4+hppercent))
-       			 {
-		        cprintf(ch,"You let loose a vicious howl as your bloodlust takes over!\n\r");
-		        act("$n lets loose a vicious howl as $s bloodlust takes over!", ch, NULL, NULL, TO_ROOM);
-		        ch->pcdata->rage[TEMP]++;
-		        if(ch->pcdata->rage[TEMP] > ch->pcdata->rage[PERM])
-				ch->pcdata->rage[TEMP] = ch->pcdata->rage[PERM];
-		        }
-		}
+    //Garou rage regeneration. Placed here so it only fires on
+    //successful hit.
+    if (!IS_NPC(ch) && ch->race == race_lookup("garou"))
+    {
+        int hppercent;	
+
+        //Calc HP percent. more injured = less difficulty.
+        hppercent = ch->hit*10 / ch->max_hit;
+        if (hppercent > 6)
+            hppercent = 6;
+        if (hppercent < 2)
+            hppercent = 2;
+        // Cake in the code Ohno!
+        //1% chance of rolling primal per hit, if less than full rage.
+        // primal diff 4 + hpperc min/max 6/10 
+        if( ch->pcdata->rage[TEMP] < ch->pcdata->rage[PERM] && number_range(1, 200) == 42 &&
+            godice(ch->pcdata->primal_urge,4+hppercent))
+             {
+            cprintf(ch,"You let loose a vicious howl as your bloodlust takes over!\n\r");
+            act("$n lets loose a vicious howl as $s bloodlust takes over!", ch, NULL, NULL, TO_ROOM);
+            ch->pcdata->rage[TEMP]++;
+            if(ch->pcdata->rage[TEMP] > ch->pcdata->rage[PERM])
+            ch->pcdata->rage[TEMP] = ch->pcdata->rage[PERM];
+            }
+    }
 
 
 
-		//Increase skill?
-		if (sn != -1 && number_percent() > 95 )
-			check_improve(ch,sn,TRUE,3);
+    //Increase skill?
+    if (sn != -1 && number_percent() > 95 )
+        check_improve(ch,sn,TRUE,3);
 
-        if (wield)
-		{
-			//Weapon bonus computed as 1/20th of weapon dice. 
-         dice += (wield->value[1])/20;
-		 
-			//Two handed weapons potentially add up to 2 dice.
-        if (IS_WEAPON_STAT(wield,WEAPON_TWO_HANDS))
-		dice += number_range(0, 2);
-		
-			// Sharp weapons potentially add up to 1 die
-		if (IS_WEAPON_STAT(wield, WEAPON_SHARP))
-			dice += number_range(0, 1);	
-			
-		} 
-		
-		if (!wield && ch->race == race_lookup("garou") && is_affected(ch, gsn_claws))
-            dice += 2;
+    if (wield)
+    {
+        //Weapon bonus computed as 1/20th of weapon dice. 
+     dice += (wield->value[1])/20;
+
+        //Two handed weapons potentially add up to 2 dice.
+    if (IS_WEAPON_STAT(wield,WEAPON_TWO_HANDS))
+    dice += number_range(0, 2);
+
+        // Sharp weapons potentially add up to 1 die
+    if (IS_WEAPON_STAT(wield, WEAPON_SHARP))
+        dice += number_range(0, 1);	
+
+    } 
+
+    if (!wield && ch->race == race_lookup("garou") && is_affected(ch, gsn_claws))
+        dice += 2;
+    
+    if (!wield && is_affected(ch, gsn_gift_razorclaws))
+        dice += 1;
 			
 		if (!IS_NPC(ch) && IS_VAMP(ch))
 		{

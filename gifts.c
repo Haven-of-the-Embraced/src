@@ -1548,9 +1548,9 @@ void spell_gift_razorclaws( int sn, int level, CHAR_DATA *ch, void *vo, int targ
     af.where      = TO_AFFECTS;
     af.type   = gsn_gift_razorclaws;
     af.level      = ch->level;
-    af.duration  = 24;
+    af.duration  = 5 + level / 4;
     af.location  = APPLY_DAMROLL;
-    af.modifier  = ch->level * 3 / 2;
+    af.modifier  = ch->level;
     af.bitvector = 0;
     affect_to_char( ch, &af );
 /*

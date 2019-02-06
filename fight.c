@@ -844,7 +844,7 @@ void one_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt )
     else
     {
     if (sn != -1)
-        check_improve(ch,sn,TRUE,9);
+        check_improve(ch,sn,TRUE,15);
     if ( wield != NULL )
     {
         if (wield->pIndexData->new_format)
@@ -1875,8 +1875,7 @@ if (DEBUG_MESSAGES || IS_DEBUGGING(ch)){
 
 
     //Increase skill?
-    if (sn != -1 && number_percent() > 95 )
-        check_improve(ch,sn,TRUE,3);
+        check_improve(ch,sn,TRUE,15);
 
     if (wield)
     {

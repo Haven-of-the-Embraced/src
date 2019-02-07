@@ -2460,7 +2460,7 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
 
      {   "inspiration", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
      { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_inspiration,  TAR_IGNORE, POS_STANDING, 
-    &gsn_gift_inspiration,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+    &gsn_gift_inspiration,          SLOT( 0),        0,     12, "",             "Your determination and resolve fade.",        "" },
 
      {   "spirit of the fray", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
      { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_spiritofthefray,  TAR_IGNORE, POS_STANDING, 

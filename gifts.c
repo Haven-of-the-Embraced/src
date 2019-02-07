@@ -1519,8 +1519,58 @@ void spell_gift_fallingtouch( int sn, int level, CHAR_DATA *ch, void *vo, int ta
 //any allies who can see the ahroun receive one auto success on all wp rolls made during the scene (not the ahroun who did the gift gets it)
 //
 void spell_gift_inspiration( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    AFFECT_DATA af;
+    CHAR_DATA *gch;
+    int glory;
+
+    act( "Your prowess as a True Warrior shines through and inspires your pack to greatness!", ch, NULL, NULL, TO_CHAR );
+    
+    glory = ch->pcdata->renown[GLORY];
+    if (glory < 2)
+        glory = 2;
+    
+    for ( gch = ch->in_room->people; gch != NULL; gch = gch->next_in_room )
+    {
+        if ( gch == ch || is_affected(gch, gsn_gift_inspiration) || gch->race != race_lookup("garou") )
+            continue;
+            act( "$N catches sight of you and seems revitalized and inspired!", ch, NULL, gch, TO_CHAR );
+            act( "$N catches sight of $n and seems revitalized and inspired!", ch, NULL, gch, TO_NOTVICT );
+            act( "The sight of $n strengthens your resolve and fills you with righteous fury!", ch, NULL, gch, TO_VICT );
+            
+            if (gch->pcdata->rage[TEMP] < gch->pcdata->rage[PERM])
+                gch->pcdata->rage[TEMP] = gch->pcdata->rage[PERM];
+            
+        af.where     = TO_AFFECTS;
+        af.type      = gsn_gift_inspiration;
+        af.level     = glory;
+        af.duration  = 5 + glory/2;
+        af.location  = APPLY_CS_STR;
+        af.modifier  = 1;
+        af.bitvector = 0;
+        affect_to_char( gch, &af );
+
+        af.where     = TO_AFFECTS;
+        af.type      = gsn_gift_inspiration;
+        af.level     = glory;
+        af.duration  = 5 + glory/2;
+        af.location  = APPLY_CS_STA;
+        af.modifier  = 2;
+        af.bitvector = 0;
+        affect_to_char( gch, &af );
+
+        af.where     = TO_AFFECTS;
+        af.type      = gsn_gift_inspiration;
+        af.level     = glory;
+        af.duration  = 5 + glory/2;
+        af.location  = APPLY_AC;
+        af.modifier  = -(glory*20);
+        af.bitvector = 0;
+        affect_to_char( gch, &af );
+    }
+
     return;
 }
+
 //“Razor Claws”
 //one rage pt
 //cat spirit

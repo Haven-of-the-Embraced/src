@@ -1523,6 +1523,12 @@ void spell_gift_inspiration( int sn, int level, CHAR_DATA *ch, void *vo, int tar
     CHAR_DATA *gch;
     int glory;
 
+        if (ch->pcdata->gnosis[TEMP] < 1) {
+        send_to_char("You do not possess the spiritual reserves to activate this gift.\n\r", ch);
+        return;
+    }
+    
+    ch->pcdata->gnosis[TEMP]--;
     act( "Your prowess as a True Warrior shines through and inspires your pack to greatness!", ch, NULL, NULL, TO_CHAR );
     
     glory = ch->pcdata->renown[GLORY];

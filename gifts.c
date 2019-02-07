@@ -1314,7 +1314,7 @@ void spell_gift_callofthewyld( int sn, int level, CHAR_DATA *ch, void *vo, int t
             continue;
         if(gch != ch)
         {
-            act( "$N raises $S head and joins $n in a savage howl!", ch, NULL, gch, TO_ROOM );
+            act( "$N raises $S head and joins $n in a savage howl!", ch, NULL, gch, TO_NOTVICT );
             act( "You feel invigorated by $n's howl and join in the praise to Luna.", ch, NULL, gch, TO_VICT );
         }
         af.where     = TO_AFFECTS;

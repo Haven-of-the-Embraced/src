@@ -843,7 +843,7 @@ void one_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt )
 
     else
     {
-    if (sn != -1 && number_percent() > 50)
+    if (sn != -1 && number_percent() < 25)
         check_improve(ch,sn,TRUE,35);
     if ( wield != NULL )
     {
@@ -1875,7 +1875,7 @@ if (DEBUG_MESSAGES || IS_DEBUGGING(ch)){
 
 
     //Increase skill?
-    if (sn != -1 && number_percent() > 50)
+    if (sn != -1 && number_percent() < 25)
         check_improve(ch,sn,TRUE,35);
 
     if (wield)

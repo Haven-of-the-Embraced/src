@@ -3705,6 +3705,7 @@ extern sh_int  gsn_gift_tongues;
 extern sh_int  gsn_gift_attunement;
 extern sh_int  gsn_gift_doppelganger;
 extern sh_int  gsn_gift_commandtheblaze;
+extern sh_int  gsn_gift_redirectpain;
 
 
 /* new garou stuff */

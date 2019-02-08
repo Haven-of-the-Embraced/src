@@ -2781,6 +2781,10 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
      {   "command the blaze", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
      { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_commandtheblaze,  TAR_IGNORE, POS_STANDING, 
     &gsn_gift_commandtheblaze,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+    
+    {   "redirect pain", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_redirectpain,  TAR_IGNORE, POS_STANDING, 
+    &gsn_gift_redirectpain,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     
 

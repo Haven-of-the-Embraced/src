@@ -467,6 +467,7 @@ sh_int  gsn_gift_tongues;
 sh_int  gsn_gift_attunement;
 sh_int  gsn_gift_doppelganger;
 sh_int  gsn_gift_commandtheblaze;
+sh_int  gsn_gift_redirectpain;
 
 
 /*

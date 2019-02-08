@@ -1128,7 +1128,7 @@ const struct    gift_type   gift_table  [MAX_GIFTS_CODED]  =
 /*  {   name,       min level,  lag delt,   chance to fail,
         breed required,     auspice required,   tribe required,
         renown required, rage required}, */
-// Smell of Man and Redirect Pain excluded from table.
+// Smell of Man excluded from table.
 //      name                      		level  lag fail   breed   auspice   tribe    rank   rage 
     {   NULL,                       	0,     0,  0,     0,      0,          0,        0,   0},
     {   "Staredown",                	1,     24, 0,     HOMID,  0,          0,        2,   0},
@@ -1293,6 +1293,7 @@ const struct    gift_type   gift_table  [MAX_GIFTS_CODED]  =
     {   "attunement", 					0,     24, 0,     0,      0,          WARDERSOFMEN, 4,   0},
     {   "doppelganger", 				0,     24, 0,     0,      0,          WARDERSOFMEN, 4,   0},
     {   "command the blaze",			0,     24, 0,     0,      0,          WARDERSOFMEN, 5,   0},
+    {   "redirect pain",                0,     24, 0,     0,      0,          FENRIR,   3,   0},
     {   NULL,                        	0,       0,  0,     0,      0,          0,      0,   0}
     };
 

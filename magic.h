@@ -315,4 +315,5 @@ DECLARE_SPELL_FUN(spell_gift_tongues);
 DECLARE_SPELL_FUN(spell_gift_attunement);
 DECLARE_SPELL_FUN(spell_gift_doppelganger);
 DECLARE_SPELL_FUN(spell_gift_commandtheblaze);
+DECLARE_SPELL_FUN(spell_gift_redirectpain);
 

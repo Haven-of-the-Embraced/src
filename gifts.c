@@ -2054,28 +2054,54 @@ void spell_gift_catfeet( int sn, int level, CHAR_DATA *ch, void *vo, int target 
 }
 
 
+// Fenrir
+//Rank 1
 
-
+// Hunters Harmony
+// charisma + primal-urge diff 6
+// Allows the garou to convey complex battle concepts to pack members.
+// buff that boosts pack bonus.
 void spell_gift_huntersharmony( int sn, int level, CHAR_DATA *ch, void *vo, int target){
     return;
 }
 
+// Visage of Fenris
+// charisma + intimidation diff 6
+// Foes flinch and lose a point of initiative.
+// Majesty-like effect that causes mobs to attack someone else first.
 void spell_gift_visageoffenris( int sn, int level, CHAR_DATA *ch, void *vo, int target){
     return;
 }
+// Rank 2
 
+//Halt the Cowards Flight
+// charisma + intimidation diff target wp
+// Stop mobs from fleeing, possibly slow them down in combat
 void spell_gift_haltthecowardsflight( int sn, int level, CHAR_DATA *ch, void *vo, int target){
     return;
 }
 
+// Sense Guilt
+// perception + empathy diff 8
+// Reveals guilt of the target. No idea for codewise.
 void spell_gift_senseguilt( int sn, int level, CHAR_DATA *ch, void *vo, int target){
     return;
 }
 
+//Rank 3
+
+//Might of Thor
+// 1 gnosis, 1 rage
+// Doubles strength for one turn, wearoff causes -1 to physical attributes
 void spell_gift_mightofthor( int sn, int level, CHAR_DATA *ch, void *vo, int target){
     return;
 }
-
+// Redirect Pain
+// 1 rage
+// aura, reduces damage by 1/2, 1/2 damage gets sent back.
+void spell_gift_redirectpain( int sh, int level, CHAR_DATA *ch, void *vo, int target) {
+	return;
+}
 void spell_gift_berserkerssong( int sn, int level, CHAR_DATA *ch, void *vo, int target){
     return;
 }

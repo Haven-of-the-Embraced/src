@@ -2626,7 +2626,7 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
     {
         send_to_char( "{WSyntax is : {wflagfind <obj/mob/room> <type> <flag>\n\r", ch );
         send_to_char( "{WObj types : {wextra, wear, affect, damage, type, weapon, special, spell\n\r",ch);
-        send_to_char( "{WMob types : {wrace, shop, affect\n\r",ch);
+        send_to_char( "{WMob types : {wrace, shop, affect, affect2\n\r",ch);
         send_to_char( "{WRoom types: {wsector, room\n\r",ch);
         return;
     }
@@ -2642,6 +2642,24 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                         if (!str_prefix(arg3, affect_flags[i].name))
                         {
                             affflag = affect_flags[i].bit;
+                            bitfound = TRUE;
+                    }
+                }
+                if (!bitfound)
+                    {sprintf(buf, "Bit '%s' not found.\n\r", arg3);
+                    sendch(buf, ch);
+                    return;
+                }
+            }
+
+                    if(!str_prefix(arg2, "affect2"))
+            {
+                bool bitfound = FALSE;
+                for (i = 0; affect2_flags[i].name != NULL; i++)
+                    {
+                        if (!str_prefix(arg3, affect2_flags[i].name))
+                        {
+                            affflag = affect2_flags[i].bit;
                             bitfound = TRUE;
                     }
                 }
@@ -2684,6 +2702,14 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                 }
 
                 if(!str_prefix(arg2, "affect") && IS_AFFECTED(pMobIndex, affflag))
+                {
+                    found = TRUE;
+                    count++;
+                    sprintf( buf, "%s(%3d) [%5d] %s\n\r",
+                    get_char_world(ch,pMobIndex->player_name) ? "*" : " ",count, pMobIndex->vnum, pMobIndex->short_descr);
+                    add_buf(buffer,buf);
+                }
+                if(!str_prefix(arg2, "affect2") && IS_AFFECTED2(pMobIndex, affflag))
                 {
                     found = TRUE;
                     count++;

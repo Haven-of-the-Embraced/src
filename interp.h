@@ -541,8 +541,6 @@ DECLARE_DO_FUN( do_contact);
 DECLARE_DO_FUN( do_xp_boost);
 DECLARE_DO_FUN( do_fatamorgana);
 DECLARE_DO_FUN( do_ignis_fatuus);
-// New dice code
-DECLARE_DO_FUN( do_newdice);
 /*New code by Sengir*/
 //DECLARE_DO_FUN( do_celerity );
 DECLARE_DO_FUN( do_celerity  );

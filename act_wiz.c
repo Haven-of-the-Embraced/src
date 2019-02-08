@@ -310,55 +310,6 @@ void wiznet(char *string, CHAR_DATA *ch, OBJ_DATA *obj,
     return;
 }
 
-// New Dice code
- void do_newdice(CHAR_DATA *ch, char *argument)
-{
-    CHAR_DATA *victim;
-    char arg [MAX_INPUT_LENGTH];
-    char arg1[MAX_INPUT_LENGTH];
-    char arg2 [MAX_INPUT_LENGTH];
-    char arg3 [MAX_INPUT_LENGTH];
-    char arg4 [MAX_INPUT_LENGTH];
-    char buf[MAX_STRING_LENGTH];
-    OBJ_DATA *obj;
-    OBJ_DATA *obj_next;
-    AFFECT_DATA af;
-    int droll;
-
-    if (IS_NPC(ch)) return;
-
- argument = one_argument( argument, arg1 );
- argument = one_argument( argument, arg2 );
-
-    if(IS_NPC(ch)) return;
-
-     if ( !str_prefix( arg, "dodge" ) )
-     {
-     droll = ch->pcdata->csabilities[CSABIL_DODGE] ;
-             send_to_char("droll",ch);
-     }
-    if(ch->pcdata->discipline[OBTENEBRATION] < 5)
-    {
-        send_to_char( "You are not skilled enough in Obtenebration to assume the Shadow Form.\n\r", ch );
-        return;
-    }
-
-    for ( obj = ch->carrying; obj != NULL; obj = obj_next )
-    {
-        obj_next = obj->next_content;
-        if(obj->wear_loc != WEAR_NONE)
-        unequip_char( ch, obj );
-    }
-
-
-    act( "Drawing upon the darkness lurking in your heart and soul, your body becomes a mass of shadows.", ch, NULL, NULL, TO_CHAR );
-    act( "$n's form fades into a shadowy mass, writhing and undulating in beat to an unseen rythm.", ch, NULL, NULL, TO_NOTVICT );
-    ch->pblood -= 50;
-return;
- }
-
-
-
 //Added this to use later as a do_function();
 void do_save_clans (CHAR_DATA *ch, char *argument)
 {

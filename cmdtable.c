@@ -537,7 +537,6 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "obliterate", do_obliterate},
     { "salvation",  do_salvation},
     { "xp boost",   do_xp_boost},
-    { "new dice",   do_newdice},
     { "teleport",   do_transfer},
     { "transfer",   do_transfer},
     { "write",      do_write},

@@ -1265,7 +1265,7 @@ void do_asave( CHAR_DATA *ch, char *argument )
     if ( ch )
         send_to_char( "Saved zones:\n\r", ch );
     else
-        log_string( "Saved zones:" );
+        log_string( "Autosave: Zones..." );
 
     sprintf( buf, "None.\n\r" );
 
@@ -1279,14 +1279,15 @@ void do_asave( CHAR_DATA *ch, char *argument )
         if ( IS_SET(pArea->area_flags, AREA_CHANGED) )
         {
         save_area( pArea );
-        sprintf( buf, "%24s - '%s'", pArea->name, pArea->file_name );
         if ( ch )
         {
+            sprintf( buf, "%24s - '%s'\n\r", pArea->name, pArea->file_name );
             send_to_char( buf, ch );
-            send_to_char( "\n\r", ch );
         }
-        else
+        else {
+            sprintf( buf, "%s - '%s'", pArea->name, pArea->file_name );
             log_string( buf );
+        }
         REMOVE_BIT( pArea->area_flags, AREA_CHANGED );
         }
     }
@@ -1334,14 +1335,20 @@ void do_asave( CHAR_DATA *ch, char *argument )
     if (!str_cmp( arg1, "commands") )
     {
             save_cmd_table();
+            if (ch)
             send_to_char("Command table saved.\n\r", ch);
+            else
+        log_string("Autosave: Command Table");
             return;
         }
     
     if (!str_cmp( arg1, "config") )
     {
         save_config( );
+        if (ch)
         sendch("Config file saved.", ch);
+        else
+        log_string("Autosave: Config");
         return;
     }
     /* Save area being edited, if authorized. */
@@ -1399,7 +1406,10 @@ void do_asave( CHAR_DATA *ch, char *argument )
     if(!str_cmp(arg1, "helps"))
     {
         save_helps();
+        if (ch)
         send_to_char( "Helps Saved.\n\r", ch);
+    else
+        log_string("Autosave: Helps");
         return;
     }
     /* Show correct syntax. */

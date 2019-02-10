@@ -2,4 +2,4 @@ rom
 nohup.out
 .bak
 obj/*
-haven.sublime-workspace
+nbproject/

@@ -2230,7 +2230,9 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
     }
 
     wiznet("Newbie alert!  $N sighted.",ch,NULL,WIZ_NEWBIE,0,0);
-        wiznet(log_buf,NULL,NULL,WIZ_SITES,0,get_trust(ch));
+    sprintf( log_buf, "Newbie alert: %s@%s", ch->name, d->host );
+    wiznet(log_buf,NULL,NULL,WIZ_SITES,0,get_trust(ch));
+    log_string( log_buf);
 
 
     write_to_buffer(d,"Haven provides character Archetypes to assign your starting attributes and\n\r",0);

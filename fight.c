@@ -181,7 +181,8 @@ void check_assist(CHAR_DATA *ch,CHAR_DATA *victim)
         continue;
         }
 
-        /* Domain mobs assist domain ruler and players of allied clans. */
+        /* Domain mobs assist domain ruler and players of allied clans. 
+         * -- DISABLED-- by player request. -matthew 2/10/19 
         if (!IS_NPC(ch) && IS_NPC(rch) && IS_SET(ch->act2, PLR2_PVP) &&
         IS_SET(rch->act2, ACT2_INFLUENCE) &&
         (dom = rch->pIndexData->area->domain) != NULL &&
@@ -191,8 +192,9 @@ void check_assist(CHAR_DATA *ch,CHAR_DATA *victim)
             multi_hit(rch, victim, TYPE_UNDEFINED);
             continue;
         }
-
-        /* PCs next */
+        */
+        
+          /* PCs next */
         if (!IS_NPC(ch) || IS_AFFECTED(ch,AFF_CHARM))
         {
         if ( ( (!IS_NPC(rch) && IS_SET(rch->act,PLR_AUTOASSIST))

@@ -1106,7 +1106,10 @@ void do_freebie(CHAR_DATA *ch, char *argument)
                 send_to_char("Your Temporary Glory is not high enough.\n\r",ch);
                 return;
             }
-            cost = ch->pcdata->renown[GLORY]*2;
+            if (ch->pcdata->renown[GLORY] == 0)
+                cost = 2;
+            else
+                cost = ch->pcdata->renown[GLORY]*2;
             step = 16;
         }
         if(!str_prefix( arg, "honor"))
@@ -1116,7 +1119,10 @@ void do_freebie(CHAR_DATA *ch, char *argument)
                 send_to_char("Your Temporary Honor is not high enough.\n\r",ch);
                 return;
             }
-            cost = ch->pcdata->renown[HONOR]*2;
+            if (ch->pcdata->renown[HONOR] == 0)
+                cost = 2;
+            else
+                cost = ch->pcdata->renown[HONOR]*2;
             step = 17;
         }
         if(!str_prefix( arg, "wisdom"))
@@ -1126,7 +1132,10 @@ void do_freebie(CHAR_DATA *ch, char *argument)
                 send_to_char("Your Temporary Wisdom is not high enough.\n\r",ch);
                 return;
             }
-            cost = ch->pcdata->renown[WISDOM]*2;
+            if (ch->pcdata->renown[WISDOM] == 0)
+                cost = 2;
+            else
+                cost = ch->pcdata->renown[WISDOM]*2;
             step = 18;
         }
 		

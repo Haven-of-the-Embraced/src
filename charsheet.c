@@ -1275,6 +1275,11 @@ void do_freebie(CHAR_DATA *ch, char *argument)
                 send_to_char("Your Avatar is already as strong as it can be. Perhaps it will gain strength in it's next Incarnation.\n\r",ch);
                 return;
             }
+            if (ch->avatar == 5)
+            {
+                send_to_char("Your Avatar is already as strong as it can be.\n\r", ch);
+                return;
+            }
             cost = ch->avatar*7;
             step = 15;
         }

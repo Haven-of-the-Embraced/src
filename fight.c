@@ -1930,7 +1930,13 @@ if (DEBUG_MESSAGES || IS_DEBUGGING(ch)){
 		}		
 
 		if ( !IS_NPC(ch) && check_critical(ch,victim) )
-			dice += get_attribute(ch, STRENGTH);		
+			dice += get_attribute(ch, STRENGTH);	
+
+                if (is_affected(ch, gsn_controlrandomness) && number_percent( ) < (2*ch->sphere[SPHERE_ENTROPY]))
+                {
+                    dice += get_attribute(ch, STRENGTH);
+                    act("Fate smiles upon you and you critically strike $N!",ch,NULL,victim,TO_CHAR);
+                }	
 			
 
 		if (IS_NPC(ch))

@@ -67,8 +67,7 @@ bool    check_critical  args( ( CHAR_DATA *ch, CHAR_DATA *victim ) );
 /* experimental garou code */
 char    *slash_dam_noun args((int dam,bool plural));
 int     get_armor_diff  args(( CHAR_DATA *ch, CHAR_DATA *victim, int dam_type));
-void    garou_hit           args( ( CHAR_DATA *ch, CHAR_DATA *victim, int dt ) );
-bool    garou_damage        args( ( CHAR_DATA *ch,CHAR_DATA *victim,int claw_dam,int bite_dam,int claw_dam_type,int bite_dam_type ) );
+void    d10_hit           args( ( CHAR_DATA *ch, CHAR_DATA *victim, int dt ) );
 
 extern bool DEBUG_MESSAGES;
 /*
@@ -719,7 +718,7 @@ void one_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt )
     {
         return;
     }
-    //garou_hit(ch,victim, dt);
+    //d10_hit(ch,victim, dt);
     //return;
 	
     /*
@@ -730,7 +729,7 @@ void one_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt )
 /*  if(!IS_NPC(ch) && wield == NULL && ch->pcdata->shiftform >= CRINOS) */
     if(!IS_NPC(ch) && (ch->race == race_lookup("garou") || IS_SET(ch->act, PLR_D10COMBAT)))
     {
-        garou_hit(ch,victim, dt);
+        d10_hit(ch,victim, dt);
         return;
     }
 
@@ -1694,9 +1693,9 @@ int get_armor_diff( CHAR_DATA *ch, CHAR_DATA *victim, int dam_type)
 }
 
 /*
- * Hit one guy once as a garou
- */ // bm_garou_hit -- garou bookmark.
-void garou_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt)
+ * Hit one guy once as d10
+ */ // bm_d10_hit -- d10 bookmark.
+void d10_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt)
 {
     char buf[MAX_STRING_LENGTH];
     DESCRIPTOR_DATA *d;

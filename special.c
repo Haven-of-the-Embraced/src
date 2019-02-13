@@ -1228,7 +1228,10 @@ bool spec_stake( CHAR_DATA *ch )
     CHAR_DATA *v_next;
     OBJ_DATA *stake;
     char buf[MAX_STRING_LENGTH];
-
+    
+    return FALSE;
+}
+/*
     if(ch->stopped > 0) return FALSE;
 
     if ( ch->position == POS_FIGHTING )
@@ -1259,11 +1262,10 @@ bool spec_stake( CHAR_DATA *ch )
         if(victim->race == race_lookup("methuselah")) victim->race = race_lookup("vampire");
         if(victim->pcdata->points < 30) victim->pcdata->points = 30;
         victim->exp   = exp_per_level(victim,victim->pcdata->points) * UMAX( 1, victim->level );
-/*      victim->max_pblood -= 10;
+      victim->max_pblood -= 10;
         victim->pblood = victim->max_pblood;
         victim->gen += 1;
         victim->dpoints = 0;
-*/
 
         if(victim->auspex > 0) victim->auspex -= 1;
         if(victim->protean > 0) victim->protean -= 1;
@@ -1288,6 +1290,7 @@ bool spec_stake( CHAR_DATA *ch )
         victim->pcdata->perm_hit = victim->max_hit;
     return TRUE;
 }
+*/
 
 bool spec_bo_dog( CHAR_DATA *ch )
 {

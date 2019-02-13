@@ -960,7 +960,7 @@ void one_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt )
         dam += dam;
         }
 
-    if (is_affected(ch, gsn_controlrandomness) && number_percent( ) < 5)
+    if (is_affected(ch, gsn_controlrandomness) && number_percent( ) < (2*ch->sphere[SPHERE_ENTROPY]))
     {
         dam += 2*dam/3; 
         act("Fate smiles upon you and you critically strike $N!",ch,NULL,victim,TO_CHAR);

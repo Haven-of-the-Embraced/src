@@ -726,8 +726,8 @@ void one_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt )
      */
     wield = get_eq_char( ch, WEAR_WIELD );
 
-/*  if(!IS_NPC(ch) && wield == NULL && ch->pcdata->shiftform >= CRINOS) */
-    if(!IS_NPC(ch) && (ch->race == race_lookup("garou") || IS_SET(ch->act, PLR_D10COMBAT)))
+    // All Hits for Players get redirected to d10_hit for wod-style damage calculations.
+    if(!IS_NPC(ch))
     {
         d10_hit(ch,victim, dt);
         return;

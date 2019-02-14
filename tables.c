@@ -449,7 +449,6 @@ const struct flag_type comm_flags[] =
     {   "prompt",       COMM_PROMPT,        TRUE    },
     {   "combine",      COMM_COMBINE,       TRUE    },
     {   "telnet_ga",        COMM_TELNET_GA,     TRUE    },
-    {   "show_affects",     COMM_SHOW_AFFECTS,  TRUE    },
     {   "nograts",      COMM_NOGRATS,       TRUE    },
     {   "noemote",      COMM_NOEMOTE,       FALSE   },
     {   "noshout",      COMM_NOSHOUT,       FALSE   },

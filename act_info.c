@@ -976,20 +976,6 @@ void do_combat(CHAR_DATA *ch, char *argument)
     }
 }
 
-void do_show(CHAR_DATA *ch, char *argument)
-{
-    if (IS_SET(ch->comm,COMM_SHOW_AFFECTS))
-    {
-      send_to_char("Affects will no longer be shown in score.\n\r",ch);
-      REMOVE_BIT(ch->comm,COMM_SHOW_AFFECTS);
-    }
-    else
-    {
-      send_to_char("Affects will now be shown in score.\n\r",ch);
-      SET_BIT(ch->comm,COMM_SHOW_AFFECTS);
-    }
-}
-
 void do_prompt(CHAR_DATA *ch, char *argument)
 {
    char buf[MAX_STRING_LENGTH];

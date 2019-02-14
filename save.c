@@ -1133,6 +1133,8 @@ if (ch->version <=11)
         ch->version ++;
         if (IS_SET(ch->act, PLR_AUTOVAMP))
             REMOVE_BIT(ch->act, PLR_AUTOVAMP);
+        if (IS_SET(ch->comm, COMM_SHOW_AFFECTS))
+            REMOVE_BIT(ch->comm, COMM_SHOW_AFFECTS);
     }
 
     return found;

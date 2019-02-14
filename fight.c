@@ -1805,7 +1805,11 @@ void d10_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt)
     dice += GET_HITROLL(ch)/200;
 
 	if (dt == gsn_backstab || dt == gsn_waylay)
-		dice *= 2;
+        {
+            dice *= 2;
+            diff = 4;
+        }
+    
 if (DEBUG_MESSAGES || IS_DEBUGGING(ch)){
 	cprintf(ch, "hp{r%d{x ", dice);
 	if (IS_NPC(ch)) cprintf(victim, "hp{r%d{x ", dice);}
@@ -4715,6 +4719,9 @@ void do_backstab( CHAR_DATA *ch, char *argument )
     CHAR_DATA *victim;
     OBJ_DATA *obj;
     int check;
+    int successes;
+    int diff;
+    
     one_argument( argument, arg );
 
     if (arg[0] == '\0')
@@ -4784,9 +4791,33 @@ void do_backstab( CHAR_DATA *ch, char *argument )
  /*Changing Backstab*/
 
     WAIT_STATE( ch, skill_table[gsn_backstab].beats );
-    if ( number_percent( ) < get_skill(ch,gsn_backstab)
-    || ( get_skill(ch,gsn_backstab) >= 2 && !IS_AWAKE(victim) ) )
+    if (!IS_AWAKE(victim))
+        diff = 1;
+    else
     {
+        diff = UMIN( 10, (get_attribute(victim, PERCEPTION) + get_ability(victim, CSABIL_ALERTNESS)));
+        
+        int skill = get_skill(ch, gsn_backstab);
+        if (skill >= 80)
+            diff--;
+        if (skill >= 90)
+            diff--;
+        if (diff < 6)
+            diff = 6;
+    }
+    
+    successes = godice(get_attribute(ch, DEXTERITY) + get_ability(ch, CSABIL_STEALTH), diff);
+        if (IS_DEBUGGING(ch))
+        cprintf(ch, "%d diff %d :{r%d{x ", get_attribute(ch, DEXTERITY)+get_ability(ch, CSABIL_STEALTH), diff, successes);
+    
+    if (successes < 1)
+    {
+        check_improve(ch,gsn_backstab,FALSE,2);
+        act("$N seems to sense you coming and dodges your backstab!", ch, NULL, victim, TO_CHAR );
+        damage( ch, victim, 0, gsn_backstab,DAM_NONE,TRUE);
+        return;
+    }
+    
     check_improve(ch,gsn_backstab,TRUE,2);
 
     one_hit( ch, victim, gsn_backstab );
@@ -4802,15 +4833,9 @@ void do_backstab( CHAR_DATA *ch, char *argument )
        if (check < 80)
           one_hit( ch, victim, gsn_backstab );
        }
-        if(is_affected(ch,gsn_timealteration))
+    
+    if(is_affected(ch,gsn_timealteration))
         one_hit( ch, victim, gsn_backstab );
-    }
-    else
-    {
-    check_improve(ch,gsn_backstab,FALSE,2);
-    act("$N seems to sense you coming and dodges your backstab!", ch, NULL, victim, TO_CHAR );
-    damage( ch, victim, 0, gsn_backstab,DAM_NONE,TRUE);
-    }
 
     return;
 }

@@ -853,40 +853,6 @@ void do_nourish(CHAR_DATA *ch, char *argument)
     return;
 }
 
-void do_autovamp( CHAR_DATA *ch, char *argument )
-{
-    char    arg[ MAX_STRING_LENGTH ];
-
-    argument = one_argument( argument, arg );
-
-    if (IS_NPC(ch)) return;
-
-    if(!IS_VAMP(ch))
-    {
-        send_to_char("You are not a vampire!\n\r" ,ch);
-        return;
-    }
-
-    if( !*arg )
-    {
-    if( !IS_SET( ch->act, PLR_AUTOVAMP ) )
-    {
-        SET_BIT( ch->act, PLR_AUTOVAMP );
-        send_to_char( "Vampire info now displayed in score.\n\r", ch );
-    }
-    else
-    {
-        send_to_char_bw( "Vampire info no longer displayed in score.\n\r", ch );
-        REMOVE_BIT( ch->act, PLR_AUTOVAMP);
-    }
-    return;
-    }
-    else
-    send_to_char_bw( "!BUG!\n\r", ch );
-
-    return;
-}
-
 int get_disc_name(char *name)
 {
     int i;

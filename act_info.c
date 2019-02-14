@@ -745,15 +745,6 @@ void do_autolist(CHAR_DATA *ch, char *argument)
     send_to_char("   action     status\n\r",ch);
     send_to_char("---------------------\n\r",ch);
 
-    if(ch->race == race_lookup("vampire") || ch->race == race_lookup("methuselah"))
-    {
-    send_to_char("autovamp       ",ch);
-    if (IS_SET(ch->act,PLR_AUTOVAMP))
-        send_to_char("ON\n\r",ch);
-    else
-        send_to_char("OFF\n\r",ch);
-    }
-
     send_to_char("autoassist     ",ch);
     if (IS_SET(ch->act,PLR_AUTOASSIST))
         send_to_char("ON\n\r",ch);

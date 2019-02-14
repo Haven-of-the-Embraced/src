@@ -1127,6 +1127,13 @@ if (ch->version <=11)
         if (IS_VAMP(ch))
             ch->pcdata->csgeneration = 10 - ch->pcdata->csbackgrounds[CSBACK_GENERATION];
     }
+    
+    if (ch->version < 14)
+    {
+        ch->version ++;
+        if (IS_SET(ch->act, PLR_AUTOVAMP))
+            REMOVE_BIT(ch->act, PLR_AUTOVAMP);
+    }
 
     return found;
 }

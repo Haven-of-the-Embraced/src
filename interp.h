@@ -90,7 +90,6 @@ DECLARE_DO_FUN( do_autolist );
 DECLARE_DO_FUN( do_autoloot );
 DECLARE_DO_FUN( do_autosac  );
 DECLARE_DO_FUN( do_autosplit    );
-DECLARE_DO_FUN( do_autovamp );
 DECLARE_DO_FUN( do_backstab );
 DECLARE_DO_FUN( do_bamfin   );
 DECLARE_DO_FUN( do_bamfout  );

@@ -277,7 +277,6 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "autoloot",   do_autoloot},
     { "autosac",    do_autosac},
     { "autosplit",  do_autosplit},
-    { "autovamp",       do_autovamp},
     { "brief",      do_brief},
     { "combat",     do_combat}, //DNM
 /*  { "channels",   do_channels}, */

@@ -2184,7 +2184,7 @@ bool d10_damage(CHAR_DATA *ch, CHAR_DATA *victim, int damsuccess, int modifier, 
 	
     if (ch != victim)
     {
-        if (check_dodge( ch, victim ))
+        if (dt != gsn_backstab && check_dodge( ch, victim ))
             return FALSE;
     }
     if (DEBUG_MESSAGES || IS_DEBUGGING(ch))	{
@@ -4808,6 +4808,7 @@ void do_backstab( CHAR_DATA *ch, char *argument )
     else
     {
     check_improve(ch,gsn_backstab,FALSE,2);
+    act("$N seems to sense you coming and dodges your backstab!", ch, NULL, victim, TO_CHAR );
     damage( ch, victim, 0, gsn_backstab,DAM_NONE,TRUE);
     }
 

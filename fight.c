@@ -68,6 +68,7 @@ bool    check_critical  args( ( CHAR_DATA *ch, CHAR_DATA *victim ) );
 char    *slash_dam_noun args((int dam,bool plural));
 int     get_armor_diff  args(( CHAR_DATA *ch, CHAR_DATA *victim, int dam_type));
 void    d10_hit           args( ( CHAR_DATA *ch, CHAR_DATA *victim, int dt ) );
+int     d10_modifier    args( ( CHAR_DATA *ch ) );
 
 extern bool DEBUG_MESSAGES;
 /*
@@ -1693,6 +1694,36 @@ int get_armor_diff( CHAR_DATA *ch, CHAR_DATA *victim, int dam_type)
 	    return diff/2;
 }
 
+// Find damage modifier for char. Moved here to be used in Other Functions.
+int d10_modifier ( CHAR_DATA *ch)
+{
+    int sn;
+    int skill;
+    int modifier;
+    
+    if (!ch || ch == NULL)
+    {
+        bug("Get_Modifier: NULL ch.", 0 );
+        return;
+    }
+    
+    /* get the weapon skill */
+    sn = get_weapon_sn(ch);
+    skill = get_weapon_skill(ch,sn);
+    
+    if (IS_NPC(ch))
+	modifier = 10 + ch->level/10;
+    else{
+        modifier = 5;
+	modifier +=  5 + UMIN(ch->remorts/5, 20) + ch->level/5;
+    }
+    
+    modifier += GET_DAMROLL(ch)/50;
+    modifier =  modifier * (20 + skill) / 100;
+    
+    return UMAX(5, modifier);
+}
+
 /*
  * Hit one guy once as d10
  */ // bm_d10_hit -- d10 bookmark.
@@ -1719,9 +1750,8 @@ void d10_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt)
     int diff = 5;
     bool modified = FALSE;
     int sn, skill;
-	int modifier;
-	bool result;
-	int diceroll;
+    bool result;
+    int diceroll;
 
 
     /* just in case */
@@ -1819,14 +1849,6 @@ if (DEBUG_MESSAGES || IS_DEBUGGING(ch)){
 		//Moment of excitement!
 		tohit = godice(dice, diff);
 		dice = 0; // clear dice so we can use them later.
-		if (IS_NPC(ch))
-			modifier = 10 + ch->level/10;
-		else{
-            modifier = 5;
-			modifier +=  5 + UMIN(ch->remorts/5, 20) + ch->level/5;
-		}
-    modifier += GET_DAMROLL(ch)/50;
-	modifier =  modifier * (20 + skill) / 100;
 
 	if (check_parry(ch, victim) ||
 			check_block(ch, victim) ||
@@ -1842,7 +1864,7 @@ if (DEBUG_MESSAGES || IS_DEBUGGING(ch)){
 
     if(tohit < 1) 
     { // Miss.
-        d10_damage(ch, victim, 0, modifier, dt, dam_type, TRUE);
+        d10_damage(ch, victim, 0, 0, dt, dam_type, TRUE);
         tail_chain( );
         return;
     } 
@@ -1955,7 +1977,7 @@ if (DEBUG_MESSAGES || IS_DEBUGGING(ch)){
             if (IS_NPC(ch)) cprintf(victim, "dp{r%d{x ", dice);
         }
 
-	result = d10_damage(ch, victim, damsuccess, modifier, dt, dam_type, TRUE);
+	result = d10_damage(ch, victim, damsuccess, d10_modifier(ch), dt, dam_type, TRUE);
 	
     /* but do we have a funky weapon? */
     if (result && wield != NULL)

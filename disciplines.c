@@ -3054,18 +3054,13 @@ void do_unseenpresence(CHAR_DATA *ch, char *argument)
     af.where     = TO_AFFECTS;
     af.type      = gsn_sneak;
     af.level     = ch->level;
-    af.duration  = ch->level*ch->pcdata->discipline[OBFUSCATE];
+    af.duration  = UMAX(24, ch->level);
     af.location  = APPLY_NONE;
     af.modifier  = 0;
     af.bitvector = AFF_SNEAK;
     affect_to_char( ch, &af );
 }
-    af.where     = TO_AFFECTS2;
     af.type      = gsn_unseen;
-    af.level     = ch->level;
-    af.duration  = ch->level*ch->pcdata->discipline[OBFUSCATE];
-    af.location  = APPLY_NONE;
-    af.modifier  = 0;
     af.bitvector = 0;
     affect_to_char( ch, &af );
 

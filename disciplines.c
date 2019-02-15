@@ -3114,16 +3114,17 @@ void do_veil(CHAR_DATA *ch, char *argument)
             ch->pblood -= 50;
         else ch->pblood -= 30;
 
-        af.where     = TO_AFFECTS2;
+        af.where     = TO_AFFECTS;
         af.type      = gsn_sneak;
         af.level     = ch->level;
-        if(ch->pcdata->discipline[OBFUSCATE] == 6) af.duration  = 24;
+        if(ch->pcdata->discipline[OBFUSCATE] == 6) af.duration  = UMAX(24, ch->level*2);
         else af.duration = -1;
         af.location  = APPLY_NONE;
         af.modifier  = 0;
-        af.bitvector = AFF2_VEIL;
+        af.bitvector = AFF_SNEAK;
         affect_to_char( ch, &af );
-        af.bitvector = 0;
+        af.where    = TO_AFFECTS2;
+        af.bitvector = AFF2_VEIL;
         af.type = gsn_unseen;
         affect_to_char(ch, &af );
 

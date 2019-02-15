@@ -2734,8 +2734,26 @@ bool can_see( CHAR_DATA *ch, CHAR_DATA *victim )
     if ( IS_AFFECTED(ch, AFF_BLIND) )
     return FALSE;
 
-    if ( IS_AFFECTED2(victim, AFF2_VEIL) )
+    if ( IS_AFFECTED2(victim, AFF2_VEIL)
+            && !is_affected(ch, gsn_reveal))
     return FALSE;
+    
+        if ( IS_AFFECTED2(victim, AFF2_VEIL)
+         && is_affected(ch, gsn_reveal))
+        {
+        int success;
+        int diff;
+        diff = 7;
+        if (victim->pcdata->discipline[OBFUSCATE] > ch->pcdata->discipline[AUSPEX])
+            return FALSE;
+        if (ch->pcdata->discipline[AUSPEX] > victim->pcdata->discipline[OBFUSCATE])
+            diff -= (ch->pcdata->discipline[AUSPEX] - victim->pcdata->discipline[OBFUSCATE]);
+        success = godice(get_attribute(ch, PERCEPTION)+ch->pcdata->csabilities[CSABIL_ALERTNESS], diff);
+        if (ch->pcdata->discipline[AUSPEX] == victim->pcdata->discipline[OBFUSCATE])
+        success -= godice(get_attribute(victim, MANIPULATION) + victim->pcdata->csabilities[CSABIL_SUBTERFUGE], diff);
+        if (success < 1)
+            return FALSE;
+    }
 
     if ( is_affected(victim, gsn_unseen)
          && !IS_AFFECTED2(ch, AFF2_DETECT_UNSEEN)

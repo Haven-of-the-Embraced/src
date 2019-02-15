@@ -124,7 +124,8 @@ void move_char( CHAR_DATA *ch, int door, bool follow )
     }
     /*if(is_affected(ch, gsn_unseen) && ch->pcdata->discipline[OBFUSCATE] < 2)
     affect_strip( ch, gsn_unseen );*/
-    if(IS_AFFECTED2(ch, AFF2_VEIL) && ch->obfuscate != 6)
+    if(IS_AFFECTED2(ch, AFF2_VEIL) && (IS_NPC(ch) ||
+            (!IS_NPC(ch) && ch->pcdata->discipline[OBFUSCATE] != 6)))
     REMOVE_BIT(ch->affected2_by, AFF2_VEIL);
 
     if (IS_SET(pexit->exit_info, EX_CLOSED)

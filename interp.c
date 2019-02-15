@@ -213,8 +213,12 @@ void interpret( CHAR_DATA *ch, char *argument )
         return;
     }
 /*Sengir moved losing veil here, can use certain commands while veiled*/
-    if (ch->obfuscate < 6 && str_prefix (command, "veil") && str_prefix(command, "affects") &&
-    str_prefix(command, "who") && str_prefix(command, "look") && str_prefix(command, "beseech blissful"))
+    if ((!IS_NPC(ch) && ch->pcdata->discipline[OBFUSCATE] < 6) && 
+            str_prefix (command, "veil") && 
+            str_prefix(command, "affects") &&
+            str_prefix(command, "who") && 
+            str_prefix(command, "look") && 
+            str_prefix(command, "beseech blissful"))
         REMOVE_BIT(ch->affected2_by, AFF2_VEIL);
 
     /*

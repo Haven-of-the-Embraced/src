@@ -4755,7 +4755,10 @@ void do_backstab( CHAR_DATA *ch, char *argument )
     CHAR_DATA *victim;
     OBJ_DATA *obj;
     int check;
+    int dice;
     int successes;
+    int damsuccess;
+    int damdice;
     int diff;
     
     one_argument( argument, arg );
@@ -4841,37 +4844,38 @@ void do_backstab( CHAR_DATA *ch, char *argument )
         if (diff < 6)
             diff = 6;
     }
-    
-    successes = godice(get_attribute(ch, DEXTERITY) + get_ability(ch, CSABIL_STEALTH), diff);
+    dice = get_attribute(ch, DEXTERITY) + get_ability(ch, CSABIL_STEALTH);
+    successes = godice(dice, diff);
+    damdice = d10_damdice(ch, victim) + successes;
+    damsuccess = godice(damdice, 4);
         if (IS_DEBUGGING(ch))
-        cprintf(ch, "%d diff %d :{r%d{x ", get_attribute(ch, DEXTERITY)+get_ability(ch, CSABIL_STEALTH), diff, successes);
+        cprintf(ch, "tohit:%d diff:%d success:%d dampool:%d damsuccess:%d\n\r", dice, diff, successes, damdice, damsuccess);
     
     if (successes < 1)
     {
         check_improve(ch,gsn_backstab,FALSE,2);
         act("$N seems to sense you coming and dodges your backstab!", ch, NULL, victim, TO_CHAR );
-        damage( ch, victim, 0, gsn_backstab,DAM_NONE,TRUE);
+        d10_damage(ch, victim, 0, 0, gsn_backstab, DAM_PIERCE, TRUE);
         return;
     }
     
     check_improve(ch,gsn_backstab,TRUE,2);
-
-    one_hit( ch, victim, gsn_backstab );
+    d10_damage(ch, victim, damsuccess, d10_modifier(ch), gsn_backstab, DAM_PIERCE, TRUE);
     check = number_percent();
     if (!IS_AFFECTED(ch,AFF_HASTE))
        {
        if (check < 40)
-          one_hit( ch, victim, gsn_backstab );
+          d10_damage(ch, victim, damsuccess, d10_modifier(ch), gsn_backstab, DAM_PIERCE, TRUE);
        }
 
     if (IS_AFFECTED(ch,AFF_HASTE))
        {
        if (check < 80)
-          one_hit( ch, victim, gsn_backstab );
+          d10_damage(ch, victim, damsuccess, d10_modifier(ch), gsn_backstab, DAM_PIERCE, TRUE);
        }
     
     if(is_affected(ch,gsn_timealteration))
-        one_hit( ch, victim, gsn_backstab );
+        d10_damage(ch, victim, damsuccess, d10_modifier(ch), gsn_backstab, DAM_PIERCE, TRUE);
 
     return;
 }

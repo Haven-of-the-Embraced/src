@@ -2737,19 +2737,15 @@ bool can_see( CHAR_DATA *ch, CHAR_DATA *victim )
     if ( IS_AFFECTED2(victim, AFF2_VEIL) )
     return FALSE;
 
-    if ( ch->in_room != NULL && victim->in_room != NULL
-         && ch->in_room->area == victim->in_room->area
-         && is_affected(victim, gsn_unseen)
+    if ( is_affected(victim, gsn_unseen)
          && !IS_AFFECTED2(ch, AFF2_DETECT_UNSEEN)
          && !is_affected(ch, gsn_reveal)
          && victim->fighting == NULL)
     return FALSE;
 
-    if ( ch->in_room != NULL && victim->in_room != NULL
-         && ch->in_room->area == victim->in_room->area
-         && is_affected(victim, gsn_unseen)
+    if ( is_affected(victim, gsn_unseen)
          && !IS_AFFECTED2(ch, AFF2_DETECT_UNSEEN)
-         && is_affected(ch, gsn_reveal)
+         && is_affected(ch, gsn_reveal) 
          && victim->fighting == NULL)
         {
         int success;
@@ -2762,7 +2758,7 @@ bool can_see( CHAR_DATA *ch, CHAR_DATA *victim )
         success = godice(get_attribute(ch, PERCEPTION)+ch->pcdata->csabilities[CSABIL_ALERTNESS], diff);
         if (ch->pcdata->discipline[AUSPEX] == victim->pcdata->discipline[OBFUSCATE])
         success -= godice(get_attribute(victim, MANIPULATION) + victim->pcdata->csabilities[CSABIL_SUBTERFUGE], diff);
-        if (success < 0)
+        if (success < 1)
             return FALSE;
     }
 

@@ -68,6 +68,7 @@ bool    check_critical  args( ( CHAR_DATA *ch, CHAR_DATA *victim ) );
 char    *slash_dam_noun args((int dam,bool plural));
 int     get_armor_diff  args(( CHAR_DATA *ch, CHAR_DATA *victim, int dam_type));
 void    d10_hit           args( ( CHAR_DATA *ch, CHAR_DATA *victim, int dt ) );
+int     d10_damdice     args( ( CHAR_DATA *ch, CHAR_DATA *victim) );
 int     d10_modifier    args( ( CHAR_DATA *ch ) );
 
 extern bool DEBUG_MESSAGES;
@@ -1694,6 +1695,82 @@ int get_armor_diff( CHAR_DATA *ch, CHAR_DATA *victim, int dam_type)
 	    return diff/2;
 }
 
+// Calculate Damage Dicepool for combat hits. Moved here for use in other functions.
+
+int d10_damdice( CHAR_DATA *ch, CHAR_DATA *victim)
+{
+    OBJ_DATA *wield;
+    int dice = 0;
+    int diceroll = 0;
+
+       if (wield)
+    {
+        //Weapon bonus computed as 1/20th of weapon dice.
+     dice += (wield->value[1])/20;
+
+        //Two handed weapons potentially add up to 2 dice.
+    if (IS_WEAPON_STAT(wield,WEAPON_TWO_HANDS))
+    dice += number_range(0, 2);
+
+        // Sharp weapons potentially add up to 1 die
+    if (IS_WEAPON_STAT(wield, WEAPON_SHARP))
+        dice += number_range(0, 1);
+
+    }
+
+    if (!wield && ch->race == race_lookup("garou") && is_affected(ch, gsn_claws))
+        dice += 2;
+
+    if (!wield && is_affected(ch, gsn_gift_razorclaws))
+        dice += 1;
+
+		if (!IS_NPC(ch) && IS_VAMP(ch))
+		{
+			dice += ch->pcdata->discipline[POTENCE];
+		}
+
+		/*
+		 * Bonuses.
+		 */
+		if ( get_skill(ch,gsn_enhanced_damage) > 0 )
+		{
+			diceroll = number_percent();
+			if (diceroll <= get_skill(ch,gsn_enhanced_damage))
+			{
+				check_improve(ch,gsn_enhanced_damage,TRUE,6);
+				dice++;
+			}
+		}
+
+		if ( get_skill(ch,gsn_knight_training) > 0 )
+		{
+			diceroll = number_percent();
+			if (diceroll <= get_skill(ch,gsn_knight_training))
+			{
+				check_improve(ch,gsn_knight_training,TRUE,6);
+				dice++;
+			}
+		}
+
+		if ( !IS_NPC(ch) && check_critical(ch,victim) )
+			dice += get_attribute(ch, STRENGTH);
+
+                if (is_affected(ch, gsn_controlrandomness) && number_percent( ) < (2*ch->sphere[SPHERE_ENTROPY]))
+                {
+                    dice += get_attribute(ch, STRENGTH);
+                    act("Fate smiles upon you and you critically strike $N!",ch,NULL,victim,TO_CHAR);
+                }
+
+
+		if (IS_NPC(ch))
+			dice += 3 +  ch->level / 30;
+		else
+			dice += get_attribute(ch, STRENGTH);
+
+    return dice;
+
+}
+
 // Find damage modifier for char. Moved here to be used in Other Functions.
 int d10_modifier ( CHAR_DATA *ch)
 {
@@ -1906,70 +1983,7 @@ if (DEBUG_MESSAGES || IS_DEBUGGING(ch)){
     if (sn != -1 && number_percent() < 25)
         check_improve(ch,sn,TRUE,35);
 
-    if (wield)
-    {
-        //Weapon bonus computed as 1/20th of weapon dice. 
-     dice += (wield->value[1])/20;
-
-        //Two handed weapons potentially add up to 2 dice.
-    if (IS_WEAPON_STAT(wield,WEAPON_TWO_HANDS))
-    dice += number_range(0, 2);
-
-        // Sharp weapons potentially add up to 1 die
-    if (IS_WEAPON_STAT(wield, WEAPON_SHARP))
-        dice += number_range(0, 1);	
-
-    } 
-
-    if (!wield && ch->race == race_lookup("garou") && is_affected(ch, gsn_claws))
-        dice += 2;
-    
-    if (!wield && is_affected(ch, gsn_gift_razorclaws))
-        dice += 1;
-			
-		if (!IS_NPC(ch) && IS_VAMP(ch))
-		{
-			dice += ch->pcdata->discipline[POTENCE];
-		}
-
-		/*
-		 * Bonuses.
-		 */
-		if ( get_skill(ch,gsn_enhanced_damage) > 0 )
-		{
-			diceroll = number_percent();
-			if (diceroll <= get_skill(ch,gsn_enhanced_damage))
-			{
-				check_improve(ch,gsn_enhanced_damage,TRUE,6);
-				dice++;
-			}
-		}
-
-		if ( get_skill(ch,gsn_knight_training) > 0 )
-		{
-			diceroll = number_percent();
-			if (diceroll <= get_skill(ch,gsn_knight_training))
-			{
-				check_improve(ch,gsn_knight_training,TRUE,6);
-				dice++;
-			}
-		}		
-
-		if ( !IS_NPC(ch) && check_critical(ch,victim) )
-			dice += get_attribute(ch, STRENGTH);	
-
-                if (is_affected(ch, gsn_controlrandomness) && number_percent( ) < (2*ch->sphere[SPHERE_ENTROPY]))
-                {
-                    dice += get_attribute(ch, STRENGTH);
-                    act("Fate smiles upon you and you critically strike $N!",ch,NULL,victim,TO_CHAR);
-                }	
-			
-
-		if (IS_NPC(ch))
-			dice += 3 +  ch->level / 30;
-		else
-			dice += get_attribute(ch, STRENGTH);
-			
+        dice = d10_damdice(ch, victim);
         damsuccess += godice(dice, 5);
 
 		if (DEBUG_MESSAGES || IS_DEBUGGING(ch))	{

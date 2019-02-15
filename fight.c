@@ -1834,7 +1834,7 @@ void d10_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt)
         
     dice += GET_HITROLL(ch)/200;
 
-	if (dt == gsn_backstab || dt == gsn_waylay)
+	if (dt == gsn_waylay)
         {
             dice *= 2;
             diff = 4;

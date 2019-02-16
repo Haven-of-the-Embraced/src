@@ -393,7 +393,7 @@ void spell_gift_createelement( int sn, int level, CHAR_DATA *ch, void *vo, int t
 			act("You direct a blast of flames at $N!", ch, NULL, victim, TO_CHAR);
 			act("$n says thanks to the Elemental Spirits of Fire as a blast of flame engulfs $N!", ch, NULL, victim, TO_NOTVICT);
 			act("$n looks at you while murmering something and suddenly.. You're engulfed in flames!", ch, NULL, victim, TO_VICT);
-			d10_damage(ch, victim, UMIN(3, success), mod, gsn_gift_createelement, DAM_FIRE, TRUE);
+			d10_damage(ch, victim, UMIN(3, success), mod, gsn_gift_createelement, DAM_FIRE, DEFENSE_NONE, TRUE);
 			WAIT_STATE(ch, PULSE_VIOLENCE);
 			return;
 		}
@@ -408,7 +408,7 @@ void spell_gift_createelement( int sn, int level, CHAR_DATA *ch, void *vo, int t
 			act("You create a bunch of heavy rocks to drop on $N!", ch, NULL, victim, TO_CHAR);
 			act("$n says thanks to the Elemental Spirits of Earth as rocks rain down from the heavens onto $N!", ch, NULL, victim, TO_NOTVICT);
 			act("$n looks at you while murmering something and suddenly.. boulders are raining down on your head!", ch, NULL, victim, TO_VICT);
-			d10_damage(ch, victim, UMIN(5, success), mod, gsn_gift_createelement, DAM_BASH, TRUE);
+			d10_damage(ch, victim, UMIN(5, success), mod, gsn_gift_createelement, DAM_BASH, DEFENSE_FULL, TRUE);
 			WAIT_STATE(ch, PULSE_VIOLENCE);
 			return;
 		}

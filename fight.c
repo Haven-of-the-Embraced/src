@@ -1941,7 +1941,7 @@ if (DEBUG_MESSAGES || IS_DEBUGGING(ch)){
 
     if(tohit < 1) 
     { // Miss.
-        d10_damage(ch, victim, 0, 0, dt, dam_type, TRUE);
+        d10_damage(ch, victim, 0, 0, dt, dam_type, DEFENSE_FULL, TRUE);
         tail_chain( );
         return;
     } 
@@ -1991,7 +1991,7 @@ if (DEBUG_MESSAGES || IS_DEBUGGING(ch)){
             if (IS_NPC(ch)) cprintf(victim, "dp{r%d{x ", dice);
         }
 
-	result = d10_damage(ch, victim, damsuccess, d10_modifier(ch), dt, dam_type, TRUE);
+	result = d10_damage(ch, victim, damsuccess, d10_modifier(ch), dt, dam_type, DEFENSE_FULL, TRUE);
 	
     /* but do we have a funky weapon? */
     if (result && wield != NULL)
@@ -2119,7 +2119,7 @@ if (DEBUG_MESSAGES || IS_DEBUGGING(ch)){
 }
 
 
-bool d10_damage(CHAR_DATA *ch, CHAR_DATA *victim, int damsuccess, int modifier, int dt, int dam_type, bool show)
+bool d10_damage(CHAR_DATA *ch, CHAR_DATA *victim, int damsuccess, int modifier, int dt, int dam_type, int defense, bool show)
 {
     extern bool slaughter;
     extern bool doubledam;
@@ -2267,9 +2267,14 @@ bool d10_damage(CHAR_DATA *ch, CHAR_DATA *victim, int damsuccess, int modifier, 
         else
             armordice = 4;
 
-    soak = godice(armordice+soakdice, 6);
-
-
+    switch (defense) {
+        case DEFENSE_NONE: soak = 0; break;
+        case DEFENSE_SOAK: soak = godice(soakdice, 6); break;
+        case DEFENSE_ARMOR: soak = godice(armordice, 6); break;
+        case DEFENSE_FULL:  soak = godice(armordice+soakdice, 6); break;
+        default: soak = godice(armordice+soakdice, 6); break;
+    }
+    
     if (soak < 0)
         soak = 0;
 
@@ -4855,27 +4860,27 @@ void do_backstab( CHAR_DATA *ch, char *argument )
     {
         check_improve(ch,gsn_backstab,FALSE,2);
         act("$N seems to sense you coming and dodges your backstab!", ch, NULL, victim, TO_CHAR );
-        d10_damage(ch, victim, 0, 0, gsn_backstab, DAM_PIERCE, TRUE);
+        d10_damage(ch, victim, 0, 0, gsn_backstab, DAM_PIERCE, DEFENSE_FULL, TRUE);
         return;
     }
     
     check_improve(ch,gsn_backstab,TRUE,2);
-    d10_damage(ch, victim, damsuccess, d10_modifier(ch), gsn_backstab, DAM_PIERCE, TRUE);
+    d10_damage(ch, victim, damsuccess, d10_modifier(ch), gsn_backstab, DAM_PIERCE, DEFENSE_SOAK, TRUE);
     check = number_percent();
     if (!IS_AFFECTED(ch,AFF_HASTE))
        {
        if (check < 40)
-          d10_damage(ch, victim, damsuccess, d10_modifier(ch), gsn_backstab, DAM_PIERCE, TRUE);
+          d10_damage(ch, victim, damsuccess, d10_modifier(ch), gsn_backstab, DAM_PIERCE, DEFENSE_SOAK, TRUE);
        }
 
     if (IS_AFFECTED(ch,AFF_HASTE))
        {
        if (check < 80)
-          d10_damage(ch, victim, damsuccess, d10_modifier(ch), gsn_backstab, DAM_PIERCE, TRUE);
+          d10_damage(ch, victim, damsuccess, d10_modifier(ch), gsn_backstab, DAM_PIERCE, DEFENSE_SOAK, TRUE);
        }
     
     if(is_affected(ch,gsn_timealteration))
-        d10_damage(ch, victim, damsuccess, d10_modifier(ch), gsn_backstab, DAM_PIERCE, TRUE);
+        d10_damage(ch, victim, damsuccess, d10_modifier(ch), gsn_backstab, DAM_PIERCE, DEFENSE_SOAK, TRUE);
 
     return;
 }

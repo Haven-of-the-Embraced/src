@@ -1734,7 +1734,11 @@ struct  kill_data
 #define POS_STANDING              9
 
 
-
+// Combat defense types.
+#define DEFENSE_NONE        0
+#define DEFENSE_SOAK        1
+#define DEFENSE_ARMOR       2
+#define DEFENSE_FULL        3
 
 
 /*
@@ -3436,7 +3440,7 @@ bool    damage      args( ( CHAR_DATA *ch, CHAR_DATA *victim, int dam,
                     int dt, int class, bool show ) );
 					
 bool d10_damage args( (CHAR_DATA *ch, CHAR_DATA *victim, int damsuccess, 
-					int modifier, int dt, int dam_type, bool show) );
+					int modifier, int dt, int dam_type, int defense, bool show) );
 
 bool    damage_old      args( ( CHAR_DATA *ch, CHAR_DATA *victim, int dam,
                                 int dt, int class, bool show ) );

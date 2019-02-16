@@ -2734,12 +2734,13 @@ bool can_see( CHAR_DATA *ch, CHAR_DATA *victim )
     if ( IS_AFFECTED(ch, AFF_BLIND) )
     return FALSE;
 
-    if ( IS_AFFECTED2(victim, AFF2_VEIL)
-            && !is_affected(ch, gsn_reveal))
+    if ( IS_AFFECTED2(victim, AFF2_VEIL) && (IS_NPC(victim)
+            || !is_affected(ch, gsn_reveal)))
     return FALSE;
     
         if ( IS_AFFECTED2(victim, AFF2_VEIL)
-         && is_affected(ch, gsn_reveal))
+         && is_affected(ch, gsn_reveal)
+                && !IS_NPC(ch) && !IS_NPC(victim))
         {
         int success;
         int diff;
@@ -2758,13 +2759,15 @@ bool can_see( CHAR_DATA *ch, CHAR_DATA *victim )
     if ( is_affected(victim, gsn_unseen)
          && !IS_AFFECTED2(ch, AFF2_DETECT_UNSEEN)
          && !is_affected(ch, gsn_reveal)
-         && victim->fighting == NULL)
+         && victim->fighting == NULL
+            && !IS_NPC(ch) && !IS_NPC(victim))
     return FALSE;
 
     if ( is_affected(victim, gsn_unseen)
          && !IS_AFFECTED2(ch, AFF2_DETECT_UNSEEN)
          && is_affected(ch, gsn_reveal) 
-         && victim->fighting == NULL)
+         && victim->fighting == NULL
+            && !IS_NPC(ch) && !IS_NPC(victim))
         {
         int success;
         int diff;

@@ -1703,6 +1703,7 @@ int d10_damdice( CHAR_DATA *ch, CHAR_DATA *victim)
     int dice = 0;
     int diceroll = 0;
 
+    wield = get_eq_char( ch, WEAR_WIELD );
        if (wield)
     {
         //Weapon bonus computed as 1/20th of weapon dice.

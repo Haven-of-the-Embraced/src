@@ -3198,7 +3198,7 @@ void do_switch( CHAR_DATA *ch, char *argument )
     return;
     }
 
-    if (!IS_NPC(victim))
+    if (!IS_NPC(victim) && !IS_IMP(ch))
     {
     send_to_char("You can only switch into mobiles.\n\r",ch);
     return;

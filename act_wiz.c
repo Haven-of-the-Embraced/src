@@ -2273,10 +2273,10 @@ void do_pstat( CHAR_DATA *ch, char *argument )
     victim->in_room == NULL    ?        0 : victim->in_room->vnum);
     send_to_char( buf, ch );
 
-    sprintf( buf, "Hp: %d/%d  Mana: %d/%d  Move: %d/%d  Agg: %d\n\r",
-    victim->hit,         victim->max_hit,
-    victim->mana,        victim->max_mana,
-    victim->move,        victim->max_move,
+    sprintf( buf, "Hp: %d/%d(%d)  Mana: %d/%d(%d)  Move: %d/%d(%d)  Agg: %d\n\r",
+    victim->hit,         victim->max_hit,       victim->pcdata->perm_hit,
+    victim->mana,        victim->max_mana,      victim->pcdata->perm_mana,
+    victim->move,        victim->max_move,      victim->pcdata->perm_move,
     victim->agg_dam );
     send_to_char( buf, ch );
 

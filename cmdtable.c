@@ -57,6 +57,7 @@ const   struct  cmdfun_type cmdfun_table    [] =
      * Common other commands.
      * Placed here so one and two letter abbreviations work.
      */
+    { "freebie",    do_freebie},
     { "chat",           do_chat },
     { "checkhelps", do_checkhelps },
     { "checktypos", do_checktypos },
@@ -278,7 +279,6 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "autosplit",  do_autosplit},
     { "brief",      do_brief},
     { "combat",     do_combat}, //DNM
-/*  { "channels",   do_channels}, */
     { "colour",     do_colour },
     { "pueblo",     do_pueblo},
     { "color",      do_colour}, //DNM
@@ -311,14 +311,12 @@ const   struct  cmdfun_type cmdfun_table    [] =
      */
     { "afk",        do_afk},
     { "answer",     do_answer},
-/*  { "auction",    do_auction}, */
+    { "auction",    do_auction},
     { "deaf",       do_deaf},
     /* emote moved above embrace */
     { "pmote",      do_pmote},
     { "ictalk",     do_ictalk},
-/*    { "grats",        do_grats}, */
     { "gtell",      do_gtell},
-/*  { "music",      do_music}, */
     { "note",       do_note},
     { "rpnote",    do_rpnote},
     { "pose",       do_pose},
@@ -367,7 +365,6 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "take",       do_get},
     { "sacrifice",  do_sacrifice},
     { "junk",           do_sacrifice},
-/*  { "unlock",     do_unlock}, */
     { "value",      do_value},
     { "battleprompt", do_battleprompt},
     { "wear",       do_wear},
@@ -416,7 +413,7 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "contact",    do_contact },
     /* Condition placed here so consider parses first */
 
-/*    { "flaw",     do_flaw}, */
+    { "flaw",     do_flaw}, 
     { "conditioning",      do_conditioning},
     { "convert",        do_convert},
     /* changeling here so change parses first */
@@ -437,12 +434,12 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "dismiss",    do_dismiss},
     { "gain",       do_gain},
     { "go",     do_enter},
-/*  { "group",      do_group}, */
+    { "group",      do_group},
     { "groups",     do_groups},
     { "hide",       do_hide},
     { "play",       do_play},
     { "games",      do_game },
-/*  { "practice",   do_practice}, */
+    { "practice",   do_practice},
     { "qui",        do_qui},
     { "quit",       do_quit},
     { "recall",     do_recall},
@@ -475,7 +472,7 @@ const   struct  cmdfun_type cmdfun_table    [] =
     /*
      * Immortal commands.
      */
-//  { "wikihelp",   do_showhelpindex}, //DNM
+    { "wikihelp",   do_showhelpindex}, //DNM
     { "lagem",    do_lagem},
     { "advance",    do_advance},
     { "dump",       do_dump},
@@ -483,7 +480,7 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "violate",    do_violate},
     { "teach",  do_teach},
     { "brew",   do_brew},
-/*    { "settime",      do_settime}, */
+    { "settime",      do_settime},
     { "allow",      do_allow},
     { "allowadmintalk", do_allowadmintalk},
     { "ban",        do_ban},
@@ -505,7 +502,6 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "nuk",    do_nuk},
     { "nuke",   do_nuke},
     { "clearaff",   do_clearaff},
-/*  { "sockets",    do_sockets}, */
     { "wizlock",    do_wizlock},
     { "qpoint", do_qpoint},
     { "gxp",       do_gxp},
@@ -566,12 +562,9 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "lset",           do_lset},
     { "lstat",          do_lstat},
 */
-/*  { "at",     do_at}, */
     { "poofin",     do_bamfin}, //DNM
     { "poofout",    do_bamfout}, //DNM
     { "gecho",      do_echo}, //DNM
-    { "announce",       do_announce},
-/*  { "goto",       do_goto}, */
     { "holylight",  do_holylight},
     { "incognito",  do_incognito},
     { "invis",      do_invis},
@@ -652,9 +645,8 @@ const   struct  cmdfun_type cmdfun_table    [] =
 
 /* to parse first insted of resets */
     { "resettime",      do_resettime},
-/*    { "fixme",        do_fixme}, */
+    { "fixme",        do_fixme}, 
     { "create",     do_create},
-    { "freebie",    do_freebie},
     { "becomeactive", do_becomeactive},
 
 

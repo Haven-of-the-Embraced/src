@@ -4765,6 +4765,7 @@ void do_backstab( CHAR_DATA *ch, char *argument )
     int damsuccess;
     int damdice;
     int diff;
+    int modifier;
     
     one_argument( argument, arg );
 
@@ -4833,7 +4834,7 @@ void do_backstab( CHAR_DATA *ch, char *argument )
     return;
     }
  /*Changing Backstab*/
-
+    int skill = get_skill(ch, gsn_backstab);
     WAIT_STATE( ch, skill_table[gsn_backstab].beats );
     if (!IS_AWAKE(victim))
         diff = 1;
@@ -4841,47 +4842,46 @@ void do_backstab( CHAR_DATA *ch, char *argument )
     {
         diff = UMIN( 10, (get_attribute(victim, PERCEPTION) + get_ability(victim, CSABIL_ALERTNESS)));
         
-        int skill = get_skill(ch, gsn_backstab);
         if (skill >= 80)
             diff--;
         if (skill >= 90)
             diff--;
-        if (diff < 6)
-            diff = 6;
+        if (diff < 7)
+            diff = 7;
     }
     dice = get_attribute(ch, DEXTERITY) + get_ability(ch, CSABIL_STEALTH);
     successes = godice(dice, diff);
     damdice = d10_damdice(ch, victim) + successes;
     damsuccess = godice(damdice, 4);
-        if (IS_DEBUGGING(ch))
+    modifier = d10_modifier(ch);
+    // Skill Percent increases modifier. 
+    modifier = (modifier * (50+skill))/100;
+
+    if (IS_DEBUGGING(ch))
         cprintf(ch, "tohit:%d diff:%d success:%d dampool:%d damsuccess:%d\n\r", dice, diff, successes, damdice, damsuccess);
     
-    if (successes < 1)
+    if (successes < 3)
     {
         check_improve(ch,gsn_backstab,FALSE,2);
         act("$N seems to sense you coming and dodges your backstab!", ch, NULL, victim, TO_CHAR );
         d10_damage(ch, victim, 0, 0, gsn_backstab, DAM_PIERCE, DEFENSE_FULL, TRUE);
         return;
     }
-    
+
     check_improve(ch,gsn_backstab,TRUE,2);
-    d10_damage(ch, victim, damsuccess, d10_modifier(ch), gsn_backstab, DAM_PIERCE, DEFENSE_SOAK, TRUE);
+    d10_damage(ch, victim, damsuccess, modifier, gsn_backstab, DAM_PIERCE, DEFENSE_SOAK, TRUE);
     check = number_percent();
-    if (!IS_AFFECTED(ch,AFF_HASTE))
+    if (!IS_AFFECTED(ch,AFF_HASTE) && godice(dice, diff))
        {
-       if (check < 40)
-          d10_damage(ch, victim, damsuccess, d10_modifier(ch), gsn_backstab, DAM_PIERCE, DEFENSE_SOAK, TRUE);
+        damsuccess = godice(damdice, 4);
+        d10_damage(ch, victim, damsuccess, modifier, gsn_backstab, DAM_PIERCE, DEFENSE_SOAK, TRUE);
        }
 
-    if (IS_AFFECTED(ch,AFF_HASTE))
-       {
-       if (check < 80)
-          d10_damage(ch, victim, damsuccess, d10_modifier(ch), gsn_backstab, DAM_PIERCE, DEFENSE_SOAK, TRUE);
-       }
-    
-    if(is_affected(ch,gsn_timealteration))
-        d10_damage(ch, victim, damsuccess, d10_modifier(ch), gsn_backstab, DAM_PIERCE, DEFENSE_SOAK, TRUE);
-
+    if((IS_AFFECTED(ch,AFF_HASTE) || is_affected(ch,gsn_timealteration) || is_affected(ch, gsn_celbuff)) && godice(dice, diff))
+    {
+        damsuccess = godice(damdice, 4);
+        d10_damage(ch, victim, damsuccess, modifier, gsn_backstab, DAM_PIERCE, DEFENSE_SOAK, TRUE);
+    }
     return;
 }
 

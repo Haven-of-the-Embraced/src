@@ -1788,18 +1788,12 @@ int d10_modifier ( CHAR_DATA *ch)
     /* get the weapon skill */
     sn = get_weapon_sn(ch);
     skill = get_weapon_skill(ch,sn);
-    
-    if (IS_NPC(ch))
-	modifier = 10 + ch->level/10;
-    else{
-        modifier = 5;
-	modifier +=  5 + UMIN(ch->remorts/5, 20) + ch->level/5;
-    }
-    
+
+    modifier = 10 + ch->level/5;
     modifier += GET_DAMROLL(ch)/50;
     modifier =  modifier * (20 + skill) / 100;
     
-    return UMAX(5, modifier);
+    return UMAX(10, modifier);
 }
 
 /*

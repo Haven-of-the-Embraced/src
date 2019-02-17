@@ -4872,13 +4872,13 @@ void do_backstab( CHAR_DATA *ch, char *argument )
     check_improve(ch,gsn_backstab,TRUE,2);
     d10_damage(ch, victim, damsuccess, modifier, gsn_backstab, DAM_PIERCE, DEFENSE_SOAK, TRUE);
     check = number_percent();
-    if (godice(dice, diff))
+    if (SAME_ROOM(ch, victim) && (godice(dice, diff) > 1))
        {
         damsuccess = godice(damdice, 4);
         d10_damage(ch, victim, damsuccess, modifier, gsn_backstab, DAM_PIERCE, DEFENSE_SOAK, TRUE);
        }
 
-    if((IS_AFFECTED(ch,AFF_HASTE) || is_affected(ch,gsn_timealteration) || is_affected(ch, gsn_rage) || is_affected(ch, gsn_celbuff)) && godice(dice, diff))
+    if(SAME_ROOM(ch, victim) && (IS_AFFECTED(ch,AFF_HASTE) || is_affected(ch,gsn_timealteration) || is_affected(ch, gsn_rage) || is_affected(ch, gsn_celbuff)) && (godice(dice, diff) > 1))
     {
         damsuccess = godice(damdice, 4);
         d10_damage(ch, victim, damsuccess, modifier, gsn_backstab, DAM_PIERCE, DEFENSE_SOAK, TRUE);

@@ -4878,7 +4878,7 @@ void do_backstab( CHAR_DATA *ch, char *argument )
         d10_damage(ch, victim, damsuccess, modifier, gsn_backstab, DAM_PIERCE, DEFENSE_SOAK, TRUE);
        }
 
-    if((IS_AFFECTED(ch,AFF_HASTE) || is_affected(ch,gsn_timealteration) || is_affected(ch, gsn_celbuff)) && godice(dice, diff))
+    if((IS_AFFECTED(ch,AFF_HASTE) || is_affected(ch,gsn_timealteration) || is_affected(ch, gsn_rage) || is_affected(ch, gsn_celbuff)) && godice(dice, diff))
     {
         damsuccess = godice(damdice, 4);
         d10_damage(ch, victim, damsuccess, modifier, gsn_backstab, DAM_PIERCE, DEFENSE_SOAK, TRUE);

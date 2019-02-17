@@ -4872,7 +4872,7 @@ void do_backstab( CHAR_DATA *ch, char *argument )
     check_improve(ch,gsn_backstab,TRUE,2);
     d10_damage(ch, victim, damsuccess, modifier, gsn_backstab, DAM_PIERCE, DEFENSE_SOAK, TRUE);
     check = number_percent();
-    if (!IS_AFFECTED(ch,AFF_HASTE) && godice(dice, diff))
+    if (godice(dice, diff))
        {
         damsuccess = godice(damdice, 4);
         d10_damage(ch, victim, damsuccess, modifier, gsn_backstab, DAM_PIERCE, DEFENSE_SOAK, TRUE);

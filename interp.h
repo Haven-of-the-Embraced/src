@@ -462,6 +462,7 @@ DECLARE_DO_FUN( do_bandage  );
 DECLARE_DO_FUN( do_dictionary   );
 DECLARE_DO_FUN( do_ground   );
 DECLARE_DO_FUN( do_headbutt );
+DECLARE_DO_FUN( do_gouge    );
 DECLARE_DO_FUN( do_warcry   );
 DECLARE_DO_FUN( do_blast    );
 DECLARE_DO_FUN( do_slip     );

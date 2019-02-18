@@ -391,6 +391,7 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "surrender",  do_surrender},
     { "trip",       do_trip},
     { "ground",     do_ground},
+    { "gouge",      do_gouge},
     { "headbutt",   do_headbutt},
     { "warcry",     do_warcry},
     { "blast",      do_blast},

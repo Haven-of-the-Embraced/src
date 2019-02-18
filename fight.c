@@ -1819,7 +1819,7 @@ void d10_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt)
     int dam = 0;
     int dam_type;
     int strength_bonus = 0;
-    int diff = 5;
+    int diff = 6;
     bool modified = FALSE;
     int sn, skill;
     bool result;
@@ -1881,8 +1881,8 @@ void d10_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt)
 		diff--;
 	if ( victim->position < POS_RESTING)
 		diff--;
-    if (diff < 4)
-        diff = 4;
+    if (diff < 3)
+        diff = 3;
 
     /* We have damage type and difficulty, now get the dicepool.*/
     if (IS_NPC(ch))
@@ -1913,8 +1913,8 @@ void d10_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt)
         }
     
 if (DEBUG_MESSAGES || IS_DEBUGGING(ch)){
-	cprintf(ch, "hp{r%d{x ", dice);
-	if (IS_NPC(ch)) cprintf(victim, "hp{r%d{x ", dice);}
+	cprintf(ch, "hp{r%d{w df{c%d{x ", dice, diff);
+	if (IS_NPC(ch)) cprintf(victim, "hp{r%d{w df{c%d{x ", dice, diff);}
 
 			
 				

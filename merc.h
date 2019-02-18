@@ -2739,6 +2739,7 @@ extern  sh_int          gsn_lightning_bolt;
 extern  sh_int          gsn_ray_of_truth;
 extern  sh_int          gsn_remove_curse;
 extern  sh_int          gsn_zeal;
+extern  sh_int          gsn_gouge;
 /* new gsns */
 extern sh_int  gsn_axe;
 extern sh_int  gsn_dagger;

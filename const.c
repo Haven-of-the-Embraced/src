@@ -1108,6 +1108,9 @@ const struct cs_skill_type csskill_table [] =
     {"zeal", &gsn_zeal, 15,
     {CSABIL_THEOLOGY, 3, ABIL}, {CSABIL_EXPRESSION, 3, ABIL} },
 
+    {"gouge", &gsn_gouge, 25,
+    {CSABIL_BRAWL, 5, ABIL}, {CSABIL_NONE, 0, ABIL} },
+
     { NULL, 0, 0, {-1, 0, ABIL}, {-1, 0, ABIL}}
     
     

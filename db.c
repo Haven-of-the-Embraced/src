@@ -159,6 +159,7 @@ sh_int          gsn_lightning_bolt;
 sh_int          gsn_ray_of_truth;
 sh_int          gsn_remove_curse;
 sh_int          gsn_zeal;
+sh_int          gsn_gouge;
 /* new gsns */
 
 sh_int          gsn_axe;

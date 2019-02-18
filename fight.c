@@ -2219,7 +2219,7 @@ bool d10_damage(CHAR_DATA *ch, CHAR_DATA *victim, int damsuccess, int modifier, 
 	
     if (ch != victim)
     {
-        if (dt != gsn_backstab && check_dodge( ch, victim ))
+        if (dt != gsn_backstab && dt != gsn_gouge && check_dodge( ch, victim ))
             return FALSE;
     }
     if (DEBUG_MESSAGES || IS_DEBUGGING(ch))	{
@@ -6096,6 +6096,119 @@ void do_headbutt( CHAR_DATA *ch, char *argument )
         victim->position = POS_SLEEPING;
     }
     else  check_improve(ch,gsn_headbutt,TRUE,5);
+
+    return;
+}
+
+void do_gouge( CHAR_DATA *ch, char *argument )
+{
+    CHAR_DATA *victim;
+    AFFECT_DATA af;
+    int dicesuccess = 0;
+    int damagesuccess = 0;
+    int skill;
+    int diff;
+
+        if (IS_NPC(ch))
+                return;
+
+        skill = get_skill(ch,gsn_gouge);
+        if (skill == 0)
+        {
+                send_to_char("Huh?\n\r", ch );
+                return;
+        }
+
+        if (( victim = get_char_room( ch, argument ) ) == NULL && (victim = ch->fighting ) == NULL )
+        {
+                send_to_char( "Gouge whose eyes out?\n\r", ch );
+                return;
+        }
+
+        if (ch == victim)
+        {
+                send_to_char("That seems like a terrible idea...\n\r", ch );
+                return;
+        }
+
+    if(IS_AFFECTED2(ch,AFF2_MIST) || IS_AFFECTED2(victim,AFF2_MIST))
+    {
+        send_to_char("Your fingers would pass right through them!\n\r",ch);
+        return;
+    }
+
+        if(IS_AFFECTED(victim, AFF_BLIND) || is_affected(victim, gsn_blindness) || is_affected(victim, gsn_gouge))
+        {
+                send_to_char("They are already blinded!\n\r", ch );
+                return;
+        }
+
+    if (IS_NPC(victim) && !IS_SET(victim->parts, PART_EYE))
+    {
+        send_to_char("That creature does not seem to have eyes to gouge out.\n\r", ch);
+        return;
+    }
+
+        if (skill > 90) diff = 7;
+        if (skill < 90) diff = 8;
+        if (skill < 70) diff = 9;
+    dicesuccess = godice(get_attribute(ch, DEXTERITY) + ch->pcdata->csabilities[CSABIL_BRAWL], diff);
+    damagesuccess = godice(get_attribute(ch, STRENGTH) + ch->pcdata->discipline[POTENCE], 6);
+        WAIT_STATE( ch, skill_table[gsn_gouge].beats );
+
+    if(dicesuccess < 0)
+    {
+        act("$N avoids your attack, causing you to trip and fall!", ch, NULL, victim, TO_CHAR);
+        act("Moving with precise timing, you sidestep and avoid $n's attempt to gouge your eyes out.", ch, NULL, victim, TO_VICT);
+        act("$n leaps forward, fingers outstretched to gouge $N's eyes out, and trips!", ch, NULL, victim, TO_NOTVICT);
+        ch->position = POS_RESTING;
+        STOPPED(ch, PULSE_VIOLENCE);
+        damage(ch, ch, ch->level, gsn_trip, DAM_BASH, TRUE);
+        check_improve(ch,gsn_gouge,FALSE,10);
+        multi_hit(victim, ch, TYPE_UNDEFINED);
+        return;
+    }
+
+    if(dicesuccess == 0 || damagesuccess < 1)
+    {
+        act("You miss their face by inches!", ch, NULL, victim, TO_CHAR);
+        act("$n tries to gouge your eyes out and misses!", ch, NULL, victim, TO_VICT);
+        act("$n tries to gouge $N's eyes out and missed by inches.", ch, NULL, victim, TO_NOTVICT);
+        check_improve(ch,gsn_gouge,FALSE,5);
+        multi_hit(victim, ch, TYPE_UNDEFINED);
+        return;
+    }
+
+        act( "You rake your fingers across $N's eyes!", ch, NULL, victim, TO_CHAR );
+        act( "$n rakes $s fingers across your eyes!", ch, NULL, victim, TO_VICT );
+        act( "$n rakes $s fingers across$N's eyes!", ch, NULL, victim, TO_ROOM );
+
+    gain_exp(ch, dicesuccess+damagesuccess);
+    check_improve(ch,gsn_gouge,TRUE,6);
+    STOPPED(victim, PULSE_VIOLENCE);
+
+    d10_damage(ch, victim, damagesuccess, d10_modifier(ch) * (20+skill) / 100, gsn_gouge, DAM_PIERCE, DEFENSE_NONE, TRUE);
+
+    if (skill > 90) diff = 2;
+    if (skill < 90) diff = 3;
+    if (skill < 70) diff = 4;
+    if(damagesuccess > diff)
+    {
+        act("$N shrieks in agony as you gouge $S eyes out!", ch, NULL, victim, TO_CHAR);
+        act("Your world becomes pain as $n tears your eyes from your skull!", ch, NULL, victim, TO_VICT);
+        act("$N shrieks in agony as $n gouges their eyes out!", ch, NULL, victim, TO_NOTVICT);
+
+        gain_exp(ch, dicesuccess);
+        af.where    = TO_AFFECTS;
+        af.type     = gsn_blindness;
+        af.level    = ch->level;
+        af.duration = -1;
+        af.location = APPLY_NONE;
+        af.modifier = 0;
+        af.bitvector    = AFF_BLIND;
+        affect_join(victim, &af);
+
+    }
 
     return;
 }

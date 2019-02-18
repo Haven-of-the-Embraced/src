@@ -2071,7 +2071,11 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
     { "headbutt",                { 50, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },  
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_CHAR_OFFENSIVE,     POS_STANDING,
     &gsn_headbutt,              SLOT( 0),        0,     24, "headbutt",                 "The soreness in your head fades away...",      "" },
-	
+
+    { "gouge",                { 25, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_CHAR_OFFENSIVE,     POS_STANDING,
+    &gsn_gouge,              SLOT( 0),        0,     24, "eye gouge",                 "The wounds afflicting your eyes heal..",      "" },
+
     { "blast",           { 50, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },  
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_CHAR_OFFENSIVE,     POS_STANDING,
     &gsn_blast,              SLOT( 0),        0,     12, "blast",                 "!Blast!",     "" },

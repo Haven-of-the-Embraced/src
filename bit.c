@@ -87,7 +87,7 @@ const struct flag_stat_type flag_stat_table[] =
     {   apply_types,        TRUE    },
     {   0,          0   }
 };
-    
+
 
 
 /*****************************************************************************

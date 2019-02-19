@@ -2089,7 +2089,7 @@ void spell_dispel_magic( int sn, int level, CHAR_DATA *ch, void *vo,int target )
     bool found = FALSE;
 
     level *= 2;
-    
+
     if (saves_spell(level, victim,DAM_OTHER))
     {
     send_to_char( "You feel a brief tingling sensation.\n\r",victim);
@@ -4702,7 +4702,7 @@ void spell_weaken( int sn, int level, CHAR_DATA *ch, void *vo,int target)
     af.modifier  = -1 * (level/2);
     af.bitvector = AFF_WEAKEN;
     affect_to_char( victim, &af);
-    if (IS_NPC(victim)) 
+    if (IS_NPC(victim))
     {
         af.location = APPLY_HITROLL;
         af.modifier = -10 * level;

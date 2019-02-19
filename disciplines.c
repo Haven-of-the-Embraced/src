@@ -28,7 +28,7 @@ void do_feralspeech(CHAR_DATA *ch, char *argument)
     argument = one_argument( argument, arg );
 
     if (IS_NPC(ch)) return;
-    
+
     if (!IS_VAMP(ch))
     {
         send_to_char("You are not a vampire!\n\r", ch);
@@ -145,9 +145,9 @@ void do_feralspeech(CHAR_DATA *ch, char *argument)
     }else if (success == 0) {
         act( "$N refuses to heed to your will.",  ch, NULL, victim, TO_CHAR );
         act( "$n stares into the eyes of $N... then frowns suddenly as $N snubs them.",  ch, NULL, victim, TO_NOTVICT );
-        return; 
+        return;
     }
-    
+
     sprintf( buf, "$n speaks to your mind, asking you to '%s'.\n\r", argument );
     act(buf,ch,NULL,victim,TO_VICT);
     sprintf( buf, "You look into the eyes of $N and ask them to '%s'.\n\r", argument );
@@ -297,9 +297,9 @@ void do_beckoning(CHAR_DATA *ch, char *argument)
             mob->hitroll += ((ch->pcdata->discipline[ANIMALISM] + dicesuccess) * 10);
             mob->damroll += ((ch->pcdata->discipline[ANIMALISM]) * 2);
         }
-        
+
     }
-    
+
     if (dicesuccess > 4)
     {
         mob->short_descr = str_dup("a horde of rats");
@@ -315,7 +315,7 @@ void do_beckoning(CHAR_DATA *ch, char *argument)
         mob->long_descr = str_dup("A horde of rats swarms the area, nipping at anything in sight.\n\r");
         mob->name = str_dup("horde rats animalism");
     }
-    
+
     add_follower( mob, ch );
     mob->leader = ch;
     mob->hit = mob->max_hit;
@@ -418,11 +418,11 @@ void do_songofserenity(CHAR_DATA *ch, char *argument)
         act( "$n sings a sweet song to $N, which seems to completely ignore it..",  ch, NULL, victim, TO_NOTVICT );
         return;
     }
-        
+
     act("Your song seems to sway the heart of $N",ch,NULL,victim,TO_CHAR);
     act( "$n sings a soft and sweet song to $N who seems calmed by it.",  ch, NULL, victim, TO_NOTVICT );
     REMOVE_BIT(victim->act, ACT_AGGRESSIVE);
-    
+
     if (success > 2) {
     affect_strip(victim, gsn_berserk);
     affect_strip(victim, gsn_vamp_frenzy);
@@ -431,7 +431,7 @@ void do_songofserenity(CHAR_DATA *ch, char *argument)
     affect_strip(victim, gsn_vigor);
     affect_strip(victim, gsn_zeal);
     }
-    
+
     af.where = TO_AFFECTS;
     af.type = skill_lookup("calm");
     af.level = success*20;
@@ -446,7 +446,7 @@ void do_songofserenity(CHAR_DATA *ch, char *argument)
 
     af.location = APPLY_DAMROLL;
     affect_to_char(victim,&af);
-    
+
     af.location = APPLY_AC;
     af.modifier = success * 50;
     affect_to_char(victim, &af);
@@ -493,13 +493,13 @@ void do_drawingoutthebeast( CHAR_DATA *ch, char *argument)
         return;
     }
     success = godice(get_attribute(ch, MANIPULATION) + ch->pcdata->csabilities[CSABIL_ANIMAL_KEN], 8);
-    
+
     if (success < 2)
     {
         send_to_char("You are unable to draw their beastial nature to the surface.\n\r", ch);
         return;
     }
-    
+
     ch->pblood -= 20;
     act( "$n stares at $N. $N suddenly starts to twitch then seems to enter a Frenzy!",  ch, NULL, victim, TO_NOTVICT );
     act( "$n stares at you... you are suddenly overcome by Frenzy!",  ch, NULL, victim, TO_VICT );
@@ -547,16 +547,16 @@ void do_quelltheherd(CHAR_DATA *ch, char *argument)
     }
     ch->pblood -= 30;
     send_to_char("You lift your voice in a sweet song of peace and serenity.\n\r",ch);
-    
+
     WAIT_STATE( ch, 24 );
     success = godice(get_attribute(ch,STRENGTH)+ch->pcdata->csabilities[CSABIL_INTIMIDATION],7);
-    
+
     if (success == 0) {
         act( "And it seems to have no effect..", ch, NULL, victim, TO_CHAR);
         act( "$n sings a sweet song of peace and serenity, which seems to go completely ignored..",  ch, NULL, victim, TO_NOTVICT );
         return;
     }
-    
+
     if(success < 0)
         {
         for ( victim = char_list; victim != NULL; victim = vict_next )
@@ -575,10 +575,10 @@ void do_quelltheherd(CHAR_DATA *ch, char *argument)
             }
             return;
         }
-    
-    
+
+
     act( "$n sings a soft and sweet song, a sense of calm descending over the room.",  ch, NULL, victim, TO_NOTVICT );
-    
+
     for ( victim = char_list; victim != NULL; victim = vict_next )
     {
         vict_next       = victim->next;
@@ -605,7 +605,7 @@ void do_quelltheherd(CHAR_DATA *ch, char *argument)
             af.level = success*20;
             af.duration = success*4;
             af.bitvector = AFF_CALM;
-            
+
             af.location = APPLY_HITROLL;
             af.modifier = -success * 25;
             affect_to_char(victim,&af);
@@ -616,8 +616,8 @@ void do_quelltheherd(CHAR_DATA *ch, char *argument)
             af.location = APPLY_AC;
             af.modifier = success * 50;
             affect_to_char(victim, &af);
-                    
-                
+
+
             continue;
         }
     }
@@ -821,14 +821,14 @@ void do_auraperception( CHAR_DATA *ch, char *argument )
     }
 
     success = godice(get_attribute(ch, PERCEPTION) + ch->pcdata->csabilities[CSABIL_EMPATHY], 8);
-        
+
     ch->pblood -= 10;
-    
+
     if (success < 0)
     { send_to_char("You are unable to read their aura.\n\r", ch);
     return;
     }
- 
+
     sprintf( buf, "%s is %d years old.\n\r", victim->name, get_age(victim));
     send_to_char( buf, ch );
 
@@ -837,7 +837,7 @@ void do_auraperception( CHAR_DATA *ch, char *argument )
     victim->sex == 0 ? "sexless" : victim->sex == 1 ? "male" : "female",
     race_table[victim->race].name);
     send_to_char(buf,ch);
-    
+
     if(success > 1)
     {
         sprintf( buf,
@@ -960,19 +960,19 @@ void do_project(CHAR_DATA *ch, char *argument)
             send_to_char( "You don't have enough blood.\n\r", ch );
             return;
         }
-    
+
         if ( (victim = get_char_world(ch, argument)) == NULL)
         {
             send_to_char( "You do not sense that person.\n\r", ch );
             return;
         }
-    
+
         if(!IS_NPC(victim) && victim->gen >= 1 && ch->gen < victim->gen+2)
         {
             send_to_char( "You should know better then to spy on your betters.\n\r", ch );
             return;
         }
-   
+
     if ( argument[0] == '\0' )
     {
         send_to_char( "Scry whom?\n\r", ch );
@@ -991,7 +991,7 @@ void do_project(CHAR_DATA *ch, char *argument)
 
     ch->pblood -= 20;
     success = godice(get_attribute(ch, PERCEPTION) + ch->pcdata->csabilities[CSABIL_OCCULT], 7);
-    
+
     if (success < 0)
     {
         send_to_char("You get lost in the Astral Plane and struggle to make your way back to your body.\n\r", ch);
@@ -1004,18 +1004,18 @@ void do_project(CHAR_DATA *ch, char *argument)
         WAIT_STATE( ch, 24);
         return;
     }
-    
+
     WAIT_STATE( ch, 24 );
     was_room = ch->in_room;
     char_from_room( ch );
     char_to_room( ch, victim->in_room );
     do_function(ch, &do_look, "auto" );
-    
+
     if (success > 2)
     {
         do_function(ch, &do_scan, "" );
     }
-    
+
     char_from_room( ch );
     char_to_room( ch, was_room );
     return;
@@ -1073,13 +1073,13 @@ void do_touch( CHAR_DATA *ch, char *argument )
     act( "You gently touch $p and gain insight on the object.",  ch, obj, NULL, TO_CHAR );
 
     success = godice(get_attribute(ch,PERCEPTION)+ch->pcdata->csabilities[CSABIL_EMPATHY],7);
-    
+
     if (success < 1)
     {
         send_to_char("You fail to discern any impressions left on this item.\n\r", ch);
         return;
     }
-    
+
     sprintf( buf,
         "Object '%s' is type %s, extra flags %s.\n\rWeight is %d, value is %d, level is %d.\n\r",
         obj->name,
@@ -1726,7 +1726,7 @@ void do_command(CHAR_DATA *ch, char *argument)
     argument = one_argument( argument, arg2 );
 
     if (IS_NPC(ch)) return;
-    
+
         if(!IS_VAMP(ch))
     {
         send_to_char("You are not a vampire!\n\r" ,ch);
@@ -1741,7 +1741,7 @@ void do_command(CHAR_DATA *ch, char *argument)
     {
         send_to_char( "You are not trained in Domination!.\n\r", ch );
         return;
-    }    
+    }
         if (ch->pblood < 20)
     {
         send_to_char( "You don't have enough blood.\n\r", ch );
@@ -1907,7 +1907,7 @@ void do_mesmerize(CHAR_DATA *ch, char *argument)
     argument = one_argument( argument, arg2 );
 
     if (IS_NPC(ch)) return;
-    
+
     if(!IS_VAMP(ch))
     {
         send_to_char("You are not a vampire!\n\r" ,ch);
@@ -2034,7 +2034,7 @@ void do_conditioning(CHAR_DATA *ch, char *argument)
     {
         send_to_char( "You are not skilled enough in Dominate!.\n\r", ch );
         return;
-    }    
+    }
     if ( IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
     {
         send_to_char("Your blood curse prevents it!\n\r" ,ch);
@@ -2158,7 +2158,7 @@ void do_possession( CHAR_DATA *ch, char *argument )
 
         if ( IS_NPC(ch) || ch->desc == NULL )
         return;
-    
+
         if(!IS_VAMP(ch))
     {
         send_to_char("You are not a vampire!\n\r" ,ch);
@@ -2241,7 +2241,7 @@ void do_blight(CHAR_DATA *ch, char *argument)
    int chance;
 
     if (IS_NPC(ch)) return;
-   
+
     if(!can_use_disc(ch,MORTIS,1,15,TRUE))
             return;
 
@@ -2297,7 +2297,7 @@ void do_blight(CHAR_DATA *ch, char *argument)
 
     dicesuccess = godice(get_attribute(ch, MANIPULATION) + ch->pcdata->csabilities[CSABIL_MEDICINE], 6);
     ch->pblood -= 10;
-    
+
     if (dicesuccess < 0)
     {
         act("... and Blight yourself instead!", ch, NULL, victim, TO_CHAR);
@@ -2522,13 +2522,13 @@ void do_homunculusservant(CHAR_DATA *ch, char *argument)
 
     if(!can_use_disc(ch,MORTIS,2,20,TRUE))
             return;
-    
+
     if((obj = get_obj_here( ch, argument )) == NULL)
     {
         send_to_char( "You require a fresh corpse to craft a Homunculus.\n\r", ch );
         return;
     }
-    
+
     if( obj->item_type != ITEM_CORPSE_NPC )
     {
         send_to_char( "That is not an acceptable corpse.\n\r", ch );
@@ -2552,7 +2552,7 @@ void do_homunculusservant(CHAR_DATA *ch, char *argument)
 
     ch->pblood -= 20;
     dicesuccess = godice(get_attribute(ch, DEXTERITY) + ch->pcdata->csabilities[CSABIL_OCCULT], 7);
-    
+
     if (dicesuccess < 0)
     {
         act("You dribble vitae on $p and it smokes and sizzles, destroying the remnants of life left within the corpse!", ch, obj, NULL, TO_CHAR);
@@ -2568,14 +2568,14 @@ void do_homunculusservant(CHAR_DATA *ch, char *argument)
         return;
         WAIT_STATE( ch, 5*PULSE_VIOLENCE );
     }
-    
+
     mob = create_mobile( pMobIndex );
     act( "$n dribbles some vitae upon $p and $N sloughs off and starts moving around!", ch, obj, mob, TO_NOTVICT );
     act( "You dribble some vitae upon $p and $N sloughs off and awaits your bidding.", ch, obj, mob, TO_CHAR);
-    
+
     WAIT_STATE( ch, 2*PULSE_VIOLENCE );
     obj->timer = 1;
-    
+
     char_to_room( mob, ch->in_room );
     mob->level  = ch->level;
     mob->max_hit = ch->max_hit/10;
@@ -2600,7 +2600,7 @@ void do_homunculusservant(CHAR_DATA *ch, char *argument)
     add_follower( mob, ch );
     ch->pet = mob;
     mob->leader = ch;
-    
+
     af.where     = TO_AFFECTS;
     af.type      = gsn_charm_person;
     af.level     = ch->pcdata->discipline[MORTIS];
@@ -2609,7 +2609,7 @@ void do_homunculusservant(CHAR_DATA *ch, char *argument)
     af.modifier  = 0;
     af.bitvector = AFF_CHARM;
     affect_to_char( mob, &af );
-    
+
     return;
 }
 
@@ -2623,12 +2623,12 @@ void do_animatedead(CHAR_DATA *ch, char *argument)
     char *str1;
     char *str2;
     int dicesuccess;
-    
+
     if (IS_NPC(ch)) return;
 
     if(!can_use_disc(ch,MORTIS,3,30,TRUE))
             return;
-    
+
     if((obj = get_obj_here( ch, argument )) == NULL)
     {
         send_to_char( "Animate what?.\n\r", ch );
@@ -2645,7 +2645,7 @@ void do_animatedead(CHAR_DATA *ch, char *argument)
         send_to_char("This creature's spirit is too powerful to control.\n\r",ch);
         return;
     }
-    
+
     if(obj->level < 5)
     {
         send_to_char( "The spirit of this corpse is not strong enough to reanimate.\n\r", ch );
@@ -2672,7 +2672,7 @@ void do_animatedead(CHAR_DATA *ch, char *argument)
     act( "You dribble some vitae into the mouth of $p and begin chanting...", ch, obj, NULL, TO_CHAR);
     ch->pblood -= 30;
     dicesuccess = godice(get_attribute(ch, STAMINA) + ch->pcdata->csabilities[CSABIL_OCCULT], 6);
-    
+
     if (dicesuccess < 0)
     {
         act( "... and $p is devoured in unholy black flames!", ch, obj, mob, TO_NOTVICT );
@@ -2686,11 +2686,11 @@ void do_animatedead(CHAR_DATA *ch, char *argument)
         act( "... and nothing happens.", ch, NULL, NULL, TO_CHAR);
         return;
     }
-    
+
 
     act( "... and $p begins moving, standing up to do $n's bidding!", ch, obj, mob, TO_NOTVICT );
     act( "... and $p is animated into your undead servant!", ch, obj, mob, TO_CHAR);
-    
+
     str1 = str_dup(obj->short_descr);
     str2 = str_dup("none");
     str1 = one_argument( str1, str2 );
@@ -2745,12 +2745,12 @@ void do_callathanatos(CHAR_DATA *ch, char *argument)
     char *str1;
     char *str2;
     int dicesuccess;
-    
+
     if (IS_NPC(ch)) return;
 
     if(!can_use_disc(ch,MORTIS,4,40,TRUE))
             return;
-    
+
     if((obj = get_obj_here( ch, argument )) == NULL)
     {
         send_to_char( "Animate what?.\n\r", ch );
@@ -2776,16 +2776,16 @@ void do_callathanatos(CHAR_DATA *ch, char *argument)
     WAIT_STATE(ch, 48);
     act( "$n dribbles some vitae onto $p and begins chanting...", ch, obj, NULL, TO_NOTVICT );
     act( "You dribble some vitae onto $p and begin chanting...", ch, obj, NULL, TO_CHAR);
-    
+
     dicesuccess = godice(get_attribute(ch, STAMINA) + ch->pcdata->csabilities[CSABIL_OCCULT], 6);
-    
+
     if (dicesuccess == 0)
     {
         act( "... and nothing happens.", ch, NULL, NULL, TO_NOTVICT );
         act( "... and nothing happens.", ch, NULL, NULL, TO_CHAR);
         return;
     }
-    
+
     mob = create_mobile( pMobIndex );
     char_to_room( mob, ch->in_room );
     mob->level  = ch->level;
@@ -2799,14 +2799,14 @@ void do_callathanatos(CHAR_DATA *ch, char *argument)
     mob->armor[2] -= ch->level*10;
     mob->armor[3] -= ch->level*10;
 
-    if (dicesuccess < 0) 
+    if (dicesuccess < 0)
     {
         act( "... and $p begins transforming into a nightmarish monster that turns and attacks $m!", ch, obj, mob, TO_NOTVICT );
         act( "... and you summon forth a corpse knight, that immediately turns on you!", ch, obj, mob, TO_CHAR);
-        multi_hit(mob, ch, TYPE_UNDEFINED);        
+        multi_hit(mob, ch, TYPE_UNDEFINED);
     } else {
         act( "... and $p begins transforming into a nightmarish monster!", ch, obj, mob, TO_NOTVICT );
-        act( "... and you summon forth a corpse knight to slay your foes.", ch, obj, mob, TO_CHAR);    
+        act( "... and you summon forth a corpse knight to slay your foes.", ch, obj, mob, TO_CHAR);
         add_follower( mob, ch );
         mob->leader = ch;
         ch->pet = mob;
@@ -2820,7 +2820,7 @@ void do_callathanatos(CHAR_DATA *ch, char *argument)
         af.bitvector = AFF_CHARM;
         affect_to_char( mob, &af );
     }
-    
+
     extract_obj(obj);
     return;
 }
@@ -3425,7 +3425,7 @@ void do_shadowplay (CHAR_DATA *ch, char *argument)
         send_to_char( "You are not skilled enough in your powers of Obtenebration!.\n\r", ch );
         return;
     }
- 
+
 
     if (arg[0] == '\0')
     {
@@ -3641,11 +3641,11 @@ void do_shadowwalk(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if(IS_SET(ch->in_room->room_flags, ROOM_SAFE) 
-	|| IS_SET(victim->in_room->room_flags, ROOM_SAFE) 
+    if(IS_SET(ch->in_room->room_flags, ROOM_SAFE)
+	|| IS_SET(victim->in_room->room_flags, ROOM_SAFE)
 	||   IS_SET(victim->in_room->room_flags, ROOM_NOTELE)
 	||   IS_SET(victim->in_room->area->area_flags, AREA_NOTELE)
-	|| IS_SET(victim->in_room->room_flags, ROOM_NO_QUIT)  
+	|| IS_SET(victim->in_room->room_flags, ROOM_NO_QUIT)
 	|| IS_SET(ch->in_room->room_flags, ROOM_NO_RECALL))
     {
         send_to_char( "You are not powerful enough.\n\r", ch );
@@ -3861,7 +3861,7 @@ void do_majesty(CHAR_DATA *ch, char *argument)
    AFFECT_DATA af;
 
     if (IS_NPC(ch)) return;
-    
+
    if(!IS_VAMP(ch))
     {
         send_to_char("You are not a vampire!\n\r" ,ch);
@@ -3887,7 +3887,7 @@ void do_majesty(CHAR_DATA *ch, char *argument)
         return;
     }
 
- 
+
 
     if ( ch->pcdata->cswillpower < 1 )
     {
@@ -4086,7 +4086,7 @@ void do_summon(CHAR_DATA *ch, char *argument)
         return;
     }
 
- 
+
     if ( ch->pblood < 70 )
     {
         send_to_char( "You don't have enough blood.\n\r", ch );
@@ -4142,7 +4142,7 @@ void do_dreadgaze(CHAR_DATA *ch, char *argument)
    CHAR_DATA *victim;
 
     if (IS_NPC(ch)) return;
-    
+
    if(!IS_VAMP(ch))
     {
         send_to_char("You are not a vampire!\n\r" ,ch);
@@ -4451,7 +4451,7 @@ void do_shift(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    
+
         if (is_affected(ch, gsn_vicissitude_horrid)) {
         sendch("You have already altered your form!\n\r", ch);
         return;
@@ -5542,7 +5542,7 @@ void do_weakness(CHAR_DATA *ch, char *argument)
         send_to_char( "You must progress beyond the rudimentaries in Quietus to learn the art of transmuting your blood into toxin.\n\r", ch );
         return;
     }
- 
+
     if ( ch->pblood < 20 )
     {
         send_to_char( "Transmuting blood now will leave you dangerously low.\n\r", ch );
@@ -6107,7 +6107,7 @@ void do_taste( CHAR_DATA *ch, char *argument )
         send_to_char("You are not a Vampire!\n\r",ch);
         return;
     }
-  
+
     if ( IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
     {
         send_to_char("Your blood curse prevents it!\n\r" ,ch);
@@ -6172,7 +6172,7 @@ void do_bloodrage( CHAR_DATA *ch, char *argument)
         return;
     }
 
-   
+
     if ( IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
     {
         send_to_char("Your blood curse prevents it!\n\r" ,ch);
@@ -6335,7 +6335,7 @@ void do_bloodofpotency(CHAR_DATA *ch, char *argument)
         send_to_char("You are not a Vampire!\n\r",ch);
         return;
     }
- 
+
     if ( IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
     {
         send_to_char("Your blood curse prevents it!\n\r" ,ch);
@@ -6432,7 +6432,7 @@ void do_bloodofpotency(CHAR_DATA *ch, char *argument)
     genmod = -(dicesuccess -1);
     if ((ch->gen + genmod) < 4)
         genmod = -(ch->gen - 4);
-        
+
     af.modifier = genmod;
     af.duration = (10*dicesuccess);
     af.where     = TO_AFFECTS;
@@ -6520,7 +6520,7 @@ void do_theft(CHAR_DATA *ch, char *argument)
         return;
     }
 
- 
+
 
     if (victim->position == POS_TORPOR)
     {
@@ -6645,7 +6645,7 @@ void do_cauldron(CHAR_DATA *ch, char *argument)
         return;
     }
 
-  
+
 
     if (victim->race == race_lookup("spirit") || victim->race == race_lookup("bane") || victim->race == race_lookup("wraith") || victim->race == race_lookup("construct"))
     {
@@ -6768,7 +6768,7 @@ void do_changeling(CHAR_DATA *ch, char *argument)
         send_to_char("You are not a Vampire!\n\r",ch);
         return;
     }
-  
+
     if ( IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
     {
         send_to_char("Your blood curse prevents it!\n\r" ,ch);
@@ -6870,7 +6870,7 @@ void do_fleshcraft(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    
+
 
     if ( IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
     {
@@ -6946,7 +6946,7 @@ void do_fleshcraft(CHAR_DATA *ch, char *argument)
     }
     if ( !str_prefix(arg,"hellhound"))
     {
-        if(mob->race != race_lookup("wolf") && 
+        if(mob->race != race_lookup("wolf") &&
                 mob->race != race_lookup("fido") &&
                 mob->race != race_lookup("dog"))
         {
@@ -7057,7 +7057,7 @@ void do_fleshcraft(CHAR_DATA *ch, char *argument)
             sendch("This beast cannot be altered again in such a way!\n\r", ch);
             return;
             }
-            
+
         if(ch->pblood-80 < 10)
         {
             send_to_char("You do not have enough blood to alter this person's form.\n\r",ch);
@@ -7066,7 +7066,7 @@ void do_fleshcraft(CHAR_DATA *ch, char *argument)
         ch->pblood -= 80;
 
         act( "$n grasps $N and wrenches their limbs and body, calling forth bone armor from within and twists the poor creature into a warped monster of destruction.", ch, NULL, mob, TO_NOTVICT );
-        
+
         mob->name = str_dup("vozhd warghoul ghoul");
         sprintf(buf,"A vicious bone-armored and spiked version of %s snarls and barely holds back it's urge to kill.\n\r",mob->short_descr);
         mob->long_descr = str_dup(buf);
@@ -7121,7 +7121,7 @@ void do_bonecraft(CHAR_DATA *ch, char *argument)
         return;
     }
 
-  
+
     if ( IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
     {
         send_to_char("Your blood curse prevents it!\n\r" ,ch);
@@ -7181,8 +7181,8 @@ void do_horrid(CHAR_DATA *ch, char *argument)
         sendch("You have already altered your form!\n\r", ch);
         return;
         }
-        
-    
+
+
     if ( IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
     {
         send_to_char("Your blood curse prevents it!\n\r" ,ch);
@@ -7230,7 +7230,7 @@ void do_horrid(CHAR_DATA *ch, char *argument)
 
     act( "Your body slowly shifts into that of a horrible Zulo.", ch, NULL, NULL, TO_CHAR );
     act( "$n's size doubles as their body is altered into that of a horrible Zulo.", ch, NULL, NULL,TO_NOTVICT );
-    
+
 
     af.where     = TO_AFFECTS;
     af.type      = gsn_vicissitude_horrid;
@@ -7320,7 +7320,7 @@ void do_essence(CHAR_DATA *ch, char *argument)
         return;
     }
 
-  
+
 
     if ( IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
     {
@@ -7367,7 +7367,7 @@ void do_essence(CHAR_DATA *ch, char *argument)
 
 void do_mortalterrors( CHAR_DATA *ch, char *argument)
 {
- 
+
     int door;
     EXIT_DATA       *pexit;
     ROOM_INDEX_DATA *original_room;
@@ -7377,12 +7377,12 @@ void do_mortalterrors( CHAR_DATA *ch, char *argument)
     char arg1[MIL];
     bool hit = FALSE;
     int dicepool, success, diff;
-    
+
     argument = one_argument( argument, arg1 );
-    
+
     if (IS_NPC(ch))
         return;
-    
+
     if (!IS_VAMP(ch))
     {
         sendch("You are not a Vampire!\n\r", ch);
@@ -7404,13 +7404,13 @@ void do_mortalterrors( CHAR_DATA *ch, char *argument)
         sendch("You do not have enough blood to perform that!", ch);
         return;
     }
-    
+
     if (IS_NULLSTR(arg1))
     {
         sendch("Send shades to terrorize which direction?\n\r", ch);
         return;
     }
-    
+
        if ( !str_prefix( arg1, "n" ) || !str_prefix( arg1, "north" ) ) door = 0;
     else if ( !str_prefix( arg1, "e" ) || !str_prefix( arg1, "east"  ) ) door = 1;
     else if ( !str_prefix( arg1, "s" ) || !str_prefix( arg1, "south" ) ) door = 2;
@@ -7443,15 +7443,15 @@ void do_mortalterrors( CHAR_DATA *ch, char *argument)
     }
     ch->pblood -= 20;
     act("$n summons forth terrible nightshades and sends them off to strike fear in the hearts of mortals.", ch, NULL, NULL, TO_NOTVICT);
-    
+
     // We have a legal room, with mobs in it. Now check for terrors.
               for (victim = pRoom->people; victim != NULL; victim = victim_next)
               {
                   victim_next = victim->next_in_room;
-                  
+
                    if ( // Some limiters.. May change later.
                            !can_see(ch, victim)
-                           || !IS_NPC(victim) 
+                           || !IS_NPC(victim)
                            ||   victim->in_room == NULL || victim == ch
                            ||   (IS_NPC(victim) && IS_SET(victim->act,ACT_AGGRESSIVE))
                            ||   victim->fighting != NULL
@@ -7460,7 +7460,7 @@ void do_mortalterrors( CHAR_DATA *ch, char *argument)
                            ||   is_safe_spell(ch, victim, TRUE)
                      )
                       continue;
-                  
+
                   //Have a mob we can influence. Roll for terror!
                   dicepool = get_attribute(ch, MANIPULATION) + get_ability(ch, CSABIL_INTIMIDATION);
                   diff = victim->level / 12;
@@ -7473,7 +7473,7 @@ void do_mortalterrors( CHAR_DATA *ch, char *argument)
                       break;
                   } else if (success == 0)
                       continue;
-                  
+
                   char_from_room( victim );
                   char_to_room( victim, ch->in_room );
                   hit = TRUE;

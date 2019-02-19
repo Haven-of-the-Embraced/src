@@ -186,7 +186,7 @@ int hit_gain( CHAR_DATA *ch )
     gain = UMAX(5, (get_attribute(ch, STAMINA) * 2) * ch->max_hit/100);
 
     gain += (ch->pcdata->condition[COND_HUNGER] + ch->pcdata->condition[COND_THIRST])/2;
-    
+
     number = number_percent();
     if (number < get_skill(ch,gsn_fast_healing))
     {
@@ -194,9 +194,9 @@ int hit_gain( CHAR_DATA *ch )
         if (ch->hit < ch->max_hit)
         check_improve(ch,gsn_fast_healing,TRUE,8);
     }
-    
+
     /*  doubling it to make up for agg */
-    gain += gain; 
+    gain += gain;
 
     switch ( ch->position )
     {
@@ -207,7 +207,7 @@ int hit_gain( CHAR_DATA *ch )
     }
 
     }
-    
+
     gain = gain * ch->in_room->heal_rate / 100;
 
     if (ch->on != NULL && ch->on->item_type == ITEM_FURNITURE)
@@ -856,7 +856,7 @@ void char_update( void )
 			else
 		    gain_condition( ch, COND_FULL, -4 );
 		}
-			
+
 		if(!IS_SET(ch->act, PLR_IC) && number_range(1, 3) == 2)
             {
             gain_condition( ch, COND_DRUNK,  -1 );
@@ -984,7 +984,7 @@ send_to_char("You probably should {Ytag{x someone else!\n\r",ch);
             send_to_char( "You shiver and suffer as the poison wracks your body.\n\r", ch );
           if(ch->position != POS_TORPOR)
             damage(ch,ch,UMIN(ch->hit - 1, ch->max_hit/20),gsn_poison,DAM_POISON,FALSE);
-            /* damage(ch,ch,poison->level*3,gsn_poison, DAM_POISON,FALSE); 
+            /* damage(ch,ch,poison->level*3,gsn_poison, DAM_POISON,FALSE);
         }
     } */
 
@@ -1079,24 +1079,24 @@ if (is_affected(ch, gsn_shadowplay) && ch != NULL)
 
     if(!IS_NPC(ch) && ch->race == race_lookup("garou"))
     {
-    
-       if (is_affected(ch, gsn_meditation) && ch->pcdata->gnosis[TEMP] < ch->pcdata->gnosis[PERM] &&  
+
+       if (is_affected(ch, gsn_meditation) && ch->pcdata->gnosis[TEMP] < ch->pcdata->gnosis[PERM] &&
        IS_AFFECTED2(ch, AFF2_UMBRA) && number_percent() < 25 &&
        godice(get_attribute(ch, WITS) + ch->pcdata->cssec_abil[CSABIL_ENIGMAS], 2))
     {
     sendch("You feel refreshed and at one with Mother Gaia.\n\r", ch);
     ch->pcdata->gnosis[TEMP]++;
     }
-    if (is_affected(ch, gsn_meditation) && ch->pcdata->gnosis[TEMP] < ch->pcdata->gnosis[PERM] && 
-        !IS_AFFECTED2(ch, AFF2_UMBRA) && number_percent() < 25 && 
+    if (is_affected(ch, gsn_meditation) && ch->pcdata->gnosis[TEMP] < ch->pcdata->gnosis[PERM] &&
+        !IS_AFFECTED2(ch, AFF2_UMBRA) && number_percent() < 25 &&
         godice(get_attribute(ch, WITS) + ch->pcdata->cssec_abil[CSABIL_ENIGMAS], 2+get_gauntlet(ch)))
         {
         sendch("You feel refreshed and at one with Mother Gaia.\n\r", ch);
         ch->pcdata->gnosis[TEMP]++;
         }
-        
+
     }
-    
+
 
     if ((ch->played/3600) > 15 && IS_SET(ch->act2, PLR2_NEWBIE))
     {
@@ -1161,12 +1161,12 @@ if (is_affected(ch, gsn_shadowplay) && ch != NULL)
 
        if (ch->pcdata->last_pose < 5)
         {
-        
+
         // Line for this into gxp as well
              global_xp += qpaward*xpmult;
              ch->qpoints += qpaward;
         }
-             
+
        if (doubleexp)
            {
            qpaward = qpaward*2;

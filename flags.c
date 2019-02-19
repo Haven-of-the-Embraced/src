@@ -14,7 +14,7 @@
  *  benefitting.  We hope that you share your changes too.  What goes      *
  *  around, comes around.                                                  *
  ***************************************************************************/
- 
+
 /***************************************************************************
 *   ROM 2.4 is copyright 1993-1998 Russ Taylor             *
 *   ROM has been brought to you by the ROM consortium          *
@@ -198,7 +198,7 @@ void do_flag(CHAR_DATA *ch, char *argument)
         flag_table = comm_flags;
     }
 
-    else 
+    else
     {
         send_to_char("That's not an acceptable flag.\n\r",ch);
         return;
@@ -262,4 +262,4 @@ void do_flag(CHAR_DATA *ch, char *argument)
 
 
 
-    
+

@@ -596,7 +596,7 @@ void boot_db()
      */
     {
     long lhour, lday, lmonth;
-    
+
     // 896255250 corresponds to approximately 800 years ago, to the hour.
     lhour       = (current_time - 896255250)
             / (PULSE_TICK / PULSE_PER_SECOND);
@@ -866,7 +866,7 @@ void new_load_area( FILE *fp )
 			break;
 			}
 			break;
-			
+
             case 'I':
             if ( !str_cmp( word, "Infl" ) )
             {
@@ -2047,7 +2047,7 @@ void reset_room( ROOM_INDEX_DATA *pRoom )
         }
     }
     OBJ_DATA *tree;
-    
+
     if(pRoom->sector_type == SECT_FOREST && tree_count < 250 &&
 	number_percent() < 10 && (tree = get_obj_list2(NULL, "tree", pRoom->contents)) == NULL)
     {
@@ -3848,7 +3848,7 @@ void do_showdump( CHAR_DATA *ch, char *argument )
 
     num_pcs = 0;
     aff_count = 0;
-    
+
     strtime             = ctime( &current_time );
     strtime[strlen(strtime)-1]  = '\0';
     sprintf(output, "-------- Memory Dump: %s --------\n", strtime);
@@ -3968,7 +3968,7 @@ void do_dump( CHAR_DATA *ch, char *argument )
 
     num_pcs = 0;
     aff_count = 0;
-    
+
     strtime             = ctime( &current_time );
     strtime[strlen(strtime)-1]  = '\0';
     fprintf(fp, "-------- Memory Dump: %s --------\n", strtime);

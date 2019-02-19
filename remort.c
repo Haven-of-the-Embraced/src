@@ -30,7 +30,7 @@ struct rank_type rank_table [] =
 {{7,0,0}, {1,0,5},  {1,4,1},  {4,0,2},  {4,1,1}},
 {{13,0,0}, {2,1,7},  {2,6,2},  {4,2,4},  {6,3,1}},
 {{19,0,0}, {4,2,9},  {3,8,4},  {7,2,6},  {9,4,2}},
-{{25,0,0}, {4,9,10}, {4,10,9}, {9,5,9}, {10,9,4}} 
+{{25,0,0}, {4,9,10}, {4,10,9}, {9,5,9}, {10,9,4}}
 };
 
 #define HONO 1
@@ -108,8 +108,8 @@ void do_remort(CHAR_DATA *ch, char *argument)
             if ( !IS_AFFECTED(ch, AFF_FANGS))
             SET_BIT(ch->affected_by, AFF_FANGS);
             do_function(ch, &do_shift, "");
-        }        
-        
+        }
+
                 while ( ch->affected )
             affect_remove( ch, ch->affected );
 
@@ -207,7 +207,7 @@ void do_remort(CHAR_DATA *ch, char *argument)
         ch->remorts++;
         nuke_pets(ch);
         save_char_obj(ch);
-        return; 
+        return;
     }
     if(!str_cmp(arg, "human"))
     {
@@ -347,8 +347,8 @@ void do_remort(CHAR_DATA *ch, char *argument)
         sendch("You cannot raise your rank any higher!\n\r", ch);
         return;
         }
-        
-        
+
+
         if (ch->pcdata->auspice == RAGABASH)
         {
             if ((ch->pcdata->renown[GLORY] + ch->pcdata->renown[HONOR] + ch->pcdata->renown[WISDOM]) >= rank_table[ch->pcdata->rank].ragabash[0])
@@ -367,31 +367,31 @@ void do_remort(CHAR_DATA *ch, char *argument)
                     ch->pcdata->renown[HONOR] >= rank_table[ch->pcdata->rank].philodox[HONO] &&
                     ch->pcdata->renown[WISDOM] >= rank_table[ch->pcdata->rank].philodox[WISD] )
                         canrank = TRUE;
-                break;                    
+                break;
             case GALLIARD:
                 if (ch->pcdata->renown[GLORY] >= rank_table[ch->pcdata->rank].galliard[GLOR] &&
                     ch->pcdata->renown[HONOR] >= rank_table[ch->pcdata->rank].galliard[HONO] &&
                     ch->pcdata->renown[WISDOM] >= rank_table[ch->pcdata->rank].galliard[WISD] )
                         canrank = TRUE;
-                break;  
+                break;
             case AHROUN:
                 if (ch->pcdata->renown[GLORY] >= rank_table[ch->pcdata->rank].ahroun[GLOR] &&
                     ch->pcdata->renown[HONOR] >= rank_table[ch->pcdata->rank].ahroun[HONO] &&
                     ch->pcdata->renown[WISDOM] >= rank_table[ch->pcdata->rank].ahroun[WISD] )
                         canrank = TRUE;
-                break;  
+                break;
              default: canrank = FALSE; break;
              }
-                
+
                 }
             if (!canrank)
             {
                 sendch("You are not well known enough to Gaia and the Garou to attain this rank.\n\r", ch);
                 return;
             }
-            
+
         ch->pcdata->rank++;
-        
+
         for ( obj = ch->carrying; obj != NULL; obj = obj_next )
         {
             obj_next = obj->next_content;
@@ -423,11 +423,11 @@ void do_remort(CHAR_DATA *ch, char *argument)
         ch->exp   = exp_per_level(ch,ch->pcdata->points) * UMAX( 1, ch->level );
         sendch("Your deeds have earned you a higher rank in garou society.\n\r", ch);
 
-        
+
         nuke_pets(ch);
         save_char_obj(ch);
         return;
-    }   
+    }
 
     if ( arg[0] == '\0')
     {
@@ -437,7 +437,7 @@ void do_remort(CHAR_DATA *ch, char *argument)
             return;
         }
 
-        if(ch->pcdata->rank > 0 && ch->pcdata->renown[TEMP_GLORY] == 10 && 
+        if(ch->pcdata->rank > 0 && ch->pcdata->renown[TEMP_GLORY] == 10 &&
         ch->pcdata->renown[TEMP_HONOR] == 10 &&  ch->pcdata->renown[TEMP_WISDOM] == 10)
         {
             send_to_char("You cannot remort again until you've spent some of your Temporary Renown.\n\r",ch);
@@ -495,10 +495,10 @@ void do_remort(CHAR_DATA *ch, char *argument)
         ch->exp   = exp_per_level(ch,ch->pcdata->points) * UMAX( 1, ch->level );
         send_to_char( "You are reborn more powerful!\n\r", ch );
         ch->freebie += 3;
-        
+
         if(ch->pcdata->rank > 0)
             renown_gain(ch);
-        
+
         nuke_pets(ch);
         save_char_obj(ch);
         return;

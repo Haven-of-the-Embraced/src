@@ -1060,7 +1060,7 @@ void do_admintalk( CHAR_DATA *ch, char *argument )
     DESCRIPTOR_DATA *d;
     d = ch->desc;
 
-    if (!IS_ADMIN(ch)) 
+    if (!IS_ADMIN(ch))
              {
                  send_to_char("Huh?\n\r", ch);
                  return;
@@ -2934,7 +2934,7 @@ void do_promote_leader( CHAR_DATA *ch, char *argument )
     send_to_char( "But you are following someone else!\n\r", ch );
     return;
     }
-    
+
     if ( ( victim = get_char_room( ch, arg ) ) == NULL )
     {
     send_to_char( "Promote whom to lead your group?\n\r", ch );
@@ -2973,7 +2973,7 @@ void do_promote_leader( CHAR_DATA *ch, char *argument )
                 gch->master = victim;
             }
         }
-        
+
         ch->leader = victim;
         ch->master = victim;
         victim->leader = NULL;

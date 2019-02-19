@@ -27,7 +27,7 @@ void spells_update (void) {
 
     if (IS_NPC(ch))
         continue;
-        
+
 //Making people being IT annoying. /*
 /* Disabling random code for now
 int r = arc4random_uniform(500);

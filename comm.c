@@ -411,7 +411,7 @@ int main( int argc, char **argv )
     xpmult = 1;
     global_xp = 0;
     global_qp = 0;
-    
+
     /*
      * Reserve one channel for our use.
      */
@@ -467,7 +467,7 @@ int main( int argc, char **argv )
     log_string( log_buf );
 
     load_config();
-    
+
     if (fCopyOver)
         copyover_recover();
 
@@ -856,11 +856,11 @@ void game_loop_unix( int control )
         if (!IS_IMMORTAL(d->character))
             continue;
         }
-        
+
         if ( d->character != NULL && d->character->stopped > 0 )
         {
         --d->character->stopped;
-        
+
         if (!IS_IMMORTAL(d->character))
             continue;
         }
@@ -1034,7 +1034,7 @@ void init_descriptor( int control )
     {from = NULL;}
     else
     {from = gethostbyaddr( (char *) &sock.sin_addr, sizeof(sock.sin_addr), AF_INET );}
-    
+
     dnew->host = str_dup( from ? from->h_name : buf );
     }
 
@@ -1413,7 +1413,7 @@ bool process_output( DESCRIPTOR_DATA *d, bool fPrompt )
 
             if (ch->fighting && target && target != ch && IS_SET(ch->act2, PLR2_BATTLEPROMPT))
             {
-                cprintf(ch, "[%s] Hp:%d% Mv:%d%\n\r", IS_NPC(target) ? target->short_descr : target->name, 
+                cprintf(ch, "[%s] Hp:%d% Mv:%d%\n\r", IS_NPC(target) ? target->short_descr : target->name,
                         tarhit, tarmove);
             }
         if ( IS_SET(ch->comm, COMM_PROMPT) )
@@ -1476,13 +1476,13 @@ void bust_a_prompt( CHAR_DATA *ch )
     const char *dir_name[] = {"N","E","S","W","U","D"};
     int door;
     const char *health_level[] =
-    { "Incapacitated", "Crippled", "Mauled", "Wounded", 
+    { "Incapacitated", "Crippled", "Mauled", "Wounded",
         "Injured", "Hurt", "Bruised", "Immaculate"};
-        
+
     int cshealth = (ch->hit / HLEVELS(ch, 1));
     if (cshealth < 0)
         cshealth = 0;
-        
+
     point = buf;
     str = ch->prompt;
     if( !str || str[0] == '\0')
@@ -1538,7 +1538,7 @@ void bust_a_prompt( CHAR_DATA *ch )
     case 'C' :
         sprintf(buf2, "%s", health_level[cshealth]);
         i = buf2; break;
-        
+
          case 'h' :
             sprintf( buf2, "%d", ch->hit );
             i = buf2; break;
@@ -2340,7 +2340,7 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
     write_to_buffer(d,"Do you wish to start the game as a Vampire [Y/N]? ",0);
     d->connected = CON_CHOICE_VAMP;
     break;
-        
+
 
     case CON_CHOICE_VAMP:
 
@@ -2400,10 +2400,10 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
     }
     if(!make_vamp(ch,buf))
         write_to_buffer(d,"ERROR! make_vamp() returning FALSE\n\r",0);
-    
 
 
-    
+
+
     ch->freebie = 15;
     ch->class = 0;
     update_csstats(ch);
@@ -2615,12 +2615,12 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
         send_to_char("Time to get killing, {RSlaughterfest{x is running!\n\r", ch);
     if (doubleexp)
         send_to_char("{CDoubleexp{x is turned on!{x", ch);
-    
+
     /*if (IS_VAMP(ch) && ch->gen < 10)
     {
         switch (ch->gen)
         {
-        case 1: case 2: case 3: case 4: 
+        case 1: case 2: case 3: case 4:
         case 5: ch->pcdata->csbackgrounds[CSBACK_GENERATION] = 5; break;
         case 6: ch->pcdata->csbackgrounds[CSBACK_GENERATION] = 4; break;
         case 7: ch->pcdata->csbackgrounds[CSBACK_GENERATION] = 3; break;
@@ -3886,8 +3886,8 @@ void load_config( void )
     bug( "load_config: fopen", 0 );
     perror( CONFIG_FILE );
     }
-    
-    
+
+
     for ( ; ; )
     {
        word   = feof( fp ) ? "End" : fread_word( fp );
@@ -3898,7 +3898,7 @@ void load_config( void )
           case 'A':
                KEY( "Arena", arena, fread_number(fp) );
                break;
-           case 'R': 
+           case 'R':
                KEY("Resolver", resolver, fread_number(fp) );
                break;
            case 'N':
@@ -3919,7 +3919,7 @@ void load_config( void )
            case 'S':
                KEY( "Slaughter", slaughter, fread_number(fp) );
                break;
-               
+
            case 'E':
                 if ( !str_cmp( word, "End" ) )
                 {
@@ -3931,7 +3931,7 @@ void load_config( void )
            case 'W':
                KEY("Wizlock", wizlock, fread_number(fp));
                break;
-          
+
         }
     }
 }

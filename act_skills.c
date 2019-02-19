@@ -170,7 +170,7 @@ void do_bandage(CHAR_DATA *ch, char *argument)
             act("and patches up the wounds with a bandage.",ch,NULL,victim,TO_NOTVICT);
         }
         /*else if(victim->race == race_lookup("garou"))
-        {               
+        {
             act("and manage to place a clean bandage just as the wounds begin to heal.",ch,NULL,victim,TO_CHAR);
             act("and manages to place the bandage just as your accelerated healing kicks in, rendering the bandage pointless.",ch,NULL,victim,TO_VICT);
             act("and manages to place a bandage on $N.",ch,NULL,victim,TO_NOTVICT);

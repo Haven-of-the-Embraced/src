@@ -500,7 +500,7 @@ void do_claim (CHAR_DATA *ch, char *argument)
          return;
      }
     }
-    
+
     if (dom->clan == 0 && dom->influence[ch->clan] < 49)
     {
         sendch("Your clan does not have enough influence in this domain to claim it.\n\r", ch);

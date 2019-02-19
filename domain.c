@@ -28,7 +28,7 @@
  DOMAIN_DATA                 *domain_first;
  DOMAIN_DATA                 *domain_last;
  int                          top_domain;
- 
+
 
 DOMAIN_DATA *new_domain (void)
 {

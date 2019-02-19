@@ -22,7 +22,7 @@
  * Declare_spell_fun(spell_giftname) in magic.h // DONE
  * declare extern sh_int gsn_gift_giftname in garou.h  // DONE
  * Add the gift to the skill table. / DONE
- * Add the gift to the gift table. / DONE 
+ * Add the gift to the gift table. / DONE
  *
  *
  * Go to the gift spell_fun below and write the function.
@@ -121,21 +121,21 @@ void spell_gift_bloodyfeast( int sn, int level, CHAR_DATA *ch, void *vo, int tar
 void spell_gift_masteroffire( int sn, int level, CHAR_DATA *ch, void *vo, int target )
 {
     AFFECT_DATA af;
-    
+
     if (ch->pcdata->gnosis[TEMP] < 1)
     {
         sendch("You do not possess the spiritual reserves to activate this gift.\n\r", ch);
         return;
         }
-        
+
      if (is_affected(ch, gsn_gift_masteroffire))
      {
         sendch("The Elemental spirits of Fire have already agreed not to consume your flesh.\n\r", ch);
         return;
         }
-    
+
 	ch->pcdata->gnosis[TEMP]--;
-	
+
     af.where        = TO_IMMUNE;
     af.type         = gsn_gift_masteroffire;
     af.level        = ch->pcdata->rank;
@@ -146,7 +146,7 @@ void spell_gift_masteroffire( int sn, int level, CHAR_DATA *ch, void *vo, int ta
     affect_to_char(ch, &af);
     sendch("You pay homage to the Elemental spirits of Fire for protection from their flames.\n\r", ch);
     return;
-    
+
     }
 //
 //“Persuasion”
@@ -164,7 +164,7 @@ void spell_gift_persuasion( int sn, int level, CHAR_DATA *ch, void *vo, int targ
 		return;
 	}
 	success = godice(get_attribute(ch, CHARISMA) + get_ability(ch, CSABIL_SUBTERFUGE), 7);
-	
+
 	if (success < 1)
 	{
 		sendch("You fail to enhance your persuasive prowess.\n\r", ch);
@@ -236,7 +236,7 @@ void spell_gift_staredown( int sn, int level, CHAR_DATA *ch, void *vo, int targe
 //“Calm the Savage Beast”
 //unicorn spirit
 //roll: Manipulation + Primal Urge (diff 8)
-//This gift allows the werewolf to ‘lend’ a frenzying garou the will to loose the hold that her Rage has on her. (If successful, stop combat and remove aggressive) 
+//This gift allows the werewolf to ‘lend’ a frenzying garou the will to loose the hold that her Rage has on her. (If successful, stop combat and remove aggressive)
 //Cost: 1 Willpower
 void spell_gift_calmthesavagebeast( int sn, int level, CHAR_DATA *ch, void *vo, int target){
     return;
@@ -310,7 +310,7 @@ void spell_gift_createelement( int sn, int level, CHAR_DATA *ch, void *vo, int t
 		target_name = one_argument(target_name, arg2);
 		int success;
 		int type = 0;
-		
+
 		if (IS_NULLSTR(arg1) && IS_NULLSTR(arg2))
 		{
 			sendch("Syntax:\n\r", ch);
@@ -320,7 +320,7 @@ void spell_gift_createelement( int sn, int level, CHAR_DATA *ch, void *vo, int t
 			sendch("beseech 'create element' air <target>				-Knock target out of air.\n\r", ch);
 			return;
 		}
-		
+
 		if (!str_cmp(arg1, "fire"))
 			type = FIRE;
 	    else if (!str_cmp(arg1, "water"))
@@ -329,14 +329,14 @@ void spell_gift_createelement( int sn, int level, CHAR_DATA *ch, void *vo, int t
 			type = EARTH;
 		else if (!str_cmp(arg1, "air"))
 			type = AIR;
-			
+
 		if (!type)
 		{
 			do_function(ch, &do_beseech, "'create element'");
 			return;
 		}
-		
-		if (type == FIRE || type == EARTH || type == AIR) 
+
+		if (type == FIRE || type == EARTH || type == AIR)
 		{
 			if (arg2[0] == '\0')
 			{
@@ -345,48 +345,48 @@ void spell_gift_createelement( int sn, int level, CHAR_DATA *ch, void *vo, int t
 					sendch("Direct an elemental attack at whom?\n\r", ch);
 					return;
 					}
-			} else if ( (victim = get_char_room(ch, arg2)) == NULL ) 
+			} else if ( (victim = get_char_room(ch, arg2)) == NULL )
 				{
 					sendch("They aren't here.\n\r", ch);
 					return;
 				}
 		}
-		
-        if (victim == NULL) 
+
+        if (victim == NULL)
         {
             sendch("They aren't here.\n\r", ch);
             return;
             }
-            
+
 		if (type == AIR && (!is_affected(victim, gsn_fly) || !IS_AFFECTED(victim, AFF_FLYING)))
 		{
 			sendch("They are not flying!\n\r", ch);
 			return;
 			}
-			
-		
+
+
 		if (type == WATER && (obj =  get_obj_carry(ch, arg2, ch)) == NULL)
 		{
 			sendch("You don't seem to have that container...", ch);
 			return;
 		}
-		
+
 		if (ch->pcdata->gnosis[TEMP] < 1)
 		{
         sendch("You do not possess the spiritual reserves to activate this gift.\n\r", ch);
 		return;
 		}
-		
+
 		ch->pcdata->gnosis[TEMP]--;
-		
+
 		success = godice(ch->pcdata->gnosis[PERM], 7);
-		
+
 		if (success < 1)
 		{
 			sendch("You fail to create the desired element.\n\r", ch);
 			return;
 		}
-		
+
 		if (type == FIRE)
 		{
 			int mod = ch->remorts/5 + ch->level/10 + 5;
@@ -416,14 +416,14 @@ void spell_gift_createelement( int sn, int level, CHAR_DATA *ch, void *vo, int t
 		{
 			act("You create gusts of air to knock $N from the sky!", ch, NULL, victim, TO_CHAR);
 			act("$n says thanks to the Elemental Spirits of Air and gusts of air begin to buffet $N from the skies!", ch, NULL, victim, TO_NOTVICT);
-			act("$n looks at you while murmering something and suddenly.. strong winds blow you out of the sky!", ch, NULL, victim, TO_VICT);		
+			act("$n looks at you while murmering something and suddenly.. strong winds blow you out of the sky!", ch, NULL, victim, TO_VICT);
 			affect_strip(victim, gsn_fly);
 			REMOVE_BIT(victim->affected_by, AFF_FLYING);
 			WAIT_STATE(ch, PULSE_VIOLENCE);
 			return;
 		}
-			
-		
+
+
     return;
 }
 //
@@ -445,13 +445,13 @@ void spell_gift_sensewyrm( int sn, int level, CHAR_DATA *ch, void *vo, int targe
     }
 
     success = godice(get_attribute(ch, PERCEPTION) + get_ability(ch, CSABIL_OCCULT), 6);
-        
+
     if ( success < 1)
     {
     sendch("You fail to attune your senses to sniffing out the Wyrm's foul influence.\n\r", ch);
     return;
     }
-    
+
     af.where        = TO_AFFECTS;
     af.type         = gsn_gift_sensewyrm;
     af.level        = level;
@@ -471,24 +471,24 @@ void spell_gift_sensewyrm( int sn, int level, CHAR_DATA *ch, void *vo, int targe
 //The metis can shed a layer of fur and skin, slipping from an opponents grasp or escaping damage from a weapon as it merely slides off her body. (Add to armor. Make resistant to bashing damage. short duration, long recovery. 2-3 ticks active, 10-12 ticks unusuable.)
 //Cost: 1 willpower
 void spell_gift_shed( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    
-    
+
+
     AFFECT_DATA af;
-    
+
     if (ch->pcdata->cswillpower < 1)
     {
         sendch("You do not possess the strength of Will to activate this gift.\n\r", ch);
         return;
         }
-        
+
      if (is_affected(ch, gsn_gift_shed))
      {
         sendch("You are already shedding fur and flesh!\n\r", ch);
         return;
         }
-    
+
 	ch->pcdata->cswillpower--;
-	
+
     af.where        = TO_RESIST;
     af.type         = gsn_gift_shed;
     af.level        = ch->pcdata->rank;
@@ -624,14 +624,14 @@ void spell_gift_totemgift( int sn, int level, CHAR_DATA *ch, void *vo, int targe
 // of attacks and back in for quick spurts of damage.
 void spell_gift_haresleap( int sn, int level, CHAR_DATA *ch, void *vo, int target){
     AFFECT_DATA af;
-    
-        
+
+
      if (is_affected(ch, gsn_gift_haresleap))
      {
         sendch("Your leaps are already enhanced by the Hare spirits.\n\r", ch);
         return;
         }
-	
+
     af.where        = TO_AFFECTS;
     af.type         = gsn_gift_haresleap;
     af.level        = ch->pcdata->rank;
@@ -650,16 +650,16 @@ void spell_gift_haresleap( int sn, int level, CHAR_DATA *ch, void *vo, int targe
 //The wolf with this gift tunes in to the world around her, increasing her senses vastly. (Auspex like affect. Can see heightened senses descriptions and hidden mobs by sniffing them out. Gives +2 perception, )
 //Cost: 1 Gnosis
 void spell_gift_heightenedsenses( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    
+
     AFFECT_DATA af;
-    
+
     if (is_affected(ch, gsn_gift_heightenedsenses))
     {
     sendch("You dull your senses back to normal.\n\r", ch);
     affect_strip(ch, gsn_gift_heightenedsenses);
     return;
     }
-    
+
     if (ch->pcdata->gnosis[TEMP] < 1)
     {
     sendch("You do not have the spiritual reserves to activate this gift.\n\r", ch);
@@ -667,7 +667,7 @@ void spell_gift_heightenedsenses( int sn, int level, CHAR_DATA *ch, void *vo, in
     }
     ch->pcdata->gnosis[TEMP]--;
     sendch("You senses increase tenfold and you take notice of things you missed before...\n\r",ch);
-	
+
     af.where     = TO_AFFECTS;
     af.type      = sn;
     af.level     = level;
@@ -676,7 +676,7 @@ void spell_gift_heightenedsenses( int sn, int level, CHAR_DATA *ch, void *vo, in
     af.location  = APPLY_CS_PER;
     af.bitvector = AFF_DETECT_HIDDEN;
     affect_to_char( ch, &af );
-    
+
     af.where     = TO_AFFECTS2;
     af.bitvector = AFF2_DETECT_UNSEEN;
     affect_to_char(ch, &af );
@@ -696,13 +696,13 @@ void spell_gift_leylines( int sn, int level, CHAR_DATA *ch, void *vo, int target
     char            buf  [ MAX_STRING_LENGTH   ];
     int             dicesuccess;
     int             found;
-    
+
     if (ch->pcdata->gnosis[TEMP] < 1)
     {
         sendch("You do not possess the spiritual reserves to activate this gift.\n\r", ch);
         return;
-        }            
-    
+        }
+
     ch->pcdata->gnosis[TEMP]--;
     dicesuccess = godice(get_attribute(ch, PERCEPTION) + get_ability2(ch, CSABIL_ENIGMAS), 7);
 
@@ -711,12 +711,12 @@ void spell_gift_leylines( int sn, int level, CHAR_DATA *ch, void *vo, int target
         send_to_char("You are unable to sense the lies of energy passing through here.\n\r", ch);
         return;
     }
-    
+
     send_to_char("You open your eyes to seeing the lines of energy in the area..\n\r", ch);
     pArea = ch->in_room->area;
     output = new_buf();
     found = 0;
-    
+
     for ( vnum = pArea->min_vnum; vnum <= pArea->max_vnum; vnum++ )
         {
             if ( ( pRoomIndex = get_room_index( vnum ) ) && pRoomIndex->sector_type == SECT_NODE )
@@ -731,10 +731,10 @@ void spell_gift_leylines( int sn, int level, CHAR_DATA *ch, void *vo, int target
     {
         sprintf(buf, "..and you detect %d %s in this area.\n\r", found, found == 1 ? "Caern" : "Caerns");
         send_to_char(buf,ch);
-        page_to_char(buf_string(output), ch);        
+        page_to_char(buf_string(output), ch);
     } else
         send_to_char("..but there are no Caerns to be found.\n\r", ch);
-    
+
     return;
 }
 //
@@ -827,7 +827,7 @@ void spell_gift_songofthegreatbeast( int sn, int level, CHAR_DATA *ch, void *vo,
 //The garou’s form becomes blurred and indistinct, as if viewed through the tired vision of a crone, allowing him to pass unnoticed among others. (Hide skill.)
 //Cost:none.
 void spell_gift_blurofthemilkyeye( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    
+
     AFFECT_DATA af;
     int success;
     if (is_affected(ch, gsn_gift_blurofthemilkyeye))
@@ -836,7 +836,7 @@ void spell_gift_blurofthemilkyeye( int sn, int level, CHAR_DATA *ch, void *vo, i
     return;
     }
     success = godice(get_attribute(ch, MANIPULATION)+get_ability(ch, CSABIL_STEALTH), 7);
-		
+
     if (success < 1)
     {
     sendch("You fail to blur your form and remain in plain sight.\n\r", ch);
@@ -850,8 +850,8 @@ void spell_gift_blurofthemilkyeye( int sn, int level, CHAR_DATA *ch, void *vo, i
     af.modifier  = 0;
     af.location  = APPLY_NONE;
     af.bitvector = AFF_HIDE;
-    affect_to_char( ch, &af );    
-	
+    affect_to_char( ch, &af );
+
 	return;
 }
 //
@@ -976,7 +976,7 @@ void spell_gift_thievingtalonsofthemagpie( int sn, int level, CHAR_DATA *ch, voi
 //chimerling spirit
 //1 gnosis
 //intelligence + animal ken (6)
-//The garou with this gift can change his shape at will to the form of any animal he wishes to be. 
+//The garou with this gift can change his shape at will to the form of any animal he wishes to be.
 //(Can take the form of an animal mob. Maybe add a few forms like protean)
 void spell_gift_chimericalform( int sn, int level, CHAR_DATA *ch, void *vo, int target){
     return;
@@ -999,22 +999,22 @@ void spell_gift_motherstouch( int sn, int level, CHAR_DATA *ch, void *vo, int ta
         send_to_char("You do not possess the spiritual reserves to activate this gift.\n\r", ch);
         return;
     }
-    
+
     if( victim->race == race_lookup("MIB") ||
         victim->race == race_lookup("spirit") ||
         victim->race == race_lookup("wraith") ||
         victim->race == race_lookup("bane") ||
         victim->race == race_lookup("vampire") ||
         victim->race == race_lookup("methuselah")) {
-        
+
         send_to_char("The touch of Gaia will not heal this creature.\n\r", ch);
         return;
     }
-    
+
     dicesuccess = godice(get_attribute(ch, INTELLIGENCE) + get_ability(ch, CSABIL_EMPATHY), 5);
     ch->pcdata->gnosis[TEMP]--;
     if (dicesuccess > 1)
-    {      
+    {
         if ( ch != victim ) {
             act("You lay hands upon $N and channel Gaia's love into healing their body.",ch,NULL,victim,TO_CHAR);
             act("$n lays their hands upon $N and $N's wounds begin to close before your eyes!",ch,NULL,victim,TO_NOTVICT);
@@ -1030,12 +1030,12 @@ void spell_gift_motherstouch( int sn, int level, CHAR_DATA *ch, void *vo, int ta
         victim->hit = UMIN( victim->hit + heal, victim->max_hit );
         victim->agg_dam = UMAX(victim->agg - aggheal, 0);
         update_pos( victim );
-       
+
     } else {
         send_to_char("You fail to channel Gaia's love through yourself.\n\r", ch);
         return;
     }
-    
+
     return;
 }
 //
@@ -1484,7 +1484,7 @@ void spell_gift_fallingtouch( int sn, int level, CHAR_DATA *ch, void *vo, int ta
     {
         diff = get_attribute(victim, STAMINA) + get_ability(victim, CSABIL_ATHLETICS);
     }
-    
+
     dicesuccess = godice(get_attribute(ch, DEXTERITY) + ch->pcdata->csabilities[CSABIL_MEDICINE], diff);
 
 
@@ -1505,7 +1505,7 @@ void spell_gift_fallingtouch( int sn, int level, CHAR_DATA *ch, void *vo, int ta
 
     damage(ch, victim, dicesuccess*UMAX(5, ch->level/2), gsn_gift_fallingtouch, DAM_ENERGY, TRUE);
     victim->position = POS_RESTING;
-    
+
 
 
     return;
@@ -1527,14 +1527,14 @@ void spell_gift_inspiration( int sn, int level, CHAR_DATA *ch, void *vo, int tar
         send_to_char("You do not possess the spiritual reserves to activate this gift.\n\r", ch);
         return;
     }
-    
+
     ch->pcdata->gnosis[TEMP]--;
     act( "Your prowess as a True Warrior shines through and inspires your pack to greatness!", ch, NULL, NULL, TO_CHAR );
-    
+
     glory = ch->pcdata->renown[GLORY];
     if (glory < 2)
         glory = 2;
-    
+
     for ( gch = ch->in_room->people; gch != NULL; gch = gch->next_in_room )
     {
         if ( gch == ch || is_affected(gch, gsn_gift_inspiration) || gch->race != race_lookup("garou") )
@@ -1542,10 +1542,10 @@ void spell_gift_inspiration( int sn, int level, CHAR_DATA *ch, void *vo, int tar
             act( "$N catches sight of you and seems revitalized and inspired!", ch, NULL, gch, TO_CHAR );
             act( "$N catches sight of $n and seems revitalized and inspired!", ch, NULL, gch, TO_NOTVICT );
             act( "The sight of $n strengthens your resolve and fills you with righteous fury!", ch, NULL, gch, TO_VICT );
-            
+
             if (gch->pcdata->rage[TEMP] < gch->pcdata->rage[PERM])
                 gch->pcdata->rage[TEMP] = gch->pcdata->rage[PERM];
-            
+
         af.where     = TO_AFFECTS;
         af.type      = gsn_gift_inspiration;
         af.level     = glory;
@@ -2277,7 +2277,7 @@ void do_beseech(CHAR_DATA *ch, char *argument)
     bool learned=FALSE;
     bool pass=FALSE;
 
-	
+
     target_name = one_argument( argument, arg1 );
     one_argument( target_name, arg2 );
 
@@ -2315,7 +2315,7 @@ void do_beseech(CHAR_DATA *ch, char *argument)
         send_to_char("The spirits have not yet taught you this Gift of Gaia.\n\r",ch);
         return;
     }
-    
+
 /*
     if(ch->level < gift_table[gn].level)
     {
@@ -2574,7 +2574,7 @@ void do_gifts(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    
+
     int i;
     int col = 1;
     BUFFER *buffer;
@@ -2582,7 +2582,7 @@ void do_gifts(CHAR_DATA *ch, char *argument)
     if (str_cmp(argument, "all"))
 	{
 		send_to_char("Your Gifts from Gaia:\n\r",ch);
-		
+
 		for (i = 0; i < MAX_GIFT; i++)
 		{
 			if (ch->pcdata->gift[i] == 0)
@@ -2601,14 +2601,14 @@ void do_gifts(CHAR_DATA *ch, char *argument)
 					sprintf(buf, "%s\n\r", capitalize(gift_table[ch->pcdata->gift[i]].name));
 					col = 0;
 					}
-				
+
 				add_buf(buffer, buf);
 				col++;
 			}
 		}
 	} else {
 	    send_to_char("Gifts you may learn:\n\r",ch);
-		
+
 		for (i = 1; i < MAX_GIFTS_CODED; i++)
 		{
 			if (ch->pcdata->rank < gift_table[i].rank ||
@@ -2620,10 +2620,10 @@ void do_gifts(CHAR_DATA *ch, char *argument)
 				bool learned = FALSE;
 				for (gn = 0; gn < MAX_GIFT; gn++)
 					if (ch->pcdata->gift[gn] == i) learned = TRUE;
-				
+
 				if (learned)
 					continue;
-					
+
 			else {
 				if (col < 2)
                 {
@@ -2640,13 +2640,13 @@ void do_gifts(CHAR_DATA *ch, char *argument)
 					sprintf(buf, "%s\n\r", capitalize(gift_table[i].name));
 					col = 0;
 					}
-				
+
 				add_buf(buffer, buf);
 				col++;
 			}
 		}
 	}
-    
+
     page_to_char(buf_string(buffer), ch);
     send_to_char("\n\rNote: Gifts marked in {rred{x are not currently coded.\n\r", ch);
     return;

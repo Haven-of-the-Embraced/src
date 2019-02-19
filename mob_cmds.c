@@ -789,7 +789,7 @@ void do_mptransfer( CHAR_DATA *ch, char *argument )
 	}
 	return;
     }
-    
+
         if ( !str_cmp( arg1, "players" ) )
     {
 	CHAR_DATA *victim_next;
@@ -1385,7 +1385,7 @@ void do_mpqpoint(CHAR_DATA *ch, char *argument)
 
     if((victim = get_char_room(ch, arg1)) == NULL)
         return;
-    
+
     if(IS_NPC(victim))
         return;
 

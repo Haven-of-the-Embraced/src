@@ -600,7 +600,7 @@ void renown_gain(CHAR_DATA *ch)
         {
             switch (ch->pcdata->auspice)
             {
-                case RAGABASH:                
+                case RAGABASH:
 				case GALLIARD:
                 switch(number_range(1,3))
                 {//33% chance of each.
@@ -617,7 +617,7 @@ void renown_gain(CHAR_DATA *ch)
                     case 3: type = TEMP_GLORY; break;
                     case 4: type = TEMP_HONOR; break;
                     }
-                    break;      
+                    break;
                 case PHILODOX:
                 switch(number_range(1,4))
                 {//50% chance of honor
@@ -635,19 +635,19 @@ void renown_gain(CHAR_DATA *ch)
                     case 3: type = TEMP_WISDOM; break;
                     case 4: type = TEMP_GLORY; break;
                     }
-                    break;                    
+                    break;
             }
             if(ch->pcdata->renown[type] < 10)
             {
                 ch->pcdata->renown[type]++;
             } else if ((ch->pcdata->renown[TEMP_GLORY] < 10 ||
 						ch->pcdata->renown[TEMP_WISDOM] < 10 ||
-						ch->pcdata->renown[TEMP_HONOR] < 10 ) && 
+						ch->pcdata->renown[TEMP_HONOR] < 10 ) &&
 						number_range(0, 5) < ch->pcdata->rank )
 					chance--;
         }
-            
-        
+
+
 }
 
 
@@ -744,7 +744,7 @@ void do_renown( CHAR_DATA *ch, char *argument )
 
 
 void do_bestowgift (CHAR_DATA *ch, char *argument)
-{    
+{
     char arg1[MAX_INPUT_LENGTH];
     char arg2[MAX_INPUT_LENGTH];
     char arg3[MAX_INPUT_LENGTH];
@@ -756,8 +756,8 @@ void do_bestowgift (CHAR_DATA *ch, char *argument)
 
     argument = one_argument( argument, arg1 );
     argument = one_argument( argument, arg2 );
-    argument = one_argument( argument, arg3 );    
-    
+    argument = one_argument( argument, arg3 );
+
 
         if(arg1[0] == '\0' || arg2[0] == '\0')
         {sendch("Syntax:  bestowgift (victim) '(giftname)' <override>\n\r", ch);
@@ -775,8 +775,8 @@ void do_bestowgift (CHAR_DATA *ch, char *argument)
         sendch("Only on players!\n\r", ch);
         return;
         }
-        
-        if((gn = gift_lookup(arg2)) < 1) 
+
+        if((gn = gift_lookup(arg2)) < 1)
         {
         sendch("Bestow which gift?\n\r", ch);
         return;
@@ -791,14 +791,14 @@ void do_bestowgift (CHAR_DATA *ch, char *argument)
             if (victim->pcdata->gift[li] == gn)
                 learned = TRUE;
                 }
-                
+
         if (learned)
         {
             send_to_char("They already have this gift.\n\r",ch);
             return;
         }
 
-        if(override || victim->pcdata->breed == gift_table[gn].breed || 
+        if(override || victim->pcdata->breed == gift_table[gn].breed ||
             victim->pcdata->auspice == gift_table[gn].auspice ||
             victim->pcdata->tribe == gift_table[gn].tribe)
         pass=TRUE;
@@ -864,7 +864,7 @@ void do_garou( CHAR_DATA *ch, char *argument )
             extract_char( ch, TRUE );
             return;
         }
-        
+
             int mob_vnum;
             long mcounter;
     for (mcounter = 0; mcounter < 999999; mcounter ++)
@@ -894,7 +894,7 @@ void do_garou( CHAR_DATA *ch, char *argument )
             do_function(ch, &do_say, "Error! Contact imms about a missing token!" );
             return;
         }
-        
+
         obj_to_char(obj,mob);
 
         do_function(ch, &do_say, "Ah, a brave adventurer seeks to earn a favor from me hmm? Very well..." );
@@ -922,14 +922,14 @@ void do_garou( CHAR_DATA *ch, char *argument )
             if (victim->pcdata->gift[li] == gn)
                 learned = TRUE;
                 }
-                
+
         if (learned)
         {
             send_to_char("You already have this gift.\n\r",victim);
             return;
         }
 
-        if(victim->pcdata->breed == gift_table[gn].breed || 
+        if(victim->pcdata->breed == gift_table[gn].breed ||
             victim->pcdata->auspice == gift_table[gn].auspice ||
             victim->pcdata->tribe == gift_table[gn].tribe)
         pass=TRUE;

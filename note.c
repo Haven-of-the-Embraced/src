@@ -221,7 +221,7 @@ void load_notes(void)
     load_thread(IDEA_FILE,&idea_list, NOTE_IDEA, 6*SECONDS_PER_MONTH);// six months
     load_thread(PENALTY_FILE,&penalty_list, NOTE_PENALTY, 6*SECONDS_PER_MONTH);//six months
     load_thread(NEWS_FILE,&news_list, NOTE_NEWS, 24*SECONDS_PER_MONTH);// two years
-    load_thread(CHANGES_FILE,&changes_list,NOTE_CHANGES, 24*SECONDS_PER_MONTH);//twoyears 
+    load_thread(CHANGES_FILE,&changes_list,NOTE_CHANGES, 24*SECONDS_PER_MONTH);//twoyears
     load_thread(RPNOTE_FILE,&rpnote_list, NOTE_RPNOTE, 6*SECONDS_PER_MONTH);//six months
 }
 
@@ -1019,7 +1019,7 @@ void parse_note( CHAR_DATA *ch, char *argument, int type )
         fch = fd->character;
         fch = fd->original ? fd->original : fd->character;
 
-        if (fch != NULL && fd->connected == CON_PLAYING && 
+        if (fch != NULL && fd->connected == CON_PLAYING &&
                 fch != ch && is_note_to(fch, ch->pnote) )
             do_function(fch, &do_unread, "");
     }

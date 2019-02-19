@@ -4113,7 +4113,7 @@ void do_rite( CHAR_DATA *ch, char *argument )
     }
     else if(!str_cmp(arg,"of the Opened Caern"))
     {
-    
+
                 if (ch->pcdata->csbackgrounds[CSBACK_RITES] < 1)
         {
         sendch("You do not have the mystical knowledge to perform this rite.\n\r", ch);
@@ -4163,7 +4163,7 @@ void do_rite( CHAR_DATA *ch, char *argument )
             return;
         }
         extract_obj(obj);
-        
+
 /*      if(number_range(1,100) > 90)
         {
             send_to_char("You failed to pierce the Gauntlet. The spirit is not summoned.\n\r",ch);

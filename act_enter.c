@@ -50,9 +50,9 @@ ROOM_INDEX_DATA  *get_random_room(CHAR_DATA *ch)
         if ( can_see_room(ch,room)
 	&&   !room_is_private(room)
         &&   !IS_SET(room->room_flags, ROOM_PRIVATE)
-        &&   !IS_SET(room->room_flags, ROOM_SOLITARY) 
-	&&   !IS_SET(room->room_flags, ROOM_SAFE) 
-	&&   (IS_NPC(ch) || IS_SET(ch->act,ACT_AGGRESSIVE) 
+        &&   !IS_SET(room->room_flags, ROOM_SOLITARY)
+	&&   !IS_SET(room->room_flags, ROOM_SAFE)
+	&&   (IS_NPC(ch) || IS_SET(ch->act,ACT_AGGRESSIVE)
 	||   !IS_SET(room->room_flags,ROOM_LAW)))
             break;
     }
@@ -62,10 +62,10 @@ ROOM_INDEX_DATA  *get_random_room(CHAR_DATA *ch)
 
 /* RT Enter portals */
 void do_enter( CHAR_DATA *ch, char *argument)
-{    
-    ROOM_INDEX_DATA *location; 
+{
+    ROOM_INDEX_DATA *location;
 
-    if ( ch->fighting != NULL ) 
+    if ( ch->fighting != NULL )
 	return;
 
     /* nifty portal stuff */
@@ -78,14 +78,14 @@ void do_enter( CHAR_DATA *ch, char *argument)
         old_room = ch->in_room;
 
 	portal = get_obj_list( ch, argument,  ch->in_room->contents );
-	
+
 	if (portal == NULL)
 	{
 	    send_to_char("You don't see that here.\n\r",ch);
 	    return;
 	}
 
-	if (portal->item_type != ITEM_PORTAL 
+	if (portal->item_type != ITEM_PORTAL
         ||  (IS_SET(portal->value[1],EX_CLOSED) && !IS_TRUSTED(ch,ANGEL)))
 	{
 	    send_to_char("You can't seem to find a way in.\n\r",ch);
@@ -93,7 +93,7 @@ void do_enter( CHAR_DATA *ch, char *argument)
 	}
 
 	if (!IS_TRUSTED(ch,ANGEL) && !IS_SET(portal->value[2],GATE_NOCURSE)
-	&&  (IS_AFFECTED(ch,AFF_CURSE) 
+	&&  (IS_AFFECTED(ch,AFF_CURSE)
 	||   IS_SET(old_room->room_flags,ROOM_NO_RECALL)))
 	{
 	    send_to_char("Something prevents you from leaving...\n\r",ch);
@@ -133,12 +133,12 @@ void do_enter( CHAR_DATA *ch, char *argument)
         }
 
 	act("$n steps into $p.",ch,portal,NULL,TO_ROOM);
-	
+
 	if (IS_SET(portal->value[2],GATE_NORMAL_EXIT))
 	    act("You enter $p.",ch,portal,NULL,TO_CHAR);
 	else
 	    act("You walk through $p and find yourself somewhere else...",
-	        ch,portal,NULL,TO_CHAR); 
+	        ch,portal,NULL,TO_CHAR);
 
 	char_from_room(ch);
 	char_to_room(ch, location);
@@ -172,17 +172,17 @@ void do_enter( CHAR_DATA *ch, char *argument)
     	{
             fch_next = fch->next_in_room;
 
-            if (portal == NULL || portal->value[0] == -1) 
+            if (portal == NULL || portal->value[0] == -1)
 	    /* no following through dead portals */
                 continue;
- 
+
             if ( fch->master == ch && IS_AFFECTED(fch,AFF_CHARM)
             &&   fch->position < POS_STANDING)
             	do_function(fch, &do_stand, "");
 
             if ( fch->master == ch && fch->position == POS_STANDING)
             {
- 
+
                 if (IS_SET(ch->in_room->room_flags,ROOM_LAW)
                 &&  (IS_NPC(fch) && IS_SET(fch->act,ACT_AGGRESSIVE)))
                 {
@@ -192,7 +192,7 @@ void do_enter( CHAR_DATA *ch, char *argument)
                     	fch,NULL,NULL,TO_CHAR);
                     continue;
             	}
- 
+
             	act( "You follow $N.", fch, NULL, ch, TO_CHAR );
 		do_function(fch, &do_enter, argument);
             }
@@ -205,7 +205,7 @@ void do_enter( CHAR_DATA *ch, char *argument)
 		act("$p fades out of existence.",ch,portal,NULL,TO_ROOM);
 	    else if (old_room->people != NULL)
 	    {
-		act("$p fades out of existence.", 
+		act("$p fades out of existence.",
 		    old_room->people,portal,NULL,TO_CHAR);
 		act("$p fades out of existence.",
 		    old_room->people,portal,NULL,TO_ROOM);
@@ -214,7 +214,7 @@ void do_enter( CHAR_DATA *ch, char *argument)
 	}
 
 
-	/* 
+	/*
 	 * If someone is following the char, these triggers get activated
 	 * for the followers before the char, but it's safer this way...
 	 */

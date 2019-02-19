@@ -575,7 +575,7 @@ REDIT( redit_copy )
 
     free_string( pRoom->description );
     pRoom->description = str_dup( pRoom2->description );
-    
+
     free_string( pRoom->name );
     pRoom->name = str_dup( pRoom2->name );
 
@@ -3212,7 +3212,7 @@ OEDIT( oedit_copy )
 
     free_string( pObj->material );
     pObj->material = str_dup( pObj2->material );
-    
+
     pObj->condition = pObj2->condition;
 
     pObj->weight = pObj2->weight;
@@ -4596,15 +4596,15 @@ MEDIT( medit_copy )
     pMob->new_format = pMob2->new_format;
     pMob->act = pMob2->act;
     pMob->sex = pMob2->sex;
- 
+
     pMob->race = pMob2->race;
 
     pMob->level = pMob2->level;
-    
+
     pMob->alignment = pMob2->alignment;
-    
+
     pMob->hitroll = pMob2->hitroll;
-    
+
     pMob->dam_type = pMob2->dam_type;
 
     pMob->group = pMob2->group;
@@ -4616,18 +4616,18 @@ MEDIT( medit_copy )
     pMob->damage[DICE_NUMBER] = pMob2->damage[DICE_NUMBER];
     pMob->damage[DICE_TYPE]   = pMob2->damage[DICE_TYPE];
     pMob->damage[DICE_BONUS]  = pMob2->damage[DICE_BONUS];
-    
+
     pMob->mana[DICE_NUMBER] = pMob2->mana[DICE_NUMBER];
     pMob->mana[DICE_TYPE]   = pMob2->mana[DICE_TYPE];
     pMob->mana[DICE_BONUS]  = pMob2->mana[DICE_BONUS];
 
     pMob->affected_by = pMob2->affected_by;
-    
+
     pMob->ac[AC_PIERCE] = pMob2->ac[AC_PIERCE];
     pMob->ac[AC_BASH]   = pMob2->ac[AC_BASH];
     pMob->ac[AC_SLASH]  = pMob2->ac[AC_SLASH];
     pMob->ac[AC_EXOTIC] = pMob2->ac[AC_EXOTIC];
-    
+
 
     pMob->form  = pMob2->form;
     pMob->parts = pMob2->parts;
@@ -4640,7 +4640,7 @@ MEDIT( medit_copy )
     pMob->size     = pMob2->size;
 
     free_string( pMob->material );
-    pMob->material = str_dup( pMob2->material ); 
+    pMob->material = str_dup( pMob2->material );
 
     pMob->start_pos   = pMob2->start_pos;
     pMob->default_pos = pMob2->default_pos;
@@ -4671,13 +4671,13 @@ MEDIT( medit_copy )
 
 	pShop =  pMob->pShop;
 	pShop2 = pMob2->pShop;
- 
+
 	pShop->profit_buy = pShop2->profit_buy;
 	pShop->profit_sell = pShop2->profit_sell;
-	
+
 	pShop->open_hour = pShop2->open_hour;
 	pShop->close_hour = pShop2->close_hour;
-	
+
 	pShop->buy_type[iTrade] = pShop2->buy_type[iTrade];
     }
 */

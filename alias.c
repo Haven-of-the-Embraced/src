@@ -14,7 +14,7 @@
  *  benefitting.  We hope that you share your changes too.  What goes	   *
  *  around, comes around.						   *
  ***************************************************************************/
- 
+
 /***************************************************************************
 *	ROM 2.4 is copyright 1993-1998 Russ Taylor			   *
 *	ROM has been brought to you by the ROM consortium		   *
@@ -58,8 +58,8 @@ void substitute_alias(DESCRIPTOR_DATA *d, char *argument)
     }
 
     if (IS_NPC(ch) || ch->pcdata->alias[0] == NULL
-    ||	!str_prefix("alias",argument) || !str_prefix("una",argument) 
-    ||  !str_prefix("prefix",argument)) 
+    ||	!str_prefix("alias",argument) || !str_prefix("una",argument)
+    ||  !str_prefix("prefix",argument))
     {
 	interpret(d->character,argument);
 	return;
@@ -118,7 +118,7 @@ void do_alias(CHAR_DATA *ch, char *argument)
 	return;
 
     argument = one_argument(argument,arg);
-    
+
 
     if (arg[0] == '\0')
     {
@@ -196,7 +196,7 @@ void do_alias(CHAR_DATA *ch, char *argument)
 	send_to_char("Sorry, you have reached the alias limit.\n\r",ch);
 	return;
      }
-  
+
      /* make a new alias */
      rch->pcdata->alias[pos]		= str_dup(arg);
      rch->pcdata->alias_sub[pos]	= str_dup(argument);
@@ -211,15 +211,15 @@ void do_unalias(CHAR_DATA *ch, char *argument)
     char arg[MAX_INPUT_LENGTH];
     int pos;
     bool found = FALSE;
- 
+
     if (ch->desc == NULL)
 	rch = ch;
     else
 	rch = ch->desc->original ? ch->desc->original : ch;
- 
+
     if (IS_NPC(rch))
 	return;
- 
+
     argument = one_argument(argument,arg);
 
     if (arg[0] == '\0')
@@ -257,7 +257,7 @@ void do_unalias(CHAR_DATA *ch, char *argument)
 	send_to_char("No alias of that name to remove.\n\r",ch);
 }
 
-     
+
 
 
 

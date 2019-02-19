@@ -14,7 +14,7 @@
  *  benefitting.  We hope that you share your changes too.  What goes	   *
  *  around, comes around.						   *
  ***************************************************************************/
- 
+
 /***************************************************************************
 *	ROM 2.4 is copyright 1993-1998 Russ Taylor			   *
 *	ROM has been brought to you by the ROM consortium		   *
@@ -44,7 +44,7 @@ void do_heal(CHAR_DATA *ch, char *argument)
     char arg[MAX_INPUT_LENGTH];
     int cost,sn;
     SPELL_FUN *spell;
-    char *words;	
+    char *words;
 
     /* check for healer */
     for ( mob = ch->in_room->people; mob; mob = mob->next_in_room )
@@ -52,7 +52,7 @@ void do_heal(CHAR_DATA *ch, char *argument)
         if ( IS_NPC(mob) && IS_SET(mob->act, ACT_IS_HEALER) )
             break;
     }
- 
+
     if ( mob == NULL )
     {
         send_to_char( "You can't do that here.\n\r", ch );
@@ -71,7 +71,7 @@ void do_heal(CHAR_DATA *ch, char *argument)
 	send_to_char("  critic: cure critical wounds  25 gold/50 gold\n\r",ch);
 	send_to_char("  heal: healing spell          100 gold/200 gold\n\r",ch);
 	send_to_char("  blind: cure blindness         50 gold/100 gold\n\r",ch);
-	send_to_char("  poison:  cure poison          50 gold/100 gold\n\r",ch); 
+	send_to_char("  poison:  cure poison          50 gold/100 gold\n\r",ch);
 	send_to_char("  uncurse: remove curse         50 gold/100 gold\n\r",ch);
 	send_to_char("  refresh: restore movement      5 gold/10 gold\n\r",ch);
 	send_to_char("  mana:  restore mana	          10 gold/20 gold\n\r",ch);
@@ -115,7 +115,7 @@ void do_heal(CHAR_DATA *ch, char *argument)
     {
 	spell = spell_cure_blindness;
 	sn    = skill_lookup("cure blindness");
-      	words = "judicandus noselacri";		
+      	words = "judicandus noselacri";
         cost  = 5000;
     }
 
@@ -134,10 +134,10 @@ void do_heal(CHAR_DATA *ch, char *argument)
 	words = "judicandus sausabru";
 	cost  = 5000;
     }
-	
+
     else if (!str_prefix(arg,"uncurse") || !str_prefix(arg,"curse"))
     {
-	spell = spell_remove_curse; 
+	spell = spell_remove_curse;
 	sn    = skill_lookup("remove curse");
 	words = "candussido judifgz";
 	cost  = 5000;
@@ -151,16 +151,16 @@ void do_heal(CHAR_DATA *ch, char *argument)
         cost = 1000;
     }
 
-	
+
     else if (!str_prefix(arg,"refresh") || !str_prefix(arg,"moves"))
     {
 	spell =  spell_refresh;
 	sn    = skill_lookup("refresh");
-	words = "candusima"; 
+	words = "candusima";
 	cost  = 500;
     }
 
-    else 
+    else
     {
 	act("$N says 'Type 'heal' for a list of spells.'",
 	    ch,NULL,mob,TO_CHAR);
@@ -179,7 +179,7 @@ void do_heal(CHAR_DATA *ch, char *argument)
     mob->gold += cost / 100;
     mob->silver += cost % 100;
     act("$n utters the words '$T'.",mob,NULL,words,TO_ROOM);
-  
+
     if (spell == NULL)  /* restore mana trap...kinda hackish */
     {
 	ch->mana += dice(2,8) + mob->level / 3;
@@ -190,6 +190,6 @@ void do_heal(CHAR_DATA *ch, char *argument)
 
      if (sn == -1)
 	return;
-    
+
      spell(sn,mob->level,mob,ch,TARGET_CHAR);
 }

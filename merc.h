@@ -363,7 +363,7 @@ struct buf_type
 #define INTELLIGENCE            7
 #define WITS                    8
 
-/* abilities */ 
+/* abilities */
 #define CSABIL_NONE             -1
 #define CSABIL_EXPRESSION       0
 #define CSABIL_ALERTNESS        1
@@ -1669,7 +1669,7 @@ struct  kill_data
 #define SECT_NODE               14
 #define SECT_MAX                15
 
-#define RECALL_COST             100 // gold. 
+#define RECALL_COST             100 // gold.
 
 /*
  * Equpiment wear locations.
@@ -3440,8 +3440,8 @@ void    violence_update args( ( void ) );
 void    multi_hit   args( ( CHAR_DATA *ch, CHAR_DATA *victim, int dt ) );
 bool    damage      args( ( CHAR_DATA *ch, CHAR_DATA *victim, int dam,
                     int dt, int class, bool show ) );
-					
-bool d10_damage args( (CHAR_DATA *ch, CHAR_DATA *victim, int damsuccess, 
+
+bool d10_damage args( (CHAR_DATA *ch, CHAR_DATA *victim, int damsuccess,
 					int modifier, int dt, int dam_type, int defense, bool show) );
 
 bool    damage_old      args( ( CHAR_DATA *ch, CHAR_DATA *victim, int dam,

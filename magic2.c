@@ -415,7 +415,7 @@ void spell_vampire_blood( int sn, int level, CHAR_DATA *ch, void *vo, int target
 	}
 	if (ch->race == race_lookup("ghoul"))
 		ch->pblood += level;
-		
+
     ch->pblood += level;
     if(ch->pblood > ch->max_pblood)
         ch->pblood = ch->max_pblood;

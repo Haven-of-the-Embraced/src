@@ -833,12 +833,12 @@ void rote_sevenleaguestride(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_D
         send_to_char("You are already at yourself.\n\r",ch);
         return;
     }
-    if(IS_SET(victim->in_room->room_flags, ROOM_SAFE) 
+    if(IS_SET(victim->in_room->room_flags, ROOM_SAFE)
 	|| IS_SET(ch->in_room->room_flags, ROOM_NO_RECALL)
 		||   IS_SET(victim->in_room->room_flags, ROOM_NOTELE)
-	||   IS_SET(victim->in_room->area->area_flags, AREA_NOTELE) 
-	|| IS_SET(victim->in_room->room_flags, ROOM_NO_RECALL) 
-	|| IS_SET(ch->act,PLR_ARENA)  
+	||   IS_SET(victim->in_room->area->area_flags, AREA_NOTELE)
+	|| IS_SET(victim->in_room->room_flags, ROOM_NO_RECALL)
+	|| IS_SET(ch->act,PLR_ARENA)
 	|| IS_SET(victim->act,PLR_ARENA))
     {
         send_to_char( "You fear that you will not be able to complete the transition.\n\r", ch );
@@ -1070,7 +1070,7 @@ void rote_healother(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj
     gain = (gain-800)/2 + 800;
     if (gain > 1000)
     gain = (gain-1000)/2 + 1000;
-    
+
     victim->hit = UMIN( victim->hit + gain, victim->max_hit );
     victim->move = UMIN(victim->move + (gain/5), victim->max_move);
     victim->agg_dam -= success * ch->sphere[SPHERE_LIFE];
@@ -1391,7 +1391,7 @@ void rote_controlminds(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *
     if (IS_NPC(ch)) return;
 
     if(victim == NULL) return;
-    
+
         if(ch->pet != NULL)
     {
         send_to_char( "You cannot command that many creatures at once!\n\r",ch );
@@ -1661,7 +1661,7 @@ void rote_stepsideways(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *
 
     stop_fighting( ch, TRUE );
     die_follower( ch );
-    
+
     if(success < get_gauntlet(ch))
     {
         act( "You start to step into the Umbra... and suddenly feel a tugging sensation as you're caught within the Gauntlet!",  ch, NULL, NULL, TO_CHAR    );

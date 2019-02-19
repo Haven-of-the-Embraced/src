@@ -824,7 +824,7 @@ bool spec_executioner( CHAR_DATA *ch )
         }
     }
 
-  
+
     if ( victim == NULL )
     return FALSE;
 }
@@ -1228,7 +1228,7 @@ bool spec_stake( CHAR_DATA *ch )
     CHAR_DATA *v_next;
     OBJ_DATA *stake;
     char buf[MAX_STRING_LENGTH];
-    
+
     return FALSE;
 }
 /*

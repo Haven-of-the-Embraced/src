@@ -126,7 +126,7 @@ void do_spells(CHAR_DATA *ch, char *argument)
 
         if ( (csn = cskill_lookup(sn)) < 0)
             continue;
-        
+
 	if ((level = csskill_table[csn].level) < LEVEL_HERO + 1
 	&&  (fAll || level <= ch->level)
 	&&  level >= min_lev && level <= max_lev
@@ -725,15 +725,15 @@ void check_improve( CHAR_DATA *ch, int sn, bool success, int multiplier )
     ||  ch->pcdata->learned[sn] == 0
     ||  ch->pcdata->learned[sn] == 100)
 	return;  /* skill is not known */
-    
+
     if (sn == gsn_whip || sn == gsn_dagger) skill = CSABIL_LIGHT;
     if (sn == gsn_axe || sn == gsn_sword) skill = CSABIL_HEAVY;
     if (sn == gsn_flail || sn == gsn_mace) skill = CSABIL_BLUNT;
     if (sn == gsn_lance || sn == gsn_spear || sn == gsn_polearm) skill = CSABIL_POLEARM;
-   
+
     if (sn == gsn_whip || sn == gsn_dagger || sn == gsn_axe || sn == gsn_sword ||
-        sn == gsn_flail || sn == gsn_mace || sn == gsn_lance || 
-        sn == gsn_spear || sn == gsn_polearm)  {  
+        sn == gsn_flail || sn == gsn_mace || sn == gsn_lance ||
+        sn == gsn_spear || sn == gsn_polearm)  {
     switch (ch->pcdata->cssec_abil[skill])
     {
         case 0: if (ch->pcdata->learned[sn] >= 50) return; break;
@@ -741,9 +741,9 @@ void check_improve( CHAR_DATA *ch, int sn, bool success, int multiplier )
         case 2: if (ch->pcdata->learned[sn] >= 70) return; break;
         case 3: if (ch->pcdata->learned[sn] >= 80) return; break;
         case 4: if (ch->pcdata->learned[sn] >= 90) return; break;
-    } 
     }
-    
+    }
+
 
 
     /* check to see if the character has a chance to learn */

@@ -760,7 +760,7 @@ void do_freebie(CHAR_DATA *ch, char *argument)
         sendch("leaving them at their default state will negatively impact your playing experience.\n\r", ch);
         return;
     }
-    
+
     if ( arg[0] == '\0')
     {
         send_to_char("The freebie costs are as follows:\n\r",ch);
@@ -793,7 +793,7 @@ void do_freebie(CHAR_DATA *ch, char *argument)
         {
         sprintf(buf,"Generation:              {Y%d{x\n\r",costcounter);
         send_to_char(buf,ch);
-        }    
+        }
         send_to_char("Unlock costs:\n\r",ch);
         send_to_char("Combat Discipline:       1 Unlock point\n\r",ch);
         send_to_char("Common Disciplines:      2 Unlock points\n\r",ch);
@@ -810,7 +810,7 @@ void do_freebie(CHAR_DATA *ch, char *argument)
 
         if(( ch->pcdata->rank > 0) && (ch->race == race_lookup("garou")))
         {
-            if(ch->pcdata->primal_urge == 0) 
+            if(ch->pcdata->primal_urge == 0)
         send_to_char("Primal-Urge              4\n\r",ch);
             else
         send_to_char("Primal-Urge:             Current Rating*2\n\r",ch);
@@ -882,8 +882,8 @@ void do_freebie(CHAR_DATA *ch, char *argument)
             break;
         }
     }
-	
-	
+
+
 /*    for(i = 0; i < MAX_CSBACK; i++)
     {
         if(!str_prefix(arg, csback_table[i].name))
@@ -1013,7 +1013,7 @@ void do_freebie(CHAR_DATA *ch, char *argument)
 			return;
             }
     }
-                
+
     if(!str_prefix( arg, "conscience"))
     {
         if(ch->pcdata->csvirtues[CSVIRT_CONSCIENCE] == 5)
@@ -1138,7 +1138,7 @@ void do_freebie(CHAR_DATA *ch, char *argument)
                 cost = ch->pcdata->renown[WISDOM]*2;
             step = 18;
         }
-		
+
         if (!str_cmp(arg, "gift"))
         {
 		for ( gn = 1; gn < MAX_GIFTS_CODED; gn++ )
@@ -1154,8 +1154,8 @@ void do_freebie(CHAR_DATA *ch, char *argument)
 						return;
 					}
 				}
-					
-					
+
+
 					if(ch->pcdata->rank < gift_table[gn].rank)
 					{
 						send_to_char("You are not known enough to Gaia and your brothers and sisters to learn this Gift.\n\r",ch);
@@ -1171,7 +1171,7 @@ void do_freebie(CHAR_DATA *ch, char *argument)
 						send_to_char("You were not born into this gift.\n\r",ch);
 						return;
 					}
-				
+
 					int gcount = 0;;
 					for (i = 0; i < MAX_GIFT; i++)
 					{
@@ -1183,7 +1183,7 @@ void do_freebie(CHAR_DATA *ch, char *argument)
 						sendch("You can only purchase up to a max of fifteen gifts with freebies.\n\r", ch);
 						return;
 					}
-				
+
 				    bool full = TRUE;
 					for (li = 0; li < MAX_GIFT; li++)
 					{
@@ -1200,7 +1200,7 @@ void do_freebie(CHAR_DATA *ch, char *argument)
 					}
 				cost = gift_table[gn].rank * 3;
 				step = 20;
-			
+
 			break;
 			}
 		}
@@ -1217,7 +1217,7 @@ void do_freebie(CHAR_DATA *ch, char *argument)
                 sendch("Your magickal potential cannot rise above your willpower.\n\r", ch);
                 return;
             }
-            
+
             if(ch->arete == 10)
             {
                 send_to_char("Your Arete is already at max.\n\r",ch);
@@ -1404,8 +1404,8 @@ void do_freebie(CHAR_DATA *ch, char *argument)
             {
                 disc = i;
 
-                if (disc == SERPENTIS || disc == PROTEAN || disc == OBTENEBRATION || 
-                disc == MORTIS || disc == QUIETUS || disc == THAUMATURGY || 
+                if (disc == SERPENTIS || disc == PROTEAN || disc == OBTENEBRATION ||
+                disc == MORTIS || disc == QUIETUS || disc == THAUMATURGY ||
                 disc == VICISSITUDE || disc == CHIMERSTRY || disc == DEMENTATION)
                  {
                      unlockneeded = 3;
@@ -1648,7 +1648,7 @@ void do_freebie(CHAR_DATA *ch, char *argument)
 				ch->pcdata->gift[li] = gn;
 				cprintf(ch, "The spirits bless you with the gift of '%s'.\n\r", capitalize(gift_table[gn].name));
 				break;
-				
+
             default:
                     send_to_char("Error! Contact an immortal!\n\r",ch);
                     break;
@@ -2923,7 +2923,7 @@ void do_create( CHAR_DATA *ch, char *argument )
                     }
                 }
                 if (backgrounds) ch->dpoints = 5;
-                
+
                 send_to_char("When you've finished setting your backgrounds, you use the freebie command to spend freebies\n\r", ch);
                 send_to_char(" to further increase your traits!\n\r",ch);
                 ch->pcdata->progress = 8;
@@ -3352,7 +3352,7 @@ void do_charsheet3 (CHAR_DATA * ch, char *argument)
         sec4[i][0] = '\0';
         sec5[i][0] = '\0';
     }
-    
+
     if(ch->race == race_lookup("garou"))
     {
         sprintf(name[row], "      Skills      ");
@@ -3380,7 +3380,7 @@ void do_charsheet3 (CHAR_DATA * ch, char *argument)
         sprintf(sec4[row], "                  ");
         sprintf(sec5[row], "                  ");
         row++;
-}                        
+}
     if (ch->pcdata->csabilities[CSABIL_MELEE] > 0)
     {
         sprintf(name[row], "  Weapon Skills   ");

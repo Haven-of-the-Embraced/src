@@ -1120,14 +1120,14 @@ if (ch->version <=10)
 //Matthew haaccckk. See Load_char_obj for csbackgrounds.
 if (ch->version <=11)
     ch->version++;
-    
+
     if (ch->version < 13)
     {
         ch->version++;
         if (IS_VAMP(ch))
             ch->pcdata->csgeneration = 10 - ch->pcdata->csbackgrounds[CSBACK_GENERATION];
     }
-    
+
     if (ch->version < 14)
     {
         ch->version ++;

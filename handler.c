@@ -338,9 +338,9 @@ bool update_csstats(CHAR_DATA *ch)
 
     if(ch->clan == clan_lookup("Nosferatu"))
         ch->pcdata->csattributes[CSATTRIB_APPEARANCE] = 0;
-    
+
     cskill_update(ch);
-    
+
     return TRUE;
 }
 
@@ -2670,7 +2670,7 @@ bool can_see_room( CHAR_DATA *ch, ROOM_INDEX_DATA *pRoomIndex )
     if (IS_SET(pRoomIndex->room_flags, ROOM_HEROES_ONLY)
     &&  !IS_IMMORTAL(ch))
     return FALSE;
-    
+
         if (IS_SET(pRoomIndex->room_flags,ROOM_HUMAN_ONLY)
     && !IS_IMMORTAL(ch) && ch->race != race_lookup("human") )
     return FALSE;
@@ -2680,12 +2680,12 @@ bool can_see_room( CHAR_DATA *ch, ROOM_INDEX_DATA *pRoomIndex )
     return FALSE;
      if (IS_SET(pRoomIndex->room_flags,ROOM_GHOUL_ONLY)
     && !IS_IMMORTAL(ch) && ch->race != race_lookup("ghoul") )
-    return FALSE;   
-    
+    return FALSE;
+
     if (IS_SET(pRoomIndex->room_flags,ROOM_GAROU_ONLY)
     && !IS_IMMORTAL(ch) && ch->race != race_lookup("garou") )
     return FALSE;
-    
+
     if (IS_SET(pRoomIndex->room_flags,ROOM_MAGE_ONLY)
     && !IS_IMMORTAL(ch) && ch->avatar == 0 )
     return FALSE;
@@ -2721,7 +2721,7 @@ bool can_see( CHAR_DATA *ch, CHAR_DATA *victim )
 
     if (IS_NPC(victim) && IS_AFFECTED2(victim, AFF2_UNSEEN) && !IS_IMMORTAL(ch))
         return FALSE;
-    
+
     if (IS_NPC(ch) && IS_AFFECTED2(ch,  AFF2_DETECT_UNSEEN))
         return TRUE;
     if (get_trust(ch) < victim->incog_level && ch->in_room != victim->in_room)
@@ -2737,7 +2737,7 @@ bool can_see( CHAR_DATA *ch, CHAR_DATA *victim )
     if ( IS_AFFECTED2(victim, AFF2_VEIL) && (IS_NPC(victim)
             || !is_affected(ch, gsn_reveal)))
     return FALSE;
-    
+
         if ( IS_AFFECTED2(victim, AFF2_VEIL)
          && is_affected(ch, gsn_reveal)
                 && !IS_NPC(ch) && !IS_NPC(victim))
@@ -2765,7 +2765,7 @@ bool can_see( CHAR_DATA *ch, CHAR_DATA *victim )
 
     if ( is_affected(victim, gsn_unseen)
          && !IS_AFFECTED2(ch, AFF2_DETECT_UNSEEN)
-         && is_affected(ch, gsn_reveal) 
+         && is_affected(ch, gsn_reveal)
          && victim->fighting == NULL
             && !IS_NPC(ch) && !IS_NPC(victim))
         {
@@ -2832,15 +2832,15 @@ char *PERS(CHAR_DATA *ch, CHAR_DATA *looker, bool channel)
     if (can_see(looker, ch))
     {
         if (
-                ((ch->changed > 0 || 
-                IS_AFFECTED(ch, AFF_SHIFT) || 
+                ((ch->changed > 0 ||
+                IS_AFFECTED(ch, AFF_SHIFT) ||
                 is_affected(ch, gsn_mask) ||
-                is_affected(ch, gsn_shadowform) || 
+                is_affected(ch, gsn_shadowform) ||
                 is_affected(ch, gsn_vicissitude_horrid) ||
-                (!IS_NPC(ch) && ch->pcdata->shiftform >= CRINOS)) && 
-                !channel && 
-                (!IS_NPC(looker) && !IS_SET(looker->act2, PLR2_NOSHORTDESC)) 
-                ) || 
+                (!IS_NPC(ch) && ch->pcdata->shiftform >= CRINOS)) &&
+                !channel &&
+                (!IS_NPC(looker) && !IS_SET(looker->act2, PLR2_NOSHORTDESC))
+                ) ||
                 IS_NPC(ch) )
             return ch->short_descr;
             else

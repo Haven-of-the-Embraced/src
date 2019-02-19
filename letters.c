@@ -88,12 +88,12 @@ do_write(CHAR_DATA *ch, char *argument)
   free_string(letter->description);
   sprintf(buffer,"A hand-written note is here.");
   letter->description = str_dup(buffer);
- 
+
   /* Let the characters know.  */
   send_to_char("You pen your note.\n\r",ch);
   act("$n writes a note.",ch,NULL,NULL,TO_ROOM);
 
-  return; 
+  return;
 }
 
 void
@@ -157,7 +157,7 @@ do_seal(CHAR_DATA *ch, char *argument)
       send_to_char("You do not have enough resources or status for that!\n\r",ch);
       return;
   }
-  
+
   if (letter == NULL)
     {
       send_to_char("What do you want to seal?\n\r",ch);
@@ -183,7 +183,7 @@ do_seal(CHAR_DATA *ch, char *argument)
   free_string(letter->description);
   sprintf(buffer,"A note is here, sealed with the crest of %s.",ch->name);
   letter->description = str_dup(buffer);
- 
+
   send_to_char("You seal the note.\n\r",ch);
   act("$n seals a note.",ch,NULL,NULL,TO_ROOM);
 }
@@ -222,7 +222,7 @@ do_unseal(CHAR_DATA *ch, char *argument)
   free_string(letter->description);
   sprintf(buffer,"A hand-written note is here.");
   letter->description = str_dup(buffer);
- 
+
   send_to_char("You unseal the note.\n\r",ch);
   act("$n unseals a note.",ch,NULL,NULL,TO_ROOM);
 }

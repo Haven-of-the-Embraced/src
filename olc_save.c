@@ -1341,7 +1341,7 @@ void do_asave( CHAR_DATA *ch, char *argument )
         log_string("Autosave: Command Table");
             return;
         }
-    
+
     if (!str_cmp( arg1, "config") )
     {
         save_config( );

@@ -176,7 +176,7 @@ void string_add( CHAR_DATA *ch, char *argument )
             send_to_char( "String formatted.\n\r", ch );
             return;
         }
-        
+
     if ( !str_cmp( arg1, ".ld" ) )
     {
         *ch->desc->pString = string_linedel( *ch->desc->pString, atoi(arg2) );
@@ -292,11 +292,11 @@ char *format_string( char *oldstring /*, bool fSpace */)
   char *rdesc;
   int i=0;
   bool cap=TRUE;
-  
+
   xbuf[0]=xbuf2[0]=0;
-  
+
   i=0;
-  
+
   for (rdesc = oldstring; *rdesc; rdesc++)
   {
     if (*rdesc=='\n')
@@ -318,7 +318,7 @@ char *format_string( char *oldstring /*, bool fSpace */)
     }
     else if (*rdesc==')')
     {
-      if (xbuf[i-1]==' ' && xbuf[i-2]==' ' && 
+      if (xbuf[i-1]==' ' && xbuf[i-2]==' ' &&
           (xbuf[i-3]=='.' || xbuf[i-3]=='?' || xbuf[i-3]=='!'))
       {
         xbuf[i-2]=*rdesc;
@@ -333,7 +333,7 @@ char *format_string( char *oldstring /*, bool fSpace */)
       }
     }
     else if (*rdesc=='.' || *rdesc=='?' || *rdesc=='!') {
-      if (xbuf[i-1]==' ' && xbuf[i-2]==' ' && 
+      if (xbuf[i-1]==' ' && xbuf[i-2]==' ' &&
           (xbuf[i-3]=='.' || xbuf[i-3]=='?' || xbuf[i-3]=='!')) {
         xbuf[i-2]=*rdesc;
         if (*(rdesc+1) != '\"')
@@ -384,11 +384,11 @@ char *format_string( char *oldstring /*, bool fSpace */)
   }
   xbuf[i]=0;
   strcpy(xbuf2,xbuf);
-  
+
   rdesc=xbuf2;
-  
+
   xbuf[0]=0;
-  
+
   for ( ; ; )
   {
     for (i=0; i<77; i++)
@@ -472,7 +472,7 @@ int count = 0;
     }
     else if (*rdesc==')')
     {
-      if (xbuf[i-1]==' ' && xbuf[i-2]==' ' && 
+      if (xbuf[i-1]==' ' && xbuf[i-2]==' ' &&
           (xbuf[i-3]=='.' || xbuf[i-3]=='?' || xbuf[i-3]=='!'))
       {
         xbuf[i-2]=*rdesc;
@@ -487,7 +487,7 @@ int count = 0;
       }
     }
     else if (*rdesc=='.' || *rdesc=='?' || *rdesc=='!') {
-      if (xbuf[i-1]==' ' && xbuf[i-2]==' ' && 
+      if (xbuf[i-1]==' ' && xbuf[i-2]==' ' &&
           (xbuf[i-3]=='.' || xbuf[i-3]=='?' || xbuf[i-3]=='!')) {
         xbuf[i-2]=*rdesc;
         if (*(rdesc+1) != '\"')
@@ -554,7 +554,7 @@ else
 {
 if (xbuf[i] == '{' && xbuf[i+1] == '/' )
         count = 0;
-        
+
 strwrap[i] = xbuf[i];
 }
 }

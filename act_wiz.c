@@ -153,7 +153,7 @@ void do_tag(CHAR_DATA *ch, char *argument)
         send_to_char("Syntax: tag <person>\n\r",ch);
         return;
         }
-    
+
 
    if(IS_NPC(victim))
 
@@ -164,7 +164,7 @@ void do_tag(CHAR_DATA *ch, char *argument)
 
    if (ch->tagged == 0)
    {
-   send_to_char("You can't tag someone! You're not it!\n\r", ch); 
+   send_to_char("You can't tag someone! You're not it!\n\r", ch);
    return;
    }
 
@@ -2211,7 +2211,7 @@ void do_pstat( CHAR_DATA *ch, char *argument )
         send_to_char( "That isn't a player.\n\r",ch);
         return;
     }
-    
+
         send_to_char("\n\r{g----Char Flags:{x\n\r",ch);
 
     sprintf( buf, "Fighting: %s\n\r",
@@ -2279,7 +2279,7 @@ void do_pstat( CHAR_DATA *ch, char *argument )
     victim->move,        victim->max_move,
     victim->agg_dam );
     send_to_char( buf, ch );
-    
+
     sprintf( buf,"Age: %d(%dhrs)  Hit: %d  Dam: %d  Saves: %d  Trains: %d  Pracs: %d\n\r",
     get_age(victim),
     (int) (victim->played + current_time - victim->logon) / 3600,
@@ -2317,7 +2317,7 @@ void do_pstat( CHAR_DATA *ch, char *argument )
 
     if (!IS_NPC(victim) && victim->pcdata->immclass > 0)
         cprintf(ch, "ImmClass: %d\n\r", victim->pcdata->immclass);
-    
+
     if(IS_IMMORTAL(victim))
     {
         send_to_char("{W------Imm Info:{x",ch);
@@ -2344,7 +2344,7 @@ void do_pstat( CHAR_DATA *ch, char *argument )
         sprintf(buf,"Clan: %s  Generation: %d(%d)  Sire: %s Childer: %d Blood: %d/%d\n\r",
         capitalize(clan_table[victim->clan].name),
         victim->gen,
-        victim->pcdata->csgeneration,    
+        victim->pcdata->csgeneration,
         victim->sire,
         victim->childer,
         victim->pblood/10,
@@ -2372,9 +2372,9 @@ void do_pstat( CHAR_DATA *ch, char *argument )
         victim->sire ? victim->sire : "none",
 // new haven fix    victim->apprentice == "(null)" ? "none" : victim->apprentice ? "none" : victim->apprentice,
         victim->apprentice ? "none" : victim->apprentice,
-        victim->rank == 1 ? "Apprentice" : 
-        victim->rank == 2 ? "Disciple" : 
-        victim->rank == 8 ? "Master" : 
+        victim->rank == 1 ? "Apprentice" :
+        victim->rank == 2 ? "Disciple" :
+        victim->rank == 8 ? "Master" :
         victim->rank == 9 ? "Mentor" : "Leader");
         send_to_char(buf,ch);
     }
@@ -4596,7 +4596,7 @@ void do_mset( CHAR_DATA *ch, char *argument )
     return;
     }
 
-    
+
     if ( !str_prefix( arg2, "mana" ) )
     {
     if ( value < 0 || value > 30000 )
@@ -4805,7 +4805,7 @@ void do_mset( CHAR_DATA *ch, char *argument )
 	sendch("Not on npcs unless you wanna crash us.\n\r", ch);
 	return;
 	}
-	
+
 	int desired;
 	if (!str_prefix(arg3, "homid")) desired = HOMID;
     else if(!str_prefix(arg3, "metis")) desired = METIS;
@@ -4818,7 +4818,7 @@ void do_mset( CHAR_DATA *ch, char *argument )
 	victim->pcdata->breed = desired;
 	return;
 	}
-	
+
 	if ( !str_prefix (arg2, "auspice" ) )
 	{
 	if (IS_NPC(victim))
@@ -4826,7 +4826,7 @@ void do_mset( CHAR_DATA *ch, char *argument )
 	sendch("Not on npcs unless you wanna crash us.\n\r", ch);
 	return;
 	}
-	
+
 	int desired;
 	if (!str_prefix(arg3, "ragabash")) desired = RAGABASH;
     else if(!str_prefix(arg3, "theurge")) desired = THEURGE;
@@ -4854,7 +4854,7 @@ void do_mset( CHAR_DATA *ch, char *argument )
             send_to_char("Fur color set.\n\r", ch);
             send_to_char("Your fur color has been changed.\n\r", victim);
             send_to_char("Will take effect on your next shift.\n\r", victim);
-            return;   
+            return;
     }
     if ( !str_prefix ( arg2, "willpower" ))
     {
@@ -5360,7 +5360,7 @@ void do_mset( CHAR_DATA *ch, char *argument )
     victim->rage = value;
     return;
     }
-    
+
     if ( !str_prefix( arg2, "immclass" ))
     {
         if (IS_NPC(victim))
@@ -5376,7 +5376,7 @@ void do_mset( CHAR_DATA *ch, char *argument )
         victim->pcdata->immclass = value;
         return;
     }
-    
+
     if ( !str_prefix( arg2, "freebie" ))
     {
         if (value < 0 || value > 1000 )
@@ -6400,7 +6400,7 @@ void do_copyover (CHAR_DATA *ch, char * argument)
     log_string(buf3);
 
     write_to_descriptor (ch->desc->descriptor, "Starting Copyover Procedures...\n\r", 0);
-    
+
     fp = fopen (COPYOVER_FILE, "w");
 
     if (!fp)
@@ -7397,9 +7397,9 @@ void do_ipoint(CHAR_DATA *ch, char *argument)
         send_to_char(buf,victim);
     }
 
-    
 
-   
+
+
     victim->pcdata->ip += ipoints;
     sprintf(buf, "{W%s {xnow has {Y%d {ximmortal points.\n\r", victim->name, victim->pcdata->ip);
     send_to_char(buf,ch);
@@ -7731,10 +7731,10 @@ if(!str_cmp(arg,"resolver"))
             resolver = TRUE;
 
         resolver ? sendch("Resolver is now on.\n\r", ch) : sendch("Resolver is now off.\n\r", ch);
-        
+
         return;
     }
-    
+
     if(!str_cmp(arg,"doubledam"))
     {
 
@@ -7788,7 +7788,7 @@ if(!str_cmp(arg,"resolver"))
         sendch("The Arena is ", ch);
         arena ? sendch("{RCLOSED{x\n\r", ch) : sendch("{GOPEN{x\n\r", ch);
         sprintf(buf, "Global XP: %d\n\r", global_xp);
-        send_to_char(buf, ch);    
+        send_to_char(buf, ch);
         sprintf(buf, "Global QP: %d\n\r", global_qp);
         send_to_char(buf, ch);
         sprintf(buf, "XP Multiplier: %d\n\r", xpawardmult);
@@ -8565,7 +8565,7 @@ CHAR_DATA *victim;
 char arg[MIL];
 
     if (str_cmp(ch->name, "Zelan") &&
-             str_cmp(ch->name, "Matthew")) 
+             str_cmp(ch->name, "Matthew"))
              {
                  send_to_char("Huh?\n\r", ch);
                  return;
@@ -8593,7 +8593,7 @@ if (IS_ADMIN(victim))
     send_to_char("They may now use the Admintalk channel.\n\r", ch);
     send_to_char("You have been bestowed the Admintalk channel!\n\r", victim);
     }
-    
+
     return;
     }
 

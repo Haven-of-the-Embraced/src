@@ -747,7 +747,7 @@ void do_nourish(CHAR_DATA *ch, char *argument)
         send_to_char( "Nourish whom?\n\r", ch );
         return;
     }
-   
+
     if (IS_NPC(victim))
     {
         send_to_char( "You cannot nourish that creature.\n\r", ch );

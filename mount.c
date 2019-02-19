@@ -11,8 +11,8 @@ int mount_success ( CHAR_DATA *ch, CHAR_DATA *mount, int canattack)
     int percent;
     int success;
 
-    percent = number_percent() + (ch->level < mount->level ? 
-                    (mount->level - ch->level) * 3 : 
+    percent = number_percent() + (ch->level < mount->level ?
+                    (mount->level - ch->level) * 3 :
                     (mount->level - ch->level) * 2);
 
     if (!ch->fighting)
@@ -44,9 +44,9 @@ int mount_success ( CHAR_DATA *ch, CHAR_DATA *mount, int canattack)
         ch->riding = FALSE;
         mount->riding = FALSE;
 
-        if (ch->position>POS_STUNNED) 
+        if (ch->position>POS_STUNNED)
         ch->position=POS_SITTING;
-    
+
         ch->hit -= 5;
         update_pos(ch);
     }
@@ -59,7 +59,7 @@ int mount_success ( CHAR_DATA *ch, CHAR_DATA *mount, int canattack)
 
         act("$N snarls and attacks you!", ch, NULL, mount, TO_CHAR);
         act("$N snarls and attacks $n!", ch, NULL, mount, TO_ROOM);
-        act("You snarl and attack $n!", ch, NULL, mount, TO_VICT);  
+        act("You snarl and attack $n!", ch, NULL, mount, TO_VICT);
 
         damage( mount, ch, number_range( 1, mount->level), gsn_kick, DAM_BASH, TRUE );
 
@@ -89,25 +89,25 @@ void do_mount( CHAR_DATA *ch, char *argument )
     send_to_char("Mount what?\n\r", ch);
     return;
     }
- 
+
     if (!IS_NPC(ch) && !ch->pcdata->learned[gsn_riding])
     {
     send_to_char("You don't know how to ride!\n\r", ch);
     return;
-    } 
+    }
 
-    if (!IS_NPC(mount) || !IS_SET(mount->act, ACT_MOUNT)) 
+    if (!IS_NPC(mount) || !IS_SET(mount->act, ACT_MOUNT))
     {
-    sprintf( buf,"You can't ride that.\n\r"); 
-    send_to_char(buf, ch); 
+    sprintf( buf,"You can't ride that.\n\r");
+    send_to_char(buf, ch);
     return;
     }
-  
+
     if (mount->level - 5 > ch->level)
     {
     send_to_char("That beast is too powerful for you to ride.", ch);
     return;
-    }    
+    }
 
     if( (mount->mount) && (!mount->riding) && (mount->mount != ch))
     {
@@ -115,7 +115,7 @@ void do_mount( CHAR_DATA *ch, char *argument )
         mount->short_descr, mount->mount->name);
     send_to_char(buf, ch);
     return;
-    } 
+    }
 
     if (mount->position < POS_STANDING)
     {
@@ -136,14 +136,14 @@ void do_mount( CHAR_DATA *ch, char *argument )
 
     if( !mount_success(ch, mount, TRUE) )
     {
-    send_to_char("You fail to mount the beast.\n\r", ch);  
-    return; 
+    send_to_char("You fail to mount the beast.\n\r", ch);
+    return;
     }
 
     act("You hop on $N's back.", ch, NULL, mount, TO_CHAR);
     act("$n hops on $N's back.", ch, NULL, mount, TO_NOTVICT);
     act("$n hops on your back!", ch, NULL, mount, TO_VICT);
- 
+
     ch->mount = mount;
     ch->riding = TRUE;
     mount->mount = ch;
@@ -189,10 +189,10 @@ void do_buy_mount( CHAR_DATA *ch, char *argument )
     CHAR_DATA *mount;
     ROOM_INDEX_DATA *pRoomIndexNext;
     ROOM_INDEX_DATA *in_room;
-    
+
     name[0] = '\0';
     size[0] = '\0';
-    color[0] = '\0'; 
+    color[0] = '\0';
 
     if ( IS_NPC(ch) )
         return;
@@ -230,7 +230,7 @@ void do_buy_mount( CHAR_DATA *ch, char *argument )
     send_to_char( "Sorry, we don't sell any of those here.\n\r", ch );
     return;
     }
- 
+
     if ( MOUNTED(ch) || ch->mount != NULL)
     {
         send_to_char("You already have a mount.\n\r",ch);
@@ -243,8 +243,8 @@ void do_buy_mount( CHAR_DATA *ch, char *argument )
         send_to_char( "You can't afford it.\n\r", ch );
         return;
     }
-    
- 
+
+
     roll = number_percent();
 
     if (!IS_NPC(ch) && roll < ch->pcdata->learned[gsn_haggle])
@@ -257,12 +257,12 @@ void do_buy_mount( CHAR_DATA *ch, char *argument )
 
     deduct_cost(ch,cost);
     mount = create_mobile( mount->pIndexData );
-        
+
     mount->comm = COMM_NOTELL|COMM_NOSHOUT|COMM_NOCHANNELS;
     mount->gold = 0;
     mount->silver = 0;
     mount->max_hit  = mount->hit  = (ch->level * number_range(10, 100)) - (25 + number_range(1,50));
-    if( mount->max_hit < 25 ) 
+    if( mount->max_hit < 25 )
         mount->max_hit = mount->hit = 25;
     mount->max_mana = mount->mana = 50;
     mount->max_move = mount->move = 200 + ch->level * 10;
@@ -281,18 +281,18 @@ void do_buy_mount( CHAR_DATA *ch, char *argument )
         case 8:  strcpy(color, "light brown");                  break;
         case 9:  strcpy(color, "white and brown spotted");      break;
         case 10: strcpy(color, "black and white spotted");      break;
-        case 11: strcpy(color, "purple and green striped"); 
+        case 11: strcpy(color, "purple and green striped");
                  strcpy(size,  "mutant ");
                  mount->hit     += 1000;
                  mount->max_hit += 1000;                            break;
-    }        
+    }
 
     if( ch->level >= 80 )
     {
     if(ch->alignment >= 350)
     {
-        strcpy(name, "pegasus"); 
-        SET_BIT(mount->affected_by, AFF_FLYING); 
+        strcpy(name, "pegasus");
+        SET_BIT(mount->affected_by, AFF_FLYING);
     }
     else if(ch->alignment <= -350)
     {
@@ -309,7 +309,7 @@ void do_buy_mount( CHAR_DATA *ch, char *argument )
     else if( ch->level >= 50 )
     {
     if (ch->sex == 1)
-        strcpy(name, "gelding"); 
+        strcpy(name, "gelding");
     else
     {
         strcpy(name, "mare");
@@ -319,13 +319,13 @@ void do_buy_mount( CHAR_DATA *ch, char *argument )
     else if( ch->level >= 25 )
     {
     if (ch->sex == 1)
-        strcpy(name, "stallion"); 
+        strcpy(name, "stallion");
     else
         strcpy(name, "mare");
     }
     else if( ch->level >= 20 )
     {
-    strcpy(name, "horse");  
+    strcpy(name, "horse");
     }
     else if( ch->level >= 10 )
     {
@@ -363,10 +363,10 @@ void do_buy_mount( CHAR_DATA *ch, char *argument )
     add_follower( mount, ch );
 
     act( "$n bought $N as a mount.", ch, NULL, mount, TO_ROOM );
-    
+
     sprintf( buf, "Enjoy your %s.\n\r", name );
     send_to_char( buf, ch);
-    
+
     do_mount(ch, name);
 
     return;
@@ -392,7 +392,7 @@ char *get_mount_owner(CHAR_DATA *pet)
     while (*temp && i<15 && len<1024)
     {
     if (*temp==' ')
-        i++;        
+        i++;
     temp++;
     len++;
     }

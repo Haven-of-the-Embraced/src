@@ -1344,7 +1344,7 @@ void mp_greet_trigger( CHAR_DATA *ch )
          * Domain Influence Mob aggressive added here.
          * Mob will attack players if mob's domain is at war with ch's clan.
          */
-         if (IS_SET(mob->act2, ACT2_INFLUENCE) && IS_SET(ch->act2, PLR2_PVP) && 
+         if (IS_SET(mob->act2, ACT2_INFLUENCE) && IS_SET(ch->act2, PLR2_PVP) &&
          (domain = mob->pIndexData->area->domain) != NULL &&
          domain->relation[ch->clan] == RELATION_WARRING)
          {

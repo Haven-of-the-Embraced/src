@@ -1,4 +1,4 @@
-/***************************************************************************   
+/***************************************************************************
  *  Original Diku Mud copyright (C) 1990, 1991 by Sebastian Hammer,        *
  *  Michael Seifert, Hans Henrik St{rfeldt, Tom Madsen, and Katja Nyboe.   *
  *                                                                         *
@@ -46,7 +46,7 @@ void save_bans(void)
     FILE *fp;
     bool found = FALSE;
 
-    fclose( fpReserve ); 
+    fclose( fpReserve );
     if ( ( fp = fopen( BAN_FILE, "w" ) ) == NULL )
     {
         perror( BAN_FILE );
@@ -72,10 +72,10 @@ void load_bans(void)
 {
     FILE *fp;
     BAN_DATA *ban_last;
- 
+
     if ( ( fp = fopen( BAN_FILE, "r" ) ) == NULL )
         return;
- 
+
     ban_last = NULL;
     for ( ; ; )
     {
@@ -85,9 +85,9 @@ void load_bans(void)
             fclose( fp );
             return;
         }
- 
+
         pban = new_ban();
- 
+
         pban->name = str_dup(fread_word(fp));
 	pban->level = fread_number(fp);
 	pban->ban_flags = fread_flag(fp);
@@ -109,13 +109,13 @@ bool check_ban(char *site,int type)
     strcpy(host,capitalize(site));
     host[0] = LOWER(host[0]);
 
-    for ( pban = ban_list; pban != NULL; pban = pban->next ) 
+    for ( pban = ban_list; pban != NULL; pban = pban->next )
     {
 	if(!IS_SET(pban->ban_flags,type))
 	    continue;
 
-	if (IS_SET(pban->ban_flags,BAN_PREFIX) 
-	&&  IS_SET(pban->ban_flags,BAN_SUFFIX)  
+	if (IS_SET(pban->ban_flags,BAN_PREFIX)
+	&&  IS_SET(pban->ban_flags,BAN_SUFFIX)
 	&&  strstr(pban->name,host) != NULL)
 	    return TRUE;
 
@@ -185,7 +185,7 @@ void ban_site(CHAR_DATA *ch, char *argument, bool fPerm)
     else
     {
 	send_to_char("Acceptable ban types are all, newbies, and permit.\n\r",
-	    ch); 
+	    ch);
 	return;
     }
 
@@ -262,7 +262,7 @@ void do_permban(CHAR_DATA *ch, char *argument)
     ban_site(ch,argument,TRUE);
 }
 
-void do_allow( CHAR_DATA *ch, char *argument )                        
+void do_allow( CHAR_DATA *ch, char *argument )
 {
     char arg[MAX_INPUT_LENGTH];
     char buf[MAX_STRING_LENGTH];

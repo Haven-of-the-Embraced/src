@@ -1128,21 +1128,21 @@ const struct    gift_type   gift_table  [MAX_GIFTS_CODED]  =
         breed required,     auspice required,   tribe required,
         renown required, rage required}, */
 // Smell of Man excluded from table.
-//      name                      		level  lag fail   breed   auspice   tribe    rank   rage 
+//      name                      		level  lag fail   breed   auspice   tribe    rank   rage
     {   NULL,                       	0,     0,  0,     0,      0,          0,        0,   0},
     {   "Staredown",                	1,     24, 0,     HOMID,  0,          0,        2,   0},
     {   "Gift of the Porcupine",    	1,     24, 0,     METIS,  0,          0,        4,   0},
     {   "Blissful Ignorance",       	1,     24, 0,     0,      RAGABASH,   0,        2,   0},
     {   "Pulse of the Invisible",   	1,     24, 0,     0,      THEURGE,    0,        3,   0},
-    {   "Catfeet",                  	1,     24, 0,     LUPUS,  0,          0,        5,   0}, 
+    {   "Catfeet",                  	1,     24, 0,     LUPUS,  0,          0,        5,   0},
     {   "Resist Pain",              	1,     24, 0,     0,      PHILODOX,   CHILDREN_OF_GAIA, 1,   0},//Fenrir
     {   "Call of the Wyld",         	1,     24, 0,     0,      GALLIARD,   0,        1,   0},
     {   "Razor Claws",              	1,     24, 0,     0,      AHROUN,     FENRIR,        1,   0},
     {   "Silver Claws",             	1,     24, 0,     0,      AHROUN,     SILVER_FANG,   3,   0},
-    {   "Sense Wyrm",         	     	1,     24, 0,     METIS,  THEURGE,    BLACK_FURY, 1,   0},//Silver Fang 
+    {   "Sense Wyrm",         	     	1,     24, 0,     METIS,  THEURGE,    BLACK_FURY, 1,   0},//Silver Fang
     {   "Inner Strength",    	     	1,     24, 0,     0,      0,          0,        5,   0},
-    {   "Bloody Feast",             	1,     24, 0,     0,      0,          0,        5,   0}, 
-    {   "Master of Fire",           	1,     24, 0,     HOMID,  0,          0,        1,   0}, 
+    {   "Bloody Feast",             	1,     24, 0,     0,      0,          0,        5,   0},
+    {   "Master of Fire",           	1,     24, 0,     HOMID,  0,          0,        1,   0},
     {   "persuasion", 					1,     24, 0,     HOMID,  0,          WARDERSOFMEN, 1,   0},
     {   "speech of the world", 			0,     24, 0,     HOMID,  0,          0,        2,   0},
     {   "calm the savage beast", 		0,     24, 0,     HOMID,  0,          0,        3,   0},

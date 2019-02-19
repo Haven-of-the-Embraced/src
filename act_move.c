@@ -66,7 +66,7 @@ const   sh_int  rev_dir     []      =
 #define SECT_MAX                15*/
 
 const   sh_int  movement_loss   [SECT_MAX]  =
-{ //I  C  F  F  H  M  S  N  U  A  D  D  H  C  N 
+{ //I  C  F  F  H  M  S  N  U  A  D  D  H  C  N
     2, 2, 2, 2, 2, 3, 2, 2, 2, 4, 3, 4, 2, 2, 1
 };
 
@@ -241,7 +241,7 @@ void move_char( CHAR_DATA *ch, int door, bool follow )
         /* conditional effects */
         if (IS_AFFECTED(ch,AFF_FLYING) || IS_AFFECTED(ch,AFF_HASTE))
         move /= 2;
-        
+
         if (is_affected(ch, gsn_gift_snowrunning))
             move /= 2;
 
@@ -1990,7 +1990,7 @@ void do_recall( CHAR_DATA *ch, char *argument )
 
 
 void do_train( CHAR_DATA *ch, char *argument )
-{ 
+{
     return;
 }
 
@@ -2128,7 +2128,7 @@ void do_hometown (CHAR_DATA *ch, char *argument)
             }
         }
         return;
-    }   
+    }
 
     if ( (hn = get_hometown_num(arg1)) < 0 || hn > MAX_HOMETOWN )
     {

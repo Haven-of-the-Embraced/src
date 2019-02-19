@@ -1225,7 +1225,7 @@ void do_look( CHAR_DATA *ch, char *argument )
 	{
 		sprintf(buf," [Influence {D%d{x]",ch->in_room->area->domain->influence[ch->clan]);
 		send_to_char(buf,ch);
-	}    
+	}
     if(IS_AFFECTED2(ch,AFF2_UMBRA)) send_to_char(" [{mUmbra{x]",ch);
     send_to_char( "\n\r", ch );
 
@@ -1242,7 +1242,7 @@ void do_look( CHAR_DATA *ch, char *argument )
         else
             send_to_char( ch->in_room->description, ch );
 /*Extra descriptions seen by players with Auspex 1 active - Sengir*/
-        if(!IS_AFFECTED2(ch, AFF2_UMBRA) && 
+        if(!IS_AFFECTED2(ch, AFF2_UMBRA) &&
         (is_affected(ch, gsn_gift_heightenedsenses) || is_affected(ch, gsn_reveal)) &&
         (pdesc = get_extra_descr("sense_room_desc",ch->in_room->extra_descr)) != NULL)
         {
@@ -1654,7 +1654,7 @@ void do_score( CHAR_DATA *ch, char *argument )
 	BUFFER *output;
 	output = new_buf();
 	int hours = (ch->played + (int) (current_time - ch->logon) ) / 3600;
-	
+
 	add_buf(output, "\n\r{w                          __, _, ____,__  _,____,_,  _,{x\n\r");
 	add_buf(output, "{w                         (-|__| (-/_|(-\\  /(-|_,(-|\\ | {x\n\r");
 	add_buf(output, "{D     |      _____________/{w_|  |,_/  |, _\\/  _|__,_| \\|,{D\\_____________      |{x\n\r");
@@ -1742,7 +1742,7 @@ void do_score( CHAR_DATA *ch, char *argument )
         if (ch->race == race_lookup("human") && ch->avatar > 0)
         {
 			add_buf(output,"     {D|>--------------------------------{WMage{D-------------------------------<|{x\n\r");
-			sprintf(buf2, "{wYou are a %d year old %s Mage of the %s.{x", get_age(ch), 
+			sprintf(buf2, "{wYou are a %d year old %s Mage of the %s.{x", get_age(ch),
                 ch->sex == 0 ? "sexless" : ch->sex == 1 ? "male" : "female", capitalize(clan_table[ch->clan].name));
 			sprintf(buf,"{D     |%s{D|{x\n\r",center(buf2,69," "));
 			add_buf(output, buf);
@@ -1750,13 +1750,13 @@ void do_score( CHAR_DATA *ch, char *argument )
 					ch->quintessence,ch->paradox);
 				sprintf(buf,"{D     |%s{D|{x\n\r",center(buf2,69," "));
                 add_buf(output, buf);
-                sprintf(buf2,"{wRank: {D%s  {wMentor: {D%s{w  Apprentice: {D%s {wLeader: {D%s {x", 
+                sprintf(buf2,"{wRank: {D%s  {wMentor: {D%s{w  Apprentice: {D%s {wLeader: {D%s {x",
                     ch->rank == 1 ? "Apprentice" : ch->rank == 2 ? "Disciple" : ch->rank == 8 ? "Master" : ch->rank == 9 ? "Mentor" : "Leader",
-                    ch->sire != NULL ? ch->sire : "none", ch->apprentice == NULL ? "None" : ch->apprentice, 
+                    ch->sire != NULL ? ch->sire : "none", ch->apprentice == NULL ? "None" : ch->apprentice,
                     capitalize(clan_table[ch->clan].leader)
                     );
 				sprintf(buf,"{D     |%s{D|{x\n\r",center(buf2,69," "));
-                add_buf(output, buf);     
+                add_buf(output, buf);
                 sprintf(buf2,"{wYour Tradition has {Y%d{w in the bank.{x",clan_table[ch->clan].bank);
 				sprintf(buf,"{D     |%s{D|{x\n\r",center(buf2,69," "));
 				add_buf(output,buf);
@@ -2296,9 +2296,9 @@ void do_who( CHAR_DATA *ch, char *argument )
         if (IS_SET(wch->comm, COMM_QUIET)) {sprintf(tags, "{w |  {c<{yQuiet Mode{c>{w  |");}
 
 
-        if (IS_IMMORTAL(ch) || IS_SET(ch->act2, PLR2_WHOSHOWLEVEL)) 
+        if (IS_IMMORTAL(ch) || IS_SET(ch->act2, PLR2_WHOSHOWLEVEL))
         {
-            sprintf(buf2, "{w[{m%3d{w]{x", wch->level); 
+            sprintf(buf2, "{w[{m%3d{w]{x", wch->level);
             strcat(buf, buf2);
         }
 
@@ -2916,9 +2916,9 @@ void do_report( CHAR_DATA *ch, char *argument )
     ch->mana, ch->max_mana,
     ch->move, ch->max_move,
     ch->exp   );
-    
-    if (ch->aget == 0) 
-    ch->aget =   17 + ( ch->played + (int) (current_time - ch->logon) ) / 14400; 
+
+    if (ch->aget == 0)
+    ch->aget =   17 + ( ch->played + (int) (current_time - ch->logon) ) / 14400;
 
     send_to_char( buf, ch );
 

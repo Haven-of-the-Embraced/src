@@ -213,11 +213,11 @@ void interpret( CHAR_DATA *ch, char *argument )
         return;
     }
 /*Sengir moved losing veil here, can use certain commands while veiled*/
-    if ((!IS_NPC(ch) && ch->pcdata->discipline[OBFUSCATE] < 6) && 
-            str_prefix (command, "veil") && 
+    if ((!IS_NPC(ch) && ch->pcdata->discipline[OBFUSCATE] < 6) &&
+            str_prefix (command, "veil") &&
             str_prefix(command, "affects") &&
-            str_prefix(command, "who") && 
-            str_prefix(command, "look") && 
+            str_prefix(command, "who") &&
+            str_prefix(command, "look") &&
             str_prefix(command, "beseech blissful"))
         REMOVE_BIT(ch->affected2_by, AFF2_VEIL);
 
@@ -555,7 +555,7 @@ char *one_argument( char *argument, char *arg_first )
     argument++;
 
     cEnd = ' ';
-   
+
     if ( *argument == '\'' || *argument == '"'
       || *argument == '(' )
     {
@@ -721,7 +721,7 @@ void do_wizhelp( CHAR_DATA *ch, char *argument )
     int finish;
     CMD_DATA *pCmd;
     output = new_buf();
-    
+
     if (is_number(argument) && (atoi(argument) <= get_trust(ch)))
     {
         start = atoi(argument);
@@ -732,7 +732,7 @@ void do_wizhelp( CHAR_DATA *ch, char *argument )
         finish = get_trust(ch) + 1;
     }
 
-    
+
     for( clevel = start; clevel < finish; clevel++ )
     {
         sprintf(buf, "\n\r{m------------------------------ {w[Level {D%d{w] {m------------------------------{x\n\r", clevel);

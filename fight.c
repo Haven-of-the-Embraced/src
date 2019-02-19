@@ -182,8 +182,8 @@ void check_assist(CHAR_DATA *ch,CHAR_DATA *victim)
         continue;
         }
 
-        /* Domain mobs assist domain ruler and players of allied clans. 
-         * -- DISABLED-- by player request. -matthew 2/10/19 
+        /* Domain mobs assist domain ruler and players of allied clans.
+         * -- DISABLED-- by player request. -matthew 2/10/19
         if (!IS_NPC(ch) && IS_NPC(rch) && IS_SET(ch->act2, PLR2_PVP) &&
         IS_SET(rch->act2, ACT2_INFLUENCE) &&
         (dom = rch->pIndexData->area->domain) != NULL &&
@@ -194,7 +194,7 @@ void check_assist(CHAR_DATA *ch,CHAR_DATA *victim)
             continue;
         }
         */
-        
+
           /* PCs next */
         if (!IS_NPC(ch) || IS_AFFECTED(ch,AFF_CHARM))
         {
@@ -278,7 +278,7 @@ void multi_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt )
 
     if(is_affected(ch, gsn_unseen) && ch->pcdata->discipline[OBFUSCATE] < 2)
     affect_strip( ch, gsn_unseen );
-    if(IS_NPC(ch) || (!IS_NPC(ch) && ch->pcdata->discipline[OBFUSCATE] != 6)) 
+    if(IS_NPC(ch) || (!IS_NPC(ch) && ch->pcdata->discipline[OBFUSCATE] != 6))
         REMOVE_BIT   ( ch->affected2_by, AFF2_VEIL       );
 
     /* no attacks for stunnies -- just a check */
@@ -304,7 +304,7 @@ void multi_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt )
     return;
 
    /* DISABLED 9/27/13 DUE TO BEING OVERPOWERED
-   
+
    if (!IS_NPC(ch) && IS_VAMP(ch) && (ch->gen < 10) && dt != gsn_backstab)
     { // Vampire Generation buff. same as celerity/2
 
@@ -441,7 +441,7 @@ void mob_hit (CHAR_DATA *ch, CHAR_DATA *victim, int dt)
     CHAR_DATA *vch, *vch_next;
     OBJ_DATA *obj;
     AFFECT_DATA af;
-    
+
     one_hit(ch,victim,dt);
 
     if (ch->fighting != victim)
@@ -723,7 +723,7 @@ void one_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt )
     }
     //d10_hit(ch,victim, dt);
     //return;
-	
+
     /*
      * Figure out the type of damage message.
      */
@@ -928,7 +928,7 @@ void one_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt )
         dam += get_attribute(ch, STRENGTH) * (dam / 5);
 
  /*  DISABLED 9/27/13 DUE TO BEING OVERPOWERED
- 
+
  if (!IS_NPC(ch) && IS_VAMP(ch))
     { // Vampire Generation buff. same as potence or strength.
         if (ch->gen > 12 || (ch->gen < 10) )
@@ -964,10 +964,10 @@ void one_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt )
 
     if (is_affected(ch, gsn_controlrandomness) && number_percent( ) < (2*ch->sphere[SPHERE_ENTROPY]))
     {
-        dam += 2*dam/3; 
+        dam += 2*dam/3;
         act("Fate smiles upon you and you critically strike $N!",ch,NULL,victim,TO_CHAR);
     }
-        
+
      result = damage( ch, victim, dam, dt, dam_type, TRUE );
 
     /* but do we have a funky weapon? */
@@ -1204,12 +1204,12 @@ bool damage(CHAR_DATA *ch,CHAR_DATA *victim,int dam,int dt,int dam_type,
         dam = (dam - 35)/2 + 35;
         if ( dam > 80)
         dam = (dam - 80)/2 + 80;
-        
+
     if(slaughter)
         dam *= 4;
     else if (doubledam)
         dam *= 2;
-        
+
     /* vampire junk */
     if(!IS_NPC(ch) && ch->clan == clan_lookup("watcher") && victim->race == race_lookup("vampire"))
       dam += ch->level/2;
@@ -1327,7 +1327,7 @@ bool damage(CHAR_DATA *ch,CHAR_DATA *victim,int dam,int dt,int dam_type,
 				if (DEBUG_MESSAGES || IS_DEBUGGING(ch))
             cprintf(ch, "AE: %d\n\r", dam);
         }
-    } 
+    }
 
   if(victim->sphere[SPHERE_FORCES] > 0)
     {
@@ -1338,7 +1338,7 @@ bool damage(CHAR_DATA *ch,CHAR_DATA *victim,int dam,int dt,int dam_type,
             dam -= (dam/100)*(4*ch->sphere[SPHERE_FORCES]);
 			if (DEBUG_MESSAGES || IS_DEBUGGING(ch))
 		cprintf(ch, "AF: %d\n\r", dam);
-    } 
+    }
 
     if ( is_affected( victim, gsn_sanctus ) )
       dam -= dam/4;
@@ -1393,7 +1393,7 @@ bool damage(CHAR_DATA *ch,CHAR_DATA *victim,int dam,int dt,int dam_type,
         victim->agg_dam += dam/20;
         break;
     }
-    
+
     if (is_affected(victim, gsn_gift_haresleap) && number_percent() < 5*get_attribute(victim, DEXTERITY))
     {
         if (godice(get_attribute(victim, STRENGTH) + get_ability(victim, CSABIL_ATHLETICS), 7) > 0)
@@ -1778,13 +1778,13 @@ int d10_modifier ( CHAR_DATA *ch)
     int sn;
     int skill;
     int modifier;
-    
+
     if (!ch || ch == NULL)
     {
         bug("Get_Modifier: NULL ch.", 0 );
         return;
     }
-    
+
     /* get the weapon skill */
     sn = get_weapon_sn(ch);
     skill = get_weapon_skill(ch,sn);
@@ -1792,7 +1792,7 @@ int d10_modifier ( CHAR_DATA *ch)
     modifier = 10 + ch->level/5;
     modifier += GET_DAMROLL(ch)/50;
     modifier =  modifier * (20 + skill) / 100;
-    
+
     return UMAX(10, modifier);
 }
 
@@ -1872,7 +1872,7 @@ void d10_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt)
     /* get the weapon skill */
     sn = get_weapon_sn(ch);
     skill = get_weapon_skill(ch,sn);
-	
+
 	if (!can_see(ch, victim))
 		diff += 2;
     if (!can_see(victim, ch))
@@ -1893,17 +1893,17 @@ void d10_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt)
 	if (ch->level > 60) dice++;
 	if (ch->level > 80) dice++;
 	if (ch->level > 100) dice++;
-	
+
 	}
 	 else
-	 {// IS player	
+	 {// IS player
 		if (wield)
 			dice = get_attribute(ch,DEXTERITY)+ch->pcdata->csabilities[CSABIL_MELEE];
 		else
 			dice = get_attribute(ch,DEXTERITY)+ch->pcdata->csabilities[CSABIL_BRAWL];
-    }    
+    }
 		//Dicepool Modifiers.
-        
+
     dice += GET_HITROLL(ch)/200;
 
 	if (dt == gsn_waylay)
@@ -1911,13 +1911,13 @@ void d10_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt)
             dice *= 2;
             diff = 4;
         }
-    
+
 if (DEBUG_MESSAGES || IS_DEBUGGING(ch)){
 	cprintf(ch, "hp{r%d{w df{c%d{x ", dice, diff);
 	if (IS_NPC(ch)) cprintf(victim, "hp{r%d{w df{c%d{x ", dice, diff);}
 
-			
-				
+
+
 		//Moment of excitement!
 		tohit = godice(dice, diff);
 		dice = 0; // clear dice so we can use them later.
@@ -1934,15 +1934,15 @@ if (DEBUG_MESSAGES || IS_DEBUGGING(ch)){
 
 
 
-    if(tohit < 1) 
+    if(tohit < 1)
     { // Miss.
         d10_damage(ch, victim, 0, 0, dt, dam_type, DEFENSE_FULL, TRUE);
         tail_chain( );
         return;
-    } 
+    }
 
     //Hit! Calculate dicepool for damage.
-        //Exceptional rolls on hit add to damage dice. 
+        //Exceptional rolls on hit add to damage dice.
     //if (tohit > 4)
     //	dice += (tohit - 4);
 
@@ -1950,7 +1950,7 @@ if (DEBUG_MESSAGES || IS_DEBUGGING(ch)){
     //successful hit.
     if (!IS_NPC(ch) && ch->race == race_lookup("garou"))
     {
-        int hppercent;	
+        int hppercent;
 
         //Calc HP percent. more injured = less difficulty.
         hppercent = ch->hit*10 / ch->max_hit;
@@ -1960,7 +1960,7 @@ if (DEBUG_MESSAGES || IS_DEBUGGING(ch)){
             hppercent = 2;
         // Cake in the code Ohno!
         //1% chance of rolling primal per hit, if less than full rage.
-        // primal diff 4 + hpperc min/max 6/10 
+        // primal diff 4 + hpperc min/max 6/10
         if( ch->pcdata->rage[TEMP] < ch->pcdata->rage[PERM] && number_range(1, 200) == 42 &&
             godice(ch->pcdata->primal_urge,4+hppercent))
              {
@@ -1987,7 +1987,7 @@ if (DEBUG_MESSAGES || IS_DEBUGGING(ch)){
         }
 
 	result = d10_damage(ch, victim, damsuccess, d10_modifier(ch), dt, dam_type, DEFENSE_FULL, TRUE);
-	
+
     /* but do we have a funky weapon? */
     if (result && wield != NULL)
     {
@@ -2065,7 +2065,7 @@ if (DEBUG_MESSAGES || IS_DEBUGGING(ch)){
         }
     }
 
-	
+
         if (ch->fighting == victim && IS_WEAPON_STAT(wield,WEAPON_VAMPIRIC))
     {
         dam = number_range(5, wield->level / 2 + 10);
@@ -2106,9 +2106,9 @@ if (DEBUG_MESSAGES || IS_DEBUGGING(ch)){
         shock_effect(victim,wield->level/2,dam,TARGET_CHAR);
         damage(ch,victim,dam,0,DAM_LIGHTNING,FALSE);
     }
-    }		
+    }
 
-	
+
     tail_chain( );
     return;
 }
@@ -2170,7 +2170,7 @@ bool d10_damage(CHAR_DATA *ch, CHAR_DATA *victim, int damsuccess, int modifier, 
         dam = (dam - 300)/2 + 300;
         if ( dam > 500)
         dam = (dam - 500)/2 + 500;
-        
+
 	    if ( victim != ch )
     {
     /*
@@ -2204,7 +2204,7 @@ bool d10_damage(CHAR_DATA *ch, CHAR_DATA *victim, int damsuccess, int modifier, 
     if ( victim->master == ch )
         stop_follower( victim );
     }
-	
+
    /*
      * Inviso attacks ... not.
      */
@@ -2215,8 +2215,8 @@ bool d10_damage(CHAR_DATA *ch, CHAR_DATA *victim, int damsuccess, int modifier, 
     REMOVE_BIT( ch->affected_by, AFF_INVISIBLE );
     act( "$n fades into existence.", ch, NULL, NULL, TO_ROOM );
     }
-	
-	
+
+
     if (ch != victim)
     {
         if (dt != gsn_backstab && dt != gsn_gouge && check_dodge( ch, victim ))
@@ -2246,8 +2246,8 @@ bool d10_damage(CHAR_DATA *ch, CHAR_DATA *victim, int damsuccess, int modifier, 
         soakdice = 0;//humans can't soak lethal.
     if ((dam_type > DAM_SLASH || dt == attack_lookup("claws") ) && victim->race != race_lookup("garou"))
         soakdice = 0;// vamps can't soak agg.
-    if (!IS_NPC(victim) && (dam_type > DAM_SLASH || dt == attack_lookup("claws") ) && 
-        victim->race != race_lookup("garou") && 
+    if (!IS_NPC(victim) && (dam_type > DAM_SLASH || dt == attack_lookup("claws") ) &&
+        victim->race != race_lookup("garou") &&
         (victim->pcdata->shiftform == HOMID || victim->pcdata->shiftform == LUPUS) )
         soakdice = 0;// Garou can't soak agg in homid or lupus.
 
@@ -2269,7 +2269,7 @@ bool d10_damage(CHAR_DATA *ch, CHAR_DATA *victim, int damsuccess, int modifier, 
         case DEFENSE_FULL:  soak = godice(armordice+soakdice, 6); break;
         default: soak = godice(armordice+soakdice, 6); break;
     }
-    
+
     if (soak < 0)
         soak = 0;
 
@@ -2283,7 +2283,7 @@ bool d10_damage(CHAR_DATA *ch, CHAR_DATA *victim, int damsuccess, int modifier, 
 
 	if (dam < 1)
 		dam = 0;
-		
+
         switch(check_immune(victim,dam_type))
         {
             case(IS_IMMUNE):
@@ -2315,12 +2315,12 @@ if (DEBUG_MESSAGES || IS_DEBUGGING(ch))	{
         dam *= 4;
     else if (doubledam)
         dam *= 2;
-			
+
     if (show)
         dam_message( ch, victim, dam, dt, immune );
-		
+
 		if (dam < 1)
-			return FALSE;	
+			return FALSE;
     /*
      * Hurt the victim.
      * Inform the victim of his new state.
@@ -2554,10 +2554,10 @@ if (DEBUG_MESSAGES || IS_DEBUGGING(ch))	{
     }
 
     tail_chain( );
-    return TRUE;	
-		
-            
-		
+    return TRUE;
+
+
+
 
 }
 
@@ -3533,10 +3533,10 @@ int xp_compute( CHAR_DATA *gch, CHAR_DATA *victim, int total_levels )
     /* Disabled code for qp xp swap.
      Get global XP for rping, get global rp for fighting
      gloxp = (xp * 10) / 100 + 1;
-    
+
      global_xp += gloxp; */
 // Returns double XP to its default state when it ends
-      
+
  if (global_xp <= 0)
 	{
 	if (doubleexp == TRUE)
@@ -3626,16 +3626,16 @@ if (xpstat == 3 && global_xp > 300000)
 	}
 
     if( IS_AFFECTED2(victim, AFF2_DOUBLE_EXP))
-        xp = xp*2; 
+        xp = xp*2;
 // Code to drain from global XP and award it.
-        
+
    if (global_xp > 0 && doubleexp == TRUE)
        {
            global_xp -= (xp*xpawardmult) - xp;
        }
-       
-        xp = (xp * xpawardmult); 
-       
+
+        xp = (xp * xpawardmult);
+
        xp = xp + (xp*2 / 8);
 /* pack hunting code
     if (gch->race == race_lookup("garou"))
@@ -3653,7 +3653,7 @@ if (xpstat == 3 && global_xp > 300000)
     }
 */
 
-    
+
 /*Sengir altered extra xp if you are leader*/
     if ((gch->leader == NULL) && (level_range >= -10))
         xp += gch->pcdata->csabilities[CSABIL_LEADERSHIP] * 5;
@@ -3671,7 +3671,7 @@ if (xpstat == 3 && global_xp > 300000)
         if(xp > 462+gch->remorts && (gch->sphere[SPHERE_MIND] < 1))
             xp = ((462+gch->remorts)*xpawardmult);
 
-        if(gch->sphere[SPHERE_MIND] > 0 && xp > (462+gch->remorts+gch->sphere[SPHERE_MIND]*4)) 
+        if(gch->sphere[SPHERE_MIND] > 0 && xp > (462+gch->remorts+gch->sphere[SPHERE_MIND]*4))
             xp = (462+gch->remorts+gch->sphere[SPHERE_MIND]*4)*xpawardmult;
 
     }
@@ -3680,12 +3680,12 @@ if (xpstat == 3 && global_xp > 300000)
     /*Sengir added deduction for being afkish in group, not contributing*/
     if (gch->timer > 10)
         xp -= xp * gch->timer / 12;
-    
+
     /*Zelan added bonus XP spells and a newbie xp boost here */
     if ( IS_AFFECTED(gch, AFF_XP_BOOST))
     xp = bxp + xp;
- 
-   
+
+
 
     if ( IS_SET(gch->act2, PLR2_NEWBIE))
     xp =  bxp + xp;
@@ -3693,7 +3693,7 @@ if (xpstat == 3 && global_xp > 300000)
 
     if (doubleexp == FALSE)
     global_xp += xp/10;
- 
+
     if (!IS_NPC(gch) && gch->pcdata->immclass > 0 )
     {
         double ixp;
@@ -3712,13 +3712,13 @@ if (xpstat == 3 && global_xp > 300000)
         return xp/10;
     else
     {
-       /* bye bye old double XP code. 
+       /* bye bye old double XP code.
         if(doubleexp)
 	{
         xpcl = xp/3;
         if(xpcl > 150) xpcl = 150;
 	global_xp -= xpcl;
-	return xp*2; 
+	return xp*2;
 	} */
          return xp;
     }
@@ -3843,7 +3843,7 @@ void dam_message( CHAR_DATA *ch, CHAR_DATA *victim,int dam,int dt,bool immune )
         }
     }
     }
-    
+
 	if (ch == victim)
     {
     act(buf1,ch,NULL,NULL,TO_ROOM);
@@ -4176,7 +4176,7 @@ void do_bash( CHAR_DATA *ch, char *argument )
         DAZE_STATE(victim, 3 * PULSE_VIOLENCE);
         STOPPED(victim, PULSE_VIOLENCE);
     }
-    
+
     WAIT_STATE(ch, 2*PULSE_VIOLENCE);
     damagesuccess = godice(get_attribute(ch,STRENGTH) + 1 + ch->pcdata->discipline[POTENCE], 6);
     if (damagesuccess < 0)
@@ -4761,7 +4761,7 @@ void do_backstab( CHAR_DATA *ch, char *argument )
     int damdice;
     int diff;
     int modifier;
-    
+
     one_argument( argument, arg );
 
     if (arg[0] == '\0')
@@ -4836,7 +4836,7 @@ void do_backstab( CHAR_DATA *ch, char *argument )
     else
     {
         diff = UMIN( 10, (get_attribute(victim, PERCEPTION) + get_ability(victim, CSABIL_ALERTNESS)));
-        
+
         if (skill >= 80)
             diff--;
         if (skill >= 90)
@@ -4849,12 +4849,12 @@ void do_backstab( CHAR_DATA *ch, char *argument )
     damdice = d10_damdice(ch, victim) + successes;
     damsuccess = godice(damdice, 4);
     modifier = d10_modifier(ch);
-    // Skill Percent increases modifier. 
+    // Skill Percent increases modifier.
     modifier = (modifier * (50+skill))/100;
 
     if (IS_DEBUGGING(ch))
         cprintf(ch, "tohit:%d diff:%d success:%d dampool:%d damsuccess:%d\n\r", dice, diff, successes, damdice, damsuccess);
-    
+
     if (successes < 3)
     {
         check_improve(ch,gsn_backstab,FALSE,2);
@@ -5352,8 +5352,8 @@ void do_disarm( CHAR_DATA *ch, char *argument )
 		/* level */
 		chance += (ch->level - victim->level);
 		chance /= 2;
-		
-		
+
+
 		if(is_affected(victim,gsn_precognition) && number_percent() > 50)
 		{
 			send_to_char("They avoid your attempt to disarm!\n\r",ch);
@@ -5376,7 +5376,7 @@ void do_disarm( CHAR_DATA *ch, char *argument )
 		check_improve(ch,gsn_disarm,FALSE,2);
 		}
 		return;
-	} else 
+	} else
 		{ // CH is pc.
 		int success, dice, diff;
 		success = dice = diff = 0;
@@ -5384,19 +5384,19 @@ void do_disarm( CHAR_DATA *ch, char *argument )
 		// victim/s strength, they take no damage and the weapon goes flying.
 		dice = get_attribute(ch, DEXTERITY) + get_ability(ch, CSABIL_MELEE);
 		success = godice(dice, 7);
-		
+
 		if (success > 0)
 		{
 			if (IS_NPC(victim))
 				diff = (victim->level/12);
 			else
 				diff = get_attribute(ch, STRENGTH);
-				
+
 			if (diff > 6)
 				diff = 6;
 			if (diff < 1)
 				diff = 1;
-				
+
 			if (success > diff)
 			{
 				WAIT_STATE( ch, skill_table[gsn_disarm].beats );
@@ -5417,9 +5417,9 @@ void do_disarm( CHAR_DATA *ch, char *argument )
 			act("$n tries to disarm $N, but fails.",ch,NULL,victim,TO_NOTVICT);
 			check_improve(ch,gsn_disarm,FALSE,2);
 		}
-		
+
 	}
-		
+
 
 }
 

@@ -413,7 +413,7 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "contact",    do_contact },
     /* Condition placed here so consider parses first */
 
-    { "flaw",     do_flaw}, 
+    { "flaw",     do_flaw},
     { "conditioning",      do_conditioning},
     { "convert",        do_convert},
     /* changeling here so change parses first */
@@ -540,6 +540,7 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "fatamorgana", do_fatamorgana},
     { "sendhtml",       do_sendhtml}, //DNM
     { "d10combat",      do_d10combat},
+    { "announce",       do_announce},
 
     /* Language stuff*/
         /*
@@ -645,7 +646,7 @@ const   struct  cmdfun_type cmdfun_table    [] =
 
 /* to parse first insted of resets */
     { "resettime",      do_resettime},
-    { "fixme",        do_fixme}, 
+    { "fixme",        do_fixme},
     { "create",     do_create},
     { "becomeactive", do_becomeactive},
 

@@ -447,7 +447,7 @@ void do_remort(CHAR_DATA *ch, char *argument)
             weapon = get_eq_char(ch,WEAR_WIELD);
     if (weapon != NULL)
     {
-        if ( is_affected( ch, gsn_claws ) || weapon->pIndexData->vnum == OBJ_VNUM_CLAWS)
+        if ( IS_VAMP(ch) && weapon->pIndexData->vnum == OBJ_VNUM_CLAWS)
         {
             affect_strip(ch,gsn_claws);
             if(weapon != NULL)

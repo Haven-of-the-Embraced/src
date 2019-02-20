@@ -6181,7 +6181,7 @@ void do_gouge( CHAR_DATA *ch, char *argument )
 
         act( "You rake your fingers across $N's eyes!", ch, NULL, victim, TO_CHAR );
         act( "$n rakes $s fingers across your eyes!", ch, NULL, victim, TO_VICT );
-        act( "$n rakes $s fingers across$N's eyes!", ch, NULL, victim, TO_ROOM );
+        act( "$n rakes $s fingers across $N's eyes!", ch, NULL, victim, TO_NOTVICT );
 
     gain_exp(ch, dicesuccess+damagesuccess);
     check_improve(ch,gsn_gouge,TRUE,6);

@@ -1162,7 +1162,7 @@ bool damage(CHAR_DATA *ch,CHAR_DATA *victim,int dam,int dt,int dam_type,
         return FALSE;
 
         if(!IS_NPC(ch) && !IS_NPC(victim) && !IS_SET(victim->act,PLR_ARENA) &&
-        victim != ch && (ch->in_room->area->domain != NULL ||
+        victim != ch && (ch->in_room->area->domain == NULL ||
             !IS_SET(ch->act2, PLR2_PVP) || !IS_SET(victim->act2, PLR2_PVP)))
                 {
         stop_fighting( ch, TRUE );
@@ -2152,7 +2152,7 @@ bool d10_damage(CHAR_DATA *ch, CHAR_DATA *victim, int damsuccess, int modifier, 
         return FALSE;
 
         if(!IS_NPC(ch) && !IS_NPC(victim) && !IS_SET(victim->act,PLR_ARENA) &&
-        victim != ch && (ch->in_room->area->domain != NULL ||
+        victim != ch && (ch->in_room->area->domain == NULL ||
             !IS_SET(ch->act2, PLR2_PVP) || !IS_SET(victim->act2, PLR2_PVP)))
                 {
         stop_fighting( ch, TRUE );

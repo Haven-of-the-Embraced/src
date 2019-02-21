@@ -2889,7 +2889,7 @@ extern sh_int gsn_vampire_regen;
 /* Matthew's Utility*/
 #define HLEVELS(ch, num)    ((ch)->max_hit/(8-(num)))
 #define IS_LEADER(ch)       ((IS_IMMORTAL((ch)) || !str_cmp(clan_table[(ch)->clan].leader, (ch)->name)))
-#define IS_MAGE(ch)         (IS_NPC((ch)) && (ch)->avatar > 0)
+#define IS_MAGE(ch)         (!IS_NPC((ch)) && (ch)->avatar > 0)
 #define IS_BANKER(ch, Clan)    (!IS_NPC(ch) && !IS_SWITCHED(ch) &&  \
                 ( strstr(clan_table[Clan].banker, ch->name ) \
                || strstr(clan_table[Clan].banker, "All" )   \

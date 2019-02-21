@@ -2886,9 +2886,20 @@ extern sh_int gsn_shadowplay;
 extern sh_int gsn_xp_boost;
 extern sh_int gsn_vampire_regen;
 
-/* Matthew's Vampire Macros*/
+/* Matthew's Utility*/
 #define HLEVELS(ch, num)    ((ch)->max_hit/(8-(num)))
 #define IS_LEADER(ch)       ((IS_IMMORTAL((ch)) || !str_cmp(clan_table[(ch)->clan].leader, (ch)->name)))
+#define IS_MAGE(ch)         (IS_NPC((ch)) && (ch)->avatar > 0)
+#define IS_BANKER(ch, Clan)    (!IS_NPC(ch) && !IS_SWITCHED(ch) &&  \
+                ( strstr(clan_table[Clan].banker, ch->name ) \
+               || strstr(clan_table[Clan].banker, "All" )   \
+               || strstr(clan_table[Clan].banker, "None" )  \
+               || !str_cmp(ch->name, clan_table[Clan].leader)))
+#define IS_DEBUGGING(ch)    (!IS_NPC((ch)) && IS_SET((ch)->act2, PLR2_DEBUG) \
+                            && IS_SET((ch)->act2, PLR2_DEBUGMSG))
+#define SAME_UMBRA(a, b)    ((IS_AFFECTED2((a), AFF2_UMBRA) && IS_AFFECTED2((b), AFF2_UMBRA)) \
+                        || (!IS_AFFECTED2((a), AFF2_UMBRA) && !IS_AFFECTED2((b), AFF2_UMBRA)))
+#define SAME_ROOM(ch, victim)     (IS_VALID((ch)) && IS_VALID((victim)) && (ch)->in_room != NULL && (victim)->in_room != NULL && (ch)->in_room == (victim)->in_room)
 
 // used by replay buffer system.
 void record_replayroom_event args ((CHAR_DATA *ch, const char *txt));
@@ -2990,16 +3001,7 @@ void    channel_to_char args( (const char *txt, CHAR_DATA*ch) );
                 ( ch->pcdata->security >= Area->security  \
                 || strstr( Area->builders, ch->name )     \
                 || strstr( Area->builders, "All" ) ) )
-#define IS_BANKER(ch, Clan)    (!IS_NPC(ch) && !IS_SWITCHED(ch) &&  \
-                ( strstr(clan_table[Clan].banker, ch->name ) \
-               || strstr(clan_table[Clan].banker, "All" )   \
-               || strstr(clan_table[Clan].banker, "None" )  \
-               || !str_cmp(ch->name, clan_table[Clan].leader)))
-#define IS_DEBUGGING(ch)    (!IS_NPC((ch)) && IS_SET((ch)->act2, PLR2_DEBUG) \
-                            && IS_SET((ch)->act2, PLR2_DEBUGMSG))
-#define SAME_UMBRA(a, b)    ((IS_AFFECTED2((a), AFF2_UMBRA) && IS_AFFECTED2((b), AFF2_UMBRA)) \
-                        || (!IS_AFFECTED2((a), AFF2_UMBRA) && !IS_AFFECTED2((b), AFF2_UMBRA)))
-#define SAME_ROOM(ch, victim)     (IS_VALID((ch)) && IS_VALID((victim)) && (ch)->in_room != NULL && (victim)->in_room != NULL && (ch)->in_room == (victim)->in_room)
+
 
 
 /*

@@ -1718,20 +1718,24 @@ int d10_damdice( CHAR_DATA *ch, CHAR_DATA *victim)
         dice += number_range(0, 1);
 
     }
-
+    // Race Bonuses
+    // Garou bonus, +2 for claws.
     if (!wield && ch->race == race_lookup("garou") && is_affected(ch, gsn_claws))
         dice += 2;
 
     if (!wield && is_affected(ch, gsn_gift_razorclaws))
         dice += 1;
 
-		if (!IS_NPC(ch) && IS_VAMP(ch))
-		{
+    //Vampire potence bonus
+	if (!IS_NPC(ch) && IS_VAMP(ch))
 			dice += ch->pcdata->discipline[POTENCE];
-		}
+
+    // Mage Matter Intrinsic Ability
+    if (IS_MAGE(ch) && ch->sphere[SPHERE_MATTER] > 0)
+        dice += 1+ch->sphere[SPHERE_MATTER]/2;
 
 		/*
-		 * Bonuses.
+		 * Skill Bonuses.
 		 */
 		if ( get_skill(ch,gsn_enhanced_damage) > 0 )
 		{

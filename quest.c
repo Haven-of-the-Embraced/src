@@ -2,6 +2,44 @@
 #include <stdio.h>
 #include <string.h>
 #include "merc.h"
+#include "olc.h"
+
+#define QIEDIT( fun )      bool fun (CHAR_DATA *ch, char *argument )
+
+QIEDIT(qiedit_show )
+{
+    QITEM_DATA *item;
+
+    EDIT_QITEM(ch, item );
+
+    printf_to_char(ch, "\n\r{wQuest Item           - {c%d{x\n\r", item->vnum );
+          send_to_char("{w======================================{x\n\r",ch);
+    printf_to_char(ch, "{wItem Vnum            - {c%s{x\n\r", item->objvnum );
+    printf_to_char(ch, "{wPlaced Room/Item/Mob - {c%s{x\n\r", item->place == PLACE_ROOM ? "Room" : item->place == PLACE_MOB ? "Mobile" : "Obj" );
+    printf_to_char(ch, "{wPlaced Vnum          - {c%d{x\n\r", item->placevnum );
+    printf_to_char(ch, "{wNotify Someone?      - {c%s{x\n\r", item->notify ? "True" : "False" );
+    printf_to_char(ch, "{wNotify Whom?         - {c%s{x\n\r", item->notified );
+    return FALSE;
+}
+
+/*
+typedef struct  qitem_data          QITEM_DATA;
+extern  QITEM_DATA                  *qitem_list;
+struct qitem_data
+{
+    QITEM_DATA  *   next;
+    sh_int          vnum;
+    sh_int          objvnum;
+    sh_int          place;
+    sh_int          placevnum;
+    sh_int          load;
+    bool            found;
+    char        *   foundby;
+    bool            notify;
+    char        *   notified;
+};*/
+
+
 
 DECLARE_DO_FUN( do_say );
 

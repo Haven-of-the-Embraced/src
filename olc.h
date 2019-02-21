@@ -347,6 +347,7 @@ DECLARE_OLC_FUN( cedit_leader           );
 #define EDIT_AREA(Ch, Area) ( Area = (AREA_DATA *)Ch->desc->pEdit )
 #define EDIT_MPCODE(Ch, Code)   ( Code = (MPROG_CODE*)Ch->desc->pEdit )
 #define EDIT_COMMAND( Ch, Cmd ) ( Cmd = (CMD_DATA *) Ch->desc->pEdit )
+#define EDIT_QITEM( Ch, Item ) (Item = (QITEM_DATA *) Ch->desc->pEdit )
 
 
 

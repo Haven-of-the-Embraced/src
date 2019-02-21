@@ -1876,6 +1876,25 @@ struct  kill_data
 #define WIZ_PREFIX      (S)
 #define WIZ_SPAM        (T)
 #define WIZ_PKILL       (U)
+
+/* Qitem Data */
+#define     PLACE_ROOM      0
+#define     PLACE_MOB       1
+#define     PLACE_OBJ       2
+typedef struct  qitem_data          QITEM_DATA;
+extern  QITEM_DATA                  *qitem_list;
+struct qitem_data
+{
+    QITEM_DATA  *   next;
+    sh_int          vnum;
+    sh_int          objvnum;
+    sh_int          place;
+    sh_int          placevnum;
+    bool            found;
+    char        *   foundby;
+    bool            notify;
+    char        *   notified;
+};
 /*Domains data*/
 typedef struct  domain_data         DOMAIN_DATA;
 extern  DOMAIN_DATA                 *domain_list;

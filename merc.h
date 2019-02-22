@@ -1883,17 +1883,24 @@ struct  kill_data
 #define     PLACE_OBJ       2
 typedef struct  qitem_data          QITEM_DATA;
 extern  QITEM_DATA                  *qitem_list;
+extern  QITEM_DATA                  *qitem_free;
+QITEM_DATA *new_qitem  args ( (void) );
+void    free_qitem args ( (QITEM_DATA *item) );
+QITEM_DATA *qitem_lookup args ((const char *name ));
 struct qitem_data
 {
-    QITEM_DATA  *   next;
-    sh_int          vnum;
-    sh_int          objvnum;
+    QITEM_DATA      *next;
+    char            *name;
+    sh_int          qobjvnum;
     sh_int          place;
-    sh_int          placevnum;
+    sh_int          roomvnum;
+    sh_int          mobvnum;
+    sh_int          objvnum;
     bool            found;
-    char        *   foundby;
+    char            *foundby;
     bool            notify;
-    char        *   notified;
+    char            *notified;
+    bool            valid;
 };
 /*Domains data*/
 typedef struct  domain_data         DOMAIN_DATA;

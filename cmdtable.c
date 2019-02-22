@@ -617,6 +617,7 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "funlist", do_funlist},
     { "allowimmtalk", do_allowimmtalk},
     { "cmdedit",    do_cmdedit      },
+    { "qiedit",     do_qiedit       },
     { "cmdlist",    do_cmdlist      },
     { "copyover",   do_copyover   },
     { "admintalk",  do_admintalk },

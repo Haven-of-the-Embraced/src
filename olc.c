@@ -62,6 +62,10 @@ bool run_olc_editor( DESCRIPTOR_DATA *d )
     case ED_CLAN:
             cedit (d->character, d->incomm);
             break;
+    case ED_QITEM:
+        qiedit (d->character, d->incomm);
+        break;
+
     default:
     return FALSE;
     }
@@ -101,6 +105,9 @@ char *olc_ed_name( CHAR_DATA *ch )
         case ED_CLAN:
             sprintf (buf, "CEdit");
             break;
+    case ED_QITEM:
+        sprintf(buf, "QIEdit");
+        break;
     default:
     sprintf( buf, " " );
     break;
@@ -226,6 +233,9 @@ bool show_commands( CHAR_DATA *ch, char *argument )
             case ED_CLAN:
             show_olc_cmds (ch, cedit_table);
             break;
+    case ED_QITEM:
+        show_olc_cmds (ch, qiedit_table);
+        break;
     }
 
     return FALSE;
@@ -808,6 +818,11 @@ const struct olc_cmd_type cmdedit_table[] =
     { NULL,     0       }
 };
 
+const struct olc_cmd_type qiedit_table[] =
+{
+    {"show",        qiedit_show     },
+    {NULL,          0               }
+};
 
 /* Entry point for all editors. */
 void do_olc( CHAR_DATA *ch, char *argument )

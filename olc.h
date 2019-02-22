@@ -69,6 +69,7 @@ void save_helps args( (void) );
 #define ED_HELP     6
 #define ED_COMMAND  7
 #define ED_CLAN     8
+#define ED_QITEM    9
 
 
 
@@ -84,6 +85,7 @@ void    mpedit      args( ( CHAR_DATA *ch, char *argument ) );
 void    hedit       args( ( CHAR_DATA *, char * ) );
 void    cmdedit       args( ( CHAR_DATA *ch, char *argument ) );
 void    cedit           args( ( CHAR_DATA *ch, char *argument ) );
+void    qiedit          args( ( CHAR_DATA *ch, char *argument ));
 
 
 
@@ -141,6 +143,7 @@ extern const struct olc_cmd_type    mpedit_table[];
 extern const struct olc_cmd_type    hedit_table[];
 extern const struct olc_cmd_type    cmdedit_table[];
 extern const struct olc_cmd_type        cedit_table[];
+extern const struct olc_cmd_type    qiedit_table[];
 
 
 
@@ -156,6 +159,7 @@ DECLARE_DO_FUN( do_mpedit   );
 DECLARE_DO_FUN( do_hedit    );
 DECLARE_DO_FUN( do_cedit        );
 DECLARE_DO_FUN( do_cmdedit  );
+DECLARE_DO_FUN( do_qiedit   );
 
 /*
  * General Functions
@@ -321,6 +325,10 @@ DECLARE_OLC_FUN( cmdedit_name       );
 DECLARE_OLC_FUN( cmdedit_new        );
 DECLARE_OLC_FUN( cmdedit_move       );
 DECLARE_OLC_FUN( cmdedit_delete     );
+
+/* Quest item editor*/
+
+DECLARE_OLC_FUN( qiedit_show        );
 
 /* Clan editor */
 DECLARE_OLC_FUN( cedit_flags            );

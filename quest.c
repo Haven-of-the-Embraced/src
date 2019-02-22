@@ -4,7 +4,106 @@
 #include "merc.h"
 #include "olc.h"
 
+QITEM_DATA      *qitem_list;
+QITEM_DATA      *qitem_free;
+
 #define QIEDIT( fun )      bool fun (CHAR_DATA *ch, char *argument )
+
+void do_qiedit( CHAR_DATA *ch, char *argument )
+{
+    QITEM_DATA *item;
+    char arg1[MAX_STRING_LENGTH];
+    char arg2[MSL];
+
+    arg1[0] = '\0';
+    arg2[0] = '\0';
+
+    if ( IS_NPC(ch) )
+        return;
+
+    argument = one_argument(argument, arg1);
+    argument = one_argument(argument, arg2);
+
+    if(arg1[0]  == '\0')
+    {
+        send_to_char("Syntax: Qiedit <name>\n\r",ch);
+        send_to_char("Or    : Qiedit new <name>\n\r", ch);
+        return;
+    }
+
+    if (!str_prefix(arg1, "new" ))
+    {
+        if( qitem_lookup(arg2 ) != NULL )
+            {
+                send_to_char("That quest item already exists.\n\r",ch);
+                return FALSE;
+            }
+            item = new_qitem();
+            free_string(item->name );
+            item->name = str_dup(arg2);
+            ch->desc->pEdit = (void *) item;
+            send_to_char("Qitem created.\n\r",ch);
+            ch->desc->pEdit = (void *)item;
+            ch->desc->editor = ED_QITEM;
+            printf_to_char(ch, "Entering Quest Item Editor for %s.\n\r", item->name );
+            return;
+    }
+
+    if ( (item = qitem_lookup(arg1) ) == NULL )
+    {
+        send_to_char("What quest item is this?\n\r",ch);
+        return;
+    }
+
+    ch->desc->pEdit = (void *)item;
+    ch->desc->editor = ED_QITEM;
+    printf_to_char(ch, "Entering Quest Item Editor for %s.\n\r", item->name );
+
+
+    return;
+}
+
+void qiedit( CHAR_DATA *ch, char *argument )
+{
+    char command[MAX_INPUT_LENGTH];
+    char arg[MAX_STRING_LENGTH];
+    int  cmd;
+    QITEM_DATA *pQitem;
+
+    arg[0] = '\0';
+
+    smash_tilde( argument );
+    strcpy( arg, argument );
+    argument = one_argument( argument, command );
+
+    EDIT_QITEM(ch, pQitem);
+
+    if ( !str_cmp(command, "done") )
+    {
+        edit_done( ch );
+        return;
+    }
+
+    if ( command[0] == '\0' )
+    {
+    qiedit_show(ch, argument);
+        return;
+    }
+
+    /* Search Table and Dispatch Command. */
+    for ( cmd = 0; qiedit_table[cmd].name != NULL; cmd++ )
+    {
+        if ( !str_prefix( command, qiedit_table[cmd].name ) )
+        {
+            qiedit_table[cmd].olc_fun( ch, argument );
+            return;
+        }
+    }
+
+    /* Default to Standard Interpreter. */
+    interpret( ch, arg );
+    return;
+}
 
 QIEDIT(qiedit_show )
 {
@@ -12,34 +111,66 @@ QIEDIT(qiedit_show )
 
     EDIT_QITEM(ch, item );
 
-    printf_to_char(ch, "\n\r{wQuest Item           - {c%d{x\n\r", item->vnum );
+    printf_to_char(ch, "\n\r{wQuest                - {c%s{x\n\r", item->name );
           send_to_char("{w======================================{x\n\r",ch);
-    printf_to_char(ch, "{wItem Vnum            - {c%s{x\n\r", item->objvnum );
+    printf_to_char(ch, "{wItem Vnum            - {c%s{x\n\r", item->qobjvnum );
     printf_to_char(ch, "{wPlaced Room/Item/Mob - {c%s{x\n\r", item->place == PLACE_ROOM ? "Room" : item->place == PLACE_MOB ? "Mobile" : "Obj" );
-    printf_to_char(ch, "{wPlaced Vnum          - {c%d{x\n\r", item->placevnum );
+    printf_to_char(ch, "{wPlaced Room          - {c%d{x\n\r", item->roomvnum );
+    if (item->place == PLACE_MOB)
+        printf_to_char(ch, "{wPlaced Mob           - {c%d{x\n\r", item->mobvnum);
+    if (item->place ==  PLACE_OBJ)
+        printf_to_char(ch, "{wPlaced In Obj        - {c%d{x\n\r", item->objvnum);
     printf_to_char(ch, "{wNotify Someone?      - {c%s{x\n\r", item->notify ? "True" : "False" );
     printf_to_char(ch, "{wNotify Whom?         - {c%s{x\n\r", item->notified );
     return FALSE;
 }
 
-/*
-typedef struct  qitem_data          QITEM_DATA;
-extern  QITEM_DATA                  *qitem_list;
-struct qitem_data
+QITEM_DATA *new_qitem (void)
 {
-    QITEM_DATA  *   next;
-    sh_int          vnum;
-    sh_int          objvnum;
-    sh_int          place;
-    sh_int          placevnum;
-    sh_int          load;
-    bool            found;
-    char        *   foundby;
-    bool            notify;
-    char        *   notified;
-};*/
+
+    extern QITEM_DATA *qitem_list;
+    QITEM_DATA *qitem;
+
+    if (qitem_free == NULL)
+    qitem = alloc_perm(sizeof(*qitem));
+    else
+    {
+    qitem = qitem_free;
+    qitem_free = qitem_free->next;
+    }
+
+    qitem->next = qitem_list;
+    qitem_list = qitem;
+
+    VALIDATE(qitem);
+    return qitem;
+}
+
+void free_qitem (QITEM_DATA *qitem)
+{
 
 
+    if (!IS_VALID(qitem))
+    return;
+
+    qitem->next = qitem_free;
+    qitem_free  = qitem;
+
+    INVALIDATE(qitem);
+    return;
+}
+
+QITEM_DATA *qitem_lookup(const char *name )
+{
+    QITEM_DATA *qitem;
+
+    for( qitem = qitem_list ; qitem ; qitem = qitem->next )
+    {
+        if(!str_cmp(name, qitem->name ) )
+            return qitem;
+    }
+    return NULL;
+}
 
 DECLARE_DO_FUN( do_say );
 

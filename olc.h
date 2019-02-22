@@ -329,6 +329,11 @@ DECLARE_OLC_FUN( cmdedit_delete     );
 /* Quest item editor*/
 
 DECLARE_OLC_FUN( qiedit_show        );
+DECLARE_OLC_FUN( qiedit_vnum        );
+DECLARE_OLC_FUN( qiedit_place       );
+DECLARE_OLC_FUN( qiedit_room        );
+DECLARE_OLC_FUN( qiedit_mobile      );
+DECLARE_OLC_FUN( qiedit_object      );
 
 /* Clan editor */
 DECLARE_OLC_FUN( cedit_flags            );

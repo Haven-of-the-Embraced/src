@@ -821,6 +821,12 @@ const struct olc_cmd_type cmdedit_table[] =
 const struct olc_cmd_type qiedit_table[] =
 {
     {"show",        qiedit_show     },
+    {"commands",    show_commands   },
+    {"vnum",        qiedit_vnum     },
+    {"place",       qiedit_place    },
+    {"room",        qiedit_room     },
+    {"mobile",      qiedit_mobile   },
+    {"object",      qiedit_object   },
     {NULL,          0               }
 };
 

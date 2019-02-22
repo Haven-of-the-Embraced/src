@@ -108,23 +108,176 @@ void qiedit( CHAR_DATA *ch, char *argument )
 QIEDIT(qiedit_show )
 {
     QITEM_DATA *item;
+    OBJ_INDEX_DATA *pItem;
+    ROOM_INDEX_DATA *pRoom;
+    MOB_INDEX_DATA *pMob;
+    OBJ_INDEX_DATA *pObj;
 
     EDIT_QITEM(ch, item );
 
-    printf_to_char(ch, "\n\r{wQuest                - {c%s{x\n\r", item->name );
-          send_to_char("{w======================================{x\n\r",ch);
-    printf_to_char(ch, "{wItem Vnum            - {c%s{x\n\r", item->qobjvnum );
-    printf_to_char(ch, "{wPlaced Room/Item/Mob - {c%s{x\n\r", item->place == PLACE_ROOM ? "Room" : item->place == PLACE_MOB ? "Mobile" : "Obj" );
-    printf_to_char(ch, "{wPlaced Room          - {c%d{x\n\r", item->roomvnum );
+    pItem = get_obj_index(item->qobjvnum);
+    pRoom = get_room_index(item->roomvnum);
+    pMob  = get_mob_index(item->mobvnum);
+    pObj  = get_obj_index(item->objvnum);
+
+    printf_to_char(ch, "\n\r{wQuest                         - {c%s{x\n\r", item->name );
+          send_to_char("{w====================================================={x\n\r",ch);
+    printf_to_char(ch, "{wItem Vnum                     - {c%d (%s){x\n\r", item->qobjvnum, pItem != NULL ? pItem->short_descr : "Null" );
+    printf_to_char(ch, "{wPlaced in/on Room/Mob/Obj     - {c%s{x\n\r", item->place == PLACE_ROOM ? "Room" : item->place == PLACE_MOB ? "Mobile" : "Obj" );
+    printf_to_char(ch, "{wPlaced Room                   - {c%d (%s){x\n\r", item->roomvnum, pRoom != NULL ? pRoom->name : "Null" );
     if (item->place == PLACE_MOB)
-        printf_to_char(ch, "{wPlaced Mob           - {c%d{x\n\r", item->mobvnum);
+        printf_to_char(ch, "{wPlaced Mob                    - {c%d (%s){x\n\r", item->mobvnum, pMob != NULL ? pMob->short_descr : "Null");
     if (item->place ==  PLACE_OBJ)
-        printf_to_char(ch, "{wPlaced In Obj        - {c%d{x\n\r", item->objvnum);
-    printf_to_char(ch, "{wNotify Someone?      - {c%s{x\n\r", item->notify ? "True" : "False" );
-    printf_to_char(ch, "{wNotify Whom?         - {c%s{x\n\r", item->notified );
+        printf_to_char(ch, "{wPlaced In Obj                 - {c%d (%s){x\n\r", item->objvnum, pObj != NULL ? pObj->short_descr : "Null");
+    printf_to_char(ch, "{wNotify Someone?               - {c%s{x\n\r", item->notify ? "True" : "False" );
+    printf_to_char(ch, "{wNotify Whom?                  - {c%s{x\n\r", item->notified );
     return FALSE;
 }
+QIEDIT( qiedit_vnum )
+{
+    QITEM_DATA *pItem;
+    OBJ_INDEX_DATA *pObj;
+    int         vnum;
+    EDIT_QITEM(ch, pItem);
 
+    if ( argument[0] == '\0' || !is_number( argument ) )
+    {
+    send_to_char( "Syntax:  vnum [number]\n\r", ch );
+    return FALSE;
+    }
+    vnum = atoi( argument );
+
+    if ( ( pObj = get_obj_index( vnum ) ) == NULL )
+    {
+        send_to_char("That Object does not exist!\n\r", ch);
+        return FALSE;
+    }
+
+    pItem->qobjvnum = vnum;
+    printf_to_char(ch, "Obj set to vnum %d, '%s'\n\r", pItem->qobjvnum, pObj->short_descr);
+    return TRUE;
+}
+
+QIEDIT( qiedit_place )
+{
+    QITEM_DATA *pItem;
+
+    EDIT_QITEM(ch, pItem);
+
+    if ( argument[0] == '\0' )
+    {
+    send_to_char( "Syntax:  place <room/mobile/object>\n\r", ch );
+    return FALSE;
+    }
+    if (!str_prefix(argument, "room"))
+    {
+        pItem->place = PLACE_ROOM;
+        send_to_char("Object will be placed in the room.\n\r", ch);
+        return TRUE;
+    }
+    if (!str_prefix(argument, "mobile"))
+    {
+        pItem->place = PLACE_MOB;
+        send_to_char("Object will be placed on a mobile.\n\r", ch);
+        return TRUE;
+    }
+    if (!str_prefix(argument, "object"))
+    {
+        pItem->place = PLACE_OBJ;
+        send_to_char("Object will be placed in another object.\n\r", ch);
+        return TRUE;
+    }
+
+    send_to_char("That is not a valid placement. Options are Room, Mobile or Object.\n\r", ch);
+    return FALSE;
+
+
+}
+
+QIEDIT( qiedit_room )
+{
+    QITEM_DATA *pItem;
+    ROOM_INDEX_DATA *pRoom;
+    int         vnum;
+    EDIT_QITEM(ch, pItem);
+
+    if ( argument[0] == '\0' || !is_number( argument ) )
+    {
+    send_to_char( "Syntax:  room [number]\n\r", ch );
+    return FALSE;
+    }
+    vnum = atoi( argument );
+
+
+
+    if ( ( pRoom = get_room_index( vnum ) )  == NULL )
+    {
+        send_to_char("That Room does not exist!\n\r", ch);
+        return FALSE;
+    }
+
+    pItem->roomvnum = vnum;
+    printf_to_char(ch, "Room set to vnum %d, '%s'\n\r", pItem->roomvnum, pRoom->name);
+    return TRUE;
+}
+QIEDIT( qiedit_mobile )
+{
+    QITEM_DATA *pItem;
+    MOB_INDEX_DATA *pMob;
+    int         vnum;
+    EDIT_QITEM(ch, pItem);
+
+    if ( argument[0] == '\0' || !is_number( argument ) )
+    {
+    send_to_char( "Syntax:  mob [number]\n\r", ch );
+    return FALSE;
+    }
+    vnum = atoi( argument );
+
+
+
+    if ( ( pMob = get_mob_index( vnum ) )  == NULL )
+    {
+        send_to_char("That mobile does not exist!\n\r", ch);
+        return FALSE;
+    }
+
+    pItem->mobvnum = vnum;
+    printf_to_char(ch, "Mobile set to vnum %d, '%s'\n\r", pItem->mobvnum, pMob->short_descr);
+    return TRUE;
+}
+QIEDIT( qiedit_object )
+{
+    QITEM_DATA *pItem;
+    OBJ_INDEX_DATA *pObj;
+    int         vnum;
+    EDIT_QITEM(ch, pItem);
+
+    if ( argument[0] == '\0' || !is_number( argument ) )
+    {
+    send_to_char( "Syntax:  room [number]\n\r", ch );
+    return FALSE;
+    }
+    vnum = atoi( argument );
+
+
+
+    if ( ( pObj = get_obj_index( vnum ) )  == NULL )
+    {
+        send_to_char("That object does not exist!\n\r", ch);
+        return FALSE;
+    }
+
+    if (pObj->item_type != ITEM_CONTAINER)
+    {
+        send_to_char("That item is not a container!\n\r", ch);
+        return FALSE;
+    }
+
+    pItem->objvnum = vnum;
+    printf_to_char(ch, "Object set to vnum %d, '%s'\n\r", pItem->objvnum, pObj->short_descr);
+    return TRUE;
+}
 QITEM_DATA *new_qitem (void)
 {
 

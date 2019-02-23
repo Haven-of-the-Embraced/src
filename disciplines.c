@@ -4475,41 +4475,9 @@ void do_shift(CHAR_DATA *ch, char *argument)
         {
             send_to_char( "You shift back into your humanoid form.\n\r", ch );
 
-/*          ch->max_hit = ch->pcdata->perm_hit;
-            ch->max_move = ch->pcdata->perm_move;
-            if (ch->hit > ch->max_hit) ch->hit = ch->max_hit;
-            if (ch->move > ch->max_move) ch->move = ch->max_move;
-            REMOVE_BIT(ch->affected_by, AFF_SHIFT);
-            if(!str_cmp(ch->shift, "A strange bat flittering about the room"))
-            {
-                REMOVE_BIT(ch->affected_by, AFF_FLYING);
-                REMOVE_BIT(ch->affected_by, AFF_DETECT_HIDDEN);
-                REMOVE_BIT(ch->affected_by, AFF_DETECT_INVIS);
-                REMOVE_BIT(ch->affected_by, AFF_DARK_VISION);
-            }
-            if(!str_cmp(ch->shift, "An ugly rat searching for food"))
-            {
-                REMOVE_BIT(ch->affected_by, AFF_SNEAK);
-                REMOVE_BIT(ch->affected_by, AFF_DARK_VISION);
-            }
-            if(!str_cmp(ch->shift, "A large mountian wolf"))
-            {
-                REMOVE_BIT(ch->affected_by, AFF_HASTE);
-                REMOVE_BIT(ch->affected_by, AFF_DARK_VISION);
-            }
-            if(!str_cmp(ch->shift, "A watery mist swirling around"))
-            {
-                REMOVE_BIT(ch->affected_by, AFF_PASS_DOOR);
-                REMOVE_BIT(ch->affected_by, AFF_FLYING);
-                REMOVE_BIT(ch->affected_by, AFF_INVISIBLE);
-                REMOVE_BIT(ch->affected_by, AFF_DETECT_INVIS);
-                REMOVE_BIT(ch->affected2_by, AFF2_MIST);
-            }
-*/
             affect_strip(ch,gsn_reveal);
-                affect_strip(ch,gsn_shift);
+            affect_strip(ch,gsn_shift);
             if (ch->hit > ch->max_hit) ch->hit = ch->max_hit;
-/*          free_string( ch->short_descr ); */
             ch->affected_by = race_table[ch->race].aff;
             act( "$n's form slowly shifts into a more humanoid form.", ch, NULL, NULL, TO_NOTVICT );
             ch->dam_type = 17;
@@ -4536,33 +4504,9 @@ void do_shift(CHAR_DATA *ch, char *argument)
             return;
         }
 
-        for ( obj = ch->carrying; obj != NULL; obj = obj_next )
-        {
-            obj_next = obj->next_content;
-            if(obj->wear_loc != WEAR_NONE)
-            unequip_char( ch, obj );
-        }
-
-
         act( "Your body slowly shifts forms into a bat.", ch, NULL, NULL, TO_CHAR );
         act( "$n shifts their form into that of a bat.", ch, NULL, NULL, TO_NOTVICT );
         ch->pblood -= 10;
-/*
-        ch->pcdata->perm_hit = ch->max_hit;
-        ch->max_hit = ch->max_hit/3;
-        ch->pcdata->perm_move = ch->max_move;
-        ch->max_move += ch->max_move;
-        ch->hit = ch->max_hit;
-        ch->move = ch->max_move;
-        ch->affected_by = race_table[ch->race].aff;
-        ch->dam_type = 5;
-        SET_BIT(ch->affected_by, AFF_FANGS);
-        SET_BIT(ch->affected_by, AFF_FLYING);
-        SET_BIT(ch->affected_by, AFF_SHIFT);
-        SET_BIT(ch->affected_by, AFF_DETECT_HIDDEN);
-        SET_BIT(ch->affected_by, AFF_DETECT_INVIS);
-        SET_BIT(ch->affected_by, AFF_DARK_VISION);
-*/
         affect_strip(ch,gsn_reveal);
 
         af.where     = TO_AFFECTS;
@@ -4629,8 +4573,6 @@ void do_shift(CHAR_DATA *ch, char *argument)
         affect_to_char( ch, &af );
 
         if (ch->hit > ch->max_hit) ch->hit = ch->max_hit;
-
-/*      free_string( ch->short_descr ); */
         ch->short_descr = str_dup( "A strange bat" );
         sprintf(buf, "A strange bat flittering about the room");
             ch->shift = str_dup( buf );
@@ -4650,31 +4592,9 @@ void do_shift(CHAR_DATA *ch, char *argument)
             return;
         }
 
-        for ( obj = ch->carrying; obj != NULL; obj = obj_next )
-        {
-            obj_next = obj->next_content;
-            if(obj->wear_loc != WEAR_NONE)
-            unequip_char( ch, obj );
-        }
-
-
         act( "Your body slowly shifts forms into a rat.", ch, NULL, NULL, TO_CHAR );
         act( "$n shifts their form into that of a rat.", ch, NULL, NULL, TO_NOTVICT );
         ch->pblood -= 10;
-/*
-        ch->pcdata->perm_hit = ch->max_hit;
-        ch->max_hit -= ch->max_hit/2;
-        ch->pcdata->perm_move = ch->max_move;
-        ch->max_move = ch->max_move*4;
-        ch->hit = ch->max_hit;
-        ch->move = ch->max_move;
-        ch->dam_type = 5;
-        ch->affected_by = race_table[ch->race].aff;
-        SET_BIT(ch->affected_by, AFF_FANGS);
-        SET_BIT(ch->affected_by, AFF_SNEAK);
-        SET_BIT(ch->affected_by, AFF_SHIFT);
-        SET_BIT(ch->affected_by, AFF_DARK_VISION);
-*/
         affect_strip(ch,gsn_reveal);
 
         af.where     = TO_AFFECTS;
@@ -4723,9 +4643,6 @@ void do_shift(CHAR_DATA *ch, char *argument)
         affect_to_char( ch, &af );
 
         if (ch->hit > ch->max_hit) ch->hit = ch->max_hit;
-
-
-/*      free_string( ch->short_descr ); */
         ch->short_descr = str_dup( "An ugly rat" );
         sprintf(buf, "An ugly rat searching for food");
             ch->shift = str_dup( buf );
@@ -4744,30 +4661,9 @@ void do_shift(CHAR_DATA *ch, char *argument)
             send_to_char( "You don't have enough blood!\n\r", ch );
             return;
         }
-
-        for ( obj = ch->carrying; obj != NULL; obj = obj_next )
-        {
-            obj_next = obj->next_content;
-            if(obj->wear_loc != WEAR_NONE)
-            unequip_char( ch, obj );
-        }
-
         act( "Your body slowly shifts forms into a wolf.", ch, NULL, NULL, TO_CHAR );
         act( "$n shifts their form into that of a wolf.", ch, NULL, NULL, TO_NOTVICT );
         ch->pblood -= 40;
-
-/*      ch->pcdata->perm_hit = ch->max_hit;
-        ch->max_hit += ch->max_hit;
-        ch->pcdata->perm_move = ch->max_move;
-        ch->hit = ch->max_hit;
-        ch->move = ch->max_move;
-        ch->dam_type = 5;
-        ch->affected_by = race_table[ch->race].aff;
-        SET_BIT(ch->affected_by, AFF_FANGS);
-        SET_BIT(ch->affected_by, AFF_HASTE);
-        SET_BIT(ch->affected_by, AFF_SHIFT);
-        SET_BIT(ch->affected_by, AFF_DARK_VISION);
-*/
         affect_strip(ch,gsn_reveal);
 
         af.where     = TO_AFFECTS;
@@ -4834,8 +4730,6 @@ void do_shift(CHAR_DATA *ch, char *argument)
         affect_to_char( ch, &af );
 
         if (ch->hit > ch->max_hit) ch->hit = ch->max_hit;
-
-/*      free_string( ch->short_descr ); */
         ch->short_descr = str_dup( "A large mountain wolf" );
         sprintf(buf, "A large mountain wolf");
             ch->shift = str_dup( buf );
@@ -4857,29 +4751,9 @@ void do_shift(CHAR_DATA *ch, char *argument)
             return;
         }
 
-        for ( obj = ch->carrying; obj != NULL; obj = obj_next )
-        {
-            obj_next = obj->next_content;
-            if(obj->wear_loc != WEAR_NONE)
-            unequip_char( ch, obj );
-        }
-
         act( "Your body slowly shifts forms into a tiger.", ch, NULL, NULL, TO_CHAR );
         act( "$n shifts their form into that of a tiger.", ch, NULL, NULL, TO_NOTVICT );
         ch->pblood -= 40;
-
-/*      ch->pcdata->perm_hit = ch->max_hit;
-        ch->max_hit += ch->max_hit;
-        ch->pcdata->perm_move = ch->max_move;
-        ch->hit = ch->max_hit;
-        ch->move = ch->max_move;
-        ch->dam_type = 5;
-        ch->affected_by = race_table[ch->race].aff;
-        SET_BIT(ch->affected_by, AFF_FANGS);
-        SET_BIT(ch->affected_by, AFF_HASTE);
-        SET_BIT(ch->affected_by, AFF_SHIFT);
-        SET_BIT(ch->affected_by, AFF_DARK_VISION);
-*/
         affect_strip(ch,gsn_reveal);
 
         af.where     = TO_AFFECTS;
@@ -4946,8 +4820,6 @@ void do_shift(CHAR_DATA *ch, char *argument)
         affect_to_char( ch, &af );
 
         if (ch->hit > ch->max_hit) ch->hit = ch->max_hit;
-
-/*      free_string( ch->short_descr ); */
         ch->short_descr = str_dup( "A powerful looking tiger" );
         sprintf(buf, "A powerful looking tiger");
             ch->shift = str_dup( buf );
@@ -4968,28 +4840,9 @@ void do_shift(CHAR_DATA *ch, char *argument)
             return;
         }
 
-        for ( obj = ch->carrying; obj != NULL; obj = obj_next )
-        {
-            obj_next = obj->next_content;
-            if(obj->wear_loc != WEAR_NONE)
-            unequip_char( ch, obj );
-        }
-
         act( "Your body slowly shifts forms into a raven.", ch, NULL, NULL, TO_CHAR );
         act( "$n shifts their form into that of a raven.", ch, NULL, NULL, TO_NOTVICT );
         ch->pblood -= 20;
-
-/*      ch->pcdata->perm_hit = ch->max_hit;
-        ch->max_hit += ch->max_hit;
-        ch->pcdata->perm_move = ch->max_move;
-        ch->hit = ch->max_hit;
-        ch->move = ch->max_move;
-        ch->dam_type = 5;
-        ch->affected_by = race_table[ch->race].aff;
-        SET_BIT(ch->affected_by, AFF_FANGS);
-        SET_BIT(ch->affected_by, AFF_SHIFT);
-        SET_BIT(ch->affected_by, AFF_DARK_VISION);
-*/
         affect_strip(ch,gsn_reveal);
 
         af.where     = TO_AFFECTS;
@@ -5056,8 +4909,6 @@ void do_shift(CHAR_DATA *ch, char *argument)
         affect_to_char( ch, &af );
 
         if (ch->hit > ch->max_hit) ch->hit = ch->max_hit;
-
-/*      free_string( ch->short_descr ); */
         ch->short_descr = str_dup( "A black raven" );
         sprintf(buf, "A black raven");
             ch->shift = str_dup( buf );
@@ -5077,28 +4928,9 @@ void do_shift(CHAR_DATA *ch, char *argument)
             return;
         }
 
-        for ( obj = ch->carrying; obj != NULL; obj = obj_next )
-        {
-            obj_next = obj->next_content;
-            if(obj->wear_loc != WEAR_NONE)
-            unequip_char( ch, obj );
-        }
-
         act( "Your body slowly shifts forms into a bear.", ch, NULL, NULL, TO_CHAR );
         act( "$n shifts their form into that of a bear.", ch, NULL, NULL, TO_NOTVICT );
         ch->pblood -= 80;
-
-/*      ch->pcdata->perm_hit = ch->max_hit;
-        ch->max_hit += ch->max_hit;
-        ch->pcdata->perm_move = ch->max_move;
-        ch->hit = ch->max_hit;
-        ch->move = ch->max_move;
-        ch->dam_type = 5;
-        ch->affected_by = race_table[ch->race].aff;
-        SET_BIT(ch->affected_by, AFF_FANGS);
-        SET_BIT(ch->affected_by, AFF_SHIFT);
-        SET_BIT(ch->affected_by, AFF_DARK_VISION);
-*/
         affect_strip(ch,gsn_reveal);
 
         af.where     = TO_AFFECTS;
@@ -5165,8 +4997,6 @@ void do_shift(CHAR_DATA *ch, char *argument)
         affect_to_char( ch, &af );
 
         if (ch->hit > ch->max_hit) ch->hit = ch->max_hit;
-
-/*      free_string( ch->short_descr ); */
         ch->short_descr = str_dup( "A strong looking bear" );
         sprintf(buf, "A strong looking bear");
             ch->shift = str_dup( buf );
@@ -5190,30 +5020,9 @@ if(ch->pcdata->discipline[OBTENEBRATION] < 1)
         send_to_char( "You are not skilled enough in obtenebration!.\n\r", ch );
         return;
 }
-
-        for ( obj = ch->carrying; obj != NULL; obj = obj_next )
-        {
-            obj_next = obj->next_content;
-            if(obj->wear_loc != WEAR_NONE)
-            unequip_char( ch, obj );
-        }
-
         act( "Your body slowly shifts forms into a shadow wolf.", ch, NULL, NULL, TO_CHAR );
         act( "$n shifts their form into that of a shadow wolf.", ch, NULL, NULL, TO_NOTVICT );
         ch->pblood -= 45;
-
-/*      ch->pcdata->perm_hit = ch->max_hit;
-        ch->max_hit += ch->max_hit;
-        ch->pcdata->perm_move = ch->max_move;
-        ch->hit = ch->max_hit;
-        ch->move = ch->max_move;
-        ch->dam_type = 5;
-        ch->affected_by = race_table[ch->race].aff;
-        SET_BIT(ch->affected_by, AFF_FANGS);
-        SET_BIT(ch->affected_by, AFF_SHIFT);
-        SET_BIT(ch->affected_by, AFF_DARK_VISION);
-        SET_BIT(ch->affected_by, AFF_HASTE);
-*/
         affect_strip(ch,gsn_reveal);
 
         af.where     = TO_AFFECTS;
@@ -5280,8 +5089,6 @@ if(ch->pcdata->discipline[OBTENEBRATION] < 1)
         affect_to_char( ch, &af );
 
         if (ch->hit > ch->max_hit) ch->hit = ch->max_hit;
-
-/*      free_string( ch->short_descr ); */
         ch->short_descr = str_dup( "A shadowy wolf" );
         sprintf(buf, "A shadowy wolf");
             ch->shift = str_dup( buf );
@@ -5301,40 +5108,10 @@ if ( !str_prefix( arg, "syrup" ) )
             return;
         }
 
-
-        for ( obj = ch->carrying; obj != NULL; obj = obj_next )
-
-        {
-
-            obj_next = obj->next_content;
-            if(obj->wear_loc != WEAR_NONE)
-
-            unequip_char( ch, obj );
-
-        }
-
-
-
         act( "Your body slowly shifts forms into good canadian maple syrup.", ch, NULL, NULL, TO_CHAR );
 
         act( "$n shifts their form into that of good canadian maple syrup.", ch, NULL, NULL, TO_NOTVICT );
         ch->pblood -= 1;
-
-
-/*      ch->pcdata->perm_hit = ch->max_hit;
-        ch->max_hit += ch->max_hit;
-        ch->pcdata->perm_move = ch->max_move;
-        ch->hit = ch->max_hit;
-        ch->move = ch->max_move;
-        ch->dam_type = 5;
-        ch->affected_by = race_table[ch->race].aff;
-
-        SET_BIT(ch->affected_by, AFF_FANGS);
-        SET_BIT(ch->affected_by, AFF_SHIFT);
-        SET_BIT(ch->affected_by, AFF_DARK_VISION);
-        SET_BIT(ch->affected_by, AFF_HASTE);
-
-*/
         affect_strip(ch,gsn_reveal);
 
         af.where     = TO_AFFECTS;
@@ -5348,7 +5125,6 @@ if ( !str_prefix( arg, "syrup" ) )
 
         if (ch->hit > ch->max_hit) ch->hit = ch->max_hit;
 
-/*      free_string( ch->short_descr ); */
         ch->short_descr = str_dup( "A pile of gooey yummy canadian syrup" );
         sprintf(buf, "A pile of gooey yummy canadian syrup");
             ch->shift = str_dup( buf );
@@ -5376,49 +5152,9 @@ if ( !str_prefix( arg, "syrup" ) )
             return;
         }
 
-        for ( obj = ch->carrying; obj != NULL; obj = obj_next )
-        {
-            obj_next = obj->next_content;
-            if(obj->wear_loc != WEAR_NONE)
-            unequip_char( ch, obj );
-        }
-
-
         act( "Your body slowly shifts forms into a watery mist.", ch, NULL, NULL, TO_CHAR );
         act( "$n shifts $s form into that of a watery mist.", ch, NULL, NULL, TO_NOTVICT );
         ch->pblood -= 15;
-/*
-        ch->pcdata->perm_hit = ch->max_hit;
-        ch->pcdata->perm_move = ch->max_move;
-        ch->hit = ch->max_hit;
-        ch->move = ch->max_move;
-        ch->affected_by = race_table[ch->race].aff;
-        SET_BIT(ch->affected_by, AFF_FANGS);
-        SET_BIT(ch->affected_by, AFF_PASS_DOOR);
-        SET_BIT(ch->affected_by, AFF_FLYING);
-        SET_BIT(ch->affected_by, AFF_SHIFT);
-        SET_BIT(ch->affected_by, AFF_INVISIBLE);
-        SET_BIT(ch->affected_by, AFF_DETECT_INVIS);
-        SET_BIT(ch->affected2_by, AFF2_MIST);
-*/
-/*
-        af.where     = TO_AFFECTS;
-        af.type      = gsn_shift;
-        af.level     = ch->level;
-        af.duration  = ch->level*ch->pcdata->discipline[PROTEAN]/2;
-        af.location  = APPLY_HIT;
-        af.modifier  = -200;
-        af.bitvector = AFF_FANGS;
-        affect_to_char( ch, &af );
-        af.bitvector = AFF_FLYING;
-        affect_to_char( ch, &af );
-        af.bitvector = AFF_INVISIBLE;
-        affect_to_char( ch, &af );
-        af.bitvector = AFF_DETECT_INVIS;
-        affect_to_char( ch, &af );
-        af.bitvector = AFF2_MIST;
-        affect_to_char( ch, &af );
-*/
         affect_strip(ch,gsn_reveal);
 
         af.where     = TO_AFFECTS;
@@ -5485,8 +5221,6 @@ if ( !str_prefix( arg, "syrup" ) )
         affect_to_char( ch, &af );
 
         if (ch->hit > ch->max_hit) ch->hit = ch->max_hit;
-
-/*      free_string( ch->short_descr ); */
         ch->short_descr = str_dup( "A swirling mist" );
         sprintf(buf, "A watery mist swirling around");
             ch->shift = str_dup( buf );

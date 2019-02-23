@@ -59,6 +59,12 @@ void do_remort(CHAR_DATA *ch, char *argument)
         return;
     }
 */
+        if(ch->level < 100)
+    {
+        send_to_char( "You must be level 100 to remort your character.\n\r", ch );
+        return;
+    }
+
     if(is_affected(ch,gsn_bloodofpotency))
         affect_strip( ch, gsn_bloodofpotency );
 
@@ -97,17 +103,6 @@ void do_remort(CHAR_DATA *ch, char *argument)
         {
             send_to_char( "You are already a Garou.\n\r", ch );
             return;
-        }
-        if(ch->remorts < 0)
-        {
-            send_to_char( "You have not struggled enough in this life to earn the honor of being one of Gaia's Chosen.\n\r",ch);
-            return;
-        }
-        if ( IS_AFFECTED(ch, AFF_SHIFT))
-        {
-            if ( !IS_AFFECTED(ch, AFF_FANGS))
-            SET_BIT(ch->affected_by, AFF_FANGS);
-            do_function(ch, &do_shift, "");
         }
 
                 while ( ch->affected )

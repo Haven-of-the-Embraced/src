@@ -808,7 +808,7 @@ void rote_correspondenceperceptions(CHAR_DATA *ch, int success, CHAR_DATA *victi
 {
     ROOM_INDEX_DATA *was_room;
 
-    if(room_is_private(victim->in_room) || victim->obfuscate >= 4)
+    if(room_is_private(victim->in_room) || victim->obfuscate >= 4 || !can_see(ch, victim))
     {
         send_to_char( "You do not have the strength to sense that person.\n\r", ch );
         return;

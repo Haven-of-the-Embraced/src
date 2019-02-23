@@ -6954,14 +6954,6 @@ void do_horrid(CHAR_DATA *ch, char *argument)
     }
     ch->pblood -= 70;
 
-    for ( obj = ch->carrying; obj != NULL; obj = obj_next )
-    {
-        obj_next = obj->next_content;
-        if(obj->wear_loc != WEAR_NONE)
-        unequip_char( ch, obj );
-    }
-
-
     act( "Your body slowly shifts into that of a horrible Zulo.", ch, NULL, NULL, TO_CHAR );
     act( "$n's size doubles as their body is altered into that of a horrible Zulo.", ch, NULL, NULL,TO_NOTVICT );
 
@@ -6971,7 +6963,7 @@ void do_horrid(CHAR_DATA *ch, char *argument)
     af.level     = ch->level;
     af.duration  = -1;
     af.location  = APPLY_HIT;
-    af.modifier  = 8 * ch->level;
+    af.modifier  = 8 * UMAX(20, ch->level);
     af.bitvector = 0;
     affect_to_char( ch, &af );
 

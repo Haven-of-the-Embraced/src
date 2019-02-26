@@ -2928,6 +2928,8 @@ void do_create( CHAR_DATA *ch, char *argument )
                 send_to_char(" to further increase your traits!\n\r",ch);
                 ch->pcdata->progress = 8;
                 cskill_update(ch);
+                if (ch->race == race_lookup("garou") && ch->remorts > 1)
+                    send_to_char("Please log out and log back in to be awarded renown for your remorts.\n\r", ch);
             }
             else do_function(ch, &do_create, "" );
         }

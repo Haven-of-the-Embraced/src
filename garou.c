@@ -451,7 +451,10 @@ void do_garouconvert(CHAR_DATA *ch, char *argument)
             ch->pcdata->csattributes[i] = 1;
         for(i = 0; i < 30; i++)
             ch->pcdata->cssec_abil[i] = 0;
-
+        for (i = 0; i < MAX_CSBACK; i++)
+            ch->pcdata->csbackgrounds[i] = 0;
+        for (i = 0; i < MAX_GIFT; i++)
+            ch->pcdata->gift[i] = 0;
         ch->pcdata->csvirtues[CSVIRT_CONSCIENCE] = 1;
         ch->pcdata->csvirtues[CSVIRT_SELF_CONTROL] = 1;
         ch->pcdata->csvirtues[CSVIRT_COURAGE] = 1;

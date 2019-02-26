@@ -443,7 +443,7 @@ void do_garouconvert(CHAR_DATA *ch, char *argument)
         ch->auspice = 0;
         send_to_char("Removing Tribe, Breed and Auspice... Done.\n\r",ch);
 
-        ch->freebie = (ch->remorts*2)+15;
+        ch->freebie = (ch->remorts*3)+15;
         for(i = 0; i < 30; i++)
             ch->pcdata->csabilities[i] = 0;
 

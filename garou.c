@@ -469,13 +469,14 @@ void do_garouconvert(CHAR_DATA *ch, char *argument)
         ch->pcdata->stat[TALENTS] = 0;
         ch->pcdata->stat[KNOWLEDGES] = 0;
         send_to_char("Resetting Character Sheet traits... Done.\n\r",ch);
+        cskill_update(ch);
         sprintf(buf, "Your all set! You are now: %s, %s %s of the %s tribe! You have %s fur.\n\rYour Renown is %d Honor, %d Glory and %d Wisdom. You are rank 1.\n\r", ch->name, ch->pcdata->breed == HOMID ? "Homid"
         : ch->pcdata->breed == METIS ? "Metis" : "Lupus", ch->pcdata->auspice == RAGABASH ? "Ragabash" :
         ch->pcdata->auspice == THEURGE ? "Theurge" : ch->pcdata->auspice == PHILODOX ? "Philodox" :
         ch->pcdata->auspice == GALLIARD ? "Galliard" : "Ahroun", tribe_table[ch->pcdata->tribe].name,
         ch->pcdata->garou_fur, ch->pcdata->renown[HONOR], ch->pcdata->renown[GLORY], ch->pcdata->renown[WISDOM]);
         send_to_char(buf,ch);
-        send_to_char("{YPlease log out and back in.{x\n\rRemember to go back through the 'create' process to reassign your CS stats after you log back in!\n\rAlso check out the new options in 'freebie'.\n\r",ch);
+        send_to_char("Remember to go back through the 'create' process to reassign your CS stats!\n\rAlso check out the new options in 'freebie'.\n\r",ch);
     }
 
     return;

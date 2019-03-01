@@ -3024,6 +3024,9 @@ void set_fighting( CHAR_DATA *ch, CHAR_DATA *victim )
     if ( IS_AFFECTED(ch, AFF_SLEEP) )
     affect_strip( ch, gsn_sleep );
 
+    if (is_affected(ch, gsn_vampire_regen))
+        affect_strip(ch, gsn_vampire_regen);
+
     ch->fighting = victim;
     ch->position = POS_FIGHTING;
 

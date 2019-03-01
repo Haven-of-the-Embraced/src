@@ -90,19 +90,25 @@ void newbie_regen( CHAR_DATA *ch)
 
 void vampire_regen( CHAR_DATA *ch)
 {
-    ch->hit += ch->level/5 + 10*(20-ch->gen)/3;
+    if (ch->position == POS_FIGHTING)
+    {
+        affect_strip(ch, gsn_vampire_regen);
+        return;
+    }
 
-    if (ch->agg_dam > 0)
+    ch->hit += ch->level/5 + 6*(20-ch->gen);
+
+    if (ch->agg_dam > 0 && ch->position <= POS_RESTING)
         ch->agg_dam -= UMIN( ((ch->level/20 + (20-ch->gen))/10), ch->agg_dam );
 
-    ch->move += ch->level*3/3;
-    ch->mana += ch->level/3;
+    ch->move += ch->level/5 + 2 * (20-ch->gen);
+    ch->mana += ch->level/5 + 2 * (20-ch->gen);
 
     if ( ch->bloodtick > 0) ch->bloodtick -= 1;
 
     if ( ch->bloodtick == 0) {
             ch->pblood -= 1;
-            ch->bloodtick = 2;
+            ch->bloodtick = 1;
             }
 
     if (ch->agg_dam < 0)
@@ -115,7 +121,7 @@ void vampire_regen( CHAR_DATA *ch)
         ch->mana = ch->max_mana;
 
     if ((ch->hit == (ch->max_hit-ch->agg_dam)) &&
-         ch->agg_dam == 0 && (ch->move == ch->max_move) &&
+         (ch->position > POS_RESTING || ch->agg_dam == 0) && (ch->move == ch->max_move) &&
         (ch->mana == ch->max_mana)){
             send_to_char( "You stop regenerating.\n\r", ch );
             act( "$n stops regenerating.", ch, NULL, NULL, TO_ROOM );

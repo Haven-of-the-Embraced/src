@@ -2178,7 +2178,7 @@ void reset_room( ROOM_INDEX_DATA *pRoom )
 
             char_to_room( pMob, pRoom );
 
-            if(number_range(1, 2400) == 2)
+            if(number_range(1, 9600) == 2)
             {
                 char name[MAX_STRING_LENGTH];
                 char shortd[MAX_STRING_LENGTH];

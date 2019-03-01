@@ -1200,10 +1200,13 @@ bool damage(CHAR_DATA *ch,CHAR_DATA *victim,int dam,int dt,int dam_type,
 */
     if(IS_NPC(ch)) grudge_update(ch,victim);    if(IS_NPC(victim)) grudge_update(victim,ch);
     /* damage reduction */
+    if(dt != gsn_fireshield && dt != gsn_holyshield && dt != gsn_darkshield && dt != gsn_gift_porcupine && dt != gsn_vicissitude_bonecraft)
+    {
         if ( dam > 35)
         dam = (dam - 35)/2 + 35;
         if ( dam > 80)
         dam = (dam - 80)/2 + 80;
+    }
 
     if(slaughter)
         dam *= 4;

@@ -970,9 +970,9 @@ void do_regenerate(CHAR_DATA *ch, char *argument )
         send_to_char( "You are already regenerating.\n\r", ch );
         return;
     }
-    if(ch->position > POS_SITTING)
+    if(ch->position == POS_FIGHTING)
     {
-        send_to_char( "You cannot do this standing!\n\r", ch );
+        send_to_char( "You cannot do this in combat!\n\r", ch );
         return;
     }
 

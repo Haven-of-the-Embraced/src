@@ -334,6 +334,7 @@ DECLARE_OLC_FUN( qiedit_place       );
 DECLARE_OLC_FUN( qiedit_room        );
 DECLARE_OLC_FUN( qiedit_mobile      );
 DECLARE_OLC_FUN( qiedit_object      );
+DECLARE_OLC_FUN( qiedit_notify      );
 
 /* Clan editor */
 DECLARE_OLC_FUN( cedit_flags            );

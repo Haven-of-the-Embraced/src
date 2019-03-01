@@ -278,6 +278,37 @@ QIEDIT( qiedit_object )
     printf_to_char(ch, "Object set to vnum %d, '%s'\n\r", pItem->objvnum, pObj->short_descr);
     return TRUE;
 }
+/*    printf_to_char(ch, "{wNotify Someone?               - {c%s{x\n\r", item->notify ? "True" : "False" );
+    printf_to_char(ch, "{wNotify Whom?                  - {c%s{x\n\r", item->notified );*/
+QIEDIT( qiedit_notify)
+{
+    QITEM_DATA *pItem;
+    char        name[MIL];
+    EDIT_QITEM(ch, pItem);
+
+    argument = one_argument(argument, name);
+
+    if (name[0] == '\0' || argument[0] == '\0')
+    {
+        send_to_char("Syntax:  notify [name]\n\r", ch);
+        send_to_char("         notify none\n\r", ch);
+        send_to_char("Name can be any note-acceptable name. eg: Matthew or Immortal\n\r", ch);
+        return FALSE;
+    }
+
+    if (!str_cmp(name, "none"))
+    {
+        pItem->notify = FALSE;
+        pItem->notified = str_dup("None");
+        send_to_char("Notification disabled.\n\r", ch);
+        return TRUE;
+    }
+
+    pItem->notify = TRUE;
+    pItem->notified = str_dup(name);
+    return TRUE;
+
+}
 QITEM_DATA *new_qitem (void)
 {
 

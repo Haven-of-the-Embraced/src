@@ -1145,7 +1145,6 @@ bool damage(CHAR_DATA *ch,CHAR_DATA *victim,int dam,int dt,int dam_type,
     return FALSE;
     affect_strip(victim,gsn_chant);     affect_strip(ch,gsn_chant);
     affect_strip(victim,gsn_meditation);    affect_strip(ch,gsn_meditation);
-    affect_strip(victim,gsn_vampire_regen); affect_strip(ch,gsn_vampire_regen);
     if ( IS_AFFECTED2(ch, AFF2_MIST) && !IS_AFFECTED2(victim, AFF2_MIST))
         return FALSE;
 
@@ -2142,7 +2141,6 @@ bool d10_damage(CHAR_DATA *ch, CHAR_DATA *victim, int damsuccess, int modifier, 
     return FALSE;
     affect_strip(victim,gsn_chant);     affect_strip(ch,gsn_chant);
     affect_strip(victim,gsn_meditation);    affect_strip(ch,gsn_meditation);
-    affect_strip(victim,gsn_vampire_regen); affect_strip(ch,gsn_vampire_regen);
     if ( IS_AFFECTED2(ch, AFF2_MIST) && !IS_AFFECTED2(victim, AFF2_MIST))
         return FALSE;
 

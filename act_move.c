@@ -1270,12 +1270,6 @@ void do_stand( CHAR_DATA *ch, char *argument )
         affect_strip(ch,gsn_chant);
     }
         affect_strip(ch,gsn_meditation);
-    if (is_affected( ch, gsn_vampire_regen))
-    {
-	send_to_char( "You stop regenerating.\n\r", ch );
-	act( "$n stops regenerating.", ch, NULL, NULL, TO_ROOM );
-	affect_strip(ch, gsn_vampire_regen);
-    }
     return;
 }
 

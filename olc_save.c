@@ -1200,6 +1200,8 @@ void do_asave( CHAR_DATA *ch, char *argument )
         send_to_char( "  asave world    - saves the world! (db dump)\n\r",  ch );
         send_to_char( "  asave helps    - saves the help files\n\r",    ch );
         send_to_char( "  asave command  - saves the command table\n\r", ch);
+        send_to_char( "  asave config   - saves configuration file\n\r", ch);
+        send_to_char( "  asave quests   - saves quest item table\n\r", ch);
         send_to_char( "\n\r", ch );
     }
 
@@ -1352,6 +1354,15 @@ void do_asave( CHAR_DATA *ch, char *argument )
         log_string("Autosave: Config");
         return;
     }
+    if (!str_cmp( arg1, "quests") )
+    {
+        save_qitem_table();
+        if (ch)
+            sendch("QItem Table Saved.\n\r", ch);
+        else
+            log_string("Autosave: Quests");
+        return;
+    }
     /* Save area being edited, if authorized. */
     /* -------------------------------------- */
     if ( !str_cmp( arg1, "area" ) )
@@ -1448,3 +1459,105 @@ void save_helps()
         return;
 }
 
+void save_qitem_table()
+{
+    FILE *fp;
+    QITEM_DATA *qitem;
+
+    if( (fp = fopen(QUEST_FILE,"w+") ) != NULL )
+    {
+        for(qitem = qitem_list; qitem ; qitem = qitem->next )
+        {
+
+            fprintf(fp, "Name %s~\n",       qitem->name );
+            fprintf(fp, "Ivnum %d\n",       qitem->qobjvnum );
+            fprintf(fp, "Placed %d\n",      qitem->place );
+            fprintf(fp, "Room %d\n",        qitem->roomvnum );
+            fprintf(fp, "Mob %d\n",         qitem->mobvnum );
+            fprintf(fp, "Obj %d\n",         qitem->objvnum );
+            fprintf(fp, "Notify %d\n",      qitem->notify );
+            fprintf(fp, "Notified %s~\n",   qitem->notified );
+            fprintf(fp, "End\n\n");
+        }
+    }
+    fprintf(fp, "$\n");
+    fclose(fp);
+}
+void load_quest_list()
+{
+    FILE *fp;
+    QITEM_DATA *qitem;
+    char *word;
+    if((fp = fopen(QUEST_FILE, "r" )) == NULL)
+    {   bug("Load_quest_list: Quest File not found!", 0);
+        return;
+    }
+    for( ;; )
+    {
+        word = feof (fp) ? "End" : fread_word (fp);
+        if(word[0] == '$' )
+            return;
+        switch (UPPER(word[0] ))
+        {
+            case 'E':
+                if(!str_cmp(word, "End" ) )
+                    break;
+                break;
+            case 'I':
+                if(!str_cmp(word, "Ivnum"))
+                {
+                    qitem->qobjvnum = fread_number(fp);
+                    break;
+                }
+                break;
+            case 'N':
+                if(!str_cmp(word, "Name" ) )
+                {   qitem = new_qitem();
+                    qitem->name = fread_string(fp);
+                    break;
+                }
+                if(!str_cmp(word, "Notify" ) )
+                {
+                    qitem->notify = fread_number(fp);
+                    break;
+                }
+                if (!str_cmp(word, "Notified"))
+                {
+                    qitem->notified = fread_string(fp);
+                    break;
+                }
+                break;
+            case 'M':
+                if(!str_cmp(word, "Mob"))
+                {
+                    qitem->mobvnum = fread_number(fp);
+                    break;
+                }
+                break;
+            case 'O':
+                if(!str_cmp(word, "Obj"))
+                {
+                    qitem->objvnum = fread_number(fp);
+                    break;
+                }
+                break;
+            case 'P':
+                if(!str_cmp(word, "Placed"))
+                {
+                    qitem->place = fread_number(fp);
+                    break;
+                }
+                break;
+            case 'R':
+                if(!str_cmp(word, "Room"))
+                {
+                    qitem->roomvnum = fread_number(fp);
+                    break;
+                }
+                break;
+
+        }//End of switch
+    }//End of for
+
+    file_close(fp);
+}

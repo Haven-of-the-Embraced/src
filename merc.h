@@ -3288,6 +3288,7 @@ char *  crypt       args( ( const char *key, const char *salt ) );
 #define LAST_COMMAND_FILE   "last.txt"
 #define LS_FILE "../player/ls.txt"
 #define COMMAND_FILE     "command.dat" /*Commands list*/
+#define QUEST_FILE       "quest.dat" /*qitems list */
 #define CONFIG_FILE "config.cfg"
 #define CONFIG_BACKUP "config.bk"
 #define WIKIHELP_INDEX  "wikihelp/helps.idx"
@@ -3387,6 +3388,9 @@ void    bugf        args( ( char *, ... ) );
 void   save_cmd_table   args( ( ) );
 void   load_cmd_list    args( ( ) );
 
+//qiedit saves
+void    save_qitem_table args( ( ) );
+void    load_quest_list args( ( ) );
 /*
  * Colour stuff by Lope of Loping Through The MUD
  */

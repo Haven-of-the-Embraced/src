@@ -288,7 +288,7 @@ QIEDIT( qiedit_notify)
 
     argument = one_argument(argument, name);
 
-    if (name[0] == '\0' || argument[0] == '\0')
+    if (name[0] == '\0')
     {
         send_to_char("Syntax:  notify [name]\n\r", ch);
         send_to_char("         notify none\n\r", ch);

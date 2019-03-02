@@ -728,6 +728,7 @@ void boot_db()
      * Read in commands.
      */
     load_cmd_list();
+    load_quest_list();
     fix_exits( );
     fix_mobprogs( );
     fBootDb = FALSE;

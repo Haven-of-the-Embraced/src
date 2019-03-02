@@ -967,7 +967,8 @@ void do_regenerate(CHAR_DATA *ch, char *argument )
     }
     if ( IS_AFFECTED2( ch, AFF2_VAMPIRE_REGEN ))
     {
-        send_to_char( "You are already regenerating.\n\r", ch );
+        send_to_char( "You stop regenerating your wounds.\n\r", ch );
+        affect_strip(ch, gsn_vampire_regen);
         return;
     }
     if(ch->position == POS_FIGHTING)

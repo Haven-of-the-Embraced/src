@@ -6412,10 +6412,9 @@ void do_copyover (CHAR_DATA *ch, char * argument)
         return;
     }
 
-    write_to_descriptor (ch->desc->descriptor, "Saving areas, commands, config and helps...\n\r", 0);
+    write_to_descriptor (ch->desc->descriptor, "Saving commands, config and helps...\n\r", 0);
     /* autosave changed lists */
     do_function( NULL, &do_asave, "config" );
-    do_function( NULL, &do_asave, "changed" );
     do_function( NULL, &do_asave, "helps");
     do_function( NULL, &do_asave, "commands");
     write_to_descriptor (ch->desc->descriptor, "Proceeding to copyover...\n\r", 0);

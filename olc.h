@@ -264,6 +264,7 @@ DECLARE_OLC_FUN( medit_desc     );
 DECLARE_OLC_FUN( medit_level        );
 DECLARE_OLC_FUN( medit_align        );
 DECLARE_OLC_FUN( medit_spec     );
+DECLARE_OLC_FUN( medit_maxload  );
 
 DECLARE_OLC_FUN( medit_sex      );  /* ROM */
 DECLARE_OLC_FUN( medit_act      );  /* ROM */

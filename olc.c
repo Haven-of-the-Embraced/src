@@ -363,6 +363,7 @@ const struct olc_cmd_type medit_table[] =
     {   "short",    medit_short },
     {   "show",     medit_show  },
     {   "spec",     medit_spec  },
+    {   "maxload",  medit_maxload},
 
     {   "sex",          medit_sex       },  /* ROM */
     {   "act",          medit_act       },  /* ROM */

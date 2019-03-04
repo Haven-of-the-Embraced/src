@@ -4014,6 +4014,7 @@ MEDIT( medit_show )
          pMob->mana[DICE_TYPE],
          pMob->mana[DICE_BONUS] );
     send_to_char( buf, ch );
+    printf_to_char(ch, "Max Load:    [%d]%s\n\r", pMob->maxload, pMob->maxload < 0 ? " (Infinite)" : "" );
 
 /* ROM values end */
 
@@ -4294,7 +4295,25 @@ MEDIT( medit_level )
     send_to_char( "Level set.\n\r", ch);
     return TRUE;
 }
+MEDIT( medit_maxload )
+{
+    MOB_INDEX_DATA *pMob;
 
+    EDIT_MOB(ch, pMob);
+
+    if ( argument[0] == '\0' || !is_number( argument ) )
+    {
+    send_to_char( "Syntax:  maxload [number]\n\r", ch );
+    return FALSE;
+    }
+
+    pMob->maxload = atoi( argument );
+    if (pMob->maxload < -1)
+        pMob->maxload = -1;
+
+    send_to_char( "Maxload set.\n\r", ch);
+    return TRUE;
+}
 
 
 MEDIT( medit_desc )

@@ -2119,7 +2119,12 @@ void reset_room( ROOM_INDEX_DATA *pRoom )
         bug( "Reset_area: 'R': bad vnum %d.", pReset->arg3 );
         continue;
         }
-            if ( pMobIndex->count >= pReset->arg2 )
+            if ( pMobIndex->count >= pReset->arg2)
+            {
+                last = FALSE;
+                break;
+            }
+            if (pMobIndex->maxload > 0 && pMobIndex->count >= pMobIndex->maxload)
             {
                 last = FALSE;
                 break;

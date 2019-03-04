@@ -222,6 +222,7 @@ void load_mobiles( FILE *fp )
         fBootDb = TRUE;
 
         pMobIndex                       = alloc_perm( sizeof(*pMobIndex) );
+        pMobIndex->maxload              = -1;
         pMobIndex->vnum                 = vnum;
         pMobIndex->area                 = area_last;               /* OLC */
     pMobIndex->new_format       = TRUE;

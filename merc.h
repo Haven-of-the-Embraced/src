@@ -1933,6 +1933,7 @@ struct  mob_index_data
     bool        new_format;
     sh_int      count;
     sh_int      killed;
+    sh_int      maxload;
     char *      player_name;
     char *      short_descr;
     char *      long_descr;

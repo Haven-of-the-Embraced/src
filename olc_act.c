@@ -4014,7 +4014,7 @@ MEDIT( medit_show )
          pMob->mana[DICE_TYPE],
          pMob->mana[DICE_BONUS] );
     send_to_char( buf, ch );
-    printf_to_char(ch, "Max Load:    [%d]%s\n\r", pMob->maxload, pMob->maxload < 0 ? " (Infinite)" : "" );
+    printf_to_char(ch, "Max Load:    [%d]%s\n\r", pMob->maxload, pMob->maxload < 0 ? " (Use Resets MxA Limit)" : "" );
 
 /* ROM values end */
 

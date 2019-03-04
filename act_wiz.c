@@ -1949,8 +1949,8 @@ void do_mstat( CHAR_DATA *ch, char *argument )
 
     if (IS_NPC(victim))
     {
-    sprintf(buf,"Count: %d  Killed: %d\n\r",
-        victim->pIndexData->count,victim->pIndexData->killed);
+    sprintf(buf,"Count: %d  Killed: %d Maxload: %d\n\r",
+        victim->pIndexData->count,victim->pIndexData->killed,victim->pIndexData->maxload);
     send_to_char(buf,ch);
     }
 

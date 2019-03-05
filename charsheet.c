@@ -3369,7 +3369,7 @@ void do_charsheet3 (CHAR_DATA * ch, char *argument)
         sprintf(name[row], "      Skills      ");
         sprintf(sec1[row], "                  ");
         sprintf(sec2[row], "Body Crafts  %s", dots(ch->pcdata->cssec_abil[CSABIL_BODYCRAFTS], FALSE));
-        sprintf(sec3[row], "Rituals      %s", dots(ch->pcdata->cssec_abil[CSABIL_RITUALS], FALSE));
+        sprintf(sec3[row], "                  ");
         sprintf(sec4[row], "                  ");
         sprintf(sec5[row], "                  ");
         row++;

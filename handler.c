@@ -3680,7 +3680,7 @@ bool send_email(char *subject, char *address, char *body)
 
     FILE *mailer = popen(buf, "w");
     if(!mailer) return FALSE;
-    fprintf(mailer, "Subject: %s\n%s",body);
+    fprintf(mailer, "Subject: %s\n%s",subject, body);
     if(pclose(mailer) == -1) return FALSE;
     return TRUE;
 }

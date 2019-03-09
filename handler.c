@@ -3676,11 +3676,11 @@ void do_register(CHAR_DATA *ch, char *argument)
 bool send_email(char *subject, char *address, char *body)
 {
     char buf [MAX_STRING_LENGTH];
-    sprintf(buf,"mail -s \"%s\" -aFrom:Admin@havenmud.net \\<%s\\>",subject, address);
+    sprintf(buf,"sendmail %s", address);
 
     FILE *mailer = popen(buf, "w");
     if(!mailer) return FALSE;
-    fprintf(mailer, "%s",body);
+    fprintf(mailer, "Subject: %s\n%s",body);
     if(pclose(mailer) == -1) return FALSE;
     return TRUE;
 }

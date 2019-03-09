@@ -392,13 +392,15 @@ void do_garouconvert(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if(ch->pcdata->garou_fur == NULL)
+    if(ch->pcdata->garou_fur[0] == '\0')
     {
         if(argument[0] == '\0')
         {
             send_to_char("You must pick a fur color. Type gogarou <fur color>. Remember, you cannot undo this. Choose wisely.\n\r",ch);
             return;
         }
+        smash_tilde( argument );
+        free_string( ch->pcdata->garou_fur );
         ch->pcdata->garou_fur = str_dup( argument );
     }
 

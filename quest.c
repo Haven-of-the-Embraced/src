@@ -134,7 +134,12 @@ QIEDIT(qiedit_show )
     if (item->place ==  PLACE_OBJ)
         printf_to_char(ch, "{wPlaced In Obj                 - {c%d (%s){x\n\r", item->objvnum, pObj != NULL ? pObj->short_descr : "Null");
     printf_to_char(ch, "{wNotify Someone?               - {c%s{x\n\r", item->notify ? "True" : "False" );
-    printf_to_char(ch, "{wNotify Whom?                  - {c%s{x\n\r", item->notified );
+    if (item->notify)
+        printf_to_char(ch, "{wNotify Whom?                  - {c%s{x\n\r", item->notified );
+    printf_to_char(ch, "{wLoaded?                       - {c%s{x\n\r", item->loaded ? "True" : "False");
+    printf_to_char(ch, "{wFound?                        - {c%s{x\n\r", item->found ? "True" : "False");
+    if (item->found)
+        printf_to_char(ch, "{wFound by:                     - {c%s{x\n\r", item->foundby);
     return FALSE;
 }
 QIEDIT( qiedit_vnum )

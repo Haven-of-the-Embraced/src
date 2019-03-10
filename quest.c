@@ -287,7 +287,23 @@ QIEDIT( qiedit_object )
     printf_to_char(ch, "Object set to vnum %d, '%s'\n\r", pItem->objvnum, pObj->short_descr);
     return TRUE;
 }
+QIEDIT( qiedit_reset )
+{
+    QITEM_DATA *pItem;
+    EDIT_QITEM(ch, pItem);
 
+    if (str_cmp(argument, "confirm"))
+    {
+        send_to_char("Syntax:  reset confirm\n\r", ch);
+        send_to_char("This will re-set the quest, clearing loaded, and found states.\n\r",ch);
+        return FALSE;
+    }
+    pItem->loaded = FALSE;
+    pItem->found  = FALSE;
+    pItem->foundby = str_dup("");
+    send_to_char("Quest reset. Run placeqitems to re-place item in the game.", ch);
+    return TRUE;
+}
 QIEDIT( qiedit_notify)
 {
     QITEM_DATA *pItem;

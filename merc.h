@@ -3391,6 +3391,7 @@ void   load_cmd_list    args( ( ) );
 //qiedit saves
 void    save_qitem_table args( ( ) );
 void    load_quest_list args( ( ) );
+void    place_qitems args( ( ) );
 /*
  * Colour stuff by Lope of Loping Through The MUD
  */

@@ -728,12 +728,12 @@ void boot_db()
      * Read in commands.
      */
     load_cmd_list();
-    load_quest_list();
     fix_exits( );
     fix_mobprogs( );
     fBootDb = FALSE;
         convert_objects( );           /* ROM OLC */
     area_update( );
+    load_quest_list();
     load_notes( );
     load_bans();
     load_songs();

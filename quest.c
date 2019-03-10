@@ -278,8 +278,7 @@ QIEDIT( qiedit_object )
     printf_to_char(ch, "Object set to vnum %d, '%s'\n\r", pItem->objvnum, pObj->short_descr);
     return TRUE;
 }
-/*    printf_to_char(ch, "{wNotify Someone?               - {c%s{x\n\r", item->notify ? "True" : "False" );
-    printf_to_char(ch, "{wNotify Whom?                  - {c%s{x\n\r", item->notified );*/
+
 QIEDIT( qiedit_notify)
 {
     QITEM_DATA *pItem;
@@ -356,6 +355,38 @@ QITEM_DATA *qitem_lookup(const char *name )
     return NULL;
 }
 
+void place_qitems( void )
+{
+    QITEM_DATA     *qitem;
+    ROOM_INDEX_DATA *pRoom;
+    OBJ_INDEX_DATA *pObj;
+    MOB_INDEX_DATA *pMob;
+    CHAR_DATA      *mob;
+    OBJ_INDEX_DATA *pItem;
+    OBJ_DATA       *obj;
+        for( qitem = qitem_list ; qitem ; qitem = qitem->next )
+    {
+        pItem = get_obj_index(qitem->qobjvnum);
+        pRoom = get_room_index(qitem->roomvnum);
+        pMob  = get_mob_index(qitem->mobvnum);
+        pObj  = get_obj_index(qitem->objvnum);
+
+        if (pItem == NULL || pRoom == NULL ||
+                (qitem->place == PLACE_MOB && pMob == NULL) ||
+                (qitem->place == PLACE_OBJ && pObj == NULL))
+            continue;
+
+        if ((obj = create_object(pObj, 0) == NULL))
+                continue;
+
+        switch (qitem->place) {
+            case PLACE_ROOM:
+                obj_to_room(obj, pRoom);
+                break;
+
+        }
+    }
+}
 DECLARE_DO_FUN( do_say );
 
 ROOM_INDEX_DATA *find_location args( ( CHAR_DATA *ch, char * arg ) );

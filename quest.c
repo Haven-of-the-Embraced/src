@@ -452,7 +452,7 @@ void qitem_check ( CHAR_DATA *ch, OBJ_DATA *obj)
                 fch = fd->original ? fd->original : fd->character;
 
                 if (fch != NULL && fd->connected == CON_PLAYING &&
-                        fch != ch && is_note_to(fch, ch->pnote) )
+                        fch != ch && is_note_to(fch, pnote) )
                     do_function(fch, &do_unread, "");
             }
         }

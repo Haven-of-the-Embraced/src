@@ -1477,6 +1477,8 @@ void save_qitem_table()
             fprintf(fp, "Obj %d\n",         qitem->objvnum );
             fprintf(fp, "Notify %d\n",      qitem->notify );
             fprintf(fp, "Notified %s~\n",   qitem->notified );
+            fprintf(fp, "Found %d\n",       qitem->found    );
+            fprintf(fp, "Foundby %s~\n",    qitem->foundby);
             fprintf(fp, "End\n\n");
         }
     }
@@ -1502,6 +1504,18 @@ void load_quest_list()
             case 'E':
                 if(!str_cmp(word, "End" ) )
                     break;
+                break;
+            case 'F':
+                if (!str_cmp(word, "Found"))
+                {
+                    qitem->found = fread_number(fp);
+                    break;
+                }
+                if (!str_cmp(word, "Foundby"))
+                {
+                    qitem->foundby = fread_string(fp);
+                    break;
+                }
                 break;
             case 'I':
                 if(!str_cmp(word, "Ivnum"))

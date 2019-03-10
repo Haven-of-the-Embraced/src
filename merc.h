@@ -1887,6 +1887,7 @@ extern  QITEM_DATA                  *qitem_free;
 QITEM_DATA *new_qitem  args ( (void) );
 void    free_qitem args ( (QITEM_DATA *item) );
 QITEM_DATA *qitem_lookup args ((const char *name ));
+QITEM_DATA *qitem_obj_lookup args( (OBJ_INDEX_DATA *pObj) );
 struct qitem_data
 {
     QITEM_DATA      *next;

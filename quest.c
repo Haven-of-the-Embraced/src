@@ -1,8 +1,12 @@
 #include <sys/types.h>
+#include <sys/time.h>
 #include <stdio.h>
 #include <string.h>
+#include <time.h>
 #include "merc.h"
 #include "olc.h"
+#include "interp.h"
+#include "recycle.h"
 
 QITEM_DATA      *qitem_list;
 QITEM_DATA      *qitem_free;
@@ -355,6 +359,127 @@ QITEM_DATA *qitem_lookup(const char *name )
     return NULL;
 }
 
+QITEM_DATA *qitem_obj_lookup( OBJ_INDEX_DATA *pObj )
+{
+    QITEM_DATA *qitem;
+
+    for (qitem = qitem_list ; qitem ; qitem = qitem->next)
+    {
+        if (pObj->vnum == qitem->qobjvnum)
+            return qitem;
+    }
+    return NULL;
+}
+
+void qitem_check ( CHAR_DATA *ch, OBJ_DATA *obj)
+{
+    QITEM_DATA *qitem;
+    OBJ_INDEX_DATA *pObj = obj->pIndexData;
+    char buf[MSL];
+
+
+    if ((qitem = qitem_obj_lookup(pObj)) != NULL)
+    {
+        qitem->found = TRUE;
+        qitem->foundby = str_dup(ch->name);
+
+        if (qitem->notify)
+        {
+            NOTE_DATA *pnote;
+            char *strtime;
+            DESCRIPTOR_DATA *fd;
+            DESCRIPTOR_DATA *fd_next;
+            CHAR_DATA *fch;
+
+            pnote = new_note();
+
+            pnote->sender   = str_dup( "System_Note" );
+            pnote->date     = str_dup( "" );
+            pnote->to_list  = str_dup( "" );
+            pnote->subject  = str_dup( "" );
+            pnote->text     = str_dup( "" );
+            pnote->type     = NOTE_NOTE;
+
+            // Notify the right person
+            free_string( pnote->to_list );
+            pnote->to_list = str_dup( qitem->notified );
+
+            // Automatic subject
+            sprintf(buf, "Auto-Note: Quest %s completed by %s!", qitem->name, ch->name);
+            free_string( pnote->subject );
+            pnote->subject = str_dup( buf );
+
+            // Body of the note
+            strtime             = (char *) ctime( &current_time );
+            strtime[strlen(strtime)-1]  = '\0';
+            sprintf(buf, "Player %s found item %s, finishing quest named '%s'.\n\rOn: %s", ch->name, pObj->name, qitem->name, strtime);
+            free_string( pnote->text );
+            pnote->text = str_dup(buf);
+
+            // Post the note
+            pnote->next         = NULL;
+            pnote->date         = str_dup( strtime );
+            pnote->date_stamp       = current_time;
+            append_note(pnote);
+
+            //Inform the char, if they're logged in
+
+            for (fd = descriptor_list; fd != NULL; fd = fd_next)
+            {
+                fd_next = fd->next;
+                fch = fd->character;
+                fch = fd->original ? fd->original : fd->character;
+
+                if (fch != NULL && fd->connected == CON_PLAYING &&
+                        fch != ch && is_note_to(fch, ch->pnote) )
+                    do_function(fch, &do_unread, "");
+            }
+        }
+
+    }
+}
+
+void do_qitemlist (CHAR_DATA *ch, char *argument)
+{
+    QITEM_DATA *item;
+    OBJ_INDEX_DATA *pItem;
+    ROOM_INDEX_DATA *pRoom;
+    MOB_INDEX_DATA *pMob;
+    OBJ_INDEX_DATA *pObj;
+
+    for (item = qitem_list ; item ; item = item->next)
+    {
+    pItem = get_obj_index(item->qobjvnum);
+    pRoom = get_room_index(item->roomvnum);
+    pMob  = get_mob_index(item->mobvnum);
+    pObj  = get_obj_index(item->objvnum);
+
+    printf_to_char(ch, "\n\r{wQuest                         - {c%s{x\n\r", item->name );
+          send_to_char("{w====================================================={x\n\r",ch);
+    printf_to_char(ch, "{wItem Vnum                     - {c%d (%s){x\n\r", item->qobjvnum, pItem != NULL ? pItem->short_descr : "Null" );
+    printf_to_char(ch, "{wPlaced in/on Room/Mob/Obj     - {c%s{x\n\r", item->place == PLACE_ROOM ? "Room" : item->place == PLACE_MOB ? "Mobile" : "Obj" );
+    printf_to_char(ch, "{wPlaced Room                   - {c%d (%s){x\n\r", item->roomvnum, pRoom != NULL ? pRoom->name : "Null" );
+    if (item->place == PLACE_MOB)
+        printf_to_char(ch, "{wPlaced Mob                    - {c%d (%s){x\n\r", item->mobvnum, pMob != NULL ? pMob->short_descr : "Null");
+    if (item->place ==  PLACE_OBJ)
+        printf_to_char(ch, "{wPlaced In Obj                 - {c%d (%s){x\n\r", item->objvnum, pObj != NULL ? pObj->short_descr : "Null");
+    printf_to_char(ch, "{wNotify Someone?               - {c%s{x\n\r", item->notify ? "True" : "False" );
+    printf_to_char(ch, "{wNotify Whom?                  - {c%s{x\n\r", item->notified );
+    printf_to_char(ch, "{wLoaded?                       - {c%s{x\n\r", item->loaded ? "True" : "False");
+    printf_to_char(ch, "{wFound?                        - {c%s{x\n\r", item->found ? "True" : "False");
+    if (item->found)
+        printf_to_char(ch, "{wFound by:                     - {c%s{x\n\r", item->foundby);
+
+    }
+}
+
+void do_placeqitems (CHAR_DATA *ch, char *argument)
+{
+    place_qitems();
+    send_to_char("Qitems Loaded.\n\r", ch);
+    return;
+}
+
 void place_qitems( void )
 {
     QITEM_DATA     *qitem;
@@ -371,17 +496,18 @@ void place_qitems( void )
         pMob  = get_mob_index(qitem->mobvnum);
         pObj  = get_obj_index(qitem->objvnum);
 
-        if (pItem == NULL || pRoom == NULL ||
+        if (qitem->loaded || pItem == NULL || pRoom == NULL ||
                 (qitem->place == PLACE_MOB && pMob == NULL) ||
                 (qitem->place == PLACE_OBJ && pObj == NULL))
             continue;
 
-        if ((obj = create_object(pObj, 0) == NULL))
+        if ((obj = create_object(pItem, 0)) == NULL)
                 continue;
 
         switch (qitem->place) {
             case PLACE_ROOM:
                 obj_to_room(obj, pRoom);
+                qitem->loaded = TRUE;
                 break;
 
         }

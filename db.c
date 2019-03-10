@@ -734,6 +734,7 @@ void boot_db()
         convert_objects( );           /* ROM OLC */
     area_update( );
     load_quest_list();
+    place_qitems();
     load_notes( );
     load_bans();
     load_songs();

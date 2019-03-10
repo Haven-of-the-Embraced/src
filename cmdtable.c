@@ -541,6 +541,8 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "sendhtml",       do_sendhtml}, //DNM
     { "d10combat",      do_d10combat},
     { "announce",       do_announce},
+    { "qitemlist",      do_qitemlist},
+    { "placeqitems",    do_placeqitems},
 
     /* Language stuff*/
         /*

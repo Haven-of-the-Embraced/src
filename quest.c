@@ -501,7 +501,7 @@ void place_qitems( void )
         pMob  = get_mob_index(qitem->mobvnum);
         pObj  = get_obj_index(qitem->objvnum);
 
-        if (qitem->loaded || pItem == NULL || pRoom == NULL ||
+        if (qitem->loaded || qitem->found || pItem == NULL || pRoom == NULL ||
                 (qitem->place == PLACE_MOB && pMob == NULL) ||
                 (qitem->place == PLACE_OBJ && pObj == NULL))
             continue;

@@ -6417,6 +6417,7 @@ void do_copyover (CHAR_DATA *ch, char * argument)
     do_function( NULL, &do_asave, "config" );
     do_function( NULL, &do_asave, "helps");
     do_function( NULL, &do_asave, "commands");
+    do_function( NULL, &do_asave, "quests");
     write_to_descriptor (ch->desc->descriptor, "Proceeding to copyover...\n\r", 0);
 
     sprintf (buf, "\n\r *** COPYOVER by %s - please remain seated!\n\r", ch->name);

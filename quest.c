@@ -399,7 +399,7 @@ void qitem_check ( CHAR_DATA *ch, OBJ_DATA *obj)
     char buf[MSL];
 
 
-    if ((qitem = qitem_obj_lookup(pObj)) != NULL)
+    if ((qitem = qitem_obj_lookup(pObj)) != NULL && qitem->found == FALSE)
     {
         qitem->found = TRUE;
         qitem->foundby = str_dup(ch->name);
@@ -456,7 +456,7 @@ void qitem_check ( CHAR_DATA *ch, OBJ_DATA *obj)
                     do_function(fch, &do_unread, "");
             }
         }
-
+        send_to_char("You found a quest item!", ch);
     }
 }
 

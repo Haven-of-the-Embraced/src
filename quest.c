@@ -510,6 +510,7 @@ void place_qitems( void )
     CHAR_DATA      *mob;
     OBJ_INDEX_DATA *pItem;
     OBJ_DATA       *obj;
+    OBJ_DATA       *container;
     char            buf[MSL];
 
         for( qitem = qitem_list ; qitem ; qitem = qitem->next )
@@ -538,11 +539,27 @@ void place_qitems( void )
                     {
                         obj_to_char(obj, mob);
                         qitem->loaded = TRUE;
+                        break;
                     }
                     if (qitem->loaded == FALSE)
                     {
                         sprintf(buf, "place_qitems: Mob %s not in room %d (Quest %s)", pMob->short_descr, pRoom->vnum, qitem->name);
                         log_string( buf);
+                        break;
+                    }
+            case PLACE_OBJ:
+                    for ( container = pRoom->contents; container; container = container->next_content )
+                    if ( container->pIndexData->vnum == qitem->objvnum )
+                    {
+                        obj_to_obj(obj,container);
+                        qitem->loaded = TRUE;
+                        break;
+                    }
+                    if (qitem->loaded == FALSE)
+                    {
+                        sprintf(buf, "place_qitems: Obj %s not in room %d (Quest %s)", pObj->short_descr, pRoom->vnum, qitem->name);
+                        log_string( buf);
+                        break;
                     }
 
         }

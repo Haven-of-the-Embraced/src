@@ -414,7 +414,7 @@ void qitem_check ( CHAR_DATA *ch, OBJ_DATA *obj)
 
             pnote = new_note();
 
-            pnote->sender   = str_dup( "System_Note" );
+            pnote->sender   = str_dup( "Auto-Note" );
             pnote->date     = str_dup( "" );
             pnote->to_list  = str_dup( "" );
             pnote->subject  = str_dup( "" );
@@ -426,7 +426,7 @@ void qitem_check ( CHAR_DATA *ch, OBJ_DATA *obj)
             pnote->to_list = str_dup( qitem->notified );
 
             // Automatic subject
-            sprintf(buf, "Auto-Note: Quest %s completed by %s!", qitem->name, ch->name);
+            sprintf(buf, "Quest %s completed by %s!", qitem->name, ch->name);
             free_string( pnote->subject );
             pnote->subject = str_dup( buf );
 

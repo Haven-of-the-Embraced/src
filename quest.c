@@ -426,14 +426,14 @@ void qitem_check ( CHAR_DATA *ch, OBJ_DATA *obj)
             pnote->to_list = str_dup( qitem->notified );
 
             // Automatic subject
-            sprintf(buf, "Quest %s completed by %s!", qitem->name, ch->name);
+            sprintf(buf, "Quest '%s' completed by %s!", qitem->name, ch->name);
             free_string( pnote->subject );
             pnote->subject = str_dup( buf );
 
             // Body of the note
             strtime             = (char *) ctime( &current_time );
             strtime[strlen(strtime)-1]  = '\0';
-            sprintf(buf, "Player %s found item %s, finishing quest named '%s'.\n\rOn: %s", ch->name, pObj->name, qitem->name, strtime);
+            sprintf(buf, "%s found item %s, finishing quest named '%s'.\n\rOn: %s\n\r", ch->name, pObj->short_descr, qitem->name, strtime);
             free_string( pnote->text );
             pnote->text = str_dup(buf);
 

@@ -205,14 +205,16 @@ void get_obj( CHAR_DATA *ch, OBJ_DATA *obj, OBJ_DATA *container )
     act( "$n gets $p from $P.", ch, obj, container, TO_ROOM );
     REMOVE_BIT(obj->extra_flags,ITEM_HAD_TIMER);
     obj_from_obj( obj );
-    qitem_check(ch, obj);
+    if (!IS_NPC(ch))
+        qitem_check(ch, obj);
     }
     else
     {
     act( "You get $p.", ch, obj, container, TO_CHAR );
     act( "$n gets $p.", ch, obj, container, TO_ROOM );
     obj_from_room( obj );
-    qitem_check(ch, obj);
+    if (!IS_NPC(ch))
+        qitem_check(ch, obj);
     }
 
     if ( obj->item_type == ITEM_MONEY)

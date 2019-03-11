@@ -308,7 +308,7 @@ QIEDIT( qiedit_reset )
     pItem->loaded = FALSE;
     pItem->found  = FALSE;
     pItem->foundby = str_dup("");
-    send_to_char("Quest reset. Run placeqitems to re-place item in the game.", ch);
+    send_to_char("Quest reset. Run placeqitems to re-place item in the game.\n\r", ch);
     return TRUE;
 }
 QIEDIT (qiedit_name )
@@ -410,6 +410,7 @@ void free_qitem (QITEM_DATA *qitem)
 
     qitem->next = qitem_free;
     qitem_free  = qitem;
+    qitem->delete = TRUE;
 
     INVALIDATE(qitem);
     return;
@@ -421,6 +422,9 @@ QITEM_DATA *qitem_lookup(const char *name )
 
     for( qitem = qitem_list ; qitem ; qitem = qitem->next )
     {
+        if (qitem->delete)
+            continue;
+
         if(!str_cmp(name, qitem->name ) )
             return qitem;
     }
@@ -433,6 +437,8 @@ QITEM_DATA *qitem_obj_lookup( OBJ_INDEX_DATA *pObj )
 
     for (qitem = qitem_list ; qitem ; qitem = qitem->next)
     {
+        if (qitem->delete)
+            continue;
         if (pObj->vnum == qitem->qobjvnum)
             return qitem;
     }
@@ -444,7 +450,7 @@ void qitem_check ( CHAR_DATA *ch, OBJ_DATA *obj)
     QITEM_DATA *qitem;
 
 
-    if ((qitem = obj->qitem) != NULL && qitem->found == FALSE)
+    if ((qitem = obj->qitem) != NULL && qitem->found == FALSE && !qitem->delete )
     {
         qitem->found = TRUE;
         qitem->foundby = str_dup(ch->name);
@@ -476,6 +482,9 @@ void do_qitemlist (CHAR_DATA *ch, char *argument)
 
     for (item = qitem_list ; item ; item = item->next)
     {
+        if (item->delete)
+            continue;
+
     pItem = get_obj_index(item->qobjvnum);
     pRoom = get_room_index(item->roomvnum);
     pMob  = get_mob_index(item->mobvnum);
@@ -496,6 +505,7 @@ void do_qitemlist (CHAR_DATA *ch, char *argument)
     printf_to_char(ch, "{wFound?                        - {c%s{x\n\r", item->found ? "True" : "False");
     if (item->found)
         printf_to_char(ch, "{wFound by:                     - {c%s{x\n\r", item->foundby);
+    send_to_char("{w====================================================={x\n\r",ch);
 
     }
 }
@@ -521,6 +531,9 @@ void place_qitems( void )
 
         for( qitem = qitem_list ; qitem ; qitem = qitem->next )
     {
+            if (qitem->delete)
+                continue;
+
         pItem = get_obj_index(qitem->qobjvnum);
         pRoom = get_room_index(qitem->roomvnum);
         pMob  = get_mob_index(qitem->mobvnum);

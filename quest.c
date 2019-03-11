@@ -528,6 +528,9 @@ void place_qitems( void )
         if ((obj = create_object(pItem, 0)) == NULL)
                 continue;
 
+        //reference qitem on Obj, for qitem_check
+        obj->qitem = qitem;
+
         switch (qitem->place) {
             case PLACE_ROOM:
                 obj_to_room(obj, pRoom);

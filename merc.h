@@ -2424,6 +2424,7 @@ struct  obj_data
     AFFECT_DATA *   affected;
     OBJ_INDEX_DATA *    pIndexData;
     ROOM_INDEX_DATA *   in_room;
+    QITEM_DATA      *   qitem;
     bool        valid;
     bool        enchanted;
     char *          owner;

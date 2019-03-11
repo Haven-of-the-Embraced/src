@@ -1042,7 +1042,7 @@ void auto_note (char *recipient, char *subject, char *body)
 
     pnote = new_note();
 
-    pnote->sender   = str_dup( "Auto-Note" );
+    pnote->sender   = str_dup( "System_Note" );
     pnote->to_list  = str_dup( recipient );
     pnote->subject  = str_dup( subject );
     pnote->text     = str_dup( body );

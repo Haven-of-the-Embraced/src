@@ -413,7 +413,7 @@ void qitem_check ( CHAR_DATA *ch, OBJ_DATA *obj)
             sprintf(subject, "Quest '%s' completed by %s", qitem->name, ch->name);
             strtime             = (char *) ctime( &current_time );
             strtime[strlen(strtime)-1]  = '\0';
-            sprintf(buf, "%s found item %s, finishing quest named '%s'.\n\rOn: %s\n\r", ch->name, obj->short_descr, qitem->name, strtime);
+            sprintf(buf, "%s found item %s, finishing quest named '%s'.\n\rOn: %s\n\rRoom: %s\n\r", ch->name, obj->short_descr, qitem->name, strtime, ch->in_room->name);
             auto_note(qitem->notified, subject, buf);
         }
     }

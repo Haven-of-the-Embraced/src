@@ -319,6 +319,31 @@ QIEDIT (qiedit_name )
     pItem->name = str_dup(argument);
     return TRUE;
 }
+QIEDIT( qiedit_delete )
+{
+    QITEM_DATA *pItem;
+    EDIT_QITEM(ch, pItem);
+
+    if (str_cmp(argument, "confirm"))
+    {
+        send_to_char("Syntax:  delete confirm\n\r", ch);
+        return FALSE;
+    }
+    pItem->name = str_dup("");
+    pItem->found = FALSE;
+    pItem->foundby = str_dup("");
+    pItem->loaded = FALSE;
+    pItem->mobvnum = 0;
+    pItem->notified = str_dup("");
+    pItem->notify = FALSE;
+    pItem->objvnum = 0;
+    pItem->roomvnum = 0;
+    pItem->qobjvnum = 0;
+    free_qitem(pItem);
+    edit_done( ch );
+    return TRUE;
+}
+
 QIEDIT( qiedit_notify)
 {
     QITEM_DATA *pItem;

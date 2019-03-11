@@ -396,7 +396,6 @@ void qitem_check ( CHAR_DATA *ch, OBJ_DATA *obj)
 {
     QITEM_DATA *qitem;
     OBJ_INDEX_DATA *pObj = obj->pIndexData;
-    char buf[MSL];
 
 
     if ((qitem = qitem_obj_lookup(pObj)) != NULL && qitem->found == FALSE)
@@ -404,59 +403,20 @@ void qitem_check ( CHAR_DATA *ch, OBJ_DATA *obj)
         qitem->found = TRUE;
         qitem->foundby = str_dup(ch->name);
 
+        send_to_char("You found a quest item!\n\r", ch);
+
         if (qitem->notify)
         {
-            NOTE_DATA *pnote;
+            char buf[MSL];
+            char subject[MSL];
             char *strtime;
-            DESCRIPTOR_DATA *fd;
-            DESCRIPTOR_DATA *fd_next;
-            CHAR_DATA *fch;
 
-            pnote = new_note();
-
-            pnote->sender   = str_dup( "Auto-Note" );
-            pnote->date     = str_dup( "" );
-            pnote->to_list  = str_dup( "" );
-            pnote->subject  = str_dup( "" );
-            pnote->text     = str_dup( "" );
-            pnote->type     = NOTE_NOTE;
-
-            // Notify the right person
-            free_string( pnote->to_list );
-            pnote->to_list = str_dup( qitem->notified );
-
-            // Automatic subject
-            sprintf(buf, "Quest '%s' completed by %s!", qitem->name, ch->name);
-            free_string( pnote->subject );
-            pnote->subject = str_dup( buf );
-
-            // Body of the note
+            sprintf(subject, "Quest '%s' completed by %s", qitem->name, ch->name);
             strtime             = (char *) ctime( &current_time );
             strtime[strlen(strtime)-1]  = '\0';
             sprintf(buf, "%s found item %s, finishing quest named '%s'.\n\rOn: %s\n\r", ch->name, pObj->short_descr, qitem->name, strtime);
-            free_string( pnote->text );
-            pnote->text = str_dup(buf);
-
-            // Post the note
-            pnote->next         = NULL;
-            pnote->date         = str_dup( strtime );
-            pnote->date_stamp       = current_time;
-            append_note(pnote);
-
-            //Inform the char, if they're logged in
-
-            for (fd = descriptor_list; fd != NULL; fd = fd_next)
-            {
-                fd_next = fd->next;
-                fch = fd->character;
-                fch = fd->original ? fd->original : fd->character;
-
-                if (fch != NULL && fd->connected == CON_PLAYING &&
-                        fch != ch && is_note_to(fch, pnote) )
-                    do_function(fch, &do_unread, "");
-            }
+            auto_note(qitem->notified, subject, buf);
         }
-        send_to_char("You found a quest item!", ch);
     }
 }
 

@@ -304,6 +304,21 @@ QIEDIT( qiedit_reset )
     send_to_char("Quest reset. Run placeqitems to re-place item in the game.", ch);
     return TRUE;
 }
+QIEDIT (qiedit_name )
+{
+    QITEM_DATA *pItem;
+
+    EDIT_QITEM(ch, pItem);
+
+    if (argument[0] == '\0')
+    {
+        send_to_char("Syntax:  name [name]\n\r", ch);
+        send_to_char("Re-names the quest.\n\r", ch);
+        return FALSE;
+    }
+    pItem->name = str_dup(argument);
+    return TRUE;
+}
 QIEDIT( qiedit_notify)
 {
     QITEM_DATA *pItem;

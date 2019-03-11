@@ -829,6 +829,7 @@ const struct olc_cmd_type qiedit_table[] =
     {"object",      qiedit_object   },
     {"notify",      qiedit_notify   },
     {"reset",       qiedit_reset    },
+    {"name",        qiedit_name     },
     {NULL,          0               }
 };
 

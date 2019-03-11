@@ -1032,3 +1032,39 @@ void parse_note( CHAR_DATA *ch, char *argument, int type )
     return;
 }
 
+void auto_note (char *recipient, char *subject, char *body)
+{
+    NOTE_DATA *pnote;
+    char *strtime;
+    DESCRIPTOR_DATA *fd;
+    DESCRIPTOR_DATA *fd_next;
+    CHAR_DATA *fch;
+
+    pnote = new_note();
+
+    pnote->sender   = str_dup( "Auto-Note" );
+    pnote->to_list  = str_dup( recipient );
+    pnote->subject  = str_dup( subject );
+    pnote->text     = str_dup( body );
+    pnote->type     = NOTE_NOTE;
+
+    // Post the note
+    strtime             = (char *) ctime( &current_time );
+    strtime[strlen(strtime)-1]  = '\0';
+    pnote->next         = NULL;
+    pnote->date         = str_dup( strtime );
+    pnote->date_stamp       = current_time;
+    append_note(pnote);
+
+    //Inform the char, if they're logged in
+
+    for (fd = descriptor_list; fd != NULL; fd = fd_next)
+    {
+        fd_next = fd->next;
+        fch = fd->character;
+        fch = fd->original ? fd->original : fd->character;
+
+        if (fch != NULL && fd->connected == CON_PLAYING && is_note_to(fch, pnote) )
+            do_function(fch, &do_unread, "");
+    }
+}

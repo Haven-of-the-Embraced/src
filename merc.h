@@ -3489,6 +3489,9 @@ void  raw_kill          args( ( CHAR_DATA *ch) );
 bool    IN_LEVEL        args( (CHAR_DATA *ch, CHAR_DATA *victim ) );
 int   get_modifier      args( (CHAR_DATA *ch, int type) );
 
+/* note.c */
+void auto_note          args ( (char *recipient, char *subject, char *body) );
+
 //Garou stuff.
 
 /* garou stuff */

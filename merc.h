@@ -1903,6 +1903,7 @@ struct qitem_data
     char            *notified;
     bool            valid;
     bool            loaded;
+    bool            delete;
 };
 /*Domains data*/
 typedef struct  domain_data         DOMAIN_DATA;

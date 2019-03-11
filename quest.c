@@ -32,6 +32,13 @@ void do_qiedit( CHAR_DATA *ch, char *argument )
     {
         send_to_char("Syntax: Qiedit <name>\n\r",ch);
         send_to_char("Or    : Qiedit new <name>\n\r", ch);
+        send_to_char("Or:     Qiedit list\n\r", ch);
+        return;
+    }
+
+    if (!str_cmp(arg1, "list"))
+    {
+        do_function(ch, &do_qitemlist, "");
         return;
     }
 

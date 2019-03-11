@@ -2370,11 +2370,11 @@ void do_group( CHAR_DATA *ch, char *argument )
         members = 0;
         for ( gch = char_list; gch != NULL; gch = gch->next )
         {
-            if ( is_same_group( gch, ch) && gch != ch)
+            if ( is_same_group( gch, ch) && gch != ch && !IS_NPC(gch))
             members++;
         }
 
-        if(members+1 > (ch->pcdata->csabilities[CSABIL_LEADERSHIP]*2)+1)
+        if(members > (ch->pcdata->csabilities[CSABIL_LEADERSHIP]*2)+1)
         {
             send_to_char("You do not have the skills needed to lead so many people.\n\r",ch);
             return;
@@ -2955,11 +2955,11 @@ void do_promote_leader( CHAR_DATA *ch, char *argument )
         members = 0;
         for ( gch = char_list; gch != NULL; gch = gch->next )
         {
-            if ( is_same_group( gch, ch) && gch != ch)
+            if ( is_same_group( gch, ch) && gch != ch && !IS_NPC(gch))
             members++;
         }
 
-        if(members+1 > (victim->pcdata->csabilities[CSABIL_LEADERSHIP]*2)+1)
+        if(members > (victim->pcdata->csabilities[CSABIL_LEADERSHIP]*2)+1)
         {
             send_to_char("They do not have the skills needed to lead so many people.\n\r",ch);
             return;

@@ -395,10 +395,9 @@ QITEM_DATA *qitem_obj_lookup( OBJ_INDEX_DATA *pObj )
 void qitem_check ( CHAR_DATA *ch, OBJ_DATA *obj)
 {
     QITEM_DATA *qitem;
-    OBJ_INDEX_DATA *pObj = obj->pIndexData;
 
 
-    if ((qitem = qitem_obj_lookup(pObj)) != NULL && qitem->found == FALSE)
+    if ((qitem = obj->qitem) != NULL && qitem->found == FALSE)
     {
         qitem->found = TRUE;
         qitem->foundby = str_dup(ch->name);
@@ -414,7 +413,7 @@ void qitem_check ( CHAR_DATA *ch, OBJ_DATA *obj)
             sprintf(subject, "Quest '%s' completed by %s", qitem->name, ch->name);
             strtime             = (char *) ctime( &current_time );
             strtime[strlen(strtime)-1]  = '\0';
-            sprintf(buf, "%s found item %s, finishing quest named '%s'.\n\rOn: %s\n\r", ch->name, pObj->short_descr, qitem->name, strtime);
+            sprintf(buf, "%s found item %s, finishing quest named '%s'.\n\rOn: %s\n\r", ch->name, obj->short_descr, qitem->name, strtime);
             auto_note(qitem->notified, subject, buf);
         }
     }

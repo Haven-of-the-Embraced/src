@@ -1469,6 +1469,9 @@ void save_qitem_table()
         for(qitem = qitem_list; qitem ; qitem = qitem->next )
         {
 
+            if (qitem->delete == TRUE)
+                continue;
+
             fprintf(fp, "Name %s~\n",       qitem->name );
             fprintf(fp, "Ivnum %d\n",       qitem->qobjvnum );
             fprintf(fp, "Placed %d\n",      qitem->place );

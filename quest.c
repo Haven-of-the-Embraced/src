@@ -49,6 +49,19 @@ void do_qiedit( CHAR_DATA *ch, char *argument )
                 send_to_char("That quest item already exists.\n\r",ch);
                 return FALSE;
             }
+        if (!str_cmp(arg2, "new") || !str_cmp(arg2, "list"))
+        {
+            send_to_char("Unacceptable keyword! 'new' and 'list' are reserved.\n\r", ch);
+            return;
+        }
+        if (arg2[0] == '\0')
+            {
+                send_to_char("Syntax: Qiedit <name>\n\r",ch);
+                send_to_char("Or    : Qiedit new <name>\n\r", ch);
+                send_to_char("Or:     Qiedit list\n\r", ch);
+                return;
+            }
+
             item = new_qitem();
             free_string(item->name );
             item->name = str_dup(arg2);

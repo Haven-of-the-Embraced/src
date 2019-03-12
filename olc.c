@@ -126,6 +126,8 @@ char *olc_ed_vnum( CHAR_DATA *ch )
     MPROG_CODE *pMprog;
      CLAN_DATA *pClan;
     HELP_DATA *pHelp;
+    CMD_DATA  *pCmd;
+    QITEM_DATA *pItem;
     static char buf[MIL];
 
     buf[0] = '\0';
@@ -155,10 +157,20 @@ char *olc_ed_vnum( CHAR_DATA *ch )
         pHelp = (HELP_DATA *)ch->desc->pEdit;
         sprintf( buf, "%s", pHelp ? pHelp->keyword : "" );
         break;
-        case ED_CLAN:
-            pClan = (CLAN_DATA *) ch->desc->pEdit;
-            sprintf (buf, "%s", pClan ? pClan->name : "");
-            break;
+    case ED_CLAN:
+        pClan = (CLAN_DATA *) ch->desc->pEdit;
+        sprintf (buf, "%s", pClan ? pClan->name : "");
+        break;
+    case ED_COMMAND:
+        pCmd = (CMD_DATA *) ch->desc->pEdit;
+        sprintf(buf, "%s", pCmd ? pCmd->name : "");
+        break;
+    case ED_QITEM:
+        pItem = (QITEM_DATA *) ch->desc->pEdit;
+        sprintf(buf, "%s", pItem ? pItem->name : "");
+        break;
+
+
     default:
     sprintf( buf, " " );
     break;

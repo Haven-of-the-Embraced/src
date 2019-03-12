@@ -338,10 +338,10 @@ QIEDIT( qiedit_delete )
     }
     pItem->name = str_dup("");
     pItem->found = FALSE;
-    pItem->foundby = str_dup("");
+    pItem->foundby = str_dup("None");
     pItem->loaded = FALSE;
     pItem->mobvnum = 0;
-    pItem->notified = str_dup("");
+    pItem->notified = str_dup("None");
     pItem->notify = FALSE;
     pItem->objvnum = 0;
     pItem->roomvnum = 0;
@@ -386,16 +386,20 @@ QITEM_DATA *new_qitem (void)
     extern QITEM_DATA *qitem_list;
     QITEM_DATA *qitem;
 
-    if (qitem_free == NULL)
+//    if (qitem_free == NULL)
     qitem = alloc_perm(sizeof(*qitem));
-    else
-    {
-    qitem = qitem_free;
-    qitem_free = qitem_free->next;
-    }
+//    else
+//    {
+//    qitem = qitem_free;
+//    qitem_free = qitem_free->next;
+//    }
 
     qitem->next = qitem_list;
     qitem_list = qitem;
+
+    qitem->name = str_dup("");
+    qitem->notified = str_dup("None");
+    qitem->foundby = str_dup("None");
 
     VALIDATE(qitem);
     return qitem;
@@ -403,10 +407,22 @@ QITEM_DATA *new_qitem (void)
 
 void free_qitem (QITEM_DATA *qitem)
 {
-
+    QITEM_DATA *prev;
 
     if (!IS_VALID(qitem))
     return;
+
+    if (qitem == qitem_list)
+        qitem_list = qitem->next;
+    if (qitem->next != NULL)
+        for (prev = qitem_list ; prev ; prev = prev->next)
+        {
+            if (prev->next == qitem)
+            {
+                prev->next = qitem->next;
+                break;
+            }
+        }
 
     qitem->next = qitem_free;
     qitem_free  = qitem;

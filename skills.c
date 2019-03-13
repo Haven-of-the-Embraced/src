@@ -39,6 +39,7 @@
 #include "interp.h"
 #include "magic.h"
 #include "recycle.h"
+#include "tables.h"
 
 /* RT spells and skills show the players spells (or skills) */
 
@@ -398,4 +399,88 @@ void check_improve( CHAR_DATA *ch, int sn, bool success, int multiplier )
 	    gain_exp(ch, ch->pcdata->learned[sn]);
 	}
     }
+}
+
+#define STAT 0
+#define DOT 1
+#define TYPE 2
+#define ATTR 0
+#define ABIL 1
+#define SECA 2
+void do_skillmap(CHAR_DATA *ch, char *argument)
+{
+    int i;
+    BUFFER *output;
+    char buf[MSL];
+    char primary[MSL];
+    char secondary[MSL];
+    bool has_secondary;
+
+    has_secondary = TRUE;
+    output = new_buf();
+    sprintf(buf, "%9s        %-3s %-17s   %-17s\n\r", "Name", "Lvl", "Primary       Dot", "Secondary     Dot");
+    add_buf(output, buf);
+    for (i = 0; csskill_table[i].name != NULL; i++)
+    {
+        switch (csskill_table[i].primary[TYPE])
+        {
+            case ABIL:
+                if (csskill_table[i].primary[STAT] == CSABIL_NONE)
+                    continue;
+                else
+                    sprintf(primary, "%s", ability_table[csskill_table[i].primary[STAT]].name);
+                break;
+            case ATTR:
+                sprintf(primary, "%s", attribute_table[csskill_table[i].primary[STAT]].name);
+                break;
+            case SECA:
+                sprintf(primary, "%s", sec_abil_table[csskill_table[i].primary[STAT]].name);
+                break;
+            default:
+                bug("skills_list: Invalid primary cs type.", 0);
+                return;
+        }
+
+        switch (csskill_table[i].secondary[TYPE])
+        {
+
+            case ABIL:
+                if (csskill_table[i].secondary[STAT] == CSABIL_NONE)
+                    has_secondary = FALSE;
+                else
+                {
+                    has_secondary = TRUE;
+                    sprintf(secondary, "%s", ability_table[csskill_table[i].secondary[STAT]].name);
+                }
+
+                break;
+            case ATTR:
+                sprintf(secondary, "%s", attribute_table[csskill_table[i].secondary[STAT]].name);
+                has_secondary = TRUE;
+                break;
+            case SECA:
+                sprintf(secondary, "%s", sec_abil_table[csskill_table[i].secondary[STAT]].name);
+                has_secondary = TRUE;
+                break;
+            default:
+                bug("skills_list: Invalid primary cs type.", 0);
+                return;
+        }
+
+        if (has_secondary)
+        {
+            sprintf(buf, "%16s %-3d %-15s %-2d  %-15s %-2d\n\r", csskill_table[i].name, csskill_table[i].level,
+                                                        primary, csskill_table[i].primary[DOT],
+                                                        secondary, csskill_table[i].secondary[DOT]);
+        }
+        else
+        {
+            sprintf(buf, "%16s %-3d %-15s %-2d\n\r", csskill_table[i].name, csskill_table[i].level,
+                                                        primary, csskill_table[i].primary[DOT]);
+        }
+        add_buf(output, buf);
+    }
+
+    page_to_char(buf_string(output), ch);
+
 }

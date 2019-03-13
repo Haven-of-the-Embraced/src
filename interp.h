@@ -300,6 +300,7 @@ DECLARE_DO_FUN( do_nuke );
 DECLARE_DO_FUN( do_clearaff );
 DECLARE_DO_FUN( do_sit      );
 DECLARE_DO_FUN( do_skills   );
+DECLARE_DO_FUN( do_skillmap );
 DECLARE_DO_FUN( do_sla  );
 DECLARE_DO_FUN( do_slay );
 DECLARE_DO_FUN( do_sleep    );

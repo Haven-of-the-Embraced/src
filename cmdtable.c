@@ -247,6 +247,7 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "cs3",        do_charsheet3 },
     { "scan",       do_scan},
     { "skills",     do_skills },
+    {"skillmap",    do_skillmap},
     { "socials",    do_socials },
     { "prayers",        do_spells}, //DNM
     { "playernotes",    do_playernotes},

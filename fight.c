@@ -603,7 +603,7 @@ void mob_hit (CHAR_DATA *ch, CHAR_DATA *victim, int dt)
                                         act( "$n suddenly seems to move much faster!",  ch, NULL, victim, TO_ROOM   );
                                         break;
                                 case (3):
-                                        victim->stopped = success;
+                                        WAIT_STATE(victim, PULSE_VIOLENCE);
                                         act( "$n waves a hand at $N who suddenly seems frozen!",  ch, NULL, victim, TO_NOTVICT    );
                                         act( "You suddenly find time rushing by too fast to perceive.",  ch, NULL, victim, TO_VICT );
                                         break;
@@ -4122,7 +4122,7 @@ void do_bash( CHAR_DATA *ch, char *argument )
         {
             act("$n tries to bash your brains in but trips and falls as you deftly step away.", ch, NULL, victim, TO_VICT);
             act("$n trips and falls while attempting to bash $N over the head.", ch, NULL, victim, TO_NOTVICT);
-            ch->stopped = 2;
+            WAIT_STATE(ch, PULSE_VIOLENCE);
             ch->position = POS_RESTING;
             return;
         }
@@ -4144,7 +4144,7 @@ void do_bash( CHAR_DATA *ch, char *argument )
             if (damagesuccess < 0)
                 damagesuccess = 0;
             damage(ch, victim, damagesuccess * ch->level / 2, gsn_bash, DAM_BASH, TRUE);
-            STOPPED(victim, 2*PULSE_VIOLENCE);
+            WAIT_STATE(victim, PULSE_VIOLENCE);
             return;
         }
     }
@@ -4182,7 +4182,7 @@ void do_bash( CHAR_DATA *ch, char *argument )
         act("$n's $p connects with your head, rattling your brain.", ch, shield, victim, TO_VICT);
         act("$N appears to be a bit dazed after being hit with $p.", ch, shield, victim, TO_NOTVICT);
         DAZE_STATE(victim, 3 * PULSE_VIOLENCE);
-        STOPPED(victim, PULSE_VIOLENCE);
+        WAIT_STATE(victim, PULSE_VIOLENCE);
     }
 
     WAIT_STATE(ch, 2*PULSE_VIOLENCE);
@@ -4468,8 +4468,8 @@ void do_trip( CHAR_DATA *ch, char *argument )
     act("$n trips $N, sending $M to the ground.",ch,NULL,victim,TO_NOTVICT);
     check_improve(ch,gsn_trip,TRUE,1);
 
-    STOPPED(victim,2 * PULSE_VIOLENCE);
-        WAIT_STATE(ch,skill_table[gsn_trip].beats);
+    WAIT_STATE(victim, PULSE_VIOLENCE);
+    WAIT_STATE(ch,skill_table[gsn_trip].beats);
     victim->position = POS_RESTING;
     damage(ch,victim,number_range(2, ch->level / 3 + victim->size),gsn_trip, DAM_BASH,TRUE);
     }
@@ -5136,7 +5136,7 @@ void do_kick(CHAR_DATA *ch, char *argument)
         {
             act("$n trips and falls as you sidestep a wild kick.", ch, NULL, victim, TO_VICT);
             act("$n trips and falls while attempting to kick $N.", ch, NULL, victim, TO_NOTVICT);
-            ch->stopped = 1;
+            WAIT_STATE(ch, PULSE_VIOLENCE);
             ch->position = POS_RESTING;
             return;
         }
@@ -5176,7 +5176,7 @@ void do_kick(CHAR_DATA *ch, char *argument)
         act("The momentum of a severely misjudged kick towards $N carries you around, \n\rcausing you to slip and fall.", ch, NULL, victim, TO_CHAR);
         act("$n misses you with a wild kick and slips to the ground.", ch, NULL, victim, TO_VICT);
         act("$n kicks out in $N's direction, but slips to the ground.", ch, NULL, victim, TO_NOTVICT);
-        ch->stopped = 2;
+        WAIT_STATE(ch, PULSE_VIOLENCE);
         ch->position = POS_RESTING;
         return;
     }
@@ -5201,7 +5201,7 @@ void do_kick(CHAR_DATA *ch, char *argument)
             act("$N doubles over as the wind is knocked out of $M.", ch, NULL, victim, TO_NOTVICT);
             if (!IS_NPC(victim))
                 act("You feel the wind knocked out of you!", ch, NULL, victim, TO_VICT);
-            STOPPED(victim, PULSE_VIOLENCE);
+            WAIT_STATE(victim, PULSE_VIOLENCE);
         }
 
         gain_exp(ch, dicesuccess*2);
@@ -5255,7 +5255,7 @@ void do_kick(CHAR_DATA *ch, char *argument)
             act("and stumbles to the ground as the momentum carries $s through the turn.", ch, NULL, victim, TO_VICT);
             act("but falls to the ground, carried by the wild kick.", ch, NULL, victim, TO_NOTVICT);
 
-            ch->stopped = 3;
+            WAIT_STATE(ch, PULSE_VIOLENCE);
             ch->position = POS_RESTING;
             return;
         }
@@ -5973,7 +5973,7 @@ void do_ground( CHAR_DATA *ch, char *argument )
                 {
                         affect_strip(victim,gsn_fly);
                         REMOVE_BIT(victim->affected_by,AFF_FLYING);
-                        STOPPED(victim, PULSE_VIOLENCE);
+                        WAIT_STATE(victim, PULSE_VIOLENCE);
                         act( "And knock $N out of the sky!",  ch, NULL, victim, TO_CHAR    );
                         act( "$n knocks you out of the sky!", ch, NULL, victim, TO_VICT    );
                         act( "$n knocks $N out of the sky!",  ch, NULL, victim, TO_NOTVICT );
@@ -6075,7 +6075,7 @@ void do_headbutt( CHAR_DATA *ch, char *argument )
         act( "$n slams $s head into $N's.", ch, NULL, victim, TO_ROOM );
 
     gain_exp(ch, dicesuccess);
-    STOPPED(victim, damagesuccess * PULSE_VIOLENCE);
+    WAIT_STATE(victim, PULSE_VIOLENCE);
 
     damage(ch, victim, damagesuccess * ch->level / 2, gsn_headbutt, DAM_BASH, TRUE);
 
@@ -6170,7 +6170,7 @@ void do_gouge( CHAR_DATA *ch, char *argument )
         act("Moving with precise timing, you sidestep and avoid $n's attempt to gouge your eyes out.", ch, NULL, victim, TO_VICT);
         act("$n leaps forward, fingers outstretched to gouge $N's eyes out, and trips!", ch, NULL, victim, TO_NOTVICT);
         ch->position = POS_RESTING;
-        STOPPED(ch, PULSE_VIOLENCE);
+        WAIT_STATE(ch, PULSE_VIOLENCE);
         damage(ch, ch, ch->level, gsn_trip, DAM_BASH, TRUE);
         check_improve(ch,gsn_gouge,FALSE,10);
         multi_hit(victim, ch, TYPE_UNDEFINED);
@@ -6193,7 +6193,7 @@ void do_gouge( CHAR_DATA *ch, char *argument )
 
     gain_exp(ch, dicesuccess+damagesuccess);
     check_improve(ch,gsn_gouge,TRUE,6);
-    STOPPED(victim, PULSE_VIOLENCE);
+    WAIT_STATE(victim, PULSE_VIOLENCE);
 
     d10_damage(ch, victim, damagesuccess, d10_modifier(ch) * (20+skill) / 100, gsn_gouge, DAM_PIERCE, DEFENSE_NONE, TRUE);
 
@@ -6275,7 +6275,7 @@ void do_blast( CHAR_DATA *ch, char *argument )
                 act( "You cough and gag as your blast misfires, blinding yourself briefly.", ch, NULL, victim, TO_CHAR );
                 act( "$n coughs and gags as smoke fills $s eyes.", ch, NULL, victim, TO_VICT );
                 act( "$n coughs and gags as smoke fills $s eyes.", ch, NULL, victim, TO_NOTVICT );
-                STOPPED(victim, 2*PULSE_VIOLENCE);
+                WAIT_STATE(ch, PULSE_VIOLENCE);
 
         damage(ch,ch,ch->level/2,gsn_blast,DAM_FIRE,TRUE);
         fire_effect(ch,ch->level,ch->level,TARGET_CHAR);

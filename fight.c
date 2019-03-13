@@ -4346,9 +4346,12 @@ void do_dirt( CHAR_DATA *ch, char *argument )
     }
     else
     {
-    damage(ch,victim,0,gsn_dirt,DAM_NONE,TRUE);
-    check_improve(ch,gsn_dirt,FALSE,2);
-    WAIT_STATE(ch,skill_table[gsn_dirt].beats);
+        act("$N avoids your kicked dirt!", ch, NULL, victim, TO_CHAR);
+        act("$n kicks dirt towards you, but you deftly step aside.", ch, NULL, victim, TO_VICT);
+        act("$n kicks dirt towards $N, who deftly steps out of the way.", ch, NULL, victim, TO_NOTVICT);
+        damage(ch,victim,0,gsn_dirt,DAM_NONE,TRUE);
+        check_improve(ch,gsn_dirt,FALSE,2);
+        WAIT_STATE(ch,skill_table[gsn_dirt].beats);
     }
 }
 

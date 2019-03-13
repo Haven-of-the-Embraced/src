@@ -990,12 +990,6 @@ bool load_char_obj( DESCRIPTOR_DATA *d, char *name )
     ch->size = pc_race_table[ch->race].size;
     ch->dam_type = 17; /*punch */
 
-    for (i = 0; i < 5; i++)
-    {
-        if (pc_race_table[ch->race].skills[i] == NULL)
-        break;
-        group_add(ch,pc_race_table[ch->race].skills[i],FALSE);
-    }
     ch->affected_by = ch->affected_by|race_table[ch->race].aff;
     ch->imm_flags   = ch->imm_flags | race_table[ch->race].imm;
     ch->res_flags   = ch->res_flags | race_table[ch->race].res;
@@ -1005,15 +999,6 @@ bool load_char_obj( DESCRIPTOR_DATA *d, char *name )
     }
 
 
-    /* RT initialize skills */
-
-    if (found && ch->version < 2)  /* need to add the new skills */
-    {
-    group_add(ch,"rom basics",FALSE);
-    group_add(ch,class_table[ch->class].base_group,FALSE);
-    group_add(ch,class_table[ch->class].default_group,TRUE);
-    ch->pcdata->learned[gsn_recall] = 50;
-    }
 
     /* fix levels */
     if (found && ch->version < 3 && (ch->level > 35 || ch->trust > 35))
@@ -1593,19 +1578,9 @@ void fread_char( CHAR_DATA *ch, FILE *fp )
 
             if ( !str_cmp( word, "Group" )  || !str_cmp(word,"Gr"))
             {
-                int gn;
                 char *temp;
-
+                // Quietly ignore groups. Just in case old pfiles show up.
                 temp = fread_word( fp ) ;
-                gn = group_lookup(temp);
-                /* gn    = group_lookup( fread_word( fp ) ); */
-                if ( gn < 0 )
-                {
-                    fprintf(stderr,"%s",temp);
-                    bug( "Fread_char: unknown group. ", 0 );
-                }
-                else
-            //gn_add(ch,gn); Quietly ignore. =D Goodbye Groups. - Matthew.
                 fMatch = TRUE;
             }
         break;

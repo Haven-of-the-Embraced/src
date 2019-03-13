@@ -2172,13 +2172,6 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
     ch->parts   = race_table[race].parts;
     ch->act2    = PLR2_NEWBIE;
 
-    /* add skills */
-    for (i = 0; i < 5; i++)
-    {
-        if (pc_race_table[race].skills[i] == NULL)
-        break;
-        group_add(ch,pc_race_table[race].skills[i],FALSE);
-    }
     /* add cost */
     ch->pcdata->points = pc_race_table[race].points;
     ch->size = pc_race_table[race].size;

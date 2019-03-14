@@ -1205,6 +1205,7 @@ bool damage(CHAR_DATA *ch,CHAR_DATA *victim,int dam,int dt,int dam_type,
                     silver = TRUE;
                     dam = dam*4;
                  }
+    }
 
      if(victim->sphere[SPHERE_ENTROPY] > 0)
     {

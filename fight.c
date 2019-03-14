@@ -95,36 +95,12 @@ void violence_update( void )
         if(ch->pcdata->shift_count == 0)
             do_function(ch, &do_shapeshift, "shift_count");
     }
-    //if(!IS_NPC(ch) && ch->pcdata->shiftform > HOMID)
-    //{
-    //    ch->hit += (ch->max_hit/600+1) * get_attribute(ch,STAMINA);
-    //    if(ch->hit > ch->max_hit) ch->hit = ch->max_hit;
-    // }
-
-    //if(!IS_NPC(ch) && ch->pcdata->shiftform > CRINOS)
-    //{
-    //   ch->move += (ch->max_move/300+1) * get_attribute(ch,STAMINA);
-    //    if(ch->move > ch->max_move) ch->move = ch->max_move;
-    //}
-    //if (!IS_NPC(ch) && ch->race == race_lookup("garou") && ch->pcdata->shiftform != CRINOS)
-    //{
-    //    ch->mana += (ch->max_mana/1200+1) * get_attribute(ch, STAMINA);
-    //    if (ch->mana > ch->max_mana) ch->mana = ch->max_mana;
-    //}
 
     if ( ( victim = ch->fighting ) == NULL || ch->in_room == NULL )
         continue;
 
     if ( IS_AWAKE(ch) && ch->in_room == victim->in_room )
-    {
         multi_hit( ch, victim, TYPE_UNDEFINED );
-      //  if(!IS_NPC(ch) && ch->race == race_lookup("garou") &&
-      //  ch->pcdata->shiftform == CRINOS && is_affected(ch, gsn_rage))
-      //  {
-      //      ch->hit += (ch->max_hit/1000+1)*get_attribute(ch, STAMINA);
-      //      if(ch->hit > ch->max_hit) ch->hit = ch->max_hit;
-      //  }
-    }
     else
         stop_fighting( ch, FALSE );
 

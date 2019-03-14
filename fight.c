@@ -891,18 +891,6 @@ void one_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt )
     if (!IS_NPC(ch))
         dam += get_attribute(ch, STRENGTH) * (dam / 5);
 
- /*  DISABLED 9/27/13 DUE TO BEING OVERPOWERED
-
- if (!IS_NPC(ch) && IS_VAMP(ch))
-    { // Vampire Generation buff. same as potence or strength.
-        if (ch->gen > 12 || (ch->gen < 10) )
-            genbonus = 10 - ch->gen;
-        else
-            genbonus = 0;
-
-        dam += genbonus * (dam / 8);
-    }
-*/
 /*New Potence change, equivalent of STR for damage*/
     if (!IS_NPC(ch))
            dam += ((ch->pcdata->discipline[POTENCE])) * (dam / 5);
@@ -1014,30 +1002,7 @@ void one_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt )
     if (ch->fighting == victim && IS_WEAPON_STAT(wield,WEAPON_AGG_DAMAGE) && victim->race != race_lookup("human"))
     {
         victim->agg_dam += 10;
-/*
-        int level;
 
-        AFFECT_DATA *agg_damage, af;
-
-        if ((agg_damage = affect_find(wield->affected,gsn_agg_damage)) == NULL)
-        level = wield->level;
-        else
-        level = agg_damage->level;
-
-        send_to_char("You scream at the searing pain of your wounds!\n\r",
-            victim);
-        act2("$n screams in pain at the touch of $p.",
-            victim,wield,NULL,TO_ROOM);
-
-            af.where     = TO_AFFECTS;
-            af.type      = gsn_agg_damage;
-            af.level     = level * 3/4;
-            af.duration  = 1;
-            af.location  = 0;
-            af.modifier  = 0;
-            af.bitvector = 0;
-            affect_join( victim, &af );
-*/
     }
         if (ch->fighting == victim && IS_WEAPON_STAT(wield,WEAPON_VAMPIRIC))
     {

@@ -3364,7 +3364,7 @@ void do_charsheet3 (CHAR_DATA * ch, char *argument)
         sprintf(sec4[row], "Meditation   %s", dots(ch->pcdata->cssec_abil[CSABIL_MEDITATION], FALSE));
         sprintf(sec5[row], "                  ");
         row++;
-} else if(ch->race == race_lookup("vampire"))
+} else if(IS_VAMP(ch))
     {
         sprintf(name[row], "      Skills      ");
         sprintf(sec1[row], "                  ");

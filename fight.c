@@ -1562,27 +1562,12 @@ int get_armor_diff( CHAR_DATA *ch, CHAR_DATA *victim, int dam_type)
         case(DAM_SLASH): victim_ac = GET_AC(victim,AC_SLASH);   break;
         default:     victim_ac = GET_AC(victim,AC_EXOTIC);  break;
     }
-/*
-    if((diff = (victim->level - ch->level)/20) < 1)
-        diff = 0;
-*/
+
     diff += -(victim_ac/100);
     if (diff < 0)
         diff = -1;
 
-    /*if(victim_ac < -500) diff += 5;
-    else if(victim_ac < -400) diff += 4;
-    else if(victim_ac < -300) diff += 3;
-    else if(victim_ac < -200) diff += 2;
-    else if(victim_ac < -100) diff += 1;
-    else if(0 < victim_ac < 100 ) diff += 0;
-    else if(victim_ac > 100) diff -= 1;
-    else if(victim_ac > 200) diff -= 2;
-
-    if(diff > 10) diff = 10;
-    if(diff < 0) diff = 0;*/
-
-	    return diff/2;
+	return diff/2;
 }
 
 // Calculate Damage Dicepool for combat hits. Moved here for use in other functions.

@@ -2181,14 +2181,6 @@ if (DEBUG_MESSAGES || IS_DEBUGGING(ch))	{
         cprintf(victim, "{xm{D%d Ar{c%d {xsd{c%d{x s{c%d{x ", modifier, armordice, soakdice, soak, dam);
 }
 
-	/* damage reduction */
-    //    if ( dam > 5)
-    //    dam = (dam - 5)/2 + 5;
-    //    if ( dam > 35)
-    //    dam = (dam-35)/2 + 35;
-    //    if ( dam > 30)
-    //    dam = (dam - 30)/2 + 30;
-
     if(slaughter)
         dam *= 4;
     else if (doubledam)

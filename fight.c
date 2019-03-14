@@ -1101,31 +1101,6 @@ bool damage(CHAR_DATA *ch,CHAR_DATA *victim,int dam,int dt,int dam_type,
         return FALSE;
     }
 
-/*  if ( !IS_NPC(victim) && !IS_NPC(ch) && ch != victim)
-    {
-        if(!IS_SET(ch->act,PLR_IC) || !IS_SET(victim->act,PLR_IC))
-            return FALSE;
-        if(!IN_LEVEL(ch, victim))           return FALSE;   } */
-    /*
-     * Stop up any residual loopholes.
-     */
-/*
-    if ( dam > 2000 && dt >= TYPE_HIT)
-    {
-    bug( "Damage: %d: more than 2000 points!", dam );
-    dam = 2000;
-    send_to_char("You've breeched the damcap!\n\r",ch);
-    if (!IS_IMMORTAL(ch))
-    {
-        OBJ_DATA *obj;
-        obj = get_eq_char( ch, WEAR_WIELD );
-        send_to_char("You really shouldn't cheat.\n\r",ch);
-        if (obj != NULL)
-            extract_obj(obj);
-    }
-
-    }
-*/
     if(IS_NPC(ch)) grudge_update(ch,victim);    if(IS_NPC(victim)) grudge_update(victim,ch);
     /* damage reduction */
     if(dt != gsn_fireshield && dt != gsn_holyshield && dt != gsn_darkshield && dt != gsn_gift_porcupine && dt != gsn_vicissitude_bonecraft)
@@ -1216,10 +1191,6 @@ bool damage(CHAR_DATA *ch,CHAR_DATA *victim,int dam,int dt,int dam_type,
     if ( !IS_NPC(victim) && victim->pcdata->discipline[FORTITUDE] == 5)
     dam -= dam / 2;
 
- //   if (!IS_NPC(victim) && IS_VAMP(victim) && victim->gen < 10)
-  //      dam -= dam / victim->gen;
-
-
     bool silver;
 
     if(!IS_NPC(victim) && victim->race == race_lookup("garou"))
@@ -1234,18 +1205,6 @@ bool damage(CHAR_DATA *ch,CHAR_DATA *victim,int dam,int dt,int dam_type,
                     silver = TRUE;
                     dam = dam*4;
                  }
-     //   if (!silver && (victim->pcdata->shiftform > HOMID &&
-     //       victim->pcdata->shiftform < LUPUS) )
-     //   dam -= dam / 2*UMAX(4, 10 - (godice(get_attribute(victim, STAMINA), 8)));
-    }
-
-
-    /*
-    dam -= get_attribute(victim,STAMINA)*8;
-        dam -= (godice(get_attribute(victim,STAMINA), 8)*8);
-*/
-
-
 
      if(victim->sphere[SPHERE_ENTROPY] > 0)
     {

@@ -279,18 +279,6 @@ void multi_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt )
     if (ch->fighting != victim)
     return;
 
-   /* DISABLED 9/27/13 DUE TO BEING OVERPOWERED
-
-   if (!IS_NPC(ch) && IS_VAMP(ch) && (ch->gen < 10) && dt != gsn_backstab)
-    { // Vampire Generation buff. same as celerity/2
-
-    genbonus = 10 - ch->gen;
-        for(i = genbonus/2;i > 0;i--)
-        {
-                one_hit(ch,victim,dt);
-        }
-
-    }*/
 /* Replacement celerity for new buff-type celerity ability - Ugha*/
     if(!IS_NPC(ch) && is_affected(ch,gsn_celbuff) && dt != gsn_backstab)
         for(i = ch->pcdata->discipline[CELERITY];i > 0;i--)

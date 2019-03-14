@@ -76,7 +76,6 @@ DECLARE_REPEAT_FUN(do_ansi, &do_colour);
 DECLARE_REPEAT_FUN(do_hold, &do_wear);
 DECLARE_REPEAT_FUN(do_bs, &do_backstab);
 DECLARE_REPEAT_FUN(do_journal, &do_qlog);
-DECLARE_REPEAT_FUN(do_wikihelp, &do_showhelpindex);
 DECLARE_REPEAT_FUN(do_poofin, &do_bamfin);
 DECLARE_REPEAT_FUN(do_poofout, &do_bamfout);
 DECLARE_REPEAT_FUN(do_gecho, &do_echo);

@@ -3295,7 +3295,6 @@ char *  crypt       args( ( const char *key, const char *salt ) );
 #define QUEST_FILE       "quest.dat" /*qitems list */
 #define CONFIG_FILE "config.cfg"
 #define CONFIG_BACKUP "config.bk"
-#define WIKIHELP_INDEX  "wikihelp/helps.idx"
 /* This file holds the copyover data */
 #define COPYOVER_FILE "copyover.data"
 

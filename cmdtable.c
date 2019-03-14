@@ -469,7 +469,6 @@ const   struct  cmdfun_type cmdfun_table    [] =
     /*
      * Immortal commands.
      */
-    { "wikihelp",   do_showhelpindex}, //DNM
     { "lagem",    do_lagem},
     { "advance",    do_advance},
     { "dump",       do_dump},

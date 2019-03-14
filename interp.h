@@ -588,7 +588,6 @@ DECLARE_DO_FUN(do_ansi);
 DECLARE_DO_FUN(do_hold);
 DECLARE_DO_FUN(do_bs);
 DECLARE_DO_FUN(do_journal);
-DECLARE_DO_FUN(do_wikihelp);
 DECLARE_DO_FUN(do_poofin);
 DECLARE_DO_FUN(do_poofout);
 DECLARE_DO_FUN(do_gecho);

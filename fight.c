@@ -2853,13 +2853,6 @@ void update_pos( CHAR_DATA *victim )
 void set_fighting( CHAR_DATA *ch, CHAR_DATA *victim )
 {
     char buf[MAX_STRING_LENGTH];
-    if ( ch->fighting != NULL )
-    {
- //   bug( "Set_fighting: already fighting", 0 );
- //   sprintf( buf, "BUG: You are already fighting %s! Please inform coders!\n\r", ch->fighting->name );
- //   send_to_char( buf, ch );
-    return;
-    }
 
     if ( IS_AFFECTED(ch, AFF_SLEEP) )
     affect_strip( ch, gsn_sleep );
@@ -2926,7 +2919,6 @@ void make_corpse( CHAR_DATA *ch )
         if (IS_AFFECTED2(ch, AFF2_UMBRA))
             SET_BIT(money->extra_flags,ITEM_UMBRA);
         obj_to_obj(money, corpse);
-/*      obj_to_obj( create_money( ch->gold, ch->silver ), corpse ); */
         ch->gold = 0;
         ch->silver = 0;
     }
@@ -2949,7 +2941,6 @@ void make_corpse( CHAR_DATA *ch )
         if (IS_AFFECTED2(ch, AFF2_UMBRA))
             SET_BIT(money->extra_flags, ITEM_UMBRA);
         obj_to_obj(money, corpse);
-/*      obj_to_obj(create_money(ch->gold / 2, ch->silver/2), corpse);*/
         ch->gold -= ch->gold/2;
         ch->silver -= ch->silver/2;
         }
@@ -3204,7 +3195,6 @@ void raw_kill( CHAR_DATA *victim )
     victim->hit     = UMAX( 1, victim->hit  );
     victim->mana    = UMAX( 1, victim->mana );
     victim->move    = UMAX( 1, victim->move );
-/*  save_char_obj( victim ); we're stable enough to not need this :) */
     return;
 }
 
@@ -3268,10 +3258,7 @@ void group_gain( CHAR_DATA *ch, CHAR_DATA *victim )
     qp /= 2;
     if (victim->level + 20 < gch->level)
     qp = 0;
-   /* if (IS_SET(victim->off_flags, ASSIST_GUARD))
-    {
-        xp = 5;
-    }*/
+
     if(xp <= 0) xp = 1;
     ch->totalkills ++;
     ch->currentkills ++;
@@ -3380,11 +3367,7 @@ int xp_compute( CHAR_DATA *gch, CHAR_DATA *victim, int total_levels )
 
     /* randomize the rewards */
     xp = number_range (xp , xp * 5/4);
-    /* Disabled code for qp xp swap.
-     Get global XP for rping, get global rp for fighting
-     gloxp = (xp * 10) / 100 + 1;
 
-     global_xp += gloxp; */
 // Returns double XP to its default state when it ends
 
  if (global_xp <= 0)
@@ -3487,21 +3470,6 @@ if (xpstat == 3 && global_xp > 300000)
         xp = (xp * xpawardmult);
 
        xp = xp + (xp*2 / 8);
-/* pack hunting code
-    if (gch->race == race_lookup("garou"))
-    {
-        int garoucount = 0;
-        CHAR_DATA *rch, *rch_next;
-        for ( rch = gch->in_room->people; rch != NULL; rch = rch_next )
-        {
-            rch_next = rch->next_in_room;
-            if ( !IS_NPC(rch) && rch->race == race_lookup("garou") && is_same_group(gch,rch) && rch != gch)
-            garoucount += 10;
-        }
-        if(garoucount > 0) garoucount += 10;
-        xp += garoucount;
-    }
-*/
 
 
 /*Sengir altered extra xp if you are leader*/
@@ -3561,17 +3529,7 @@ if (xpstat == 3 && global_xp > 300000)
     if(victim->leader != NULL)
         return xp/10;
     else
-    {
-       /* bye bye old double XP code.
-        if(doubleexp)
-	{
-        xpcl = xp/3;
-        if(xpcl > 150) xpcl = 150;
-	global_xp -= xpcl;
-	return xp*2;
-	} */
          return xp;
-    }
 
 }
 
@@ -3892,13 +3850,7 @@ void do_bash( CHAR_DATA *ch, char *argument )
         send_to_char("You can't bash while riding!\n\r", ch);
         return;
     }
-/*
-    if (victim->position < POS_STUNNED)
-    {
-    act("$N is already stunned.",ch,NULL,victim,TO_CHAR);
-    return;
-    }
-*/
+
     if (victim == ch)
     {
     send_to_char("You try to bash your brains out, but fail.\n\r",ch);
@@ -4102,12 +4054,6 @@ void do_dirt( CHAR_DATA *ch, char *argument )
         return;
     }
 
-/*    if ( !IS_NPC(victim) && (!IS_SET(ch->act,PLR_IC) || !IS_SET(victim->act,PLR_IC)))
-    {
-        send_to_char( "You and your victim must both be in IC mode to fight.\n\r", ch );
-        return;
-    }
-*/
     if (IS_AFFECTED(ch,AFF_CHARM) && ch->master == victim)
     {
     act("But $N is such a good friend!",ch,NULL,victim,TO_CHAR);
@@ -4364,13 +4310,6 @@ void do_kill( CHAR_DATA *ch, char *argument )
     if ( is_safe( ch, victim ) )
     return;
 
-/*    if ( victim->fighting != NULL &&
-    !is_same_group(ch,victim->fighting))
-    {
-        send_to_char("Kill stealing is not permitted.\n\r",ch);
-        return;
-    }
-*/
     if ( IS_AFFECTED(ch, AFF_CHARM) && ch->master == victim )
     {
     act( "$N is your beloved master.", ch, NULL, victim, TO_CHAR );
@@ -4399,24 +4338,7 @@ void do_kill( CHAR_DATA *ch, char *argument )
         send_to_char("You pass right through them.\n\r",ch);
         return;
     }
-/* Don't need this. Murder makes it useless.
-    if ( IS_SET(victim->act,PLR_SPEC) && !IS_NPC(victim))
-    {
-    send_to_char( "You cannot attack that player!\n\r", ch );
-    return;
-    }
 
-    if ( !IS_NPC(victim) && !IS_NPC(ch) && !IN_LEVEL(ch, victim))
-    {
-        send_to_char( "You cannot harm them, they are not in level to you!\n\r", ch );
-        return;
-    }
-
-    if ( !IS_NPC(victim) && (!IS_SET(ch->act,PLR_IC) || !IS_SET(victim->act,PLR_IC)))
-    {
-    send_to_char( "You and your victim must both be in IC mode to fight.\n\r", ch );
-    return;
-    } */
     if ( !IS_AFFECTED2(ch, AFF2_MIST) && IS_AFFECTED2(victim, AFF2_MIST))
     {
     send_to_char( "You can barely see them, let alone attack them!\n\r", ch );
@@ -4515,92 +4437,6 @@ void do_murder( CHAR_DATA *ch, char *argument )
     multi_hit( ch, victim, TYPE_UNDEFINED );
     return;
 }
-
-/*
-void do_murder( CHAR_DATA *ch, char *argument )
-{
-    char arg[MAX_INPUT_LENGTH];
-    CHAR_DATA *victim;
-
-    one_argument( argument, arg );
-
-    if ( arg[0] == '\0' )
-    {
-    send_to_char( "Murder whom?\n\r", ch );
-    return;
-    }
-
-    if (IS_AFFECTED(ch,AFF_CHARM) || (IS_NPC(ch) && IS_SET(ch->act,ACT_PET)))
-    return;
-
-    if ( ( victim = get_char_room( ch, arg ) ) == NULL )
-    {
-    send_to_char( "They aren't here.\n\r", ch );
-    return;
-    }
-
-    if ( victim == ch )
-    {
-    send_to_char( "Suicide is a mortal sin.\n\r", ch );
-    return;
-    }
-
-    if ( is_safe( ch, victim ) )
-    return;
-
-    if (IS_NPC(victim) &&
-     victim->fighting != NULL &&
-    !is_same_group(ch,victim->fighting))
-    {
-        send_to_char("Kill stealing is not permitted.\n\r",ch);
-        return;
-    }
-
-    if ( IS_AFFECTED(ch, AFF_CHARM) && ch->master == victim )
-    {
-    act( "$N is your beloved master.", ch, NULL, victim, TO_CHAR );
-    return;
-    }
-
-    if ( ch->position == POS_FIGHTING )
-    {
-    send_to_char( "You do the best you can!\n\r", ch );
-    return;
-    }
-
-    if ( IS_AFFECTED2(ch, AFF2_MIST) && !IS_AFFECTED2(victim, AFF2_MIST))
-    {
-    send_to_char( "You cannot attack them in this form!\n\r", ch );
-    return;
-    }
-
-    if ( !IS_AFFECTED2(ch, AFF2_MIST) && IS_AFFECTED2(victim, AFF2_MIST))
-    {
-    send_to_char( "You can barely see them, let alone attack them!\n\r", ch );
-    return;
-    }
-
-    if ( !IS_NPC(victim) && !IS_NPC(ch) && !IN_LEVEL(ch, victim))
-    {
-        send_to_char( "You cannot harm them, they are not in level to you!\n\r", ch );
-        return;
-    }
-
-    if ( !IS_NPC(victim) && (!IS_SET(ch->act,PLR_IC) ||
-!IS_SET(victim->act,PLR_IC)))
-    {
-        send_to_char( "You and your victim must both be in IC mode to fight.\n\r, ch );
-        return;
-    }
-
-    WAIT_STATE( ch, 1 * PULSE_VIOLENCE );
-    if (IS_NPC(ch))
-    check_killer( ch, victim );
-    multi_hit( ch, victim, TYPE_UNDEFINED );
-    return;
-}
-
-*/
 
 void do_backstab( CHAR_DATA *ch, char *argument )
 {
@@ -4844,12 +4680,6 @@ void do_rescue( CHAR_DATA *ch, char *argument )
         return;
     }
 
-/*    if ( IS_NPC(fch) && !is_same_group(ch,victim))
-    {
-        send_to_char("Kill stealing is not permitted.\n\r",ch);
-        return;
-    }
-*/
     WAIT_STATE( ch, skill_table[gsn_rescue].beats );
     if ( number_percent( ) > get_skill(ch,gsn_rescue))
     {
@@ -4884,25 +4714,7 @@ void do_kick(CHAR_DATA *ch, char *argument)
     int soakdice = 0;
     int damagesuccess = 0;
     int extradamage = 0;    /*Extra successes past 1st on attack added to damage*/
-/*  bool wp = FALSE; */
 
-
-/*  one_argument( argument, arg );
-    if (!str_prefix(arg,"wp"))
-    {
-        if (IS_NPC(ch))
-            return;
-
-        if(ch->pcdata->cswillpower <= 0)
-        {
-            send_to_char("You do not have enough {WWillpower{x to spend.\n\r", ch);
-            return;
-        }
-
-        wp = TRUE;
-
-    }
-*/
     if (argument[0] == '\0')
     {
         victim = ch->fighting;
@@ -4944,9 +4756,6 @@ void do_kick(CHAR_DATA *ch, char *argument)
     if (!IS_NPC(ch))
         ch->move -= 1;
 
-/*  if (wp)
-        ch->pcdata->cswillpower--;
-*/
     if (is_affected(victim, gsn_precognition) && number_percent() > 50)
     {
         act("With uncanny judgement, $N deftly avoids your kick!", ch, NULL, victim, TO_CHAR);
@@ -5008,12 +4817,7 @@ void do_kick(CHAR_DATA *ch, char *argument)
     }
 
     dicesuccess = godice(get_attribute(ch, DEXTERITY) + ch->pcdata->csabilities[CSABIL_BRAWL], 5);
-/*  if (wp)
-    {
-        send_to_char("You spent {WWillpower{x!  Extra success!\n\r", ch);
-        dicesuccess++;
-    }
-*/
+
     WAIT_STATE(ch, 12);
 
     if (dicesuccess < 0)
@@ -5441,15 +5245,6 @@ void kill_em(CHAR_DATA *ch,CHAR_DATA *victim)
     if(!IS_NPC(victim) && victim->race == race_lookup("ghoul"))
         victim->pblood = victim->max_pblood;
 
-        /*
-         * Dying penalty:
-         * all the way back to previous level.
-         */
-/*      if ( victim->exp > exp_per_level(victim,victim->pcdata->points)
-                   * victim->level )
-    gain_exp( victim, (2 * (exp_per_level(victim,victim->pcdata->points)
-                     * victim->level - victim->exp)/3) + 50 );
-*/
                 victim->exp   = exp_per_level(victim,victim->pcdata->points) * UMAX( 1, victim->level );
 
       }
@@ -5641,17 +5436,9 @@ void do_assassinate( CHAR_DATA *ch, char *argument )
         ch->move -= 50;
         return;
     }
-/*  if(chance == 1 && !IS_NPC(victim) && (victim->race != race_lookup("vampire") || victim->race != race_lookup("methuselah")))
-    {
-                act( "$N screams as you place your dagger in their spine!", ch, NULL, victim, TO_CHAR );
-                act( "$n plants his dagger into your spine, your body spasms in pain.", ch, NULL, victim, TO_VICT );
-                act( "$n stabs $N in the spine!", ch, NULL, victim, TO_NOTVICT );
-        return;
-    }
-*/
+
     check_improve(ch,gsn_assassinate,TRUE,4);
     do_function(ch, &do_backstab, victim->name);
-/*  multi_hit( ch, victim, gsn_assassinate ); */
     }
     else
     {
@@ -5708,40 +5495,6 @@ void do_divine_strength(CHAR_DATA *ch, char *argument )
 return;
 }
 
-/* void do_divine_strength(CHAR_DATA *ch, char *argument )
-{
-    CHAR_DATA *victim;
-
-    if (get_skill(ch,gsn_divine_strength) == 0)
-    {
-    send_to_char( "Huh?\n\r", ch );
-    return;
-    }
-
-    if ( ( victim = ch->fighting ) == NULL )
-    {
-    send_to_char( "You aren't fighting anyone.\n\r", ch );
-    return;
-    }
-        if ( get_skill(ch,gsn_divine_strength) > number_percent())
-    {
-        act( "$n invokes the power of their God!",  ch, NULL, NULL, TO_ROOM );
-        send_to_char( "You pray to your God to give you strength to smite your foes.\n\r", ch );
-        check_improve(ch,gsn_divine_strength,TRUE,1);
-        do_function(ch, &do_disarm, "");
-        do_function(ch, &do_kick, "");
-        do_function(ch, &do_kick, "");
-        do_function(ch, &do_trip, "");
-        do_function(ch, &do_trip, "");
-    }
-    else
-    {
-        act( "$n fails to invoke the power of their God!",  ch, NULL, NULL, TO_ROOM );
-        send_to_char( "You fail to summon a Divine Blessing for Strength!\n\r", ch );
-        check_improve(ch,gsn_assassinate,FALSE,1);
-    }
-return;
-} */
 bool check_critical(CHAR_DATA *ch, CHAR_DATA *victim)
 {
         OBJ_DATA *obj;
@@ -5768,16 +5521,6 @@ bool check_critical(CHAR_DATA *ch, CHAR_DATA *victim)
 
 bool IN_LEVEL( CHAR_DATA *ch, CHAR_DATA *victim )
 {
-/*
-                if(IS_IMMORTAL(ch))
-                        return TRUE;
-                if (IS_SET(victim->act,PLR_ARENA))
-                        return TRUE;
-                if(victim->level < ch->level-20)
-                        return FALSE;
-                if(victim->level > ch->level+20)
-                        return FALSE;
-*/
         return TRUE;
 }
 
@@ -6099,16 +5842,6 @@ void do_blast( CHAR_DATA *ch, char *argument )
         return;
     }
     ch->mana -= ch->level / 2;
-/*
-        chance = number_percent();
-        if(get_curr_stat(ch,STAT_INT) > get_curr_stat(victim,STAT_INT))
-                chance += (get_curr_stat(ch,STAT_INT) - get_curr_stat(ch,STAT_INT));
-        if(ch->level >= victim->level)
-                chance += (ch->level - victim->level)/2;
-        else
-                chance -= (victim->level - ch->level);
-*/
-
 
         WAIT_STATE( ch, skill_table[gsn_blast].beats );
 
@@ -6126,10 +5859,6 @@ void do_blast( CHAR_DATA *ch, char *argument )
         fire_effect(ch,ch->level,ch->level,TARGET_CHAR);
         return;
 
-/*                damage(ch,victim,number_range( ch->level+1, ch->level*3 + 3 ), gsn_blast,DAM_FIRE,TRUE);
-                fire_effect(victim,ch->level/2,number_range(1, ch->level+5),TARGET_CHAR);
-                check_improve(ch,gsn_blast,TRUE,2);
-*/
         }
 
         else if (dicesuccess == 0)
@@ -6260,60 +5989,6 @@ void do_warcry( CHAR_DATA *ch, char *argument )
         return;
 }
 
-/* Sengir with Celerity, had to have here to use one_hit() properly*/
-/* Disabled due to players wanting a buffing ability. Left here because its good work. - Ugha
-void do_celerity(CHAR_DATA *ch, char *argument)
-{
-    CHAR_DATA *victim;
-    int celattack;
-
-    if (IS_NPC(ch))
-        return;
-
-    if (ch->fighting == NULL )
-    {
-        send_to_char("You aren't fighting anyone!\n\r", ch);
-        return;
-    }
-
-    victim = ch->fighting;
-
-    if (!IS_VAMP(ch))
-    {
-        send_to_char("You do not have Kindred blood in your veins!\n\r", ch);
-        return;
-    }
-
-    if (ch->pcdata->discipline[CELERITY] == 0)
-    {
-        send_to_char("You have not begun studying the metahuman speed of Celerity.\n\r", ch);
-        return;
-    }
-
-    if (ch->pblood < (ch->pcdata->discipline[CELERITY] * 2) + 2)
-    {
-        send_to_char("You are too low on vampiric vitae to fuel that Discipline!\n\r", ch);
-        return;
-    }
-
-    ch->pblood -= ch->pcdata->discipline[CELERITY] * 2;
-
-    act("Drawing upon the latent power of your {rVi{Rt{rae{x, you lash out and attack $N repeatedly.", ch, NULL, victim, TO_CHAR);
-    act("$n suddenly lashes out at you with a flurry of swift attacks.", ch, NULL, victim, TO_VICT);
-    act("$n strikes out swiftly at $N, attacking repeatedly.", ch, NULL, victim, TO_NOTVICT);
-
-    WAIT_STATE(ch, 12);
-
-    for(celattack = 1; celattack <= ch->pcdata->discipline[CELERITY]; celattack++)
-    {
-        one_hit( ch, victim, TYPE_UNDEFINED );
-    }
-
-    return;
-}
-*/
-
-/*Sengir adding new beheading code*/
 void do_behead( CHAR_DATA *ch, char *argument )
 {
     char arg[MAX_INPUT_LENGTH];
@@ -6537,8 +6212,6 @@ void do_allies(CHAR_DATA *ch, char *argument)
     af.type      = gsn_charm_person;
     af.level     = ch->level;
     af.duration  = -1;
-  //af.duration  = (dicesuccess * ch->pcdata->csbackgrounds[CSBACK_ALLIES]) + 10; // Old duration code
-  // Removed it - should be replaced with an auto equipment drop and allies dismiss, not just charm wearing off
     af.location  = 0;
     af.modifier  = 0;
     af.bitvector = AFF_CHARM;

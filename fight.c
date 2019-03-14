@@ -2538,30 +2538,6 @@ bool is_safe(CHAR_DATA *ch, CHAR_DATA *victim)
         return TRUE;
         }
     }
-    /* player doing the killing */
-/*  else
-    {
-        if (!is_clan(ch))
-        {
-        send_to_char("Join a clan if you want to kill players.\n\r",ch);
-        return TRUE;
-        }
-
-        if (IS_SET(victim->act,PLR_KILLER) || IS_SET(victim->act,PLR_THIEF))
-        return FALSE;
-
-        if (!is_clan(victim))
-        {
-        send_to_char("They aren't in a clan, leave them alone.\n\r",ch);
-        return TRUE;
-        }
-
-        if (ch->level > victim->level + 8)
-        {
-        send_to_char("Pick on someone your own size.\n\r",ch);
-        return TRUE;
-        }
-    } */
     }
     return FALSE;
 }

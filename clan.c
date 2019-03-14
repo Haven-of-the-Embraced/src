@@ -181,7 +181,13 @@ void load_clans(void)
 
 bool is_clan(CHAR_DATA * ch)
 {
-    return ch->clan;
+    if (ch)
+        return ch->clan;
+    else
+    {
+        log_string("is_clan: NULL ch passed to is_clan");
+        return FALSE;
+    }
 }
 
 bool is_same_clan(CHAR_DATA * ch, CHAR_DATA * victim)
@@ -533,7 +539,7 @@ void do_claim (CHAR_DATA *ch, char *argument)
     for (d = descriptor_list; d != NULL ; d = d->next)
     {
         fch = d->character;
-        if (fch == ch || !is_clan(fch))
+        if (fch == NULL || fch == ch || !is_clan(fch))
             continue;
         if (dom->clan > 0)
         {

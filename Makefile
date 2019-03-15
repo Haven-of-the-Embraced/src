@@ -42,9 +42,8 @@ $(OBJ_DIR)/%.o: %.c
 clean:
 	$(RM) -f $(OBJ_FILES) $(EXE) *~ *.bak *.orig *.rej
 
-new:
-	make clean
-	make
+new: clean
+	@$(MAKE)
 
 distro:
 	make clean

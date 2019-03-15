@@ -3223,9 +3223,11 @@ void do_switch( CHAR_DATA *ch, char *argument )
     ch->desc->character = victim;
     ch->desc->original  = ch;
     victim->desc        = ch->desc;
+    if (victim->pcdata == NULL)
+        victim->pcdata      = ch->pcdata;
     ch->desc            = NULL;
     /* change communications to match */
-    if (ch->prompt != NULL)
+    if (IS_NPC(victim) && ch->prompt != NULL)
         victim->prompt = str_dup(ch->prompt);
     victim->comm = ch->comm;
     victim->lines = ch->lines;
@@ -3251,7 +3253,7 @@ void do_return( CHAR_DATA *ch, char *argument )
     send_to_char(
 "You return to your original body. Type replay to see any missed tells.\n\r",
     ch );
-    if (ch->prompt != NULL)
+    if (IS_NPC(ch) && ch->prompt != NULL)
     {
     free_string(ch->prompt);
     ch->prompt = NULL;
@@ -3263,6 +3265,8 @@ void do_return( CHAR_DATA *ch, char *argument )
     ch->desc->original        = NULL;
     ch->desc->character->desc = ch->desc;
     ch->desc                  = NULL;
+    if (IS_NPC(ch))
+        ch->pcdata                = NULL;
     return;
 }
 

@@ -2052,6 +2052,7 @@ struct  char_data
     char *      description;
     char *      prompt;
     char *      prefix;
+    char *      leadername;
     sh_int      group;
     sh_int      clan;
     sh_int      petition;

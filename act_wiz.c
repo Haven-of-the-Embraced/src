@@ -6439,7 +6439,7 @@ void do_copyover (CHAR_DATA *ch, char * argument)
         }
         else
         {
-            fprintf (fp, "%d %s %s\n", d->descriptor, och->name, d->host);
+            fprintf (fp, "%d %s %s %s\n", d->descriptor, och->name, d->host, och->leader != NULL ? och->leader->name : NULL);
 
             save_char_obj (och);
 
@@ -6473,12 +6473,14 @@ void do_copyover (CHAR_DATA *ch, char * argument)
 void copyover_recover ()
 {
     DESCRIPTOR_DATA *d;
+    CHAR_DATA   *ch;
     FILE *fp;
     char name [100];
     char host[MSL];
     int desc;
     bool fOld;
     char buf[MSL];
+    char leader[MSL];
 
     log_string("Copyover recovery initiated");
 
@@ -6495,7 +6497,7 @@ void copyover_recover ()
 
     for (;;)
     {
-        fscanf (fp, "%d %s %s\n", &desc, name, host);
+        fscanf (fp, "%d %s %s %s\n", &desc, name, host, leader);
         if (desc == -1)
             break;
 
@@ -6537,6 +6539,7 @@ void copyover_recover ()
 
             char_to_room (d->character, d->character->in_room);
             do_look (d->character, "auto");
+            d->character->leadername = str_dup(leader);
             act ("$n materializes!", d->character, NULL, NULL, TO_ROOM);
             d->connected = CON_PLAYING;
 
@@ -6546,12 +6549,20 @@ void copyover_recover ()
                 act("$n materializes!.",d->character->pet,NULL,NULL,TO_ROOM);
             }
             sendch ("\n\r{DCopyover recovery complete.{x\n\r", d->character);
-            sendch ("{DPlease remember, {wGroups {Ddon't save on copyover!\n\rYou'll have to {wfollow{D your leader again.{x\n\r", d->character);
+            sendch ("{DYour group should have persisted over copyover. \n\rIf it did not, You'll have to {wfollow{D your leader again.{x\n\r", d->character);
         }
 
     }
    fclose (fp);
 
+    for (d = descriptor_list; d ; d = d->next)
+    {
+        ch = d->character;
+        if (ch->leadername != NULL)
+        {
+            ch->leader = get_char_world(ch, ch->leadername);
+        }
+    }
 
 }
 

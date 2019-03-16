@@ -5860,8 +5860,16 @@ void do_oset( CHAR_DATA *ch, char *argument )
 
     if ( !str_prefix( arg2, "extra" ) )
     {
-    obj->extra_flags = value;
-    return;
+            if ( ( value = flag_value( extra_flags, argument ) ) != NO_FLAG )
+        {
+            TOGGLE_BIT(obj->extra_flags, value);
+
+            send_to_char( "Extra flag toggled.\n\r", ch);
+            return;
+        } else {
+                printf_to_char(ch, "Invalid bit name '%s'", argument);
+                return;
+        }
     }
 
     if ( !str_prefix( arg2, "wear" ) )

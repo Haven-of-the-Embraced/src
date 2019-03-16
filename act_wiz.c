@@ -6561,6 +6561,7 @@ void copyover_recover ()
         if (ch->leadername != NULL)
         {
             ch->leader = get_char_world(ch, ch->leadername);
+            ch->master = ch->leader;
         }
     }
 

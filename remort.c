@@ -268,7 +268,6 @@ void do_remort(CHAR_DATA *ch, char *argument)
         ch->gen = 0;
         ch->bonded = 0;
         ch->embraced = 0;
-	ch->aget = 17;
         ch->unlocksspent = 0;
             for(i = 0; i < MAX_DISC; i++)
             ch->pcdata->discipline[i] = 0;

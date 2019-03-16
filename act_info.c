@@ -2917,9 +2917,6 @@ void do_report( CHAR_DATA *ch, char *argument )
     ch->move, ch->max_move,
     ch->exp   );
 
-    if (ch->aget == 0)
-    ch->aget =   17 + ( ch->played + (int) (current_time - ch->logon) ) / 14400;
-
     send_to_char( buf, ch );
 
     sprintf( buf, "$n says '{wI have %d/%d hp %d/%d mana %d/%d mv %d xp.{x'",

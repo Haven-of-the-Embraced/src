@@ -197,7 +197,6 @@ void fwrite_char( CHAR_DATA *ch, FILE *fp )
     fprintf( fp, "qpoints %d\n", ch->qpoints );
     fprintf( fp, "pblood %d\n", ch->pblood );
     fprintf( fp, "unlockp %d\n", ch->unlocksspent);
-    fprintf( fp, "aget %d\n", ch->aget);
     fprintf( fp, "totalkills %d\n", ch->totalkills);
     fprintf( fp, "currentkills %d\n", ch->currentkills);
     fprintf( fp, "maxdamage %d\n", ch->maxdamage);
@@ -895,7 +894,6 @@ bool load_char_obj( DESCRIPTOR_DATA *d, char *name )
     ch->pcdata->pretitle        = str_dup( "" );
     ch->pcdata->last_rpnote            = current_time;
     ch->pcdata->hometown 		= 0;
-    ch->aget = 17; //Default age
     for (stat =0; stat < MAX_STATS; stat++)
     ch->perm_stat[stat]     = 13;
     ch->pcdata->condition[COND_THIRST]  = 48;
@@ -1198,7 +1196,12 @@ void fread_char( CHAR_DATA *ch, FILE *fp )
         KEY( "Auspex",  ch->auspex,     fread_number( fp ) );
         KEY( "Auspice", ch->auspice,        fread_number( fp ) );
         KEY( "Apprentice",  ch->apprentice,         fread_string( fp ) );
-	KEY( "Aget", ch->aget, 			fread_number( fp ) );
+        if (!str_cmp(word, "Aget"))
+        {
+            // silently ignore.
+            fread_number(fp);
+            fMatch = TRUE;
+        }
         if (!str_cmp( word, "Alia"))
         {
         if (count >= MAX_ALIAS)

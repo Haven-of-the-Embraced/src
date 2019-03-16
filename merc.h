@@ -2070,7 +2070,6 @@ struct  char_data
     int         unlocksspent;
     int		cslock;
     int		smited;
-    int 	aget;
     int 	currentkills;
     int 	totalkills;
     int         cheater;

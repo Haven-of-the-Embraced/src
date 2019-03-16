@@ -1245,8 +1245,10 @@ void do_asave( CHAR_DATA *ch, char *argument )
         if ( ch && !IS_BUILDER( ch, pArea ) )
         continue;
 
-        save_area( pArea );
         REMOVE_BIT( pArea->area_flags, AREA_CHANGED );
+        REMOVE_BIT( pArea->area_flags, AREA_ADDED );
+        REMOVE_BIT( pArea->area_flags, AREA_LOADING);
+        save_area( pArea );
     }
 
     if ( ch )
@@ -1281,17 +1283,20 @@ void do_asave( CHAR_DATA *ch, char *argument )
         /* Save changed areas. */
         if ( IS_SET(pArea->area_flags, AREA_CHANGED) )
         {
-        save_area( pArea );
-        if ( ch )
-        {
-            sprintf( buf, "%24s - '%s'\n\r", pArea->name, pArea->file_name );
-            send_to_char( buf, ch );
-        }
-        else {
-            sprintf( buf, "%s - '%s'", pArea->name, pArea->file_name );
-            log_string( buf );
-        }
-        REMOVE_BIT( pArea->area_flags, AREA_CHANGED );
+            REMOVE_BIT( pArea->area_flags, AREA_CHANGED );
+            REMOVE_BIT( pArea->area_flags, AREA_ADDED );
+            REMOVE_BIT( pArea->area_flags, AREA_LOADING);
+            save_area( pArea );
+
+            if ( ch )
+            {
+                sprintf( buf, "%24s - '%s'\n\r", pArea->name, pArea->file_name );
+                send_to_char( buf, ch );
+            }
+            else {
+                sprintf( buf, "%s - '%s'", pArea->name, pArea->file_name );
+                log_string( buf );
+            }
         }
     }
 

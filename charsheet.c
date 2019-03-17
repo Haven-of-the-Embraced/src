@@ -3147,44 +3147,7 @@ void do_charsheet2 (CHAR_DATA * ch, char *argument)
         send_to_char(buf, sch);
         send_to_char("<======================================================================>\n\r",sch);
     }
-    if(ch->race == race_lookup("garou") && ch->pcdata->rank == 0)
-    {
-        send_to_char("\n\r |<=-------------------------=Advantages=---------------------------=>|\n\r",sch);
-        send_to_char(" |                                                                    |\n\r",sch);
-        send_to_char(" |         GIFTS              BACKGROUNDS               VIRTUES       |\n\r",sch);
-        sprintf(buf, " | %s  Allies_________%s    Conscience____%s |\n\r",center(!str_cmp(ch->gift1,"(null)") ? " " : ch->gift1,21," "),dots(ch->pcdata->csbackgrounds[CSBACK_ALLIES], FALSE),dots(ch->pcdata->csvirtues[CSVIRT_CONSCIENCE], FALSE));
-        send_to_char(buf, sch);
-        sprintf(buf, " | %s  Contacts_______%s                        |\n\r",center(!str_cmp(ch->gift2,"(null)") ? " " : ch->gift2,21," "), dots(ch->pcdata->csbackgrounds[CSBACK_CONTACTS], FALSE));
-        send_to_char(buf, sch);
-        sprintf(buf, " | %s  Influence______%s    Self-Control__%s |\n\r",center(!str_cmp(ch->gift3,"(null)") ? " " : ch->gift3,21," "),dots(ch->pcdata->csbackgrounds[CSBACK_INFLUENCE], FALSE),dots(ch->pcdata->csvirtues[CSVIRT_SELF_CONTROL], FALSE));
-        send_to_char(buf, sch);
-        sprintf(buf, " | %s  Resources______%s                        |\n\r",center(!str_cmp(ch->gift4,"(null)") ? " " : ch->gift4,21," "), dots(ch->pcdata->csbackgrounds[CSBACK_RESOURCES], FALSE));
-        send_to_char(buf, sch);
-        sprintf(buf, " | %s  Status_________%s    Courage_______%s |\n\r",center(!str_cmp(ch->gift5,"(null)") ? " " : ch->gift5,21," "),dots(ch->pcdata->csbackgrounds[CSBACK_STATUS], FALSE), dots(ch->pcdata->csvirtues[CSVIRT_COURAGE], FALSE));
-        send_to_char(buf, sch);
-        sprintf(buf, " |<=----------------------------------------------------------------=>|\n\r");
-        send_to_char(buf, sch);
-        sprintf(buf2,"%d",ch->renown);
-        sprintf(buf, " | Renown:  %s     <------Humanity----->   <------Health------> |\n\r",center(buf2,8," "));
-        send_to_char(buf, sch);
-        sprintf(buf2,"%d",ch->rage);
-        sprintf(buf, " | Rage:    %s      %s        Bruised        %s |\n\r",center(buf2,8," "),dots2(ch->pcdata->cshumanity, TRUE), cshealth < 7 ? "{RX{x" : "_");
-        send_to_char(buf, sch);
-        sprintf(buf, " | Form:   %s    <------Willpower---->       Hurt        -1 %s |\n\r",center(ch->changed == CHANGED_HOMID ? "Homid" : ch->changed == CHANGED_LUPUS ? "Lupus" : ch->changed == CHANGED_CRINOS ? "Crinos" : "Error", 10, " "), cshealth < 6 ? "{RX{x" : "_");
-        send_to_char(buf, sch);
-        sprintf(buf, " |                        %s        Injured     -1 %s |\n\r",dots2(ch->pcdata->csmax_willpower, TRUE), cshealth < 5 ? "{RX{x" : "_");
-        send_to_char(buf, sch);
-        sprintf(buf, " |                        %s        Wounded     -2 %s |\n\r",dots3(ch->pcdata->cswillpower, TRUE), cshealth < 4 ? "{RX{x" : "_");
-        send_to_char(buf, sch);
-        sprintf(buf, " |                                                   Mauled      -2 %s |\n\r", cshealth < 3 ? "{RX{x" : "_");
-        send_to_char(buf, sch);
-        sprintf(buf, " |                                                   Crippled    -5 %s |\n\r", cshealth < 2 ? "{RX{x" : "_");
-        send_to_char(buf, sch);
-        sprintf(buf, " |                                                   Incapacitated  %s |\n\r", cshealth < 1 ? "{RX{x" : "_");
-        send_to_char(buf, sch);
-        send_to_char("<======================================================================>\n\r",sch);
-    }
-    if(ch->race == race_lookup("garou") && ch->pcdata->rank > 0)
+    if(ch->race == race_lookup("garou"))
     {
         send_to_char("\n\r |<=-------------------------=Advantages=---------------------------=>|\n\r",sch);
         send_to_char(" |                                                                    |\n\r",sch);
@@ -3216,7 +3179,7 @@ void do_charsheet2 (CHAR_DATA * ch, char *argument)
             case 3: sprintf(buf2,"Adren"); break;
             case 4: sprintf(buf2,"Athro"); break;
             case 5: sprintf(buf2,"Elder"); break;
-            default: sprintf(buf2,"Error"); break;
+            default: sprintf(buf2,"Pup"); break;
         }
         sprintf(buf, " |     Rank %s       %s        Wounded     -2 %s |\n\r",center(buf2, 7, " "), dots2(ch->pcdata->gnosis[PERM], TRUE), cshealth < 4 ? "{RX{x" : "_");
         send_to_char(buf, sch);

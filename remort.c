@@ -149,6 +149,8 @@ void do_remort(CHAR_DATA *ch, char *argument)
             ch->pcdata->csbackgrounds[i] = 0;
         for (i = 0; i < MAX_GIFT; i++)
             ch->pcdata->gift[i] = 0;
+        for (i = 0; i < 6; i++)
+            ch->pcdata->renown[i] = 0;
         ch->pcdata->shiftform = HOMID;
         ch->pcdata->rage[0] = 0;
         ch->pcdata->rage[1] = 0;
@@ -309,6 +311,8 @@ void do_remort(CHAR_DATA *ch, char *argument)
             ch->pcdata->cssec_abil[i] = 0;
         for (i = 0; i < MAX_GIFT; i++)
             ch->pcdata->gift[i] = 0;
+        for (i = 0; i < 6; i++)
+            ch->pcdata->renown[i] = 0;
         for(i = 0; i < 9; i++)
             ch->pcdata->csattributes[i] = 1;
         ch->pcdata->csvirtues[CSVIRT_CONSCIENCE] = 1;

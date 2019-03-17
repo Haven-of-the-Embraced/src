@@ -24,7 +24,7 @@ except:
 #
 os.chdir('/home/havenlive/area')
 
-if (os.path.exists('shutdown.txt')):
+if (os.path.exists('../data/shutdown.txt')):
     os.unlink(pidfile)
     exit()
 
@@ -45,8 +45,8 @@ while True:
     os.system('cat /home/havenlive/log/current/system.log >> /home/havenlive/log/{0}'.format(filename))
 
 
-    if (os.path.exists('shutdown.txt')):
-       # os.system('rm -f shutdown.txt')
+    if (os.path.exists('../data/shutdown.txt')):
+       # os.system('rm -f ../data/shutdown.txt')
         os.unlink(pidfile)
         exit()
 

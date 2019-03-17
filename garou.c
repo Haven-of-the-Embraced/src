@@ -392,7 +392,7 @@ void do_garouconvert(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if(ch->pcdata->garou_fur[0] == '\0')
+    if(ch->pcdata->garou_fur == NULL || ch->pcdata->garou_fur[0] == '\0')
     {
         if(argument[0] == '\0')
         {
@@ -400,6 +400,11 @@ void do_garouconvert(CHAR_DATA *ch, char *argument)
             return;
         }
         smash_tilde( argument );
+        if ( c_str_len(argument) > 18 )
+        {
+            sendch("Fur color length limited to 18 visible characters. Pick something shorter!\n\r", ch);
+            return;
+        }
         free_string( ch->pcdata->garou_fur );
         ch->pcdata->garou_fur = str_dup( argument );
     }

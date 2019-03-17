@@ -100,7 +100,7 @@ void load_clans(void)
     clan_table[i].banker = "";
     }
 
-    if (!(fp = fopen(DATA_FILE, "r")) )
+    if (!(fp = fopen(CLAN_FILE, "r")) )
     {
     log_string("Error: guild.dat file not found!");
     exit(1);

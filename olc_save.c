@@ -80,10 +80,10 @@ void save_area_list()
     extern HELP_AREA * had_list;
     HELP_AREA * ha;
 
-    if ( ( fp = fopen( "area.lst", "w" ) ) == NULL )
+    if ( ( fp = fopen( AREA_LIST, "w" ) ) == NULL )
     {
     bug( "Save_area_list: fopen", 0 );
-    perror( "area.lst" );
+    perror( AREA_LIST );
     }
     else
     {
@@ -986,7 +986,7 @@ void save_clans(CHAR_DATA *ch, char *argument)
     int value;
     char buf[MSL];
 
-    sprintf (buf, "guild.dat");
+    sprintf (buf, CLAN_FILE);
     if ( !( fp = fopen(buf, "w" ) ) )
     {
         log_string( "Open_guild: fopen" );

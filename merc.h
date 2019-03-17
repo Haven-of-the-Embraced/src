@@ -3267,36 +3267,36 @@ char *  crypt       args( ( const char *key, const char *salt ) );
 #define PLAYER_DIR      "../player/"            /* Player files */
 #define BK_PLAYER_DIR   "../player/bk/"         /* Backup player files */
 #define GOD_DIR         "../gods/"          /* list of gods */
-#define TEMP_FILE   "../player/romtmp"
-#define NULL_FILE   "/dev/null"     /* To reserve one stream */
+#define TEMP_FILE       "../player/romtmp"
+#define NULL_FILE       "/dev/null"     /* To reserve one stream */
 #define DATA_DIR        "../data/"
 #endif
-#define DATA_FILE       "guild.dat"
-#define AREA_LIST       "area.lst"  /* List of areas*/
-#define DICT_FILE        "dictionary.lst" /* For dict entries */
-#define BUG_FILE        "bugs.txt" /* For 'bug' and bug()*/
-#define TYPO_FILE       "typos.txt" /* For 'typo'*/
-#define NOHELPS_FILE    "nohelps.txt" /*For if help !found in 'help'*/
-#define NOTE_FILE       "notes.not"/* For 'notes'*/
-#define IDEA_FILE   "ideas.not"
-#define PENALTY_FILE    "penal.not"
-#define NEWS_FILE   "news.not"
-#define CHANGES_FILE    "chang.not"
-#define IMMNOTE_FILE    "immnote.not"
-#define RPNOTE_FILE     "rpnote.not"
-#define SHUTDOWN_FILE   "shutdown.txt"/* For 'shutdown'*/
-#define BAN_FILE    "ban.txt"
-#define SYSTEM_LOG  "../log/current/system.log"
-#define MUSIC_FILE  "music.txt"
-#define GOD_FILE    "gods.txt"
-#define LAST_COMMAND_FILE   "last.txt"
-#define LS_FILE "../player/ls.txt"
-#define COMMAND_FILE     "command.dat" /*Commands list*/
-#define QUEST_FILE       "quest.dat" /*qitems list */
-#define CONFIG_FILE "config.cfg"
-#define CONFIG_BACKUP "config.bk"
+#define CLAN_FILE       "../data/guild.dat"
+#define AREA_LIST       "../data/area.lst"  /* List of areas*/
+#define DICT_FILE       "../data/dictionary.lst" /* For dict entries */
+#define BUG_FILE        "../data/bugs.txt" /* For 'bug' and bug()*/
+#define TYPO_FILE       "../data/typos.txt" /* For 'typo'*/
+#define NOHELPS_FILE    "../data/nohelps.txt" /*For if help !found in 'help'*/
+#define NOTE_FILE       "../data/notes.not"/* For 'notes'*/
+#define IDEA_FILE       "../data/ideas.not"
+#define PENALTY_FILE    "../data/penal.not"
+#define NEWS_FILE       "../data/news.not"
+#define CHANGES_FILE    "../data/chang.not"
+#define IMMNOTE_FILE    "../data/immnote.not"
+#define RPNOTE_FILE     "../data/rpnote.not"
+#define SHUTDOWN_FILE   "../data/shutdown.txt"/* For 'shutdown'*/
+#define BAN_FILE        "../data/ban.txt"
+#define SYSTEM_LOG      "../log/current/system.log"
+#define MUSIC_FILE      "../data/music.txt"
+#define GOD_FILE        "../data/gods.txt"
+#define LAST_COMMAND_FILE   "../data/last.txt"
+#define LS_FILE         "../player/ls.txt"
+#define COMMAND_FILE     "../data/command.dat" /*Commands list*/
+#define QUEST_FILE       "../data/quest.dat" /*qitems list */
+#define CONFIG_FILE      "../data/config.cfg"
+#define CONFIG_BACKUP    "../data/config.bk"
 /* This file holds the copyover data */
-#define COPYOVER_FILE "copyover.data"
+#define COPYOVER_FILE   "../data/copyover.data"
 
 /* This is the executable file */
 #define EXE_FILE      "../src/rom"

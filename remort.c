@@ -435,7 +435,7 @@ void do_remort(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if ( arg[0] == '\0')
+    if ( !str_cmp(arg, "confirm") || arg[0] == '\0')
     {
         if(ch->level < 100)
         {
@@ -443,10 +443,11 @@ void do_remort(CHAR_DATA *ch, char *argument)
             return;
         }
 
-        if(ch->pcdata->rank > 0 && ch->pcdata->renown[TEMP_GLORY] == 10 &&
+        if(str_cmp(arg, "confirm") && ch->pcdata->rank > 0 && ch->pcdata->renown[TEMP_GLORY] == 10 &&
         ch->pcdata->renown[TEMP_HONOR] == 10 &&  ch->pcdata->renown[TEMP_WISDOM] == 10)
         {
             send_to_char("You cannot remort again until you've spent some of your Temporary Renown.\n\r",ch);
+            send_to_char("If you do not mind sacrificing potential renown, type 'remort confirm' to bypass this message.\n\r", ch);
             return;
         }
 

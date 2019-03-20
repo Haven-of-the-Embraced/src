@@ -4828,7 +4828,7 @@ void do_plane( CHAR_DATA *ch, char *argument )
     act( "and manage to plane the log into $p!", ch, obj,NULL, TO_CHAR );
     act( "and manages to plane the log into $p!", ch, obj,NULL, TO_ROOM );
 
-    gain_exp( ch, 30*success );
+    gain_exp( ch, 45*success );
     obj_to_room(obj,ch->in_room);
     WAIT_STATE( ch, (6- ch->pcdata->cssec_abil[CSABIL_CARVING]) * PULSE_VIOLENCE );
     extract_obj( log );
@@ -5006,7 +5006,7 @@ void do_carve( CHAR_DATA *ch, char *argument )
     act( "and manage to create $p!", ch, obj,NULL, TO_CHAR );
     act( "and manages to create $p!", ch, obj,NULL, TO_ROOM );
 
-    gain_exp( ch, 25*success );
+    gain_exp( ch, 40*success );
     obj_to_room(obj,ch->in_room);
     WAIT_STATE( ch, (6- ch->pcdata->cssec_abil[CSABIL_CARVING]) * PULSE_VIOLENCE );
     extract_obj( resource );

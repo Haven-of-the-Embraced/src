@@ -2378,6 +2378,14 @@ void do_pstat( CHAR_DATA *ch, char *argument )
         victim->rank == 9 ? "Mentor" : "Leader");
         send_to_char(buf,ch);
     }
+        if (!IS_NPC(victim) && victim->pcdata->playernotes != NULL)
+    {
+        send_to_char("{W--Player Notes:{x\n\r", ch);
+        send_to_char("=================================================================\n\r", ch);
+        printf_to_char(ch,"%s", victim->pcdata->playernotes);
+        send_to_char("=================================================================\n\r", ch);
+    }
+
     if(victim->affected != NULL)
         send_to_char("{y-------Affects:{x\n\r",ch);
 

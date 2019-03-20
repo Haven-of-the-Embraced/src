@@ -1087,28 +1087,17 @@ if (is_affected(ch, gsn_shadowplay) && ch != NULL)
        if (doubleexp)
            {
            qpaward = qpaward*2;
-           ch->qpoints += qpaward;
-           global_xp += qpaward*2;
-           }
-       if (global_qp < 20000)
-          {
-          qpaward = qpaward*2;
-          ch->qpoints += qpaward;
-          global_qp -= qpaward/2;
-          }
-       if (global_qp > 20000)
-          {
-          qpaward = qpaward*4;
-          ch->qpoints += qpaward;
-          global_qp -= qpaward/4;
-          }
+           global_xp -= qpaward*2;
 
-        if (global_qp > 40000)
-          {
-             qpaward = qpaward*6;
-             ch->qpoints += qpaward;
-             global_qp -= qpaward/6;
-          }
+            if (global_qp > 40000)
+              {
+                 qpaward = qpaward*2;
+                 global_qp -= qpaward;
+              }
+           ch->qpoints += qpaward;
+       }
+
+
        if (ch->qpoints > 30000)
             ch->qpoints = 30000;
         }
@@ -1120,7 +1109,7 @@ if (is_affected(ch, gsn_shadowplay) && ch != NULL)
    ichours = (ch->played + (int) (current_time - ch->logon)) / 3600;
                 gain_exp( ch, UMIN( (370 + ch->remorts)*2, number_range( ichours/8, (ichours/6 + ch->roleplaying))));
         if (doubleexp)
-            gain_exp( ch, UMIN( (370 + ch->remorts)*2, number_range( ichours/8, (ichours/6 + ch->roleplaying))*2));
+            gain_exp( ch, UMIN( (370 + ch->remorts)*2, number_range( ichours/8, (ichours/6 + ch->roleplaying))*xpawardmult));
     }
 
     if(ch->race == race_lookup("vampire") || ch->race == race_lookup("methuselah"))

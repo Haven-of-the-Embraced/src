@@ -285,43 +285,26 @@ void do_skills(CHAR_DATA *ch, char *argument)
 
 int exp_per_level(CHAR_DATA *ch, int points)
 {
-    int expl,inc;
+    int expl,mod;
 
     if (IS_NPC(ch))
 	return 1000;
 
     expl = 1000;
-    inc = 500;
+    mod = 100;
+    if (ch->race == race_lookup("vampire"))
+        mod = 150;
+    if (ch->race == race_lookup("ghoul"))
+        mod = 125;
+    if (ch->race == race_lookup("garou"))
+        mod = 200;
+    if (ch->race == race_lookup("human"))
+        mod = 100;
 
-    if (points < 30)
-	{
-		if((1000 * (pc_race_table[ch->race].class_mult[ch->class] ? pc_race_table[ch->race].class_mult[ch->class]/100 : 1))+(100*ch->remorts) > 10000)
-			return 10000;
-		else
-			return (1000 * (pc_race_table[ch->race].class_mult[ch->class] ?
-				       pc_race_table[ch->race].class_mult[ch->class]/100 : 1))+(100*ch->remorts);
-	}
-    /* processing */
-    points -= 30;
-
-
-    {
-	expl += inc;
-        points -= 10;
-        if (points > 9)
-	{
-	    expl += inc;
-	    inc *= 2;
-	    points -= 10;
-	}
-    }
-
-    expl += points * inc / 10;
-
-	if((expl * pc_race_table[ch->race].class_mult[ch->class]/100)+(100*ch->remorts) > 10000)
+	if((expl * mod/100)+(100*ch->remorts) > 10000)
 		return 10000;
 	else
-    	return (expl * pc_race_table[ch->race].class_mult[ch->class]/100)+(100*ch->remorts);
+    	return (expl * mod/100)+(100*ch->remorts);
 }
 
 /* checks for skill improvement */

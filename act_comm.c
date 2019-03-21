@@ -1722,7 +1722,7 @@ void do_dictionary( CHAR_DATA *ch, char *argument )
 
     send_to_char( "Searching...\n\r", ch );
 
-    sprintf(buf,"grep -i %s dictionary.lst",word);
+    sprintf(buf,"grep -i %s %s",word, DICT_FILE);
     if(0==system(buf))
     {
         sprintf( buf2, "The word '%s' is in the Dictionary.\n\r", word );

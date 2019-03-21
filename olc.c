@@ -1623,6 +1623,7 @@ void do_resets( CHAR_DATA *ch, char *argument )
 
         free_reset_data( pReset );
         send_to_char( "Reset deleted.\n\r", ch );
+        SET_BIT( ch->in_room->area->area_flags, AREA_CHANGED );
     }
     else
     /*
@@ -1649,6 +1650,7 @@ void do_resets( CHAR_DATA *ch, char *argument )
         pReset->arg2    = is_number( arg4 ) ? atoi( arg4 ) : 1; /* Max # */
         pReset->arg3    = ch->in_room->vnum;
         pReset->arg4    = is_number( arg5 ) ? atoi( arg5 ) : 1; /* Min # */
+        SET_BIT( ch->in_room->area->area_flags, AREA_CHANGED );
         }
         else
         /*
@@ -1678,6 +1680,7 @@ void do_resets( CHAR_DATA *ch, char *argument )
             pReset->arg2    = is_number( arg6 ) ? atoi( arg6 ) : 1;
             pReset->arg3    = is_number( arg5 ) ? atoi( arg5 ) : 1;
             pReset->arg4    = is_number( arg7 ) ? atoi( arg7 ) : 1;
+            SET_BIT( ch->in_room->area->area_flags, AREA_CHANGED );
         }
         else
         /*
@@ -1695,6 +1698,7 @@ void do_resets( CHAR_DATA *ch, char *argument )
             pReset->arg2     = 0;
             pReset->arg3     = ch->in_room->vnum;
             pReset->arg4     = 0;
+            SET_BIT( ch->in_room->area->area_flags, AREA_CHANGED );
         }
         else
         /*

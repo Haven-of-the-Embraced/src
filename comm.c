@@ -2082,7 +2082,7 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
     case 'y': case 'Y':
     /* dict check stuff */
         write_to_buffer(d, "New character.\n\rChecking for Dictionary entry...", 0);
-        sprintf(buf,"grep -i %s dictionary.lst",ch->name);
+        sprintf(buf,"grep -i %s %s",ch->name, DICT_FILE);
         if(0==system(buf))
         {
             write_to_buffer(d,"\n\r This name is listed in the dictionary.\n\rPlease choose another.\n\r\n\rName:\n\r",0);

@@ -701,6 +701,7 @@ const struct reward_type reward_table[]=
   { "Archonian Plate",        "archonian plate", 9500, TRUE,  6613,    0},
   { "a potion of Escape to a True Friend", "escape true friend", 250, TRUE, 30432, 0},
   { "the Godly Potion of Mana", "mana", 250, TRUE, 3099, 0},
+  { "One Freebie",      "freebie",      3500, FALSE, 1, &ch->freebie},
 
 
 //  { "350,000 Gold Pieces",     "350000 gold",   500, FALSE, 350000,&ch->gold},

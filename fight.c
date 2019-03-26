@@ -3251,7 +3251,7 @@ void group_gain( CHAR_DATA *ch, CHAR_DATA *victim )
         continue;
 
     xp = xp_compute( gch, victim, group_levels );
-    qp = number_range(1, xp/100);
+    qp = number_range(1, xp/200);
     if (gch == lch && members > 1)
     qp *= 2;
     if (victim->level < gch->level || ch->leader != NULL)

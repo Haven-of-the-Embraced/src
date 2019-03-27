@@ -4979,6 +4979,15 @@ void do_mset( CHAR_DATA *ch, char *argument )
             send_to_char("Invalid background range. Valid range is 0 - 5\n\r",ch);
             return;
         }
+        if (disc == CSBACK_GENERATION)
+        {
+            victim->gen = 10-value;
+            victim->pcdata->csgeneration = 10-value;
+            victim->max_pblood = 100+(value * 10);
+        }
+        if (disc == CSBACK_FOUNT)
+            victim->max_quintessence = 100+(value*10);
+
         victim->pcdata->csbackgrounds[disc] = value;
         return;
     }
@@ -5255,13 +5264,20 @@ void do_mset( CHAR_DATA *ch, char *argument )
         return;
     }
 
-    if ( value < 1 || value > 15 )
+    if ( !IS_IMMORTAL(victim) && (value < 5 || value > 10) )
     {
-        send_to_char("Generation range is 1 to 15.\n\r", ch);
+        send_to_char("Generation range is 5 to 10.\n\r", ch);
         return;
     }
+    int newgen;
     victim->gen = value;
     victim->pcdata->csgeneration = value;
+    newgen = 10-value;
+    if (newgen > 5) newgen = 5;
+    if (newgen < 0) newgen = 0;
+    victim->pcdata->csbackgrounds[CSBACK_GENERATION] = newgen;
+    victim->max_pblood = 100+(newgen * 10);
+
     return;
     }
     if ( !str_prefix( arg2, "rank" ) )

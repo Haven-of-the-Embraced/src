@@ -1052,31 +1052,26 @@ if (is_affected(ch, gsn_shadowplay) && ch != NULL)
     if(ch->qpoints < 30000)
     {
         ichours = ch->pcdata->IC_total/60;
-        if (ichours <= 50)
-            qpgain = number_range(ichours, 3*ichours/2 + 8);
-        if (ichours > 50 && ichours < 100)
+
             qpgain = number_range(ichours, ichours/2 + 8);
         if (ichours >= 100)
             qpgain = number_range(ichours/2, ichours/4 + 8);
-        if (ichours > 200)
-            qpgain = number_range(ichours/4, ichours/8 + 8);
         if (ichours > 300)
-            qpgain = number_range(ichours/8, ichours/16 + 8);
-        if (ichours > 400)
-            qpgain = number_range(ichours/16, ichours/32 + 8);
+            qpgain = number_range(ichours/4, ichours/8 + 8);
         if (ichours > 600)
-            qpgain = number_range(ichours/32, ichours/100 + 8);
+            qpgain = number_range(ichours/8, ichours/16 + 8);
 
        switch (ch->pcdata->room_last_pose) {
-           case 0: case 1:qpgain = 3*qpgain/2;break;
-           case 2: case 3: break;
-           case 4: case 5: qpgain = qpgain/2;break;
+           case 0: case 1:
+           case 2: case 3: qpgain = 3*qpgain/2;break;
+           case 4: case 5: break;
+           case 6: case 7: qpgain = qpgain/2;break;
            default: qpgain = 4;break;
        }
         // Doing math ahead of time so variables match
         qpaward = UMIN(200+ch->remorts, qpgain);
 
-       if (ch->pcdata->last_pose < 5)
+       if (ch->pcdata->last_pose < 8)
         {
 
         // Line for this into gxp as well

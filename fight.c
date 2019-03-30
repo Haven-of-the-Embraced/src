@@ -6073,7 +6073,7 @@ void do_behead( CHAR_DATA *ch, char *argument )
     OBJ_DATA *obj;
     char *name;
 
-    name        = IS_NPC(ch) ? victim->short_descr : victim->name;
+    name        = IS_NPC(victim) ? victim->short_descr : victim->name;
     obj     = create_object( get_obj_index( OBJ_VNUM_SEVERED_HEAD ) , 0 );
     obj->timer  = number_range( 7, 12 );
 
@@ -6098,7 +6098,7 @@ void do_behead( CHAR_DATA *ch, char *argument )
 
     obj_to_room( obj, ch->in_room);
 
-    REMOVE_BIT(ch->parts, PART_HEAD);
+    REMOVE_BIT(victim->parts, PART_HEAD);
 
     WAIT_STATE(ch, 6);
 

@@ -369,6 +369,7 @@ const struct flag_type imm_flags[] =
     {   "silver",       Y,  TRUE    },
     {   "iron",         Z,  TRUE    },
     {   "sunlight",         aa, TRUE    },
+    {   "disarm",           bb,     TRUE},
     {   NULL,           0,  0   }
 };
 

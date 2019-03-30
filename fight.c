@@ -4986,6 +4986,15 @@ void do_disarm( CHAR_DATA *ch, char *argument )
     return;
     }
 
+    if (IS_SET(victim->imm_flags, IMM_DISARM))
+    {
+        WAIT_STATE(ch,skill_table[gsn_disarm].beats);
+		act("You fail to disarm $N.",ch,NULL,victim,TO_CHAR);
+		act("$n tries to disarm you, but fails.",ch,NULL,victim,TO_VICT);
+		act("$n tries to disarm $N, but fails.",ch,NULL,victim,TO_NOTVICT);
+        return;
+    }
+
     /* find weapon skills */
     ch_weapon = get_weapon_skill(ch,get_weapon_sn(ch));
     vict_weapon = get_weapon_skill(victim,get_weapon_sn(victim));

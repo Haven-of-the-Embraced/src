@@ -784,7 +784,7 @@ int IS_VAMP( CHAR_DATA *ch )
  */
 int get_age( CHAR_DATA *ch )
 {
-    return 17 + ( ch->played + (int) (current_time - ch->logon) ) / 72000; 
+    return 17 + ( ch->played + (int) (current_time - ch->logon) ) / 72000;
 }
 
 /* command for retrieving stats */
@@ -3211,6 +3211,7 @@ char *imm_bit_name(int imm_flags)
     if (imm_flags & IMM_ENERGY      ) strcat(buf, " energy");
     if (imm_flags & IMM_MENTAL      ) strcat(buf, " mental");
     if (imm_flags & IMM_DISEASE ) strcat(buf, " disease");
+    if (imm_flags & IMM_DISARM) strcat(buf, " disarm");
     if (imm_flags & IMM_DROWNING    ) strcat(buf, " drowning");
     if (imm_flags & IMM_LIGHT       ) strcat(buf, " light");
     if (imm_flags & VULN_IRON       ) strcat(buf, " iron");

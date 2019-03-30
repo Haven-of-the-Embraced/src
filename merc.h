@@ -1058,6 +1058,7 @@ struct  kill_data
 #define IMM_SILVER              (Y)
 #define IMM_IRON                (Z)
 #define IMM_SUNLIGHT            (aa)
+#define IMM_DISARM              (bb)
 /* RES bits for mobs */
 #define RES_SUMMON      (A)
 #define RES_CHARM       (B)

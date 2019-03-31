@@ -2360,8 +2360,13 @@ void do_who( CHAR_DATA *ch, char *argument )
     add_buf(output, "{w<==============================================================================>{x\n\r");
     sprintf( buf2, "Global {WXP{x:%d | Global {MQP{x:%d\n",global_xp,global_qp);
     add_buf(output,buf2);
-    if (doubleexp)sprintf( buf2, "Double XP is ON!\n");
-    if (doubleexp)add_buf(output,buf2);
+    if (doubleexp) {
+        if (xpawardmult == 2)
+            sprintf( buf2, "Double XP is ON!\n");
+        if (xpawardmult == 3)
+            sprintf(buf2, "Triple XP is ON!\n");
+        add_buf(output,buf2);
+    }
 page_to_char( buf_string(output), ch );
     free_buf(output);
     return;

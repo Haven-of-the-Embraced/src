@@ -2607,8 +2607,12 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
     if (slaughter)
         send_to_char("Time to get killing, {RSlaughterfest{x is running!\n\r", ch);
     if (doubleexp)
-        send_to_char("{CDoubleexp{x is turned on!{x", ch);
-
+    {
+        if (xpawardmult == 2)
+            send_to_char("{CDoubleexp{x is turned on!{x\n\r", ch);
+        if (xpawardmult == 3)
+            send_to_char("{CTripleexp{x is turned on!{x\n\r", ch);
+    }
     /*if (IS_VAMP(ch) && ch->gen < 10)
     {
         switch (ch->gen)

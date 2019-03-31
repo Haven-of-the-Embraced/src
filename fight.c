@@ -3452,7 +3452,7 @@ if (xpstat == 3 && global_xp > 300000)
             {
                 if ( d->connected == CON_PLAYING )
                 {
-                    send_to_char( "{G****{YIt's {RD{Go{Mu{Yb{Bl{Ce {RE{Gx{Mp{Y time!{G****{x\n\r", d->character );
+                    send_to_char( "{R****{YIt's {RT{Gr{Mi{Yp{Bl{Ce {RE{Gx{Mp{Y time!{R****{x\n\r", d->character );
                 }
             }
 

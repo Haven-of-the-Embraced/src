@@ -3510,7 +3510,7 @@ if (xpstat == 3 && global_xp > 300000)
        // Zelan steals XP here to add to global_xp
 
     if (doubleexp == FALSE)
-    global_xp += xp/10;
+    global_xp += xp/5;
 
     if (!IS_NPC(gch) && gch->pcdata->immclass > 0 )
     {

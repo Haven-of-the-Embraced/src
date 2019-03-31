@@ -3378,7 +3378,10 @@ int xp_compute( CHAR_DATA *gch, CHAR_DATA *victim, int total_levels )
             {
                 if ( d->connected == CON_PLAYING )
                 {
-                    send_to_char( "{G****[{YDouble Exp has ended {y:-( {G]****{x\n\r", d->character );
+                    if (xpawardmult == 2)
+                        send_to_char( "{G****[{YDouble Exp has ended {y:-( {G]****{x\n\r", d->character );
+                    if (xpawardmult == 3)
+                        send_to_char( "{R****[{Ytriple Exp has ended {y:-( {R]****{x\n\r", d->character );
                 }
             }
 		}

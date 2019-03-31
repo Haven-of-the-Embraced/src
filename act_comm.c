@@ -2261,10 +2261,13 @@ void do_group( CHAR_DATA *ch, char *argument )
 {
     char buf[MAX_STRING_LENGTH];
     char arg[MAX_INPUT_LENGTH];
+    char arg2[MAX_INPUT_LENGTH];
     CHAR_DATA *victim;
     CHAR_DATA *groupie;
 
-    one_argument( argument, arg );
+    argument = one_argument( argument, arg );
+    argument = one_argument( argument, arg2);
+
 
     if (IS_SET(ch->act,PLR_ARENA))
     {
@@ -2339,6 +2342,11 @@ void do_group( CHAR_DATA *ch, char *argument )
         ch,NULL,victim,TO_VICT,POS_SLEEPING, FALSE);
     act_new("You remove $N from your group.",
         ch,NULL,victim,TO_CHAR,POS_SLEEPING, FALSE);
+    if (!str_cmp(arg2, "abandon"))
+    {
+        act_new("You abandon $N entirely.", ch, NULL, victim, TO_CHAR, POS_SLEEPING, FALSE);
+        victim->master = NULL;
+    }
     return;
     }
 

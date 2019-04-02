@@ -794,10 +794,6 @@ void do_freebie(CHAR_DATA *ch, char *argument)
         sprintf(buf,"Generation:              {Y%d{x\n\r",costcounter);
         send_to_char(buf,ch);
         }
-        send_to_char("Unlock costs:\n\r",ch);
-        send_to_char("Combat Discipline:       1 Unlock point\n\r",ch);
-        send_to_char("Common Disciplines:      2 Unlock points\n\r",ch);
-        send_to_char("Clan Disciplines:        3 Unlock points\n\r",ch);
     }
         if (ch->race == race_lookup("ghoul"))
         {
@@ -828,9 +824,6 @@ void do_freebie(CHAR_DATA *ch, char *argument)
         send_to_char("\n\rTo increase a trait type 'freebie <trait>'\n\rExample: freebie animal_ken\n\r",ch);
         sprintf(buf,"You have %d freebies remaining.\n\r",ch->freebie);
         send_to_char(buf,ch);
-	if (IS_VAMP(ch)) {
-        sprintf(buf,"You have %d unlock points remaining.\n\r",unlockpoints);
-        send_to_char(buf,ch);}
         return;
     }
     for(i = 0; i < 30; i++)
@@ -1393,8 +1386,7 @@ void do_freebie(CHAR_DATA *ch, char *argument)
         }
     }
 
-    int disc, num, unlockneeded, freebiecost;
-
+    int disc, num;
     for(i = 0; i < MAX_DISC; i++)
     {
         if(!str_prefix(arg, disc_table[i].name))
@@ -1408,65 +1400,32 @@ void do_freebie(CHAR_DATA *ch, char *argument)
                 disc == MORTIS || disc == QUIETUS || disc == THAUMATURGY ||
                 disc == VICISSITUDE || disc == CHIMERSTRY || disc == DEMENTATION)
                  {
-                     unlockneeded = 3;
-                     if (disc == VICISSITUDE)
-                     {
-                     send_to_char("One does not simply 'learn' Vicissitude.\n\r",ch);
-                     return;
-                     }
-
+                    send_to_char("This discipline cannot be purchased OOCly, you must roleplay for it.\n\r", ch);
+                    return;
                 }
-                if (disc == ANIMALISM || disc == AUSPEX || disc == DOMINATE ||
-                    disc == OBFUSCATE || disc == PRESENCE)
-                {
-                    unlockneeded = 2;
-                }
-                if (disc == CELERITY || disc == POTENCE || disc == FORTITUDE)
-                {
-                    unlockneeded = 1;
-                }
-
 
             if (ch->race != race_lookup("ghoul"))
-            freebiecost = 10;
+            cost = 10;
             else
             {
-                freebiecost = 15;
+                cost = 15;
 
                 for (num = 0; num < 3; num ++)
                 {
                     if (i == clandisc_table[ch->clan].clan_disc[num])
                     {
-                        freebiecost = 10;
+                        cost = 10;
                         break;
                     }
                 }
                 if (disc == CELERITY || disc == FORTITUDE || disc == POTENCE)
-                    freebiecost = 8;
+                    cost = 8;
             } // if race == ghoul
 
-
-
-
-            if (ch->freebie < freebiecost)
-                {
-                    cprintf(ch, "You must have at least %d freebies for this discpline.\n\r", freebiecost );
-                            return;
-                }
-                if (unlockpoints < unlockneeded)
-                {
-                    cprintf(ch, "You must have at least %d unlock points for this discpline.\n\r", unlockneeded );
-                            return;
-                }
-                ch->pcdata->discipline[i]++;
-                ch->unlocksspent += unlockneeded;
-                ch->freebie -= freebiecost;
-                unlockpoints = max_unlock - ch->unlocksspent;
-                cprintf(ch,"You spend %d freebies and use %d unlock points to learn the Discipline of %s.\n\r",freebiecost, unlockneeded, capitalize(disc_table[i].name));
-                cprintf(ch, "You have %d unlock points and %d freebies remaining.\n\r",unlockpoints, ch->freebie);
-                return;
+            count = i;
+            step = 12;
+            break;
             }
-
 
         if (ch->race == race_lookup("vampire") || ch->race == race_lookup("methuselah"))
         {
@@ -1538,7 +1497,8 @@ void do_freebie(CHAR_DATA *ch, char *argument)
     {
         if(ch->freebie < cost)
         {
-            send_to_char("You don't have enough freebies.\n\r",ch);
+            sprintf(buf, "You do not have enough freebies.\n\rYou have %d freebies and need %d more.\n\r", ch->freebie, cost - ch->freebie);
+            send_to_char(buf,ch);
             return;
         }
         ch->freebie -= cost;

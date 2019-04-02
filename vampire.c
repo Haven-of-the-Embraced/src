@@ -1437,6 +1437,7 @@ void do_diablerize(CHAR_DATA *ch, char *argument)
 void do_teach(CHAR_DATA *ch, char *argument)
 {
     char arg1[MAX_INPUT_LENGTH], arg2[MIL];
+    char buf[MSL];
     CHAR_DATA *victim;
     int i, disc, cost, num;
     disc = -1;
@@ -1445,13 +1446,22 @@ void do_teach(CHAR_DATA *ch, char *argument)
     argument = one_argument( argument, arg2 );
 
     if (IS_NPC(ch)) return;
-    if (!IS_IMMORTAL(ch)) {
-        send_to_char("Huh?", ch);
-        return;}
+
 
     if ( ( victim = get_char_world( ch, arg2 ) ) == NULL )
     {
         send_to_char( "Teach what to whom?\n\r", ch );
+        return;
+    }
+
+    if (IS_NPC(victim))
+    {
+        send_to_char("They would not benefit from your knowledge.\n\r", ch);
+        return;
+    }
+    if (!IS_SET(ch->act, PLR_IC) || !IS_SET(victim->act, PLR_IC))
+    {
+        send_to_char("You and your student must both be IC for this!\n\r", ch);
         return;
     }
     if(!IS_VAMP(victim))
@@ -1503,6 +1513,13 @@ void do_teach(CHAR_DATA *ch, char *argument)
         send_to_char("They already know that discipline!\n\r", ch);
         return;
     }
+    if (ch->pcdata->discipline[disc] < 3)
+    {
+        sprintf(buf, "You are not studied enough in %s to teach it to another.\n\r", capitalize(disc_table[disc].name));
+        send_to_char(buf, ch);
+        return;
+    }
+
     victim->freebie -= cost;
     victim->pcdata->discipline[disc] = 1;
     act( "$n bestows $s wisdom upon you and teaches you the basics of a new discipline.",  ch, NULL, victim, TO_VICT );

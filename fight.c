@@ -3467,7 +3467,7 @@ if (xpstat == 3 && global_xp > 300000)
 
    if (global_xp > 0 && doubleexp == TRUE)
        {
-           global_xp -= (xp*xpawardmult) - xp;
+           global_xp -= xp;
        }
 
         xp = (xp * xpawardmult);

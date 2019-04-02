@@ -3398,7 +3398,7 @@ int xp_compute( CHAR_DATA *gch, CHAR_DATA *victim, int total_levels )
 if (xpstat == 0 && global_xp > 149999)
 	{
 	xpstat = 1;
-	if (number_range(1,100) <= (xpstat*10))
+	if (number_range(1,100) <= 20)
 		{
 		 doubleexp = TRUE;
 		 xpawardmult = 2;
@@ -3415,7 +3415,7 @@ if (xpstat == 0 && global_xp > 149999)
 if (xpstat == 1 && global_xp > 199999)
 	{
 	xpstat = 2;
-	if (number_range(1,100) <= (xpstat*10))
+	if (number_range(1,100) <= 40)
 		{
 		 doubleexp = TRUE;
 		 xpawardmult = 2;
@@ -3432,7 +3432,7 @@ if (xpstat == 1 && global_xp > 199999)
 if (xpstat == 2 && global_xp > 249999)
 	{
 	xpstat = 3;
-	if (number_range(1,100) <= (xpstat*10))
+	if (number_range(1,100) <= 50)
 		{
 		 doubleexp = TRUE;
 		 xpawardmult = 2;

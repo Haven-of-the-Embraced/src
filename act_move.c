@@ -1141,7 +1141,7 @@ void do_pick( CHAR_DATA *ch, char *argument )
     if ( !IS_SET(pexit->exit_info, EX_LOCKED) )
         { send_to_char( "It's already unlocked.\n\r",  ch ); return; }
     if ( IS_SET(pexit->exit_info, EX_PICKPROOF) && !IS_IMMORTAL(ch))
-        { send_to_char( "You failed.\n\r",             ch ); return; }
+        { send_to_char( "It can't be picked.\n\r",             ch ); return; }
 
     REMOVE_BIT(pexit->exit_info, EX_LOCKED);
     send_to_char( "*Click*\n\r", ch );

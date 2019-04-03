@@ -1194,6 +1194,7 @@ void rote_opensesame(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *ob
         found = FALSE;
         if ( ( pexit = ch->in_room->exit[door] ) != NULL
         &&   IS_SET(pexit->exit_info, EX_ISDOOR)
+        &&   !IS_SET(pexit->exit_info, EX_PICKPROOF)
         )
         {
             REMOVE_BIT(pexit->exit_info, EX_HIDDEN );

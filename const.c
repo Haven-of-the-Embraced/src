@@ -1033,31 +1033,31 @@ const struct cs_skill_type csskill_table [] =
     {"bash", &gsn_bash, 10,
     {CSABIL_MELEE, 2, ABIL}, {CSABIL_NONE, 0, ABIL} },
 
-    {"axe", &gsn_axe,  10,
+    {"axe", &gsn_axe,  1,
     {CSABIL_MELEE, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
 
     {"dagger", &gsn_dagger, 1,
     {CSABIL_MELEE, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
 
-    {"flail", &gsn_flail, 5,
+    {"flail", &gsn_flail, 1,
     {CSABIL_MELEE, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
 
     {"mace", &gsn_mace, 1,
     {CSABIL_MELEE, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
 
-    {"polearm", &gsn_polearm, 5,
+    {"polearm", &gsn_polearm, 1,
     {CSABIL_MELEE, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
 
-    {"whip", &gsn_whip, 5,
+    {"whip", &gsn_whip, 1,
     {CSABIL_MELEE, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
 
-    {"spear", &gsn_spear, 5,
+    {"spear", &gsn_spear, 1,
     {CSABIL_MELEE, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
 
     {"sword", &gsn_sword, 1,
     {CSABIL_MELEE, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
 
-    {"lance", &gsn_lance, 10,
+    {"lance", &gsn_lance, 1,
     {CSABIL_MELEE, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
 
     {"hand to hand", &gsn_hand_to_hand,  1,

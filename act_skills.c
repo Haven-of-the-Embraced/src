@@ -12,6 +12,7 @@
 #include "merc.h"
 #include "interp.h"
 #include "tables.h"
+#include "recycle.h"
 
 
 /* New bandage code by Sengir */

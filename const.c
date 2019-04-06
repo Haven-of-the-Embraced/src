@@ -119,6 +119,7 @@ const   struct wiznet_type      wiznet_table    []              =
    {    "snoops",   WIZ_SNOOPS, L2 },
    {    "switches", WIZ_SWITCHES,   L3 },
    {    "secure",   WIZ_SECURE, L2 },
+   {    "file",     WIZ_FILE, L2    },
    {    NULL,       0,      0  }
 };
 

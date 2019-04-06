@@ -1877,6 +1877,7 @@ struct  kill_data
 #define WIZ_PREFIX      (S)
 #define WIZ_SPAM        (T)
 #define WIZ_PKILL       (U)
+#define WIZ_FILE        (V)
 
 /* Qitem Data */
 #define     PLACE_ROOM      0

@@ -49,6 +49,7 @@ extern CMD_DATA * cmd_last;
 #define LOG_NORMAL      0
 #define LOG_ALWAYS      1
 #define LOG_NEVER       2
+#define LOG_FILE        3
 
 extern const struct cmdfun_type cmdfun_table[];
 extern const struct size_type cat_table[];
@@ -94,7 +95,7 @@ bool    check_social    args( ( CHAR_DATA *ch, char *command,
 #define LOG_NORMAL  0
 #define LOG_ALWAYS  1
 #define LOG_NEVER   2
-
+#define LOG_FILE    3
 
 
 /*
@@ -266,10 +267,13 @@ void interpret( CHAR_DATA *ch, char *argument )
 
     if ( ( !IS_NPC(ch) && IS_SET(ch->act, PLR_LOG) )
     ||   fLogAll
-    ||   pCmd->log == LOG_ALWAYS )
+    ||   pCmd->log == LOG_ALWAYS || pCmd->log == LOG_FILE )
     {
     sprintf( log_buf, "Log %s: %s", ch->name, logline );
-    wiznet(log_buf,ch,NULL,WIZ_SECURE,0,get_trust(ch));
+    if (pCmd->log == LOG_ALWAYS)
+        wiznet(log_buf,ch,NULL,WIZ_SECURE,0,get_trust(ch));
+    if (pCmd->log == LOG_FILE)
+        wiznet(log_buf, ch, NULL, WIZ_FILE, 0, get_trust(ch));
     log_string( log_buf );
     }
 
@@ -1151,8 +1155,14 @@ CMDEDIT( cmdedit_log)
         cmd->log = LOG_NORMAL;
         return TRUE;
     }
+    if (!str_cmp(argument, "file"))
+    {
+        send_to_char("Loggint set to file.\n\r", ch);
+        cmd->log = LOG_FILE;
+        return TRUE;
+    }
 
-    send_to_char("Either never, normal, or always.\n\r",ch);
+    send_to_char("Either never, normal, file, or always.\n\r",ch);
     return FALSE;
 }
 
@@ -1357,6 +1367,7 @@ const struct size_type log_table[] =
     { "Normal" },
     { "Always" },
     { "Never"  },
+    { "File"   },
     { NULL     }
 };
 

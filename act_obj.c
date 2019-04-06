@@ -4049,8 +4049,8 @@ void do_dip(CHAR_DATA *ch, char *argument)
 
     if(chance > 70)
     {
-        act( "You curse as $p sizzels, smokes then disappears!", ch, obj, obj2, TO_CHAR );
-        act( "$n curses as $p sizzels, smokes then disappears!", ch, obj, obj2, TO_ROOM );
+        act( "You curse as $p sizzles, smokes then disappears!", ch, obj, obj2, TO_CHAR );
+        act( "$n curses as $p sizzles, smokes then disappears!", ch, obj, obj2, TO_ROOM );
         extract_obj( obj );
         return;
     }

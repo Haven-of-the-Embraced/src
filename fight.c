@@ -6014,7 +6014,7 @@ void do_behead( CHAR_DATA *ch, char *argument )
 
     if (arg[0] == '\0')
     {
-        send_to_char("Whom deserves to lose their head?\n\r", ch);
+        send_to_char("Who deserves to lose their head?\n\r", ch);
         return;
     }
 

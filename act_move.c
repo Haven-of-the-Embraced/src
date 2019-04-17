@@ -2052,6 +2052,12 @@ void do_meditate(CHAR_DATA *ch, char *argument )
 	if (IS_NPC(ch))
 		return;
 
+    if (get_skill(ch, gsn_meditation) < 50)
+    {
+        send_to_char("You have not been trained in the art of stilling your mind.\n\r", ch);
+        return;
+    }
+
     if ( is_affected( ch, gsn_meditation ))
     {
         send_to_char( "Be still, you are already meditating.\n\r", ch );

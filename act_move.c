@@ -2048,11 +2048,14 @@ void do_knock( CHAR_DATA *ch, char *argument )
 void do_meditate(CHAR_DATA *ch, char *argument )
 {
     AFFECT_DATA af;
+    int diff;
+    int skill;
 
 	if (IS_NPC(ch))
 		return;
+    skill = get_skill(ch, gsn_meditation);
 
-    if (get_skill(ch, gsn_meditation) < 50)
+    if (skill < 50)
     {
         send_to_char("You have not been trained in the art of stilling your mind.\n\r", ch);
         return;
@@ -2068,6 +2071,10 @@ void do_meditate(CHAR_DATA *ch, char *argument )
         send_to_char( "You cannot do this standing!\n\r", ch );
         return;
     }
+    diff = 8;
+    if (skill >= 65) diff --;
+    if (skill >= 80) diff --;
+    if (skill == 100) diff --;
     if(godice(get_attribute(ch, STAMINA) + ch->pcdata->cssec_abil[CSABIL_MEDITATION], 8) < 1 )
     {
         send_to_char( "You fail to still your mind.\n\r", ch );

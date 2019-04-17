@@ -2858,6 +2858,7 @@ extern sh_int  gsn_torpor;
 extern sh_int  gsn_arise;
 extern sh_int  gsn_gleam;
 extern sh_int  gsn_unseen;
+extern sh_int  gsn_veil;
 extern sh_int  gsn_ignis_fatuus;
 
 /* for rituals */

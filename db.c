@@ -248,6 +248,7 @@ sh_int          gsn_blood_buff;
 sh_int          gsn_torpor;
 sh_int          gsn_arise;
 sh_int          gsn_unseen;
+sh_int          gsn_veil;
 
 /*Sengir Thaum Rituals*/
 sh_int          gsn_incorporeal_passage;

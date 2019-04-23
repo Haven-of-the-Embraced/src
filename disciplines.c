@@ -3100,7 +3100,10 @@ void do_veil(CHAR_DATA *ch, char *argument)
         if (is_affected(ch, gsn_unseen))
         affect_strip(ch, gsn_unseen);
         else
+        {
         REMOVE_BIT(ch->affected2_by, AFF2_VEIL);
+        affect_strip(ch, gsn_veil);
+        }
         act( "$n suddenly appears!", ch, 0, 0, TO_NOTVICT );
         send_to_char( "You drop your veil of shadows.\n\r", ch );
         return;
@@ -3110,17 +3113,22 @@ void do_veil(CHAR_DATA *ch, char *argument)
         else ch->pblood -= 30;
 
         af.where     = TO_AFFECTS;
-        af.type      = gsn_sneak;
-        af.level     = ch->level;
         if(ch->pcdata->discipline[OBFUSCATE] == 6) af.duration  = UMAX(24, ch->level*2);
         else af.duration = -1;
-        af.location  = APPLY_NONE;
+        af.level     = ch->level;
         af.modifier  = 0;
-        af.bitvector = AFF_SNEAK;
-        affect_to_char( ch, &af );
+        af.location  = APPLY_NONE;
+
+        if (ch->pcdata->discipline[OBFUSCATE] == 6)
+        {
+            af.type      = gsn_veil;
+            af.bitvector = AFF_SNEAK;
+            affect_to_char( ch, &af );
+        }
+
         af.where    = TO_AFFECTS2;
         af.bitvector = AFF2_VEIL;
-        af.type = gsn_unseen;
+        af.type = gsn_veil;
         affect_to_char(ch, &af );
 
         send_to_char( "You veil yourself in darkness.\n\r", ch );

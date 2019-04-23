@@ -255,7 +255,10 @@ void multi_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt )
     if(is_affected(ch, gsn_unseen) && ch->pcdata->discipline[OBFUSCATE] < 2)
     affect_strip( ch, gsn_unseen );
     if(IS_NPC(ch) || (!IS_NPC(ch) && ch->pcdata->discipline[OBFUSCATE] != 6))
+    {
         REMOVE_BIT   ( ch->affected2_by, AFF2_VEIL       );
+        affect_strip(ch, gsn_veil);
+    }
 
     /* no attacks for stunnies -- just a check */
     if (ch->position < POS_RESTING)

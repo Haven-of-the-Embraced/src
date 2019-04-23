@@ -2736,7 +2736,7 @@ bool can_see( CHAR_DATA *ch, CHAR_DATA *victim )
             || !is_affected(ch, gsn_reveal)))
     return FALSE;
 
-        if ( IS_AFFECTED2(victim, AFF2_VEIL)
+        if ( (IS_AFFECTED2(victim, AFF2_VEIL) || is_affected(victim, gsn_veil))
          && is_affected(ch, gsn_reveal)
                 && !IS_NPC(ch) && !IS_NPC(victim))
         {

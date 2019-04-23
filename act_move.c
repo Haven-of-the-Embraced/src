@@ -126,8 +126,10 @@ void move_char( CHAR_DATA *ch, int door, bool follow )
     affect_strip( ch, gsn_unseen );*/
     if(IS_AFFECTED2(ch, AFF2_VEIL) && (IS_NPC(ch) ||
             (!IS_NPC(ch) && ch->pcdata->discipline[OBFUSCATE] != 6)))
+    {
     REMOVE_BIT(ch->affected2_by, AFF2_VEIL);
-
+    affect_strip(ch, gsn_veil);
+    }
     if (IS_SET(pexit->exit_info, EX_CLOSED)
     &&  (!IS_AFFECTED(ch, AFF_PASS_DOOR) || IS_SET(pexit->exit_info,EX_NOPASS))
     &&   !IS_IMMORTAL(ch)
@@ -1842,6 +1844,7 @@ void do_visible( CHAR_DATA *ch, char *argument )
     affect_strip ( ch, gsn_cloakshadow          );
     affect_strip ( ch, gsn_cloak_the_gathering      );
     affect_strip ( ch, gsn_unseen               );
+    affect_strip ( ch, gsn_veil);
 
     REMOVE_BIT   ( ch->affected_by, AFF_HIDE        );
     REMOVE_BIT   ( ch->affected_by, AFF_INVISIBLE   );

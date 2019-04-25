@@ -3877,7 +3877,8 @@ void do_majesty(CHAR_DATA *ch, char *argument)
     }
     if ( is_affected( ch, gsn_majesty ) )
     {
-        send_to_char( "You can already bend nearly any heart to your whim, what more could you want?\n\r", ch );
+        send_to_char( "You release the aura of superiority and power surrounding you.\n\r", ch );
+        affect_strip(ch, gsn_majesty);
         return;
     }
 

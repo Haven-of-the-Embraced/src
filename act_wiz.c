@@ -7888,7 +7888,7 @@ if(!str_cmp(arg,"resolver"))
         send_to_char(buf, ch);
         sprintf(buf, "XP Multiplier: %d\n\r", xpawardmult);
         send_to_char(buf, ch);
-        send_to_char("\n\r{wValid options are: {Darena{w, {Ddoubleexp{w, {Ddoubledam{w, {Dnosun{w,\n\r", ch);
+        send_to_char("\n\r{wValid options are: {Darena{w, {Ddoubleexp{w, {Dtripleexp{w, {Ddoubledam{w, {Dnosun{w,\n\r", ch);
         send_to_char("{Dslaughterfest{w, {Dresolver{w, {Ddebug{w, {Dstatus{x\n\r",ch);
 
         return;

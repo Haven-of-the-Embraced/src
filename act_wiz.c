@@ -7733,11 +7733,18 @@ void do_globalpower( CHAR_DATA *ch, char *argument )
             {
                 if ( d->connected == CON_PLAYING )
                 {
-                    send_to_char( "{G****[{?M{?u{?l{?t{?i{Y Exp has ended {y:-( {G]****{x\n\r", d->character );
+                    send_to_char( "{G****[{?M{?u{?l{?t{?i{Y Exp Override has ended {y:-( {G]****{x\n\r", d->character );
                 }
             }
             manualxp = FALSE;
-            xpawardmult = 1;
+            if (!doubleexp)
+                xpawardmult = 1;
+            else {
+                if (xpstat <=3)
+                    xpawardmult = 2;
+                if (xpstat > 3)
+                    xpawardmult = 3;
+            }
         }
         else
         {
@@ -7763,11 +7770,18 @@ void do_globalpower( CHAR_DATA *ch, char *argument )
             {
                 if ( d->connected == CON_PLAYING )
                 {
-                    send_to_char( "{G****[{?M{?u{?l{?t{?i{Y Exp has ended {y:-( {G]****{x\n\r", d->character );
+                    send_to_char( "{G****[{?M{?u{?l{?t{?i{Y Exp Override has ended {y:-( {G]****{x\n\r", d->character );
                 }
             }
             manualxp = FALSE;
-            xpawardmult = 1;
+            if (!doubleexp)
+                xpawardmult = 1;
+            else {
+                if (xpstat <=3)
+                    xpawardmult = 2;
+                if (xpstat > 3)
+                    xpawardmult = 3;
+            }
         }
         else
         {

@@ -2175,6 +2175,7 @@ void do_who( CHAR_DATA *ch, char *argument )
     DESCRIPTOR_DATA *d;
 
     extern bool doubleexp;
+    extern bool manualxp;
     int iRace;
     int iClan;
     int iLevelLower;

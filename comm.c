@@ -321,6 +321,7 @@ int             vein_count = 0;
 bool            arena=FALSE;              /* Arena is closed      */
 bool            nosun=FALSE;        /* No sun damage for vamps  */
 bool            doubleexp=FALSE;    /* Double exp and cap   */
+bool            manualxp=FALSE; /*manually set doublexp */
 bool            slaughter=FALSE;        /* Removes damcap and quad damage */
 bool            doubledam=FALSE;    /* double damage for players */
 bool            resolver=TRUE;
@@ -2604,9 +2605,10 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
         send_to_char("{WYou need to type {Mcreate{W to complete your creation process. A lot of features are disabled until you do so.{x\n\r",ch);
     extern bool slaughter;
     extern bool doubleexp;
+    extern bool manualxp;
     if (slaughter)
         send_to_char("Time to get killing, {RSlaughterfest{x is running!\n\r", ch);
-    if (doubleexp)
+    if (doubleexp || manualxp)
     {
         if (xpawardmult == 2)
             send_to_char("{CDoubleexp{x is turned on!{x\n\r", ch);
@@ -3840,6 +3842,7 @@ void save_config( void )
     fprintf (fp, "Gxp %d\n",            global_xp);
     fprintf (fp, "Gqp %d\n",            global_qp);
     fprintf (fp, "Xpmult %d\n",         xpawardmult);
+    fprintf (fp, "Manualxp %d\n",       manualxp);
 
     fprintf( fp, "End\n\n\n\n" );
     fclose( fp );
@@ -3901,6 +3904,9 @@ void load_config( void )
            case 'N':
                KEY("Nosun", nosun, fread_number(fp) );
                KEY("Newlock", newlock, fread_number(fp));
+               break;
+           case 'M':
+               KEY( "Manualxp", manualxp, fread_number(fp));
                break;
           case 'D':
                 KEY( "Doubleexp", doubleexp, fread_number(fp) );

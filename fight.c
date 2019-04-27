@@ -3213,6 +3213,8 @@ void group_gain( CHAR_DATA *ch, CHAR_DATA *victim )
     int fakexp;
     int fakeqp;
     int members;
+    extern bool doubleexp;
+    extern bool manualxp;
     int group_levels;
 
     /*
@@ -3266,7 +3268,8 @@ void group_gain( CHAR_DATA *ch, CHAR_DATA *victim )
     ch->totalkills ++;
     ch->currentkills ++;
     // Adds QP to global QP from fights
-    global_qp += qp*qpmult;
+    if (!manualxp && !doubleexp)
+        global_qp += qp*qpmult;
     //Added line for people caught cheating.
     if (gch->cheater == 0)
     sprintf( buf, "You receive {g%d{x experience and {c%d{x quest points.\n\r", xp, qp );
@@ -3328,6 +3331,7 @@ int xp_compute( CHAR_DATA *gch, CHAR_DATA *victim, int total_levels )
     int playerbonus;
     double dBonus;
     extern bool doubleexp;
+    extern bool manualxp;
     DESCRIPTOR_DATA *d;
 
     level_range = victim->level - gch->level;
@@ -3373,7 +3377,7 @@ int xp_compute( CHAR_DATA *gch, CHAR_DATA *victim, int total_levels )
 
 // Returns double XP to its default state when it ends
 
- if (global_xp <= 0)
+ if (global_xp <= 0 && !manualxp)
 	{
 	if (doubleexp == TRUE)
 		{
@@ -3397,78 +3401,81 @@ int xp_compute( CHAR_DATA *gch, CHAR_DATA *victim, int total_levels )
 
 // Do I turn on double XP? Let's check.
 // Rates check as well to lock in multiplier
+    if (!manualxp)
+    {
 
-if (xpstat == 0 && global_xp > 149999)
-	{
-	xpstat = 1;
-	if (number_range(1,100) <= 20)
-		{
-		 doubleexp = TRUE;
-		 xpawardmult = 2;
-		 for ( d = descriptor_list; d; d = d->next )
+        if (xpstat == 0 && global_xp > 149999)
             {
-                if ( d->connected == CON_PLAYING )
+            xpstat = 1;
+            if (number_range(1,100) <= 20)
                 {
-                    send_to_char( "{G****{YIt's {RD{Go{Mu{Yb{Bl{Ce {RE{Gx{Mp{Y time!{G****{x\n\r", d->character );
+                 doubleexp = TRUE;
+                 xpawardmult = 2;
+                 for ( d = descriptor_list; d; d = d->next )
+                    {
+                        if ( d->connected == CON_PLAYING )
+                        {
+                            send_to_char( "{G****{YIt's {RD{Go{Mu{Yb{Bl{Ce {RE{Gx{Mp{Y time!{G****{x\n\r", d->character );
+                        }
+                    }
+
                 }
             }
-
-		}
-	}
-if (xpstat == 1 && global_xp > 199999)
-	{
-	xpstat = 2;
-	if (number_range(1,100) <= 40)
-		{
-		 doubleexp = TRUE;
-		 xpawardmult = 2;
-		 for ( d = descriptor_list; d; d = d->next )
+        if (xpstat == 1 && global_xp > 199999)
             {
-                if ( d->connected == CON_PLAYING )
+            xpstat = 2;
+            if (number_range(1,100) <= 40)
                 {
-                    send_to_char( "{G****{YIt's {RD{Go{Mu{Yb{Bl{Ce {RE{Gx{Mp{Y time!{G****{x\n\r", d->character );
+                 doubleexp = TRUE;
+                 xpawardmult = 2;
+                 for ( d = descriptor_list; d; d = d->next )
+                    {
+                        if ( d->connected == CON_PLAYING )
+                        {
+                            send_to_char( "{G****{YIt's {RD{Go{Mu{Yb{Bl{Ce {RE{Gx{Mp{Y time!{G****{x\n\r", d->character );
+                        }
+                    }
+
                 }
             }
-
-		}
-	}
-if (xpstat == 2 && global_xp > 249999)
-	{
-	xpstat = 3;
-	if (number_range(1,100) <= 50)
-		{
-		 doubleexp = TRUE;
-		 xpawardmult = 2;
-		 for ( d = descriptor_list; d; d = d->next )
+        if (xpstat == 2 && global_xp > 249999)
             {
-                if ( d->connected == CON_PLAYING )
+            xpstat = 3;
+            if (number_range(1,100) <= 50)
                 {
-                    send_to_char( "{G****{YIt's {RD{Go{Mu{Yb{Bl{Ce {RE{Gx{Mp{Y time!{G****{x\n\r", d->character );
+                 doubleexp = TRUE;
+                 xpawardmult = 2;
+                 for ( d = descriptor_list; d; d = d->next )
+                    {
+                        if ( d->connected == CON_PLAYING )
+                        {
+                            send_to_char( "{G****{YIt's {RD{Go{Mu{Yb{Bl{Ce {RE{Gx{Mp{Y time!{G****{x\n\r", d->character );
+                        }
+                    }
+
                 }
             }
-
-		}
-	}
-if (xpstat == 3 && global_xp > 300000)
-	{
-	 doubleexp = TRUE;
-	 xpstat = 4;
-	 xpawardmult = 3;
-	 for ( d = descriptor_list; d; d = d->next )
+        if (xpstat == 3 && global_xp > 300000)
             {
-                if ( d->connected == CON_PLAYING )
-                {
-                    send_to_char( "{R****{YIt's {RT{Gr{Mi{Yp{Bl{Ce {RE{Gx{Mp{Y time!{R****{x\n\r", d->character );
-                }
-            }
+             doubleexp = TRUE;
+             xpstat = 4;
+             xpawardmult = 3;
+             for ( d = descriptor_list; d; d = d->next )
+                    {
+                        if ( d->connected == CON_PLAYING )
+                        {
+                            send_to_char( "{R****{YIt's {RT{Gr{Mi{Yp{Bl{Ce {RE{Gx{Mp{Y time!{R****{x\n\r", d->character );
+                        }
+                    }
 
-	}
+            }
+    }
 
     if( IS_AFFECTED2(victim, AFF2_DOUBLE_EXP))
         xp = xp*2;
 // Code to drain from global XP and award it.
 
-   if (global_xp > 0 && doubleexp == TRUE)
+   if (!manualxp && global_xp > 0 && doubleexp == TRUE)
        {
            global_xp -= xp;
        }
@@ -3515,7 +3522,7 @@ if (xpstat == 3 && global_xp > 300000)
     xp =  bxp + xp;
        // Zelan steals XP here to add to global_xp
 
-    if (doubleexp == FALSE)
+    if (!manualxp && doubleexp == FALSE)
     global_xp += xp/5;
 
     if (!IS_NPC(gch) && gch->pcdata->immclass > 0 )

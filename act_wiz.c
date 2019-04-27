@@ -6583,6 +6583,18 @@ void copyover_recover ()
             sendch ("\n\r{DCopyover recovery complete.{x\n\r", d->character);
             sendch ("{DYour group should have persisted over copyover. \n\rIf it did not, You'll have to {wfollow{D your leader again.{x\n\r", d->character);
         }
+            extern bool slaughter;
+    extern bool doubleexp;
+    extern bool manualxp;
+    if (slaughter)
+        send_to_char("Time to get killing, {RSlaughterfest{x is running!\n\r", d->character);
+    if (doubleexp || manualxp)
+    {
+        if (xpawardmult == 2)
+            send_to_char("{CDoubleexp{x is turned on!{x\n\r", d->character);
+        if (xpawardmult == 3)
+            send_to_char("{CTripleexp{x is turned on!{x\n\r", d->character);
+    }
 
     }
    fclose (fp);
@@ -7646,6 +7658,7 @@ void do_globalpower( CHAR_DATA *ch, char *argument )
     extern bool arena;
     extern bool nosun;
     extern bool doubleexp;
+    extern bool manualxp;
     extern bool doubledam;
     extern bool resolver;
     extern bool newlock;
@@ -7713,17 +7726,18 @@ void do_globalpower( CHAR_DATA *ch, char *argument )
     }
     if(!str_cmp(arg,"doubleexp") || !str_cmp(arg, "doublexp") )
     {
-        if(doubleexp)
+        if(manualxp)
         {
 
             for ( d = descriptor_list; d; d = d->next )
             {
                 if ( d->connected == CON_PLAYING )
                 {
-                    send_to_char( "{G****[{YDouble Exp has ended {y:-( {G]****{x\n\r", d->character );
+                    send_to_char( "{G****[{?M{?u{?l{?t{?i{Y Exp has ended {y:-( {G]****{x\n\r", d->character );
                 }
             }
-            doubleexp = FALSE;
+            manualxp = FALSE;
+            xpawardmult = 1;
         }
         else
         {
@@ -7735,7 +7749,38 @@ void do_globalpower( CHAR_DATA *ch, char *argument )
                     send_to_char( "{G****{YIt's {RD{Go{Mu{Yb{Bl{Ce {RE{Gx{Mp{Y time!{G****{x\n\r", d->character );
                 }
             }
-            doubleexp = TRUE;
+            manualxp = TRUE;
+            xpawardmult = 2;
+        }
+        return;
+    }
+    if(!str_cmp(arg,"tripleexp") || !str_cmp(arg, "triplexp") )
+    {
+        if(manualxp)
+        {
+
+            for ( d = descriptor_list; d; d = d->next )
+            {
+                if ( d->connected == CON_PLAYING )
+                {
+                    send_to_char( "{G****[{?M{?u{?l{?t{?i{Y Exp has ended {y:-( {G]****{x\n\r", d->character );
+                }
+            }
+            manualxp = FALSE;
+            xpawardmult = 1;
+        }
+        else
+        {
+
+            for ( d = descriptor_list; d; d = d->next )
+            {
+                if ( d->connected == CON_PLAYING )
+                {
+                    send_to_char( "{R****{YIt's {RT{Gr{Mi{Yp{Bl{Ce {RE{Gx{Mp{Y time!{R****{x\n\r", d->character );
+                }
+            }
+            manualxp = TRUE;
+            xpawardmult = 3;
         }
         return;
     }
@@ -7817,6 +7862,8 @@ if(!str_cmp(arg,"resolver"))
     if(!str_prefix(arg,"status"))
     {
         send_to_char("Global status:\n\r",ch);
+        send_to_char("Manual Multi-xp is ", ch);
+        manualxp ? send_to_char("{GON{x\n\r", ch) : send_to_char("{ROFF{x\n\r", ch);
         send_to_char("Slaughterfest is ", ch);
         slaughter ? send_to_char("{GON{x\n\r", ch) : send_to_char("{ROFF{x\n\r", ch);
         sendch("Double dam is ", ch);

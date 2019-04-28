@@ -1044,7 +1044,7 @@ void one_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt )
     {
         dam = number_range(1,wield->level/5 + 2);
         act2("$n is struck by lightning from $p.",victim,wield,ch,TO_ROOM);
-        act2("You are shocked by $p.",victim,ch,NULL,TO_CHAR);
+        act2("You are shocked by $p.",victim,wield,ch,TO_CHAR);
         shock_effect(victim,wield->level/2,dam,TARGET_CHAR);
         damage(ch,victim,dam,0,DAM_LIGHTNING,FALSE);
     }
@@ -1985,7 +1985,7 @@ if (DEBUG_MESSAGES || IS_DEBUGGING(ch)){
     {
         dam = number_range(1,wield->level/5 + 2);
         act2("$n is struck by lightning from $p.",victim,wield,ch,TO_ROOM);
-        act2("You are shocked by $p.",victim,ch,NULL,TO_CHAR);
+        act2("You are shocked by $p.",victim,wield,ch,TO_CHAR);
         shock_effect(victim,wield->level/2,dam,TARGET_CHAR);
         damage(ch,victim,dam,0,DAM_LIGHTNING,FALSE);
     }

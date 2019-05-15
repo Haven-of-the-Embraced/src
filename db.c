@@ -3775,7 +3775,8 @@ void do_areas( CHAR_DATA *ch, char *argument )
     AREA_DATA *pArea2;
     int iArea;
     int iAreaHalf;
-
+    BUFFER *buffer;
+    buffer = new_buf();
     if (argument[0] != '\0')
     {
     send_to_char_bw("No argument is used with this command.\n\r",ch);
@@ -3792,12 +3793,13 @@ void do_areas( CHAR_DATA *ch, char *argument )
     {
     sprintf( buf, "%-39s%-39s\n\r",
         pArea1->credits, (pArea2 != NULL) ? pArea2->credits : "" );
-    send_to_char_bw( buf, ch );
+    add_buf(buffer, buf);
     pArea1 = pArea1->next;
     if ( pArea2 != NULL )
         pArea2 = pArea2->next;
     }
-
+    page_to_char(buf_string(buffer),ch);
+    free_buf(buffer);
     return;
 }
 

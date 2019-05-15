@@ -3786,6 +3786,8 @@ void do_areas( CHAR_DATA *ch, char *argument )
     iAreaHalf = (top_area + 1) / 2;
     pArea1    = area_first;
     pArea2    = area_first;
+    sprintf(buf, "\n\r%40s\n\r\n\r", "--- Areas of Haven ---");
+    add_buf(buffer, buf);
     for ( iArea = 0; iArea < iAreaHalf; iArea++ )
     pArea2 = pArea2->next;
 

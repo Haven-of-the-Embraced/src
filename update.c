@@ -476,7 +476,7 @@ void mobile_update( void )
         obj_best    = 0;
         for ( obj = ch->in_room->contents; obj; obj = obj->next_content )
         {
-        if ( CAN_WEAR(obj, ITEM_TAKE) && can_loot(ch, obj)
+        if ( CAN_WEAR(obj, ITEM_TAKE) && can_loot(ch, obj) && !count_users(obj)
              && obj->cost > max  && obj->cost > 0)
         {
             obj_best    = obj;

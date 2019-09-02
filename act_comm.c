@@ -222,6 +222,12 @@ void do_channels( CHAR_DATA *ch, char *argument)
       send_to_char("ON\n\r",ch);
     else
       send_to_char("OFF\n\r",ch);
+    
+    send_to_char("telnet Go Ahead",ch);
+    if (!IS_SET(ch->comm,COMM_TELNET_GA))
+    send_to_char("ON\n\r",ch);
+    else
+    send_to_char("OFF\n\r",ch);
 
     if (IS_SET(ch->comm,COMM_AFK))
     send_to_char("You are AFK.\n\r",ch);
@@ -260,6 +266,22 @@ void do_channels( CHAR_DATA *ch, char *argument)
     if (IS_SET(ch->comm,COMM_NOEMOTE))
       send_to_char("You cannot show emotions.\n\r",ch);
 
+}
+
+// Turn Telnet_Ga On/off
+void do_telnetgoahead( CHAR_DATA *ch, char *argument)
+{
+
+   if (IS_SET(ch->comm,COMM_TELNET_GA))
+   {
+     send_to_char("The MUD will no longer send Go Ahead with output.\n\r",ch);
+     REMOVE_BIT(ch->comm,COMM_TELNET_GA);
+   }
+   else
+   {
+     send_to_char("The MUD will now send a Telnet Go Ahead with output.\n\r",ch);
+     SET_BIT(ch->comm,COMM_TELNET_GA);
+   }
 }
 
 //Matthew - Autoooc turns on ooc when you login.

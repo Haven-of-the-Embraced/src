@@ -336,7 +336,7 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "unread",     do_unread},
     { "yell",       do_yell},
     { "tsect",      do_tsect},
-    { "telnetgoahead", dotelnetgoahead},
+    { "telnetgoahead", do_telnetgoahead},
 
     /*
      * Object manipulation commands.

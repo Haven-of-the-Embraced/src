@@ -1476,6 +1476,7 @@ void bust_a_prompt( CHAR_DATA *ch )
     bool found;
     const char *dir_name[] = {"N","E","S","W","U","D"};
     int door;
+    struct tm * timeinfo;
     const char *health_level[] =
     { "Incapacitated", "Crippled", "Mauled", "Wounded",
         "Injured", "Hurt", "Bruised", "Immaculate"};
@@ -1569,6 +1570,12 @@ void bust_a_prompt( CHAR_DATA *ch )
     sprintf(buf2, "%d%s", (time_info.hour % 12 == 0) ? 12 : time_info.hour %12, time_info.hour >= 12 ? "pm" : "am");
     i = buf2;break;
 
+    case 'T':
+    	timeinfo = localtime (&current_time);
+    	strftime(buf2, 10, "%I:%M%p", timeinfo);
+	i = buf2;
+    	break;
+    
     case 'i' :
     sprintf(buf2, "%d",  IS_NPC(ch) ? 0 : (int)ch->pcdata->IC_total/60);
     i = buf2;break;

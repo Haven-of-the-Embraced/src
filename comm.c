@@ -2356,7 +2356,8 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
 
         write_to_buffer(d,"Assamite                      Nosferatu\n\r",0);
         write_to_buffer(d,"Tremere                       Gangrel\n\r",0);
-        write_to_buffer(d,"Malkavian\n\r",0);
+        write_to_buffer(d,"Malkavian			 Brujah\n\r",0);
+        write_to_buffer(d,"Toreador			 Ventrue\n\r",0);
         write_to_buffer(d,"Ravnos\n\r",0);
         write_to_buffer(d,"\n\rPlease choose a clan: ",0);
 
@@ -2386,16 +2387,26 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
     {
         do_function(ch,&do_help,argument);
 
-        write_to_buffer(d,"\n\rYour choice? (Assamite, Gangrel, Malkavian, Nosferatu, Tremere, Ravnos or help <clan>) ",0);
+ 
+        write_to_buffer(d,"Please choose a Clan (Assamite, Gangrel, Malkavian, Nosferatu, Tremere,\n\r", 0);
+	write_to_buffer(d,"Ravnos, Brujah, Toreador, Ventrue or help <clan>) ",0);
         d->connected = CON_PICK_CLAN;
         break;
     }
 /* Dirty hack til we better organize the clan code */
-    if(str_prefix(buf,"assamite") && str_prefix(buf, "tremere") && str_prefix(buf, "malkavian") && str_prefix(buf, "nosferatu") &&
-    str_prefix(buf, "gangrel") && str_prefix(buf, "ravnos"))
+    if(str_prefix(buf,"assamite") && 
+	str_prefix(buf, "tremere") && 
+	str_prefix(buf, "malkavian") && 
+	str_prefix(buf, "nosferatu") &&
+        str_prefix(buf, "gangrel") &&
+	str_prefix(buf, "ventrue") &&
+	str_prefix(buf, "brujah" ) &&
+	str_prefix(buf, "toreador" ) &&
+	str_prefix(buf, "ravnos"))
     {
-        write_to_buffer(d,"{RInvalid clan choice.{x",0);
-        write_to_buffer(d,"\n\rPlease choose a Clan (Assamite, Gangrel, Malkavian, Nosferatu, Tremere, Ravnos or help <clan>) ",0);
+        write_to_buffer(d,"Invalid clan choice.\n\r",0);
+        write_to_buffer(d,"Please choose a Clan (Assamite, Gangrel, Malkavian, Nosferatu, Tremere,\n\r", 0);
+	write_to_buffer(d,"Ravnos, Brujah, Toreador, Ventrue or help <clan>) ",0);
         d->connected = CON_PICK_CLAN;
         break;
     }

@@ -2356,8 +2356,8 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
 
         write_to_buffer(d,"Assamite                      Nosferatu\n\r",0);
         write_to_buffer(d,"Tremere                       Gangrel\n\r",0);
-        write_to_buffer(d,"Malkavian			 Brujah\n\r",0);
-        write_to_buffer(d,"Toreador			 Ventrue\n\r",0);
+        write_to_buffer(d,"Malkavian                     Brujah\n\r",0);
+        write_to_buffer(d,"Toreador                      Ventrue\n\r",0);
         write_to_buffer(d,"Ravnos\n\r",0);
         write_to_buffer(d,"\n\rPlease choose a clan: ",0);
 

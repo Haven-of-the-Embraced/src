@@ -996,22 +996,34 @@ if (is_affected(ch, gsn_shadowplay) && ch != NULL)
 
     if(!IS_NPC(ch) && ch->race == race_lookup("garou"))
     {
+        int diff, success, gain;
 
-       if (is_affected(ch, gsn_meditation) && ch->pcdata->gnosis[TEMP] < ch->pcdata->gnosis[PERM] &&
-       IS_AFFECTED2(ch, AFF2_UMBRA) && number_percent() < 25 &&
-       godice(get_attribute(ch, WITS) + ch->pcdata->cssec_abil[CSABIL_ENIGMAS], 2))
-    {
-    sendch("You feel refreshed and at one with Mother Gaia.\n\r", ch);
-    ch->pcdata->gnosis[TEMP]++;
-    }
-    if (is_affected(ch, gsn_meditation) && ch->pcdata->gnosis[TEMP] < ch->pcdata->gnosis[PERM] &&
-        !IS_AFFECTED2(ch, AFF2_UMBRA) && number_percent() < 25 &&
-        godice(get_attribute(ch, WITS) + ch->pcdata->cssec_abil[CSABIL_ENIGMAS], 2+get_gauntlet(ch)))
-        {
-        sendch("You feel refreshed and at one with Mother Gaia.\n\r", ch);
-        ch->pcdata->gnosis[TEMP]++;
+        if (IS_AFFECTED2(ch, AFF2_UMBRA))
+            diff = 4;
+        else
+            diff = 4 + get_gauntlet(ch);
+
+       if (is_affected(ch, gsn_meditation) && ch->pcdata->gnosis[TEMP] < ch->pcdata->gnosis[PERM])
+       {
+            success = godice(get_attribute(ch, WITS) + ch->pcdata->cssec_abil[CSABIL_ENIGMAS], diff);
+
+            if (success > 0)
+            {
+
+                if (success > 1)
+                    gain = success / 2;
+                else
+                    gain = 1;
+
+                ch->pcdata->gnosis[TEMP] += UMIN(gain, ch->pcdata->gnosis[PERM] - ch->pcdata->gnosis[TEMP]);
+
+                if (ch->pcdata->gnosis[TEMP] == ch->pcdata->gnosis[PERM])
+                    sendch("Your spiritual reserves are fully replenished!\n\r", ch);
+                else
+                    sendch("You feel refreshed and at one with Mother Gaia.\n\r", ch);
+
+            }
         }
-
     }
 
 

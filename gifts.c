@@ -635,7 +635,7 @@ void spell_gift_haresleap( int sn, int level, CHAR_DATA *ch, void *vo, int targe
     af.where        = TO_AFFECTS;
     af.type         = gsn_gift_haresleap;
     af.level        = ch->pcdata->rank;
-    af.duration     = ch->pcdata->gnosis[PERM]/2;
+    af.duration     = ch->pcdata->gnosis[PERM]*2;
     af.modifier     = 0;
     af.location     = APPLY_NONE;
     af.bitvector    = 0;

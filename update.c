@@ -324,8 +324,8 @@ int move_gain( CHAR_DATA *ch )
 
     switch ( ch->position )
     {
-    case POS_SLEEPING: gain += get_curr_stat(ch,STAT_DEX);      break;
-    case POS_RESTING:  gain += get_curr_stat(ch,STAT_DEX) / 2;  break;
+    case POS_SLEEPING: gain += get_attribute(ch, STAMINA) * 5;      break;
+    case POS_RESTING:  gain += (get_attribute(ch, STAMINA) * 5) / 2;  break;
     }
 
     if ( ch->pcdata->condition[COND_HUNGER]   == 0 )

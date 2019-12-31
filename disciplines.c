@@ -847,19 +847,6 @@ void do_auraperception( CHAR_DATA *ch, char *argument )
         victim->move, victim->max_move);
         send_to_char( buf, ch );
 
-        sprintf( buf,
-        "Their stats are:\nStr: %d(%d)  Int: %d(%d)  Wis: %d(%d)  Dex: %d(%d)  Con: %d(%d)\n\r",
-        victim->perm_stat[STAT_STR],
-        get_curr_stat(victim,STAT_STR),
-        victim->perm_stat[STAT_INT],
-        get_curr_stat(victim,STAT_INT),
-        victim->perm_stat[STAT_WIS],
-        get_curr_stat(victim,STAT_WIS),
-        victim->perm_stat[STAT_DEX],
-        get_curr_stat(victim,STAT_DEX),
-        victim->perm_stat[STAT_CON],
-        get_curr_stat(victim,STAT_CON) );
-        send_to_char( buf, ch );
     }
     if(success > 2)
     {

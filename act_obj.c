@@ -4041,13 +4041,12 @@ void do_dip(CHAR_DATA *ch, char *argument)
         send_to_char( "That item cannot be preserved!\n\r", ch );
         return;
     }
-    chance = number_range(1, 100);
-    chance -= get_curr_stat(ch,STAT_INT);
+    chance = godice(get_attribute(ch, INTELLIGENCE) + get_ability(ch, CSABIL_SURVIVAL), 6);
 
     act( "You dip $p into $P.", ch, obj, obj2, TO_CHAR );
     act( "$n dips $p into $P.", ch, obj, obj2, TO_ROOM );
 
-    if(chance > 70)
+    if(chance < 1)
     {
         act( "You curse as $p sizzles, smokes then disappears!", ch, obj, obj2, TO_CHAR );
         act( "$n curses as $p sizzles, smokes then disappears!", ch, obj, obj2, TO_ROOM );

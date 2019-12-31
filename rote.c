@@ -937,7 +937,7 @@ void rote_senselife(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj
     sprintf(buf, "You sense that this being is a %d year old %s.\n\r",get_age(victim), race_table[victim->race].name);
     send_to_char(buf,ch);
 
-    if(success >= 1)
+    if(success > 1)
     {
         sprintf(buf, "They have %d/%d HP, %d/%d Mana and %d/%d movement.\n\r",
         victim->hit,  victim->max_hit,
@@ -945,18 +945,7 @@ void rote_senselife(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj
         victim->move, victim->max_move);
         send_to_char(buf,ch);
     }
-    if(success >= 2)
-    {
-        sprintf( buf,
-        "Their stats are:\nStr: %d(%d)  Int: %d(%d)  Wis: %d(%d)  Dex: %d(%d)  Con: %d(%d)\n\r",
-        victim->perm_stat[STAT_STR], get_curr_stat(victim,STAT_STR),
-        victim->perm_stat[STAT_INT], get_curr_stat(victim,STAT_INT),
-        victim->perm_stat[STAT_WIS], get_curr_stat(victim,STAT_WIS),
-        victim->perm_stat[STAT_DEX], get_curr_stat(victim,STAT_DEX),
-        victim->perm_stat[STAT_CON], get_curr_stat(victim,STAT_CON) );
-        send_to_char( buf, ch );
-    }
-    if(success >= 3)
+    if(success > 2)
     {
         for ( paf = victim->affected; paf != NULL; paf = paf->next )
         {

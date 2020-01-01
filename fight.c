@@ -4006,11 +4006,11 @@ void do_dirt( CHAR_DATA *ch, char *argument )
 {
     char arg[MAX_INPUT_LENGTH];
     CHAR_DATA *victim;
-    int chance;
+    int success, dice, diff, skill;
 
     one_argument(argument,arg);
 
-    if ( (chance = get_skill(ch,gsn_dirt)) == 0
+    if ( (skill = get_skill(ch,gsn_dirt)) == 0
     ||   (IS_NPC(ch) && !IS_SET(ch->off_flags,OFF_KICK_DIRT)))
     {
     send_to_char("You get your feet dirty.\n\r",ch);
@@ -4061,61 +4061,56 @@ void do_dirt( CHAR_DATA *ch, char *argument )
         return;
     }
 
-    if ( !IS_NPC(victim) && !IS_NPC(ch) && !IN_LEVEL(ch, victim))
-    {
-        send_to_char( "You cannot harm them, they are not in level to you!\n\r", ch );
-        return;
-    }
-
     if (IS_AFFECTED(ch,AFF_CHARM) && ch->master == victim)
     {
     act("But $N is such a good friend!",ch,NULL,victim,TO_CHAR);
     return;
     }
+    dice = get_attribute(ch, DEXTERITY) + get_ability(ch, CSABIL_BRAWL);
+    diff = 6;
 
     /* modifiers */
 
-    /* dexterity */
-    chance += get_curr_stat(ch,STAT_DEX);
-    chance -= 2 * get_curr_stat(victim,STAT_DEX);
-
     /* speed  */
     if (IS_SET(ch->off_flags,OFF_FAST) || IS_AFFECTED(ch,AFF_HASTE))
-    chance += 10;
+    diff--;
     if (IS_SET(victim->off_flags,OFF_FAST) || IS_AFFECTED(victim,AFF_HASTE))
-    chance -= 25;
+    diff += 2;
 
     /* level */
-    chance += (ch->level - victim->level) * 2;
+    if (victim->level > ch->level+10)
+    diff++;
 
-    /* sloppy hack to prevent false zeroes */
-    if (chance % 5 == 0)
-    chance += 1;
+    /* skill */
+    dice = (dice * skill) / 100;
 
     /* terrain */
 
     switch(ch->in_room->sector_type)
     {
-    case(SECT_INSIDE):      chance -= 20;   break;
-    case(SECT_CITY):        chance -= 10;   break;
-    case(SECT_FIELD):       chance +=  5;   break;
-    case(SECT_FOREST):              break;
-    case(SECT_HILLS):               break;
-    case(SECT_MOUNTAIN):        chance -= 10;   break;
-    case(SECT_WATER_SWIM):      chance  =  0;   break;
-    case(SECT_WATER_NOSWIM):    chance  =  0;   break;
-    case(SECT_AIR):         chance  =  0;   break;
-    case(SECT_DESERT):      chance += 10;   break;
-    case(SECT_WATER_DROWN): chance  =  0;   break;
-    case(SECT_HOT):             break;
-    case(SECT_COLD):                break;
+    case(SECT_INSIDE):          diff += 1;   break;
+    case(SECT_CITY):            diff += 1;   break;
+    case(SECT_FIELD):           diff -= 1;   break;
+    case(SECT_FOREST):          diff += 1;        break;
+    case(SECT_HILLS):           diff += 1;        break;
+    case(SECT_MOUNTAIN):        diff -= 1;   break;
+    case(SECT_WATER_SWIM):      diff = -1;       break;
+    case(SECT_WATER_NOSWIM):    diff = -1;       break;
+    case(SECT_AIR):             diff = -1;  break;
+    case(SECT_DESERT):          diff -= 2; break;
+    case(SECT_WATER_DROWN):     diff = -1; break;
+    case(SECT_HOT):                     break;
+    case(SECT_COLD):                    break;
     }
 
-    if (chance == 0)
+    if (diff == -1)
     {
-    send_to_char("There isn't any dirt to kick.\n\r",ch);
-    return;
+        sendch("There's no dirt here to kick!\n\r", ch);
+        return;
     }
+
+    if (diff > 10)
+        diff = 10;
 
     if(is_affected(victim,gsn_precognition) && number_percent() > 50)
     {
@@ -4123,27 +4118,48 @@ void do_dirt( CHAR_DATA *ch, char *argument )
         return;
     }
 
+    success = godice(dice, diff);
+    if (IS_DEBUGGING(ch)) {
+        char buf[MSL];
+        sprintf(buf, "Dice: %d(%d) Diff %d Success %d",
+            dice, get_attribute(ch, DEXTERITY) + get_ability(ch, CSABIL_BRAWL),
+            diff, success);
+        sendch(buf, ch);
+    }
+
     /* now the attack */
-    if (number_percent() < chance)
+    if (success > 0)
     {
-    AFFECT_DATA af;
-    act("$n is blinded by the dirt in $s eyes!",victim,NULL,NULL,TO_ROOM);
-    act("$n kicks dirt in your eyes!",ch,NULL,victim,TO_VICT);
+        act("$n kicks dirt in your eyes!",ch,NULL,victim,TO_VICT);
+        damage(ch,victim,number_range(ch->level / 4, ch->level / 2),gsn_dirt,DAM_NONE,TRUE);
+        check_improve(ch,gsn_dirt,TRUE,2);
+        WAIT_STATE(ch,skill_table[gsn_dirt].beats);
 
-    damage(ch,victim,number_range(ch->level / 4, ch->level / 2),gsn_dirt,DAM_NONE,FALSE);
-    send_to_char("You can't see a thing!\n\r",victim);
-    check_improve(ch,gsn_dirt,TRUE,2);
-    WAIT_STATE(ch,skill_table[gsn_dirt].beats);
 
-    af.where    = TO_AFFECTS;
-    af.type     = gsn_dirt;
-    af.level    = ch->level;
-    af.duration = 0;
-    af.location = APPLY_HITROLL;
-    af.modifier = -4;
-    af.bitvector    = AFF_BLIND;
+        if (success < 3)
+        {
+            act("$n is momentarily stunned by the dirt kicked in $s eyes!",victim, NULL, NULL, TO_ROOM);
+            STOPPED(victim, 2 * PULSE_VIOLENCE);
 
-    affect_to_char(victim,&af);
+        } else {
+            AFFECT_DATA af;
+            act("$n is blinded by the dirt in $s eyes!",victim,NULL,NULL,TO_ROOM);
+
+            STOPPED(victim, PULSE_VIOLENCE);
+
+            send_to_char("You can't see a thing!\n\r",victim);
+
+            af.where    = TO_AFFECTS;
+            af.type     = gsn_dirt;
+            af.level    = ch->level;
+            af.duration = 0;
+            af.location = APPLY_HITROLL;
+            af.modifier = -8 * success;
+            af.bitvector    = AFF_BLIND;
+
+            affect_to_char(victim,&af);
+        }
+
     }
     else
     {

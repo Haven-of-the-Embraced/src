@@ -5658,6 +5658,13 @@ void do_string( CHAR_DATA *ch, char *argument )
                 return;
         }
 
+        if (!str_cmp, (arg2, "immtitle") && IS_IMMORTAL(victim))
+        {
+                free_string(victim->pcdata->immtitle);
+                victim->pcdata->immtitle = str_dup ( arg3 );
+                return;
+        }
+
         if ( !str_prefix( arg2, "description" ) )
         {
             free_string(victim->description);

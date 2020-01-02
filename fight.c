@@ -5922,12 +5922,14 @@ void do_blast( CHAR_DATA *ch, char *argument )
 void do_slip( CHAR_DATA *ch, char *argument )
 {
     CHAR_DATA *victim;
-    int chance;
+    int dice, diff, success, resistdice, resist, skill, resistdiff;
+
+    diff = resistdiff = 6;
 
         if (IS_NPC(ch))
                 return;
 
-        if (get_skill(ch,gsn_slip) == 0)
+        if ((skill = get_skill(ch,gsn_slip)) == 0)
         {
                 send_to_char("You have no idea how to do this!\n\r", ch );
                 return;
@@ -5945,21 +5947,31 @@ void do_slip( CHAR_DATA *ch, char *argument )
                 return;
         }
 
-        chance = number_percent();
-        if(get_curr_stat(ch,STAT_DEX) > get_curr_stat(victim,STAT_INT))
-                chance += (get_curr_stat(ch,STAT_DEX) - get_curr_stat(ch,STAT_INT));
-        if(get_curr_stat(ch,STAT_DEX) > get_curr_stat(victim,STAT_WIS))
-                chance += (get_curr_stat(ch,STAT_DEX) - get_curr_stat(ch,STAT_WIS));
-        if(get_curr_stat(ch,STAT_DEX) > get_curr_stat(victim,STAT_DEX))
-                chance += (get_curr_stat(ch,STAT_DEX) - get_curr_stat(ch,STAT_DEX));
-        if(ch->level >= victim->level)
-                chance += (ch->level - victim->level)/2;
-        else
-                chance -= (victim->level - ch->level);
+        dice = get_attribute(ch, WITS) + get_ability(ch, CSABIL_STEALTH);
+        dice = dice * skill / 100;
+
+        if (victim->fighting != ch)
+        {
+            diff--;
+            resistdiff++;
+        }
+
+        success = godice(dice, diff);
+        resistdice = get_attribute(victim, PERCEPTION) +
+                 get_ability(victim, CSABIL_ALERTNESS);
+        resist = godice(resistdice, resistdiff);
+
+        if (IS_DEBUGGING(ch)) {
+            char buf[MSL];
+
+            sprintf(buf, "Dice %d Diff %d Resistdice %d Resistd %d Success %d Resist%d\n\r",
+                dice, diff, resistdice, resistdiff, success, resist);
+            sendch(buf, ch);
+        }
 
         WAIT_STATE( ch, skill_table[gsn_slip].beats );
 
-        if(chance <= get_skill(ch,gsn_slip))
+        if(success > resist)
         {
                 act( "You manage to slip away from $N...", ch, NULL, victim, TO_CHAR );
                 act( "$n suddenly slips away from you!", ch, NULL, victim, TO_VICT );

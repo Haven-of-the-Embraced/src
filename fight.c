@@ -4506,9 +4506,11 @@ void do_backstab( CHAR_DATA *ch, char *argument )
         return;
     }
 
-    if (!IS_AFFECTED(ch,AFF_SNEAK))
+    if (!IS_AFFECTED(ch,AFF_SNEAK) && !IS_AFFECTED(ch, AFF_HIDE) &&
+        !IS_AFFECTED(ch, AFF_INVISIBLE) && !IS_AFFECTED2(ch, AFF2_UNSEEN) &&
+        !IS_AFFECTED2(ch, AFF2_VEIL) && !IS_AFFECTED(victim, AFF_BLIND))
     {
-        send_to_char("How do you expect to sneak up on them if your not sneaking?\n\r",ch);
+        send_to_char("They will undoubtedly see you coming. Try being less visible.\n\r",ch);
         return;
     }
 
@@ -5396,11 +5398,9 @@ void do_assassinate( CHAR_DATA *ch, char *argument )
         return;
     }
 
-    chance = number_range(1, 100);
-
-    if (!IS_AFFECTED(ch,AFF_SNEAK))
+    if ((victim = get_char_room(ch,arg)) == NULL)
     {
-        send_to_char("How do you expect to sneak up on them if your not sneaking?\n\r",ch);
+        send_to_char("They aren't here.\n\r",ch);
         return;
     }
 
@@ -5409,10 +5409,13 @@ void do_assassinate( CHAR_DATA *ch, char *argument )
     send_to_char("You're facing the wrong end.\n\r",ch);
     return;
     }
+    chance = number_range(1, 100);
 
-    else if ((victim = get_char_room(ch,arg)) == NULL)
+    if (!IS_AFFECTED(ch,AFF_SNEAK) && !IS_AFFECTED(ch, AFF_HIDE) &&
+        !IS_AFFECTED(ch, AFF_INVISIBLE) && !IS_AFFECTED2(ch, AFF2_UNSEEN) &&
+        !IS_AFFECTED2(ch, AFF2_VEIL) && !IS_AFFECTED(victim, AFF_BLIND))
     {
-        send_to_char("They aren't here.\n\r",ch);
+        send_to_char("They will undoubtedly see you coming. Try being less visible.\n\r",ch);
         return;
     }
 

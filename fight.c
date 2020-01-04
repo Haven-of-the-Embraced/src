@@ -5937,7 +5937,7 @@ void do_slip( CHAR_DATA *ch, char *argument )
 
         if(ch->position != POS_FIGHTING)
         {
-                send_to_char("Your not fighting!\n\r", ch );
+                send_to_char("You're not fighting!\n\r", ch );
                 return;
         }
 
@@ -5953,7 +5953,7 @@ void do_slip( CHAR_DATA *ch, char *argument )
         if (victim->fighting != ch)
         {
             diff--;
-            resistdiff++;
+            resistdiff += 2;
         }
 
         success = godice(dice, diff);

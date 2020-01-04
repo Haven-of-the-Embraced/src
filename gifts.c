@@ -1485,7 +1485,7 @@ void spell_gift_fallingtouch( int sn, int level, CHAR_DATA *ch, void *vo, int ta
         diff = get_attribute(victim, STAMINA) + get_ability(victim, CSABIL_ATHLETICS);
     }
 
-    dicesuccess = godice(get_attribute(ch, DEXTERITY) + ch->pcdata->csabilities[CSABIL_MEDICINE], diff);
+    dicesuccess = godice(get_attribute(ch, DEXTERITY) + ch->csabilities[CSABIL_MEDICINE], diff);
 
 
     if(dicesuccess <= 0)

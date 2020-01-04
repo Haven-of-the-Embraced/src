@@ -112,7 +112,7 @@ void do_embrace(CHAR_DATA *ch, char *argument)
 
     sprintf(buf,"You feel the power of %s blood surging in your veins!\n\r", capitalize(clan_table[victim->clan].name));
     send_to_char(buf,victim);
-    if(victim->clan == clan_lookup("nosferatu")) ch->pcdata->csattributes[CSATTRIB_APPEARANCE] = 0;
+    if(victim->clan == clan_lookup("nosferatu")) ch->csattributes[CSATTRIB_APPEARANCE] = 0;
     victim->exp   = exp_per_level(victim,victim->pcdata->points) * UMAX( 1, victim->level );
     if(!IS_IMMORTAL(ch))
         ch->exp   = exp_per_level(ch,ch->pcdata->points) * UMAX( 1, ch->level-1 );
@@ -470,7 +470,7 @@ void do_feed(CHAR_DATA *ch, char *argument)
         if (victim->hit < victim->max_hit/2)
             diff -= 2;
 
-        success = godice(get_attribute(ch, DEXTERITY) + ch->pcdata->csabilities[CSABIL_ATHLETICS] + ch->pcdata->csbackgrounds[CSBACK_HERD], diff);
+        success = godice(get_attribute(ch, DEXTERITY) + ch->csabilities[CSABIL_ATHLETICS] + ch->pcdata->csbackgrounds[CSBACK_HERD], diff);
 
         if(victim->race == race_lookup("spirit") || victim->race == race_lookup("undead") || victim->race == race_lookup("bane") || victim->race == race_lookup("spider") || victim->race == race_lookup("construct") || victim->race == race_lookup("centipede") || victim->race == race_lookup("unique") || victim->race == race_lookup("wraith"))
         {
@@ -1296,10 +1296,10 @@ void do_stake(CHAR_DATA *ch, char *argument)
         victim->agg_dam = 0;
         victim->freebie = 15;
         for(i = 0; i < 30; i++)
-            victim->pcdata->csabilities[i] = 0;
+            victim->csabilities[i] = 0;
 
         for(i = 0; i < 9; i++)
-            victim->pcdata->csattributes[i] = 1;
+            victim->csattributes[i] = 1;
         victim->pcdata->csvirtues[CSVIRT_CONSCIENCE] = 0;
         victim->pcdata->csvirtues[CSVIRT_SELF_CONTROL] = 0;
         victim->pcdata->csvirtues[CSVIRT_COURAGE] = 0;
@@ -1593,7 +1593,7 @@ void do_incorporealpassage( CHAR_DATA *ch, char *argument )
 
     WAIT_STATE(ch, 7);
 
-    dicesuccess = godice(get_attribute(ch, INTELLIGENCE)+ch->pcdata->csabilities[CSABIL_OCCULT], 7);
+    dicesuccess = godice(get_attribute(ch, INTELLIGENCE)+ch->csabilities[CSABIL_OCCULT], 7);
 
     if (dicesuccess < 0)
     {
@@ -1614,7 +1614,7 @@ void do_incorporealpassage( CHAR_DATA *ch, char *argument )
     act("You smile as you watch your body fade and turn translucent.", ch, NULL, NULL, TO_CHAR);
     act("$n fades slowly, becoming a ghostly figure.", ch, NULL, NULL, TO_NOTVICT);
 
-    dicesuccess = godice(get_attribute(ch, WITS)+ch->pcdata->csabilities[CSABIL_SURVIVAL], 6);
+    dicesuccess = godice(get_attribute(ch, WITS)+ch->csabilities[CSABIL_SURVIVAL], 6);
 
     af.where    = TO_AFFECTS;
     af.type     = gsn_incorporeal_passage;

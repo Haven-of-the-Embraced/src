@@ -152,7 +152,7 @@ void do_drain(CHAR_DATA *ch, char *argument)
     }
 
     act( "You attempt to pierce one of $N's veins to steal their vitae...",  ch, NULL, victim, TO_CHAR );
-    success = godice(get_attribute(ch, DEXTERITY) + ch->pcdata->csabilities[CSABIL_MEDICINE], 6);
+    success = godice(get_attribute(ch, DEXTERITY) + ch->csabilities[CSABIL_MEDICINE], 6);
     if (success < 0)
     {
         send_to_char("..and fail horribly, pushing their torpid body into Final death.\n\r", ch);

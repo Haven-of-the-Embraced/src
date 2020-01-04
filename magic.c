@@ -4275,7 +4275,7 @@ void spell_refresh( int sn, int level, CHAR_DATA *ch, void *vo,int target )
 {       /*Sengir added bonus to refresh based on CS Stats)*/
     CHAR_DATA *victim = (CHAR_DATA *) vo;
     if (!IS_NPC(ch))
-    victim->move = UMIN( victim->move + level + (3*(get_attribute(ch,STAMINA) + ch->pcdata->csabilities[CSABIL_THEOLOGY])), victim->max_move );
+    victim->move = UMIN( victim->move + level + (3*(get_attribute(ch,STAMINA) + ch->csabilities[CSABIL_THEOLOGY])), victim->max_move );
     else
     victim->move = UMIN( victim->move + level, victim->max_move);
     if (victim->max_move == victim->move)

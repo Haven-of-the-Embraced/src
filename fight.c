@@ -1781,9 +1781,9 @@ void d10_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt)
 	 else
 	 {// IS player
 		if (wield)
-			dice = get_attribute(ch,DEXTERITY)+ch->pcdata->csabilities[CSABIL_MELEE];
+			dice = get_attribute(ch,DEXTERITY)+ch->csabilities[CSABIL_MELEE];
 		else
-			dice = get_attribute(ch,DEXTERITY)+ch->pcdata->csabilities[CSABIL_BRAWL];
+			dice = get_attribute(ch,DEXTERITY)+ch->csabilities[CSABIL_BRAWL];
     }
 		//Dicepool Modifiers.
 
@@ -2659,10 +2659,10 @@ bool check_parry( CHAR_DATA *ch, CHAR_DATA *victim )
         else
         {
             if (get_skill(ch,gsn_hand_to_hand) <= 75) return FALSE;
-            chance *= godice(get_attribute(victim,DEXTERITY)+victim->pcdata->csabilities[CSABIL_BRAWL],6);
+            chance *= godice(get_attribute(victim,DEXTERITY)+victim->csabilities[CSABIL_BRAWL],6);
         }
     }
-    else if(!IS_NPC(victim)) chance *= godice(get_attribute(victim,DEXTERITY)+victim->pcdata->csabilities[CSABIL_MELEE],6);
+    else if(!IS_NPC(victim)) chance *= godice(get_attribute(victim,DEXTERITY)+victim->csabilities[CSABIL_MELEE],6);
 
     if (!can_see(ch,victim))
     chance /= 2;
@@ -2723,7 +2723,7 @@ bool check_dodge( CHAR_DATA *ch, CHAR_DATA *victim )
     if(!IS_NPC(victim))
     {
         chance = get_skill(victim,gsn_dodge) / 6;
-        chance *= godice(get_attribute(victim,DEXTERITY)+victim->pcdata->csabilities[CSABIL_DODGE],6);
+        chance *= godice(get_attribute(victim,DEXTERITY)+victim->csabilities[CSABIL_DODGE],6);
     }
     else chance = get_skill(victim,gsn_dodge) / 2;
 
@@ -3482,7 +3482,7 @@ int xp_compute( CHAR_DATA *gch, CHAR_DATA *victim, int total_levels )
 
 /*Sengir altered extra xp if you are leader*/
     if ((gch->leader == NULL) && (level_range >= -10))
-        xp += gch->pcdata->csabilities[CSABIL_LEADERSHIP] * 5;
+        xp += gch->csabilities[CSABIL_LEADERSHIP] * 5;
 
 /*Sengir remort bonus xp code*/
     if (level_range >= -10)
@@ -3951,7 +3951,7 @@ void do_bash( CHAR_DATA *ch, char *argument )
         }
     }
 
-    dicesuccess = godice(get_attribute(ch, DEXTERITY) + ch->pcdata->csabilities[CSABIL_MELEE], 6);
+    dicesuccess = godice(get_attribute(ch, DEXTERITY) + ch->csabilities[CSABIL_MELEE], 6);
 
     if(dicesuccess < 0)
     {
@@ -4842,7 +4842,7 @@ void do_kick(CHAR_DATA *ch, char *argument)
         }
     }
 
-    dicesuccess = godice(get_attribute(ch, DEXTERITY) + ch->pcdata->csabilities[CSABIL_BRAWL], 5);
+    dicesuccess = godice(get_attribute(ch, DEXTERITY) + ch->csabilities[CSABIL_BRAWL], 5);
 
     WAIT_STATE(ch, 12);
 
@@ -4922,7 +4922,7 @@ void do_kick(CHAR_DATA *ch, char *argument)
         act("$n spins around, bringing $s heel directly at you,", ch, NULL, victim, TO_VICT);
         act("$n twists around, attempting another kick at $N,", ch, NULL, victim, TO_NOTVICT);
 
-        dicesuccess = godice(get_attribute(ch, DEXTERITY) + ch->pcdata->csabilities[CSABIL_BRAWL], 6);
+        dicesuccess = godice(get_attribute(ch, DEXTERITY) + ch->csabilities[CSABIL_BRAWL], 6);
 
         if (dicesuccess < 0)
         {
@@ -5690,7 +5690,7 @@ void do_headbutt( CHAR_DATA *ch, char *argument )
 
     ch->move -= (ch->level / 20);
 
-    dicesuccess = godice(get_attribute(ch, DEXTERITY) + ch->pcdata->csabilities[CSABIL_BRAWL], 6);
+    dicesuccess = godice(get_attribute(ch, DEXTERITY) + ch->csabilities[CSABIL_BRAWL], 6);
 
         WAIT_STATE( ch, skill_table[gsn_headbutt].beats );
 
@@ -5809,7 +5809,7 @@ void do_gouge( CHAR_DATA *ch, char *argument )
         if (skill > 90) diff = 7;
         if (skill < 90) diff = 8;
         if (skill < 70) diff = 9;
-    dicesuccess = godice(get_attribute(ch, DEXTERITY) + ch->pcdata->csabilities[CSABIL_BRAWL], diff);
+    dicesuccess = godice(get_attribute(ch, DEXTERITY) + ch->csabilities[CSABIL_BRAWL], diff);
     damagesuccess = godice(get_attribute(ch, STRENGTH) + ch->pcdata->discipline[POTENCE], 6);
         WAIT_STATE( ch, skill_table[gsn_gouge].beats );
 
@@ -5906,7 +5906,7 @@ void do_blast( CHAR_DATA *ch, char *argument )
 
         WAIT_STATE( ch, skill_table[gsn_blast].beats );
 
-    dicesuccess = godice(get_attribute(ch, DEXTERITY) + ch->pcdata->csabilities[CSABIL_SUBTERFUGE], 6);
+    dicesuccess = godice(get_attribute(ch, DEXTERITY) + ch->csabilities[CSABIL_SUBTERFUGE], 6);
 
         if(dicesuccess < 0)
         {
@@ -6227,7 +6227,7 @@ void do_allies(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    dicesuccess = godice(get_attribute(ch, CHARISMA) + ch->pcdata->csabilities[CSABIL_LEADERSHIP], 7);
+    dicesuccess = godice(get_attribute(ch, CHARISMA) + ch->csabilities[CSABIL_LEADERSHIP], 7);
 
     WAIT_STATE(ch, 10);
 

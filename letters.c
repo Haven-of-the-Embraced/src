@@ -29,7 +29,7 @@ do_write(CHAR_DATA *ch, char *argument)
   char buffer[MAX_STRING_LENGTH];
 
   /* NPCs can't write.  */
-   if (ch->pcdata->csabilities[CSABIL_ACADEMICS] < 2)
+   if (ch->csabilities[CSABIL_ACADEMICS] < 2)
    {
        send_to_char("You're not academic enough to write letters!\n\r",ch);
        return;
@@ -103,7 +103,7 @@ do_read(CHAR_DATA *ch, char *argument)
 
   /* Look for an item matching argument.  */
   letter = get_obj_list(ch,argument,ch->carrying);
-   if (ch->pcdata->csabilities[CSABIL_ACADEMICS] == 0)
+   if (ch->csabilities[CSABIL_ACADEMICS] == 0)
    {
        send_to_char("You're not academic enough to read letters!\n\r",ch);
        return;

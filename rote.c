@@ -669,7 +669,7 @@ void rote_perceiveforces(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA
     af.where     = TO_AFFECTS;
     af.type      = gsn_magick;
     af.level     = ch->level;
-    af.duration  = success*2*(ch->pcdata->csabilities[CSABIL_ALERTNESS]+get_attribute(ch,PERCEPTION));
+    af.duration  = success*2*(ch->csabilities[CSABIL_ALERTNESS]+get_attribute(ch,PERCEPTION));
     af.location  = APPLY_NONE;
     af.modifier  = 0;
     af.bitvector = AFF_INFRARED;
@@ -795,7 +795,7 @@ void rote_spatialperceptions(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_
     af.where     = TO_AFFECTS;
     af.type      = gsn_magick;
     af.level     = ch->level;
-    af.duration  = success*(ch->pcdata->csabilities[CSABIL_ALERTNESS]+get_attribute(ch,PERCEPTION));
+    af.duration  = success*(ch->csabilities[CSABIL_ALERTNESS]+get_attribute(ch,PERCEPTION));
     af.location  = APPLY_NONE;
     af.modifier  = 0;
     af.bitvector = AFF_DARK_VISION;
@@ -1154,7 +1154,7 @@ void rote_matterperception(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DA
     af.where     = TO_AFFECTS;
     af.type      = gsn_detect_hidden;
     af.level     = ch->level;
-    af.duration  = success*(ch->pcdata->csabilities[CSABIL_ALERTNESS]+get_attribute(ch,PERCEPTION));
+    af.duration  = success*(ch->csabilities[CSABIL_ALERTNESS]+get_attribute(ch,PERCEPTION));
     af.location  = APPLY_NONE;
     af.modifier  = 0;
     af.bitvector = AFF_DETECT_HIDDEN;
@@ -1393,7 +1393,7 @@ void rote_controlminds(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *
         group_members++;
     }
 
-    if (group_members + 1 > ch->pcdata->csabilities[CSABIL_LEADERSHIP] + 1)
+    if (group_members + 1 > ch->csabilities[CSABIL_LEADERSHIP] + 1)
     {
         send_to_char("Even if you subverted your target's mind, you cannot lead that many people.\n\r", ch);
         return;
@@ -1465,7 +1465,7 @@ void rote_spiritsight(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *o
     af.where     = TO_AFFECTS;
     af.type      = gsn_detect_invis;
     af.level     = ch->level;
-    af.duration  = success*(ch->pcdata->csabilities[CSABIL_ALERTNESS]+get_attribute(ch,PERCEPTION));
+    af.duration  = success*(ch->csabilities[CSABIL_ALERTNESS]+get_attribute(ch,PERCEPTION));
     af.location  = APPLY_NONE;
     af.modifier  = 0;
     af.bitvector = AFF_DETECT_INVIS;

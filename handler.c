@@ -329,15 +329,15 @@ bool update_csstats(CHAR_DATA *ch)
     int i;
 
     for (i = 0; i <= MAX_CSATTRIBUTES; i ++)
-        if(ch->pcdata->csattributes[i] == 0 || ch->pcdata->csattributes[i] > 10)
-                ch->pcdata->csattributes[i] = 1;
+        if(ch->csattributes[i] == 0 || ch->csattributes[i] > 10)
+                ch->csattributes[i] = 1;
 
     if(ch->pcdata->csvirtues[CSVIRT_CONSCIENCE] == 0) ch->pcdata->csvirtues[CSVIRT_CONSCIENCE]++;
     if(ch->pcdata->csvirtues[CSVIRT_SELF_CONTROL] == 0) ch->pcdata->csvirtues[CSVIRT_SELF_CONTROL]++;
     if(ch->pcdata->csvirtues[CSVIRT_COURAGE] == 0) ch->pcdata->csvirtues[CSVIRT_COURAGE]++;
 
     if(ch->clan == clan_lookup("Nosferatu"))
-        ch->pcdata->csattributes[CSATTRIB_APPEARANCE] = 0;
+        ch->csattributes[CSATTRIB_APPEARANCE] = 0;
 
     cskill_update(ch);
 
@@ -590,7 +590,7 @@ void reset_char(CHAR_DATA *ch)
     ch->mod_stat[stat] = 0;
 
     for (i = 0; i <= MAX_CSATTRIBUTES; i ++)
-        ch->pcdata->csattrib_mod[i] = 0;
+        ch->csattrib_mod[i] = 0;
 
     if (ch->pcdata->true_sex < 0 || ch->pcdata->true_sex > 2)
     ch->pcdata->true_sex = 0;
@@ -632,15 +632,15 @@ void reset_char(CHAR_DATA *ch)
         case APPLY_MANA:    ch->max_mana        += mod; break;
         case APPLY_HIT:     ch->max_hit     += mod; break;
         case APPLY_MOVE:    ch->max_move        += mod; break;
-        case APPLY_CS_STR:      ch->pcdata->csattrib_mod[CSATTRIB_STRENGTH]  += mod; break;
-        case APPLY_CS_DEX:      ch->pcdata->csattrib_mod[CSATTRIB_DEXTERITY]  += mod; break;
-        case APPLY_CS_STA:      ch->pcdata->csattrib_mod[CSATTRIB_STAMINA]  += mod; break;
-        case APPLY_CS_CHA:      ch->pcdata->csattrib_mod[CSATTRIB_CHARISMA]  += mod; break;
-        case APPLY_CS_MAN:      ch->pcdata->csattrib_mod[CSATTRIB_MANIPULATION]  += mod; break;
-        case APPLY_CS_APP:      ch->pcdata->csattrib_mod[CSATTRIB_APPEARANCE]  += mod; break;
-        case APPLY_CS_PER:      ch->pcdata->csattrib_mod[CSATTRIB_PERCEPTION]  += mod; break;
-        case APPLY_CS_INT:      ch->pcdata->csattrib_mod[CSATTRIB_INTELLIGENCE]  += mod; break;
-        case APPLY_CS_WIT:      ch->pcdata->csattrib_mod[CSATTRIB_WITS]  += mod; break;
+        case APPLY_CS_STR:      ch->csattrib_mod[CSATTRIB_STRENGTH]  += mod; break;
+        case APPLY_CS_DEX:      ch->csattrib_mod[CSATTRIB_DEXTERITY]  += mod; break;
+        case APPLY_CS_STA:      ch->csattrib_mod[CSATTRIB_STAMINA]  += mod; break;
+        case APPLY_CS_CHA:      ch->csattrib_mod[CSATTRIB_CHARISMA]  += mod; break;
+        case APPLY_CS_MAN:      ch->csattrib_mod[CSATTRIB_MANIPULATION]  += mod; break;
+        case APPLY_CS_APP:      ch->csattrib_mod[CSATTRIB_APPEARANCE]  += mod; break;
+        case APPLY_CS_PER:      ch->csattrib_mod[CSATTRIB_PERCEPTION]  += mod; break;
+        case APPLY_CS_INT:      ch->csattrib_mod[CSATTRIB_INTELLIGENCE]  += mod; break;
+        case APPLY_CS_WIT:      ch->csattrib_mod[CSATTRIB_WITS]  += mod; break;
 
         case APPLY_AC:
             for (i = 0; i < 4; i ++)
@@ -673,15 +673,15 @@ void reset_char(CHAR_DATA *ch)
                 case APPLY_HIT:         ch->max_hit             += mod; break;
                 case APPLY_MOVE:        ch->max_move            += mod; break;
                 case APPLY_GENERATION:  ch->gen                 += mod; break;
-                case APPLY_CS_STR:      ch->pcdata->csattrib_mod[CSATTRIB_STRENGTH]  += mod; break;
-                case APPLY_CS_DEX:      ch->pcdata->csattrib_mod[CSATTRIB_DEXTERITY]  += mod; break;
-                case APPLY_CS_STA:      ch->pcdata->csattrib_mod[CSATTRIB_STAMINA]  += mod; break;
-                case APPLY_CS_CHA:      ch->pcdata->csattrib_mod[CSATTRIB_CHARISMA]  += mod; break;
-                case APPLY_CS_MAN:      ch->pcdata->csattrib_mod[CSATTRIB_MANIPULATION]  += mod; break;
-                case APPLY_CS_APP:      ch->pcdata->csattrib_mod[CSATTRIB_APPEARANCE]  += mod; break;
-                case APPLY_CS_PER:      ch->pcdata->csattrib_mod[CSATTRIB_PERCEPTION]  += mod; break;
-                case APPLY_CS_INT:      ch->pcdata->csattrib_mod[CSATTRIB_INTELLIGENCE]  += mod; break;
-                case APPLY_CS_WIT:      ch->pcdata->csattrib_mod[CSATTRIB_WITS]  += mod; break;
+                case APPLY_CS_STR:      ch->csattrib_mod[CSATTRIB_STRENGTH]  += mod; break;
+                case APPLY_CS_DEX:      ch->csattrib_mod[CSATTRIB_DEXTERITY]  += mod; break;
+                case APPLY_CS_STA:      ch->csattrib_mod[CSATTRIB_STAMINA]  += mod; break;
+                case APPLY_CS_CHA:      ch->csattrib_mod[CSATTRIB_CHARISMA]  += mod; break;
+                case APPLY_CS_MAN:      ch->csattrib_mod[CSATTRIB_MANIPULATION]  += mod; break;
+                case APPLY_CS_APP:      ch->csattrib_mod[CSATTRIB_APPEARANCE]  += mod; break;
+                case APPLY_CS_PER:      ch->csattrib_mod[CSATTRIB_PERCEPTION]  += mod; break;
+                case APPLY_CS_INT:      ch->csattrib_mod[CSATTRIB_INTELLIGENCE]  += mod; break;
+                case APPLY_CS_WIT:      ch->csattrib_mod[CSATTRIB_WITS]  += mod; break;
 
         case APPLY_MAX_BLOOD:   ch->max_pblood      += mod; break;
 
@@ -717,15 +717,15 @@ void reset_char(CHAR_DATA *ch)
                 case APPLY_MANA:        ch->max_mana            += mod; break;
                 case APPLY_HIT:         ch->max_hit             += mod; break;
                 case APPLY_MOVE:        ch->max_move            += mod; break;
-                case APPLY_CS_STR:      ch->pcdata->csattrib_mod[CSATTRIB_STRENGTH]  += mod; break;
-                case APPLY_CS_DEX:      ch->pcdata->csattrib_mod[CSATTRIB_DEXTERITY]  += mod; break;
-                case APPLY_CS_STA:      ch->pcdata->csattrib_mod[CSATTRIB_STAMINA]  += mod; break;
-                case APPLY_CS_CHA:      ch->pcdata->csattrib_mod[CSATTRIB_CHARISMA]  += mod; break;
-                case APPLY_CS_MAN:      ch->pcdata->csattrib_mod[CSATTRIB_MANIPULATION]  += mod; break;
-                case APPLY_CS_APP:      ch->pcdata->csattrib_mod[CSATTRIB_APPEARANCE]  += mod; break;
-                case APPLY_CS_PER:      ch->pcdata->csattrib_mod[CSATTRIB_PERCEPTION]  += mod; break;
-                case APPLY_CS_INT:      ch->pcdata->csattrib_mod[CSATTRIB_INTELLIGENCE]  += mod; break;
-                case APPLY_CS_WIT:      ch->pcdata->csattrib_mod[CSATTRIB_WITS]  += mod; break;
+                case APPLY_CS_STR:      ch->csattrib_mod[CSATTRIB_STRENGTH]  += mod; break;
+                case APPLY_CS_DEX:      ch->csattrib_mod[CSATTRIB_DEXTERITY]  += mod; break;
+                case APPLY_CS_STA:      ch->csattrib_mod[CSATTRIB_STAMINA]  += mod; break;
+                case APPLY_CS_CHA:      ch->csattrib_mod[CSATTRIB_CHARISMA]  += mod; break;
+                case APPLY_CS_MAN:      ch->csattrib_mod[CSATTRIB_MANIPULATION]  += mod; break;
+                case APPLY_CS_APP:      ch->csattrib_mod[CSATTRIB_APPEARANCE]  += mod; break;
+                case APPLY_CS_PER:      ch->csattrib_mod[CSATTRIB_PERCEPTION]  += mod; break;
+                case APPLY_CS_INT:      ch->csattrib_mod[CSATTRIB_INTELLIGENCE]  += mod; break;
+                case APPLY_CS_WIT:      ch->csattrib_mod[CSATTRIB_WITS]  += mod; break;
 
                 case APPLY_AC:
                     for (i = 0; i < 4; i ++)
@@ -816,13 +816,13 @@ int get_attribute( CHAR_DATA *ch, int stat )
     if (IS_NPC(ch))
         return 1 + ch->level/30;
 
-    if(ch->pcdata->csattributes[stat]+ch->pcdata->csattrib_mod[stat] > 10)
+    if(ch->csattributes[stat]+ch->csattrib_mod[stat] > 10)
         return 10;
 
-    if(ch->pcdata->csattributes[stat]+ch->pcdata->csattrib_mod[stat] < 0)
+    if(ch->csattributes[stat]+ch->csattrib_mod[stat] < 0)
         return 0;
 
-    return ch->pcdata->csattributes[stat]+ch->pcdata->csattrib_mod[stat];
+    return ch->csattributes[stat]+ch->csattrib_mod[stat];
 }
 
 int get_ability( CHAR_DATA *ch, int stat )
@@ -830,7 +830,7 @@ int get_ability( CHAR_DATA *ch, int stat )
     if (IS_NPC(ch))
         return 1 + ch->level/30;
 
-    return ch->pcdata->csabilities[stat];
+    return ch->csabilities[stat];
 }
 
 int get_ability2( CHAR_DATA *ch, int stat )
@@ -1061,15 +1061,15 @@ void affect_modify( CHAR_DATA *ch, AFFECT_DATA *paf, bool fAdd )
     case APPLY_AGE:                     break;
     case APPLY_ALIGN:       ch->alignment       += mod; break;
     case APPLY_GENERATION:    ch->gen           += mod; break;
-    case APPLY_CS_STR:      if(!IS_NPC(ch)) {ch->pcdata->csattrib_mod[CSATTRIB_STRENGTH] += mod;} break;
-    case APPLY_CS_DEX:      if(!IS_NPC(ch)) {ch->pcdata->csattrib_mod[CSATTRIB_DEXTERITY]  += mod;} break;
-    case APPLY_CS_STA:      if(!IS_NPC(ch)) {ch->pcdata->csattrib_mod[CSATTRIB_STAMINA]  += mod;} break;
-    case APPLY_CS_CHA:      if(!IS_NPC(ch)) {ch->pcdata->csattrib_mod[CSATTRIB_CHARISMA]  += mod;} break;
-    case APPLY_CS_MAN:      if(!IS_NPC(ch)) {ch->pcdata->csattrib_mod[CSATTRIB_MANIPULATION]  += mod;} break;
-    case APPLY_CS_APP:      if(!IS_NPC(ch)) {ch->pcdata->csattrib_mod[CSATTRIB_APPEARANCE]  += mod;} break;
-    case APPLY_CS_PER:      if(!IS_NPC(ch)) {ch->pcdata->csattrib_mod[CSATTRIB_PERCEPTION]  += mod;} break;
-    case APPLY_CS_INT:      if(!IS_NPC(ch)) ch->pcdata->csattrib_mod[CSATTRIB_INTELLIGENCE]  += mod; break;
-    case APPLY_CS_WIT:      if(!IS_NPC(ch)) {ch->pcdata->csattrib_mod[CSATTRIB_WITS]  += mod;} break;
+    case APPLY_CS_STR:      if(!IS_NPC(ch)) {ch->csattrib_mod[CSATTRIB_STRENGTH] += mod;} break;
+    case APPLY_CS_DEX:      if(!IS_NPC(ch)) {ch->csattrib_mod[CSATTRIB_DEXTERITY]  += mod;} break;
+    case APPLY_CS_STA:      if(!IS_NPC(ch)) {ch->csattrib_mod[CSATTRIB_STAMINA]  += mod;} break;
+    case APPLY_CS_CHA:      if(!IS_NPC(ch)) {ch->csattrib_mod[CSATTRIB_CHARISMA]  += mod;} break;
+    case APPLY_CS_MAN:      if(!IS_NPC(ch)) {ch->csattrib_mod[CSATTRIB_MANIPULATION]  += mod;} break;
+    case APPLY_CS_APP:      if(!IS_NPC(ch)) {ch->csattrib_mod[CSATTRIB_APPEARANCE]  += mod;} break;
+    case APPLY_CS_PER:      if(!IS_NPC(ch)) {ch->csattrib_mod[CSATTRIB_PERCEPTION]  += mod;} break;
+    case APPLY_CS_INT:      if(!IS_NPC(ch)) ch->csattrib_mod[CSATTRIB_INTELLIGENCE]  += mod; break;
+    case APPLY_CS_WIT:      if(!IS_NPC(ch)) {ch->csattrib_mod[CSATTRIB_WITS]  += mod;} break;
     case APPLY_HEIGHT:                      break;
     case APPLY_WEIGHT:                      break;
     case APPLY_MANA:          ch->max_mana      += mod; break;
@@ -2747,9 +2747,9 @@ bool can_see( CHAR_DATA *ch, CHAR_DATA *victim )
             return FALSE;
         if (ch->pcdata->discipline[AUSPEX] > victim->pcdata->discipline[OBFUSCATE])
             diff -= (ch->pcdata->discipline[AUSPEX] - victim->pcdata->discipline[OBFUSCATE]);
-        success = godice(get_attribute(ch, PERCEPTION)+ch->pcdata->csabilities[CSABIL_ALERTNESS], diff);
+        success = godice(get_attribute(ch, PERCEPTION)+ch->csabilities[CSABIL_ALERTNESS], diff);
         if (ch->pcdata->discipline[AUSPEX] == victim->pcdata->discipline[OBFUSCATE])
-        success -= godice(get_attribute(victim, MANIPULATION) + victim->pcdata->csabilities[CSABIL_SUBTERFUGE], diff);
+        success -= godice(get_attribute(victim, MANIPULATION) + victim->csabilities[CSABIL_SUBTERFUGE], diff);
         if (success < 1)
             return FALSE;
     }
@@ -2774,9 +2774,9 @@ bool can_see( CHAR_DATA *ch, CHAR_DATA *victim )
             return FALSE;
         if (ch->pcdata->discipline[AUSPEX] > victim->pcdata->discipline[OBFUSCATE])
             diff -= (ch->pcdata->discipline[AUSPEX] - victim->pcdata->discipline[OBFUSCATE]);
-        success = godice(get_attribute(ch, PERCEPTION)+ch->pcdata->csabilities[CSABIL_ALERTNESS], diff);
+        success = godice(get_attribute(ch, PERCEPTION)+ch->csabilities[CSABIL_ALERTNESS], diff);
         if (ch->pcdata->discipline[AUSPEX] == victim->pcdata->discipline[OBFUSCATE])
-        success -= godice(get_attribute(victim, MANIPULATION) + victim->pcdata->csabilities[CSABIL_SUBTERFUGE], diff);
+        success -= godice(get_attribute(victim, MANIPULATION) + victim->csabilities[CSABIL_SUBTERFUGE], diff);
         if (success < 1)
             return FALSE;
     }
@@ -3522,13 +3522,13 @@ void do_wipecs(CHAR_DATA *ch, char *argument)
 
     victim->freebie = 0;
     for(i = 0; i < 30; i++)
-        victim->pcdata->csabilities[i] = 0;
+        victim->csabilities[i] = 0;
 
     for(i = 0; i < 30; i++)
         victim->pcdata->cssec_abil[i] = 0;
 
     for(i = 0; i < 9; i++)
-        victim->pcdata->csattributes[i] = 1;
+        victim->csattributes[i] = 1;
     for(i = 0;i<MAX_CSBACK;i++)
         victim->pcdata->csbackgrounds[i] = 0;
     victim->pcdata->csvirtues[CSVIRT_CONSCIENCE] = 0;

@@ -1702,7 +1702,7 @@ void do_sneak( CHAR_DATA *ch, char *argument )
     send_to_char( "Using all of your skill and poise, you attempt to move silently.\n\r", ch );
     if(!IS_NPC(ch))
     {
-        if((success = godice(get_attribute(ch,DEXTERITY)+ch->pcdata->csabilities[CSABIL_STEALTH],6)) == 0)
+        if((success = godice(get_attribute(ch,DEXTERITY)+ch->csabilities[CSABIL_STEALTH],6)) == 0)
         {
             send_to_char("Your own feet betray your position as you attempt to be silent.\n\r",ch);
             WAIT_STATE(ch, 12);

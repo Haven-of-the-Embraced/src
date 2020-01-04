@@ -356,7 +356,7 @@ void spell_mana( int sn, int level, CHAR_DATA *ch, void *vo, int target )
 
 	if(IS_NPC(ch)) return;
 
-	for(num1 = (get_attribute(ch,INTELLIGENCE)+ch->pcdata->csabilities[CSABIL_OCCULT])*2;num1 != 0;num1--)
+	for(num1 = (get_attribute(ch,INTELLIGENCE)+ch->csabilities[CSABIL_OCCULT])*2;num1 != 0;num1--)
 	{
 		roll = number_range(1,10);
 		if(roll >= 6) success++;

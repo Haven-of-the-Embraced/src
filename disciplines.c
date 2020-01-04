@@ -136,7 +136,7 @@ void do_feralspeech(CHAR_DATA *ch, char *argument)
         return;
     }
     int success;
-    if ((success = godice(get_attribute(ch, MANIPULATION) + ch->pcdata->csabilities[CSABIL_ANIMAL_KEN], 6)) < 0)
+    if ((success = godice(get_attribute(ch, MANIPULATION) + ch->csabilities[CSABIL_ANIMAL_KEN], 6)) < 0)
     {
         act( "$N ignores you a moment before it suddenly takes offense and attacks!",  ch, NULL, victim, TO_CHAR );
         act( "$n stares into the eyes of $N a moment... $N suddenly takes offense and attacks!",  ch, NULL, victim, TO_NOTVICT );
@@ -200,7 +200,7 @@ void do_beckoning(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    dicesuccess = godice(get_attribute(ch, CHARISMA) + ch->pcdata->csabilities[CSABIL_SURVIVAL], 6);
+    dicesuccess = godice(get_attribute(ch, CHARISMA) + ch->csabilities[CSABIL_SURVIVAL], 6);
 
     WAIT_STATE(ch, 10);
 
@@ -405,7 +405,7 @@ void do_songofserenity(CHAR_DATA *ch, char *argument)
     }
 
     WAIT_STATE( ch, 24 );
-    success = godice(get_attribute(ch,MANIPULATION)+ch->pcdata->csabilities[CSABIL_EMPATHY],7);
+    success = godice(get_attribute(ch,MANIPULATION)+ch->csabilities[CSABIL_EMPATHY],7);
     if(success < 0)
     {
         act( "$N ignores you a moment before it suddenly takes offense and attacks!",  ch, NULL, victim, TO_CHAR );
@@ -492,7 +492,7 @@ void do_drawingoutthebeast( CHAR_DATA *ch, char *argument)
         send_to_char("You fear that it may hinder your future purchases.\n\r",ch);
         return;
     }
-    success = godice(get_attribute(ch, MANIPULATION) + ch->pcdata->csabilities[CSABIL_ANIMAL_KEN], 8);
+    success = godice(get_attribute(ch, MANIPULATION) + ch->csabilities[CSABIL_ANIMAL_KEN], 8);
 
     if (success < 2)
     {
@@ -549,7 +549,7 @@ void do_quelltheherd(CHAR_DATA *ch, char *argument)
     send_to_char("You lift your voice in a sweet song of peace and serenity.\n\r",ch);
 
     WAIT_STATE( ch, 24 );
-    success = godice(get_attribute(ch,STRENGTH)+ch->pcdata->csabilities[CSABIL_INTIMIDATION],7);
+    success = godice(get_attribute(ch,STRENGTH)+ch->csabilities[CSABIL_INTIMIDATION],7);
 
     if (success == 0) {
         act( "And it seems to have no effect..", ch, NULL, victim, TO_CHAR);
@@ -820,7 +820,7 @@ void do_auraperception( CHAR_DATA *ch, char *argument )
         return;
     }
 
-    success = godice(get_attribute(ch, PERCEPTION) + ch->pcdata->csabilities[CSABIL_EMPATHY], 8);
+    success = godice(get_attribute(ch, PERCEPTION) + ch->csabilities[CSABIL_EMPATHY], 8);
 
     ch->pblood -= 10;
 
@@ -977,7 +977,7 @@ void do_project(CHAR_DATA *ch, char *argument)
     }
 
     ch->pblood -= 20;
-    success = godice(get_attribute(ch, PERCEPTION) + ch->pcdata->csabilities[CSABIL_OCCULT], 7);
+    success = godice(get_attribute(ch, PERCEPTION) + ch->csabilities[CSABIL_OCCULT], 7);
 
     if (success < 0)
     {
@@ -1059,7 +1059,7 @@ void do_touch( CHAR_DATA *ch, char *argument )
     act( "$n gently touches $p.",  ch, obj, NULL, TO_ROOM );
     act( "You gently touch $p and gain insight on the object.",  ch, obj, NULL, TO_CHAR );
 
-    success = godice(get_attribute(ch,PERCEPTION)+ch->pcdata->csabilities[CSABIL_EMPATHY],7);
+    success = godice(get_attribute(ch,PERCEPTION)+ch->csabilities[CSABIL_EMPATHY],7);
 
     if (success < 1)
     {
@@ -1344,7 +1344,7 @@ void do_telepathy( CHAR_DATA *ch, char *argument )
     if (!can_see(ch, victim))
         diff += 1;
 
-    success = godice(get_attribute(ch, INTELLIGENCE) + ch->pcdata->csabilities[CSABIL_SUBTERFUGE], diff);
+    success = godice(get_attribute(ch, INTELLIGENCE) + ch->csabilities[CSABIL_SUBTERFUGE], diff);
     ch->pblood -= 10;
     WAIT_STATE(ch, 5);
     if (success < 1)
@@ -1802,7 +1802,7 @@ void do_command(CHAR_DATA *ch, char *argument)
         diff++;
     if (victim->level > ch->level*2)
         diff++;
-    success = godice(get_attribute(ch, MANIPULATION) + ch->pcdata->csabilities[CSABIL_INTIMIDATION], diff);
+    success = godice(get_attribute(ch, MANIPULATION) + ch->csabilities[CSABIL_INTIMIDATION], diff);
 
     if (success < 1)
     {
@@ -1981,7 +1981,7 @@ void do_mesmerize(CHAR_DATA *ch, char *argument)
         diff++;
     if (victim->level > ch->level*2)
         diff++;
-    success = godice(get_attribute(ch, MANIPULATION) + ch->pcdata->csabilities[CSABIL_LEADERSHIP], diff);
+    success = godice(get_attribute(ch, MANIPULATION) + ch->csabilities[CSABIL_LEADERSHIP], diff);
 
     if (success < 1)
     {
@@ -2079,7 +2079,7 @@ void do_conditioning(CHAR_DATA *ch, char *argument)
         group_members++;
     }
 
-    if (group_members + 1 > (ch->pcdata->csabilities[CSABIL_LEADERSHIP]*2)+1)
+    if (group_members + 1 > (ch->csabilities[CSABIL_LEADERSHIP]*2)+1)
     {
         send_to_char("You are already leading around as much of an entourage as you can manage.\n\r", ch);
         return;
@@ -2105,7 +2105,7 @@ void do_conditioning(CHAR_DATA *ch, char *argument)
         diff++;
     if (victim->level > ch->level*2)
         diff++;
-    success = godice(get_attribute(ch, MANIPULATION) + ch->pcdata->csabilities[CSABIL_LEADERSHIP], diff);
+    success = godice(get_attribute(ch, MANIPULATION) + ch->csabilities[CSABIL_LEADERSHIP], diff);
 
     if (success > 0)
     {
@@ -2259,7 +2259,7 @@ void do_blight(CHAR_DATA *ch, char *argument)
         return;
     }
 
-   dicesuccess = godice(get_attribute(ch, DEXTERITY) + ch->pcdata->csabilities[CSABIL_BRAWL], 6);
+   dicesuccess = godice(get_attribute(ch, DEXTERITY) + ch->csabilities[CSABIL_BRAWL], 6);
 
     if (dicesuccess < 0)
     {
@@ -2282,7 +2282,7 @@ void do_blight(CHAR_DATA *ch, char *argument)
     act("$n grabs on to you and seems to focus for a moment...", ch, NULL, victim, TO_VICT);
     act("$n grabs on to $N and seems to focus for a moment...", ch, NULL, victim, TO_NOTVICT);
 
-    dicesuccess = godice(get_attribute(ch, MANIPULATION) + ch->pcdata->csabilities[CSABIL_MEDICINE], 6);
+    dicesuccess = godice(get_attribute(ch, MANIPULATION) + ch->csabilities[CSABIL_MEDICINE], 6);
     ch->pblood -= 10;
 
     if (dicesuccess < 0)
@@ -2538,7 +2538,7 @@ void do_homunculusservant(CHAR_DATA *ch, char *argument)
     }
 
     ch->pblood -= 20;
-    dicesuccess = godice(get_attribute(ch, DEXTERITY) + ch->pcdata->csabilities[CSABIL_OCCULT], 7);
+    dicesuccess = godice(get_attribute(ch, DEXTERITY) + ch->csabilities[CSABIL_OCCULT], 7);
 
     if (dicesuccess < 0)
     {
@@ -2591,7 +2591,7 @@ void do_homunculusservant(CHAR_DATA *ch, char *argument)
     af.where     = TO_AFFECTS;
     af.type      = gsn_charm_person;
     af.level     = ch->pcdata->discipline[MORTIS];
-    af.duration  = ch->pcdata->discipline[MORTIS]+ch->pcdata->csabilities[CSABIL_OCCULT]+20;  /*tmp hack while I fix time code */
+    af.duration  = ch->pcdata->discipline[MORTIS]+ch->csabilities[CSABIL_OCCULT]+20;  /*tmp hack while I fix time code */
     af.location  = 0;
     af.modifier  = 0;
     af.bitvector = AFF_CHARM;
@@ -2658,7 +2658,7 @@ void do_animatedead(CHAR_DATA *ch, char *argument)
     act( "$n dribbles some vitae into the mouth of $p and begins chanting...", ch, obj, NULL, TO_NOTVICT );
     act( "You dribble some vitae into the mouth of $p and begin chanting...", ch, obj, NULL, TO_CHAR);
     ch->pblood -= 30;
-    dicesuccess = godice(get_attribute(ch, STAMINA) + ch->pcdata->csabilities[CSABIL_OCCULT], 6);
+    dicesuccess = godice(get_attribute(ch, STAMINA) + ch->csabilities[CSABIL_OCCULT], 6);
 
     if (dicesuccess < 0)
     {
@@ -2764,7 +2764,7 @@ void do_callathanatos(CHAR_DATA *ch, char *argument)
     act( "$n dribbles some vitae onto $p and begins chanting...", ch, obj, NULL, TO_NOTVICT );
     act( "You dribble some vitae onto $p and begin chanting...", ch, obj, NULL, TO_CHAR);
 
-    dicesuccess = godice(get_attribute(ch, STAMINA) + ch->pcdata->csabilities[CSABIL_OCCULT], 6);
+    dicesuccess = godice(get_attribute(ch, STAMINA) + ch->csabilities[CSABIL_OCCULT], 6);
 
     if (dicesuccess == 0)
     {
@@ -3781,7 +3781,7 @@ void do_awe(CHAR_DATA *ch, char *argument)
 
     send_to_char("Flashing your most charming smile, you draw into your personal reserves and\n\rattempt to augment your supernatural attraction...\n\r", ch);
 
-    dicesuccess = godice(get_attribute(ch, CHARISMA) + ch->pcdata->csabilities[CSABIL_EXPRESSION], 7);
+    dicesuccess = godice(get_attribute(ch, CHARISMA) + ch->csabilities[CSABIL_EXPRESSION], 7);
 
     if (dicesuccess < 0)
     {
@@ -5289,7 +5289,7 @@ void do_weakness(CHAR_DATA *ch, char *argument)
 
     send_to_char("You channel your vitae to seep onto the palms of your hands, transmuting the blood into a mystical toxin.\n\r", ch);
 
-    dicesuccess = godice(get_attribute(ch, DEXTERITY)+ch->pcdata->csabilities[CSABIL_BRAWL], 6);
+    dicesuccess = godice(get_attribute(ch, DEXTERITY)+ch->csabilities[CSABIL_BRAWL], 6);
 
     if (dicesuccess < 0)
     {
@@ -5499,7 +5499,7 @@ void do_acidblood(CHAR_DATA *ch, char *argument)
 
     send_to_char("Focusing upon the birthright of Haqim, you transmute precious vitae into a virulent acid and project it towards your enemy!\n\r", ch);
 
-    dicesuccess = godice(get_attribute(ch,STAMINA)+ch->pcdata->csabilities[CSABIL_ATHLETICS], 6);
+    dicesuccess = godice(get_attribute(ch,STAMINA)+ch->csabilities[CSABIL_ATHLETICS], 6);
 
         damagesuccess = godice(2 * transmutedblood, 6);
 
@@ -5873,7 +5873,7 @@ void do_bloodrage( CHAR_DATA *ch, char *argument)
         return;
     }
 
-    touchsuccess = godice(get_attribute(ch, DEXTERITY) + ch->pcdata->csabilities[CSABIL_BRAWL], 4);
+    touchsuccess = godice(get_attribute(ch, DEXTERITY) + ch->csabilities[CSABIL_BRAWL], 4);
 
     if (touchsuccess < 0)
     {
@@ -6314,7 +6314,7 @@ void do_cauldron(CHAR_DATA *ch, char *argument)
     }
 
     WAIT_STATE(ch, 12);
-    touchsuccess = godice(get_attribute(ch, DEXTERITY) + ch->pcdata->csabilities[CSABIL_BRAWL], 4);
+    touchsuccess = godice(get_attribute(ch, DEXTERITY) + ch->csabilities[CSABIL_BRAWL], 4);
 
     if (touchsuccess < 0)
     {

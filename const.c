@@ -1144,11 +1144,11 @@ void cskill_update(CHAR_DATA *ch)
         switch (csskill_table[i].primary[TYPE])
         {
             case ABIL:
-                if (ch->pcdata->csabilities[csskill_table[i].primary[STAT]] >= csskill_table[i].primary[DOT])
+                if (ch->csabilities[csskill_table[i].primary[STAT]] >= csskill_table[i].primary[DOT])
                     primary = TRUE;
                 break;
             case ATTR:
-                if (ch->pcdata->csattributes[csskill_table[i].primary[STAT]] >= csskill_table[i].primary[DOT])
+                if (ch->csattributes[csskill_table[i].primary[STAT]] >= csskill_table[i].primary[DOT])
                     primary = TRUE;
                 break;
             case SECA:
@@ -1164,14 +1164,14 @@ void cskill_update(CHAR_DATA *ch)
         {
             case ABIL:
                 if (csskill_table[i].secondary[STAT] == CSABIL_NONE ||
-                (ch->pcdata->csabilities[csskill_table[i].secondary[STAT]] >= 1 &&
-                ch->pcdata->csabilities[csskill_table[i].secondary[STAT]] >= csskill_table[i].secondary[DOT]))
+                (ch->csabilities[csskill_table[i].secondary[STAT]] >= 1 &&
+                ch->csabilities[csskill_table[i].secondary[STAT]] >= csskill_table[i].secondary[DOT]))
                     secondary = TRUE;
                 break;
             case ATTR:
                 if (csskill_table[i].secondary[STAT] == CSABIL_NONE ||
-                (ch->pcdata->csattributes[csskill_table[i].secondary[STAT]] >= 1 &&
-                ch->pcdata->csattributes[csskill_table[i].secondary[STAT]] >= csskill_table[i].secondary[DOT]))                    secondary = TRUE;
+                (ch->csattributes[csskill_table[i].secondary[STAT]] >= 1 &&
+                ch->csattributes[csskill_table[i].secondary[STAT]] >= csskill_table[i].secondary[DOT]))                    secondary = TRUE;
                 break;
             case SECA:
                 if (csskill_table[i].secondary[STAT] == CSABIL_NONE ||

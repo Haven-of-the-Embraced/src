@@ -984,7 +984,7 @@ void do_envenom(CHAR_DATA *ch, char *argument)
         return;
     }
 */
-    dicesuccess = godice(get_attribute(ch, INTELLIGENCE) + ch->pcdata->csabilities[CSABIL_MEDICINE], 4);
+    dicesuccess = godice(get_attribute(ch, INTELLIGENCE) + ch->csabilities[CSABIL_MEDICINE], 4);
     WAIT_STATE(ch,skill_table[gsn_envenom].beats);
 
     if (dicesuccess < 0)
@@ -1039,13 +1039,13 @@ void do_envenom(CHAR_DATA *ch, char *argument)
         }
 
     WAIT_STATE(ch, skill_table[gsn_envenom].beats);
-    dicesuccess = godice(get_attribute(ch, INTELLIGENCE) + ch->pcdata->csabilities[CSABIL_MEDICINE], 6);
+    dicesuccess = godice(get_attribute(ch, INTELLIGENCE) + ch->csabilities[CSABIL_MEDICINE], 6);
 
     if (dicesuccess < 0)
     {
         act("In the course of trying to envenom $p, you poison yourself!", ch, obj, NULL, TO_CHAR);
         act("$n mutters a few curses as $e accidently poisons $mself.", ch, obj, NULL, TO_ROOM);
-        poison_effect(ch, ch->pcdata->csabilities[CSABIL_MEDICINE], ch->level, TARGET_CHAR);
+        poison_effect(ch, ch->csabilities[CSABIL_MEDICINE], ch->level, TARGET_CHAR);
         return;
     }
 
@@ -1059,7 +1059,7 @@ void do_envenom(CHAR_DATA *ch, char *argument)
 
             af.where     = TO_WEAPON;
             af.type      = gsn_poison;
-            af.level     = ch->pcdata->csabilities[CSABIL_MEDICINE];
+            af.level     = ch->csabilities[CSABIL_MEDICINE];
             af.duration  = dicesuccess * 25;
             af.location  = 0;
             af.modifier  = 0;
@@ -2910,7 +2910,7 @@ void do_buy( CHAR_DATA *ch, char *argument )
         return;
     }
     /* haggle */
-        success = godice(get_attribute(ch, MANIPULATION) + ch->pcdata->csabilities[CSABIL_COMMERCE], 6);
+        success = godice(get_attribute(ch, MANIPULATION) + ch->csabilities[CSABIL_COMMERCE], 6);
     if (success < 0)
     {
         send_to_char("The Shopkeeper seems insulted by your attempt to haggle down the price and ups the price!\n\r", ch);
@@ -3045,9 +3045,9 @@ void do_buy( CHAR_DATA *ch, char *argument )
     }
 
     /* haggle */
-    if (!IS_NPC(ch) && !IS_OBJ_STAT(obj,ITEM_SELL_EXTRACT) && ch->pcdata->csabilities[CSABIL_COMMERCE] > 0 )
+    if (!IS_NPC(ch) && !IS_OBJ_STAT(obj,ITEM_SELL_EXTRACT) && ch->csabilities[CSABIL_COMMERCE] > 0 )
     {
-        success = godice(get_attribute(ch, MANIPULATION) + ch->pcdata->csabilities[CSABIL_COMMERCE], 6);
+        success = godice(get_attribute(ch, MANIPULATION) + ch->csabilities[CSABIL_COMMERCE], 6);
     if (success < 0)
     {
         act("$N seems insulted by your attempt to haggle down the price and ups the price!", ch, NULL, keeper, TO_CHAR);
@@ -3350,7 +3350,7 @@ void do_sell( CHAR_DATA *ch, char *argument )
      /* haggle */
         if(haggle)
         {
-            success = godice(get_attribute(ch,MANIPULATION)+ch->pcdata->csabilities[CSABIL_COMMERCE],4);
+            success = godice(get_attribute(ch,MANIPULATION)+ch->csabilities[CSABIL_COMMERCE],4);
             if(success <= 0)
                 cost /= 2;
             else
@@ -4198,7 +4198,7 @@ void do_learn(CHAR_DATA *ch, char *argument)
     else if(!str_cmp(rarity, "lesser")) tlev = 2;
     else tlev = 1;
 
-    if(ch->pcdata->csabilities[CSABIL_LINGUISTICS] < tlev)
+    if(ch->csabilities[CSABIL_LINGUISTICS] < tlev)
     {
         send_to_char("You cannot decypher the language of this tome.\n\r",ch);
         return;
@@ -4213,14 +4213,14 @@ void do_learn(CHAR_DATA *ch, char *argument)
     {
         if(!str_cmp(stat, ability_table[i].name))
         {
-            if(ch->pcdata->csabilities[i] != tlev-1)
+            if(ch->csabilities[i] != tlev-1)
             {
-                sprintf(buf,"Your %s is too %s.\n\r",ability_table[i].name, ch->pcdata->csabilities[i] > tlev-1 ? "high" : "low");
+                sprintf(buf,"Your %s is too %s.\n\r",ability_table[i].name, ch->csabilities[i] > tlev-1 ? "high" : "low");
                 send_to_char(buf,ch);
                 return;
             }
 
-            ch->pcdata->csabilities[i]++;
+            ch->csabilities[i]++;
             extract_obj( obj );
             send_to_char("You concentrate intently on the mystical tome and feel you have a grasp on it's concepts.\n\rThe tome fades from existance.\n\r",ch);
             cskill_update(ch);
@@ -4232,9 +4232,9 @@ void do_learn(CHAR_DATA *ch, char *argument)
     {
         if(!str_cmp(stat, attribute_table[i].name))
         {
-            if(ch->pcdata->csattributes[i] != tlev-1)
+            if(ch->csattributes[i] != tlev-1)
             {
-                sprintf(buf,"Your %s is too %s.\n\r",capitalize(attribute_table[i].name), ch->pcdata->csattributes[i] > tlev-1 ? "high" : "low");
+                sprintf(buf,"Your %s is too %s.\n\r",capitalize(attribute_table[i].name), ch->csattributes[i] > tlev-1 ? "high" : "low");
                 send_to_char(buf,ch);
                 return;
             }
@@ -4243,7 +4243,7 @@ void do_learn(CHAR_DATA *ch, char *argument)
                 send_to_char("You are unable to raise your appearance.\n\r",ch);
                 return;
             }
-            ch->pcdata->csattributes[i]++;
+            ch->csattributes[i]++;
             extract_obj( obj );
             send_to_char("You concentrate intently on the mystical tome and feel you have a grasp on it's concepts.\n\rThe tome fades from existance.\n\r",ch);
             cskill_update(ch);
@@ -4394,7 +4394,7 @@ void do_chop( CHAR_DATA *ch, char *argument )
             send_to_char("With a sharp crack the trunk splits, causing the tree to topple over towards you!\n\r",ch);
             act( "In its weakened state, the tree cracks and topples over and falls towards $n!", ch, NULL,NULL, TO_ROOM );
 
-            success = godice(get_attribute(ch, DEXTERITY) + ch->pcdata->csabilities[CSABIL_DODGE],7);
+            success = godice(get_attribute(ch, DEXTERITY) + ch->csabilities[CSABIL_DODGE],7);
 
             if(success <= 0)
             {
@@ -4689,7 +4689,7 @@ void do_plane( CHAR_DATA *ch, char *argument )
 
 
 
-    success = godice(get_attribute(ch,DEXTERITY)+ch->pcdata->csabilities[CSABIL_CRAFTS],(number_range(1,5)+((100-tool->value[0])/10))-ch->pcdata->cssec_abil[CSABIL_CARVING]);
+    success = godice(get_attribute(ch,DEXTERITY)+ch->csabilities[CSABIL_CRAFTS],(number_range(1,5)+((100-tool->value[0])/10))-ch->pcdata->cssec_abil[CSABIL_CARVING]);
 
     if(success < 1)
     {
@@ -4826,7 +4826,7 @@ void do_carve( CHAR_DATA *ch, char *argument )
     act( "You set about carefully carving on $p...", ch, resource,NULL, TO_CHAR );
     act( "$n sets about carefully carving on $p...", ch, resource,NULL, TO_ROOM );
 
-    success = godice(get_attribute(ch,DEXTERITY)+ch->pcdata->cssec_abil[CSABIL_CARVING],((100-tool->value[0])/10)-ch->pcdata->csabilities[CSABIL_WOOD]);
+    success = godice(get_attribute(ch,DEXTERITY)+ch->pcdata->cssec_abil[CSABIL_CARVING],((100-tool->value[0])/10)-ch->csabilities[CSABIL_WOOD]);
 
     if(success < 1)
     {
@@ -4844,7 +4844,7 @@ void do_carve( CHAR_DATA *ch, char *argument )
 
     if(obj->item_type == ITEM_CRAFTED)
     {
-        obj->value[0] = (get_attribute(ch,DEXTERITY)+ch->pcdata->csabilities[CSABIL_CRAFTS]+ch->pcdata->cssec_abil[CSABIL_CARVING]+ch->pcdata->cssec_abil[CSABIL_WOOD]+success)*4;
+        obj->value[0] = (get_attribute(ch,DEXTERITY)+ch->csabilities[CSABIL_CRAFTS]+ch->pcdata->cssec_abil[CSABIL_CARVING]+ch->pcdata->cssec_abil[CSABIL_WOOD]+success)*4;
         for(i = 0;i < 5;i++)
         {
             if(resource->pIndexData->vnum - crafted_item_table[craft].resource_type == crafted_item_table[craft].best[i])

@@ -182,11 +182,11 @@ void do_remort(CHAR_DATA *ch, char *argument)
         for (i = 1;i < 10;i++)
             ch->sphere[i] = 0;
         for(i = 0; i < 30; i++)
-            ch->pcdata->csabilities[i] = 0;
+            ch->csabilities[i] = 0;
             for (i = 0; i < MAX_CSBACK; i++)
             ch->pcdata->csbackgrounds[i] = 0;
         for(i = 0; i < 9; i++)
-            ch->pcdata->csattributes[i] = 1;
+            ch->csattributes[i] = 1;
         for(i = 0; i < 30; i++)
             ch->pcdata->cssec_abil[i] = 0;
         ch->pcdata->csvirtues[CSVIRT_CONSCIENCE] = 1;
@@ -306,7 +306,7 @@ void do_remort(CHAR_DATA *ch, char *argument)
         for (i = 1;i < 10;i++)
             ch->sphere[i] = 0;
         for(i = 0; i < 30; i++)
-            ch->pcdata->csabilities[i] = 0;
+            ch->csabilities[i] = 0;
         for(i = 0; i < 30; i++)
             ch->pcdata->cssec_abil[i] = 0;
         for (i = 0; i < MAX_GIFT; i++)
@@ -314,7 +314,7 @@ void do_remort(CHAR_DATA *ch, char *argument)
         for (i = 0; i < 6; i++)
             ch->pcdata->renown[i] = 0;
         for(i = 0; i < 9; i++)
-            ch->pcdata->csattributes[i] = 1;
+            ch->csattributes[i] = 1;
         ch->pcdata->csvirtues[CSVIRT_CONSCIENCE] = 1;
         ch->pcdata->csvirtues[CSVIRT_SELF_CONTROL] = 1;
         ch->pcdata->csvirtues[CSVIRT_COURAGE] = 1;

@@ -830,16 +830,16 @@ void do_freebie(CHAR_DATA *ch, char *argument)
     {
         if(!str_prefix(arg, ability_table[i].name))
         {
-            if(ch->pcdata->csabilities[i] == 5)
+            if(ch->csabilities[i] == 5)
             {
                 sprintf(buf,"Your %s is already at max.\n\r",ability_table[i].name);
                 send_to_char(buf,ch);
                 return;
             }
-            if(ch->pcdata->csabilities[i] == 0)
+            if(ch->csabilities[i] == 0)
                 cost = 3;
             else
-                cost = ch->pcdata->csabilities[i]*2;
+                cost = ch->csabilities[i]*2;
 
             if (ch->pcdata->csbackgrounds[CSBACK_MENTOR] > 0) {
             int chance = number_range(1, 100);
@@ -858,7 +858,7 @@ void do_freebie(CHAR_DATA *ch, char *argument)
     {
         if(!str_prefix(arg, attribute_table[i].name))
         {
-            if(ch->pcdata->csattributes[i] == 5)
+            if(ch->csattributes[i] == 5)
             {
                 sprintf(buf,"Your %s is already at max.\n\r",capitalize(attribute_table[i].name));
                 send_to_char(buf,ch);
@@ -869,7 +869,7 @@ void do_freebie(CHAR_DATA *ch, char *argument)
                 send_to_char("You are unable to raise your appearance.\n\r",ch);
                 return;
             }
-            cost = ch->pcdata->csattributes[i]*4;
+            cost = ch->csattributes[i]*4;
             count = i;
             step = 2;
             break;
@@ -1293,7 +1293,7 @@ void do_freebie(CHAR_DATA *ch, char *argument)
             {
                 if (sec_abil_table[i].req1 != 0)
                 {
-                    if(ch->pcdata->csabilities[sec_abil_table[i].req1] < 1)
+                    if(ch->csabilities[sec_abil_table[i].req1] < 1)
                     {
                         send_to_char("You don't have the requirements to gain that skill.\n\r",ch);
                         return;
@@ -1301,7 +1301,7 @@ void do_freebie(CHAR_DATA *ch, char *argument)
                 }
                 if (sec_abil_table[i].req2 != 0)
                 {
-                    if(ch->pcdata->csabilities[sec_abil_table[i].req2] < 2)
+                    if(ch->csabilities[sec_abil_table[i].req2] < 2)
                     {
                         send_to_char("You don't have the requirements to gain that skill.\n\r",ch);
                         return;
@@ -1309,7 +1309,7 @@ void do_freebie(CHAR_DATA *ch, char *argument)
                 }
                 if (sec_abil_table[i].req3 != 0)
                 {
-                    if(ch->pcdata->csabilities[sec_abil_table[i].req3] < 3)
+                    if(ch->csabilities[sec_abil_table[i].req3] < 3)
                     {
                         send_to_char("You don't have the requirements to gain that skill.\n\r",ch);
                         return;
@@ -1317,7 +1317,7 @@ void do_freebie(CHAR_DATA *ch, char *argument)
                 }
                 if (sec_abil_table[i].req4 != 0)
                 {
-                    if(ch->pcdata->csabilities[sec_abil_table[i].req4] < 4)
+                    if(ch->csabilities[sec_abil_table[i].req4] < 4)
                     {
                         send_to_char("You don't have the requirements to gain that skill.\n\r",ch);
                         return;
@@ -1325,7 +1325,7 @@ void do_freebie(CHAR_DATA *ch, char *argument)
                 }
                 if (sec_abil_table[i].req5 != 0)
                 {
-                    if(ch->pcdata->csabilities[sec_abil_table[i].req5] < 5)
+                    if(ch->csabilities[sec_abil_table[i].req5] < 5)
                     {
                         send_to_char("You don't have the requirements to gain that skill.\n\r",ch);
                         return;
@@ -1505,14 +1505,14 @@ void do_freebie(CHAR_DATA *ch, char *argument)
         switch(step)
         {
             case 1:
-                    ch->pcdata->csabilities[count]++;
+                    ch->csabilities[count]++;
                     if (mentor)
                         send_to_char("You seek out your mentor's aid and wisdom... and it pays off.\n\r", ch);
                     sprintf(buf,"You increase your %s.\n\r",capitalize(ability_table[count].name));
                     send_to_char(buf,ch);
                     break;
             case 2:
-                    ch->pcdata->csattributes[count]++;
+                    ch->csattributes[count]++;
                     sprintf(buf,"You increase your %s.\n\r",capitalize(attribute_table[count].name));
                     send_to_char(buf,ch);
                     break;
@@ -1874,54 +1874,54 @@ void do_create( CHAR_DATA *ch, char *argument )
         send_to_char(buf2,ch);
         send_to_char("|\n\r",ch);
         sprintf(buf, " | Expression_____%s   Animal Ken_____%s   Academics______%s |\n\r",
-        dots(ch->pcdata->csabilities[CSABIL_EXPRESSION], FALSE),
-        dots(ch->pcdata->csabilities[CSABIL_ANIMAL_KEN], FALSE),
-        dots(ch->pcdata->csabilities[CSABIL_ACADEMICS], FALSE));
+        dots(ch->csabilities[CSABIL_EXPRESSION], FALSE),
+        dots(ch->csabilities[CSABIL_ANIMAL_KEN], FALSE),
+        dots(ch->csabilities[CSABIL_ACADEMICS], FALSE));
         send_to_char(buf,ch);
         sprintf(buf, " | Alertness______%s   Archery________%s   Seneschal______%s |\n\r",
-        dots(ch->pcdata->csabilities[CSABIL_ALERTNESS], FALSE),
-        dots(ch->pcdata->csabilities[CSABIL_ARCHERY], FALSE),
-        dots(ch->pcdata->csabilities[CSABIL_SENESCHAL], FALSE));
+        dots(ch->csabilities[CSABIL_ALERTNESS], FALSE),
+        dots(ch->csabilities[CSABIL_ARCHERY], FALSE),
+        dots(ch->csabilities[CSABIL_SENESCHAL], FALSE));
         send_to_char(buf,ch);
         sprintf(buf, " | Athletics______%s   Crafts_________%s   Investigation__%s |\n\r",
-        dots(ch->pcdata->csabilities[CSABIL_ATHLETICS], FALSE),
-        dots(ch->pcdata->csabilities[CSABIL_CRAFTS], FALSE),
-        dots(ch->pcdata->csabilities[CSABIL_INVESTIGATION], FALSE));
+        dots(ch->csabilities[CSABIL_ATHLETICS], FALSE),
+        dots(ch->csabilities[CSABIL_CRAFTS], FALSE),
+        dots(ch->csabilities[CSABIL_INVESTIGATION], FALSE));
         send_to_char(buf,ch);
         sprintf(buf, " | Brawl__________%s   Etiquette______%s   Law____________%s |\n\r",
-        dots(ch->pcdata->csabilities[CSABIL_BRAWL], FALSE),
-        dots(ch->pcdata->csabilities[CSABIL_ETIQUETTE], FALSE),
-        dots(ch->pcdata->csabilities[CSABIL_LAW], FALSE));
+        dots(ch->csabilities[CSABIL_BRAWL], FALSE),
+        dots(ch->csabilities[CSABIL_ETIQUETTE], FALSE),
+        dots(ch->csabilities[CSABIL_LAW], FALSE));
         send_to_char(buf,ch);
         sprintf(buf, " | Dodge__________%s   Melee__________%s   Linguistics____%s |\n\r",
-        dots(ch->pcdata->csabilities[CSABIL_DODGE], FALSE),
-        dots(ch->pcdata->csabilities[CSABIL_MELEE], FALSE),
-        dots(ch->pcdata->csabilities[CSABIL_LINGUISTICS], FALSE));
+        dots(ch->csabilities[CSABIL_DODGE], FALSE),
+        dots(ch->csabilities[CSABIL_MELEE], FALSE),
+        dots(ch->csabilities[CSABIL_LINGUISTICS], FALSE));
         send_to_char(buf,ch);
         sprintf(buf, " | Empathy________%s   Performance____%s   Medicine_______%s |\n\r",
-        dots(ch->pcdata->csabilities[CSABIL_EMPATHY], FALSE),
-        dots(ch->pcdata->csabilities[CSABIL_PERFORMANCE], FALSE),
-        dots(ch->pcdata->csabilities[CSABIL_MEDICINE], FALSE));
+        dots(ch->csabilities[CSABIL_EMPATHY], FALSE),
+        dots(ch->csabilities[CSABIL_PERFORMANCE], FALSE),
+        dots(ch->csabilities[CSABIL_MEDICINE], FALSE));
         send_to_char(buf,ch);
         sprintf(buf, " | Intimidation___%s   Riding_________%s   Occult_________%s |\n\r",
-        dots(ch->pcdata->csabilities[CSABIL_INTIMIDATION], FALSE),
-        dots(ch->pcdata->csabilities[CSABIL_RIDING], FALSE),
-        dots(ch->pcdata->csabilities[CSABIL_OCCULT], FALSE));
+        dots(ch->csabilities[CSABIL_INTIMIDATION], FALSE),
+        dots(ch->csabilities[CSABIL_RIDING], FALSE),
+        dots(ch->csabilities[CSABIL_OCCULT], FALSE));
         send_to_char(buf,ch);
         sprintf(buf, " | Leadership_____%s   Commerce_______%s   Politics_______%s |\n\r",
-        dots(ch->pcdata->csabilities[CSABIL_LEADERSHIP], FALSE),
-        dots(ch->pcdata->csabilities[CSABIL_COMMERCE], FALSE),
-        dots(ch->pcdata->csabilities[CSABIL_POLITICS], FALSE));
+        dots(ch->csabilities[CSABIL_LEADERSHIP], FALSE),
+        dots(ch->csabilities[CSABIL_COMMERCE], FALSE),
+        dots(ch->csabilities[CSABIL_POLITICS], FALSE));
         send_to_char(buf,ch);
         sprintf(buf, " | Legerdemain____%s   Stealth________%s   Hearth Wisdom__%s |\n\r",
-        dots(ch->pcdata->csabilities[CSABIL_LEGERDEMAIN], FALSE),
-        dots(ch->pcdata->csabilities[CSABIL_STEALTH], FALSE),
-        dots(ch->pcdata->csabilities[CSABIL_HEARTHWISDOM], FALSE));
+        dots(ch->csabilities[CSABIL_LEGERDEMAIN], FALSE),
+        dots(ch->csabilities[CSABIL_STEALTH], FALSE),
+        dots(ch->csabilities[CSABIL_HEARTHWISDOM], FALSE));
         send_to_char(buf,ch);
         sprintf(buf, " | Subterfuge_____%s   Survival_______%s   Theology_______%s |\n\r",
-        dots(ch->pcdata->csabilities[CSABIL_SUBTERFUGE], FALSE),
-        dots(ch->pcdata->csabilities[CSABIL_SURVIVAL], FALSE),
-        dots(ch->pcdata->csabilities[CSABIL_THEOLOGY], FALSE));
+        dots(ch->csabilities[CSABIL_SUBTERFUGE], FALSE),
+        dots(ch->csabilities[CSABIL_SURVIVAL], FALSE),
+        dots(ch->csabilities[CSABIL_THEOLOGY], FALSE));
         send_to_char(buf,ch);
         send_to_char(" |<=----------------------------------------------------------------=>|\n\r",ch);
         return;
@@ -1937,19 +1937,19 @@ void do_create( CHAR_DATA *ch, char *argument )
             ch->pcdata->stat[MENTAL] == PRIMARY ? ch->pcdata->primary : ch->pcdata->stat[MENTAL] == SECONDARY ? ch->pcdata->secondary : ch->pcdata->tertiary);
         send_to_char(buf,ch);
         sprintf(buf, " | Strength_______%s   Charisma_______%s   Perception_____%s |\n\r",
-            dots(ch->pcdata->csattributes[CSATTRIB_STRENGTH], FALSE),
-            dots(ch->pcdata->csattributes[CSATTRIB_CHARISMA], FALSE),
-            dots(ch->pcdata->csattributes[CSATTRIB_PERCEPTION], FALSE));
+            dots(ch->csattributes[CSATTRIB_STRENGTH], FALSE),
+            dots(ch->csattributes[CSATTRIB_CHARISMA], FALSE),
+            dots(ch->csattributes[CSATTRIB_PERCEPTION], FALSE));
         send_to_char(buf,ch);
         sprintf(buf, " | Dexterity______%s   Manipulation___%s   Intelligence___%s |\n\r",
-            dots(ch->pcdata->csattributes[CSATTRIB_DEXTERITY], FALSE),
-            dots(ch->pcdata->csattributes[CSATTRIB_MANIPULATION], FALSE),
-            dots(ch->pcdata->csattributes[CSATTRIB_INTELLIGENCE], FALSE));
+            dots(ch->csattributes[CSATTRIB_DEXTERITY], FALSE),
+            dots(ch->csattributes[CSATTRIB_MANIPULATION], FALSE),
+            dots(ch->csattributes[CSATTRIB_INTELLIGENCE], FALSE));
         send_to_char(buf,ch);
         sprintf(buf, " | Stamina________%s   Appearance_____%s   Wits___________%s |\n\r",
-            dots(ch->pcdata->csattributes[CSATTRIB_STAMINA], FALSE),
-            dots(ch->pcdata->csattributes[CSATTRIB_APPEARANCE], FALSE),
-            dots(ch->pcdata->csattributes[CSATTRIB_WITS], FALSE));
+            dots(ch->csattributes[CSATTRIB_STAMINA], FALSE),
+            dots(ch->csattributes[CSATTRIB_APPEARANCE], FALSE),
+            dots(ch->csattributes[CSATTRIB_WITS], FALSE));
         send_to_char(buf,ch);
         send_to_char(" |<=----------------------------------------------------------------=>|\n\r",ch);
         return;
@@ -2013,52 +2013,52 @@ void do_create( CHAR_DATA *ch, char *argument )
         {
             if(!str_prefix(arg1,"strength"))
             {
-                if(ch->pcdata->csattributes[CSATTRIB_STRENGTH] >= 4)
+                if(ch->csattributes[CSATTRIB_STRENGTH] >= 4)
                 {
                     send_to_char("Your Strength is already at maximum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csattributes[CSATTRIB_STRENGTH]++;
+                ch->csattributes[CSATTRIB_STRENGTH]++;
             }
             else if(!str_prefix(arg1,"dexterity"))
             {
-                if(ch->pcdata->csattributes[CSATTRIB_DEXTERITY] >= 4)
+                if(ch->csattributes[CSATTRIB_DEXTERITY] >= 4)
                 {
                     send_to_char("Your Dexterity is already at maximum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csattributes[CSATTRIB_DEXTERITY]++;
+                ch->csattributes[CSATTRIB_DEXTERITY]++;
             }
             else if(!str_prefix(arg1,"stamina"))
             {
-                if(ch->pcdata->csattributes[CSATTRIB_STAMINA] >= 4)
+                if(ch->csattributes[CSATTRIB_STAMINA] >= 4)
                 {
                     send_to_char("Your Stamina is already at maximum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csattributes[CSATTRIB_STAMINA]++;
+                ch->csattributes[CSATTRIB_STAMINA]++;
             }
             else if(!str_prefix(arg1,"charisma"))
             {
-                if(ch->pcdata->csattributes[CSATTRIB_CHARISMA] >= 4)
+                if(ch->csattributes[CSATTRIB_CHARISMA] >= 4)
                 {
                     send_to_char("Your Charisma is already at maximum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csattributes[CSATTRIB_CHARISMA]++;
+                ch->csattributes[CSATTRIB_CHARISMA]++;
             }
             else if(!str_prefix(arg1,"manipulation"))
             {
-                if(ch->pcdata->csattributes[CSATTRIB_MANIPULATION] >= 4)
+                if(ch->csattributes[CSATTRIB_MANIPULATION] >= 4)
                 {
                     send_to_char("Your Manipulation is already at maximum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csattributes[CSATTRIB_MANIPULATION]++;
+                ch->csattributes[CSATTRIB_MANIPULATION]++;
             }
             else if(!str_prefix(arg1,"appearance"))
             {
-                if(ch->pcdata->csattributes[CSATTRIB_APPEARANCE] >= 4)
+                if(ch->csattributes[CSATTRIB_APPEARANCE] >= 4)
                 {
                     send_to_char("Your Appearance is already at maximum.\n\r",ch);
                     return;
@@ -2068,307 +2068,307 @@ void do_create( CHAR_DATA *ch, char *argument )
                     send_to_char("You can't increase your Appearance. Your just too darned ugly.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csattributes[CSATTRIB_APPEARANCE]++;
+                ch->csattributes[CSATTRIB_APPEARANCE]++;
             }
             else if(!str_prefix(arg1,"perception"))
             {
-                if(ch->pcdata->csattributes[CSATTRIB_PERCEPTION] >= 4)
+                if(ch->csattributes[CSATTRIB_PERCEPTION] >= 4)
                 {
                     send_to_char("Your Perception is already at maximum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csattributes[CSATTRIB_PERCEPTION]++;
+                ch->csattributes[CSATTRIB_PERCEPTION]++;
             }
             else if(!str_prefix(arg1,"intelligence"))
             {
-                if(ch->pcdata->csattributes[CSATTRIB_INTELLIGENCE] >= 4)
+                if(ch->csattributes[CSATTRIB_INTELLIGENCE] >= 4)
                 {
                     send_to_char("Your Intelligence is already at maximum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csattributes[CSATTRIB_INTELLIGENCE]++;
+                ch->csattributes[CSATTRIB_INTELLIGENCE]++;
             }
             else if(!str_prefix(arg1,"wits"))
             {
-                if(ch->pcdata->csattributes[CSATTRIB_WITS] >= 4)
+                if(ch->csattributes[CSATTRIB_WITS] >= 4)
                 {
                     send_to_char("Your Wits is already at maximum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csattributes[CSATTRIB_WITS]++;
+                ch->csattributes[CSATTRIB_WITS]++;
             }
         }
         else if (ch->pcdata->progress == 4)
         {
             if(!str_prefix(arg1,"expression"))
             {
-                if(ch->pcdata->csabilities[CSABIL_EXPRESSION] >= 4)
+                if(ch->csabilities[CSABIL_EXPRESSION] >= 4)
                 {
                     send_to_char("Your Expression is already at maximum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csabilities[CSABIL_EXPRESSION]++;
+                ch->csabilities[CSABIL_EXPRESSION]++;
             }
             else if(!str_prefix(arg1,"alertness"))
             {
-                if(ch->pcdata->csabilities[CSABIL_ALERTNESS] >= 4)
+                if(ch->csabilities[CSABIL_ALERTNESS] >= 4)
                 {
                     send_to_char("Your Alertness is already at maximum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csabilities[CSABIL_ALERTNESS]++;
+                ch->csabilities[CSABIL_ALERTNESS]++;
             }
             else if(!str_prefix(arg1,"athletics"))
             {
-                if(ch->pcdata->csabilities[CSABIL_ATHLETICS] >= 4)
+                if(ch->csabilities[CSABIL_ATHLETICS] >= 4)
                 {
                     send_to_char("Your Athletics is already at maximum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csabilities[CSABIL_ATHLETICS]++;
+                ch->csabilities[CSABIL_ATHLETICS]++;
             }
             else if(!str_prefix(arg1,"brawl"))
             {
-                if(ch->pcdata->csabilities[CSABIL_BRAWL] >= 4)
+                if(ch->csabilities[CSABIL_BRAWL] >= 4)
                 {
                     send_to_char("Your Brawl is already at maximum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csabilities[CSABIL_BRAWL]++;
+                ch->csabilities[CSABIL_BRAWL]++;
             }
             else if(!str_prefix(arg1,"dodge"))
             {
-                if(ch->pcdata->csabilities[CSABIL_DODGE] >= 4)
+                if(ch->csabilities[CSABIL_DODGE] >= 4)
                 {
                     send_to_char("Your Dodge is already at maximum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csabilities[CSABIL_DODGE]++;
+                ch->csabilities[CSABIL_DODGE]++;
             }
             else if(!str_prefix(arg1,"empathy"))
             {
-                if(ch->pcdata->csabilities[CSABIL_EMPATHY] >= 4)
+                if(ch->csabilities[CSABIL_EMPATHY] >= 4)
                 {
                     send_to_char("Your Empathy is already at maximum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csabilities[CSABIL_EMPATHY]++;
+                ch->csabilities[CSABIL_EMPATHY]++;
             }
             else if(!str_prefix(arg1,"intimidation"))
             {
-                if(ch->pcdata->csabilities[CSABIL_INTIMIDATION] >= 4)
+                if(ch->csabilities[CSABIL_INTIMIDATION] >= 4)
                 {
                     send_to_char("Your Intimidation is already at maximum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csabilities[CSABIL_INTIMIDATION]++;
+                ch->csabilities[CSABIL_INTIMIDATION]++;
             }
             else if(!str_prefix(arg1,"leadership"))
             {
-                if(ch->pcdata->csabilities[CSABIL_LEADERSHIP] >= 4)
+                if(ch->csabilities[CSABIL_LEADERSHIP] >= 4)
                 {
                     send_to_char("Your Leadership is already at maximum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csabilities[CSABIL_LEADERSHIP]++;
+                ch->csabilities[CSABIL_LEADERSHIP]++;
             }
             else if(!str_prefix(arg1,"legerdemain"))
             {
-                if(ch->pcdata->csabilities[CSABIL_LEGERDEMAIN] >= 4)
+                if(ch->csabilities[CSABIL_LEGERDEMAIN] >= 4)
                 {
                     send_to_char("Your Legerdemain is already at maximum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csabilities[CSABIL_LEGERDEMAIN]++;
+                ch->csabilities[CSABIL_LEGERDEMAIN]++;
             }
             else if(!str_prefix(arg1,"subterfuge"))
             {
-                if(ch->pcdata->csabilities[CSABIL_SUBTERFUGE] >= 4)
+                if(ch->csabilities[CSABIL_SUBTERFUGE] >= 4)
                 {
                     send_to_char("Your Subterfuge is already at maximum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csabilities[CSABIL_SUBTERFUGE]++;
+                ch->csabilities[CSABIL_SUBTERFUGE]++;
             }
             else if(!str_prefix(arg1,"animal_ken"))
             {
-                if(ch->pcdata->csabilities[CSABIL_ANIMAL_KEN] >= 4)
+                if(ch->csabilities[CSABIL_ANIMAL_KEN] >= 4)
                 {
                     send_to_char("Your Animal_Ken is already at maximum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csabilities[CSABIL_ANIMAL_KEN]++;
+                ch->csabilities[CSABIL_ANIMAL_KEN]++;
             }
             else if(!str_prefix(arg1,"riding"))
             {
-                if(ch->pcdata->csabilities[CSABIL_RIDING] >= 4)
+                if(ch->csabilities[CSABIL_RIDING] >= 4)
                 {
                     send_to_char("Your Riding is already at maximum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csabilities[CSABIL_RIDING]++;
+                ch->csabilities[CSABIL_RIDING]++;
             }
             else if(!str_prefix(arg1,"etiquette"))
             {
-                if(ch->pcdata->csabilities[CSABIL_ETIQUETTE] >= 4)
+                if(ch->csabilities[CSABIL_ETIQUETTE] >= 4)
                 {
                     send_to_char("Your Etiquette is already at maximum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csabilities[CSABIL_ETIQUETTE]++;
+                ch->csabilities[CSABIL_ETIQUETTE]++;
             }
             else if(!str_prefix(arg1,"archery"))
             {
-                if(ch->pcdata->csabilities[CSABIL_ARCHERY] >= 4)
+                if(ch->csabilities[CSABIL_ARCHERY] >= 4)
                 {
                     send_to_char("Your Archery is already at maximum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csabilities[CSABIL_ARCHERY]++;
+                ch->csabilities[CSABIL_ARCHERY]++;
             }
             else if(!str_prefix(arg1,"melee"))
             {
-                if(ch->pcdata->csabilities[CSABIL_MELEE] >= 4)
+                if(ch->csabilities[CSABIL_MELEE] >= 4)
                 {
                     send_to_char("Your Melee is already at maximum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csabilities[CSABIL_MELEE]++;
+                ch->csabilities[CSABIL_MELEE]++;
             }
             else if(!str_prefix(arg1,"performance"))
             {
-                if(ch->pcdata->csabilities[CSABIL_PERFORMANCE] >= 4)
+                if(ch->csabilities[CSABIL_PERFORMANCE] >= 4)
                 {
                     send_to_char("Your Performance is already at maximum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csabilities[CSABIL_PERFORMANCE]++;
+                ch->csabilities[CSABIL_PERFORMANCE]++;
             }
             else if(!str_prefix(arg1,"crafts"))
             {
-                if(ch->pcdata->csabilities[CSABIL_CRAFTS] >= 4)
+                if(ch->csabilities[CSABIL_CRAFTS] >= 4)
                 {
                     send_to_char("Your Crafts is already at maximum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csabilities[CSABIL_CRAFTS]++;
+                ch->csabilities[CSABIL_CRAFTS]++;
             }
             else if(!str_prefix(arg1,"commerce"))
             {
-                if(ch->pcdata->csabilities[CSABIL_COMMERCE] >= 4)
+                if(ch->csabilities[CSABIL_COMMERCE] >= 4)
                 {
                     send_to_char("Your Commerce is already at maximum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csabilities[CSABIL_COMMERCE]++;
+                ch->csabilities[CSABIL_COMMERCE]++;
             }
             else if(!str_prefix(arg1,"stealth"))
             {
-                if(ch->pcdata->csabilities[CSABIL_STEALTH] >= 4)
+                if(ch->csabilities[CSABIL_STEALTH] >= 4)
                 {
                     send_to_char("Your Stealth is already at maximum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csabilities[CSABIL_STEALTH]++;
+                ch->csabilities[CSABIL_STEALTH]++;
             }
             else if(!str_prefix(arg1,"survival"))
             {
-                if(ch->pcdata->csabilities[CSABIL_SURVIVAL] >= 4)
+                if(ch->csabilities[CSABIL_SURVIVAL] >= 4)
                 {
                     send_to_char("Your Survival is already at maximum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csabilities[CSABIL_SURVIVAL]++;
+                ch->csabilities[CSABIL_SURVIVAL]++;
             }
             else if(!str_prefix(arg1,"academics"))
             {
-                if(ch->pcdata->csabilities[CSABIL_ACADEMICS] >= 4)
+                if(ch->csabilities[CSABIL_ACADEMICS] >= 4)
                 {
                     send_to_char("Your Academics is already at maximum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csabilities[CSABIL_ACADEMICS]++;
+                ch->csabilities[CSABIL_ACADEMICS]++;
             }
             else if(!str_prefix(arg1,"theology"))
             {
-                if(ch->pcdata->csabilities[CSABIL_THEOLOGY] >= 4)
+                if(ch->csabilities[CSABIL_THEOLOGY] >= 4)
                 {
                     send_to_char("Your Theology is already at maximum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csabilities[CSABIL_THEOLOGY]++;
+                ch->csabilities[CSABIL_THEOLOGY]++;
             }
             else if(!str_prefix(arg1,"seneschal"))
             {
-                if(ch->pcdata->csabilities[CSABIL_SENESCHAL] >= 4)
+                if(ch->csabilities[CSABIL_SENESCHAL] >= 4)
                 {
                     send_to_char("Your Seneschal is already at maximum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csabilities[CSABIL_SENESCHAL]++;
+                ch->csabilities[CSABIL_SENESCHAL]++;
             }
             else if(!str_prefix(arg1,"investigation"))
             {
-                if(ch->pcdata->csabilities[CSABIL_INVESTIGATION] >= 4)
+                if(ch->csabilities[CSABIL_INVESTIGATION] >= 4)
                 {
                     send_to_char("Your Investigation is already at maximum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csabilities[CSABIL_INVESTIGATION]++;
+                ch->csabilities[CSABIL_INVESTIGATION]++;
             }
             else if(!str_prefix(arg1,"law"))
             {
-                if(ch->pcdata->csabilities[CSABIL_LAW] >= 4)
+                if(ch->csabilities[CSABIL_LAW] >= 4)
                 {
                     send_to_char("Your Law is already at maximum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csabilities[CSABIL_LAW]++;
+                ch->csabilities[CSABIL_LAW]++;
             }
             else if(!str_prefix(arg1,"linguistics"))
             {
-                if(ch->pcdata->csabilities[CSABIL_LINGUISTICS] >= 4)
+                if(ch->csabilities[CSABIL_LINGUISTICS] >= 4)
                 {
                     send_to_char("Your Linguistics is already at maximum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csabilities[CSABIL_LINGUISTICS]++;
+                ch->csabilities[CSABIL_LINGUISTICS]++;
             }
             else if(!str_prefix(arg1,"medicine"))
             {
-                if(ch->pcdata->csabilities[CSABIL_MEDICINE] >= 4)
+                if(ch->csabilities[CSABIL_MEDICINE] >= 4)
                 {
                     send_to_char("Your Medicine is already at maximum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csabilities[CSABIL_MEDICINE]++;
+                ch->csabilities[CSABIL_MEDICINE]++;
             }
             else if(!str_prefix(arg1,"occult"))
             {
-                if(ch->pcdata->csabilities[CSABIL_OCCULT] >= 4)
+                if(ch->csabilities[CSABIL_OCCULT] >= 4)
                 {
                     send_to_char("Your Occult is already at maximum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csabilities[CSABIL_OCCULT]++;
+                ch->csabilities[CSABIL_OCCULT]++;
             }
             else if(!str_prefix(arg1,"politics"))
             {
-                if(ch->pcdata->csabilities[CSABIL_POLITICS] >= 4)
+                if(ch->csabilities[CSABIL_POLITICS] >= 4)
                 {
                     send_to_char("Your Politics is already at maximum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csabilities[CSABIL_POLITICS]++;
+                ch->csabilities[CSABIL_POLITICS]++;
             }
             else if(!str_prefix(arg1,"hearth_wisdom"))
             {
-                if(ch->pcdata->csabilities[CSABIL_HEARTHWISDOM] >= 4)
+                if(ch->csabilities[CSABIL_HEARTHWISDOM] >= 4)
                 {
                     send_to_char("Your Hearth_Wisdom is already at maximum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csabilities[CSABIL_HEARTHWISDOM]++;
+                ch->csabilities[CSABIL_HEARTHWISDOM]++;
             }
         }
         else if (ch->pcdata->progress == 6)
@@ -2437,357 +2437,357 @@ void do_create( CHAR_DATA *ch, char *argument )
         {
             if(!str_prefix(arg1,"strength"))
             {
-                if(ch->pcdata->csattributes[CSATTRIB_STRENGTH] == 1)
+                if(ch->csattributes[CSATTRIB_STRENGTH] == 1)
                 {
                     send_to_char("Your Strength is already at minimum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csattributes[CSATTRIB_STRENGTH]--;
+                ch->csattributes[CSATTRIB_STRENGTH]--;
             }
             else if(!str_prefix(arg1,"dexterity"))
             {
-                if(ch->pcdata->csattributes[CSATTRIB_DEXTERITY] == 1)
+                if(ch->csattributes[CSATTRIB_DEXTERITY] == 1)
                 {
                     send_to_char("Your Dexterity is already at minimum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csattributes[CSATTRIB_DEXTERITY]--;
+                ch->csattributes[CSATTRIB_DEXTERITY]--;
             }
             else if(!str_prefix(arg1,"stamina"))
             {
-                if(ch->pcdata->csattributes[CSATTRIB_STAMINA] == 1)
+                if(ch->csattributes[CSATTRIB_STAMINA] == 1)
                 {
                     send_to_char("Your Stamina is already at minimum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csattributes[CSATTRIB_STAMINA]--;
+                ch->csattributes[CSATTRIB_STAMINA]--;
             }
             else if(!str_prefix(arg1,"charisma"))
             {
-                if(ch->pcdata->csattributes[CSATTRIB_CHARISMA] == 1)
+                if(ch->csattributes[CSATTRIB_CHARISMA] == 1)
                 {
                     send_to_char("Your Charisma is already at minimum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csattributes[CSATTRIB_CHARISMA]--;
+                ch->csattributes[CSATTRIB_CHARISMA]--;
             }
             else if(!str_prefix(arg1,"manipulation"))
             {
-                if(ch->pcdata->csattributes[CSATTRIB_MANIPULATION] == 1)
+                if(ch->csattributes[CSATTRIB_MANIPULATION] == 1)
                 {
                     send_to_char("Your Manipulation is already at minimum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csattributes[CSATTRIB_MANIPULATION]--;
+                ch->csattributes[CSATTRIB_MANIPULATION]--;
             }
             else if(!str_prefix(arg1,"appearance"))
             {
-                if(ch->pcdata->csattributes[CSATTRIB_APPEARANCE] <= 1)
+                if(ch->csattributes[CSATTRIB_APPEARANCE] <= 1)
                 {
                     send_to_char("Your Appearance is already at minimum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csattributes[CSATTRIB_APPEARANCE]--;
+                ch->csattributes[CSATTRIB_APPEARANCE]--;
             }
             else if(!str_prefix(arg1,"perception"))
             {
-                if(ch->pcdata->csattributes[CSATTRIB_PERCEPTION] == 1)
+                if(ch->csattributes[CSATTRIB_PERCEPTION] == 1)
                 {
                     send_to_char("Your Perception is already at minimum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csattributes[CSATTRIB_PERCEPTION]--;
+                ch->csattributes[CSATTRIB_PERCEPTION]--;
             }
             else if(!str_prefix(arg1,"intelligence"))
             {
-                if(ch->pcdata->csattributes[CSATTRIB_INTELLIGENCE] == 1)
+                if(ch->csattributes[CSATTRIB_INTELLIGENCE] == 1)
                 {
                     send_to_char("Your Intelligence is already at minimum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csattributes[CSATTRIB_INTELLIGENCE]--;
+                ch->csattributes[CSATTRIB_INTELLIGENCE]--;
             }
             else if(!str_prefix(arg1,"wits"))
             {
-                if(ch->pcdata->csattributes[CSATTRIB_WITS] == 1)
+                if(ch->csattributes[CSATTRIB_WITS] == 1)
                 {
                     send_to_char("Your Wits is already at minimum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csattributes[CSATTRIB_WITS]--;
+                ch->csattributes[CSATTRIB_WITS]--;
             }
         }
         else if(ch->pcdata->progress == 4)
         {
             if(!str_prefix(arg1,"expression"))
             {
-                if(ch->pcdata->csabilities[CSABIL_EXPRESSION] == 0)
+                if(ch->csabilities[CSABIL_EXPRESSION] == 0)
                 {
                     send_to_char("Your Expression is already at minimum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csabilities[CSABIL_EXPRESSION]--;
+                ch->csabilities[CSABIL_EXPRESSION]--;
             }
             else if(!str_prefix(arg1,"alertness"))
             {
-                if(ch->pcdata->csabilities[CSABIL_ALERTNESS] == 0)
+                if(ch->csabilities[CSABIL_ALERTNESS] == 0)
                 {
                     send_to_char("Your Alertness is already at minimum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csabilities[CSABIL_ALERTNESS]--;
+                ch->csabilities[CSABIL_ALERTNESS]--;
             }
             else if(!str_prefix(arg1,"athletics"))
             {
-                if(ch->pcdata->csabilities[CSABIL_ATHLETICS] == 0)
+                if(ch->csabilities[CSABIL_ATHLETICS] == 0)
                 {
                     send_to_char("Your Athletics is already at minimum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csabilities[CSABIL_ATHLETICS]--;
+                ch->csabilities[CSABIL_ATHLETICS]--;
             }
             else if(!str_prefix(arg1,"brawl"))
             {
-                if(ch->pcdata->csabilities[CSABIL_BRAWL] == 0)
+                if(ch->csabilities[CSABIL_BRAWL] == 0)
                 {
                     send_to_char("Your Brawl is already at minimum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csabilities[CSABIL_BRAWL]--;
+                ch->csabilities[CSABIL_BRAWL]--;
             }
             else if(!str_prefix(arg1,"dodge"))
             {
-                if(ch->pcdata->csabilities[CSABIL_DODGE] == 0)
+                if(ch->csabilities[CSABIL_DODGE] == 0)
                 {
                     send_to_char("Your Dodge is already at minimum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csabilities[CSABIL_DODGE]--;
+                ch->csabilities[CSABIL_DODGE]--;
             }
             else if(!str_prefix(arg1,"empathy"))
             {
-                if(ch->pcdata->csabilities[CSABIL_EMPATHY] == 0)
+                if(ch->csabilities[CSABIL_EMPATHY] == 0)
                 {
                     send_to_char("Your Empathy is already at minimum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csabilities[CSABIL_EMPATHY]--;
+                ch->csabilities[CSABIL_EMPATHY]--;
             }
             else if(!str_prefix(arg1,"intimidation"))
             {
-                if(ch->pcdata->csabilities[CSABIL_INTIMIDATION] == 0)
+                if(ch->csabilities[CSABIL_INTIMIDATION] == 0)
                 {
                     send_to_char("Your Intimidation is already at minimum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csabilities[CSABIL_INTIMIDATION]--;
+                ch->csabilities[CSABIL_INTIMIDATION]--;
             }
             else if(!str_prefix(arg1,"leadership"))
             {
-                if(ch->pcdata->csabilities[CSABIL_LEADERSHIP] == 0)
+                if(ch->csabilities[CSABIL_LEADERSHIP] == 0)
                 {
                     send_to_char("Your Leadership is already at minimum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csabilities[CSABIL_LEADERSHIP]--;
+                ch->csabilities[CSABIL_LEADERSHIP]--;
             }
             else if(!str_prefix(arg1,"legerdemain"))
             {
-                if(ch->pcdata->csabilities[CSABIL_LEGERDEMAIN] == 0)
+                if(ch->csabilities[CSABIL_LEGERDEMAIN] == 0)
                 {
                     send_to_char("Your Legerdemain is already at minimum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csabilities[CSABIL_LEGERDEMAIN]--;
+                ch->csabilities[CSABIL_LEGERDEMAIN]--;
             }
             else if(!str_prefix(arg1,"subterfuge"))
             {
-                if(ch->pcdata->csabilities[CSABIL_SUBTERFUGE] == 0)
+                if(ch->csabilities[CSABIL_SUBTERFUGE] == 0)
                 {
                     send_to_char("Your Subterfuge is already at minimum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csabilities[CSABIL_SUBTERFUGE]--;
+                ch->csabilities[CSABIL_SUBTERFUGE]--;
             }
             else if(!str_prefix(arg1,"animal_ken"))
             {
-                if(ch->pcdata->csabilities[CSABIL_ANIMAL_KEN] == 0)
+                if(ch->csabilities[CSABIL_ANIMAL_KEN] == 0)
                 {
                     send_to_char("Your Animal_Ken is already at minimum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csabilities[CSABIL_ANIMAL_KEN]--;
+                ch->csabilities[CSABIL_ANIMAL_KEN]--;
             }
             else if(!str_prefix(arg1,"riding"))
             {
-                if(ch->pcdata->csabilities[CSABIL_RIDING] == 0)
+                if(ch->csabilities[CSABIL_RIDING] == 0)
                 {
                     send_to_char("Your Riding is already at minimum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csabilities[CSABIL_RIDING]--;
+                ch->csabilities[CSABIL_RIDING]--;
             }
             else if(!str_prefix(arg1,"etiquette"))
             {
-                if(ch->pcdata->csabilities[CSABIL_ETIQUETTE] == 0)
+                if(ch->csabilities[CSABIL_ETIQUETTE] == 0)
                 {
                     send_to_char("Your Etiquette is already at minimum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csabilities[CSABIL_ETIQUETTE]--;
+                ch->csabilities[CSABIL_ETIQUETTE]--;
             }
             else if(!str_prefix(arg1,"archery"))
             {
-                if(ch->pcdata->csabilities[CSABIL_ARCHERY] == 0)
+                if(ch->csabilities[CSABIL_ARCHERY] == 0)
                 {
                     send_to_char("Your Archery is already at minimum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csabilities[CSABIL_ARCHERY]--;
+                ch->csabilities[CSABIL_ARCHERY]--;
             }
             else if(!str_prefix(arg1,"melee"))
             {
-                if(ch->pcdata->csabilities[CSABIL_MELEE] == 0)
+                if(ch->csabilities[CSABIL_MELEE] == 0)
                 {
                     send_to_char("Your Melee is already at minimum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csabilities[CSABIL_MELEE]--;
+                ch->csabilities[CSABIL_MELEE]--;
             }
             else if(!str_prefix(arg1,"performance"))
             {
-                if(ch->pcdata->csabilities[CSABIL_PERFORMANCE] == 0)
+                if(ch->csabilities[CSABIL_PERFORMANCE] == 0)
                 {
                     send_to_char("Your Performance is already at minimum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csabilities[CSABIL_PERFORMANCE]--;
+                ch->csabilities[CSABIL_PERFORMANCE]--;
             }
             else if(!str_prefix(arg1,"crafts"))
             {
-                if(ch->pcdata->csabilities[CSABIL_CRAFTS] == 0)
+                if(ch->csabilities[CSABIL_CRAFTS] == 0)
                 {
                     send_to_char("Your Crafts is already at minimum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csabilities[CSABIL_CRAFTS]--;
+                ch->csabilities[CSABIL_CRAFTS]--;
             }
             else if(!str_prefix(arg1,"commerce"))
             {
-                if(ch->pcdata->csabilities[CSABIL_COMMERCE] == 0)
+                if(ch->csabilities[CSABIL_COMMERCE] == 0)
                 {
                     send_to_char("Your Commerce is already at minimum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csabilities[CSABIL_COMMERCE]--;
+                ch->csabilities[CSABIL_COMMERCE]--;
             }
             else if(!str_prefix(arg1,"stealth"))
             {
-                if(ch->pcdata->csabilities[CSABIL_STEALTH] == 0)
+                if(ch->csabilities[CSABIL_STEALTH] == 0)
                 {
                     send_to_char("Your Stealth is already at minimum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csabilities[CSABIL_STEALTH]--;
+                ch->csabilities[CSABIL_STEALTH]--;
             }
             else if(!str_prefix(arg1,"survival"))
             {
-                if(ch->pcdata->csabilities[CSABIL_SURVIVAL] == 0)
+                if(ch->csabilities[CSABIL_SURVIVAL] == 0)
                 {
                     send_to_char("Your Survival is already at minimum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csabilities[CSABIL_SURVIVAL]--;
+                ch->csabilities[CSABIL_SURVIVAL]--;
             }
             else if(!str_prefix(arg1,"academics"))
             {
-                if(ch->pcdata->csabilities[CSABIL_ACADEMICS] == 0)
+                if(ch->csabilities[CSABIL_ACADEMICS] == 0)
                 {
                     send_to_char("Your Academics is already at minimum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csabilities[CSABIL_ACADEMICS]--;
+                ch->csabilities[CSABIL_ACADEMICS]--;
             }
             else if(!str_prefix(arg1,"theology"))
             {
-                if(ch->pcdata->csabilities[CSABIL_THEOLOGY] == 0)
+                if(ch->csabilities[CSABIL_THEOLOGY] == 0)
                 {
                     send_to_char("Your Theology is already at minimum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csabilities[CSABIL_THEOLOGY]--;
+                ch->csabilities[CSABIL_THEOLOGY]--;
             }
             else if(!str_prefix(arg1,"seneschal"))
             {
-                if(ch->pcdata->csabilities[CSABIL_SENESCHAL] == 0)
+                if(ch->csabilities[CSABIL_SENESCHAL] == 0)
                 {
                     send_to_char("Your Seneschal is already at minimum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csabilities[CSABIL_SENESCHAL]--;
+                ch->csabilities[CSABIL_SENESCHAL]--;
             }
             else if(!str_prefix(arg1,"investigation"))
             {
-                if(ch->pcdata->csabilities[CSABIL_INVESTIGATION] == 0)
+                if(ch->csabilities[CSABIL_INVESTIGATION] == 0)
                 {
                     send_to_char("Your Investigation is already at minimum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csabilities[CSABIL_INVESTIGATION]--;
+                ch->csabilities[CSABIL_INVESTIGATION]--;
             }
             else if(!str_prefix(arg1,"law"))
             {
-                if(ch->pcdata->csabilities[CSABIL_LAW] == 0)
+                if(ch->csabilities[CSABIL_LAW] == 0)
                 {
                     send_to_char("Your Law is already at minimum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csabilities[CSABIL_LAW]--;
+                ch->csabilities[CSABIL_LAW]--;
             }
             else if(!str_prefix(arg1,"linguistics"))
             {
-                if(ch->pcdata->csabilities[CSABIL_LINGUISTICS] == 0)
+                if(ch->csabilities[CSABIL_LINGUISTICS] == 0)
                 {
                     send_to_char("Your Linguistics is already at minimum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csabilities[CSABIL_LINGUISTICS]--;
+                ch->csabilities[CSABIL_LINGUISTICS]--;
             }
             else if(!str_prefix(arg1,"medicine"))
             {
-                if(ch->pcdata->csabilities[CSABIL_MEDICINE] == 0)
+                if(ch->csabilities[CSABIL_MEDICINE] == 0)
                 {
                     send_to_char("Your Medicine is already at minimum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csabilities[CSABIL_MEDICINE]--;
+                ch->csabilities[CSABIL_MEDICINE]--;
             }
             else if(!str_prefix(arg1,"occult"))
             {
-                if(ch->pcdata->csabilities[CSABIL_OCCULT] == 0)
+                if(ch->csabilities[CSABIL_OCCULT] == 0)
                 {
                     send_to_char("Your Occult is already at minimum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csabilities[CSABIL_OCCULT]--;
+                ch->csabilities[CSABIL_OCCULT]--;
             }
             else if(!str_prefix(arg1,"politics"))
             {
-                if(ch->pcdata->csabilities[CSABIL_POLITICS] == 0)
+                if(ch->csabilities[CSABIL_POLITICS] == 0)
                 {
                     send_to_char("Your Politics is already at minimum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csabilities[CSABIL_POLITICS]--;
+                ch->csabilities[CSABIL_POLITICS]--;
             }
             else if(!str_prefix(arg1,"hearth_wisdom"))
             {
-                if(ch->pcdata->csabilities[CSABIL_HEARTHWISDOM] == 0)
+                if(ch->csabilities[CSABIL_HEARTHWISDOM] == 0)
                 {
                     send_to_char("Your Hearth_wisdom is already at minimum.\n\r",ch);
                     return;
                 }
-                ch->pcdata->csabilities[CSABIL_HEARTHWISDOM]--;
+                ch->csabilities[CSABIL_HEARTHWISDOM]--;
             }
         }
         else if (ch->pcdata->progress == 6)
@@ -3009,25 +3009,25 @@ send_to_char(" |                                                                
 send_to_char(" |<=--------------------------=Abilities=---------------------------=>|\n\r",sch);
 send_to_char(" |                                                                    |\n\r",sch);
 send_to_char(" |       TALENTS               SKILLS                KNOWLEDGE        |\n\r",sch);
-sprintf(buf, " | Expression_____%s   Animal Ken_____%s   Academics______%s |\n\r",dots(ch->pcdata->csabilities[CSABIL_EXPRESSION], FALSE),dots(ch->pcdata->csabilities[CSABIL_ANIMAL_KEN], FALSE),dots(ch->pcdata->csabilities[CSABIL_ACADEMICS], FALSE));
+sprintf(buf, " | Expression_____%s   Animal Ken_____%s   Academics______%s |\n\r",dots(ch->csabilities[CSABIL_EXPRESSION], FALSE),dots(ch->csabilities[CSABIL_ANIMAL_KEN], FALSE),dots(ch->csabilities[CSABIL_ACADEMICS], FALSE));
 send_to_char(buf,sch);
-sprintf(buf, " | Alertness______%s   Archery________%s   Seneschal______%s |\n\r",dots(ch->pcdata->csabilities[CSABIL_ALERTNESS], FALSE),dots(ch->pcdata->csabilities[CSABIL_ARCHERY], FALSE),dots(ch->pcdata->csabilities[CSABIL_SENESCHAL], FALSE));
+sprintf(buf, " | Alertness______%s   Archery________%s   Seneschal______%s |\n\r",dots(ch->csabilities[CSABIL_ALERTNESS], FALSE),dots(ch->csabilities[CSABIL_ARCHERY], FALSE),dots(ch->csabilities[CSABIL_SENESCHAL], FALSE));
 send_to_char(buf,sch);
-sprintf(buf, " | Athletics______%s   Crafts_________%s   Investigation__%s |\n\r",dots(ch->pcdata->csabilities[CSABIL_ATHLETICS], FALSE),dots(ch->pcdata->csabilities[CSABIL_CRAFTS], FALSE),dots(ch->pcdata->csabilities[CSABIL_INVESTIGATION], FALSE));
+sprintf(buf, " | Athletics______%s   Crafts_________%s   Investigation__%s |\n\r",dots(ch->csabilities[CSABIL_ATHLETICS], FALSE),dots(ch->csabilities[CSABIL_CRAFTS], FALSE),dots(ch->csabilities[CSABIL_INVESTIGATION], FALSE));
 send_to_char(buf,sch);
-sprintf(buf, " | Brawl__________%s   Etiquette______%s   Law____________%s |\n\r",dots(ch->pcdata->csabilities[CSABIL_BRAWL], FALSE),dots(ch->pcdata->csabilities[CSABIL_ETIQUETTE], FALSE),dots(ch->pcdata->csabilities[CSABIL_LAW], FALSE));
+sprintf(buf, " | Brawl__________%s   Etiquette______%s   Law____________%s |\n\r",dots(ch->csabilities[CSABIL_BRAWL], FALSE),dots(ch->csabilities[CSABIL_ETIQUETTE], FALSE),dots(ch->csabilities[CSABIL_LAW], FALSE));
 send_to_char(buf,sch);
-sprintf(buf, " | Dodge__________%s   Melee__________%s   Linguistics____%s |\n\r",dots(ch->pcdata->csabilities[CSABIL_DODGE], FALSE),dots(ch->pcdata->csabilities[CSABIL_MELEE], FALSE),dots(ch->pcdata->csabilities[CSABIL_LINGUISTICS], FALSE));
+sprintf(buf, " | Dodge__________%s   Melee__________%s   Linguistics____%s |\n\r",dots(ch->csabilities[CSABIL_DODGE], FALSE),dots(ch->csabilities[CSABIL_MELEE], FALSE),dots(ch->csabilities[CSABIL_LINGUISTICS], FALSE));
 send_to_char(buf,sch);
-sprintf(buf, " | Empathy________%s   Performance____%s   Medicine_______%s |\n\r",dots(ch->pcdata->csabilities[CSABIL_EMPATHY], FALSE),dots(ch->pcdata->csabilities[CSABIL_PERFORMANCE], FALSE),dots(ch->pcdata->csabilities[CSABIL_MEDICINE], FALSE));
+sprintf(buf, " | Empathy________%s   Performance____%s   Medicine_______%s |\n\r",dots(ch->csabilities[CSABIL_EMPATHY], FALSE),dots(ch->csabilities[CSABIL_PERFORMANCE], FALSE),dots(ch->csabilities[CSABIL_MEDICINE], FALSE));
 send_to_char(buf,sch);
-sprintf(buf, " | Intimidation___%s   Riding_________%s   Occult_________%s |\n\r",dots(ch->pcdata->csabilities[CSABIL_INTIMIDATION], FALSE),dots(ch->pcdata->csabilities[CSABIL_RIDING], FALSE),dots(ch->pcdata->csabilities[CSABIL_OCCULT], FALSE));
+sprintf(buf, " | Intimidation___%s   Riding_________%s   Occult_________%s |\n\r",dots(ch->csabilities[CSABIL_INTIMIDATION], FALSE),dots(ch->csabilities[CSABIL_RIDING], FALSE),dots(ch->csabilities[CSABIL_OCCULT], FALSE));
 send_to_char(buf,sch);
-sprintf(buf, " | Leadership_____%s   Commerce_______%s   Politics_______%s |\n\r",dots(ch->pcdata->csabilities[CSABIL_LEADERSHIP], FALSE),dots(ch->pcdata->csabilities[CSABIL_COMMERCE], FALSE),dots(ch->pcdata->csabilities[CSABIL_POLITICS], FALSE));
+sprintf(buf, " | Leadership_____%s   Commerce_______%s   Politics_______%s |\n\r",dots(ch->csabilities[CSABIL_LEADERSHIP], FALSE),dots(ch->csabilities[CSABIL_COMMERCE], FALSE),dots(ch->csabilities[CSABIL_POLITICS], FALSE));
 send_to_char(buf,sch);
-sprintf(buf, " | Legerdemain____%s   Stealth________%s   Hearth Wisdom__%s |\n\r",dots(ch->pcdata->csabilities[CSABIL_LEGERDEMAIN], FALSE),dots(ch->pcdata->csabilities[CSABIL_STEALTH], FALSE),dots(ch->pcdata->csabilities[CSABIL_HEARTHWISDOM], FALSE));
+sprintf(buf, " | Legerdemain____%s   Stealth________%s   Hearth Wisdom__%s |\n\r",dots(ch->csabilities[CSABIL_LEGERDEMAIN], FALSE),dots(ch->csabilities[CSABIL_STEALTH], FALSE),dots(ch->csabilities[CSABIL_HEARTHWISDOM], FALSE));
 send_to_char(buf,sch);
-sprintf(buf, " | Subterfuge_____%s   Survival_______%s   Theology_______%s |\n\r",dots(ch->pcdata->csabilities[CSABIL_SUBTERFUGE], FALSE),dots(ch->pcdata->csabilities[CSABIL_SURVIVAL], FALSE),dots(ch->pcdata->csabilities[CSABIL_THEOLOGY], FALSE));
+sprintf(buf, " | Subterfuge_____%s   Survival_______%s   Theology_______%s |\n\r",dots(ch->csabilities[CSABIL_SUBTERFUGE], FALSE),dots(ch->csabilities[CSABIL_SURVIVAL], FALSE),dots(ch->csabilities[CSABIL_THEOLOGY], FALSE));
 send_to_char(buf,sch);
 send_to_char(" |                                                                    |\n\r",sch);
 send_to_char("<======================================================================>\n\r",sch);
@@ -3306,7 +3306,7 @@ void do_charsheet3 (CHAR_DATA * ch, char *argument)
         sprintf(sec5[row], "                  ");
         row++;
 }
-    if (ch->pcdata->csabilities[CSABIL_MELEE] > 0)
+    if (ch->csabilities[CSABIL_MELEE] > 0)
     {
         sprintf(name[row], "  Weapon Skills   ");
         sprintf(sec1[row], "Light        %s", dots(ch->pcdata->cssec_abil[CSABIL_LIGHT], FALSE));
@@ -3316,7 +3316,7 @@ void do_charsheet3 (CHAR_DATA * ch, char *argument)
         sprintf(sec5[row], "                  ");
         row++;
     }
-    if(ch->pcdata->csabilities[CSABIL_CRAFTS] > 0)
+    if(ch->csabilities[CSABIL_CRAFTS] > 0)
     {
         sprintf(name[row], "      Crafts      ");
         sprintf(sec1[row], "                  ");

@@ -111,13 +111,13 @@ void do_bandage(CHAR_DATA *ch, char *argument)
     }
 
 
-    if( ch->pcdata->csabilities[CSABIL_MEDICINE]<1)     /*First thing it checks for, if you have Medicine knowledge.*/
+    if( ch->csabilities[CSABIL_MEDICINE]<1)     /*First thing it checks for, if you have Medicine knowledge.*/
     {
         send_to_char("Without the proper knowledge in Medicine, you might make the wound worse.\n\r", ch);
         return;
     }
 
-    if(ch->move <= (100-(ch->pcdata->csattributes[STAMINA]*10)))    /*Checks your movement, possible ranges are 90-50*/
+    if(ch->move <= (100-(ch->csattributes[STAMINA]*10)))    /*Checks your movement, possible ranges are 90-50*/
     {                   /*Higher CS_Stam, lower movement cost*/
         send_to_char("You are too tired to bandage someone.\n\r", ch);
         return;
@@ -129,7 +129,7 @@ void do_bandage(CHAR_DATA *ch, char *argument)
     act("$n attempts to bandage your wounds...",ch,NULL,victim,TO_VICT);    /*motions of attempting to bandage*/
     act("$n attempts to bandage $N...",ch,NULL,victim,TO_NOTVICT);      /*before making subsequent checks*/
 
-    dicepool = (ch->pcdata->csattributes[INTELLIGENCE]+ch->pcdata->csabilities[CSABIL_MEDICINE]);   /*Calculates dicepool, CS_Int +CS_Med*/
+    dicepool = (ch->csattributes[INTELLIGENCE]+ch->csabilities[CSABIL_MEDICINE]);   /*Calculates dicepool, CS_Int +CS_Med*/
     for (i = 1; i <= dicepool; i++)         /*Loops for dicepool, to make a roll for each 'die'*/
     {
         diceroll = number_range(1, 10);         /*Get random #, 1-10, and save it.*/
@@ -152,13 +152,13 @@ void do_bandage(CHAR_DATA *ch, char *argument)
         act("and only succeeds in making the wound worse!",ch,NULL,victim,TO_VICT);
         act("and only succeeds in making the wound worse!",ch,NULL,victim,TO_NOTVICT);
 
-        if (victim->hit - (60 - (10*ch->pcdata->csabilities[CSABIL_MEDICINE]) ) <= 0)
+        if (victim->hit - (60 - (10*ch->csabilities[CSABIL_MEDICINE]) ) <= 0)
         {               /*If botch would kill victim, instead sets to hp 1*/
             victim->hit = 1;
             return;
         }
 
-        victim->hit -= 60-(10*ch->pcdata->csabilities[CSABIL_MEDICINE]);
+        victim->hit -= 60-(10*ch->csabilities[CSABIL_MEDICINE]);
                 /*^^^---Damage is 60 minus10*Medicine rating*/
         return;
     }
@@ -187,27 +187,27 @@ void do_bandage(CHAR_DATA *ch, char *argument)
             else
                 victim->hit += (dicesuccess*ch->level/2)+10;
 
-            if (ch->pcdata->csabilities[CSABIL_MEDICINE] >= 4)   /*If Medicine 4 or higher, heals a little agg damage*/
+            if (ch->csabilities[CSABIL_MEDICINE] >= 4)   /*If Medicine 4 or higher, heals a little agg damage*/
             {
                 victim->agg_dam -= dicesuccess;
                 if (victim->agg_dam < 0)
                     victim->agg_dam=0;
             }
 
-            if (ch->pcdata->csabilities[CSABIL_MEDICINE] >= 3)   /*Bonus heal for higher medicine*/
+            if (ch->csabilities[CSABIL_MEDICINE] >= 3)   /*Bonus heal for higher medicine*/
                 victim->hit += dicesuccess*ch->level/2;
 
             if (victim->hit > victim->max_hit)
                 victim->hit = victim->max_hit; /*Max HP check */
         }
     }
-    ch->move -= (90-ch->pcdata->csattributes[STAMINA]*10);  /*Movement cost = 100 minus CS_Stam*10, range*/
+    ch->move -= (90-ch->csattributes[STAMINA]*10);  /*Movement cost = 100 minus CS_Stam*10, range*/
                                 /*is from 90 - 50, higher CS_Stam, lower cost*/
 
     /*All this following has to do with what you see in the affects on your char*/
     af.where = TO_AFFECTS;      /*I am unsure what this does exactly...*/
     af.type = gsn_bandage;      /*Sets affect as bandage*/
-    af.level = ch->pcdata->csabilities[CSABIL_MEDICINE];        /*Affect level = Medicine lvl*/
+    af.level = ch->csabilities[CSABIL_MEDICINE];        /*Affect level = Medicine lvl*/
     af.duration = duration;
     af.location = APPLY_NONE;       /*None, as opposed to maxhp, int, CS_stat...etc*/
     af.modifier = 0;            /*Modifies none location by 0*/
@@ -415,4 +415,3 @@ void do_fortress(CHAR_DATA *ch, char *argument)
     check_improve(ch,gsn_fortress,TRUE,4);
     return;
 }
-

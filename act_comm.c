@@ -65,7 +65,7 @@ void check_unseen(CHAR_DATA *ch, int type)
         case UNSEEN_TALK: diff = 6;break;
         case UNSEEN_MOVE: diff = 9;break;
     }
-    success = godice(get_attribute(ch, WITS) + ch->pcdata->csabilities[CSABIL_STEALTH], diff);
+    success = godice(get_attribute(ch, WITS) + ch->csabilities[CSABIL_STEALTH], diff);
     if (success < 1)
     {
         affect_strip(ch, gsn_unseen);
@@ -1298,8 +1298,8 @@ void do_whisper( CHAR_DATA *ch, char *argument )
             continue;
             // If d isn't fully online, or dch is ch or victim, or dch isn't in the same room,
             // go on to next char in descriptor_list.
-            int resistance = (godice(get_attribute(ch, WITS) + ch->pcdata->csabilities[CSABIL_SUBTERFUGE], 7));
-            int challenge = (godice(get_attribute(dch, WITS) + dch->pcdata->csabilities[CSABIL_ALERTNESS], 7));
+            int resistance = (godice(get_attribute(ch, WITS) + ch->csabilities[CSABIL_SUBTERFUGE], 7));
+            int challenge = (godice(get_attribute(dch, WITS) + dch->csabilities[CSABIL_ALERTNESS], 7));
             int listsuccess = challenge - resistance;
         if  (listsuccess > 3)// 1 in 10 chance of overhearing.
         // To add a diceroll you could do if(godice(ch's perception + ch's alertness, diff 9))
@@ -2404,7 +2404,7 @@ void do_group( CHAR_DATA *ch, char *argument )
             members++;
         }
 
-        if(members > (ch->pcdata->csabilities[CSABIL_LEADERSHIP]*2)+1)
+        if(members > (ch->csabilities[CSABIL_LEADERSHIP]*2)+1)
         {
             send_to_char("You do not have the skills needed to lead so many people.\n\r",ch);
             return;
@@ -2989,7 +2989,7 @@ void do_promote_leader( CHAR_DATA *ch, char *argument )
             members++;
         }
 
-        if(members > (victim->pcdata->csabilities[CSABIL_LEADERSHIP]*2)+1)
+        if(members > (victim->csabilities[CSABIL_LEADERSHIP]*2)+1)
         {
             send_to_char("They do not have the skills needed to lead so many people.\n\r",ch);
             return;

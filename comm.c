@@ -2288,29 +2288,29 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
         break;
     }
     for(i = 0; i <= MAX_CSATTRIBUTES; i++)
-        ch->pcdata->csattributes[i] = cr_attribute_table[num].attribute[i];
+        ch->csattributes[i] = cr_attribute_table[num].attribute[i];
 
     for(;;)
     {
         num1 = number_range(0,MAX_CSATTRIBUTES);
-        if(ch->pcdata->csattributes[num1] < 4)
+        if(ch->csattributes[num1] < 4)
         {
-            ch->pcdata->csattributes[num1]++;
+            ch->csattributes[num1]++;
             break;
         }
     }
 
     for(i = 0; i <= MAX_CSABIL; i++)
-        ch->pcdata->csabilities[i] = cr_abil_table[num].abil[i];
+        ch->csabilities[i] = cr_abil_table[num].abil[i];
 
     for(i = 0; i <= 2;i++)
         ch->pcdata->csvirtues[i] = cr_abil_table[num].virtue[i];
     num1 = 2;
     while (num1 > 0)
     {
-        if(ch->pcdata->csabilities[(i = number_range(0,MAX_CSABIL))] < 4)
+        if(ch->csabilities[(i = number_range(0,MAX_CSABIL))] < 4)
         {
-            ch->pcdata->csabilities[i]++;
+            ch->csabilities[i]++;
             num1--;
         }
     }

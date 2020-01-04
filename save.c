@@ -318,30 +318,30 @@ void fwrite_char( CHAR_DATA *ch, FILE *fp )
     else if (ch->countdown != 0)
         fprintf( fp, "QuestNext %d\n",  30              );
     fprintf( fp, "CSattributes %d %d %d %d %d %d %d %d %d\n",
-    ch->pcdata->csattributes[CSATTRIB_STRENGTH],    ch->pcdata->csattributes[CSATTRIB_DEXTERITY],
-    ch->pcdata->csattributes[CSATTRIB_STAMINA],     ch->pcdata->csattributes[CSATTRIB_CHARISMA],
-    ch->pcdata->csattributes[CSATTRIB_MANIPULATION],    ch->pcdata->csattributes[CSATTRIB_APPEARANCE],
-    ch->pcdata->csattributes[CSATTRIB_PERCEPTION],  ch->pcdata->csattributes[CSATTRIB_INTELLIGENCE],
-    ch->pcdata->csattributes[CSATTRIB_WITS]);
+    ch->csattributes[CSATTRIB_STRENGTH],    ch->csattributes[CSATTRIB_DEXTERITY],
+    ch->csattributes[CSATTRIB_STAMINA],     ch->csattributes[CSATTRIB_CHARISMA],
+    ch->csattributes[CSATTRIB_MANIPULATION],    ch->csattributes[CSATTRIB_APPEARANCE],
+    ch->csattributes[CSATTRIB_PERCEPTION],  ch->csattributes[CSATTRIB_INTELLIGENCE],
+    ch->csattributes[CSATTRIB_WITS]);
 
     fprintf( fp, "CSattrib_mod %d %d %d %d %d %d %d %d %d\n",
-    ch->pcdata->csattrib_mod[CSATTRIB_STRENGTH],    ch->pcdata->csattrib_mod[CSATTRIB_DEXTERITY],
-    ch->pcdata->csattrib_mod[CSATTRIB_STAMINA],     ch->pcdata->csattrib_mod[CSATTRIB_CHARISMA],
-    ch->pcdata->csattrib_mod[CSATTRIB_MANIPULATION],    ch->pcdata->csattrib_mod[CSATTRIB_APPEARANCE],
-    ch->pcdata->csattrib_mod[CSATTRIB_PERCEPTION],  ch->pcdata->csattrib_mod[CSATTRIB_INTELLIGENCE],
-    ch->pcdata->csattrib_mod[CSATTRIB_WITS]);
+    ch->csattrib_mod[CSATTRIB_STRENGTH],    ch->csattrib_mod[CSATTRIB_DEXTERITY],
+    ch->csattrib_mod[CSATTRIB_STAMINA],     ch->csattrib_mod[CSATTRIB_CHARISMA],
+    ch->csattrib_mod[CSATTRIB_MANIPULATION],    ch->csattrib_mod[CSATTRIB_APPEARANCE],
+    ch->csattrib_mod[CSATTRIB_PERCEPTION],  ch->csattrib_mod[CSATTRIB_INTELLIGENCE],
+    ch->csattrib_mod[CSATTRIB_WITS]);
 
     fprintf( fp, "CSabilities %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d\n",
-    ch->pcdata->csabilities[0], ch->pcdata->csabilities[1], ch->pcdata->csabilities[2],
-    ch->pcdata->csabilities[3], ch->pcdata->csabilities[4], ch->pcdata->csabilities[5],
-    ch->pcdata->csabilities[6], ch->pcdata->csabilities[7], ch->pcdata->csabilities[8],
-    ch->pcdata->csabilities[9], ch->pcdata->csabilities[10],    ch->pcdata->csabilities[11],
-    ch->pcdata->csabilities[12],    ch->pcdata->csabilities[13],    ch->pcdata->csabilities[14],
-    ch->pcdata->csabilities[15],    ch->pcdata->csabilities[16],    ch->pcdata->csabilities[17],
-    ch->pcdata->csabilities[18],    ch->pcdata->csabilities[19],    ch->pcdata->csabilities[20],
-    ch->pcdata->csabilities[21],    ch->pcdata->csabilities[22],    ch->pcdata->csabilities[23],
-    ch->pcdata->csabilities[24],    ch->pcdata->csabilities[25],    ch->pcdata->csabilities[26],
-    ch->pcdata->csabilities[27],    ch->pcdata->csabilities[28],    ch->pcdata->csabilities[29]);
+    ch->csabilities[0], ch->csabilities[1], ch->csabilities[2],
+    ch->csabilities[3], ch->csabilities[4], ch->csabilities[5],
+    ch->csabilities[6], ch->csabilities[7], ch->csabilities[8],
+    ch->csabilities[9], ch->csabilities[10],    ch->csabilities[11],
+    ch->csabilities[12],    ch->csabilities[13],    ch->csabilities[14],
+    ch->csabilities[15],    ch->csabilities[16],    ch->csabilities[17],
+    ch->csabilities[18],    ch->csabilities[19],    ch->csabilities[20],
+    ch->csabilities[21],    ch->csabilities[22],    ch->csabilities[23],
+    ch->csabilities[24],    ch->csabilities[25],    ch->csabilities[26],
+    ch->csabilities[27],    ch->csabilities[28],    ch->csabilities[29]);
 
     fprintf( fp, "CSsec_abil %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d\n",
     ch->pcdata->cssec_abil[0],  ch->pcdata->cssec_abil[1],  ch->pcdata->cssec_abil[2],
@@ -1030,11 +1030,11 @@ bool load_char_obj( DESCRIPTOR_DATA *d, char *name )
         int temp[MAX_CSABIL];
         int i;
         for (i = 1; i <= MAX_CSABIL; i ++)
-            temp[i] = ch->pcdata->csabilities[i-1];
+            temp[i] = ch->csabilities[i-1];
 
         temp[0] = 0;
         for (i = 0; i <= MAX_CSABIL; i ++)
-            ch->pcdata->csabilities[i] = temp[i];
+            ch->csabilities[i] = temp[i];
 
         ch->version = 6;
     }
@@ -1412,7 +1412,7 @@ void fread_char( CHAR_DATA *ch, FILE *fp )
         {
         int i;
         for (i = 0; i <= MAX_CSATTRIBUTES; i ++)
-           ch->pcdata->csattributes[i] = fread_number(fp);
+           ch->csattributes[i] = fread_number(fp);
         fMatch = TRUE;
         break;
         }
@@ -1421,7 +1421,7 @@ void fread_char( CHAR_DATA *ch, FILE *fp )
         {
         int i;
         for (i = 0; i <= MAX_CSATTRIBUTES; i ++)
-           ch->pcdata->csattrib_mod[i] = fread_number(fp);
+           ch->csattrib_mod[i] = fread_number(fp);
         fMatch = TRUE;
         break;
         }
@@ -1430,7 +1430,7 @@ void fread_char( CHAR_DATA *ch, FILE *fp )
         {
         int i;
         for (i = 0; i <= MAX_CSABIL; i ++)
-           ch->pcdata->csabilities[i] = fread_number(fp);
+           ch->csabilities[i] = fread_number(fp);
         fMatch = TRUE;
         break;
         }

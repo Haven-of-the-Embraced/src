@@ -5101,7 +5101,7 @@ void do_mset( CHAR_DATA *ch, char *argument )
         send_to_char("CS Strength range is 0 to 5.\n\r", ch);
         return;
     }
-    victim->pcdata->csattributes[CSATTRIB_STRENGTH] = value;
+    victim->csattributes[CSATTRIB_STRENGTH] = value;
     return;
     }
 
@@ -5118,7 +5118,7 @@ void do_mset( CHAR_DATA *ch, char *argument )
         send_to_char("CS Dexterity range is 0 to 5.\n\r", ch);
         return;
     }
-    victim->pcdata->csattributes[CSATTRIB_DEXTERITY] = value;
+    victim->csattributes[CSATTRIB_DEXTERITY] = value;
     return;
     }
 
@@ -5135,7 +5135,7 @@ void do_mset( CHAR_DATA *ch, char *argument )
         send_to_char("CS Stamina range is 0 to 5.\n\r", ch);
         return;
     }
-    victim->pcdata->csattributes[CSATTRIB_STAMINA] = value;
+    victim->csattributes[CSATTRIB_STAMINA] = value;
     return;
     }
 
@@ -5152,7 +5152,7 @@ void do_mset( CHAR_DATA *ch, char *argument )
         send_to_char("CS Charisma range is 0 to 5.\n\r", ch);
         return;
     }
-    victim->pcdata->csattributes[CSATTRIB_CHARISMA] = value;
+    victim->csattributes[CSATTRIB_CHARISMA] = value;
     return;
     }
 
@@ -5169,7 +5169,7 @@ void do_mset( CHAR_DATA *ch, char *argument )
         send_to_char("CS Manipulation range is 0 to 5.\n\r", ch);
         return;
     }
-    victim->pcdata->csattributes[CSATTRIB_MANIPULATION] = value;
+    victim->csattributes[CSATTRIB_MANIPULATION] = value;
     return;
     }
 
@@ -5186,7 +5186,7 @@ void do_mset( CHAR_DATA *ch, char *argument )
         send_to_char("CS Appearance range is 0 to 5.\n\r", ch);
         return;
     }
-    victim->pcdata->csattributes[CSATTRIB_APPEARANCE] = value;
+    victim->csattributes[CSATTRIB_APPEARANCE] = value;
     return;
     }
 
@@ -5203,7 +5203,7 @@ void do_mset( CHAR_DATA *ch, char *argument )
         send_to_char("CS Perception range is 0 to 5.\n\r", ch);
         return;
     }
-    victim->pcdata->csattributes[CSATTRIB_PERCEPTION] = value;
+    victim->csattributes[CSATTRIB_PERCEPTION] = value;
     return;
     }
 
@@ -5220,7 +5220,7 @@ void do_mset( CHAR_DATA *ch, char *argument )
         send_to_char("CS Intelligence range is 0 to 5.\n\r", ch);
         return;
     }
-    victim->pcdata->csattributes[CSATTRIB_INTELLIGENCE] = value;
+    victim->csattributes[CSATTRIB_INTELLIGENCE] = value;
     return;
     }
 
@@ -5237,7 +5237,7 @@ void do_mset( CHAR_DATA *ch, char *argument )
         send_to_char("CS Wits range is 0 to 5.\n\r", ch);
         return;
     }
-    victim->pcdata->csattributes[CSATTRIB_WITS] = value;
+    victim->csattributes[CSATTRIB_WITS] = value;
     return;
     }
 

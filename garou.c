@@ -452,10 +452,10 @@ void do_garouconvert(CHAR_DATA *ch, char *argument)
 
         ch->freebie = (ch->remorts*3)+15;
         for(i = 0; i < 30; i++)
-            ch->pcdata->csabilities[i] = 0;
+            ch->csabilities[i] = 0;
 
         for(i = 0; i < 9; i++)
-            ch->pcdata->csattributes[i] = 1;
+            ch->csattributes[i] = 1;
         for(i = 0; i < 30; i++)
             ch->pcdata->cssec_abil[i] = 0;
         for (i = 0; i < MAX_CSBACK; i++)

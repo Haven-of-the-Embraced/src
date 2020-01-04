@@ -4648,7 +4648,7 @@ void do_contacts( CHAR_DATA *ch, char *argument )
         if (!IS_NPC(victim) && victim->pcdata->csbackgrounds[CSBACK_FAME] > 2)
             diff -= 2;
         sprintf(buf, "You ask your contacts to help you find %s...", IS_NPC(victim) ? victim->short_descr : victim->name);
-        success = godice(get_attribute(ch, MANIPULATION) + ch->pcdata->csabilities[CSABIL_INTIMIDATION], diff);
+        success = godice(get_attribute(ch, MANIPULATION) + ch->csabilities[CSABIL_INTIMIDATION], diff);
 
         if (success < 0)
         {

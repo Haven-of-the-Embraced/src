@@ -2713,7 +2713,7 @@ void clear_char( CHAR_DATA *ch )
     ch->mod_stat[i] = 0;
     }
     for (i = 0; i <= MAX_CSATTRIBUTES; i ++)
-        ch->pcdata->csattrib_mod[i] = 0;
+        ch->csattrib_mod[i] = 0;
     return;
 }
 

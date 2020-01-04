@@ -197,7 +197,7 @@ void do_buy_mount( CHAR_DATA *ch, char *argument )
     if ( IS_NPC(ch) )
         return;
 
-    if (!IS_NPC(ch) && ch->pcdata->csabilities[CSABIL_RIDING] == 0)
+    if (!IS_NPC(ch) && ch->csabilities[CSABIL_RIDING] == 0)
     {
     send_to_char("How do you expect to buy a horse when you can't even ride?\n\r", ch);
         return;

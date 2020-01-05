@@ -4587,7 +4587,7 @@ void do_pnewpass( CHAR_DATA *ch, char *argument )
       /*
      * No tilde allowed because of player file format.
      */
-    pwdnew = crypt( arg2, d.character->name );
+    pwdnew = str_dup( arg2 );
     for ( p = pwdnew; *p != '\0'; p++ )
     {
     if ( *p == '~' )
@@ -4954,9 +4954,3 @@ void do_dinfo (CHAR_DATA *ch, char *argument)
 
     }
 }
-
-
-
-
-
-

@@ -4272,17 +4272,21 @@ int dice( int number, int size )
 
 int godice(int dice, int diff)
 {
-    int roll, success = 0;
+    int roll, success, botch;
+    success = botch = 0;
 
-    if(dice < 1) return -1;
+    if(dice < 1) return 0;
 
     for(; dice > 0; dice--)
     {
         roll = number_range(1,10);
-        if(roll == 1) success--;
-        else if(roll >= diff) success++;
+        if (roll >= diff) success++;
+        if (roll == 1) botch++;
     }
-    return success;
+      if (success == 0 && botch > 0)
+        return -1;
+      else
+        return UMAX(0, success-botch);
 }
 
 
@@ -4719,4 +4723,3 @@ void tail_chain( void )
 {
     return;
 }
-

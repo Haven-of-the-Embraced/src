@@ -1572,17 +1572,7 @@ void wear_obj( CHAR_DATA *ch, OBJ_DATA *obj, bool fReplace )
 
     if ( CAN_WEAR( obj, ITEM_WEAR_FINGER ) )
     {
-    /*if(is_affected(ch,gsn_vicissitude_horrid))
-    {
-        send_to_char("You cannot wear that in this form.\n\r",ch);
-        return;
-    }*/
 
-    /*if ( ch->changed == CHANGED_CRINOS)
-    {
-        send_to_char("You cannot wear that item in this form!\n\r",ch);
-        return;
-    }*/
     if ( get_eq_char( ch, WEAR_FINGER_L ) != NULL
     &&   get_eq_char( ch, WEAR_FINGER_R ) != NULL
     &&   !remove_obj( ch, WEAR_FINGER_L, fReplace )
@@ -1612,11 +1602,6 @@ void wear_obj( CHAR_DATA *ch, OBJ_DATA *obj, bool fReplace )
 
     if ( CAN_WEAR( obj, ITEM_WEAR_NECK ) )
     {
-    /*if(is_affected(ch,gsn_vicissitude_horrid))
-    {
-        send_to_char("You cannot wear that in this form.\n\r",ch);
-        return;
-    }*/
 
     if ( get_eq_char( ch, WEAR_NECK_1 ) != NULL
     &&   get_eq_char( ch, WEAR_NECK_2 ) != NULL
@@ -1647,11 +1632,6 @@ void wear_obj( CHAR_DATA *ch, OBJ_DATA *obj, bool fReplace )
 
     if ( CAN_WEAR( obj, ITEM_WEAR_BODY ) )
     {
-    /*if(is_affected(ch,gsn_vicissitude_horrid))
-    {
-        send_to_char("You cannot wear that in this form.\n\r",ch);
-        return;
-    }*/
 
     if ( !remove_obj( ch, WEAR_BODY, fReplace ) )
         return;
@@ -1663,17 +1643,7 @@ void wear_obj( CHAR_DATA *ch, OBJ_DATA *obj, bool fReplace )
 
     if ( CAN_WEAR( obj, ITEM_WEAR_HEAD ) )
     {
-    /*if(is_affected(ch,gsn_vicissitude_horrid))
-    {
-        send_to_char("You cannot wear that in this form.\n\r",ch);
-        return;
-    }
 
-    if ( ch->changed == CHANGED_CRINOS)
-    {
-        send_to_char("You cannot wear that item in this form!\n\r",ch);
-        return;
-    }*/
     if ( !remove_obj( ch, WEAR_HEAD, fReplace ) )
         return;
     act( "$n wears $p on $s head.",   ch, obj, NULL, TO_ROOM );
@@ -1684,18 +1654,7 @@ void wear_obj( CHAR_DATA *ch, OBJ_DATA *obj, bool fReplace )
 
     if ( CAN_WEAR( obj, ITEM_WEAR_LEGS ) )
     {
-    /*if(is_affected(ch,gsn_vicissitude_horrid))
-    {
-        send_to_char("You cannot wear that in this form.\n\r",ch);
-        return;
-    }
 
-
-    if ( ch->changed == CHANGED_CRINOS)
-    {
-        send_to_char("You cannot wear that item in this form!\n\r",ch);
-        return;
-    }*/
     if ( !remove_obj( ch, WEAR_LEGS, fReplace ) )
         return;
     act( "$n wears $p on $s legs.",   ch, obj, NULL, TO_ROOM );
@@ -1706,17 +1665,7 @@ void wear_obj( CHAR_DATA *ch, OBJ_DATA *obj, bool fReplace )
 
     if ( CAN_WEAR( obj, ITEM_WEAR_FEET ) )
     {
-    /*if(is_affected(ch,gsn_vicissitude_horrid))
-    {
-        send_to_char("You cannot wear that in this form.\n\r",ch);
-        return;
-    }
 
-    if ( ch->changed == CHANGED_CRINOS)
-    {
-        send_to_char("You cannot wear that item in this form!\n\r",ch);
-        return;
-    }*/
     if ( !remove_obj( ch, WEAR_FEET, fReplace ) )
         return;
     act( "$n wears $p on $s feet.",   ch, obj, NULL, TO_ROOM );
@@ -1727,17 +1676,7 @@ void wear_obj( CHAR_DATA *ch, OBJ_DATA *obj, bool fReplace )
 
     if ( CAN_WEAR( obj, ITEM_WEAR_HANDS ) )
     {
-    /*if(is_affected(ch,gsn_vicissitude_horrid))
-    {
-        send_to_char("You cannot wear that in this form.\n\r",ch);
-        return;
-    }
 
-    if ( ch->changed == CHANGED_CRINOS)
-    {
-        send_to_char("You cannot wear that item in this form!\n\r",ch);
-        return;
-    }*/
     if ( !remove_obj( ch, WEAR_HANDS, fReplace ) )
         return;
     act( "$n wears $p on $s hands.",   ch, obj, NULL, TO_ROOM );
@@ -1748,17 +1687,7 @@ void wear_obj( CHAR_DATA *ch, OBJ_DATA *obj, bool fReplace )
 
     if ( CAN_WEAR( obj, ITEM_WEAR_ARMS ) )
     {
-    /*if(is_affected(ch,gsn_vicissitude_horrid))
-    {
-        send_to_char("You cannot wear that in this form.\n\r",ch);
-        return;
-    }
 
-    if ( ch->changed == CHANGED_CRINOS)
-    {
-        send_to_char("You cannot wear that item in this form!\n\r",ch);
-        return;
-    }*/
     if ( !remove_obj( ch, WEAR_ARMS, fReplace ) )
         return;
     act( "$n wears $p on $s arms.",   ch, obj, NULL, TO_ROOM );
@@ -1769,11 +1698,6 @@ void wear_obj( CHAR_DATA *ch, OBJ_DATA *obj, bool fReplace )
 
     if ( CAN_WEAR( obj, ITEM_WEAR_ABOUT ) )
     {
-    /*if(is_affected(ch,gsn_vicissitude_horrid))
-    {
-        send_to_char("You cannot wear that in this form.\n\r",ch);
-        return;
-    }*/
 
     if ( !remove_obj( ch, WEAR_ABOUT, fReplace ) )
         return;
@@ -1785,17 +1709,6 @@ void wear_obj( CHAR_DATA *ch, OBJ_DATA *obj, bool fReplace )
 
     if ( CAN_WEAR( obj, ITEM_WEAR_WAIST ) )
     {
-    /*if(is_affected(ch,gsn_vicissitude_horrid))
-    {
-        send_to_char("You cannot wear that in this form.\n\r",ch);
-        return;
-    }
-
-    if ( ch->changed == CHANGED_CRINOS)
-    {
-        send_to_char("You cannot wear that item in this form!\n\r",ch);
-        return;
-    }*/
     if ( !remove_obj( ch, WEAR_WAIST, fReplace ) )
         return;
     act( "$n wears $p about $s waist.",   ch, obj, NULL, TO_ROOM );
@@ -1806,11 +1719,6 @@ void wear_obj( CHAR_DATA *ch, OBJ_DATA *obj, bool fReplace )
 
     if ( CAN_WEAR( obj, ITEM_WEAR_WRIST ) )
     {
-    /*if(is_affected(ch,gsn_vicissitude_horrid))
-    {
-        send_to_char("You cannot wear that in this form.\n\r",ch);
-        return;
-    }*/
 
     if ( get_eq_char( ch, WEAR_WRIST_L ) != NULL
     &&   get_eq_char( ch, WEAR_WRIST_R ) != NULL
@@ -1847,20 +1755,6 @@ void wear_obj( CHAR_DATA *ch, OBJ_DATA *obj, bool fReplace )
     {
     OBJ_DATA *weapon;
 
-    /*if(is_affected(ch,gsn_vicissitude_horrid))
-    {
-        send_to_char("You cannot wear that in this form.\n\r",ch);
-        return;
-    }*/
-
-
-/*  if ( ch->changed == CHANGED_CRINOS)
-    {
-        send_to_char("You cannot wear that item in this form!\n\r",ch);
-        return;
-    }
-*/
-
     if ( !remove_obj( ch, WEAR_SHIELD, fReplace ) )
         return;
 
@@ -1887,14 +1781,6 @@ void wear_obj( CHAR_DATA *ch, OBJ_DATA *obj, bool fReplace )
 
     if ( !remove_obj( ch, WEAR_WIELD, fReplace ) )
         return;
-
-    /*if ( !IS_NPC(ch)
-    && get_obj_weight(obj) > (str_app[get_curr_stat(ch,STAT_STR)].wield
-        * 10))
-    {
-        send_to_char( "It is too heavy for you to wield.\n\r", ch );
-        return;
-    }*/
 
     if (!IS_NPC(ch) && ch->size < SIZE_LARGE
     &&  IS_WEAPON_STAT(obj,WEAPON_TWO_HANDS)

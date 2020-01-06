@@ -1127,7 +1127,9 @@ void do_stake(CHAR_DATA *ch, char *argument)
 
     if (IS_NPC(ch)) return;
 
-    argument = one_argument( argument, arg );
+    do_huh(ch, argument);
+    return;
+/*    argument = one_argument( argument, arg );
     chance = number_range(1, 100);
     awake = number_range(1, 100);
     breaking = number_range(1, 100);
@@ -1186,14 +1188,6 @@ void do_stake(CHAR_DATA *ch, char *argument)
         return;
     }
 
-/*This is where cindi changed the staking code*/
-
-/*  if ( !IS_NPC(victim) && (!IS_SET(ch->act,PLR_IC) || !IS_SET(victim->act,PLR_IC)))
-    {
-        send_to_char( "You and your victim must both be in IC mode to fight.\n\r",ch);
-        return;
-    }
-*/
     if(get_curr_stat(victim,STAT_STR) > get_curr_stat(ch,STAT_DEX))
     chance -= 10;
     if(victim->level > ch->level)
@@ -1324,6 +1318,7 @@ void do_stake(CHAR_DATA *ch, char *argument)
         save_char_obj(victim);
     }
     return;
+    */
 }
 
 /*Sengir wrote brand new staking code
@@ -1760,4 +1755,3 @@ bool make_vamp(CHAR_DATA *ch, char *argument)
     }
     return TRUE;
 }
-

@@ -440,7 +440,6 @@ DECLARE_DO_FUN( do_weakness );
 DECLARE_DO_FUN( do_blight   );
 DECLARE_DO_FUN( do_blackdeath   );
 DECLARE_DO_FUN( do_acidblood    );
-DECLARE_DO_FUN( do_clotblood    );
 DECLARE_DO_FUN( do_bloodcurse   );
 DECLARE_DO_FUN( do_assassinate  );
 DECLARE_DO_FUN( do_divine_strength  );

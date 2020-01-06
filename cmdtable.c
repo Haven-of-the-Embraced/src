@@ -168,7 +168,6 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "blight",     do_blight},
     { "blackdeath",     do_blackdeath},
     { "spitblood",      do_acidblood },//dnm
-/*    { "clotblood",        do_clotblood }, */
     { "bloodcurse",     do_bloodcurse },
     { "lore",       do_lore},
     { "dip",        do_dip },

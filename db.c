@@ -107,371 +107,6 @@ bool            stay2;
 bool            show1;
 bool            show2;
 
-
-sh_int          gsn_backstab;
-sh_int          gsn_dodge;
-sh_int          gsn_envenom;
-sh_int          gsn_hide;
-sh_int          gsn_peek;
-sh_int          gsn_pick_lock;
-sh_int          gsn_sneak;
-sh_int          gsn_steal;
-sh_int          gsn_block;
-
-sh_int          gsn_disarm;
-sh_int          gsn_enhanced_damage;
-sh_int          gsn_critical_strike;
-sh_int          gsn_kick;
-sh_int          gsn_parry;
-sh_int          gsn_rescue;
-sh_int          gsn_second_attack;
-sh_int          gsn_third_attack;
-sh_int          gsn_fourth_attack;
-sh_int          gsn_fifth_attack;
-sh_int          gsn_knight_training;
-
-
-sh_int          gsn_blindness;
-sh_int          gsn_charm_person;
-sh_int          gsn_curse;
-sh_int          gsn_invis;
-sh_int          gsn_mass_invis;
-sh_int          gsn_poison;
-sh_int          gsn_agg_damage;
-sh_int          gsn_detect_hidden;
-sh_int          gsn_detect_invis;
-/* sh_int           gsn_plague; */
-sh_int          gsn_sleep;
-sh_int          gsn_sanctuary;
-sh_int          gsn_fly;
-sh_int          gsn_teleport;
-sh_int          gsn_retreat;
-sh_int          gsn_call_lightning;
-sh_int          gsn_cause_light;
-sh_int          gsn_create_food;
-sh_int          gsn_create_water;
-sh_int          gsn_create_spring;
-sh_int          gsn_cure_blindness;
-sh_int          gsn_cure_poison;
-sh_int          gsn_dispel;
-sh_int          gsn_earthquake;
-sh_int          gsn_lightning_bolt;
-sh_int          gsn_ray_of_truth;
-sh_int          gsn_remove_curse;
-sh_int          gsn_zeal;
-sh_int          gsn_gouge;
-/* new gsns */
-
-sh_int          gsn_axe;
-sh_int          gsn_dagger;
-sh_int          gsn_flail;
-sh_int          gsn_mace;
-sh_int          gsn_polearm;
-sh_int          gsn_lance;
-sh_int          gsn_shield_block;
-sh_int          gsn_spear;
-sh_int          gsn_sword;
-sh_int          gsn_whip;
-
-sh_int          gsn_bash;
-sh_int          gsn_berserk;
-sh_int          gsn_dirt;
-sh_int          gsn_hand_to_hand;
-sh_int          gsn_trip;
-
-sh_int          gsn_fast_healing;
-sh_int          gsn_haggle;
-sh_int          gsn_lore;
-sh_int          gsn_study;
-sh_int          gsn_meditation;
-
-sh_int          gsn_scrolls;
-sh_int          gsn_staves;
-sh_int          gsn_wands;
-sh_int          gsn_recall;
-sh_int          gsn_riding;
-sh_int      gsn_shift;
-sh_int      gsn_change;
-sh_int      gsn_touch;
-sh_int      gsn_elemental;
-sh_int      gsn_fireshield;
-sh_int      gsn_holyshield;
-sh_int      gsn_darkshield;
-sh_int      gsn_shockshield;
-
-sh_int      gsn_chant;
-
-sh_int          gsn_vamp_frenzy;
-sh_int          gsn_garou_frenzy;
-sh_int          gsn_thaumaturgy_frenzy;
-sh_int          gsn_bloodofpotency;
-sh_int          gsn_theft;
-sh_int          gsn_cauldron;
-sh_int          gsn_armsoftheabyss;
-sh_int          gsn_awe;
-sh_int          gsn_claws;
-sh_int          gsn_celbuff;
-sh_int          gsn_gleam;
-/*Botched Presence Affect*/
-sh_int          gsn_botched_presence;
-sh_int          gsn_track;
-sh_int      gsn_cloakshadow;
-sh_int          gsn_majesty;
-sh_int          gsn_quietus_weakness;
-sh_int          gsn_acidblood;
-sh_int          gsn_quietus_bloodcurse;
-sh_int      gsn_reveal;
-sh_int      gsn_sanctus;
-sh_int      gsn_bandage;
-sh_int          gsn_mass_healing;
-sh_int      gsn_ground;
-sh_int      gsn_warcry;
-sh_int      gsn_headbutt;
-sh_int      gsn_blast;
-sh_int      gsn_slip;
-sh_int      gsn_enhanced_speed;
-sh_int      gsn_renown;
-sh_int      gsn_second_kick;
-sh_int      gsn_slow;
-sh_int      gsn_vigor;
-sh_int      gsn_waylay;
-sh_int      gsn_fortress;
-sh_int      gsn_arena;
-sh_int          gsn_scry;
-sh_int          gsn_brew;
-sh_int          gsn_skin;
-sh_int      gsn_behead;
-
-/* New disc gsns */
-sh_int          gsn_regen;
-sh_int          gsn_blood_buff;
-sh_int          gsn_torpor;
-sh_int          gsn_arise;
-sh_int          gsn_unseen;
-sh_int          gsn_veil;
-
-/*Sengir Thaum Rituals*/
-sh_int          gsn_incorporeal_passage;
-
-/* ritual stuff */
-sh_int          gsn_store_inferno;
-sh_int          gsn_store_assamiteacid;
-sh_int          gsn_blood_magic;
-sh_int          gsn_fetish;
-sh_int          gsn_forget;
-sh_int          gsn_mask;
-sh_int          gsn_cloak_the_gathering;
-sh_int          gsn_earthmeld;
-sh_int          gsn_shadowform;
-sh_int          gsn_vicissitude_horrid;
-sh_int          gsn_vicissitude_bonecraft;
-
-/* trap crap */
-sh_int          gsn_bash_trap;
-sh_int          gsn_pierce_trap;
-sh_int          gsn_slash_trap;
-sh_int          gsn_fire_trap;
-sh_int          gsn_cold_trap;
-sh_int          gsn_acid_trap;
-sh_int          gsn_energy_trap;
-
-
-/* specials for professions */
-sh_int          gsn_assassinate;
-sh_int          gsn_divine_strength;
-
-/* mage stuff */
-sh_int          gsn_controlrandomness;
-sh_int          gsn_magick;
-sh_int          gsn_kineticshield;
-sh_int          gsn_empower;
-sh_int          gsn_precognition;
-sh_int          gsn_timealteration;
-sh_int          gsn_sidesteptime;
-sh_int          gsn_negationfield;
-sh_int          gsn_quintessence;
-/*sh_int            gsn_quintessentialbond;*/
-sh_int          gsn_botched_allies;
-sh_int          gsn_allies;
-sh_int          gsn_summoned_illusion;
-
-sh_int          gsn_weaken;
-sh_int          gsn_shadowplay;
-/* new garou stuff */
-sh_int          gsn_rage;
-sh_int          gsn_spirit_totem;
-/* Immortal bonus stuff */
-sh_int		gsn_xp_boost;
-/* New regen stuff */
-sh_int		gsn_vampire_regen;
-/* Ravnos Discs */
-sh_int		gsn_ignis_fatuus;
-
-/* garou gifts */
-sh_int          gsn_gift_porcupine;
-sh_int          gsn_gift_blissfulignorance;
-sh_int          gsn_gift_pulseoftheinvisible;
-sh_int          gsn_gift_catfeet;
-sh_int          gsn_gift_resistpain;
-sh_int          gsn_gift_callofthewyld;
-sh_int          gsn_gift_razorclaws;
-sh_int          gsn_gift_silverclaws;
-sh_int          gsn_gift_sensewyrm;
-sh_int          gsn_gift_innerstrength;
-sh_int          gsn_gift_bloodyfeast;
-sh_int          gsn_gift_masteroffire;
-sh_int  gsn_gift_persuasion;
-sh_int  gsn_gift_speechoftheworld;
-sh_int  gsn_gift_calmthesavagebeast;
-sh_int  gsn_gift_reshapeobject;
-sh_int  gsn_gift_burythewolf;
-sh_int  gsn_gift_spiritward;
-sh_int  gsn_gift_assimilation;
-sh_int  gsn_gift_falsecomfort;
-sh_int  gsn_gift_createelement;
-sh_int  gsn_gift_shed;
-sh_int  gsn_gift_curseofhatred;
-sh_int  gsn_gift_sensesilver;
-sh_int  gsn_gift_eyesofthecat;
-sh_int  gsn_gift_mentalspeech;
-sh_int  gsn_gift_witherlimb;
-sh_int  gsn_gift_madness;
-sh_int  gsn_gift_totemgift;
-sh_int  gsn_gift_haresleap;
-sh_int  gsn_gift_heightenedsenses;
-sh_int  gsn_gift_leylines;
-sh_int  gsn_gift_scentofsight;
-sh_int  gsn_gift_sensetheunnatural;
-sh_int  gsn_gift_devilschild;
-sh_int  gsn_gift_namethespirit;
-sh_int  gsn_gift_beastlife;
-sh_int  gsn_gift_gnaw;
-sh_int  gsn_gift_elementalgift;
-sh_int  gsn_gift_songofthegreatbeast;
-sh_int  gsn_gift_blurofthemilkyeye;
-sh_int  gsn_gift_scentofrunningwater;
-sh_int  gsn_gift_snowrunning;
-sh_int  gsn_gift_senseofprey;
-sh_int  gsn_gift_openmoonbridge;
-sh_int  gsn_gift_reynardslie;
-sh_int  gsn_gift_leperscurse;
-sh_int  gsn_gift_lunasblessing;
-sh_int  gsn_gift_thievingtalonsofthemagpie;
-sh_int  gsn_gift_chimericalform;
-sh_int  gsn_gift_motherstouch;
-sh_int  gsn_gift_spiritspeech;
-sh_int  gsn_gift_commandspirit;
-sh_int  gsn_gift_sightfrombeyond;
-sh_int  gsn_gift_expelspirit;
-sh_int  gsn_gift_graspthebeyond;
-sh_int  gsn_gift_spiritwassail;
-sh_int  gsn_gift_nightmarepossession;
-sh_int  gsn_gift_malleablespirit;
-sh_int  gsn_gift_scentofthetrueform;
-sh_int  gsn_gift_truthofgaia;
-sh_int  gsn_gift_callofduty;
-sh_int  gsn_gift_strengthofpurpose;
-sh_int  gsn_gift_spiritwitness;
-sh_int  gsn_gift_warriorseye;
-sh_int  gsn_gift_rollover;
-sh_int  gsn_gift_scentofbeyond;
-sh_int  gsn_gift_earthfriendspact;
-sh_int  gsn_gift_geas;
-sh_int  gsn_gift_beastspirit;
-sh_int  gsn_gift_wakingdream;
-sh_int  gsn_gift_callofthewyrm;
-sh_int  gsn_gift_distractions;
-sh_int  gsn_gift_eyeoftheasp;
-sh_int  gsn_gift_songofrage;
-sh_int  gsn_gift_shadowsbythefirelight;
-sh_int  gsn_gift_songofmockery;
-sh_int  gsn_gift_dreamgolems;
-sh_int  gsn_gift_callforvengeance;
-sh_int  gsn_gift_fallingtouch;
-sh_int  gsn_gift_inspiration;
-sh_int  gsn_gift_spiritofthefray;
-sh_int  gsn_gift_truefear;
-sh_int  gsn_gift_heartoffury;
-sh_int  gsn_gift_fullmoonslight;
-sh_int  gsn_gift_stokingfurysfurnace;
-sh_int  gsn_gift_kissofhelios;
-sh_int  gsn_gift_strengthofwill;
-sh_int  gsn_gift_breathofthewyld;
-sh_int  gsn_gift_mansskin;
-sh_int  gsn_gift_curseoftheaeolus;
-sh_int  gsn_gift_coupdegrace;
-sh_int  gsn_gift_flamesofhestia;
-sh_int  gsn_gift_bodywrack;
-sh_int  gsn_gift_bowofpegasus;
-sh_int  gsn_gift_gazeofthegorgon;
-sh_int  gsn_gift_wyldwarp;
-sh_int  gsn_gift_cookery;
-sh_int  gsn_gift_resisttoxin;
-sh_int  gsn_gift_scentofthehoneycomb;
-sh_int  gsn_gift_corneredrat;
-sh_int  gsn_gift_plaguevisage;
-sh_int  gsn_gift_calltherust;
-sh_int  gsn_gift_friendinneed;
-sh_int  gsn_gift_blink;
-sh_int  gsn_gift_clawsoftheglassblower;
-sh_int  gsn_gift_mawofthewhale;
-sh_int  gsn_gift_survivor;
-sh_int  gsn_gift_evesblessing;
-sh_int  gsn_gift_grandmotherstouch;
-sh_int  gsn_gift_lunasarmor;
-sh_int  gsn_gift_dazzle;
-sh_int  gsn_gift_spiritfriend;
-sh_int  gsn_gift_angelssemblance;
-sh_int  gsn_gift_haloofthesun;
-sh_int  gsn_gift_thelivingwood;
-sh_int  gsn_gift_huntersharmony;
-sh_int  gsn_gift_visageoffenris;
-sh_int  gsn_gift_haltthecowardsflight;
-sh_int  gsn_gift_senseguilt;
-sh_int  gsn_gift_mightofthor;
-sh_int  gsn_gift_berserkerssong;
-sh_int  gsn_gift_ironcannotpierce;
-sh_int  gsn_gift_blazeofglory;
-sh_int  gsn_gift_hordeofvalhalla;
-sh_int  gsn_gift_distractthefool;
-sh_int  gsn_gift_faerielight;
-sh_int  gsn_gift_howlofthebanshee;
-sh_int  gsn_gift_warriorsdraught;
-sh_int  gsn_gift_faerieaid;
-sh_int  gsn_gift_woadling;
-sh_int  gsn_gift_balorsgaze;
-sh_int  gsn_gift_semblance;
-sh_int  gsn_gift_fogonthemoor;
-sh_int  gsn_gift_giftofthespriggan;
-sh_int  gsn_gift_auraofconfidence;
-sh_int  gsn_gift_fatalflaw;
-sh_int  gsn_gift_seizingtheedge;
-sh_int  gsn_gift_clapofthunder;
-sh_int  gsn_gift_ravenscurse;
-sh_int  gsn_gift_shadowcutting;
-sh_int  gsn_gift_dolorousstroke;
-sh_int  gsn_gift_strengthofthedominator;
-sh_int  gsn_gift_shadowpack;
-sh_int  gsn_gift_obedience;
-sh_int  gsn_gift_eyeofthefalcon;
-sh_int  gsn_gift_lambentfire;
-sh_int  gsn_gift_empathy;
-sh_int  gsn_gift_exceptionalswordplay;
-sh_int  gsn_gift_wrathofgaia;
-sh_int  gsn_gift_lordlywill;
-sh_int  gsn_gift_sidestepdeath;
-sh_int  gsn_gift_lunasavenger;
-sh_int  gsn_gift_pawsofthenewborncub;
-sh_int  gsn_gift_artisanscommand;
-sh_int  gsn_gift_giftofsalt;
-sh_int  gsn_gift_maskthepredator;
-sh_int  gsn_gift_tongues;
-sh_int  gsn_gift_attunement;
-sh_int  gsn_gift_doppelganger;
-sh_int  gsn_gift_commandtheblaze;
-sh_int  gsn_gift_redirectpain;
-
-
 /*
  * Locals.
  */
@@ -4723,3 +4358,366 @@ void tail_chain( void )
 {
     return;
 }
+
+sh_int          gsn_backstab;
+sh_int          gsn_dodge;
+sh_int          gsn_envenom;
+sh_int          gsn_hide;
+sh_int          gsn_peek;
+sh_int          gsn_pick_lock;
+sh_int          gsn_sneak;
+sh_int          gsn_steal;
+sh_int          gsn_block;
+
+sh_int          gsn_disarm;
+sh_int          gsn_enhanced_damage;
+sh_int          gsn_critical_strike;
+sh_int          gsn_kick;
+sh_int          gsn_parry;
+sh_int          gsn_rescue;
+sh_int          gsn_second_attack;
+sh_int          gsn_third_attack;
+sh_int          gsn_fourth_attack;
+sh_int          gsn_fifth_attack;
+sh_int          gsn_knight_training;
+
+
+sh_int          gsn_blindness;
+sh_int          gsn_charm_person;
+sh_int          gsn_curse;
+sh_int          gsn_invis;
+sh_int          gsn_mass_invis;
+sh_int          gsn_poison;
+sh_int          gsn_agg_damage;
+sh_int          gsn_detect_hidden;
+sh_int          gsn_detect_invis;
+/* sh_int           gsn_plague; */
+sh_int          gsn_sleep;
+sh_int          gsn_sanctuary;
+sh_int          gsn_fly;
+sh_int          gsn_teleport;
+sh_int          gsn_retreat;
+sh_int          gsn_call_lightning;
+sh_int          gsn_cause_light;
+sh_int          gsn_create_food;
+sh_int          gsn_create_water;
+sh_int          gsn_create_spring;
+sh_int          gsn_cure_blindness;
+sh_int          gsn_cure_poison;
+sh_int          gsn_dispel;
+sh_int          gsn_earthquake;
+sh_int          gsn_lightning_bolt;
+sh_int          gsn_ray_of_truth;
+sh_int          gsn_remove_curse;
+sh_int          gsn_zeal;
+sh_int          gsn_gouge;
+/* new gsns */
+
+sh_int          gsn_axe;
+sh_int          gsn_dagger;
+sh_int          gsn_flail;
+sh_int          gsn_mace;
+sh_int          gsn_polearm;
+sh_int          gsn_lance;
+sh_int          gsn_shield_block;
+sh_int          gsn_spear;
+sh_int          gsn_sword;
+sh_int          gsn_whip;
+
+sh_int          gsn_bash;
+sh_int          gsn_berserk;
+sh_int          gsn_dirt;
+sh_int          gsn_hand_to_hand;
+sh_int          gsn_trip;
+
+sh_int          gsn_fast_healing;
+sh_int          gsn_haggle;
+sh_int          gsn_lore;
+sh_int          gsn_study;
+sh_int          gsn_meditation;
+
+sh_int          gsn_scrolls;
+sh_int          gsn_staves;
+sh_int          gsn_wands;
+sh_int          gsn_recall;
+sh_int          gsn_riding;
+sh_int      gsn_shift;
+sh_int      gsn_change;
+sh_int      gsn_touch;
+sh_int      gsn_elemental;
+sh_int      gsn_fireshield;
+sh_int      gsn_holyshield;
+sh_int      gsn_darkshield;
+sh_int      gsn_shockshield;
+
+sh_int      gsn_chant;
+
+sh_int          gsn_vamp_frenzy;
+sh_int          gsn_garou_frenzy;
+sh_int          gsn_thaumaturgy_frenzy;
+sh_int          gsn_bloodofpotency;
+sh_int          gsn_theft;
+sh_int          gsn_cauldron;
+sh_int          gsn_armsoftheabyss;
+sh_int          gsn_awe;
+sh_int          gsn_claws;
+sh_int          gsn_celbuff;
+sh_int          gsn_gleam;
+/*Botched Presence Affect*/
+sh_int          gsn_botched_presence;
+sh_int          gsn_track;
+sh_int      gsn_cloakshadow;
+sh_int          gsn_majesty;
+sh_int          gsn_quietus_weakness;
+sh_int          gsn_acidblood;
+sh_int          gsn_quietus_bloodcurse;
+sh_int      gsn_reveal;
+sh_int      gsn_sanctus;
+sh_int      gsn_bandage;
+sh_int          gsn_mass_healing;
+sh_int      gsn_ground;
+sh_int      gsn_warcry;
+sh_int      gsn_headbutt;
+sh_int      gsn_blast;
+sh_int      gsn_slip;
+sh_int      gsn_enhanced_speed;
+sh_int      gsn_renown;
+sh_int      gsn_second_kick;
+sh_int      gsn_slow;
+sh_int      gsn_vigor;
+sh_int      gsn_waylay;
+sh_int      gsn_fortress;
+sh_int      gsn_arena;
+sh_int          gsn_scry;
+sh_int          gsn_brew;
+sh_int          gsn_skin;
+sh_int      gsn_behead;
+
+/* New disc gsns */
+sh_int          gsn_regen;
+sh_int          gsn_blood_buff;
+sh_int          gsn_torpor;
+sh_int          gsn_arise;
+sh_int          gsn_unseen;
+sh_int          gsn_veil;
+
+/*Sengir Thaum Rituals*/
+sh_int          gsn_incorporeal_passage;
+
+/* ritual stuff */
+sh_int          gsn_store_inferno;
+sh_int          gsn_store_assamiteacid;
+sh_int          gsn_blood_magic;
+sh_int          gsn_fetish;
+sh_int          gsn_forget;
+sh_int          gsn_mask;
+sh_int          gsn_cloak_the_gathering;
+sh_int          gsn_earthmeld;
+sh_int          gsn_shadowform;
+sh_int          gsn_vicissitude_horrid;
+sh_int          gsn_vicissitude_bonecraft;
+
+/* trap crap */
+sh_int          gsn_bash_trap;
+sh_int          gsn_pierce_trap;
+sh_int          gsn_slash_trap;
+sh_int          gsn_fire_trap;
+sh_int          gsn_cold_trap;
+sh_int          gsn_acid_trap;
+sh_int          gsn_energy_trap;
+
+
+/* specials for professions */
+sh_int          gsn_assassinate;
+sh_int          gsn_divine_strength;
+
+/* mage stuff */
+sh_int          gsn_controlrandomness;
+sh_int          gsn_magick;
+sh_int          gsn_kineticshield;
+sh_int          gsn_empower;
+sh_int          gsn_precognition;
+sh_int          gsn_timealteration;
+sh_int          gsn_sidesteptime;
+sh_int          gsn_negationfield;
+sh_int          gsn_quintessence;
+/*sh_int            gsn_quintessentialbond;*/
+sh_int          gsn_botched_allies;
+sh_int          gsn_allies;
+sh_int          gsn_summoned_illusion;
+
+sh_int          gsn_weaken;
+sh_int          gsn_shadowplay;
+/* new garou stuff */
+sh_int          gsn_rage;
+sh_int          gsn_spirit_totem;
+/* Immortal bonus stuff */
+sh_int		gsn_xp_boost;
+/* New regen stuff */
+sh_int		gsn_vampire_regen;
+/* Ravnos Discs */
+sh_int		gsn_ignis_fatuus;
+
+/* garou gifts */
+sh_int          gsn_gift_porcupine;
+sh_int          gsn_gift_blissfulignorance;
+sh_int          gsn_gift_pulseoftheinvisible;
+sh_int          gsn_gift_catfeet;
+sh_int          gsn_gift_resistpain;
+sh_int          gsn_gift_callofthewyld;
+sh_int          gsn_gift_razorclaws;
+sh_int          gsn_gift_silverclaws;
+sh_int          gsn_gift_sensewyrm;
+sh_int          gsn_gift_innerstrength;
+sh_int          gsn_gift_bloodyfeast;
+sh_int          gsn_gift_masteroffire;
+sh_int  gsn_gift_persuasion;
+sh_int  gsn_gift_speechoftheworld;
+sh_int  gsn_gift_calmthesavagebeast;
+sh_int  gsn_gift_reshapeobject;
+sh_int  gsn_gift_burythewolf;
+sh_int  gsn_gift_spiritward;
+sh_int  gsn_gift_assimilation;
+sh_int  gsn_gift_falsecomfort;
+sh_int  gsn_gift_createelement;
+sh_int  gsn_gift_shed;
+sh_int  gsn_gift_curseofhatred;
+sh_int  gsn_gift_sensesilver;
+sh_int  gsn_gift_eyesofthecat;
+sh_int  gsn_gift_mentalspeech;
+sh_int  gsn_gift_witherlimb;
+sh_int  gsn_gift_madness;
+sh_int  gsn_gift_totemgift;
+sh_int  gsn_gift_haresleap;
+sh_int  gsn_gift_heightenedsenses;
+sh_int  gsn_gift_leylines;
+sh_int  gsn_gift_scentofsight;
+sh_int  gsn_gift_sensetheunnatural;
+sh_int  gsn_gift_devilschild;
+sh_int  gsn_gift_namethespirit;
+sh_int  gsn_gift_beastlife;
+sh_int  gsn_gift_gnaw;
+sh_int  gsn_gift_elementalgift;
+sh_int  gsn_gift_songofthegreatbeast;
+sh_int  gsn_gift_blurofthemilkyeye;
+sh_int  gsn_gift_scentofrunningwater;
+sh_int  gsn_gift_snowrunning;
+sh_int  gsn_gift_senseofprey;
+sh_int  gsn_gift_openmoonbridge;
+sh_int  gsn_gift_reynardslie;
+sh_int  gsn_gift_leperscurse;
+sh_int  gsn_gift_lunasblessing;
+sh_int  gsn_gift_thievingtalonsofthemagpie;
+sh_int  gsn_gift_chimericalform;
+sh_int  gsn_gift_motherstouch;
+sh_int  gsn_gift_spiritspeech;
+sh_int  gsn_gift_commandspirit;
+sh_int  gsn_gift_sightfrombeyond;
+sh_int  gsn_gift_expelspirit;
+sh_int  gsn_gift_graspthebeyond;
+sh_int  gsn_gift_spiritwassail;
+sh_int  gsn_gift_nightmarepossession;
+sh_int  gsn_gift_malleablespirit;
+sh_int  gsn_gift_scentofthetrueform;
+sh_int  gsn_gift_truthofgaia;
+sh_int  gsn_gift_callofduty;
+sh_int  gsn_gift_strengthofpurpose;
+sh_int  gsn_gift_spiritwitness;
+sh_int  gsn_gift_warriorseye;
+sh_int  gsn_gift_rollover;
+sh_int  gsn_gift_scentofbeyond;
+sh_int  gsn_gift_earthfriendspact;
+sh_int  gsn_gift_geas;
+sh_int  gsn_gift_beastspirit;
+sh_int  gsn_gift_wakingdream;
+sh_int  gsn_gift_callofthewyrm;
+sh_int  gsn_gift_distractions;
+sh_int  gsn_gift_eyeoftheasp;
+sh_int  gsn_gift_songofrage;
+sh_int  gsn_gift_shadowsbythefirelight;
+sh_int  gsn_gift_songofmockery;
+sh_int  gsn_gift_dreamgolems;
+sh_int  gsn_gift_callforvengeance;
+sh_int  gsn_gift_fallingtouch;
+sh_int  gsn_gift_inspiration;
+sh_int  gsn_gift_spiritofthefray;
+sh_int  gsn_gift_truefear;
+sh_int  gsn_gift_heartoffury;
+sh_int  gsn_gift_fullmoonslight;
+sh_int  gsn_gift_stokingfurysfurnace;
+sh_int  gsn_gift_kissofhelios;
+sh_int  gsn_gift_strengthofwill;
+sh_int  gsn_gift_breathofthewyld;
+sh_int  gsn_gift_mansskin;
+sh_int  gsn_gift_curseoftheaeolus;
+sh_int  gsn_gift_coupdegrace;
+sh_int  gsn_gift_flamesofhestia;
+sh_int  gsn_gift_bodywrack;
+sh_int  gsn_gift_bowofpegasus;
+sh_int  gsn_gift_gazeofthegorgon;
+sh_int  gsn_gift_wyldwarp;
+sh_int  gsn_gift_cookery;
+sh_int  gsn_gift_resisttoxin;
+sh_int  gsn_gift_scentofthehoneycomb;
+sh_int  gsn_gift_corneredrat;
+sh_int  gsn_gift_plaguevisage;
+sh_int  gsn_gift_calltherust;
+sh_int  gsn_gift_friendinneed;
+sh_int  gsn_gift_blink;
+sh_int  gsn_gift_clawsoftheglassblower;
+sh_int  gsn_gift_mawofthewhale;
+sh_int  gsn_gift_survivor;
+sh_int  gsn_gift_evesblessing;
+sh_int  gsn_gift_grandmotherstouch;
+sh_int  gsn_gift_lunasarmor;
+sh_int  gsn_gift_dazzle;
+sh_int  gsn_gift_spiritfriend;
+sh_int  gsn_gift_angelssemblance;
+sh_int  gsn_gift_haloofthesun;
+sh_int  gsn_gift_thelivingwood;
+sh_int  gsn_gift_huntersharmony;
+sh_int  gsn_gift_visageoffenris;
+sh_int  gsn_gift_haltthecowardsflight;
+sh_int  gsn_gift_senseguilt;
+sh_int  gsn_gift_mightofthor;
+sh_int  gsn_gift_berserkerssong;
+sh_int  gsn_gift_ironcannotpierce;
+sh_int  gsn_gift_blazeofglory;
+sh_int  gsn_gift_hordeofvalhalla;
+sh_int  gsn_gift_distractthefool;
+sh_int  gsn_gift_faerielight;
+sh_int  gsn_gift_howlofthebanshee;
+sh_int  gsn_gift_warriorsdraught;
+sh_int  gsn_gift_faerieaid;
+sh_int  gsn_gift_woadling;
+sh_int  gsn_gift_balorsgaze;
+sh_int  gsn_gift_semblance;
+sh_int  gsn_gift_fogonthemoor;
+sh_int  gsn_gift_giftofthespriggan;
+sh_int  gsn_gift_auraofconfidence;
+sh_int  gsn_gift_fatalflaw;
+sh_int  gsn_gift_seizingtheedge;
+sh_int  gsn_gift_clapofthunder;
+sh_int  gsn_gift_ravenscurse;
+sh_int  gsn_gift_shadowcutting;
+sh_int  gsn_gift_dolorousstroke;
+sh_int  gsn_gift_strengthofthedominator;
+sh_int  gsn_gift_shadowpack;
+sh_int  gsn_gift_obedience;
+sh_int  gsn_gift_eyeofthefalcon;
+sh_int  gsn_gift_lambentfire;
+sh_int  gsn_gift_empathy;
+sh_int  gsn_gift_exceptionalswordplay;
+sh_int  gsn_gift_wrathofgaia;
+sh_int  gsn_gift_lordlywill;
+sh_int  gsn_gift_sidestepdeath;
+sh_int  gsn_gift_lunasavenger;
+sh_int  gsn_gift_pawsofthenewborncub;
+sh_int  gsn_gift_artisanscommand;
+sh_int  gsn_gift_giftofsalt;
+sh_int  gsn_gift_maskthepredator;
+sh_int  gsn_gift_tongues;
+sh_int  gsn_gift_attunement;
+sh_int  gsn_gift_doppelganger;
+sh_int  gsn_gift_commandtheblaze;
+sh_int  gsn_gift_redirectpain;

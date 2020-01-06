@@ -5381,12 +5381,13 @@ void do_assassinate( CHAR_DATA *ch, char *argument )
     char arg[MAX_INPUT_LENGTH];
     CHAR_DATA *victim;
     OBJ_DATA *obj;
-    int chance;
-    int dam;
+    int skill, dice, diff, success;
+    int damdice, damsuccess, modifier;
+    int resistdice, resistdiff, resistsuccess;
 
     one_argument( argument, arg );
 
-    if (get_skill(ch,gsn_assassinate) == 0)
+    if ((skill = get_skill(ch,gsn_assassinate)) == 0)
     {
     send_to_char( "Huh?\n\r", ch );
     return;
@@ -5409,21 +5410,7 @@ void do_assassinate( CHAR_DATA *ch, char *argument )
     send_to_char("You're facing the wrong end.\n\r",ch);
     return;
     }
-    chance = number_range(1, 100);
 
-    if (!IS_AFFECTED(ch,AFF_SNEAK) && !IS_AFFECTED(ch, AFF_HIDE) &&
-        !IS_AFFECTED(ch, AFF_INVISIBLE) && !IS_AFFECTED2(ch, AFF2_UNSEEN) &&
-        !IS_AFFECTED2(ch, AFF2_VEIL) && !IS_AFFECTED(victim, AFF_BLIND))
-    {
-        send_to_char("They will undoubtedly see you coming. Try being less visible.\n\r",ch);
-        return;
-    }
-
-    if (victim->fighting != NULL)
-    {
-        send_to_char("They are too defensive as it is, wait til they aren't fighting!\n\r", ch);
-        return;
-    }
     if ( victim == ch )
     {
     send_to_char( "How can you sneak up on yourself?\n\r", ch );
@@ -5452,42 +5439,80 @@ void do_assassinate( CHAR_DATA *ch, char *argument )
         return;
     }
 
+    if (!IS_AFFECTED(ch,AFF_SNEAK) && !IS_AFFECTED(ch, AFF_HIDE) &&
+        !IS_AFFECTED(ch, AFF_INVISIBLE) && !IS_AFFECTED2(ch, AFF2_UNSEEN) &&
+        !IS_AFFECTED2(ch, AFF2_VEIL) && !IS_AFFECTED(victim, AFF_BLIND))
+    {
+        send_to_char("They will undoubtedly see you coming. Try being less visible.\n\r",ch);
+        return;
+    }
 
     WAIT_STATE( ch, skill_table[gsn_assassinate].beats );
-    if ( victim->hit < victim->max_hit)
+
+    if ( victim->hit < 2 * victim->max_hit / 3 && victim->position != POS_SLEEPING)
     {
     act( "$N is hurt and suspicious ... you can't sneak up.",
         ch, NULL, victim, TO_CHAR );
     return;
     }
-    dam = number_range(1, ch->level);
-    dam += get_curr_stat(ch,STAT_DEX);
-    dam += get_curr_stat(ch,STAT_STR);
+    // Roll to sneak up behind victim, resisted
+    dice = get_attribute(ch, DEXTERITY) + get_ability(ch, CSABIL_STEALTH);
+    resistdice = get_attribute(victim, PERCEPTION) + get_ability(victim, CSABIL_ALERTNESS);
+    diff = resistdiff = 6;
 
-
-    if ( number_percent( ) < get_skill(ch,gsn_assassinate)
-    || ( get_skill(ch,gsn_assassinate) >= 2 && !IS_AWAKE(victim) ) )
+    if (!can_see(victim, ch))
     {
-    if(chance <= 10+get_curr_stat(ch,STAT_DEX))
-        {
-        act( "$N screams as you place your dagger in their spine!", ch, NULL, victim, TO_CHAR );
-        act( "$n plants his dagger into your spine, your body spasms in pain.", ch, NULL, victim, TO_VICT );
-        act( "$n stabs $N in the spine!", ch, NULL, victim, TO_NOTVICT );
-        damage( ch, victim, (ch->level +dam)*100, gsn_assassinate,DAM_PIERCE,TRUE);
-        ch->move -= 50;
-        return;
+      diff -= 1;
+      resistdiff += 1;
     }
 
-    check_improve(ch,gsn_assassinate,TRUE,4);
-    do_function(ch, &do_backstab, victim->name);
-    }
-    else
+    if (!IS_AWAKE(victim))
+      resistdice = 0;
+
+    success = godice(dice, diff);
+    resistsuccess = godice(resistdice, resistdiff);
+
+    if (IS_DEBUGGING(ch))
+      cprintf(ch, "tohit:%d diff:%d resist:%d resdiff:%d succ:%d ressucc:%d\n\r", dice, diff,
+    resistdice, resistdiff, success, resistsuccess);
+
+    // Failure, or detected
+    if (success < 1 || success < resistsuccess)
     {
-    check_improve(ch,gsn_assassinate,FALSE,4);
-    damage( ch, victim, 0, gsn_assassinate,DAM_NONE,TRUE);
+      act( "You fail to sneak up on $N!", ch, NULL, victim, TO_CHAR);
+      check_improve(ch,gsn_assassinate,FALSE,4);
+      multi_hit(ch, victim, TYPE_UNDEFINED);
+      return;
     }
 
-    return;
+    // Successful sneak, Now, do we hit the spine.
+    dice = get_attribute(ch, INTELLIGENCE) + get_ability(ch, CSABIL_MEDICINE);
+    dice = dice * skill / 100;
+    diff = 12 - get_ability(ch, CSABIL_MEDICINE);
+    success = godice(dice, diff);
+
+    if (IS_DEBUGGING(ch))
+      cprintf(ch, "attdice:%d attdiff:%d succ:%d\n\r", dice, diff, success);
+    if (success > 0)
+    {
+      check_improve(ch, gsn_assassinate, TRUE, 4);
+      damdice = d10_damdice(ch, victim);
+      modifier = d10_modifier(ch) * ((skill + ch->level)/2)/10;
+      diff = 6;
+      damsuccess = godice(damdice, diff);
+
+      if (IS_DEBUGGING(ch))
+        cprintf(ch, "damdice:%d mod:%d damsucc:%d\n\r", damdice, modifier, damsuccess);
+
+      act( "$N screams as you place your dagger in their spine!", ch, NULL, victim, TO_CHAR );
+      act( "$n plants his dagger into your spine, your body spasms in pain.", ch, NULL, victim, TO_VICT );
+      act( "$n stabs $N in the spine!", ch, NULL, victim, TO_NOTVICT );
+      d10_damage(ch, victim, damsuccess, modifier, gsn_assassinate, DAM_PIERCE, DEFENSE_SOAK, TRUE);
+      return;
+    } else {
+      check_improve(ch,gsn_assassinate,FALSE,4);
+      do_function(ch, &do_backstab, victim->name);
+    }
 }
 void do_divine_strength(CHAR_DATA *ch, char *argument )
 {

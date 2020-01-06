@@ -1084,9 +1084,10 @@ void save_other_helps( CHAR_DATA *ch )
 void save_area( AREA_DATA *pArea )
 {
     FILE *fp;
-
+    char areaLoc[MIL];
     fclose( fpReserve );
-    if ( !( fp = fopen( pArea->file_name, "w" ) ) )
+    sprintf(areaLoc, "%s%s", AREA_DIR, pArea->file_name);
+    if ( !( fp = fopen( areaLoc, "w" ) ) )
     {
     bug( "Open_area: fopen", 0 );
     perror( pArea->file_name );

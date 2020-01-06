@@ -292,6 +292,7 @@ void boot_db()
         exit( 1 );
     }
 
+    char strAreaLoc[MIL];
     for ( ; ; )
     {
         strcpy( strArea, fread_word( fpList ) );
@@ -304,7 +305,8 @@ void boot_db()
         }
         else
         {
-        if ( ( fpArea = fopen( strArea, "r" ) ) == NULL )
+          sprintf(strAreaLoc, "%s%s", AREA_DIR, strArea);
+        if ( ( fpArea = fopen( strAreaLoc, "r" ) ) == NULL )
         {
             perror( strArea );
             exit( 1 );

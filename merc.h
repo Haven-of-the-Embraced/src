@@ -3267,6 +3267,7 @@ char *  crypt       args( ( const char *key, const char *salt ) );
 #endif
 
 #if defined(unix)
+#define AREA_DIR        "../area/"              /* area files */
 #define PLAYER_DIR      "../player/"            /* Player files */
 #define BK_PLAYER_DIR   "../player/bk/"         /* Backup player files */
 #define GOD_DIR         "../gods/"          /* list of gods */

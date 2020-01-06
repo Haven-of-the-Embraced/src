@@ -3218,7 +3218,7 @@ void spell_heat_metal( int sn, int level, CHAR_DATA *ch, void *vo,int target )
         {
             if (can_drop_obj(victim,obj_lose)
             &&  (obj_lose->weight / 10) <
-            number_range(1,2 * get_curr_stat(victim,STAT_DEX))
+            number_range(1,10 * get_attribute(victim, DEXTERITY))
             &&  remove_obj( victim, obj_lose->wear_loc, TRUE ))
             {
                 act("$n yelps and throws $p to the ground!",

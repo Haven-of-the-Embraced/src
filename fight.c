@@ -1805,9 +1805,10 @@ if (DEBUG_MESSAGES || IS_DEBUGGING(ch)){
 		tohit = godice(dice, diff);
 		dice = 0; // clear dice so we can use them later.
 
-	if (check_parry(ch, victim) ||
-			check_block(ch, victim) ||
-			check_shield_block(ch, victim) )
+	if (check_dodge(ch, victim) ||
+      check_parry(ch, victim) ||
+			check_shield_block(ch, victim) ||
+			check_block(ch, victim) )
 		tohit = 0;
 
 	if (DEBUG_MESSAGES || IS_DEBUGGING(ch)){
@@ -2098,12 +2099,6 @@ bool d10_damage(CHAR_DATA *ch, CHAR_DATA *victim, int damsuccess, int modifier, 
     act( "$n fades into existence.", ch, NULL, NULL, TO_ROOM );
     }
 
-
-    if (ch != victim)
-    {
-        if (dt != gsn_backstab && dt != gsn_gouge && check_dodge( ch, victim ))
-            return FALSE;
-    }
     if (DEBUG_MESSAGES || IS_DEBUGGING(ch))	{
         cprintf(ch, "d{W%d{x ", damsuccess);
     if (IS_NPC(ch))

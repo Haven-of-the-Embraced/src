@@ -46,6 +46,14 @@ struct cr_attribute_type
     int attribute[9];
 };
 
+struct template_type
+{
+    char *name;
+    sh_int attribute[9];
+    sh_int ability[30];
+    sh_int willpower;
+};
+
 struct flag_type
 {
     char *name;

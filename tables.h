@@ -230,6 +230,7 @@ extern  const   struct  disc_type   sphere_table [MAX_SPHERE+1];
 extern  const   struct  csback_type csback_table    [MAX_CSBACK];
 extern  const   struct  cr_abil_type    cr_abil_table   [3];
 extern  const   struct  cr_attribute_type   cr_attribute_table  [3];
+extern  const   struct  template_type   template_table[];
 extern 	const 	struct 	hometown_type 		hometown_table  [MAX_HOMETOWN];
 /* flag tables */
 extern  const   struct  flag_type   act_flags[];

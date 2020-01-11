@@ -2175,6 +2175,7 @@ CHAR_DATA *create_mobile( MOB_INDEX_DATA *pMobIndex )
     CHAR_DATA *mob;
     int i;
     AFFECT_DATA af;
+    int template;
 
     mobile_count++;
 
@@ -2262,7 +2263,44 @@ CHAR_DATA *create_mobile( MOB_INDEX_DATA *pMobIndex )
     mob->material       = str_dup(pMobIndex->material);
 
     /* computed on the spot */
+    if (mob->race == race_lookup("vampire") ||
+        mob->race == race_lookup("methuselah") ||
+        mob->race == race_lookup("dhampire") ||
+        mob->race == race_lookup("undead"))
+        template = TEMPLATE_NEONATE;
+    else if (mob->race == race_lookup("garou"))
+        template = TEMPLATE_CUB;
+    else if (mob->race == race_lookup("bat") ||
+        mob->race == race_lookup("bear") ||
+        mob->race == race_lookup("cat") ||
+        mob->race == race_lookup("centipede") ||
+        mob->race == race_lookup("dog") ||
+        mob->race == race_lookup("fido") ||
+        mob->race == race_lookup("fox") ||
+        mob->race == race_lookup("lizard") ||
+        mob->race == race_lookup("pig") ||
+        mob->race == race_lookup("rabbit") ||
+        mob->race == race_lookup("snake") ||
+        mob->race == race_lookup("song bird") ||
+        mob->race == race_lookup("water fowl") ||
+        mob->race == race_lookup("wolf") ||
+        mob->race == race_lookup("bat") ||
+        mob->race == race_lookup("horse") ||
+        mob->race == race_lookup("spider") ||
+        mob->race == race_lookup("fish") ||
+        mob->race == race_lookup("rodent"))
+        template = TEMPLATE_RODENT;
+    else
+        template = TEMPLATE_DEFAULT;
 
+    if (mob->level > 60)
+        template++;
+
+    for (i = 0; i < 9; i++)
+        mob->csattributes[i] = template_table[template].attribute[i];
+    for (i = 0; i < 30; i++)
+        mob->csabilities[i] = template_table[template].ability[i];
+    mob->csmax_willpower = mob->cswillpower = template_table[template].willpower;
 
     /* let's get some spell action */
     if (IS_AFFECTED(mob,AFF_SANCTUARY))

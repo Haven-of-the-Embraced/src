@@ -926,6 +926,16 @@ struct  kill_data
 #define ACT2_INFLUENCE         (A)
 #define ACT2_IS_NPC            (E)
 
+/*Mobile Templates*/
+#define TEMPLATE_DEFAULT    0
+#define TEMPLATE_HUNTER     1
+#define TEMPLATE_NEONATE    2
+#define TEMPLATE_ANCIENT    3
+#define TEMPLATE_CUB        4
+#define TEMPLATE_ELDER      5
+#define TEMPLATE_RODENT     6
+#define TEMPLATE_WOLF       7
+
 /* damage classes */
 #define DAM_NONE                0
 #define DAM_BASH                1

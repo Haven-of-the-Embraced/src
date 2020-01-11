@@ -2263,42 +2263,6 @@ CHAR_DATA *create_mobile( MOB_INDEX_DATA *pMobIndex )
 
     /* computed on the spot */
 
-        for (i = 0; i < MAX_STATS; i ++)
-            mob->perm_stat[i] = UMIN(25,11 + mob->level/4);
-
-        if (IS_SET(mob->act,ACT_WARRIOR))
-        {
-            mob->perm_stat[STAT_STR] += 3;
-            mob->perm_stat[STAT_INT] -= 1;
-            mob->perm_stat[STAT_CON] += 2;
-        }
-
-        if (IS_SET(mob->act,ACT_THIEF))
-        {
-            mob->perm_stat[STAT_DEX] += 3;
-            mob->perm_stat[STAT_INT] += 1;
-            mob->perm_stat[STAT_WIS] -= 1;
-        }
-
-        if (IS_SET(mob->act,ACT_CLERIC))
-        {
-            mob->perm_stat[STAT_WIS] += 3;
-            mob->perm_stat[STAT_DEX] -= 1;
-            mob->perm_stat[STAT_STR] += 1;
-        }
-
-        if (IS_SET(mob->act,ACT_MAGE))
-        {
-            mob->perm_stat[STAT_INT] += 3;
-            mob->perm_stat[STAT_STR] -= 1;
-            mob->perm_stat[STAT_DEX] += 1;
-        }
-
-        if (IS_SET(mob->off_flags,OFF_FAST))
-            mob->perm_stat[STAT_DEX] += 2;
-
-        mob->perm_stat[STAT_STR] += mob->size - SIZE_MEDIUM;
-        mob->perm_stat[STAT_CON] += (mob->size - SIZE_MEDIUM) / 2;
 
     /* let's get some spell action */
     if (IS_AFFECTED(mob,AFF_SANCTUARY))

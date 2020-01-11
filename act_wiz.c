@@ -3778,7 +3778,7 @@ void restore_one(CHAR_DATA *ch, CHAR_DATA *victim, bool show) {
                     victim->pcdata->rage[TEMP] = victim->pcdata->rage[PERM];
                     victim->pcdata->gnosis[TEMP] = victim->pcdata->gnosis[PERM];
             }
-            victim->pcdata->cswillpower = victim->pcdata->csmax_willpower;
+            victim->cswillpower = victim->csmax_willpower;
         }
 
         update_pos( victim);
@@ -4866,7 +4866,7 @@ void do_mset( CHAR_DATA *ch, char *argument )
             send_to_char("Invalid Willpower range.\n\r",ch);
             return;
         }
-        victim->pcdata->csmax_willpower = value;
+        victim->csmax_willpower = value;
         return;
     }
         if ( !str_prefix ( arg2, "sphere" ) )

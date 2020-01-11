@@ -305,13 +305,13 @@ void do_feed(CHAR_DATA *ch, char *argument)
 
     if(ch->race == race_lookup("dhampire") && !IS_NPC(ch))
     {
-        if (ch->pcdata->cswillpower <= 0)
+        if (ch->cswillpower <= 0)
         {
             send_to_char("You do not have enough strength of will to bring yourself to overcome your base human nature.\n\r", ch);
             return;
         }
 
-        ch->pcdata->cswillpower--;
+        ch->cswillpower--;
 
         send_to_char("Overcoming your mortal aversion, you give in to your vampiric side, if only for a moment.\n\r", ch);
 
@@ -1303,8 +1303,8 @@ void do_stake(CHAR_DATA *ch, char *argument)
         victim->pcdata->csvirtues[CSVIRT_CONSCIENCE] = 0;
         victim->pcdata->csvirtues[CSVIRT_SELF_CONTROL] = 0;
         victim->pcdata->csvirtues[CSVIRT_COURAGE] = 0;
-        victim->pcdata->csmax_willpower = 0;
-        victim->pcdata->cswillpower = 0;
+        victim->csmax_willpower = 0;
+        victim->cswillpower = 0;
         victim->pcdata->cshumanity = 0;
         victim->pcdata->progress = 0;
 

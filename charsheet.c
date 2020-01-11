@@ -1039,12 +1039,12 @@ void do_freebie(CHAR_DATA *ch, char *argument)
     }
     if(!str_prefix( arg, "willpower"))
     {
-        if(ch->pcdata->csmax_willpower == 10)
+        if(ch->csmax_willpower == 10)
         {
             send_to_char("Your Willpower is already at max.\n\r",ch);
             return;
         }
-        cost = ch->pcdata->csmax_willpower;
+        cost = ch->csmax_willpower;
         step = 6;
     }
     if(!str_prefix( arg, "humanity"))
@@ -1205,7 +1205,7 @@ void do_freebie(CHAR_DATA *ch, char *argument)
     {
         if(!str_prefix( arg, "arete"))
         {
-            if (ch->pcdata->csmax_willpower <= ch->arete)
+            if (ch->csmax_willpower <= ch->arete)
             {
                 sendch("Your magickal potential cannot rise above your willpower.\n\r", ch);
                 return;
@@ -1529,8 +1529,8 @@ void do_freebie(CHAR_DATA *ch, char *argument)
                     send_to_char("You increase your Courage.\n\r",ch);
                     break;
             case 6:
-                    ch->pcdata->csmax_willpower++;
-                    ch->pcdata->cswillpower++;
+                    ch->csmax_willpower++;
+                    ch->cswillpower++;
                     send_to_char("You increase your Willpower.\n\r",ch);
                     break;
             case 7:
@@ -2863,11 +2863,11 @@ void do_create( CHAR_DATA *ch, char *argument )
             if(ch->pcdata->progress == 7)
             {
                 ch->pcdata->cshumanity = ch->pcdata->csvirtues[CSVIRT_CONSCIENCE]+ch->pcdata->csvirtues[CSVIRT_SELF_CONTROL];
-                ch->pcdata->cswillpower = ch->pcdata->csvirtues[CSVIRT_COURAGE];
-                ch->pcdata->csmax_willpower = ch->pcdata->cswillpower;
+                ch->cswillpower = ch->pcdata->csvirtues[CSVIRT_COURAGE];
+                ch->csmax_willpower = ch->cswillpower;
                 sprintf(buf,"Calculating your Humanity (Conscience + Self-Control)...%d\n\r",ch->pcdata->cshumanity);
                 send_to_char(buf,ch);
-                sprintf(buf,"Calculating your Willpower (Courage)... %d\n\r\n\r",ch->pcdata->cswillpower);
+                sprintf(buf,"Calculating your Willpower (Courage)... %d\n\r\n\r",ch->cswillpower);
                 send_to_char(buf,ch);
                 send_to_char("Advantage traits are all set.\n\r",ch);
                 send_to_char("You can now use the 'backgrounds' command to set your background traits. You have been\n\r",ch);
@@ -3093,9 +3093,9 @@ void do_charsheet2 (CHAR_DATA * ch, char *argument)
         send_to_char(buf, sch);
         sprintf(buf, " | Potence________%s<------Willpower---->       Hurt        -1 %s |\n\r",dots(ch->pcdata->discipline[POTENCE], TRUE), cshealth < 6 ? "{RX{x" : "_");
         send_to_char(buf, sch);
-        sprintf(buf, " | Presence_______%s %s        Injured     -1 %s |\n\r",dots(ch->pcdata->discipline[PRESENCE], TRUE),dots2(ch->pcdata->csmax_willpower, TRUE), cshealth < 5 ? "{RX{x" : "_");
+        sprintf(buf, " | Presence_______%s %s        Injured     -1 %s |\n\r",dots(ch->pcdata->discipline[PRESENCE], TRUE),dots2(ch->csmax_willpower, TRUE), cshealth < 5 ? "{RX{x" : "_");
         send_to_char(buf, sch);
-        sprintf(buf, " | Protean________%s %s        Wounded     -2 %s |\n\r",dots(ch->pcdata->discipline[PROTEAN], TRUE),dots3(ch->pcdata->cswillpower, TRUE), cshealth < 4 ? "{RX{x" : "_");
+        sprintf(buf, " | Protean________%s %s        Wounded     -2 %s |\n\r",dots(ch->pcdata->discipline[PROTEAN], TRUE),dots3(ch->cswillpower, TRUE), cshealth < 4 ? "{RX{x" : "_");
         send_to_char(buf, sch);
         sprintf(buf, " | Quietus________%s                            Mauled      -2 %s |\n\r",dots(ch->pcdata->discipline[QUIETUS], TRUE), cshealth < 3 ? "{RX{x" : "_");
         send_to_char(buf, sch);
@@ -3147,9 +3147,9 @@ void do_charsheet2 (CHAR_DATA * ch, char *argument)
         send_to_char(buf, sch);
         sprintf(buf, " |   <-Primal Urge->     <-----Willpower----->       Crippled    -5 %s |\n\r", cshealth < 2 ? "{RX{x" : "_");
         send_to_char(buf, sch);
-        sprintf(buf, " |        %s           %s        Incapacitated  %s |\n\r", dots(ch->pcdata->primal_urge, FALSE), dots2(ch->pcdata->csmax_willpower,TRUE), cshealth < 1 ? "{RX{x" : "_");
+        sprintf(buf, " |        %s           %s        Incapacitated  %s |\n\r", dots(ch->pcdata->primal_urge, FALSE), dots2(ch->csmax_willpower,TRUE), cshealth < 1 ? "{RX{x" : "_");
         send_to_char(buf, sch);
-        sprintf(buf, " |                        %s                         |\n\r",dots3(ch->pcdata->cswillpower,TRUE));
+        sprintf(buf, " |                        %s                         |\n\r",dots3(ch->cswillpower,TRUE));
         send_to_char(buf, sch);
         send_to_char("<======================================================================>\n\r",sch);
     }
@@ -3176,9 +3176,9 @@ void do_charsheet2 (CHAR_DATA * ch, char *argument)
         send_to_char(buf, sch);
         sprintf(buf, " | Entropy:        %s  <------Willpower---->      Hurt        -1 %s |\n\r",dots(ch->sphere[SPHERE_ENTROPY], FALSE), cshealth < 6 ? "{RX{x" : "_");
         send_to_char(buf, sch);
-        sprintf(buf, " |  <------Arete------>    %s       Injured     -1 %s |\n\r",dots2(ch->pcdata->csmax_willpower, TRUE), cshealth < 5 ? "{RX{x" : "_");
+        sprintf(buf, " |  <------Arete------>    %s       Injured     -1 %s |\n\r",dots2(ch->csmax_willpower, TRUE), cshealth < 5 ? "{RX{x" : "_");
         send_to_char(buf, sch);
-        sprintf(buf, " |  %s    %s       Wounded     -2 %s |\n\r",dots2(ch->arete, TRUE),dots3(ch->pcdata->cswillpower, TRUE), cshealth < 4 ? "{RX{x" : "_");
+        sprintf(buf, " |  %s    %s       Wounded     -2 %s |\n\r",dots2(ch->arete, TRUE),dots3(ch->cswillpower, TRUE), cshealth < 4 ? "{RX{x" : "_");
         send_to_char(buf, sch);
         sprintf(buf, " | Avatar:       %s                               Mauled      -2 %s |\n\r", dots(ch->avatar, FALSE), cshealth < 3 ? "{RX{x" : "_");
         send_to_char(buf, sch);
@@ -3215,9 +3215,9 @@ void do_charsheet2 (CHAR_DATA * ch, char *argument)
             send_to_char(buf, sch);
             sprintf(buf, " |                        <------Willpower---->      Injured     -1 %s |\n\r", cshealth < 5 ? "{RX{x" : "_");
             send_to_char(buf, sch);
-            sprintf(buf, " |                         %s       Wounded     -2 %s |\n\r",dots2(ch->pcdata->csmax_willpower, TRUE), cshealth < 4 ? "{RX{x" : "_");
+            sprintf(buf, " |                         %s       Wounded     -2 %s |\n\r",dots2(ch->csmax_willpower, TRUE), cshealth < 4 ? "{RX{x" : "_");
             send_to_char(buf, sch);
-            sprintf(buf, " |                         %s       Mauled      -2 %s |\n\r", dots3(ch->pcdata->cswillpower, TRUE), cshealth < 3 ? "{RX{x" : "_");
+            sprintf(buf, " |                         %s       Mauled      -2 %s |\n\r", dots3(ch->cswillpower, TRUE), cshealth < 3 ? "{RX{x" : "_");
             send_to_char(buf, sch);
             sprintf(buf, " |                                                   Crippled    -5 %s |\n\r", cshealth < 2 ? "{RX{x" : "_");
             send_to_char(buf, sch);

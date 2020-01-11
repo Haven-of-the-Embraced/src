@@ -1699,14 +1699,14 @@ void bust_a_prompt( CHAR_DATA *ch )
 
     case 'w' :
         if (!IS_NPC(ch))
-            sprintf( buf2, "%d", ch->pcdata->cswillpower );
+            sprintf( buf2, "%d", ch->cswillpower );
         else
             sprintf( buf2, "(NONE)" );
         i = buf2; break;
 
     case 'W' :
         if (!IS_NPC(ch))
-            sprintf( buf2, "%d", ch->pcdata->csmax_willpower );
+            sprintf( buf2, "%d", ch->csmax_willpower );
         else
             sprintf( buf2, "(NO MAX)" );
         i = buf2; break;
@@ -2328,9 +2328,9 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
     write_to_buffer(d,"'background' points that you can spend on background traits in-game. Once you've \n\r", 0);
     write_to_buffer(d,"done that, you may use the 'freebie' command to further increase your traits using \n\r",0);
     write_to_buffer(d,"experience points called 'freebies'.\n\r", 0);
-    ch->pcdata->csmax_willpower = ch->pcdata->csvirtues[COURAGE];
+    ch->csmax_willpower = ch->pcdata->csvirtues[COURAGE];
     ch->pcdata->cshumanity = ch->pcdata->csvirtues[CONSCIENCE]+ch->pcdata->csvirtues[SELF_CONTROL];
-    ch->pcdata->cswillpower = ch->pcdata->csmax_willpower;
+    ch->cswillpower = ch->csmax_willpower;
 
     write_to_buffer(d,"\n\rHaven of the Embraced is focused on Vampires but you may choose to start the game as a human\n\r",0);
     write_to_buffer(d,"if you wish. You may later be Embraced as a vampire if you choose, or your character may\n\r",0);

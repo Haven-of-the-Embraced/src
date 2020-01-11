@@ -389,8 +389,8 @@ void fwrite_char( CHAR_DATA *ch, FILE *fp )
     ch->pcdata->csvirtues[CSVIRT_CONSCIENCE], ch->pcdata->csvirtues[CSVIRT_SELF_CONTROL], ch->pcdata->csvirtues[CSVIRT_COURAGE]);
 
     fprintf( fp, "CShumanity %d\n", ch->pcdata->cshumanity );
-    fprintf( fp, "CSmaxwillpower %d\n", ch->pcdata->csmax_willpower );
-    fprintf( fp, "CSwillpower %d\n", ch->pcdata->cswillpower );
+    fprintf( fp, "CSmaxwillpower %d\n", ch->csmax_willpower );
+    fprintf( fp, "CSwillpower %d\n", ch->cswillpower );
 /*
     fprintf( fp, "CSmaxbloodpool %d\n", ch->pcdata->csmax_bloodpool );
     fprintf( fp, "CSbloodpool %d\n", ch->pcdata->csbloodpool );
@@ -1481,8 +1481,8 @@ void fread_char( CHAR_DATA *ch, FILE *fp )
         }
 
         KEY( "CShumanity",  ch->pcdata->cshumanity,     fread_number( fp ) );
-        KEY( "CSmaxwillpower",  ch->pcdata->csmax_willpower,        fread_number( fp ) );
-        KEY( "CSwillpower", ch->pcdata->cswillpower,        fread_number( fp ) );
+        KEY( "CSmaxwillpower",  ch->csmax_willpower,        fread_number( fp ) );
+        KEY( "CSwillpower", ch->cswillpower,        fread_number( fp ) );
 /*
         KEY( "CSmaxbloodpool",  ch->pcdata->csmax_bloodpool,        fread_number( fp ) );
         KEY( "CSbloodpool", ch->pcdata->csbloodpool,        fread_number( fp ) );

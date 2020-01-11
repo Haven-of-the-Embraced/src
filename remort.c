@@ -192,8 +192,8 @@ void do_remort(CHAR_DATA *ch, char *argument)
         ch->pcdata->csvirtues[CSVIRT_CONSCIENCE] = 1;
         ch->pcdata->csvirtues[CSVIRT_SELF_CONTROL] = 1;
         ch->pcdata->csvirtues[CSVIRT_COURAGE] = 1;
-        ch->pcdata->csmax_willpower = 0;
-        ch->pcdata->cswillpower = 0;
+        ch->csmax_willpower = 0;
+        ch->cswillpower = 0;
         ch->pcdata->cshumanity = 0;
         ch->pcdata->progress = 0;
         ch->pcdata->sect = 0;
@@ -318,8 +318,8 @@ void do_remort(CHAR_DATA *ch, char *argument)
         ch->pcdata->csvirtues[CSVIRT_CONSCIENCE] = 1;
         ch->pcdata->csvirtues[CSVIRT_SELF_CONTROL] = 1;
         ch->pcdata->csvirtues[CSVIRT_COURAGE] = 1;
-        ch->pcdata->csmax_willpower = 0;
-        ch->pcdata->cswillpower = 0;
+        ch->csmax_willpower = 0;
+        ch->cswillpower = 0;
         ch->pcdata->cshumanity = 0;
         ch->pcdata->progress = 0;
         ch->pcdata->sect = 0;

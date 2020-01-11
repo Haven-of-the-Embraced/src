@@ -2171,6 +2171,8 @@ struct  char_data
     sh_int      csattributes[9];
     sh_int      csattrib_mod[9];
     sh_int      csabilities[30];
+    sh_int      csmax_willpower;
+    sh_int      cswillpower;
     /* parts stuff */
     long        form;
     long        parts;

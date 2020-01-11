@@ -3534,8 +3534,8 @@ void do_wipecs(CHAR_DATA *ch, char *argument)
     victim->pcdata->csvirtues[CSVIRT_CONSCIENCE] = 0;
     victim->pcdata->csvirtues[CSVIRT_SELF_CONTROL] = 0;
     victim->pcdata->csvirtues[CSVIRT_COURAGE] = 0;
-    victim->pcdata->csmax_willpower = 0;
-    victim->pcdata->cswillpower = 0;
+    victim->csmax_willpower = 0;
+    victim->cswillpower = 0;
     victim->pcdata->cshumanity = 0;
     victim->pcdata->progress = 0;
     victim->pcdata->stat[PHYSICAL] = 0;

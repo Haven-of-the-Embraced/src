@@ -475,7 +475,7 @@ void spell_gift_shed( int sn, int level, CHAR_DATA *ch, void *vo, int target){
 
     AFFECT_DATA af;
 
-    if (ch->pcdata->cswillpower < 1)
+    if (ch->cswillpower < 1)
     {
         sendch("You do not possess the strength of Will to activate this gift.\n\r", ch);
         return;
@@ -487,7 +487,7 @@ void spell_gift_shed( int sn, int level, CHAR_DATA *ch, void *vo, int target){
         return;
         }
 
-	ch->pcdata->cswillpower--;
+	ch->cswillpower--;
 
     af.where        = TO_RESIST;
     af.type         = gsn_gift_shed;

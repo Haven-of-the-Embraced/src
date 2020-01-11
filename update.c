@@ -954,17 +954,17 @@ if (is_affected(ch, gsn_shadowplay) && ch != NULL)
 /*Sengir -  Characters gain WP every DAY*/
     if (!IS_NPC(ch))
     {
-        if (ch->pcdata->cswillpower < ch->pcdata->csmax_willpower)
+        if (ch->cswillpower < ch->csmax_willpower)
         {
             if ((ch->race == race_lookup("vampire") || ch->race == race_lookup("methuselah")) && time_info.hour == 18)
             {
-                ch->pcdata->cswillpower++;
+                ch->cswillpower++;
                 send_to_char("The evening's transition to nighttime fills you with resolve and determination.\n\r", ch);
             }
 
             if (ch->race != race_lookup("vampire") && ch->race != race_lookup("methuselah") && time_info.hour == 6)
             {
-                ch->pcdata->cswillpower++;
+                ch->cswillpower++;
                 send_to_char("The new day fortifies your resolve and determination, ready to face what lies ahead.\n\r", ch);
             }
         }

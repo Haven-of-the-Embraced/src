@@ -4293,14 +4293,14 @@ void do_learn(CHAR_DATA *ch, char *argument)
     }
     if(!str_cmp( stat, "willpower"))
     {
-        if(ch->pcdata->csmax_willpower != tlev-1+5)
+        if(ch->csmax_willpower != tlev-1+5)
         {
-            sprintf(buf,"Your Willpower is too %s.\n\r",ch->pcdata->csmax_willpower > tlev-1+5 ? "high" : "low");
+            sprintf(buf,"Your Willpower is too %s.\n\r",ch->csmax_willpower > tlev-1+5 ? "high" : "low");
             send_to_char(buf,ch);
             return;
         }
-        ch->pcdata->csmax_willpower++;
-        ch->pcdata->cswillpower++;
+        ch->csmax_willpower++;
+        ch->cswillpower++;
         extract_obj( obj );
         send_to_char("You concentrate intently on the mystical tome and feel you have a grasp on it's concepts.\n\rThe tome fades from existance.\n\r",ch);
         return;

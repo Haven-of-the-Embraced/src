@@ -1337,7 +1337,7 @@ void do_telepathy( CHAR_DATA *ch, char *argument )
     if (IS_NPC(victim))
         diff = 6;
     else
-        diff = victim->pcdata->csmax_willpower;
+        diff = victim->csmax_willpower;
 
     if (ch->level*2 < victim->level)
         diff += 2;
@@ -1592,12 +1592,12 @@ void do_fatamorgana(CHAR_DATA *ch, char *argument)
            send_to_char("You're not skilled enough in Chimerstry.\n\r",ch);
            return;
     }
-    if (ch->pcdata->cswillpower < 2)
+    if (ch->cswillpower < 2)
     {
         send_to_char("You do not have enough will to bring forth this creation.\n\r",ch);
         return;
     }
-    ch->pcdata->cswillpower -= 2;
+    ch->cswillpower -= 2;
 
 /* This will be used later for auto dismiss code.
         af.where     = TO_AFFECTS;
@@ -2253,7 +2253,7 @@ void do_blight(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if (ch->pcdata->cswillpower < 1)
+    if (ch->cswillpower < 1)
     {
         send_to_char("You do not have any Willpower left to spend for this.\n\r", ch);
         return;
@@ -2461,13 +2461,13 @@ void do_resurrection(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if (ch->pcdata->cswillpower < 2)
+    if (ch->cswillpower < 2)
     {
         send_to_char("You do not have enough Willpower to force yourself out of {RT{ro{Drp{ro{Rr{x.\n\r", ch);
         return;
     }
 
-    dicesuccess = godice(ch->pcdata->csmax_willpower, 13 - ch->pcdata->cshumanity);
+    dicesuccess = godice(ch->csmax_willpower, 13 - ch->pcdata->cshumanity);
 
     if (dicesuccess < 0)
     {
@@ -2483,7 +2483,7 @@ void do_resurrection(CHAR_DATA *ch, char *argument)
 
     ch->position=POS_RESTING;
     ch->hit = ch->max_hit / 12;
-    ch->pcdata->cswillpower -= 2;
+    ch->cswillpower -= 2;
     affect_strip(ch,gsn_vamp_frenzy);
     affect_strip(ch, gsn_torpor);
     if (ch->pblood == 0)
@@ -3885,7 +3885,7 @@ void do_majesty(CHAR_DATA *ch, char *argument)
 
 
 
-    if ( ch->pcdata->cswillpower < 1 )
+    if ( ch->cswillpower < 1 )
     {
         send_to_char( "You do not have the strength of will to bolster your social magnificence.\n\r", ch);
         return;
@@ -3898,7 +3898,7 @@ void do_majesty(CHAR_DATA *ch, char *argument)
     }
 
     ch->pblood -= 10;
-    ch->pcdata->cswillpower--;
+    ch->cswillpower--;
 
     af.where     = TO_AFFECTS2;
     af.type      = gsn_majesty;
@@ -5327,7 +5327,7 @@ void do_weakness(CHAR_DATA *ch, char *argument)
     else
         wpdiff = get_attribute(ch, STAMINA) + ch->pcdata->discipline[FORTITUDE];
 
-    dicesuccess = godice(ch->pcdata->cswillpower, wpdiff);
+    dicesuccess = godice(ch->cswillpower, wpdiff);
 
     if (dicesuccess < 0)
     {
@@ -5903,7 +5903,7 @@ void do_bloodrage( CHAR_DATA *ch, char *argument)
     act( "$n reaches over, dragging $s hand lightly across your chest.",  ch, NULL, victim, TO_VICT );
     act( "You reach over to $N and lightly drag your hand across $S chest.",  ch, NULL, victim, TO_CHAR );
 
-    dicesuccess = godice(ch->pcdata->csmax_willpower, 5);
+    dicesuccess = godice(ch->csmax_willpower, 5);
 
     if (dicesuccess < 0)
     {
@@ -6034,7 +6034,7 @@ void do_bloodofpotency(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    dicesuccess = godice(ch->pcdata->csmax_willpower, 6);
+    dicesuccess = godice(ch->csmax_willpower, 6);
     ch->pblood -= 10;
 
     WAIT_STATE(ch, 16);
@@ -6147,13 +6147,13 @@ void do_theft(CHAR_DATA *ch, char *argument)
 
     if(ch->race == race_lookup("dhampire"))
     {
-        if (ch->pcdata->cswillpower == 0)
+        if (ch->cswillpower == 0)
         {
             send_to_char("You lack the {WWillpower{x to overcome your base human nature and feed on blood.\n\r",ch);
             return;
         }
 
-        ch->pcdata->cswillpower--;
+        ch->cswillpower--;
     }
 
     if(ch->race == race_lookup("ghoul"))
@@ -6196,7 +6196,7 @@ void do_theft(CHAR_DATA *ch, char *argument)
 
     WAIT_STATE( ch, 18 );
 
-    dicesuccess = godice(ch->pcdata->csmax_willpower, 7);
+    dicesuccess = godice(ch->csmax_willpower, 7);
 
     ch->pblood -= 10;
 
@@ -6340,7 +6340,7 @@ void do_cauldron(CHAR_DATA *ch, char *argument)
     gain_exp(ch, touchsuccess);
 
     ch->pblood -= 20;
-    dicesuccess = godice(ch->pcdata->csmax_willpower, 7);
+    dicesuccess = godice(ch->csmax_willpower, 7);
 
     if (dicesuccess < 0)
     {

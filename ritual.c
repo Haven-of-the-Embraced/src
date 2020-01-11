@@ -83,11 +83,11 @@ void do_drain(CHAR_DATA *ch, char *argument)
     sprintf(buf, "vial blood potion kindred vitae %s", ch->name);
     bpotion->name = str_dup(buf);
     }
-    if (ch->pcdata->csmax_willpower == 0) {
+    if (ch->csmax_willpower == 0) {
         send_to_char("You do not have the willpower to drain your blood into a vial.\n\r", ch);
         return;
     }
-    success = godice(ch->pcdata->csmax_willpower, 5);
+    success = godice(ch->csmax_willpower, 5);
 
     if (success < 0)
     {

@@ -239,7 +239,7 @@ void do_rote(CHAR_DATA *ch, char *argument)
     }
     else ch->quintessence -= rote_table[rote].quintessence*2;
 */
-    for(count = ch->arete+(ch->pcdata->cswillpower/2); count > 0; count--)
+    for(count = ch->arete+(ch->cswillpower/2); count > 0; count--)
     {
         roll = number_range(1,10);
         if(roll == 1) success--;

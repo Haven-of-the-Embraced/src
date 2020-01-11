@@ -2168,6 +2168,42 @@ void do_mstat( CHAR_DATA *ch, char *argument )
         );
     send_to_char( buf, ch );
     }
+    send_to_char(" |<=-------------------------=Attributes=---------------------------=>|\n\r",ch);
+    send_to_char(" |                                                                    |\n\r",ch);
+    send_to_char(" |      PHYSICAL                SOCIAL                  MENTAL        |\n\r",ch);
+    sprintf(buf, " | Strength_______%s Charisma_______%s Perception____%s|\n\r",dots(get_attribute(victim,STRENGTH),TRUE),dots(get_attribute(victim,CHARISMA),TRUE),dots(get_attribute(victim,PERCEPTION),TRUE));
+    send_to_char(buf,ch);
+    sprintf(buf, " | Dexterity______%s Manipulation___%s Intelligence__%s|\n\r",dots(get_attribute(victim,DEXTERITY),TRUE),dots(get_attribute(victim,MANIPULATION),TRUE),dots(get_attribute(victim,INTELLIGENCE),TRUE));
+    send_to_char(buf,ch);
+    sprintf(buf, " | Stamina________%s Appearance_____%s Wits__________%s|\n\r",dots(get_attribute(victim,STAMINA),TRUE),dots(get_attribute(victim,APPEARANCE),TRUE),dots(get_attribute(victim,WITS),TRUE));
+    send_to_char(buf,ch);
+    send_to_char(" |                                                                    |\n\r",ch);
+    send_to_char(" |<=--------------------------=Abilities=---------------------------=>|\n\r",ch);
+    send_to_char(" |                                                                    |\n\r",ch);
+    send_to_char(" |       TALENTS               SKILLS                KNOWLEDGE        |\n\r",ch);
+    sprintf(buf, " | Expression_____%s   Animal Ken_____%s   Academics______%s |\n\r",dots(victim->csabilities[CSABIL_EXPRESSION], FALSE),dots(victim->csabilities[CSABIL_ANIMAL_KEN], FALSE),dots(victim->csabilities[CSABIL_ACADEMICS], FALSE));
+    send_to_char(buf,ch);
+    sprintf(buf, " | Alertness______%s   Archery________%s   Seneschal______%s |\n\r",dots(victim->csabilities[CSABIL_ALERTNESS], FALSE),dots(victim->csabilities[CSABIL_ARCHERY], FALSE),dots(victim->csabilities[CSABIL_SENESCHAL], FALSE));
+    send_to_char(buf,ch);
+    sprintf(buf, " | Athletics______%s   Crafts_________%s   Investigation__%s |\n\r",dots(victim->csabilities[CSABIL_ATHLETICS], FALSE),dots(victim->csabilities[CSABIL_CRAFTS], FALSE),dots(victim->csabilities[CSABIL_INVESTIGATION], FALSE));
+    send_to_char(buf,ch);
+    sprintf(buf, " | Brawl__________%s   Etiquette______%s   Law____________%s |\n\r",dots(victim->csabilities[CSABIL_BRAWL], FALSE),dots(victim->csabilities[CSABIL_ETIQUETTE], FALSE),dots(victim->csabilities[CSABIL_LAW], FALSE));
+    send_to_char(buf,ch);
+    sprintf(buf, " | Dodge__________%s   Melee__________%s   Linguistics____%s |\n\r",dots(victim->csabilities[CSABIL_DODGE], FALSE),dots(victim->csabilities[CSABIL_MELEE], FALSE),dots(victim->csabilities[CSABIL_LINGUISTICS], FALSE));
+    send_to_char(buf,ch);
+    sprintf(buf, " | Empathy________%s   Performance____%s   Medicine_______%s |\n\r",dots(victim->csabilities[CSABIL_EMPATHY], FALSE),dots(victim->csabilities[CSABIL_PERFORMANCE], FALSE),dots(victim->csabilities[CSABIL_MEDICINE], FALSE));
+    send_to_char(buf,ch);
+    sprintf(buf, " | Intimidation___%s   Riding_________%s   Occult_________%s |\n\r",dots(victim->csabilities[CSABIL_INTIMIDATION], FALSE),dots(victim->csabilities[CSABIL_RIDING], FALSE),dots(victim->csabilities[CSABIL_OCCULT], FALSE));
+    send_to_char(buf,ch);
+    sprintf(buf, " | Leadership_____%s   Commerce_______%s   Politics_______%s |\n\r",dots(victim->csabilities[CSABIL_LEADERSHIP], FALSE),dots(victim->csabilities[CSABIL_COMMERCE], FALSE),dots(victim->csabilities[CSABIL_POLITICS], FALSE));
+    send_to_char(buf,ch);
+    sprintf(buf, " | Legerdemain____%s   Stealth________%s   Hearth Wisdom__%s |\n\r",dots(victim->csabilities[CSABIL_LEGERDEMAIN], FALSE),dots(victim->csabilities[CSABIL_STEALTH], FALSE),dots(victim->csabilities[CSABIL_HEARTHWISDOM], FALSE));
+    send_to_char(buf,ch);
+    sprintf(buf, " | subterfuge_____%s   Survival_______%s   Theology_______%s |\n\r",dots(victim->csabilities[CSABIL_SUBTERFUGE], FALSE),dots(victim->csabilities[CSABIL_SURVIVAL], FALSE),dots(victim->csabilities[CSABIL_THEOLOGY], FALSE));
+    send_to_char(buf,ch);
+    send_to_char(" |                                                                    |\n\r",ch);
+    send_to_char("<======================================================================>\n\r",ch);
+
 
     return;
 }

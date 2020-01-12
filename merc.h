@@ -3010,6 +3010,8 @@ void    channel_to_char args( (const char *txt, CHAR_DATA*ch) );
 #define IS_TRUSTED(ch,level)    (get_trust((ch)) >= (level))
 #define IS_AFFECTED(ch, sn) (IS_SET((ch)->affected_by, (sn)))
 #define IS_AFFECTED2(ch, sn)    (IS_SET((ch)->affected2_by, (sn)))
+#define IS_ATTRFLAGGED(ch, flag)    (IS_SET((ch)->attr_flags, (flag)))
+#define IS_ABILFLAGGED(ch, flag)    (IS_SET((ch)->abil_flags, (flag)))
 
 #define GET_AGE(ch)     ((int) (17 + ((ch)->played \
                     + current_time - (ch)->logon )/72000))

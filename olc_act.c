@@ -4079,10 +4079,10 @@ MEDIT( medit_show )
     pMob->wealth );
     send_to_char( buf, ch );
 
-    cprintf(ch, "Attr:           [%s]\n\r",
+    cprintf(ch, "Attr:        [%s]\n\r",
     flag_string( attr_flags, pMob->attr_flags ) );
 
-    cprintf(ch, "Abil:           [%s]\n\r",
+    cprintf(ch, "Abil:        [%s]\n\r",
     flag_string( abil_flags, pMob->abil_flags ) );
 
 /* ROM values end */

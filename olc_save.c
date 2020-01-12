@@ -207,6 +207,8 @@ void save_mobile( FILE *fp, MOB_INDEX_DATA *pMobIndex )
                 pMobIndex->ac[AC_BASH]   / 10,
                 pMobIndex->ac[AC_SLASH]  / 10,
                 pMobIndex->ac[AC_EXOTIC] / 10 );
+    fprintf( fp, "%s ",     fwrite_flag( pMobIndex->attr_flags, buf ) );
+    fprintf( fp, "%s ",     fwrite_flag( pMobIndex->abil_flags, buf ) );
     fprintf( fp, "%s ",     fwrite_flag( pMobIndex->off_flags,  buf ) );
     fprintf( fp, "%s ",     fwrite_flag( pMobIndex->imm_flags,  buf ) );
     fprintf( fp, "%s ",     fwrite_flag( pMobIndex->res_flags,  buf ) );

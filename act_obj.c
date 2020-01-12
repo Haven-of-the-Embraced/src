@@ -4917,6 +4917,12 @@ void do_donate( CHAR_DATA *ch, char *argument)
       return;
    }
 
+   if (IS_AFFECTED2(ch, AFF2_UMBRA))
+   {
+       sendch("You cannot donate things from the Umbra.\n\r", ch);
+       return;
+   }
+
    original = ch->in_room;
    if (ch->position == POS_FIGHTING)
    {
@@ -4953,6 +4959,12 @@ void do_donate( CHAR_DATA *ch, char *argument)
       char_from_room(ch);
       char_to_room(ch,get_room_index(ROOM_VNUM_DONATE));
       pit = get_obj_list(ch, "donation", ch->in_room->contents);
+      if (!pit)
+      {
+          sendch("Something went wrong... Bug reported.\n\r", ch);
+          bug("do_donate: NULL donation chest", 0);
+          return;
+      }
       obj_from_char(obj);
       obj_to_obj(obj, pit);
       //Return to original room.

@@ -7,11 +7,7 @@ CC = gcc
 RM = rm
 EXE = rom
 
-ifdef LIVE
-PROF = -O3 -w -lcrypt
-else
 PROF = -Og -g -w -lcrypt
-endif
 # add -Wall back if you want warnings. I do not.
 C_FLAGS = $(PROF)
 # -Wno-char-subscripts

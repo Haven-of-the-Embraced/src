@@ -4663,6 +4663,8 @@ MEDIT( medit_copy )
     pMob->res_flags  = pMob2->res_flags;
     pMob->vuln_flags = pMob2->vuln_flags;
     pMob->off_flags  = pMob2->off_flags;
+    pMob->attr_flags = pMob2->attr_flags;
+    pMob->abil_flags = pMob2->abil_flags;
 
     pMob->size     = pMob2->size;
 

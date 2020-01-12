@@ -2005,6 +2005,8 @@ struct  mob_index_data
     sh_int      size;
     char *      material;
     long        mprog_flags;
+    long        attr_flags;
+    long        abil_flags;
 };
 
 
@@ -2183,6 +2185,8 @@ struct  char_data
     sh_int      csabilities[30];
     sh_int      csmax_willpower;
     sh_int      cswillpower;
+    long        attr_flags;
+    long        abil_flags;
     /* parts stuff */
     long        form;
     long        parts;

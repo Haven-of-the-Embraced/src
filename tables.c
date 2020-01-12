@@ -233,6 +233,16 @@ const struct size_type size_table[] =
     {   NULL        }
 };
 
+const struct flag_type attr_flags[] =
+{
+	{NULL,				0,	FALSE 	}
+};
+
+const struct flag_type abil_flags[] =
+{
+	{NULL,				0,	FALSE 	}
+};
+
 const struct flag_type act2_flags[] =
 {
     { "influence",      A,  TRUE    },

@@ -235,6 +235,8 @@ extern 	const 	struct 	hometown_type 		hometown_table  [MAX_HOMETOWN];
 /* flag tables */
 extern  const   struct  flag_type   act_flags[];
 extern  const   struct  flag_type   act2_flags[];
+extern  const   struct  flag_type   attr_flags[];
+extern  const   struct  flag_type   abil_flags[];
 extern  const   struct  flag_type   plr_flags[];
 extern  const   struct  flag_type   affect_flags[];
 extern  const   struct  flag_type   affect2_flags[];

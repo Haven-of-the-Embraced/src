@@ -235,11 +235,30 @@ const struct size_type size_table[] =
 
 const struct flag_type attr_flags[] =
 {
+	{"strong",			A,	TRUE	},
+	{"weak",			B,	TRUE	},
+	{"brilliant",		C,	TRUE	},
+	{"dull",			D,	TRUE	},
+	{"social",			E,	TRUE	},
+	{"awkward",			F,	TRUE	},
+	{"allplustwo",		G,	TRUE	},
+	{"allminustwo",		H,	TRUE	},
+	{"allplusfour",		I,	TRUE	},
+	{"allminusfour",	J,	TRUE	},
+	{"crinos",			K,	TRUE	},
 	{NULL,				0,	FALSE 	}
 };
 
 const struct flag_type abil_flags[] =
 {
+	{"warrior",			A,	TRUE	},
+	{"occultist",		B,	TRUE	},
+	{"mage",			C,	TRUE	},
+	{"thief",			D,	TRUE	},
+	{"healer",			E,	TRUE	},
+	{"noble",			F,	TRUE	},
+	{"clergy",			G,	TRUE	},
+	{"scholar",			H,	TRUE	},
 	{NULL,				0,	FALSE 	}
 };
 

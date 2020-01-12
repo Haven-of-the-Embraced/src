@@ -936,6 +936,30 @@ struct  kill_data
 #define TEMPLATE_RODENT     6
 #define TEMPLATE_WOLF       7
 
+/*Mob template modifier flag bits*/
+/*attr_flags*/
+#define ATTR_STRONG         (A)
+#define ATTR_WEAK           (B)
+#define ATTR_BRILLIANT      (C)
+#define ATTR_DULL           (D)
+#define ATTR_SOCIAL         (E)
+#define ATTR_AWKWARD        (F)
+#define ATTR_ALLPLUSTWO     (G)
+#define ATTR_ALLMINTWO      (H)
+#define ATTR_ALLPLUSFOUR    (I)
+#define ATTR_ALLMINFOUR     (J)
+#define ATTR_CRINOS         (K)
+
+/*Abil_flags*/
+#define ABIL_WARRIOR        (A)
+#define ABIL_OCCULTIST      (B)
+#define ABIL_MAGE           (C)
+#define ABIL_THIEF          (D)
+#define ABIL_HEALER         (E)
+#define ABIL_NOBLE          (F)
+#define ABIL_CLERGY         (G)
+#define ABIL_SCHOLAR        (H)
+
 /* damage classes */
 #define DAM_NONE                0
 #define DAM_BASH                1

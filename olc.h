@@ -271,6 +271,8 @@ DECLARE_OLC_FUN( medit_spec     );
 DECLARE_OLC_FUN( medit_maxload  );
 
 DECLARE_OLC_FUN( medit_sex      );  /* ROM */
+DECLARE_OLC_FUN( medit_attrflags);
+DECLARE_OLC_FUN( medit_abilflags);
 DECLARE_OLC_FUN( medit_act      );  /* ROM */
 DECLARE_OLC_FUN( medit_act2     );
 DECLARE_OLC_FUN( medit_affect       );  /* ROM */

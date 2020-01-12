@@ -101,6 +101,8 @@ const struct olc_help_type help_table[] =
     {   "wear-loc", wear_loc_flags,  "Where mobile wears object."    },
     {   "spells",   skill_table,     "Names of current spells."      },
     {   "container",    container_flags, "Container status."         },
+    {   "attrflags",    attr_flags,      "Mob template attribute modifiers." },
+    {   "abilflags",    abil_flags,     "Mob template ability modifiers." },
 
 /* ROM specific bits: */
 
@@ -4077,6 +4079,12 @@ MEDIT( medit_show )
     pMob->wealth );
     send_to_char( buf, ch );
 
+    cprintf(ch, "Attr:           [%s]\n\r",
+    flag_string( attr_flags, pMob->attr_flags ) );
+
+    cprintf(ch, "Abil:           [%s]\n\r",
+    flag_string( abil_flags, pMob->abil_flags ) );
+
 /* ROM values end */
 
     if ( pMob->spec_fun )
@@ -5356,6 +5364,50 @@ MEDIT( medit_hitroll )
 
     send_to_char( "Hitroll set.\n\r", ch);
     return TRUE;
+}
+
+MEDIT( medit_attrflags )
+{
+    MOB_INDEX_DATA *pMob;
+    int value;
+
+    if ( argument[0] != '\0' )
+    {
+    EDIT_MOB( ch, pMob );
+
+    if ( ( value = flag_value( attr_flags, argument ) ) != NO_FLAG )
+    {
+        pMob->attr_flags ^= value;
+        send_to_char( "Attribute Modifier toggled.\n\r", ch );
+        return TRUE;
+    }
+    }
+
+    send_to_char( "Syntax: attrflags [flags]\n\r"
+          "Type '? attrflags' for a list of flags.\n\r", ch );
+    return FALSE;
+}
+
+MEDIT( medit_abilflags )
+{
+    MOB_INDEX_DATA *pMob;
+    int value;
+
+    if ( argument[0] != '\0' )
+    {
+    EDIT_MOB( ch, pMob );
+
+    if ( ( value = flag_value( abil_flags, argument ) ) != NO_FLAG )
+    {
+        pMob->abil_flags ^= value;
+        send_to_char( "Ability Modifier toggled.\n\r", ch );
+        return TRUE;
+    }
+    }
+
+    send_to_char( "Syntax: abilflags [flags]\n\r"
+          "Type '? abilflags' for a list of flags.\n\r", ch );
+    return FALSE;
 }
 
 void show_liqlist(CHAR_DATA *ch)

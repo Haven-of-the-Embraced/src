@@ -390,6 +390,8 @@ const struct olc_cmd_type medit_table[] =
     {   "sex",          medit_sex       },  /* ROM */
     {   "act",          medit_act       },  /* ROM */
     {   "act2",         medit_act2      },
+    {   "attrflags",    medit_attrflags },
+    {   "abilflags",    medit_abilflags },
     {   "affect",       medit_affect    },  /* ROM */
     {   "aff2",       medit_affect2    },  /* ROM */
     {   "armor",        medit_ac        },  /* ROM */
@@ -1946,4 +1948,3 @@ void do_cmdedit( CHAR_DATA *ch, char *argument )
 
     return;
 }
-

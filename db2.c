@@ -277,6 +277,8 @@ void load_mobiles( FILE *fp )
     pMobIndex->ac[AC_EXOTIC]    = fread_number( fp ) * 10;
 
     /* read flags and add in data from the race table */
+    pMobIndex->attr_flags       = fread_flag( fp );
+    pMobIndex->abil_flags       = fread_flag( fp );
     pMobIndex->off_flags        = fread_flag( fp )
                     | race_table[pMobIndex->race].off;
     pMobIndex->imm_flags        = fread_flag( fp )

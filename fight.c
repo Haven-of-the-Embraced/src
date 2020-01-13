@@ -2091,14 +2091,14 @@ bool d10_damage(CHAR_DATA *ch, CHAR_DATA *victim, int damsuccess, int modifier, 
     }
 
     //Soak dice, subtracts successes from damage.
+    soakdice = get_attribute(victim, STAMINA);
+
     if (!IS_NPC(victim))
     {
-    soakdice = get_attribute(victim, STAMINA);
-    if (IS_VAMP(victim)) //vamps add fortitude.
-        soakdice += victim->pcdata->discipline[FORTITUDE];
+        if (IS_VAMP(victim)) //vamps add fortitude.
+            soakdice += victim->pcdata->discipline[FORTITUDE];
 
     } else {// IS NPC
-        soakdice = victim->level/50;
      if (IS_VAMP(victim) || victim->race == race_lookup("garou"))
         soakdice++;
     }

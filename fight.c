@@ -1765,23 +1765,11 @@ void d10_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt)
         diff = 3;
 
     /* We have damage type and difficulty, now get the dicepool.*/
-    if (IS_NPC(ch))
-	{
-	dice = 5;
-	if (ch->level > 20) dice++;
-	if (ch->level > 40) dice++;
-	if (ch->level > 60) dice++;
-	if (ch->level > 80) dice++;
-	if (ch->level > 100) dice++;
-
-	}
-	 else
-	 {// IS player
 		if (wield)
 			dice = get_attribute(ch,DEXTERITY)+ch->csabilities[CSABIL_MELEE];
 		else
 			dice = get_attribute(ch,DEXTERITY)+ch->csabilities[CSABIL_BRAWL];
-    }
+
 		//Dicepool Modifiers.
 
     dice += GET_HITROLL(ch)/200;

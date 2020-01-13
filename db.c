@@ -201,6 +201,8 @@ void    fix_mobprogs    args( ( void ) );
 
 void    reset_area  args( ( AREA_DATA * pArea ) );
 
+/* Mob Charsheet Populating */
+void    mob_charsheet   args( (CHAR_DATA *mob, MOB_INDEX_DATA *pMobIndex ) );
 /*
  * Big mama top level function.
  */
@@ -2263,44 +2265,6 @@ CHAR_DATA *create_mobile( MOB_INDEX_DATA *pMobIndex )
     mob->material       = str_dup(pMobIndex->material);
 
     /* computed on the spot */
-    if (mob->race == race_lookup("vampire") ||
-        mob->race == race_lookup("methuselah") ||
-        mob->race == race_lookup("dhampire") ||
-        mob->race == race_lookup("undead"))
-        template = TEMPLATE_NEONATE;
-    else if (mob->race == race_lookup("garou"))
-        template = TEMPLATE_CUB;
-    else if (mob->race == race_lookup("bat") ||
-        mob->race == race_lookup("bear") ||
-        mob->race == race_lookup("cat") ||
-        mob->race == race_lookup("centipede") ||
-        mob->race == race_lookup("dog") ||
-        mob->race == race_lookup("fido") ||
-        mob->race == race_lookup("fox") ||
-        mob->race == race_lookup("lizard") ||
-        mob->race == race_lookup("pig") ||
-        mob->race == race_lookup("rabbit") ||
-        mob->race == race_lookup("snake") ||
-        mob->race == race_lookup("song bird") ||
-        mob->race == race_lookup("water fowl") ||
-        mob->race == race_lookup("wolf") ||
-        mob->race == race_lookup("bat") ||
-        mob->race == race_lookup("horse") ||
-        mob->race == race_lookup("spider") ||
-        mob->race == race_lookup("fish") ||
-        mob->race == race_lookup("rodent"))
-        template = TEMPLATE_RODENT;
-    else
-        template = TEMPLATE_DEFAULT;
-
-    if (mob->level > 60)
-        template++;
-
-    for (i = 0; i < 9; i++)
-        mob->csattributes[i] = template_table[template].attribute[i];
-    for (i = 0; i < 30; i++)
-        mob->csabilities[i] = template_table[template].ability[i];
-    mob->csmax_willpower = mob->cswillpower = template_table[template].willpower;
 
     /* let's get some spell action */
     if (IS_AFFECTED(mob,AFF_SANCTUARY))
@@ -2402,6 +2366,132 @@ CHAR_DATA *create_mobile( MOB_INDEX_DATA *pMobIndex )
     char_list       = mob;
     pMobIndex->count++;
     return mob;
+}
+
+void mob_charsheet (CHAR_DATA *mob, MOB_INDEX_DATA *pMobIndex)
+{
+    int template;
+    int i;
+    if (mob == NULL || pMobIndex == NULL)
+    return;
+
+    if (mob->race == race_lookup("vampire") ||
+        mob->race == race_lookup("methuselah") ||
+        mob->race == race_lookup("dhampire") ||
+        mob->race == race_lookup("undead"))
+        template = TEMPLATE_NEONATE;
+    else if (mob->race == race_lookup("garou"))
+        template = TEMPLATE_CUB;
+    else if (mob->race == race_lookup("bat") ||
+        mob->race == race_lookup("bear") ||
+        mob->race == race_lookup("cat") ||
+        mob->race == race_lookup("centipede") ||
+        mob->race == race_lookup("dog") ||
+        mob->race == race_lookup("fido") ||
+        mob->race == race_lookup("fox") ||
+        mob->race == race_lookup("lizard") ||
+        mob->race == race_lookup("pig") ||
+        mob->race == race_lookup("rabbit") ||
+        mob->race == race_lookup("snake") ||
+        mob->race == race_lookup("song bird") ||
+        mob->race == race_lookup("water fowl") ||
+        mob->race == race_lookup("wolf") ||
+        mob->race == race_lookup("bat") ||
+        mob->race == race_lookup("horse") ||
+        mob->race == race_lookup("spider") ||
+        mob->race == race_lookup("fish") ||
+        mob->race == race_lookup("rodent"))
+        template = TEMPLATE_RODENT;
+    else
+        template = TEMPLATE_DEFAULT;
+
+    if (mob->level > 60)
+        template++;
+
+    for (i = 0; i < 9; i++)
+        mob->csattributes[i] = template_table[template].attribute[i];
+    for (i = 0; i < 30; i++)
+        mob->csabilities[i] = template_table[template].ability[i];
+    mob->csmax_willpower = mob->cswillpower = template_table[template].willpower;
+
+    if (IS_ATTRFLAGGED(pMobIndex, ATTR_STRONG))
+    {
+        mob->csattributes[STRENGTH] += 3;
+        mob->csattributes[DEXTERITY] += 2;
+        mob->csattributes[STAMINA] += 2;
+    }
+    if (IS_ATTRFLAGGED(pMobIndex, ATTR_WEAK))
+    {
+        mob->csattributes[STRENGTH] -= 3;
+        mob->csattributes[DEXTERITY] -= 2;
+        mob->csattributes[STAMINA] -= 2;
+    }
+    if (IS_ATTRFLAGGED(pMobIndex, ATTR_BRILLIANT))
+    {
+        mob->csattributes[INTELLIGENCE] += 3;
+        mob->csattributes[PERCEPTION] += 2;
+        mob->csattributes[WITS] += 2;
+    }
+    if (IS_ATTRFLAGGED(pMobIndex, ATTR_DULL))
+    {
+        mob->csattributes[INTELLIGENCE] -= 3;
+        mob->csattributes[PERCEPTION] -= 2;
+        mob->csattributes[WITS] -= 2;
+    }
+    if (IS_ATTRFLAGGED(pMobIndex, ATTR_SOCIAL))
+    {
+        mob->csattributes[CHARISMA] += 3;
+        mob->csattributes[MANIPULATION] += 2;
+        mob->csattributes[APPEARANCE] += 2;
+    }
+    if (IS_ATTRFLAGGED(pMobIndex, ATTR_AWKWARD))
+    {
+        mob->csattributes[CHARISMA] -= 3;
+        mob->csattributes[MANIPULATION] -= 2;
+        mob->csattributes[APPEARANCE] -= 2;
+    }
+    if (IS_ATTRFLAGGED(pMobIndex, ATTR_ALLPLUSTWO))
+        for (i = 0; i < 9; i++)
+            mob->csattributes[i] += 2;
+
+    if (IS_ATTRFLAGGED(pMobIndex, ATTR_ALLPLUSFOUR))
+        for (i = 0; i < 9; i++)
+            mob->csattributes[i] += 4;
+
+    if (IS_ATTRFLAGGED(pMobIndex, ATTR_ALLMINTWO))
+        for (i = 0; i < 9; i++)
+            mob->csattributes[i] -= 2;
+
+    if (IS_ATTRFLAGGED(pMobIndex, ATTR_ALLMINFOUR))
+        for (i = 0; i < 9; i++)
+            mob->csattributes[i] -= 4;
+
+    if (IS_ATTRFLAGGED(pMobIndex, ATTR_CRINOS))
+    {
+        mob->csattributes[STRENGTH] += 4;
+        mob->csattributes[DEXTERITY]++;
+        mob->csattributes[STAMINA] += 3;
+        mob->csattributes[MANIPULATION] = 0;
+        mob->csattributes[APPEARANCE] = 0;
+    }
+
+    for (i = 0; i < 9; i++)
+    {
+        if (mob->csattributes[i] < 0)
+            mob->csattributes[i] = 0;
+
+        if (mob->csattributes[i] < 1 &&
+            (i != CHARISMA && i != MANIPULATION && i != APPEARANCE))
+            mob->csattributes[i] = 1;
+
+        if (mob->csattributes[i] > 10)
+            mob->csattributes[i] = 10;
+
+        if ((template < 2 || template > 5) &&
+            mob->csattributes[i] > 5)
+            mob->csattributes[i] = 5;
+    }
+
 }
 
 /* duplicate a mobile exactly -- except inventory */

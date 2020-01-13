@@ -2265,6 +2265,7 @@ CHAR_DATA *create_mobile( MOB_INDEX_DATA *pMobIndex )
     mob->material       = str_dup(pMobIndex->material);
 
     /* computed on the spot */
+    mob_charsheet(mob, pMobIndex);
 
     /* let's get some spell action */
     if (IS_AFFECTED(mob,AFF_SANCTUARY))
@@ -2491,6 +2492,99 @@ void mob_charsheet (CHAR_DATA *mob, MOB_INDEX_DATA *pMobIndex)
             mob->csattributes[i] > 5)
             mob->csattributes[i] = 5;
     }
+
+    if (IS_ABILFLAGGED(pMobIndex, ABIL_WARRIOR))
+    {
+        mob->csabilities[CSABIL_ATHLETICS] += 2;
+        mob->csabilities[CSABIL_DODGE] += 1;
+        mob->csabilities[CSABIL_BRAWL] += 2;
+        mob->csabilities[CSABIL_MELEE] += 3;
+        mob->csabilities[CSABIL_INTIMIDATION] += 1;
+        mob->csabilities[CSABIL_ALERTNESS] += 2;
+    }
+
+    if (IS_ABILFLAGGED(pMobIndex, ABIL_MAGE))
+    {
+        mob->csabilities[CSABIL_OCCULT] += 3;
+        mob->csabilities[CSABIL_HEARTHWISDOM] += 2;
+        mob->csabilities[CSABIL_THEOLOGY] += 1;
+        mob->csabilities[CSABIL_EXPRESSION] += 2;
+        mob->csabilities[CSABIL_ACADEMICS] += 2;
+        mob->csabilities[CSABIL_INVESTIGATION] += 2;
+    }
+    if (IS_ABILFLAGGED(pMobIndex, ABIL_THIEF))
+    {
+        mob->csabilities[CSABIL_ATHLETICS] += 2;
+        mob->csabilities[CSABIL_DODGE] += 3;
+        mob->csabilities[CSABIL_BRAWL] += 2;
+        mob->csabilities[CSABIL_MELEE] += 1;
+        mob->csabilities[CSABIL_STEALTH] += 3;
+        mob->csabilities[CSABIL_SUBTERFUGE] += 2;
+        mob->csabilities[CSABIL_LEGERDEMAIN] += 2;
+    }
+
+    if (IS_ABILFLAGGED(pMobIndex, ABIL_OCCULTIST))
+    {
+        mob->csabilities[CSABIL_OCCULT] += 4;
+        mob->csabilities[CSABIL_SUBTERFUGE] += 2;
+        mob->csabilities[CSABIL_ACADEMICS] += 2;
+        mob->csabilities[CSABIL_INTIMIDATION] += 1;
+        mob->csabilities[CSABIL_HEARTHWISDOM] += 3;
+        mob->csabilities[CSABIL_SURVIVAL] += 2;
+        mob->csabilities[CSABIL_ALERTNESS] += 2;
+    }
+
+    if (IS_ABILFLAGGED(pMobIndex, ABIL_NOBLE))
+    {
+        mob->csabilities[CSABIL_EXPRESSION] += 2;
+        mob->csabilities[CSABIL_LEADERSHIP] += 3;
+        mob->csabilities[CSABIL_SUBTERFUGE] += 2;
+        mob->csabilities[CSABIL_MELEE] += 2;
+        mob->csabilities[CSABIL_ETIQUETTE] += 3;
+        mob->csabilities[CSABIL_COMMERCE] += 2;
+        mob->csabilities[CSABIL_POLITICS] += 2;
+        mob->csabilities[CSABIL_RIDING] += 2;
+        mob->csabilities[CSABIL_LAW] += 2;
+    }
+
+    if (IS_ABILFLAGGED(pMobIndex, ABIL_HEALER))
+    {
+        mob->csabilities[CSABIL_ALERTNESS] += 2;
+        mob->csabilities[CSABIL_INVESTIGATION] += 1;
+        mob->csabilities[CSABIL_EMPATHY] += 2;
+        mob->csabilities[CSABIL_CRAFTS] += 2;
+        mob->csabilities[CSABIL_SURVIVAL] += 3;
+        mob->csabilities[CSABIL_MEDICINE] += 4;
+        mob->csabilities[CSABIL_HEARTHWISDOM] += 3;
+    }
+
+    if (IS_ABILFLAGGED(pMobIndex, ABIL_CLERGY))
+    {
+        mob->csabilities[CSABIL_EMPATHY] += 2;
+        mob->csabilities[CSABIL_LEADERSHIP] += 1;
+        mob->csabilities[CSABIL_PERFORMANCE] += 2;
+        mob->csabilities[CSABIL_ACADEMICS] += 2;
+        mob->csabilities[CSABIL_THEOLOGY] += 4;
+        mob->csabilities[CSABIL_OCCULT] += 1;
+        mob->csabilities[CSABIL_MEDICINE] += 1;
+    }
+
+    if (IS_ABILFLAGGED(pMobIndex, ABIL_SCHOLAR))
+    {
+        mob->csabilities[CSABIL_ALERTNESS] += 2;
+        mob->csabilities[CSABIL_ACADEMICS] += 3;
+        mob->csabilities[CSABIL_INVESTIGATION] += 2;
+        mob->csabilities[CSABIL_LINGUISTICS] += 2;
+        mob->csabilities[CSABIL_MEDICINE] += 1;
+        mob->csabilities[CSABIL_COMMERCE] += 1;
+        mob->csabilities[CSABIL_POLITICS] += 1;
+        mob->csabilities[CSABIL_OCCULT] += 1;
+        mob->csabilities[CSABIL_LAW] += 1;
+    }
+
+    for (i = 0; i < 30; i++)
+        if (mob->csabilities[i] > 5)
+            mob->csabilities[i] = 5;
 
 }
 

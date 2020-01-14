@@ -2609,7 +2609,7 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
     {
         send_to_char( "{WSyntax is : {wflagfind <obj/mob/room> <type> <flag>\n\r", ch );
         send_to_char( "{WObj types : {wextra, wear, affect, damage, type, weapon, special, spell\n\r",ch);
-        send_to_char( "{WMob types : {wrace, shop, affect, affect2\n\r",ch);
+        send_to_char( "{WMob types : {wrace, shop, aff, aff2, act, act2, off, res, vuln, imm, attr, abil\n\r",ch);
         send_to_char( "{WRoom types: {wsector, room\n\r",ch);
         return;
     }

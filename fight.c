@@ -65,7 +65,6 @@ bool    check_critical  args( ( CHAR_DATA *ch, CHAR_DATA *victim ) );
 
 
 /* experimental garou code */
-char    *slash_dam_noun args((int dam,bool plural));
 int     get_armor_diff  args(( CHAR_DATA *ch, CHAR_DATA *victim, int dam_type));
 void    d10_hit           args( ( CHAR_DATA *ch, CHAR_DATA *victim, int dt ) );
 int     d10_damdice     args( ( CHAR_DATA *ch, CHAR_DATA *victim) );
@@ -2416,36 +2415,6 @@ if (DEBUG_MESSAGES || IS_DEBUGGING(ch))	{
 
 
 }
-
-
-
-char *slash_dam_noun(int dam, bool plural)
-{
-    if(dam <= 20) { if(plural) return "barely scratches"; else return "barely scratch"; }
-    else if(dam <= 40) { if(plural) return "nips"; else return "nip"; }
-    else if(dam <= 60) { if(plural) return "bruises"; else return "bruise"; }
-    else if(dam <= 80) { if(plural) return "scrapes"; else return "scrape"; }
-    else if(dam <= 100) { if(plural)  return "slices"; else return "slice"; }
-    else if(dam <= 120) { if(plural) return "cuts"; else return "cut"; }
-    else if(dam <= 150) { if(plural) return "punctures"; else return "puncture"; }
-    else if(dam <= 175) { if(plural) return "tears"; else return "tear"; }
-    else if(dam <= 200) { if(plural) return "rips"; else return "rip"; }
-    else if(dam <= 250) { if(plural) return "gashes"; else return "gash"; }
-    else if(dam <= 300) { if(plural) return "rakes"; else return "rake"; }
-    else if(dam <= 350) { if(plural) return "carves"; else return "carve"; }
-    else if(dam <= 400) { if(plural) return "cleaves"; else return "cleave"; }
-    else if(dam <= 450) { if(plural) return "lacerates"; else return "lacerate"; }
-    else if(dam <= 500) { if(plural) return "lances"; else return "lance"; }
-    else if(dam <= 550) { if(plural) return "rends"; else return "rend"; }
-    else if(dam <= 600) { if(plural) return "severs"; else return "sever"; }
-    else if(dam <= 650) { if(plural) return "hacks"; else return "hack"; }
-    else if(dam <= 800) { if(plural) return "shreds"; else return "shred"; }
-    else { if(plural) return "savages"; else return "savage"; }
-
-    return "ERROR";
-}
-
-
 
 bool is_safe(CHAR_DATA *ch, CHAR_DATA *victim)
 {

@@ -2595,6 +2595,8 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
     bool found;
     int i;
     int affflag;
+    bool findflag;
+    const struct flag_type *table;
 
     found   = FALSE;
     nMatch  = 0;
@@ -2614,42 +2616,49 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
 
     if(!str_prefix(arg1,"mob"))
     {
+        findflag = TRUE;
 
-        if(!str_prefix(arg2, "affect"))
-            {
-                bool bitfound = FALSE;
-                for (i = 0; affect_flags[i].name != NULL; i++)
+        if(!str_cmp(arg2, "affect") || !str_cmp(arg2, "aff"))
+            table = &affect_flags;
+        else if (!str_cmp(arg2, "affect2") || !str_cmp(arg2, "aff2"))
+            table = &affect2_flags;
+        else if (!str_cmp(arg2, "act"))
+            table = &act_flags;
+        else if (!str_cmp(arg2, "act2"))
+            table = &act2_flags;
+        else if (!str_prefix(arg2, "immune"))
+            table = &imm_flags;
+        else if (!str_prefix(arg2, "resist"))
+            table = &res_flags;
+        else if (!str_prefix(arg2, "vulnerable"))
+            table = &vuln_flags;
+        else if (!str_prefix(arg2, "offense"))
+            table = &off_flags;
+        else if (!str_prefix(arg2, "attributes"))
+            table = &attr_flags;
+        else if (!str_prefix(arg2, "abilities"))
+            table = &abil_flags;
+        else
+            findflag = FALSE;
+
+        if (findflag)
+        {
+            bool bitfound = FALSE;
+            for (i = 0; table[i].name != NULL; i++)
+                {
+                    if (!str_prefix(arg3, table[i].name))
                     {
-                        if (!str_prefix(arg3, affect_flags[i].name))
-                        {
-                            affflag = affect_flags[i].bit;
-                            bitfound = TRUE;
-                    }
-                }
-                if (!bitfound)
-                    {sprintf(buf, "Bit '%s' not found.\n\r", arg3);
-                    sendch(buf, ch);
-                    return;
+                        affflag = table[i].bit;
+                        bitfound = TRUE;
                 }
             }
-
-                    if(!str_prefix(arg2, "affect2"))
-            {
-                bool bitfound = FALSE;
-                for (i = 0; affect2_flags[i].name != NULL; i++)
-                    {
-                        if (!str_prefix(arg3, affect2_flags[i].name))
-                        {
-                            affflag = affect2_flags[i].bit;
-                            bitfound = TRUE;
-                    }
-                }
-                if (!bitfound)
-                    {sprintf(buf, "Bit '%s' not found.\n\r", arg3);
-                    sendch(buf, ch);
-                    return;
-                }
+            if (!bitfound)
+                {sprintf(buf, "Bit '%s' not found.\n\r", arg3);
+                sendch(buf, ch);
+                return;
             }
+        }
+
 
         for ( vnum = 0; nMatch < top_mob_index; vnum++ )
         {
@@ -2661,7 +2670,7 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                     found = TRUE;
                     count++;
                     sprintf( buf, "%s(%3d) [%5d] %s\n\r",
-                    get_char_world(ch,pMobIndex->player_name) ? "*" : " ",count,pMobIndex->vnum, pMobIndex->short_descr );
+                    pMobIndex->count ? "*" : " ",count,pMobIndex->vnum, pMobIndex->short_descr );
                     add_buf(buffer,buf);
                 }
                 if(!str_prefix(arg2, "shop") && pMobIndex->pShop != NULL)
@@ -2669,33 +2678,96 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                     found = TRUE;
                     count++;
                     sprintf( buf, "%s(%3d) [%5d] %s\n\r",
-                    get_char_world(ch,pMobIndex->player_name) ? "*" : " ",count,pMobIndex->vnum, pMobIndex->short_descr );
+                    pMobIndex->count ? "*" : " ",count,pMobIndex->vnum, pMobIndex->short_descr );
                     add_buf(buffer,buf);
                 }
 
-                if(!str_prefix(arg2, "bash") && IS_SET(pMobIndex->off_flags, OFF_BASH))
+                if(!str_prefix(arg2, "offense") && IS_SET(pMobIndex->off_flags, affflag))
                 {
                     found = TRUE;
                     count++;
                     sprintf( buf, "%s(%3d) [%5d] %s\n\r",
-                    get_char_world(ch,pMobIndex->player_name) ? "*" : " ",count, pMobIndex->vnum, pMobIndex->short_descr);
+                    pMobIndex->count ? "*" : " ",count, pMobIndex->vnum, pMobIndex->short_descr);
                     add_buf(buffer,buf);
                 }
 
-                if(!str_prefix(arg2, "affect") && IS_AFFECTED(pMobIndex, affflag))
+                if(!str_prefix(arg2, "immune") && IS_SET(pMobIndex->imm_flags, affflag))
                 {
                     found = TRUE;
                     count++;
                     sprintf( buf, "%s(%3d) [%5d] %s\n\r",
-                    get_char_world(ch,pMobIndex->player_name) ? "*" : " ",count, pMobIndex->vnum, pMobIndex->short_descr);
+                    pMobIndex->count ? "*" : " ",count, pMobIndex->vnum, pMobIndex->short_descr);
                     add_buf(buffer,buf);
                 }
-                if(!str_prefix(arg2, "affect2") && IS_AFFECTED2(pMobIndex, affflag))
+
+                if(!str_prefix(arg2, "resistant") && IS_SET(pMobIndex->res_flags, affflag))
                 {
                     found = TRUE;
                     count++;
                     sprintf( buf, "%s(%3d) [%5d] %s\n\r",
-                    get_char_world(ch,pMobIndex->player_name) ? "*" : " ",count, pMobIndex->vnum, pMobIndex->short_descr);
+                    pMobIndex->count ? "*" : " ",count, pMobIndex->vnum, pMobIndex->short_descr);
+                    add_buf(buffer,buf);
+                }
+
+                if(!str_prefix(arg2, "vulnerable") && IS_SET(pMobIndex->vuln_flags, affflag))
+                {
+                    found = TRUE;
+                    count++;
+                    sprintf( buf, "%s(%3d) [%5d] %s\n\r",
+                    pMobIndex->count ? "*" : " ",count, pMobIndex->vnum, pMobIndex->short_descr);
+                    add_buf(buffer,buf);
+                }
+
+                if((!str_cmp(arg2, "affect") || !str_cmp(arg2, "aff")) && IS_AFFECTED(pMobIndex, affflag))
+                {
+                    found = TRUE;
+                    count++;
+                    sprintf( buf, "%s(%3d) [%5d] %s\n\r",
+                    pMobIndex->count ? "*" : " ",count, pMobIndex->vnum, pMobIndex->short_descr);
+                    add_buf(buffer,buf);
+                }
+                if((!str_cmp(arg2, "affect2") || !str_cmp(arg2, "aff2")) && IS_AFFECTED2(pMobIndex, affflag))
+                {
+                    found = TRUE;
+                    count++;
+                    sprintf( buf, "%s(%3d) [%5d] %s\n\r",
+                    pMobIndex->count ? "*" : " ",count, pMobIndex->vnum, pMobIndex->short_descr);
+                    add_buf(buffer,buf);
+                }
+
+                if(!str_cmp(arg2, "act") && IS_SET(pMobIndex->act, affflag))
+                {
+                    found = TRUE;
+                    count++;
+                    sprintf( buf, "%s(%3d) [%5d] %s\n\r",
+                    pMobIndex->count ? "*" : " ",count, pMobIndex->vnum, pMobIndex->short_descr);
+                    add_buf(buffer,buf);
+                }
+
+                if(!str_cmp(arg2, "act2") && IS_SET(pMobIndex->act2, affflag))
+                {
+                    found = TRUE;
+                    count++;
+                    sprintf( buf, "%s(%3d) [%5d] %s\n\r",
+                    pMobIndex->count ? "*" : " ",count, pMobIndex->vnum, pMobIndex->short_descr);
+                    add_buf(buffer,buf);
+                }
+
+                if(!str_prefix(arg2, "attribute") && IS_SET(pMobIndex->attr_flags, affflag))
+                {
+                    found = TRUE;
+                    count++;
+                    sprintf( buf, "%s(%3d) [%5d] %s\n\r",
+                    pMobIndex->count ? "*" : " ",count, pMobIndex->vnum, pMobIndex->short_descr);
+                    add_buf(buffer,buf);
+                }
+
+                if(!str_prefix(arg2, "abilities") && IS_SET(pMobIndex->abil_flags, affflag))
+                {
+                    found = TRUE;
+                    count++;
+                    sprintf( buf, "%s(%3d) [%5d] %s\n\r",
+                    pMobIndex->count ? "*" : " ",count, pMobIndex->vnum, pMobIndex->short_descr);
                     add_buf(buffer,buf);
                 }
 

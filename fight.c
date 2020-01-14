@@ -1714,7 +1714,9 @@ void d10_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt)
      * Can't beat a dead char!
      * Guard against weird room-leavings.
      */
-    if ( victim->position == POS_DEAD || ch->in_room != victim->in_room )
+    if ( victim->position == POS_DEAD ||
+         victim->position == POS_TORPOR ||
+         ch->in_room != victim->in_room )
         return;
 
 

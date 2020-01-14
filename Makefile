@@ -7,7 +7,7 @@ CC = gcc
 RM = rm
 EXE = rom
 
-PROF = -Og -g -w -lcrypt
+PROF = -O0 -g -w -lcrypt
 # add -Wall back if you want warnings. I do not.
 C_FLAGS = $(PROF)
 # -Wno-char-subscripts

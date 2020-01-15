@@ -2575,6 +2575,10 @@ void do_ofind( CHAR_DATA *ch, char *argument )
 
     return;
 }
+#define LEVEL_IS        0
+#define LEVEL_ABOVE     1
+#define LEVEL_BELOW     2
+#define LEVEL_BETWEEN   3
 
 void do_flagfind( CHAR_DATA *ch, char *argument )
 {
@@ -2584,6 +2588,8 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
     char arg1[MAX_INPUT_LENGTH];
     char arg2[MAX_INPUT_LENGTH];
     char arg3[MAX_INPUT_LENGTH];
+    char arg4[MIL];
+    char arg5[MIL];
     BUFFER *buffer;
     AFFECT_DATA *paf;
     OBJ_INDEX_DATA *pObjIndex;
@@ -2596,7 +2602,9 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
     int i;
     int affflag;
     bool findflag;
+    int tlevel, ulevel, llevel;
     const struct flag_type *table;
+    bool foundlevel;
 
     found   = FALSE;
     nMatch  = 0;
@@ -2604,20 +2612,70 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
     argument = one_argument( argument, arg1 );
     argument = one_argument( argument, arg2 );
     argument = one_argument( argument, arg3 );
+    argument = one_argument( argument, arg4 );
+    argument = one_argument (argument, arg5 );
 
     if ( arg1[0] == '\0' || arg2[0] == '\0' || arg3[0] == '\0')
     {
-        send_to_char( "{WSyntax is : {wflagfind <obj/mob/room> <type> <flag>\n\r", ch );
-        send_to_char( "{WObj types : {wextra, wear, affect, damage, type, weapon, special, spell\n\r",ch);
-        send_to_char( "{WMob types : {wrace, shop, aff, aff2, act, act2, off, res, vuln, imm, attr, abil\n\r",ch);
-        send_to_char( "{WRoom types: {wsector, room\n\r",ch);
+        send_to_char( "{WSyntax is   : {xflagfind <obj/mob/room> <type> <flag>\n\r", ch );
+        send_to_char( "{WObj types   : {xextra, wear, affect, damage, type, weapon, special, spell\n\r",ch);
+        send_to_char( "{WMob types   : {xlevel, race, shop, aff, aff2, act, act2, off, res, vuln, imm, attr, abil\n\r",ch);
+        send_to_char( "{WRoom types  : {xsector, room\n\r",ch);
+        send_to_char( "{WSyntax Note : {xSee '{chelp flagfind{x' for special syntax.\n\r", ch);
         return;
     }
 
     if(!str_prefix(arg1,"mob"))
     {
-        findflag = TRUE;
 
+        if (!str_prefix(arg2, "level"))
+        {
+            if (is_number(arg3))
+            {
+                tlevel = LEVEL_IS;
+                llevel = atoi(arg3);
+            } else if (!str_prefix(arg3, "above"))
+            {
+                tlevel = LEVEL_ABOVE;
+                if (!is_number(arg4))
+                {
+                    sendch("Search for mobs above which level?\n\r", ch);
+                    return;
+                } else
+                    llevel = atoi(arg4);
+            } else if (!str_prefix(arg3, "below"))
+            {
+                tlevel = LEVEL_BELOW;
+                if (!is_number(arg4))
+                {
+                    sendch("Search for mobs below which level?\n\r", ch);
+                    return;
+                } else
+                    ulevel = atoi(arg4);
+            } else if (!str_prefix(arg3, "between"))
+            {
+                tlevel = LEVEL_BETWEEN;
+                if (!is_number(arg4) || !is_number(arg5))
+                {
+                    sendch("Search for mobs between which levels?\n\r", ch);
+                    return;
+                } else {
+                    if (atoi(arg4) > atoi(arg5))
+                    {
+                        ulevel = atoi(arg4);
+                        llevel = atoi(arg5);
+                    } else {
+                        ulevel = atoi(arg5);
+                        llevel = atoi(arg4);
+                    }
+                }
+            } else {
+                sendch("Search for mobs of what level?\n\r", ch);
+                return;
+            }
+        }
+
+        findflag = TRUE;
         if(!str_cmp(arg2, "affect") || !str_cmp(arg2, "aff"))
             table = &affect_flags;
         else if (!str_cmp(arg2, "affect2") || !str_cmp(arg2, "aff2"))
@@ -2680,6 +2738,40 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                     sprintf( buf, "%s(%3d) [%5d] %s\n\r",
                     pMobIndex->count ? "*" : " ",count,pMobIndex->vnum, pMobIndex->short_descr );
                     add_buf(buffer,buf);
+                }
+
+                if (!str_prefix(arg2, "level"))
+                {
+                    foundlevel = FALSE;
+                    switch (tlevel)
+                    {
+                        case LEVEL_IS:
+                            if (pMobIndex->level == llevel)
+                                foundlevel = TRUE;
+                            break;
+                        case LEVEL_ABOVE:
+                            if (pMobIndex->level > llevel)
+                                foundlevel = TRUE;
+                            break;
+                        case LEVEL_BELOW:
+                            if (pMobIndex->level < ulevel)
+                                foundlevel = TRUE;
+                            break;
+                        case LEVEL_BETWEEN:
+                            if (pMobIndex->level > llevel && pMobIndex->level < ulevel)
+                                foundlevel = TRUE;
+                            break;
+                        default: break;
+                    }
+                    if (foundlevel)
+                    {
+                        found = TRUE;
+                        count++;
+                        sprintf( buf, "%s(%3d) [%5d] %s\n\r",
+                        pMobIndex->count ? "*" : " ",count,pMobIndex->vnum, pMobIndex->short_descr );
+                        add_buf(buffer,buf);
+                        foundlevel = FALSE;
+                    }
                 }
 
                 if(!str_prefix(arg2, "offense") && IS_SET(pMobIndex->off_flags, affflag))

@@ -2619,7 +2619,7 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
     {
         send_to_char( "{WSyntax is   : {xflagfind <obj/mob/room> <type> <flag>\n\r", ch );
         send_to_char( "{WObj types   : {xextra, wear, affect, damage, type, weapon, special, spell\n\r",ch);
-        send_to_char( "{WMob types   : {xlevel, race, shop, aff, aff2, act, act2, off, res, vuln, imm, attr, abil\n\r",ch);
+        send_to_char( "{WMob types   : {xlevel, race, special, shop, aff, aff2, act, act2, off, res, vuln, imm, attr, abil\n\r",ch);
         send_to_char( "{WRoom types  : {xsector, room\n\r",ch);
         send_to_char( "{WSyntax Note : {xSee '{chelp flagfind{x' for special syntax.\n\r", ch);
         return;
@@ -2732,6 +2732,16 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                     add_buf(buffer,buf);
                 }
                 if(!str_prefix(arg2, "shop") && pMobIndex->pShop != NULL)
+                {
+                    found = TRUE;
+                    count++;
+                    sprintf( buf, "%s(%3d) [%5d] %s\n\r",
+                    pMobIndex->count ? "*" : " ",count,pMobIndex->vnum, pMobIndex->short_descr );
+                    add_buf(buffer,buf);
+                }
+
+                if(!str_prefix(arg2, "special") && pMobIndex->spec_fun != NULL &&
+                    !str_cmp(arg3, spec_name(pMobIndex->spec_fun)))
                 {
                     found = TRUE;
                     count++;

@@ -548,6 +548,12 @@ void do_stepsideways(CHAR_DATA *ch, char *argument)
         return;
     }
 
+    if (ch->position == POS_FIGHTING)
+    {
+        send_to_char("You can't concentrate enough!\n\r", ch);
+        return;
+    }
+
     success = godice(ch->pcdata->gnosis[PERM], get_gauntlet(ch));
     if (success < 1)
     {
@@ -555,9 +561,6 @@ void do_stepsideways(CHAR_DATA *ch, char *argument)
         WAIT_STATE(ch, 24);
         return;
     } else {
-    stop_fighting( ch, TRUE );
-    stop_follower(ch);
-    die_follower( ch );
 
 
     if(IS_AFFECTED2(ch, AFF2_UMBRA))

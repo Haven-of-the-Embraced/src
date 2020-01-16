@@ -562,47 +562,46 @@ void do_stepsideways(CHAR_DATA *ch, char *argument)
         return;
     } else {
 
+        if(IS_AFFECTED2(ch, AFF2_UMBRA))
+        {
+            REMOVE_BIT(ch->affected2_by, AFF2_UMBRA);
+            act( "You step sideways and leave the Umbra.",  ch, NULL, NULL, TO_CHAR    );
+            act( "$n suddenly appears in this reality!",  ch, NULL, NULL, TO_ROOM );
 
-    if(IS_AFFECTED2(ch, AFF2_UMBRA))
-    {
-        REMOVE_BIT(ch->affected2_by, AFF2_UMBRA);
-        act( "You step sideways and leave the Umbra.",  ch, NULL, NULL, TO_CHAR    );
-        act( "$n suddenly appears in this reality!",  ch, NULL, NULL, TO_ROOM );
+            for ( obj = ch->carrying; obj != NULL; obj = obj_next )
+            {
+                obj_next = obj->next_content;
+                REMOVE_BIT(obj->extra_flags,ITEM_UMBRA);
 
+                if (obj->item_type == ITEM_CONTAINER || obj->item_type == ITEM_CORPSE_NPC || obj->item_type == ITEM_CORPSE_PC)
+                {
+                    for ( bag = obj->contains; bag != NULL; bag = bag_next )
+                    {
+                        bag_next = bag->next_content;
+                        REMOVE_BIT(bag->extra_flags, ITEM_UMBRA);
+                    }
+                }
+
+            }
+            do_function(ch, &do_look, "auto" );
+            WAIT_STATE(ch, 12);
+            return;
+        }
+        act( "You tap into your innate shifting nature and step sideways into the Umbra",  ch, NULL, NULL, TO_CHAR    );
+        act( "$n fades from existance.",  ch, NULL, NULL, TO_NOTVICT );
+        SET_BIT(ch->affected2_by, AFF2_UMBRA);
         for ( obj = ch->carrying; obj != NULL; obj = obj_next )
         {
             obj_next = obj->next_content;
-            REMOVE_BIT(obj->extra_flags,ITEM_UMBRA);
+            SET_BIT(obj->extra_flags,ITEM_UMBRA);
 
-            if (obj->item_type == ITEM_CONTAINER || obj->item_type == ITEM_CORPSE_NPC || obj->item_type == ITEM_CORPSE_PC)
-            {
-                for ( bag = obj->contains; bag != NULL; bag = bag_next )
-                {
-                    bag_next = bag->next_content;
-                    REMOVE_BIT(bag->extra_flags, ITEM_UMBRA);
-                }
-            }
 
         }
+        act( "$n fades into existance.",  ch, NULL, NULL, TO_NOTVICT );
         do_function(ch, &do_look, "auto" );
         WAIT_STATE(ch, 12);
         return;
     }
-    act( "You tap into your innate shifting nature and step sideways into the Umbra",  ch, NULL, NULL, TO_CHAR    );
-    act( "$n fades from existance.",  ch, NULL, NULL, TO_NOTVICT );
-    SET_BIT(ch->affected2_by, AFF2_UMBRA);
-    for ( obj = ch->carrying; obj != NULL; obj = obj_next )
-    {
-        obj_next = obj->next_content;
-        SET_BIT(obj->extra_flags,ITEM_UMBRA);
-
-
-    }
-    act( "$n fades into existance.",  ch, NULL, NULL, TO_NOTVICT );
-    do_function(ch, &do_look, "auto" );
-    WAIT_STATE(ch, 12);
-    return;
-}
 }
 
 void renown_gain(CHAR_DATA *ch)

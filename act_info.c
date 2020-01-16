@@ -1589,7 +1589,11 @@ void do_exits( CHAR_DATA *ch, char *argument )
                 sprintf(buf2, "</xch_mudtext><a xch_cmd=%s>%s</a><xch_mudtext>",dir_name[door], dir_name[door]);
         }
         else
-            sprintf(buf2, "{C%s{x",dir_name[door]);
+            if (IS_SET(pexit->u1.to_room->room_flags, ROOM_UMBRA))
+                sprintf(buf2, "{m%s{x",dir_name[door]);
+            else
+                sprintf(buf2, "{C%s{x",dir_name[door]);
+
         strcat( buf, buf2);
         if ( IS_SET(pexit->exit_info, EX_HIDDEN))
             strcat( buf, "*" );

@@ -2688,7 +2688,7 @@ bool can_see_room( CHAR_DATA *ch, ROOM_INDEX_DATA *pRoomIndex )
     return FALSE;
 
     if (IS_SET(pRoomIndex->room_flags,ROOM_UMBRA)
-    && IS_AFFECTED2(ch, AFF2_UMBRA) && !IS_IMMORTAL(ch))
+    && !IS_AFFECTED2(ch, AFF2_UMBRA) && !IS_IMMORTAL(ch))
     return FALSE;
 
     if (!IS_IMMORTAL(ch) && pRoomIndex->clan && ch->clan != pRoomIndex->clan)

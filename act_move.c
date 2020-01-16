@@ -354,8 +354,8 @@ void move_char( CHAR_DATA *ch, int door, bool follow )
     &&   fch->position < POS_STANDING)
         do_function(fch, &do_stand, "");
 
-    if ( fch->master == ch && fch->position == POS_STANDING
-    &&   can_see_room(fch,to_room))
+    if ( fch->master == ch && SAME_UMBRA(fch, ch) &&
+        fch->position == POS_STANDING && can_see_room(fch,to_room))
     {
 
         if (IS_SET(ch->in_room->room_flags,ROOM_LAW)

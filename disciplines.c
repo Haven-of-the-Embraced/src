@@ -1527,50 +1527,63 @@ void do_ignis_fatuus( CHAR_DATA *ch, char *argument)
 
     argument = one_argument( argument, arg );
 
+    if (IS_NPC(ch)) return;
+
+    if(!can_use_disc(ch,CHIMERSTRY,1,15,TRUE))
+            return;
+
     if ( arg[0] == '\0' )
     {
-        send_to_char("Confuse who?\n\r",ch);
+        send_to_char("Confound the senses of which poor soul?\n\r",ch);
         return;
     }
+
+    if ( ( victim = get_char_room( ch, arg ) ) == NULL )
+    {
+        send_to_char("You can't confound the senses of someone you cannot see.\n\r",ch);
+        return;
+    }
+
     if (victim == ch)
     {
         send_to_char("Clearly you don't need help with that!\n\r",ch);
     }
 
-    if ( ( victim = get_char_world( ch, arg ) ) == NULL )
-    {
-        send_to_char("You can't confuse people who aren't here.\n\r",ch);
-        return;
-    }
     if (IS_AFFECTED2(victim, AFF2_IGNIS_FATUUS))
     {
-        send_to_char("They're already confused!\n\r",ch);
+        send_to_char("They're already trapped in illusion!\n\r",ch);
         return;
     }
-    if(ch->pcdata->discipline[CHIMERSTRY] < 1)
-    {
-        send_to_char("You are not skilled enough in Chimerstry!\n\r",ch);
-        return;
-    }
-    if (ch->pblood > 15)
-    {
-        sendch("You do not have enough blood!\n\r", ch);
-        return;
-    }
+
 
     af.where     = TO_AFFECTS2;
     af.type      = gsn_ignis_fatuus;
-    af.level     = ch->level;
-    af.duration  = 5;
-    af.modifier  =  -50 * ch->pcdata->discipline[CHIMERSTRY];
+    af.level     = ch->pcdata->discipline[CHIMERSTRY];
+    af.duration  = 2 * ch->pcdata->discipline[CHIMERSTRY];
+    af.modifier  =  -10 * ch->pcdata->discipline[CHIMERSTRY];
     af.location  = APPLY_HITROLL;
     af.bitvector = AFF2_IGNIS_FATUUS;
     affect_to_char( victim, &af );
+    af.location = APPLY_CS_PER;
+    af.modifier = -1;
+    affect_to_char(victim, &af );
 
 
-    act( "You confuse $N!", ch, NULL, victim, TO_CHAR);
-    act( "You have been confused!", ch, NULL, victim, TO_VICT    );
-
+    act( "You twist reality around $N and confound their senses!", ch, NULL, victim, TO_CHAR);
+    act( "You suddenly begin hearing and seeing things that aren't there!", ch, NULL, victim, TO_VICT    );
+    if (victim->position == POS_FIGHTING)
+        STOPPED(victim, 2* PULSE_VIOLENCE);
+    else {
+        int success;
+        success = godice(get_attribute(victim, PERCEPTION) + get_ability(victim, CSABIL_ALERTNESS), 6);
+        if (success)
+        {
+            act("You notice $n staring at you, they must be causing your hallucinations!", ch, NULL, victim, TO_VICT);
+            act("$N surmises you're the cause of their hallucinations and attacks!", ch, NULL, victim, TO_CHAR);
+            act("$N seems confused for a moment, then attacks $n!", ch, NULL, victim, TO_ROOM);
+            multi_hit(victim, ch, TYPE_UNDEFINED);
+        }
+    }
     return;
 }
 void do_fatamorgana(CHAR_DATA *ch, char *argument)

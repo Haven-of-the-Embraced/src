@@ -36,6 +36,39 @@ void affects_update (void) {
         }
     }
 
+    if (is_affected(ch, gsn_ignis_fatuus))
+    {
+        int level = get_affect_level(ch, gsn_ignis_fatuus);
+        if (number_percent() < 5 * level)
+        {
+            char * chmsg;
+            char * roommsg;
+
+            switch (number_range(1, 4))
+            {
+                case 1:
+                    chmsg = str_dup("You hear someone dashing up behind you and turn to find... nothing.\n\r");
+                    roommsg = str_dup("$n suddenly spins around to face a threat... that isn't there.");
+                    break;
+                case 2:
+                    chmsg = str_dup("You are momentarily deafened by the sound of bells!\n\r");
+                    roommsg = str_dup("$n covers $s ears, distracted by some sound only $e can hear.");
+                    break;
+                case 3:
+                    chmsg = str_dup("You feel spiders crawling all over your skin!\n\r");
+                    roommsg = str_dup("$n starts dancing around, beating $s clothes to dislodge imaginary bugs.");
+                    break;
+                case 4:
+                    chmsg = str_dup("You are dazzled by a bright light shining in your eyes!\n\r");
+                    roommsg = str_dup("$n blinks and covers $s eyes, dazzled by some vision.");
+                    break;
+            }
+            sendch(chmsg, ch);
+            act(roommsg, ch, NULL, NULL, TO_ROOM);
+            STOPPED(ch, 2*PULSE_VIOLENCE);
+        }
+    }
+
     // Player-Only affects below this point.
     if (IS_NPC(ch))
         continue;

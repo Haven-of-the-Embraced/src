@@ -834,23 +834,24 @@ struct  kill_data
  * Well known mob virtual numbers.
  * Defined in #MOBILES.
  */
-#define MOB_VNUM_RAT           1
-#define MOB_VNUM_HORDE_RATS      27
-#define MOB_VNUM_ALLIES          22
-#define MOB_VNUM_MORTIS_SPIRIT   28
-#define MOB_VNUM_MORTIS_ZOMBIE   29
-#define MOB_VNUM_OBTEN_SERVANT   30
-#define MOB_VNUM_HOMUNCULUS     32
-#define MOB_VNUM_ATHANATOS      33
-#define MOB_VNUM_FIDO           711
-#define MOB_VNUM_CITYGUARD      708
-//#define MOB_VNUM_VAMPIRE     3404
+#define MOB_VNUM_RAT                    1
 #define MOB_VNUM_VICISSITUDE_SZLACHTA   4
 #define MOB_VNUM_VICISSITUDE_VOZHD      5
 #define MOB_VNUM_VICISSITUDE_ZULO       6
-#define MOB_VNUM_PATROLMAN     2106
-#define GROUP_VNUM_TROLLS      2100
-#define GROUP_VNUM_OGRES       2101
+#define MOB_VNUM_ALLIES                 22
+#define MOB_VNUM_DOPPLEGANGER           23
+#define MOB_VNUM_HORDE_RATS             27
+#define MOB_VNUM_MORTIS_SPIRIT          28
+#define MOB_VNUM_MORTIS_ZOMBIE          29
+#define MOB_VNUM_OBTEN_SERVANT          30
+#define MOB_VNUM_HOMUNCULUS             32
+#define MOB_VNUM_ATHANATOS              33
+#define MOB_VNUM_FIDO                   711
+#define MOB_VNUM_CITYGUARD              708
+//#define MOB_VNUM_VAMPIRE              3404
+#define MOB_VNUM_PATROLMAN              2106
+#define GROUP_VNUM_TROLLS               2100
+#define GROUP_VNUM_OGRES                2101
 
 
 /* RT ASCII conversions -- used so we can have letters in this file */

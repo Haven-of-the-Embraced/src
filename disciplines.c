@@ -1529,7 +1529,7 @@ void do_ignis_fatuus( CHAR_DATA *ch, char *argument)
 
     if (IS_NPC(ch)) return;
 
-    if(!can_use_disc(ch,CHIMERSTRY,1,15,TRUE))
+    if(!can_use_disc(ch,CHIMERSTRY,1,0,TRUE))
             return;
 
     if ( arg[0] == '\0' )

@@ -1593,43 +1593,34 @@ void do_ignis_fatuus( CHAR_DATA *ch, char *argument)
     }
     return;
 }
-void do_fatamorgana(CHAR_DATA *ch, char *argument)
+void do_chimaera(CHAR_DATA *ch, char *argument)
 {
     MOB_INDEX_DATA *pMobIndex;
     CHAR_DATA *mob;
     AFFECT_DATA af;
     char buf[MSL];
-    int dicesuccess = 0;
+    int level;
 
     if (IS_NPC(ch)) return;
-    if (!IS_VAMP(ch))
-    {
-        send_to_char("You're not a vampire!\n\r",ch);
-        return;
-    }
-    if (ch->pcdata->discipline[CHIMERSTRY] == 0)
-    {
-           send_to_char("You're not skilled enough in Chimerstry.\n\r",ch);
-           return;
-    }
-    if (ch->cswillpower < 2)
+
+    if(!can_use_disc(ch,CHIMERSTRY,2,0,TRUE))
+            return;
+
+    if (ch->cswillpower < 1)
     {
         send_to_char("You do not have enough will to bring forth this creation.\n\r",ch);
         return;
     }
-    ch->cswillpower -= 2;
 
-/* This will be used later for auto dismiss code.
-        af.where     = TO_AFFECTS;
-        af.type      = gsn_summoned_illusion;
-        af.level     = ch->level;
-        af.duration  = 20;
-        af.location  = 0;
-        af.modifier  = 0;
-        af.bitvector = 0;
-        affect_to_char( ch, &af );
-   */
-    dicesuccess = ch->pcdata->discipline[CHIMERSTRY];
+    if ( (pMobIndex = get_mob_index(MOB_VNUM_DOPPLEGANGER)) == NULL )
+    {
+        send_to_char( "{RError: {Wplease inform the Coders!{x\n\r", ch );
+        return;
+    }
+
+    ch->cswillpower -= 1;
+
+    level = ch->pcdata->discipline[CHIMERSTRY];
 
     WAIT_STATE(ch, 10);
 
@@ -1639,38 +1630,29 @@ void do_fatamorgana(CHAR_DATA *ch, char *argument)
 
     mob->leader = ch;
     mob->level  = (ch->level);
-    mob->max_hit = (ch->max_hit/3) + (dicesuccess * 300);
-    mob->hitroll = ch->hitroll/2 + (dicesuccess * 7);
-    mob->damroll = ch->damroll + (dicesuccess*15);
+    mob->max_hit = ch->max_hit;
     mob->hit = mob->max_hit;
-    mob->damage[DICE_NUMBER] = ch->level;
-    mob->damage[DICE_TYPE] = 2+(dicesuccess);
-    mob->armor[0] -= ch->level*(dicesuccess + 2);
-    mob->armor[1] -= ch->level*(dicesuccess + 2);
-    mob->armor[2] -= ch->level*(dicesuccess + 2);
-    mob->armor[3] -= ch->level*(dicesuccess + 2);
     ch->pet = mob;
-
-
-
 
     af.where     = TO_AFFECTS;
     af.type      = gsn_charm_person;
-    af.level     = ch->level;
-    af.duration  = 20;
+    af.level     = level;
+    af.duration  = level;
     af.location  = 0;
     af.modifier  = 0;
     af.bitvector = AFF_CHARM;
     affect_to_char( mob, &af );
 
-        sprintf(buf, "a wisp of never-ending nothingness", ch->name);
-        mob->short_descr = str_dup(buf);
-        sprintf(buf, " A wisp of constantly changing nothingness hovers in and out of reality here\n\r", ch->name);
-        mob->long_descr = str_dup(buf);
-        mob->name = str_dup("wisp nothingness");
+    sprintf( buf, mob->short_descr, ch->name );
+    free_string( mob->short_descr );
+    mob->short_descr = str_dup( buf );
 
-    act("$n summons $N from the void.", ch, NULL, mob, TO_NOTVICT );;
-    send_to_char("You summon forth an illusion to assist you.\n\r",ch);
+    sprintf( buf, mob->long_descr, ch->name );
+    free_string( mob->long_descr );
+    mob->long_descr = str_dup( buf );
+
+    act("$n appears to split into two, creating $N out of thin air!", ch, NULL, mob, TO_NOTVICT );;
+    send_to_char("You summon forth a doppleganger to assist you.\n\r",ch);
 
     return;
 }

@@ -1242,11 +1242,11 @@ struct  kill_data
  * Used in #MOBILES.
  */
 
-#define AFF2_MIST           (A)
-#define AFF2_VEIL           (B)
-#define AFF2_VAMP_FRENZY            (C)
+#define AFF2_MIST               (A)
+#define AFF2_VEIL               (B)
+#define AFF2_VAMP_FRENZY        (C)
 #define AFF2_MAJESTY            (D)
-#define AFF2_QUIETUS_BLOODCURSE         (E)
+#define AFF2_QUIETUS_BLOODCURSE (E)
 #define AFF2_HOLYSHIELD         (F)
 #define AFF2_FIRESHIELD         (G)
 #define AFF2_DOUBLE_EXP         (H)
@@ -1254,9 +1254,10 @@ struct  kill_data
 #define AFF2_UMBRA              (J)
 #define AFF2_UNSEEN             (K)
 #define AFF2_DETECT_UNSEEN      (L)
-#define AFF2_VAMPIRE_REGEN  (Z)
-#define AFF2_IGNIS_FATUUS      (X)
-#define AFF2_IGNIS_FATUUS (X)
+// These are defined out of order and it bugs me - Matthew
+#define AFF2_IGNIS_FATUUS       (X)
+
+#define AFF2_VAMPIRE_REGEN      (Z)
 /*
  * Sex.
  * Used in #MOBILES.

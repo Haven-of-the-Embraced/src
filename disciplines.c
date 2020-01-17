@@ -3456,7 +3456,7 @@ void do_shadowplay (CHAR_DATA *ch, char *argument)
 
     af.where     = TO_AFFECTS;
     af.type      = gsn_invis;
-    af.level     = ch->level + ch->pcdata->discipline[OBTENEBRATION];
+    af.level     = ch->pcdata->discipline[OBTENEBRATION];
     af.duration  = (5+(ch->pcdata->discipline[OBTENEBRATION]*10))-ch->gen;
     af.location  = APPLY_NONE;
     af.modifier  = 0;
@@ -3487,10 +3487,10 @@ void do_shadowplay (CHAR_DATA *ch, char *argument)
             {
             af.where     = TO_AFFECTS;
             af.type      = gsn_shadowplay;
-            af.level     = 10 * ch->pcdata->discipline[OBTENEBRATION];
-            af.duration  = 5 + ch->pcdata->discipline[OBTENEBRATION];
+            af.level     = ch->pcdata->discipline[OBTENEBRATION];
+            af.duration  = 1 + ch->pcdata->discipline[OBTENEBRATION];
             af.location  = APPLY_CS_STA;
-            af.modifier  = -(ch->pcdata->discipline[OBTENEBRATION]);
+            af.modifier  = -(ch->pcdata->discipline[OBTENEBRATION]/2);
             af.bitvector = AFF_BLIND;
             affect_to_char( victim, &af );
             af.location  = APPLY_HITROLL;

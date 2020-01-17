@@ -36,7 +36,7 @@ void affects_update (void) {
         }
     }
 
-    if (is_affected(ch, gsn_ignis_fatuus))
+    if (is_affected(ch, gsn_ignis_fatuus) && IS_AWAKE(ch))
     {
         int level = get_affect_level(ch, gsn_ignis_fatuus);
         if (number_percent() < 5 * level)

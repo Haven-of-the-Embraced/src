@@ -212,9 +212,8 @@ typedef void VAMP_FUN   args( ( CHAR_DATA *ch ) );
 #define INFLUENCE_KILL_CHANCE      5
 #define INFLUENCE_RP_CHANCE         15
 // Defines spell pulse
-#define PULSE_SPELLS    ( 3 * PULSE_PER_SECOND)
+#define PULSE_AFFECTS   ( 3 * PULSE_PER_SECOND)
 #define PULSE_REGEN     ( 3 * PULSE_PER_SECOND)
-#define PULSE_
 
 #define IMPLEMENTOR     MAX_LEVEL
 #define CREATOR         (MAX_LEVEL - 1)
@@ -3815,8 +3814,8 @@ int gift_lookup args( ( const char *name ) );
 void renown_gain args ( (CHAR_DATA *ch ) );
 
 
-/* spelleffects.c */
-void spells_update args( (void) );
+/* pulse.c */
+void affects_update args( (void) );
 
 /* handler.c */
 int     get_aff_mod args((CHAR_DATA *ch, int sn, int loc));

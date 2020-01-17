@@ -67,8 +67,8 @@ int     pulse_point;
 int     pulse_music;
 int     pulse_influence;
 int     pulse_influence_fade;
-// Spells pulse for over time effects
-int pulse_spells;
+// Affects pulse for over time effects
+int pulse_affects;
 int pulse_regen;
 //int     pulse_bank_offline;
 int     pulse_bank;
@@ -1683,10 +1683,10 @@ CHAR_DATA   *ch;
     violence_update ( );
 
     }
-    if ( --pulse_spells <= 0 )
+    if ( --pulse_affects <= 0 )
     {
-    pulse_spells = PULSE_SPELLS;
-    spells_update ( );
+    pulse_affects = PULSE_AFFECTS;
+    affects_update ( );
     }
 
     if ( --pulse_regen <= 0)

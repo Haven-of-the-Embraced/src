@@ -27,7 +27,7 @@ void affects_update (void) {
     if (is_affected(ch, gsn_shadowplay))
     {
         int level = get_affect_level(ch, gsn_shadowplay);
-        if (number_percent() < 5 * level)
+        if (number_percent() < 4 * level)
         {
             act( "$n chokes and gags as shadows try to suffocate $m.", ch, NULL, NULL, TO_ROOM );
             send_to_char( "You gag and struggle to breathe through the shadows in your throat.\n\r", ch );
@@ -39,7 +39,7 @@ void affects_update (void) {
     if (is_affected(ch, gsn_ignis_fatuus) && IS_AWAKE(ch))
     {
         int level = get_affect_level(ch, gsn_ignis_fatuus);
-        if (number_percent() < 5 * level)
+        if (number_percent() < 4 * level)
         {
             char * chmsg;
             char * roommsg;

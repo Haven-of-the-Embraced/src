@@ -905,16 +905,6 @@ if (ch->qpoints > 30000)
     ch->qpoints = 30000;
     }
 
-if (is_affected(ch, gsn_shadowplay) && ch != NULL)
-
-    {
-        act( "$n chokes and gags as shadows try to suffocate $m.", ch, NULL, NULL, TO_ROOM );
-            send_to_char( "You gag and struggle to breathe through the shadows in your throat.\n\r", ch );
-          if(ch->position != POS_TORPOR)
-            damage(ch,ch,ch->max_hit/15,gsn_shadowplay,DAM_BASH,FALSE);
-            /* damage(ch,ch,poison->level*3,gsn_poison, DAM_POISON,FALSE); */
-        }
-
     if(!IS_NPC(ch) && ch->in_room != NULL && !IS_IMMORTAL(ch) && ch->in_room->sector_type == SECT_WATER_DROWN && (ch->race != race_lookup("vampire") ||
     ch->race != race_lookup("methuselah")))
     {

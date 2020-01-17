@@ -184,6 +184,7 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "dash",       do_dash },
     { "ignisfatuus", do_ignis_fatuus},
     { "mortalterrors", do_mortalterrors},
+    { "chimaera", do_chimaera},
 
 /* for human guilds */
     { "ictalk", do_ictalk},
@@ -533,7 +534,6 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "write",      do_write},
     { "seal",       do_seal},
     { "unseal",     do_unseal},
-    { "fatamorgana", do_fatamorgana},
     { "sendhtml",       do_sendhtml}, //DNM
     { "d10combat",      do_d10combat},
     { "announce",       do_announce},

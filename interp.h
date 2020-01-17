@@ -538,7 +538,7 @@ DECLARE_DO_FUN( do_qlog);
 DECLARE_DO_FUN( do_contact);
 //XP Boost code / vampire regen by Zelan
 DECLARE_DO_FUN( do_xp_boost);
-DECLARE_DO_FUN( do_fatamorgana);
+DECLARE_DO_FUN( do_chimaera);
 DECLARE_DO_FUN( do_ignis_fatuus);
 /*New code by Sengir*/
 //DECLARE_DO_FUN( do_celerity );

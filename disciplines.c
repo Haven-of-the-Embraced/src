@@ -1555,6 +1555,13 @@ void do_ignis_fatuus( CHAR_DATA *ch, char *argument)
         return;
     }
 
+    if (ch->cswillpower < 1)
+    {
+        sendch("You do not possess the strength of will to affect reality in such a way.\n\r", ch);
+        return;
+    }
+
+    ch->cswillpower--;
 
     af.where     = TO_AFFECTS2;
     af.type      = gsn_ignis_fatuus;

@@ -1646,7 +1646,8 @@ void do_chimaera(CHAR_DATA *ch, char *argument)
     af.bitvector = AFF_CHARM;
     affect_to_char( mob, &af );
 
-    af.duration = level * 3;
+    af.type      = gsn_chimerstry;
+    af.duration  = level * 3;
     af.bitvector = 0;
     affect_to_char( ch, &af );
 

@@ -1840,7 +1840,7 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
 
     { "chimaera",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_SLEEPING,
-    &gsn_chimaera,            SLOT(0),   0, 12, "chimaera",           "!Chimaera!", "" },
+    &gsn_chimaera,            SLOT(0),   0, 12, "chimaera",           "You once again feel strong enough to twist reality to your whim.", "" },
 
     { "blood of potency", { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_SLEEPING,

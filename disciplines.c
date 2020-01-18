@@ -1669,6 +1669,51 @@ void do_chimaera(CHAR_DATA *ch, char *argument)
     return;
 }
 
+void do_apparition (CHAR_DATA *ch, char *argument)
+{
+    AFFECT_DATA af;
+    int level;
+
+    if (!can_use_disc(ch, CHIMERSTRY, 3, 0, TRUE))
+        return;
+
+    if (is_affected(ch, gsn_apparition))
+    {
+        sendch("You are already masking your body with illusion.\n\r", ch);
+        return;
+    }
+
+    if (is_affected(ch, gsn_chimerstry) && get_affect_level(ch, gsn_chimerstry) == 3)
+    {
+        sendch("You do not have the force of will to summon such an illusion so soon.\n\r", ch);
+        return;
+    }
+
+    if (ch->cswillpower < 1)
+    {
+        send_to_char("You do not have enough will to bring forth this creation.\n\r",ch);
+        return;
+    }
+
+    ch->cswillpower -= 1;
+
+    level = ch->pcdata->discipline[CHIMERSTRY];
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_apparition;
+    af.level     = level;
+    af.duration  = level * 2;
+    af.location  = 0;
+    af.modifier  = 0;
+    af.bitvector = 0;
+    affect_to_char( ch, &af );
+    af.type     = gsn_chimerstry;
+    af.duration = level * 6;
+    affect_to_char( ch, &af);
+
+    act("$n concentrates for a moment and $s form suddenly shifts six inches to the left.", ch, NULL, NULL, TO_ROOM);
+    sendch("You construct an illusion around yourself, masking your true location.\n\r", ch);
+    return;
+}
 
 /*
 // Ravnos discs

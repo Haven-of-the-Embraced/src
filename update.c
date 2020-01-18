@@ -892,6 +892,13 @@ void char_update( void )
         ||   paf_next->type != paf->type
         ||   paf_next->duration > 0 )
         {
+            if ( paf->type == gsn_chimaera)
+            {
+                act("$n begins to fade away... then winks out of existence.", ch, NULL, NULL, TO_ROOM);
+                extract_char(ch, TRUE);
+                break;
+            }
+
             if ( paf->type > 0 && skill_table[paf->type].msg_off )
             {
             send_to_char( skill_table[paf->type].msg_off, ch );
@@ -901,6 +908,10 @@ void char_update( void )
 
         affect_remove( ch, paf );
         }
+
+        if (!ch) // Guard against null ch being returned from chimaera wearing off.
+            continue;
+
 if (ch->qpoints > 30000)
     ch->qpoints = 30000;
     }

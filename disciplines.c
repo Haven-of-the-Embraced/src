@@ -1606,6 +1606,12 @@ void do_chimaera(CHAR_DATA *ch, char *argument)
     if(!can_use_disc(ch,CHIMERSTRY,2,0,TRUE))
             return;
 
+    if (is_affected(ch, gsn_chimaera))
+    {
+        sendch("You do not have the force of will to summon such an illusion so soon.\n\r", ch);
+        return;
+    }
+
     if (ch->cswillpower < 1)
     {
         send_to_char("You do not have enough will to bring forth this creation.\n\r",ch);
@@ -1622,26 +1628,27 @@ void do_chimaera(CHAR_DATA *ch, char *argument)
 
     level = ch->pcdata->discipline[CHIMERSTRY];
 
-    WAIT_STATE(ch, 10);
+    WAIT_STATE(ch, 3 * PULSE_VIOLENCE);
 
     mob = create_mobile( pMobIndex );
-    char_to_room( mob, ch->in_room );
-    add_follower( mob, ch );
 
     mob->leader = ch;
-    mob->level  = (ch->level);
-    mob->max_hit = ch->max_hit;
+    mob->level  = (ch->level)/2;
+    mob->max_hit = ch->max_hit * 2;
     mob->hit = mob->max_hit;
-    ch->pet = mob;
 
     af.where     = TO_AFFECTS;
-    af.type      = gsn_charm_person;
+    af.type      = gsn_chimaera;
     af.level     = level;
-    af.duration  = level;
+    af.duration  = level * 2;
     af.location  = 0;
     af.modifier  = 0;
     af.bitvector = AFF_CHARM;
     affect_to_char( mob, &af );
+
+    af.duration = level * 3;
+    af.bitvector = 0;
+    affect_to_char( ch, &af );
 
     sprintf( buf, mob->short_descr, ch->name );
     free_string( mob->short_descr );
@@ -1651,8 +1658,12 @@ void do_chimaera(CHAR_DATA *ch, char *argument)
     free_string( mob->long_descr );
     mob->long_descr = str_dup( buf );
 
-    act("$n appears to split into two, creating $N out of thin air!", ch, NULL, mob, TO_NOTVICT );;
+    char_to_room( mob, ch->in_room );
+    act("$n appears to split into two, creating $N out of thin air!", ch, NULL, mob, TO_NOTVICT );
     send_to_char("You summon forth a doppleganger to assist you.\n\r",ch);
+    add_follower( mob, ch );
+    mob->leader = ch;
+    ch->pet = mob;
 
     return;
 }

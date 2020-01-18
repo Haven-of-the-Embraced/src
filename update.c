@@ -881,8 +881,6 @@ void char_update( void )
         if ( paf->duration > 0 )
         {
         paf->duration--;
-        if (number_range(0,4) == 0 && paf->level > 0)
-          paf->level--;  /* spell strength fades with time */
             }
         else if ( paf->duration < 0 )
         ;

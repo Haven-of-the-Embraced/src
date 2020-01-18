@@ -1719,20 +1719,19 @@ CHAR_DATA   *ch;
     bank_update ( );
     }
 
+    if ( --pulse_point    <= 0 )
+    {
+    wiznet("{WTICK{R!{x",NULL,NULL,WIZ_TICKS,0,0);
+    pulse_point     = PULSE_TICK;
+    char_update ( );
+    obj_update  ( );
+    }
+
     if (--pulse_weather   <= 0 )
     {
         pulse_weather   = PULSE_WEATHER;
         wiznet("{DTOCK{R!{x", NULL, NULL, WIZ_TICKS, 0, 0);
         weather_update  ( );
-    }
-
-    if ( --pulse_point    <= 0 )
-    {
-    wiznet("{WTICK{R!{x",NULL,NULL,WIZ_TICKS,0,0);
-    pulse_point     = PULSE_TICK;
-/* number_range( PULSE_TICK / 2, 3 * PULSE_TICK / 2 ); */
-    char_update ( );
-    obj_update  ( );
     }
 
     sleep_update ();

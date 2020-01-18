@@ -1669,7 +1669,7 @@ void do_chimaera(CHAR_DATA *ch, char *argument)
     return;
 }
 
-void do_apparition (CHAR_DATA *ch, char *argument)
+void do_phantasm (CHAR_DATA *ch, char *argument)
 {
     AFFECT_DATA af;
     int level;
@@ -1677,7 +1677,7 @@ void do_apparition (CHAR_DATA *ch, char *argument)
     if (!can_use_disc(ch, CHIMERSTRY, 3, 0, TRUE))
         return;
 
-    if (is_affected(ch, gsn_apparition))
+    if (is_affected(ch, gsn_phantasm))
     {
         sendch("You are already masking your body with illusion.\n\r", ch);
         return;
@@ -1699,7 +1699,7 @@ void do_apparition (CHAR_DATA *ch, char *argument)
 
     level = ch->pcdata->discipline[CHIMERSTRY];
     af.where     = TO_AFFECTS;
-    af.type      = gsn_apparition;
+    af.type      = gsn_phantasm;
     af.level     = level;
     af.duration  = level * 2;
     af.location  = 0;

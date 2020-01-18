@@ -185,7 +185,7 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "ignisfatuus", do_ignis_fatuus},
     { "mortalterrors", do_mortalterrors},
     { "chimaera", do_chimaera},
-    { "apparition", do_apparition},
+    { "phantasm", do_phantasm},
 
 /* for human guilds */
     { "ictalk", do_ictalk},

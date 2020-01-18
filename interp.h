@@ -540,7 +540,7 @@ DECLARE_DO_FUN( do_contact);
 DECLARE_DO_FUN( do_xp_boost);
 DECLARE_DO_FUN( do_chimaera);
 DECLARE_DO_FUN( do_ignis_fatuus);
-DECLARE_DO_FUN( do_apparition);
+DECLARE_DO_FUN( do_phantasm);
 /*New code by Sengir*/
 //DECLARE_DO_FUN( do_celerity );
 DECLARE_DO_FUN( do_celerity  );

@@ -523,6 +523,7 @@ void weather_update( void )
 {
     char buf[MAX_STRING_LENGTH];
     DESCRIPTOR_DATA *d;
+    CHAR_DATA *ch;
     int diff;
 
     buf[0] = '\0';
@@ -565,28 +566,9 @@ void weather_update( void )
         strcat(buf,"Stars sparkle in the moonless sky above.\n\r");
     sprintf(buf, "The %s moon shines down upon the land.\n\r", time_info.phase == 1 ? "crescent" :
         time_info.phase == 2 ? "half" : time_info.phase == 3 ? "gibbous" : "full");
-    for ( d = descriptor_list; d != NULL; d = d->next )
-    {
-        if ( d->connected == CON_PLAYING
-        &&   IS_OUTSIDE(d->character)
-        &&   IS_AWAKE(d->character)
-        && !IS_NPC(d->character)
-        && d->character->pcdata->rank > 0)
-        {
-            d->character->pcdata->rage[TEMP]++;
-            if(d->character->pcdata->auspice-1 == time_info.phase || d->character->pcdata->rage[TEMP] > d->character->pcdata->rage[PERM])
-                d->character->pcdata->rage[TEMP] = d->character->pcdata->rage[PERM];
-        }
-    }
     break;
     }
-/*
-    if ( time_info.day   >= 35 )
-    {
-    time_info.day = 0;
-    time_info.month++;
-    }
-*/
+
     if ( (time_info.month == 0 && time_info.day > 30) ||
         (time_info.month == 1 && time_info.day > 27 ) ||
         (time_info.month == 2 && time_info.day > 30 ) ||
@@ -713,6 +695,43 @@ void weather_update( void )
         }
     }
 */
+    }
+
+    for ( d = descriptor_list; d != NULL; d = d->next )
+    {
+        if ( d->connected != CON_PLAYING || IS_NPC(d->character))
+            continue;
+        ch = d->character;
+
+        if ( ch->race == race_lookup("garou") &&
+            IS_OUTSIDE(ch) &&
+            IS_AWAKE(ch)
+            && time_info.hour == 0)
+        {
+            ch->pcdata->rage[TEMP]++;
+            if(ch->pcdata->auspice-1 == time_info.phase || ch->pcdata->rage[TEMP] > ch->pcdata->rage[PERM])
+                ch->pcdata->rage[TEMP] = ch->pcdata->rage[PERM];
+        }
+
+    /*Sengir -  Characters gain WP every DAY*/
+        if (ch->cswillpower < ch->csmax_willpower)
+        {
+            if ((ch->race == race_lookup("vampire") || ch->race == race_lookup("methuselah")) && time_info.hour == 18)
+            {
+                ch->cswillpower += ch->csmax_willpower / 2;
+                if (ch->cswillpower > ch->csmax_willpower)
+                    ch->cswillpower = ch->csmax_willpower;
+                send_to_char("The evening's transition to nighttime fills you with resolve and determination.\n\r", ch);
+            }
+
+            if (ch->race != race_lookup("vampire") && ch->race != race_lookup("methuselah") && time_info.hour == 6)
+            {
+                ch->cswillpower += ch->csmax_willpower / 2;
+                if (ch->cswillpower > ch->csmax_willpower)
+                    ch->cswillpower = ch->csmax_willpower;
+                send_to_char("The new day fortifies your resolve and determination, ready to face what lies ahead.\n\r", ch);
+            }
+        }
     }
 
     return;
@@ -950,25 +969,6 @@ if (ch->qpoints > 30000)
             damage(ch,ch,agg_damage->level,gsn_agg_damage, DAM_NEGATIVE,FALSE);
         }
     }
-/*Sengir -  Characters gain WP every DAY*/
-    if (!IS_NPC(ch))
-    {
-        if (ch->cswillpower < ch->csmax_willpower)
-        {
-            if ((ch->race == race_lookup("vampire") || ch->race == race_lookup("methuselah")) && time_info.hour == 18)
-            {
-                ch->cswillpower++;
-                send_to_char("The evening's transition to nighttime fills you with resolve and determination.\n\r", ch);
-            }
-
-            if (ch->race != race_lookup("vampire") && ch->race != race_lookup("methuselah") && time_info.hour == 6)
-            {
-                ch->cswillpower++;
-                send_to_char("The new day fortifies your resolve and determination, ready to face what lies ahead.\n\r", ch);
-            }
-        }
-    }
-
 
 /*  New Mage Code */
     if(ch->race == race_lookup("mage") || clan_table[ch->clan].clan_type == TYPE_TRADITION)

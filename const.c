@@ -1842,6 +1842,10 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_SLEEPING,
     &gsn_chimaera,            SLOT(0),   0, 12, "chimaera",           "!chimaera!", "" },
 
+    { "apparition",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_SLEEPING,
+    &gsn_apparition,            SLOT(0),   0, 12, "apparition",           "The illusion masking your true position fades away.", "" },
+
     { "chimerstry",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_SLEEPING,
     &gsn_chimerstry,            SLOT(0),   0, 12, "chimerstry",           "You once again feel strong enough to twist reality to your whim.", "" },

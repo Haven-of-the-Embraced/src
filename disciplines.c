@@ -1606,7 +1606,7 @@ void do_chimaera(CHAR_DATA *ch, char *argument)
     if(!can_use_disc(ch,CHIMERSTRY,2,0,TRUE))
             return;
 
-    if (is_affected(ch, gsn_chimaera))
+    if (is_affected(ch, gsn_chimerstry))
     {
         sendch("You do not have the force of will to summon such an illusion so soon.\n\r", ch);
         return;

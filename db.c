@@ -4746,6 +4746,7 @@ sh_int		gsn_vampire_regen;
 /* Ravnos Discs */
 sh_int		gsn_ignis_fatuus;
 sh_int      gsn_chimaera;
+sh_int      gsn_chimerstry;
 
 /* garou gifts */
 sh_int          gsn_gift_porcupine;

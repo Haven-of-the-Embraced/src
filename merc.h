@@ -2904,6 +2904,7 @@ extern sh_int  gsn_gleam;
 extern sh_int  gsn_unseen;
 extern sh_int  gsn_veil;
 extern sh_int  gsn_ignis_fatuus;
+extern sh_int  gsn_chimaera;
 
 /* for rituals */
 extern sh_int  gsn_store_inferno;

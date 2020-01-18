@@ -1836,7 +1836,11 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
 
     { "ignis fatuus",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_SLEEPING,
-    &gsn_ignis_fatuus,            SLOT(405),   0, 12, "ignis",           "Your confusion fades away", "" },
+    &gsn_ignis_fatuus,            SLOT(405),   0, 12, "ignis",           "Your confusion fades away.", "" },
+
+    { "chimaera",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_SLEEPING,
+    &gsn_chimaera,            SLOT(0),   0, 12, "chimaera",           "!Chimaera!", "" },
 
     { "blood of potency", { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_SLEEPING,

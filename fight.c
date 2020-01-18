@@ -1309,6 +1309,14 @@ bool damage(CHAR_DATA *ch,CHAR_DATA *victim,int dam,int dt,int dam_type,
         }
     }
 
+    if(is_affected(victim,gsn_phantasm) && number_range(1,100) > get_affect_level(ch, gsn_phantasm) * 5)
+    {
+        act("$N is fooled by your phantasm and misses you completely!",victim,NULL,ch,TO_CHAR);
+        act("$n is almost hit by $N, but just as the blow connects $n's image dissolves... $e was never there.",victim,NULL,ch,TO_NOTVICT);
+        act("You almost hit $n, but just as the blow connects $s image dissolves... $e was never there.",victim,NULL,ch,TO_VICT);
+        dam = 0;
+    }
+
     if (show)
         dam_message( ch, victim, dam, dt, immune );
 

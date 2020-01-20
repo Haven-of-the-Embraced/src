@@ -5712,7 +5712,7 @@ void do_headbutt( CHAR_DATA *ch, char *argument )
         af.modifier = 0;
         af.bitvector    = AFF_SLEEP;
         affect_join(victim, &af);
-        check_improve(ch,gsn_headbutt,FALSE,5);
+        check_improve(ch,gsn_headbutt,TRUE,5);
 
         victim->position = POS_SLEEPING;
     }

@@ -1717,7 +1717,10 @@ void do_phantasm (CHAR_DATA *ch, char *argument)
     af.where     = TO_AFFECTS;
     af.type      = gsn_phantasm;
     af.level     = level;
-    af.duration  = level * 2;
+    if (level < 4)
+        af.duration  = level * 2;
+    else
+        af.duration = -1;
     af.location  = 0;
     af.modifier  = 0;
     af.bitvector = 0;

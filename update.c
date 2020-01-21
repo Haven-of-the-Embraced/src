@@ -719,18 +719,21 @@ void weather_update( void )
             if ((ch->race == race_lookup("vampire") || ch->race == race_lookup("methuselah")) && time_info.hour == 18)
             {
                 ch->cswillpower += ch->csmax_willpower / 2;
-                if (ch->cswillpower > ch->csmax_willpower)
-                    ch->cswillpower = ch->csmax_willpower;
                 send_to_char("The evening's transition to nighttime fills you with resolve and determination.\n\r", ch);
             }
 
             if (ch->race != race_lookup("vampire") && ch->race != race_lookup("methuselah") && time_info.hour == 6)
             {
                 ch->cswillpower += ch->csmax_willpower / 2;
-                if (ch->cswillpower > ch->csmax_willpower)
-                    ch->cswillpower = ch->csmax_willpower;
                 send_to_char("The new day fortifies your resolve and determination, ready to face what lies ahead.\n\r", ch);
             }
+            if (ch->position == POS_SLEEPING)
+            {
+                ch->cswillpower++;
+                send_to_char("You feel rested and rejuvinated, ready to take on anything.\n\r", ch);
+            }
+            if (ch->cswillpower > ch->csmax_willpower)
+                ch->cswillpower = ch->csmax_willpower;
         }
     }
 

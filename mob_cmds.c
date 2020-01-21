@@ -1137,14 +1137,14 @@ void do_mpdamage( CHAR_DATA *ch, char *argument )
 	{
 	    victim_next = victim->next_in_room;
 	    if ( victim != ch )
-    		damage( victim, victim,
+    		damage( ch, victim,
 		    fKill ?
 		    number_range(low,high) : UMIN(victim->hit,number_range(low,high)),
 	        TYPE_UNDEFINED, DAM_NONE, FALSE );
 	}
     }
     else
-    	damage( victim, victim,
+    	damage( ch, victim,
 	    fKill ?
 	    number_range(low,high) : UMIN(victim->hit,number_range(low,high)),
         TYPE_UNDEFINED, DAM_NONE, FALSE );
@@ -1547,4 +1547,3 @@ void do_mpquest( CHAR_DATA *ch, char *argument )
 	bug("MpQuest: invalid command from vnum %d", IS_NPC(ch) ? ch->pIndexData->vnum : 0 );
 	return;
 }
-

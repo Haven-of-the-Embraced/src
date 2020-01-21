@@ -1603,6 +1603,12 @@ void do_chimaera(CHAR_DATA *ch, char *argument)
 
     if (IS_NPC(ch)) return;
 
+    if(ch->pet != NULL)
+    {
+        send_to_char( "You cannot summon another pet!\n\r",ch );
+        return;
+    }
+
     if(!can_use_disc(ch,CHIMERSTRY,2,0,TRUE))
             return;
 

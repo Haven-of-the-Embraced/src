@@ -1566,7 +1566,10 @@ void do_ignis_fatuus( CHAR_DATA *ch, char *argument)
     af.where     = TO_AFFECTS2;
     af.type      = gsn_ignis_fatuus;
     af.level     = ch->pcdata->discipline[CHIMERSTRY];
-    af.duration  = 2 * ch->pcdata->discipline[CHIMERSTRY];
+    if (ch->pcdata->discipline[CHIMERSTRY] < 4)
+        af.duration  = 2 * ch->pcdata->discipline[CHIMERSTRY];
+    else
+        af.duration = -1;
     af.modifier  =  -10 * ch->pcdata->discipline[CHIMERSTRY];
     af.location  = APPLY_HITROLL;
     af.bitvector = AFF2_IGNIS_FATUUS;
@@ -1646,16 +1649,22 @@ void do_chimaera(CHAR_DATA *ch, char *argument)
     af.where     = TO_AFFECTS;
     af.type      = gsn_chimaera;
     af.level     = level;
-    af.duration  = level * 2;
+    if (level < 4)
+        af.duration  = level * 2;
+    else
+        af.duration = -1;
     af.location  = 0;
     af.modifier  = 0;
     af.bitvector = AFF_CHARM;
     affect_to_char( mob, &af );
 
+    if (level < 4)
+    {
     af.type      = gsn_chimerstry;
     af.duration  = level * 3;
     af.bitvector = 0;
     affect_to_char( ch, &af );
+    }
 
     sprintf( buf, mob->short_descr, ch->name );
     free_string( mob->short_descr );
@@ -1685,7 +1694,8 @@ void do_phantasm (CHAR_DATA *ch, char *argument)
 
     if (is_affected(ch, gsn_phantasm))
     {
-        sendch("You are already masking your body with illusion.\n\r", ch);
+        sendch("You release the illusion masking your true position.\n\r", ch);
+        affect_strip(ch, gsn_phantasm);
         return;
     }
 
@@ -1712,9 +1722,12 @@ void do_phantasm (CHAR_DATA *ch, char *argument)
     af.modifier  = 0;
     af.bitvector = 0;
     affect_to_char( ch, &af );
-    af.type     = gsn_chimerstry;
-    af.duration = level * 6;
-    affect_to_char( ch, &af);
+    if (level < 4)
+    {
+        af.type     = gsn_chimerstry;
+        af.duration = level * 6;
+        affect_to_char( ch, &af);
+    }
 
     act("$n concentrates for a moment and $s form suddenly shifts six inches to the left.", ch, NULL, NULL, TO_ROOM);
     sendch("You construct an illusion around yourself, masking your true location.\n\r", ch);

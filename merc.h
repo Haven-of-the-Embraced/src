@@ -3532,7 +3532,7 @@ bool    damage      args( ( CHAR_DATA *ch, CHAR_DATA *victim, int dam,
                     int dt, int class, bool show ) );
 
 bool d10_damage args( (CHAR_DATA *ch, CHAR_DATA *victim, int damsuccess,
-					int modifier, int dt, int dam_type, int defense, bool show) );
+					int modifier, int dt, int dam_type, int defense, bool show, bool fatal) );
 
 bool    damage_old      args( ( CHAR_DATA *ch, CHAR_DATA *victim, int dam,
                                 int dt, int class, bool show ) );

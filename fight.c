@@ -1814,7 +1814,7 @@ if (DEBUG_MESSAGES || IS_DEBUGGING(ch)){
 
     if(tohit < 1)
     { // Miss.
-        d10_damage(ch, victim, 0, 0, dt, dam_type, DEFENSE_FULL, TRUE);
+        d10_damage(ch, victim, 0, 0, dt, dam_type, DEFENSE_FULL, TRUE, TRUE);
         tail_chain( );
         return;
     }
@@ -1864,7 +1864,7 @@ if (DEBUG_MESSAGES || IS_DEBUGGING(ch)){
             if (IS_NPC(ch)) cprintf(victim, "dp{r%d{x ", dice);
         }
 
-	result = d10_damage(ch, victim, damsuccess, d10_modifier(ch), dt, dam_type, DEFENSE_FULL, TRUE);
+	result = d10_damage(ch, victim, damsuccess, d10_modifier(ch), dt, dam_type, DEFENSE_FULL, TRUE, TRUE);
 
     /* but do we have a funky weapon? */
     if (result && wield != NULL)
@@ -1992,7 +1992,7 @@ if (DEBUG_MESSAGES || IS_DEBUGGING(ch)){
 }
 
 
-bool d10_damage(CHAR_DATA *ch, CHAR_DATA *victim, int damsuccess, int modifier, int dt, int dam_type, int defense, bool show)
+bool d10_damage(CHAR_DATA *ch, CHAR_DATA *victim, int damsuccess, int modifier, int dt, int dam_type, int defense, bool show, bool fatal)
 {
     extern bool slaughter;
     extern bool doubledam;
@@ -4538,23 +4538,23 @@ void do_backstab( CHAR_DATA *ch, char *argument )
     {
         check_improve(ch,gsn_backstab,FALSE,2);
         act("$N seems to sense you coming and dodges your backstab!", ch, NULL, victim, TO_CHAR );
-        d10_damage(ch, victim, 0, 0, gsn_backstab, DAM_PIERCE, DEFENSE_FULL, TRUE);
+        d10_damage(ch, victim, 0, 0, gsn_backstab, DAM_PIERCE, DEFENSE_FULL, TRUE, TRUE);
         return;
     }
 
     check_improve(ch,gsn_backstab,TRUE,2);
-    d10_damage(ch, victim, damsuccess, modifier, gsn_backstab, DAM_PIERCE, DEFENSE_SOAK, TRUE);
+    d10_damage(ch, victim, damsuccess, modifier, gsn_backstab, DAM_PIERCE, DEFENSE_SOAK, TRUE, TRUE);
     check = number_percent();
     if (SAME_ROOM(ch, victim) && (godice(dice, diff) > 1))
        {
         damsuccess = godice(damdice, 4);
-        d10_damage(ch, victim, damsuccess, modifier, gsn_backstab, DAM_PIERCE, DEFENSE_SOAK, TRUE);
+        d10_damage(ch, victim, damsuccess, modifier, gsn_backstab, DAM_PIERCE, DEFENSE_SOAK, TRUE, TRUE);
        }
 
     if(SAME_ROOM(ch, victim) && (IS_AFFECTED(ch,AFF_HASTE) || is_affected(ch,gsn_timealteration) || is_affected(ch, gsn_rage) || is_affected(ch, gsn_celbuff)) && (godice(dice, diff) > 1))
     {
         damsuccess = godice(damdice, 4);
-        d10_damage(ch, victim, damsuccess, modifier, gsn_backstab, DAM_PIERCE, DEFENSE_SOAK, TRUE);
+        d10_damage(ch, victim, damsuccess, modifier, gsn_backstab, DAM_PIERCE, DEFENSE_SOAK, TRUE, TRUE);
     }
     return;
 }
@@ -5466,7 +5466,7 @@ void do_assassinate( CHAR_DATA *ch, char *argument )
       act( "$N screams as you place your dagger in their spine!", ch, NULL, victim, TO_CHAR );
       act( "$n plants his dagger into your spine, your body spasms in pain.", ch, NULL, victim, TO_VICT );
       act( "$n stabs $N in the spine!", ch, NULL, victim, TO_NOTVICT );
-      d10_damage(ch, victim, damsuccess, modifier, gsn_assassinate, DAM_PIERCE, DEFENSE_SOAK, TRUE);
+      d10_damage(ch, victim, damsuccess, modifier, gsn_assassinate, DAM_PIERCE, DEFENSE_SOAK, TRUE, TRUE);
       return;
     } else {
       check_improve(ch,gsn_assassinate,FALSE,4);
@@ -5808,7 +5808,7 @@ void do_gouge( CHAR_DATA *ch, char *argument )
     check_improve(ch,gsn_gouge,TRUE,6);
     WAIT_STATE(victim, PULSE_VIOLENCE);
 
-    d10_damage(ch, victim, damagesuccess, d10_modifier(ch) * (20+skill) / 100, gsn_gouge, DAM_PIERCE, DEFENSE_NONE, TRUE);
+    d10_damage(ch, victim, damagesuccess, d10_modifier(ch) * (20+skill) / 100, gsn_gouge, DAM_PIERCE, DEFENSE_NONE, TRUE, TRUE);
 
     if (skill > 90) diff = 2;
     if (skill < 90) diff = 3;

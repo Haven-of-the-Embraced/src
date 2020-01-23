@@ -3048,6 +3048,484 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
     return;
 }
 
+void do_areaflagfind( CHAR_DATA *ch, char *argument )
+{
+    char buf[MAX_STRING_LENGTH];
+    char arg1[MAX_INPUT_LENGTH];
+    char arg2[MAX_INPUT_LENGTH];
+    char arg3[MAX_INPUT_LENGTH];
+    char arg4[MIL];
+    char arg5[MIL];
+    BUFFER *buffer;
+    AFFECT_DATA *paf;
+    AREA_DATA *pArea;
+    OBJ_INDEX_DATA *pObjIndex;
+    MOB_INDEX_DATA *pMobIndex;
+    ROOM_INDEX_DATA *pRoomIndex;
+    int vnum;
+    int nMatch;
+    int minv, maxv;
+    int count = 0;
+    bool found;
+    int i;
+    int affflag;
+    bool findflag;
+    int tlevel, ulevel, llevel;
+    const struct flag_type *table;
+    bool foundlevel;
+
+    found   = FALSE;
+    nMatch  = 0;
+    buffer = new_buf();
+    argument = one_argument( argument, arg1 );
+    argument = one_argument( argument, arg2 );
+    argument = one_argument( argument, arg3 );
+    argument = one_argument( argument, arg4 );
+    argument = one_argument (argument, arg5 );
+
+    if ( arg1[0] == '\0' || arg2[0] == '\0' || arg3[0] == '\0')
+    {
+        send_to_char( "{WSyntax is   : {xflagfind <obj/mob/room> <type> <flag>\n\r", ch );
+        send_to_char( "{WObj types   : {xextra, wear, affect, damage, type, weapon, special, spell\n\r",ch);
+        send_to_char( "{WMob types   : {xlevel, race, special, shop, aff, aff2, act, act2, off, res, vuln, imm, attr, abil\n\r",ch);
+        send_to_char( "{WRoom types  : {xsector, room\n\r",ch);
+        send_to_char( "{WSyntax Note : {xSee '{chelp flagfind{x' for special syntax.\n\r", ch);
+        return;
+    }
+
+    pArea = ch->in_room->area;
+
+    if (pArea == NULL)
+    {
+        sendch("Error! Null area!\n\r", ch);
+        return;
+    }
+
+    minv = pArea->min_vnum;
+    maxv = pArea->max_vnum;
+
+    if(!str_prefix(arg1,"mob"))
+    {
+
+        if (!str_prefix(arg2, "level"))
+        {
+            if (is_number(arg3))
+            {
+                tlevel = LEVEL_IS;
+                llevel = atoi(arg3);
+            } else if (!str_prefix(arg3, "above"))
+            {
+                tlevel = LEVEL_ABOVE;
+                if (!is_number(arg4))
+                {
+                    sendch("Search for mobs above which level?\n\r", ch);
+                    return;
+                } else
+                    llevel = atoi(arg4);
+            } else if (!str_prefix(arg3, "below"))
+            {
+                tlevel = LEVEL_BELOW;
+                if (!is_number(arg4))
+                {
+                    sendch("Search for mobs below which level?\n\r", ch);
+                    return;
+                } else
+                    ulevel = atoi(arg4);
+            } else if (!str_prefix(arg3, "between"))
+            {
+                tlevel = LEVEL_BETWEEN;
+                if (!is_number(arg4) || !is_number(arg5))
+                {
+                    sendch("Search for mobs between which levels?\n\r", ch);
+                    return;
+                } else {
+                    if (atoi(arg4) > atoi(arg5))
+                    {
+                        ulevel = atoi(arg4);
+                        llevel = atoi(arg5);
+                    } else {
+                        ulevel = atoi(arg5);
+                        llevel = atoi(arg4);
+                    }
+                }
+            } else {
+                sendch("Search for mobs of what level?\n\r", ch);
+                return;
+            }
+        }
+
+        findflag = TRUE;
+        if(!str_cmp(arg2, "affect") || !str_cmp(arg2, "aff"))
+            table = &affect_flags;
+        else if (!str_cmp(arg2, "affect2") || !str_cmp(arg2, "aff2"))
+            table = &affect2_flags;
+        else if (!str_cmp(arg2, "act"))
+            table = &act_flags;
+        else if (!str_cmp(arg2, "act2"))
+            table = &act2_flags;
+        else if (!str_prefix(arg2, "immune"))
+            table = &imm_flags;
+        else if (!str_prefix(arg2, "resist"))
+            table = &res_flags;
+        else if (!str_prefix(arg2, "vulnerable"))
+            table = &vuln_flags;
+        else if (!str_prefix(arg2, "offense"))
+            table = &off_flags;
+        else if (!str_prefix(arg2, "attributes"))
+            table = &attr_flags;
+        else if (!str_prefix(arg2, "abilities"))
+            table = &abil_flags;
+        else
+            findflag = FALSE;
+
+        if (findflag)
+        {
+            bool bitfound = FALSE;
+            for (i = 0; table[i].name != NULL; i++)
+                {
+                    if (!str_prefix(arg3, table[i].name))
+                    {
+                        affflag = table[i].bit;
+                        bitfound = TRUE;
+                }
+            }
+            if (!bitfound)
+                {sprintf(buf, "Bit '%s' not found.\n\r", arg3);
+                sendch(buf, ch);
+                return;
+            }
+        }
+
+
+        for ( vnum = minv; vnum < maxv; vnum++ )
+        {
+            if ( ( pMobIndex = get_mob_index( vnum ) ) != NULL )
+            {
+                nMatch++;
+                if(!str_prefix(arg2, "race") && pMobIndex->race == race_lookup(arg3))
+                {
+                    found = TRUE;
+                    count++;
+                    sprintf( buf, "%s(%3d) [%5d] %s\n\r",
+                    pMobIndex->count ? "*" : " ",count,pMobIndex->vnum, pMobIndex->short_descr );
+                    add_buf(buffer,buf);
+                }
+                if(!str_prefix(arg2, "shop") && pMobIndex->pShop != NULL)
+                {
+                    found = TRUE;
+                    count++;
+                    sprintf( buf, "%s(%3d) [%5d] %s\n\r",
+                    pMobIndex->count ? "*" : " ",count,pMobIndex->vnum, pMobIndex->short_descr );
+                    add_buf(buffer,buf);
+                }
+
+                if(!str_prefix(arg2, "special") && pMobIndex->spec_fun != NULL &&
+                    !str_cmp(arg3, spec_name(pMobIndex->spec_fun)))
+                {
+                    found = TRUE;
+                    count++;
+                    sprintf( buf, "%s(%3d) [%5d] %s\n\r",
+                    pMobIndex->count ? "*" : " ",count,pMobIndex->vnum, pMobIndex->short_descr );
+                    add_buf(buffer,buf);
+                }
+
+                if (!str_prefix(arg2, "level"))
+                {
+                    foundlevel = FALSE;
+                    switch (tlevel)
+                    {
+                        case LEVEL_IS:
+                            if (pMobIndex->level == llevel)
+                                foundlevel = TRUE;
+                            break;
+                        case LEVEL_ABOVE:
+                            if (pMobIndex->level > llevel)
+                                foundlevel = TRUE;
+                            break;
+                        case LEVEL_BELOW:
+                            if (pMobIndex->level < ulevel)
+                                foundlevel = TRUE;
+                            break;
+                        case LEVEL_BETWEEN:
+                            if (pMobIndex->level > llevel && pMobIndex->level < ulevel)
+                                foundlevel = TRUE;
+                            break;
+                        default: break;
+                    }
+                    if (foundlevel)
+                    {
+                        found = TRUE;
+                        count++;
+                        sprintf( buf, "%s(%3d) [%5d] %s\n\r",
+                        pMobIndex->count ? "*" : " ",count,pMobIndex->vnum, pMobIndex->short_descr );
+                        add_buf(buffer,buf);
+                        foundlevel = FALSE;
+                    }
+                }
+
+                if(!str_prefix(arg2, "offense") && IS_SET(pMobIndex->off_flags, affflag))
+                {
+                    found = TRUE;
+                    count++;
+                    sprintf( buf, "%s(%3d) [%5d] %s\n\r",
+                    pMobIndex->count ? "*" : " ",count, pMobIndex->vnum, pMobIndex->short_descr);
+                    add_buf(buffer,buf);
+                }
+
+                if(!str_prefix(arg2, "immune") && IS_SET(pMobIndex->imm_flags, affflag))
+                {
+                    found = TRUE;
+                    count++;
+                    sprintf( buf, "%s(%3d) [%5d] %s\n\r",
+                    pMobIndex->count ? "*" : " ",count, pMobIndex->vnum, pMobIndex->short_descr);
+                    add_buf(buffer,buf);
+                }
+
+                if(!str_prefix(arg2, "resistant") && IS_SET(pMobIndex->res_flags, affflag))
+                {
+                    found = TRUE;
+                    count++;
+                    sprintf( buf, "%s(%3d) [%5d] %s\n\r",
+                    pMobIndex->count ? "*" : " ",count, pMobIndex->vnum, pMobIndex->short_descr);
+                    add_buf(buffer,buf);
+                }
+
+                if(!str_prefix(arg2, "vulnerable") && IS_SET(pMobIndex->vuln_flags, affflag))
+                {
+                    found = TRUE;
+                    count++;
+                    sprintf( buf, "%s(%3d) [%5d] %s\n\r",
+                    pMobIndex->count ? "*" : " ",count, pMobIndex->vnum, pMobIndex->short_descr);
+                    add_buf(buffer,buf);
+                }
+
+                if((!str_cmp(arg2, "affect") || !str_cmp(arg2, "aff")) && IS_AFFECTED(pMobIndex, affflag))
+                {
+                    found = TRUE;
+                    count++;
+                    sprintf( buf, "%s(%3d) [%5d] %s\n\r",
+                    pMobIndex->count ? "*" : " ",count, pMobIndex->vnum, pMobIndex->short_descr);
+                    add_buf(buffer,buf);
+                }
+                if((!str_cmp(arg2, "affect2") || !str_cmp(arg2, "aff2")) && IS_AFFECTED2(pMobIndex, affflag))
+                {
+                    found = TRUE;
+                    count++;
+                    sprintf( buf, "%s(%3d) [%5d] %s\n\r",
+                    pMobIndex->count ? "*" : " ",count, pMobIndex->vnum, pMobIndex->short_descr);
+                    add_buf(buffer,buf);
+                }
+
+                if(!str_cmp(arg2, "act") && IS_SET(pMobIndex->act, affflag))
+                {
+                    found = TRUE;
+                    count++;
+                    sprintf( buf, "%s(%3d) [%5d] %s\n\r",
+                    pMobIndex->count ? "*" : " ",count, pMobIndex->vnum, pMobIndex->short_descr);
+                    add_buf(buffer,buf);
+                }
+
+                if(!str_cmp(arg2, "act2") && IS_SET(pMobIndex->act2, affflag))
+                {
+                    found = TRUE;
+                    count++;
+                    sprintf( buf, "%s(%3d) [%5d] %s\n\r",
+                    pMobIndex->count ? "*" : " ",count, pMobIndex->vnum, pMobIndex->short_descr);
+                    add_buf(buffer,buf);
+                }
+
+                if(!str_prefix(arg2, "attribute") && IS_SET(pMobIndex->attr_flags, affflag))
+                {
+                    found = TRUE;
+                    count++;
+                    sprintf( buf, "%s(%3d) [%5d] %s\n\r",
+                    pMobIndex->count ? "*" : " ",count, pMobIndex->vnum, pMobIndex->short_descr);
+                    add_buf(buffer,buf);
+                }
+
+                if(!str_prefix(arg2, "abilities") && IS_SET(pMobIndex->abil_flags, affflag))
+                {
+                    found = TRUE;
+                    count++;
+                    sprintf( buf, "%s(%3d) [%5d] %s\n\r",
+                    pMobIndex->count ? "*" : " ",count, pMobIndex->vnum, pMobIndex->short_descr);
+                    add_buf(buffer,buf);
+                }
+
+
+            }
+        }
+
+    }
+    if(!str_prefix(arg1,"obj"))
+    {
+        for ( vnum = minv; vnum < maxv; vnum++ )
+        {
+            if ( ( pObjIndex = get_obj_index( vnum ) ) != NULL )
+            {
+                nMatch++;
+                if(!str_prefix(arg2,"extra"))
+                {
+                    if ( is_exact_name( arg3, extra_bit_name( pObjIndex->extra_flags ) ) )
+                    {
+                        found = TRUE;
+                        count++;
+                        sprintf( buf, "%s(%3d) [%5d] %s\n\r",
+                        get_obj_world(ch,pObjIndex->name) ? "*" : " ",
+                        count,pObjIndex->vnum, pObjIndex->short_descr );
+                        add_buf(buffer,buf);
+                    }
+                }
+                else if(!str_prefix(arg2,"wear"))
+                {
+                    if ( is_exact_name( arg3, wear_bit_name( pObjIndex->wear_flags ) ) )
+                    {
+                        found = TRUE;
+                        count++;
+                        sprintf( buf, "%s(%3d) [%5d] %s\n\r",
+                        get_obj_world(ch,pObjIndex->name) ? "*" : " ",
+                        count,pObjIndex->vnum, pObjIndex->short_descr );
+                        add_buf(buffer,buf);
+                    }
+                }
+                else if(!str_prefix(arg2,"affect"))
+                {
+                    for ( paf = pObjIndex->affected; paf != NULL; paf = paf->next )
+                    {
+                        if(paf->bitvector && !str_prefix(affect_bit_name(paf->bitvector), arg3))
+                        {
+                            found = TRUE;
+                            count++;
+                            sprintf( buf, "%s(%3d) [%5d] %s\n\r",
+                            get_obj_world(ch,pObjIndex->name) ? "*" : " ",
+                            count,pObjIndex->vnum, pObjIndex->short_descr );
+                            add_buf(buffer,buf);
+                        }
+                    }
+                }
+                else if(!str_prefix(arg2,"damage"))
+                {
+                    if(pObjIndex->item_type == ITEM_WEAPON && pObjIndex->value[3] < MAX_DAMAGE_MESSAGE && !str_prefix(attack_table[pObjIndex->value[3]].noun, arg3))
+                    {
+                        found = TRUE;
+                        count++;
+                        sprintf( buf, "%s(%3d) [%5d] %s\n\r",
+                        get_obj_world(ch,pObjIndex->name) ? "*" : " ",
+                        count,pObjIndex->vnum, pObjIndex->short_descr );
+                        add_buf(buffer,buf);
+                    }
+                }
+                else if(!str_prefix(arg2,"type"))
+                {
+                    if(!str_prefix(item_name(pObjIndex->item_type),arg3))
+                    {
+                        found = TRUE;
+                        count++;
+                        sprintf( buf, "%s(%3d) [%5d] %s\n\r",
+                        get_obj_world(ch,pObjIndex->name) ? "*" : " ",
+                        count,pObjIndex->vnum, pObjIndex->short_descr );
+                        add_buf(buffer,buf);
+                    }
+                }
+                else if(!str_prefix(arg2,"weapon"))
+                {
+                    if(pObjIndex->item_type == ITEM_WEAPON && !str_prefix(weapon_class[pObjIndex->value[0]].name, arg3))
+                    {
+                        found = TRUE;
+                        count++;
+                        sprintf( buf, "%s(%3d) [%5d] %s\n\r",
+                        get_obj_world(ch,pObjIndex->name) ? "*" : " ",
+                        count,pObjIndex->vnum, pObjIndex->short_descr );
+                        add_buf(buffer,buf);
+                    }
+                }
+                else if(!str_prefix(arg2,"special"))
+                {
+                    if(pObjIndex->item_type == ITEM_WEAPON && !str_prefix(weapon_bit_name(pObjIndex->value[4]), arg3))
+                    {
+                        found = TRUE;
+                        count++;
+                        sprintf( buf, "%s(%3d) [%5d] %s\n\r",
+                        get_obj_world(ch,pObjIndex->name) ? "*" : " ",
+                        count,pObjIndex->vnum, pObjIndex->short_descr );
+                        add_buf(buffer,buf);
+                    }
+                }
+                else if(!str_prefix(arg2,"spell"))
+                {
+                    if((pObjIndex->item_type == ITEM_SCROLL || pObjIndex->item_type == ITEM_POTION ||
+                        pObjIndex->item_type == ITEM_PILL) &&
+                        ((pObjIndex->value[1] >= 0 && pObjIndex->value[1] < MAX_SKILL &&
+                        !str_prefix(skill_table[pObjIndex->value[1]].name, arg3)) ||
+                        (pObjIndex->value[2] >= 0 && pObjIndex->value[2] < MAX_SKILL &&
+                        !str_prefix(skill_table[pObjIndex->value[2]].name, arg3)) ||
+                        (pObjIndex->value[3] >= 0 && pObjIndex->value[3] < MAX_SKILL &&
+                        !str_prefix(skill_table[pObjIndex->value[3]].name, arg3)) ||
+                        (pObjIndex->value[4] >= 0 && pObjIndex->value[4] < MAX_SKILL &&
+                        !str_prefix(skill_table[pObjIndex->value[4]].name, arg3))))
+                        {
+                            found = TRUE;
+                            count++;
+                            sprintf( buf, "%s(%3d) [%5d] %s\n\r",
+                            get_obj_world(ch,pObjIndex->name) ? "*" : " ",
+                            count,pObjIndex->vnum, pObjIndex->short_descr );
+                            add_buf(buffer,buf);
+                        }
+                    if((pObjIndex->item_type == ITEM_WAND || pObjIndex->item_type == ITEM_STAFF) &&
+                        (pObjIndex->value[3] >= 0 && pObjIndex->value[3] < MAX_SKILL &&
+                        !str_prefix(skill_table[pObjIndex->value[3]].name, arg3)))
+                        {
+                            found = TRUE;
+                            count++;
+                            sprintf( buf, "%s(%3d) [%5d] %s\n\r",
+                            get_obj_world(ch,pObjIndex->name) ? "*" : " ",
+                            count,pObjIndex->vnum, pObjIndex->short_descr );
+                            add_buf(buffer,buf);
+                        }
+                }
+            }
+        }
+    }
+/*Sengir added sector types for rooms to flagfind*/
+    if (!str_prefix(arg1, "room"))
+    {
+        for (vnum = minv; vnum < maxv; vnum++)
+        {
+            if ((pRoomIndex = get_room_index(vnum)) != NULL)
+            {
+                nMatch++;
+                if(!str_prefix(arg2, "sector"))
+                {
+                    if (!str_cmp(arg3, flag_string(sector_flags,pRoomIndex->sector_type)))
+                    {
+                        found = TRUE;
+                        count++;
+                        sprintf( buf, " (%3d) [%5d] %s\n\r", count, pRoomIndex->vnum, pRoomIndex->name);
+                        add_buf(buffer,buf);
+                    }
+                }
+
+                if(!str_prefix(arg2, "room"))
+                {
+                    if (!str_cmp(arg3, flag_string(room_flags, pRoomIndex->room_flags)))
+                    {
+                        found = TRUE;
+                        count++;
+                        sprintf( buf, " (%3d) [%5d] %s\n\r", count, pRoomIndex->vnum, pRoomIndex->name);
+                        add_buf(buffer,buf);
+                    }
+                }
+            }
+        }
+    }
+
+    if ( !found )
+        send_to_char( "Nothing with those flags.\n\r", ch );
+    else
+        page_to_char(buf_string(buffer),ch);
+
+    return;
+}
 
 void do_owhere(CHAR_DATA *ch, char *argument )
 {

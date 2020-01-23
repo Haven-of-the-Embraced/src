@@ -340,6 +340,7 @@ DECLARE_DO_FUN( do_violate  );
 DECLARE_DO_FUN( do_vnum     );
 DECLARE_DO_FUN( do_vlist    );
 DECLARE_DO_FUN( do_flagfind );
+DECLARE_DO_FUN( do_areaflagfind);
 DECLARE_DO_FUN( do_wake );
 DECLARE_DO_FUN( do_wear );
 DECLARE_DO_FUN( do_weather  );

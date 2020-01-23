@@ -1688,6 +1688,7 @@ void do_phantasm (CHAR_DATA *ch, char *argument)
 {
     AFFECT_DATA af;
     int level;
+    bool perm = FALSE;
 
     if (!can_use_disc(ch, CHIMERSTRY, 3, 0, TRUE))
         return;
@@ -1710,14 +1711,25 @@ void do_phantasm (CHAR_DATA *ch, char *argument)
         send_to_char("You do not have enough will to bring forth this creation.\n\r",ch);
         return;
     }
+    level = ch->pcdata->discipline[CHIMERSTRY];
+
+    if (!str_prefix(argument, "permanent") && level > 3)
+    {
+        perm = TRUE;
+        if (ch->pblood > 25)
+            ch->pblood -= 20;
+        else {
+            sendch("You do not have enough blood to make this effect permanent!\n\r", ch);
+            perm = FALSE;
+        }
+    }
 
     ch->cswillpower -= 1;
 
-    level = ch->pcdata->discipline[CHIMERSTRY];
     af.where     = TO_AFFECTS;
     af.type      = gsn_phantasm;
     af.level     = level;
-    if (level < 4)
+    if (!perm)
         af.duration  = level * 2;
     else
         af.duration = -1;
@@ -1725,7 +1737,7 @@ void do_phantasm (CHAR_DATA *ch, char *argument)
     af.modifier  = 0;
     af.bitvector = 0;
     affect_to_char( ch, &af );
-    if (level < 4)
+    if (!perm)
     {
         af.type     = gsn_chimerstry;
         af.duration = level * 6;

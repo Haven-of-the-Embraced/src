@@ -2189,10 +2189,10 @@ if (DEBUG_MESSAGES || IS_DEBUGGING(ch))	{
      * Inform the victim of his new state.
      */
     victim->hit -= dam;
-    if ( !IS_NPC(victim)
+    if ( victim->hit < 1 && ((!IS_NPC(victim)
     &&   !IS_SET(victim->act,PLR_ARENA)
-    &&   victim->level >= LEVEL_IMMORTAL
-    &&   victim->hit < 1 )
+    &&   victim->level >= LEVEL_IMMORTAL)
+    || !fatal) )
     victim->hit = 1;
 
     if(dt != gsn_fireshield && dt != gsn_holyshield && dt != gsn_darkshield && dt != gsn_gift_porcupine && dt != gsn_vicissitude_bonecraft)

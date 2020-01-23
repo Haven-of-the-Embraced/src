@@ -2942,9 +2942,9 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                     {
                         found = TRUE;
                         count++;
-                        sprintf( buf, "{m%s{w(%3d) {W[{G%5d{W] <{Blvl {M%3d{W> %s\n\r",
+                        sprintf( buf, "%s(%3d) [%5d] %s\n\r",
                         get_obj_world(ch,pObjIndex->name) ? "*" : " ",
-                        count,pObjIndex->vnum, pObjIndex->level, pObjIndex->short_descr );
+                        count,pObjIndex->vnum, pObjIndex->short_descr );
                         add_buf(buffer,buf);
                     }
                 }
@@ -2954,9 +2954,9 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                     {
                         found = TRUE;
                         count++;
-                        sprintf( buf, "{m%s{w(%3d) {W[{G%5d{W] <{Blvl {M%3d{W> {w%s\n\r",
+                        sprintf( buf, "%s(%3d) [%5d] %s\n\r",
                         get_obj_world(ch,pObjIndex->name) ? "*" : " ",
-                        count,pObjIndex->vnum, pObjIndex->level, pObjIndex->short_descr );
+                        count,pObjIndex->vnum, pObjIndex->short_descr );
                         add_buf(buffer,buf);
                     }
                 }

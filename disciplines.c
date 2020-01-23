@@ -1603,6 +1603,7 @@ void do_chimaera(CHAR_DATA *ch, char *argument)
     AFFECT_DATA af;
     char buf[MSL];
     int level;
+    bool perm;
 
     if (IS_NPC(ch)) return;
 
@@ -1637,6 +1638,17 @@ void do_chimaera(CHAR_DATA *ch, char *argument)
 
     level = ch->pcdata->discipline[CHIMERSTRY];
 
+    if (!str_prefix(argument, "permanent") && level > 3)
+    {
+        if (ch->pblood < 15)
+        {
+            sendch("You do not have enough blood to make this illusion permanent!\n\r", ch);
+        } else {
+            perm = TRUE;
+            ch->pblood -= 10;
+        }
+    }
+
     WAIT_STATE(ch, 3 * PULSE_VIOLENCE);
 
     mob = create_mobile( pMobIndex );
@@ -1649,7 +1661,7 @@ void do_chimaera(CHAR_DATA *ch, char *argument)
     af.where     = TO_AFFECTS;
     af.type      = gsn_chimaera;
     af.level     = level;
-    if (level < 4)
+    if (!perm)
         af.duration  = level * 2;
     else
         af.duration = -1;
@@ -1658,7 +1670,7 @@ void do_chimaera(CHAR_DATA *ch, char *argument)
     af.bitvector = AFF_CHARM;
     affect_to_char( mob, &af );
 
-    if (level < 4)
+    if (!perm)
     {
     af.type      = gsn_chimerstry;
     af.duration  = level * 3;

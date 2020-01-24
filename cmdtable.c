@@ -186,6 +186,7 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "mortalterrors", do_mortalterrors},
     { "chimaera", do_chimaera},
     { "phantasm", do_phantasm},
+    { "horridreality", do_horridreality},
 
 /* for human guilds */
     { "ictalk", do_ictalk},

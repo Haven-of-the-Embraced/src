@@ -542,6 +542,7 @@ DECLARE_DO_FUN( do_xp_boost);
 DECLARE_DO_FUN( do_chimaera);
 DECLARE_DO_FUN( do_ignis_fatuus);
 DECLARE_DO_FUN( do_phantasm);
+DECLARE_DO_FUN( do_horridreality);
 /*New code by Sengir*/
 //DECLARE_DO_FUN( do_celerity );
 DECLARE_DO_FUN( do_celerity  );

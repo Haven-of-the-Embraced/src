@@ -1547,6 +1547,7 @@ void do_ignis_fatuus( CHAR_DATA *ch, char *argument)
     if (victim == ch)
     {
         send_to_char("Clearly you don't need help with that!\n\r",ch);
+        return;
     }
 
     if (IS_AFFECTED2(victim, AFF2_IGNIS_FATUUS))

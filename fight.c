@@ -5470,7 +5470,7 @@ void do_assassinate( CHAR_DATA *ch, char *argument )
       return;
     } else {
       check_improve(ch,gsn_assassinate,FALSE,4);
-      do_function(ch, &do_backstab, victim->name);
+      do_function(ch, &do_backstab, arg);
     }
 }
 void do_divine_strength(CHAR_DATA *ch, char *argument )

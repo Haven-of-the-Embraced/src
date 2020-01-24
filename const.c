@@ -1846,6 +1846,10 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_SLEEPING,
     &gsn_phantasm,            SLOT(0),   0, 12, "phantasm",           "The illusion masking your true position fades away.", "" },
 
+    { "horrid reality",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_SLEEPING,
+    &gsn_horridreality,            SLOT(0),   0, 12, "horrid reality",           "!Horrid Reality!", "" },
+
     { "chimerstry",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_SLEEPING,
     &gsn_chimerstry,            SLOT(0),   0, 12, "chimerstry",           "You once again feel strong enough to twist reality to your whim.", "" },

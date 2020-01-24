@@ -4748,6 +4748,7 @@ sh_int		gsn_ignis_fatuus;
 sh_int      gsn_chimaera;
 sh_int      gsn_chimerstry;
 sh_int      gsn_phantasm;
+sh_int      gsn_horridreality;
 
 /* garou gifts */
 sh_int          gsn_gift_porcupine;

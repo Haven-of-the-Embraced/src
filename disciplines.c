@@ -1762,49 +1762,80 @@ void do_phantasm (CHAR_DATA *ch, char *argument)
     return;
 }
 
-/*
-// Ravnos discs
-void do_ignis_fatuus(CHAR_DATA *ch, char *argument)
+#define FLAMES 0
+#define BLADES 1
 
+void do_horridreality(CHAR_DATA *ch, char *argument)
 {
-   AFFECT_DATA af;
-   CHAR_DATA *victim;
-   char buf[MAX_STRING_LENGTH];
+    CHAR_DATA *victim;
+    int dice, diff, success;
+    char arg1[MIL];
+    char arg2[MIL];
+    int  type;
 
-   char arg[MAX_INPUT_LENGTH];
-   int chance;
+    if (IS_NPC(ch))
+        return;
 
-    if (IS_NPC(ch)) return;
+    if (!can_use_disc(ch, CHIMERSTRY, 5, 0, TRUE))
+        return;
 
+    argument = one_argument(argument, arg1);
+    argument = one_argument(argument, arg2);
 
-    argument = one_argument( argument, arg );
-
-    if(!IS_VAMP(ch))
-    {
-        send_to_char("You are not a vampire!\n\r" ,ch);
+    if ( !str_prefix(arg1, "flames") )
+        type = FLAMES;
+    else if (!str_prefix(arg1, "blades"))
+        type = BLADES;
+    else {
+        sendch("Inflict illusions of FLAMES or BLADES?\n\r", ch);
         return;
     }
 
-  if(ch->pcdata->discipline[CHIMERSTRY] < 1)
-  {
-      send_to_char("You are not skilled enough in Chimerstry to perform this!\n\r",ch);
-  }
-    af.where     = TO_AFFECTS2;
-    af.type      = gsn_ignis_fatuus;
-    af.level     = ch->level;
-    af.duration  = 3;
-    af.modifier  = -50 * ch->pcdata->discipline[CHIMERSTRY];
-    af.location  = APPLY_HITROLL;
-    af.bitvector = AFF2_IGNIS_FATUUS;
-    affect_to_char( ch, &af );
+    if ( ( victim = get_char_room( ch, arg2 ) ) == NULL &&
+        (victim = ch->fighting) == NULL )
+    {
+        send_to_char("Who do you wish to inflict this horrid reality upon?\n\r",ch);
+        return;
+    }
 
+    if (victim == ch)
+    {
+        send_to_char("You are well aware of the Horrors reality has to offer...\n\r",ch);
+        return;
+    }
 
-printf(buf, "You confuse %s\n\r", victim->name);
-    send_to_char(buf,ch);
+    if (ch->cswillpower < 2)
+    {
+        send_to_char("You do not have enough will to bring forth this creation.\n\r",ch);
+        return;
+    }
+    ch->cswillpower -= 2;
+    dice = get_attribute(ch, MANIPULATION) + get_ability(ch, CSABIL_SUBTERFUGE);
+    diff = get_attribute(victim, PERCEPTION) + IS_NPC(victim) ?
+            victim->cswillpower / 2 : victim->pcdata->csvirtues[SELF_CONTROL];
+    success = godice(dice, diff);
 
+    if (success < 1)
+    {
+        act("$N is not fooled by your illusions!", ch, NULL, victim, TO_CHAR);
+        multi_hit(victim, ch, TYPE_UNDEFINED);
+        return;
+    }
+
+    if (type == FLAMES)
+    {
+        act("You engulf $N in illusory flames, leaving them with horrible burns!", ch, NULL, victim, TO_CHAR);
+        act("$n concentrates for a moment, and $N begins shrieking as horrible burns begin appearing all over $S body!", ch, NULL, victim, TO_ROOM);
+        act("You are suddenly engulfed in flames!", ch, NULL, victim, TO_VICT);
+        d10_damage(ch, victim, success, victim->max_hit/7, gsn_horridreality, DAM_FIRE, DEFENSE_NONE, TRUE, FALSE);
+    } else {
+        act("You shower $N in a hail of blades, cutting them to shreds!", ch, NULL, victim, TO_CHAR);
+        act("$n concentrates for a moment, and $N begins shrieking as large gashes begin appearing all over $S body!", ch, NULL, victim, TO_ROOM);
+        act("You are suddenly assaulted by a hail of flying blades!", ch, NULL, victim, TO_VICT);
+        d10_damage(ch, victim, success, victim->max_hit/7, gsn_horridreality, DAM_SLASH, DEFENSE_NONE, TRUE, FALSE);
+
+    }
 }
-*/
-
 
 void do_command(CHAR_DATA *ch, char *argument)
 {

@@ -1813,6 +1813,10 @@ void do_horridreality(CHAR_DATA *ch, char *argument)
     dice = get_attribute(ch, MANIPULATION) + get_ability(ch, CSABIL_SUBTERFUGE);
     diff = get_attribute(victim, PERCEPTION) + IS_NPC(victim) ?
             victim->cswillpower / 2 : victim->pcdata->csvirtues[SELF_CONTROL];
+    if (diff < 5)
+        diff = 5;
+    if (diff > 9)
+        diff = 9;
     success = godice(dice, diff);
 
     if (success < 1)

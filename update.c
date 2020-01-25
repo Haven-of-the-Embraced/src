@@ -1146,7 +1146,7 @@ if (ch->qpoints > 30000)
         if(ch->pblood < 0) ch->pblood = 0;
         if(ch->pblood < ch->max_pblood && IS_IMMORTAL(ch)) ch->pblood = ch->max_pblood;
 
-        if(ch->position != POS_TORPOR && ch->in_room && !room_is_dark( ch->in_room ) &&
+        if(!IS_NEWBIE(ch) && ch->position != POS_TORPOR && ch->in_room && !room_is_dark( ch->in_room ) &&
         IS_OUTSIDE(ch) && time_info.hour < 19 && time_info.hour > 5 && !IS_IMMORTAL(ch)
         && !IS_NPC(ch) && !IS_SET(ch->imm_flags,IMM_SUNLIGHT) && !is_affected(ch,gsn_earthmeld)
         && !nosun && !IS_SET(ch->act,PLR_IC))

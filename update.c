@@ -1146,7 +1146,7 @@ if (ch->qpoints > 30000)
         if(ch->pblood < 0) ch->pblood = 0;
         if(ch->pblood < ch->max_pblood && IS_IMMORTAL(ch)) ch->pblood = ch->max_pblood;
 
-        if(!IS_NEWBIE(ch) && ch->position != POS_TORPOR && ch->in_room && !room_is_dark( ch->in_room ) &&
+        if(ch->position != POS_TORPOR && ch->in_room && !room_is_dark( ch->in_room ) &&
         IS_OUTSIDE(ch) && time_info.hour < 19 && time_info.hour > 5 && !IS_IMMORTAL(ch)
         && !IS_NPC(ch) && !IS_SET(ch->imm_flags,IMM_SUNLIGHT) && !is_affected(ch,gsn_earthmeld)
         && !nosun && !IS_SET(ch->act,PLR_IC))
@@ -1155,17 +1155,23 @@ if (ch->qpoints > 30000)
             {
                 act( "$n flinches in pain as a few stray beams of sunlight cause $s skin to smoulder.", ch, NULL, NULL, TO_ROOM);
                 send_to_char("You flinch reflexively as a few beams of sunlight pass through the clouds and caress your skin.\n\r", ch);
+                if (!IS_NEWBIE(ch))
+                {
                 damage( ch, ch, ch->max_hit/(30+(ch->pcdata->discipline[FORTITUDE]*5)), 0, DAM_SUNLIGHT, FALSE);
                 if(is_affected(ch,gsn_shadowform))
                     damage( ch, ch, ch->max_hit/(8+(ch->pcdata->discipline[FORTITUDE]*2)), 0, DAM_SUNLIGHT, FALSE);
+                }
             }
             else
             {
                 act( "$n screams in agony as $s skin smoulders beneath the blazing sun.", ch, NULL, NULL, TO_ROOM );
                 send_to_char( "You scream in pain as your skin smoulders beneath the blazing sun.\n\r", ch );
+                if (!IS_NEWBIE(ch))
+                {
                 damage( ch, ch, ch->max_hit/(15+(ch->pcdata->discipline[FORTITUDE]*5)), 0, DAM_SUNLIGHT, FALSE);
                 if(is_affected(ch,gsn_shadowform))
                     damage( ch, ch, ch->max_hit/(8+(ch->pcdata->discipline[FORTITUDE]*2)), 0, DAM_SUNLIGHT, FALSE);
+                }
 /* disabled to reduce lag... maybe - Ugha
                 if(!IS_NPC(ch) && IS_SET(ch->act,PLR_PUEBLO))
                     send_html("<img xch_sound=play href=http://haven.wolfpaw.net/pueblo/sounds/sunlight.wav>",ch,TO_ROOM);

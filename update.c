@@ -1029,10 +1029,9 @@ if (ch->qpoints > 30000)
     }
 
 
-    if ((ch->played/3600) > 15 && IS_SET(ch->act2, PLR2_NEWBIE))
-    {
+    if ((ch->played/3600) > 24 && IS_SET(ch->act2, PLR2_NEWBIE))
         REMOVE_BIT(ch->act2, PLR2_NEWBIE);
-    }
+
     if (!IS_NPC(ch) && ch->pcdata->influenced > 0)
     {
         ch->pcdata->influenced--;

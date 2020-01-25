@@ -2126,13 +2126,6 @@ bool d10_damage(CHAR_DATA *ch, CHAR_DATA *victim, int damsuccess, int modifier, 
     if (dam_type <= DAM_SLASH || dt == attack_lookup("claws") )
         armordice += get_armor_diff(ch, victim, dam_type);
 
-    //Protective Spells go here!
-    if (IS_AFFECTED(victim, AFF_SANCTUARY))
-        if (armordice > 2)
-            armordice *=2;
-        else
-            armordice = 4;
-
     switch (defense) {
         case DEFENSE_NONE: soak = 0; break;
         case DEFENSE_SOAK: soak = godice(soakdice, 6); break;
@@ -2151,6 +2144,12 @@ bool d10_damage(CHAR_DATA *ch, CHAR_DATA *victim, int damsuccess, int modifier, 
     // Bashing damage is halved.
     if (dam_type == DAM_BASH && IS_VAMP(victim))
         dam /= 2;
+
+    //Protective Spells go here!
+    if (IS_AFFECTED(victim, AFF_SANCTUARY))
+        dam /= 2;
+    if (IS_NEWBIE(victim))
+        dam = 2*dam/3;
 
 	if (dam < 1)
 		dam = 0;

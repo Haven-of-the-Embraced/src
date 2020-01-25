@@ -1239,6 +1239,9 @@ bool damage(CHAR_DATA *ch,CHAR_DATA *victim,int dam,int dt,int dam_type,
     if ( dam > 1 && IS_AFFECTED(victim, AFF_SANCTUARY) )
     dam /= 2;
 
+    if (IS_NEWBIE(victim))
+        dam = 2*dam/3;
+
     if (dam_type <= 3) dam = dam/2;
 
     immune = FALSE;
@@ -2144,6 +2147,10 @@ bool d10_damage(CHAR_DATA *ch, CHAR_DATA *victim, int damsuccess, int modifier, 
     // Bashing damage is halved.
     if (dam_type == DAM_BASH && IS_VAMP(victim))
         dam /= 2;
+
+    //Newbie Bonus. Whee!    
+    if (IS_NEWBIE(ch))
+        dam = 3*dam/2;
 
     //Protective Spells go here!
     if (IS_AFFECTED(victim, AFF_SANCTUARY))

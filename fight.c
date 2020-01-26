@@ -1484,6 +1484,8 @@ bool damage(CHAR_DATA *ch,CHAR_DATA *victim,int dam,int dt,int dam_type,
     case POS_TORPOR:
     act( "$n falls to the floor as they enter {RT{ro{Drp{ro{Rr{x.",
         victim, NULL, NULL, TO_ROOM );
+    if (IS_NPC(victim))
+        act("'Behead' $n to send them into Final Death!", victim, NULL, NULL, TO_NEWBIEALL);
     send_to_char("You enter {RT{ro{Drp{ro{Rr{x.\n\r",
         victim );
     break;
@@ -2148,7 +2150,7 @@ bool d10_damage(CHAR_DATA *ch, CHAR_DATA *victim, int damsuccess, int modifier, 
     if (dam_type == DAM_BASH && IS_VAMP(victim))
         dam /= 2;
 
-    //Newbie Bonus. Whee!    
+    //Newbie Bonus. Whee!
     if (IS_NEWBIE(ch))
         dam = 3*dam/2;
 
@@ -2345,6 +2347,8 @@ if (DEBUG_MESSAGES || IS_DEBUGGING(ch))	{
     case POS_TORPOR:
     act( "$n falls to the floor as they enter {RT{ro{Drp{ro{Rr{x.",
         victim, NULL, NULL, TO_ROOM );
+    if (IS_NPC(victim))
+        act("'Behead' $n to send them into Final Death!", victim, NULL, NULL, TO_NEWBIEALL);
     send_to_char("You enter {RT{ro{Drp{ro{Rr{x.\n\r",
         victim );
     break;

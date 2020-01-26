@@ -619,6 +619,8 @@ struct  con_app_type
 #define TO_VICT         2
 #define TO_CHAR         3
 #define TO_ALL          4
+#define TO_NEWBIECH     5
+#define TO_NEWBIEALL    6
 
 #define MSL MAX_STRING_LENGTH
 #define MIL MAX_INPUT_LENGTH

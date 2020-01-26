@@ -1575,7 +1575,7 @@ void bust_a_prompt( CHAR_DATA *ch )
     	strftime(buf2, 10, "%I:%M%p", timeinfo);
 	i = buf2;
     	break;
-    
+
     case 'i' :
     sprintf(buf2, "%d",  IS_NPC(ch) ? 0 : (int)ch->pcdata->IC_total/60);
     i = buf2;break;
@@ -2387,16 +2387,16 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
     {
         do_function(ch,&do_help,argument);
 
- 
+
         write_to_buffer(d,"Please choose a Clan (Assamite, Gangrel, Malkavian, Nosferatu, Tremere,\n\r", 0);
 	write_to_buffer(d,"Ravnos, Brujah, Toreador, Ventrue or help <clan>) ",0);
         d->connected = CON_PICK_CLAN;
         break;
     }
 /* Dirty hack til we better organize the clan code */
-    if(str_prefix(buf,"assamite") && 
-	str_prefix(buf, "tremere") && 
-	str_prefix(buf, "malkavian") && 
+    if(str_prefix(buf,"assamite") &&
+	str_prefix(buf, "tremere") &&
+	str_prefix(buf, "malkavian") &&
 	str_prefix(buf, "nosferatu") &&
         str_prefix(buf, "gangrel") &&
 	str_prefix(buf, "ventrue") &&

@@ -3274,6 +3274,10 @@ void act_new( const char *format, CHAR_DATA *ch, const void *arg1,
             continue;
         if( type == TO_NOTVICT && (to == ch || to == vch) )
             continue;
+        if( type == TO_NEWBIECH && (to != ch || !IS_NEWBIE(ch)))
+            continue;
+        if (type == TO_NEWBIEALL && !IS_NEWBIE(to))
+            continue;
         if(!channel && ((IS_AFFECTED2(ch, AFF2_UMBRA) && !IS_AFFECTED2(to, AFF2_UMBRA)) || (!IS_AFFECTED2(ch, AFF2_UMBRA) && IS_AFFECTED2(to, AFF2_UMBRA))))
             continue;
 

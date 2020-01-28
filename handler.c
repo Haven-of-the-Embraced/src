@@ -3526,9 +3526,9 @@ void do_wipecs(CHAR_DATA *ch, char *argument)
         victim->csattributes[i] = 1;
     for(i = 0;i<MAX_CSBACK;i++)
         victim->pcdata->csbackgrounds[i] = 0;
-    victim->pcdata->csvirtues[CSVIRT_CONSCIENCE] = 0;
-    victim->pcdata->csvirtues[CSVIRT_SELF_CONTROL] = 0;
-    victim->pcdata->csvirtues[CSVIRT_COURAGE] = 0;
+    victim->pcdata->csvirtues[CSVIRT_CONSCIENCE] = 1;
+    victim->pcdata->csvirtues[CSVIRT_SELF_CONTROL] = 1;
+    victim->pcdata->csvirtues[CSVIRT_COURAGE] = 1;
     victim->csmax_willpower = 0;
     victim->cswillpower = 0;
     victim->pcdata->cshumanity = 0;

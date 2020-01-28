@@ -1662,8 +1662,12 @@ void do_create( CHAR_DATA *ch, char *argument )
             send_to_char("same for secondary and tertiary.\n\r",ch);
             send_to_char("Type one of the following:\n\r create primary physical\n\r create primary social\n\r create primary mental\n\r",ch);
             if(ch->pcdata->progress == 0) ch->pcdata->progress++;
+        } else if (ch->pcdata->progress == 2)
+        {
+            do_function(ch, &do_create, "showattr" );
+            return;
         }
-        else if(ch->pcdata->progress == 2 || ch->pcdata->progress == 3)
+        else if(ch->pcdata->progress == 3)
         {
             send_to_char("The next step is setting up your abilities. Abilities are numeric values for what your\n\r",ch);
             send_to_char("character knows and can learn.\n\r\n\r",ch);
@@ -1676,9 +1680,12 @@ void do_create( CHAR_DATA *ch, char *argument )
             send_to_char("Please assign your Primary by typing 'create primary <section>' then do the same for\n\r",ch);
             send_to_char("Secondary and Tertiary.\n\r",ch);
             send_to_char("Type one of the following:\n\r create primary talents\n\r create primary skills\n\r create primary knowledges\n\r",ch);
-            if(ch->pcdata->progress == 2) ch->pcdata->progress++;
+        } else if (ch->pcdata->progress == 4)
+        {
+            do_function(ch, &do_create, "showabil" );
+            return;
         }
-        else if(ch->pcdata->progress == 4 || ch->pcdata->progress == 5 || ch->pcdata->progress == 6)
+        else if(ch->pcdata->progress == 5)
         {
             send_to_char("Your almost finished with this process. Next is setting your Virtues.\n\r\n\r",ch);
             send_to_char("Virtues are the moral guidelines for your character. What your character feels about\n\r",ch);
@@ -1697,15 +1704,20 @@ void do_create( CHAR_DATA *ch, char *argument )
                 ch->pcdata->primary = 7;
             }
         }
+        else if (ch->pcdata->progress == 6)
+        {
+            do_function(ch, &do_create, "showvirtue" );
+            return;
+        }
+        else if(ch->pcdata->progress >= 8)
+        {
+            send_to_char("Nothing new to set on your stats. Sorry.\n\r",ch);
+            return;
+        }
 /*      else if(ch->pcdata->progress == 7) do_function(ch, &do_create, "done" ); */
         else
-            send_to_char("Nothing new to set on your stats. Sorry.\n\r",ch);
+            send_to_char("Something has gone wrong.\n\r",ch);
 
-        return;
-    }
-    if(arg1[0] == '\0' || ch->pcdata->progress >= 8)
-    {
-        send_to_char("Nothing new to set on your stats. Sorry.\n\r",ch);
         return;
     }
     if(strlen(arg1) < 3)
@@ -1831,6 +1843,7 @@ void do_create( CHAR_DATA *ch, char *argument )
             ch->pcdata->primary = 7;
             ch->pcdata->secondary = 5;
             ch->pcdata->tertiary = 3;
+            ch->pcdata->progress++;
             do_function(ch, &do_create, "showattr" );
         }
         if(ch->pcdata->progress == 3 && ch->pcdata->stat[SKILLS] > 0 && ch->pcdata->stat[TALENTS] > 0 && ch->pcdata->stat[KNOWLEDGES] > 0)
@@ -2009,7 +2022,7 @@ void do_create( CHAR_DATA *ch, char *argument )
             send_to_char("You don't have enough points.\n\r",ch);
             return;
         }
-        if(ch->pcdata->progress == 1)
+        if(ch->pcdata->progress == 2)
         {
             if(!str_prefix(arg1,"strength"))
             {
@@ -2423,7 +2436,7 @@ void do_create( CHAR_DATA *ch, char *argument )
             if(ch->pcdata->stat[stat] == SECONDARY) ch->pcdata->secondary--;
             if(ch->pcdata->stat[stat] == TERTIARY) ch->pcdata->tertiary--;
         }
-        if(ch->pcdata->progress == 1) do_function(ch, &do_create, "showattr" );
+        if(ch->pcdata->progress == 2) do_function(ch, &do_create, "showattr" );
         if(ch->pcdata->progress == 4) do_function(ch, &do_create, "showabil" );
         if(ch->pcdata->progress == 6) do_function(ch, &do_create, "showvirtue");
         if(ch->pcdata->primary == 0 && ch->pcdata->secondary == 0 && ch->pcdata->tertiary == 0)
@@ -2433,7 +2446,7 @@ void do_create( CHAR_DATA *ch, char *argument )
 
     if(arg2[0] != '\0' && !str_prefix(arg2,"-"))
     {
-        if(ch->pcdata->progress == 1)
+        if(ch->pcdata->progress == 2)
         {
             if(!str_prefix(arg1,"strength"))
             {
@@ -2847,7 +2860,10 @@ void do_create( CHAR_DATA *ch, char *argument )
 
     if(!str_prefix(arg1,"done"))
     {
-        if((ch->pcdata->progress == 1 || ch->pcdata->progress == 4 || ch->pcdata->progress == 6) && ch->pcdata->primary == 0 && ch->pcdata->secondary == 0 && ch->pcdata->tertiary == 0)
+        if((ch->pcdata->progress == 1 || ch->pcdata->progress == 2 ||
+            ch->pcdata->progress == 4 || ch->pcdata->progress == 6) &&
+            ch->pcdata->primary == 0 && ch->pcdata->secondary == 0 &&
+            ch->pcdata->tertiary == 0)
         {
             send_to_char("You've finished and finalized your traits!\n\r",ch);
             ch->pcdata->progress++;

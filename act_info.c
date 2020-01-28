@@ -2292,10 +2292,15 @@ void do_who( CHAR_DATA *ch, char *argument )
                 sprintf(tags, "{w | {w   %-10s  {w|", wch->pcdata->immtitle);
 
             }
-        if (IS_SET(wch->comm, COMM_AFK))
+        if (IS_SET(wch->comm, COMM_AFK) && wch->timer < 1000)
                 sprintf(tags, "{w |  {D**{GAFK{D** {r({w%3d{r) {w|", wch->timer);
-        if (wch->timer >= 18)
+        else if (IS_SET(wch->comm, COMM_AFK) && wch->timer >= 1000)
+            sprintf(tags, "{w |  {D**{GAFK{D** {r({w%4d{r){w|", wch->timer);
+        if (wch->timer >= 18 && wch->timer < 1000)
                 sprintf(tags, "{w | {D**{RIDLE{D** {r({w%3d{r) {w|", wch->timer);
+        else if (wch->timer >= 1000)
+            sprintf(tags, "{w | {D**{RIDLE{D** {r({w%4d{r){w|", wch->timer);
+
 
         if (IS_SET(wch->act, PLR_IC)) {sprintf(tags, "{w | {w({CIn-Character{w){w |");}
         if (IS_SET(wch->comm, COMM_QUIET)) {sprintf(tags, "{w |  {c<{yQuiet Mode{c>{w  |");}

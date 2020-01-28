@@ -1620,7 +1620,7 @@ void do_freebie(CHAR_DATA *ch, char *argument)
         return;
     }
     sprintf(buf,"You have %d freebies remaining.\n\r",ch->freebie);
-    cskill_update(ch);
+    cskill_update(ch, TRUE);
     send_to_char(buf,ch);
     return;
 }
@@ -2887,7 +2887,8 @@ void do_create( CHAR_DATA *ch, char *argument )
                 send_to_char("When you've finished setting your backgrounds, you use the freebie command to spend freebies\n\r", ch);
                 send_to_char(" to further increase your traits!\n\r",ch);
                 ch->pcdata->progress = 8;
-                cskill_update(ch);
+                cskill_update(ch, FALSE);
+                sendch("You've learned some skills! Type 'skills all' to view what you know.\n\r", ch);
                 if (ch->race == race_lookup("garou") && ch->remorts > 1)
                     send_to_char("Please log out and log back in to be awarded renown for your remorts.\n\r", ch);
             }

@@ -4223,7 +4223,7 @@ void do_learn(CHAR_DATA *ch, char *argument)
             ch->csabilities[i]++;
             extract_obj( obj );
             send_to_char("You concentrate intently on the mystical tome and feel you have a grasp on it's concepts.\n\rThe tome fades from existance.\n\r",ch);
-            cskill_update(ch);
+            cskill_update(ch, TRUE);
             return;
         }
     }
@@ -4246,7 +4246,7 @@ void do_learn(CHAR_DATA *ch, char *argument)
             ch->csattributes[i]++;
             extract_obj( obj );
             send_to_char("You concentrate intently on the mystical tome and feel you have a grasp on it's concepts.\n\rThe tome fades from existance.\n\r",ch);
-            cskill_update(ch);
+            cskill_update(ch, TRUE);
             return;
         }
     }

@@ -200,7 +200,7 @@ void do_remort(CHAR_DATA *ch, char *argument)
         ch->pcdata->condition[COND_THIRST] = 10;
         ch->pcdata->condition[COND_HUNGER] = 10;
         ch->freebie = 15 + (ch->remorts*3);
-        cskill_update(ch);
+        cskill_update(ch, FALSE);
         send_to_char( "You are now reborn a Garou!\n\r", ch );
         send_to_char( "Then type 'gogarou' to set your breed/auspice/tribe and fur color.\n\r", ch);
         ch->freebie += 3;
@@ -327,7 +327,7 @@ void do_remort(CHAR_DATA *ch, char *argument)
         ch->pcdata->condition[COND_HUNGER] = 10;
         ch->exp   = exp_per_level(ch,ch->pcdata->points) * UMAX( 1, ch->level );
         ch->freebie = 15 + (ch->remorts*3);
-        cskill_update(ch);
+        cskill_update(ch, FALSE);
         send_to_char( "You regain your Humanity!\n\r", ch );
         nuke_pets(ch);
         save_char_obj(ch);

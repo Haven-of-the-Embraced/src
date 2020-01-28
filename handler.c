@@ -339,7 +339,7 @@ bool update_csstats(CHAR_DATA *ch)
     if(ch->clan == clan_lookup("Nosferatu"))
         ch->csattributes[CSATTRIB_APPEARANCE] = 0;
 
-    cskill_update(ch);
+    cskill_update(ch, FALSE);
 
     return TRUE;
 }

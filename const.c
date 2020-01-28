@@ -1129,7 +1129,7 @@ int cskill_lookup (int gsn)
 #define STAT 0
 #define DOT 1
 #define TYPE 2
-void cskill_update(CHAR_DATA *ch)
+void cskill_update(CHAR_DATA *ch, bool show)
 {
 
     int i, c;
@@ -1190,14 +1190,17 @@ void cskill_update(CHAR_DATA *ch)
             if (ch->pcdata->learned[*csskill_table[i].gsn] > 0)
             {
                 ch->pcdata->learned[*csskill_table[i].gsn] = 0;
-            cprintf(ch, "Losing the %s skill.\n\r", csskill_table[i].name);
+                if (show)
+                    cprintf(ch, "Losing the %s skill.\n\r", csskill_table[i].name);
             }
         }
             else
             {
-            if (ch->pcdata->learned[*csskill_table[i].gsn] < 10) {
+            if (ch->pcdata->learned[*csskill_table[i].gsn] < 10)
+            {
                 ch->pcdata->learned[*csskill_table[i].gsn] = 50;
-                cprintf(ch, "Learning the %s skill!\n\r", csskill_table[i].name);
+                if (show)
+                    cprintf(ch, "Learning the %s skill!\n\r", csskill_table[i].name);
                 }
             }
 

@@ -2470,7 +2470,7 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
 
         char_to_room( ch, get_room_index( ROOM_VNUM_SCHOOL ) );
         send_to_char("\n\r",ch);
-        do_function(ch, &do_help, "newbie info");
+        do_function(ch, &do_help, "info");
         send_to_char("\n\r",ch);
 /*      if (newch) announce(ch, NULL, WIZ_NEWBIE); */
         announce(ch, NULL, WIZ_NEWBIE);

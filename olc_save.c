@@ -1445,7 +1445,7 @@ void save_helps()
     HELP_DATA * pHelp;
     FILE * fp;
 
-    if (! (fp = fopen( "help.are", "w") ) )
+    if (! (fp = fopen( "/home/havenlive/area/help.are", "w") ) )
     {
         bug( "Open_help: fopen", 0);
         perror( "help.are");

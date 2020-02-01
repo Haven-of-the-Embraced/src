@@ -2101,6 +2101,7 @@ void do_help( CHAR_DATA *ch, char *argument )
     bool found = FALSE;
     char argall[MAX_INPUT_LENGTH],argone[MAX_INPUT_LENGTH];
     int level;
+    char buf[MSL];
 
     output = new_buf();
 
@@ -2129,11 +2130,13 @@ void do_help( CHAR_DATA *ch, char *argument )
         /* add seperator if found */
         if (found)
         add_buf(output,
-    "\n\r============================================================\n\r\n\r");
+    "\n\r======================================================================\n\r\n\r");
         if ( pHelp->level >= 0 && str_cmp( argall, "imotd" ) )
         {
-        add_buf(output,pHelp->keyword);
-        add_buf(output,"\n\r");
+            add_buf(output, "{W**********************************************************************{x\n\r");
+            sprintf(buf, "{DKeywords:{c %s{x\n\r", pHelp->keyword);
+            add_buf(output,buf);
+            add_buf(output,"{W**********************************************************************{x\n\r\n\r");
         }
 
         /*

@@ -3343,7 +3343,7 @@ char *  crypt       args( ( const char *key, const char *salt ) );
 #define RPNOTE_FILE     "../data/rpnote.not"
 #define SHUTDOWN_FILE   "../data/shutdown.txt"/* For 'shutdown'*/
 #define BAN_FILE        "../data/ban.txt"
-#define SYSTEM_LOG      "../log/current/system.log"
+#define SYSTEM_LOG      "../log/current.log"
 #define MUSIC_FILE      "../data/music.txt"
 #define GOD_FILE        "../data/gods.txt"
 #define LAST_COMMAND_FILE   "../data/last.txt"

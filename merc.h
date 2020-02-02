@@ -3326,6 +3326,7 @@ char *  crypt       args( ( const char *key, const char *salt ) );
 #define TEMP_FILE       "../player/romtmp"
 #define NULL_FILE       "/dev/null"     /* To reserve one stream */
 #define DATA_DIR        "../data/"
+#define LOG_DIR         "../log/"       /* Location of log files. */
 #endif
 #define CLAN_FILE       "../data/guild.dat"
 #define AREA_LIST       "../data/area.lst"  /* List of areas*/

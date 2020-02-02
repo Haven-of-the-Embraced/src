@@ -4519,10 +4519,30 @@ void bug( const char *str, int param )
 void log_string( const char *str )
 {
     char *strtime;
+    char filename[15];
+    char filepath[21];
+    struct tm *timeinfo;
+    FILE *fp;
+
+    timeinfo = localtime (&current_time);
+    strftime(filename, 15, "%Y-%m-%d.log", timeinfo);
+    sprintf(filepath, "%s%s", LOG_DIR, filename);
 
     strtime                    = ctime( &current_time );
     strtime[strlen(strtime)-1] = '\0';
-    fprintf( stderr, "%s :: %s\n", strtime, str );
+
+    if ( ( fp = fopen( filepath, "a" ) ) == NULL )
+    {
+        fprintf( stderr, "%s :: %s\n", strtime, "BUG: log_string: Could not open log file." );
+        fprintf( stderr, "%s :: %s\n", strtime, str );
+    }
+    else
+    {
+        fprintf( fp, "%s :: %s\n", strtime, str );
+        fprintf( stderr, "%s :: %s\n", strtime, str );
+        fclose( fp );
+    }
+
     return;
 }
 

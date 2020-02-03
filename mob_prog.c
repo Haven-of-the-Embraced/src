@@ -177,7 +177,7 @@ const char * fn_keyword[] =
     "sex",      /* if sex $i == 0   - sex check */
     "level",        /* if level $n < 5  - level check */
     "align",        /* if align $n < -1000  - alignment check */
-    "money",        /* if money $n */
+    "money",        /* if money $n > 2000  - Money check (total, gold + silver)*/
     "objval0",      /* if objval0 > 1000    - object value[] checks 0..4 */
     "objval1",
     "objval2",

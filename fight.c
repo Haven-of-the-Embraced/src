@@ -3233,9 +3233,6 @@ void group_gain( CHAR_DATA *ch, CHAR_DATA *victim )
     if (victim->level + 20 < gch->level)
     qp = 0;
 
-    if(xp <= 0) xp = 1;
-    ch->totalkills ++;
-    ch->currentkills ++;
     if (!IS_NPC(gch) && gch->cswillpower < gch->csmax_willpower &&
         victim->level > gch->level &&
         ((gch == ch && number_percent() < (3 * (10-gch->cswillpower))) ||
@@ -3245,6 +3242,12 @@ void group_gain( CHAR_DATA *ch, CHAR_DATA *victim )
             gch->cswillpower++;
             sendch("Your resolve strengthens as yet another of your enemies is slain.\n\r", gch);
         }
+
+    if(xp <= 0)
+        xp = 1;
+
+    gch->totalkills ++;
+    gch->currentkills ++;
     // Adds QP to global QP from fights
     if (!manualxp && !doubleexp)
         global_qp += qp*qpmult;

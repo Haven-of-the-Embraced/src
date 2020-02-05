@@ -1234,7 +1234,7 @@ void rote_refinematter(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *
 {
     AFFECT_DATA af;
 
-    if(obj->enchanted)
+    if(IS_SET(obj->extra_flags, ITEM_IS_ENHANCED))
     {
         send_to_char("This item is already holding as much energy as it can. Perhaps the Oracles can do more, but you cannot.\n\r",ch);
         return;
@@ -1270,7 +1270,7 @@ void rote_refinematter(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *
     SET_BIT(obj->extra_flags,ITEM_NODROP);
     SET_BIT(obj->extra_flags,ITEM_NOUNCURSE);
     SET_BIT(obj->extra_flags,ITEM_ROT_DEATH);
-    obj->enchanted = TRUE;
+    SET_BIT(obj->extra_flags,ITEM_IS_ENHANCED);
 
     act("You pour raw Quintessence into $p's pattern, refining it into a stronger form.",ch,obj,NULL,TO_CHAR);
     act("$n stares intently at $p which seems to shift and warp slightly.",ch,obj,NULL,TO_NOTVICT);

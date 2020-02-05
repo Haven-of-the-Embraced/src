@@ -205,6 +205,7 @@ void do_remort(CHAR_DATA *ch, char *argument)
         send_to_char( "Then type 'gogarou' to set your breed/auspice/tribe and fur color.\n\r", ch);
         ch->freebie += 3;
         ch->remorts++;
+        ch->currentkills = 0;
         ch->exp   = exp_per_level(ch,ch->pcdata->points) * UMAX( 1, ch->level );
         nuke_pets(ch);
         save_char_obj(ch);
@@ -327,6 +328,7 @@ void do_remort(CHAR_DATA *ch, char *argument)
         ch->pcdata->condition[COND_HUNGER] = 10;
         ch->exp   = exp_per_level(ch,ch->pcdata->points) * UMAX( 1, ch->level );
         ch->freebie = 15 + (ch->remorts*3);
+        ch->currentkills = 0;
         cskill_update(ch, FALSE);
         send_to_char( "You regain your Humanity!\n\r", ch );
         nuke_pets(ch);
@@ -426,6 +428,7 @@ void do_remort(CHAR_DATA *ch, char *argument)
         ch->pblood = ch->max_pblood;
         ch->remorts += 1;
         ch->agg_dam = 0;
+        ch->currentkills = 0;
         ch->exp   = exp_per_level(ch,ch->pcdata->points) * UMAX( 1, ch->level );
         sendch("Your deeds have earned you a higher rank in garou society.\n\r", ch);
 
@@ -502,6 +505,7 @@ void do_remort(CHAR_DATA *ch, char *argument)
         ch->exp   = exp_per_level(ch,ch->pcdata->points) * UMAX( 1, ch->level );
         send_to_char( "You are reborn more powerful!\n\r", ch );
         ch->freebie += 3;
+        ch->currentkills = 0;
 
         if(ch->pcdata->rank > 0)
             renown_gain(ch);

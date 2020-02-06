@@ -959,12 +959,6 @@ AEDIT( aedit_file )
     /*
      * Simple Syntax Check.
      */
-    length = strlen( argument );
-    if ( length > 8 )
-    {
-    send_to_char( "No more than eight characters allowed.\n\r", ch );
-    return FALSE;
-    }
 
     /*
      * Allow only letters and numbers.

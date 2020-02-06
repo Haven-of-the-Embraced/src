@@ -116,13 +116,13 @@ void do_mpedit(CHAR_DATA *ch, char *argument)
 
 	if ( ad == NULL )
 	{
-		send_to_char( "MPEdit : VNUM no asignado a ningun area.\n\r", ch );
+		send_to_char( "MPEdit : VNUM not assigned to any area.\n\r", ch );
 		return;
 	}
 
 	if ( !IS_BUILDER(ch, ad) )
 	{
-		send_to_char("MPEdit : Insuficiente seguridad para editar area.\n\r", ch );
+		send_to_char("MPEdit : Insufficient security to edit area.\n\r", ch );
 		return;
 	}
 
@@ -136,7 +136,7 @@ void do_mpedit(CHAR_DATA *ch, char *argument)
     {
 	if (argument[0] == '\0')
 	{
-		send_to_char( "Sintaxis : mpedit create [vnum]\n\r", ch );
+		send_to_char( "Syntax : mpedit create [vnum]\n\r", ch );
 		return;
 	}
 
@@ -144,7 +144,7 @@ void do_mpedit(CHAR_DATA *ch, char *argument)
 	return;
     }
 
-    send_to_char( "Sintaxis : mpedit [vnum]\n\r", ch );
+    send_to_char( "Syntax : mpedit [vnum]\n\r", ch );
     send_to_char( "           mpedit create [vnum]\n\r", ch );
 
     return;
@@ -158,7 +158,7 @@ MPEDIT (mpedit_create)
 
     if (IS_NULLSTR(argument) || value < 1)
     {
-	send_to_char( "Sintaxis : mpedit create [vnum]\n\r", ch );
+	send_to_char( "Syntax : mpedit create [vnum]\n\r", ch );
 	return FALSE;
     }
 
@@ -166,13 +166,13 @@ MPEDIT (mpedit_create)
 
     if ( ad == NULL )
     {
-    	send_to_char( "MPEdit : VNUM no asignado a ningun area.\n\r", ch );
+    	send_to_char( "MPEdit : VNUM not assigned to an area.\n\r", ch );
     	return FALSE;
     }
 
     if ( !IS_BUILDER(ch, ad) )
     {
-        send_to_char("MPEdit : Insuficiente seguridad para crear MobProgs.\n\r", ch);
+        send_to_char("MPEdit : Insufficient security to create MobProgs.\n\r", ch);
         return FALSE;
     }
 
@@ -259,9 +259,9 @@ MPEDIT( mpedit_list )
     if ( count == 1 )
     {
     	if ( fAll )
-    		add_buf( buffer, "No existen MobPrograms.\n\r" );
+    		add_buf( buffer, "There are no MobPrograms.\n\r" );
     	else
-    		add_buf( buffer, "No existen MobPrograms en esta area.\n\r" );
+    		add_buf( buffer, "There are no MobPrograms in this area.\n\r" );
     }
 
     page_to_char(buf_string(buffer), ch);

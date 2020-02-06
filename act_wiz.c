@@ -2575,6 +2575,70 @@ void do_ofind( CHAR_DATA *ch, char *argument )
 
     return;
 }
+
+void do_mpfind( CHAR_DATA *ch, char *argument )
+{
+    extern int top_mob_index;
+    char buf[MAX_STRING_LENGTH];
+    char arg[MAX_INPUT_LENGTH];
+    MOB_INDEX_DATA *pMobIndex;
+    MPROG_LIST *pMobProg;
+    int vnum;
+    int mpvnum;
+    int nMatch;
+    bool found;
+
+    one_argument( argument, arg );
+    if ( arg[0] == '\0' || !is_number(arg))
+    {
+    send_to_char( "Syntax: mpfind <mprog vnum>\n\r", ch );
+    return;
+    }
+
+    mpvnum = atoi(arg);
+    if ( (get_mprog_index(mpvnum)) == NULL )
+    {
+        sendch("That is not a valid mprog vnum.\n\r", ch);
+        return;
+    }
+
+    found   = FALSE;
+    nMatch  = 0;
+
+    /*
+     * Yeah, so iterating over all vnum's takes 10,000 loops.
+     * Get_mob_index is fast, and I don't feel like threading another link.
+     * Do you?
+     * -- Furey
+     */
+    for ( vnum = 0; nMatch < top_mob_index; vnum++ )
+    {
+        if ( ( pMobIndex = get_mob_index( vnum ) ) != NULL )
+        {
+            nMatch++;
+            if ( pMobIndex->mprog_flags)
+            {
+                for (pMobProg = pMobIndex->mprogs; pMobProg != NULL; pMobProg = pMobProg->next)
+                {
+                    if (pMobProg->vnum == mpvnum)
+                    {
+                        found = TRUE;
+                        sprintf(buf, "%s[%5d] %s\n\r", pMobIndex->count ? "*" : " ", pMobIndex->vnum,
+                        pMobIndex->short_descr);
+                        sendch(buf, ch);
+                    }
+                }
+            }
+        }
+    }
+
+    if ( !found )
+    send_to_char( "No mobiles found with that mprog.\n\r", ch );
+
+    return;
+}
+
+
 #define LEVEL_IS        0
 #define LEVEL_ABOVE     1
 #define LEVEL_BELOW     2

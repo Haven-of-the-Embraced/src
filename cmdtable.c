@@ -590,6 +590,7 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "vlist",      do_vlist },
     { "flagfind",   do_flagfind},
     { "areaflagfind", do_areaflagfind },
+    { "mpfind",     do_mpfind },
     { "zecho",      do_zecho},
 
     { "clone",      do_clone},

@@ -207,6 +207,7 @@ DECLARE_DO_FUN( do_mob      );
 DECLARE_DO_FUN( do_motd     );
 DECLARE_DO_FUN( do_mpstat   );
 DECLARE_DO_FUN( do_mpdump   );
+DECLARE_DO_FUN( do_mpfind   );
 DECLARE_DO_FUN( do_murde    );
 DECLARE_DO_FUN( do_murder   );
 DECLARE_DO_FUN( do_music    );

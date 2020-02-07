@@ -1645,6 +1645,14 @@ void bust_a_prompt( CHAR_DATA *ch )
         else
             sprintf( buf2, "(NONE)");
         i = buf2; break;
+    case 'N' :
+       if (!IS_NPC(ch))
+           sprintf( buf2, "%d", ch->pcdata->gnosis[TEMP] );
+       else
+           sprintf( buf2, "(NONE)");
+       i = buf2;
+       break;
+
      case 'u' :
         if (!IS_NPC(ch))
             sprintf( buf2, "%d", ch->pcdata->condition[COND_FULL] );

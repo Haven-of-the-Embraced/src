@@ -3236,54 +3236,43 @@ void do_cloakthegathering(CHAR_DATA *ch, char *argument)
 void do_unseenpresence(CHAR_DATA *ch, char *argument)
 {
     AFFECT_DATA af;
+    int dice, success, level;
     if (IS_NPC(ch)) return;
 
-    if(!IS_VAMP(ch))
-    {
-        send_to_char("You are not a Vampire!\n\r",ch);
+    if (!can_use_disc(ch, DISC_OBFUSCATE, 2, 25, TRUE))
         return;
-    }
 
-    if ( IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
-    {
-        send_to_char("Your blood curse prevents it!\n\r" ,ch);
-        return;
-    }
-    if (ch->pblood < 25)
-    {
-        send_to_char( "You do not have enough blood.\n\r", ch );
-        return;
-    }
-    if (ch->pcdata->discipline[OBFUSCATE] < 2)
-    {
-        send_to_char( "You are not skilled enough in Obfuscate.\n\r", ch );
-        return;
-    }
-
-    if ( IS_AFFECTED(ch, AFF_SNEAK) )
+    if ( is_affected(ch, gsn_unseen) )
     {
         affect_strip( ch, gsn_sneak );
+        affect_strip( ch, gsn_unseen);
         act( "$n steps out of nothingness.", ch, 0, 0, TO_NOTVICT );
         send_to_char( "You reveal yourself.\n\r", ch );
         return;
     }
+    level = ch->pcdata->discipline[DISC_OBFUSCATE];
     ch->pblood -= 15;
+    dice = get_attribute(ch, WITS) + get_ability(ch, CSABIL_STEALTH);
+    success = godice(dice, UMAX(5, 9 - level));
+
+    if (success < 1)
+    {
+        sendch("You fail to mask your presence to those around you.\n\r", ch);
+        return;
+    }
+
     act( "$n fades into the surroundings!", ch, 0, 0, TO_NOTVICT );
     send_to_char( "You fade into nothingness.\n\r", ch );
 
-    affect_strip( ch, gsn_sneak );
-
-    if (!IS_AFFECTED(ch,AFF_SNEAK))
-        {
     af.where     = TO_AFFECTS;
     af.type      = gsn_sneak;
-    af.level     = ch->level;
-    af.duration  = UMAX(24, ch->level);
+    af.level     = level;
+    af.duration  = UMAX(6, level * 5);
     af.location  = APPLY_NONE;
     af.modifier  = 0;
     af.bitvector = AFF_SNEAK;
     affect_to_char( ch, &af );
-}
+
     af.type      = gsn_unseen;
     af.bitvector = 0;
     affect_to_char( ch, &af );

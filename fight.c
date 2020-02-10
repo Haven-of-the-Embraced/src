@@ -1290,7 +1290,7 @@ bool damage(CHAR_DATA *ch,CHAR_DATA *victim,int dam,int dt,int dam_type,
         break;
     }
 
-    if (is_affected(victim, gsn_gift_haresleap) && number_percent() < 5*get_attribute(victim, DEXTERITY))
+    if (victim != ch && is_affected(victim, gsn_gift_haresleap) && number_percent() < 5*get_attribute(victim, DEXTERITY))
     {
         if (godice(get_attribute(victim, STRENGTH) + get_ability(victim, CSABIL_ATHLETICS), 7) > 0)
         {
@@ -1301,7 +1301,7 @@ bool damage(CHAR_DATA *ch,CHAR_DATA *victim,int dam,int dt,int dam_type,
         }
     }
 
-    if(is_affected(victim,gsn_kineticshield) && number_range(1,100) > 50)
+    if(victim != ch && is_affected(victim,gsn_kineticshield) && number_range(1,100) > 50)
     {
         if(dam_type == DAM_PIERCE || dam_type == DAM_BASH || dam_type == DAM_SLASH)
         {
@@ -1312,7 +1312,7 @@ bool damage(CHAR_DATA *ch,CHAR_DATA *victim,int dam,int dt,int dam_type,
         }
     }
 
-    if(is_affected(victim,gsn_phantasm) && number_range(1,100) < get_affect_level(victim, gsn_phantasm) * 5)
+    if(victim != ch && is_affected(victim,gsn_phantasm) && number_range(1,100) < get_affect_level(victim, gsn_phantasm) * 5)
     {
         act("$N is fooled by your phantasm and misses you completely!",victim,NULL,ch,TO_CHAR);
         act("$n is almost hit by $N, but just as the blow connects $n's image dissolves... $e was never there.",victim,NULL,ch,TO_NOTVICT);

@@ -64,7 +64,7 @@ void do_flag(CHAR_DATA *ch, char *argument)
     send_to_char("  flag mob  <name> <field> <flags>\n\r",ch);
     send_to_char("  flag char <name> <field> <flags>\n\r",ch);
     send_to_char("  mob  flags: act, act2,aff,off,imm,res,vuln,form,part\n\r",ch);
-    send_to_char("  char flags: plr,comm,aff,imm,res,vuln,\n\r",ch);
+    send_to_char("  char flags: plr, plr2, comm,aff,imm,res,vuln,\n\r",ch);
     send_to_char("  +: add flag, -: remove flag, = set equal to\n\r",ch);
     send_to_char("  otherwise flag toggles the flags listed.\n\r",ch);
     return;
@@ -131,7 +131,17 @@ void do_flag(CHAR_DATA *ch, char *argument)
         flag = &victim->act;
         flag_table = plr_flags;
     }
+    else if (!str_prefix(arg3,"plr2"))
+    {
+        if (IS_NPC(victim))
+        {
+        send_to_char("Use act2 for NPCs.\n\r",ch);
+        return;
+        }
 
+        flag = &victim->act2;
+        flag_table = plr2_flags;
+    }
     else if (!str_prefix(arg3,"aff"))
     {
         flag = &victim->affected_by;
@@ -259,7 +269,3 @@ void do_flag(CHAR_DATA *ch, char *argument)
     return;
     }
 }
-
-
-
-

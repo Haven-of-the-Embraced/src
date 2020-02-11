@@ -327,6 +327,27 @@ const struct flag_type plr_flags[] =
     {   NULL,           0,  0   }
 };
 
+const struct flag_type plr2_flags[] =
+{
+	{   "newbie",          A,  FALSE   },
+	{   "pvp",          B,  FALSE   },
+	{   "questor",          C,  FALSE   },
+	{   "leader",          D,  FALSE   },
+	{   "is_npc",          E,  FALSE   },
+	{   "autodoors",          F,  FALSE   },
+	{   "wholocic",          G,  FALSE   },
+	{   "wholocquiet",          H,  FALSE   },
+	{   "wholocalways",          I,  FALSE   },
+	{   "whoshowlevel",          J,  FALSE   },
+	{   "immshowloc",          K,  FALSE   },
+	{   "nocondition",          L,  FALSE   },
+	{   "noshortdesc",          M,  FALSE   },
+	{   "battleprompt",          N,  FALSE   },
+	{   "debug",          O,  FALSE   },
+	{   "debugmsg",          P,  FALSE   },
+    {   NULL,           0,  0   }
+};
+
 const struct flag_type affect_flags[] =
 {
     {   "blind",        A,  TRUE    },

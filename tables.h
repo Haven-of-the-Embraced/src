@@ -238,6 +238,7 @@ extern  const   struct  flag_type   act2_flags[];
 extern  const   struct  flag_type   attr_flags[];
 extern  const   struct  flag_type   abil_flags[];
 extern  const   struct  flag_type   plr_flags[];
+extern  const   struct  flag_type   plr2_flags[];
 extern  const   struct  flag_type   affect_flags[];
 extern  const   struct  flag_type   affect2_flags[];
 extern  const   struct  flag_type   off_flags[];

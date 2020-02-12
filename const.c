@@ -530,6 +530,67 @@ const   struct  race_type   race_table  []      =
     IMM_SUNLIGHT,       RES_POISON|RES_NEGATIVE,      VULN_MENTAL,
     A|H|M|V,    A|B|C|D|E|F|G|H|I|J|K
     },
+    {
+    "Bygone",        FALSE,
+    0,      AFF_DETECT_HIDDEN|AFF_DARK_VISION|AFF_REGENERATION,      0,
+    IMM_DISEASE|IMM_SUNLIGHT,      RES_MENTAL|RES_CHARM|RES_SUMMON|RES_MAGIC|RES_WEAPON|RES_MAGIC|RES_POISON,      VULN_FIRE|VULN_COLD|VULN_LIGHTNING|VULN_ACID|VULN_ENERGY,
+    FORM_MAGICAL|FORM_ANIMAL|FORM_SENTIENT,      PART_HEAD|PART_HEART|PART_BRAINS|PART_GUTS|PART_EYE|PART_TAIL|PART_LEGS
+    },
+    {
+    "Faerie",        FALSE,
+    0,      0,      0,
+    0,      0,      0,
+    0,      0
+    },
+    {
+    "Demon",        FALSE,
+    0,      0,      0,
+    0,      0,      0,
+    0,      0
+    },
+    {
+    "Abomination",        FALSE,
+    0,      0,      0,
+    0,      0,      0,
+    0,      0
+    },
+    {
+    "Elemental",        FALSE,
+    0,      0,      0,
+    0,      0,      0,
+    0,      0
+    },
+    {
+    "Ooze",        FALSE,
+    0,      0,      0,
+    0,      0,      0,
+    0,      0
+    },
+    {
+    "Shadow",        FALSE,
+    0,      0,      0,
+    0,      0,      0,
+    0,      0
+    },
+    {
+    "Vegetation",        FALSE,
+    0,      0,      0,
+    0,      0,      0,
+    0,      0
+    },
+    {
+    "Insect",        FALSE,
+    0,      0,      0,
+    0,      0,      0,
+    0,      0
+    },
+    {
+    "Amphibian",        FALSE,
+    0,      0,      0,
+    0,      0,      0,
+    0,      0
+    },
+
 
 /*    {
     "unique",       FALSE,

@@ -49,8 +49,16 @@ struct      social_type social_table        [MAX_SOCIALS];
 int     social_count;
 
 /* snarf a socials file */
-void load_socials( FILE *fp)
+void load_socials( void )
 {
+    FILE *fp;
+
+    if ( ( fp = fopen( SOCIAL_FILE, "r") ) == NULL)
+    {
+        perror( SOCIAL_FILE);
+        exit(1);
+    }
+
     for ( ; ; )
     {
         struct social_type social;
@@ -175,6 +183,8 @@ void load_socials( FILE *fp)
     social_table[social_count] = social;
         social_count++;
    }
+
+   fclose( fp );
    return;
 }
 

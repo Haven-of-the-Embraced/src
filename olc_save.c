@@ -1445,13 +1445,11 @@ void save_helps()
     HELP_DATA * pHelp;
     FILE * fp;
 
-    if (! (fp = fopen( "/home/havenlive/area/help.are", "w") ) )
+    if (! (fp = fopen( HELP_FILE, "w") ) )
     {
         bug( "Open_help: fopen", 0);
-        perror( "help.are");
+        perror(HELP_FILE);
      }
-
-        fprintf(fp, "#HELPS\n");
 
         for ( pHelp = help_first; pHelp != NULL; pHelp = pHelp->next )
         {

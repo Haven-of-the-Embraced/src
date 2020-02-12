@@ -181,7 +181,7 @@ char            strArea[MAX_INPUT_LENGTH];
 void    init_mm         args( ( void ) );
 void    load_area   args( ( FILE *fp ) );
 void    new_load_area   args( ( FILE *fp ) );   /* OLC */
-void    load_helps  args( ( FILE *fp, char *fname ) );
+void    load_helps  args( ( void ) );
 void    load_old_mob    args( ( FILE *fp ) );
 void    load_mobiles    args( ( FILE *fp ) );
 void    load_old_obj    args( ( FILE *fp ) );
@@ -189,7 +189,7 @@ void    load_objects    args( ( FILE *fp ) );
 void    load_resets args( ( FILE *fp ) );
 void    load_rooms  args( ( FILE *fp ) );
 void    load_shops  args( ( FILE *fp ) );
-void    load_socials    args( ( FILE *fp ) );
+void    load_socials    args( ( void ) );
 void    load_specials   args( ( FILE *fp ) );
 void    load_notes  args( ( void ) );
 void    load_bans   args( ( void ) );
@@ -281,6 +281,8 @@ void boot_db()
     }
     /* Read in the clan file. */
     load_clans();
+    load_socials();
+    load_helps();
 
     /*
      * Read in all the area files.
@@ -332,7 +334,6 @@ void boot_db()
              if ( word[0] == '$'               )                 break;
         else if ( !str_cmp( word, "AREA"     ) ) load_area    (fpArea);
   /* OLC */     else if ( !str_cmp( word, "AREADATA" ) ) new_load_area(fpArea);
-        else if ( !str_cmp( word, "HELPS"    ) ) load_helps   (fpArea, strArea);
         else if ( !str_cmp( word, "MOBOLD"   ) ) load_old_mob (fpArea);
         else if ( !str_cmp( word, "MOBILES"  ) ) load_mobiles (fpArea);
         else if ( !str_cmp( word, "MOBPROGS" ) ) load_mobprogs(fpArea);
@@ -341,7 +342,6 @@ void boot_db()
         else if ( !str_cmp( word, "RESETS"   ) ) load_resets  (fpArea);
         else if ( !str_cmp( word, "ROOMS"    ) ) load_rooms   (fpArea);
         else if ( !str_cmp( word, "SHOPS"    ) ) load_shops   (fpArea);
-        else if ( !str_cmp( word, "SOCIALS"  ) ) load_socials (fpArea);
         else if ( !str_cmp( word, "SPECIALS" ) ) load_specials(fpArea);
         else
         {
@@ -622,11 +622,20 @@ void assign_area_vnum( int vnum )
 /*
  * Snarf a help section.
  */
-void load_helps( FILE *fp, char *fname )
+void load_helps( void )
 {
+    FILE *fp;
     HELP_DATA *pHelp;
     int level;
     char *keyword;
+    char *fname;
+    fname = str_dup("help.dat");
+
+    if ( (fp = fopen(HELP_FILE, "r")) == NULL )
+    {
+        perror(HELP_FILE);
+        exit(1);
+    }
 
     for ( ; ; )
     {
@@ -688,7 +697,7 @@ void load_helps( FILE *fp, char *fname )
 
     top_help++;
     }
-
+    fclose(fp);
     return;
 }
 

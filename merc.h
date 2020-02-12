@@ -3346,6 +3346,8 @@ char *  crypt       args( ( const char *key, const char *salt ) );
 #define SYSTEM_LOG      "../log/current.log"
 #define MUSIC_FILE      "../data/music.txt"
 #define GOD_FILE        "../data/gods.txt"
+#define HELP_FILE       "../data/help.dat"
+#define SOCIAL_FILE     "../data/social.dat"
 #define LAST_COMMAND_FILE   "../data/last.txt"
 #define LS_FILE         "../player/ls.txt"
 #define COMMAND_FILE     "../data/command.dat" /*Commands list*/

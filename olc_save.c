@@ -87,15 +87,6 @@ void save_area_list()
     }
     else
     {
-    /*
-     * Add any help files that need to be loaded at
-     * startup to this section.
-     */
-    fprintf( fp, "social.are\n" );    /* ROM OLC */
-
-    for ( ha = had_list; ha; ha = ha->next )
-        if ( ha->area == NULL )
-            fprintf( fp, "%s\n", ha->filename );
 
     for( pArea = area_first; pArea; pArea = pArea->next )
     {

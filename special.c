@@ -1337,12 +1337,11 @@ bool spec_lag( CHAR_DATA *ch )
 {
     CHAR_DATA *victim;
     CHAR_DATA *v_next;
-    if(is_affected( ch, gsn_forget ))
-    return FALSE;
-
-    if(ch->stopped > 0) return FALSE;
-
-     for ( victim = ch->in_room->people; victim != NULL; victim = v_next )
+  	
+	if (!IS_AWAKE(ch) || ch->stopped > 0 || is_affected( ch, gsn_forget ))
+      return FALSE;
+  
+    for ( victim = ch->in_room->people; victim != NULL; victim = v_next )
     {
     v_next = victim->next_in_room;
     if ( victim != ch && can_see( ch, victim ) && number_bits( 1 ) == 0

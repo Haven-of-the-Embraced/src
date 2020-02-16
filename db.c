@@ -1496,11 +1496,16 @@ void fix_exits( void )
         {
             if ( pexit->u1.vnum <= 0
             || get_room_index(pexit->u1.vnum) == NULL)
-            pexit->u1.to_room = NULL;
+            {
+                if (fBootDb)
+                    bugf("Fix_exits: Bad room vnum %d, %s exit from %d (%s)",
+                    pexit->u1.vnum, dir_table[door].name, pRoomIndex->vnum, pRoomIndex->area->name);
+                pexit->u1.to_room = NULL;
+            }
             else
             {
-            fexit = TRUE;
-            pexit->u1.to_room = get_room_index( pexit->u1.vnum );
+                fexit = TRUE;
+                pexit->u1.to_room = get_room_index( pexit->u1.vnum );
             }
         }
         }

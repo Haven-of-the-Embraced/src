@@ -1354,7 +1354,7 @@ void display_resets( CHAR_DATA *ch )
         }
 
             sprintf( buf, "O[%5d] %-13.13s in room             "
-                          "R[%5d]       %-15.15s\n\r",
+                          "R[%5d]       %-15.15s{x\n\r",		//Added {x to clear color bleed
                           pReset->arg1, pObj->short_descr,
                           pReset->arg3, pRoomIndex->name );
             strcat( final, buf );

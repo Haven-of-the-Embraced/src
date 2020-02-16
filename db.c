@@ -2997,12 +2997,6 @@ ROOM_INDEX_DATA *get_room_index( int vnum )
         return pRoomIndex;
     }
 
-    if ( fBootDb )
-    {
-    bug( "Get_room_index: bad vnum %d.", vnum );
-    exit( 1 );
-    }
-
     return NULL;
 }
 

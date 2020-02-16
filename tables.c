@@ -1644,3 +1644,17 @@ const struct flag_type clan_flags[] = {
    {    "Modified",             CLAN_CHANGED,           FALSE   },
    {    NULL,                   0,                      FALSE   }
 };
+/*#define DIR_NORTH             0
+#define DIR_EAST              1
+#define DIR_SOUTH             2
+#define DIR_WEST              3
+#define DIR_UP                4
+#define DIR_DOWN              5*/
+const struct dir_type dir_table[] = {
+	{"north"},
+	{"east"},
+	{"south"},
+	{"west"},
+	{"up"},
+	{"down"}
+};

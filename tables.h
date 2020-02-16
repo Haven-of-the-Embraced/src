@@ -209,6 +209,11 @@ struct  crafted_item_type
     int best[10];
 };
 
+struct dir_type
+{
+    char* name;
+};
+
 /* game tables */
 extern  const   struct cdisc_type clandisc_table[MAX_CLAN];
 extern  const   struct  sect_type   sect_table[MAX_SECT];
@@ -232,6 +237,7 @@ extern  const   struct  cr_abil_type    cr_abil_table   [3];
 extern  const   struct  cr_attribute_type   cr_attribute_table  [3];
 extern  const   struct  template_type   template_table[];
 extern 	const 	struct 	hometown_type 		hometown_table  [MAX_HOMETOWN];
+extern  const   struct  dir_type    dir_table[];
 /* flag tables */
 extern  const   struct  flag_type   act_flags[];
 extern  const   struct  flag_type   act2_flags[];

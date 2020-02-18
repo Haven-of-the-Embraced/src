@@ -793,21 +793,27 @@ void parse_note( CHAR_DATA *ch, char *argument, int type )
     {
         case NOTE_NOTE:
         ch->pcdata->last_note = current_time;
+        send_to_char("All of your unread notes have now been caught up.\n\r", ch);
         break;
         case NOTE_RPNOTE:
         ch->pcdata->last_rpnote = current_time;
+        send_to_char("All of your unread rpnotes have now been caught up.\n\r", ch);
         break;
         case NOTE_IDEA:
         ch->pcdata->last_idea = current_time;
+        send_to_char("All of your unread ideas have now been caught up.\n\r", ch);
         break;
         case NOTE_PENALTY:
         ch->pcdata->last_penalty = current_time;
+        send_to_char("All of your unread penalties have now been caught up.\n\r", ch);
         break;
         case NOTE_NEWS:
         ch->pcdata->last_news = current_time;
+        send_to_char("All of your unread news have now been caught up.\n\r", ch);
         break;
         case NOTE_CHANGES:
         ch->pcdata->last_changes = current_time;
+        send_to_char("All of your unread changes have now been caught up.\n\r", ch);
         break;
     }
     return;

@@ -430,10 +430,10 @@ const   struct  race_type   race_table  []      =
     },
 
     {
-    "bat",      FALSE,
-    0,      AFF_FLYING|AFF_BLIND,   0,
-    IMM_LIGHT,  0,  VULN_SOUND,
-    A|G|V,      A|D|E|F|J|K|P|U
+    "Fomor",      FALSE,
+    0,      0,   0,
+    0,  RES_CHARM|RES_POISON|RES_NEGATIVE|RES_MENTAL|RES_DISEASE,  VULN_HOLY,
+    FORM_SENTIENT|FORM_BIPED|FORM_MAMMAL,      PART_HEAD|PART_ARMS|PART_LEGS|PART_HEART|PART_BRAINS|PART_GUTS|PART_HANDS|PART_FEET|PART_FINGERS|PART_EAR|PART_EYE
     },
 
     {

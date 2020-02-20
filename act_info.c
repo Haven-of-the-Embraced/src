@@ -1004,8 +1004,10 @@ void do_prompt(CHAR_DATA *ch, char *argument)
 
 	else if ( !strcmp( argument, "raw"))
 	{
+        if (IS_NPC(ch))
+            return;
 		send_to_char("Your 'raw code' prompt setup is: ", ch);
-		write_to_buffer( ch, ch->prompt, 0);
+		write_to_buffer( ch->desc, ch->prompt, 0);
 		send_to_char("\n\r", ch);
 		return;
 	}

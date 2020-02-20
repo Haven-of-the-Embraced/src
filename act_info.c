@@ -995,7 +995,21 @@ void do_prompt(CHAR_DATA *ch, char *argument)
        return;
    }
 
-   if( !strcmp( argument, "all" ) )
+	else if ( !strcmp( argument, "show") )
+    {
+		sprintf(buf,"Your current prompt displays as: %s\n\r", ch->prompt);
+		send_to_char(buf, ch);
+		return;
+    }
+
+	else if ( !strcmp( argument, "raw"))
+	{
+		send_to_char("Your 'raw code' prompt setup is: ", ch);
+		write_to_buffer( ch, ch->prompt, 0);
+		send_to_char("\n\r", ch);
+		return;
+	}
+  if( !strcmp( argument, "all" ) )
       strcpy( buf, "{c<%hhp %mm %vmv>{x " );
    else
    {

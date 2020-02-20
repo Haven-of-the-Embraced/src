@@ -4427,3 +4427,74 @@ bool canwear_objaffect( CHAR_DATA *ch, OBJ_DATA *obj )
 
     return TRUE;
     }
+
+/*
+pass_gauntlet:
+Takes care of moving a Char and all of their contents to the Umbra one way or
+the other.
+
+Takes two parameters:
+CHAR_DATA *ch of the char being moved
+int direction: either UMBRA_ENTER or UMBRA_EXIT, to determine whether it
+strips of applies Umbral flag.
+
+Does NOT print messages. Calling function must provide messages.
+*/
+void pass_gauntlet( CHAR_DATA *ch, int direction)
+{
+    OBJ_DATA *pObj;
+    OBJ_DATA *pObjNext;
+    OBJ_DATA *pContents;
+    OBJ_DATA *pContentsNext;
+
+    switch (direction)
+    {
+        case UMBRA_EXIT:
+        REMOVE_BIT(ch->affected2_by, AFF2_UMBRA);
+
+        for ( pObj = ch->carrying; pObj != NULL; pObj = pObjNext )
+        {
+            pObjNext = pObj->next_content;
+            REMOVE_BIT(pObj->extra_flags,ITEM_UMBRA);
+
+            if (pObj->item_type == ITEM_CONTAINER ||
+                pObj->item_type == ITEM_CORPSE_NPC ||
+                pObj->item_type == ITEM_CORPSE_PC)
+            {
+                for ( pContents = pObj->contains; pContents != NULL; pContents = pContentsNext )
+                {
+                    pContentsNext = pContents->next_content;
+                    REMOVE_BIT(pContents->extra_flags, ITEM_UMBRA);
+                }
+            }
+
+        }
+        break;
+        case UMBRA_ENTER:
+        SET_BIT(ch->affected2_by, AFF2_UMBRA);
+
+        for ( pObj = ch->carrying; pObj != NULL; pObj = pObjNext )
+        {
+            pObjNext = pObj->next_content;
+            SET_BIT(pObj->extra_flags,ITEM_UMBRA);
+
+            if (pObj->item_type == ITEM_CONTAINER ||
+                pObj->item_type == ITEM_CORPSE_NPC ||
+                pObj->item_type == ITEM_CORPSE_PC)
+            {
+                for ( pContents = pObj->contains; pContents != NULL; pContents = pContentsNext )
+                {
+                    pContentsNext = pContents->next_content;
+                    SET_BIT(pContents->extra_flags, ITEM_UMBRA);
+                }
+            }
+
+        }
+        break;
+        default:
+        bug("pass_gauntlet: Direction invalid.", 0);
+        return;
+    }
+    return;
+
+}

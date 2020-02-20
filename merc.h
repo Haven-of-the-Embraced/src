@@ -166,6 +166,10 @@ typedef void VAMP_FUN   args( ( CHAR_DATA *ch ) );
 #define TROLLISH        10
 #define HOBBIT          11
 
+/* Umbral direction flags*/
+#define UMBRA_EXIT      0
+#define UMBRA_ENTER     1
+
 /*
  * Game parameters.
  * Increase the max'es if you add more of something.
@@ -3948,6 +3952,7 @@ bool    update_csstats  args( (CHAR_DATA *ch));
 char *  strip_color     args( (const char *string) );
 int     strlen_color    args( (const char *string) );
 bool    canwear_objaffect args( (CHAR_DATA *ch, OBJ_DATA *obj) );
+void    pass_gauntlet   args( (CHAR_DATA *ch, int direction) );
 /* interp.c */
 void    interpret   args( ( CHAR_DATA *ch, char *argument ) );
 bool    is_number   args( ( char *arg ) );

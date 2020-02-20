@@ -101,7 +101,7 @@ char *format_obj_to_char( OBJ_DATA *obj, CHAR_DATA *ch, bool fShort )
     ||  (obj->description == NULL || obj->description[0] == '\0'))
     return buf;
 
-    if ( IS_IMMORTAL(ch) && IS_OBJ_STAT(obj, ITEM_UMBRA)       )   strcat( buf, "({mUmbra{y) "   );
+    if ( IS_IMMORTAL(ch) && IS_OBJ_STAT(obj, ITEM_UMBRA) && !IS_AFFECTED2(ch, AFF2_UMBRA)      )   strcat( buf, "(Umbra) "   );
     if ( IS_OBJ_STAT(obj, ITEM_INVIS)     )   strcat( buf, "(Invis) "     );
     if ( IS_AFFECTED(ch, AFF_DETECT_EVIL)
          && IS_OBJ_STAT(obj, ITEM_EVIL)   )   strcat( buf, "(Red Aura) "  );

@@ -1055,6 +1055,7 @@ const struct flag_type portal_flags[]=
     {   "go_with",    GATE_GOWITH,      TRUE    },
     {   "buggy",      GATE_BUGGY,       TRUE    },
     {   "random",     GATE_RANDOM,      TRUE    },
+	{   "umbra", 	  GATE_UMBRA, 		TRUE 	},
     {   NULL,         0,            0   }
 };
 

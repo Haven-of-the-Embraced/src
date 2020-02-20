@@ -1530,6 +1530,7 @@ struct  kill_data
 #define GATE_GOWITH     (C)
 #define GATE_BUGGY      (D)
 #define GATE_RANDOM     (E)
+#define GATE_UMBRA      (F)
 
 /* furniture flags */
 #define STAND_AT        (A)

@@ -4432,13 +4432,6 @@ bool canwear_objaffect( CHAR_DATA *ch, OBJ_DATA *obj )
 pass_gauntlet:
 Takes care of moving a Char and all of their contents to the Umbra one way or
 the other.
-
-Takes two parameters:
-CHAR_DATA *ch of the char being moved
-int direction: either UMBRA_ENTER or UMBRA_EXIT, to determine whether it
-strips of applies Umbral flag.
-
-Does NOT print messages. Calling function must provide messages.
 */
 bool pass_gauntlet( CHAR_DATA *ch)
 {
@@ -4447,9 +4440,16 @@ bool pass_gauntlet( CHAR_DATA *ch)
     OBJ_DATA *pContents;
     OBJ_DATA *pContentsNext;
 
-    switch (direction)
+    if (IS_AFFECTED2(ch, AFF2_UMBRA))
     {
-        case UMBRA_EXIT:
+        if (IS_SET(ch->in_room->room_flags, ROOM_UMBRA))
+        {
+            sendch("You cannot return to Reality here, this place does not exist there\n\r", ch);
+            return FALSE;
+        }
+
+        act( "You feel more solid as you pass into Physical Reality.",  ch, NULL, NULL, TO_CHAR    );
+        act( "$n seems more solid and almost too real before disappearing completely.",  ch, NULL, NULL, TO_NOTVICT );
         REMOVE_BIT(ch->affected2_by, AFF2_UMBRA);
 
         for ( pObj = ch->carrying; pObj != NULL; pObj = pObjNext )
@@ -4467,10 +4467,13 @@ bool pass_gauntlet( CHAR_DATA *ch)
                     REMOVE_BIT(pContents->extra_flags, ITEM_UMBRA);
                 }
             }
-
         }
-        break;
-        case UMBRA_ENTER:
+        act( "$n passes into this Reality as if stepping through a curtain.",  ch, NULL, NULL, TO_NOTVICT );
+        do_function(ch, &do_look, "auto" );
+        return TRUE;
+    } else {
+        act( "Reality passes through you as you step sideways into the Umbra.",  ch, NULL, NULL, TO_CHAR    );
+        act( "$n seems ephemeral and hazy before simply blinking out of existence.",  ch, NULL, NULL, TO_NOTVICT );
         SET_BIT(ch->affected2_by, AFF2_UMBRA);
 
         for ( pObj = ch->carrying; pObj != NULL; pObj = pObjNext )
@@ -4488,13 +4491,9 @@ bool pass_gauntlet( CHAR_DATA *ch)
                     SET_BIT(pContents->extra_flags, ITEM_UMBRA);
                 }
             }
-
         }
-        break;
-        default:
-        bug("pass_gauntlet: Direction invalid.", 0);
-        return FALSE;
+        act( "$n passes into the Umbra as if stepping through a curtain.",  ch, NULL, NULL, TO_NOTVICT );
+        do_function(ch, &do_look, "auto" );
+        return TRUE;
     }
-    return TRUE;
-
 }

@@ -117,7 +117,7 @@ void do_enter( CHAR_DATA *ch, char *argument)
 	}
 
 	if (location == NULL
-	||  location == old_room
+	||  (location == old_room && !IS_SET(portal->value[2], GATE_UMBRA))
 	||  !can_see_room(ch,location))
 	{
 	   act("$p doesn't seem to go anywhere.",ch,portal,NULL,TO_CHAR);
@@ -140,14 +140,23 @@ void do_enter( CHAR_DATA *ch, char *argument)
 	    act("You walk through $p and find yourself somewhere else...",
 	        ch,portal,NULL,TO_CHAR);
 
-	char_from_room(ch);
-	char_to_room(ch, location);
+    char_from_room(ch);
+    char_to_room(ch, location);
+
+    if (!pass_gauntlet(ch))
+    {
+	    char_from_room(ch);
+	    char_to_room(ch, old_room);
+        sendch("It is too dangerous to continue onward.\n\r", ch);
+        return;
+    }
 
 	if (IS_SET(portal->value[2],GATE_GOWITH)) /* take the gate along */
 	{
 	    obj_from_room(portal);
 	    obj_to_room(portal,location);
 	}
+
 
 	if (IS_SET(portal->value[2],GATE_NORMAL_EXIT))
 	    act("$n has arrived.",ch,portal,NULL,TO_ROOM);
@@ -165,7 +174,7 @@ void do_enter( CHAR_DATA *ch, char *argument)
 	}
 
 	/* protect against circular follows */
-	if (old_room == location)
+	if (old_room == location && !IS_SET(portal->value[2], GATE_UMBRA))
 	    return;
 
     	for ( fch = old_room->people; fch != NULL; fch = fch_next )

@@ -4469,7 +4469,6 @@ bool pass_gauntlet( CHAR_DATA *ch)
             }
         }
         act( "$n passes into this Reality as if stepping through a curtain.",  ch, NULL, NULL, TO_NOTVICT );
-        do_function(ch, &do_look, "auto" );
         return TRUE;
     } else {
         act( "Reality passes through you as you step sideways into the Umbra.",  ch, NULL, NULL, TO_CHAR    );
@@ -4493,7 +4492,6 @@ bool pass_gauntlet( CHAR_DATA *ch)
             }
         }
         act( "$n passes into the Umbra as if stepping through a curtain.",  ch, NULL, NULL, TO_NOTVICT );
-        do_function(ch, &do_look, "auto" );
         return TRUE;
     }
 }

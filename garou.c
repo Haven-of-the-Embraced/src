@@ -562,10 +562,14 @@ void do_stepsideways(CHAR_DATA *ch, char *argument)
         send_to_char("You fail to pierce the Gauntlet and remain where you stand.\n\r", ch);
         WAIT_STATE(ch, 24);
         return;
-    } else
+    } else {
         if (pass_gauntlet(ch))
+        {
+            do_function(ch, &do_look, "auto");
             WAIT_STATE(ch, 12);
-        return;
+            return;
+        }
+    }
 }
 
 void renown_gain(CHAR_DATA *ch)

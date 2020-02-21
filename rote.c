@@ -1660,7 +1660,12 @@ void rote_stepsideways(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *
         do_function(ch, &do_look, "auto" );
         return;
     }
-    pass_gauntlet(ch);
+
+    if (pass_gauntlet(ch))
+    {
+        do_function(ch, &do_look, "auto");
+        return;
+    }
 }
 
 void rote_controlgauntlet(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)

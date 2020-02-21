@@ -562,25 +562,10 @@ void do_stepsideways(CHAR_DATA *ch, char *argument)
         send_to_char("You fail to pierce the Gauntlet and remain where you stand.\n\r", ch);
         WAIT_STATE(ch, 24);
         return;
-    } else {
-
-        if(IS_AFFECTED2(ch, AFF2_UMBRA))
-        {
-            act( "You step sideways and leave the Umbra.",  ch, NULL, NULL, TO_CHAR    );
-            act( "$n suddenly appears in this reality!",  ch, NULL, NULL, TO_ROOM );
-            pass_gauntlet(ch, UMBRA_EXIT);
-            do_function(ch, &do_look, "auto" );
+    } else
+        if (pass_gauntlet(ch))
             WAIT_STATE(ch, 12);
-            return;
-        }
-        act( "You tap into your innate shifting nature and step sideways into the Umbra",  ch, NULL, NULL, TO_CHAR    );
-        act( "$n fades from existance.",  ch, NULL, NULL, TO_NOTVICT );
-        pass_gauntlet(ch, UMBRA_ENTER);
-        act( "$n fades into existance.",  ch, NULL, NULL, TO_NOTVICT );
-        do_function(ch, &do_look, "auto" );
-        WAIT_STATE(ch, 12);
         return;
-    }
 }
 
 void renown_gain(CHAR_DATA *ch)

@@ -1650,7 +1650,6 @@ void rote_stepsideways(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *
         return;
 
     stop_fighting( ch, TRUE );
-    die_follower( ch );
 
     if(success < get_gauntlet(ch))
     {
@@ -1661,21 +1660,7 @@ void rote_stepsideways(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *
         do_function(ch, &do_look, "auto" );
         return;
     }
-    if(IS_AFFECTED2(ch, AFF2_UMBRA))
-    {
-        pass_gauntlet(ch, UMBRA_EXIT);
-        act( "You step sideways, pass the Gauntlet and leave the Umbra.",  ch, NULL, NULL, TO_CHAR    );
-        act( "$n suddenly appears in this reality!",  ch, NULL, victim, TO_NOTVICT );
-        do_function(ch, &do_look, "auto" );
-        return;
-    }
-    act( "You step sideways, pass through the Gauntlet and enter the Umbra.",  ch, NULL, NULL, TO_CHAR    );
-    act( "$n fades from existance in this reality.",  ch, NULL, NULL, TO_NOTVICT );
-    pass_gauntlet(ch, UMBRA_ENTER);
-
-    act( "$n fades into existance within the Penumbra.",  ch, NULL, NULL, TO_NOTVICT );
-    do_function(ch, &do_look, "auto" );
-    return;
+    pass_gauntlet(ch);
 }
 
 void rote_controlgauntlet(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)

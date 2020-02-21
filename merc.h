@@ -3953,7 +3953,7 @@ bool    update_csstats  args( (CHAR_DATA *ch));
 char *  strip_color     args( (const char *string) );
 int     strlen_color    args( (const char *string) );
 bool    canwear_objaffect args( (CHAR_DATA *ch, OBJ_DATA *obj) );
-void    pass_gauntlet   args( (CHAR_DATA *ch, int direction) );
+bool    pass_gauntlet   args( (CHAR_DATA *ch) );
 /* interp.c */
 void    interpret   args( ( CHAR_DATA *ch, char *argument ) );
 bool    is_number   args( ( char *arg ) );

@@ -4440,7 +4440,7 @@ strips of applies Umbral flag.
 
 Does NOT print messages. Calling function must provide messages.
 */
-void pass_gauntlet( CHAR_DATA *ch, int direction)
+bool pass_gauntlet( CHAR_DATA *ch)
 {
     OBJ_DATA *pObj;
     OBJ_DATA *pObjNext;
@@ -4493,8 +4493,8 @@ void pass_gauntlet( CHAR_DATA *ch, int direction)
         break;
         default:
         bug("pass_gauntlet: Direction invalid.", 0);
-        return;
+        return FALSE;
     }
-    return;
+    return TRUE;
 
 }

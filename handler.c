@@ -4444,7 +4444,7 @@ bool pass_gauntlet( CHAR_DATA *ch)
     {
         if (IS_SET(ch->in_room->room_flags, ROOM_UMBRA))
         {
-            sendch("You cannot return to Reality here, this place does not exist there\n\r", ch);
+            sendch("You cannot return to Reality, this place does not exist there!\n\r", ch);
             return FALSE;
         }
 

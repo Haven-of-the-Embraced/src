@@ -498,13 +498,13 @@ const   struct  race_type   race_table  []      =
         "spirit",           FALSE,
         0,      0,  OFF_DODGE,
         IMM_POISON|IMM_DISEASE|IMM_DROWNING|IMM_SUNLIGHT,   RES_WEAPON|RES_COLD|RES_ACID|RES_FIRE,  VULN_NEGATIVE|VULN_HOLY|VULN_ENERGY,
-        A|H|M|V,    A|B|C|D|E|F|G|H|I|J|K
+        FORM_SENTIENT,    0
     },
     {
         "bane",         FALSE,
         0,      0,  OFF_DODGE,
         IMM_POISON|IMM_DISEASE|IMM_DROWNING|IMM_SUNLIGHT,   RES_WEAPON|RES_COLD|RES_ACID|RES_FIRE,  VULN_NEGATIVE|VULN_HOLY|VULN_ENERGY,
-        A|H|M|V,    A|B|C|D|E|F|G|H|I|J|K
+        FORM_SENTIENT,    0
     },
     {
         "spider",       FALSE,

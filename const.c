@@ -315,10 +315,10 @@ const   struct  race_type   race_table  []      =
     },
 
     {
-    "fido",         FALSE,
-    0,      0,      OFF_DODGE|ASSIST_RACE,
-    0,      0,          VULN_MAGIC,
-    A|B|G|V,    A|C|D|E|F|H|J|K|Q|V
+    "Marine Mammal",         FALSE,
+    0,      AFF_SWIM,      0,
+    0,      RES_COLD|RES_DROWNING,          VULN_LIGHTNING,
+    FORM_EDIBLE|FORM_ANIMAL|FORM_SENTIENT|FORM_MAMMAL,    PART_HEAD|PART_HEART|PART_BRAINS|PART_GUTS|PART_EYE
     },
 
     {

@@ -430,7 +430,7 @@ const   struct  race_type   race_table  []      =
     },
 
     {
-    "Fomor",      FALSE,
+    "fomor",      FALSE,
     0,      0,   0,
     0,  RES_CHARM|RES_POISON|RES_NEGATIVE|RES_MENTAL|RES_DISEASE,  VULN_HOLY,
     FORM_SENTIENT|FORM_BIPED|FORM_MAMMAL,      PART_HEAD|PART_ARMS|PART_LEGS|PART_HEART|PART_BRAINS|PART_GUTS|PART_HANDS|PART_FEET|PART_FINGERS|PART_EAR|PART_EYE
@@ -531,61 +531,61 @@ const   struct  race_type   race_table  []      =
     A|H|M|V,    A|B|C|D|E|F|G|H|I|J|K
     },
     {
-    "Bygone",        FALSE,
+    "bygone",        FALSE,
     0,      AFF_DETECT_HIDDEN|AFF_DARK_VISION|AFF_REGENERATION,      0,
     IMM_DISEASE|IMM_SUNLIGHT,      RES_MENTAL|RES_CHARM|RES_SUMMON|RES_MAGIC|RES_WEAPON|RES_MAGIC|RES_POISON,      VULN_FIRE|VULN_COLD|VULN_LIGHTNING|VULN_ACID|VULN_ENERGY,
     FORM_MAGICAL|FORM_ANIMAL|FORM_SENTIENT,      PART_HEAD|PART_HEART|PART_BRAINS|PART_GUTS|PART_EYE|PART_TAIL|PART_LEGS
     },
     {
-    "Faerie",        FALSE,
+    "faerie",        FALSE,
     0,      0,      0,
     IMM_SUNLIGHT,      RES_CHARM|RES_MAGIC,      VULN_IRON,
     FORM_EDIBLE|FORM_MAGICAL|FORM_SENTIENT|FORM_BIPED,      PART_HEAD|PART_ARMS|PART_HEART| PART_BRAINS|PART_GUTS|PART_HANDS|PART_FEET|PART_FINGERS|PART_EAR|PART_EYE
     },
     {
-    "Demon",        FALSE,
+    "demon",        FALSE,
     0,      AFF_DARK_VISION,      0,
     IMM_POISON|IMM_DISEASE|IMM_NEGATIVE,      RES_CHARM,      VULN_SUMMON|VULN_HOLY|VULN_SUNLIGHT,
     FORM_SENTIENT|FORM_BIPED,      PART_HEAD|PART_ARMS|PART_HEART| PART_BRAINS|PART_GUTS|PART_HANDS|PART_FEET|PART_FINGERS|PART_EAR|PART_EYE|PART_CLAWS|PART_TAIL|PART_FANGS|PART_HORNS
     },
     {
-    "Abomination",        FALSE,
+    "abomination",        FALSE,
     0,      AFF_BERSERK,      0,
     IMM_MENTAL,      RES_WEAPON|RES_DROWNING,      VULN_MAGIC,
     0,      0
     },
     {
-    "Elemental",        FALSE,
+    "elemental",        FALSE,
     0,      0,      0,
     0,      0,      0,
     FORM_INSTANT_DECAY|FORM_SENTIENT,      0
     },
     {
-    "Ooze",        FALSE,
+    "ooze",        FALSE,
     0,      AFF_BLIND|AFF_SLOW,      0,
     IMM_LIGHT|IMM_MENTAL|IMM_DROWNING,      RES_WEAPON,      VULN_MAGIC|VULN_FIRE,
     FORM_BLOB,      0
     },
     {
-    "Shadow",        FALSE,
+    "shadow",        FALSE,
     0,      AFF_HIDE|AFF_SNEAK|AFF_PASS_DOOR|AFF_DARK_VISION,      0,
     IMM_POISON|IMM_DISEASE|IMM_NEGATIVE|IMM_DROWNING,      0,      VULN_SUNLIGHT|VULN_LIGHT,
     FORM_INSTANT_DECAY|FORM_INTANGIBLE,      0
     },
     {
-    "Vegetation",        FALSE,
+    "vegetation",        FALSE,
     0,      0,      0,
     IMM_SUNLIGHT|IMM_DROWNING|IMM_POISON,      RES_BASH|RES_LIGHT|RES_WOOD|RES_MENTAL,      VULN_COLD|VULN_SLASH|VULN_FIRE,
     FORM_EDIBLE,      0
     },
     {
-    "Insect",        FALSE,
+    "insect",        FALSE,
     0,      0,      0,
     IMM_MENTAL,      RES_POISON|RES_SUNLIGHT|RES_DROWNING,      VULN_FIRE|VULN_COLD|VULN_ACID,
     FORM_EDIBLE|FORM_INSECT,      PART_HEAD|PART_LEGS|PART_GUTS|PART_EYE
     },
     {
-    "Amphibian",        FALSE,
+    "amphibian",        FALSE,
     0,      AFF_SWIM,      0,
     0,      RES_POISON|RES_DROWNING,      VULN_COLD|VULN_LIGHTNING|VULN_ACID,
     FORM_EDIBLE|FORM_AMPHIBIAN|FORM_COLD_BLOOD,      PART_HEAD|PART_LEGS|PART_HEART|PART_BRAINS|PART_GUTS|PART_FEET|PART_EYE|PART_LONG_TONGUE

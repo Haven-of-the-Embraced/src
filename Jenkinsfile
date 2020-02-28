@@ -9,12 +9,19 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'Building...'
+                echo 'Doing a Clean Build...'
+                sh '''
+                make clean
+                make
+                '''
             }
         }
         stage('Test') {
             steps {
-                echo 'Testing...'
+                echo 'Executing a Test Run...'
+                dir('/home/havendev/area') {
+                    sh '../src/rom 2002 testrun'
+                }
             }
         }
     }

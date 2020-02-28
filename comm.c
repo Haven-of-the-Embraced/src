@@ -428,26 +428,27 @@ int main( int argc, char **argv )
     port = 4000;
     if ( argc > 1 )
     {
-    if ( !is_number( argv[1] ) )
-    {
-        fprintf( stderr, "Usage: %s [port #]\n", argv[0] );
-        exit( 1 );
-    }
-    else if ( ( port = atoi( argv[1] ) ) <= 1024 )
-    {
-        fprintf( stderr, "Port number must be above 1024.\n" );
-        exit( 1 );
-    }
+        if ( !is_number( argv[1] ) )
+        {
+            fprintf( stderr, "Usage: %s [port #]\n", argv[0] );
+            exit( 1 );
+        }
+        else if ( ( port = atoi( argv[1] ) ) <= 1024 )
+        {
+            fprintf( stderr, "Port number must be above 1024.\n" );
+            exit( 1 );
+        }
 
-    /* Are we recovering from a copyover? */
-    if (argv[2] && argv[2][0])
-    {
-        fCopyOver = TRUE;
-        control = atoi(argv[3]);
-    }
-    else
-        fCopyOver = FALSE;
+        /* Are we being passed some arguments? */
+        if (argv[2]) {
 
+            /* Are we recovering from a copyover? */
+            if (!str_cmp(argv[2], "copyover"))
+            {
+                fCopyOver = TRUE;
+                control = atoi(argv[3]);
+            }
+        }
     }
 
     /*

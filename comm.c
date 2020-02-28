@@ -307,6 +307,7 @@ DESCRIPTOR_DATA *   d_next;     /* Next descriptor in loop  */
 FILE *          fpReserve;      /* Reserved file handle     */
 bool            god;        /* All new chars are gods!  */
 bool            merc_down;      /* Shutdown         */
+bool            test_run;
 bool            wizlock;        /* Game is wizlocked        */
 bool            newlock;        /* Game is newlocked        */
 char            str_boot_time[MAX_INPUT_LENGTH];
@@ -447,6 +448,11 @@ int main( int argc, char **argv )
             {
                 fCopyOver = TRUE;
                 control = atoi(argv[3]);
+            } else if (!str_cmp(argv[2], "testrun"))
+            {
+                test_run = TRUE;
+            } else {
+                fprintf(stderr, "Unrecognized argument. Booting MUD normally...\n" );
             }
         }
     }
@@ -968,6 +974,10 @@ void game_loop_unix( int control )
 
     gettimeofday( &last_time, NULL );
     current_time = (time_t) last_time.tv_sec;
+
+    if (test_run)
+        merc_down = TRUE;
+
     }
 
     return;

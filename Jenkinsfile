@@ -7,16 +7,37 @@ pipeline {
     }
 
     stages {
-        stage('Build') {
+        stage('Clean') {
+            when {
+                beforeAgent true
+                changeset "*.h"
+            }
             steps {
-                echo 'Doing a Clean Build...'
-                sh '''
-                make clean
-                make
-                '''
+                echo 'Cleaning up object files...'
+                sh 'make clean'
+            }
+        }
+        stage('Build') {
+            when {
+                beforeAgent true
+                anyOf {
+                    changeset '*.h'
+                    changeset '*.c'
+                }
+            }
+            steps {
+                echo 'Building MUD...'
+                sh 'make'
             }
         }
         stage('Test') {
+            when {
+                beforeAgent true
+                anyOf {
+                    changeset '*.h'
+                    changeset '*.c'
+                }
+            }
             steps {
                 echo 'Executing a Test Run...'
                 dir('/home/havendev/area') {

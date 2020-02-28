@@ -28,8 +28,9 @@ pipeline {
     post {
         always {
             script {
+                def branch = BRANCH_NAME
                 def msg = "**Status:** " + currentBuild.currentResult.toLowerCase() + "\n"
-                msg += "**Branch:** ${BRANCH_NAME}\n"
+                msg += "**Branch:** ${branch}\n"
                 msg += "**Changes:** \n"
                 if (!currentBuild.changeSets.isEmpty()) {
                     currentBuild.changeSets.first().getLogs().each {

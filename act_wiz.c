@@ -7094,6 +7094,63 @@ void do_prefix (CHAR_DATA *ch, char *argument)
  *  http://www.andreasen.org
  *  Changed into a ROM patch after seeing the 100th request for it :)
  */
+bool copyover_handler()
+{
+    FILE *fp;
+    DESCRIPTOR_DATA *d, *d_next;
+    char buf [100], buf2[100], buf3[MSL];
+    extern int port,control; /* db.c */
+
+    fp = fopen (COPYOVER_FILE, "w");
+
+    if (!fp)
+    {
+        sprintf (buf3, "Could not write to copyover file: %s", COPYOVER_FILE);
+        log_string( buf );
+        perror ("do_copyover:fopen");
+        return FALSE;
+    }
+
+    /* For each playing descriptor, save its state */
+    for (d = descriptor_list; d ; d = d_next)
+    {
+        CHAR_DATA * och = CH (d);
+        d_next = d->next; /* We delete from the list , so need to save this */
+
+        if (!d->character || d->connected > CON_PLAYING) /* drop those logging on */
+        {
+            write_to_descriptor (d->descriptor, "\n\rSorry, we are rebooting. Come back in a few minutes.\n\r", 0);
+            close_socket (d); /* throw'em out */
+        }
+        else
+        {
+            fprintf (fp, "%d %s %s %s\n", d->descriptor, och->name, d->host, och->leader != NULL ? och->leader->name : NULL);
+
+            save_char_obj (och);
+
+            write_to_descriptor (d->descriptor, buf, 0);
+        }
+    }
+
+    fprintf (fp, "-1\n");
+    fclose (fp);
+
+    /* Close reserve and other always-open files and release other resources */
+    fclose (fpReserve);
+
+    /* exec - descriptors are inherited */
+    sprintf (buf, "%d", port);
+    sprintf (buf2, "%d", control);
+    execl (EXE_FILE, "rom", buf, "copyover", buf2, (char *) NULL);
+
+    /* Failed - sucessful exec will not return */
+    perror ("do_copyover: execl");
+
+    /* Here you might want to reopen fpReserve */
+    fpReserve = fopen (NULL_FILE, "r");
+    return FALSE;
+}
+
 void do_copyover (CHAR_DATA *ch, char * argument)
 {
     FILE *fp;
@@ -7182,16 +7239,6 @@ void do_copyover (CHAR_DATA *ch, char * argument)
 
     write_to_descriptor (ch->desc->descriptor, "Starting Copyover Procedures...\n\r", 0);
 
-    fp = fopen (COPYOVER_FILE, "w");
-
-    if (!fp)
-    {
-        send_to_char ("Copyover file not writeable, aborted.\n\r",ch);
-        sprintf (buf3, "Could not write to copyover file: %s", COPYOVER_FILE);
-        log_string( buf );
-        perror ("do_copyover:fopen");
-        return;
-    }
 
     write_to_descriptor (ch->desc->descriptor, "Saving commands, config and helps...\n\r", 0);
     /* autosave changed lists */
@@ -7203,47 +7250,10 @@ void do_copyover (CHAR_DATA *ch, char * argument)
 
     sprintf (buf, "\n\r *** COPYOVER by %s - please remain seated!\n\r", ch->name);
 
-    /* For each playing descriptor, save its state */
-    for (d = descriptor_list; d ; d = d_next)
+    if (!copyover_handler())
     {
-        CHAR_DATA * och = CH (d);
-        d_next = d->next; /* We delete from the list , so need to save this */
-
-        if (!d->character || d->connected > CON_PLAYING) /* drop those logging on */
-        {
-            write_to_descriptor (d->descriptor, "\n\rSorry, we are rebooting. Come back in a few minutes.\n\r", 0);
-            close_socket (d); /* throw'em out */
-        }
-        else
-        {
-            fprintf (fp, "%d %s %s %s\n", d->descriptor, och->name, d->host, och->leader != NULL ? och->leader->name : NULL);
-
-            save_char_obj (och);
-
-            write_to_descriptor (d->descriptor, buf, 0);
-        }
+        send_to_char ("Copyover FAILED!\n\r",ch);
     }
-
-    fprintf (fp, "-1\n");
-    fclose (fp);
-
-    /* Close reserve and other always-open files and release other resources */
-
-    fclose (fpReserve);
-
-    /* exec - descriptors are inherited */
-
-    sprintf (buf, "%d", port);
-    sprintf (buf2, "%d", control);
-    execl (EXE_FILE, "rom", buf, "copyover", buf2, (char *) NULL);
-
-    /* Failed - sucessful exec will not return */
-
-    perror ("do_copyover: execl");
-    send_to_char ("Copyover FAILED!\n\r",ch);
-
-    /* Here you might want to reopen fpReserve */
-    fpReserve = fopen (NULL_FILE, "r");
 }
 
 /* Recover from a copyover - load players */

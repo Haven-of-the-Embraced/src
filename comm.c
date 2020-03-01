@@ -58,6 +58,7 @@
 #include <time.h>
 #include <unistd.h> /* OLC -- for close read write etc */
 #include <stdarg.h> /* printf_to_char */
+#include <assert.h>
 
 #include "merc.h"
 #include "interp.h"
@@ -3843,7 +3844,6 @@ void sig_handler(int sig)
       break;
   }
 }
-#include <assert.h>
 /**************************************************************************/
 // redirect to str_len(), check the result to make sure we don't do a
 // signed overflow

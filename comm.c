@@ -380,7 +380,10 @@ int main( int argc, char **argv )
     struct timeval now_time;
     bool fCopyOver = FALSE;
 
-
+    /*
+     * Initialize Signal Handler
+     */
+     init_signals();
     /*
      * Memory debugging if needed.
      */

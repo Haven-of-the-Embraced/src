@@ -5926,7 +5926,8 @@ void do_blast( CHAR_DATA *ch, char *argument )
                 act( "Your blast misses $N!", ch, NULL, victim, TO_CHAR );
                 act( "$n sends a blast of flame and smoke that misses you.", ch, NULL, victim, TO_VICT );
                 act( "$n misses with $s blast of flame that was aimed at $N.", ch, NULL, victim, TO_ROOM );
-        return;
+          		check_improve(ch,gsn_blast,FALSE,4);
+        		return;
         }
 
     act("Using a bit of misdirection and legardemain, you send a blast of {Ds{wmok{De{x\n\rand {rf{yl{ra{ym{re{x directly at $N!", ch, NULL, victim, TO_CHAR);
@@ -5935,7 +5936,8 @@ void do_blast( CHAR_DATA *ch, char *argument )
 
     damage(ch, victim, dicesuccess * ch->level * 3 / 5, gsn_blast, DAM_FIRE, TRUE);
     fire_effect(victim, ch->level/2, number_range(1, ch->level+5), TARGET_CHAR);
-
+	check_improve(ch,gsn_blast,TRUE,8);
+  
     gain_exp(ch, dicesuccess);
     return;
 }

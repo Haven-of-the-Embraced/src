@@ -3878,8 +3878,10 @@ void do_bash( CHAR_DATA *ch, char *argument )
 
     if(is_affected(victim,gsn_precognition) && number_percent() > 50)
     {
-        send_to_char("They avoid your shield bash!\n\r",ch);
-        return;
+    	act("Deftly moving out of the way, $N ducks from your shield bash attempt!", ch, NULL, victim, TO_CHAR);
+    	act("Sensing the movement of $n's shield an instant before it actually happens, you deftly duck out of the way.", ch, NULL, victim, TO_VICT);
+    	act("$N ducks swiftly, avoiding $n's attempt to strike with $p.", ch, NULL, victim, TO_NOTVICT);
+    	return;
     }
 
 
@@ -4095,8 +4097,10 @@ void do_dirt( CHAR_DATA *ch, char *argument )
 
     if(is_affected(victim,gsn_precognition) && number_percent() > 50)
     {
-        send_to_char("They avoid your kicked dirt!\n\r",ch);
-        return;
+    	act("Your kicked dirt targeting is on point, but $N manages to dodge to the side!", ch, NULL, victim, TO_CHAR);
+    	act("$n kicks some dirt directly at your face, but your foresight allowed you to dodge to the side with ease.", ch, NULL, victim, TO_VICT);
+    	act("$N dodges quickly to the side, avoiding $n's kicked dirt.", ch, NULL, victim, TO_NOTVICT);
+    	return;
     }
 
     success = godice(dice, diff);
@@ -4251,14 +4255,18 @@ void do_trip( CHAR_DATA *ch, char *argument )
 
     if(is_affected(victim,gsn_precognition) && number_percent() > 50)
     {
-        send_to_char("They avoid your trip!\n\r",ch);
-        return;
+    	act("You sweep out quickly and attempt to trip $N, but $E leaps out of the way!", ch, NULL, victim, TO_CHAR);
+    	act("You see $n's trip coming long before $e even goes in motion, and jump out of the way easily.", ch, NULL, victim, TO_VICT);
+    	act("Leaping to the side, $N easily avoids $n's trip.", ch, NULL, victim, TO_NOTVICT);
+    	return;
     }
 
     if(is_affected(victim, gsn_gift_catfeet) && number_percent() > 45)
     {
-        send_to_char("You swipe your foot out to trip them, but a nimble sidestep causes you to miss!\n\r", ch);
-        return;
+    	act("You swipe your foot out to trip $n, but $E nimbly sidesteps!", ch, NULL, victim, TO_CHAR);
+    	act("Your body nimbly sidesteps with a feline grace as you easily avoid $n's trip.", ch, NULL, victim, TO_VICT);
+    	act("Leaping gracefully, like a cat in motion, $N nimbly avoids $n's trip.", ch, NULL, victim, TO_NOTVICT);
+    	return;
     }
 
     /* now the attack */
@@ -5034,8 +5042,10 @@ void do_disarm( CHAR_DATA *ch, char *argument )
 
 		if(is_affected(victim,gsn_precognition) && number_percent() > 50)
 		{
-			send_to_char("They avoid your attempt to disarm!\n\r",ch);
-			return;
+    		act("You attempt to disarm $N, but $E twists to the side, holding $S weapon tightly!", ch, NULL, victim, TO_CHAR);
+    		act("You sense $n striking in to try and disarm you, but you twist to the side and hold your weapon tightly.", ch, NULL, victim, TO_VICT);
+    		act("$n strikes forward, but fails to disarm $N.", ch, NULL, victim, TO_NOTVICT);
+    		return;
 		}
 
 		/* and now the attack */
@@ -5590,8 +5600,10 @@ void do_ground( CHAR_DATA *ch, char *argument )
 
     if(is_affected(victim, gsn_gift_catfeet) && number_percent() > 45)
     {
-        send_to_char("You crash into them, but they simply tumble backwards and land upright again!\n\r", ch);
-        return;
+    	act("You crash directly into $N, but $E tumbles backwards and upright immediately!", ch, NULL, victim, TO_CHAR);
+    	act("With acrobatic grace that would make gymnasts jealous, you roll with $n's collision into you and hop back upright.", ch, NULL, victim, TO_VICT);
+    	act("$n collides forcefully into $N, who simply tumbles backwards and pops upright again with apparent ease.", ch, NULL, victim, TO_NOTVICT);
+    	return;
     }
 
         WAIT_STATE( ch, skill_table[gsn_ground].beats );

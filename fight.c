@@ -3880,7 +3880,7 @@ void do_bash( CHAR_DATA *ch, char *argument )
     {
     	act("Deftly moving out of the way, $N ducks from your shield bash attempt!", ch, NULL, victim, TO_CHAR);
     	act("Sensing the movement of $n's shield an instant before it actually happens, you deftly duck out of the way.", ch, NULL, victim, TO_VICT);
-    	act("$N ducks swiftly, avoiding $n's attempt to strike with $p.", ch, NULL, victim, TO_NOTVICT);
+        act("$N ducks swiftly, avoiding $n's attempt to strike with their shield.", ch, NULL, victim, TO_NOTVICT);
     	return;
     }
 
@@ -5937,7 +5937,7 @@ void do_blast( CHAR_DATA *ch, char *argument )
     damage(ch, victim, dicesuccess * ch->level * 3 / 5, gsn_blast, DAM_FIRE, TRUE);
     fire_effect(victim, ch->level/2, number_range(1, ch->level+5), TARGET_CHAR);
 	check_improve(ch,gsn_blast,TRUE,8);
-  
+
     gain_exp(ch, dicesuccess);
     return;
 }

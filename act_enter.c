@@ -110,12 +110,6 @@ void do_enter( CHAR_DATA *ch, char *argument)
 	else
 	    location = get_room_index(portal->value[3]);
 
-	if (portal->level <= 100 && room_is_private(location) && !IS_TRUSTED(ch,IMPLEMENTOR))
-	{
-	   act("$p doesn't seem to go anywhere.",ch,portal,NULL,TO_CHAR);
-	   return;
-	}
-
 	if (location == NULL
 	||  (location == old_room && !IS_SET(portal->value[2], GATE_UMBRA))
 	||  !can_see_room(ch,location))
@@ -124,6 +118,11 @@ void do_enter( CHAR_DATA *ch, char *argument)
 	   return;
 	}
 
+    if (portal->level <= 100 && room_is_private(location) && !IS_TRUSTED(ch,IMPLEMENTOR))
+	{
+	   act("$p doesn't seem to go anywhere.",ch,portal,NULL,TO_CHAR);
+	   return;
+	}
 
         if (IS_NPC(ch) && IS_SET(ch->act,ACT_AGGRESSIVE)
         &&  IS_SET(location->room_flags,ROOM_LAW))

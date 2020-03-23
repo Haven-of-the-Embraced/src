@@ -1656,7 +1656,7 @@ void do_chimaera(CHAR_DATA *ch, char *argument)
 
     mob->leader = ch;
     mob->level  = (ch->level)/2;
-    mob->max_hit = UMAX(30000, ch->max_hit * 2);
+    mob->max_hit = UMIN(30000, ch->max_hit * 2);
     mob->hit = mob->max_hit;
 
     af.where     = TO_AFFECTS;

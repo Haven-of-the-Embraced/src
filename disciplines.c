@@ -1655,8 +1655,8 @@ void do_chimaera(CHAR_DATA *ch, char *argument)
     mob = create_mobile( pMobIndex );
 
     mob->leader = ch;
-    mob->level  = (ch->level)/2;
-    mob->max_hit = UMIN(30000, ch->max_hit * 2);
+    mob->level  = UMAX(1, (ch->level)/2);
+    mob->max_hit = URANGE(500, ch->max_hit * 3, 5000);
     mob->hit = mob->max_hit;
 
     af.where     = TO_AFFECTS;

@@ -1803,6 +1803,12 @@ void do_quit( CHAR_DATA *ch, char *argument )
 
     if ( IS_NPC(ch) )
     return;
+  
+	if (is_affected(ch, gsn_astralprojection))
+	{
+        send_to_char(“You need to return to the material plane first, or you will be lost forever.\n\r”, ch);
+		return;
+	}
 
     if ( ch->position == POS_FIGHTING )
     {

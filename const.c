@@ -2043,7 +2043,15 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
     &gsn_reveal,            SLOT(0),     0, 12, "",         "Your heightened senses fade away, leaving you aware of only the mundane world once again.",    "" },
 
-    { "forgetful mind",       {  102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+	{ "astrally lost",   { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+	{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_IGNORE,         POS_STANDING,
+	&gsn_astrallylost,        SLOT( 0),     0,    24, "",      "Out of the corner of your eye, you spot your silver astral cord that leads back to your physical body!",  "" },
+
+	{ "astral projection",   { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+	{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,  TAR_IGNORE,        POS_STANDING,
+	&gsn_astralprojection,     SLOT( 0),    0,    24, "",     “!!Wearoffmsg!!”,     “”},
+
+	{ "forgetful mind",       {  102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
     &gsn_forget,            SLOT(0),     0, 12, "",         "Your memory slowly returns...", "" },
 

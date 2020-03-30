@@ -405,7 +405,7 @@ int cmd_eval( sh_int vnum, char *line, int check,
         case CHK_MOBEXISTS:
         return( (bool) (get_char_world( mob, buf) != NULL) );
     case CHK_OBJEXISTS:
-        return( (bool) (get_obj_world( mob, buf) != NULL) );
+        return( (bool) (get_obj_world( mob, buf, FALSE) != NULL) );
     /*
      * Case 2 begins here: We sneakily use rval to indicate need
      *             for numeric eval...

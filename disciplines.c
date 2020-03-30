@@ -934,7 +934,7 @@ void do_project(CHAR_DATA *ch, char *argument)
 	}
 
 	sprintf(name, "%sastralcorpse", ch->name);
-	vamp_corpse = get_obj_world( ch, name );
+	vamp_corpse = get_obj_world( ch, name, TRUE);
 
 	if (is_affected(ch, gsn_astralprojection) && vamp_corpse == NULL ) // You already got the corpse. Use it.
 	{

@@ -1082,7 +1082,7 @@ void do_project(CHAR_DATA *ch, char *argument)
 			}
 		}
 
-		do_function(gch, &do_look, "auto" );
+		do_function(ch, &do_look, "auto" );
 		return;
     }
 

@@ -10,7 +10,7 @@ pipeline {
         stage('Clean') {
             when {
                 beforeAgent true
-                changeset "*.h"
+                expression { sh(returnStatus: true, script: 'git diff  origin/master --name-only | grep -E "*.h" > /dev/null') == 0 }
             }
             steps {
                 echo 'Cleaning up object files...'
@@ -21,8 +21,8 @@ pipeline {
             when {
                 beforeAgent true
                 anyOf {
-                    changeset '*.h'
-                    changeset '*.c'
+                    expression { sh(returnStatus: true, script: 'git diff  origin/master --name-only | grep -E "*.h" > /dev/null') == 0 }
+                    expression { sh(returnStatus: true, script: 'git diff  origin/master --name-only | grep -E "*.c" > /dev/null') == 0 }
                 }
             }
             steps {
@@ -34,8 +34,8 @@ pipeline {
             when {
                 beforeAgent true
                 anyOf {
-                    changeset '*.h'
-                    changeset '*.c'
+                    expression { sh(returnStatus: true, script: 'git diff  origin/master --name-only | grep -E "*.h" > /dev/null') == 0 }
+                    expression { sh(returnStatus: true, script: 'git diff  origin/master --name-only | grep -E "*.c" > /dev/null') == 0 }
                 }
             }
             steps {

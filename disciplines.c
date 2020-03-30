@@ -1066,7 +1066,7 @@ void do_project(CHAR_DATA *ch, char *argument)
                 affect_strip(ch, gsn_astralprojection);
 
 		act( "You follow your ephemeral cord back to the physical realm and reenter your torpid shell of a body.",  ch, NULL, NULL, TO_CHAR);
-		act( "$n stirs slowly and opens $s eyes.",  ch, NULL, victim, TO_NOTVICT );
+		act( "$n stirs slowly and opens $s eyes.",  ch, NULL, NULL, TO_NOTVICT );
 
 		for ( obj = ch->carrying; obj != NULL; obj = obj_next )
 		{

@@ -142,7 +142,7 @@ void do_enter( CHAR_DATA *ch, char *argument)
     char_from_room(ch);
     char_to_room(ch, location);
 
-    if (IS_SET(portal->value[2], GATE_UMBRA) && !pass_gauntlet(ch))
+    if (IS_SET(portal->value[2], GATE_UMBRA) && !pass_gauntlet(ch, TRUE))
     {
 	    char_from_room(ch);
 	    char_to_room(ch, old_room);

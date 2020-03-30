@@ -4433,7 +4433,7 @@ pass_gauntlet:
 Takes care of moving a Char and all of their contents to the Umbra one way or
 the other.
 */
-bool pass_gauntlet( CHAR_DATA *ch)
+bool pass_gauntlet( CHAR_DATA *ch, bool show)
 {
     OBJ_DATA *pObj;
     OBJ_DATA *pObjNext;
@@ -4444,12 +4444,15 @@ bool pass_gauntlet( CHAR_DATA *ch)
     {
         if (IS_SET(ch->in_room->room_flags, ROOM_UMBRA))
         {
-            sendch("You cannot return to Reality, this place does not exist there!\n\r", ch);
+            if (show)
+                sendch("You cannot return to Reality, this place does not exist there!\n\r", ch);
             return FALSE;
         }
-
-        act( "You feel more solid as you pass into Physical Reality.",  ch, NULL, NULL, TO_CHAR    );
-        act( "$n seems more solid and almost too real before disappearing completely.",  ch, NULL, NULL, TO_NOTVICT );
+        if (show)
+        {
+            act( "You feel more solid as you pass into Physical Reality.",  ch, NULL, NULL, TO_CHAR    );
+            act( "$n seems more solid and almost too real before disappearing completely.",  ch, NULL, NULL, TO_NOTVICT );
+        }
         REMOVE_BIT(ch->affected2_by, AFF2_UMBRA);
 
         for ( pObj = ch->carrying; pObj != NULL; pObj = pObjNext )
@@ -4468,11 +4471,14 @@ bool pass_gauntlet( CHAR_DATA *ch)
                 }
             }
         }
-        act( "$n passes into this Reality as if stepping through a curtain.",  ch, NULL, NULL, TO_NOTVICT );
+        if (show)
+            act( "$n passes into this Reality as if stepping through a curtain.",  ch, NULL, NULL, TO_NOTVICT );
         return TRUE;
     } else {
-        act( "Reality passes through you as you step sideways into the Umbra.",  ch, NULL, NULL, TO_CHAR    );
-        act( "$n seems ephemeral and hazy before simply blinking out of existence.",  ch, NULL, NULL, TO_NOTVICT );
+        if (show) {
+            act( "Reality passes through you as you step sideways into the Umbra.",  ch, NULL, NULL, TO_CHAR    );
+            act( "$n seems ephemeral and hazy before simply blinking out of existence.",  ch, NULL, NULL, TO_NOTVICT );
+        }
         SET_BIT(ch->affected2_by, AFF2_UMBRA);
 
         for ( pObj = ch->carrying; pObj != NULL; pObj = pObjNext )
@@ -4491,7 +4497,8 @@ bool pass_gauntlet( CHAR_DATA *ch)
                 }
             }
         }
-        act( "$n passes into the Umbra as if stepping through a curtain.",  ch, NULL, NULL, TO_NOTVICT );
+        if (show)
+            act( "$n passes into the Umbra as if stepping through a curtain.",  ch, NULL, NULL, TO_NOTVICT );
         return TRUE;
     }
 }

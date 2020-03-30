@@ -563,7 +563,7 @@ void do_stepsideways(CHAR_DATA *ch, char *argument)
         WAIT_STATE(ch, 24);
         return;
     } else {
-        if (pass_gauntlet(ch))
+        if (pass_gauntlet(ch, TRUE))
         {
             do_function(ch, &do_look, "auto");
             WAIT_STATE(ch, 12);

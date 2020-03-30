@@ -1661,7 +1661,7 @@ void rote_stepsideways(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *
         return;
     }
 
-    if (pass_gauntlet(ch))
+    if (pass_gauntlet(ch, TRUE))
     {
         do_function(ch, &do_look, "auto");
         return;

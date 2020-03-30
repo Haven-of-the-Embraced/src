@@ -4145,7 +4145,7 @@ void do_dirt( CHAR_DATA *ch, char *argument )
             affect_to_char(victim,&af);
         }
 
-		gain_exp( ch, dicesuccess * 5);
+		gain_exp( ch, success * 5);
 
     }
     else

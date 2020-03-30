@@ -222,7 +222,7 @@ void do_channels( CHAR_DATA *ch, char *argument)
       send_to_char("ON\n\r",ch);
     else
       send_to_char("OFF\n\r",ch);
-    
+
     send_to_char("telnet Go Ahead",ch);
     if (!IS_SET(ch->comm,COMM_TELNET_GA))
     send_to_char("ON\n\r",ch);
@@ -1803,10 +1803,10 @@ void do_quit( CHAR_DATA *ch, char *argument )
 
     if ( IS_NPC(ch) )
     return;
-  
+
 	if (is_affected(ch, gsn_astralprojection))
 	{
-        send_to_char(“You need to return to the material plane first, or you will be lost forever.\n\r”, ch);
+        send_to_char("You need to return to the material plane first, or you will be lost forever.\n\r", ch);
 		return;
 	}
 
@@ -3020,4 +3020,3 @@ void do_promote_leader( CHAR_DATA *ch, char *argument )
     return;
 
 }
-

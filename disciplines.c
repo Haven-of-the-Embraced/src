@@ -1024,16 +1024,16 @@ void do_project(CHAR_DATA *ch, char *argument)
 
 	if(!can_use_disc(ch,AUSPEX,5,0,TRUE))
 	{
-		send_to_char(“Your mastery of Auspex is not high enough yet.\n\r”, ch);
+		send_to_char("Your mastery of Auspex is not high enough yet.\n\r", ch);
 		return;
 	}
-        
-	sprintf(name, “%sastralcorpse”, ch->name);
+
+	sprintf(name, "%sastralcorpse", ch->name);
 	vamp_corpse = get_obj_world( ch, name );
 
 	if (is_affected(ch, gsn_astralprojection) && vamp_corpse == NULL ) // You already got the corpse. Use it.
 	{
-		send_to_char(“Your anchored body is missing, contact an immortal immediately!\n\r”, ch);
+		send_to_char("Your anchored body is missing, contact an immortal immediately!\n\r", ch);
 		return;
 	}
 
@@ -1045,7 +1045,7 @@ void do_project(CHAR_DATA *ch, char *argument)
 
 	if (is_affected(ch, gsn_astrallylost))
 	{
-		send_to_char(“You are still hopelessly lost and cannot find your ephemeral cord to link back to your body.\n\r”, ch);
+		send_to_char("You are still hopelessly lost and cannot find your ephemeral cord to link back to your body.\n\r", ch);
 		return;
 	}
 
@@ -1053,11 +1053,11 @@ void do_project(CHAR_DATA *ch, char *argument)
 	{
 		if (!is_affected(ch, gsn_astralprojection))
 		{
-			send_to_char(“You did not enter the Umbra through Psychic Projection, and have no body anchoring for your return.  You must find another way back.\n\r”, ch);
+			send_to_char("You did not enter the Umbra through Psychic Projection, and have no body anchoring for your return.  You must find another way back.\n\r", ch);
 			return;
 		}
 
-		act(“$N grabs a shining silver cord attached to $s body, and zips away following it into the distance.”, ch, NULL, NULL, TO_NOTVICT);
+		act("$N grabs a shining silver cord attached to $s body, and zips away following it into the distance.", ch, NULL, NULL, TO_NOTVICT);
                 location = vamp_corpse->in_room;
                 char_from_room( ch );
 		char_to_room( ch, location );
@@ -1084,11 +1084,11 @@ void do_project(CHAR_DATA *ch, char *argument)
 
 		do_function(gch, &do_look, "auto" );
 		return;
-    }                
+    }
 
 	if (ch->cswillpower < 1)
 	{
-		send_to_char(“You do not have the strength of will it requires to force your spirit into the astral plane.\n\r”, ch);
+		send_to_char("You do not have the strength of will it requires to force your spirit into the astral plane.\n\r", ch);
 		return;
 	}
 
@@ -1110,7 +1110,7 @@ void do_project(CHAR_DATA *ch, char *argument)
 	free_string( vamp_corpse->description );
 	vamp_corpse->description = str_dup( buf );
 
-	sprintf( buf, “%sastralcorpse”, ch->name);
+	sprintf( buf, "%sastralcorpse", ch->name);
 	free_string( vamp_corpse->name );
 	vamp_corpse->name = str_dup( buf );
 
@@ -1120,8 +1120,8 @@ void do_project(CHAR_DATA *ch, char *argument)
 
 	if (success < 0)
 	{
-		act(“You force your way into the Astral Realm, but in the process snap your psychic cord link to your body and are flung through the astral plane!”, ch, NULL, NULL, TO_CHAR);
-		act(“$n jerks violently backward, and drops to the ground in a torpid state, unmoving and unaware of the world around $s.”, ch, NULL, NULL, TO_NOTVICT);
+		act("You force your way into the Astral Realm, but in the process snap your psychic cord link to your body and are flung through the astral plane!", ch, NULL, NULL, TO_CHAR);
+		act("$n jerks violently backward, and drops to the ground in a torpid state, unmoving and unaware of the world around $s.", ch, NULL, NULL, TO_NOTVICT);
 		location = get_random_room(ch);
 		char_from_room( ch );
 		char_to_room( ch, location );
@@ -1164,14 +1164,14 @@ void do_project(CHAR_DATA *ch, char *argument)
 
 	if (success == 0)
 	{
-		act(“You struggle for a moment, but cannot muster enough force to eject your psyche from your body.  After a brief moment, you realize the effort is wasted.”, ch, NULL, NULL, TO_CHAR);
+		act("You struggle for a moment, but cannot muster enough force to eject your psyche from your body.  After a brief moment, you realize the effort is wasted.", ch, NULL, NULL, TO_CHAR);
 		extract_obj(vamp_corpse);
 		WAIT_STATE(ch, 24);
 		return;
-	} 
+	}
 
-	act(“Your astral form slides easily out of your body, leaving only an empty vessel on the ground as you cross the Gauntlet into the Astral Plane.”, ch, NULL, NULL, TO_CHAR);
-	act(“$n’s body slowly slumps to the ground, eyes closed and lying in a torpid, yet peaceful state.”, ch, NULL, NULL, TO_NOTVICT);
+	act("Your astral form slides easily out of your body, leaving only an empty vessel on the ground as you cross the Gauntlet into the Astral Plane.", ch, NULL, NULL, TO_CHAR);
+	act("$n’s body slowly slumps to the ground, eyes closed and lying in a torpid, yet peaceful state.", ch, NULL, NULL, TO_NOTVICT);
 	SET_BIT(ch->affected2_by, AFF2_UMBRA);
 	for ( obj = ch->carrying; obj != NULL; obj = obj_next )
 	{

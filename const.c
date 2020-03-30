@@ -2049,7 +2049,7 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
 
 	{ "astral projection",   { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 	{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,  TAR_IGNORE,        POS_STANDING,
-	&gsn_astralprojection,     SLOT( 0),    0,    24, "",     “!!Wearoffmsg!!”,     “”},
+	&gsn_astralprojection,     SLOT( 0),    0,    24, "",     "!!Wearoffmsg!!",     ""},
 
 	{ "forgetful mind",       {  102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,

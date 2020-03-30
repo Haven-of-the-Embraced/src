@@ -1012,15 +1012,16 @@ void do_project(CHAR_DATA *ch, char *argument)
 // New Auspex 5 by Gilean
 void do_project(CHAR_DATA *ch, char *argument)
 {
-        char buf[MAX_STRING_LENGTH];
+    char buf[MAX_STRING_LENGTH];
 	ROOM_INDEX_DATA *location;
-        OBJ_DATA *vamp_corpse;
-        OBJ_DATA *obj;
-        OBJ_DATA *obj_next;
-        OBJ_DATA *bag;
-        OBJ_DATA *bag_next;
-        char *name;
-        int success;
+    OBJ_DATA *vamp_corpse;
+    OBJ_DATA *obj;
+    OBJ_DATA *obj_next;
+    OBJ_DATA *bag;
+    OBJ_DATA *bag_next;
+    AFFECT_DATA af;
+    char *name;
+    int success;
 
 	if(!can_use_disc(ch,AUSPEX,5,0,TRUE))
 	{
@@ -1196,7 +1197,7 @@ void do_project(CHAR_DATA *ch, char *argument)
 	af.bitvector	= 0;
 	affect_to_char( ch, &af );
 
-	gain_exp(ch, dicesuccess * 10);
+	gain_exp(ch, success * 10);
 	do_function(ch, &do_look, "auto" );
 	return;
 }

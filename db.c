@@ -4679,6 +4679,8 @@ sh_int          gsn_awe;
 sh_int          gsn_claws;
 sh_int          gsn_celbuff;
 sh_int          gsn_gleam;
+sh_int          gsn_astralprojection;
+sh_int          gsn_astrallylost;
 /*Botched Presence Affect*/
 sh_int          gsn_botched_presence;
 sh_int          gsn_track;

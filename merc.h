@@ -3915,7 +3915,7 @@ OD *    get_carry_vnum  args( ( CHAR_DATA *ch, int vnum, int location, bool sigh
 OD *    get_obj_wear    args( ( CHAR_DATA *ch, char *argument ) );
 OD *    get_obj_here    args( ( CHAR_DATA *ch, char *argument ) );
 OD *    get_obj_hidden  args( ( CHAR_DATA *ch, char *argument ) );
-OD *    get_obj_world   args( ( CHAR_DATA *ch, char *argument ) );
+OD *    get_obj_world   args( ( CHAR_DATA *ch, char *argument, bool unseen ) );
 OD *    create_money    args( ( int gold, int silver ) );
 int get_obj_number  args( ( OBJ_DATA *obj ) );
 int get_obj_weight  args( ( OBJ_DATA *obj ) );

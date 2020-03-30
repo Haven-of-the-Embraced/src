@@ -2435,7 +2435,7 @@ OBJ_DATA *get_obj_hidden( CHAR_DATA *ch, char *argument )
 /*
  * Find an obj in the world.
  */
-OBJ_DATA *get_obj_world( CHAR_DATA *ch, char *argument )
+OBJ_DATA *get_obj_world( CHAR_DATA *ch, char *argument, bool unseen )
 {
     char arg[MAX_INPUT_LENGTH];
     OBJ_DATA *obj;
@@ -2449,7 +2449,7 @@ OBJ_DATA *get_obj_world( CHAR_DATA *ch, char *argument )
     count  = 0;
     for ( obj = object_list; obj != NULL; obj = obj->next )
     {
-    if ( can_see_obj( ch, obj ) && is_name( arg, obj->name ) )
+    if ( (unseen || can_see_obj( ch, obj )) && is_name( arg, obj->name ) )
     {
         if ( ++count == number )
         return obj;

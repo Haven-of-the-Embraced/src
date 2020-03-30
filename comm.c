@@ -2500,6 +2500,13 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
     }
     else if ( ch->in_room != NULL)
     {
+        if (is_affected(ch, gsn_astralprojection)) {
+            ch->in_room = get_room_index(ROOM_VNUM_TEMPLE);
+            pass_gauntlet(ch, FALSE);
+            sendch("{RYou were astrally projected and you body is now lost.\n\rYou've been returned to Recall.{x\n\r", ch);
+            affect_strip(ch, gsn_astralprojection);
+            affect_strip(ch, gsn_astrallylost);
+        }
         char_to_room( ch, ch->in_room );
     }
     else if ( IS_IMMORTAL(ch) )

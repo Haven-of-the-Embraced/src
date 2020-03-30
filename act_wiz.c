@@ -7323,6 +7323,15 @@ void copyover_recover ()
             /* Insert in the char_list */
             d->character->next = char_list;
             char_list = d->character;
+            ch = d->character;
+
+            if (is_affected(ch, gsn_astralprojection)) {
+                ch->in_room = get_room_index(ROOM_VNUM_TEMPLE);
+                pass_gauntlet(ch, FALSE);
+                sendch("{RYou were astrally projected during the copyover.\n\rYou've been returned to Recall.{x\n\r", ch);
+                affect_strip(ch, gsn_astralprojection);
+                affect_strip(ch, gsn_astrallylost);
+            }
 
             char_to_room (d->character, d->character->in_room);
             do_look (d->character, "auto");

@@ -1020,7 +1020,7 @@ void do_project(CHAR_DATA *ch, char *argument)
     OBJ_DATA *bag;
     OBJ_DATA *bag_next;
     AFFECT_DATA af;
-    char *name;
+    char name[MSL];
     int success;
 
 	if(!can_use_disc(ch,AUSPEX,5,0,TRUE))
@@ -1038,11 +1038,6 @@ void do_project(CHAR_DATA *ch, char *argument)
 		return;
 	}
 
-	if (ch->position > POS_SITTING)
-	{
-		send_to_char("You can’t concentrate enough. You must be relaxed to do this! \n\r", ch);
-		return;
-	}
 
 	if (is_affected(ch, gsn_astrallylost))
 	{
@@ -1059,12 +1054,12 @@ void do_project(CHAR_DATA *ch, char *argument)
 		}
 
 		act("$N grabs a shining silver cord attached to $s body, and zips away following it into the distance.", ch, NULL, NULL, TO_NOTVICT);
-                location = vamp_corpse->in_room;
-                char_from_room( ch );
+        location = vamp_corpse->in_room;
+        char_from_room( ch );
 		char_to_room( ch, location );
 		extract_obj(vamp_corpse);
-                REMOVE_BIT(ch->affected2_by, AFF2_UMBRA);
-                affect_strip(ch, gsn_astralprojection);
+        REMOVE_BIT(ch->affected2_by, AFF2_UMBRA);
+        affect_strip(ch, gsn_astralprojection);
 
 		act( "You follow your ephemeral cord back to the physical realm and reenter your torpid shell of a body.",  ch, NULL, NULL, TO_CHAR);
 		act( "$n stirs slowly and opens $s eyes.",  ch, NULL, NULL, TO_NOTVICT );
@@ -1087,6 +1082,12 @@ void do_project(CHAR_DATA *ch, char *argument)
 		return;
     }
 
+    if (ch->position > POS_SITTING)
+	{
+		send_to_char("You can't concentrate enough. You must be relaxed to do this! \n\r", ch);
+		return;
+	}
+
 	if (ch->cswillpower < 1)
 	{
 		send_to_char("You do not have the strength of will it requires to force your spirit into the astral plane.\n\r", ch);
@@ -1096,24 +1097,22 @@ void do_project(CHAR_DATA *ch, char *argument)
 	ch->cswillpower--;
 
 	location = ch->in_room;
-	name = ch->name;
 	vamp_corpse  = create_object(get_obj_index(OBJ_VNUM_CORPSE_PC), 0);
 	vamp_corpse->timer   = 0;
 	REMOVE_BIT(vamp_corpse->wear_flags, ITEM_TAKE);
 	vamp_corpse->cost = 0;
 	vamp_corpse->level = ch->level;
 
-	sprintf( buf, vamp_corpse->short_descr, name );
+	sprintf( buf, vamp_corpse->short_descr, ch->name );
 	free_string( vamp_corpse->short_descr );
 	vamp_corpse->short_descr = str_dup( buf );
 
-	sprintf( buf, vamp_corpse->description, name );
+	sprintf( buf, vamp_corpse->description, ch->name );
 	free_string( vamp_corpse->description );
 	vamp_corpse->description = str_dup( buf );
 
-	sprintf( buf, "%sastralcorpse", ch->name);
 	free_string( vamp_corpse->name );
-	vamp_corpse->name = str_dup( buf );
+	vamp_corpse->name = str_dup( name );
 
 	obj_to_room(vamp_corpse, location);
 
@@ -1172,7 +1171,7 @@ void do_project(CHAR_DATA *ch, char *argument)
 	}
 
 	act("Your astral form slides easily out of your body, leaving only an empty vessel on the ground as you cross the Gauntlet into the Astral Plane.", ch, NULL, NULL, TO_CHAR);
-	act("$n’s body slowly slumps to the ground, eyes closed and lying in a torpid, yet peaceful state.", ch, NULL, NULL, TO_NOTVICT);
+	act("$n's body slowly slumps to the ground, eyes closed and lying in a torpid, yet peaceful state.", ch, NULL, NULL, TO_NOTVICT);
 	SET_BIT(ch->affected2_by, AFF2_UMBRA);
 	for ( obj = ch->carrying; obj != NULL; obj = obj_next )
 	{

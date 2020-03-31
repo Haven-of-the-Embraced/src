@@ -1256,7 +1256,10 @@ if (ch->qpoints > 30000)
 
         if (ch == ch_quit)
     {
-            do_function(ch, &do_quit, "" );
+        if (is_affected(ch, gsn_astralprojection))
+            do_function(ch, &do_project, "");
+
+        do_function(ch, &do_quit, "" );
     }
     }
 

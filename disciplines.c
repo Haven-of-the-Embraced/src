@@ -3299,8 +3299,6 @@ void do_cloakthegathering(CHAR_DATA *ch, char *argument)
     af.duration  = ch->level*ch->pcdata->discipline[OBFUSCATE];
     af.location  = APPLY_NONE;
     af.modifier  = 0;
-    af.bitvector = AFF_INVISIBLE;
-    affect_to_char( gch, &af );
     af.bitvector = AFF_SNEAK;
     affect_to_char( gch, &af );
     af.bitvector = AFF_HIDE;
@@ -3315,8 +3313,6 @@ void do_cloakthegathering(CHAR_DATA *ch, char *argument)
     af.duration  = ch->level*ch->pcdata->discipline[OBFUSCATE];
     af.location  = APPLY_NONE;
     af.modifier  = 0;
-    af.bitvector = AFF_INVISIBLE;
-    affect_to_char( gch, &af );
     af.bitvector = AFF_SNEAK;
     affect_to_char( gch, &af );
     af.bitvector = AFF_HIDE;

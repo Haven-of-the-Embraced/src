@@ -3552,6 +3552,7 @@ bool    damage_old      args( ( CHAR_DATA *ch, CHAR_DATA *victim, int dam,
 void    update_pos  args( ( CHAR_DATA *victim ) );
 void    stop_fighting   args( ( CHAR_DATA *ch, bool fBoth ) );
 void  kill_em           args( ( CHAR_DATA *ch, CHAR_DATA *victim) );
+void  kill_triggers     args( ( CHAR_DATA *ch ));
 void  raw_kill          args( ( CHAR_DATA *ch) );
 bool    IN_LEVEL        args( (CHAR_DATA *ch, CHAR_DATA *victim ) );
 int   get_modifier      args( (CHAR_DATA *ch, int type) );

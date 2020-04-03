@@ -5189,7 +5189,6 @@ void do_slay( CHAR_DATA *ch, char *argument )
 
 void kill_em(CHAR_DATA *ch,CHAR_DATA *victim)
 {
-    OBJ_DATA *corpse;
     char mobname[MAX_STRING_LENGTH];
     DOMAIN_DATA *dom;
 
@@ -5330,8 +5329,14 @@ void kill_em(CHAR_DATA *ch,CHAR_DATA *victim)
 
     raw_kill( victim );
 
-    if (!IS_NPC(ch)
-    &&  (corpse = get_obj_list(ch,"corpse",ch->in_room->contents)) != NULL
+    return;
+}
+
+void kill_triggers (CHAR_DATA *ch)
+{
+    OBJ_DATA *corpse;
+
+    if ((corpse = get_obj_list(ch,"corpse",ch->in_room->contents)) != NULL
     &&  corpse->item_type == ITEM_CORPSE_NPC && can_see_obj(ch,corpse))
     {
         OBJ_DATA *coins;
@@ -5357,17 +5362,16 @@ void kill_em(CHAR_DATA *ch,CHAR_DATA *victim)
 
         if (IS_SET(ch->act, PLR_AUTOSAC))
         {
-                if (IS_SET(ch->act,PLR_AUTOLOOT) && corpse && corpse->contains)
-                {
-            return;
+            if (IS_SET(ch->act,PLR_AUTOLOOT) && corpse && corpse->contains)
+            {
+                return;
             }
             else
-        {
-            do_function(ch, &do_sacrifice, "corpse");
-        }
+            {
+                do_function(ch, &do_sacrifice, "corpse");
+            }
         }
     }
-    return;
 }
 void do_assassinate( CHAR_DATA *ch, char *argument )
 {

@@ -5329,6 +5329,11 @@ void kill_em(CHAR_DATA *ch,CHAR_DATA *victim)
 
     raw_kill( victim );
 
+    if (!IS_NPC(ch))
+        kill_triggers(ch);
+    else if (SAME_ROOM(ch, ch->master))
+        kill_triggers(ch->master);
+
     return;
 }
 

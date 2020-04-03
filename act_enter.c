@@ -102,9 +102,9 @@ void do_enter( CHAR_DATA *ch, char *argument)
 
   if (IS_SET(portal->value[2], GATE_UMBRA) && is_affected(ch, gsn_astralprojection))
   {
-  	act("Your astral form refuses to cross through $p.  You must follow your silver cord to your waiting body.", ch, portal, NULL, TO_CHAR);
-  	act("$n's form wavers for a moment as it refuses to cross into $p.", ch, portal, NULL, TO_NOTVICT);
-  	return;
+      act("Your astral form refuses to cross through $p.  You must follow your silver cord to your waiting body.", ch, portal, NULL, TO_CHAR);
+      act("$n's form wavers for a moment as it refuses to cross into $p.", ch, portal, NULL, TO_NOTVICT);
+      return;
   }
 
   if (IS_SET(portal->value[2],GATE_RANDOM) || portal->value[3] == -1)

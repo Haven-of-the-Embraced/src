@@ -472,9 +472,9 @@ void do_feed(CHAR_DATA *ch, char *argument)
 
         success = godice(get_attribute(ch, DEXTERITY) + ch->csabilities[CSABIL_ATHLETICS] + ch->pcdata->csbackgrounds[CSBACK_HERD], diff);
 
-        if(victim->race == race_lookup("spirit") || victim->race == race_lookup("undead") || victim->race == race_lookup("bane") || victim->race == race_lookup("spider") || victim->race == race_lookup("construct") || victim->race == race_lookup("centipede") || victim->race == race_lookup("unique") || victim->race == race_lookup("wraith"))
+        if (!has_blood(victim))
         {
-            send_to_char("They have no blood to feed from!\n\r",ch);
+            send_to_char("Your quarry has no blood to feed upon!\n\r",ch);
             return;
         }
 

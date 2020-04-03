@@ -319,7 +319,7 @@ void do_feed(CHAR_DATA *ch, char *argument)
 // Ghouls disabled - UGHA
     if(ch->race == race_lookup("ghoul"))
     {
-        send_to_char("You must either be willingly nourished, or take sustenance from reserved blood from your Master.\n\r",ch);
+        send_to_char("You must either be willingly nourished by a Kindred, or take sustenance from a beheaded vampire corpse.\n\r",ch);
         return;
     }
 
@@ -519,10 +519,6 @@ void do_feed(CHAR_DATA *ch, char *argument)
             }
 
             if(ch->pblood > ch->max_pblood) ch->pblood = ch->max_pblood;
-/* disabled to reduce lag... maybe - Ugha
-            if(!IS_NPC(ch) && IS_SET(ch->act,PLR_PUEBLO))
-                send_html("<img xch_sound=play href=http://haven.wolfpaw.net/pueblo/sounds/feed1.wav>",ch,TO_ROOM);
-*/
             return;
         }
         else

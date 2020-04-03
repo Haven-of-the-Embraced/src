@@ -7125,10 +7125,7 @@ bool copyover_handler()
         else
         {
             fprintf (fp, "%d %s %s %s\n", d->descriptor, och->name, d->host, och->leader != NULL ? och->leader->name : NULL);
-
             save_char_obj (och);
-
-            write_to_descriptor (d->descriptor, buf, 0);
         }
     }
 

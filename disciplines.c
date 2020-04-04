@@ -3678,25 +3678,7 @@ void do_shadowform(CHAR_DATA *ch, char *argument)
     af.duration  = (ch->level*ch->pcdata->discipline[OBTENEBRATION]/2)-ch->gen;
     af.location  = APPLY_NONE;
     af.modifier  = 0;
-    af.bitvector = AFF_INVISIBLE;
-    affect_to_char( ch, &af );
-
-    af.where     = TO_AFFECTS;
-    af.type      = gsn_shadowform;
-    af.level     = ch->level;
-    af.duration  = (ch->level*ch->pcdata->discipline[OBTENEBRATION]/2)-ch->gen;
-    af.location  = APPLY_NONE;
-    af.modifier  = 0;
     af.bitvector = AFF_SNEAK;
-    affect_to_char( ch, &af );
-
-    af.where     = TO_AFFECTS;
-    af.type      = gsn_shadowform;
-    af.level     = ch->level;
-    af.duration  = (ch->level*ch->pcdata->discipline[OBTENEBRATION]/2)-ch->gen;
-    af.location  = APPLY_NONE;
-    af.modifier  = 0;
-    af.bitvector = AFF_DETECT_INVIS;
     affect_to_char( ch, &af );
 
     af.where     = TO_AFFECTS;

@@ -1949,7 +1949,7 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
 
     { "celerity", { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
-    &gsn_celbuff,           SLOT(0),     0, 12, "",         "The world suddenly seems to stand still as your vitae enhanced speed fades away.", "" },
+    &gsn_celbuff,           SLOT(0),     0, 12, "",         "The world suddenly seems to speed up around you, as your vitae enhanced speed fades away.", "" },
 
     { "gleam",    { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,

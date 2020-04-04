@@ -1611,7 +1611,7 @@ void do_celerity(CHAR_DATA *ch, char *argument)
     af.bitvector = 0;
     affect_to_char( ch, &af );
     send_to_char( "You draw upon the power of your vampiric nature and enhance your speed to superhuman levels.\n\r", ch );
-    act("$n suddenly starts moving so fast that they seem a blur!",ch,NULL,ch,TO_NOTVICT);
+    act("$n suddenly starts moving so fast that $E seems a blur!",ch,NULL,ch,TO_NOTVICT);
     return;
 }
 

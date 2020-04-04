@@ -4839,15 +4839,6 @@ void do_shift(CHAR_DATA *ch, char *argument)
         af.duration  = 24;
         af.location  = APPLY_NONE;
         af.modifier  = 0;
-        af.bitvector = AFF_DETECT_INVIS;
-        affect_to_char( ch, &af );
-
-        af.where     = TO_AFFECTS;
-        af.type      = gsn_shift;
-        af.level     = ch->pcdata->discipline[PROTEAN];
-        af.duration  = 24;
-        af.location  = APPLY_NONE;
-        af.modifier  = 0;
         af.bitvector = AFF_DETECT_HIDDEN;
         affect_to_char( ch, &af );
 
@@ -5479,24 +5470,6 @@ if ( !str_prefix( arg, "syrup" ) )
         af.location  = APPLY_NONE;
         af.modifier  = 0;
         af.bitvector = AFF_FLYING;
-        affect_to_char( ch, &af );
-
-        af.where     = TO_AFFECTS;
-        af.type      = gsn_shift;
-        af.level     = ch->pcdata->discipline[PROTEAN];
-        af.duration  = 24+ch->level;
-        af.location  = APPLY_NONE;
-        af.modifier  = 0;
-        af.bitvector = AFF_INVISIBLE;
-        affect_to_char( ch, &af );
-
-        af.where     = TO_AFFECTS;
-        af.type      = gsn_shift;
-        af.level     = ch->pcdata->discipline[PROTEAN];
-        af.duration  = 24+ch->level;
-        af.location  = APPLY_NONE;
-        af.modifier  = 0;
-        af.bitvector = AFF_DETECT_INVIS;
         affect_to_char( ch, &af );
 
         af.where     = TO_AFFECTS;

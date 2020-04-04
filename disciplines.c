@@ -5145,7 +5145,7 @@ void do_shift(CHAR_DATA *ch, char *argument)
         af.level     = ch->pcdata->discipline[PROTEAN];
         af.duration  = 24;
         af.location  = APPLY_CS_STR;
-        af.modifier  = 1;
+        af.modifier  = -(get_attribute(ch, STRENGTH)-2);
         af.bitvector = 0;
         affect_to_char( ch, &af );
 
@@ -5154,7 +5154,7 @@ void do_shift(CHAR_DATA *ch, char *argument)
         af.level    = ch->pcdata->discipline[PROTEAN];
         af.duration = 24;
         af.location = APPLY_CS_DEX;
-        af.modifier = 3;
+        af.modifier = -(get_attribute(ch, DEXTERITY)-3);
         af.bitvector    = 0;
         affect_to_char( ch, &af );
 
@@ -5163,7 +5163,7 @@ void do_shift(CHAR_DATA *ch, char *argument)
         af.level    = ch->pcdata->discipline[PROTEAN];
         af.duration = 24;
         af.location = APPLY_CS_STA;
-        af.modifier = 1;
+        af.modifier = -(get_attribute(ch, STAMINA)-3);
         af.bitvector    = 0;
         affect_to_char( ch, &af );
 
@@ -5183,6 +5183,15 @@ void do_shift(CHAR_DATA *ch, char *argument)
         af.location  = APPLY_NONE;
         af.modifier  = 0;
         af.bitvector = AFF_SHIFT;
+        affect_to_char( ch, &af );
+
+        af.where     = TO_AFFECTS;
+        af.type      = gsn_shift;
+        af.level     = ch->pcdata->discipline[PROTEAN];
+        af.duration  = 24;
+        af.location  = APPLY_NONE;
+        af.modifier  = 0;
+        af.bitvector = AFF_FLYING;
         affect_to_char( ch, &af );
 
         if (ch->hit > ch->max_hit) ch->hit = ch->max_hit;

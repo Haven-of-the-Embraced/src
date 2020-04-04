@@ -688,17 +688,6 @@ void do_reveal(CHAR_DATA *ch, char *argument)
         affect_to_char( ch, &af );
     }
 
-    if (ch->pcdata->discipline[AUSPEX] >= 3 && !IS_AFFECTED(ch,AFF_DETECT_INVIS))
-    {
-        af.where     = TO_AFFECTS;
-        af.type      = gsn_reveal;
-        af.level     = ch->pcdata->discipline[AUSPEX];
-        af.duration  = ch->level/2 + ch->pcdata->discipline[AUSPEX]*10;
-        af.location  = APPLY_NONE;
-        af.modifier  = 0;
-        af.bitvector = AFF_DETECT_INVIS;
-        affect_to_char( ch, &af );
-    }
     return;
 }
 

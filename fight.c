@@ -5906,16 +5906,16 @@ void do_blast( CHAR_DATA *ch, char *argument )
                 return;
         }
 
-    if (ch->mana < ch->level / 2)
+    if (ch->mana < ch->level)
     {
         send_to_char("You don't have the energy to spend on that right now.\n\r", ch);
         return;
     }
-    ch->mana -= ch->level / 2;
+    ch->mana -= ch->level;
 
         WAIT_STATE( ch, skill_table[gsn_blast].beats );
 
-    dicesuccess = godice(get_attribute(ch, DEXTERITY) + ch->csabilities[CSABIL_SUBTERFUGE], 6);
+    dicesuccess = godice(get_attribute(ch, DEXTERITY) + ch->csabilities[CSABIL_LEGERDEMAIN], 6);
 
         if(dicesuccess < 0)
         {
@@ -5945,11 +5945,11 @@ void do_blast( CHAR_DATA *ch, char *argument )
     act("$n sends a blast of smoke and flame directly at you!", ch, NULL, victim, TO_VICT);
     act("$n sends a quick burst of smoke and flame towards $N.", ch, NULL, victim, TO_NOTVICT);
 
-    damage(ch, victim, dicesuccess * ch->level * 3 / 5, gsn_blast, DAM_FIRE, TRUE);
+    damage(ch, victim, dicesuccess * ch->level * 3 , gsn_blast, DAM_FIRE, TRUE);
     fire_effect(victim, ch->level/2, number_range(1, ch->level+5), TARGET_CHAR);
 	check_improve(ch,gsn_blast,TRUE,8);
 
-    gain_exp(ch, dicesuccess);
+    gain_exp(ch, dicesuccess*5);
     return;
 }
 

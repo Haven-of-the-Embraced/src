@@ -4699,7 +4699,7 @@ void spell_weaken( int sn, int level, CHAR_DATA *ch, void *vo,int target)
     af.level     = level;
     af.duration  = level / 2;
     af.location  = APPLY_CS_STR;
-    af.modifier  = UMIN(-1, -(level/2));
+    af.modifier  = UMIN(-1, -(level/40));
     af.bitvector = AFF_WEAKEN;
     affect_to_char( victim, &af);
     if (IS_NPC(victim))

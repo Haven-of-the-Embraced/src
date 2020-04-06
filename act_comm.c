@@ -2991,7 +2991,7 @@ void do_promote_leader( CHAR_DATA *ch, char *argument )
         members = 0;
         for ( gch = char_list; gch != NULL; gch = gch->next )
         {
-            if ( is_same_group( gch, ch) && gch != ch && !IS_NPC(gch))
+            if ( is_same_group( gch, ch) && gch != victim && !IS_NPC(gch))
             members++;
         }
 

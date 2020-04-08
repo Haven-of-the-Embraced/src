@@ -1454,7 +1454,7 @@ void rote_spiritsight(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *o
         return;
     }
 
-    if(IS_AFFECTED(ch, AFF_DETECT_INVIS))
+    if(is_affected(ch, gsn_spiritsight) || IS_AFFECTED2(ch, AFF2_UMBRA))
     {
         send_to_char("You are already viewing the etheral plane of existance.\n\r",ch);
         return;
@@ -1463,12 +1463,12 @@ void rote_spiritsight(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *o
     send_to_char("You expand your vision to see the etheral plane of existance.\n\r" ,ch);
 
     af.where     = TO_AFFECTS;
-    af.type      = gsn_detect_invis;
+    af.type      = gsn_spiritsight;
     af.level     = ch->level;
     af.duration  = success*(ch->csabilities[CSABIL_ALERTNESS]+get_attribute(ch,PERCEPTION));
     af.location  = APPLY_NONE;
     af.modifier  = 0;
-    af.bitvector = AFF_DETECT_INVIS;
+    af.bitvector = 0;
     affect_to_char( ch, &af );
     return;
 }

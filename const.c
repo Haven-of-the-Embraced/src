@@ -2897,6 +2897,10 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
     &gsn_controlrandomness,          SLOT( 0),        0,     24, "",             "You feel your power to control random events slowly fade.",        "" },
 
+    { "spirit sight",		{ 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,	TAR_IGNORE,	POS_STANDING,
+    &gsn_spiritsight,	SLOT( 0),	0,	24, "",	"Your ethereal senses shift back to this reality.", ""},
+    
     { "precognition",             { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
     &gsn_precognition,          SLOT( 0),        0,     24, "",             "Your foresight of time fades away as you lose focus.",     "" },

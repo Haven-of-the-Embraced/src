@@ -519,6 +519,154 @@ void do_remort(CHAR_DATA *ch, char *argument)
         return;
     }
 
+    if(!str_cmp(arg, "mage"))
+    {
+        int tradition;
+
+        if (IS_NULLSTR(arg2) || (tradition = tradition_lookup(arg2)) == 0)
+        {
+            sendch("You must select a Tradition to join.\n\r", ch);
+            sendch("eg: 'remort mage order' for Order of Hermes.\n\r", ch);
+            return;
+        }
+
+        if(clan_table[ch->clan].clan_type == TYPE_TRADITION)
+        {
+            send_to_char("You are already Awakened, further Enlightenment does not come that easy!\n\r",ch);
+            return;
+        }
+        if(IS_VAMP(ch))
+        {
+            send_to_char( "Your Avatar has left you. There is nothing to Awaken.\n\r", ch );
+            return;
+        }
+
+        if(ch->embraced >= 1)
+        {
+            send_to_char( "Only True Blood humans may Awaken.\n\r", ch );
+            return;
+        }
+        if(ch->level < 1)
+        {
+            send_to_char( "Something is seriously wrong, contact an immortal..\n\r", ch );
+            return;
+        }
+
+        if(ch->race == race_lookup("garou"))
+        {
+            send_to_char( "You are one of Gaia's Chosen! Why would you debase yourself?\n\r", ch );
+            return;
+        }
+
+        while ( ch->affected )
+            affect_remove( ch, ch->affected );
+
+        for ( obj = ch->carrying; obj != NULL; obj = obj_next )
+        {
+            obj_next = obj->next_content;
+            if(obj->wear_loc != WEAR_NONE)
+                unequip_char( ch, obj );
+        }
+        // Probably redundant, but just in case!
+        ch->race = race_lookup("human");
+
+        while ( ch->affected )
+            affect_remove( ch, ch->affected );
+        ch->affected_by = race_table[ch->race].aff;
+        ch->imm_flags   = ch->imm_flags|race_table[ch->race].imm;
+        ch->res_flags   = ch->res_flags|race_table[ch->race].res;
+        ch->vuln_flags  = ch->vuln_flags|race_table[ch->race].vuln;
+        ch->level    = 1;
+        ch->clan = clan_lookup(arg2);
+        ch->tradition = tradition;
+        ch->size = pc_race_table[ch->race].size;
+        if(ch->pcdata->points < 30) ch->pcdata->points = 30;
+        ch->max_hit  = 100;
+        ch->max_mana = 100;
+        ch->max_move = 100;
+        ch->pcdata->perm_hit = ch->max_hit;
+        ch->pcdata->perm_mana = ch->max_mana;
+        ch->pcdata->perm_move = ch->max_move;
+        ch->hit      = ch->max_hit;
+        ch->mana     = ch->max_mana;
+        ch->move     = ch->max_move;
+        ch->position = POS_STANDING;
+        ch->gen = 0;
+        ch->bonded = 0;
+        ch->embraced = 0;
+            for(i = 0; i < MAX_DISC; i++)
+            ch->pcdata->discipline[i] = 0;
+            for (i = 0; i < MAX_CSBACK; i++)
+            ch->pcdata->csbackgrounds[i] = 0;
+        for (i = 0; i < MAX_GIFT; i++)
+            ch->pcdata->gift[i] = 0;
+        for (i = 0; i < 6; i++)
+            ch->pcdata->renown[i] = 0;
+        ch->pcdata->shiftform = HOMID;
+        ch->pcdata->rage[0] = 0;
+        ch->pcdata->rage[1] = 0;
+        ch->pcdata->gnosis[0] = 0;
+        ch->pcdata->gnosis[1] = 0;
+        ch->pcdata->shift_count = 0;
+        ch->pcdata->shift_to = 0;
+        ch->pcdata->garou_fur = str_dup("");
+        ch->pcdata->rank = 0;
+        ch->pcdata->tribe = 0;
+        ch->pcdata->breed = 0;
+        ch->pcdata->auspice = 0;
+        ch->pcdata->primal_urge = 0;
+        ch->dpoints = 5;
+        ch->short_descr = str_dup("");
+        ch->long_descr = str_dup("");
+        ch->sire = str_dup("Unknown");
+        ch->pblood = 100;
+        ch->embraced = 0;
+        ch->childer = 0;
+        ch->arete = 1;
+        ch->avatar = 1;
+        ch->paradox = 0;
+        ch->quintessence = 10;
+        ch->foci = 0;
+        ch->breed = 0;
+        ch->auspice = 0;
+        ch->agg_dam = 0;
+        ch->freebie = 0;
+        for (i = 1;i < 10;i++)
+            ch->sphere[i] = 0;
+        ch->sphere[tradition_table[tradition].sphere]++;
+        for(i = 0; i < 30; i++)
+            ch->csabilities[i] = 0;
+            for (i = 0; i < MAX_CSBACK; i++)
+            ch->pcdata->csbackgrounds[i] = 0;
+        for(i = 0; i < 9; i++)
+            ch->csattributes[i] = 1;
+        for(i = 0; i < 30; i++)
+            ch->pcdata->cssec_abil[i] = 0;
+        ch->pcdata->csvirtues[CSVIRT_CONSCIENCE] = 1;
+        ch->pcdata->csvirtues[CSVIRT_SELF_CONTROL] = 1;
+        ch->pcdata->csvirtues[CSVIRT_COURAGE] = 1;
+        ch->csmax_willpower = 0;
+        ch->cswillpower = 0;
+        ch->pcdata->cshumanity = 0;
+        ch->pcdata->progress = 0;
+        ch->pcdata->sect = sect_lookup("mage");
+        ch->pcdata->condition[COND_THIRST] = 10;
+        ch->pcdata->condition[COND_HUNGER] = 10;
+        ch->rank = 1;
+        ch->freebie = 15 + (ch->remorts*3);
+        cskill_update(ch, FALSE);
+        send_to_char( "{WYou Awaken to the true nature of Reality!{x\n\r\n\r", ch );
+        send_to_char("Remember to go back through the 'create' process to reassign your CS stats!\n\r", ch);
+        send_to_char("Until you have done so, you will have no skills.\n\r", ch);
+        ch->freebie += 3;
+        ch->remorts++;
+        ch->currentkills = 0;
+        ch->exp   = exp_per_level(ch,ch->pcdata->points) * UMAX( 1, ch->level );
+        nuke_pets(ch);
+        save_char_obj(ch);
+        return;
+    }
+
     send_to_char( "That is not a valid option!\n\r", ch );
     return;
 }

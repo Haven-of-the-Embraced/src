@@ -201,8 +201,10 @@ void do_remort(CHAR_DATA *ch, char *argument)
         ch->pcdata->condition[COND_HUNGER] = 10;
         ch->freebie = 15 + (ch->remorts*3);
         cskill_update(ch, FALSE);
-        send_to_char( "You are now reborn a Garou!\n\r", ch );
-        send_to_char( "Then type 'gogarou' to set your breed/auspice/tribe and fur color.\n\r", ch);
+        send_to_char( "{WYou are now reborn one of Gaia's Chosen!{x\n\r\n\r", ch );
+        send_to_char("Remember to go back through the 'create' process to reassign your CS stats!\n\r", ch);
+        send_to_char("Until you have done so, you will have no skills. You must also type 'gogarou'\n\r", ch);
+        send_to_char( "to finish setting your Garou stats, such as auspice and fur color.\n\r", ch);
         ch->freebie += 3;
         ch->remorts++;
         ch->currentkills = 0;
@@ -330,7 +332,9 @@ void do_remort(CHAR_DATA *ch, char *argument)
         ch->freebie = 15 + (ch->remorts*3);
         ch->currentkills = 0;
         cskill_update(ch, FALSE);
-        send_to_char( "You regain your Humanity!\n\r", ch );
+        send_to_char( "{WYou regain your Humanity!{x\n\r\n\r", ch );
+        send_to_char("Remember to go back through the 'create' process to reassign your CS stats!\n\r", ch);
+        send_to_char("Until you have done so, you will have no skills.\n\r", ch);
         nuke_pets(ch);
         save_char_obj(ch);
         return;

@@ -177,7 +177,7 @@ typedef void VAMP_FUN   args( ( CHAR_DATA *ch ) );
  */
 #define MAX_HELP        5
 #define MAX_SOCIALS       256
-#define MAX_SKILL         405
+#define MAX_SKILL         406
 #define MAX_GIFT          90
 #define MAX_GIFTS_CODED   163
 #define MAX_BREW        24
@@ -2954,6 +2954,7 @@ extern  sh_int  gsn_divine_strength;
 extern  sh_int  gsn_controlrandomness;
 extern  sh_int  gsn_magick;
 extern  sh_int  gsn_kineticshield;
+extern  sh_int  gsn_spiritsight;
 extern  sh_int  gsn_empower;
 extern  sh_int  gsn_precognition;
 extern  sh_int  gsn_timealteration;

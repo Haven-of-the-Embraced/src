@@ -2716,7 +2716,59 @@ bool can_see_room( CHAR_DATA *ch, ROOM_INDEX_DATA *pRoomIndex )
     return TRUE;
 }
 
+bool unseen_check(CHAR_DATA *ch, CHAR_DATA *victim)
+{
+    /* Checks all types of Unseen/veil versus PCs reveal*/
+    if (IS_AFFECTED2(victim, AFF2_VEIL) &&
+        (IS_NPC(victim) || !is_affected(ch, gsn_reveal)))
+       return FALSE;
 
+        if ((IS_AFFECTED2(victim, AFF2_VEIL) || is_affected(victim, gsn_veil)) &&
+            is_affected(ch, gsn_reveal) && !IS_NPC(ch) && !IS_NPC(victim))
+        {
+            int success;
+            int diff;
+            diff = 7;
+            if (victim->pcdata->discipline[OBFUSCATE] > ch->pcdata->discipline[AUSPEX])
+                return FALSE;
+
+            if (ch->pcdata->discipline[AUSPEX] > victim->pcdata->discipline[OBFUSCATE])
+                diff -= (ch->pcdata->discipline[AUSPEX] - victim->pcdata->discipline[OBFUSCATE]);
+
+            success = godice(get_attribute(ch, PERCEPTION)+ch->csabilities[CSABIL_ALERTNESS], diff);
+
+            if (ch->pcdata->discipline[AUSPEX] == victim->pcdata->discipline[OBFUSCATE])
+                success -= godice(get_attribute(victim, MANIPULATION) + victim->csabilities[CSABIL_SUBTERFUGE], diff);
+
+            if (success < 1)
+                return FALSE;
+            }
+
+    if (is_affected(victim, gsn_unseen) && !IS_AFFECTED2(ch, AFF2_DETECT_UNSEEN) &&
+        !is_affected(ch, gsn_reveal) && victim->fighting == NULL && !IS_NPC(ch) && !IS_NPC(victim))
+    return FALSE;
+
+    if (is_affected(victim, gsn_unseen) && !IS_AFFECTED2(ch, AFF2_DETECT_UNSEEN) &&
+        is_affected(ch, gsn_reveal) && victim->fighting == NULL && !IS_NPC(ch) && !IS_NPC(victim))
+        {
+            int success;
+            int diff;
+            diff = 7;
+            if (victim->pcdata->discipline[OBFUSCATE] > ch->pcdata->discipline[AUSPEX])
+                return FALSE;
+
+            if (ch->pcdata->discipline[AUSPEX] > victim->pcdata->discipline[OBFUSCATE])
+                diff -= (ch->pcdata->discipline[AUSPEX] - victim->pcdata->discipline[OBFUSCATE]);
+
+            success = godice(get_attribute(ch, PERCEPTION)+ch->csabilities[CSABIL_ALERTNESS], diff);
+
+            if (ch->pcdata->discipline[AUSPEX] == victim->pcdata->discipline[OBFUSCATE])
+                success -= godice(get_attribute(victim, MANIPULATION) + victim->csabilities[CSABIL_SUBTERFUGE], diff);
+
+            if (success < 1)
+                return FALSE;
+            }
+}
 
 /*
  * True if char can see victim.
@@ -2746,55 +2798,8 @@ bool can_see( CHAR_DATA *ch, CHAR_DATA *victim )
     if ( IS_AFFECTED(ch, AFF_BLIND) )
     return FALSE;
 
-    if ( IS_AFFECTED2(victim, AFF2_VEIL) && (IS_NPC(victim)
-            || !is_affected(ch, gsn_reveal)))
-    return FALSE;
-
-        if ( (IS_AFFECTED2(victim, AFF2_VEIL) || is_affected(victim, gsn_veil))
-         && is_affected(ch, gsn_reveal)
-                && !IS_NPC(ch) && !IS_NPC(victim))
-        {
-        int success;
-        int diff;
-        diff = 7;
-        if (victim->pcdata->discipline[OBFUSCATE] > ch->pcdata->discipline[AUSPEX])
-            return FALSE;
-        if (ch->pcdata->discipline[AUSPEX] > victim->pcdata->discipline[OBFUSCATE])
-            diff -= (ch->pcdata->discipline[AUSPEX] - victim->pcdata->discipline[OBFUSCATE]);
-        success = godice(get_attribute(ch, PERCEPTION)+ch->csabilities[CSABIL_ALERTNESS], diff);
-        if (ch->pcdata->discipline[AUSPEX] == victim->pcdata->discipline[OBFUSCATE])
-        success -= godice(get_attribute(victim, MANIPULATION) + victim->csabilities[CSABIL_SUBTERFUGE], diff);
-        if (success < 1)
-            return FALSE;
-    }
-
-    if ( is_affected(victim, gsn_unseen)
-         && !IS_AFFECTED2(ch, AFF2_DETECT_UNSEEN)
-         && !is_affected(ch, gsn_reveal)
-         && victim->fighting == NULL
-            && !IS_NPC(ch) && !IS_NPC(victim))
-    return FALSE;
-
-    if ( is_affected(victim, gsn_unseen)
-         && !IS_AFFECTED2(ch, AFF2_DETECT_UNSEEN)
-         && is_affected(ch, gsn_reveal)
-         && victim->fighting == NULL
-            && !IS_NPC(ch) && !IS_NPC(victim))
-        {
-        int success;
-        int diff;
-        diff = 7;
-        if (victim->pcdata->discipline[OBFUSCATE] > ch->pcdata->discipline[AUSPEX])
-            return FALSE;
-        if (ch->pcdata->discipline[AUSPEX] > victim->pcdata->discipline[OBFUSCATE])
-            diff -= (ch->pcdata->discipline[AUSPEX] - victim->pcdata->discipline[OBFUSCATE]);
-        success = godice(get_attribute(ch, PERCEPTION)+ch->csabilities[CSABIL_ALERTNESS], diff);
-        if (ch->pcdata->discipline[AUSPEX] == victim->pcdata->discipline[OBFUSCATE])
-        success -= godice(get_attribute(victim, MANIPULATION) + victim->csabilities[CSABIL_SUBTERFUGE], diff);
-        if (success < 1)
-            return FALSE;
-    }
-
+    if (unseen_check(ch, victim) == FALSE)
+        return FALSE;
 
     if (is_affected(victim,gsn_earthmeld))
     return FALSE;

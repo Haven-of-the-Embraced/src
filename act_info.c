@@ -76,6 +76,9 @@ char *  const   where_name  [] =
 /* for  keeping track of the player count */
 int max_on = 0;
 
+/* extern for whether the action is a 'look' */
+bool ACT_LOOKING = FALSE;
+
 /*
  * Local functions.
  */
@@ -1219,6 +1222,7 @@ void do_look( CHAR_DATA *ch, char *argument )
     argument = one_argument( argument, arg2 );
     number = number_argument(arg1,arg3);
     count = 0;
+    ACT_LOOKING = TRUE;
 
     if ( arg1[0] == '\0' || !str_cmp( arg1, "auto" ) )
     {

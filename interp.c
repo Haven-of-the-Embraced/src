@@ -125,6 +125,9 @@ void interpret( CHAR_DATA *ch, char *argument )
     CMD_DATA *fCmd;
     FILE *fp;
 
+    /* Reset act_looking */
+    ACT_LOOKING = FALSE;
+    
     /*
      * Strip leading spaces.
      */

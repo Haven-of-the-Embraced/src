@@ -2770,6 +2770,7 @@ struct mprog_code
 extern char temp_HSL_workspace[HSL];
 extern bool RECORD_TO_REPLAYROOM;
 
+extern bool ACT_LOOKING;
 
 /*
  * These are skill_lookup return values for common skills and spells.

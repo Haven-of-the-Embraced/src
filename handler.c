@@ -2775,12 +2775,11 @@ bool unseen_check(CHAR_DATA *ch, CHAR_DATA *victim)
  */
 bool can_see( CHAR_DATA *ch, CHAR_DATA *victim )
 {
-/* RT changed so that WIZ_INVIS has levels */
     if ( ch == victim )
-    return TRUE;
+        return TRUE;
 
     if ( get_trust(ch) < victim->invis_level)
-    return FALSE;
+        return FALSE;
 
 
     if (IS_NPC(victim) && IS_AFFECTED2(victim, AFF2_UNSEEN) && !IS_IMMORTAL(ch))
@@ -2788,48 +2787,33 @@ bool can_see( CHAR_DATA *ch, CHAR_DATA *victim )
 
     if (IS_NPC(ch) && IS_AFFECTED2(ch,  AFF2_DETECT_UNSEEN))
         return TRUE;
+
     if (get_trust(ch) < victim->incog_level && ch->in_room != victim->in_room)
-    return FALSE;
+        return FALSE;
 
-    if ( (!IS_NPC(ch) && IS_SET(ch->act, PLR_HOLYLIGHT))
-    ||   (IS_NPC(ch) && IS_IMMORTAL(ch)))
-    return TRUE;
+    if ((!IS_NPC(ch) && IS_SET(ch->act, PLR_HOLYLIGHT)) ||
+        (IS_NPC(ch) && IS_IMMORTAL(ch)))
+        return TRUE;
 
-    if ( IS_AFFECTED(ch, AFF_BLIND) )
-    return FALSE;
+    if (IS_AFFECTED(ch, AFF_BLIND) )
+        return FALSE;
 
     if (unseen_check(ch, victim) == FALSE)
         return FALSE;
 
     if (is_affected(victim,gsn_earthmeld))
-    return FALSE;
-
-    if ( room_is_dark( ch->in_room ) && !IS_AFFECTED(ch, AFF_INFRARED))
-    return FALSE;
-    if ( IS_AFFECTED(victim, AFF_INVISIBLE)
-    &&   !IS_AFFECTED(ch, AFF_DETECT_INVIS) )
-    return FALSE;
-
-    /* sneaking */
-/*    if ( IS_AFFECTED(victim, AFF_SNEAK)
-    &&   !IS_AFFECTED(ch,AFF_DETECT_HIDDEN)
-    &&   victim->fighting == NULL)
-    {
-    int chance;
-    chance = get_skill(victim,gsn_sneak);
-    chance += get_curr_stat(victim,STAT_DEX) * 3/2;
-    chance -= get_curr_stat(ch,STAT_INT) * 2;
-    chance -= ch->level - victim->level * 3/2;
-
-    if (number_percent() < chance)
         return FALSE;
-    } */
 
+    if (room_is_dark( ch->in_room ) && !IS_AFFECTED(ch, AFF_INFRARED))
+        return FALSE;
 
-    if ( IS_AFFECTED(victim, AFF_HIDE)
-    &&   !IS_AFFECTED(ch, AFF_DETECT_HIDDEN)
-    &&   victim->fighting == NULL)
-    return FALSE;
+    if (IS_AFFECTED(victim, AFF_INVISIBLE) && !IS_AFFECTED(ch, AFF_DETECT_INVIS) )
+        return FALSE;
+
+    if (IS_AFFECTED(victim, AFF_HIDE) &&
+        !IS_AFFECTED(ch, AFF_DETECT_HIDDEN) &&
+        victim->fighting == NULL)
+        return FALSE;
 
     if(IS_AFFECTED2(victim, AFF2_UMBRA) && !IS_AFFECTED2(ch, AFF2_UMBRA))
         return FALSE;

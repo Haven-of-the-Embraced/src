@@ -2815,6 +2815,10 @@ bool can_see( CHAR_DATA *ch, CHAR_DATA *victim )
         victim->fighting == NULL)
         return FALSE;
 
+    if (ACT_LOOKING && IS_AFFECTED2(victim, AFF2_UMBRA) &&
+        !IS_AFFECTED2(ch, AFF2_UMBRA) && is_affected(ch, gsn_spiritsight))
+        return TRUE;
+
     if(IS_AFFECTED2(victim, AFF2_UMBRA) && !IS_AFFECTED2(ch, AFF2_UMBRA))
         return FALSE;
 
@@ -2877,6 +2881,10 @@ bool can_see_obj( CHAR_DATA *ch, OBJ_DATA *obj )
 
     if ( IS_OBJ_STAT(obj,ITEM_HIDDEN))
         return FALSE;
+
+    if (ACT_LOOKING && IS_SET(obj->extra_flags, ITEM_UMBRA) &&
+        !IS_AFFECTED2(ch, AFF2_UMBRA) && is_affected(ch, gsn_spiritsight))
+        return TRUE;
 
     if ( IS_SET(obj->extra_flags, ITEM_UMBRA) && !IS_AFFECTED2(ch, AFF2_UMBRA))
         return FALSE;

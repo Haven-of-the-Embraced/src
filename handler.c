@@ -2875,6 +2875,9 @@ bool can_see_obj( CHAR_DATA *ch, OBJ_DATA *obj )
     &&   !IS_AFFECTED(ch, AFF_DETECT_INVIS) )
         return FALSE;
 
+    if ( IS_OBJ_STAT(obj,ITEM_HIDDEN))
+        return FALSE;
+
     if ( IS_SET(obj->extra_flags, ITEM_UMBRA) && !IS_AFFECTED2(ch, AFF2_UMBRA))
         return FALSE;
 
@@ -2887,12 +2890,8 @@ bool can_see_obj( CHAR_DATA *ch, OBJ_DATA *obj )
     if ( IS_OBJ_STAT(obj,ITEM_GLOW))
     return TRUE;
 
-    if ( IS_OBJ_STAT(obj,ITEM_HIDDEN))
-    return FALSE;
-
     if ( room_is_dark( ch->in_room ) && !IS_AFFECTED(ch, AFF_DARK_VISION) )
     return FALSE;
-
 
     return TRUE;
 }

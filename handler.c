@@ -2768,6 +2768,7 @@ bool unseen_check(CHAR_DATA *ch, CHAR_DATA *victim)
             if (success < 1)
                 return FALSE;
             }
+        return TRUE;
 }
 
 /*

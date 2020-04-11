@@ -2816,7 +2816,8 @@ bool can_see( CHAR_DATA *ch, CHAR_DATA *victim )
         return FALSE;
 
     if (ACT_LOOKING && IS_AFFECTED2(victim, AFF2_UMBRA) &&
-        !IS_AFFECTED2(ch, AFF2_UMBRA) && is_affected(ch, gsn_spiritsight))
+        !IS_AFFECTED2(ch, AFF2_UMBRA) &&
+        (is_affected(ch, gsn_spiritsight) || is_affected(ch, gsn_gift_pulseoftheinvisible)))
         return TRUE;
 
     if(IS_AFFECTED2(victim, AFF2_UMBRA) && !IS_AFFECTED2(ch, AFF2_UMBRA))
@@ -2883,7 +2884,8 @@ bool can_see_obj( CHAR_DATA *ch, OBJ_DATA *obj )
         return FALSE;
 
     if (ACT_LOOKING && IS_SET(obj->extra_flags, ITEM_UMBRA) &&
-        !IS_AFFECTED2(ch, AFF2_UMBRA) && is_affected(ch, gsn_spiritsight))
+        !IS_AFFECTED2(ch, AFF2_UMBRA) &&
+        is_affected(ch, gsn_spiritsight) || is_affected(ch, gsn_gift_pulseoftheinvisible))
         return TRUE;
 
     if ( IS_SET(obj->extra_flags, ITEM_UMBRA) && !IS_AFFECTED2(ch, AFF2_UMBRA))

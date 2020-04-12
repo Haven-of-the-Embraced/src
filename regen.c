@@ -208,6 +208,13 @@ int pulse_hit_gain( CHAR_DATA *ch )
             case POS_FIGHTING:  gain = 0;          break;
         }
 
+        if (IS_DEBUGGING(ch))
+        {
+            char buf[MSL];
+            sprintf(buf, "Hp:%d ", UMIN(gain, (ch->max_hit+ch->agg_dam) - ch->hit));
+            sendch(buf, ch);
+        }
+
     return UMIN(gain, (ch->max_hit+ch->agg_dam) - ch->hit);
 }
 
@@ -278,6 +285,13 @@ int pulse_mana_gain( CHAR_DATA *ch )
             case POS_FIGHTING:  gain = 0;          break;
         }
 
+    if (IS_DEBUGGING(ch))
+    {
+        char buf[MSL];
+        sprintf(buf, "Mn:%d ", UMIN(gain, (ch->max_hit+ch->agg_dam) - ch->hit));
+        sendch(buf, ch);
+    }
+
     return UMIN(gain, ch->max_mana - ch->mana);
 }
 
@@ -343,6 +357,13 @@ int pulse_move_gain( CHAR_DATA *ch )
             case POS_RESTING: gain += gain/8; break;
             case POS_FIGHTING:  gain = 0;          break;
         }
+
+    if (IS_DEBUGGING(ch))
+    {
+        char buf[MSL];
+        sprintf(buf, "Mv:%d\n\r", UMIN(gain, (ch->max_hit+ch->agg_dam) - ch->hit));
+        sendch(buf, ch);
+    }
 
     return UMIN(gain, ch->max_move - ch->move);
 }

@@ -795,7 +795,7 @@ void char_update( void )
         if(IS_NPC(ch) && ch->position != ch->default_pos)
         do_function(ch, &do_wake, "");
 
-        if (ch->race != race_lookup("garou")) {
+        if (ch->race != race_lookup("garou") || !PLAYTESTING(ch)) {
             if ( ch->hit  < ch->max_hit )
             ch->hit  += hit_gain(ch);
             else

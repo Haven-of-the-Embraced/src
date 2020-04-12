@@ -44,7 +44,7 @@ void regen_update( void )
 
         // Pulse based regeneration for Garou only currently, will eventually be all chars.
 
-    	if (ch->race == race_lookup("garou"))
+    	if (ch->race == race_lookup("garou") || PLAYTESTING(ch) )
         {
             if (ch->hit < (ch->max_hit - ch->agg_dam))
                 ch->hit += pulse_hit_gain(ch);
@@ -63,7 +63,7 @@ void regen_update( void )
     // Vampire regen, almost made redundant by pulse regen
 
     // Zelan's new regen code
-  if ( IS_VAMP(ch) && IS_AFFECTED2 (ch, AFF2_VAMPIRE_REGEN))
+  if ( !PLAYTESTING(ch) && IS_VAMP(ch) && IS_AFFECTED2 (ch, AFF2_VAMPIRE_REGEN))
       vampire_regen(ch);
 
 

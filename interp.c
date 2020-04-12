@@ -201,7 +201,7 @@ void interpret( CHAR_DATA *ch, char *argument )
     }
 
     //While trapped in Gauntlet, only certain commands allowed
-    if (!IS_NPC(ch) && is_affected(ch, trappedingauntlet) &&
+    if (!IS_NPC(ch) && is_affected(ch, gsn_trappedingauntlet) &&
     	str_prefix(command, "ooc") &&
     	str_prefix(command, "inventory") &&
     	str_prefix(command, "who") &&

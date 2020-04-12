@@ -2988,6 +2988,7 @@ extern sh_int gsn_vampire_regen;
                || strstr(clan_table[Clan].banker, "All" )   \
                || strstr(clan_table[Clan].banker, "None" )  \
                || !str_cmp(ch->name, clan_table[Clan].leader)))
+#define PLAYTESTING(ch)     (!IS_NPC((ch)) && IS_SET((ch)->act, PLR_PLAYTEST))
 #define IS_DEBUGGING(ch)    (!IS_NPC((ch)) && IS_SET((ch)->act2, PLR2_DEBUG) \
                             && IS_SET((ch)->act2, PLR2_DEBUGMSG))
 #define SAME_UMBRA(a, b)    ((IS_AFFECTED2((a), AFF2_UMBRA) && IS_AFFECTED2((b), AFF2_UMBRA)) \

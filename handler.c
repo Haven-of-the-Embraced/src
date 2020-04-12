@@ -3131,7 +3131,7 @@ char *act_bit_name( int act_flags )
     if (act_flags & PLR_IC      ) strcat(buf, " is_IC");
     if (act_flags & PLR_PUEBLO  ) strcat(buf, " pueblo");
     if (act_flags & PLR_NEWBIEHELP  ) strcat(buf, " newbiehelper");
-    if (act_flags & PLR_D10COMBAT)  strcat(buf, " d10combat");
+    if (act_flags & PLR_PLAYTEST)  strcat(buf, " playtest");
     }
     return ( buf[0] != '\0' ) ? buf+1 : "none";
 }

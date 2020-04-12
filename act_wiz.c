@@ -9292,7 +9292,7 @@ if (IS_SET(victim->act, PLR_NEWBIEHELP))
     return;
     }
 
-void do_d10combat (CHAR_DATA *ch, char *argument)
+void do_playtest (CHAR_DATA *ch, char *argument)
 {
 CHAR_DATA *victim;
 char arg[MIL];
@@ -9303,16 +9303,16 @@ one_argument( argument, arg );
     return;
   }
 
-if (IS_SET(victim->act, PLR_D10COMBAT))
+if (IS_SET(victim->act, PLR_PLAYTEST))
     {
-    REMOVE_BIT(victim->act, PLR_D10COMBAT);
-    send_to_char("D10 Combat tag removed.\n\r", ch);
-    send_to_char("You are no longer using d10 combat.\n\r", victim);
+    REMOVE_BIT(victim->act, PLR_PLAYTEST);
+    send_to_char("Play Tester tag removed.\n\r", ch);
+    send_to_char("You are no longer a play tester.\n\r", victim);
     }
     else {
-    SET_BIT(victim->act, PLR_D10COMBAT);
-    send_to_char("D10 combat tag set.\n\r", ch);
-    send_to_char("You have been set to use d10 combat!\n\r", victim);
+    SET_BIT(victim->act, PLR_PLAYTEST);
+    send_to_char("Play Tester tag set.\n\r", ch);
+    send_to_char("You have been set as a play tester!\n\r", victim);
     }
     return;
     }

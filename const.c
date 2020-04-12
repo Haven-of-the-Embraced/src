@@ -2900,7 +2900,11 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
     { "spirit sight",		{ 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,	TAR_IGNORE,	POS_STANDING,
     &gsn_spiritsight,	SLOT( 0),	0,	24, "",	"Your ethereal senses shift back to this reality.", ""},
-    
+
+    { "trapped in gauntlet",   { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+  	{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_IGNORE,         POS_STANDING,
+  	&gsn_trappedingauntlet,        SLOT( 0),     0,    24, "",  "Your very Essence finally untangles itself from the Gauntlet!",  "" },
+
     { "precognition",             { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
     &gsn_precognition,          SLOT( 0),        0,     24, "",             "Your foresight of time fades away as you lose focus.",     "" },

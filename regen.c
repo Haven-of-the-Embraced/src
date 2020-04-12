@@ -39,7 +39,7 @@ void regen_update( void )
     if (IS_NPC(ch))
         continue;
 
-        if (!IS_NPC(ch) && IS_SET(ch->act2, PLR2_NEWBIE))
+        if (IS_SET(ch->act2, PLR2_NEWBIE))
             newbie_regen(ch);
 
         // Pulse based regeneration for Garou only currently, will eventually be all chars.
@@ -346,4 +346,3 @@ int pulse_move_gain( CHAR_DATA *ch )
 
     return UMIN(gain, ch->max_move - ch->move);
 }
-

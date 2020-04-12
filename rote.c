@@ -1640,32 +1640,93 @@ void rote_stepsideways(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *
     OBJ_DATA *obj_next;
     OBJ_DATA *bag;
     OBJ_DATA *bag_next;
+    AFFECT_DATA af;
+    int gauntlet_diff = get_gauntlet(ch);
+    int success_needed;
+    int avatar_storm = godice(ch->paradox + ch->arete, 6);
 
     if ( ( location = get_room_index( ROOM_VNUM_PARADOX ) ) == NULL )
     {
         send_to_char( "Error! Contact the imms at once!\n\r", ch );
         return;
     }
-    if ( ch->in_room == location )
-        return;
 
-    stop_fighting( ch, TRUE );
+    if (ch->position == POS_FIGHTING)
+  	{
+  		send_to_char("Your concentration was broken because you are fighting!\n\r", ch);
+  		return;
+  	}
+
+    switch(gauntlet_diff)
+  	{
+  		default:
+  			success_needed = 6;
+  			break;
+  		case 0:
+  		case 1:
+  		case 2:
+  		case 3:
+  			success_needed = 1;
+  			break;
+  		case 4:
+  		case 5:
+  			success_needed = 2;
+  			break;
+  		case 6:
+  			success_needed = 3;
+  			break;
+  		case 7:
+  			success_needed = 4;
+  			break;
+  		case 8:
+  		case 9:
+  		case 10:
+  			success_needed = 5;
+  			break;
+  	}
+
+    if (avatar_storm < 0)
+    		avatar_storm = 0;
 
     if(success < get_gauntlet(ch))
     {
         act( "You start to step into the Umbra... and suddenly feel a tugging sensation as you're caught within the Gauntlet!",  ch, NULL, NULL, TO_CHAR    );
         act( "A vague look of terror crosses $n's features before they suddenly cease to exist in this reality.",  ch, NULL, NULL, TO_NOTVICT );
-        char_from_room( ch );
-        char_to_room( ch, location );
-        do_function(ch, &do_look, "auto" );
-        return;
-    }
 
-    if (pass_gauntlet(ch, TRUE))
-    {
-        do_function(ch, &do_look, "auto");
-        return;
-    }
+        if (!IS_AFFECTED2(ch, AFF2_UMBRA))
+    			pass_gauntlet(ch, FALSE);
+
+    		af.where	=	TO_AFFECTS;
+    		af.type		=	gsn_trappedingauntlet;
+    		af.level	=	gauntlet_diff;
+    		af.duration	=	(success_needed) / 2 + 1;
+    		af.modifier	=	0;
+    		af.location	=	0;
+    		af.bitvector	=	0;
+    		affect_to_char( ch, &af );
+
+    		d10_damage(ch, ch, avatar_storm, ch->level + (ch->avatar * 5), gsn_magick, DAM_NEGATIVE, DEFENSE_NONE, TRUE, TRUE);
+    		return;
+    	}
+
+      if (success < success_needed)
+    	{
+    		act( "You calm your mind and focus on the spirit realm, but meet resistance in the Gauntlet.",  ch, NULL, NULL, TO_CHAR    );
+    		act( "$n wavers slightly before your eyes, before becoming whole once again.",  ch, NULL, NULL, TO_NOTVICT );
+    		WAIT_STATE(ch, (success_needed - success)*3);
+    		d10_damage(ch, ch, avatar_storm, ch->level + (ch->avatar * 5), gsn_magick, DAM_NEGATIVE, DEFENSE_NONE, TRUE, TRUE);
+    		return;
+    	}
+
+      if (pass_gauntlet(ch, FALSE))
+    	{
+    		act( "Concentrating intently, you feel a tingling sensation as your physical body navigates the Gauntlet to the spirit realm on the other side.",  ch, NULL, NULL, TO_CHAR    );
+    		act( "$n's body becomes slowly translucent, before $s melts into thin air.",  ch, NULL, NULL, TO_NOTVICT );
+    		WAIT_STATE(ch, (success_needed - success)*3);
+    		d10_damage(ch, ch, avatar_storm, (ch->level / 5) + ch->avatar * 5, gsn_magick, DAM_NEGATIVE, DEFENSE_NONE, TRUE, TRUE);
+    		do_function(ch, &do_look, "auto");
+    		return;
+    	}
 }
 
 void rote_controlgauntlet(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)

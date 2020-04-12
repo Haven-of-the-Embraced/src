@@ -127,7 +127,7 @@ void interpret( CHAR_DATA *ch, char *argument )
 
     /* Reset act_looking */
     ACT_LOOKING = FALSE;
-    
+
     /*
      * Strip leading spaces.
      */
@@ -199,6 +199,37 @@ void interpret( CHAR_DATA *ch, char *argument )
     {
     argument = one_argument( argument, command );
     }
+
+    //While trapped in Gauntlet, only certain commands allowed
+    if (!IS_NPC(ch) && is_affected(ch, trappedingauntlet) &&
+    	str_prefix(command, "ooc") &&
+    	str_prefix(command, "inventory") &&
+    	str_prefix(command, "who") &&
+    	str_prefix(command, "score") &&
+    	str_prefix(command, "affect") &&
+    	str_prefix(command, "look") &&
+    	str_prefix(command, "where") &&
+    	str_prefix(command, "time") &&
+    	str_prefix(command, "charsheet") &&
+    	str_prefix(command, "cs1") &&
+    	str_prefix(command, "cs2") &&
+    	str_prefix(command, "cs3") &&
+    	str_prefix(command, "plead") &&
+    	str_prefix(command, "freebie") &&
+    	str_prefix(command, "prompt") &&
+    	str_prefix(command, "group") &&
+    	str_prefix(command, "traditiontalk") &&
+    	str_prefix(command, "tell") &&
+    	str_prefix(command, "wizlist") &&
+    	str_prefix(command, "afk") &&
+    	str_prefix(command, "gtell") &&
+    	str_prefix(command, "reply") &&
+    	str_prefix(command, "quit"))
+    {
+    	send_to_char("What is left of your body refuses to do anything while still entangled in the Gauntlet.\n\r", ch);
+    	return;
+    }
+
 
     if(IS_SET(ch->act,PLR_SPEC) && !IS_NPC(ch) &&
         str_prefix(command, "north") && str_prefix(command, "south") &&

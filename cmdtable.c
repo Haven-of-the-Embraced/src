@@ -542,6 +542,7 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "announce",       do_announce},
     { "qitemlist",      do_qitemlist},
     { "placeqitems",    do_placeqitems},
+    { "bslap",          do_bslap},
 
     /* Language stuff*/
         /*

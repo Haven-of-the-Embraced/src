@@ -498,6 +498,7 @@ DECLARE_DO_FUN( do_skin     );
 DECLARE_DO_FUN( do_mount    );
 DECLARE_DO_FUN( do_dismount );
 DECLARE_DO_FUN( do_obliterate   );
+DECLARE_DO_FUN( do_bslap );
 DECLARE_DO_FUN( do_salvation    );
 DECLARE_DO_FUN( do_totem    );
 DECLARE_DO_FUN( do_bind     );

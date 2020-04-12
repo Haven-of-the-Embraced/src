@@ -9675,3 +9675,62 @@ void do_auto_shutdown()
    }
 
 }
+
+void do_bslap( CHAR_DATA *ch, char *argument )
+{
+    char arg1[MAX_INPUT_LENGTH];
+    DESCRIPTOR_DATA *d;
+    ROOM_INDEX_DATA *location;
+    CHAR_DATA *victim;
+    char buf[MSL];
+
+    argument = one_argument( argument, arg1 );
+
+    if ( arg1[0] == '\0' || ( victim = get_char_world( ch, arg1  ) ) == NULL )
+    {
+    send_to_char( "Bitchslap whom across the realm?\n\r", ch );
+    return;
+    }
+
+    if (IS_NPC(victim) || ch == victim)
+    {
+        sendch("Honestly?\n\r", ch);
+        return;
+    }
+
+    location = get_random_room(victim);
+
+    if ( victim->fighting != NULL )
+    stop_fighting( victim, TRUE );
+
+    sprintf(buf, "%s hauls off and {RB{rI{RT{rC{RH{rS{RL{rA{RP{rs{x %s half way across the realm!\n\r", ch->name, victim->name);
+
+    for ( d = descriptor_list; d; d = d->next )
+    {
+        if ( d->connected == CON_PLAYING && d->character != victim && d->character != ch)
+        {
+            send_to_char( buf, d->character );
+        }
+    }
+
+    act("You haul off and {RB{rI{RT{rC{RH{rS{RL{rA{RP{x $N across the realm!", ch, NULL, victim, TO_CHAR);
+    char_from_room( victim );
+    char_to_room( victim, location );
+    act( "$n comes tumbling in from half way across the realm!", victim, NULL, NULL, TO_ROOM );
+
+    if( MOUNTED(victim) )
+    {
+        char_from_room( MOUNTED(victim) );
+        char_to_room( MOUNTED(victim), location );
+    }
+
+    if (ch->pet != NULL)
+    {
+        char_from_room (ch->pet);
+        char_to_room (ch->pet, location);
+    }
+
+    act( "$n hauls off and {RB{rI{RT{rC{RH{rS{RL{rA{RP{rs{x you... you go flying across the realm!\n\r", ch, NULL, victim, TO_VICT );
+    do_function(victim, &do_look, "auto" );
+
+}

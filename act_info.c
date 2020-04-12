@@ -105,7 +105,7 @@ char *format_obj_to_char( OBJ_DATA *obj, CHAR_DATA *ch, bool fShort )
     return buf;
 
     if ( IS_IMMORTAL(ch) && IS_OBJ_STAT(obj, ITEM_UMBRA) && !IS_AFFECTED2(ch, AFF2_UMBRA)      )   strcat( buf, "(Umbra) "   );
-    if ((is_affected(ch, gsn_spiritsight) || is_affected(ch, gsn_gift_pulseoftheinvisible)) 
+    if ((is_affected(ch, gsn_spiritsight) || is_affected(ch, gsn_gift_pulseoftheinvisible))
         && IS_OBJ_STAT(obj, ITEM_UMBRA) && !IS_AFFECTED(ch, AFF2_UMBRA)) strcat(buf, "(Indistinct) ");
     if ( IS_OBJ_STAT(obj, ITEM_INVIS)     )   strcat( buf, "(Invis) "     );
     if ( IS_AFFECTED(ch, AFF_DETECT_EVIL)
@@ -277,7 +277,7 @@ void show_char_to_char_0( CHAR_DATA *victim, CHAR_DATA *ch )
             strcat( buf, "{x*{MTaint{x*{y " );
     }
     if ( IS_IMMORTAL(ch) && IS_AFFECTED2(victim, AFF2_UMBRA)       ) strcat( buf, "{x({mUmbra{x){y "    );
-    if ( (is_affected(ch, gsn_spiritsight) || is_affected(ch, gsn_gift_pulseoftheinvisible)) 
+    if ( (is_affected(ch, gsn_spiritsight) || is_affected(ch, gsn_gift_pulseoftheinvisible))
         && IS_AFFECTED2(victim, AFF2_UMBRA)) strcat(buf, "{x({mIndistinct{x){y ");
     if ( IS_SET(victim->comm,COMM_AFK     )   ) strcat( buf, "{x[{RAFK{x]{y "        );
     if ( IS_AFFECTED(victim, AFF_INVISIBLE)   ) strcat( buf, "{x({CInvis{x){y "      );
@@ -1240,7 +1240,7 @@ void do_look( CHAR_DATA *ch, char *argument )
         sprintf(buf," [Room %d]",ch->in_room->vnum);
         send_to_char(buf,ch);
     }
-    if(ch->avatar > 0 && IS_AFFECTED(ch, AFF_DETECT_INVIS))
+    if(ch->avatar > 0 && is_affected(ch, gsn_spiritsight))
     {
         sprintf(buf," [Gauntlet: %d]",get_gauntlet(ch));
         send_to_char(buf,ch);

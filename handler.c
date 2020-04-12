@@ -2782,6 +2782,8 @@ bool can_see( CHAR_DATA *ch, CHAR_DATA *victim )
     if ( get_trust(ch) < victim->invis_level)
         return FALSE;
 
+        if (is_affected(victim, gsn_trappedingauntlet) && !IS_IMMORTAL(ch))
+        	return FALSE;
 
     if (IS_NPC(victim) && IS_AFFECTED2(victim, AFF2_UNSEEN) && !IS_IMMORTAL(ch))
         return FALSE;

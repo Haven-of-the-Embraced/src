@@ -3304,11 +3304,15 @@ void do_charsheet3 (CHAR_DATA * ch, char *argument)
         sprintf(sec4[row], "Meditation   %s", dots(ch->pcdata->cssec_abil[CSABIL_MEDITATION], FALSE));
         sprintf(sec5[row], "                  ");
         row++;
-} else if(IS_VAMP(ch) && (ch->pcdata->discipline[VICISSITUDE] > 0))
+} else if(IS_VAMP(ch))
     {
         sprintf(name[row], "      Skills      ");
         sprintf(sec1[row], "                  ");
-        sprintf(sec2[row], "Body Crafts  %s", dots(ch->pcdata->cssec_abil[CSABIL_BODYCRAFTS], FALSE));
+        if (ch->pcdata->discipline[VICISSITUDE] > 0) {
+            sprintf(sec2[row], "Body Crafts  %s", dots(ch->pcdata->cssec_abil[CSABIL_BODYCRAFTS], FALSE));
+        } else {
+            sprintf(sec2[row], "                  ");
+        }
         sprintf(sec3[row], "                  ");
         sprintf(sec4[row], "                  ");
         sprintf(sec5[row], "                  ");

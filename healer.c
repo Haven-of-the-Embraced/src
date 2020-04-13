@@ -49,7 +49,7 @@ void do_heal(CHAR_DATA *ch, char *argument)
     /* check for healer */
     for ( mob = ch->in_room->people; mob; mob = mob->next_in_room )
     {
-        if ( IS_NPC(mob) && IS_SET(mob->act, ACT_IS_HEALER) )
+        if ( IS_NPC(mob) && IS_SET(mob->act, ACT_IS_HEALER) && SAME_UMBRA(ch, mob))
             break;
     }
 

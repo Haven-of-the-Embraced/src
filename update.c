@@ -780,12 +780,21 @@ void char_update( void )
             /* check to see if we need to go home */
             if (IS_NPC(ch) && ch->zone != NULL && ch->zone != ch->in_room->area
             &&  ch->fighting == NULL
-        && !IS_AFFECTED(ch,AFF_CHARM) && number_percent() < 60)
+        && !IS_AFFECTED(ch,AFF_CHARM))
             {
-                act("$n wanders on home.",ch,NULL,NULL,TO_ROOM);
-                extract_char(ch,TRUE);
-                continue;
+                if (!IS_UMBRA(ch) && number_percent() < 60)
+                {
+                    act("$n wanders on home.",ch,NULL,NULL,TO_ROOM);
+                    extract_char(ch,TRUE);
+                    continue;
+                } else if (IS_UMBRA(ch) && number_percent() < 20)
+                {
+                    act("$n slowly fades out of existence.",ch,NULL,NULL,TO_ROOM);
+                    extract_char(ch,TRUE);
+                    continue;
+                }
             }
+
         if(IS_NPC(ch) && RIDDEN(ch) && get_char_room( ch, ch->mount->name ) == NULL)
             {
                 act("$n takes this chance to bolt for freedom.",ch,NULL,NULL,TO_ROOM);

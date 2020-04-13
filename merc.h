@@ -2991,6 +2991,7 @@ extern sh_int gsn_vampire_regen;
 #define PLAYTESTING(ch)     (!IS_NPC((ch)) && IS_SET((ch)->act, PLR_PLAYTEST))
 #define IS_DEBUGGING(ch)    (!IS_NPC((ch)) && IS_SET((ch)->act2, PLR2_DEBUG) \
                             && IS_SET((ch)->act2, PLR2_DEBUGMSG))
+#define IS_UMBRA(ch)        (IS_AFFECTED2((ch), AFF2_UMBRA))
 #define SAME_UMBRA(a, b)    ((IS_AFFECTED2((a), AFF2_UMBRA) && IS_AFFECTED2((b), AFF2_UMBRA)) \
                         || (!IS_AFFECTED2((a), AFF2_UMBRA) && !IS_AFFECTED2((b), AFF2_UMBRA)))
 #define SAME_ROOM(ch, victim)     (IS_VALID((ch)) && IS_VALID((victim)) && (ch)->in_room != NULL && (victim)->in_room != NULL && (ch)->in_room == (victim)->in_room)

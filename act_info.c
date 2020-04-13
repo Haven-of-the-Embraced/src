@@ -278,7 +278,7 @@ void show_char_to_char_0( CHAR_DATA *victim, CHAR_DATA *ch )
     }
     if ( IS_IMMORTAL(ch) && IS_AFFECTED2(victim, AFF2_UMBRA)       ) strcat( buf, "{x({mUmbra{x){y "    );
     if ( (is_affected(ch, gsn_spiritsight) || is_affected(ch, gsn_gift_pulseoftheinvisible))
-        && IS_AFFECTED2(victim, AFF2_UMBRA)) strcat(buf, "{x({mIndistinct{x){y ");
+        && !IS_AFFECTED2(ch, AFF2_UMBRA) && IS_AFFECTED2(victim, AFF2_UMBRA)) strcat(buf, "{x({mIndistinct{x){y ");
     if ( IS_SET(victim->comm,COMM_AFK     )   ) strcat( buf, "{x[{RAFK{x]{y "        );
     if ( IS_AFFECTED(victim, AFF_INVISIBLE)   ) strcat( buf, "{x({CInvis{x){y "      );
     if ( victim->invis_level >= LEVEL_HERO    ) strcat( buf, "{x(Wizi){y "       );

@@ -740,7 +740,7 @@ const struct flag_type extra_flags[] =
     {   "hum",          ITEM_HUM,       TRUE    },
     {   "dark",         ITEM_DARK,      TRUE    },
     {   "hidden",       ITEM_HIDDEN,    TRUE    },
-    {   "evil",         ITEM_EVIL,      TRUE    },
+    {   "illuminate",         ITEM_ILLUMINATE,      TRUE    },
     {   "invis",        ITEM_INVIS,     TRUE    },
     {   "magic",        ITEM_MAGIC,     TRUE    },
     {   "nodrop",       ITEM_NODROP,        TRUE    },

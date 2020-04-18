@@ -1446,7 +1446,7 @@ struct  kill_data
 #define ITEM_HUM        (B)
 #define ITEM_DARK       (C)
 #define ITEM_HIDDEN     (D)
-#define ITEM_EVIL       (E)
+#define ITEM_ILLUMINATE (E)
 #define ITEM_INVIS      (F)
 #define ITEM_MAGIC      (G)
 #define ITEM_NODROP     (H)

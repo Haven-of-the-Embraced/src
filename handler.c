@@ -1927,6 +1927,10 @@ void obj_from_room( OBJ_DATA *obj )
     }
     }
 
+    if ( IS_SET(obj->extra_flags, ITEM_ILLUMINATE)
+    &&   in_room != NULL )
+    --in_room->light;
+
     obj->in_room      = NULL;
     obj->next_content = NULL;
     return;
@@ -1944,6 +1948,10 @@ void obj_to_room( OBJ_DATA *obj, ROOM_INDEX_DATA *pRoomIndex )
     obj->in_room        = pRoomIndex;
     obj->carried_by     = NULL;
     obj->in_obj         = NULL;
+
+    if ( IS_SET(obj->extra_flags, ITEM_ILLUMINATE)
+    &&   obj->in_room != NULL )
+    ++obj->in_room->light;
     return;
 }
 
@@ -3052,7 +3060,7 @@ char *extra_bit_name( int extra_flags )
     if ( extra_flags & ITEM_HUM          ) strcat( buf, " hum"          );
     if ( extra_flags & ITEM_DARK         ) strcat( buf, " dark"         );
     if ( extra_flags & ITEM_HIDDEN       ) strcat( buf, " hidden"         );
-    if ( extra_flags & ITEM_EVIL         ) strcat( buf, " evil"         );
+    if ( extra_flags & ITEM_ILLUMINATE   ) strcat( buf, " illuminate"   );
     if ( extra_flags & ITEM_INVIS        ) strcat( buf, " invis"        );
     if ( extra_flags & ITEM_MAGIC        ) strcat( buf, " magic"        );
     if ( extra_flags & ITEM_NODROP       ) strcat( buf, " nodrop"       );
@@ -3968,10 +3976,6 @@ void obj_affect_to_char( CHAR_DATA *ch, OBJ_DATA *obj, int iWear )
     else
         affect_modify( ch, paf, TRUE );
 
-    if ( obj->item_type == ITEM_LIGHT
-    &&   obj->value[2] != 0
-    &&   ch->in_room != NULL )
-    ++ch->in_room->light;
 
     return;
 }

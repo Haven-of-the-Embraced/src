@@ -820,27 +820,6 @@ void spell_bless( int sn, int level, CHAR_DATA *ch, void *vo, int target)
         return;
     }
 
-    if (IS_OBJ_STAT(obj,ITEM_EVIL))
-    {
-        AFFECT_DATA *paf;
-
-        paf = affect_find(obj->affected,gsn_curse);
-        if (!saves_dispel(level,paf != NULL ? paf->level : obj->level,0))
-        {
-        if (paf != NULL)
-            affect_remove_obj(obj,paf);
-        act("$p glows a pale blue.",ch,obj,NULL,TO_ALL);
-        REMOVE_BIT(obj->extra_flags,ITEM_EVIL);
-        return;
-        }
-        else
-        {
-        act("The evil of $p is too powerful for you to overcome.",
-            ch,obj,NULL,TO_CHAR);
-        return;
-        }
-    }
-
     af.where    = TO_OBJECT;
     af.type     = sn;
     af.level    = level;
@@ -1754,11 +1733,6 @@ void spell_curse( int sn, int level, CHAR_DATA *ch, void *vo,int target )
     if (target == TARGET_OBJ)
     {
         obj = (OBJ_DATA *) vo;
-        if (IS_OBJ_STAT(obj,ITEM_EVIL))
-        {
-            act("$p is already filled with evil.",ch,obj,NULL,TO_CHAR);
-            return;
-        }
 
         if (IS_OBJ_STAT(obj,ITEM_BLESS))
         {
@@ -1787,7 +1761,7 @@ void spell_curse( int sn, int level, CHAR_DATA *ch, void *vo,int target )
         af.duration     = 2 * level;
         af.location     = APPLY_SAVES;
         af.modifier     = +1;
-        af.bitvector    = ITEM_EVIL;
+        af.bitvector    = 0;
         affect_to_obj(obj,&af);
 
         act("$p glows with a malevolent aura.",ch,obj,NULL,TO_ALL);

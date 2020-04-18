@@ -3050,7 +3050,7 @@ char *extra_bit_name( int extra_flags )
     if ( extra_flags & ITEM_NODROP       ) strcat( buf, " nodrop"       );
     if ( extra_flags & ITEM_BLESS        ) strcat( buf, " bless"        );
     //if ( extra_flags & ITEM_ANTI_GOOD    ) strcat( buf, " anti-good"    );
-    //if ( extra_flags & ITEM_ANTI_EVIL    ) strcat( buf, " anti-evil"    );
+    if ( extra_flags & ITEM_REFLECTIVE   ) strcat( buf, " reflective"    );
     //if ( extra_flags & ITEM_ANTI_NEUTRAL ) strcat( buf, " anti-neutral" );
     if ( extra_flags & ITEM_NOREMOVE     ) strcat( buf, " noremove"     );
     if ( extra_flags & ITEM_INVENTORY    ) strcat( buf, " inventory"    );

@@ -1452,7 +1452,7 @@ struct  kill_data
 #define ITEM_NODROP     (H)
 #define ITEM_BLESS      (I)
 //#define ITEM_ANTI_GOOD      (J)
-//#define ITEM_ANTI_EVIL      (K)
+#define ITEM_REFLECTIVE     (K)
 //#define ITEM_ANTI_NEUTRAL   (L)
 #define ITEM_NOREMOVE       (M)
 #define ITEM_INVENTORY      (N)

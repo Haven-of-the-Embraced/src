@@ -746,7 +746,7 @@ const struct flag_type extra_flags[] =
     {   "nodrop",       ITEM_NODROP,        TRUE    },
     {   "bless",        ITEM_BLESS,     TRUE    },
 //    {   "antigood",     ITEM_ANTI_GOOD,     TRUE    },
-//    {   "antievil",     ITEM_ANTI_EVIL,     TRUE    },
+    {   "reflective",     ITEM_REFLECTIVE,     TRUE    },
 //    {   "antineutral",      ITEM_ANTI_NEUTRAL,  TRUE    },
     {   "noremove",     ITEM_NOREMOVE,      TRUE    },
     {   "inventory",        ITEM_INVENTORY,     TRUE    },

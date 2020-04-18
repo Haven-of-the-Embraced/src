@@ -3274,25 +3274,6 @@ void group_gain( CHAR_DATA *ch, CHAR_DATA *victim )
                 ch->questmob = -1;
             }
         }
-
-    for ( obj = ch->carrying; obj != NULL; obj = obj_next )
-    {
-        obj_next = obj->next_content;
-        if ( obj->wear_loc == WEAR_NONE )
-        continue;
-
-        if ( ( IS_OBJ_STAT(obj, ITEM_ANTI_EVIL)    && IS_EVIL(ch)    )
-        ||   ( IS_OBJ_STAT(obj, ITEM_ANTI_GOOD)    && IS_GOOD(ch)    )
-        ||   ( IS_OBJ_STAT(obj, ITEM_ANTI_NEUTRAL) && IS_NEUTRAL(ch) ) )
-        {
-        act( "You are zapped by $p.", ch, obj, NULL, TO_CHAR );
-        act( "$n is zapped by $p.",   ch, obj, NULL, TO_ROOM );
-        obj_from_char( obj );
-        obj_to_room( obj, ch->in_room );
-        if(IS_AFFECTED2(ch, AFF2_UMBRA))
-            SET_BIT(obj->extra_flags,ITEM_UMBRA);
-        }
-    }
     }
 
     return;

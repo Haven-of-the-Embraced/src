@@ -540,7 +540,9 @@ void do_stepsideways(CHAR_DATA *ch, char *argument)
     OBJ_DATA *bag;
     OBJ_DATA *bag_next;
     OBJ_DATA *obj;
-    int success;
+    int success, diff, i;
+    OBJ_DATA *mirror;
+    bool reflective = FALSE;
     if (IS_NPC(ch))
     return;
 
@@ -556,19 +558,63 @@ void do_stepsideways(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    success = godice(ch->pcdata->gnosis[PERM], get_gauntlet(ch));
-    if (success < 1)
+    diff = get_gauntlet(ch);
+
+    if (is_affected(ch, gsn_gift_pulseoftheinvisible))
+        diff -= 2;
+
+    if (!IS_NULLSTR(argument) && (mirror = get_obj_here(ch, argument)) != NULL &&
+        IS_SET(mirror->extra_flags, ITEM_REFLECTIVE))
+    {
+            diff--;
+            reflective = TRUE;
+    }
+
+    success = godice(ch->pcdata->gnosis[PERM], diff);
+
+    if (IS_DEBUGGING(ch))
+    {
+        char buf[MSL];
+        sprintf(buf, "g%dd%ds%d\n\r", get_gauntlet(ch), diff, success);
+        sendch(buf, ch);
+    }
+
+    if (success == 0)
     {
         send_to_char("You fail to pierce the Gauntlet and remain where you stand.\n\r", ch);
         WAIT_STATE(ch, 24);
         return;
-    } else {
+    } else  if (success > 0){
         if (pass_gauntlet(ch, TRUE))
         {
             do_function(ch, &do_look, "auto");
             WAIT_STATE(ch, 12);
             return;
         }
+    } else {
+        if (reflective) {
+            extract_obj(mirror);
+            sendch("The reflective surface you were using breaks, rendered completely useless!\n\r", ch);
+            sendch("You remain where you stand.\n\r", ch);
+            return;
+        }
+
+        AFFECT_DATA af;
+        act( "You start to step into the Umbra... and suddenly feel a tugging sensation as you're surrounded by Webs!",  ch, NULL, NULL, TO_CHAR    );
+        act( "A vague look of terror crosses $n's features before they suddenly cease to exist in this reality.",  ch, NULL, NULL, TO_NOTVICT );
+
+        if (!IS_AFFECTED2(ch, AFF2_UMBRA))
+                pass_gauntlet(ch, FALSE);
+
+            af.where	=	TO_AFFECTS;
+            af.type		=	gsn_trappedingauntlet;
+            af.level	=	diff;
+            af.duration	=	(diff) / 2 + 1;
+            af.modifier	=	0;
+            af.location	=	0;
+            af.bitvector	=	0;
+            affect_to_char( ch, &af );
+            WAIT_STATE(ch, 48);
     }
 }
 

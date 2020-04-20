@@ -2995,6 +2995,9 @@ extern sh_int gsn_vampire_regen;
 #define IS_UMBRA(ch)        (IS_AFFECTED2((ch), AFF2_UMBRA))
 #define SAME_UMBRA(a, b)    ((IS_AFFECTED2((a), AFF2_UMBRA) && IS_AFFECTED2((b), AFF2_UMBRA)) \
                         || (!IS_AFFECTED2((a), AFF2_UMBRA) && !IS_AFFECTED2((b), AFF2_UMBRA)))
+#define SAME_UMBRA_OBJ(a, b)    ((IS_AFFECTED2((a), AFF2_UMBRA) && IS_OBJ_STAT((b), ITEM_UMBRA)) \
+                  || (!IS_AFFECTED2((a), AFF2_UMBRA) && !IS_OBJ_STAT((b), ITEM_UMBRA)))
+
 #define SAME_ROOM(ch, victim)     (IS_VALID((ch)) && IS_VALID((victim)) && (ch)->in_room != NULL && (victim)->in_room != NULL && (ch)->in_room == (victim)->in_room)
 
 // used by replay buffer system.

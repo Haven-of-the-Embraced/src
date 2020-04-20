@@ -1291,7 +1291,7 @@ void do_drink( CHAR_DATA *ch, char *argument )
     {
     for ( obj = ch->in_room->contents; obj; obj = obj->next_content )
     {
-        if ( obj->item_type == ITEM_FOUNTAIN )
+        if ( (obj->item_type == ITEM_FOUNTAIN) && (SAME_UMBRA_OBJ(ch, obj)) )
         break;
     }
 

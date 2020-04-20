@@ -1295,7 +1295,7 @@ void do_drink( CHAR_DATA *ch, char *argument )
         break;
     }
 
-    if ( obj == NULL )
+    if (( obj == NULL ) || (!SAME_UMBRA_OBJ(ch, obj)))
     {
         send_to_char( "Drink what?\n\r", ch );
         return;

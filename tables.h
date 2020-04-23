@@ -87,6 +87,7 @@ struct  rote_type
     sh_int  quintessence;   /* quintessence required */
     sh_int  diff;           /* diff of the rote */
     bool vulgar;
+    bool passthrough;
 };
 
 

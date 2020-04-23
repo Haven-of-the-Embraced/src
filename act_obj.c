@@ -1103,7 +1103,7 @@ void do_fill( CHAR_DATA *ch, char *argument )
     for ( fountain = ch->in_room->contents; fountain != NULL;
     fountain = fountain->next_content )
     {
-    if ( fountain->item_type == ITEM_FOUNTAIN )
+    if ( (fountain->item_type == ITEM_FOUNTAIN) && SAME_UMBRA_OBJ(ch, fountain) )
     {
         found = TRUE;
         break;

@@ -107,6 +107,7 @@ extern int flag_lookup( const char *word, const struct flag_type *flag_table );
 #define CHK_OBJVAL4     (50)
 #define CHK_GRPSIZE     (51)
 #define CHK_QUEST_STEP  (52)
+#define CHK_REMORT      (53)
 
 /*
  * These defines correspond to the entries in fn_evals[] table.
@@ -185,6 +186,7 @@ const char * fn_keyword[] =
     "objval4",
     "grpsize",      /* if grpsize $n > 6    - group size check */
     "quest_step", /* if quest_step $n == 100  - quest status check */
+    "remort", /* if remort $n >= 50     - check remorts on char*/
     "\n"        /* Table terminator */
 };
 
@@ -652,6 +654,8 @@ int cmd_eval( sh_int vnum, char *line, int check,
     /* quest log quest step comparison */
     case CHK_QUEST_STEP:
         if( lval_char != NULL ) lval = quest_status(lval_char, mob->quest); break;
+    case CHK_REMORT:
+        if (lval_char != NULL ) lval = lval_char->remorts; break;
     default:
             return FALSE;
     }

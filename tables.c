@@ -1555,7 +1555,7 @@ const struct    tradition_type  tradition_table [MAX_TRADITION] =
 
 const struct    rote_type   rote_table  [MAX_ROTE]  =
 {
-/*  {   name,   function,   corr, entropy, forces, life, matter, mind, prime, spirit, time, target, quint, diff, vulgar},*/
+/*  {   name,   function,   corr, entropy, forces, life, matter, mind, prime, spirit, time, target, quint, diff, vulgar, botch/fail passed through},*/
 
     {   "reserved",             0,                          0, 0, 0, 0, 0, 0, 0, 0, 0, TARGET_NONE, 0, 0, FALSE, FALSE},
     {   "Perceive Entropy",     rote_perceiveentropy,       0, 1, 0, 0, 0, 0, 0, 0, 0, TARGET_CHAR, 1, 1, FALSE, FALSE},
@@ -1590,7 +1590,7 @@ const struct    rote_type   rote_table  [MAX_ROTE]  =
     {   "Control Minds",        rote_controlminds,          0, 0, 0, 0, 0, 4, 0, 0, 0, TARGET_CHAR, 25, 4, TRUE, FALSE},
     {   "Spirit Sight",         rote_spiritsight,           0, 0, 0, 0, 0, 0, 0, 1, 0, TARGET_NONE, 1, 1, FALSE, FALSE},
     {   "Call Spirit",          rote_callspirit,            0, 0, 0, 0, 0, 0, 0, 2, 0, TARGET_NONE, 25, 2, TRUE, FALSE},
-    {   "Step Sideways",        rote_stepsideways,          0, 0, 0, 0, 0, 0, 0, 3, 0, TARGET_NONE, 3, 3, TRUE, FALSE},
+    {   "Step Sideways",        rote_stepsideways,          0, 0, 0, 0, 0, 0, 0, 3, 0, TARGET_NONE, 3, 3, TRUE, TRUE},
     {   "Control Gauntlet",     rote_controlgauntlet,       0, 0, 0, 0, 0, 0, 0, 4, 0, TARGET_NONE, 25, 4, TRUE, FALSE},
     {   "Umbral Rescue",        rote_umbralrescue,          0, 0, 0, 2, 0, 0, 0, 4, 0, TARGET_ROOM, 25, 4, TRUE, FALSE},
     {   "Precognition",         rote_precognition,          0, 0, 0, 0, 0, 0, 0, 0, 2, TARGET_NONE, 2, 2, FALSE, FALSE},

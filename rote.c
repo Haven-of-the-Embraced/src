@@ -255,12 +255,16 @@ void do_rote(CHAR_DATA *ch, char *argument)
         } else {
         send_to_char("The forces of Paradox smooth reality out before the effect can take place.\n\r",ch);
         }
+        if (rote_table[rote].passthrough)
+            (*rote_table[rote].rote_fun) (ch,success,victim,obj);
         return;
     }
     if(success < 0)
     {
         send_to_char("A cold chill enters your body as you feel the eye of Paradox swing towards you.\n\r",ch);
         paradox_check(ch,rote_table[rote].vulgar);
+        if (rote_table[rote].passthrough)
+            (*rote_table[rote].rote_fun) (ch,success,victim,obj);
         return;
     }
     if(!IS_AFFECTED2(ch,AFF2_UMBRA) && rote_table[rote].vulgar) ch->paradox++;

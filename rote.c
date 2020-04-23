@@ -1692,7 +1692,7 @@ void rote_stepsideways(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *
     if (avatar_storm < 0)
     		avatar_storm = 0;
 
-    if(success < get_gauntlet(ch))
+    if(success < 0)
     {
         act( "You start to step into the Umbra... and suddenly feel a tugging sensation as you're caught within the Gauntlet!",  ch, NULL, NULL, TO_CHAR    );
         act( "A vague look of terror crosses $n's features before they suddenly cease to exist in this reality.",  ch, NULL, NULL, TO_NOTVICT );

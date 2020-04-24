@@ -2596,6 +2596,52 @@ void mob_charsheet (CHAR_DATA *mob, MOB_INDEX_DATA *pMobIndex)
         mob->csabilities[CSABIL_LAW] += 1;
     }
 
+    if (IS_ABILFLAGGED(pMobIndex, ABIL_MERCHANT))
+    {
+    	mob->csabilities[CSABIL_EXPRESSION] += 2;
+    	mob->csabilities[CSABIL_ALERTNESS] += 2;
+    	mob->csabilities[CSABIL_LEADERSHIP] += 1;
+    	mob->csabilities[CSABIL_ETIQUETTE] += 1;
+    	mob->csabilities[CSABIL_COMMERCE] += 4;
+      mob->csabilities[CSABIL_INVESTIGATION] += 1;
+      mob->csabilities[CSABIL_LAW] += 1;
+      mob->csabilities[CSABIL_LINGUISTICS] += 2;
+      mob->csabilities[CSABIL_POLITICS] += 2;
+    }
+
+    if (IS_ABILFLAGGED(pMobIndex, ABIL_SURVIVALIST))
+    {
+    	mob->csabilities[CSABIL_ALERTNESS] += 1;
+    	mob->csabilities[CSABIL_ATHLETICS] += 2;
+    	mob->csabilities[CSABIL_ANIMALKEN] += 1;
+    	mob->csabilities[CSABIL_ARCHERY] += 2;
+    	mob->csabilities[CSABIL_STEALTH] += 1;
+    	mob->csabilities[CSABIL_SURVIVAL] += 4;
+    	mob->csabilities[CSABIL_MEDICINE] += 2;
+    	mob->csabilities[CSABIL_HEARTHWISDOM] += 1;
+    }
+
+    if (IS_ABILFLAGGED(pMobIndex, ABIL_HERMIT))
+    {
+    	mob->csabilities[CSABIL_ALERTNESS] += 1;
+    	mob->csabilities[CSABIL_DODGE] += 2;
+    	mob->csabilities[CSABIL_ANIMALKEN] += 1;
+    	mob->csabilities[CSABIL_CRAFTS] += 1;
+    	mob->csabilities[CSABIL_STEALTH] += 1;
+    	mob->csabilities[CSABIL_SURVIVAL] += 2;
+    	mob->csabilities[CSABIL_HEARTHWISDOM] += 4;
+    }
+
+    if (IS_ABILFLAGGED(pMobIndex, ABIL_ENTERTAINER))
+    {
+    	mob->csabilities[CSABIL_EXPRESSION] += 2;
+    	mob->csabilities[CSABIL_ALERTNESS] += 2;
+    	mob->csabilities[CSABIL_EMPATHY] += 2;
+    	mob->csabilities[CSABIL_ETIQUETTE] += 2;
+    	mob->csabilities[CSABIL_PERFORMANCE] += 4;
+    	mob->csabilities[CSABIL_COMMERCE] += 2;
+    }
+
     for (i = 0; i < 30; i++)
         if (mob->csabilities[i] > 5)
             mob->csabilities[i] = 5;

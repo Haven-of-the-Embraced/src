@@ -259,6 +259,10 @@ const struct flag_type abil_flags[] =
 	{"noble",			F,	TRUE	},
 	{"clergy",			G,	TRUE	},
 	{"scholar",			H,	TRUE	},
+	{"merchant",	I, TRUE  },
+	{"survivalist",	J, TRUE  },
+	{"hermit",	K, TRUE  },
+	{"entertainer",	L, TRUE  },
 	{NULL,				0,	FALSE 	}
 };
 

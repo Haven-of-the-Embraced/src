@@ -965,6 +965,10 @@ struct  kill_data
 #define ABIL_NOBLE          (F)
 #define ABIL_CLERGY         (G)
 #define ABIL_SCHOLAR        (H)
+#define ABIL_MERCHANT       (I)
+#define ABIL_SURVIVALIST    (J)
+#define ABIL_HERMIT         (K)
+#define ABIL_ENTERTAINER    (L)
 
 /* damage classes */
 #define DAM_NONE                0

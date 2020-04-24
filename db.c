@@ -2613,7 +2613,7 @@ void mob_charsheet (CHAR_DATA *mob, MOB_INDEX_DATA *pMobIndex)
     {
     	mob->csabilities[CSABIL_ALERTNESS] += 1;
     	mob->csabilities[CSABIL_ATHLETICS] += 2;
-    	mob->csabilities[CSABIL_ANIMALKEN] += 1;
+    	mob->csabilities[CSABIL_ANIMAL_KEN] += 1;
     	mob->csabilities[CSABIL_ARCHERY] += 2;
     	mob->csabilities[CSABIL_STEALTH] += 1;
     	mob->csabilities[CSABIL_SURVIVAL] += 4;
@@ -2625,7 +2625,7 @@ void mob_charsheet (CHAR_DATA *mob, MOB_INDEX_DATA *pMobIndex)
     {
     	mob->csabilities[CSABIL_ALERTNESS] += 1;
     	mob->csabilities[CSABIL_DODGE] += 2;
-    	mob->csabilities[CSABIL_ANIMALKEN] += 1;
+    	mob->csabilities[CSABIL_ANIMAL_KEN] += 1;
     	mob->csabilities[CSABIL_CRAFTS] += 1;
     	mob->csabilities[CSABIL_STEALTH] += 1;
     	mob->csabilities[CSABIL_SURVIVAL] += 2;

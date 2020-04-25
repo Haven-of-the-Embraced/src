@@ -3082,6 +3082,7 @@ void    channel_to_char args( (const char *txt, CHAR_DATA*ch) );
 #define IS_OUTSIDE(ch)      (!IS_SET(                   \
                     (ch)->in_room->room_flags,          \
                     ROOM_INDOORS))
+#define HAS_REFLECTION(ch)  ((ch)->clan != clan_lookup("lasombra"))
 
 #define WAIT_STATE(ch, npulse)  ((ch)->wait = UMAX((ch)->wait, (npulse)))
 #define DAZE_STATE(ch, npulse)  ((ch)->daze = UMAX((ch)->daze, (npulse)))
@@ -3117,7 +3118,7 @@ void    channel_to_char args( (const char *txt, CHAR_DATA*ch) );
 #define IS_WEAPON_STAT(obj,stat)(IS_SET((obj)->value[4],(stat)))
 #define WEIGHT_MULT(obj)    ((obj)->item_type == ITEM_CONTAINER ? \
     (obj)->value[4] : 100)
-
+#define IS_REFLECTIVE(obj) (IS_SET((obj)->extra_flags, ITEM_REFLECTIVE ))
 
 
 /*

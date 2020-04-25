@@ -120,7 +120,7 @@ void mob_interpret( CHAR_DATA *ch, char *argument )
     bug( buf, 0 );
 }
 
-char *mprog_type_to_name( int type )
+char *prog_type_to_name( int type )
 {
     switch ( type )
     {
@@ -152,7 +152,7 @@ char *mprog_type_to_name( int type )
 void do_mpstat( CHAR_DATA *ch, char *argument )
 {
     char        arg[ MAX_STRING_LENGTH  ];
-    MPROG_LIST  *mprg;
+    PROG_LIST  *mprg;
     CHAR_DATA   *victim;
     int i;
 
@@ -204,7 +204,7 @@ void do_mpstat( CHAR_DATA *ch, char *argument )
     {
 	sprintf( arg, "[%2d] Trigger [%-8s] Program [%4d] Phrase [%s]\n\r",
 	      ++i,
-	      mprog_type_to_name( mprg->trig_type ),
+	      prog_type_to_name( mprg->trig_type ),
 	      mprg->vnum,
 	      mprg->trig_phrase );
 	send_to_char( arg, ch );
@@ -222,10 +222,10 @@ void do_mpstat( CHAR_DATA *ch, char *argument )
 void do_mpdump( CHAR_DATA *ch, char *argument )
 {
    char buf[ MAX_INPUT_LENGTH ];
-   MPROG_CODE *mprg;
+   PROG_CODE *mprg;
 
    one_argument( argument, buf );
-   if ( ( mprg = get_mprog_index( atoi(buf) ) ) == NULL )
+   if ( ( mprg = get_prog_index( atoi(buf), PRG_MPROG) ) == NULL )
    {
 	send_to_char( "No such MOBprogram.\n\r", ch );
 	return;
@@ -344,7 +344,7 @@ void do_mpkill( CHAR_DATA *ch, char *argument )
     if ( arg[0] == '\0' )
 	return;
 
-    if ( ( victim = get_char_room( ch, arg ) ) == NULL )
+    if ( ( victim = get_char_room( ch, NULL, arg ) ) == NULL )
 	return;
 
     if ( victim == ch || IS_NPC(victim) || ch->position == POS_FIGHTING )
@@ -376,7 +376,7 @@ void do_mpassist( CHAR_DATA *ch, char *argument )
     if ( arg[0] == '\0' )
 	return;
 
-    if ( ( victim = get_char_room( ch, arg ) ) == NULL )
+    if ( ( victim = get_char_room( ch, NULL, arg ) ) == NULL )
 	return;
 
     if ( victim == ch || ch->fighting != NULL || victim->fighting == NULL )
@@ -408,7 +408,7 @@ void do_mpjunk( CHAR_DATA *ch, char *argument )
 
     if ( str_cmp( arg, "all" ) && str_prefix( "all.", arg ) )
     {
-    	if ( ( obj = get_obj_wear( ch, arg ) ) != NULL )
+    	if ( ( obj = get_obj_wear( ch, arg, TRUE ) ) != NULL )
       	{
       	    unequip_char( ch, obj );
 	    extract_obj( obj );
@@ -450,7 +450,7 @@ void do_mpechoaround( CHAR_DATA *ch, char *argument )
     if ( arg[0] == '\0' )
 	return;
 
-    if ( ( victim=get_char_room( ch, arg ) ) == NULL )
+    if ( ( victim=get_char_room( ch, NULL, arg ) ) == NULL )
 	return;
 
     act( argument, ch, NULL, victim, TO_NOTVICT );
@@ -471,7 +471,7 @@ void do_mpechoat( CHAR_DATA *ch, char *argument )
     if ( arg[0] == '\0' || argument[0] == '\0' )
 	return;
 
-    if ( ( victim = get_char_room( ch, arg ) ) == NULL )
+    if ( ( victim = get_char_room( ch, NULL, arg ) ) == NULL )
 	return;
 
     act( argument, ch, NULL, victim, TO_VICT );
@@ -641,9 +641,9 @@ void do_mppurge( CHAR_DATA *ch, char *argument )
 	return;
     }
 
-    if ( ( victim = get_char_room( ch, arg ) ) == NULL )
+    if ( ( victim = get_char_room( ch, NULL, arg ) ) == NULL )
     {
-	if ( ( obj = get_obj_here( ch, arg ) ) )
+	if ( ( obj = get_obj_here( ch, NULL, arg ) ) )
 	{
 	    extract_obj( obj );
 	}
@@ -863,7 +863,7 @@ void do_mpgtransfer( CHAR_DATA *ch, char *argument )
 	return;
     }
 
-    if ( (who = get_char_room( ch, arg1 )) == NULL )
+    if ( (who = get_char_room( ch, NULL, arg1 )) == NULL )
 	return;
 
     for ( victim = ch->in_room->people; victim; victim = victim_next )
@@ -919,7 +919,7 @@ void do_mpforce( CHAR_DATA *ch, char *argument )
     {
 	CHAR_DATA *victim;
 
-	if ( ( victim = get_char_room( ch, arg ) ) == NULL )
+	if ( ( victim = get_char_room( ch, NULL, arg ) ) == NULL )
 	    return;
 
 	if ( victim == ch )
@@ -953,7 +953,7 @@ void do_mpgforce( CHAR_DATA *ch, char *argument )
 	return;
     }
 
-    if ( ( victim = get_char_room( ch, arg ) ) == NULL )
+    if ( ( victim = get_char_room( ch, NULL, arg ) ) == NULL )
 	return;
 
     if ( victim == ch )
@@ -1048,8 +1048,8 @@ void do_mpcast( CHAR_DATA *ch, char *argument )
 		IS_NPC(ch) ? ch->pIndexData->vnum : 0 );
 	return;
     }
-    vch = get_char_room( ch, target );
-    obj = get_obj_here( ch, target );
+    vch = get_char_room( ch, NULL, target );
+    obj = get_obj_here( ch, NULL, target );
     switch ( skill_table[sn].target )
     {
 	default: return;
@@ -1103,7 +1103,7 @@ void do_mpdamage( CHAR_DATA *ch, char *argument )
     }
     if( !str_cmp( target, "all" ) )
 	fAll = TRUE;
-    else if( ( victim = get_char_room( ch, target ) ) == NULL )
+    else if( ( victim = get_char_room( ch, NULL, target ) ) == NULL )
 	return;
 
     if ( is_number( min ) )
@@ -1223,7 +1223,7 @@ void do_mpcall( CHAR_DATA *ch, char *argument )
     char arg[ MAX_INPUT_LENGTH ];
     CHAR_DATA *vch;
     OBJ_DATA *obj1, *obj2;
-    MPROG_CODE *prg;
+    PROG_CODE *prg;
 	extern void program_flow(sh_int, char *, CHAR_DATA *, CHAR_DATA *, const void *, const void *, int );
 //    extern void program_flow( sh_int, char *, CHAR_DATA *, CHAR_DATA *, const void *, const void * );
 
@@ -1234,7 +1234,7 @@ void do_mpcall( CHAR_DATA *ch, char *argument )
 		IS_NPC(ch) ? ch->pIndexData->vnum : 0 );
 	return;
     }
-    if ( ( prg = get_mprog_index( atoi(arg) ) ) == NULL )
+    if ( ( prg = get_prog_index( atoi(arg), PRG_MPROG ) ) == NULL )
     {
 	bug( "MpCall: invalid prog from vnum %d.",
 		IS_NPC(ch) ? ch->pIndexData->vnum : 0 );
@@ -1244,13 +1244,13 @@ void do_mpcall( CHAR_DATA *ch, char *argument )
     obj1 = obj2 = NULL;
     argument = one_argument( argument, arg );
     if ( arg[0] != '\0' )
-        vch = get_char_room( ch, arg );
+        vch = get_char_room( ch, NULL, arg );
     argument = one_argument( argument, arg );
     if ( arg[0] != '\0' )
-    	obj1 = get_obj_here( ch, arg );
+    	obj1 = get_obj_here( ch, NULL, arg );
     argument = one_argument( argument, arg );
     if ( arg[0] != '\0' )
-    	obj2 = get_obj_here( ch, arg );
+    	obj2 = get_obj_here( ch, NULL, arg );
 	program_flow( prg->vnum, prg->code, ch, vch, (void *)obj1, (void *)obj2, 1 );
 //    program_flow( prg->vnum, prg->code, ch, vch, (void *)obj1, (void *)obj2 );
 }
@@ -1316,7 +1316,7 @@ void do_mpotransfer( CHAR_DATA *ch, char *argument )
 		IS_NPC(ch) ? ch->pIndexData->vnum : 0 );
 	return;
     }
-    if ( (obj = get_obj_here( ch, arg )) == NULL )
+    if ( (obj = get_obj_here( ch, NULL, arg )) == NULL )
 	return;
     if ( obj->carried_by == NULL )
 	obj_from_room( obj );
@@ -1344,7 +1344,7 @@ void do_mpremove( CHAR_DATA *ch, char *argument )
     char arg[ MAX_INPUT_LENGTH ];
 
     argument = one_argument( argument, arg );
-    if ( ( victim = get_char_room( ch, arg ) ) == NULL )
+    if ( ( victim = get_char_room( ch, NULL, arg ) ) == NULL )
 	return;
 
     one_argument( argument, arg );
@@ -1383,7 +1383,7 @@ void do_mpqpoint(CHAR_DATA *ch, char *argument)
     argument = one_argument( argument, arg1 );
     argument = one_argument( argument, arg2 );
 
-    if((victim = get_char_room(ch, arg1)) == NULL)
+    if((victim = get_char_room(ch, NULL, arg1)) == NULL)
         return;
 
     if(IS_NPC(victim))
@@ -1440,7 +1440,7 @@ void do_mpquest( CHAR_DATA *ch, char *argument )
 		return;
 	}
 
-	if ( ( victim = get_char_room( ch, arg[1] ) ) == NULL)
+	if ( ( victim = get_char_room( ch, NULL, arg[1] ) ) == NULL)
 	{
 		bug("MpQuest: victim not valid from vnum %d", IS_NPC(ch) ? ch->pIndexData->vnum : 0 );
 		return;

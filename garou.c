@@ -563,7 +563,7 @@ void do_stepsideways(CHAR_DATA *ch, char *argument)
     if (is_affected(ch, gsn_gift_pulseoftheinvisible))
         diff -= 2;
 
-    if (!IS_NULLSTR(argument) && (mirror = get_obj_here(ch, argument)) != NULL &&
+    if (!IS_NULLSTR(argument) && (mirror = get_obj_here(ch, NULL, argument)) != NULL &&
         IS_SET(mirror->extra_flags, ITEM_REFLECTIVE))
     {
             diff--;
@@ -801,7 +801,7 @@ void do_bestowgift (CHAR_DATA *ch, char *argument)
          sendch("Quotes are required around gift name.\n\r", ch);
         return;
         }
-        if ( ( victim = get_char_room( ch, arg1 ) ) == NULL)
+        if ( ( victim = get_char_room( ch, NULL, arg1 ) ) == NULL)
         {
         sendch("Bestow a gift upon whom?\n\r", ch);
         return;
@@ -945,7 +945,7 @@ void do_garou( CHAR_DATA *ch, char *argument )
     {
         if(!IS_NPC(ch) || arg2[0] == '\0' || arg3[0] == '\0')
         return;
-        if ( ( victim = get_char_room( ch, arg3 ) ) == NULL)
+        if ( ( victim = get_char_room( ch, NULL, arg3 ) ) == NULL)
         return;
         if((gn = gift_lookup(arg2)) == 0)
         return;

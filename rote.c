@@ -139,7 +139,7 @@ void do_rote(CHAR_DATA *ch, char *argument)
                                     return;
                                 }
                             }
-                            else if((victim = get_char_room(ch,arg2)) == NULL && !extra)
+                            else if((victim = get_char_room(ch,NULL, arg2)) == NULL && !extra)
                             {
                                 send_to_char("There is no one here by that name.\n\r",ch);
                                 return;

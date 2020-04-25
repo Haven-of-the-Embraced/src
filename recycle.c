@@ -668,12 +668,12 @@ char *buf_string(BUFFER *buffer)
 }
 
 /* stuff for recycling mobprograms */
-MPROG_LIST *mprog_free;
+PROG_LIST *mprog_free;
 
-MPROG_LIST *new_mprog(void)
+PROG_LIST *new_mprog(void)
 {
-   static MPROG_LIST mp_zero;
-   MPROG_LIST *mp;
+   static PROG_LIST mp_zero;
+   PROG_LIST *mp;
 
    if (mprog_free == NULL)
        mp = alloc_perm(sizeof(*mp));
@@ -691,7 +691,7 @@ MPROG_LIST *new_mprog(void)
    return mp;
 }
 
-void free_mprog(MPROG_LIST *mp)
+void free_mprog(PROG_LIST *mp)
 {
    if (!IS_VALID(mp))
       return;

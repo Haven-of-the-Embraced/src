@@ -83,7 +83,7 @@ SHOP_DATA *     shop_last;
 
 NOTE_DATA *     note_free;
 
-MPROG_CODE *        mprog_list;
+PROG_CODE *        mprog_list;
 
 char            bug_buf     [2*MAX_INPUT_LENGTH];
 CHAR_DATA *     char_list;
@@ -1547,7 +1547,7 @@ void fix_exits( void )
  */
 void load_mobprogs( FILE *fp )
 {
-    MPROG_CODE *pMprog;
+    PROG_CODE *pMprog;
 
     if ( area_last == NULL )
     {
@@ -1572,7 +1572,7 @@ void load_mobprogs( FILE *fp )
         break;
 
     fBootDb = FALSE;
-    if ( get_mprog_index( vnum ) != NULL )
+    if ( get_prog_index( vnum, , PRG_MPROG ) != NULL )
     {
         bug( "Load_mobprogs: vnum %d duplicated.", vnum );
         exit( 1 );
@@ -1600,8 +1600,8 @@ void load_mobprogs( FILE *fp )
 void fix_mobprogs( void )
 {
     MOB_INDEX_DATA *pMobIndex;
-    MPROG_LIST        *list;
-    MPROG_CODE        *prog;
+    PROG_LIST        *list;
+    PROG_CODE        *prog;
     int iHash;
 
     for ( iHash = 0; iHash < MAX_KEY_HASH; iHash++ )
@@ -1612,7 +1612,7 @@ void fix_mobprogs( void )
     {
         for( list = pMobIndex->mprogs; list != NULL; list = list->next )
         {
-        if ( ( prog = get_mprog_index( list->vnum ) ) != NULL )
+        if ( ( prog = get_prog_index( list->vnum, PRG_MPROG ) ) != NULL )
             list->code = prog->code;
         else
         {
@@ -3051,9 +3051,9 @@ ROOM_INDEX_DATA *get_room_index( int vnum )
     return NULL;
 }
 
-MPROG_CODE *get_mprog_index( int vnum )
+PROG_CODE *get_prog_index( int vnum )
 {
-    MPROG_CODE *prg;
+    PROG_CODE *prg;
     for( prg = mprog_list; prg; prg = prg->next )
     {
         if ( prg->vnum == vnum )

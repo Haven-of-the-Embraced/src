@@ -353,7 +353,7 @@ void load_mobiles( FILE *fp )
          }
          else if ( letter == 'M' )
          {
-        MPROG_LIST *pMprog;
+        PROG_LIST *pMprog;
         char *word;
         int trigger = 0;
 

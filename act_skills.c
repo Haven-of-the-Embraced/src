@@ -34,7 +34,7 @@ void do_bandage(CHAR_DATA *ch, char *argument)
     if ( arg[0] == '\0')        /*If arg is null, it means you didnt specify a victim*/
         victim = ch;        /*therefore setting victim = the one using bandage*/
     else
-        if ( ( victim = get_char_room( ch, arg ) ) == NULL)     /*If victim specified is not in the room*/
+        if ( ( victim = get_char_room( ch, NULL, arg ) ) == NULL)     /*If victim specified is not in the room*/
         {
             send_to_char( "You don't see that person here.\n\r", ch );      /*let the user know.*/
             return;
@@ -334,7 +334,7 @@ void do_waylay(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if ( ( victim = get_char_room( ch, arg ) ) == NULL)
+    if ( ( victim = get_char_room( ch, NULL, arg ) ) == NULL)
     {
         send_to_char( "Waylay whom?\n\r", ch );
         return;

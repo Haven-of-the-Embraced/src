@@ -39,7 +39,7 @@ void do_feralspeech(CHAR_DATA *ch, char *argument)
         send_to_char("To what creature do you wish to speak to?\n\r", ch );
         return;
     }
-    if ( ( victim = get_char_room( ch, arg ) ) == NULL )
+    if ( ( victim = get_char_room( ch, NULL, arg ) ) == NULL )
     {
         send_to_char( "No creature here by that name.\n\r", ch );
         return;
@@ -347,7 +347,7 @@ void do_songofserenity(CHAR_DATA *ch, char *argument)
         send_to_char("To whom do you wish to calm?\n\r", ch );
         return;
     }
-    if ( ( victim = get_char_room( ch, arg ) ) == NULL )
+    if ( ( victim = get_char_room( ch, NULL, arg ) ) == NULL )
     {
         send_to_char( "No one here by that name.\n\r", ch );
         return;
@@ -482,7 +482,7 @@ void do_drawingoutthebeast( CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if ( ( victim = get_char_room( ch, argument ) ) == NULL )
+    if ( ( victim = get_char_room( ch, NULL, argument ) ) == NULL )
     {
         send_to_char( "Draw the beast to the surface of whom?\n\r", ch );
         return;
@@ -803,7 +803,7 @@ void do_auraperception( CHAR_DATA *ch, char *argument )
         send_to_char( "View whom?\n\r", ch );
         return;
     }
-    if ( ( victim = get_char_room( ch, arg1 ) ) == NULL )
+    if ( ( victim = get_char_room( ch, NULL, arg1 ) ) == NULL )
     {
         send_to_char( "View whom?\n\r", ch );
         return;
@@ -1624,7 +1624,7 @@ void do_ignis_fatuus( CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if ( ( victim = get_char_room( ch, arg ) ) == NULL )
+    if ( ( victim = get_char_room( ch, NULL, arg ) ) == NULL )
     {
         send_to_char("You can't confound the senses of someone you cannot see.\n\r",ch);
         return;
@@ -1877,7 +1877,7 @@ void do_horridreality(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if ( ( victim = get_char_room( ch, arg2 ) ) == NULL &&
+    if ( ( victim = get_char_room( ch, NULL, arg2 ) ) == NULL &&
         (victim = ch->fighting) == NULL )
     {
         send_to_char("Who do you wish to inflict this horrid reality upon?\n\r",ch);
@@ -1966,7 +1966,7 @@ void do_command(CHAR_DATA *ch, char *argument)
         send_to_char("Command whom to do what?\n\r", ch );
         return;
     }
-    if ( ( victim = get_char_room( ch, arg1 ) ) == NULL )
+    if ( ( victim = get_char_room( ch, NULL, arg1 ) ) == NULL )
     {
         send_to_char( "Nobody here by that name.\n\r", ch );
         return;
@@ -2074,7 +2074,7 @@ void do_forgetful (CHAR_DATA *ch, char *argument)
         send_to_char( "You are not skilled enough in your powers of Dominate!.\n\r", ch );
         return;
     }
-       if ( (victim = get_char_room(ch, argument)) == NULL)
+       if ( (victim = get_char_room(ch, NULL, argument)) == NULL)
     {
         send_to_char( "Dominate whom?\n\r", ch );
         return;
@@ -2142,7 +2142,7 @@ void do_mesmerize(CHAR_DATA *ch, char *argument)
         send_to_char("Mesmerize whom to do what?\n\r", ch );
         return;
     }
-    if ( ( victim = get_char_room( ch, arg1 ) ) == NULL )
+    if ( ( victim = get_char_room( ch, NULL, arg1 ) ) == NULL )
     {
         send_to_char( "Nobody here by that name.\n\r", ch );
         return;
@@ -2254,7 +2254,7 @@ void do_conditioning(CHAR_DATA *ch, char *argument)
         send_to_char("Your blood curse prevents it!\n\r" ,ch);
         return;
     }
-    if ( ( victim = get_char_room( ch, arg ) ) == NULL )
+    if ( ( victim = get_char_room( ch, NULL, arg ) ) == NULL )
     {
         send_to_char( "Nobody here by that name.\n\r", ch );
         return;
@@ -2401,7 +2401,7 @@ void do_possession( CHAR_DATA *ch, char *argument )
     }
 
 
-    if ( ( victim = get_char_room( ch, arg ) ) == NULL )
+    if ( ( victim = get_char_room( ch, NULL, arg ) ) == NULL )
     {
     send_to_char( "They aren't here to possess.\n\r", ch );
     return;
@@ -2462,7 +2462,7 @@ void do_blight(CHAR_DATA *ch, char *argument)
     argument = one_argument( argument, arg );
     chance = number_range(1, 100);
 
-    if ( ( victim = get_char_room( ch, arg ) ) == NULL )
+    if ( ( victim = get_char_room( ch, NULL, arg ) ) == NULL )
     {
         send_to_char( "Who?\n\r", ch );
         return;
@@ -2565,7 +2565,7 @@ void do_blackdeath(CHAR_DATA *ch, char *argument)
         send_to_char("You are not a vampire!\n\r" ,ch);
         return;
     }
-    if ( ( victim = get_char_room( ch, argument ) ) == NULL )
+    if ( ( victim = get_char_room( ch, NULL, argument ) ) == NULL )
     {
         send_to_char( "Who?\n\r", ch );
         return;
@@ -2737,7 +2737,7 @@ void do_homunculusservant(CHAR_DATA *ch, char *argument)
     if(!can_use_disc(ch,MORTIS,2,20,TRUE))
             return;
 
-    if((obj = get_obj_here( ch, argument )) == NULL)
+    if((obj = get_obj_here( ch, NULL, argument )) == NULL)
     {
         send_to_char( "You require a fresh corpse to craft a Homunculus.\n\r", ch );
         return;
@@ -2843,7 +2843,7 @@ void do_animatedead(CHAR_DATA *ch, char *argument)
     if(!can_use_disc(ch,MORTIS,3,30,TRUE))
             return;
 
-    if((obj = get_obj_here( ch, argument )) == NULL)
+    if((obj = get_obj_here( ch, NULL, argument )) == NULL)
     {
         send_to_char( "Animate what?.\n\r", ch );
         return;
@@ -2965,7 +2965,7 @@ void do_callathanatos(CHAR_DATA *ch, char *argument)
     if(!can_use_disc(ch,MORTIS,4,40,TRUE))
             return;
 
-    if((obj = get_obj_here( ch, argument )) == NULL)
+    if((obj = get_obj_here( ch, NULL, argument )) == NULL)
     {
         send_to_char( "Animate what?.\n\r", ch );
         return;
@@ -3055,7 +3055,7 @@ void do_musterthecorpsearmy(CHAR_DATA *ch, char *argument)
     if(!can_use_disc(ch,MORTIS,5,50,TRUE))
             return;
 
-    if((obj = get_obj_here( ch, argument )) == NULL)
+    if((obj = get_obj_here( ch, NULL, argument )) == NULL)
     {
         send_to_char( "Animate what?.\n\r", ch );
         return;
@@ -3171,7 +3171,7 @@ void do_mask(CHAR_DATA *ch, char *argument)
             send_to_char("Assume a mask of whom?\n\r",ch);
         return;
     }
-    if ((victim = get_char_room( ch, argument ))== NULL)
+    if ((victim = get_char_room( ch, NULL, argument ))== NULL)
     {
         send_to_char( "Assume a mask of whom?\n\r", ch );
         return;
@@ -3536,7 +3536,7 @@ void do_armsoftheabyss(CHAR_DATA *ch, char *argument)
         send_to_char("You are not a vampire!\n\r" ,ch);
         return;
     }
-    if ( ( victim = get_char_room( ch, argument ) ) == NULL )
+    if ( ( victim = get_char_room( ch, NULL, argument ) ) == NULL )
     {
         send_to_char( "Who?\n\r", ch );
         return;
@@ -3742,7 +3742,7 @@ void do_shadowplay (CHAR_DATA *ch, char *argument)
     }
     if(!is_affected(ch,gsn_shadowform)) ch->pblood -= 10;
 
-        if ((victim = get_char_room(ch, arg)) != NULL)
+        if ((victim = get_char_room(ch, NULL, arg)) != NULL)
         {
         sh_int success;
         success = godice(get_attribute(ch, WITS) + ch->pcdata->discipline[OBTENEBRATION], 7);
@@ -4224,7 +4224,7 @@ void do_entrancement(CHAR_DATA *ch, char *argument)
         send_to_char("Entrance whom to do what?\n\r", ch );
         return;
     }
-    if ( ( victim = get_char_room( ch, arg ) ) == NULL )
+    if ( ( victim = get_char_room( ch, NULL, arg ) ) == NULL )
     {
         send_to_char( "Nobody here by that name.\n\r", ch );
         return;
@@ -4451,7 +4451,7 @@ void do_dreadgaze(CHAR_DATA *ch, char *argument)
         send_to_char( "You don't have enough blood.\n\r", ch );
         return;
     }
-    if ((victim = get_char_room( ch, argument ))== NULL)
+    if ((victim = get_char_room( ch, NULL, argument ))== NULL)
     {
         send_to_char( "Frighten whom?\n\r", ch );
         return;
@@ -5500,7 +5500,7 @@ void do_weakness(CHAR_DATA *ch, char *argument)
         send_to_char("You do not have any vampiric blood to change.\n\r" ,ch);
         return;
     }
-    if ( ( victim = get_char_room( ch, arg ) ) == NULL )
+    if ( ( victim = get_char_room( ch, NULL, arg ) ) == NULL )
     {
         send_to_char( "Whom do you wish to affect with the toxin?\n\r", ch );
         return;
@@ -5693,7 +5693,7 @@ void do_acidblood(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if ((victim = get_char_room(ch, arg)) == NULL)
+    if ((victim = get_char_room(ch, NULL, arg)) == NULL)
     {
         send_to_char("Spit caustic blood at whom?\n\r", ch);
         return;
@@ -5827,7 +5827,7 @@ void do_bloodcurse(CHAR_DATA *ch, char *argument)
         send_to_char("You are not a vampire!\n\r" ,ch);
         return;
     }
-    if ( ( victim = get_char_room( ch, arg ) ) == NULL )
+    if ( ( victim = get_char_room( ch, NULL, arg ) ) == NULL )
     {
         send_to_char( "Who?\n\r", ch );
         return;
@@ -6039,7 +6039,7 @@ void do_taste( CHAR_DATA *ch, char *argument )
         return;
     }
 
-    if ( ( victim = get_char_room( ch, argument ) ) == NULL )
+    if ( ( victim = get_char_room( ch, NULL, argument ) ) == NULL )
     {
         send_to_char( "Gain knowledge from whom?\n\r", ch );
         return;
@@ -6104,7 +6104,7 @@ void do_bloodrage( CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if ( ( victim = get_char_room( ch, argument ) ) == NULL )
+    if ( ( victim = get_char_room( ch, NULL, argument ) ) == NULL )
     {
         send_to_char( "Cause whom to rage?\n\r", ch );
         return;
@@ -6382,7 +6382,7 @@ void do_theft(CHAR_DATA *ch, char *argument)
         send_to_char("You are not a vampire!\n\r" ,ch);
         return;
     }
-    if ( ( victim = get_char_room( ch, argument ) ) == NULL )
+    if ( ( victim = get_char_room( ch, NULL, argument ) ) == NULL )
     {
         send_to_char( "Steal the lifeblood from whom?\n\r", ch );
         return;
@@ -6530,7 +6530,7 @@ void do_cauldron(CHAR_DATA *ch, char *argument)
         send_to_char("You are not a vampire!\n\r" ,ch);
         return;
     }
-    if ( ( victim = get_char_room( ch, argument ) ) == NULL )
+    if ( ( victim = get_char_room( ch, NULL, argument ) ) == NULL )
     {
         send_to_char( "Boil whom?\n\r", ch );
         return;
@@ -6704,7 +6704,7 @@ void do_changeling(CHAR_DATA *ch, char *argument)
             send_to_char("Assume the form of whom?\n\r",ch);
         return;
     }
-    if ((victim = get_char_room( ch, argument ))== NULL)
+    if ((victim = get_char_room( ch, NULL, argument ))== NULL)
     {
         send_to_char( "Assume the form of whom?\n\r", ch );
         return;
@@ -6839,7 +6839,7 @@ void do_fleshcraft(CHAR_DATA *ch, char *argument)
         send_to_char( "You cannot control two creatures at once!\n\r",ch );
         return;
     }
-    if((mob = get_char_room( ch, argument )) == NULL)
+    if((mob = get_char_room( ch, NULL, argument )) == NULL)
     {
         send_to_char( "Fleshcraft whom?.\n\r", ch );
         return;

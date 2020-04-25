@@ -63,7 +63,7 @@ void spell_gift_bloodyfeast( int sn, int level, CHAR_DATA *ch, void *vo, int tar
     OBJ_DATA *obj;
     AFFECT_DATA af;
 
-    if ((obj = get_obj_here( ch, "corpse" )) == NULL)
+    if ((obj = get_obj_here( ch, NULL, "corpse" )) == NULL)
     {
         send_to_char("Feast upon what?\n\r",ch);
         return;
@@ -345,7 +345,7 @@ void spell_gift_createelement( int sn, int level, CHAR_DATA *ch, void *vo, int t
 					sendch("Direct an elemental attack at whom?\n\r", ch);
 					return;
 					}
-			} else if ( (victim = get_char_room(ch, arg2)) == NULL )
+			} else if ( (victim = get_char_room(ch, NULL, arg2)) == NULL )
 				{
 					sendch("They aren't here.\n\r", ch);
 					return;
@@ -2368,7 +2368,7 @@ void do_beseech(CHAR_DATA *ch, char *argument)
     }
     else
     {
-        if ( ( victim = get_char_room( ch, target_name ) ) == NULL )
+        if ( ( victim = get_char_room( ch, NULL, target_name ) ) == NULL )
         {
         send_to_char( "They aren't here.\n\r", ch );
         return;
@@ -2427,7 +2427,7 @@ void do_beseech(CHAR_DATA *ch, char *argument)
     }
     else
     {
-        if ( ( victim = get_char_room( ch, target_name ) ) == NULL )
+        if ( ( victim = get_char_room( ch, NULL, target_name ) ) == NULL )
         {
         send_to_char( "They aren't here.\n\r", ch );
         return;
@@ -2477,7 +2477,7 @@ void do_beseech(CHAR_DATA *ch, char *argument)
 
         target = TARGET_CHAR;
     }
-    else if ((victim = get_char_room(ch,target_name)) != NULL)
+    else if ((victim = get_char_room(ch,NULL, target_name)) != NULL)
     {
         target = TARGET_CHAR;
     }
@@ -2499,7 +2499,7 @@ void do_beseech(CHAR_DATA *ch, char *argument)
 
         vo = (void *) victim;
     }
-    else if ((obj = get_obj_here(ch,target_name)) != NULL)
+    else if ((obj = get_obj_here(ch,NULL, target_name)) != NULL)
     {
         vo = (void *) obj;
         target = TARGET_OBJ;
@@ -2517,7 +2517,7 @@ void do_beseech(CHAR_DATA *ch, char *argument)
             vo = (void *) ch;
             target = TARGET_CHAR;
         }
-        else if ((victim = get_char_room(ch,target_name)) != NULL)
+        else if ((victim = get_char_room(ch,NULL, target_name)) != NULL)
         {
             vo = (void *) victim;
             target = TARGET_CHAR;

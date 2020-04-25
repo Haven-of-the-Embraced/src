@@ -3292,7 +3292,7 @@ void act_new( const char *format, CHAR_DATA *ch, const void *arg1,
     for( ; to ; to = to->next_in_room )
     {
         if ( (!IS_NPC(to) && to->desc == NULL )
-                ||   ( IS_NPC(to) && !HAS_TRIGGER(to, TRIG_ACT) )
+                ||   ( IS_NPC(to) && !HAS_TRIGGER_MOB(to, TRIG_ACT) )
                 ||    to->position < min_pos )
             continue;
 
@@ -3410,7 +3410,7 @@ void act_new( const char *format, CHAR_DATA *ch, const void *arg1,
 
 
                 if ( IS_NPC(to) && MOBtrigger )
-                    mp_act_trigger( buf, to, ch, arg1, arg2, TRIG_ACT );
+                    p_act_trigger( buf, to, NULL, NULL, ch, arg1, arg2, TRIG_ACT );
 
         }
     return;
@@ -3423,7 +3423,7 @@ void act_new( const char *format, CHAR_DATA *ch, const void *arg1,
         write_to_buffer( to->desc, buffer, 0 );
         else
                 if ( MOBtrigger )
-                    mp_act_trigger( buf, to, ch, arg1, arg2, TRIG_ACT );
+                    p_act_trigger( buf, to, NULL, NULL, ch, arg1, arg2, TRIG_ACT );
                 */
 }
 
@@ -3477,7 +3477,7 @@ void act_new2( const char *format, CHAR_DATA *ch, const void *arg1,
     for( ; to ; to = to->next_in_room )
     {
         if ( (!IS_NPC(to) && to->desc == NULL )
-                ||   ( IS_NPC(to) && !HAS_TRIGGER(to, TRIG_ACT) )
+                ||   ( IS_NPC(to) && !HAS_TRIGGER_MOB(to, TRIG_ACT) )
                 ||    to->position < min_pos )
             continue;
 
@@ -3581,7 +3581,7 @@ void act_new2( const char *format, CHAR_DATA *ch, const void *arg1,
         write_to_buffer( to->desc, buffer, 0 );
         else
                 if ( MOBtrigger )
-                    mp_act_trigger( buf, to, ch, arg1, arg2, TRIG_ACT );
+                    p_act_trigger( buf, to, NULL, NULL, ch, arg1, arg2, TRIG_ACT );
     }
 
     return;

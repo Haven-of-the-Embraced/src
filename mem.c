@@ -62,7 +62,7 @@ HELP_DATA *new_help(void)
 }
 void    free_extra_descr    args( ( EXTRA_DESCR_DATA *pExtra ) );
 void    free_affect     args( ( AFFECT_DATA *af ) );
-void    free_mprog              args ( ( MPROG_LIST *mp ) );
+void    free_mprog              args ( ( PROG_LIST *mp ) );
 
 
 RESET_DATA *new_reset_data( void )
@@ -456,11 +456,11 @@ void free_mob_index( MOB_INDEX_DATA *pMob )
     return;
 }
 
-MPROG_CODE              *       mpcode_free;
+PROG_CODE              *       mpcode_free;
 
-MPROG_CODE *new_mpcode(void)
+PROG_CODE *new_mpcode(void)
 {
-     MPROG_CODE *NewCode;
+     PROG_CODE *NewCode;
 
      if (!mpcode_free)
      {
@@ -480,7 +480,7 @@ MPROG_CODE *new_mpcode(void)
      return NewCode;
 }
 
-void free_mpcode(MPROG_CODE *pMcode)
+void free_mpcode(PROG_CODE *pMcode)
 {
     free_string(pMcode->code);
     pMcode->next = mpcode_free;

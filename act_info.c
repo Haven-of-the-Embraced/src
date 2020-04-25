@@ -1304,7 +1304,7 @@ void do_look( CHAR_DATA *ch, char *argument )
         return;
     }
 
-    if ( ( obj = get_obj_here( ch, arg2 ) ) == NULL )
+    if ( ( obj = get_obj_here( ch, NULL, arg2 ) ) == NULL )
     {
         send_to_char( "You do not see that here.\n\r", ch );
         return;
@@ -1350,7 +1350,7 @@ void do_look( CHAR_DATA *ch, char *argument )
     return;
     }
 
-    if ( ( victim = get_char_room( ch, arg1 ) ) != NULL )
+    if ( ( victim = get_char_room( ch, NULL, arg1 ) ) != NULL )
     {
     show_char_to_char_1( victim, ch );
     return;
@@ -1513,7 +1513,7 @@ void do_examine( CHAR_DATA *ch, char *argument )
 
     do_function(ch, &do_look, arg );
 
-    if ( ( obj = get_obj_here( ch, arg ) ) != NULL )
+    if ( ( obj = get_obj_here( ch, NULL, arg ) ) != NULL )
     {
     switch ( obj->item_type )
     {
@@ -2770,7 +2770,7 @@ void do_consider( CHAR_DATA *ch, char *argument )
     return;
     }
 
-    if ( ( victim = get_char_room( ch, arg ) ) == NULL )
+    if ( ( victim = get_char_room( ch, NULL, arg ) ) == NULL )
     {
     send_to_char( "They're not here.\n\r", ch );
     return;
@@ -3308,7 +3308,7 @@ void do_invite( CHAR_DATA *ch, char *argument )
         send_to_char( "Syntax: invite <char>\n\r",ch);
         return;
     }
-    if ( ( victim = get_char_room( ch, arg ) ) == NULL )
+    if ( ( victim = get_char_room( ch, NULL, arg ) ) == NULL )
     {
         send_to_char( "They aren't here to invite.\n\r", ch );
         return;
@@ -3417,7 +3417,7 @@ void do_rank( CHAR_DATA *ch, char *argument )
         return;
     }
 
-    if ( ( victim = get_char_room( ch, arg1 ) ) == NULL )
+    if ( ( victim = get_char_room( ch, NULL, arg1 ) ) == NULL )
     {
         send_to_char( "They aren't here to rank.\n\r", ch );
         return;
@@ -3484,7 +3484,7 @@ void do_promote( CHAR_DATA *ch, char *argument )
         return;
     }
 
-    if ( ( victim = get_char_room( ch, arg1 ) ) == NULL )
+    if ( ( victim = get_char_room( ch, NULL, arg1 ) ) == NULL )
     {
         send_to_char( "They aren't here to promote.\n\r", ch );
         return;
@@ -3651,7 +3651,7 @@ void do_expel( CHAR_DATA *ch, char *argument )
         return;
     }
 
-    if ( ( victim = get_char_room( ch, arg ) ) == NULL )
+    if ( ( victim = get_char_room( ch, NULL, arg ) ) == NULL )
     {
         send_to_char( "They aren't here to expel.\n\r", ch );
         return;
@@ -3723,7 +3723,7 @@ void do_induct( CHAR_DATA *ch, char *argument )
         send_to_char( "Syntax: induct <char>\n\r",ch);
         return;
     }
-    if ( ( victim = get_char_room( ch, arg ) ) == NULL )
+    if ( ( victim = get_char_room( ch, NULL, arg ) ) == NULL )
     {
         send_to_char( "That Garou isn't here to induct.\n\r", ch );
         return;
@@ -3963,7 +3963,7 @@ void do_glance( CHAR_DATA *ch, char *argument )
 
     argument = one_argument( argument, arg );
 
-    if ( ( victim = get_char_room( ch, arg ) ) == NULL )
+    if ( ( victim = get_char_room( ch, NULL, arg ) ) == NULL )
     {
     send_to_char("Who???\n\r",ch);
     return;

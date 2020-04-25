@@ -84,7 +84,7 @@ void do_mount( CHAR_DATA *ch, char *argument )
     {
     mount = ch->mount;
     }
-    else if (!(mount = get_char_room(ch, arg)))
+    else if (!(mount = get_char_room(ch, NULL, arg)))
     {
     send_to_char("Mount what?\n\r", ch);
     return;
@@ -216,7 +216,7 @@ void do_buy_mount( CHAR_DATA *ch, char *argument )
 
     in_room     = ch->in_room;
     ch->in_room = pRoomIndexNext;
-    mount       = get_char_room( ch, arg );
+    mount       = get_char_room( ch, NULL, arg );
     ch->in_room = in_room;
 
     if ( mount == NULL)

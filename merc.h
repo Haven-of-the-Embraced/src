@@ -119,8 +119,8 @@ typedef struct  time_info_data      TIME_INFO_DATA;
 typedef struct  weather_data        WEATHER_DATA;
 typedef struct  config_data         CONFIG_DATA;
 // typedef struct   database_data       DATABASE_DATA;  non-functional database code
-typedef struct  mprog_list      MPROG_LIST;
-typedef struct  mprog_code      MPROG_CODE;
+typedef struct  mprog_list      PROG_LIST;
+typedef struct  mprog_code      PROG_CODE;
 typedef struct    clan_type        CLAN_DATA;
 
 
@@ -298,7 +298,7 @@ struct sleep_data
     SLEEP_DATA *prev;
     CHAR_DATA *ch;
     CHAR_DATA *mob;
-    MPROG_CODE *prog;
+    PROG_CODE *prog;
     int valid;
     int vnum;
     int line;
@@ -2002,7 +2002,7 @@ struct  mob_index_data
     MOB_INDEX_DATA *    next;
     SPEC_FUN *      spec_fun;
     SHOP_DATA *     pShop;
-    MPROG_LIST *        mprogs;
+    PROG_LIST *        mprogs;
     AREA_DATA *     area;       /* OLC */
 
     sh_int      vnum;
@@ -2759,7 +2759,7 @@ struct mprog_list
     char *      trig_phrase;
     sh_int      vnum;
     char *          code;
-    MPROG_LIST *    next;
+    PROG_LIST *    next;
     bool        valid;
 };
 
@@ -2767,7 +2767,7 @@ struct mprog_code
 {
     sh_int      vnum;
     char *      code;
-    MPROG_CODE *    next;
+    PROG_CODE *    next;
 };
 
 /*HUGE string, for wordwrap functions.*/
@@ -3100,7 +3100,7 @@ void    channel_to_char args( (const char *txt, CHAR_DATA*ch) );
 #define act2(format,ch,arg1,arg2,type)\
     act_new2((format),(ch),(arg1),(arg2),(type),POS_RESTING)
 
-#define HAS_TRIGGER(ch,trig)    (IS_SET((ch)->pIndexData->mprog_flags,(trig)))
+#define HAS_TRIGGER_MOB(ch,trig)    (IS_SET((ch)->pIndexData->mprog_flags,(trig)))
 #define EDIT_CLAN(ch, Clan)     ( Clan = ch->desc->pEdit )
 #define IS_SWITCHED( ch )       ( ch->desc && ch->desc->original )
 #define IS_BUILDER(ch, Area)    ( !IS_NPC(ch) && !IS_SWITCHED( ch ) &&    \
@@ -3200,7 +3200,7 @@ extern      SHOP_DATA     * shop_first;
 extern      CHAR_DATA     * char_list;
 extern      DESCRIPTOR_DATA   * descriptor_list;
 extern      OBJ_DATA      * object_list;
-extern      MPROG_CODE    * mprog_list;
+extern      PROG_CODE    * mprog_list;
 extern      char            bug_buf     [];
 extern      time_t          current_time;
 extern      time_t          agg_time;
@@ -3391,7 +3391,7 @@ char *  crypt       args( ( const char *key, const char *salt ) );
 #define RID ROOM_INDEX_DATA
 #define SF  SPEC_FUN
 #define AD  AFFECT_DATA
-#define MPC MPROG_CODE
+#define MPC PROG_CODE
 /* act_comm.c */
 void    check_sex   args( ( CHAR_DATA *ch) );
 void    add_follower    args( ( CHAR_DATA *ch, CHAR_DATA *master ) );
@@ -3497,7 +3497,7 @@ char *  get_extra_descr args( ( const char *name, EXTRA_DESCR_DATA *ed ) );
 MID *   get_mob_index   args( ( int vnum ) );
 OID *   get_obj_index   args( ( int vnum ) );
 RID *   get_room_index  args( ( int vnum ) );
-MPC *   get_mprog_index args( ( int vnum ) );
+MPC *   get_prog_index args( ( int vnum ) );
 char    fread_letter    args( ( FILE *fp ) );
 int fread_number    args( ( FILE *fp ) );
 long    fread_flag  args( ( FILE *fp ) );
@@ -3999,17 +3999,17 @@ void    obj_cast_spell  args( ( int sn, int level, CHAR_DATA *ch,
 void    program_flow    args( ( sh_int vnum, char *source, CHAR_DATA *mob,
             CHAR_DATA *ch, const void *arg1, const void *arg2, int numlines ) );
 
-MPROG_CODE *get_mprog_by_vnum args( (int vnum) );
+PROG_CODE *get_mprog_by_vnum args( (int vnum) );
 
 /* mob_prog.c */
 //void  program_flow    args( ( sh_int vnum, char *source, CHAR_DATA *mob, CHAR_DATA *ch,
 //              const void *arg1, const void *arg2 ) );
-void    mp_act_trigger  args( ( char *argument, CHAR_DATA *mob, CHAR_DATA *ch,
+void    p_act_trigger  args( ( char *argument, CHAR_DATA *mob, CHAR_DATA *ch,
                 const void *arg1, const void *arg2, int type ) );
-bool    mp_percent_trigger args( ( CHAR_DATA *mob, CHAR_DATA *ch,
+bool    p_percent_trigger args( ( CHAR_DATA *mob, CHAR_DATA *ch,
                 const void *arg1, const void *arg2, int type ) );
-void    mp_bribe_trigger  args( ( CHAR_DATA *mob, CHAR_DATA *ch, int amount ) );
-bool    mp_exit_trigger   args( ( CHAR_DATA *ch, int dir ) );
+void    p_bribe_trigger  args( ( CHAR_DATA *mob, CHAR_DATA *ch, int amount ) );
+bool    p_exit_trigger   args( ( CHAR_DATA *ch, int dir ) );
 void    mp_give_trigger   args( ( CHAR_DATA *mob, CHAR_DATA *ch, OBJ_DATA *obj ) );
 void    mp_greet_trigger  args( ( CHAR_DATA *ch ) );
 void    mp_hprct_trigger  args( ( CHAR_DATA *mob, CHAR_DATA *ch ) );

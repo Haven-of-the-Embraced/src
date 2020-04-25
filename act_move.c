@@ -113,7 +113,7 @@ void move_char( CHAR_DATA *ch, int door, bool follow )
     /*
      * Exit trigger, if activated, bail out. Only PCs are triggered.
      */
-    if ( !IS_NPC(ch) && mp_exit_trigger( ch, door ) )
+    if ( !IS_NPC(ch) && p_exit_trigger( ch, door, PRG_MPROG) )
     return;
 
     in_room = ch->in_room;
@@ -409,10 +409,10 @@ void move_char( CHAR_DATA *ch, int door, bool follow )
      * If someone is following the char, these triggers get activated
      * for the followers before the char, but it's safer this way...
      */
-    if ( IS_NPC( ch ) && HAS_TRIGGER( ch, TRIG_ENTRY ) )
-    mp_percent_trigger( ch, NULL, NULL, NULL, TRIG_ENTRY );
+    if ( IS_NPC( ch ) && HAS_TRIGGER_MOB( ch, TRIG_ENTRY ) )
+    p_percent_trigger( ch, NULL, NULL, NULL, NULL, NULL, TRIG_ENTRY );
     if ( !IS_NPC( ch ) )
-        mp_greet_trigger( ch );
+        p_greet_trigger( ch, PRG_MPROG );
 
     return;
 }
@@ -552,7 +552,7 @@ void do_open( CHAR_DATA *ch, char *argument )
     return;
     }
 
-    if ( ( obj = get_obj_here( ch, arg ) ) != NULL )
+    if ( ( obj = get_obj_here( ch, NULL, arg ) ) != NULL )
     {
     /* open portal */
     if (obj->item_type == ITEM_PORTAL)
@@ -653,7 +653,7 @@ void do_lift( CHAR_DATA *ch, char *argument )
     return;
     }
 
-    if ( ( obj = get_obj_here( ch, arg ) ) != NULL )
+    if ( ( obj = get_obj_here( ch, NULL, arg ) ) != NULL )
     {
     /* open portal */
     if (obj->item_type == ITEM_PORTAL)
@@ -743,7 +743,7 @@ void do_close( CHAR_DATA *ch, char *argument )
     return;
     }
 
-    if ( ( obj = get_obj_here( ch, arg ) ) != NULL )
+    if ( ( obj = get_obj_here( ch, NULL, arg ) ) != NULL )
     {
     /* portal stuff */
     if (obj->item_type == ITEM_PORTAL)
@@ -850,7 +850,7 @@ void do_lock( CHAR_DATA *ch, char *argument )
         return;
     }
 
-    if ( ( obj = get_obj_here( ch, arg ) ) != NULL )
+    if ( ( obj = get_obj_here( ch, NULL, arg ) ) != NULL )
     {
     /* portal stuff */
     if (obj->item_type == ITEM_PORTAL)
@@ -965,7 +965,7 @@ void do_unlock( CHAR_DATA *ch, char *argument )
     }
 
 
-    if ( ( obj = get_obj_here( ch, arg ) ) != NULL )
+    if ( ( obj = get_obj_here( ch, NULL, arg ) ) != NULL )
     {
     /* portal stuff */
     if (obj->item_type == ITEM_PORTAL)
@@ -1101,7 +1101,7 @@ void do_pick( CHAR_DATA *ch, char *argument )
     return;
     }
 
-    if ( ( obj = get_obj_here( ch, arg ) ) != NULL )
+    if ( ( obj = get_obj_here( ch, NULL, arg ) ) != NULL )
     {
     /* portal stuff */
     if (obj->item_type == ITEM_PORTAL)
@@ -1691,7 +1691,7 @@ void do_wake( CHAR_DATA *ch, char *argument )
     if ( !IS_AWAKE(ch) )
     { send_to_char( "You are asleep yourself!\n\r",       ch ); return; }
 
-    if ( ( victim = get_char_room( ch, arg ) ) == NULL )
+    if ( ( victim = get_char_room( ch, NULL, arg ) ) == NULL )
     { send_to_char( "They aren't here.\n\r",              ch ); return; }
 
     if ( IS_AWAKE(victim) )

@@ -372,7 +372,7 @@ void do_cast( CHAR_DATA *ch, char *argument )
     }
     else
     {
-        if ( ( victim = get_char_room( ch, target_name ) ) == NULL )
+        if ( ( victim = get_char_room( ch, NULL, target_name ) ) == NULL )
         {
         send_to_char( "They aren't here.\n\r", ch );
         return;
@@ -451,7 +451,7 @@ IC mode to fight.\n\r", ch );
     }
     else
     {
-        if ( ( victim = get_char_room( ch, target_name ) ) == NULL )
+        if ( ( victim = get_char_room( ch, NULL, target_name ) ) == NULL )
         {
         send_to_char( "They aren't here.\n\r", ch );
         return;
@@ -501,7 +501,7 @@ IC mode to fight.\n\r", ch );
 
         target = TARGET_CHAR;
     }
-    else if ((victim = get_char_room(ch,target_name)) != NULL)
+    else if ((victim = get_char_room(ch,NULL, target_name)) != NULL)
     {
         target = TARGET_CHAR;
     }
@@ -525,7 +525,7 @@ IC mode to fight.\n\r", ch );
 
         vo = (void *) victim;
     }
-    else if ((obj = get_obj_here(ch,target_name)) != NULL)
+    else if ((obj = get_obj_here(ch,NULL, target_name)) != NULL)
     {
         vo = (void *) obj;
         target = TARGET_OBJ;
@@ -543,7 +543,7 @@ IC mode to fight.\n\r", ch );
             vo = (void *) ch;
             target = TARGET_CHAR;
         }
-        else if ((victim = get_char_room(ch,target_name)) != NULL)
+        else if ((victim = get_char_room(ch,NULL, target_name)) != NULL)
         {
             vo = (void *) victim;
             target = TARGET_CHAR;

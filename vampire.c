@@ -46,7 +46,7 @@ void do_embrace(CHAR_DATA *ch, char *argument)
         send_to_char("You are not a vampire!\n\r" ,ch);
         return;
     }
-    if ( ( victim = get_char_room( ch, arg1 ) ) == NULL )
+    if ( ( victim = get_char_room( ch, NULL, arg1 ) ) == NULL )
     {
         send_to_char( "Your future childe is not here.\n\r", ch );
         return;
@@ -344,7 +344,7 @@ void do_feed(CHAR_DATA *ch, char *argument)
             return;
         }
 */
-        if ( ( victim = get_char_room( ch, arg1 ) ) == NULL )
+        if ( ( victim = get_char_room( ch, NULL, arg1 ) ) == NULL )
         {
             send_to_char( "They aren't here.\n\r", ch );
             return;
@@ -438,7 +438,7 @@ void do_feed(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if ((obj = get_obj_here( ch, arg1 )) == NULL)
+    if ((obj = get_obj_here( ch, NULL, arg1 )) == NULL)
     {
         if ( ( victim = ch->fighting ) == NULL )
         {
@@ -622,7 +622,7 @@ void do_smell(CHAR_DATA *ch, char *argument)
     send_to_char( "Smell what?\n\r", ch );
     return;
     }
-    obj = get_obj_here( ch, argument );
+    obj = get_obj_here( ch, NULL, argument );
     if ( obj == NULL )
 
     {
@@ -710,7 +710,7 @@ void do_nourish(CHAR_DATA *ch, char *argument)
     {
         if(arg1[0] == '\0')
             return;
-        if((victim = get_char_room(ch,arg1)) == NULL)
+        if((victim = get_char_room(ch,NULL, arg1)) == NULL)
             return;
         if(victim->race != race_lookup("vampire") && victim->race != race_lookup("methuselah"))
             return;
@@ -738,7 +738,7 @@ void do_nourish(CHAR_DATA *ch, char *argument)
         send_to_char("Your blood curse prevents it!\n\r" ,ch);
         return;
     }
-    if ( ( victim = get_char_room( ch, arg1 ) ) == NULL )
+    if ( ( victim = get_char_room( ch, NULL, arg1 ) ) == NULL )
     {
         send_to_char( "Nourish whom?\n\r", ch );
         return;
@@ -1143,7 +1143,7 @@ void do_stake(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if ( ( victim = get_char_room( ch, arg ) ) == NULL )
+    if ( ( victim = get_char_room( ch, NULL, arg ) ) == NULL )
     {
         send_to_char( "You cannot stake someone who is not here!\n\r", ch );
         return;
@@ -1332,7 +1332,7 @@ void do_diablerize(CHAR_DATA *ch, char *argument)
 
     argument = one_argument( argument, arg );
 
-    if ( ( victim = get_char_room( ch, arg ) ) == NULL )
+    if ( ( victim = get_char_room( ch, NULL, arg ) ) == NULL )
     {
         send_to_char( "You cannot diablerize someone who isn't here!\n\r", ch );
         return;

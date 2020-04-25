@@ -35,7 +35,7 @@ const struct olc_cmd_type mpedit_table[] =
 
 void mpedit( CHAR_DATA *ch, char *argument)
 {
-    MPROG_CODE *pMcode;
+    PROG_CODE *pMcode;
     char arg[MAX_INPUT_LENGTH];
     char command[MAX_INPUT_LENGTH];
     int cmd;
@@ -95,7 +95,7 @@ void mpedit( CHAR_DATA *ch, char *argument)
 
 void do_mpedit(CHAR_DATA *ch, char *argument)
 {
-    MPROG_CODE *pMcode;
+    PROG_CODE *pMcode;
     char command[MAX_INPUT_LENGTH];
 
     argument = one_argument(argument, command);
@@ -106,7 +106,7 @@ void do_mpedit(CHAR_DATA *ch, char *argument)
 	int vnum = atoi(command);
 	AREA_DATA *ad;
 
-	if ( (pMcode = get_mprog_index(vnum)) == NULL )
+	if ( (pMcode = get_prog_index(vnum, PRG_MPROG)) == NULL )
 	{
 		send_to_char("MPEdit : That vnum does not exist.\n\r",ch);
 		return;
@@ -152,7 +152,7 @@ void do_mpedit(CHAR_DATA *ch, char *argument)
 
 MPEDIT (mpedit_create)
 {
-    MPROG_CODE *pMcode;
+    PROG_CODE *pMcode;
     int value = atoi(argument);
     AREA_DATA *ad;
 
@@ -176,7 +176,7 @@ MPEDIT (mpedit_create)
         return FALSE;
     }
 
-    if ( get_mprog_index(value) )
+    if ( get_prog_index(value, PRG_MPROG) )
     {
 	send_to_char("MPEdit: Code vnum already exists.\n\r",ch);
 	return FALSE;
@@ -196,7 +196,7 @@ MPEDIT (mpedit_create)
 
 MPEDIT(mpedit_show)
 {
-    MPROG_CODE *pMcode;
+    PROG_CODE *pMcode;
     char buf[MAX_STRING_LENGTH];
 
     EDIT_MPCODE(ch,pMcode);
@@ -212,7 +212,7 @@ MPEDIT(mpedit_show)
 
 MPEDIT(mpedit_code)
 {
-    MPROG_CODE *pMcode;
+    PROG_CODE *pMcode;
     EDIT_MPCODE(ch, pMcode);
 
     if (argument[0] =='\0')
@@ -228,7 +228,7 @@ MPEDIT(mpedit_code)
 MPEDIT( mpedit_list )
 {
     int count = 1;
-    MPROG_CODE *mprg;
+    PROG_CODE *mprg;
     char buf[MAX_STRING_LENGTH];
     BUFFER *buffer;
     bool fAll = !str_cmp(argument, "all");

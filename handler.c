@@ -2230,7 +2230,7 @@ CHAR_DATA *get_char_world( CHAR_DATA *ch, char *argument )
     int number;
     int count;
 
-    if ( ( wch = get_char_room( ch, argument ) ) != NULL )
+    if ( ( wch = get_char_room( ch, NULL, argument ) ) != NULL )
     return wch;
 
     number = number_argument( argument, arg );
@@ -2253,7 +2253,7 @@ CHAR_DATA * get_char_area( CHAR_DATA *ch, char *argument )
     CHAR_DATA *ach;
     int number, count;
 
-    if ((ach = get_char_room( ch, argument )) != NULL)
+    if ((ach = get_char_room( ch, NULL, argument )) != NULL)
     return ach;
 
     number = number_argument( argument, arg );
@@ -2421,7 +2421,7 @@ OBJ_DATA *get_obj_here( CHAR_DATA *ch, char *argument )
     if ( ( obj = get_obj_carry( ch, argument, ch ) ) != NULL )
     return obj;
 
-    if ( ( obj = get_obj_wear( ch, argument ) ) != NULL )
+    if ( ( obj = get_obj_wear( ch, argument , TRUE) ) != NULL )
     return obj;
 
     return NULL;
@@ -2453,7 +2453,7 @@ OBJ_DATA *get_obj_world( CHAR_DATA *ch, char *argument, bool unseen )
     int number;
     int count;
 
-    if ( ( obj = get_obj_here( ch, argument ) ) != NULL )
+    if ( ( obj = get_obj_here( ch, NULL, argument ) ) != NULL )
     return obj;
 
     number = number_argument( argument, arg );

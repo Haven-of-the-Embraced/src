@@ -398,12 +398,12 @@ int cmd_eval( sh_int vnum, char *line, int check,
         if ( is_number( buf ) )
         return( get_mob_vnum_room( mob, atoi(buf) ) );
         else
-        return( (bool) (get_char_room( mob, buf) != NULL) );
+        return( (bool) (get_char_room( mob, NULL, buf) != NULL) );
     case CHK_OBJHERE:
         if ( is_number( buf ) )
         return( get_obj_vnum_room( mob, atoi(buf) ) );
         else
-        return( (bool) (get_obj_here( mob, buf) != NULL) );
+        return( (bool) (get_obj_here( mob, NULL, buf) != NULL) );
         case CHK_MOBEXISTS:
         return( (bool) (get_char_world( mob, buf) != NULL) );
     case CHK_OBJEXISTS:
@@ -560,7 +560,7 @@ int cmd_eval( sh_int vnum, char *line, int check,
         if ( is_number( buf ) )
         return( lval_char != NULL && has_item( lval_char, atoi(buf), -1, TRUE ) );
         else
-        return( lval_char != NULL && (get_obj_wear( lval_char, buf ) != NULL) );
+        return( lval_char != NULL && (get_obj_wear( lval_char, buf, TRUE) != NULL) );
     case CHK_HAS:
         return( lval_char != NULL && has_item( lval_char, -1, item_lookup(buf), FALSE ) );
     case CHK_USES:
@@ -883,7 +883,7 @@ void program_flow( sh_int pvnum, char *source, CHAR_DATA *mob, CHAR_DATA *ch, co
     cond[MAX_NESTED_LEVEL];  /* Boolean value based on the last if-check */
 
     int count = 0;
-    MPROG_CODE *prog = get_mprog_by_vnum(pvnum);
+    PROG_CODE *prog = get_mprog_by_vnum(pvnum);
 
 
     sh_int mvnum = mob->pIndexData->vnum;
@@ -1161,11 +1161,11 @@ void program_flow( sh_int pvnum, char *source, CHAR_DATA *mob, CHAR_DATA *ch, co
  * A general purpose string trigger. Matches argument to a string trigger
  * phrase.
  */
-void mp_act_trigger(
+void p_act_trigger(
     char *argument, CHAR_DATA *mob, CHAR_DATA *ch,
     const void *arg1, const void *arg2, int type )
 {
-    MPROG_LIST *prg;
+    PROG_LIST *prg;
     SLEEP_DATA *test;
 
     for ( prg = mob->pIndexData->mprogs; prg != NULL; prg = prg->next )
@@ -1188,11 +1188,11 @@ void mp_act_trigger(
  * A general purpose percentage trigger. Checks if a random percentage
  * number is less than trigger phrase
  */
-bool mp_percent_trigger(
+bool p_percent_trigger(
     CHAR_DATA *mob, CHAR_DATA *ch,
     const void *arg1, const void *arg2, int type )
 {
-    MPROG_LIST *prg;
+    PROG_LIST *prg;
     SLEEP_DATA *test;
 
     for ( prg = mob->pIndexData->mprogs; prg != NULL; prg = prg->next )
@@ -1211,9 +1211,9 @@ bool mp_percent_trigger(
     return ( FALSE );
 }
 
-void mp_bribe_trigger( CHAR_DATA *mob, CHAR_DATA *ch, int amount )
+void p_bribe_trigger( CHAR_DATA *mob, CHAR_DATA *ch, int amount )
 {
-    MPROG_LIST *prg;
+    PROG_LIST *prg;
     SLEEP_DATA *test;
 
     /*
@@ -1237,16 +1237,16 @@ void mp_bribe_trigger( CHAR_DATA *mob, CHAR_DATA *ch, int amount )
     return;
 }
 
-bool mp_exit_trigger( CHAR_DATA *ch, int dir )
+bool p_exit_trigger( CHAR_DATA *ch, int dir )
 {
     CHAR_DATA *mob;
-    MPROG_LIST   *prg;
+    PROG_LIST   *prg;
     SLEEP_DATA *test;
 
     for ( mob = ch->in_room->people; mob != NULL; mob = mob->next_in_room )
     {
     if ( IS_NPC( mob )
-    &&   ( HAS_TRIGGER(mob, TRIG_EXIT) || HAS_TRIGGER(mob, TRIG_EXALL) ) )
+    &&   ( HAS_TRIGGER_MOB(mob, TRIG_EXIT) || HAS_TRIGGER_MOB(mob, TRIG_EXALL) ) )
     {
         for ( prg = mob->pIndexData->mprogs; prg; prg = prg->next )
         {
@@ -1288,7 +1288,7 @@ void mp_give_trigger( CHAR_DATA *mob, CHAR_DATA *ch, OBJ_DATA *obj )
 {
 
     char        buf[MAX_INPUT_LENGTH], *p;
-    MPROG_LIST  *prg;
+    PROG_LIST  *prg;
     SLEEP_DATA *test;
 
     for ( prg = mob->pIndexData->mprogs; prg; prg = prg->next )
@@ -1342,7 +1342,7 @@ void mp_greet_trigger( CHAR_DATA *ch )
     for ( mob = ch->in_room->people; mob != NULL; mob = mob->next_in_room )
     {
     if ( IS_NPC( mob )
-    && ( HAS_TRIGGER(mob, TRIG_GREET) || HAS_TRIGGER(mob,TRIG_GRALL) || IS_SET(mob->act2, ACT2_INFLUENCE)) )
+    && ( HAS_TRIGGER_MOB(mob, TRIG_GREET) || HAS_TRIGGER_MOB(mob,TRIG_GRALL) || IS_SET(mob->act2, ACT2_INFLUENCE)) )
     {
         /*
          * Domain Influence Mob aggressive added here.
@@ -1362,13 +1362,13 @@ void mp_greet_trigger( CHAR_DATA *ch )
          * (fighting etc.). If you want to catch all players, use
          * GrAll trigger
          */
-        if ( HAS_TRIGGER( mob,TRIG_GREET )
+        if ( HAS_TRIGGER_MOB( mob,TRIG_GREET )
         &&   mob->position == mob->pIndexData->default_pos
         &&   can_see( mob, ch ) )
-        mp_percent_trigger( mob, ch, NULL, NULL, TRIG_GREET );
+        p_percent_trigger( mob, NULL, NULL, ch, NULL, NULL, TRIG_GREET );
         else
-        if ( HAS_TRIGGER( mob, TRIG_GRALL ) )
-        mp_percent_trigger( mob, ch, NULL, NULL, TRIG_GRALL );
+        if ( HAS_TRIGGER_MOB( mob, TRIG_GRALL ) )
+        p_percent_trigger( mob, NULL, NULL, ch, NULL, NULL, TRIG_GRALL );
     }
     }
     return;
@@ -1376,7 +1376,7 @@ void mp_greet_trigger( CHAR_DATA *ch )
 
 void mp_hprct_trigger( CHAR_DATA *mob, CHAR_DATA *ch )
 {
-    MPROG_LIST *prg;
+    PROG_LIST *prg;
     SLEEP_DATA *test;
 
     for ( prg = mob->pIndexData->mprogs; prg != NULL; prg = prg->next )
@@ -1392,9 +1392,9 @@ void mp_hprct_trigger( CHAR_DATA *mob, CHAR_DATA *ch )
     }
 }
 
-MPROG_CODE *get_mprog_by_vnum(int vnum)
+PROG_CODE *get_mprog_by_vnum(int vnum)
 {
-    MPROG_CODE *temp;
+    PROG_CODE *temp;
     for(temp = mprog_list; temp != NULL; temp = temp->next)
         if(temp->vnum == vnum)
             return temp;

@@ -443,18 +443,18 @@ void mobile_update( void )
     if ( ch->position == ch->pIndexData->default_pos )
     {
         /* Delay */
-        if ( HAS_TRIGGER( ch, TRIG_DELAY)
+        if ( HAS_TRIGGER_MOB( ch, TRIG_DELAY)
         &&   ch->mprog_delay > 0 )
         {
         if ( --ch->mprog_delay <= 0 )
         {
-            mp_percent_trigger( ch, NULL, NULL, NULL, TRIG_DELAY );
+            p_percent_trigger( ch, NULL, NULL, NULL, NULL, NULL, TRIG_DELAY );
             continue;
         }
         }
-        if ( HAS_TRIGGER( ch, TRIG_RANDOM) )
+        if ( HAS_TRIGGER_MOB( ch, TRIG_RANDOM) )
         {
-        if( mp_percent_trigger( ch, NULL, NULL, NULL, TRIG_RANDOM ) )
+        if( p_percent_trigger( ch, NULL, NULL, NULL, NULL, NULL, TRIG_RANDOM ) )
         continue;
         }
     }
@@ -795,7 +795,7 @@ void char_update( void )
                 }
             }
 
-        if(IS_NPC(ch) && RIDDEN(ch) && get_char_room( ch, ch->mount->name ) == NULL)
+        if(IS_NPC(ch) && RIDDEN(ch) && get_char_room( ch, NULL, ch->mount->name ) == NULL)
             {
                 act("$n takes this chance to bolt for freedom.",ch,NULL,NULL,TO_ROOM);
                 extract_char(ch,TRUE);

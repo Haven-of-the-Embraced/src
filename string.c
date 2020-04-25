@@ -225,8 +225,8 @@ void string_add( CHAR_DATA *ch, char *argument )
     {
         MOB_INDEX_DATA *mob;
         int hash;
-        MPROG_LIST *mpl;
-        MPROG_CODE *mpc;
+        PROG_LIST *mpl;
+        PROG_CODE *mpc;
 
         EDIT_MPCODE(ch, mpc);
 

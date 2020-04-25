@@ -131,7 +131,7 @@ void do_drain(CHAR_DATA *ch, char *argument)
         }
     } else {
         CHAR_DATA *victim;
-    if ( ( victim = get_char_room( ch, arg ) ) == NULL )
+    if ( ( victim = get_char_room( ch, NULL, arg ) ) == NULL )
     {
         send_to_char( "They aren't here.\n\r", ch );
         return;
@@ -667,7 +667,7 @@ void do_invoke(CHAR_DATA *ch, char *argument)
     if (!str_prefix(arg1,"wrath of fungus"))
     {
 
-        if ( ( victim = get_char_room( ch, arg2 ) ) == NULL )
+        if ( ( victim = get_char_room( ch, NULL, arg2 ) ) == NULL )
         {
             send_to_char( "At whom?\n\r", ch );
             return;
@@ -862,7 +862,7 @@ void do_activate(CHAR_DATA *ch, char *argument)
             send_to_char( "You do not have that Ritual stored!\n\r", ch );
             return;
         }
-        if ( ( victim = get_char_room( ch, arg2 ) ) == NULL )
+        if ( ( victim = get_char_room( ch, NULL, arg2 ) ) == NULL )
         {
             send_to_char( "Who?\n\r", ch );
             return;
@@ -884,7 +884,7 @@ void do_activate(CHAR_DATA *ch, char *argument)
             return;
         }
 
-        if ( ( victim = get_char_room( ch, arg2 ) ) == NULL )
+        if ( ( victim = get_char_room( ch, NULL, arg2 ) ) == NULL )
         {
             send_to_char( "Who?\n\r", ch );
             return;
@@ -926,7 +926,7 @@ void do_magecast(CHAR_DATA *ch, char *argument)
             send_to_char("You do not need this form of Magick. Use the 'rote' command.\n\r",ch);
             return;
     }
-    if ( ( victim = get_char_room( ch, arg2 ) ) == NULL )
+    if ( ( victim = get_char_room( ch, NULL, arg2 ) ) == NULL )
     {
         send_to_char( "Cast which spell upon whom?\n\r", ch );
         return;
@@ -1440,7 +1440,7 @@ void do_skin(CHAR_DATA *ch, char *argument )
 
     argument = one_argument(argument,arg);
 
-    if((corpse = get_obj_here( ch, arg )) == NULL)
+    if((corpse = get_obj_here( ch, NULL, arg )) == NULL)
     {
         send_to_char( "Skin what?\n\r", ch );
         return;
@@ -1543,7 +1543,7 @@ void do_bind(CHAR_DATA *ch, char *argument )
         return;
     }
 
-    if((corpse = get_obj_here( ch, arg )) == NULL)
+    if((corpse = get_obj_here( ch, NULL, arg )) == NULL)
     {
         send_to_char( "Bind the spirit of what?\n\r", ch );
         return;

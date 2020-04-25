@@ -350,7 +350,7 @@ if ( IS_AFFECTED(ch, AFF_SHIFT) || ch->changed == CHANGED_LUPUS || is_affected(c
         return;
     }
 
-    if ( ( container = get_obj_here( ch, arg2 ) ) == NULL )
+    if ( ( container = get_obj_here( ch, NULL, arg2 ) ) == NULL )
     {
         act( "I see no $T here.", ch, NULL, arg2, TO_CHAR );
         return;
@@ -459,7 +459,7 @@ void do_put( CHAR_DATA *ch, char *argument )
     return;
     }
 
-    if ( ( container = get_obj_here( ch, arg2 ) ) == NULL )
+    if ( ( container = get_obj_here( ch, NULL, arg2 ) ) == NULL )
     {
     act( "I see no $T here.", ch, NULL, arg2, TO_CHAR );
     return;
@@ -792,7 +792,7 @@ void do_give( CHAR_DATA *ch, char *argument )
         return;
     }
 
-    if ( ( victim = get_char_room( ch, arg2 ) ) == NULL )
+    if ( ( victim = get_char_room( ch, NULL, arg2 ) ) == NULL )
     {
         send_to_char( "They aren't here.\n\r", ch );
         return;
@@ -823,8 +823,8 @@ void do_give( CHAR_DATA *ch, char *argument )
     /*
      * Bribe trigger
      */
-    if ( IS_NPC(victim) && HAS_TRIGGER( victim, TRIG_BRIBE ) )
-        mp_bribe_trigger( victim, ch, silver ? amount : amount * 100 );
+    if ( IS_NPC(victim) && HAS_TRIGGER_MOB( victim, TRIG_BRIBE ) )
+        p_bribe_trigger( victim, ch, silver ? amount : amount * 100 );
 
 
     if (IS_NPC(victim) && IS_SET(victim->act,ACT_IS_CHANGER))
@@ -882,7 +882,7 @@ void do_give( CHAR_DATA *ch, char *argument )
     return;
     }
 
-    if ( ( victim = get_char_room( ch, arg2 ) ) == NULL )
+    if ( ( victim = get_char_room( ch, NULL, arg2 ) ) == NULL )
     {
     send_to_char( "They aren't here.\n\r", ch );
     return;
@@ -938,8 +938,8 @@ void do_give( CHAR_DATA *ch, char *argument )
     /*
      * Give trigger
      */
-    if ( IS_NPC(victim) && HAS_TRIGGER( victim, TRIG_GIVE ) )
-    mp_give_trigger( victim, ch, obj );
+    if ( IS_NPC(victim) && HAS_TRIGGER_MOB( victim, TRIG_GIVE ) )
+    p_give_trigger( victim, NULL, NULL, ch, obj, TRIG_GIVE );
 
     return;
 }
@@ -1193,9 +1193,9 @@ void do_pour (CHAR_DATA *ch, char *argument)
     return;
     }
 
-    if ((in = get_obj_here(ch,argument)) == NULL)
+    if ((in = get_obj_here(ch,NULL, argument)) == NULL)
     {
-    vch = get_char_room(ch,argument);
+    vch = get_char_room(ch,NULL,argument);
 
     if (vch == NULL)
     {
@@ -1303,7 +1303,7 @@ void do_drink( CHAR_DATA *ch, char *argument )
     }
     else
     {
-    if ( ( obj = get_obj_here( ch, arg ) ) == NULL )
+    if ( ( obj = get_obj_here( ch, NULL, arg ) ) == NULL )
     {
         send_to_char( "You can't find it.\n\r", ch );
         return;
@@ -2006,7 +2006,7 @@ void do_remove( CHAR_DATA *ch, char *argument )
         }
         else
     {
-        if ( ( obj = get_obj_wear( ch, arg ) ) == NULL )
+        if ( ( obj = get_obj_wear( ch, arg, TRUE ) ) == NULL )
     {
         send_to_char( "You do not have that item.\n\r", ch );
         return;
@@ -2031,7 +2031,7 @@ void do_remove( CHAR_DATA *ch, char *argument )
     return;
     }
 
-    if ( ( obj = get_obj_wear( ch, arg ) ) == NULL )
+    if ( ( obj = get_obj_wear( ch, arg , TRUE) ) == NULL )
     {
     send_to_char( "You do not have that item.\n\r", ch );
     return;
@@ -2235,8 +2235,8 @@ void do_recite( CHAR_DATA *ch, char *argument )
     }
     else
     {
-    if ( ( victim = get_char_room ( ch, arg2 ) ) == NULL
-    &&   ( obj    = get_obj_here  ( ch, arg2 ) ) == NULL )
+    if ( ( victim = get_char_room ( ch, NULL, arg2 ) ) == NULL
+    &&   ( obj    = get_obj_here  ( ch, NULL, arg2 ) ) == NULL )
     {
         send_to_char( "You can't find it.\n\r", ch );
         return;
@@ -2399,8 +2399,8 @@ void do_zap( CHAR_DATA *ch, char *argument )
     }
     else
     {
-    if ( ( victim = get_char_room ( ch, arg ) ) == NULL
-    &&   ( obj    = get_obj_here  ( ch, arg ) ) == NULL )
+    if ( ( victim = get_char_room ( ch, NULL, arg ) ) == NULL
+    &&   ( obj    = get_obj_here  ( ch, NULL, arg ) ) == NULL )
     {
         send_to_char( "You can't find it.\n\r", ch );
         return;
@@ -2473,7 +2473,7 @@ void do_steal( CHAR_DATA *ch, char *argument )
     return;
     }
 
-    if ( ( victim = get_char_room( ch, arg2 ) ) == NULL )
+    if ( ( victim = get_char_room( ch, NULL, arg2 ) ) == NULL )
     {
     send_to_char( "They aren't here.\n\r", ch );
     return;
@@ -2885,7 +2885,7 @@ void do_buy( CHAR_DATA *ch, char *argument )
 
     in_room     = ch->in_room;
     ch->in_room = pRoomIndexNext;
-    pet         = get_char_room( ch, arg );
+    pet         = get_char_room( ch, NULL, arg );
     ch->in_room = in_room;
 
     if ( pet == NULL || !IS_SET(pet->act, ACT_PET) )
@@ -3571,7 +3571,7 @@ void do_lore( CHAR_DATA *ch, char *argument )
 
     one_argument( argument, arg );
 
-    if ( ( obj = get_obj_carry( ch, arg, ch ) ) == NULL && get_char_room( ch, arg ) == NULL)
+    if ( ( obj = get_obj_carry( ch, arg, ch ) ) == NULL && get_char_room( ch, NULL, arg ) == NULL)
     {
         send_to_char( "Lore what?.\n\r", ch );
         return;
@@ -3605,7 +3605,7 @@ void do_lore( CHAR_DATA *ch, char *argument )
     WAIT_STATE(ch, 36);
     ch->mana -= 50;
     ch->move -= 100;
-    if((victim = get_char_room( ch, arg )) != NULL)
+    if((victim = get_char_room( ch, NULL, arg )) != NULL)
     {
         if(!IS_NPC(victim))
         {
@@ -3905,13 +3905,13 @@ void do_dip(CHAR_DATA *ch, char *argument)
     argument = one_argument( argument, arg1 );
     argument = one_argument( argument, arg2 );
 
-    if((obj = get_obj_here( ch, arg1 )) == NULL)
+    if((obj = get_obj_here( ch, NULL, arg1 )) == NULL)
     {
         send_to_char("You do not have that item!\n\r" ,ch);
         return;
     }
 
-    if((obj2 = get_obj_here( ch, arg2 )) == NULL)
+    if((obj2 = get_obj_here( ch, NULL, arg2 )) == NULL)
     {
         send_to_char("Dip it into what?\n\r" ,ch);
         return;
@@ -3971,7 +3971,7 @@ void do_rite( CHAR_DATA *ch, char *argument )
         return;
     }
 
-    if ( ( caern = get_obj_here( ch, "caern" ) ) == NULL )
+    if ( ( caern = get_obj_here( ch, NULL,  "caern" ) ) == NULL )
     {
     send_to_char( "This Rite must be performed in the presence of a Caern.\n\r", ch );
     return;
@@ -3990,7 +3990,7 @@ void do_rite( CHAR_DATA *ch, char *argument )
         sendch("You do not have the mystical knowledge to perform this rite.\n\r", ch);
         return;
         }
-        if ( ( obj = get_obj_here( ch, "platinum" ) ) == NULL )
+        if ( ( obj = get_obj_here( ch, NULL, "platinum" ) ) == NULL )
         {
             send_to_char("This sacrifice is not great enough to please Gaia.\n\r",ch);
             return;
@@ -4008,7 +4008,7 @@ void do_rite( CHAR_DATA *ch, char *argument )
         sendch("You do not have the mystical knowledge to perform this rite.\n\r", ch);
         return;
         }
-        if ( ( obj = get_obj_here( ch, "heart" ) ) == NULL )
+        if ( ( obj = get_obj_here( ch, NULL, "heart" ) ) == NULL )
         {
             send_to_char( "This Rite requires the heart of brave creature or person to be placed in the center of the Caern.\n\r", ch );
             return;
@@ -4046,7 +4046,7 @@ void do_rite( CHAR_DATA *ch, char *argument )
             send_to_char("Only a true Mystic can summon forth a spirit.\n\r",ch);
             return;
         }
-        if ( ( obj = get_obj_here( ch, "platinum" ) ) == NULL )
+        if ( ( obj = get_obj_here( ch, NULL, "platinum" ) ) == NULL )
         {
             send_to_char("This sacrifice is not great enough to please Gaia.\n\r",ch);
             return;
@@ -4357,7 +4357,7 @@ void do_chop( CHAR_DATA *ch, char *argument )
         return;
     }
 
-    if ( ( obj = get_obj_here( ch, arg ) ) == NULL )
+    if ( ( obj = get_obj_here( ch, NULL, arg ) ) == NULL )
     {
     send_to_char( "What tree?\n\r", ch );
     return;
@@ -4540,7 +4540,7 @@ void do_mine( CHAR_DATA *ch, char *argument )
         return;
     }
 
-    if ( ( obj = get_obj_here( ch, arg ) ) == NULL )
+    if ( ( obj = get_obj_here( ch, NULL, arg ) ) == NULL )
     {
     send_to_char( "What vein?\n\r", ch );
     return;
@@ -4659,7 +4659,7 @@ void do_plane( CHAR_DATA *ch, char *argument )
         return;
     }
 
-    if((bench = get_obj_here(ch,"bench")) == NULL || bench->item_type != ITEM_TOOL ||
+    if((bench = get_obj_here(ch,NULL, "bench")) == NULL || bench->item_type != ITEM_TOOL ||
         str_cmp(tool_table[bench->value[1]].tool_name,"bench"))
     {
         send_to_char("You need a bench in the room to plane wood.\n\r",ch);
@@ -4770,7 +4770,7 @@ void do_carve( CHAR_DATA *ch, char *argument )
         return;
     }
 
-    if((bench = get_obj_here(ch,"bench")) == NULL || bench->item_type != ITEM_TOOL ||
+    if((bench = get_obj_here(ch,NULL, "bench")) == NULL || bench->item_type != ITEM_TOOL ||
         str_cmp(tool_table[bench->value[1]].tool_name,"bench"))
     {
         send_to_char("You need a bench in the room to carve wood.\n\r",ch);

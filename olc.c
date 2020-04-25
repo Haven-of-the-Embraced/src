@@ -123,7 +123,7 @@ char *olc_ed_vnum( CHAR_DATA *ch )
     ROOM_INDEX_DATA *pRoom;
     OBJ_INDEX_DATA *pObj;
     MOB_INDEX_DATA *pMob;
-    MPROG_CODE *pMprog;
+    PROG_CODE *pMprog;
      CLAN_DATA *pClan;
     HELP_DATA *pHelp;
     CMD_DATA  *pCmd;
@@ -150,7 +150,7 @@ char *olc_ed_vnum( CHAR_DATA *ch )
     sprintf( buf, "%d", pMob ? pMob->vnum : 0 );
     break;
     case ED_MPCODE:
-        pMprog = (MPROG_CODE *)ch->desc->pEdit;
+        pMprog = (PROG_CODE *)ch->desc->pEdit;
         sprintf( buf, "%d", pMprog ? pMprog->vnum : 0 );
     break;
     case ED_HELP:

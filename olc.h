@@ -364,7 +364,7 @@ DECLARE_OLC_FUN( cedit_leader           );
 #define EDIT_OBJ(Ch, Obj)   ( Obj = (OBJ_INDEX_DATA *)Ch->desc->pEdit )
 #define EDIT_ROOM(Ch, Room) ( Room = Ch->in_room )
 #define EDIT_AREA(Ch, Area) ( Area = (AREA_DATA *)Ch->desc->pEdit )
-#define EDIT_MPCODE(Ch, Code)   ( Code = (MPROG_CODE*)Ch->desc->pEdit )
+#define EDIT_MPCODE(Ch, Code)   ( Code = (PROG_CODE*)Ch->desc->pEdit )
 #define EDIT_COMMAND( Ch, Cmd ) ( Cmd = (CMD_DATA *) Ch->desc->pEdit )
 #define EDIT_QITEM( Ch, Item ) (Item = (QITEM_DATA *) Ch->desc->pEdit )
 
@@ -400,8 +400,8 @@ void        show_toollist       args ( ( CHAR_DATA *ch ) );
 void        show_craftedlist        args ( ( CHAR_DATA *ch ) );
 void        show_damlist        args ( ( CHAR_DATA *ch ) );
 
-char *      mprog_type_to_name  args ( ( int type ) );
-MPROG_LIST      *new_mprog              args ( ( void ) );
-void            free_mprog              args ( ( MPROG_LIST *mp ) );
-MPROG_CODE  *new_mpcode     args ( (void) );
-void        free_mpcode     args ( ( MPROG_CODE *pMcode));
+char *      prog_type_to_name  args ( ( int type ) );
+PROG_LIST      *new_mprog              args ( ( void ) );
+void            free_mprog              args ( ( PROG_LIST *mp ) );
+PROG_CODE  *new_mpcode     args ( (void) );
+void        free_mpcode     args ( ( PROG_CODE *pMcode));

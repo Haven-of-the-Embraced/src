@@ -136,7 +136,7 @@ void do_tag(CHAR_DATA *ch, char *argument)
     return;
     }
 
-    if ( ( victim = get_char_room( ch, arg1 ) ) == NULL )
+    if ( ( victim = get_char_room( ch, NULL, arg1 ) ) == NULL )
     {
     send_to_char( "They aren't here.\n\r", ch );
     return;
@@ -2582,7 +2582,7 @@ void do_mpfind( CHAR_DATA *ch, char *argument )
     char buf[MAX_STRING_LENGTH];
     char arg[MAX_INPUT_LENGTH];
     MOB_INDEX_DATA *pMobIndex;
-    MPROG_LIST *pMobProg;
+    PROG_LIST *pMobProg;
     int vnum;
     int mpvnum;
     int nMatch;
@@ -2596,7 +2596,7 @@ void do_mpfind( CHAR_DATA *ch, char *argument )
     }
 
     mpvnum = atoi(arg);
-    if ( (get_mprog_index(mpvnum)) == NULL )
+    if ( (get_prog_index(mpvnum, PRG_MPROG)) == NULL )
     {
         sendch("That is not a valid mprog vnum.\n\r", ch);
         return;
@@ -4066,7 +4066,7 @@ void do_clone(CHAR_DATA *ch, char *argument )
     if (!str_prefix(arg,"object"))
     {
     mob = NULL;
-    obj = get_obj_here(ch,rest);
+    obj = get_obj_here(ch,NULL, rest);
     if (obj == NULL)
     {
         send_to_char("You don't see that here.\n\r",ch);
@@ -4076,7 +4076,7 @@ void do_clone(CHAR_DATA *ch, char *argument )
     else if (!str_prefix(arg,"mobile") || !str_prefix(arg,"character"))
     {
     obj = NULL;
-    mob = get_char_room(ch,rest);
+    mob = get_char_room(ch, NULL, rest);
     if (mob == NULL)
     {
         send_to_char("You don't see that here.\n\r",ch);
@@ -4085,8 +4085,8 @@ void do_clone(CHAR_DATA *ch, char *argument )
     }
     else /* find both */
     {
-    mob = get_char_room(ch,argument);
-    obj = get_obj_here(ch,argument);
+    mob = get_char_room(ch,NULL,argument);
+    obj = get_obj_here(ch,NULL, argument);
     if (mob == NULL && obj == NULL)
     {
         send_to_char("You don't see that here.\n\r",ch);
@@ -7393,7 +7393,7 @@ void do_nuke( CHAR_DATA *ch, char *argument )
     return;
     }
 
-    if ( ( victim = get_char_room( ch, arg ) ) == NULL )
+    if ( ( victim = get_char_room( ch, NULL, arg ) ) == NULL )
     {
     send_to_char( "They aren't here.\n\r", ch );
     return;
@@ -7616,7 +7616,7 @@ void do_vlist( CHAR_DATA *ch, char *argument )
     MOB_INDEX_DATA *pMobIndex;
     OBJ_INDEX_DATA *pObjIndex;
     ROOM_INDEX_DATA *pRoomIndex;
-    MPROG_LIST  *mprg;
+    PROG_LIST  *mprg;
     int tvnum;
     int bvnum;
     int vnum;
@@ -7714,7 +7714,7 @@ void do_vlist( CHAR_DATA *ch, char *argument )
     {
         for ( i = 0,vnum = bvnum; vnum <= tvnum; vnum++)
         {
-            if ( ( get_mprog_index( vnum ) ) != NULL )
+            if ( ( get_prog_index( vnum, PRG_MPROG ) ) != NULL )
             {
                     found = TRUE;
                     i++;
@@ -9072,7 +9072,7 @@ void do_immmask(CHAR_DATA *ch, char *argument)
             send_to_char("Assume a mask of whom?\n\r",ch);
         return;
     }
-    if ((victim = get_char_room( ch, argument ))== NULL)
+    if ((victim = get_char_room( ch, NULL, argument ))== NULL)
     {
         send_to_char( "Assume a mask of whom?\n\r", ch );
         return;

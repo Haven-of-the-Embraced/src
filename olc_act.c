@@ -33,7 +33,7 @@
 #define CEDIT( fun )        bool fun( CHAR_DATA *ch, char *argument )
 
 
-char * mprog_type_to_name ( int type );
+char * prog_type_to_name ( int type );
 
 #define ALT_FLAGVALUE_SET( _blargh, _table, _arg )      \
     {                           \
@@ -2343,7 +2343,7 @@ REDIT( redit_oreset )
     /*
      * Load into mobile's inventory.
      */
-    if ( ( to_mob = get_char_room( ch, arg2 ) ) != NULL )
+    if ( ( to_mob = get_char_room( ch, NULL, arg2 ) ) != NULL )
     {
     int wear_loc;
 
@@ -3955,7 +3955,7 @@ MEDIT( medit_show )
 {
     MOB_INDEX_DATA *pMob;
     char buf[MAX_STRING_LENGTH];
-    MPROG_LIST *list;
+    PROG_LIST *list;
 
     EDIT_MOB(ch, pMob);
 
@@ -4143,7 +4143,7 @@ MEDIT( medit_show )
         }
 
         sprintf(buf, "[%5d] %4d %7s %s\n\r", cnt,
-            list->vnum,mprog_type_to_name(list->trig_type),
+            list->vnum,prog_type_to_name(list->trig_type),
             list->trig_phrase);
         send_to_char( buf, ch );
         cnt++;
@@ -4586,7 +4586,7 @@ MEDIT( medit_copy )
     MOB_INDEX_DATA *pMob2; /* The mob to copy */
     int vnum;
 
-    /* MPROG_LIST *list; */ /* Used for the mob prog for loop */
+    /* PROG_LIST *list; */ /* Used for the mob prog for loop */
 
     if ( argument[0] == '\0' )
     {
@@ -4708,7 +4708,7 @@ MEDIT( medit_copy )
 
     for (list = pMob->mprogs; list; list = list->next )
     {
-      MPROG_LIST *newp = new_mprog();
+      PROG_LIST *newp = new_mprog();
       newp->trig_type = list->trig_type;
 
       free_string( newp->trig_phrase );
@@ -5594,8 +5594,8 @@ MEDIT ( medit_addmprog )
 {
   int value;
   MOB_INDEX_DATA *pMob;
-  MPROG_LIST *list;
-  MPROG_CODE *code;
+  PROG_LIST *list;
+  PROG_CODE *code;
   char trigger[MAX_STRING_LENGTH];
   char phrase[MAX_STRING_LENGTH];
   char num[MAX_STRING_LENGTH];
@@ -5618,7 +5618,7 @@ MEDIT ( medit_addmprog )
         return FALSE;
   }
 
-  if ( ( code =get_mprog_index (atoi(num) ) ) == NULL)
+  if ( ( code =get_prog_index (atoi(num) , PRG_MPROG) ) == NULL)
   {
         send_to_char("No such MOBProgram.\n\r",ch);
         return FALSE;
@@ -5640,8 +5640,8 @@ MEDIT ( medit_addmprog )
 MEDIT ( medit_delmprog )
 {
     MOB_INDEX_DATA *pMob;
-    MPROG_LIST *list;
-    MPROG_LIST *list_next;
+    PROG_LIST *list;
+    PROG_LIST *list_next;
     char mprog[MAX_STRING_LENGTH];
     int value;
     int cnt = 0;

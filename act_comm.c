@@ -1180,9 +1180,9 @@ void do_say( CHAR_DATA *ch, char *argument )
         if (!IS_NPC(mob) && IS_SET(mob->act, PLR_IC))
         mob->pcdata->room_last_pose = 0;
 
-        if ( IS_NPC(mob) && HAS_TRIGGER( mob, TRIG_SPEECH )
+        if ( IS_NPC(mob) && HAS_TRIGGER_MOB( mob, TRIG_SPEECH )
         &&   mob->position == mob->pIndexData->default_pos )
-        mp_act_trigger( argument, mob, ch, NULL, NULL, TRIG_SPEECH );
+        p_act_trigger( argument, mob, NULL, NULL, ch, NULL, NULL, TRIG_SPEECH );
     }
     }
 
@@ -1275,7 +1275,7 @@ void do_whisper( CHAR_DATA *ch, char *argument )
         return;
     }
 
-    if ((victim = get_char_room(ch, arg)) == NULL) //Get character from ch->in_room.
+    if ((victim = get_char_room(ch, NULL, arg)) == NULL) //Get character from ch->in_room.
     {
         sendch("How do you expect to whisper to someone who isn't here?!\n\r", ch);
         return;
@@ -1415,8 +1415,8 @@ void do_tell( CHAR_DATA *ch, char *argument )
 */
     victim->reply   = ch;
 
-    if ( !IS_NPC(ch) && IS_NPC(victim) && HAS_TRIGGER(victim,TRIG_SPEECH) )
-        mp_act_trigger( argument, victim, ch, NULL, NULL, TRIG_SPEECH );
+    if ( !IS_NPC(ch) && IS_NPC(victim) && HAS_TRIGGER_MOB(victim,TRIG_SPEECH) )
+        p_act_trigger( argument, victim,NULL, NULL, ch, NULL, NULL, TRIG_SPEECH );
 
 
     return;
@@ -1971,7 +1971,7 @@ void do_follow( CHAR_DATA *ch, char *argument )
     return;
     }
 
-    if ( ( victim = get_char_room( ch, arg ) ) == NULL )
+    if ( ( victim = get_char_room( ch, NULL, arg ) ) == NULL )
     {
     send_to_char( "They aren't here.\n\r", ch );
     return;
@@ -2030,7 +2030,7 @@ void do_dismiss( CHAR_DATA *ch, char *argument )
     return;
     }
 
-    if ( ( victim = get_char_room( ch, arg ) ) == NULL )
+    if ( ( victim = get_char_room( ch, NULL, arg ) ) == NULL )
     {
     send_to_char( "They aren't here.\n\r", ch );
     return;
@@ -2222,7 +2222,7 @@ void do_order( CHAR_DATA *ch, char *argument )
         }
     }
 
-    else if ( ( victim = get_char_room( ch, arg ) ) == NULL )
+    else if ( ( victim = get_char_room( ch, NULL, arg ) ) == NULL )
     {
         send_to_char( "They aren't here.\n\r", ch );
         return;
@@ -2330,7 +2330,7 @@ void do_group( CHAR_DATA *ch, char *argument )
     return;
     }
 
-    if ( ( victim = get_char_room( ch, arg ) ) == NULL )
+    if ( ( victim = get_char_room( ch, NULL, arg ) ) == NULL )
     {
     send_to_char( "They aren't here.\n\r", ch );
     return;
@@ -2971,7 +2971,7 @@ void do_promote_leader( CHAR_DATA *ch, char *argument )
     return;
     }
 
-    if ( ( victim = get_char_room( ch, arg ) ) == NULL )
+    if ( ( victim = get_char_room( ch, NULL, arg ) ) == NULL )
     {
     send_to_char( "Promote whom to lead your group?\n\r", ch );
     return;

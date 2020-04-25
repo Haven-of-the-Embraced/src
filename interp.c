@@ -471,7 +471,7 @@ bool check_social( CHAR_DATA *ch, char *command, char *argument )
     act( social_table[cmd].others_no_arg, ch, NULL, victim, TO_ROOM    );
     act( social_table[cmd].char_no_arg,   ch, NULL, victim, TO_CHAR    );
     }
-    else if ( ( victim = get_char_room( ch, arg ) ) == NULL )
+    else if ( ( victim = get_char_room( ch, NULL, arg ) ) == NULL )
     {
     send_to_char( "They aren't here.\n\r", ch );
     }

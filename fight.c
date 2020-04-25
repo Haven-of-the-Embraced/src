@@ -121,10 +121,10 @@ void violence_update( void )
             damage( ch, victim, ch->level*2, gsn_magick, DAM_PIERCE, FALSE);
         }
 
-        if ( HAS_TRIGGER( ch, TRIG_FIGHT ) )
-        mp_percent_trigger( ch, victim, NULL, NULL, TRIG_FIGHT );
-        if ( HAS_TRIGGER( ch, TRIG_HPCNT ) )
-        mp_hprct_trigger( ch, victim );
+        if ( HAS_TRIGGER_MOB( ch, TRIG_FIGHT ) )
+        p_percent_trigger( ch, NULL, NULL, victim, NULL, NULL, TRIG_FIGHT );
+        if ( HAS_TRIGGER_MOB( ch, TRIG_HPCNT ) )
+        p_hprct_trigger( ch, victim );
     }
 
     }
@@ -1138,8 +1138,8 @@ bool damage(CHAR_DATA *ch,CHAR_DATA *victim,int dam,int dt,int dam_type,
     {
         if ( victim->fighting == NULL )
         {
-            if ( IS_NPC( victim ) && HAS_TRIGGER( victim, TRIG_KILL ) )
-                mp_percent_trigger( victim, ch, NULL, NULL, TRIG_KILL );
+            if ( IS_NPC( victim ) && HAS_TRIGGER_MOB( victim, TRIG_KILL ) )
+                p_percent_trigger( victim, NULL, NULL, ch, NULL, NULL, TRIG_KILL );
         set_fighting( victim, ch );
         }
         if (victim->timer <= 4)
@@ -2066,8 +2066,8 @@ bool d10_damage(CHAR_DATA *ch, CHAR_DATA *victim, int damsuccess, int modifier, 
     {
         if ( victim->fighting == NULL )
         {
-            if ( IS_NPC( victim ) && HAS_TRIGGER( victim, TRIG_KILL ) )
-                mp_percent_trigger( victim, ch, NULL, NULL, TRIG_KILL );
+            if ( IS_NPC( victim ) && HAS_TRIGGER_MOB( victim, TRIG_KILL ) )
+                p_percent_trigger( victim, NULL, NULL, ch, NULL, NULL, TRIG_KILL );
         set_fighting( victim, ch );
         }
         if (victim->timer <= 4)
@@ -3814,7 +3814,7 @@ void do_bash( CHAR_DATA *ch, char *argument )
     }
     }
 
-   else if ((victim = get_char_room(ch,arg)) == NULL)
+   else if ((victim = get_char_room(ch,NULL,arg)) == NULL)
     {
     send_to_char("They aren't here.\n\r",ch);
     return;
@@ -3990,7 +3990,7 @@ void do_dirt( CHAR_DATA *ch, char *argument )
         return;
     }
     }
-    else if ((victim = get_char_room(ch,arg)) == NULL)
+    else if ((victim = get_char_room(ch,NULL,arg)) == NULL)
     {
     send_to_char("They aren't here.\n\r",ch);
     return;
@@ -4166,7 +4166,7 @@ void do_trip( CHAR_DATA *ch, char *argument )
     }
     }
 
-    else if ((victim = get_char_room(ch,arg)) == NULL)
+    else if ((victim = get_char_room(ch,NULL,arg)) == NULL)
     {
     send_to_char("They aren't here.\n\r",ch);
     return;
@@ -4289,7 +4289,7 @@ void do_kill( CHAR_DATA *ch, char *argument )
     return;
     }
 
-    if ( ( victim = get_char_room( ch, arg ) ) == NULL )
+    if ( ( victim = get_char_room( ch, NULL, arg ) ) == NULL )
     {
     send_to_char( "They aren't here.\n\r", ch );
     return;
@@ -4372,7 +4372,7 @@ void do_murder( CHAR_DATA *ch, char *argument )
     return;
     }
 
-    if ( ( victim = get_char_room( ch, arg ) ) == NULL )
+    if ( ( victim = get_char_room( ch, NULL, arg ) ) == NULL )
     {
     send_to_char( "They aren't here.\n\r", ch );
     return;
@@ -4472,7 +4472,7 @@ void do_backstab( CHAR_DATA *ch, char *argument )
     return;
     }
 
-    else if ((victim = get_char_room(ch,arg)) == NULL)
+    else if ((victim = get_char_room(ch,NULL,arg)) == NULL)
     {
         send_to_char("They aren't here.\n\r",ch);
         return;
@@ -4647,7 +4647,7 @@ void do_rescue( CHAR_DATA *ch, char *argument )
     return;
     }
 
-    if ( ( victim = get_char_room( ch, arg ) ) == NULL )
+    if ( ( victim = get_char_room( ch, NULL, arg ) ) == NULL )
     {
     send_to_char( "They aren't here.\n\r", ch );
     return;
@@ -4729,7 +4729,7 @@ void do_kick(CHAR_DATA *ch, char *argument)
         }
     }
 
-    else if ((victim = get_char_room(ch, argument)) == NULL)
+    else if ((victim = get_char_room(ch, NULL, argument)) == NULL)
     {
         if (!IS_NPC(ch))
             send_to_char("Your target seems to be conspicuously absent.\n\r", ch);
@@ -5115,8 +5115,8 @@ void do_surrender( CHAR_DATA *ch, char *argument )
     stop_fighting( ch, TRUE );
 
     if ( !IS_NPC( ch ) && IS_NPC( mob )
-    &&   ( !HAS_TRIGGER( mob, TRIG_SURR )
-        || !mp_percent_trigger( mob, ch, NULL, NULL, TRIG_SURR ) ) )
+    &&   ( !HAS_TRIGGER_MOB( mob, TRIG_SURR )
+        || !p_percent_trigger( mob, NULL, NULL, ch, NULL, NULL, TRIG_SURR ) ) )
     {
     act( "$N seems to ignore your cowardly act!", ch, NULL, mob, TO_CHAR );
     multi_hit( mob, ch, TYPE_UNDEFINED );
@@ -5143,7 +5143,7 @@ void do_slay( CHAR_DATA *ch, char *argument )
     return;
     }
 
-    if ( ( victim = get_char_room( ch, arg ) ) == NULL )
+    if ( ( victim = get_char_room( ch, NULL, arg ) ) == NULL )
     {
     send_to_char( "They aren't here.\n\r", ch );
     return;
@@ -5274,10 +5274,10 @@ void kill_em(CHAR_DATA *ch,CHAR_DATA *victim)
             wiznet(log_buf,NULL,NULL,WIZ_DEATHS,0,0);
             if(victim != ch) announce(victim, ch, WIZ_DEATHS);
       }
-    if ( IS_NPC( victim ) && HAS_TRIGGER( victim, TRIG_DEATH) )
+    if ( IS_NPC( victim ) && HAS_TRIGGER_MOB( victim, TRIG_DEATH) )
       {
         victim->position = POS_STANDING;
-        mp_percent_trigger( victim, ch, NULL, NULL, TRIG_DEATH );
+        p_percent_trigger( victim, NULL, NULL, ch, NULL, NULL, TRIG_DEATH );
     }
     if(!IS_NPC(victim) && victim->pcdata->shiftform > 1)
     {
@@ -5382,7 +5382,7 @@ void do_assassinate( CHAR_DATA *ch, char *argument )
         return;
     }
 
-    if ((victim = get_char_room(ch,arg)) == NULL)
+    if ((victim = get_char_room(ch,NULL,arg)) == NULL)
     {
         send_to_char("They aren't here.\n\r",ch);
         return;
@@ -5648,7 +5648,7 @@ void do_headbutt( CHAR_DATA *ch, char *argument )
                 return;
         }
 
-        if (( victim = get_char_room( ch, argument ) ) == NULL && (victim = ch->fighting ) == NULL )
+        if (( victim = get_char_room( ch, NULL, argument ) ) == NULL && (victim = ch->fighting ) == NULL )
         {
                 send_to_char( "There is no one here to butt heads with!\n\r", ch );
                 return;
@@ -5766,7 +5766,7 @@ void do_gouge( CHAR_DATA *ch, char *argument )
                 return;
         }
 
-        if (( victim = get_char_room( ch, argument ) ) == NULL && (victim = ch->fighting ) == NULL )
+        if (( victim = get_char_room( ch, NULL, argument ) ) == NULL && (victim = ch->fighting ) == NULL )
         {
                 send_to_char( "Gouge whose eyes out?\n\r", ch );
                 return;
@@ -5875,7 +5875,7 @@ void do_blast( CHAR_DATA *ch, char *argument )
                 return;
         }
 
-        if ( ( victim = get_char_room( ch, argument ) ) == NULL && (victim = ch->fighting ) == NULL)
+        if ( ( victim = get_char_room( ch, NULL, argument ) ) == NULL && (victim = ch->fighting ) == NULL)
         {
                 send_to_char( "Noone here to blast!\n\r", ch );
                 return;
@@ -6071,7 +6071,7 @@ void do_behead( CHAR_DATA *ch, char *argument )
         return;
     }
 
-    if ((victim = get_char_room(ch, arg)) == NULL)
+    if ((victim = get_char_room(ch, NULL, arg)) == NULL)
     {
         send_to_char("That person isn't here!\n\r", ch);
         return;

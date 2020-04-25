@@ -1366,6 +1366,8 @@ void do_look( CHAR_DATA *ch, char *argument )
                 if (++count == number)
             {
             send_to_char( pdesc, ch );
+            if(HAS_REFLECTION(ch) && IS_REFLECTIVE(obj))
+              act("{WYou catch a glimpse of your reflection in $p.{x", ch, obj, NULL, TO_CHAR);
             return;
             }
             else continue;
@@ -1377,6 +1379,8 @@ void do_look( CHAR_DATA *ch, char *argument )
                 if (++count == number)
             {
             send_to_char( pdesc, ch );
+            if(HAS_REFLECTION(ch) && IS_REFLECTIVE(obj))
+              act("{WYou catch a glimpse of your reflection in $p.{x", ch, obj, NULL, TO_CHAR);
             return;
             }
         else continue;
@@ -1387,6 +1391,8 @@ void do_look( CHAR_DATA *ch, char *argument )
             {
                 send_to_char( obj->description, ch );
                 send_to_char( "\n\r",ch);
+                if(HAS_REFLECTION(ch) && IS_REFLECTIVE(obj))
+                  act("You catch a glimpse of your reflection in $p.{x", ch, obj, NULL, TO_CHAR);
             return;
           }
       }

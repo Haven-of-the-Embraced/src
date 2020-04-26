@@ -87,7 +87,9 @@ void move_char( CHAR_DATA *ch, int door, bool follow )
     ROOM_INDEX_DATA *in_room;
     ROOM_INDEX_DATA *to_room;
     EXIT_DATA *pexit;
+    OBJ_DATA *reflective;
     char buf[MAX_STRING_LENGTH];
+    int stealth = 0, perception = 0;
 
     if ( door < 0 || door > 5 )
     {
@@ -342,6 +344,36 @@ void move_char( CHAR_DATA *ch, int door, bool follow )
         char_to_room( MOUNTED(ch), to_room );
     }
     do_function(ch, &do_look, "auto" );
+
+    if (HAS_REFLECTION(ch))
+    {
+    	if(IS_AFFECTED(ch, AFF_SNEAK) || IS_AFFECTED(ch, AFF2_UNSEEN) || IS_AFFECTED(ch,AFF_HIDE))
+    		stealth = godice(get_attribute(ch,WITS)+ch->csabilities[CSABIL_STEALTH],6);
+
+    	for (reflective = ch->in_room->contents; reflective != NULL; reflective = reflective->next_content)
+    	{
+    		if (IS_REFLECTIVE(reflective) && (SAME_UMBRA_OBJ(ch, reflective)))
+    		{
+    			for (fch = char_list; fch != NULL; fch = fch_next)
+    			{
+    				fch_next = fch->next;
+    				if (fch->in_room == NULL || fch->in_room != ch->in_room
+    					|| !SAME_UMBRA(ch, fch) || !can_see(fch, ch)
+    					|| !can_see_obj(fch, reflective))
+    					continue;
+
+    				perception = godice(get_attribute(fch,PERCEPTION)+fch->csabilities[CSABIL_ALERTNESS], 7);
+    				if (perception >= stealth)
+    				{
+    					if (fch == ch)
+    						act("{WYou spot your own image reflecting in $p as you enter the room.{x", ch, reflective, NULL, TO_CHAR);
+    					else
+    						act("{W$n's image reflects briefly in $p as $e enters the room.{x", ch, reflective, NULL, TO_NOTVICT);
+    				}
+    			}
+    		}
+    	}
+    }
 
     if (in_room == to_room) /* no circular follows */
     return;

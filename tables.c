@@ -583,6 +583,35 @@ const struct flag_type mprog_flags[] =
     {   NULL,           0,          TRUE    }
 };
 
+const struct flag_type oprog_flags[] =
+{
+    {	"act",			TRIG_ACT,		TRUE	},
+    {	"fight",		TRIG_FIGHT,		TRUE	},
+    {	"give",			TRIG_GIVE,		TRUE	},
+    {   "greet",		TRIG_GRALL,		TRUE	},
+    {	"random",		TRIG_RANDOM,		TRUE	},
+    {   "speech",		TRIG_SPEECH,		TRUE	},
+    {	"exall",		TRIG_EXALL,		TRUE	},
+    {	"delay",		TRIG_DELAY,		TRUE	},
+    {	"drop",		TRIG_DROP,		TRUE	},
+    {	"get",		TRIG_GET,		TRUE	},
+    {	"sit",		TRIG_SIT,		TRUE	},
+    {	NULL,			0,			TRUE	},
+};
+
+const struct flag_type rprog_flags[] =
+{
+    {	"act",			TRIG_ACT,		TRUE	},
+    {	"fight",		TRIG_FIGHT,		TRUE	},
+    {	"drop",			TRIG_DROP,		TRUE	},
+    {	"greet",		TRIG_GRALL,		TRUE	},
+    {	"random",		TRIG_RANDOM,		TRUE	},
+    {	"speech",		TRIG_SPEECH,		TRUE	},
+    {	"exall",		TRIG_EXALL,		TRUE	},
+    {	"delay",		TRIG_DELAY,		TRUE	},
+    {	NULL,			0,			TRUE	},
+};
+
 const struct flag_type area_flags[] =
 {
     {   "none",         AREA_NONE,      FALSE   },

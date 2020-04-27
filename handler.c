@@ -2195,27 +2195,39 @@ void extract_char( CHAR_DATA *ch, bool fPull )
 /*
  * Find a char in the room.
  */
-CHAR_DATA *get_char_room( CHAR_DATA *ch, char *argument )
-{
-    char arg[MAX_INPUT_LENGTH];
-    CHAR_DATA *rch;
-    int number;
-    int count;
+ CHAR_DATA *get_char_room( CHAR_DATA *ch, ROOM_INDEX_DATA *room, char *argument )
+ {
+     char arg[MAX_INPUT_LENGTH];
+     CHAR_DATA *rch;
+     int number;
+     int count;
 
-    number = number_argument( argument, arg );
-    count  = 0;
-    if ( !str_cmp( arg, "self" ) )
-    return ch;
-    for ( rch = ch->in_room->people; rch != NULL; rch = rch->next_in_room )
-    {
-    if ( !can_see( ch, rch ) || !is_name( arg, rch->name ) )
-        continue;
-    if ( ++count == number )
-        return rch;
-    }
+     number = number_argument( argument, arg );
+     count  = 0;
+     if ( !str_cmp( arg, "self" ) )
+ 	return ch;
 
-    return NULL;
-}
+     if ( ch && room )
+     {
+ 	bug( "get_char_room received multiple types (ch/room)", 0 );
+ 	return NULL;
+     }
+
+     if ( ch )
+ 	rch = ch->in_room->people;
+     else
+ 	rch = room->people;
+
+     for ( ; rch != NULL; rch = rch->next_in_room )
+     {
+ 	if ( (ch && !can_see( ch, rch )) || !is_name( arg, rch->name ) )
+ 	    continue;
+ 	if ( ++count == number )
+ 	    return rch;
+     }
+
+     return NULL;
+ }
 
 
 
@@ -2223,29 +2235,29 @@ CHAR_DATA *get_char_room( CHAR_DATA *ch, char *argument )
 /*
  * Find a char in the world.
  */
-CHAR_DATA *get_char_world( CHAR_DATA *ch, char *argument )
-{
-    char arg[MAX_INPUT_LENGTH];
-    CHAR_DATA *wch;
-    int number;
-    int count;
+ CHAR_DATA *get_char_world( CHAR_DATA *ch, char *argument )
+ {
+     char arg[MAX_INPUT_LENGTH];
+     CHAR_DATA *wch;
+     int number;
+     int count;
 
-    if ( ( wch = get_char_room( ch, NULL, argument ) ) != NULL )
-    return wch;
+     if ( ch && ( wch = get_char_room( ch, NULL, argument ) ) != NULL )
+ 	return wch;
 
-    number = number_argument( argument, arg );
-    count  = 0;
-    for ( wch = char_list; wch != NULL ; wch = wch->next )
-    {
-    if ( wch->in_room == NULL || !can_see( ch, wch )
-    ||   !is_name( arg, wch->name ) )
-        continue;
-    if ( ++count == number )
-        return wch;
-    }
+     number = number_argument( argument, arg );
+     count  = 0;
+     for ( wch = char_list; wch != NULL ; wch = wch->next )
+     {
+ 	if ( wch->in_room == NULL || ( ch && !can_see( ch, wch ) )
+ 	||   !is_name( arg, wch->name ) )
+ 	    continue;
+ 	if ( ++count == number )
+ 	    return wch;
+     }
 
-    return NULL;
-}
+     return NULL;
+ }
 
 CHAR_DATA * get_char_area( CHAR_DATA *ch, char *argument )
 {
@@ -2340,28 +2352,28 @@ OBJ_DATA *get_obj_list2( CHAR_DATA *ch, char *argument, OBJ_DATA *list )
 /*
  * Find an obj in player's inventory.
  */
-OBJ_DATA *get_obj_carry( CHAR_DATA *ch, char *argument, CHAR_DATA *viewer )
-{
-    char arg[MAX_INPUT_LENGTH];
-    OBJ_DATA *obj;
-    int number;
-    int count;
+ OBJ_DATA *get_obj_carry( CHAR_DATA *ch, char *argument, CHAR_DATA *viewer )
+ {
+     char arg[MAX_INPUT_LENGTH];
+     OBJ_DATA *obj;
+     int number;
+     int count;
 
-    number = number_argument( argument, arg );
-    count  = 0;
-    for ( obj = ch->carrying; obj != NULL; obj = obj->next_content )
-    {
-    if ( obj->wear_loc == WEAR_NONE
-    &&   (can_see_obj( viewer, obj ) )
-    &&   is_name( arg, obj->name ) )
-    {
-        if ( ++count == number )
-        return obj;
-    }
-    }
+     number = number_argument( argument, arg );
+     count  = 0;
+     for ( obj = ch->carrying; obj != NULL; obj = obj->next_content )
+     {
+         if ( obj->wear_loc == WEAR_NONE
+         &&   ( viewer ? can_see_obj( viewer, obj ) : TRUE )
+         &&   is_name( arg, obj->name ) )
+         {
+             if ( ++count == number )
+                             return obj;
+         }
+     }
 
-    return NULL;
-}
+     return NULL;
+ }
 
 /* Find an object a player is carrying based on vnum and wear location  - Ugha*/
 OBJ_DATA *get_carry_vnum(CHAR_DATA *ch, int vnum, int location, bool sight)
@@ -2382,50 +2394,74 @@ OBJ_DATA *get_carry_vnum(CHAR_DATA *ch, int vnum, int location, bool sight)
 /*
  * Find an obj in player's equipment.
  */
-OBJ_DATA *get_obj_wear( CHAR_DATA *ch, char *argument )
-{
-    char arg[MAX_INPUT_LENGTH];
-    OBJ_DATA *obj;
-    int number;
-    int count;
+ OBJ_DATA *get_obj_wear( CHAR_DATA *ch, char *argument, bool character )
+ {
+     char arg[MAX_INPUT_LENGTH];
+     OBJ_DATA *obj;
+     int number;
+     int count;
 
-    number = number_argument( argument, arg );
-    count  = 0;
-    for ( obj = ch->carrying; obj != NULL; obj = obj->next_content )
-    {
-    if ( obj->wear_loc != WEAR_NONE
-    &&   can_see_obj( ch, obj )
-    &&   is_name( arg, obj->name ) )
-    {
-        if ( ++count == number )
-        return obj;
-    }
-    }
+     number = number_argument( argument, arg );
+     count  = 0;
+     for ( obj = ch->carrying; obj != NULL; obj = obj->next_content )
+     {
+         if ( obj->wear_loc != WEAR_NONE
+                 &&  ( character ? can_see_obj( ch, obj ) : TRUE)
+         &&   is_name( arg, obj->name ) )
+         {
+             if ( ++count == number )
+                 return obj;
+         }
+     }
 
-    return NULL;
-}
+     return NULL;
+ }
 
 
 
 /*
  * Find an obj in the room or in inventory.
  */
-OBJ_DATA *get_obj_here( CHAR_DATA *ch, char *argument )
-{
-    OBJ_DATA *obj;
+ OBJ_DATA *get_obj_here( CHAR_DATA *ch, ROOM_INDEX_DATA *room, char *argument )
+ {
+     OBJ_DATA *obj;
+     int number, count;
+     char arg[MAX_INPUT_LENGTH];
 
-    obj = get_obj_list( ch, argument, ch->in_room->contents );
-    if ( obj != NULL )
-    return obj;
+     if ( ch && room )
+     {
+ 	bug( "get_obj_here received a ch and a room",0);
+ 	return NULL;
+     }
 
-    if ( ( obj = get_obj_carry( ch, argument, ch ) ) != NULL )
-    return obj;
+     number = number_argument( argument, arg );
+     count = 0;
 
-    if ( ( obj = get_obj_wear( ch, argument , TRUE) ) != NULL )
-    return obj;
+     if ( ch )
+     {
+ 	obj = get_obj_list( ch, argument, ch->in_room->contents );
+ 	if ( obj != NULL )
+ 	    return obj;
 
-    return NULL;
-}
+ 	if ( ( obj = get_obj_carry( ch, argument, ch ) ) != NULL )
+ 	    return obj;
+
+ 	if ( ( obj = get_obj_wear( ch, argument, TRUE ) ) != NULL )
+ 	    return obj;
+     }
+     else
+     {
+ 	for ( obj = room->contents; obj; obj = obj->next_content )
+ 	{
+ 	    if ( !is_name( arg, obj->name ) )
+ 		continue;
+ 	    if ( ++count == number )
+ 		return obj;
+ 	}
+     }
+
+     return NULL;
+ }
 
 
 /*
@@ -2460,7 +2496,9 @@ OBJ_DATA *get_obj_world( CHAR_DATA *ch, char *argument, bool unseen )
     count  = 0;
     for ( obj = object_list; obj != NULL; obj = obj->next )
     {
-    if ( (unseen || can_see_obj( ch, obj )) && is_name( arg, obj->name ) )
+    if ( obj->in_room != NULL &&
+    (unseen || can_see_obj( ch, obj )) &&
+    is_name( arg, obj->name ) )
     {
         if ( ++count == number )
         return obj;

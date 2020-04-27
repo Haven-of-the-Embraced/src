@@ -36,12 +36,16 @@
 #define DECLARE_SPEC_FUN( fun )     bool fun( )
 #define DECLARE_SPELL_FUN( fun )    void fun( )
 #define DECLARE_ROTE_FUN( fun )     void fun( )
+#define DECLARE_OBJ_FUN( fun )		void fun( )
+#define DECLARE_ROOM_FUN( fun )		void fun( )
 #else
 #define args( list )            list
 #define DECLARE_DO_FUN( fun )       DO_FUN    fun
 #define DECLARE_SPEC_FUN( fun )     SPEC_FUN  fun
 #define DECLARE_SPELL_FUN( fun )    SPELL_FUN fun
 #define DECLARE_ROTE_FUN( fun )     ROTE_FUN fun
+#define DECLARE_OBJ_FUN( fun )		OBJ_FUN	  fun
+#define DECLARE_ROOM_FUN( fun )		ROOM_FUN  fun
 #endif
 
 /* system calls */
@@ -119,8 +123,8 @@ typedef struct  time_info_data      TIME_INFO_DATA;
 typedef struct  weather_data        WEATHER_DATA;
 typedef struct  config_data         CONFIG_DATA;
 // typedef struct   database_data       DATABASE_DATA;  non-functional database code
-typedef struct  mprog_list      PROG_LIST;
-typedef struct  mprog_code      PROG_CODE;
+typedef struct  prog_list      PROG_LIST;
+typedef struct  prog_code      PROG_CODE;
 typedef struct    clan_type        CLAN_DATA;
 
 
@@ -132,6 +136,8 @@ typedef bool SPEC_FUN   args( ( CHAR_DATA *ch ) );
 typedef void SPELL_FUN  args( ( int sn, int level, CHAR_DATA *ch, void *vo, int target ) );
 typedef void ROTE_FUN   args( ( CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj ) );
 typedef void VAMP_FUN   args( ( CHAR_DATA *ch ) );
+typedef void OBJ_FUN	args( ( OBJ_DATA *obj, char *argument ) );
+typedef void ROOM_FUN	args( ( ROOM_INDEX_DATA *room, char *argument ) );
 
 /* I am lazy :) */
 #define MSL MAX_STRING_LENGTH
@@ -2446,6 +2452,8 @@ struct  obj_index_data
     EXTRA_DESCR_DATA *  extra_descr;
     AFFECT_DATA *   affected;
     AREA_DATA *     area;       /* OLC */
+    PROG_LIST *     oprogs;
+    long        oprog_flags;
     bool        new_format;
     char *      name;
     char *      short_descr;
@@ -2478,6 +2486,7 @@ struct  obj_data
     OBJ_DATA *      in_obj;
     OBJ_DATA *      on;
     CHAR_DATA *     carried_by;
+    CHAR_DATA *	oprog_target;
     EXTRA_DESCR_DATA *  extra_descr;
     AFFECT_DATA *   affected;
     OBJ_INDEX_DATA *    pIndexData;
@@ -2500,6 +2509,7 @@ struct  obj_data
     char *      material;
     sh_int      timer;
     int         value   [5];
+    sh_int			oprog_delay;
 };
 
 
@@ -2521,6 +2531,10 @@ struct  exit_data
     EXIT_DATA *     next;       /* OLC */
     int         rs_flags;   /* OLC */
     int         orig_door;  /* OLC */
+    PROG_LIST *		rprogs;
+    CHAR_DATA *		rprog_target;
+    long		rprog_flags;
+    sh_int		rprog_delay;
 
 };
 
@@ -2752,22 +2766,32 @@ struct  group_type
 #define TRIG_EXALL  (N)
 #define TRIG_DELAY  (O)
 #define TRIG_SURR   (P)
+#define TRIG_GET		(Q)
+#define TRIG_DROP	(R)
+#define TRIG_SIT	(S)
 
-struct mprog_list
+/*
+ * Prog types
+ */
+#define PRG_MPROG	0
+#define PRG_OPROG	1
+#define PRG_RPROG	2
+
+struct prog_list
 {
-    int         trig_type;
-    char *      trig_phrase;
-    sh_int      vnum;
-    char *          code;
-    PROG_LIST *    next;
-    bool        valid;
+    int                 trig_type;
+    char *              trig_phrase;
+    sh_int              vnum;
+    char *              code;
+    PROG_LIST *         next;
+    bool                valid;
 };
 
-struct mprog_code
+struct prog_code
 {
-    sh_int      vnum;
-    char *      code;
-    PROG_CODE *    next;
+    sh_int              vnum;
+    char *              code;
+    PROG_CODE *         next;
 };
 
 /*HUGE string, for wordwrap functions.*/
@@ -3101,6 +3125,8 @@ void    channel_to_char args( (const char *txt, CHAR_DATA*ch) );
     act_new2((format),(ch),(arg1),(arg2),(type),POS_RESTING)
 
 #define HAS_TRIGGER_MOB(ch,trig)    (IS_SET((ch)->pIndexData->mprog_flags,(trig)))
+#define HAS_TRIGGER_OBJ(obj,trig) (IS_SET((obj)->pIndexData->oprog_flags,(trig)))
+#define HAS_TRIGGER_ROOM(room,trig) (IS_SET((room)->rprog_flags,(trig)))
 #define EDIT_CLAN(ch, Clan)     ( Clan = ch->desc->pEdit )
 #define IS_SWITCHED( ch )       ( ch->desc && ch->desc->original )
 #define IS_BUILDER(ch, Area)    ( !IS_NPC(ch) && !IS_SWITCHED( ch ) &&    \
@@ -3201,6 +3227,8 @@ extern      CHAR_DATA     * char_list;
 extern      DESCRIPTOR_DATA   * descriptor_list;
 extern      OBJ_DATA      * object_list;
 extern      PROG_CODE    * mprog_list;
+extern          PROG_CODE         *     rprog_list;
+extern          PROG_CODE         *     oprog_list;
 extern      char            bug_buf     [];
 extern      time_t          current_time;
 extern      time_t          agg_time;
@@ -3497,7 +3525,7 @@ char *  get_extra_descr args( ( const char *name, EXTRA_DESCR_DATA *ed ) );
 MID *   get_mob_index   args( ( int vnum ) );
 OID *   get_obj_index   args( ( int vnum ) );
 RID *   get_room_index  args( ( int vnum ) );
-MPC *   get_prog_index args( ( int vnum ) );
+MPC *   get_prog_index args( ( int vnum, int type ) );
 char    fread_letter    args( ( FILE *fp ) );
 int fread_number    args( ( FILE *fp ) );
 long    fread_flag  args( ( FILE *fp ) );
@@ -3915,7 +3943,7 @@ void    obj_from_obj    args( ( OBJ_DATA *obj ) );
 void    restore_affects args(   ( CHAR_DATA *ch ) );
 void    extract_obj args( ( OBJ_DATA *obj ) );
 void    extract_char    args( ( CHAR_DATA *ch, bool fPull ) );
-CD *    get_char_room   args( ( CHAR_DATA *ch, char *argument ) );
+CD *    get_char_room   args( ( CHAR_DATA *ch, ROOM_INDEX_DATA *room, char *argument ) );
 CD *    get_char_world  args( ( CHAR_DATA *ch, char *argument ) );
 CD *    get_char_area   args( ( CHAR_DATA *ch, char *argument ) );
 OD *    get_obj_type    args( ( OBJ_INDEX_DATA *pObjIndexData ) );
@@ -3927,8 +3955,8 @@ OD *    get_obj_carry   args( ( CHAR_DATA *ch, char *argument,
                 CHAR_DATA *viewer ) );
 OD *    get_carry_vnum  args( ( CHAR_DATA *ch, int vnum, int location, bool sight) );
 
-OD *    get_obj_wear    args( ( CHAR_DATA *ch, char *argument ) );
-OD *    get_obj_here    args( ( CHAR_DATA *ch, char *argument ) );
+OD *    get_obj_wear    args( ( CHAR_DATA *ch, char *argument, bool character ) );
+OD *    get_obj_here    args( ( CHAR_DATA *ch, ROOM_INDEX_DATA *room, char *argument ) );
 OD *    get_obj_hidden  args( ( CHAR_DATA *ch, char *argument ) );
 OD *    get_obj_world   args( ( CHAR_DATA *ch, char *argument, bool unseen ) );
 OD *    create_money    args( ( int gold, int silver ) );
@@ -4002,20 +4030,29 @@ void    program_flow    args( ( sh_int vnum, char *source, CHAR_DATA *mob,
 PROG_CODE *get_mprog_by_vnum args( (int vnum) );
 
 /* mob_prog.c */
-//void  program_flow    args( ( sh_int vnum, char *source, CHAR_DATA *mob, CHAR_DATA *ch,
-//              const void *arg1, const void *arg2 ) );
-void    p_act_trigger  args( ( char *argument, CHAR_DATA *mob, CHAR_DATA *ch,
-                const void *arg1, const void *arg2, int type ) );
-bool    p_percent_trigger args( ( CHAR_DATA *mob, CHAR_DATA *ch,
-                const void *arg1, const void *arg2, int type ) );
-void    p_bribe_trigger  args( ( CHAR_DATA *mob, CHAR_DATA *ch, int amount ) );
-bool    p_exit_trigger   args( ( CHAR_DATA *ch, int dir ) );
-void    mp_give_trigger   args( ( CHAR_DATA *mob, CHAR_DATA *ch, OBJ_DATA *obj ) );
-void    mp_greet_trigger  args( ( CHAR_DATA *ch ) );
-void    mp_hprct_trigger  args( ( CHAR_DATA *mob, CHAR_DATA *ch ) );
+void	program_flow	args( ( sh_int vnum, char *source, CHAR_DATA *mob,
+				OBJ_DATA *obj, ROOM_INDEX_DATA *room,
+				CHAR_DATA *ch, const void *arg1,
+				const void *arg2 ) );
+void	p_act_trigger	args( ( char *argument, CHAR_DATA *mob,
+				OBJ_DATA *obj, ROOM_INDEX_DATA *room,
+				CHAR_DATA *ch, const void *arg1,
+				const void *arg2, int type ) );
+bool	p_percent_trigger args( ( CHAR_DATA *mob, OBJ_DATA *obj,
+				ROOM_INDEX_DATA *room, CHAR_DATA *ch,
+				const void *arg1, const void *arg2, int type ) );
+void	p_bribe_trigger  args( ( CHAR_DATA *mob, CHAR_DATA *ch, int amount ) );
+bool	p_exit_trigger   args( ( CHAR_DATA *ch, int dir, int type ) );
+void	p_give_trigger   args( ( CHAR_DATA *mob, OBJ_DATA *obj,
+				ROOM_INDEX_DATA *room, CHAR_DATA *ch,
+				OBJ_DATA *dropped, int type ) );
+void 	p_greet_trigger  args( ( CHAR_DATA *ch, int type ) );
+void	p_hprct_trigger  args( ( CHAR_DATA *mob, CHAR_DATA *ch ) );
 
 /* mob_cmds.c */
 void    mob_interpret   args( ( CHAR_DATA *ch, char *argument ) );
+void	obj_interpret	args( ( OBJ_DATA *obj, char *argument ) );
+void room_interpret	args( ( ROOM_INDEX_DATA *room, char *argument ) );
 
 /* save.c */
 void    save_char_obj   args( ( CHAR_DATA *ch ) );

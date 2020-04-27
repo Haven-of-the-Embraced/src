@@ -1173,19 +1173,34 @@ void do_say( CHAR_DATA *ch, char *argument )
         ch->pcdata->last_pose = 0;
     if ( !IS_NPC(ch) )
     {
-    CHAR_DATA *mob, *mob_next;
-    for ( mob = ch->in_room->people; mob != NULL; mob = mob_next )
-    {
-        mob_next = mob->next_in_room;
-        if (!IS_NPC(mob) && IS_SET(mob->act, PLR_IC))
-        mob->pcdata->room_last_pose = 0;
+        CHAR_DATA *mob, *mob_next;
+        for ( mob = ch->in_room->people; mob != NULL; mob = mob_next )
+        {
+            mob_next = mob->next_in_room;
+            if (!IS_NPC(mob) && IS_SET(mob->act, PLR_IC))
+            mob->pcdata->room_last_pose = 0;
 
-        if ( IS_NPC(mob) && HAS_TRIGGER_MOB( mob, TRIG_SPEECH )
-        &&   mob->position == mob->pIndexData->default_pos )
-        p_act_trigger( argument, mob, NULL, NULL, ch, NULL, NULL, TRIG_SPEECH );
-    }
-    }
+            if ( IS_NPC(mob) && HAS_TRIGGER_MOB( mob, TRIG_SPEECH )
+            &&   mob->position == mob->pIndexData->default_pos )
+            p_act_trigger( argument, mob, NULL, NULL, ch, NULL, NULL, TRIG_SPEECH );
 
+            for ( obj = mob->carrying; obj; obj = obj_next )
+            {
+                obj_next = obj->next_content;
+                if ( HAS_TRIGGER_OBJ( obj, TRIG_SPEECH ) )
+                    p_act_trigger( argument, NULL, obj, NULL, ch, NULL, NULL, TRIG_SPEECH );
+            }
+        }
+        for ( obj = ch->in_room->contents; obj; obj = obj_next )
+        {
+            obj_next = obj->next_content;
+            if ( HAS_TRIGGER_OBJ( obj, TRIG_SPEECH ) )
+            p_act_trigger( argument, NULL, obj, NULL, ch, NULL, NULL, TRIG_SPEECH );
+        }
+
+        if ( HAS_TRIGGER_ROOM( ch->in_room, TRIG_SPEECH ) )
+            p_act_trigger( argument, NULL, NULL, ch->in_room, ch, NULL, NULL, TRIG_SPEECH );
+    }
     return;
 }
 

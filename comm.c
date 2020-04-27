@@ -3412,6 +3412,42 @@ void act_new( const char *format, CHAR_DATA *ch, const void *arg1,
                 if ( IS_NPC(to) && MOBtrigger )
                     p_act_trigger( buf, to, NULL, NULL, ch, arg1, arg2, TRIG_ACT );
 
+                    if ( type == TO_ROOM || type == TO_NOTVICT )
+                    {
+                    	OBJ_DATA *obj, *obj_next;
+                    	CHAR_DATA *tch, *tch_next;
+
+                    	 point   = buf;
+                    	 str     = format;
+                    	 while( *str != '\0' )
+                    	 {
+                    	     *point++ = *str++;
+                    	 }
+                    	 *point   = '\0';
+
+                    	for( obj = ch->in_room->contents; obj; obj = obj_next )
+                    	{
+                    	    obj_next = obj->next_content;
+                    	    if ( HAS_TRIGGER_OBJ( obj, TRIG_ACT ) )
+                    		p_act_trigger( buf, NULL, obj, NULL, ch, NULL, NULL, TRIG_ACT );
+                    	}
+
+                    	for( tch = ch; tch; tch = tch_next )
+                    	{
+                    	    tch_next = tch->next_in_room;
+
+                    	    for ( obj = tch->carrying; obj; obj = obj_next )
+                    	    {
+                    		obj_next = obj->next_content;
+                    		if ( HAS_TRIGGER_OBJ( obj, TRIG_ACT ) )
+                    		    p_act_trigger( buf, NULL, obj, NULL, ch, NULL, NULL, TRIG_ACT );
+                	    }
+                	}
+
+                	 if ( HAS_TRIGGER_ROOM( ch->in_room, TRIG_ACT ) )
+                	     p_act_trigger( buf, NULL, NULL, ch->in_room, ch, NULL, NULL, TRIG_ACT );
+                    }
+
         }
     return;
 /*        if(!IS_SET(to->act, PLR_PUEBLO))

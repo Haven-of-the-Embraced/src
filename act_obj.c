@@ -242,6 +242,10 @@ void get_obj( CHAR_DATA *ch, OBJ_DATA *obj, OBJ_DATA *container )
     else
     {
     obj_to_char( obj, ch );
+    if ( HAS_TRIGGER_OBJ( obj, TRIG_GET ) )
+        p_give_trigger( NULL, obj, NULL, ch, obj, TRIG_GET );
+    if ( HAS_TRIGGER_ROOM( ch->in_room, TRIG_GET ) )
+        p_give_trigger( NULL, NULL, ch->in_room, ch, obj, TRIG_GET );
     }
 
     return;
@@ -699,6 +703,11 @@ void do_drop( CHAR_DATA *ch, char *argument )
     if(IS_AFFECTED2(ch, AFF2_UMBRA))
         SET_BIT(obj->extra_flags,ITEM_UMBRA);
 
+        if ( HAS_TRIGGER_OBJ( obj, TRIG_DROP ) )
+    	    p_give_trigger( NULL, obj, NULL, ch, obj, TRIG_DROP );
+    	if ( HAS_TRIGGER_ROOM( ch->in_room, TRIG_DROP ) )
+    	    p_give_trigger( NULL, NULL, ch->in_room, ch, obj, TRIG_DROP );
+
     if (IS_OBJ_STAT(obj,ITEM_MELT_DROP))
     {
         act("$p dissolves into smoke.",ch,obj,NULL,TO_ROOM);
@@ -726,6 +735,11 @@ void do_drop( CHAR_DATA *ch, char *argument )
             SET_BIT(obj->extra_flags,ITEM_UMBRA);
         act( "$n drops $p.", ch, obj, NULL, TO_ROOM );
         act( "You drop $p.", ch, obj, NULL, TO_CHAR );
+        if ( HAS_TRIGGER_OBJ( obj, TRIG_DROP ) )
+            p_give_trigger( NULL, obj, NULL, ch, obj, TRIG_DROP );
+        if ( HAS_TRIGGER_ROOM( ch->in_room, TRIG_DROP ) )
+            p_give_trigger( NULL, NULL, ch->in_room, ch, obj, TRIG_DROP );
+
             if (IS_OBJ_STAT(obj,ITEM_MELT_DROP))
             {
                     act("$p dissolves into smoke.",ch,obj,NULL,TO_ROOM);
@@ -939,8 +953,11 @@ void do_give( CHAR_DATA *ch, char *argument )
      * Give trigger
      */
     if ( IS_NPC(victim) && HAS_TRIGGER_MOB( victim, TRIG_GIVE ) )
-    p_give_trigger( victim, NULL, NULL, ch, obj, TRIG_GIVE );
-
+        p_give_trigger( victim, NULL, NULL, ch, obj, TRIG_GIVE );
+    if ( HAS_TRIGGER_OBJ( obj, TRIG_GIVE ) )
+        p_give_trigger( NULL, obj, NULL, ch, obj, TRIG_GIVE );
+    if ( HAS_TRIGGER_ROOM( ch->in_room, TRIG_GIVE ) )
+        p_give_trigger( NULL, NULL, ch->in_room, ch, obj, TRIG_GIVE );
     return;
 }
 

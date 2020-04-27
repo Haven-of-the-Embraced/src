@@ -113,8 +113,11 @@ void move_char( CHAR_DATA *ch, int door, bool follow )
     /*
      * Exit trigger, if activated, bail out. Only PCs are triggered.
      */
-    if ( !IS_NPC(ch) && p_exit_trigger( ch, door, PRG_MPROG) )
-    return;
+     if ( !IS_NPC(ch)
+       && (p_exit_trigger( ch, door, PRG_MPROG )
+       ||  p_exit_trigger( ch, door, PRG_OPROG )
+       ||  p_exit_trigger( ch, door, PRG_RPROG )) )
+ 	return;
 
     in_room = ch->in_room;
     if ( ( pexit   = in_room->exit[door] ) == NULL
@@ -412,7 +415,11 @@ void move_char( CHAR_DATA *ch, int door, bool follow )
     if ( IS_NPC( ch ) && HAS_TRIGGER_MOB( ch, TRIG_ENTRY ) )
     p_percent_trigger( ch, NULL, NULL, NULL, NULL, NULL, TRIG_ENTRY );
     if ( !IS_NPC( ch ) )
-        p_greet_trigger( ch, PRG_MPROG );
+    {
+    	p_greet_trigger( ch, PRG_MPROG );
+	    p_greet_trigger( ch, PRG_OPROG );
+	    p_greet_trigger( ch, PRG_RPROG );
+    }
 
     return;
 }
@@ -1229,6 +1236,8 @@ void do_stand( CHAR_DATA *ch, char *argument )
         return;
     }
     ch->on = obj;
+    if ( HAS_TRIGGER_OBJ( obj, TRIG_SIT ) )
+	   p_percent_trigger( NULL, obj, NULL, ch, NULL, NULL, TRIG_SIT );
     }
 
     switch ( ch->position )
@@ -1361,6 +1370,8 @@ void do_rest( CHAR_DATA *ch, char *argument )
         }
 
     ch->on = obj;
+    if ( HAS_TRIGGER_OBJ( obj, TRIG_SIT ) )
+	   p_percent_trigger( NULL, obj, NULL, ch, NULL, NULL, TRIG_SIT );
     }
 
     switch ( ch->position )
@@ -1509,6 +1520,8 @@ void do_sit (CHAR_DATA *ch, char *argument )
     }
 
     ch->on = obj;
+    if ( HAS_TRIGGER_OBJ( obj, TRIG_SIT ) )
+       p_percent_trigger( NULL, obj, NULL, ch, NULL, NULL, TRIG_SIT );
     }
     switch (ch->position)
     {
@@ -1650,6 +1663,8 @@ void do_sleep( CHAR_DATA *ch, char *argument )
         }
 
         ch->on = obj;
+        if ( HAS_TRIGGER_OBJ( obj, TRIG_SIT ) )
+           p_percent_trigger( NULL, obj, NULL, ch, NULL, NULL, TRIG_SIT );
         if (IS_SET(obj->value[2],SLEEP_AT))
         {
         act("You go to sleep at $p.",ch,obj,NULL,TO_CHAR);

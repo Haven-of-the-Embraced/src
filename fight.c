@@ -125,6 +125,19 @@ void violence_update( void )
         p_percent_trigger( ch, NULL, NULL, victim, NULL, NULL, TRIG_FIGHT );
         if ( HAS_TRIGGER_MOB( ch, TRIG_HPCNT ) )
         p_hprct_trigger( ch, victim );
+        for ( obj = ch->carrying; obj; obj = obj_next )
+        {
+            obj_next = obj->next_content;
+
+            if ( obj->wear_loc != WEAR_NONE && HAS_TRIGGER_OBJ( obj, TRIG_FIGHT ) )
+            p_percent_trigger( NULL, obj, NULL, victim, NULL, NULL, TRIG_FIGHT );
+        }
+
+        if ( HAS_TRIGGER_ROOM( ch->in_room, TRIG_FIGHT ) && room_trig == FALSE )
+        {
+            room_trig = TRUE;
+            p_percent_trigger( NULL, NULL, ch->in_room, victim, NULL, NULL, TRIG_FIGHT );
+        }
     }
 
     }

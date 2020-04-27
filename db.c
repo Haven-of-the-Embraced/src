@@ -380,6 +380,9 @@ void boot_db()
     load_cmd_list();
     fix_exits( );
     fix_mobprogs( );
+    fix_objprogs( );
+    fix_roomprogs( );
+    
     fBootDb = FALSE;
         convert_objects( );           /* ROM OLC */
     area_update( );
@@ -1603,7 +1606,7 @@ void load_mobprogs( FILE *fp )
         break;
 
     fBootDb = FALSE;
-    if ( get_prog_index( vnum, , PRG_MPROG ) != NULL )
+    if ( get_prog_index( vnum, PRG_MPROG ) != NULL )
     {
         bug( "Load_mobprogs: vnum %d duplicated.", vnum );
         exit( 1 );

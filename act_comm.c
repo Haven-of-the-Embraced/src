@@ -1174,6 +1174,7 @@ void do_say( CHAR_DATA *ch, char *argument )
     if ( !IS_NPC(ch) )
     {
         CHAR_DATA *mob, *mob_next;
+        OBJ_DATA *obj, *obj_next;
         for ( mob = ch->in_room->people; mob != NULL; mob = mob_next )
         {
             mob_next = mob->next_in_room;

@@ -2618,6 +2618,10 @@ struct  room_index_data
     sh_int      heal_rate;
     sh_int      mana_rate;
     sh_int      clan;
+    PROG_LIST *		rprogs;
+    CHAR_DATA *		rprog_target;
+    long		rprog_flags;
+    sh_int		rprog_delay;
 };
 
 
@@ -4024,16 +4028,13 @@ void    say_spell   args( ( CHAR_DATA *ch, int sn ) );
 void    obj_cast_spell  args( ( int sn, int level, CHAR_DATA *ch,
                     CHAR_DATA *victim, OBJ_DATA *obj ) );
 /* mob_prog.c */
-void    program_flow    args( ( sh_int vnum, char *source, CHAR_DATA *mob,
-            CHAR_DATA *ch, const void *arg1, const void *arg2, int numlines ) );
-
 PROG_CODE *get_mprog_by_vnum args( (int vnum) );
 
 /* mob_prog.c */
 void	program_flow	args( ( sh_int vnum, char *source, CHAR_DATA *mob,
 				OBJ_DATA *obj, ROOM_INDEX_DATA *room,
 				CHAR_DATA *ch, const void *arg1,
-				const void *arg2 ) );
+				const void *arg2, int numlines ) );
 void	p_act_trigger	args( ( char *argument, CHAR_DATA *mob,
 				OBJ_DATA *obj, ROOM_INDEX_DATA *room,
 				CHAR_DATA *ch, const void *arg1,

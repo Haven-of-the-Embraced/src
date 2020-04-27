@@ -80,6 +80,8 @@ void violence_update( void )
     CHAR_DATA *ch;
     CHAR_DATA *ch_next;
     CHAR_DATA *victim;
+    OBJ_DATA *obj, *obj_next;
+    bool room_trig = FALSE;
 
     for ( ch = char_list; ch != NULL; ch = ch_next )
     {

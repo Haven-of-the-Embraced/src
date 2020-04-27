@@ -1353,7 +1353,7 @@ void obj_update( void )
     	/* Make sure the object is still there before proceeding */
     	if ( !obj )
     	    continue;
-            
+
     if ( obj->timer <= 0 || --obj->timer > 0 )
         continue;
 
@@ -1667,7 +1667,7 @@ void sleep_update(void)
 
         if(--temp->timer <= 0)
         {
-            program_flow(temp->vnum, temp->prog->code, temp->mob, temp->ch, NULL, NULL, temp->line);
+            program_flow(temp->vnum, temp->prog->code, temp->mob, NULL, NULL, temp->ch, NULL, NULL, temp->line);
 
             /* more slick linked list manipulation */
             if(temp->prev)

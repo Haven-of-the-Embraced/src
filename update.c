@@ -1635,6 +1635,22 @@ void aggr_update( void )
     return;
 }
 
+bool obj_same_room(OBJ_DATA *obj, ROOM_INDEX_DATA *room)
+{
+    OBJ_DATA *pObj, *pObj_next;
+
+    if (!room || !obj)
+    {
+        bug( "obj_same_room: room or obj == NULL.",0);
+        return FALSE;
+    }
+
+    if (obj->in_room == room || obj->carried_by->in_room == room)
+        return TRUE;
+
+    return FALSE;
+
+}
 
 void sleep_update(void)
 {
@@ -1646,12 +1662,17 @@ void sleep_update(void)
 
             temp_next = temp->next;
 
-            /* checks to make sure the mob still exists*/
-            if(!temp->mob)
+            /* checks to make sure the caller still exists*/
+            if(!temp->mob && !temp->room && !temp->obj)
                 delete = TRUE;
             /*checks to make sure the character is still in the same room as the mob*/
             else if(temp->mob && temp->ch && temp->mob->in_room != temp->ch->in_room)
                 delete = TRUE;
+            else if(temp->room && temp->ch && temp->ch->in_room != temp->room)
+                delete = TRUE;
+            else if (temp->obj && temp->ch && !obj_same_room(temp->obj, temp->ch->in_room))
+                delete = TRUE;
+
             if(delete)
             {
                 /* some slick linked list manipulation */
@@ -1667,7 +1688,7 @@ void sleep_update(void)
 
         if(--temp->timer <= 0)
         {
-            program_flow(temp->vnum, temp->prog->code, temp->mob, NULL, NULL, temp->ch, NULL, NULL, temp->line);
+            program_flow(temp->vnum, temp->prog->code, temp->mob, temp->obj, temp->room, temp->ch, NULL, NULL, temp->line);
 
             /* more slick linked list manipulation */
             if(temp->prev)

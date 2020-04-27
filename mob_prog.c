@@ -1827,12 +1827,31 @@ void program_flow(
     }
 
     if ( mob )
-	mvnum = mob->pIndexData->vnum;
-    else if ( obj )
-	ovnum = obj->pIndexData->vnum;
-    else if ( room )
-	rvnum = room->vnum;
-    else
+    {
+	    mvnum = mob->pIndexData->vnum;
+        if ((prog = get_prog_index(pvnum, PRG_MPROG)) == NULL)
+            {
+                sprintf(bugbuf, "PROGs: program_flow unable to find mob prog index (%d) for mob %d", pvnum, mvnum);
+                bug(bugbuf, 0);
+                return;
+            }
+    } else if ( obj ) {
+	    ovnum = obj->pIndexData->vnum;
+        if ((prog = get_prog_index(pvnum, PRG_OPROG)) == NULL)
+            {
+                sprintf(bugbuf, "PROGs: program_flow unable to find mob prog index (%d) for mob %d", pvnum, ovnum);
+                bug(bugbuf, 0);
+                return;
+            }
+    } else if ( room ) {
+	    rvnum = room->vnum;
+        if ((prog = get_prog_index(pvnum, PRG_RPROG)) == NULL)
+            {
+                sprintf(bugbuf, "PROGs: program_flow unable to find mob prog index (%d) for mob %d", pvnum, rvnum);
+                bug(bugbuf, 0);
+                return;
+            }
+    } else
     {
 	bug( "PROGs: program_flow did not receive a prog type.", 0 );
 	return;
@@ -1945,6 +1964,8 @@ void program_flow(
         sd = new_sleep_data();
         sd->ch = ch;
         sd->mob = mob;
+        sd->obj = obj;
+        sd->room = room;
         sd->line = count + 1;
         sd->vnum = prog->vnum;
         sd->timer = timer;
@@ -2277,6 +2298,9 @@ void p_act_trigger(
     	    if ( prg->trig_type == type
     	      && strstr( argument, prg->trig_phrase ) != NULL )
     	    {
+                for(test = first_sleep; test != NULL; test = test->next)
+                    if(test->obj == obj && test->vnum == prg->vnum)
+                        return;
     		program_flow( prg->vnum, prg->code, NULL, obj, NULL, ch, arg1, arg2, 1 );
     		break;
     	    }
@@ -2289,6 +2313,9 @@ void p_act_trigger(
     	    if ( prg->trig_type == type
     	      && strstr( argument, prg->trig_phrase ) != NULL )
     	    {
+                for(test = first_sleep; test != NULL; test = test->next)
+                    if(test->room == room && test->vnum == prg->vnum)
+                        return;
     		program_flow( prg->vnum, prg->code, NULL, NULL, room, ch, arg1, arg2, 1 );
     		break;
     	    }
@@ -2331,7 +2358,40 @@ bool p_percent_trigger( CHAR_DATA *mob, OBJ_DATA *obj, ROOM_INDEX_DATA *room,
             return ( TRUE );
             }
         }
+    }else if ( obj )
+    {
+	for ( prg = obj->pIndexData->oprogs; prg != NULL; prg = prg->next )
+	{
+	    if ( prg->trig_type == type
+	      && number_percent() < atoi( prg->trig_phrase ) )
+	    {
+            for(test = first_sleep; test != NULL; test = test->next)
+                if(test->obj == obj && test->vnum == prg->vnum)
+                    return ( TRUE );
+
+		program_flow( prg->vnum, prg->code, NULL, obj, NULL, ch, arg1, arg2, 1 );
+		return ( TRUE );
+	    }
+	}
     }
+    else if ( room )
+    {
+	for ( prg = room->rprogs; prg != NULL; prg = prg->next )
+	{
+	    if ( prg->trig_type == type
+	      && number_percent() < atoi( prg->trig_phrase ) )
+	    {
+            for(test = first_sleep; test != NULL; test = test->next)
+                if(test->room == room && test->vnum == prg->vnum)
+                    return ( TRUE );
+
+		program_flow( prg->vnum, prg->code, NULL, NULL, room, ch, arg1, arg2, 1 );
+		return ( TRUE );
+	    }
+	}
+    }
+    else
+	bug( "PERCENT trigger missing program type.", 0 );
 
     return ( FALSE );
 }
@@ -2422,6 +2482,9 @@ bool p_exit_trigger( CHAR_DATA *ch, int dir, int type )
 		    if ( prg->trig_type == TRIG_EXALL
 		      && dir == atoi( prg->trig_phrase ) )
 		    {
+                for(test = first_sleep; test != NULL; test = test->next)
+                    if(test->obj == obj && test->vnum == prg->vnum)
+                        return ( TRUE );
 			program_flow( prg->vnum, prg->code, NULL, obj, NULL, ch, NULL, NULL, 1 );
 			return TRUE;
 		    }
@@ -2440,6 +2503,10 @@ bool p_exit_trigger( CHAR_DATA *ch, int dir, int type )
 			if ( prg->trig_type == TRIG_EXALL
 			  && dir == atoi( prg->trig_phrase ) )
 			{
+                for(test = first_sleep; test != NULL; test = test->next)
+                    if(test->obj == obj && test->vnum == prg->vnum)
+                        return ( TRUE );
+
 			    program_flow( prg->vnum, prg->code, NULL, obj, NULL, ch, NULL, NULL, 1 );
 			    return TRUE;
 			}
@@ -2459,6 +2526,9 @@ bool p_exit_trigger( CHAR_DATA *ch, int dir, int type )
 		if ( prg->trig_type == TRIG_EXALL
 		    && dir == atoi( prg->trig_phrase ) )
 		{
+            for(test = first_sleep; test != NULL; test = test->next)
+                if(test->room == room && test->vnum == prg->vnum)
+                    return ( TRUE );
 		    program_flow( prg->vnum, prg->code, NULL, NULL, room, ch, NULL, NULL, 1 );
 		    return TRUE;
 		}
@@ -2532,6 +2602,9 @@ else if ( obj )
 for ( prg = obj->pIndexData->oprogs; prg; prg = prg->next )
     if ( prg->trig_type == type )
     {
+        for(test = first_sleep; test != NULL; test = test->next)
+            if(test->obj == obj && test->vnum == prg->vnum)
+                return ( TRUE );
     program_flow( prg->vnum, prg->code, NULL, obj, NULL, ch, (void *) obj, NULL, 1);
     return;
     }
@@ -2549,6 +2622,9 @@ for ( prg = room->rprogs; prg; prg = prg->next )
     {
         if ( dropped->pIndexData->vnum == atoi(p) )
         {
+            for(test = first_sleep; test != NULL; test = test->next)
+                if(test->room == room && test->vnum == prg->vnum)
+                    return ( TRUE );
         program_flow( prg->vnum, prg->code, NULL, NULL, room, ch, (void *) dropped, NULL, 1);
         return;
         }
@@ -2565,6 +2641,9 @@ for ( prg = room->rprogs; prg; prg = prg->next )
         if ( is_name( buf, dropped->name )
           || !str_cmp( "all", buf ) )
         {
+            for(test = first_sleep; test != NULL; test = test->next)
+                if(test->room == room && test->vnum == prg->vnum)
+                    return ( TRUE );
             program_flow( prg->vnum, prg->code, NULL, NULL, room, ch, (void *) dropped, NULL, 1);
             return;
         }

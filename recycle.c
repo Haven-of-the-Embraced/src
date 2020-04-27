@@ -802,6 +802,8 @@ SLEEP_DATA *new_sleep_data(void)
     sd->timer            = 0;
     sd->line             = 0;
     sd->prog             = NULL;
+    sd->obj              = NULL;
+    sd->room             = NULL;
     sd->mob              = NULL;
     sd->ch               = NULL;
     sd->next             = NULL;

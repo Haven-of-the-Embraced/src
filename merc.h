@@ -304,6 +304,8 @@ struct sleep_data
     SLEEP_DATA *prev;
     CHAR_DATA *ch;
     CHAR_DATA *mob;
+    OBJ_DATA *obj;
+    ROOM_INDEX_DATA *room;
     PROG_CODE *prog;
     int valid;
     int vnum;

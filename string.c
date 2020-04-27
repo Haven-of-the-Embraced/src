@@ -241,7 +241,47 @@ void string_add( CHAR_DATA *ch, char *argument )
                             mpl->code = mpc->code;
                         }
     }
+    if ( ch->desc->editor == ED_OPCODE ) /* for the objprogs */
+	{
+		OBJ_INDEX_DATA *obj;
+		int hash;
+		PROG_LIST *opl;
+		PROG_CODE *opc;
 
+		EDIT_OPCODE(ch, opc);
+
+		if ( opc != NULL )
+			for ( hash = 0; hash < MAX_KEY_HASH; hash++ )
+				for ( obj = obj_index_hash[hash]; obj; obj = obj->next )
+					for ( opl = obj->oprogs; opl; opl = opl->next )
+						if ( opl->vnum == opc->vnum )
+						{
+							sprintf( buf, "Fixing object %d.\n\r", obj->vnum );
+							send_to_char( buf, ch );
+							opl->code = opc->code;
+						}
+	}
+
+	if ( ch->desc->editor == ED_RPCODE ) /* for the roomprogs */
+	{
+		ROOM_INDEX_DATA *room;
+		int hash;
+		PROG_LIST *rpl;
+		PROG_CODE *rpc;
+
+		EDIT_RPCODE(ch, rpc);
+
+		if ( rpc != NULL )
+			for ( hash = 0; hash < MAX_KEY_HASH; hash++ )
+				for ( room = room_index_hash[hash]; room; room = room->next )
+					for ( rpl = room->rprogs; rpl; rpl = rpl->next )
+						if ( rpl->vnum == rpc->vnum )
+						{
+							sprintf( buf, "Fixing room %d.\n\r", room->vnum );
+							send_to_char( buf, ch );
+							rpl->code = rpc->code;
+						}
+	}
         ch->desc->pString = NULL;
         return;
     }

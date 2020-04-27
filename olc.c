@@ -53,6 +53,12 @@ bool run_olc_editor( DESCRIPTOR_DATA *d )
     case ED_MPCODE:
         mpedit( d->character, d->incomm );
         break;
+        case ED_OPCODE:
+    	opedit( d->character, d->incomm );
+    	break;
+        case ED_RPCODE:
+    	rpedit( d->character, d->incomm );
+    	break;
     case ED_HELP:
         hedit( d->character, d->incomm );
         break;
@@ -96,6 +102,12 @@ char *olc_ed_name( CHAR_DATA *ch )
     case ED_MPCODE:
         sprintf( buf, "MPEdit" );
     break;
+    case ED_OPCODE:
+  	sprintf( buf, "OPEdit" );
+  	break;
+      case ED_RPCODE:
+  	sprintf( buf, "RPEdit" );
+  	break;
     case ED_HELP:
         sprintf( buf, "HEdit" );
         break;
@@ -124,6 +136,8 @@ char *olc_ed_vnum( CHAR_DATA *ch )
     OBJ_INDEX_DATA *pObj;
     MOB_INDEX_DATA *pMob;
     PROG_CODE *pMprog;
+    PROG_CODE *pOprog;
+    PROG_CODE *pRprog;
      CLAN_DATA *pClan;
     HELP_DATA *pHelp;
     CMD_DATA  *pCmd;
@@ -153,6 +167,14 @@ char *olc_ed_vnum( CHAR_DATA *ch )
         pMprog = (PROG_CODE *)ch->desc->pEdit;
         sprintf( buf, "%d", pMprog ? pMprog->vnum : 0 );
     break;
+    case ED_OPCODE:
+	pOprog = (PROG_CODE *)ch->desc->pEdit;
+	sprintf( buf, "%d", pOprog ? pOprog->vnum : 0 );
+	break;
+    case ED_RPCODE:
+	pRprog = (PROG_CODE *)ch->desc->pEdit;
+	sprintf( buf, "%d", pRprog ? pRprog->vnum : 0 );
+	break;
     case ED_HELP:
         pHelp = (HELP_DATA *)ch->desc->pEdit;
         sprintf( buf, "%s", pHelp ? pHelp->keyword : "" );
@@ -236,6 +258,12 @@ bool show_commands( CHAR_DATA *ch, char *argument )
     case ED_MPCODE:
         show_olc_cmds( ch, mpedit_table );
         break;
+        case ED_OPCODE:
+	    show_olc_cmds( ch, opedit_table );
+	    break;
+	case ED_RPCODE:
+	    show_olc_cmds( ch, rpedit_table );
+	    break;
     case ED_HELP:
         show_olc_cmds( ch, hedit_table );
         break;
@@ -323,7 +351,8 @@ const struct olc_cmd_type redit_table[] =
     {   "room",     redit_room  },
     {   "sector",   redit_sector    },
     {   "copy", redit_copy },
-
+    {	"addrprog",	redit_addrprog	},
+    {	"delrprog",	redit_delrprog	},
     {   "?",        show_help   },
     {   "version",  show_version    },
 
@@ -362,6 +391,8 @@ const struct olc_cmd_type oedit_table[] =
     {   "condition",    oedit_condition },  /* ROM */
     {   "timer",    oedit_timer },
     {   "copy", oedit_copy },
+    {	"addoprog",	oedit_addoprog	},
+    {	"deloprog",	oedit_deloprog	},
     {   "?",        show_help   },
     {   "version",  show_version    },
 
@@ -805,6 +836,8 @@ const struct editor_cmd_type editor_table[] =
     {   "object",   do_oedit    },
     {   "mobile",   do_medit    },
     {   "mpcode",   do_mpedit   },
+    {	"opcode",	do_opedit	},
+    {	"rpcode",	do_rpedit	},
     {   "help", do_hedit    },
      {   "commands",     do_cmdedit  },
          {"clan", do_cedit},

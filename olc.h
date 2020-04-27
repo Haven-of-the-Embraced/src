@@ -70,6 +70,8 @@ void save_helps args( (void) );
 #define ED_COMMAND  7
 #define ED_CLAN     8
 #define ED_QITEM    9
+#define ED_OPCODE   10
+#define ED_RPCODE   11
 
 
 
@@ -86,7 +88,8 @@ void    hedit       args( ( CHAR_DATA *, char * ) );
 void    cmdedit       args( ( CHAR_DATA *ch, char *argument ) );
 void    cedit           args( ( CHAR_DATA *ch, char *argument ) );
 void    qiedit          args( ( CHAR_DATA *ch, char *argument ));
-
+void    opedit          args( ( CHAR_DATA *ch, char *argument ) );
+void    rpedit          args( ( CHAR_DATA *ch, char *argument ) );
 
 
 /*
@@ -144,6 +147,8 @@ extern const struct olc_cmd_type    hedit_table[];
 extern const struct olc_cmd_type    cmdedit_table[];
 extern const struct olc_cmd_type        cedit_table[];
 extern const struct olc_cmd_type    qiedit_table[];
+extern const struct olc_cmd_type        opedit_table[];
+extern const struct olc_cmd_type        rpedit_table[];
 
 
 
@@ -160,6 +165,8 @@ DECLARE_DO_FUN( do_hedit    );
 DECLARE_DO_FUN( do_cedit        );
 DECLARE_DO_FUN( do_cmdedit  );
 DECLARE_DO_FUN( do_qiedit   );
+DECLARE_DO_FUN( do_opedit       );
+DECLARE_DO_FUN( do_rpedit       );
 
 /*
  * General Functions
@@ -222,7 +229,8 @@ DECLARE_OLC_FUN( redit_owner        );
 DECLARE_OLC_FUN( redit_room     );
 DECLARE_OLC_FUN( redit_sector       );
 DECLARE_OLC_FUN( redit_copy         );
-
+DECLARE_OLC_FUN( redit_addrprog		);
+DECLARE_OLC_FUN( redit_delrprog		);
 
 
 /*
@@ -254,6 +262,8 @@ DECLARE_OLC_FUN( oedit_level            );  /* ROM */
 DECLARE_OLC_FUN( oedit_condition        );  /* ROM */
 DECLARE_OLC_FUN( oedit_timer        );
 DECLARE_OLC_FUN( oedit_copy );
+DECLARE_OLC_FUN( oedit_addoprog		);
+DECLARE_OLC_FUN( oedit_deloprog		);
 
 /*
  * Mobile Editor Prototypes
@@ -355,6 +365,20 @@ DECLARE_OLC_FUN( cedit_create           );
 DECLARE_OLC_FUN( cedit_delete           );
 DECLARE_OLC_FUN( cedit_list             );
 DECLARE_OLC_FUN( cedit_leader           );
+
+/* Objprog editor */
+DECLARE_OLC_FUN( opedit_create		);
+DECLARE_OLC_FUN( opedit_code		);
+DECLARE_OLC_FUN( opedit_show		);
+DECLARE_OLC_FUN( opedit_list		);
+
+/* Roomprog editor */
+DECLARE_OLC_FUN( rpedit_create		);
+DECLARE_OLC_FUN( rpedit_code		);
+DECLARE_OLC_FUN( rpedit_show		);
+DECLARE_OLC_FUN( rpedit_list		);
+
+
 /*
  * Macros
  */
@@ -367,7 +391,8 @@ DECLARE_OLC_FUN( cedit_leader           );
 #define EDIT_MPCODE(Ch, Code)   ( Code = (PROG_CODE*)Ch->desc->pEdit )
 #define EDIT_COMMAND( Ch, Cmd ) ( Cmd = (CMD_DATA *) Ch->desc->pEdit )
 #define EDIT_QITEM( Ch, Item ) (Item = (QITEM_DATA *) Ch->desc->pEdit )
-
+#define EDIT_OPCODE(Ch, Code)   ( Code = (PROG_CODE*)Ch->desc->pEdit )
+#define EDIT_RPCODE(Ch, Code)   ( Code = (PROG_CODE*)Ch->desc->pEdit )
 
 
 /*
@@ -405,3 +430,11 @@ PROG_LIST      *new_mprog              args ( ( void ) );
 void            free_mprog              args ( ( PROG_LIST *mp ) );
 PROG_CODE  *new_mpcode     args ( (void) );
 void        free_mpcode     args ( ( PROG_CODE *pMcode));
+PROG_LIST	*new_oprog		args ( ( void ) );
+void		free_oprog		args ( ( PROG_LIST *op ) );
+PROG_LIST	*new_rprog		args ( ( void ) );
+void		free_rprog		args ( ( PROG_LIST *rp ) );
+PROG_CODE	*new_opcode		args ( ( void ) );
+void		free_opcode		args ( ( PROG_CODE *pOcode ) );
+PROG_CODE	*new_rpcode		args ( ( void ) );
+void		free_rpcode		args ( ( PROG_CODE *pRcode ) );

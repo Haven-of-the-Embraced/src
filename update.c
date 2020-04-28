@@ -49,6 +49,7 @@ void    mobile_update   args( ( void ) );
 void    weather_update  args( ( void ) );
 void    char_update args( ( void ) );
 void    obj_update  args( ( void ) );
+void    prog_update args( ( void ) );
 void    aggr_update args( ( void ) );
 void    bank_offline_update args( ( void ) );
 void    bank_update args( (void) );
@@ -437,27 +438,6 @@ void mobile_update( void )
         ch->silver += ch->pIndexData->wealth * number_range(1,20)/50000;
         }
 
-    /*
-     * Check triggers only if mobile still in default position
-     */
-    if ( ch->position == ch->pIndexData->default_pos )
-    {
-        /* Delay */
-        if ( HAS_TRIGGER_MOB( ch, TRIG_DELAY)
-        &&   ch->mprog_delay > 0 )
-        {
-        if ( --ch->mprog_delay <= 0 )
-        {
-            p_percent_trigger( ch, NULL, NULL, NULL, NULL, NULL, TRIG_DELAY );
-            continue;
-        }
-        }
-        if ( HAS_TRIGGER_MOB( ch, TRIG_RANDOM) )
-        {
-        if( p_percent_trigger( ch, NULL, NULL, NULL, NULL, NULL, TRIG_RANDOM ) )
-        continue;
-        }
-    }
 
     /* That's all for sleeping / busy monster, and empty zones */
     if ( ch->position != POS_STANDING )
@@ -1335,24 +1315,9 @@ void obj_update( void )
             }
         }
 
-        /*
-    	 * Oprog triggers!
-    	 */
-    	if ( obj->in_room || (obj->carried_by && obj->carried_by->in_room))
-    	{
-    	    if ( HAS_TRIGGER_OBJ( obj, TRIG_DELAY )
-    	      && obj->oprog_delay > 0 )
-    	    {
-    	        if ( --obj->oprog_delay <= 0 )
-    		    p_percent_trigger( NULL, obj, NULL, NULL, NULL, NULL, TRIG_DELAY );
-    	    }
-    	    else if ( ((obj->in_room && !obj->in_room->area->empty)
-    	    	|| obj->carried_by ) && HAS_TRIGGER_OBJ( obj, TRIG_RANDOM ) )
-    		    p_percent_trigger( NULL, obj, NULL, NULL, NULL, NULL, TRIG_RANDOM );
-    	 }
-    	/* Make sure the object is still there before proceeding */
-    	if ( !obj )
-    	    continue;
+        /* Make sure the object is still there before proceeding */
+        if ( !obj )
+            continue;
 
     if ( obj->timer <= 0 || --obj->timer > 0 )
         continue;
@@ -1490,7 +1455,85 @@ void influence_update(void)
         }
     }
 
+void prog_update ( void )
+{
+    CHAR_DATA *ch, *ch_next;
+    OBJ_DATA *obj, *obj_next;
+    int hash;
+    ROOM_INDEX_DATA *room;
+    
+    /*
+     * ROOMprog Triggers!
+     */
+    for ( hash = 0; hash < MAX_KEY_HASH; hash++ )
+    for ( room = room_index_hash[hash]; room; room = room->next )
+    {
+        if ( room->area->empty )
+            continue;
 
+        if ( HAS_TRIGGER_ROOM( room, TRIG_DELAY ) && room->rprog_delay > 0 )
+        {
+        if ( --room->rprog_delay <= 0 )
+            p_percent_trigger( NULL, NULL, room, NULL, NULL, NULL, TRIG_DELAY );
+        }
+        else if ( HAS_TRIGGER_ROOM( room, TRIG_RANDOM ) )
+        p_percent_trigger( NULL, NULL, room, NULL, NULL, NULL, TRIG_RANDOM );
+    }
+
+    for ( obj = object_list; obj != NULL; obj = obj_next )
+    {
+        obj_next = obj->next;
+                /*
+            	 * Oprog triggers!
+            	 */
+    	if ( obj->in_room || (obj->carried_by && obj->carried_by->in_room))
+    	{
+    	    if ( HAS_TRIGGER_OBJ( obj, TRIG_DELAY )
+    	      && obj->oprog_delay > 0 )
+    	    {
+    	        if ( --obj->oprog_delay <= 0 )
+    		    p_percent_trigger( NULL, obj, NULL, NULL, NULL, NULL, TRIG_DELAY );
+    	    }
+    	    else if ( ((obj->in_room && !obj->in_room->area->empty)
+    	    	|| obj->carried_by ) && HAS_TRIGGER_OBJ( obj, TRIG_RANDOM ) )
+    		    p_percent_trigger( NULL, obj, NULL, NULL, NULL, NULL, TRIG_RANDOM );
+    	}
+    } // End obj section
+
+             /* Examine all mobs. */
+             for ( ch = char_list; ch != NULL; ch = ch_next )
+             {
+             ch_next = ch->next;
+
+             if ( !IS_NPC(ch) || ch->in_room == NULL || IS_AFFECTED(ch,AFF_CHARM))
+                 continue;
+
+             if (ch->in_room->area->empty && !IS_SET(ch->act,ACT_UPDATE_ALWAYS))
+                 continue;
+
+                /*
+                 * Check triggers only if mobile still in default position
+                 */
+                if ( ch->position == ch->pIndexData->default_pos )
+                {
+                    /* Delay */
+                    if ( HAS_TRIGGER_MOB( ch, TRIG_DELAY)
+                    &&   ch->mprog_delay > 0 )
+                    {
+                    if ( --ch->mprog_delay <= 0 )
+                    {
+                        p_percent_trigger( ch, NULL, NULL, NULL, NULL, NULL, TRIG_DELAY );
+                        continue;
+                    }
+                    }
+                    if ( HAS_TRIGGER_MOB( ch, TRIG_RANDOM) )
+                    {
+                    if( p_percent_trigger( ch, NULL, NULL, NULL, NULL, NULL, TRIG_RANDOM ) )
+                    continue;
+                    }
+                }
+            } // End mob section
+}
 
 
 
@@ -1745,6 +1788,7 @@ CHAR_DATA   *ch;
     {
     pulse_affects = PULSE_AFFECTS;
     affects_update ( );
+    prog_update( );
     }
 
     if ( --pulse_regen <= 0)

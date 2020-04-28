@@ -382,7 +382,7 @@ void boot_db()
     fix_mobprogs( );
     fix_objprogs( );
     fix_roomprogs( );
-    
+
     fBootDb = FALSE;
         convert_objects( );           /* ROM OLC */
     area_update( );
@@ -1666,8 +1666,7 @@ void area_update( void )
 {
     AREA_DATA *pArea;
     char buf[MAX_STRING_LENGTH];
-    int hash;
-    ROOM_INDEX_DATA *room;
+
 
     for ( pArea = area_first; pArea != NULL; pArea = pArea->next )
     {
@@ -1697,23 +1696,6 @@ void area_update( void )
     }
     }
 
-    /*
-     * ROOMprog Triggers!
-     */
-    for ( hash = 0; hash < MAX_KEY_HASH; hash++ )
-	for ( room = room_index_hash[hash]; room; room = room->next )
-	{
-	    if ( room->area->empty )
-	    	continue;
-
-	    if ( HAS_TRIGGER_ROOM( room, TRIG_DELAY ) && room->rprog_delay > 0 )
-	    {
-		if ( --room->rprog_delay <= 0 )
-		    p_percent_trigger( NULL, NULL, room, NULL, NULL, NULL, TRIG_DELAY );
-	    }
-	    else if ( HAS_TRIGGER_ROOM( room, TRIG_RANDOM ) )
-		p_percent_trigger( NULL, NULL, room, NULL, NULL, NULL, TRIG_RANDOM );
-	}
     return;
 }
 

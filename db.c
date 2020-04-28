@@ -4621,6 +4621,7 @@ void bug( const char *str, int param )
     strcpy( buf, "[*****] BUG: " );
     sprintf( buf + strlen(buf), str, param );
     log_string( buf );
+    wiznet(buf, NULL, NULL, WIZ_BUGS, 0, 0);
 /* RT removed due to bug-file spamming
     fclose( fpReserve );
     if ( ( fp = fopen( BUG_FILE, "a" ) ) != NULL )

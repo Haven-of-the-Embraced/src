@@ -1663,7 +1663,7 @@ void sleep_update(void)
             temp_next = temp->next;
 
             /* checks to make sure the caller still exists*/
-            if(!temp->mob && !temp->room && !temp->obj)
+            if(!IS_VALID(temp->mob) && !temp->room && !IS_VALID(temp->obj))
                 delete = TRUE;
             /*checks to make sure the character is still in the same room as the mob*/
             else if(temp->mob && temp->ch && temp->mob->in_room != temp->ch->in_room)

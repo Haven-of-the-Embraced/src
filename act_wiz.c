@@ -1579,6 +1579,30 @@ void do_rstat( CHAR_DATA *ch, char *argument )
     }
     }
 
+    if ( location->rprogs )
+     {
+         int cnt = 0;
+         PROG_LIST *list;
+
+         sprintf(buf, "\n\rROOMPrograms for [%5d]:\n\r", location->vnum);
+         send_to_char( buf, ch );
+
+         for (list=location->rprogs; list; list=list->next)
+         {
+             if (cnt == 0)
+             {
+                 send_to_char ( " Number Vnum Trigger Phrase\n\r", ch );
+                 send_to_char ( " ------ ---- ------- ------\n\r", ch );
+             }
+
+             sprintf(buf, "[%5d] %4d %7s %s\n\r", cnt,
+                 list->vnum,prog_type_to_name(list->trig_type),
+                 list->trig_phrase);
+             send_to_char( buf, ch );
+             cnt++;
+         }
+     }
+
     return;
 }
 
@@ -1590,6 +1614,7 @@ void do_ostat( CHAR_DATA *ch, char *argument )
     char arg[MAX_INPUT_LENGTH];
     AFFECT_DATA *paf;
     OBJ_DATA *obj;
+    OBJ_INDEX_DATA *pObj;
 
     one_argument( argument, arg );
 
@@ -1907,6 +1932,30 @@ void do_ostat( CHAR_DATA *ch, char *argument )
         }
     }
 
+    if ( pObj && pObj->oprogs )
+    {
+        int cnt = 0;
+        PROG_LIST *list;
+
+        sprintf(buf, "\n\rOBJPrograms for [%5d]:\n\r", pObj->vnum);
+        send_to_char( buf, ch );
+
+        for (list = pObj->oprogs; list; list=list->next)
+        {
+            if (cnt == 0)
+            {
+                send_to_char ( " Number Vnum Trigger Phrase\n\r", ch );
+                send_to_char ( " ------ ---- ------- ------\n\r", ch );
+            }
+
+            sprintf(buf, "[%5d] %4d %7s %s\n\r", cnt,
+                list->vnum,prog_type_to_name(list->trig_type),
+                list->trig_phrase);
+            send_to_char( buf, ch );
+            cnt++;
+        }
+    }
+
     return;
 }
 
@@ -1918,6 +1967,7 @@ void do_mstat( CHAR_DATA *ch, char *argument )
     char arg[MAX_INPUT_LENGTH];
     AFFECT_DATA *paf;
     CHAR_DATA *victim;
+    MOB_INDEX_DATA *pMob;
 
     one_argument( argument, arg );
 
@@ -1936,6 +1986,9 @@ void do_mstat( CHAR_DATA *ch, char *argument )
     sprintf( buf, "Name: %s\n\r",
     victim->name);
     send_to_char( buf, ch );
+
+    if (IS_NPC(victim))
+        pMob = victim->pIndexData;
 
     sprintf( buf,
     "Vnum: %d  Format: %s  Race: %s  Group: %d  Sex: %s  Room: %d\n\r",
@@ -2090,6 +2143,30 @@ void do_mstat( CHAR_DATA *ch, char *argument )
     victim->short_descr,
     victim->long_descr[0] != '\0' ? victim->long_descr : "(none)\n\r" );
     send_to_char( buf, ch );
+
+    if ( pMob && pMob->mprogs )
+    {
+        int cnt = 0;
+        PROG_LIST *list;
+
+        sprintf(buf, "\n\rMOBPrograms for [%5d]:\n\r", pMob->vnum);
+        send_to_char( buf, ch );
+
+        for (list = pMob->mprogs; list; list=list->next)
+        {
+            if (cnt == 0)
+            {
+                send_to_char ( " Number Vnum Trigger Phrase\n\r", ch );
+                send_to_char ( " ------ ---- ------- ------\n\r", ch );
+            }
+
+            sprintf(buf, "[%5d] %4d %7s %s\n\r", cnt,
+                list->vnum,prog_type_to_name(list->trig_type),
+                list->trig_phrase);
+            send_to_char( buf, ch );
+            cnt++;
+        }
+    }
 
     if(victim->breed > 0 && victim->auspice > 0)
     {

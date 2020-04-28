@@ -1630,6 +1630,8 @@ void do_ostat( CHAR_DATA *ch, char *argument )
     return;
     }
 
+    pObj = obj->pIndexData;
+    
     sprintf( buf, "Name(s): %s\n\r",
     obj->name );
     send_to_char( buf, ch );

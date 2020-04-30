@@ -2776,6 +2776,8 @@ struct  group_type
 #define TRIG_GET		(Q)
 #define TRIG_DROP	(R)
 #define TRIG_SIT	(S)
+#define TRIG_SYSTIME   (T)
+#define TRIG_MUDTIME (U)
 
 /*
  * Prog types

@@ -574,13 +574,15 @@ const struct flag_type mprog_flags[] =
     {   "grall",        TRIG_GRALL,     TRUE    },
     {   "kill",         TRIG_KILL,      TRUE    },
     {   "hpcnt",        TRIG_HPCNT,     TRUE    },
-    {   "random",       TRIG_RANDOM,        TRUE    },
-    {   "speech",       TRIG_SPEECH,        TRUE    },
+    {   "random",       TRIG_RANDOM,    TRUE    },
+    {   "speech",       TRIG_SPEECH,    TRUE    },
     {   "exit",         TRIG_EXIT,      TRUE    },
     {   "exall",        TRIG_EXALL,     TRUE    },
     {   "delay",        TRIG_DELAY,     TRUE    },
     {   "surr",         TRIG_SURR,      TRUE    },
-    {   NULL,           0,          TRUE    }
+	{   "systime", 		TRIG_SYSTIME, 	TRUE	},
+	{   "mudtime", 		TRIG_MUDTIME, 	TRUE	},
+    {   NULL,           0,          	TRUE    }
 };
 
 const struct flag_type oprog_flags[] =
@@ -589,14 +591,16 @@ const struct flag_type oprog_flags[] =
     {	"fight",		TRIG_FIGHT,		TRUE	},
     {	"give",			TRIG_GIVE,		TRUE	},
     {   "greet",		TRIG_GRALL,		TRUE	},
-    {	"random",		TRIG_RANDOM,		TRUE	},
-    {   "speech",		TRIG_SPEECH,		TRUE	},
+    {	"random",		TRIG_RANDOM,	TRUE	},
+    {   "speech",		TRIG_SPEECH,	TRUE	},
     {	"exall",		TRIG_EXALL,		TRUE	},
     {	"delay",		TRIG_DELAY,		TRUE	},
-    {	"drop",		TRIG_DROP,		TRUE	},
-    {	"get",		TRIG_GET,		TRUE	},
-    {	"sit",		TRIG_SIT,		TRUE	},
-    {	NULL,			0,			TRUE	},
+    {	"drop",			TRIG_DROP,		TRUE	},
+    {	"get",			TRIG_GET,		TRUE	},
+    {	"sit",			TRIG_SIT,		TRUE	},
+	{   "systime", 		TRIG_SYSTIME, 	TRUE	},
+	{   "mudtime", 		TRIG_MUDTIME, 	TRUE	},
+    {	NULL,			0,				TRUE	},
 };
 
 const struct flag_type rprog_flags[] =
@@ -605,11 +609,13 @@ const struct flag_type rprog_flags[] =
     {	"fight",		TRIG_FIGHT,		TRUE	},
     {	"drop",			TRIG_DROP,		TRUE	},
     {	"greet",		TRIG_GRALL,		TRUE	},
-    {	"random",		TRIG_RANDOM,		TRUE	},
-    {	"speech",		TRIG_SPEECH,		TRUE	},
+    {	"random",		TRIG_RANDOM,	TRUE	},
+    {	"speech",		TRIG_SPEECH,	TRUE	},
     {	"exall",		TRIG_EXALL,		TRUE	},
     {	"delay",		TRIG_DELAY,		TRUE	},
-    {	NULL,			0,			TRUE	},
+	{   "systime", 		TRIG_SYSTIME, 	TRUE	},
+	{   "mudtime", 		TRIG_MUDTIME, 	TRUE	},
+    {	NULL,			0,				TRUE	},
 };
 
 const struct flag_type area_flags[] =

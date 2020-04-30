@@ -157,14 +157,16 @@ char *prog_type_to_name( int type )
     case TRIG_GRALL:        	return "GRALL";
     case TRIG_GIVE:            	return "GIVE";
     case TRIG_BRIBE:           	return "BRIBE";
-    case TRIG_KILL:	      	return "KILL";
+    case TRIG_KILL:	      		return "KILL";
     case TRIG_DELAY:           	return "DELAY";
-    case TRIG_SURR:	      	return "SURRENDER";
-    case TRIG_EXIT:	      	return "EXIT";
+    case TRIG_SURR:	      		return "SURRENDER";
+    case TRIG_EXIT:	      		return "EXIT";
     case TRIG_EXALL:	      	return "EXALL";
-    case TRIG_GET:		return "GET";
-    case TRIG_DROP:		return "DROP";
-    case TRIG_SIT:		return "SIT";
+    case TRIG_GET:				return "GET";
+    case TRIG_DROP:				return "DROP";
+    case TRIG_SIT:				return "SIT";
+	case TRIG_SYSTIME:			return "SYSTIME";
+	case TRIG_MUDTIME: 			return "MUDTIME";
     default:                  	return "ERROR";
     }
 }

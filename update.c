@@ -49,7 +49,7 @@ void    mobile_update   args( ( void ) );
 void    weather_update  args( ( void ) );
 void    char_update args( ( void ) );
 void    obj_update  args( ( void ) );
-void    prog_update args( ( void ) );
+void    prog_update args( ( int type ) );
 void    aggr_update args( ( void ) );
 void    bank_offline_update args( ( void ) );
 void    bank_update args( (void) );
@@ -1455,7 +1455,10 @@ void influence_update(void)
         }
     }
 
-void prog_update ( void )
+#define     UPDATE_PULSE        0
+#define     UPDATE_TICK         1
+#define     UPDATE_WEATHER      2
+void prog_update ( int type )
 {
     CHAR_DATA *ch, *ch_next;
     OBJ_DATA *obj, *obj_next;
@@ -1470,14 +1473,24 @@ void prog_update ( void )
     {
         if ( room->area->empty )
             continue;
-
-        if ( HAS_TRIGGER_ROOM( room, TRIG_DELAY ) && room->rprog_delay > 0 )
+        if (type == UPDATE_PULSE)
         {
-        if ( --room->rprog_delay <= 0 )
-            p_percent_trigger( NULL, NULL, room, NULL, NULL, NULL, TRIG_DELAY );
+            if ( HAS_TRIGGER_ROOM( room, TRIG_DELAY ) && room->rprog_delay > 0 )
+                {
+                if ( --room->rprog_delay <= 0 )
+                    p_percent_trigger( NULL, NULL, room, NULL, NULL, NULL, TRIG_DELAY );
+                }
+            else if ( HAS_TRIGGER_ROOM( room, TRIG_RANDOM ) )
+                p_percent_trigger( NULL, NULL, room, NULL, NULL, NULL, TRIG_RANDOM );
+        } else if (type == UPDATE_TICK)
+        {
+            if (HAS_TRIGGER_ROOM( room, TRIG_SYSTIME))
+                p_time_trigger( NULL, NULL, room, NULL, NULL, NULL, TRIG_SYSTIME );
+        } else if (type == UPDATE_WEATHER)
+        {
+            if (HAS_TRIGGER_ROOM( room, TRIG_MUDTIME))
+                p_time_trigger( NULL, NULL, room, NULL, NULL, NULL, TRIG_MUDTIME );
         }
-        else if ( HAS_TRIGGER_ROOM( room, TRIG_RANDOM ) )
-        p_percent_trigger( NULL, NULL, room, NULL, NULL, NULL, TRIG_RANDOM );
     }
 
     for ( obj = object_list; obj != NULL; obj = obj_next )
@@ -1488,15 +1501,28 @@ void prog_update ( void )
             	 */
     	if ( obj->in_room || (obj->carried_by && obj->carried_by->in_room))
     	{
-    	    if ( HAS_TRIGGER_OBJ( obj, TRIG_DELAY )
-    	      && obj->oprog_delay > 0 )
-    	    {
-    	        if ( --obj->oprog_delay <= 0 )
-    		    p_percent_trigger( NULL, obj, NULL, NULL, NULL, NULL, TRIG_DELAY );
-    	    }
-    	    else if ( ((obj->in_room && !obj->in_room->area->empty)
-    	    	|| obj->carried_by ) && HAS_TRIGGER_OBJ( obj, TRIG_RANDOM ) )
-    		    p_percent_trigger( NULL, obj, NULL, NULL, NULL, NULL, TRIG_RANDOM );
+            if (type == UPDATE_PULSE)
+            {
+        	    if ( HAS_TRIGGER_OBJ( obj, TRIG_DELAY )
+        	      && obj->oprog_delay > 0 )
+        	    {
+        	        if ( --obj->oprog_delay <= 0 )
+        		    p_percent_trigger( NULL, obj, NULL, NULL, NULL, NULL, TRIG_DELAY );
+        	    }
+        	    else if ( ((obj->in_room && !obj->in_room->area->empty)
+        	    	|| obj->carried_by ) && HAS_TRIGGER_OBJ( obj, TRIG_RANDOM ) )
+        		    p_percent_trigger( NULL, obj, NULL, NULL, NULL, NULL, TRIG_RANDOM );
+                } else if (type == UPDATE_TICK)
+                {
+                    if (((obj->in_room && !obj->in_room->area->empty)
+            	    	|| obj->carried_by ) && HAS_TRIGGER_OBJ( obj, TRIG_SYSTIME))
+                        p_time_trigger( NULL, obj, NULL, NULL, NULL, NULL, TRIG_SYSTIME );
+                } else if (type == UPDATE_WEATHER)
+                {
+                    if (((obj->in_room && !obj->in_room->area->empty)
+            	    	|| obj->carried_by ) && HAS_TRIGGER_OBJ( obj, TRIG_MUDTIME))
+                        p_time_trigger( NULL, obj, NULL, NULL, NULL, NULL, TRIG_MUDTIME );
+                }
     	}
     } // End obj section
 
@@ -1516,20 +1542,31 @@ void prog_update ( void )
                  */
                 if ( ch->position == ch->pIndexData->default_pos )
                 {
-                    /* Delay */
-                    if ( HAS_TRIGGER_MOB( ch, TRIG_DELAY)
-                    &&   ch->mprog_delay > 0 )
+                    if (type == UPDATE_PULSE)
                     {
-                    if ( --ch->mprog_delay <= 0 )
-                    {
-                        p_percent_trigger( ch, NULL, NULL, NULL, NULL, NULL, TRIG_DELAY );
+                        /* Delay */
+                        if ( HAS_TRIGGER_MOB( ch, TRIG_DELAY)
+                        &&   ch->mprog_delay > 0 )
+                        {
+                        if ( --ch->mprog_delay <= 0 )
+                        {
+                            p_percent_trigger( ch, NULL, NULL, NULL, NULL, NULL, TRIG_DELAY );
+                            continue;
+                        }
+                        }
+                        if ( HAS_TRIGGER_MOB( ch, TRIG_RANDOM) )
+                        {
+                        if( p_percent_trigger( ch, NULL, NULL, NULL, NULL, NULL, TRIG_RANDOM ) )
                         continue;
-                    }
-                    }
-                    if ( HAS_TRIGGER_MOB( ch, TRIG_RANDOM) )
+                        }
+                    } else if (type == UPDATE_TICK)
                     {
-                    if( p_percent_trigger( ch, NULL, NULL, NULL, NULL, NULL, TRIG_RANDOM ) )
-                    continue;
+                        if (HAS_TRIGGER_MOB( ch, TRIG_SYSTIME))
+                            p_time_trigger( ch, NULL, NULL, NULL, NULL, NULL, TRIG_SYSTIME );
+                    } else if (type == UPDATE_WEATHER)
+                    {
+                        if (HAS_TRIGGER_MOB( ch, TRIG_MUDTIME))
+                            p_time_trigger( ch, NULL, NULL, NULL, NULL, NULL, TRIG_MUDTIME );
                     }
                 }
             } // End mob section
@@ -1788,7 +1825,7 @@ CHAR_DATA   *ch;
     {
     pulse_affects = PULSE_AFFECTS;
     affects_update ( );
-    prog_update( );
+    prog_update(UPDATE_PULSE);
     }
 
     if ( --pulse_regen <= 0)
@@ -1828,6 +1865,7 @@ CHAR_DATA   *ch;
     pulse_point     = PULSE_TICK;
     char_update ( );
     obj_update  ( );
+    prog_update(UPDATE_TICK);
     }
 
     if (--pulse_weather   <= 0 )
@@ -1835,6 +1873,7 @@ CHAR_DATA   *ch;
         pulse_weather   = PULSE_WEATHER;
         wiznet("{DTOCK{R!{x", NULL, NULL, WIZ_TICKS, 0, 0);
         weather_update  ( );
+        prog_update(UPDATE_WEATHER);
     }
 
     sleep_update ();

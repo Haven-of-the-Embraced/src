@@ -4047,6 +4047,9 @@ void	p_act_trigger	args( ( char *argument, CHAR_DATA *mob,
 bool	p_percent_trigger args( ( CHAR_DATA *mob, OBJ_DATA *obj,
 				ROOM_INDEX_DATA *room, CHAR_DATA *ch,
 				const void *arg1, const void *arg2, int type ) );
+bool	p_time_trigger args( ( CHAR_DATA *mob, OBJ_DATA *obj,
+				ROOM_INDEX_DATA *room, CHAR_DATA *ch,
+				const void *arg1, const void *arg2, int type ) );
 void	p_bribe_trigger  args( ( CHAR_DATA *mob, CHAR_DATA *ch, int amount ) );
 bool	p_exit_trigger   args( ( CHAR_DATA *ch, int dir, int type ) );
 void	p_give_trigger   args( ( CHAR_DATA *mob, OBJ_DATA *obj,

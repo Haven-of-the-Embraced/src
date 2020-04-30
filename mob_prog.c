@@ -2755,3 +2755,103 @@ PROG_CODE *get_mprog_by_vnum(int vnum)
             return temp;
     return NULL;
 }
+
+/*
+ * Checks whether the number provided as trig_phrase refers to the current
+ * time. Could be systime or gametime.
+ */
+bool p_time_trigger( CHAR_DATA *mob, OBJ_DATA *obj, ROOM_INDEX_DATA *room,
+	CHAR_DATA *ch, const void *arg1, const void *arg2, int type )
+{
+    PROG_LIST *prg;
+    SLEEP_DATA *test;
+    int time;
+
+    if ( (mob && obj) || (mob && room) || (obj && room) )
+    {
+	bug( "Multiple program types in TIME trigger.", 0 );
+	return ( FALSE );
+    }
+
+    if (type == TRIG_SYSTIME)
+    {
+        struct tm * timeinfo;
+        timeinfo = localtime (&current_time);
+        time = timeinfo->tm_hour * 100;
+        time += timeinfo->tm_min;
+
+        if (time < 0 || time > 2359)
+        {
+            char buf[MSL];
+            sprintf(buf, "TIME trigger computed time as (%d) from localtime(&current_time).", time);
+            bug(buf, 0);
+            return FALSE;
+        }
+    } else if (type == TRIG_MUDTIME)
+    {
+        time = time_info.hour;
+
+        if (time < 0 || time > 23)
+        {
+            char buf[MSL];
+            sprintf(buf, "TIME trigger computed time as (%d) from time_info.hour.", time);
+            bug(buf, 0);
+            return FALSE;
+        }
+    } else
+    {
+        char buf[MSL];
+        sprintf(buf, "TIME trigger received bad type %s (%d).", prog_type_to_name(type), type);
+        bug(buf, 0);
+        return FALSE;        
+    }
+
+    if ( mob )
+    {
+        for ( prg = mob->pIndexData->mprogs; prg != NULL; prg = prg->next )
+        {
+            if ( prg->trig_type == type && time == atoi( prg->trig_phrase ) )
+            {
+            for(test = first_sleep; test != NULL; test = test->next)
+                if(test->ch == ch && test->vnum == prg->vnum)
+                    return ( TRUE );
+
+            program_flow( prg->vnum, prg->code, mob, NULL, NULL, ch, arg1, arg2, 1 );
+            return ( TRUE );
+            }
+        }
+    }else if ( obj )
+    {
+	for ( prg = obj->pIndexData->oprogs; prg != NULL; prg = prg->next )
+	{
+        if ( prg->trig_type == type && time == atoi( prg->trig_phrase ) )
+	    {
+            for(test = first_sleep; test != NULL; test = test->next)
+                if(test->obj == obj && test->vnum == prg->vnum)
+                    return ( TRUE );
+
+		program_flow( prg->vnum, prg->code, NULL, obj, NULL, ch, arg1, arg2, 1 );
+		return ( TRUE );
+	    }
+	}
+    }
+    else if ( room )
+    {
+	for ( prg = room->rprogs; prg != NULL; prg = prg->next )
+	{
+        if ( prg->trig_type == type && time == atoi( prg->trig_phrase ) )
+	    {
+            for(test = first_sleep; test != NULL; test = test->next)
+                if(test->room == room && test->vnum == prg->vnum)
+                    return ( TRUE );
+
+		program_flow( prg->vnum, prg->code, NULL, NULL, room, ch, arg1, arg2, 1 );
+		return ( TRUE );
+	    }
+	}
+    }
+    else
+	bug( "TIME trigger missing program type.", 0 );
+
+    return ( FALSE );
+}

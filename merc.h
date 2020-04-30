@@ -206,17 +206,16 @@ typedef void ROOM_FUN	args( ( ROOM_INDEX_DATA *room, char *argument ) );
 #define MAX_HOMETOWN 		3
 
 #define PULSE_PER_SECOND        4
-#define PULSE_VIOLENCE        ( 3 * PULSE_PER_SECOND)
-#define PULSE_MOBILE          ( 4 * PULSE_PER_SECOND)
-#define PULSE_MUSIC       ( 6 * PULSE_PER_SECOND)
-#define PULSE_TICK        (60 * PULSE_PER_SECOND)
-#define PULSE_WEATHER     (6 * PULSE_TICK)
-#define PULSE_BANK         (6 * PULSE_TICK )
-/* #define PULSE_AREA         (120 * PULSE_PER_SECOND) */
-#define PULSE_AREA        (480 * PULSE_PER_SECOND)
-#define PULSE_INFLUENCECHANGE ( 60* PULSE_TICK * 4 )
-#define PULSE_INFLUENCEFADE   ( PULSE_INFLUENCECHANGE * 12 )
-#define PULSE_UNDERWATER           (20 * PULSE_PER_SECOND)
+#define PULSE_VIOLENCE          ( 3 * PULSE_PER_SECOND)
+#define PULSE_MOBILE            ( 4 * PULSE_PER_SECOND)
+#define PULSE_MUSIC             ( 6 * PULSE_PER_SECOND)
+#define PULSE_TICK              (60 * PULSE_PER_SECOND)
+#define PULSE_WEATHER           (3 * PULSE_TICK)
+#define PULSE_BANK              (6 * PULSE_TICK)
+#define PULSE_AREA              (3 * PULSE_TICK)
+#define PULSE_INFLUENCECHANGE   (60* PULSE_TICK * 4 )
+#define PULSE_INFLUENCEFADE     (PULSE_INFLUENCECHANGE * 12 )
+#define PULSE_UNDERWATER        (20 * PULSE_PER_SECOND)
 
 #define INFLUENCE_TIMER        60
 #define INFLUENCE_KILL_CHANCE      5

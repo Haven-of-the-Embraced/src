@@ -369,9 +369,9 @@ void move_char( CHAR_DATA *ch, int door, bool follow )
     				if (perception >= stealth)
     				{
     					if (fch == ch)
-    						act("{WYou spot your own image reflecting in $p as you enter the room.{x", ch, reflective, NULL, TO_CHAR);
+    						act("{WYou spot your own image reflecting in $p as you enter the room.{x", fch, reflective, ch, TO_CHAR);
     					else
-    						act("{W$n's image reflects briefly in $p as $e enters the room.{x", ch, reflective, NULL, TO_NOTVICT);
+    						act("{W$N's image reflects briefly in $p as $E enters the room.{x", fch, reflective, ch, TO_CHAR);
     				}
     			}
     		}

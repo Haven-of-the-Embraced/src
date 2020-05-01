@@ -5514,49 +5514,118 @@ void do_assassinate( CHAR_DATA *ch, char *argument )
 }
 void do_divine_strength(CHAR_DATA *ch, char *argument )
 {
-    AFFECT_DATA af;
+  AFFECT_DATA af;
+	int divinesuccess;
+	int divineskill = get_skill(ch, gsn_divine_strength);
+	int focus = ch->level / 2;
 
-    if (get_skill(ch,gsn_divine_strength) == 0)
-    {
-        send_to_char( "You are not holy enough!\n\r", ch );
-        return;
-    }
-    if ( is_affected( ch, gsn_divine_strength ))
-    {
-        send_to_char( "You are already blessed by your God!\n\r", ch );
-        return;
-    }
-    if ( get_skill(ch,gsn_divine_strength) > number_percent())
-    {
-        act( "$n invokes the power of $s God!",  ch, NULL, NULL, TO_ROOM );
-        send_to_char( "You pray to your God to give you strength to smite your foes!\n\r", ch );
-        check_improve(ch,gsn_divine_strength,TRUE,4);
+	if (divineskill == 0)
+	{
+		send_to_char( "You have not devoted yourself enough to garner favor with a deity.\n\r", ch );
+		return;
+	}
+	if ( is_affected( ch, gsn_divine_strength ))
+	{
+		send_to_char( "You have already received a blessing from your deity!\n\r", ch );
+		return;
+	}
+  if (ch->position == POS_FIGHTING)
+  {
+    send_to_char("You cannot concentrate enough in combat to recite a proper prayer.\n\r", ch);
+    return;
+  }
+	if (ch->cswillpower < 1)
+	{
+		send_to_char("You do not have the willpower required to focus a serious prayer.\n\r", ch);
+		return;
+	}
+	if (ch->move < focus)
+	{
+		send_to_char("You are too tired to offer up a proper prayer to your deity.\n\r", ch);
+		return;
+	}
+	if (ch->mana < focus)
+	{
+		send_to_char("You do not have the inner reserve of energy to profess your faith.\n\r", ch);
+		return;
+	}
 
-        af.where    = TO_AFFECTS;
-        af.type     = gsn_divine_strength;
-        af.level    = ch->level;
-        af.duration = ch->level/2;
-        af.modifier = ch->level/2+5;
-        af.location = APPLY_DAMROLL;
-        af.bitvector    = 0;
-        affect_to_char( ch, &af );
+	ch->cswillpower--;
+	ch->move -= focus;
+	ch->mana -= focus;
 
-        af.where    = TO_AFFECTS;
-        af.type     = gsn_divine_strength;
-        af.level    = ch->level;
-        af.duration = ch->level/2;
-        af.modifier = 1;
-        af.location = APPLY_CS_STR;
-        af.bitvector    = 0;
-        affect_to_char( ch, &af );
-    }
-    else
-    {
-        act( "$n fails to invoke the power of $s God!",  ch, NULL, NULL, TO_ROOM );
-        send_to_char( "You fail to summon a Divine Blessing for Strength!\n\r", ch );
-        check_improve(ch,gsn_divine_strength,FALSE,4);
-    }
-return;
+	divinesuccess = godice((get_attribute(ch, CHARISMA) + get_ability(ch, CSABIL_THEOLOGY) * divineskill / 100), 6);
+	act("Focusing on your devotion, you offer up a quick prayer to your deity above.", ch, NULL, NULL, TO_CHAR);
+	act("$n offers up a quick prayer to the heavens above.", ch, NULL, NULL, TO_NOTVICT);
+	WAIT_STATE( ch, skill_table[gsn_divine_strength].beats );
+
+	if (divinesuccess < 0)
+	{
+		act("You feel a sense of dread and unease as you stumble through your prayer.", ch, NULL, NULL, TO_CHAR);
+		act("$e looks around uneasily as $e stumbles through $s prayer.", ch, NULL, NULL, TO_NOTVICT);
+		check_improve(ch,gsn_divine_strength,FALSE,4);
+
+    af.where    = TO_AFFECTS;
+    af.type     = gsn_curse;
+    af.level    = ch->level + 15;
+    af.duration = 5;
+    af.modifier = ch->level/2;
+    af.location = APPLY_HITROLL;
+    af.bitvector    = 0;
+    affect_to_char( ch, &af );
+		return;
+	}
+
+	if (divinesuccess == 0)
+	{
+		act("After a moment of reflection, your prayer seems to have been unanswered.", ch, NULL, NULL, TO_CHAR);
+		WAIT_STATE( ch, 5 );
+		check_improve(ch,gsn_divine_strength,FALSE,4);
+		return;
+	}
+
+	if (divinesuccess > 0)
+	{
+		act( "Smiling broadly, $n seems to be renewed with extra strength of purose.",  ch, NULL, NULL, TO_ROOM );
+		act( "A feeling of purpose and strength flows through your body as your deity grants your request for help.", ch, NULL, NULL, TO_CHAR);
+		check_improve(ch,gsn_divine_strength,TRUE,4);
+    gain_exp(ch, divinesuccess * (15 + get_ability(ch, CSABIL_THEOLOGY)));
+
+    af.where    = TO_AFFECTS;
+		af.type     = gsn_divine_strength;
+		af.level    = ch->level;
+		af.duration = (divinesuccess * 5) + 50;
+		af.modifier = 1;
+		af.location = APPLY_CS_STR;
+		af.bitvector    = 0;
+		affect_to_char( ch, &af );
+
+		af.where    = TO_AFFECTS;
+		af.type     = gsn_divine_strength;
+		af.level    = ch->level;
+		af.duration = (divinesuccess * 5) + 50;
+		af.modifier = ch->level/2 + (divinesuccess * 5);
+		af.location = APPLY_DAMROLL;
+		af.bitvector    = 0;
+		affect_to_char( ch, &af );
+
+		if (divinesuccess > 4)
+		{
+			act("You feel the blessing of being your deity's chosen flow through your veins!", ch, NULL, NULL, TO_CHAR);
+
+			af.where    = TO_AFFECTS;
+			af.type     = gsn_divine_strength;
+			af.level    = ch->level;
+			af.duration = (divinesuccess * 5) + 50;
+			af.modifier = ch->level/2 + (divinesuccess * 5);
+			af.location = APPLY_HITROLL;
+			af.bitvector    = 0;
+			affect_to_char( ch, &af );
+
+			ch->move = UMIN( ch->move + ch->level + (divinesuccess * (get_attribute(ch,STAMINA) + ch->csabilities[CSABIL_THEOLOGY])), ch->max_move );
+		}
+	}
+	return;
 }
 
 bool check_critical(CHAR_DATA *ch, CHAR_DATA *victim)

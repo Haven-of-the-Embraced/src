@@ -2137,6 +2137,7 @@ struct  char_data
     int         tagged;
     int         airtick;
     int     qpoints;
+    long    totalqpoints;
     int       gen;
     int       drains;
     int       embraced;

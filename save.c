@@ -195,6 +195,7 @@ void fwrite_char( CHAR_DATA *ch, FILE *fp )
     fprintf( fp, "Hometown %d\n", ch->pcdata->hometown);
     fprintf( fp, "Admin %d\n",ch->pcdata->admin);
     fprintf( fp, "qpoints %d\n", ch->qpoints );
+    fprintf( fp, "qpointstot %d\n", ch->totalqpoints);
     fprintf( fp, "pblood %d\n", ch->pblood );
     fprintf( fp, "unlockp %d\n", ch->unlocksspent);
     fprintf( fp, "totalkills %d\n", ch->totalkills);
@@ -1713,6 +1714,7 @@ void fread_char( CHAR_DATA *ch, FILE *fp )
 
     case 'Q':
         KEY( "qpoints", ch->qpoints,        fread_number( fp ) );
+        KEY( "qpointstot", ch->totalqpoints,        fread_number( fp ) );
         KEY( "Quietus", ch->quietus,        fread_number( fp ) );
         KEY( "QuestNext",   ch->nextquest,          fread_number( fp ) );
         KEY( "Quintessence",    ch->quintessence,       fread_number( fp ) );

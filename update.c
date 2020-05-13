@@ -917,13 +917,13 @@ void char_update( void )
 
         affect_remove( ch, paf );
         }
+    }
 
         if (!ch) // Guard against null ch being returned from chimaera wearing off.
             continue;
 
 if (ch->qpoints > 30000)
     ch->qpoints = 30000;
-    }
 
     if(!IS_NPC(ch) && ch->in_room != NULL && !IS_IMMORTAL(ch) && ch->in_room->sector_type == SECT_WATER_DROWN && (ch->race != race_lookup("vampire") ||
     ch->race != race_lookup("methuselah")))
@@ -1464,7 +1464,7 @@ void prog_update ( int type )
     OBJ_DATA *obj, *obj_next;
     int hash;
     ROOM_INDEX_DATA *room;
-    
+
     /*
      * ROOMprog Triggers!
      */

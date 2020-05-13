@@ -3354,8 +3354,8 @@ void do_mpqpoint(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if(victim->qpoints+points > 30000)
-        points = 30000 - victim->qpoints;
+    if(victim->qpoints+points > MAX_QPOINTS)
+        points = MAX_QPOINTS - victim->qpoints;
 
 
 

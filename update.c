@@ -922,8 +922,8 @@ void char_update( void )
         if (!ch) // Guard against null ch being returned from chimaera wearing off.
             continue;
 
-if (ch->qpoints > 30000)
-    ch->qpoints = 30000;
+if (ch->qpoints > MAX_QPOINTS)
+    ch->qpoints = MAX_QPOINTS;
 
     if(!IS_NPC(ch) && ch->in_room != NULL && !IS_IMMORTAL(ch) && ch->in_room->sector_type == SECT_WATER_DROWN && (ch->race != race_lookup("vampire") ||
     ch->race != race_lookup("methuselah")))
@@ -1051,7 +1051,7 @@ if (ch->qpoints > 30000)
         }
     }   /* add rank gain and goal gain here */
         }
-    if(ch->qpoints < 30000)
+    if(ch->qpoints < MAX_QPOINTS)
     {
         ichours = ch->pcdata->IC_total/60;
 
@@ -1095,8 +1095,8 @@ if (ch->qpoints > 30000)
        }
 
 
-       if (ch->qpoints > 30000)
-            ch->qpoints = 30000;
+       if (ch->qpoints > MAX_QPOINTS)
+           ch->qpoints = MAX_QPOINTS;
         }
 
 

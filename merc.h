@@ -200,6 +200,7 @@ typedef void ROOM_FUN	args( ( ROOM_INDEX_DATA *room, char *argument ) );
 #define MAX_LEVEL          110
 #define MAX_QUEST           50
 #define MAX_TOTEM           5
+#define MAX_QPOINTS         99999
 #define LEVEL_HERO         (MAX_LEVEL - 10)
 #define LEVEL_IMMORTAL         (MAX_LEVEL - 9)
 #define MAX_LANGUAGE               12 /* Number of languages */

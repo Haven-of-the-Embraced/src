@@ -1631,7 +1631,7 @@ void do_ostat( CHAR_DATA *ch, char *argument )
     }
 
     pObj = obj->pIndexData;
-    
+
     sprintf( buf, "Name(s): %s\n\r",
     obj->name );
     send_to_char( buf, ch );
@@ -8375,9 +8375,10 @@ void do_qpoint(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if(victim->qpoints+points > 30000)
+    if(victim->qpoints+points > MAX_QPOINTS)
     {
-        send_to_char("A player's quest points cannot exceed 30000.\n\r",ch);
+        sprintf(buf, "A player's quest points cannot exceed %d.\n\r", MAX_QPOINTS);
+        send_to_char(buf,ch);
         return;
     }
 

@@ -2546,6 +2546,9 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
    // if (!IS_SET(ch->comm, COMM_AUTOOOC))
    //     SET_BIT(ch->comm, COMM_NOOOC);
 
+// Setting first value for QP-total.
+if (d->character->totalqpoints < d->character->qpoints)
+    d->character->totalqpoints = d->character->qpoints;
 
 //Fixing tribe and tradition channels.
     if (ch->race == race_lookup("garou") && ch->pcdata->tribe != 0) {

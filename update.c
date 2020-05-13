@@ -1079,6 +1079,7 @@ if (ch->qpoints > MAX_QPOINTS)
         // Line for this into gxp as well
              global_xp += qpaward*xpmult;
              ch->qpoints += qpaward;
+             ch->totalqpoints += qpaward;
         }
 
        if (doubleexp)
@@ -1092,6 +1093,7 @@ if (ch->qpoints > MAX_QPOINTS)
                  global_qp -= qpaward;
               }
            ch->qpoints += qpaward;
+           ch->totalqpoints += qpaward;
        }
 
 

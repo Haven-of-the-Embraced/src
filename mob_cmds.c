@@ -3366,6 +3366,7 @@ void do_mpqpoint(CHAR_DATA *ch, char *argument)
     }
 
     victim->qpoints += points;
+		victim->totalqpoints += points;
     sprintf(log_buf, "%s was awarded %d Qpoints by mob %d (Now has %d)",victim->name, points, IS_NPC(ch) ? ch->pIndexData->vnum : 0, victim->qpoints);
     wiznet(log_buf,ch,NULL,WIZ_SECURE,0,0);
     log_string(log_buf);

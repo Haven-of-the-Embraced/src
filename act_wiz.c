@@ -8398,6 +8398,7 @@ void do_qpoint(CHAR_DATA *ch, char *argument)
 
     if(points > 0)
     {
+        victim->totalqpoints += points;
         sprintf(buf, "You have been rewarded {Y%d {xquest points!\n\r", points);
         send_to_char(buf,victim);
     }

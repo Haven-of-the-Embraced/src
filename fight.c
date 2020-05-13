@@ -3280,8 +3280,10 @@ void group_gain( CHAR_DATA *ch, CHAR_DATA *victim )
     send_to_char( buf, gch );
     gain_exp( gch, xp );
     gch->qpoints += qp;
+    gch->totalqpoints += qp;
     if (gch->qpoints > MAX_QPOINTS)
         gch->qpoints = MAX_QPOINTS;
+
             if (IS_SET(ch->act2, PLR2_QUESTOR)&&IS_NPC(victim))
         {
             if (ch->questmob == victim->pIndexData->vnum)

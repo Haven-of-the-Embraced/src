@@ -1853,7 +1853,11 @@ void do_score( CHAR_DATA *ch, char *argument )
 //		add_buf(output,buf);
 
 		/* New version. Need to make sure it won't stretch insanely large when numbers near max. */
-		sprintf(buf2,"{wKills: {y%d  {wCurrent Kills: {y%d  {wTop Dam: {y%d  {wQpoints: {y%d{x", ch->totalkills,ch->currentkills,ch->maxdamage,ch->qpoints);
+		sprintf(buf2,"{wKills: {y%d  {wCurrent Kills: {y%d  {wTop Dam: {y%d{x", ch->totalkills,ch->currentkills,ch->maxdamage);
+		sprintf(buf,"{D     |%s{D|{x\n\r",center(buf2,69," "));
+		add_buf(output,buf);
+
+    sprintf(buf2,"{wQpoints: {y%d  {wTotal Qpoints: {y%d{x", ch->qpoints, ch->totalqpoints);
 		sprintf(buf,"{D     |%s{D|{x\n\r",center(buf2,69," "));
 		add_buf(output,buf);
 	}

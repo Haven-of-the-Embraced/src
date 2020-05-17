@@ -1989,9 +1989,6 @@ void do_mstat( CHAR_DATA *ch, char *argument )
     victim->name);
     send_to_char( buf, ch );
 
-    if (IS_NPC(victim))
-        pMob = victim->pIndexData;
-
     sprintf( buf,
     "Vnum: %d  Format: %s  Race: %s  Group: %d  Sex: %s  Room: %d\n\r",
     IS_NPC(victim) ? victim->pIndexData->vnum : 0,
@@ -2146,7 +2143,8 @@ void do_mstat( CHAR_DATA *ch, char *argument )
     victim->long_descr[0] != '\0' ? victim->long_descr : "(none)\n\r" );
     send_to_char( buf, ch );
 
-    if ( pMob && pMob->mprogs )
+    if (IS_NPC(victim))
+        if ( (pMob = victim->pIndexData) != NULL && pMob->mprogs )
     {
         int cnt = 0;
         PROG_LIST *list;

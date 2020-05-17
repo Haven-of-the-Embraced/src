@@ -40,7 +40,7 @@ void    free_oprog              args ( ( PROG_LIST *op ) );
 void    free_rprog              args ( ( PROG_LIST *rp ) );
 
 AREA_DATA       *   area_free;
-EXTRA_DESCR_DATA    *   extra_descr_free;
+extern EXTRA_DESCR_DATA    *   extra_descr_free;
 EXIT_DATA       *   exit_free;
 ROOM_INDEX_DATA     *   room_index_free;
 OBJ_INDEX_DATA      *   obj_index_free;
@@ -50,7 +50,7 @@ RESET_DATA      *   reset_free;
 HELP_DATA       *   help_free;
 
 
-HELP_DATA       *   help_last;
+extern HELP_DATA       *   help_last;
 HELP_DATA *new_help(void)
 {
      HELP_DATA *NewHelp;

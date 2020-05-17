@@ -81,7 +81,7 @@ HELP_AREA *     had_list;
 SHOP_DATA *     shop_first;
 SHOP_DATA *     shop_last;
 
-NOTE_DATA *     note_free;
+extern NOTE_DATA *     note_free;
 
 PROG_CODE *        mprog_list;
 PROG_CODE *     oprog_list;
@@ -92,8 +92,8 @@ CHAR_DATA *     char_list;
 char *          help_greeting;
 char            log_buf     [2*MAX_INPUT_LENGTH];
 KILL_DATA       kill_table  [MAX_LEVEL];
-NOTE_DATA *     note_list;
-NOTE_DATA *     rpnote_list;
+extern NOTE_DATA *     note_list;
+extern NOTE_DATA *     rpnote_list;
 OBJ_DATA *      object_list;
 TIME_INFO_DATA      time_info;
 WEATHER_DATA        weather_info;
@@ -174,7 +174,7 @@ int         sAllocPerm;
 bool            fBootDb;
 FILE *          fpArea;
 char            strArea[MAX_INPUT_LENGTH];
- int                          top_domain;
+extern int      top_domain;
 
 
 

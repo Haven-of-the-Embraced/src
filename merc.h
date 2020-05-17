@@ -58,12 +58,12 @@ int system();
 
 
 // Special XP global and QP
-int global_qp;
-int global_xp;
-int qpmult; //Sets rate that QP is added to global qp
-int xpmult; //sets rate that XP is added to global qp
-int xpawardmult; // Set double xp multiplier
-int xpstat; //Sets the milestone status for firing double xp
+extern int global_qp;
+extern int global_xp;
+extern int qpmult; //Sets rate that QP is added to global qp
+extern int xpmult; //sets rate that XP is added to global qp
+extern int xpawardmult; // Set double xp multiplier
+extern int xpstat; //Sets the milestone status for firing double xp
 /*
  * Short scalar types.
  * Diavolo reports AIX compiler has bugs with short types.
@@ -3471,7 +3471,7 @@ bool    check_ban   args( ( char *site, int type) );
 
 /* clan.c */
 extern  int             top_clan;
-struct  clan_type       clan_table[MAX_CLAN];
+extern struct  clan_type       clan_table[MAX_CLAN];
 char *  clan_bit_name   args( ( int clan_flags ) );
 bool    is_clan         args( (CHAR_DATA *ch) );
 bool    is_same_clan    args( (CHAR_DATA *ch, CHAR_DATA *victim) );
@@ -4016,8 +4016,8 @@ int number_argument args( ( char *argument, char *arg ) );
 int mult_argument   args( ( char *argument, char *arg) );
 char *  one_argument    args( ( char *argument, char *arg_first ) );
 char *  one_argument2   args( ( char *argument, char *arg_first ) );
-CMD_DATA * cmd_first;
-CMD_DATA * cmd_last;
+extern CMD_DATA * cmd_first;
+extern CMD_DATA * cmd_last;
 struct cmdfun_type
 {
     char *name;

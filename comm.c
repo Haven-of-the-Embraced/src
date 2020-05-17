@@ -318,6 +318,7 @@ bool            MOBtrigger = TRUE;  /* act() switch                 */
 int             most_players = 0;   /* most players on since reboot */
 int             tree_count = 0;
 int             vein_count = 0;
+struct  clan_type       clan_table[MAX_CLAN];
 
 /* Imm globals */
 bool            arena=FALSE;              /* Arena is closed      */
@@ -328,7 +329,14 @@ bool            slaughter=FALSE;        /* Removes damcap and quad damage */
 bool            doubledam=FALSE;    /* double damage for players */
 bool            resolver=TRUE;
 bool            DEBUG_MESSAGES=FALSE;
-
+CMD_DATA * cmd_first;
+CMD_DATA * cmd_last;
+int global_qp;
+int global_xp;
+int qpmult; //Sets rate that QP is added to global qp
+int xpmult; //sets rate that XP is added to global qp
+int xpawardmult; // Set double xp multiplier
+int xpstat; //Sets the milestone status for firing double xp
 /* config file (config.cfg in the area directory) */
 CONFIG_DATA     *config;
 

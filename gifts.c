@@ -29,7 +29,7 @@
  *
  * Change the level of the gift from level0 to level1
  */
-char *target_name;
+ char *gift_target_name;
 char *trueargs;
 
 void spell_gift_innerstrength( int sn, int level, CHAR_DATA *ch, void *vo, int target )
@@ -306,8 +306,8 @@ void spell_gift_createelement( int sn, int level, CHAR_DATA *ch, void *vo, int t
 		char arg2[MIL];
 		CHAR_DATA *victim;
 		OBJ_DATA *obj;
-		target_name = one_argument(target_name, arg1);
-		target_name = one_argument(target_name, arg2);
+		gift_target_name = one_argument(gift_target_name, arg1);
+		gift_target_name = one_argument(gift_target_name, arg2);
 		int success;
 		int type = 0;
 
@@ -2278,8 +2278,8 @@ void do_beseech(CHAR_DATA *ch, char *argument)
     bool pass=FALSE;
 
 
-    target_name = one_argument( argument, arg1 );
-    one_argument( target_name, arg2 );
+    gift_target_name = one_argument( argument, arg1 );
+    one_argument( gift_target_name, arg2 );
 
     if ( arg1[0] == '\0' )
     {
@@ -2368,7 +2368,7 @@ void do_beseech(CHAR_DATA *ch, char *argument)
     }
     else
     {
-        if ( ( victim = get_char_room( ch, NULL, target_name ) ) == NULL )
+        if ( ( victim = get_char_room( ch, NULL, gift_target_name ) ) == NULL )
         {
         send_to_char( "They aren't here.\n\r", ch );
         return;
@@ -2427,7 +2427,7 @@ void do_beseech(CHAR_DATA *ch, char *argument)
     }
     else
     {
-        if ( ( victim = get_char_room( ch, NULL, target_name ) ) == NULL )
+        if ( ( victim = get_char_room( ch, NULL, gift_target_name ) ) == NULL )
         {
         send_to_char( "They aren't here.\n\r", ch );
         return;
@@ -2439,7 +2439,7 @@ void do_beseech(CHAR_DATA *ch, char *argument)
     break;
 
     case TAR_CHAR_SELF:
-    if ( arg2[0] != '\0' && !is_name( target_name, ch->name ) )
+    if ( arg2[0] != '\0' && !is_name( gift_target_name, ch->name ) )
     {
         send_to_char( "You cannot grant this to another.\n\r", ch );
         return;
@@ -2456,7 +2456,7 @@ void do_beseech(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if ( ( obj = get_obj_carry( ch, target_name, ch ) ) == NULL )
+    if ( ( obj = get_obj_carry( ch, gift_target_name, ch ) ) == NULL )
     {
         send_to_char( "You are not carrying that.\n\r", ch );
         return;
@@ -2477,7 +2477,7 @@ void do_beseech(CHAR_DATA *ch, char *argument)
 
         target = TARGET_CHAR;
     }
-    else if ((victim = get_char_room(ch,NULL, target_name)) != NULL)
+    else if ((victim = get_char_room(ch,NULL, gift_target_name)) != NULL)
     {
         target = TARGET_CHAR;
     }
@@ -2499,7 +2499,7 @@ void do_beseech(CHAR_DATA *ch, char *argument)
 
         vo = (void *) victim;
     }
-    else if ((obj = get_obj_here(ch,NULL, target_name)) != NULL)
+    else if ((obj = get_obj_here(ch,NULL, gift_target_name)) != NULL)
     {
         vo = (void *) obj;
         target = TARGET_OBJ;
@@ -2517,12 +2517,12 @@ void do_beseech(CHAR_DATA *ch, char *argument)
             vo = (void *) ch;
             target = TARGET_CHAR;
         }
-        else if ((victim = get_char_room(ch,NULL, target_name)) != NULL)
+        else if ((victim = get_char_room(ch,NULL, gift_target_name)) != NULL)
         {
             vo = (void *) victim;
             target = TARGET_CHAR;
     }
-    else if ((obj = get_obj_carry(ch,target_name,ch)) != NULL)
+    else if ((obj = get_obj_carry(ch,gift_target_name,ch)) != NULL)
     {
         vo = (void *) obj;
         target = TARGET_OBJ;

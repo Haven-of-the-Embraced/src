@@ -7705,7 +7705,10 @@ void do_vlist( CHAR_DATA *ch, char *argument )
 
     if(!is_number(arg2) || !is_number(argument) || arg[0] == '\0' || arg2[0] == '\0' || argument[0] == '\0')
     {
-        send_to_char( "{WSyntax: {Yvlist <obj/room/mob/mprog/showmp> <min_vnum> <max_vnum>{x\n\r", ch );
+        send_to_char( "{WSyntax: {Yvlist <sub_command> <min_vnum> <max_vnum>{x\n\r", ch );
+        sendch("\n\rValid Subcommands:\n\r", ch);
+        sendch("obj, room, mob, mprog, oprog, rprog, showmp{R*{x, showop{R*{x, showrp{R*{x\n\r", ch);
+        sendch("\n\r{R*{x - min and max vnum refer to the mob/room/obj, not program.\n\r", ch);
         return;
     }
 
@@ -7842,12 +7845,12 @@ void do_vlist( CHAR_DATA *ch, char *argument )
             {
                     found = TRUE;
                     i++;
-                    sprintf( buf, "{W[%2d] {BVnum {W[{C%5d{W]{x\n\r",i,vnum);
+                    sprintf( buf, "{W[%2d] {cVnum {W[{C%5d{W]{x\n\r",i,vnum);
                     send_to_char( buf, ch );
             }
         }
         if(!found)
-            send_to_char( "{RNo {Cmobprogs {Rfound in that range.\n\r", ch );
+            send_to_char( "No mobprogs found in that range.\n\r", ch );
         return;
     }
     if (!str_cmp(arg,"oprog"))
@@ -7858,12 +7861,12 @@ void do_vlist( CHAR_DATA *ch, char *argument )
             {
                     found = TRUE;
                     i++;
-                    sprintf( buf, "{W[%2d] {BVnum {W[{C%5d{W]{x\n\r",i,vnum);
+                    sprintf( buf, "{W[%2d] {cVnum {W[{C%5d{W]{x\n\r",i,vnum);
                     send_to_char( buf, ch );
             }
         }
         if(!found)
-            send_to_char( "{RNo {Cobjprogs {Rfound in that range.\n\r", ch );
+            send_to_char( "No objprogs found in that range.\n\r", ch );
         return;
     }
     if (!str_cmp(arg,"rprog"))
@@ -7874,16 +7877,16 @@ void do_vlist( CHAR_DATA *ch, char *argument )
             {
                     found = TRUE;
                     i++;
-                    sprintf( buf, "{W[%2d] {BVnum {W[{C%5d{W]{x\n\r",i,vnum);
+                    sprintf( buf, "{W[%2d] {cVnum {W[{C%5d{W]{x\n\r",i,vnum);
                     send_to_char( buf, ch );
             }
         }
         if(!found)
-            send_to_char( "{RNo {Croomprogs {Rfound in that range.\n\r", ch );
+            send_to_char( "No roomprogs found in that range.\n\r", ch );
         return;
     }
-
-    bug( "Do_Vlist: unknown error", 0 );
+    sprintf(buf, "do_vlist: subcommand '%s' not recognized.", arg);
+    bug( buf, 0 );
     return;
 }
 /*

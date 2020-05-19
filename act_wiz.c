@@ -7693,7 +7693,7 @@ void do_vlist( CHAR_DATA *ch, char *argument )
     MOB_INDEX_DATA *pMobIndex;
     OBJ_INDEX_DATA *pObjIndex;
     ROOM_INDEX_DATA *pRoomIndex;
-    PROG_LIST  *mprg;
+    PROG_LIST  *prg;
     int tvnum;
     int bvnum;
     int vnum;
@@ -7773,9 +7773,9 @@ void do_vlist( CHAR_DATA *ch, char *argument )
                     sprintf( buf, "{W[{G%5d{W] {x%s has",
                     pMobIndex->vnum, pMobIndex->short_descr );
                     send_to_char( buf, ch );
-                    for (mprg = pMobIndex->mprogs; mprg != NULL;mprg = mprg->next )
+                    for (prg = pMobIndex->mprogs; prg != NULL;prg = prg->next )
                     {
-                        sprintf( buf, " {W[{C%d{W]{x",mprg->vnum);
+                        sprintf( buf, " {W[{C%d{W]{x",prg->vnum);
                         send_to_char( buf, ch );
 
                     }
@@ -7783,9 +7783,56 @@ void do_vlist( CHAR_DATA *ch, char *argument )
             }
         }
         if(!found)
-            send_to_char( "{RNo mobs with {Rmobprogs {Ron them in that range.\n\r", ch );
+            send_to_char( "No mobs with mobprogs on them in that range.\n\r", ch );
         return;
     }
+
+    if (!str_cmp(arg,"showop"))
+    {
+        for ( vnum = bvnum; vnum <= tvnum; vnum++ )
+        {
+            if ( ( pObjIndex = get_obj_index( vnum ) ) != NULL && pObjIndex->oprog_flags)
+            {
+                    found = TRUE;
+                    sprintf( buf, "{W[{G%5d{W] {x%s has",
+                    pObjIndex->vnum, pObjIndex->short_descr );
+                    send_to_char( buf, ch );
+                    for (prg = pObjIndex->oprogs; prg != NULL;prg = prg->next )
+                    {
+                        sprintf( buf, " {W[{C%d{W]{x",prg->vnum);
+                        send_to_char( buf, ch );
+
+                    }
+                    send_to_char(".\n\r",ch);
+            }
+        }
+        if(!found)
+            send_to_char( "No objs with objprogs on them in that range.\n\r", ch );
+        return;
+    }
+        if (!str_cmp(arg,"showrp"))
+        {
+            for ( vnum = bvnum; vnum <= tvnum; vnum++ )
+            {
+                if ( ( pRoomIndex = get_room_index( vnum ) ) != NULL && pRoomIndex->rprog_flags)
+                {
+                        found = TRUE;
+                        sprintf( buf, "{W[{G%5d{W] {x%s has",
+                        pRoomIndex->vnum, pRoomIndex->name );
+                        send_to_char( buf, ch );
+                        for (prg = pRoomIndex->rprogs; prg != NULL;prg = prg->next )
+                        {
+                            sprintf( buf, " {W[{C%d{W]{x",prg->vnum);
+                            send_to_char( buf, ch );
+
+                        }
+                        send_to_char(".\n\r",ch);
+                }
+            }
+            if(!found)
+                send_to_char( "No rooms with roomprogs on them in that range.\n\r", ch );
+            return;
+        }
 
     if (!str_cmp(arg,"mprog"))
     {

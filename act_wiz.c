@@ -9594,15 +9594,17 @@ void do_allowadmintalk (CHAR_DATA *ch, char *argument)
 {
 CHAR_DATA *victim;
 char arg[MIL];
+char arg2[MIL];
 
-    if (str_cmp(ch->name, "Zelan") &&
-             str_cmp(ch->name, "Matthew"))
+    if (!ch->pcdata->admin) 
              {
                  send_to_char("Huh?\n\r", ch);
                  return;
              }
 
-    one_argument( argument, arg );
+    argument = one_argument( argument, arg );
+    argument = one_argument( argument, arg2 );
+
   if ( ( victim = get_char_world( ch, arg  ) ) == NULL )
   {
     send_to_char( "They aren't here.\n\r", ch );
@@ -9610,8 +9612,23 @@ char arg[MIL];
   }
     if (IS_NPC(victim))
     {
-        sendch("That would be unwise...\n\r", ch);
+        sendch("That is how the robot uprising starts... Better not.\n\r", ch);
         return;
+    }
+
+    if (victim == ch)
+    {
+        if (!str_cmp(arg2, "shuttlecock"))
+        {
+            sendch("You remove your own admin privileges.\n\r", ch);
+            victim->pcdata->admin = FALSE;
+            return;
+        } else {
+            sendch("That does not seem like a good idea. To continue with this action,\n\r", ch);
+            sendch("repeat the same command with the word 'shuttlecock' at the end.\n\r", ch);
+            sendch("eg: allowadmintalk self shuttlecock\n\r", ch);
+            return;
+        }
     }
 
 if (IS_ADMIN(victim))

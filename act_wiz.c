@@ -7803,6 +7803,38 @@ void do_vlist( CHAR_DATA *ch, char *argument )
             send_to_char( "{RNo {Cmobprogs {Rfound in that range.\n\r", ch );
         return;
     }
+    if (!str_cmp(arg,"oprog"))
+    {
+        for ( i = 0,vnum = bvnum; vnum <= tvnum; vnum++)
+        {
+            if ( ( get_prog_index( vnum, PRG_OPROG ) ) != NULL )
+            {
+                    found = TRUE;
+                    i++;
+                    sprintf( buf, "{W[%2d] {BVnum {W[{C%5d{W]{x\n\r",i,vnum);
+                    send_to_char( buf, ch );
+            }
+        }
+        if(!found)
+            send_to_char( "{RNo {Cobjprogs {Rfound in that range.\n\r", ch );
+        return;
+    }
+    if (!str_cmp(arg,"rprog"))
+    {
+        for ( i = 0,vnum = bvnum; vnum <= tvnum; vnum++)
+        {
+            if ( ( get_prog_index( vnum, PRG_RPROG ) ) != NULL )
+            {
+                    found = TRUE;
+                    i++;
+                    sprintf( buf, "{W[%2d] {BVnum {W[{C%5d{W]{x\n\r",i,vnum);
+                    send_to_char( buf, ch );
+            }
+        }
+        if(!found)
+            send_to_char( "{RNo {Croomprogs {Rfound in that range.\n\r", ch );
+        return;
+    }
 
     bug( "Do_Vlist: unknown error", 0 );
     return;

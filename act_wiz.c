@@ -9003,7 +9003,7 @@ void do_salvation( CHAR_DATA *ch, char *argument )
 
     af.modifier  = -20;
     af.location  = APPLY_SAVES;
-    af.bitvector = AFF_DETECT_INVIS;
+    af.bitvector = 0;
     affect_to_char( victim, &af );
 
     af.modifier  = 50;
@@ -9028,7 +9028,7 @@ void do_salvation( CHAR_DATA *ch, char *argument )
 
     af.modifier  = 1000;
     af.location  = APPLY_MOVE;
-    af.bitvector = AFF_INVISIBLE;
+    af.bitvector = 0;
     affect_to_char( victim, &af );
 
     af.where     = TO_IMMUNE;
@@ -9596,7 +9596,7 @@ CHAR_DATA *victim;
 char arg[MIL];
 char arg2[MIL];
 
-    if (!ch->pcdata->admin) 
+    if (!ch->pcdata->admin)
              {
                  send_to_char("Huh?\n\r", ch);
                  return;

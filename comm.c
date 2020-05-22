@@ -1563,7 +1563,9 @@ void bust_a_prompt( CHAR_DATA *ch )
     case 'C' :
         sprintf(buf2, "%s", health_level[cshealth]);
         i = buf2; break;
-
+     case 'E' :
+        sprintf(buf2, "%d", global_xp);
+        i = buf2; break;
          case 'h' :
             sprintf( buf2, "%d", ch->hit );
             i = buf2; break;
@@ -1589,6 +1591,10 @@ void bust_a_prompt( CHAR_DATA *ch )
         sprintf( buf2, "%d", ch->agg_dam );
         i = buf2; break;
 
+    case 'S' :
+        sprintf(buf2, "%d", ch->remorts);
+        i = buf2; break;
+        
     case 't' :
     sprintf(buf2, "%d%s", (time_info.hour % 12 == 0) ? 12 : time_info.hour %12, time_info.hour >= 12 ? "pm" : "am");
     i = buf2;break;

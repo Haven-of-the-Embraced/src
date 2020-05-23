@@ -7317,7 +7317,7 @@ void do_chiropteranmarauder(CHAR_DATA *ch, char *argument)
 
 	if (IS_AFFECTED(ch, AFF_SHIFT) || is_affected(ch,gsn_vicissitude_horrid))
 	{
-		send_to_ch("You have already altered your form!\n\r", ch);
+		send_to_char("You have already altered your form!\n\r", ch);
 		return;
 	}
 
@@ -7401,7 +7401,7 @@ void do_wingclaws(CHAR_DATA *ch, char *argument)
 		return;
 	}
 
-	if (is_affected(ch, gsn_wingclaws)
+	if (is_affected(ch, gsn_wingclaws))
 	{
 		affect_strip(ch, gsn_wingclaws);
 		act( "Your bony claws retract back into the ends of your winged hands.", ch, NULL, NULL, TO_CHAR );

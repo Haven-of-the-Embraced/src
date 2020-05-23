@@ -1626,7 +1626,7 @@ int d10_damdice( CHAR_DATA *ch, CHAR_DATA *victim)
     }
     // Race Bonuses
     // Garou bonus with claws or Chiropteran Marauder bone claws, +2 for claws.
-    if (!wield && ((ch->race == race_lookup("garou") && is_affected(ch, gsn_claws)) || is_affected(gsn_wingclaws)))
+    if (!wield && ((ch->race == race_lookup("garou") && is_affected(ch, gsn_claws)) || is_affected(ch, gsn_wingclaws)))
         dice += 2;
 
     if (!wield && is_affected(ch, gsn_gift_razorclaws))
@@ -5225,7 +5225,7 @@ void kill_em(CHAR_DATA *ch,CHAR_DATA *victim)
                 {
                   if (!IS_AFFECTED(victim, AFF_FANGS))
                     SET_BIT(victim->affected_by, AFF_FANGS);
-                  do_function(victim, &do_chiropteran, "");
+                  do_function(victim, &do_chiropteranmarauder, "");
                   do_function(victim, &do_fangs, "");
                   if (is_affected(victim, gsn_wingclaws))
                     do_function(victim, &do_wingclaws, "");
@@ -5286,7 +5286,7 @@ void kill_em(CHAR_DATA *ch,CHAR_DATA *victim)
     {
       if (!IS_AFFECTED(victim, AFF_FANGS))
         SET_BIT(victim->affected_by, AFF_FANGS);
-      do_function(victim, &do_chiropteran, "");
+      do_function(victim, &do_chiropteranmarauder, "");
       do_function(victim, &do_fangs, "");
       if (is_affected(victim, gsn_wingclaws))
         do_function(victim, &do_wingclaws, "");

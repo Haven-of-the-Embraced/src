@@ -2970,6 +2970,8 @@ extern sh_int   gsn_earthmeld;
 extern sh_int   gsn_shadowform;
 extern sh_int   gsn_vicissitude_bonecraft;
 extern sh_int   gsn_vicissitude_horrid;
+extern sh_int   gsn_vicissitude_chiropteran;
+extern sh_int   gsn_wingclaws;
 
 /* Sengir Thaum Rituals */
 extern sh_int   gsn_incorporeal_passage;

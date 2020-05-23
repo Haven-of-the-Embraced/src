@@ -7261,7 +7261,118 @@ void do_essence(CHAR_DATA *ch, char *argument)
     return;
 }
 
+void do_chiropteranmarauder(CHAR_DATA *ch, char *argument)
+{
+	char buf[MAX_STRING_LENGTH];
+	OBJ_DATA *obj;
+	OBJ_DATA *obj_next;
+	AFFECT_DATA af;
 
+	if(IS_NPC(ch))
+		return;
+
+	if(!IS_VAMP(ch))
+	{
+		send_to_char("You are not a Vampire!\n\r",ch);
+		return;
+	}
+
+	if(ch->pcdata->discipline[VICISSITUDE] < 6)
+	{
+		send_to_char( "You have not mastered the art of Vicissitude to a degree to assume this form.\n\r", ch );
+		return;
+	}
+
+	if (is_affected( ch, gsn_vicissitude_chiropteran ))
+	{
+		affect_strip(ch,gsn_vicissitude_chiropteran);
+		if (is_affected(ch, gsn_wingclaws))
+		{
+			affect_strip(ch, gsn_wingclaws);
+			act( "Your bony claws retract back into the ends of your winged hands.", ch, NULL, NULL, TO_CHAR );
+			act( "$n's bony claws retract into $s winged hands.", ch, NULL, NULL, TO_NOTVICT );
+		}
+		if (ch->hit > ch->max_hit)
+			ch->hit = ch->max_hit;
+		act( "Your leathery wings merge with your body as you return to your normal form.", ch, NULL, NULL, TO_CHAR );
+		act( "$n's body slowly alters from a horrid half-bat form to something more humanoid.", ch, NULL, NULL, TO_NOTVICT );
+		ch->dam_type = 17;
+		if ( !IS_AFFECTED(ch, AFF_FANGS))
+			do_function(ch, &do_fangs, "" );
+		return;
+	}
+
+	if (IS_AFFECTED(ch, AFF_SHIFT) || is_affected(ch,gsn_vicissitude_horrid))
+	{
+		send_to_ch("You have already altered your form!\n\r", ch);
+		return;
+	}
+
+	if ( IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
+	{
+		send_to_char("Your blood curse prevents it!\n\r" ,ch);
+		return;
+	}
+
+	if (is_affected( ch, gsn_mask ))
+	{
+		if ( !IS_AFFECTED(ch, AFF_FANGS))
+			SET_BIT(ch->affected_by, AFF_FANGS);
+		do_function(ch, &do_mask, "" );
+	}
+
+	if (ch->pblood-80 < 10)
+	{
+		send_to_char( "You don't have enough blood!\n\r", ch );
+		return;
+	}
+
+	ch->pblood -= 80;
+
+	act( "You smile wickedly as you force your body into a terrifying form, composed of the best of both humanoid and chiropteran traits.", ch, NULL, NULL, TO_CHAR );
+	act( "$n's body shifts slowly as $e transforms into a monstrous bat-like form.", ch, NULL, NULL,TO_NOTVICT );
+
+	af.where     = TO_AFFECTS;
+	af.type      = gsn_vicissitude_chiropteran;
+	af.level     = ch->level;
+	af.duration  = -1;
+	af.location  = APPLY_HIT;
+	af.modifier  = 8 * UMAX(20, ch->level);
+	af.bitvector = AFF_FLYING;
+	affect_to_char( ch, &af );
+
+	af.location = APPLY_CS_STR;
+	af.modifier = 3;
+	af.bitvector    = AFF_SHIFT;
+	affect_to_char( ch, &af );
+
+	af.location = APPLY_CS_DEX;
+	af.bitvector    = 0;
+	affect_to_char( ch, &af );
+
+	af.location = APPLY_CS_STA;
+	affect_to_char( ch, &af );
+
+	af.location = APPLY_CS_CHA;
+	af.modifier = -(get_attribute(ch, CHARISMA));
+	affect_to_char( ch, &af );
+
+	af.location = APPLY_CS_MAN;
+	af.modifier = -(get_attribute(ch, MANIPULATION));
+	affect_to_char( ch, &af );
+
+	af.location = APPLY_CS_APP;
+	af.modifier = -(get_attribute(ch, APPEARANCE));
+	affect_to_char( ch, &af );
+
+	if (ch->hit > ch->max_hit) ch->hit = ch->max_hit;
+	sprintf(buf, "A horrific man-bat",ch->name);
+	ch->short_descr = str_dup( buf );
+	sprintf(buf, "Spreading its wings, an enourmous bat-like beast prepares to take flight.");
+	ch->shift = str_dup( buf );
+	WAIT_STATE( ch, 80 );
+	return;
+}
 
 /*******************************************************************************
  *                                                                             *

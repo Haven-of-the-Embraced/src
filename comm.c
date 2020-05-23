@@ -319,6 +319,8 @@ int             most_players = 0;   /* most players on since reboot */
 int             tree_count = 0;
 int             vein_count = 0;
 struct  clan_type       clan_table[MAX_CLAN];
+PC_DATA         *pc_first;
+PC_DATA         *pc_last;
 
 /* Imm globals */
 bool            arena=FALSE;              /* Arena is closed      */
@@ -1594,7 +1596,7 @@ void bust_a_prompt( CHAR_DATA *ch )
     case 'S' :
         sprintf(buf2, "%d", ch->remorts);
         i = buf2; break;
-        
+
     case 't' :
     sprintf(buf2, "%d%s", (time_info.hour % 12 == 0) ? 12 : time_info.hour %12, time_info.hour >= 12 ? "pm" : "am");
     i = buf2;break;

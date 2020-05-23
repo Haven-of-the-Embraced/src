@@ -4198,6 +4198,8 @@ extern      AREA_DATA *     area_last;
 extern      SHOP_DATA *     shop_last;
 extern      CMD_DATA * cmd_first;
 extern      CMD_DATA * cmd_last;
+extern      PC_DATA *   pc_first;
+extern      PC_DATA *   pc_last;
 
 extern      int         top_affect;
 extern      int         top_area;

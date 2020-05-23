@@ -3211,7 +3211,7 @@ void do_mask(CHAR_DATA *ch, char *argument)
 return;
     }
 
-    if (is_affected( ch, gsn_vicissitude_horrid ) || is_affected(ch, gsn_vicissitude_bonecraft))
+    if (is_affected( ch, gsn_vicissitude_horrid ) || is_affected(ch, gsn_vicissitude_bonecraft) || is_affected(ch, gsn_vicissitude_chiropteran))
     {
         send_to_char("Your form is too inhuman to alter in this way.\n\r",ch);
         return;
@@ -3641,6 +3641,12 @@ void do_shadowform(CHAR_DATA *ch, char *argument)
 
         if ( !IS_AFFECTED(ch, AFF_FANGS)) do_function(ch, &do_fangs, "" );
         return;
+    }
+
+    if (is_affected(ch, gsn_vicissitude_horrid) || is_affected(ch, gsn_vicissitude_chiropteran))
+    {
+      send_to_char("Your form has already been altered to something other than human.\n\r", ch);
+      return;
     }
     if (ch->pblood < 60)
     {
@@ -4626,6 +4632,12 @@ void do_claws(CHAR_DATA *ch, char *argument)
         return;
     }
 
+    if(is_affected(ch, gsn_wingclaws))
+  	{
+  		send_to_char("You already have bony claws extending from your fingertips.\n\r", ch);
+  		return;
+  	}
+
     if (ch->pblood < 30)
     {
         send_to_char( "You do not have enough blood.\n\r", ch );
@@ -4738,7 +4750,8 @@ void do_shift(CHAR_DATA *ch, char *argument)
     }
 
 
-        if (is_affected(ch, gsn_vicissitude_horrid)) {
+        if (is_affected(ch, gsn_vicissitude_horrid) || is_affected(ch, gsn_vicissitude_chiropteran))
+        {
         sendch("You have already altered your form!\n\r", ch);
         return;
         }
@@ -6736,7 +6749,7 @@ return;
         return;
     }
 
-    if (is_affected( ch, gsn_vicissitude_horrid ) || is_affected(ch, gsn_vicissitude_bonecraft))
+    if (is_affected( ch, gsn_vicissitude_horrid ) || is_affected(ch, gsn_vicissitude_bonecraft) || is_affected(ch, gsn_vicissitude_chiropteran))
     {
         send_to_char("Your form is too inhuman to alter in this way.\n\r",ch);
         return;

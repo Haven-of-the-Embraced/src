@@ -182,6 +182,8 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "bonecraft",      do_bonecraft},
     { "horridform",     do_horrid },
     { "essence",        do_essence},
+    { "chiropteranmarauder",	do_chiropteranmarauder },
+    { "wing claws", do_wingclaws },
     { "dash",       do_dash },
     { "ignisfatuus", do_ignis_fatuus},
     { "mortalterrors", do_mortalterrors},

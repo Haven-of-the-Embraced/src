@@ -4985,6 +4985,8 @@ sh_int          gsn_earthmeld;
 sh_int          gsn_shadowform;
 sh_int          gsn_vicissitude_horrid;
 sh_int          gsn_vicissitude_bonecraft;
+sh_int          gsn_vicissitude_chiropteran;
+sh_int          gsn_wingclaws;
 
 /* trap crap */
 sh_int          gsn_bash_trap;

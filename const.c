@@ -1964,6 +1964,14 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
     &gsn_vicissitude_horrid,                     SLOT(0),    0, 12, "",      "Your form shrinks and you slowly return to your 'normal' form.",  "" },
 
+    { "chiropteran marauder",  { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+  	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+  	&gsn_vicissitude_chiropteran,	SLOT(0), 0, 12, "", "Your leathery wings merge with your body as you return to your normal form.",  "" },
+
+    { "wing claws",  { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+  	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+  	&gsn_wingclaws,	SLOT(0), 0, 12, "", "Your bony claws retract from the ends of your winged hands.",  "" },
+
     { "change form",  { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
     &gsn_change,                     SLOT(0),    0, 12, "",      "You loose control over your current form.",   "" },

@@ -523,6 +523,8 @@ DECLARE_DO_FUN( do_fleshcraft);
 DECLARE_DO_FUN( do_bonecraft);
 DECLARE_DO_FUN( do_changeling);
 DECLARE_DO_FUN( do_essence);
+DECLARE_DO_FUN( do_chiropteranmarauder);
+DECLARE_DO_FUN( do_wingclaws);
 DECLARE_DO_FUN( do_teach);
 DECLARE_DO_FUN( do_mage);
 DECLARE_DO_FUN( do_convert);

@@ -1757,8 +1757,7 @@ void d10_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt)
         dt += wield->value[3];
     else
         {
-            if (ch->race == race_lookup("garou") &&
-                is_affected(ch, gsn_claws) )
+            if ((ch->race == race_lookup("garou") && is_affected(ch, gsn_claws)) || is_affected(ch, gsn_wingclaws))
                 dt += attack_lookup("claws");
             else
                 dt += ch->dam_type;
@@ -5292,7 +5291,7 @@ void kill_em(CHAR_DATA *ch,CHAR_DATA *victim)
       if (is_affected(victim, gsn_wingclaws))
         do_function(victim, &do_wingclaws, "");
     }
-    
+
 /* garou stuff */
     if(!IS_NPC(victim) && victim->race == race_lookup("ghoul"))
         victim->pblood = victim->max_pblood;

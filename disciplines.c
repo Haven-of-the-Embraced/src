@@ -7374,6 +7374,89 @@ void do_chiropteranmarauder(CHAR_DATA *ch, char *argument)
 	return;
 }
 
+void do_wingclaws(CHAR_DATA *ch, char *argument)
+{
+	AFFECT_DATA af;
+	int dicesuccess;
+
+	if (IS_NPC(ch))
+		return;
+
+	if(!IS_VAMP(ch))
+	{
+		send_to_char("You are not a Vampire!\n\r",ch);
+		return;
+	}
+
+	if (is_affected(ch, gsn_wingclaws)
+	{
+		affect_strip(ch, gsn_wingclaws);
+		act( "Your bony claws retract back into the ends of your winged hands.", ch, NULL, NULL, TO_CHAR );
+		act( "$n's bony claws retract into $s winged hands.", ch, NULL, NULL, TO_NOTVICT );
+		return;
+	}
+
+	if (is_affected(ch, gsn_claws))
+	{
+		send_to_char("You already have claws extended from your fingertips.\n\r", ch);
+		return;
+	}
+
+	if (!is_affected( ch, gsn_vicissitude_chiropteran ))
+	{
+		send_to_char("You are not in the correct form to do that.\n\r", ch);
+		return;
+	}
+
+	if (ch->pblood < 15)
+	{
+		send_to_char("You do not have enough blood to extend your wing claws.\n\r", ch);
+		return;
+	}
+
+	ch->pblood -= 10;
+	dicesuccess = godice(get_attribute(ch, STRENGTH) + ch->csabilities[CSABIL_BODYCRAFTS], 6);
+  WAIT_STATE(ch, 6);
+
+  if (dicesuccess < 0)
+  {
+    act("You howl in pain as you mangle your hands, the bone ripping and bursting randomly through your hands and knuckles!", ch, NULL, NULL, TO_CHAR);
+    act("A sharp yelp of pain comes from $n as $e looks at $s hands.", ch, NULL, NULL, TO_NOTVICT);
+    d10_damage(ch, ch, -(dicesuccess), ch->level, gsn_wingclaws, DAM_AGGREVATED, DEFENSE_NONE, TRUE, FALSE);
+    act("After a moment of concentration, you manage to fix your mistake and your bone claws become serviceable.", ch, NULL, NULL, TO_CHAR);
+    WAIT_STATE(ch, 8);
+    return;
+  }
+
+  if (dicesuccess == 0)
+  {
+      act("You try to mold yourself a pair of wing claws, but can't seem to get it right.", ch, NULL, NULL, TO_CHAR);
+      WAIT_STATE(ch, 4);
+      return;
+  }
+
+  act("Sharpened bone claws slowly extend from your winged digits.", ch, NULL, NULL, TO_CHAR);
+  act("Wicked bone claws slide forth from $n's winged hands.", ch, NULL, NULL, TO_NOTVICT);
+        af.where     = TO_AFFECTS;
+        af.type      = gsn_wingclaws;
+        af.level     = ch->level;
+        af.duration  = -1;
+        af.location  = APPLY_NONE;
+        af.modifier  = 0;
+        af.bitvector = 0;
+
+        if (dicesuccess > 4)
+        {
+          act("Taking meticulous care while crafting, your claws have been formed perfectly.", ch, NULL, NULL, TO_CHAR);
+          af.location = APPLY_HIT;
+          af.modifier = dicesuccess * 10;
+        }
+        affect_to_char( ch, &af );
+
+	gain_exp(ch, dicesuccess*20);
+        return;
+}
+
 /*******************************************************************************
  *                                                                             *
  *                        Beginning of Combo Disciplines.                      *

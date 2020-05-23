@@ -5222,6 +5222,15 @@ void kill_em(CHAR_DATA *ch,CHAR_DATA *victim)
                     do_function(victim, &do_shift, "");
                     do_function(victim, &do_fangs, "");
                 }
+                if(is_affected( victim, gsn_vicissitude_chiropteran ))
+                {
+                  if (!IS_AFFECTED(victim, AFF_FANGS))
+                    SET_BIT(victim->affected_by, AFF_FANGS);
+                  do_function(victim, &do_chiropteran, "");
+                  do_function(victim, &do_fangs, "");
+                  if (is_affected(victim, gsn_wingclaws))
+                    do_function(victim, &do_wingclaws, "");
+                }
                 if ( is_affected( victim, gsn_claws ) )
                         do_function(victim, &do_claws, "");
 
@@ -5273,6 +5282,17 @@ void kill_em(CHAR_DATA *ch,CHAR_DATA *victim)
         do_function(victim, &do_horrid, "");
         do_function(victim, &do_fangs, "");
     }
+
+    if(is_affected( victim, gsn_vicissitude_chiropteran ))
+    {
+      if (!IS_AFFECTED(victim, AFF_FANGS))
+        SET_BIT(victim->affected_by, AFF_FANGS);
+      do_function(victim, &do_chiropteran, "");
+      do_function(victim, &do_fangs, "");
+      if (is_affected(victim, gsn_wingclaws))
+        do_function(victim, &do_wingclaws, "");
+    }
+    
 /* garou stuff */
     if(!IS_NPC(victim) && victim->race == race_lookup("ghoul"))
         victim->pblood = victim->max_pblood;

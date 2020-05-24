@@ -2129,6 +2129,28 @@ void extract_char( CHAR_DATA *ch, bool fPull )
     }
     else
     {
+
+        if (ch->pcdata->pc_next) // If there's a player that logged in AFTER ch
+        {
+            if (ch->pcdata->pc_prev) // If there's a player that logged in BEFORE ch
+            {
+                // Delete ch from the middle of the list.
+                ch->pcdata->pc_prev->pc_next = ch->pcdata->pc_next;
+                ch->pcdata->pc_next->pc_prev = ch->pcdata->pc_prev;
+                ch->pcdata->pc_prev = ch->pcdata->pc_next = NULL;
+            } else // somebody AFTER nobody BEFORE, ch is first
+            {
+                ch->pcdata->pc_next->pc_prev = NULL;
+                pc_first = ch->pcdata->pc_next;
+            }
+        } else if (ch->pcdata->pc_prev) // Somebody BEFORE, nobody AFTER ch is last
+        {
+            ch->pcdata->pc_prev->pc_next = NULL;
+            pc_last = ch->pcdata->pc_prev;
+        } else { // Nobody before, Nobody after, ch is foreveralone.
+            pc_first = pc_last = NULL;
+        }
+
     nuke_pets(ch);
     ch->pet = NULL;
 

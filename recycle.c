@@ -461,6 +461,9 @@ void free_pcdata(PC_DATA *pcdata)
     INVALIDATE(pcdata);
     pcdata->next = pcdata_free;
     pcdata_free = pcdata;
+    pcdata->character = NULL;
+    pcdata->pc_next = NULL;
+    pcdata->pc_prev = NULL;
 
     return;
 }

@@ -2269,6 +2269,9 @@ struct  char_data
 struct  pc_data
 {
     PC_DATA *       next;
+    PC_DATA *       pc_next;
+    PC_DATA *       pc_prev;
+    CHAR_DATA *     character;
     BUFFER *        buffer;
     bool        valid;
     char *      pwd;

@@ -876,6 +876,7 @@ bool load_char_obj( DESCRIPTOR_DATA *d, char *name )
     ch->pcdata = new_pcdata();
 
     d->character            = ch;
+    ch->pcdata->character   = ch;
     ch->desc                = d;
     ch->name                = str_dup( name );
     ch->id              = get_pc_id();
@@ -2626,4 +2627,3 @@ void fread_obj( CHAR_DATA *ch, FILE *fp )
     }
     }
 }
-

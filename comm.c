@@ -1887,6 +1887,7 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
     char *p;
     int group,iClass,race,i,weapon, num, num1;
     bool fOld;
+    PC_DATA *pcdata, *prev, *next;
 
     while ( isspace(*argument) )
     argument++;
@@ -2486,6 +2487,22 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
         0 );
     ch->next    = char_list;
     char_list   = ch;
+    pcdata      = ch->pcdata;
+
+    if (!IS_IMMORTAL(ch))
+        if (!pc_first)
+        {
+            pc_first = pcdata;
+            pc_last = pcdata;
+        }    else {
+                prev = pc_first;
+                while (prev->pc_next != NULL)
+                    prev = prev->pc_next;
+                prev->pc_next = pcdata;
+                pcdata->pc_prev = prev;
+                pc_last = pcdata;
+            }
+
     d->connected    = CON_PLAYING;
     reset_char(ch);
     stop_fighting( ch, TRUE );

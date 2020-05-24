@@ -2334,6 +2334,15 @@ void do_who( CHAR_DATA *ch, char *argument )
                 sprintf(tags, "{w | {w   %-10s  {w|", wch->pcdata->immtitle);
 
             }
+            
+        if (ADDICTED(wch))
+        {
+            if (FIRST(wch))
+                sprintf(tags, "{w | {r<{w-{D[{yADDICTED{D]{w-{r>{w |");
+            else
+                sprintf(tags, "{w |   {D<{wADDICTED{D>{w   |");
+        }
+
         if (IS_SET(wch->comm, COMM_AFK) && wch->timer < 1000)
                 sprintf(tags, "{w |  {D**{GAFK{D** {r({w%3d{r) {w|", wch->timer);
         else if (IS_SET(wch->comm, COMM_AFK) && wch->timer >= 1000)

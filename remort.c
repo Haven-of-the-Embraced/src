@@ -228,7 +228,7 @@ void do_remort(CHAR_DATA *ch, char *argument)
             send_to_char( "You are already Human.\n\r", ch );
             return;
         }
-        if ( IS_AFFECTED(ch, AFF_SHIFT) && !is_affected(gsn_vicissitude_chiropteran))
+        if ( IS_AFFECTED(ch, AFF_SHIFT) && !is_affected(ch,gsn_vicissitude_chiropteran))
         {
             if ( !IS_AFFECTED(ch, AFF_FANGS))
             SET_BIT(ch->affected_by, AFF_FANGS);

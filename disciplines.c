@@ -7104,11 +7104,23 @@ void do_horrid(CHAR_DATA *ch, char *argument)
         return;
     }
 
+    if (is_affected( ch, gsn_vicissitude_horrid ))
+    {
+        send_to_char( "Your form shrinks and you slowly return to your 'normal' form.\n\r", ch );
+        affect_strip(ch,gsn_vicissitude_horrid);
+        if (ch->hit > ch->max_hit)
+            ch->hit = ch->max_hit;
+        act( "$n's body slowly shrinks and alters back into their 'normal' form.", ch, NULL, NULL, TO_NOTVICT );
+        ch->dam_type = 17;
+        if ( !IS_AFFECTED(ch, AFF_FANGS))
+            do_function(ch, &do_fangs, "" );
+        return;
+    }
+
     if (IS_AFFECTED(ch, AFF_SHIFT)) {
         sendch("You have already altered your form!\n\r", ch);
         return;
         }
-
 
     if ( IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
     {
@@ -7122,18 +7134,6 @@ void do_horrid(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if (is_affected( ch, gsn_vicissitude_horrid ))
-    {
-        send_to_char( "Your form shrinks and you slowly return to your 'normal' form.\n\r", ch );
-        affect_strip(ch,gsn_vicissitude_horrid);
-        if (ch->hit > ch->max_hit)
-            ch->hit = ch->max_hit;
-        act( "$n's body slowly shrinks and alters back into their 'normal' form.", ch, NULL, NULL, TO_NOTVICT );
-        ch->dam_type = 17;
-        if ( !IS_AFFECTED(ch, AFF_FANGS))
-            do_function(ch, &do_fangs, "" );
-        return;
-    }
     if (is_affected( ch, gsn_mask ))
     {
         if ( !IS_AFFECTED(ch, AFF_FANGS))

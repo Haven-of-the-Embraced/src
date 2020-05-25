@@ -3310,6 +3310,7 @@ int xp_compute( CHAR_DATA *gch, CHAR_DATA *victim, int total_levels )
     int level_range;
     int playerbonus;
     double dBonus;
+    double axp, mxp;
     extern bool doubleexp;
     extern bool manualxp;
     DESCRIPTOR_DATA *d;
@@ -3507,18 +3508,32 @@ int xp_compute( CHAR_DATA *gch, CHAR_DATA *victim, int total_levels )
 
     if (!IS_NPC(gch) && gch->pcdata->immclass > 0 )
     {
-        double ixp;
         switch (gch->pcdata->immclass)
         {
-            case 1: ixp = (5 * (double) base_exp/100); break;
-            case 2: ixp = (15 * (double) base_exp/100); break;
-            case 3: ixp = (50 * (double) base_exp/100); break;
+            case 1: mxp = (5 * (double) base_exp/100); break;
+            case 2: mxp = (15 * (double) base_exp/100); break;
+            case 3: mxp = (50 * (double) base_exp/100); break;
         }
         //cprintf(gch, "xp%d ixp%f", xp, ixp);
-        ixp += 0.5;
-        xp += (int) ixp;
+        mxp += 0.5;
+        xp += (int) mxp;
     }
 
+    if (ADDICTED(gch))
+    {
+            axp = (2 * (double) ADDICTED(gch)) * (double) base_exp / 100;
+            axp += 0.5;
+
+            if (FIRST(gch))
+                axp += 1;
+
+            xp += (int) axp;
+    }
+
+    if (IS_DEBUGGING(gch))
+    {
+        cprintf(gch, "xp%d base%d axp%f ixp%f\n\r", xp, base_exp, axp, mxp);
+    }
     if(victim->leader != NULL)
         return xp/10;
     else

@@ -7174,7 +7174,7 @@ void do_prefix (CHAR_DATA *ch, char *argument)
 bool copyover_handler()
 {
     FILE *fp;
-    DESCRIPTOR_DATA *d, *d_next;
+    DESCRIPTOR_DATA *d, *d_next, *d_prev;
     char buf [100], buf2[100], buf3[MSL];
     extern int port,control; /* db.c */
 
@@ -7189,10 +7189,10 @@ bool copyover_handler()
     }
 
     /* For each playing descriptor, save its state */
-    for (d = descriptor_list; d ; d = d_next)
+    for (d = descriptor_tsil; d ; d = d_prev)
     {
         CHAR_DATA * och = CH (d);
-        d_next = d->next; /* We delete from the list , so need to save this */
+        d_prev = d->prev; /* We delete from the list , so need to save this */
 
         if (!d->character || d->connected > CON_PLAYING) /* drop those logging on */
         {
@@ -7201,7 +7201,7 @@ bool copyover_handler()
         }
         else
         {
-            fprintf (fp, "%d %s %s %s\n", d->descriptor, och->name, d->host, och->leader != NULL ? och->leader->name : NULL);
+            fprintf (fp, "%d %s %s %d %s\n", d->descriptor, och->name, d->host, (int) (current_time - och->logon), och->leader != NULL ? och->leader->name : NULL);
             save_char_obj (och);
         }
     }
@@ -7335,6 +7335,7 @@ void copyover_recover ()
 {
     DESCRIPTOR_DATA *d;
     CHAR_DATA   *ch;
+    PC_DATA     *pcdata;
     FILE *fp;
     char name [100];
     char host[MSL];
@@ -7342,6 +7343,7 @@ void copyover_recover ()
     bool fOld;
     char buf[MSL];
     char leader[MSL];
+    int logon;
 
     log_string("Copyover recovery initiated");
 
@@ -7358,7 +7360,7 @@ void copyover_recover ()
 
     for (;;)
     {
-        fscanf (fp, "%d %s %s %s\n", &desc, name, host, leader);
+        fscanf (fp, "%d %s %s %d %s\n", &desc, name, host, &logon, leader);
         if (desc == -1)
             break;
 
@@ -7374,7 +7376,12 @@ void copyover_recover ()
 
         d->host = str_dup (host);
         d->next = descriptor_list;
+        if (descriptor_list)
+            descriptor_list->prev = d;
+        if (descriptor_tsil == NULL)
+            descriptor_tsil = d;
         descriptor_list = d;
+
         d->connected = CON_COPYOVER_RECOVER; /* -15, so close_socket frees the char */
 
 
@@ -7398,6 +7405,18 @@ void copyover_recover ()
             d->character->next = char_list;
             char_list = d->character;
             ch = d->character;
+            pcdata = ch->pcdata;
+
+            if (!IS_IMMORTAL(ch))
+                if (!pc_first)
+                {
+                    pc_first = pcdata;
+                    pc_last = pcdata;
+                } else {
+                        pcdata->pc_prev = pc_last;
+                        pc_last->pc_next = pcdata;
+                        pc_last = pcdata;
+                    }
 
             if (is_affected(ch, gsn_astralprojection)) {
                 ch->in_room = get_room_index(ROOM_VNUM_TEMPLE);
@@ -7407,6 +7426,7 @@ void copyover_recover ()
                 affect_strip(ch, gsn_astrallylost);
             }
 
+            ch->logon = (time_t) (current_time - logon);
             char_to_room (d->character, d->character->in_room);
             do_look (d->character, "auto");
             d->character->leadername = str_dup(leader);

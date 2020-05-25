@@ -304,7 +304,9 @@ int write       args( ( int fd, char *buf, int nbyte ) );
  * Global variables.
  */
 DESCRIPTOR_DATA *   descriptor_list;    /* All open descriptors     */
+DESCRIPTOR_DATA *   descriptor_tsil;    /* Like descriptor_list, but backwards! */
 DESCRIPTOR_DATA *   d_next;     /* Next descriptor in loop  */
+DESCRIPTOR_DATA *   d_prev;     /* Previous descriptor in loop */
 FILE *          fpReserve;      /* Reserved file handle     */
 bool            god;        /* All new chars are gods!  */
 bool            merc_down;      /* Shutdown         */

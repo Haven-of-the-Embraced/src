@@ -564,6 +564,7 @@ struct  weather_data
 struct  descriptor_data
 {
     DESCRIPTOR_DATA *   next;
+    DESCRIPTOR_DATA *   prev;
     DESCRIPTOR_DATA *   snoop_by;
     CHAR_DATA *     character;
     CHAR_DATA *     original;
@@ -3242,6 +3243,7 @@ extern      SHOP_DATA     * shop_first;
 
 extern      CHAR_DATA     * char_list;
 extern      DESCRIPTOR_DATA   * descriptor_list;
+extern      DESCRIPTOR_DATA   * descriptor_tsil;
 extern      OBJ_DATA      * object_list;
 extern      PROG_CODE    * mprog_list;
 extern          PROG_CODE         *     rprog_list;

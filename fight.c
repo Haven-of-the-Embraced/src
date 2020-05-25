@@ -5223,12 +5223,7 @@ void kill_em(CHAR_DATA *ch,CHAR_DATA *victim)
                 if (victim->in_room != NULL)
                         char_from_room( victim );
                 char_to_room( victim, get_room_index( ROOM_VNUM_ALTAR ) );
-                if ( IS_AFFECTED(victim, AFF_SHIFT))
-                {       if (!IS_AFFECTED(victim, AFF_FANGS))
-                        SET_BIT(victim->affected_by, AFF_FANGS);
-                        do_function(ch, &do_shift, "");
-                        do_function(ch, &do_fangs, "");
-                }
+
                 if(is_affected( victim, gsn_vicissitude_horrid ))
                 {
                     if (!IS_AFFECTED(victim, AFF_FANGS))
@@ -5244,6 +5239,12 @@ void kill_em(CHAR_DATA *ch,CHAR_DATA *victim)
                   do_function(victim, &do_fangs, "");
                   if (is_affected(victim, gsn_wingclaws))
                     do_function(victim, &do_wingclaws, "");
+                }
+                if ( IS_AFFECTED(victim, AFF_SHIFT))
+                {       if (!IS_AFFECTED(victim, AFF_FANGS))
+                        SET_BIT(victim->affected_by, AFF_FANGS);
+                        do_function(ch, &do_shift, "");
+                        do_function(ch, &do_fangs, "");
                 }
                 if ( is_affected( victim, gsn_claws ) )
                         do_function(victim, &do_claws, "");
@@ -5282,13 +5283,6 @@ void kill_em(CHAR_DATA *ch,CHAR_DATA *victim)
         ch->in_room->vnum );
         log_string( log_buf );
 
-    if ( IS_AFFECTED(victim, AFF_SHIFT))
-    {   if (!IS_AFFECTED(victim, AFF_FANGS))
-        SET_BIT(victim->affected_by, AFF_FANGS);
-        do_function(victim, &do_shift, "");
-        do_function(victim, &do_fangs, "");
-    }
-
     if(is_affected( victim, gsn_vicissitude_horrid ))
     {
         if (!IS_AFFECTED(victim, AFF_FANGS))
@@ -5305,6 +5299,13 @@ void kill_em(CHAR_DATA *ch,CHAR_DATA *victim)
       do_function(victim, &do_fangs, "");
       if (is_affected(victim, gsn_wingclaws))
         do_function(victim, &do_wingclaws, "");
+    }
+    
+    if ( IS_AFFECTED(victim, AFF_SHIFT))
+    {   if (!IS_AFFECTED(victim, AFF_FANGS))
+        SET_BIT(victim->affected_by, AFF_FANGS);
+        do_function(victim, &do_shift, "");
+        do_function(victim, &do_fangs, "");
     }
 
 /* garou stuff */

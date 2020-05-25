@@ -796,7 +796,7 @@ bool spec_executioner( CHAR_DATA *ch )
         v_next = victim->next_in_room;
 
         if (!IS_NPC(victim) && !IS_IMMORTAL(victim) && ((IS_AFFECTED(victim,AFF_FANGS) && !IS_AFFECTED(victim,AFF_SHIFT) && can_see( ch, victim )) ||
-        (victim->changed == CHANGED_CRINOS && can_see( ch, victim )) || (is_affected(victim,gsn_vicissitude_horrid) && can_see( ch, victim )) ||
+        (victim->changed == CHANGED_CRINOS && can_see( ch, victim )) || ((is_affected(victim,gsn_vicissitude_horrid) || is_affected(victim, gsn_vicissitude_chiropteran)) && can_see( ch, victim )) ||
         (is_affected(victim,gsn_vicissitude_bonecraft) && can_see( ch, victim )) || (victim->inhumanity >= 5 && can_see( ch, victim ))))
         {
             AFFECT_DATA af;
@@ -1337,10 +1337,10 @@ bool spec_lag( CHAR_DATA *ch )
 {
     CHAR_DATA *victim;
     CHAR_DATA *v_next;
-  	
+
 	if (!IS_AWAKE(ch) || ch->stopped > 0 || is_affected( ch, gsn_forget ))
       return FALSE;
-  
+
     for ( victim = ch->in_room->people; victim != NULL; victim = v_next )
     {
     v_next = victim->next_in_room;
@@ -1609,4 +1609,3 @@ bool spec_cast_fire( CHAR_DATA *ch )
     (*skill_table[sn].spell_fun) ( sn, ch->level, ch, victim,TARGET_CHAR);
     return TRUE;
 }
-

@@ -1084,7 +1084,11 @@ void init_descriptor( int control )
     /*
      * Init descriptor data.
      */
-    dnew->next          = descriptor_list;
+    dnew->next              = descriptor_list;
+    if (descriptor_list)
+        descriptor_list->prev   = dnew;
+    if (descriptor_tsil == NULL)
+        descriptor_tsil = dnew;
     descriptor_list     = dnew;
 
     /*
@@ -1148,22 +1152,34 @@ void close_socket( DESCRIPTOR_DATA *dclose )
     if ( d_next == dclose )
     d_next = d_next->next;
 
-    if ( dclose == descriptor_list )
+    if ( dclose == descriptor_list ) // NEWEST descriptor
     {
     descriptor_list = descriptor_list->next;
+    if (descriptor_list)
+        descriptor_list->prev = NULL;
+    }
+    else if (dclose == descriptor_tsil) // Oldest descriptor
+    {
+        descriptor_tsil = descriptor_tsil->prev;
+        if (descriptor_tsil)
+            descriptor_tsil->next = NULL;
     }
     else
     {
-    DESCRIPTOR_DATA *d;
+        dclose->next->prev = dclose->prev;
+        dclose->prev->next = dclose->next;
+    }
+    /*DESCRIPTOR_DATA *d;
 
     for ( d = descriptor_list; d && d->next != dclose; d = d->next )
         ;
     if ( d != NULL )
         d->next = dclose->next;
+        d->next->prev = d;
     else
         bug( "Close_socket: dclose not found.", 0 );
     }
-
+*/
     close( dclose->descriptor );
     free_descriptor(dclose);
 #if defined(MSDOS) || defined(macintosh)

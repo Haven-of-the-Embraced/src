@@ -2334,8 +2334,8 @@ void do_who( CHAR_DATA *ch, char *argument )
                 sprintf(tags, "{w | {w   %-10s  {w|", wch->pcdata->immtitle);
 
             }
-            
-        if (ADDICTED(wch))
+
+        if (!IS_IMMORTAL(wch) && ADDICTED(wch))
         {
             if (FIRST(wch))
                 sprintf(tags, "{w | {r<{w-{D[{yADDICTED{D]{w-{r>{w |");

@@ -7407,16 +7407,16 @@ void copyover_recover ()
             ch = d->character;
             pcdata = ch->pcdata;
 
-            if (!IS_IMMORTAL(ch))
-                if (!pc_first)
-                {
-                    pc_first = pcdata;
-                    pc_last = pcdata;
-                } else {
-                        pcdata->pc_prev = pc_last;
-                        pc_last->pc_next = pcdata;
-                        pc_last = pcdata;
-                    }
+    if (!IS_IMMORTAL(ch))
+    {
+        if (!pc_first)
+            pc_first = pcdata;
+        else {
+            pcdata->pc_next = NULL;
+            pcdata->pc_prev = pc_last;
+            }
+        pc_last = pcdata;
+}
 
             if (is_affected(ch, gsn_astralprojection)) {
                 ch->in_room = get_room_index(ROOM_VNUM_TEMPLE);

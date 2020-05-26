@@ -7462,7 +7462,7 @@ void copyover_recover ()
         ch = d->character;
         if (ch->leadername != NULL)
         {
-            ch->leader = get_char_world(ch, ch->leadername);
+            ch->leader = get_char_world(NULL, ch->leadername);
             ch->master = ch->leader;
         }
     }

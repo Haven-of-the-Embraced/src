@@ -620,6 +620,7 @@ DECLARE_DO_FUN(do_seal);
 DECLARE_DO_FUN(do_unseal);
 DECLARE_DO_FUN(do_meditate);
 DECLARE_DO_FUN(do_telnetgoahead);
+DECLARE_DO_FUN(do_addict);
 /* Additions by The Maniac for Languages */
 DECLARE_DO_FUN( do_common       );
 DECLARE_DO_FUN( do_human        );

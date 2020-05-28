@@ -5009,3 +5009,8 @@ void do_dinfo (CHAR_DATA *ch, char *argument)
 
     }
 }
+
+void do_addict (CHAR_DATA *ch, char *argument)
+{
+    return;
+}

@@ -222,6 +222,7 @@ const   struct  cmdfun_type cmdfun_table    [] =
     /*
      * Informational commands.
      */
+    { "addict",     do_addict},
     { "affects",    do_affects},
     { "areas",      do_areas },
     { "dictionary",     do_dictionary },

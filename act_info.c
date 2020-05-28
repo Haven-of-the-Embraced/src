@@ -5013,7 +5013,7 @@ void do_dinfo (CHAR_DATA *ch, char *argument)
 void do_addict (CHAR_DATA *ch, char *argument)
 {
     PC_DATA *pcdata;
-    int count, mins, secs, hours;
+    int count, mins, secs, hours, bonus;
     char buf[MSL];
     BUFFER *output;
     output = new_buf();
@@ -5026,11 +5026,12 @@ void do_addict (CHAR_DATA *ch, char *argument)
 
 
     add_buf(output, "-=============================-  Addict Data  -=============================-\n\r");
-    add_buf(output, "\n\r  {c[Play Time][Idle] Name            - Login Time{x\n\r");
-
+    add_buf(output, "Legend:          {G^^^{D = {wFirst{x                     {rvvv{D = {wLast{x\n\r");
+    add_buf(output, "                 {Y>>>{D = {wNext{x                      {y---{D = {wNone{x\n\r");
     if (IS_IMMORTAL(ch))
     {
-
+        add_buf(output, "                 {W!!!{D = {wImmortal{x\n\r");
+        add_buf(output, "\n\r{D[POS][Play Time][Bonus] Name            - Login Time{x\n\r");
 
         for ( d = descriptor_list; d; d = d->next )
         {
@@ -5041,30 +5042,63 @@ void do_addict (CHAR_DATA *ch, char *argument)
             secs = ((int)current_time - vch->logon);
             mins = secs / 60;
             hours = mins / 60;
-            sprintf(buf2, "{W!!{x");
 
-            if (vch->pcdata == pc_first)
-            {
-                first == TRUE;
-                sprintf(buf," {WF{x");
-            }
-            if (vch->pcdata == pc_last)
-            {
-                last == TRUE;
-                sprintf(buf, " {RL{x");
-            }
-            if (first && last)
-                sprintf(buf, "{R:({x");
+            if (IS_IMMORTAL(vch))
+                sprintf(buf2, "{W!!!{x");
+            else if (vch->pcdata == pc_first)
+                sprintf(buf2, "{G^^^{x");
+            else if (vch->pcdata == pc_last)
+                sprintf(buf2, "{Rvvv{x");
+            else if (pc_first && pc_first->next == vch->pcdata)
+                sprintf(buf2, "{Y>>>{x");
+            else
+                sprintf(buf2, "{y---{x");
 
             if (hours)
             {
+                if (!IS_IMMORTAL(vch))
+                {
+                    bonus = ADDICTED(vch);
+                    if (FIRST(vch))
+                        bonus++;
+                        bonus *= 2;
+                } else {
+                    bonus = 1337;
+                }
+
                 mins = mins % 60;
-                sprintf(buf, "%s[%5dh%2.2dm][%4d] %-15s - %s", buf2, hours, mins,vch->timer, vch->name, ctime(&ch->logon));
+                sprintf(buf, " %s {D[{w%5d{mh{w%2.2d{mm{D][{W%4d{w%%{D]{w %-15s{D - {y%s{x", buf2, hours, mins,bonus, vch->name, ctime(&vch->logon));
             } else {
-            sprintf(buf, "%s[%8dm][%4d] %-15s - %s", buf2, mins, vch->timer, vch->name, ctime(&ch->logon));
+            sprintf(buf, " %s {D[{m%8dm{D][{W%4d{w%%{D]{w %-15s{D - {y%s{x", buf2, mins, bonus, vch->name, ctime(&vch->logon));
             }
         add_buf(output, buf);
         }
+
+    } else {
+        add_buf(output, "\n\r{D[POS][Play Time][Bonus] - Login Time{x\n\r");
+        secs = ((int)current_time - ch->logon);
+        mins = secs / 60;
+        hours = mins / 60;
+
+        if(ch->pcdata == pc_first)
+            sprintf(buf2, "{G^^^{x");
+        else if (ch->pcdata == pc_last)
+            sprintf(buf2, "{Rvvv{x");
+        else
+            sprintf(buf2, "{y---{x");
+
+        if (hours)
+        {
+            bonus = ADDICTED(ch);
+            if (FIRST(ch))
+                bonus++;
+            bonus *= 2;
+            mins = mins % 60;
+            sprintf(buf, " %s {D[{w%5d{mh{w%2.2d{mm{D][{W%4d{w%%{D] - {y%s{x",buf2, hours, mins, bonus, ctime(&ch->logon));
+        } else {
+            sprintf(buf, " %s {D[{w%8d{mm{D][{w-----{D] - {y%s{x",buf2, mins, ctime(&ch->logon));
+        }
+    add_buf(output, buf);
 
     }
 

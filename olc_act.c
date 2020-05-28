@@ -3175,12 +3175,12 @@ OEDIT( oedit_show )
     {
     if ( cnt == 0 )
     {
-        send_to_char( "Number Modifier Affects\n\r", ch );
-        send_to_char( "------ -------- -------\n\r", ch );
+        send_to_char( "Number Modifier Affects Bits\n\r", ch );
+        send_to_char( "------ -------- ------- ----\n\r", ch );
     }
-    sprintf( buf, "[%4d] %-8d %s\n\r", cnt,
+    sprintf( buf, "[%4d] %-8d %-7s %s\n\r", cnt,
         paf->modifier,
-        flag_string( apply_flags, paf->location ) );
+        flag_string( apply_flags, paf->location ), affect_bit_name(paf->bitvector));
     send_to_char( buf, ch );
     cnt++;
     }

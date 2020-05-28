@@ -3356,30 +3356,6 @@ int xp_compute( CHAR_DATA *gch, CHAR_DATA *victim, int total_levels )
     /* randomize the rewards */
     xp = number_range (xp , xp * 5/4);
 
-// Returns double XP to its default state when it ends
-
- if (global_xp <= 0 && !manualxp)
-	{
-	if (doubleexp == TRUE)
-		{
-		            for ( d = descriptor_list; d; d = d->next )
-            {
-                if ( d->connected == CON_PLAYING )
-                {
-                    if (xpawardmult == 2)
-                        send_to_char( "{G****[{YDouble Exp has ended {y:-( {G]****{x\n\r", d->character );
-                    if (xpawardmult == 3)
-                        send_to_char( "{R****[{Ytriple Exp has ended {y:-( {R]****{x\n\r", d->character );
-                }
-            }
-		}
-
-	global_xp = 0;
-	doubleexp = FALSE;
-	xpstat = 0;
-	xpawardmult = 1;
-	}
-
 // Do I turn on double XP? Let's check.
 // Rates check as well to lock in multiplier
     if (!manualxp)
@@ -3464,6 +3440,30 @@ int xp_compute( CHAR_DATA *gch, CHAR_DATA *victim, int total_levels )
         xp = (xp * xpawardmult);
 
        xp = xp + (xp*2 / 8);
+
+       // Returns double XP to its default state when it ends
+
+        if (global_xp <= 0 && !manualxp)
+       	{
+       	if (doubleexp == TRUE)
+       		{
+       		            for ( d = descriptor_list; d; d = d->next )
+                   {
+                       if ( d->connected == CON_PLAYING )
+                       {
+                           if (xpawardmult == 2)
+                               send_to_char( "{G****[{YDouble Exp has ended {y:-( {G]****{x\n\r", d->character );
+                           if (xpawardmult == 3)
+                               send_to_char( "{R****[{Ytriple Exp has ended {y:-( {R]****{x\n\r", d->character );
+                       }
+                   }
+       		}
+
+       	global_xp = 0;
+       	doubleexp = FALSE;
+       	xpstat = 0;
+       	xpawardmult = 1;
+       	}
 
 
 /*Sengir altered extra xp if you are leader*/
@@ -5300,7 +5300,7 @@ void kill_em(CHAR_DATA *ch,CHAR_DATA *victim)
       if (is_affected(victim, gsn_wingclaws))
         do_function(victim, &do_wingclaws, "");
     }
-    
+
     if ( IS_AFFECTED(victim, AFF_SHIFT))
     {   if (!IS_AFFECTED(victim, AFF_FANGS))
         SET_BIT(victim->affected_by, AFF_FANGS);

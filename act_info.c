@@ -5012,5 +5012,63 @@ void do_dinfo (CHAR_DATA *ch, char *argument)
 
 void do_addict (CHAR_DATA *ch, char *argument)
 {
+    PC_DATA *pcdata;
+    int count, mins, secs, hours;
+    char buf[MSL];
+    BUFFER *output;
+    output = new_buf();
+    CHAR_DATA *vch;
+    DESCRIPTOR_DATA *d;
+    bool first, last;
+    first = last = FALSE;
+    char buf2[MSL];
+
+
+
+    add_buf(output, "-=============================-  Addict Data  -=============================-\n\r");
+    add_buf(output, "\n\r  {c[Play Time][Idle] Name            - Login Time{x\n\r");
+
+    if (IS_IMMORTAL(ch))
+    {
+
+
+        for ( d = descriptor_list; d; d = d->next )
+        {
+            if (!d->character || d->connected > CON_PLAYING)
+                continue;
+
+            vch = d->character;
+            secs = ((int)current_time - vch->logon);
+            mins = secs / 60;
+            hours = mins / 60;
+            sprintf(buf2, "{W!!{x");
+
+            if (vch->pcdata == pc_first)
+            {
+                first == TRUE;
+                sprintf(buf," {WF{x");
+            }
+            if (vch->pcdata == pc_last)
+            {
+                last == TRUE;
+                sprintf(buf, " {RL{x");
+            }
+            if (first && last)
+                sprintf(buf, "{R:({x");
+
+            if (hours)
+            {
+                mins = mins % 60;
+                sprintf(buf, "%s[%5dh%2.2dm][%4d] %-15s - %s", buf2, hours, mins,vch->timer, vch->name, ctime(&ch->logon));
+            } else {
+            sprintf(buf, "%s[%8dm][%4d] %-15s - %s", buf2, mins, vch->timer, vch->name, ctime(&ch->logon));
+            }
+        add_buf(output, buf);
+        }
+
+    }
+
+    page_to_char(buf_string(output), ch);
+    free_buf(output);
     return;
 }

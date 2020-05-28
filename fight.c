@@ -3521,11 +3521,13 @@ int xp_compute( CHAR_DATA *gch, CHAR_DATA *victim, int total_levels )
 
     if (ADDICTED(gch))
     {
-            axp = (2 * (double) ADDICTED(gch)) * (double) base_exp / 100;
-            axp += 0.5;
-
+        double math;
+        math = (double) ADDICTED(gch);
             if (FIRST(gch))
-                axp += 1;
+                math += 1;
+
+            axp = (2 * math) * (double) base_exp / 100;
+            axp += 0.5;
 
             xp += (int) axp;
     }

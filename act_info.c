@@ -2425,8 +2425,6 @@ void do_who( CHAR_DATA *ch, char *argument )
     sprintf(buf2, "{w |  {DMost Online{w:%2d    {DSince Reboot{w:%2d   |  {DGXp{w: %-6d      {DXP Mod{w: %d{Dx{w        |{x\n\r", max_players, most_players, global_xp, xpawardmult);
     add_buf(output, buf2);
     add_buf(output, "{w<==============================================================================>{x\n\r");
-    sprintf( buf2, "Global {WXP{x:%d | Global {MQP{x:%d\n",global_xp,global_qp);
-    add_buf(output,buf2);
     if (doubleexp) {
         if (xpawardmult == 2)
             sprintf( buf2, "Double XP is ON!\n");

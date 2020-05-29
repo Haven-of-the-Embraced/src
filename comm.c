@@ -318,6 +318,7 @@ char            str_boot_time[MAX_INPUT_LENGTH];
 time_t          current_time;   /* time of this pulse */
 bool            MOBtrigger = TRUE;  /* act() switch                 */
 int             most_players = 0;   /* most players on since reboot */
+int             max_players = 0; /* Max players on, EVEWRR!*/
 int             tree_count = 0;
 int             vein_count = 0;
 struct  clan_type       clan_table[MAX_CLAN];

@@ -2230,6 +2230,7 @@ void do_who( CHAR_DATA *ch, char *argument )
     int nMatch;
     int vMatch;
     extern int most_players;
+    extern int max_players;
     bool rgfRace[MAX_PC_RACE];
     bool rgfClan[top_clan];
     bool fClanRestrict = FALSE;
@@ -2390,6 +2391,8 @@ void do_who( CHAR_DATA *ch, char *argument )
     buf[0] = '\0';
     }
     cuplayers = plist;
+    if(nMatch > most_players) most_players = nMatch;
+    if(most_players > max_players) max_players = most_players;
     if (ilist[0] == '\0')
         sprintf(ilist, "{w |    {D< {rNone{D >{w    |\r\n");
     if (plist[0] == '\0')
@@ -2408,7 +2411,6 @@ void do_who( CHAR_DATA *ch, char *argument )
     add_buf(output, ilist);
     add_buf(output,"{w |{D----{wPlayers{D-----{w|{x\n\r");
     add_buf(output, plist);
-    if(nMatch > most_players) most_players = nMatch;
       sprintf(buf2," {w+----------------+---------------------+-------------------------------------+\n\r");
     add_buf(output,buf2);
     sprintf( buf2, "{w |           {GPlayers found{w: %2d          |      {WMost on since update{w: %2d       |\n\r", vMatch,most_players );

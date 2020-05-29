@@ -2391,8 +2391,9 @@ void do_who( CHAR_DATA *ch, char *argument )
     buf[0] = '\0';
     }
     cuplayers = plist;
-    if(nMatch > most_players) most_players = nMatch;
-    if(most_players > max_players) max_players = most_players;
+
+    update_moston();
+
     if (ilist[0] == '\0')
         sprintf(ilist, "{w |    {D< {rNone{D >{w    |\r\n");
     if (plist[0] == '\0')

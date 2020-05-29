@@ -4018,6 +4018,7 @@ char *  strip_color     args( (const char *string) );
 int     strlen_color    args( (const char *string) );
 bool    canwear_objaffect args( (CHAR_DATA *ch, OBJ_DATA *obj) );
 bool    pass_gauntlet   args( (CHAR_DATA *ch, bool show) );
+void    update_moston  args( (void) );
 /* interp.c */
 void    interpret   args( ( CHAR_DATA *ch, char *argument ) );
 bool    is_number   args( ( char *arg ) );

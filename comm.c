@@ -3982,6 +3982,7 @@ void save_config( void )
     fprintf (fp, "Gqp %d\n",            global_qp);
     fprintf (fp, "Xpmult %d\n",         xpawardmult);
     fprintf (fp, "Manualxp %d\n",       manualxp);
+    fprintf (fp, "Maxon %d\n",          max_players);
 
     fprintf( fp, "End\n\n\n\n" );
     fclose( fp );
@@ -4046,6 +4047,7 @@ void load_config( void )
                break;
            case 'M':
                KEY( "Manualxp", manualxp, fread_number(fp));
+               KEY( "Maxon", max_players, fread_number(fp));
                break;
           case 'D':
                 KEY( "Doubleexp", doubleexp, fread_number(fp) );

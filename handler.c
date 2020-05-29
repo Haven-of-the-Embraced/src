@@ -4557,3 +4557,23 @@ bool pass_gauntlet( CHAR_DATA *ch, bool show)
         return TRUE;
     }
 }
+void update_moston ( void )
+{
+    DESCRIPTOR_DATA *d;
+    int current;
+    extern int most_players;
+    extern int max_players;
+
+    current = 0;
+    for ( d = descriptor_list; d != NULL; d = d->next )
+    {
+        if ( d->connected != CON_PLAYING  )
+            continue;
+            current++;
+    }
+
+    if (current > most_players) most_players = current;
+    if (current > max_players) max_players = current;
+    save_config();
+
+}

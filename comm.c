@@ -316,6 +316,7 @@ bool            newlock;        /* Game is newlocked        */
 char            str_boot_time[MAX_INPUT_LENGTH];
 /*char          boot_time_short[MAX_INPUT_LENGTH];*/
 time_t          current_time;   /* time of this pulse */
+time_t          boot_time;
 bool            MOBtrigger = TRUE;  /* act() switch                 */
 int             most_players = 0;   /* most players on since reboot */
 int             max_players = 0; /* Max players on, EVEWRR!*/
@@ -411,6 +412,7 @@ int main( int argc, char **argv )
     sprintf( boot_time_short, "%2d:%2d on %2d/%2d/%d", now->tm_hour, now->tm_min, now->tm_year+1900, now->tm_mon+1, now->tm_mday);*/
     gettimeofday( &now_time, NULL );
     current_time    = (time_t) now_time.tv_sec;
+    boot_time       = current_time;
     strcpy( str_boot_time, ctime( &current_time ) );
 
     /*

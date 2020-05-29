@@ -3250,6 +3250,7 @@ extern          PROG_CODE         *     rprog_list;
 extern          PROG_CODE         *     oprog_list;
 extern      char            bug_buf     [];
 extern      time_t          current_time;
+extern      time_t          boot_time;
 extern      time_t          agg_time;
 extern      bool            fLogAll;
 extern      bool            Debug;

@@ -2229,6 +2229,8 @@ void do_who( CHAR_DATA *ch, char *argument )
     int nNumber;
     int nMatch;
     int vMatch;
+    int bootsecs;
+    int uphours, upmins;
     extern int most_players;
     extern int max_players;
     bool rgfRace[MAX_PC_RACE];
@@ -2393,6 +2395,10 @@ void do_who( CHAR_DATA *ch, char *argument )
     cuplayers = plist;
 
     update_moston();
+    bootsecs = (int) (current_time - boot_time);
+    upmins   = bootsecs / 60;
+    uphours  = upmins / 60;
+    upmins   = upmins % 60;
 
     if (ilist[0] == '\0')
         sprintf(ilist, "{w |    {D< {rNone{D >{w    |\r\n");
@@ -2412,10 +2418,12 @@ void do_who( CHAR_DATA *ch, char *argument )
     add_buf(output, ilist);
     add_buf(output,"{w |{D----{wPlayers{D-----{w|{x\n\r");
     add_buf(output, plist);
-      sprintf(buf2," {w+----------------+---------------------+-------------------------------------+\n\r");
+      sprintf(buf2," {w+----------------+---------------------+--------------+----------------------+\n\r");
     add_buf(output,buf2);
-    sprintf( buf2, "{w |           {GPlayers found{w: %2d          |      {WMost on since update{w: %2d       |\n\r", vMatch,most_players );
+    sprintf( buf2, "{w |__{gPlayer{w_{gStats{w__|    {DPlaying Now{w:%2d   |__{cMUD{w__{cStats{w__|    {DUptime{w:%2d{Dh{w%2d{Dm     |{x\n\r", vMatch, uphours, upmins );
     add_buf(output,buf2);
+    sprintf(buf2, "{w |  {DMost Online{w:%2d    {DSince Reboot{w:%2d   |  {DGXp{w: %-6d      {DXP Mod{w: %d{Dx{w        |{x\n\r", max_players, most_players, global_xp, xpawardmult);
+    add_buf(output, buf2);
     add_buf(output, "{w<==============================================================================>{x\n\r");
     sprintf( buf2, "Global {WXP{x:%d | Global {MQP{x:%d\n",global_xp,global_qp);
     add_buf(output,buf2);

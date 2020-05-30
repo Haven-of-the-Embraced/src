@@ -3084,8 +3084,8 @@ void    channel_to_char args( (const char *txt, CHAR_DATA*ch) );
                     (a) = (b);                  \
                     if ( (a) < 0 )                  \
                     bug( "CHECK_POS : " c " == %d < 0", a );    \
-                }                           \
-
+                }
+#define HRTIME(buf, hour)   sprintf((buf), "%d%s", ((hour) % 12 == 0) ? 12, (hour) >= ? "pm" : "am")
 
 /*
  * Character macros.

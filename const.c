@@ -367,10 +367,10 @@ const   struct  race_type   race_table  []      =
     },
 
     {
-    "orc",          FALSE,
-    0,      AFF_INFRARED,   0,
-    0,      RES_DISEASE,    VULN_LIGHT,
-    A|H|M|V,    A|B|C|D|E|F|G|H|I|J|K
+    "placeholder",          FALSE,
+    0,      0,      0,
+    0,      0,      0,
+    0,      0
     },
 
     {

@@ -3423,6 +3423,7 @@ char *  crypt       args( ( const char *key, const char *salt ) );
 #define CONFIG_BACKUP    "../data/config.bk"
 /* This file holds the copyover data */
 #define COPYOVER_FILE   "../data/copyover.data"
+#define PLAYERLIST_FILE  "../data/player.lst"
 
 /* This is the executable file */
 #define EXE_FILE      "../src/rom"

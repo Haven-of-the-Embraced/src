@@ -258,9 +258,9 @@ const   struct  race_type   race_table  []      =
     },
 
     {
-    "giant",        FALSE,
+    "kinfolk",        FALSE,
     0,      0,      0,
-    0,      RES_FIRE|RES_COLD,  VULN_MENTAL|VULN_LIGHTNING,
+    0,      RES_CHARM|RES_MENTAL,   0,
     A|H|M|V,    A|B|C|D|E|F|G|H|I|J|K
     },
 

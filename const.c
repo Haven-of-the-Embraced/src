@@ -244,17 +244,17 @@ const   struct  race_type   race_table  []      =
     },
 
     {
-    "elf",          FALSE,
-    0,      AFF_INFRARED,   0,
-    0,      RES_CHARM,  VULN_IRON,
-    A|H|M|V,    A|B|C|D|E|F|G|H|I|J|K
+    "ape",          FALSE,
+    0,      0,      0,
+    0,      0,      0,
+    FORM_EDIBLE|FORM_ANIMAL|FORM_SENTIENT|FORM_BIPED|FORM_MAMMAL,   PART_HEAD|PART_ARMS|PART_LEGS|PART_HEART|PART_BRAINS|PART_GUTS|PART_HANDS|PART_FEET|PART_FINGERS|PART_EAR|PART_EYE
     },
 
     {
-    "dwarf",        FALSE,
-    0,      AFF_INFRARED,   0,
-    0,      RES_POISON|RES_DISEASE, VULN_DROWNING,
-    A|H|M|V,    A|B|C|D|E|F|G|H|I|J|K
+    "monkey",        FALSE,
+    0,      0,      0,
+    0,      0,      0,
+    FORM_EDIBLE|FORM_ANIMAL|FORM_SENTIENT|FORM_BIPED|FORM_MAMMAL,   PART_HEAD|PART_ARMS|PART_LEGS|PART_HEART|PART_BRAINS|PART_GUTS|PART_HANDS|PART_FEET|PART_FINGERS|PART_EAR|PART_EYE|PART_TAIL
     },
 
     {

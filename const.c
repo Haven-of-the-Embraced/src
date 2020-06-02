@@ -316,7 +316,7 @@ const   struct  race_type   race_table  []      =
     },
 
     {
-    "Marine Mammal",         FALSE,
+    "marine mammal",         FALSE,
     0,      AFF_SWIM,      0,
     0,      RES_COLD|RES_DROWNING,          VULN_LIGHTNING,
     FORM_EDIBLE|FORM_ANIMAL|FORM_SENTIENT|FORM_MAMMAL,    PART_HEAD|PART_HEART|PART_BRAINS|PART_GUTS|PART_EYE

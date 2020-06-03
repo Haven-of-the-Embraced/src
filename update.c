@@ -910,10 +910,13 @@ void char_update( void )
 
             if ( paf->type > 0 && skill_table[paf->type].msg_off )
             {
-            send_to_char( skill_table[paf->type].msg_off, ch );
-            send_to_char( "\n\r", ch );
+              send_to_char( skill_table[paf->type].msg_off, ch );
+              send_to_char( "\n\r", ch );
+            }
             if (paf->type == gsn_gift_lambentfire)
+            {
               act("The shining silver light surrounding $n dims, and fades away.", ch, NULL, NULL, TO_NOTVICT);
+              ch->in_room->light -= 2;
             }
         }
 

@@ -2202,7 +2202,35 @@ void spell_gift_eyeofthefalcon( int sn, int level, CHAR_DATA *ch, void *vo, int 
     return;
 }
 
-void spell_gift_lambentfire( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_lambentfire( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  if (is_affected(ch, gsn_gift_lambentfire))
+    {
+      act("You will the silvery brilliance to fade from your body.", ch, NULL, NULL, TO_CHAR);
+      act("The silvery light shining from $n fades away.", ch, NULL, NULL, TO_NOTVICT);
+      return;
+    }
+
+  if (ch->cswillpower < 1)
+  {
+    send_to_char("You do not have enough willpower to enact this Gift.\n\r", ch);
+    return;
+  }
+
+  ch->cswillpower--;
+
+  act("Focusing your energies, you ask for Luna's blessing, turning yourself into a shining beacon of silver light.", ch, NULL, NULL, TO_CHAR);
+  act("A brilliant silver light erupts from $n, and continues to glow brightly.", ch, NULL, NULL, TO_NOTVICT);
+
+  af.where        = TO_AFFECTS;
+  af.type         = gsn_gift_lambentfire;
+  af.level        = level;
+  af.duration     = 10 * (ch->rank / 2);
+  af.modifier     = 0;
+  af.location     = 0;
+  af.bitvector    = 0;
+  affect_to_char(ch, &af);
+
     return;
 }
 

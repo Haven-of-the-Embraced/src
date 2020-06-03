@@ -2204,12 +2204,16 @@ void spell_gift_eyeofthefalcon( int sn, int level, CHAR_DATA *ch, void *vo, int 
 
 void spell_gift_lambentfire( int sn, int level, CHAR_DATA *ch, void *vo, int target)
 {
+  CHAR_DATA *vch;
+  CHAR_DATA *vch_next;
+  int blindcheck = 0;
+
   if (is_affected(ch, gsn_gift_lambentfire))
-    {
-      act("You will the silvery brilliance to fade from your body.", ch, NULL, NULL, TO_CHAR);
-      act("The silvery light shining from $n fades away.", ch, NULL, NULL, TO_NOTVICT);
-      return;
-    }
+  {
+    act("You will the silvery brilliance to fade from your body.", ch, NULL, NULL, TO_CHAR);
+    act("The silvery light shining from $n fades away.", ch, NULL, NULL, TO_NOTVICT);
+    return;
+  }
 
   if (ch->cswillpower < 1)
   {
@@ -2231,7 +2235,49 @@ void spell_gift_lambentfire( int sn, int level, CHAR_DATA *ch, void *vo, int tar
   af.bitvector    = 0;
   affect_to_char(ch, &af);
 
-    return;
+  for ( vch = char_list; vch != NULL; vch = vch_next )
+  {
+    vch_next    = vch->next;
+    if ( vch->in_room == NULL )
+      continue;
+    if ( vch->in_room == ch->in_room && SAME_UMBRA(ch, vch))
+    {
+      if ( vch != ch  && !is_safe_spell(ch,vch,TRUE))
+      {
+        blindcheck = godice(get_attribute(vch,CSATTRIB_WITS) + vch->csabilities[CSABIL_ALERTNESS], 8);
+        if (is_same_group(vch,ch))
+        {
+          if (blindcheck > 0)
+            act("You manage to turn and shield your eyes in time from $N's sudden luminescence.", vch, NULL, ch, TO_CHAR);
+          else
+          {
+            act("Caught off guard, you are dazzled momentarily by the intensity of the silver light.", vch, NULL, NULL, TO_CHAR);
+            vch->stopped += ch->rank;
+          }
+        }
+        else
+        {
+          if (blindcheck > 0)
+            act("You manage to turn and shield your eyes in time from $N's sudden luminescence.", vch, NULL, ch, TO_CHAR);
+          else
+          {
+            act("Caught off guard by $N's dazzling brilliance, you are briefly blinded!", vch, NULL, ch, TO_CHAR);
+            af.where        = TO_AFFECTS;
+            af.type         = gsn_blindness;
+            af.level        = level;
+            af.duration     = 1;
+            af.modifier     = 0;
+            af.location     = 0;
+            af.bitvector    = 0;
+            affect_to_char(vch, &af);
+          }
+        }
+      }
+    }
+    continue;
+  }
+
+  return;
 }
 
 void spell_gift_empathy( int sn, int level, CHAR_DATA *ch, void *vo, int target){

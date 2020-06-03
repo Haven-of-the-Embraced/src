@@ -1808,6 +1808,9 @@ void d10_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt)
             diff = 4;
         }
 
+  if (is_affected(victim, gsn_gift_lambentfire))
+    diff++;
+
 if (DEBUG_MESSAGES || IS_DEBUGGING(ch)){
 	cprintf(ch, "hp{r%d{w df{c%d{x ", dice, diff);
 	if (IS_NPC(ch)) cprintf(victim, "hp{r%d{w df{c%d{x ", dice, diff);}

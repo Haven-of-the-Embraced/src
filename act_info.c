@@ -303,6 +303,7 @@ void show_char_to_char_0( CHAR_DATA *victim, CHAR_DATA *ch )
     if ( IS_AFFECTED2(victim, AFF2_HOLYSHIELD)   ) strcat( buf, "{x({WRadiant Aura{x){y " );
     if ( IS_AFFECTED2(victim, AFF2_DARKSHIELD)   ) strcat( buf, "{x({DDark Aura{x){y " );
     if ( is_affected(victim,gsn_shockshield)    ) strcat( buf, "{x({CS{Wt{cat{Wi{Cc{x){y " );
+    if (is_affected(victim, gsn_gift_lambentfire))  strcat(buf, "{x{D{{{WLuminous{D}{y ");
 /*Testing for imms to see Sanctus Lucis by Sengir*/
     if ( is_affected(victim,gsn_sanctus) && IS_IMMORTAL(ch))    strcat( buf, "{x({WH{wol{Wy{x){y ");
     if ( !IS_NPC(victim) && IS_SET(victim->act, PLR_KILLER ) )

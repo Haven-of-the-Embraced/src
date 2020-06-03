@@ -2204,6 +2204,7 @@ void spell_gift_eyeofthefalcon( int sn, int level, CHAR_DATA *ch, void *vo, int 
 
 void spell_gift_lambentfire( int sn, int level, CHAR_DATA *ch, void *vo, int target)
 {
+  AFFECT_DATA af;
   CHAR_DATA *vch;
   CHAR_DATA *vch_next;
   int blindcheck = 0;
@@ -2212,6 +2213,8 @@ void spell_gift_lambentfire( int sn, int level, CHAR_DATA *ch, void *vo, int tar
   {
     act("You will the silvery brilliance to fade from your body.", ch, NULL, NULL, TO_CHAR);
     act("The silvery light shining from $n fades away.", ch, NULL, NULL, TO_NOTVICT);
+    affect_strip(ch, gsn_gift_lambentfire);
+    ch->in_room->light -= 2;
     return;
   }
 
@@ -2225,6 +2228,8 @@ void spell_gift_lambentfire( int sn, int level, CHAR_DATA *ch, void *vo, int tar
 
   act("Focusing your energies, you ask for Luna's blessing, turning yourself into a shining beacon of silver light.", ch, NULL, NULL, TO_CHAR);
   act("A brilliant silver light erupts from $n, and continues to glow brightly.", ch, NULL, NULL, TO_NOTVICT);
+
+  ch->in_room->light += 2;
 
   af.where        = TO_AFFECTS;
   af.type         = gsn_gift_lambentfire;

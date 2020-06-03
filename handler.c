@@ -1499,6 +1499,13 @@ void char_from_room( CHAR_DATA *ch )
     &&   ch->in_room->light > 0 )
     --ch->in_room->light;
 
+    if (is_affected(ch, gsn_gift_lambentfire) && ch->in_room->light > 0)
+    {
+      ch->in_room->light -= 2;
+      if (ch->in_room->light < 0)
+        ch->in_room->light = 0;
+    }
+
     if ( ch == ch->in_room->people )
     {
     ch->in_room->people = ch->next_in_room;
@@ -1565,6 +1572,9 @@ void char_to_room( CHAR_DATA *ch, ROOM_INDEX_DATA *pRoomIndex )
     &&   obj->item_type == ITEM_LIGHT
     &&   obj->value[2] != 0 )
     ++ch->in_room->light;
+
+    if (is_affected(ch, gsn_gift_lambentfire))
+      ch->in_room->light += 2;
 
  /*   if (IS_AFFECTED(ch,AFF_PLAGUE))
     {

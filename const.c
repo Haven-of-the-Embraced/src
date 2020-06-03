@@ -2833,7 +2833,7 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
 
      {   "lambent fire", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
      { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_lambentfire,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_lambentfire,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+    &gsn_gift_lambentfire,          SLOT( 0),        0,     12, "",             "The brilliant silver light emanating from your body slowly dims and winks out.",        "" },
 
      {   "empathy", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
      { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_empathy,  TAR_IGNORE, POS_STANDING,

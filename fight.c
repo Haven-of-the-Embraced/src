@@ -3523,18 +3523,8 @@ int xp_compute( CHAR_DATA *gch, CHAR_DATA *victim, int total_levels )
         xp += (int) mxp;
     }
 
-    if (ADDICTED(gch))
-    {
-        double math;
-        math = (double) ADDICTED(gch);
-            if (FIRST(gch))
-                math += 1;
-
-            axp = (2 * math) * (double) base_exp / 100;
-            axp += 0.5;
-
-            xp += (int) axp;
-    }
+    axp == get_addict_bonus(gch, base_exp);
+    xp += axp;
 
     if (IS_DEBUGGING(gch))
     {

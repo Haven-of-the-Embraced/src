@@ -7166,6 +7166,7 @@ void save_player_list()
     FILE *fp;
     PC_DATA *pcdata;
     char buf[MSL];
+    int count = 0;
 
     if (pc_first == pc_last)
         return;
@@ -7178,12 +7179,70 @@ void save_player_list()
     }
 
     for (pcdata = pc_first; pcdata != NULL; pcdata = pcdata->pc_next)
-        fprintf(fp, "%s\n", pcdata->character->name);
+    {
+        fprintf(fp, "%d %s\n", count++, pcdata->character->name);
+    }
 
     fprintf(fp, "-1\n");
     fclose(fp);
     return;
 }
+
+void load_player_list()
+{
+    FILE *fp;
+    PC_DATA *pcdata;
+    char *buf[MSL];
+    int num;
+    char name[100];
+    CHAR_DATA *fch;
+
+    if ((fp = fopen(PLAYERLIST_FILE, "r")) == NULL)
+    {
+        sprintf(buf, "Could not read from file: %s", PLAYERLIST_FILE);
+        log_string( buf );
+        return;
+    }
+
+    for (;;)
+    {
+        fscanf (fp, "%d %s\n", &num, name);
+        if (num == -1)
+            break;
+        ;
+
+        if ((fch = get_char_world(NULL, name)) == NULL)
+        {
+            sprintf(buf, "load_player_list: Could not find character (%s) to re-list", name);
+            bug( buf, 0 );
+            continue;
+        }
+
+        if ((pcdata = fch->pcdata) == NULL)
+        {
+            sprintf(buf, "load_player_list: Got mobile (%s) to re-list, ERROR!", name);
+            bug( buf, 0 );
+            continue;
+        }
+
+        if (!pc_first)
+        {
+            pc_first = pc_last = pcdata;
+            sprintf(buf, "%s restored to addict spot.", name);
+            log_string( buf );
+            continue;
+        } else {
+            pcdata->pc_next = NULL;
+            pcdata->pc_prev = pc_last;
+            pc_last->pc_next = pcdata;
+        }
+        pc_last = pcdata;
+        sprintf(buf, "Appended %s to end of player list.", name);
+        log_string( buf );
+    }
+
+}
+
 
 #define CH(descriptor)  ((descriptor)->original ? \
 (descriptor)->original : (descriptor)->character)
@@ -7431,18 +7490,6 @@ void copyover_recover ()
             ch = d->character;
             pcdata = ch->pcdata;
 
-    if (!IS_IMMORTAL(ch))
-    {
-        if (!pc_first)
-            pc_first = pcdata;
-        else {
-            pcdata->pc_next = NULL;
-            pcdata->pc_prev = pc_last;
-            pc_last->pc_next = pcdata;
-            }
-        pc_last = pcdata;
-    }
-
             if (is_affected(ch, gsn_astralprojection)) {
                 ch->in_room = get_room_index(ROOM_VNUM_TEMPLE);
                 pass_gauntlet(ch, FALSE);
@@ -7481,6 +7528,8 @@ void copyover_recover ()
 
     }
    fclose (fp);
+
+   load_player_list();
 
     for (d = descriptor_list; d ; d = d->next)
     {

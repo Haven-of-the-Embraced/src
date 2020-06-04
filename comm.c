@@ -2517,6 +2517,7 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
         else {
             pcdata->pc_next = NULL;
             pcdata->pc_prev = pc_last;
+            pc_last->pc_next = pcdata;
             }
         pc_last = pcdata;
 }

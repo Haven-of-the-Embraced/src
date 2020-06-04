@@ -7438,9 +7438,10 @@ void copyover_recover ()
         else {
             pcdata->pc_next = NULL;
             pcdata->pc_prev = pc_last;
+            pc_last->pc_next = pcdata;
             }
         pc_last = pcdata;
-}
+    }
 
             if (is_affected(ch, gsn_astralprojection)) {
                 ch->in_room = get_room_index(ROOM_VNUM_TEMPLE);

@@ -2665,7 +2665,9 @@ void do_steal( CHAR_DATA *ch, char *argument )
  */
 CHAR_DATA *find_keeper( CHAR_DATA *ch )
 {
-    /*char buf[MAX_STRING_LENGTH];*/
+    char buf[MAX_STRING_LENGTH];
+    char open[MAX_STRING_LENGTH];
+    char close[MAX_STRING_LENGTH];
     CHAR_DATA *keeper;
     SHOP_DATA *pShop;
 

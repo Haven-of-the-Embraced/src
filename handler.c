@@ -2987,6 +2987,24 @@ bool can_drop_obj( CHAR_DATA *ch, OBJ_DATA *obj )
     return FALSE;
 }
 
+/*Converts numerical hour to am/pm format*/
+char *get_time_string(int hours)
+{
+    static char buf[MSL];
+    bool pm;
+
+    if (hours > 12)
+    {
+        pm = TRUE;
+        hours -= 12;
+    }
+
+    if (hours % 12 == 0)
+        hours = 12;
+
+    sprintf(buf, "%d%s", hours, pm ? "pm" : "am");
+    return buf;
+}
 
 /*
  * Return ascii name of an affect location.

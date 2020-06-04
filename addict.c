@@ -92,3 +92,23 @@ void load_player_list()
     }
 
 }
+
+int get_addict_bonus(CHAR_DATA *ch, int xp)
+{
+    double bonus;
+    double axp;
+
+    bonus = (double) ADDICTED(ch);
+    bonus *= 1.5;
+
+    if (bonus > 15)
+        bonus = 15;
+
+    if (FIRST(ch))
+        bonus += 1;
+
+    axp = bonus * (double) xp / 100;
+    axp += 0.5;
+    return (int) axp;
+
+}

@@ -5024,7 +5024,8 @@ void do_dinfo (CHAR_DATA *ch, char *argument)
 void do_addict (CHAR_DATA *ch, char *argument)
 {
     PC_DATA *pcdata;
-    int count, mins, secs, hours, bonus;
+    int count, mins, secs, hours;
+    double bonus;
     char buf[MSL];
     BUFFER *output;
     output = new_buf();
@@ -5042,7 +5043,7 @@ void do_addict (CHAR_DATA *ch, char *argument)
     if (IS_IMMORTAL(ch))
     {
         add_buf(output, "                 {W!!!{D = {wImmortal{x\n\r");
-        add_buf(output, "\n\r{D[POS][Play Time][Bonus] Name            - Login Time{x\n\r");
+        add_buf(output, "\n\r{D[POS][Play Time][Bonus ] Name            - Login Time{x\n\r");
 
         for ( d = descriptor_list; d; d = d->next )
         {
@@ -5069,16 +5070,13 @@ void do_addict (CHAR_DATA *ch, char *argument)
             {
                 if (!IS_IMMORTAL(vch))
                 {
-                    bonus = ADDICTED(vch);
-                    if (FIRST(vch))
-                        bonus++;
-                        bonus *= 2;
+                    bonus = get_addict_mult(vch);
                 } else {
-                    bonus = 1337;
+                    bonus = 13.37;
                 }
 
                 mins = mins % 60;
-                sprintf(buf, " %s {D[{w%5d{mh{w%2.2d{mm{D][{W%4d{w%%{D]{w %-15s{D - {y%s{x", buf2, hours, mins,bonus, vch->name, ctime(&vch->logon));
+                sprintf(buf, " %s {D[{w%5d{mh{w%2.2d{mm{D][{W%5.2f{w%%{D]{w %-15s{D - {y%s{x", buf2, hours, mins,bonus, vch->name, ctime(&vch->logon));
             } else {
             sprintf(buf, " %s {D[{m%8dm{D][{W%4d{w%%{D]{w %-15s{D - {y%s{x", buf2, mins, 0, vch->name, ctime(&vch->logon));
             }
@@ -5086,7 +5084,7 @@ void do_addict (CHAR_DATA *ch, char *argument)
         }
 
     } else {
-        add_buf(output, "\n\r{D[POS][Play Time][Bonus] - Login Time{x\n\r");
+        add_buf(output, "\n\r{D[POS][Play Time][Bonus ] - Login Time{x\n\r");
         secs = ((int)current_time - ch->logon);
         mins = secs / 60;
         hours = mins / 60;
@@ -5100,12 +5098,9 @@ void do_addict (CHAR_DATA *ch, char *argument)
 
         if (hours)
         {
-            bonus = ADDICTED(ch);
-            if (FIRST(ch))
-                bonus++;
-            bonus *= 2;
+            bonus = get_addict_mult(ch);
             mins = mins % 60;
-            sprintf(buf, " %s {D[{w%5d{mh{w%2.2d{mm{D][{W%4d{w%%{D] - {y%s{x",buf2, hours, mins, bonus, ctime(&ch->logon));
+            sprintf(buf, " %s {D[{w%5d{mh{w%2.2d{mm{D][{W%5.2f{w%%{D] - {y%s{x",buf2, hours, mins, bonus, ctime(&ch->logon));
         } else {
             sprintf(buf, " %s {D[{w%8d{mm{D][{w-----{D] - {y%s{x",buf2, mins, ctime(&ch->logon));
         }

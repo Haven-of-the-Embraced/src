@@ -2666,8 +2666,6 @@ void do_steal( CHAR_DATA *ch, char *argument )
 CHAR_DATA *find_keeper( CHAR_DATA *ch )
 {
     char buf[MAX_STRING_LENGTH];
-    char open[MAX_STRING_LENGTH];
-    char close[MAX_STRING_LENGTH];
     CHAR_DATA *keeper;
     SHOP_DATA *pShop;
 
@@ -2709,12 +2707,16 @@ CHAR_DATA *find_keeper( CHAR_DATA *ch )
     if ( time_info.hour < pShop->open_hour )
     {
     do_function(keeper, &do_say, "Sorry, I am closed. Come back later.");
+    sprintf(buf, "My hours of operation are from %s to %s.\n\r", get_time_string(pShop->open_hour), get_time_string(pShop->close_hour));
+    do_function(keeper, &do_say, buf);
     return NULL;
     }
 
     if ( time_info.hour > pShop->close_hour )
     {
     do_function(keeper, &do_say, "Sorry, I am closed. Come back tomorrow.");
+    sprintf(buf, "My hours of operation are from %s to %s.\n\r", get_time_string(pShop->open_hour), get_time_string(pShop->close_hour));
+    do_function(keeper, &do_say, buf);
     return NULL;
     }
 

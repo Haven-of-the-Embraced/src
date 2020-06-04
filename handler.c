@@ -2074,7 +2074,9 @@ void extract_obj( OBJ_DATA *obj )
 
     if ( prev == NULL )
     {
-        bug( "Extract_obj: obj %d not found.", obj->pIndexData->vnum );
+        char buf[MSL];
+        sprintf(buf, "Extract_obj: obj %d (%s) not found in object list", obj->pIndexData->vnum, obj->name);
+        bug( buf, 0);
         return;
     }
     }

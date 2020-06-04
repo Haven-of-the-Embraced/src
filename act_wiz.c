@@ -7161,6 +7161,29 @@ void do_prefix (CHAR_DATA *ch, char *argument)
     ch->prefix = str_dup(argument);
 }
 
+void save_player_list()
+{
+    FILE *fp;
+    PC_DATA *pcdata;
+    char buf[MSL];
+
+    if (pc_first == pc_last)
+        return;
+
+    if ((fp = fopen(PLAYERLIST_FILE, "w")) == NULL)
+    {
+        sprintf(buf, "Could not write to file: %s", PLAYERLIST_FILE);
+        log_string( buf );
+        return;
+    }
+
+    for (pcdata = pc_first; pcdata != NULL; pcdata = pcdata->pc_next)
+        fprintf(fp, "%s\n", pcdata->character->name);
+
+    fprintf(fp, "-1\n");
+    fclose(fp);
+    return;
+}
 
 #define CH(descriptor)  ((descriptor)->original ? \
 (descriptor)->original : (descriptor)->character)
@@ -7178,6 +7201,7 @@ bool copyover_handler()
     char buf [100], buf2[100], buf3[MSL];
     extern int port,control; /* db.c */
 
+    save_player_list();
     fp = fopen (COPYOVER_FILE, "w");
 
     if (!fp)

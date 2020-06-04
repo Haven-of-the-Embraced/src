@@ -7209,20 +7209,19 @@ void load_player_list()
         fscanf (fp, "%d %s\n", &num, name);
         if (num == -1)
             break;
-        ;
 
         if ((fch = get_char_world(NULL, name)) == NULL)
         {
             sprintf(buf, "load_player_list: Could not find character (%s) to re-list", name);
             bug( buf, 0 );
-            continue;
+            break;
         }
 
         if ((pcdata = fch->pcdata) == NULL)
         {
             sprintf(buf, "load_player_list: Got mobile (%s) to re-list, ERROR!", name);
             bug( buf, 0 );
-            continue;
+            break;
         }
 
         if (!pc_first)

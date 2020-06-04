@@ -2234,7 +2234,7 @@ void spell_gift_lambentfire( int sn, int level, CHAR_DATA *ch, void *vo, int tar
   af.where        = TO_AFFECTS;
   af.type         = gsn_gift_lambentfire;
   af.level        = level;
-  af.duration     = 10 * (ch->rank / 2);
+  af.duration     = 10 * ((ch->rank / 2) + 1);
   af.modifier     = 0;
   af.location     = 0;
   af.bitvector    = 0;

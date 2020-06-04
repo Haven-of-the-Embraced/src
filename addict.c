@@ -91,6 +91,9 @@ void load_player_list()
         log_string( buf );
     }
 
+    fclose(fp);
+    unlink(PLAYERLIST_FILE);
+
 }
 
 int get_addict_bonus(CHAR_DATA *ch, int xp)
@@ -98,6 +101,15 @@ int get_addict_bonus(CHAR_DATA *ch, int xp)
     double bonus;
     double axp;
 
+    axp = get_addict_mult(ch) * (double) xp / 100;
+    axp += 0.5;
+    return (int) axp;
+
+}
+
+double get_addict_mult(CHAR_DATA *ch)
+{
+    double bonus;
     bonus = (double) ADDICTED(ch);
     bonus *= 1.5;
 
@@ -107,8 +119,5 @@ int get_addict_bonus(CHAR_DATA *ch, int xp)
     if (FIRST(ch))
         bonus += 1;
 
-    axp = bonus * (double) xp / 100;
-    axp += 0.5;
-    return (int) axp;
-
+    return bonus;
 }

@@ -3101,8 +3101,6 @@ void    channel_to_char args( (const char *txt, CHAR_DATA*ch) );
 #define IS_AFFECTED2(ch, sn)    (IS_SET((ch)->affected2_by, (sn)))
 #define IS_ATTRFLAGGED(ch, flag)    (IS_SET((ch)->attr_flags, (flag)))
 #define IS_ABILFLAGGED(ch, flag)    (IS_SET((ch)->abil_flags, (flag)))
-#define FIRST(ch)           (!IS_NPC((ch)) && (ch)->pcdata == pc_first)
-#define ADDICTED(ch)       ((int) ((current_time - (ch)->logon) / 3600))
 
 #define GET_AGE(ch)     ((int) (17 + ((ch)->played \
                     + current_time - (ch)->logon )/72000))
@@ -3423,7 +3421,6 @@ char *  crypt       args( ( const char *key, const char *salt ) );
 #define CONFIG_BACKUP    "../data/config.bk"
 /* This file holds the copyover data */
 #define COPYOVER_FILE   "../data/copyover.data"
-#define PLAYERLIST_FILE  "../data/player.lst"
 
 /* This is the executable file */
 #define EXE_FILE      "../src/rom"

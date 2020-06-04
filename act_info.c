@@ -42,6 +42,7 @@
 #include "recycle.h"
 #include "tables.h"
 #include "lookup.h"
+#include "addict.h"
 
 ROOM_INDEX_DATA *       find_location   args( ( CHAR_DATA *ch, char *arg ) );
 

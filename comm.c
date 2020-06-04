@@ -65,6 +65,7 @@
 #include "recycle.h"
 #include "tables.h"
 #include "lookup.h"
+#include "addict.h"
 
 /*
  * Malloc debugging stuff.
@@ -323,8 +324,6 @@ int             max_players = 0; /* Max players on, EVEWRR!*/
 int             tree_count = 0;
 int             vein_count = 0;
 struct  clan_type       clan_table[MAX_CLAN];
-PC_DATA         *pc_first;
-PC_DATA         *pc_last;
 
 /* Imm globals */
 bool            arena=FALSE;              /* Arena is closed      */

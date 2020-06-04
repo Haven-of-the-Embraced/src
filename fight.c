@@ -38,6 +38,7 @@
 #include <math.h>
 #include "merc.h"
 #include "interp.h"
+#include "addict.h"
 
 /*
  * Local functions.

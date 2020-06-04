@@ -2668,6 +2668,8 @@ CHAR_DATA *find_keeper( CHAR_DATA *ch )
     char buf[MAX_STRING_LENGTH];
     CHAR_DATA *keeper;
     SHOP_DATA *pShop;
+    char *open;
+    char *close;
 
     pShop = NULL;
     for ( keeper = ch->in_room->people; keeper; keeper = keeper->next_in_room )
@@ -2704,10 +2706,13 @@ CHAR_DATA *find_keeper( CHAR_DATA *ch )
     /*
      * Shop hours.
      */
+    open = str_dup(get_time_string(pShop->open_hour));
+    close = str_dup(get_time_string(pShop->close_hour));
+
     if ( time_info.hour < pShop->open_hour )
     {
     do_function(keeper, &do_say, "Sorry, I am closed. Come back later.");
-    sprintf(buf, "My hours of operation are from %s to %s.\n\r", get_time_string(pShop->open_hour), get_time_string(pShop->close_hour));
+    sprintf(buf, "My hours of operation are from %s to %s.", open, close);
     do_function(keeper, &do_say, buf);
     return NULL;
     }
@@ -2715,7 +2720,7 @@ CHAR_DATA *find_keeper( CHAR_DATA *ch )
     if ( time_info.hour > pShop->close_hour )
     {
     do_function(keeper, &do_say, "Sorry, I am closed. Come back tomorrow.");
-    sprintf(buf, "My hours of operation are from %s to %s.\n\r", get_time_string(pShop->open_hour), get_time_string(pShop->close_hour));
+    sprintf(buf, "My hours of operation are from %s to %s.", open, close);
     do_function(keeper, &do_say, buf);
     return NULL;
     }

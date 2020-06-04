@@ -3989,6 +3989,7 @@ bool    can_see     args( ( CHAR_DATA *ch, CHAR_DATA *victim ) );
 bool    can_see_obj args( ( CHAR_DATA *ch, OBJ_DATA *obj ) );
 bool    can_see_room    args( ( CHAR_DATA *ch, ROOM_INDEX_DATA *pRoomIndex) );
 bool    can_drop_obj    args( ( CHAR_DATA *ch, OBJ_DATA *obj ) );
+char *  get_time_string args( ( int hours) );
 bool    send_email      args( ( char *subject, char *address, char *body) );
 char *  affect_loc_name args( ( int location ) );
 char *  affect_bit_name args( ( int vector ) );

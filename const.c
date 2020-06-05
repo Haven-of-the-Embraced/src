@@ -201,260 +201,181 @@ const   struct  race_type   race_table  []      =
     { "unique",     FALSE, 0, 0, 0, 0, 0, 0, 0, 0 },
 
     {
-    "human",        TRUE,
-    0,      0,      0,
-    IMM_SUNLIGHT,       0,      VULN_MENTAL,
-    A|H|M|V,    A|B|C|D|E|F|G|H|I|J|K
+      "dhampire",         TRUE,
+      0,      0,      0,
+      IMM_SUNLIGHT,       RES_POISON|RES_BASH,    VULN_FIRE,
+      A|H|M|V,    A|B|C|D|E|F|G|H|I|J|K
     },
 
     {
-    "ghoul",        TRUE,
-    0,      0,      0,
-    IMM_SUNLIGHT,       RES_POISON,     VULN_FIRE|VULN_CHARM|VULN_MENTAL,
-    A|H|M|V,    A|B|C|D|E|F|G|H|I|J|K
-    },
-
-
-    {
-    "vampire",          TRUE,
-    0,      0,  0,
-    IMM_DROWNING,       RES_CHARM|RES_POISON|RES_BASH,  VULN_FIRE|VULN_SUNLIGHT|VULN_HOLY,
-    A|H|M|V,    A|B|C|D|E|F|G|H|I|J|K
+      "garou",            TRUE,
+      0,      AFF_INFRARED,   0,
+      IMM_SUNLIGHT|IMM_POISON,        0,      VULN_NEGATIVE,
+      A|H|M|V,    A|B|C|D|E|F|G|H|I|J|K
     },
 
     {
-    "garou",            TRUE,
-    0,      AFF_INFRARED,   0,
-    IMM_SUNLIGHT|IMM_POISON,        0,      VULN_NEGATIVE,
-    A|H|M|V,    A|B|C|D|E|F|G|H|I|J|K
+      "ghoul",        TRUE,
+      0,      0,      0,
+      IMM_SUNLIGHT,       RES_POISON,     VULN_FIRE|VULN_CHARM|VULN_MENTAL,
+      A|H|M|V,    A|B|C|D|E|F|G|H|I|J|K
     },
 
     {
-    "methuselah",           TRUE,
-    0,      0,  0,
-    IMM_DROWNING,       RES_CHARM|RES_POISON|RES_BASH,  VULN_FIRE|VULN_SUNLIGHT|VULN_HOLY,
-    A|H|M|V,    A|B|C|D|E|F|G|H|I|J|K
+      "human",        TRUE,
+      0,      0,      0,
+      IMM_SUNLIGHT,       0,      VULN_MENTAL,
+      A|H|M|V,    A|B|C|D|E|F|G|H|I|J|K
     },
 
     {
-    "dhampire",         TRUE,
-    0,      0,      0,
-    IMM_SUNLIGHT,       RES_POISON|RES_BASH,    VULN_FIRE,
-    A|H|M|V,    A|B|C|D|E|F|G|H|I|J|K
+      "methuselah",           TRUE,
+      0,      0,  0,
+      IMM_DROWNING,       RES_CHARM|RES_POISON|RES_BASH,  VULN_FIRE|VULN_SUNLIGHT|VULN_HOLY,
+      A|H|M|V,    A|B|C|D|E|F|G|H|I|J|K
     },
 
     {
-    "ape",          FALSE,
-    0,      0,      0,
-    0,      0,      0,
-    FORM_EDIBLE|FORM_ANIMAL|FORM_SENTIENT|FORM_BIPED|FORM_MAMMAL,   PART_HEAD|PART_ARMS|PART_LEGS|PART_HEART|PART_BRAINS|PART_GUTS|PART_HANDS|PART_FEET|PART_FINGERS|PART_EAR|PART_EYE
+      "vampire",          TRUE,
+      0,      0,  0,
+      IMM_DROWNING,       RES_CHARM|RES_POISON|RES_BASH,  VULN_FIRE|VULN_SUNLIGHT|VULN_HOLY,
+      A|H|M|V,    A|B|C|D|E|F|G|H|I|J|K
+    },
+
+//Mob-only Races Starting Here
+    {
+      "abomination",        FALSE,
+      0,      AFF_BERSERK,      0,
+      IMM_MENTAL,      RES_WEAPON|RES_DROWNING,      VULN_MAGIC,
+      0,      0
     },
 
     {
-    "monkey",        FALSE,
-    0,      0,      0,
-    0,      0,      0,
-    FORM_EDIBLE|FORM_ANIMAL|FORM_SENTIENT|FORM_BIPED|FORM_MAMMAL,   PART_HEAD|PART_ARMS|PART_LEGS|PART_HEART|PART_BRAINS|PART_GUTS|PART_HANDS|PART_FEET|PART_FINGERS|PART_EAR|PART_EYE|PART_TAIL
+      "amphibian",        FALSE,
+      0,      AFF_SWIM,      0,
+      0,      RES_POISON|RES_DROWNING,      VULN_COLD|VULN_LIGHTNING|VULN_ACID,
+      FORM_EDIBLE|FORM_AMPHIBIAN|FORM_COLD_BLOOD,      PART_HEAD|PART_LEGS|PART_HEART|PART_BRAINS|PART_GUTS|PART_FEET|PART_EYE|PART_LONG_TONGUE
     },
 
     {
-    "kinfolk",        FALSE,
-    0,      0,      0,
-    0,      RES_CHARM|RES_MENTAL,   0,
-    A|H|M|V,    A|B|C|D|E|F|G|H|I|J|K
+      "ape",          FALSE,
+      0,      0,      0,
+      0,      0,      0,
+      FORM_EDIBLE|FORM_ANIMAL|FORM_SENTIENT|FORM_BIPED|FORM_MAMMAL,   PART_HEAD|PART_ARMS|PART_LEGS|PART_HEART|PART_BRAINS|PART_GUTS|PART_HANDS|PART_FEET|PART_FINGERS|PART_EAR|PART_EYE
     },
 
     {
-    "bat",          FALSE,
-    0,      AFF_FLYING|AFF_DARK_VISION, OFF_DODGE|OFF_FAST,
-    0,      0,      VULN_LIGHT,
-    A|G|V,      A|C|D|E|F|H|J|K|P
+      "bane",         FALSE,
+      0,      0,  OFF_DODGE,
+      IMM_POISON|IMM_DISEASE|IMM_DROWNING|IMM_SUNLIGHT,   RES_WEAPON|RES_COLD|RES_ACID|RES_FIRE,  VULN_NEGATIVE|VULN_HOLY|VULN_ENERGY,
+      FORM_SENTIENT,    0
     },
 
     {
-    "bear",         FALSE,
-    0,      0,      OFF_CRUSH|OFF_DISARM|OFF_BERSERK,
-    0,      RES_BASH|RES_COLD,  0,
-    A|G|V,      A|B|C|D|E|F|H|J|K|U|V
+      "bat",          FALSE,
+      0,      AFF_FLYING|AFF_DARK_VISION, OFF_DODGE|OFF_FAST,
+      0,      0,      VULN_LIGHT,
+      A|G|V,      A|C|D|E|F|H|J|K|P
     },
 
     {
-    "cat",          FALSE,
-    0,      AFF_DARK_VISION,    OFF_FAST|OFF_DODGE,
-    0,      0,      0,
-    A|G|V,      A|C|D|E|F|H|J|K|Q|U|V
+      "bear",         FALSE,
+      0,      0,      OFF_CRUSH|OFF_DISARM|OFF_BERSERK,
+      0,      RES_BASH|RES_COLD,  0,
+      A|G|V,      A|B|C|D|E|F|H|J|K|U|V
     },
 
     {
-    "centipede",        FALSE,
-    0,      AFF_DARK_VISION,    0,
-    0,      RES_PIERCE|RES_COLD,    VULN_BASH,
-    A|B|G|O,        A|C|K
+      "bygone",        FALSE,
+      0,      AFF_DETECT_HIDDEN|AFF_DARK_VISION|AFF_REGENERATION,      0,
+      IMM_DISEASE|IMM_SUNLIGHT,      RES_MENTAL|RES_CHARM|RES_SUMMON|RES_MAGIC|RES_WEAPON|RES_MAGIC|RES_POISON,      VULN_FIRE|VULN_COLD|VULN_LIGHTNING|VULN_ACID|VULN_ENERGY,
+      FORM_MAGICAL|FORM_ANIMAL|FORM_SENTIENT,      PART_HEAD|PART_HEART|PART_BRAINS|PART_GUTS|PART_EYE|PART_TAIL|PART_LEGS
     },
 
     {
-    "dog",          FALSE,
-    0,      0,      OFF_FAST,
-    0,      0,      0,
-    A|G|V,      A|C|D|E|F|H|J|K|U|V
+      "cat",          FALSE,
+      0,      AFF_DARK_VISION,    OFF_FAST|OFF_DODGE,
+      0,      0,      0,
+      A|G|V,      A|C|D|E|F|H|J|K|Q|U|V
     },
 
     {
-    "construct",        FALSE,
-    0,      0,      OFF_PARRY|OFF_PARRY,
-    IMM_COLD|IMM_POISON|IMM_NEGATIVE|IMM_MENTAL|IMM_DISEASE|IMM_SUNLIGHT
-    |IMM_DROWNING|IMM_CHARM,    RES_LIGHT|RES_SLASH|RES_PIERCE,
-    VULN_ACID|VULN_LIGHTNING|VULN_ENERGY,
-    C|J,    A|B|C|G|H
-    },
-
-    {   "dragon",       FALSE,
-    0,          AFF_INFRARED|AFF_FLYING,    0,
-    0,          RES_FIRE|RES_BASH|RES_CHARM,
-    VULN_PIERCE|VULN_COLD,
-    A|H|Z,      A|C|D|E|F|G|H|I|J|K|P|Q|U|V|X
+      "centipede",        FALSE,
+      0,      AFF_DARK_VISION,    0,
+      0,      RES_PIERCE|RES_COLD,    VULN_BASH,
+      A|B|G|O,        A|C|K
     },
 
     {
-    "marine mammal",         FALSE,
-    0,      AFF_SWIM,      0,
-    0,      RES_COLD|RES_DROWNING,          VULN_LIGHTNING,
-    FORM_EDIBLE|FORM_ANIMAL|FORM_SENTIENT|FORM_MAMMAL,    PART_HEAD|PART_HEART|PART_BRAINS|PART_GUTS|PART_EYE
+      "construct",        FALSE,
+      0,      0,      OFF_PARRY|OFF_PARRY,
+      IMM_COLD|IMM_POISON|IMM_NEGATIVE|IMM_MENTAL|IMM_DISEASE|IMM_SUNLIGHT
+      |IMM_DROWNING|IMM_CHARM,    RES_LIGHT|RES_SLASH|RES_PIERCE,
+      VULN_ACID|VULN_LIGHTNING|VULN_ENERGY,
+      C|J,    A|B|C|G|H
     },
 
     {
-    "fox",          FALSE,
-    0,      AFF_DARK_VISION,    OFF_FAST|OFF_DODGE,
-    0,      0,      0,
-    A|G|V,      A|C|D|E|F|H|J|K|Q|V
+      "demon",        FALSE,
+      0,      AFF_DARK_VISION,      0,
+      IMM_POISON|IMM_DISEASE|IMM_NEGATIVE,      RES_CHARM,      VULN_SUMMON|VULN_HOLY|VULN_SUNLIGHT,
+      FORM_SENTIENT|FORM_BIPED,      PART_HEAD|PART_ARMS|PART_HEART| PART_BRAINS|PART_GUTS|PART_HANDS|PART_FEET|PART_FINGERS|PART_EAR|PART_EYE|PART_CLAWS|PART_TAIL|PART_FANGS|PART_HORNS
     },
 
     {
-    "goblin",       FALSE,
-    0,      AFF_INFRARED,   0,
-    0,      RES_DISEASE,    VULN_MAGIC,
-    A|H|M|V,    A|B|C|D|E|F|G|H|I|J|K
+      "dog",          FALSE,
+      0,      0,      OFF_FAST,
+      0,      0,      0,
+      A|G|V,      A|C|D|E|F|H|J|K|U|V
     },
 
     {
-    "hobgoblin",        FALSE,
-    0,      AFF_INFRARED,   0,
-    0,      RES_DISEASE|RES_POISON, 0,
-    A|H|M|V,        A|B|C|D|E|F|G|H|I|J|K|Y
+      "dragon",       FALSE,
+      0,          AFF_INFRARED|AFF_FLYING,    0,
+      0,          RES_FIRE|RES_BASH|RES_CHARM,  VULN_PIERCE|VULN_COLD,
+      A|H|Z,      A|C|D|E|F|G|H|I|J|K|P|Q|U|V|X
     },
 
     {
-    "wraith",       FALSE,
-    0,      AFF_SNEAK|AFF_PASS_DOOR|AFF_DARK_VISION, OFF_FADE,
-    IMM_POISON|IMM_DISEASE|IMM_DROWNING|IMM_SUNLIGHT,   RES_WEAPON|RES_COLD|RES_ACID|RES_FIRE,
-    VULN_NEGATIVE|VULN_HOLY|VULN_ENERGY,
-    C|D|H|I,    0
+      "elemental",        FALSE,
+      0,      0,      0,
+      0,      0,      0,
+      FORM_INSTANT_DECAY|FORM_SENTIENT,      0
     },
 
     {
-    "lizard",       FALSE,
-    0,      0,      0,
-    0,      RES_POISON, VULN_COLD,
-    A|G|X|cc,   A|C|D|E|F|H|K|Q|V
+      "faerie",        FALSE,
+      0,      0,      0,
+      IMM_SUNLIGHT,      RES_CHARM|RES_MAGIC,      VULN_IRON,
+      FORM_EDIBLE|FORM_MAGICAL|FORM_SENTIENT|FORM_BIPED,      PART_HEAD|PART_ARMS|PART_HEART| PART_BRAINS|PART_GUTS|PART_HANDS|PART_FEET|PART_FINGERS|PART_EAR|PART_EYE
     },
 
     {
-    "modron",       FALSE,
-    0,      AFF_INFRARED,       ASSIST_RACE|ASSIST_ALIGN,
-    IMM_CHARM|IMM_DISEASE|IMM_MENTAL|IMM_HOLY|IMM_NEGATIVE,
-            RES_FIRE|RES_COLD|RES_ACID, 0,
-    H,      A|B|C|G|H|J|K
+      "fera",         FALSE,
+      0,      AFF_BERSERK|AFF_REGENERATION,   OFF_DODGE|OFF_FAST,
+      IMM_SUNLIGHT,   RES_POISON|RES_DISEASE,     VULN_SILVER,
+      A|C|H|M,        A|B|C|D|E|F|G|H|I|J|K
     },
 
     {
-    "placeholder",          FALSE,
-    0,      0,      0,
-    0,      0,      0,
-    0,      0
+      "fish",     FALSE,
+      0,      0,      0,
+      IMM_DROWNING,   RES_MENTAL, VULN_FIRE|VULN_LIGHTNING,
+      A|G|X|cc,   A|C|D|E|F|H|K|Q|V
     },
 
     {
-    "pig",          FALSE,
-    0,      0,      0,
-    0,      0,      0,
-    A|G|V,      A|C|D|E|F|H|J|K
+      "fomor",      FALSE,
+      0,      0,   0,
+      0,  RES_CHARM|RES_POISON|RES_NEGATIVE|RES_MENTAL|RES_DISEASE,  VULN_HOLY,
+      FORM_SENTIENT|FORM_BIPED|FORM_MAMMAL,      PART_HEAD|PART_ARMS|PART_LEGS|PART_HEART|PART_BRAINS|PART_GUTS|PART_HANDS|PART_FEET|PART_FINGERS|PART_EAR|PART_EYE
     },
 
     {
-    "rabbit",       FALSE,
-    0,      0,      OFF_DODGE|OFF_FAST,
-    0,      0,      0,
-    A|G|V,      A|C|D|E|F|H|J|K
-    },
-
-    {
-    "fera",         FALSE,
-    0,      AFF_BERSERK|AFF_REGENERATION,   OFF_DODGE|OFF_FAST,
-    IMM_SUNLIGHT,   RES_POISON|RES_DISEASE,     VULN_SILVER,
-    A|C|H|M,        A|B|C|D|E|F|G|H|I|J|K
-    },
-
-    {
-    "snake",        FALSE,
-    0,      0,      0,
-    0,      RES_POISON, VULN_COLD,
-    A|G|X|Y|cc, A|D|E|F|K|L|Q|V|X
-    },
-
-    {
-    "song bird",        FALSE,
-    0,      AFF_FLYING,     OFF_FAST|OFF_DODGE,
-    0,      0,      0,
-    A|G|W,      A|C|D|E|F|H|K|P
-    },
-
-    {
-    "troll",        FALSE,
-    0,      AFF_REGENERATION|AFF_INFRARED|AFF_DETECT_HIDDEN,
-    OFF_BERSERK,
-    0,  RES_CHARM|RES_BASH, VULN_FIRE|VULN_ACID,
-    A|B|H|M|V,      A|B|C|D|E|F|G|H|I|J|K|U|V
-    },
-
-    {
-    "water fowl",       FALSE,
-    0,      AFF_SWIM|AFF_FLYING,    0,
-    0,      RES_DROWNING,       0,
-    A|G|W,      A|C|D|E|F|H|K|P
-    },
-
-    {
-    "wolf",         FALSE,
-    0,      AFF_DARK_VISION,    OFF_FAST|OFF_DODGE,
-    0,      0,      0,
-    A|G|V,      A|C|D|E|F|J|K|Q|V
-    },
-
-    {
-    "fomor",      FALSE,
-    0,      0,   0,
-    0,  RES_CHARM|RES_POISON|RES_NEGATIVE|RES_MENTAL|RES_DISEASE,  VULN_HOLY,
-    FORM_SENTIENT|FORM_BIPED|FORM_MAMMAL,      PART_HEAD|PART_ARMS|PART_LEGS|PART_HEART|PART_BRAINS|PART_GUTS|PART_HANDS|PART_FEET|PART_FINGERS|PART_EAR|PART_EYE
-    },
-
-    {
-    "undead",           FALSE,
-    0,      0,  OFF_DODGE,
-    0,      RES_COLD,       VULN_HOLY,
-    A|H|M|V,    A|B|C|D|E|F|G|H|I|J|K
-    },
-    {
-        "duergar",              FALSE,
-        0,              AFF_INFRARED,   0,
-        0,              RES_MAGIC|RES_POISON|RES_DISEASE, VULN_DROWNING,
-        A|H|M|V,        A|B|C|D|E|F|G|H|I|J|K
-    },
-
-    {
-       "gnome",                FALSE,
-        0,              AFF_INFRARED,   0,
-        0,              RES_POISON,     VULN_BASH,
-        A|H|M|V,        A|B|C|D|E|F|G|H|I|J|K
+      "fox",          FALSE,
+      0,      AFF_DARK_VISION,    OFF_FAST|OFF_DODGE,
+      0,      0,      0,
+      A|G|V,      A|C|D|E|F|H|J|K|Q|V
     },
 
     {
@@ -465,131 +386,230 @@ const   struct  race_type   race_table  []      =
     },
 
     {
-        "svirfnebli",           FALSE,
-        0,              AFF_INFRARED,   0,
-        0,              RES_MAGIC|RES_POISON|RES_DISEASE, VULN_BASH,
-        A|H|M|V,        A|B|C|D|E|F|G|H|I|J|K
+      "insect",        FALSE,
+      0,      0,      0,
+      IMM_MENTAL,      RES_POISON|RES_SUNLIGHT|RES_DROWNING,      VULN_FIRE|VULN_COLD|VULN_ACID,
+      FORM_EDIBLE|FORM_INSECT,      PART_HEAD|PART_LEGS|PART_GUTS|PART_EYE
     },
 
     {
-        "HIT Mark",             FALSE,
-        0,              AFF_DETECT_INVIS|AFF_DETECT_HIDDEN|AFF_DARK_VISION, OFF_FAST,
-        IMM_MENTAL|IMM_CHARM,       RES_PIERCE|RES_BASH|RES_SLASH|RES_WEAPON, VULN_LIGHTNING,
-        A|H|M|V,        A|B|C|D|E|F|G|H|I|J|K
+    "kinfolk",        FALSE,
+      0,      0,      0,
+      0,      RES_CHARM|RES_MENTAL,   0,
+      A|H|M|V,    A|B|C|D|E|F|G|H|I|J|K
     },
+
     {
-        "MIB",              FALSE,
-        0,              AFF_DETECT_INVIS|AFF_DETECT_HIDDEN|AFF_DARK_VISION|AFF_SNEAK,   OFF_FAST,
-        IMM_CHARM|IMM_NEGATIVE,     0, VULN_HOLY,
-        A|H|M|V,        A|B|C|D|E|F|G|H|I|J|K
+      "lizard",       FALSE,
+      0,      0,      0,
+      0,      RES_POISON, VULN_COLD,
+      A|G|X|cc,   A|C|D|E|F|H|K|Q|V
     },
+
     {
-        "Marauder",             FALSE,
-        ACT_AGGRESSIVE,             AFF_DETECT_INVIS|AFF_DETECT_HIDDEN|AFF_DARK_VISION, OFF_ULTRA_MOB,
-        IMM_CHARM,      RES_MAGIC, VULN_MENTAL,
-        A|H|M|V,        A|B|C|D|E|F|G|H|I|J|K
+      "mage",        TRUE,
+      0,      0,      0,
+      IMM_SUNLIGHT,       RES_POISON|RES_NEGATIVE,      VULN_MENTAL,
+      A|H|M|V,    A|B|C|D|E|F|G|H|I|J|K
     },
+
     {
-        "Nephandi",             FALSE,
-        0,              AFF_DETECT_INVIS|AFF_DETECT_HIDDEN|AFF_DARK_VISION, OFF_ULTRA_MOB,
-        IMM_MENTAL|IMM_NEGATIVE,        RES_WEAPON|RES_MAGIC, VULN_HOLY,
-        A|H|M|V,        A|B|C|D|E|F|G|H|I|J|K
+      "marine mammal",         FALSE,
+      0,      AFF_SWIM,      0,
+      0,      RES_COLD|RES_DROWNING,          VULN_LIGHTNING,
+      FORM_EDIBLE|FORM_ANIMAL|FORM_SENTIENT|FORM_MAMMAL,    PART_HEAD|PART_HEART|PART_BRAINS|PART_GUTS|PART_EYE
     },
+
     {
-        "spirit",           FALSE,
-        0,      0,  OFF_DODGE,
-        IMM_POISON|IMM_DISEASE|IMM_DROWNING|IMM_SUNLIGHT,   RES_WEAPON|RES_COLD|RES_ACID|RES_FIRE,  VULN_NEGATIVE|VULN_HOLY|VULN_ENERGY,
-        FORM_SENTIENT,    0
+      "monkey",        FALSE,
+      0,      0,      0,
+      0,      0,      0,
+      FORM_EDIBLE|FORM_ANIMAL|FORM_SENTIENT|FORM_BIPED|FORM_MAMMAL,   PART_HEAD|PART_ARMS|PART_LEGS|PART_HEART|PART_BRAINS|PART_GUTS|PART_HANDS|PART_FEET|PART_FINGERS|PART_EAR|PART_EYE|PART_TAIL
     },
+
     {
-        "bane",         FALSE,
-        0,      0,  OFF_DODGE,
-        IMM_POISON|IMM_DISEASE|IMM_DROWNING|IMM_SUNLIGHT,   RES_WEAPON|RES_COLD|RES_ACID|RES_FIRE,  VULN_NEGATIVE|VULN_HOLY|VULN_ENERGY,
-        FORM_SENTIENT,    0
+      "ooze",        FALSE,
+      0,      AFF_BLIND|AFF_SLOW,      0,
+      IMM_LIGHT|IMM_MENTAL|IMM_DROWNING,      RES_WEAPON,      VULN_MAGIC|VULN_FIRE,
+      FORM_BLOB,      0
     },
+
     {
-        "spider",       FALSE,
-        0,      0,      0,
-        0,      RES_POISON, VULN_COLD,
-        A|G|X|cc,   A|C|D|E|F|H|K|Q|V
+      "pig",          FALSE,
+      0,      0,      0,
+      0,      0,      0,
+      A|G|V,      A|C|D|E|F|H|J|K
     },
+
     {
-        "fish",     FALSE,
-        0,      0,      0,
-        IMM_DROWNING,   RES_MENTAL, VULN_FIRE|VULN_LIGHTNING,
-        A|G|X|cc,   A|C|D|E|F|H|K|Q|V
+      "rabbit",       FALSE,
+      0,      0,      OFF_DODGE|OFF_FAST,
+      0,      0,      0,
+      A|G|V,      A|C|D|E|F|H|J|K
     },
+
     {
-        "rodent",       FALSE,
-        0,      0,      OFF_DODGE|OFF_FAST,
-        0,      0,      0,
-        A|G|V,      A|C|D|E|F|H|J|K
+      "rodent",       FALSE,
+      0,      0,      OFF_DODGE|OFF_FAST,
+      0,      0,      0,
+      A|G|V,      A|C|D|E|F|H|J|K
     },
+
     {
-    "mage",        TRUE,
-    0,      0,      0,
-    IMM_SUNLIGHT,       RES_POISON|RES_NEGATIVE,      VULN_MENTAL,
-    A|H|M|V,    A|B|C|D|E|F|G|H|I|J|K
+      "shadow",        FALSE,
+      0,      AFF_HIDE|AFF_SNEAK|AFF_PASS_DOOR|AFF_DARK_VISION,      0,
+      IMM_POISON|IMM_DISEASE|IMM_NEGATIVE|IMM_DROWNING,      0,      VULN_SUNLIGHT|VULN_LIGHT,
+      FORM_INSTANT_DECAY|FORM_INTANGIBLE,      0
     },
+
     {
-    "bygone",        FALSE,
-    0,      AFF_DETECT_HIDDEN|AFF_DARK_VISION|AFF_REGENERATION,      0,
-    IMM_DISEASE|IMM_SUNLIGHT,      RES_MENTAL|RES_CHARM|RES_SUMMON|RES_MAGIC|RES_WEAPON|RES_MAGIC|RES_POISON,      VULN_FIRE|VULN_COLD|VULN_LIGHTNING|VULN_ACID|VULN_ENERGY,
-    FORM_MAGICAL|FORM_ANIMAL|FORM_SENTIENT,      PART_HEAD|PART_HEART|PART_BRAINS|PART_GUTS|PART_EYE|PART_TAIL|PART_LEGS
+      "snake",        FALSE,
+      0,      0,      0,
+      0,      RES_POISON, VULN_COLD,
+      A|G|X|Y|cc, A|D|E|F|K|L|Q|V|X
     },
+
     {
-    "faerie",        FALSE,
-    0,      0,      0,
-    IMM_SUNLIGHT,      RES_CHARM|RES_MAGIC,      VULN_IRON,
-    FORM_EDIBLE|FORM_MAGICAL|FORM_SENTIENT|FORM_BIPED,      PART_HEAD|PART_ARMS|PART_HEART| PART_BRAINS|PART_GUTS|PART_HANDS|PART_FEET|PART_FINGERS|PART_EAR|PART_EYE
+      "song bird",        FALSE,
+      0,      AFF_FLYING,     OFF_FAST|OFF_DODGE,
+      0,      0,      0,
+      A|G|W,      A|C|D|E|F|H|K|P
     },
+
     {
-    "demon",        FALSE,
-    0,      AFF_DARK_VISION,      0,
-    IMM_POISON|IMM_DISEASE|IMM_NEGATIVE,      RES_CHARM,      VULN_SUMMON|VULN_HOLY|VULN_SUNLIGHT,
-    FORM_SENTIENT|FORM_BIPED,      PART_HEAD|PART_ARMS|PART_HEART| PART_BRAINS|PART_GUTS|PART_HANDS|PART_FEET|PART_FINGERS|PART_EAR|PART_EYE|PART_CLAWS|PART_TAIL|PART_FANGS|PART_HORNS
+      "spider",       FALSE,
+      0,      0,      0,
+      0,      RES_POISON, VULN_COLD,
+      A|G|X|cc,   A|C|D|E|F|H|K|Q|V
     },
+
     {
-    "abomination",        FALSE,
-    0,      AFF_BERSERK,      0,
-    IMM_MENTAL,      RES_WEAPON|RES_DROWNING,      VULN_MAGIC,
-    0,      0
+      "spirit",           FALSE,
+      0,      0,  OFF_DODGE,
+      IMM_POISON|IMM_DISEASE|IMM_DROWNING|IMM_SUNLIGHT,   RES_WEAPON|RES_COLD|RES_ACID|RES_FIRE,  VULN_NEGATIVE|VULN_HOLY|VULN_ENERGY,
+      FORM_SENTIENT,    0
     },
+
     {
-    "elemental",        FALSE,
-    0,      0,      0,
-    0,      0,      0,
-    FORM_INSTANT_DECAY|FORM_SENTIENT,      0
+      "undead",           FALSE,
+      0,      0,  OFF_DODGE,
+      0,      RES_COLD,       VULN_HOLY,
+      A|H|M|V,    A|B|C|D|E|F|G|H|I|J|K
     },
+
     {
-    "ooze",        FALSE,
-    0,      AFF_BLIND|AFF_SLOW,      0,
-    IMM_LIGHT|IMM_MENTAL|IMM_DROWNING,      RES_WEAPON,      VULN_MAGIC|VULN_FIRE,
-    FORM_BLOB,      0
+      "water fowl",       FALSE,
+      0,      AFF_SWIM|AFF_FLYING,    0,
+      0,      RES_DROWNING,       0,
+      A|G|W,      A|C|D|E|F|H|K|P
     },
+
     {
-    "shadow",        FALSE,
-    0,      AFF_HIDE|AFF_SNEAK|AFF_PASS_DOOR|AFF_DARK_VISION,      0,
-    IMM_POISON|IMM_DISEASE|IMM_NEGATIVE|IMM_DROWNING,      0,      VULN_SUNLIGHT|VULN_LIGHT,
-    FORM_INSTANT_DECAY|FORM_INTANGIBLE,      0
+      "wolf",         FALSE,
+      0,      AFF_DARK_VISION,    OFF_FAST|OFF_DODGE,
+      0,      0,      0,
+      A|G|V,      A|C|D|E|F|J|K|Q|V
     },
+
     {
-    "vegetation",        FALSE,
-    0,      0,      0,
-    IMM_SUNLIGHT|IMM_DROWNING|IMM_POISON,      RES_BASH|RES_LIGHT|RES_WOOD|RES_MENTAL,      VULN_COLD|VULN_SLASH|VULN_FIRE,
-    FORM_EDIBLE,      0
+      "vegetation",        FALSE,
+      0,      0,      0,
+      IMM_SUNLIGHT|IMM_DROWNING|IMM_POISON,      RES_BASH|RES_LIGHT|RES_WOOD|RES_MENTAL,      VULN_COLD|VULN_SLASH|VULN_FIRE,
+      FORM_EDIBLE,      0
     },
+
     {
-    "insect",        FALSE,
-    0,      0,      0,
-    IMM_MENTAL,      RES_POISON|RES_SUNLIGHT|RES_DROWNING,      VULN_FIRE|VULN_COLD|VULN_ACID,
-    FORM_EDIBLE|FORM_INSECT,      PART_HEAD|PART_LEGS|PART_GUTS|PART_EYE
+      "wraith",       FALSE,
+      0,      AFF_SNEAK|AFF_PASS_DOOR|AFF_DARK_VISION, OFF_FADE,
+      IMM_POISON|IMM_DISEASE|IMM_DROWNING|IMM_SUNLIGHT,   RES_WEAPON|RES_COLD|RES_ACID|RES_FIRE,
+      VULN_NEGATIVE|VULN_HOLY|VULN_ENERGY,
+      C|D|H|I,    0
     },
+
+//Unused/Replaceable Mob Races Here
     {
-    "amphibian",        FALSE,
-    0,      AFF_SWIM,      0,
-    0,      RES_POISON|RES_DROWNING,      VULN_COLD|VULN_LIGHTNING|VULN_ACID,
-    FORM_EDIBLE|FORM_AMPHIBIAN|FORM_COLD_BLOOD,      PART_HEAD|PART_LEGS|PART_HEART|PART_BRAINS|PART_GUTS|PART_FEET|PART_EYE|PART_LONG_TONGUE
+      "placeholder",          FALSE,
+      0,      0,      0,
+      0,      0,      0,
+      0,      0
+    },
+
+    {
+      "duergar",              FALSE,
+      0,              AFF_INFRARED,   0,
+      0,              RES_MAGIC|RES_POISON|RES_DISEASE, VULN_DROWNING,
+      A|H|M|V,        A|B|C|D|E|F|G|H|I|J|K
+    },
+
+    {
+      "gnome",                FALSE,
+      0,              AFF_INFRARED,   0,
+      0,              RES_POISON,     VULN_BASH,
+      A|H|M|V,        A|B|C|D|E|F|G|H|I|J|K
+    },
+
+    {
+      "goblin",       FALSE,
+      0,      AFF_INFRARED,   0,
+      0,      RES_DISEASE,    VULN_MAGIC,
+      A|H|M|V,    A|B|C|D|E|F|G|H|I|J|K
+    },
+
+    {
+      "hobgoblin",        FALSE,
+      0,      AFF_INFRARED,   0,
+      0,      RES_DISEASE|RES_POISON, 0,
+      A|H|M|V,        A|B|C|D|E|F|G|H|I|J|K|Y
+    },
+
+    {
+      "modron",       FALSE,
+      0,      AFF_INFRARED,       ASSIST_RACE|ASSIST_ALIGN,
+      IMM_CHARM|IMM_DISEASE|IMM_MENTAL|IMM_HOLY|IMM_NEGATIVE,
+        RES_FIRE|RES_COLD|RES_ACID, 0,
+        H,      A|B|C|G|H|J|K
+    },
+
+    {
+      "svirfnebli",           FALSE,
+      0,              AFF_INFRARED,   0,
+      0,              RES_MAGIC|RES_POISON|RES_DISEASE, VULN_BASH,
+      A|H|M|V,        A|B|C|D|E|F|G|H|I|J|K
+    },
+
+    {
+      "HIT Mark",             FALSE,
+      0,              AFF_DETECT_INVIS|AFF_DETECT_HIDDEN|AFF_DARK_VISION, OFF_FAST,
+      IMM_MENTAL|IMM_CHARM,       RES_PIERCE|RES_BASH|RES_SLASH|RES_WEAPON, VULN_LIGHTNING,
+      A|H|M|V,        A|B|C|D|E|F|G|H|I|J|K
+    },
+
+    {
+      "MIB",              FALSE,
+      0,              AFF_DETECT_INVIS|AFF_DETECT_HIDDEN|AFF_DARK_VISION|AFF_SNEAK,   OFF_FAST,
+      IMM_CHARM|IMM_NEGATIVE,     0, VULN_HOLY,
+      A|H|M|V,        A|B|C|D|E|F|G|H|I|J|K
+    },
+
+    {
+      "Marauder",             FALSE,
+      ACT_AGGRESSIVE,             AFF_DETECT_INVIS|AFF_DETECT_HIDDEN|AFF_DARK_VISION, OFF_ULTRA_MOB,
+      IMM_CHARM,      RES_MAGIC, VULN_MENTAL,
+      A|H|M|V,        A|B|C|D|E|F|G|H|I|J|K
+    },
+
+    {
+      "Nephandi",             FALSE,
+      0,              AFF_DETECT_INVIS|AFF_DETECT_HIDDEN|AFF_DARK_VISION, OFF_ULTRA_MOB,
+      IMM_MENTAL|IMM_NEGATIVE,        RES_WEAPON|RES_MAGIC, VULN_HOLY,
+      A|H|M|V,        A|B|C|D|E|F|G|H|I|J|K
+    },
+
+    {
+      "troll",        FALSE,
+      0,      AFF_REGENERATION|AFF_INFRARED|AFF_DETECT_HIDDEN,      OFF_BERSERK,
+      0,  RES_CHARM|RES_BASH, VULN_FIRE|VULN_ACID,
+      A|B|H|M|V,      A|B|C|D|E|F|G|H|I|J|K|U|V
     },
 
 

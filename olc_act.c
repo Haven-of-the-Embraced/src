@@ -1522,6 +1522,7 @@ bool change_exit( CHAR_DATA *ch, char *argument, int door )
     ROOM_INDEX_DATA *pRoom;
     char command[MAX_INPUT_LENGTH];
     char arg[MAX_INPUT_LENGTH];
+    char buf[MSL];
     int  value;
 
     EDIT_ROOM(ch, pRoom);
@@ -1601,8 +1602,16 @@ bool change_exit( CHAR_DATA *ch, char *argument, int door )
 
     if ( pToRoom->exit[rev] )
     {
-        free_exit( pToRoom->exit[rev] );
-        pToRoom->exit[rev] = NULL;
+        if (pToRoom->exit[rev]->u1.to_room == pRoom)
+        {
+            send_to_char("Unlinking two-way exit.\n\r", ch);
+            free_exit( pToRoom->exit[rev] );
+            pToRoom->exit[rev] = NULL;
+        } else {
+            sprintf(buf, "{rWARNING{w: Reverse exit unchanged. Exit from %d does not link here. (Links to %d).\n\r", pToRoom->vnum, pToRoom->exit[rev]->u1.to_room->vnum);
+            sendch(buf, ch);
+        }
+
     }
 
     /*

@@ -611,6 +611,14 @@ void redit( CHAR_DATA *ch, char *argument )
     EDIT_ROOM(ch, pRoom);
     pArea = pRoom->area;
 
+    if ((void *) pRoom != ch->desc->pEdit)
+    {
+        char buf[MSL];
+        sprintf(buf, "%s: now editing room %d", ch->name, pRoom->vnum);
+        ch->desc->pEdit = (void *) pRoom;
+        log_string( buf );
+    }
+
     smash_tilde( argument );
     strcpy( arg, argument );
     argument = one_argument( argument, command );

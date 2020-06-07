@@ -961,7 +961,13 @@ AEDIT( aedit_file )
     /*
      * Simple Syntax Check.
      */
+     length = strlen(file);
 
+     if (length < 4 || length > 16)
+     {
+         sendch("Filenames must be between 4 and 16 characters, without the '.are'.", ch);
+         return FALSE;
+     }
     /*
      * Allow only letters and numbers.
      */

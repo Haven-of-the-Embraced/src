@@ -2,7 +2,7 @@ pipeline {
     agent {
         node {
             label 'master'
-            customWorkspace '/home/havendev/src'
+            customWorkspace '/home/jenkinsbuild/src'
         }
     }
 
@@ -41,7 +41,7 @@ pipeline {
             steps {
                 echo 'Executing a Test Run...'
                 dir('/home/havendev/area') {
-                    sh '../src/rom 2002 testrun'
+                    sh '../src/rom 2005 testrun'
                 }
             }
         }

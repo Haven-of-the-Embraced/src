@@ -529,11 +529,6 @@ void reset_char(CHAR_DATA *ch)
      if (IS_NPC(ch))
     return;
 
-    if (ch->pcdata->perm_hit == 0
-    ||  ch->pcdata->perm_mana == 0
-    ||  ch->pcdata->perm_move == 0
-    ||  ch->pcdata->last_level == 0)
-    {
     /* do a FULL reset */
     for (loc = 0; loc < MAX_WEAR; loc++)
     {
@@ -583,7 +578,12 @@ void reset_char(CHAR_DATA *ch)
             ch->pcdata->true_sex    = 0;
         }
 
-    }
+    ch->affected_by = race_table[ch->race].aff;
+    ch->imm_flags   = race_table[ch->race].imm;
+    ch->res_flags   = race_table[ch->race].res;
+    ch->vuln_flags  = race_table[ch->race].vuln;
+    ch->form    = race_table[ch->race].form;
+    ch->parts   = race_table[ch->race].parts;
 
     /* now restore the character to his/her true condition */
     for (stat = 0; stat < MAX_STATS; stat++)
@@ -617,130 +617,29 @@ void reset_char(CHAR_DATA *ch)
         ch->armor[i] -= apply_ac( obj, loc, i );
 
         if (!obj->enchanted)
-    for ( af = obj->pIndexData->affected; af != NULL; af = af->next )
+        for ( af = obj->pIndexData->affected; af != NULL; af = af->next )
         {
             mod = af->modifier;
-            switch(af->location)
-            {
-        case APPLY_STR:     ch->mod_stat[STAT_STR]  += mod; break;
-        case APPLY_DEX:     ch->mod_stat[STAT_DEX]  += mod; break;
-        case APPLY_INT:     ch->mod_stat[STAT_INT]  += mod; break;
-        case APPLY_WIS:     ch->mod_stat[STAT_WIS]  += mod; break;
-        case APPLY_CON:     ch->mod_stat[STAT_CON]  += mod; break;
 
-        case APPLY_SEX:     ch->sex         += mod; break;
-        case APPLY_MANA:    ch->max_mana        += mod; break;
-        case APPLY_HIT:     ch->max_hit     += mod; break;
-        case APPLY_MOVE:    ch->max_move        += mod; break;
-        case APPLY_CS_STR:      ch->csattrib_mod[CSATTRIB_STRENGTH]  += mod; break;
-        case APPLY_CS_DEX:      ch->csattrib_mod[CSATTRIB_DEXTERITY]  += mod; break;
-        case APPLY_CS_STA:      ch->csattrib_mod[CSATTRIB_STAMINA]  += mod; break;
-        case APPLY_CS_CHA:      ch->csattrib_mod[CSATTRIB_CHARISMA]  += mod; break;
-        case APPLY_CS_MAN:      ch->csattrib_mod[CSATTRIB_MANIPULATION]  += mod; break;
-        case APPLY_CS_APP:      ch->csattrib_mod[CSATTRIB_APPEARANCE]  += mod; break;
-        case APPLY_CS_PER:      ch->csattrib_mod[CSATTRIB_PERCEPTION]  += mod; break;
-        case APPLY_CS_INT:      ch->csattrib_mod[CSATTRIB_INTELLIGENCE]  += mod; break;
-        case APPLY_CS_WIT:      ch->csattrib_mod[CSATTRIB_WITS]  += mod; break;
-
-        case APPLY_AC:
-            for (i = 0; i < 4; i ++)
-            ch->armor[i] += mod;
-            break;
-        case APPLY_HITROLL: ch->hitroll     += mod; break;
-        case APPLY_DAMROLL: ch->damroll     += mod; break;
-
-        case APPLY_SAVES:       ch->saving_throw += mod; break;
-        case APPLY_SAVING_ROD:      ch->saving_throw += mod; break;
-        case APPLY_SAVING_PETRI:    ch->saving_throw += mod; break;
-        case APPLY_SAVING_BREATH:   ch->saving_throw += mod; break;
-        case APPLY_SAVING_SPELL:    ch->saving_throw += mod; break;
-        }
+            if ( af->location != APPLY_SPELL_AFFECT )
+                affect_modify( ch, af, TRUE );
         }
 
         for ( af = obj->affected; af != NULL; af = af->next )
         {
             mod = af->modifier;
-            switch(af->location)
-            {
-                case APPLY_STR:         ch->mod_stat[STAT_STR]  += mod; break;
-                case APPLY_DEX:         ch->mod_stat[STAT_DEX]  += mod; break;
-                case APPLY_INT:         ch->mod_stat[STAT_INT]  += mod; break;
-                case APPLY_WIS:         ch->mod_stat[STAT_WIS]  += mod; break;
-                case APPLY_CON:         ch->mod_stat[STAT_CON]  += mod; break;
 
-                case APPLY_SEX:         ch->sex                 += mod; break;
-                case APPLY_MANA:        ch->max_mana            += mod; break;
-                case APPLY_HIT:         ch->max_hit             += mod; break;
-                case APPLY_MOVE:        ch->max_move            += mod; break;
-                case APPLY_GENERATION:  ch->gen                 += mod; break;
-                case APPLY_CS_STR:      ch->csattrib_mod[CSATTRIB_STRENGTH]  += mod; break;
-                case APPLY_CS_DEX:      ch->csattrib_mod[CSATTRIB_DEXTERITY]  += mod; break;
-                case APPLY_CS_STA:      ch->csattrib_mod[CSATTRIB_STAMINA]  += mod; break;
-                case APPLY_CS_CHA:      ch->csattrib_mod[CSATTRIB_CHARISMA]  += mod; break;
-                case APPLY_CS_MAN:      ch->csattrib_mod[CSATTRIB_MANIPULATION]  += mod; break;
-                case APPLY_CS_APP:      ch->csattrib_mod[CSATTRIB_APPEARANCE]  += mod; break;
-                case APPLY_CS_PER:      ch->csattrib_mod[CSATTRIB_PERCEPTION]  += mod; break;
-                case APPLY_CS_INT:      ch->csattrib_mod[CSATTRIB_INTELLIGENCE]  += mod; break;
-                case APPLY_CS_WIT:      ch->csattrib_mod[CSATTRIB_WITS]  += mod; break;
+            if ( af->location == APPLY_SPELL_AFFECT )
+                    affect_to_char ( ch, af );
+            else
+                affect_modify( ch, af, TRUE );
 
-        case APPLY_MAX_BLOOD:   ch->max_pblood      += mod; break;
-
-                case APPLY_AC:
-                    for (i = 0; i < 4; i ++)
-                        ch->armor[i] += mod;
-                    break;
-        case APPLY_HITROLL:     ch->hitroll             += mod; break;
-                case APPLY_DAMROLL:     ch->damroll             += mod; break;
-
-                case APPLY_SAVES:         ch->saving_throw += mod; break;
-                case APPLY_SAVING_ROD:          ch->saving_throw += mod; break;
-                case APPLY_SAVING_PETRI:        ch->saving_throw += mod; break;
-                case APPLY_SAVING_BREATH:       ch->saving_throw += mod; break;
-                case APPLY_SAVING_SPELL:        ch->saving_throw += mod; break;
-            }
-    }
+        }
     }
 
     /* now add back spell effects */
     for (af = ch->affected; af != NULL; af = af->next)
-    {
-        mod = af->modifier;
-        switch(af->location)
-        {
-                case APPLY_STR:         ch->mod_stat[STAT_STR]  += mod; break;
-                case APPLY_DEX:         ch->mod_stat[STAT_DEX]  += mod; break;
-                case APPLY_INT:         ch->mod_stat[STAT_INT]  += mod; break;
-                case APPLY_WIS:         ch->mod_stat[STAT_WIS]  += mod; break;
-                case APPLY_CON:         ch->mod_stat[STAT_CON]  += mod; break;
-
-                case APPLY_SEX:         ch->sex                 += mod; break;
-                case APPLY_MANA:        ch->max_mana            += mod; break;
-                case APPLY_HIT:         ch->max_hit             += mod; break;
-                case APPLY_MOVE:        ch->max_move            += mod; break;
-                case APPLY_CS_STR:      ch->csattrib_mod[CSATTRIB_STRENGTH]  += mod; break;
-                case APPLY_CS_DEX:      ch->csattrib_mod[CSATTRIB_DEXTERITY]  += mod; break;
-                case APPLY_CS_STA:      ch->csattrib_mod[CSATTRIB_STAMINA]  += mod; break;
-                case APPLY_CS_CHA:      ch->csattrib_mod[CSATTRIB_CHARISMA]  += mod; break;
-                case APPLY_CS_MAN:      ch->csattrib_mod[CSATTRIB_MANIPULATION]  += mod; break;
-                case APPLY_CS_APP:      ch->csattrib_mod[CSATTRIB_APPEARANCE]  += mod; break;
-                case APPLY_CS_PER:      ch->csattrib_mod[CSATTRIB_PERCEPTION]  += mod; break;
-                case APPLY_CS_INT:      ch->csattrib_mod[CSATTRIB_INTELLIGENCE]  += mod; break;
-                case APPLY_CS_WIT:      ch->csattrib_mod[CSATTRIB_WITS]  += mod; break;
-
-                case APPLY_AC:
-                    for (i = 0; i < 4; i ++)
-                        ch->armor[i] += mod;
-                    break;
-                case APPLY_HITROLL:     ch->hitroll             += mod; break;
-                case APPLY_DAMROLL:     ch->damroll             += mod; break;
-
-                case APPLY_SAVES:         ch->saving_throw += mod; break;
-                case APPLY_SAVING_ROD:          ch->saving_throw += mod; break;
-                case APPLY_SAVING_PETRI:        ch->saving_throw += mod; break;
-                case APPLY_SAVING_BREATH:       ch->saving_throw += mod; break;
-                case APPLY_SAVING_SPELL:        ch->saving_throw += mod; break;
-        }
-    }
+        affect_modify( ch, af, TRUE );
 
     /* make sure sex is RIGHT!!!! */
     if (ch->sex < 0 || ch->sex > 2)

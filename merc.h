@@ -3976,6 +3976,7 @@ OD *    get_obj_wear    args( ( CHAR_DATA *ch, char *argument, bool character ) 
 OD *    get_obj_here    args( ( CHAR_DATA *ch, ROOM_INDEX_DATA *room, char *argument ) );
 OD *    get_obj_hidden  args( ( CHAR_DATA *ch, char *argument ) );
 OD *    get_obj_world   args( ( CHAR_DATA *ch, char *argument, bool unseen ) );
+OD *    get_obj_anywhere   args( ( CHAR_DATA *ch, char *argument) );
 OD *    create_money    args( ( int gold, int silver ) );
 int get_obj_number  args( ( OBJ_DATA *obj ) );
 int get_obj_weight  args( ( OBJ_DATA *obj ) );

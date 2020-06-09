@@ -2542,6 +2542,36 @@ OBJ_DATA *get_obj_world( CHAR_DATA *ch, char *argument, bool unseen )
     return NULL;
 }
 
+/*
+ * Find an obj in obj_list regardless of where.
+ */
+OBJ_DATA *get_obj_anywhere( CHAR_DATA *ch, char *argument )
+{
+    char arg[MAX_INPUT_LENGTH];
+    OBJ_DATA *obj;
+    int number;
+    int count;
+
+    if ( ( obj = get_obj_here( ch, NULL, argument ) ) != NULL )
+        return obj;
+
+    if ( ( obj = get_obj_world( ch, argument, TRUE ) ) != NULL )
+        return obj;
+
+    number = number_argument( argument, arg );
+    count  = 0;
+    for ( obj = object_list; obj != NULL; obj = obj->next )
+    {
+        if ( can_see_obj( ch, obj ) && is_name( arg, obj->name ) )
+        {
+            if ( ++count == number )
+            return obj;
+        }
+    }
+
+    return NULL;
+}
+
 /* deduct cost from a character */
 
 void deduct_cost(CHAR_DATA *ch, int cost)

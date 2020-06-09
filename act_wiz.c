@@ -1625,7 +1625,7 @@ void do_ostat( CHAR_DATA *ch, char *argument )
     return;
     }
 
-    if ( ( obj = get_obj_world(ch,argument, FALSE) ) == NULL )
+    if ( ( obj = get_obj_anywhere(ch,argument) ) == NULL )
     {
     send_to_char( "Nothing like that in hell, earth, or heaven.\n\r", ch );
     return;

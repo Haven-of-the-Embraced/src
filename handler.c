@@ -2551,13 +2551,7 @@ OBJ_DATA *get_obj_anywhere( CHAR_DATA *ch, char *argument )
     OBJ_DATA *obj;
     int number;
     int count;
-
-    if ( ( obj = get_obj_here( ch, NULL, argument ) ) != NULL )
-        return obj;
-
-    if ( ( obj = get_obj_world( ch, argument, TRUE ) ) != NULL )
-        return obj;
-
+    
     number = number_argument( argument, arg );
     count  = 0;
     for ( obj = object_list; obj != NULL; obj = obj->next )

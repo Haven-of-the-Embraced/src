@@ -622,7 +622,7 @@ void renown_gain(CHAR_DATA *ch)
 {
     int renown, chance, type;
     renown = chance = type = 0;
-    renown = number_range(0, 4);
+    renown = number_range(1, 4);
 
     if (ch->pcdata->renown[TEMP_GLORY] == 10 &&
         ch->pcdata->renown[TEMP_HONOR] == 10 &&

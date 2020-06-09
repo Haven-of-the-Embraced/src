@@ -2655,6 +2655,8 @@ void do_steal( CHAR_DATA *ch, char *argument )
     act("You pocket $p.",ch,obj,NULL,TO_CHAR);
     check_improve(ch,gsn_steal,TRUE,2);
     send_to_char( "Got it!\n\r", ch );
+    if (!IS_NPC(ch))
+        qitem_check(ch, obj);
     return;
 }
 

@@ -9920,50 +9920,117 @@ void do_bslap( CHAR_DATA *ch, char *argument )
     do_function(victim, &do_look, "auto" );
 
 }
-
+#define CHECK_STANDING 0
+#define CHECK_RANGE    1
+#define CHECK_AREA     2
 void do_checklinks (CHAR_DATA *ch, char *argument)
 {
     AREA_DATA *pArea;
     ROOM_INDEX_DATA *pRoom;
     EXIT_DATA *pExit;
     int door, areanum, lvnum, hvnum;
-    int i;
-    char buf[MSL];
-    BUFFER *buffer;
-    bool found;
+    int type;
+    char arg1[MIL], arg2[MIL];
 
-    buffer = new_buf();
-    found = FALSE;
+    argument = one_argument(argument, arg1);
+    argument = one_argument(argument, arg2);
 
-    if ((pRoom = ch->in_room) == NULL)
+    if (IS_NULLSTR(arg1) && IS_NULLSTR(arg2))
     {
-        bug("Checklinks: NULL in_room for ch (%s)", ch->name);
+        type = CHECK_STANDING;
+    } else if (IS_NULLSTR(arg2)) {
+        if ( is_number( arg1 ) )
+            if ( (pArea = get_area_data(atoi(arg1))) != NULL )
+                type = CHECK_AREA;
+    } else {
+        if (is_number(arg1) && is_number(arg2))
+        type = CHECK_RANGE;
+    }
+
+    if (type == -1)
+    {
+        sendch("That is not a valid option. Please enter an area vnum, a vnum range, or nothing.\n\r", ch);
         return;
     }
-    pArea = pRoom->area;
 
-    hvnum = pArea->max_vnum;
-    lvnum = pArea->min_vnum;
-    for (i = lvnum; i < hvnum; i++)
+    lvnum = hvnum = 0;
+    switch (type)
     {
-        if ((pRoom = get_room_index(i)) == NULL)
+        case CHECK_STANDING:
+            pRoom = ch->in_room;
+            pArea = pRoom->area;
+            break;
+        case CHECK_RANGE:
+            lvnum = atoi(arg1);
+            hvnum = atoi(arg2);
+            break;
+        case CHECK_AREA:
+            pArea = get_area_data(atoi(arg1));
+            break;
+        default:
+            break;
+    }
+
+    if (lvnum == 0)
+    {
+        hvnum = pArea->max_vnum;
+        lvnum = pArea->min_vnum;
+    }
+    sendch("[Vnum]     [ Crosslink ]\n\r", ch);
+    output_crosslinks(ch, lvnum, hvnum);
+    return;
+}
+
+void output_crosslinks(CHAR_DATA *ch, int lvnum, int hvnum)
+{
+    ROOM_INDEX_DATA *pRoom;
+    EXIT_DATA *pExit;
+    BUFFER *buffer;
+    bool found;
+    int door, vnum;
+    buffer = new_buf();
+    found = FALSE;
+    int count = 0;
+    char buf[MSL];
+    char color[MSL];
+
+    if (lvnum > hvnum)
+    { // If lowvnum is actually high, flip them.
+        vnum = lvnum;
+        lvnum = hvnum;
+        hvnum = vnum;
+    }
+
+    for (vnum = lvnum; vnum <= hvnum; vnum++)
+    {
+        if ((pRoom = get_room_index(vnum)) == NULL)
             continue;
 
         for ( door = 0; door <= 5; door++ )
             if ( ( pExit = pRoom->exit[door] ) != NULL )
                 if (pExit->u1.to_room->vnum > hvnum || pExit->u1.to_room->vnum < lvnum)
                 {
-                    sprintf( buf, "Shit Link Found: Room %d exit %s to room %d\n\r", pRoom->vnum, dir_name[door], pExit->u1.to_room->vnum);
+                    if (count <= 0)
+                        strcpy(color, "{w");
+                    else
+                    {
+                        strcpy(color, "{c");
+                    }
+
+                    sprintf( buf, "%s%5d     %5s to %d\n\r", color, pRoom->vnum, dir_name[door], pExit->u1.to_room->vnum);
                     add_buf(buffer, buf);
+                    count++;
+                    if (count > 1) count = 0;
                     found = TRUE;
                 }
 
     }
+
     if (found)
     {
         page_to_char(buf_string(buffer),ch);
         free_buf(buffer);
     } else {
-        sendch("No Shit Links found.\n\r", ch);
+        sendch("Good Job! No Shit Links found.\n\r", ch);
     }
 }

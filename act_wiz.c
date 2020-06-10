@@ -9920,3 +9920,26 @@ void do_bslap( CHAR_DATA *ch, char *argument )
     do_function(victim, &do_look, "auto" );
 
 }
+void do_checklinks (CHAR_DATA *ch, char *argument)
+{
+    return;
+/*        for ( door = 0; door <= 5; door++ )
+        {
+        EXIT_DATA *pexit;
+
+        if ( ( pexit = location->exit[door] ) != NULL )
+        {
+            sprintf( buf,
+            "Door: %d.  To: %d.  Key: %d.  Exit flags: %d.\n\rKeyword: '%s'.  Description: %s",
+
+            door,
+            (pexit->u1.to_room == NULL ? -1 : pexit->u1.to_room->vnum),
+                pexit->key,
+                pexit->exit_info,
+                pexit->keyword,
+                pexit->description[0] != '\0'
+                ? pexit->description : "(none).\n\r" );
+            send_to_char( buf, ch );
+        }
+    }*/
+    }

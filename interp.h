@@ -64,6 +64,7 @@ struct  cmd_type
  * Command functions.
  * Defined in act_*.c (mostly).
  */
+DECLARE_DO_FUN( do_checklinks ); 
 DECLARE_DO_FUN( do_forcetick);
 DECLARE_DO_FUN( do_advance  );
 DECLARE_DO_FUN( do_rat);

@@ -502,6 +502,7 @@ DECLARE_DO_FUN( do_portal   );
 DECLARE_DO_FUN( do_study    );
 DECLARE_DO_FUN( do_brew     );
 DECLARE_DO_FUN( do_skin     );
+DECLARE_DO_FUN( do_trophy   );
 DECLARE_DO_FUN( do_mount    );
 DECLARE_DO_FUN( do_dismount );
 DECLARE_DO_FUN( do_obliterate   );

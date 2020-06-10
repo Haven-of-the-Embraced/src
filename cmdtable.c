@@ -411,7 +411,7 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "arise",  do_arise},
     { "allies", do_allies},
 
-
+    { "trophy", do_trophy},
 
     /* Remort placed here so remove parses first */
     { "remort",     do_remort},

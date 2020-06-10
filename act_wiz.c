@@ -1495,89 +1495,84 @@ void do_rstat( CHAR_DATA *ch, char *argument )
     location = ( arg[0] == '\0' ) ? ch->in_room : find_location( ch, arg );
     if ( location == NULL )
     {
-    send_to_char( "No such location.\n\r", ch );
-    return;
+        send_to_char( "No such location.\n\r", ch );
+        return;
     }
 
     if (!is_room_owner(ch,location) && ch->in_room != location
     &&  room_is_private( location ) && !IS_TRUSTED(ch,IMPLEMENTOR))
     {
-    send_to_char( "That room is private right now.\n\r", ch );
-    return;
+        send_to_char( "That room is private right now.\n\r", ch );
+        return;
     }
 
     sprintf( buf, "Name: '%s'\n\rArea: '%s'\n\r",
-    location->name,
-    location->area->name );
+        location->name,
+        location->area->name );
     send_to_char( buf, ch );
 
     sprintf( buf,
-    "Vnum: %d  Sector: %d  Light: %d  Healing: %d  Mana: %d\n\r",
-    location->vnum,
-    location->sector_type,
-    location->light,
-    location->heal_rate,
-    location->mana_rate );
-    send_to_char( buf, ch );
+        "Vnum: %d  Sector: %d  Light: %d  Healing: %d  Mana: %d\n\r",
+        location->vnum,
+        location->sector_type,
+        location->light,
+        location->heal_rate,
+        location->mana_rate );
+        send_to_char( buf, ch );
 
     sprintf( buf,
-    "Room flags: %d.\n\rDescription:\n\r%s",
-    location->room_flags,
-    location->description );
-    send_to_char( buf, ch );
+        "Room flags: %d.\n\rDescription:\n\r%s",
+        location->room_flags,
+        location->description );
+        send_to_char( buf, ch );
 
     if ( location->extra_descr != NULL )
     {
-    EXTRA_DESCR_DATA *ed;
+        EXTRA_DESCR_DATA *ed;
 
-    send_to_char( "Extra description keywords: '", ch );
-    for ( ed = location->extra_descr; ed; ed = ed->next )
-    {
-        send_to_char( ed->keyword, ch );
-        if ( ed->next != NULL )
-        send_to_char( " ", ch );
-    }
-    send_to_char( "'.\n\r", ch );
+        send_to_char( "Extra description keywords: '", ch );
+        for ( ed = location->extra_descr; ed; ed = ed->next )
+        {
+            send_to_char( ed->keyword, ch );
+            if ( ed->next != NULL )
+            send_to_char( " ", ch );
+        }
+        send_to_char( "'.\n\r", ch );
     }
 
     send_to_char( "Characters:", ch );
     for ( rch = location->people; rch; rch = rch->next_in_room )
     {
-    if (can_see(ch,rch))
-        {
-        send_to_char( " ", ch );
-        one_argument( rch->name, buf );
-        send_to_char( buf, ch );
-    }
+        if (can_see(ch,rch))
+            {
+            send_to_char( " ", ch );
+            one_argument( rch->name, buf );
+            send_to_char( buf, ch );
+        }
     }
 
     send_to_char( ".\n\rObjects:   ", ch );
     for ( obj = location->contents; obj; obj = obj->next_content )
     {
-    send_to_char( " ", ch );
-    one_argument( obj->name, buf );
-    send_to_char( buf, ch );
+        send_to_char( " ", ch );
+        one_argument( obj->name, buf );
+        send_to_char( buf, ch );
     }
     send_to_char( ".\n\r", ch );
 
     for ( door = 0; door <= 5; door++ )
     {
-    EXIT_DATA *pexit;
+        EXIT_DATA *pexit;
 
-    if ( ( pexit = location->exit[door] ) != NULL )
-    {
-        sprintf( buf,
-        "Door: %d.  To: %d.  Key: %d.  Exit flags: %d.\n\rKeyword: '%s'.  Description: %s",
-
-        door,
-        (pexit->u1.to_room == NULL ? -1 : pexit->u1.to_room->vnum),
-            pexit->key,
-            pexit->exit_info,
-            pexit->keyword,
-            pexit->description[0] != '\0'
-            ? pexit->description : "(none).\n\r" );
-        send_to_char( buf, ch );
-    }
+        if ( ( pexit = location->exit[door] ) != NULL )
+        {
+            sprintf( buf,
+            "Door: %d.  To: %d.  Key: %d.  Exit flags: %d.\n\rKeyword: '%s'.  Description: %s",
+            door, (pexit->u1.to_room == NULL ? -1 : pexit->u1.to_room->vnum),
+                pexit->key, pexit->exit_info, pexit->keyword,
+                pexit->description[0] != '\0' ? pexit->description : "(none).\n\r" );
+            send_to_char( buf, ch );
+        }
     }
 
     if ( location->rprogs )

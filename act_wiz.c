@@ -9920,26 +9920,50 @@ void do_bslap( CHAR_DATA *ch, char *argument )
     do_function(victim, &do_look, "auto" );
 
 }
+
 void do_checklinks (CHAR_DATA *ch, char *argument)
 {
-    return;
-/*        for ( door = 0; door <= 5; door++ )
-        {
-        EXIT_DATA *pexit;
+    AREA_DATA *pArea;
+    ROOM_INDEX_DATA *pRoom;
+    EXIT_DATA *pExit;
+    int door, areanum, lvnum, hvnum;
+    int i;
+    char buf[MSL];
+    BUFFER *buffer;
+    bool found;
 
-        if ( ( pexit = location->exit[door] ) != NULL )
-        {
-            sprintf( buf,
-            "Door: %d.  To: %d.  Key: %d.  Exit flags: %d.\n\rKeyword: '%s'.  Description: %s",
+    buffer = new_buf();
+    found = FALSE;
 
-            door,
-            (pexit->u1.to_room == NULL ? -1 : pexit->u1.to_room->vnum),
-                pexit->key,
-                pexit->exit_info,
-                pexit->keyword,
-                pexit->description[0] != '\0'
-                ? pexit->description : "(none).\n\r" );
-            send_to_char( buf, ch );
-        }
-    }*/
+    if ((pRoom = ch->in_room) == NULL)
+    {
+        bug("Checklinks: NULL in_room for ch (%s)", ch->name);
+        return;
     }
+    pArea = pRoom->area;
+
+    hvnum = pArea->max_vnum;
+    lvnum = pArea->min_vnum;
+    for (i = lvnum; i < hvnum; i++)
+    {
+        if ((pRoom = get_room_index(i)) == NULL)
+            continue;
+
+        for ( door = 0; door <= 5; door++ )
+            if ( ( pExit = pRoom->exit[door] ) != NULL )
+                if (pExit->u1.to_room->vnum > hvnum || pExit->u1.to_room->vnum < lvnum)
+                {
+                    sprintf( buf, "Shit Link Found: Room %d exit %s to room %d\n\r", pRoom->vnum, dir_name[door], pExit->u1.to_room->vnum);
+                    add_buf(buffer, buf);
+                    found = TRUE;
+                }
+
+    }
+    if (found)
+    {
+        page_to_char(buf_string(buffer),ch);
+        free_buf(buffer);
+    } else {
+        sendch("No Shit Links found.\n\r", ch);
+    }
+}

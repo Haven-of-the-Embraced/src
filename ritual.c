@@ -1504,6 +1504,78 @@ void do_skin(CHAR_DATA *ch, char *argument )
     return;
 }
 
+void do_trophy(CHAR_DATA *ch, char *argument )
+{
+    CHAR_DATA *mob;
+    OBJ_DATA *trophy;
+    OBJ_DATA *corpse;
+    char buf[MAX_STRING_LENGTH], arg[MAX_INPUT_LENGTH];
+
+    argument = one_argument(argument,arg);
+
+    if((corpse = get_obj_here( ch, NULL, arg )) == NULL)
+    {
+        send_to_char( "Make a trophy out of what?\n\r", ch );
+        return;
+    }
+
+    if(corpse->item_type != ITEM_CORPSE_NPC)
+    {
+        send_to_char( "You can't make a trophy out of that!\n\r", ch );
+        return;
+    }
+
+    if(corpse->level == 0)
+    {
+        send_to_char("This corpse has been desecrated and will not make a good trophy.\n\r",ch);
+        return;
+    }
+
+    send_to_char("You start to skin the corpse and...\n\r",ch);
+
+    if (get_skill(ch,gsn_skin) < number_percent())
+    {
+        if(number_range(1,100) < 50)
+        {
+            send_to_char("slip and cut your finger.. OOOW IT HURTS!\n\r",ch);
+            check_improve(ch,gsn_skin,FALSE,1);
+            act( "$n attempts to skin $p but slips and cuts $s finger!.", ch, corpse, ch, TO_NOTVICT );
+            damage( ch, ch, corpse->level*2, gsn_skin, DAM_SLASH, TRUE);
+            WAIT_STATE(ch, 36);
+            return;
+        }
+        send_to_char("fail horribly, tearing the skin into useless shreds.\n\r",ch);
+        check_improve(ch,gsn_skin,FALSE,1);
+        act( "$n attempts to skin $p but fails miserably, tearing the skin into useless shreds.", ch, corpse, ch, TO_NOTVICT );
+        extract_obj(corpse);
+        WAIT_STATE(ch, 36);
+        return;
+    }
+
+    mob = create_mobile(get_mob_index(corpse->value[0]));
+    char_to_room(mob, ch->in_room);
+
+    if((skin = create_object(get_obj_index(OBJ_VNUM_SKIN),0)) == NULL)
+    {
+        send_to_char("Error! Contact an imm at once to fix this missing item!\n\r",ch);
+        return;
+    }
+
+    act( "$n skins $p into a nice hide.", ch, corpse, ch, TO_NOTVICT );
+    act("You skin $p and make a nice hide out of it.",ch, corpse, ch, TO_CHAR);
+    sprintf(buf,"%s %s skin",mob->name, race_table[mob->race].name);
+    skin->name = str_dup(buf);
+    sprintf(buf,"the skin of %s",mob->short_descr);
+    skin->short_descr = str_dup(buf);
+    skin->level = corpse->level;
+    skin->value[0] = corpse->value[0];
+    skin->value[1] = mob->race;
+    skin->cost = corpse->level*50;
+    extract_obj(corpse);
+    extract_char( mob, TRUE );
+    obj_to_char(skin,ch);
+    return;
+}
 /*
 void do_craft(CHAR_DATA *ch, char *argument )
 {
@@ -1634,6 +1706,3 @@ void do_bind(CHAR_DATA *ch, char *argument )
     extract_char( mob, TRUE );
     return;
 }
-
-
-

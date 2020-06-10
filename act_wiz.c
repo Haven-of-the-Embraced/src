@@ -10017,7 +10017,7 @@ void output_crosslinks(CHAR_DATA *ch, int lvnum, int hvnum)
                         strcpy(color, "{c");
                     }
 
-                    sprintf( buf, "%s%5d     %5s to %d\n\r", color, pRoom->vnum, dir_name[door], pExit->u1.to_room->vnum);
+                    sprintf( buf, "%s%5d     %5s to %d{x\n\r", color, pRoom->vnum, dir_name[door], pExit->u1.to_room->vnum);
                     add_buf(buffer, buf);
                     count++;
                     if (count > 1) count = 0;

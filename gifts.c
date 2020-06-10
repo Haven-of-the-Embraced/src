@@ -211,12 +211,15 @@ void spell_gift_speechoftheworld( int sn, int level, CHAR_DATA *ch, void *vo, in
 //
 //“Staredown”
 //Ram or Snake spirit
-//Roll: Charisma + Intimidation (Diff 5+ targets rank or courage)
+//Roll: Charisma + Intimidation (Diff 5+ targets [rank] or [courage/2 + 1])
 //A werewolf’s stare can strike fear into the hearts of mortals and animals, causing them to flee for their lives. (If garou succeeds on the roll against another garou, garou will be frozen with terror and cannot attack, anyone else will flee the room)
 //Cost: None.
 void spell_gift_staredown( int sn, int level, CHAR_DATA *ch, void *vo, int target )
 {
    CHAR_DATA *victim = (CHAR_DATA *) vo;
+    int staresuccess = 0;
+    int starediff = 5;
+    char buf[MSL];
 
     if (victim == NULL)
     {
@@ -224,10 +227,107 @@ void spell_gift_staredown( int sn, int level, CHAR_DATA *ch, void *vo, int targe
         return;
     }
 
+    if (victim == ch)
+    {
+      send_to_char("You cannot stare yourself into submission, choose someone else.\n\r", ch);
+      return;
+    }
 
-    act( "$n stares in the eyes of $N and $e flees in terror!",  ch, NULL, victim, TO_NOTVICT );
-    act( "You stare into the eyes of $N and force them to flee!",  ch, NULL, victim, TO_CHAR );
-    act( "$n stares into your eyes... RUN!!!",  ch, NULL, victim, TO_VICT );
+    if (IS_NPC(victim))
+    {
+      starediff += victim->level / 30;
+      if (IS_DEBUGGING(ch))
+      {
+        sprintf(buf, "{MTarget: Mob {R(Difficulty: %d)\n\r{x", starediff);
+        send_to_char(buf, ch);
+      }
+    }
+    else
+    {
+      if(victim->race == race_lookup("garou"))
+      {
+        starediff += victim->pcdata->rank;
+        if (IS_DEBUGGING(ch))
+        {
+          sprintf(buf, "{MTarget: PC Garou {R(Difficulty: %d)\n\r{x", starediff);
+          send_to_char(buf, ch);
+        }
+      }
+      else
+      {
+        starediff += 1 + (victim->pcdata->csvirtues[CSVIRT_COURAGE] / 2);
+        if (IS_DEBUGGING(ch))
+        {
+          sprintf(buf, "{MTarget: PC Non-Garou {R(Difficulty: %d)\n\r{x", starediff);
+          send_to_char(buf, ch);
+        }
+      }
+    }
+
+    staresuccess = godice(get_attribute(ch, CHARISMA) + ch->csabilities[CSABIL_INTIMIDATION], starediff );
+    if (IS_SET(victim->res_flags, RES_CHARM))
+    {
+      staresuccess--;
+      if (IS_DEBUGGING(ch))
+        send_to_char("{GTarget: Resist charm!  -1 success{x\n\r", ch);
+    }
+
+    if(IS_DEBUGGING(ch))
+    {
+      sprintf(buf, "{YSuccesses Rolled: %d\n\r{x", staresuccess);
+      send_to_char(buf, ch);
+    }
+
+    WAIT_STATE(ch,8);
+
+    act( "$n stares fiercefully into the eyes of $N.",  ch, NULL, victim, TO_NOTVICT );
+    act( "You stand your ground, and stare fiercely into the eyes of $N.",  ch, NULL, victim, TO_CHAR );
+    act( "$n locks eyes with you and begins to stare you down.",  ch, NULL, victim, TO_VICT );
+
+    if (staresuccess < 0)
+    {
+      act( "With a quick movement, $n turns and flees the scene.",  ch, NULL, victim, TO_NOTVICT );
+      act( "$N returns your gaze with a fierceness you were not prepared for, and turn and flee!",  ch, NULL, victim, TO_CHAR );
+      act( "You return $n's gaze with even more ferocity, watching $e flee in terror.",  ch, NULL, victim, TO_VICT );
+      WAIT_STATE(ch,4);
+      do_function(ch, &do_flee, "auto" );
+      return;
+    }
+
+    if (staresuccess == 0)
+    {
+      act( "$N doesn't seem to be fazed by the staring contest.",  ch, NULL, victim, TO_NOTVICT );
+      act( "You and $N continue to lock gazes, neither backing down.",  ch, NULL, victim, TO_CHAR );
+      act( "You and $n continue to have your gazes locked, neither backing down.",  ch, NULL, victim, TO_VICT );
+      WAIT_STATE(ch, 6);
+      return;
+    }
+
+    if (IS_SET(victim->imm_flags, IMM_CHARM) || (ch->level + 10 < victim->level))
+    {
+      act( "$N doesn't seem to back down, and in fact stares back with even more resolve.",  ch, NULL, victim, TO_NOTVICT );
+      act( "Staring back at you, $N's eyes show a force of resolve seldom seen.",  ch, NULL, victim, TO_CHAR );
+      act( "With ease, you stare directly back into $n's eyes with fierce resolve.",  ch, NULL, victim, TO_VICT );
+      WAIT_STATE(ch,4);
+      if (IS_DEBUGGING(ch))
+        send_to_char("{GTarget Immune to Charm or Over 10 levels higher.{x\n\r", ch);
+      return;
+    }
+
+    gain_exp(ch, staresuccess);
+
+    if(victim->race == race_lookup("garou") || IS_SET(victim->off_flags, OFF_ULTRA_MOB))
+    {
+      act( "$N pauses for a moment, frozen in fear.",  ch, NULL, victim, TO_NOTVICT );
+      act( "$N freezes with fear under your fierce gaze.",  ch, NULL, victim, TO_CHAR );
+      act( "$n's gaze fills you with terror as you freeze momentarily with fear.",  ch, NULL, victim, TO_VICT );
+      ch->stopped += staresuccess * 2;
+      return;
+    }
+
+    act( "$N buckles under the gaze, and flees in terror.",  ch, NULL, victim, TO_NOTVICT );
+    act( "$N buckles under your fierce gaze, fleeing the scene in terror.",  ch, NULL, victim, TO_CHAR );
+    act( "$n's gaze is too much to handle, and you flee in terror!",  ch, NULL, victim, TO_VICT );
     do_function(victim, &do_flee, "auto" );
     return;
 }

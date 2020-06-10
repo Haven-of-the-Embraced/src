@@ -1531,25 +1531,13 @@ void do_trophy(CHAR_DATA *ch, char *argument )
         return;
     }
 
-    send_to_char("You start to skin the corpse and...\n\r",ch);
-
-    if (get_skill(ch,gsn_skin) < number_percent())
+    if(number_range(1,10) == 1)
     {
-        if(number_range(1,100) < 50)
-        {
-            send_to_char("slip and cut your finger.. OOOW IT HURTS!\n\r",ch);
-            check_improve(ch,gsn_skin,FALSE,1);
-            act( "$n attempts to skin $p but slips and cuts $s finger!.", ch, corpse, ch, TO_NOTVICT );
-            damage( ch, ch, corpse->level*2, gsn_skin, DAM_SLASH, TRUE);
-            WAIT_STATE(ch, 36);
-            return;
-        }
-        send_to_char("fail horribly, tearing the skin into useless shreds.\n\r",ch);
-        check_improve(ch,gsn_skin,FALSE,1);
-        act( "$n attempts to skin $p but fails miserably, tearing the skin into useless shreds.", ch, corpse, ch, TO_NOTVICT );
-        extract_obj(corpse);
-        WAIT_STATE(ch, 36);
-        return;
+      act( "You try to claim a trophy from $p, but but end up butchering it instead.", ch, corpse, NULL, TO_CHAR );
+      act( "$n tries to claim a trophy from $p, but destroys the corpse instead.", ch, corpse, NULL, TO_NOTVICT );
+      extract_obj(corpse);
+      WAIT_STATE(ch, 36);
+      return;
     }
 
     mob = create_mobile(get_mob_index(corpse->value[0]));

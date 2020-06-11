@@ -1535,7 +1535,7 @@ void do_trophy(CHAR_DATA *ch, char *argument )
     failure = number_range(1,10);
     if (IS_DEBUGGING(ch))
     {
-      sprintf(buf, "{YFailure Check: {C%d\n\r", failure);
+      sprintf(buf, "{YFailure Check: {C%d{x\n\r", failure);
       send_to_char(buf, ch);
     }
 
@@ -1559,11 +1559,13 @@ void do_trophy(CHAR_DATA *ch, char *argument )
     }
 
     act( "$n kneels down and takes a trophy from $p.", ch, corpse, ch, TO_NOTVICT );
-    act("You kneel down next to $p, and take a trophy from your kill.",ch, corpse, ch, TO_CHAR);
+    act("You kneel down next to $p, and take a trophy from the kill.",ch, corpse, ch, TO_CHAR);
     sprintf(buf,"%s %s trophy",mob->name, race_table[mob->race].name);
     trophy->name = str_dup(buf);
     sprintf(buf,"a trophy from %s",mob->short_descr);
     trophy->short_descr = str_dup(buf);
+    sprintf(buf,"A grisly trophy has been poached from %s.",mob->short_descr);
+    trophy->description = str_dup(buf);
     trophy->level = corpse->level;
     trophy->value[0] = corpse->value[0];
     trophy->value[1] = mob->race;

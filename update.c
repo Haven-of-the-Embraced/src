@@ -575,7 +575,7 @@ void weather_update( void )
     if ( time_info.moon_count == 3)
     {
         time_info.moon_count = 0;
-        if(time_info.phase == 9) time_info.phase = 0;
+        if(time_info.phase == 7) time_info.phase = 0;
         else
             time_info.phase++;
     }

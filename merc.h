@@ -1342,6 +1342,7 @@ struct  kill_data
 /* garou fetish */
 #define OBJ_VNUM_FETISH          18
 
+#define OBJ_VNUM_TROPHY          19
 #define OBJ_VNUM_MUSHROOM        20
 #define OBJ_VNUM_LIGHT_BALL      21
 #define OBJ_VNUM_SPRING          22

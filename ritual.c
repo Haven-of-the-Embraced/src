@@ -1543,9 +1543,10 @@ void do_trophy(CHAR_DATA *ch, char *argument )
     mob = create_mobile(get_mob_index(corpse->value[0]));
     char_to_room(mob, ch->in_room);
 
-    if((skin = create_object(get_obj_index(OBJ_VNUM_SKIN),0)) == NULL)
+    if((trophy = create_object(get_obj_index(OBJ_VNUM_TROPHY),0)) == NULL)
     {
         send_to_char("Error! Contact an imm at once to fix this missing item!\n\r",ch);
+        bug( "do_trophy: OBJ_VNUM_TROPHY [%d] = NULL", OBJ_VNUM_TROPHY);
         return;
     }
 

@@ -1510,6 +1510,7 @@ void do_trophy(CHAR_DATA *ch, char *argument )
     OBJ_DATA *trophy;
     OBJ_DATA *corpse;
     char buf[MAX_STRING_LENGTH], arg[MAX_INPUT_LENGTH];
+    int failure;
 
     argument = one_argument(argument,arg);
 
@@ -1531,9 +1532,16 @@ void do_trophy(CHAR_DATA *ch, char *argument )
         return;
     }
 
-    if(number_range(1,10) == 1)
+    failure = number_range(1,10);
+    if (IS_DEBUGGING(ch))
     {
-      act( "You try to claim a trophy from $p, but but end up butchering it instead.", ch, corpse, NULL, TO_CHAR );
+      sprintf(buf, "{YFailure Check: {C%d\n\r", failure);
+      send_to_char(buf, ch);
+    }
+
+    if(failure == 1)
+    {
+      act( "You try to claim a trophy from $p, but ends up butchering it instead.", ch, corpse, NULL, TO_CHAR );
       act( "$n tries to claim a trophy from $p, but destroys the corpse instead.", ch, corpse, NULL, TO_NOTVICT );
       extract_obj(corpse);
       WAIT_STATE(ch, 36);
@@ -1550,19 +1558,19 @@ void do_trophy(CHAR_DATA *ch, char *argument )
         return;
     }
 
-    act( "$n skins $p into a nice hide.", ch, corpse, ch, TO_NOTVICT );
-    act("You skin $p and make a nice hide out of it.",ch, corpse, ch, TO_CHAR);
-    sprintf(buf,"%s %s skin",mob->name, race_table[mob->race].name);
-    skin->name = str_dup(buf);
-    sprintf(buf,"the skin of %s",mob->short_descr);
-    skin->short_descr = str_dup(buf);
-    skin->level = corpse->level;
-    skin->value[0] = corpse->value[0];
-    skin->value[1] = mob->race;
-    skin->cost = corpse->level*50;
+    act( "$n kneels down and takes a trophy from $p.", ch, corpse, ch, TO_NOTVICT );
+    act("You kneel down next to $p, and take a trophy from your kill.",ch, corpse, ch, TO_CHAR);
+    sprintf(buf,"%s %s trophy",mob->name, race_table[mob->race].name);
+    trophy->name = str_dup(buf);
+    sprintf(buf,"a trophy from %s",mob->short_descr);
+    trophy->short_descr = str_dup(buf);
+    trophy->level = corpse->level;
+    trophy->value[0] = corpse->value[0];
+    trophy->value[1] = mob->race;
+    trophy->cost = 0;
     extract_obj(corpse);
     extract_char( mob, TRUE );
-    obj_to_char(skin,ch);
+    obj_to_char( trophy, ch);
     return;
 }
 /*

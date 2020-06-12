@@ -10048,186 +10048,197 @@ void output_crossresets( CHAR_DATA *ch, AREA_DATA *pArea, ROOM_INDEX_DATA *pRoom
     char        buf   [ MAX_STRING_LENGTH ];
     char        final [ MAX_STRING_LENGTH ];
     int         iReset = 0;
+    int         vnum;
 
     final[0]  = '\0';
 
     send_to_char ("\n\rNow let's talk about shit resets...\n\r\n\r", ch );
 
-    for ( pReset = pRoom->reset_first; pReset; pReset = pReset->next )
+    if (pArea != NULL)
     {
-    OBJ_INDEX_DATA  *pObj;
-    MOB_INDEX_DATA  *pMobIndex;
-    OBJ_INDEX_DATA  *pObjIndex;
-    OBJ_INDEX_DATA  *pObjToIndex;
-    ROOM_INDEX_DATA *pRoomIndex;
-
-    final[0] = '\0';
-
-    switch ( pReset->command )
+        lvnum = pArea->min_vnum;
+        hvnum = pArea->max_vnum;
+    }
+    for ( vnum = lvnum; vnum <= hvnum; vnum++)
     {
-    default:
-        sprintf( buf, "Bad reset command: %c.", pReset->command );
-        strcat( final, buf );
-        break;
+        if ((pRoom = get_room_index(vnum)) == NULL )
+            continue;
 
-    case 'M':
-        if ( !( pMobIndex = get_mob_index( pReset->arg1 ) ) )
+        for ( pReset = pRoom->reset_first; pReset; pReset = pReset->next )
         {
-                sprintf( buf, "Load Mobile - Bad Mob %d\n\r", pReset->arg1 );
-                strcat( final, buf );
-                continue;
-        }
+        OBJ_INDEX_DATA  *pObj;
+        MOB_INDEX_DATA  *pMobIndex;
+        OBJ_INDEX_DATA  *pObjIndex;
+        OBJ_INDEX_DATA  *pObjToIndex;
+        ROOM_INDEX_DATA *pRoomIndex;
 
-        if ( !( pRoomIndex = get_room_index( pReset->arg3 ) ) )
+        final[0] = '\0';
+
+        switch ( pReset->command )
         {
-                sprintf( buf, "Load Mobile - Bad Room %d\n\r", pReset->arg3 );
-                strcat( final, buf );
-                continue;
-        }
+        default:
+            sprintf( buf, "Bad reset command: %c.", pReset->command );
+            strcat( final, buf );
+            break;
 
-            pMob = pMobIndex;
-            if (pMobIndex->vnum < lvnum || pMobIndex->vnum > hvnum)
+        case 'M':
+            if ( !( pMobIndex = get_mob_index( pReset->arg1 ) ) )
             {
-                sprintf( buf, "M[%5d] %-13.13s in room             R[%5d] %2d-%2d %-15.15s\n\r",
-                           pReset->arg1, pMob->short_descr, pReset->arg3,
-                           pReset->arg2, pReset->arg4, pRoomIndex->name );
-                strcat( final, buf );
+                    sprintf( buf, "Load Mobile - Bad Mob %d\n\r", pReset->arg1 );
+                    strcat( final, buf );
+                    continue;
             }
+
+            if ( !( pRoomIndex = get_room_index( pReset->arg3 ) ) )
+            {
+                    sprintf( buf, "Load Mobile - Bad Room %d\n\r", pReset->arg3 );
+                    strcat( final, buf );
+                    continue;
+            }
+
+                pMob = pMobIndex;
+                if (pMobIndex->vnum < lvnum || pMobIndex->vnum > hvnum)
+                {
+                    sprintf( buf, "M[%5d] %-13.13s in room             R[%5d] %2d-%2d %-15.15s\n\r",
+                               pReset->arg1, pMob->short_descr, pReset->arg3,
+                               pReset->arg2, pReset->arg4, pRoomIndex->name );
+                    strcat( final, buf );
+                }
+
+            /*
+             * Check for pet shop.
+             * -------------------
+             */
+            {
+            ROOM_INDEX_DATA *pRoomIndexPrev;
+
+            pRoomIndexPrev = get_room_index( pRoomIndex->vnum - 1 );
+            if ( pRoomIndexPrev
+                && IS_SET( pRoomIndexPrev->room_flags, ROOM_PET_SHOP ) )
+                        final[5] = 'P';
+            }
+
+            break;
+
+        case 'O':
+            if ( !( pObjIndex = get_obj_index( pReset->arg1 ) ) )
+            {
+                    sprintf( buf, "Load Object - Bad Object %d\n\r",
+                pReset->arg1 );
+                    strcat( final, buf );
+                    continue;
+            }
+
+                pObj       = pObjIndex;
+
+            if ( !( pRoomIndex = get_room_index( pReset->arg3 ) ) )
+            {
+                    sprintf( buf, "Load Object - Bad Room %d\n\r", pReset->arg3 );
+                    strcat( final, buf );
+                    continue;
+            }
+                if (pObjIndex->vnum < lvnum || pObjIndex->vnum > hvnum)
+                {
+                    sprintf( buf, "O[%5d] %-13.13s in room             "
+                                  "R[%5d]       %-15.15s{x\n\r",		//Added {x to clear color bleed
+                                  pReset->arg1, pObj->short_descr,
+                                  pReset->arg3, pRoomIndex->name );
+                    strcat( final, buf );
+                }
+
+            break;
+
+        case 'P':
+            if ( !( pObjIndex = get_obj_index( pReset->arg1 ) ) )
+            {
+                    sprintf( buf, "Put Object - Bad Object %d\n\r",
+                        pReset->arg1 );
+                    strcat( final, buf );
+                    continue;
+            }
+
+                pObj       = pObjIndex;
+
+            if ( !( pObjToIndex = get_obj_index( pReset->arg3 ) ) )
+            {
+                    sprintf( buf, "Put Object - Bad To Object %d\n\r",
+                        pReset->arg3 );
+                    strcat( final, buf );
+                    continue;
+            }
+                if (pMobIndex->vnum < lvnum || pMobIndex->vnum > hvnum)
+                {
+                    sprintf( buf,
+                    "O[%5d] %-13.13s inside              O[%5d] %2d-%2d %-15.15s\n\r",
+                    pReset->arg1,
+                    pObj->short_descr,
+                    pReset->arg3,
+                    pReset->arg2,
+                    pReset->arg4,
+                    pObjToIndex->short_descr );
+                    strcat( final, buf );
+                }
+
+            break;
+
+        case 'G':
+        case 'E':
+            if ( !( pObjIndex = get_obj_index( pReset->arg1 ) ) )
+            {
+                    sprintf( buf, "Give/Equip Object - Bad Object %d\n\r",
+                        pReset->arg1 );
+                    strcat( final, buf );
+                    continue;
+            }
+
+                pObj       = pObjIndex;
+
+            if ( !pMob )
+            {
+                    sprintf( buf, "Give/Equip Object - No Previous Mobile\n\r" );
+                    strcat( final, buf );
+                    break;
+            }
+                if (pMobIndex->vnum < lvnum || pMobIndex->vnum > hvnum)
+                {
+                    if ( pMob->pShop )
+                    {
+                    sprintf( buf,
+                    "O[%5d] %-13.13s in the inventory of S[%5d]       %-15.15s\n\r",
+                    pReset->arg1,
+                    pObj->short_descr,
+                    pMob->vnum,
+                    pMob->short_descr  );
+                    }
+                    else
+                    sprintf( buf,
+                    "O[%5d] %-13.13s %-19.19s M[%5d]       %-15.15s\n\r",
+                    pReset->arg1,
+                    pObj->short_descr,
+                    (pReset->command == 'G') ?
+                        flag_string( wear_loc_strings, WEAR_NONE )
+                      : flag_string( wear_loc_strings, pReset->arg3 ),
+                      pMob->vnum,
+                      pMob->short_descr );
+                    strcat( final, buf );
+            }
+            break;
 
         /*
-         * Check for pet shop.
-         * -------------------
+         * Doors are set in rs_flags don't need to be displayed.
+         * If you want to display them then uncomment the new_reset
+         * line in the case 'D' in load_resets in db.c and here.
          */
-        {
-        ROOM_INDEX_DATA *pRoomIndexPrev;
-
-        pRoomIndexPrev = get_room_index( pRoomIndex->vnum - 1 );
-        if ( pRoomIndexPrev
-            && IS_SET( pRoomIndexPrev->room_flags, ROOM_PET_SHOP ) )
-                    final[5] = 'P';
+        case 'D':
+            break;
+        /*
+         * End Doors Comment.
+         */
+        case 'R':
+            break;
         }
-
-        break;
-
-    case 'O':
-        if ( !( pObjIndex = get_obj_index( pReset->arg1 ) ) )
-        {
-                sprintf( buf, "Load Object - Bad Object %d\n\r",
-            pReset->arg1 );
-                strcat( final, buf );
-                continue;
+        send_to_char( final, ch );
         }
-
-            pObj       = pObjIndex;
-
-        if ( !( pRoomIndex = get_room_index( pReset->arg3 ) ) )
-        {
-                sprintf( buf, "Load Object - Bad Room %d\n\r", pReset->arg3 );
-                strcat( final, buf );
-                continue;
-        }
-            if (pObjIndex->vnum < lvnum || pObjIndex->vnum > hvnum)
-            {
-                sprintf( buf, "O[%5d] %-13.13s in room             "
-                              "R[%5d]       %-15.15s{x\n\r",		//Added {x to clear color bleed
-                              pReset->arg1, pObj->short_descr,
-                              pReset->arg3, pRoomIndex->name );
-                strcat( final, buf );
-            }
-
-        break;
-
-    case 'P':
-        if ( !( pObjIndex = get_obj_index( pReset->arg1 ) ) )
-        {
-                sprintf( buf, "Put Object - Bad Object %d\n\r",
-                    pReset->arg1 );
-                strcat( final, buf );
-                continue;
-        }
-
-            pObj       = pObjIndex;
-
-        if ( !( pObjToIndex = get_obj_index( pReset->arg3 ) ) )
-        {
-                sprintf( buf, "Put Object - Bad To Object %d\n\r",
-                    pReset->arg3 );
-                strcat( final, buf );
-                continue;
-        }
-            if (pMobIndex->vnum < lvnum || pMobIndex->vnum > hvnum)
-            {
-                sprintf( buf,
-                "O[%5d] %-13.13s inside              O[%5d] %2d-%2d %-15.15s\n\r",
-                pReset->arg1,
-                pObj->short_descr,
-                pReset->arg3,
-                pReset->arg2,
-                pReset->arg4,
-                pObjToIndex->short_descr );
-                strcat( final, buf );
-            }
-
-        break;
-
-    case 'G':
-    case 'E':
-        if ( !( pObjIndex = get_obj_index( pReset->arg1 ) ) )
-        {
-                sprintf( buf, "Give/Equip Object - Bad Object %d\n\r",
-                    pReset->arg1 );
-                strcat( final, buf );
-                continue;
-        }
-
-            pObj       = pObjIndex;
-
-        if ( !pMob )
-        {
-                sprintf( buf, "Give/Equip Object - No Previous Mobile\n\r" );
-                strcat( final, buf );
-                break;
-        }
-            if (pMobIndex->vnum < lvnum || pMobIndex->vnum > hvnum)
-            {
-                if ( pMob->pShop )
-                {
-                sprintf( buf,
-                "O[%5d] %-13.13s in the inventory of S[%5d]       %-15.15s\n\r",
-                pReset->arg1,
-                pObj->short_descr,
-                pMob->vnum,
-                pMob->short_descr  );
-                }
-                else
-                sprintf( buf,
-                "O[%5d] %-13.13s %-19.19s M[%5d]       %-15.15s\n\r",
-                pReset->arg1,
-                pObj->short_descr,
-                (pReset->command == 'G') ?
-                    flag_string( wear_loc_strings, WEAR_NONE )
-                  : flag_string( wear_loc_strings, pReset->arg3 ),
-                  pMob->vnum,
-                  pMob->short_descr );
-                strcat( final, buf );
-        }
-        break;
-
-    /*
-     * Doors are set in rs_flags don't need to be displayed.
-     * If you want to display them then uncomment the new_reset
-     * line in the case 'D' in load_resets in db.c and here.
-     */
-    case 'D':
-        break;
-    /*
-     * End Doors Comment.
-     */
-    case 'R':
-        break;
     }
-    send_to_char( final, ch );
-    }
-
     return;
 }

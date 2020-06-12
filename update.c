@@ -502,6 +502,8 @@ void mobile_update( void )
 void weather_update( void )
 {
     char buf[MAX_STRING_LENGTH];
+    char buf2[MSL];
+    char phase[MSL];
     DESCRIPTOR_DATA *d;
     CHAR_DATA *ch;
     int diff;
@@ -542,10 +544,35 @@ void weather_update( void )
     time_info.hour = 0;
     time_info.day++;
     time_info.moon_count++;
+
+    switch(time_info.phase)
+    {
+      case  0:
+                break;
+      case  1:  strcpy(phase, "crescent");
+                break;
+      case  2:  strcpy(phase, "half");
+                break;
+      case  3:  strcpy(phase, "gibbous");
+                break;
+      case  4:  strcpy(phase, "full");
+                break;
+      case  5:  strcpy(phase, "gibbous");
+                break;
+      case  6:  strcpy(phase, "half");
+                break;
+      case  7:  strcpy(phase, "crescent");
+                break;
+    }
+
     if(time_info.phase == 0)
         strcat(buf,"Stars sparkle in the moonless sky above.\n\r");
-    sprintf(buf, "The %s moon shines down upon the land.\n\r", time_info.phase == 1 ? "crescent" :
-        time_info.phase == 2 ? "half" : time_info.phase == 3 ? "gibbous" : "full");
+    else
+    {
+        sprintf(buf2, "The %s moon shines down upon the land.\n\r", phase);
+        strcat(buf, buf2);
+    }
+
     break;
     }
 

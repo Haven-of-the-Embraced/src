@@ -545,6 +545,14 @@ void weather_update( void )
     time_info.day++;
     time_info.moon_count++;
 
+    if ( time_info.moon_count == 3)
+    {
+        time_info.moon_count = 0;
+        if(time_info.phase == 7) time_info.phase = 0;
+        else
+            time_info.phase++;
+    }
+
     switch(time_info.phase)
     {
       case  0:
@@ -599,13 +607,6 @@ void weather_update( void )
     time_info.year++;
     }
 
-    if ( time_info.moon_count == 3)
-    {
-        time_info.moon_count = 0;
-        if(time_info.phase == 7) time_info.phase = 0;
-        else
-            time_info.phase++;
-    }
     /*
      * Weather change.
      */

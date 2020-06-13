@@ -9976,7 +9976,6 @@ void do_checklinks (CHAR_DATA *ch, char *argument)
         hvnum = pArea->max_vnum;
         lvnum = pArea->min_vnum;
     }
-    sendch("[Vnum]     [ Crosslink ]\n\r", ch);
     output_crosslinks(ch, lvnum, hvnum);
     return;
 }
@@ -9992,6 +9991,7 @@ void output_crosslinks(CHAR_DATA *ch, int lvnum, int hvnum)
     found = FALSE;
     int count = 0;
     char buf[MSL];
+    char buf2[MSL];
     char color[MSL];
 
     if (lvnum > hvnum)
@@ -10014,10 +10014,10 @@ void output_crosslinks(CHAR_DATA *ch, int lvnum, int hvnum)
                         strcpy(color, "{w");
                     else
                     {
-                        strcpy(color, "{c");
+                        strcpy(color, "{D");
                     }
-
-                    sprintf( buf, "%s%5d     %5s to %d{x\n\r", color, pRoom->vnum, dir_name[door], pExit->u1.to_room->vnum);
+                    sprintf(buf2, "%s to", dir_name[door]);
+                    sprintf( buf, "%s  %5d%s%-5d{x\n\r", color, pRoom->vnum, center(buf2, 15, " "), pExit->u1.to_room->vnum);
                     add_buf(buffer, buf);
                     count++;
                     if (count > 1) count = 0;
@@ -10028,6 +10028,8 @@ void output_crosslinks(CHAR_DATA *ch, int lvnum, int hvnum)
 
     if (found)
     {
+        sendch("{c [{wVnum{c]    [{wExit{c]   [{wExternal{c]{x\n\r"
+               "  --------------------------- \n\r\n\r", ch);
         page_to_char(buf_string(buffer),ch);
         free_buf(buffer);
     } else {

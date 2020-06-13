@@ -4186,7 +4186,9 @@ char    *get_piperesult( char *cmd );
 #define         AREA_ADDED      (B)   /* Area has been added to. */
 #define         AREA_LOADING    (C)   /* Used for counting in db.c */
 #define         AREA_PKILL      (D)   /* Used for pure PK areas. */
+#define         AREA_UNLINKED   (E)
 #define			AREA_NOTELE		(F)   /* Used to limit teleport like effects */
+
 
 #define MAX_DIR 6
 #define NO_FLAG -99 /* Must not be used in flags or stats. */

@@ -625,6 +625,7 @@ const struct flag_type area_flags[] =
     {   "added",        AREA_ADDED,     TRUE    },
     {   "loading",      AREA_LOADING,       FALSE   },
     {   "pkill",        AREA_PKILL,         FALSE   },
+    {   "unlinked",     AREA_UNLINKED,      TRUE    },
 	{   "noteleport",   AREA_NOTELE, 		TRUE    },
     {   NULL,           0,          0   }
 };

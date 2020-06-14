@@ -10041,6 +10041,66 @@ void output_crosslinks(CHAR_DATA *ch, int lvnum, int hvnum)
     }
 }
 
+void do_checkresets (CHAR_DATA *ch, char *argument)
+{
+    AREA_DATA *pArea;
+    ROOM_INDEX_DATA *pRoom;
+    EXIT_DATA *pExit;
+    int door, areanum, lvnum, hvnum;
+    int type;
+    char arg1[MIL], arg2[MIL];
+
+    argument = one_argument(argument, arg1);
+    argument = one_argument(argument, arg2);
+
+    if (IS_NULLSTR(arg1) && IS_NULLSTR(arg2))
+    {
+        type = CHECK_STANDING;
+    } else if (IS_NULLSTR(arg2)) {
+        if ( is_number( arg1 ) )
+            if ( (pArea = get_area_data(atoi(arg1))) != NULL )
+                type = CHECK_AREA;
+    } else {
+        if (is_number(arg1) && is_number(arg2))
+        type = CHECK_RANGE;
+    }
+
+    if (type == -1)
+    {
+        sendch("That is not a valid option. Please enter an area vnum, a vnum range, or nothing.\n\r", ch);
+        return;
+    }
+
+    lvnum = hvnum = 0;
+    switch (type)
+    {
+        case CHECK_STANDING:
+            pRoom = ch->in_room;
+            pArea = pRoom->area;
+            break;
+        case CHECK_RANGE:
+            lvnum = atoi(arg1);
+            hvnum = atoi(arg2);
+            pArea = NULL;
+            break;
+        case CHECK_AREA:
+            pArea = get_area_data(atoi(arg1));
+            break;
+        default:
+            break;
+    }
+
+    if (pArea && lvnum == 0)
+    {
+        hvnum = pArea->max_vnum;
+        lvnum = pArea->min_vnum;
+        pRoom = get_room_index(pArea->min_vnum);
+    }
+    sendch("\n\r", ch);
+    output_crossresets( ch, pArea, pRoom, lvnum, hvnum );
+    return;
+}
+
 void output_crossresets( CHAR_DATA *ch, AREA_DATA *pArea, ROOM_INDEX_DATA *pRoom, int lvnum, int hvnum )
 {
     RESET_DATA      *pReset;

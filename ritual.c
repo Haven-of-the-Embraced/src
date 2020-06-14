@@ -1532,7 +1532,7 @@ void do_trophy(CHAR_DATA *ch, char *argument )
         return;
     }
 
-    failure = number_range(1,10);
+    failure = number_range(1,8);
     if (IS_DEBUGGING(ch))
     {
       sprintf(buf, "{YFailure Check: {C%d{x\n\r", failure);
@@ -1541,7 +1541,7 @@ void do_trophy(CHAR_DATA *ch, char *argument )
 
     if(failure == 1)
     {
-      act( "You try to claim a trophy from $p, but ends up butchering it instead.", ch, corpse, NULL, TO_CHAR );
+      act( "You try to claim a trophy from $p, but end up butchering it instead.", ch, corpse, NULL, TO_CHAR );
       act( "$n tries to claim a trophy from $p, but destroys the corpse instead.", ch, corpse, NULL, TO_NOTVICT );
       extract_obj(corpse);
       WAIT_STATE(ch, 36);

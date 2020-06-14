@@ -9977,7 +9977,6 @@ void do_checklinks (CHAR_DATA *ch, char *argument)
         lvnum = pArea->min_vnum;
     }
     output_crosslinks(ch, lvnum, hvnum);
-    output_crossresets( ch, pArea, pRoom, lvnum, hvnum );
     return;
 }
 
@@ -10019,6 +10018,8 @@ void output_crosslinks(CHAR_DATA *ch, int lvnum, int hvnum)
                     }
                     if (IS_SET(pExit->u1.to_room->area->area_flags, AREA_UNLINKED))
                         strcpy(extcolor, "{R");
+                    else
+                        strcpy(extcolor, "");
 
                     sprintf(buf2, "%s to", dir_name[door]);
                     sprintf( buf, "%s  %5d%s%s%-5d{x\n\r", linecolor, pRoom->vnum, center(buf2, 15, " "), extcolor, pExit->u1.to_room->vnum);

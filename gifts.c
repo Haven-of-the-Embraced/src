@@ -329,6 +329,12 @@ void spell_gift_staredown( int sn, int level, CHAR_DATA *ch, void *vo, int targe
     act( "$N buckles under your fierce gaze, fleeing the scene in terror.",  ch, NULL, victim, TO_CHAR );
     act( "$n's gaze is too much to handle, and you flee in terror!",  ch, NULL, victim, TO_VICT );
     do_function(victim, &do_flee, "auto" );
+    if (ch->in_room == victim->in_room)
+    {
+      act( "In such a terrorized state, $N was unable to escape and instead attacks $n in a blind panic!", ch, NULL, victim, TO_NOTVICT);
+      act( "$N seems to panic, unable to find an escape route, then turns and attacks you in a blind panic!", ch, NULL, victim, TO_CHAR);
+      act( "Failing to find a suitable retreat, you attack $n in panic!", ch, NULL, victim, TO_VICT);
+    }
     return;
 }
 //

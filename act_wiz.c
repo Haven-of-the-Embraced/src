@@ -9992,7 +9992,7 @@ void output_crosslinks(CHAR_DATA *ch, int lvnum, int hvnum)
     int count = 0;
     char buf[MSL];
     char buf2[MSL];
-    char color[MSL];
+    char linecolor[5], extcolor[5];
 
     if (lvnum > hvnum)
     { // If lowvnum is actually high, flip them.
@@ -10011,13 +10011,16 @@ void output_crosslinks(CHAR_DATA *ch, int lvnum, int hvnum)
                 if (pExit->u1.to_room->vnum > hvnum || pExit->u1.to_room->vnum < lvnum)
                 {
                     if (count <= 0)
-                        strcpy(color, "{w");
+                        strcpy(linecolor, "{w");
                     else
                     {
-                        strcpy(color, "{D");
+                        strcpy(linecolor, "{D");
                     }
+                    if (IS_SET(pExit->u1.to_room->area->area_flags, AREA_UNLINKED))
+                        strcpy(extcolor, "{R");
+
                     sprintf(buf2, "%s to", dir_name[door]);
-                    sprintf( buf, "%s  %5d%s%-5d{x\n\r", color, pRoom->vnum, center(buf2, 15, " "), pExit->u1.to_room->vnum);
+                    sprintf( buf, "%s  %5d%s%s%-5d{x\n\r", linecolor, pRoom->vnum, center(buf2, 15, " "), extcolor, pExit->u1.to_room->vnum);
                     add_buf(buffer, buf);
                     count++;
                     if (count > 1) count = 0;

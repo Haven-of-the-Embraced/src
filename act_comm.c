@@ -1062,15 +1062,15 @@ void do_immtalk( CHAR_DATA *ch, char *argument )
 
     REMOVE_BIT(ch->comm,COMM_NOWIZ);
 
-    sprintf( buf, "{c[{y$n{c]: {w%s{x", argument );
-    act_new("{c[{y$n{c]: {w$t{x",ch,argument,NULL,TO_CHAR,POS_DEAD, TRUE);
+    sprintf( buf, "{D[{w$n{D]: {G%s{x", argument );
+    act_new("{D[{w$n{D]: {G$t{x",ch,argument,NULL,TO_CHAR,POS_DEAD, TRUE);
     for ( d = descriptor_list; d != NULL; d = d->next )
     {
     if ( d->connected == CON_PLAYING &&
          (IS_IMMORTAL(d->character) || IS_SET(d->character->act, PLR_IMMTALK)) &&
              !IS_SET(d->character->comm,COMM_NOWIZ) )
     {
-        act_new("{c[{y$n{c]: {w$t{x",ch,argument,d->character,TO_VICT,POS_DEAD, TRUE);
+        act_new("{D[{w$n{D]: {G$t{x",ch,argument,d->character,TO_VICT,POS_DEAD, TRUE);
     }
     }
 
@@ -1139,14 +1139,14 @@ void do_imptalk( CHAR_DATA *ch, char *argument )
     }
 
     REMOVE_BIT(ch->comm,COMM_NOIMP);
-    act_new("{c*{R$n{c*: {w$t{x",ch,argument,NULL,TO_CHAR,POS_DEAD, TRUE);
+    act_new("{D*{m$n{D*: {D$t{x",ch,argument,NULL,TO_CHAR,POS_DEAD, TRUE);
     for ( d = descriptor_list; d != NULL; d = d->next )
     {
     if ( d->connected == CON_PLAYING &&
          (get_trust(d->character) >= MAX_LEVEL) &&
              !IS_SET(d->character->comm,COMM_NOIMP) )
     {
-        act_new("{c*{R$n{c*: {w$t{x",ch,argument,d->character,TO_VICT,POS_DEAD, TRUE);
+        act_new("{D*{m$n{D*: {D$t{x",ch,argument,d->character,TO_VICT,POS_DEAD, TRUE);
     }
     }
 

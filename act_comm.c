@@ -2694,7 +2694,7 @@ void do_announce(CHAR_DATA *ch, char *argument )
 
     if(get_trust(ch) >= (MAX_LEVEL - 4) && argument[0] != '\0' )
     {
-          sprintf( buf, "{xYou {R*{YAnnounce{R* {w%s{x\n\r", argument );
+          sprintf( buf, "{R*{YAnnouncement{R*{w %s{x\n\r", argument);
           send_to_char( buf, ch );
 
         for ( d = descriptor_list; d != NULL; d = d->next )

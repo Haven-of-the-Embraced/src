@@ -524,7 +524,7 @@ void reset_char(CHAR_DATA *ch)
      int loc,mod,stat;
      OBJ_DATA *obj;
      AFFECT_DATA *af;
-     int i;
+     int i, oldbp, oldgen;
 
      if (IS_NPC(ch))
     return;
@@ -599,6 +599,13 @@ void reset_char(CHAR_DATA *ch)
     ch->max_mana    = ch->pcdata->perm_mana;
     ch->max_move    = ch->pcdata->perm_move;
 
+    if (IS_VAMP(ch) && is_affected(ch, gsn_bloodofpotency))
+    {
+        oldgen = oldbp = 0;
+        oldgen = ch->gen;
+        oldbp = ch->max_pblood;
+    }
+
     for (i = 0; i < 4; i++)
         ch->armor[i]    = 100;
 
@@ -644,6 +651,12 @@ void reset_char(CHAR_DATA *ch)
     /* make sure sex is RIGHT!!!! */
     if (ch->sex < 0 || ch->sex > 2)
     ch->sex = ch->pcdata->true_sex;
+
+    if (IS_VAMP(ch) && is_affected(ch, gsn_bloodofpotency))
+    {
+        ch->gen = oldgen;
+        ch->max_pblood = oldbp;
+    }
 }
 
 
@@ -2450,7 +2463,7 @@ OBJ_DATA *get_obj_anywhere( CHAR_DATA *ch, char *argument )
     OBJ_DATA *obj;
     int number;
     int count;
-    
+
     number = number_argument( argument, arg );
     count  = 0;
     for ( obj = object_list; obj != NULL; obj = obj->next )

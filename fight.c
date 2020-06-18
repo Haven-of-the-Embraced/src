@@ -4171,35 +4171,37 @@ void do_dirt( CHAR_DATA *ch, char *argument )
 
 void do_trip( CHAR_DATA *ch, char *argument )
 {
-    char arg[MAX_INPUT_LENGTH];
-    CHAR_DATA *victim;
-    int chance;
+	char arg[MAX_INPUT_LENGTH];
+  char buf[MSL];
+	CHAR_DATA *victim;
+	int skill;
+  int cost = 0;
+	int tripdiff, tripsuccess, tripdamage, knockdown;
 
-    one_argument(argument,arg);
+	one_argument(argument,arg);
 
-    if ( (chance = get_skill(ch,gsn_trip)) == 0
-    ||   (IS_NPC(ch) && !IS_SET(ch->off_flags,OFF_TRIP)))
-    {
-    send_to_char("Tripping?  What's that?\n\r",ch);
-    return;
-    }
+	if ( (skill = get_skill(ch,gsn_trip)) == 0
+	||   (IS_NPC(ch) && !IS_SET(ch->off_flags,OFF_TRIP)))
+	{
+		send_to_char("You stumble for a moment before catching your balance.\n\r",ch);
+		return;
+	}
 
+	if (arg[0] == '\0')
+	{
+		victim = ch->fighting;
+		if (victim == NULL)
+		{
+			send_to_char("But you aren't fighting anyone!\n\r",ch);
+			return;
+		}
+	}
 
-    if (arg[0] == '\0')
-    {
-    victim = ch->fighting;
-    if (victim == NULL)
-    {
-        send_to_char("But you aren't fighting anyone!\n\r",ch);
-        return;
-    }
-    }
-
-    else if ((victim = get_char_room(ch,NULL,arg)) == NULL)
-    {
-    send_to_char("They aren't here.\n\r",ch);
-    return;
-    }
+	else if ((victim = get_char_room(ch,NULL,arg)) == NULL)
+	{
+		send_to_char("You can't seem to find this person to trip.\n\r",ch);
+		return;
+	}
 
     if ( MOUNTED(ch) )
     {
@@ -4207,100 +4209,138 @@ void do_trip( CHAR_DATA *ch, char *argument )
         return;
     }
 
-
-
     if (is_safe(ch,victim))
-    return;
+	{
+		send_to_char("You don't think that starting a fight here is a good idea.\n\r", ch);
+		return;
+	}
 
-    if (IS_NPC(victim) &&
-     victim->fighting != NULL &&
-    !is_same_group(ch,victim->fighting))
-    {
-    send_to_char("Kill stealing is not permitted.\n\r",ch);
-    return;
-    }
+	if (IS_NPC(victim) && victim->fighting != NULL &&
+	!is_same_group(ch,victim->fighting))
+	{
+		send_to_char("Kill stealing is not permitted.\n\r",ch);
+		return;
+	}
 
-    if (IS_AFFECTED(victim,AFF_FLYING))
-    {
-    act("$S feet aren't on the ground.",ch,NULL,victim,TO_CHAR);
-    return;
-    }
+	if (IS_AFFECTED(victim,AFF_FLYING) || IS_AFFECTED(ch, AFF_FLYING))
+	{
+		act("Both $N and yourself must be standing on solid ground.",ch,NULL,victim,TO_CHAR);
+		return;
+	}
 
-    if (victim->position < POS_FIGHTING)
-    {
-    act("$N is already down.",ch,NULL,victim,TO_CHAR);
-    return;
-    }
+	if (victim->position < POS_FIGHTING)
+	{
+		act("$N has already been knocked down.",ch,NULL,victim,TO_CHAR);
+		return;
+	}
 
-    if (victim == ch)
-    {
-    send_to_char("You fall flat on your face!\n\r",ch);
-    WAIT_STATE(ch,2 * skill_table[gsn_trip].beats);
-    act("$n trips over $s own feet!",ch,NULL,NULL,TO_ROOM);
-    return;
-    }
+	if (victim == ch)
+	{
+		send_to_char("You fall flat on your face!\n\r",ch);
+		WAIT_STATE(ch,2 * skill_table[gsn_trip].beats);
+		act("$n trips over $s own feet!",ch,NULL,NULL,TO_ROOM);
+		return;
+	}
 
-    if (IS_AFFECTED(ch,AFF_CHARM) && ch->master == victim)
-    {
-    act("$N is your beloved master.",ch,NULL,victim,TO_CHAR);
-    return;
-    }
+	if (IS_AFFECTED(ch,AFF_CHARM) && ch->master == victim)
+	{
+		act("$N is your beloved master.",ch,NULL,victim,TO_CHAR);
+		return;
+	}
 
-    /* modifiers */
+  if (!IS_NPC(ch))
+    cost = (ch->level / 4) + (9 - get_attribute(ch, CSABIL_ATHLETICS));
 
-    /* size */
-    if (ch->size < victim->size)
-        chance += (ch->size - victim->size) * 10;  /* bigger = harder to trip */
+	if (ch->move < cost + 1)
+	{
+		send_to_char("You are too tired to try to trip someone.\n\r",ch);
+		return;
+	}
 
-    /* dex */
-    chance += get_curr_stat(ch,STAT_DEX);
-    chance -= get_curr_stat(victim,STAT_DEX) * 3 / 2;
+	tripdiff = 7;
 
-    /* speed */
-    if (IS_SET(ch->off_flags,OFF_FAST) || IS_AFFECTED(ch,AFF_HASTE))
-    chance += 10;
-    if (IS_SET(victim->off_flags,OFF_FAST) || IS_AFFECTED(victim,AFF_HASTE))
-    chance -= 20;
+	if (ch->size < victim->size)
+		tripdiff++;
 
-    /* level */
-    chance += (ch->level - victim->level) * 2;
+	if (!can_see(victim,ch) || ch->stopped > 0 )
+		tripdiff -= 2;
 
-    if(is_affected(victim,gsn_precognition) && number_percent() > 50)
-    {
-    	act("You sweep out quickly and attempt to trip $N, but $E leaps out of the way!", ch, NULL, victim, TO_CHAR);
-    	act("You see $n's trip coming long before $e even goes in motion, and jump out of the way easily.", ch, NULL, victim, TO_VICT);
-    	act("Leaping to the side, $N easily avoids $n's trip.", ch, NULL, victim, TO_NOTVICT);
-    	return;
-    }
+	if (IS_SET(victim->off_flags,OFF_FAST) || IS_AFFECTED(victim,AFF_HASTE) || IS_SET(victim->off_flags, OFF_DODGE))
+		tripdiff++;
 
-    if(is_affected(victim, gsn_gift_catfeet) && number_percent() > 45)
-    {
-    	act("You swipe your foot out to trip $n, but $E nimbly sidesteps!", ch, NULL, victim, TO_CHAR);
-    	act("Your body nimbly sidesteps with a feline grace as you easily avoid $n's trip.", ch, NULL, victim, TO_VICT);
-    	act("Leaping gracefully, like a cat in motion, $N nimbly avoids $n's trip.", ch, NULL, victim, TO_NOTVICT);
-    	return;
-    }
+	WAIT_STATE(ch, 8);
 
-    /* now the attack */
-    if (number_percent() < chance)
-    {
-    act("$n trips you and you go down!",ch,NULL,victim,TO_VICT);
-    act("You trip $N and $E goes down!",ch,NULL,victim,TO_CHAR);
-    act("$n trips $N, sending $M to the ground.",ch,NULL,victim,TO_NOTVICT);
-    check_improve(ch,gsn_trip,TRUE,1);
+	if(is_affected(victim,gsn_precognition) && number_percent() > 50)
+	{
+		act("You sweep your legs quickly, but $N nimbly hops over the attack.", ch, NULL, victim, TO_CHAR);
+		act("$n tries to sweep your legs out from under you, but you have a moment's warning before hopping over the attack.", ch, NULL, victim, TO_VICT);
+		act("$N effortlessly hops over $n's attempted tripping maneuver.", ch, NULL, victim, TO_NOTVICT);
+		return;
+	}
 
-    WAIT_STATE(victim, PULSE_VIOLENCE);
-    WAIT_STATE(ch,skill_table[gsn_trip].beats);
-    victim->position = POS_RESTING;
-    damage(ch,victim,number_range(2, ch->level / 3 + victim->size),gsn_trip, DAM_BASH,TRUE);
-    }
-    else
-    {
-    send_to_char("They avoid your trip!\n\r",ch);
-    damage(ch,victim,0,gsn_trip,DAM_BASH,TRUE);
-    WAIT_STATE(ch,skill_table[gsn_trip].beats*2/3);
-    check_improve(ch,gsn_trip,FALSE,1);
-    }
+	if(is_affected(victim, gsn_gift_catfeet) && number_percent() > 45)
+	{
+		act("You sweep your legs quickly, but $N gracefully leaps to the side.", ch, NULL, victim, TO_CHAR);
+		act("$n tries to sweep your legs out from under you, but you leap safely away with feline grace.", ch, NULL, victim, TO_VICT);
+		act("$N effortlessly leaps away $n's attempted tripping maneuver, planting $S feet firmly.", ch, NULL, victim, TO_NOTVICT);
+		return;
+	}
+
+	tripsuccess = godice(get_attribute(ch, DEXTERITY) + get_ability(ch, CSABIL_BRAWL), tripdiff);
+
+	if (tripsuccess < 0)
+	{
+		act("Even as dextrous as you are, you still manage to trip over your own two feet.", ch, NULL, victim, TO_CHAR);
+		act("$n stumbles and faceplants unceremoniously.", ch, NULL, victim, TO_VICT);
+		act("$n stumbles and faceplants unceremoniously.", ch, NULL, victim, TO_NOTVICT);
+		ch->position = POS_RESTING;
+		DAZE_STATE(ch, 6*PULSE_VIOLENCE);
+		WAIT_STATE(ch, 8);
+		return;
+	}
+
+	if (tripsuccess == 0)
+	{
+		act("You misjudge the distance between yourself and $N, missing your trip attempt.", ch, NULL, victim, TO_CHAR);
+		act("$n tries to trip you, but misses from too far away.", ch, NULL, victim, TO_VICT);
+		act("$n sweeps out with $s legs to try and trip $N, but misses from too far away.", ch, NULL, victim, TO_NOTVICT);
+		WAIT_STATE(ch,skill_table[gsn_trip].beats*2/3);
+		check_improve(ch,gsn_trip,FALSE,3);
+		return;
+	}
+
+	if (tripsuccess > 0)
+	{
+		act("You sweep your legs out in a powerful blow, connecting solidly with $N.",ch,NULL,victim,TO_CHAR);
+		act("$n connects with a powerful blow, trying to topple you.",ch,NULL,victim,TO_VICT);
+		act("$n connects with a solid blow, sweeping $s legs to collide with $N.",ch,NULL,victim,TO_NOTVICT);
+		check_improve(ch,gsn_trip,TRUE,6);
+    gain_exp(ch, 3*tripsuccess);
+
+		tripdamage = godice(get_attribute(ch, STRENGTH) + ch->pcdata->discipline[POTENCE], 6);
+		damage(ch, victim, tripdamage*ch->level, gsn_trip, DAM_BASH, TRUE);
+
+		if (IS_SET(victim->parts,PART_LEGS))
+		{
+			knockdown = godice(get_attribute(victim, DEXTERITY) + get_ability(victim, CSABIL_ATHLETICS), 8);
+			if (knockdown < 1)
+			{
+				act("Your swift maneuver sweeps $N's legs out from under $M, and $E crashes to the ground.",ch,NULL,victim,TO_CHAR);
+				act("$n's attack cactches you by surprise, and you lose your balance.",ch,NULL,victim,TO_VICT);
+				act("With a swift maneuver, $n sweeps $N's legs out from under $S.",ch,NULL,victim,TO_NOTVICT);
+				WAIT_STATE(victim, PULSE_VIOLENCE * tripsuccess);
+				WAIT_STATE(ch,skill_table[gsn_trip].beats);
+				victim->position = POS_RESTING;
+			}
+		}
+		else
+		{
+			act("Your opponent doesn't topple, having no legs to sweep.",ch,NULL,victim,TO_CHAR);
+			act("You remain motionless against the blow.",ch,NULL,victim,TO_VICT);
+			act("$n connects with a solid blow, but $N has no legs to be swept away.",ch,NULL,victim,TO_NOTVICT);
+		}
+		return;
+	}
 }
 
 

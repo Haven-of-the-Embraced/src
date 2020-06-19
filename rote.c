@@ -610,7 +610,24 @@ void rote_destroymatter( CHAR_DATA *ch, int success, CHAR_DATA *victim )
         return;
     }
 
+    if (success < 0)
+    {
+      act("", ch, obj, victim, TO_CHAR);
+      act("", ch, obj, victim, TO_VICT);
+      act("", ch, obj, victim, TO_NOTVICT);
+      return;
+    }
+
+    if (success == 0)
+    {
+      act("", ch, obj, victim, TO_CHAR);
+      act("", ch, obj, victim, TO_VICT);
+      act("", ch, obj, victim, TO_NOTVICT);
+      return;
+    }
+
     act( "You snap your fingers and $N's weapon turns into dust!",  ch, NULL, victim, TO_CHAR    );
+    act( "$n snaps $s fingers and turns your weapon into dust!", ch, NULL, victim, TO_VICT);
     act( "$n snaps $s fingers and turns $N's weapon into dust!",  ch, NULL, victim, TO_NOTVICT );
 
     extract_obj( obj );

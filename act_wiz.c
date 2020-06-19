@@ -8786,7 +8786,6 @@ if(!str_cmp(arg,"resolver"))
                 }
             }
             doubledam = FALSE;
-            nosun = FALSE;
         }
         else
         {
@@ -8799,7 +8798,6 @@ if(!str_cmp(arg,"resolver"))
                 }
             }
             doubledam = TRUE;
-            nosun = TRUE;
         }
         return;
     }

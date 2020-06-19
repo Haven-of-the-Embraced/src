@@ -1600,7 +1600,7 @@ const struct    rote_type   rote_table  [MAX_ROTE]  =
     {   "reserved",             0,                          0, 0, 0, 0, 0, 0, 0, 0, 0, TARGET_NONE, 0, 0, FALSE, FALSE},
     {   "Perceive Entropy",     rote_perceiveentropy,       0, 1, 0, 0, 0, 0, 0, 0, 0, TARGET_CHAR, 1, 1, FALSE, FALSE},
     {   "Control Randomness",   rote_controlrandomness,     0, 2, 0, 0, 0, 0, 0, 0, 0, TARGET_NONE, 2, 2, FALSE, FALSE},
-    {   "Destroy Matter",       rote_destroymatter,         0, 3, 0, 0, 0, 0, 0, 0, 0, TARGET_CHAR, 3, 3, TRUE, FALSE},
+    {   "Destroy Matter",       rote_destroymatter,         0, 3, 0, 0, 0, 0, 0, 0, 0, TARGET_CHAR, 3, 3, TRUE, TRUE},
     {   "Wither Life",          rote_witherlife,            0, 4, 0, 0, 0, 0, 0, 0, 0, TARGET_CHAR, 4, 4, TRUE, FALSE},
     {   "Entropic Mind",        rote_entropicmind,          0, 5, 0, 0, 0, 0, 0, 0, 0, TARGET_CHAR, 5, 7, FALSE, FALSE},
     {   "Perceive Forces",      rote_perceiveforces,        0, 0, 1, 0, 0, 0, 0, 0, 0, TARGET_NONE, 1, 1, FALSE, FALSE},

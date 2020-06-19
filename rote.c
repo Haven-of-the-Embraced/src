@@ -597,10 +597,12 @@ void rote_destroymatter( CHAR_DATA *ch, int success, CHAR_DATA *victim )
     }
 
     if ( ( obj = get_eq_char( victim, WEAR_WIELD ) ) == NULL )
-    {
-        send_to_char("They aren't wielding a weapon!\n\r",ch);
-        return;
-    }
+      if ( ( obj = get_eq_char( victim, WEAR_SHIELD ) ) == NULL )
+        if ( ( obj = get_eq_char( victim, WEAR_HOLD ) ) == NULL )
+        {
+          send_to_char("Your opponent has nothing readily available to destroy!\n\r",ch);
+          return;
+        }
 
     if (victim->pIndexData->pShop != NULL)
     {

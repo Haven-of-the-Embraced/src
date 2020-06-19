@@ -1332,6 +1332,11 @@ void do_whisper( CHAR_DATA *ch, char *argument )
                 sendch(buf,dch);
             }
     }//for
+
+    if (!IS_NPC(ch) && IS_NPC(victim) && HAS_TRIGGER_MOB(victim,TRIG_SPEECH) &&
+        (victim->position > POS_SLEEPING) && (victim->position != POS_FIGHTING))
+        p_act_trigger( argument, victim,NULL, NULL, ch, NULL, NULL, TRIG_SPEECH );
+
 }// do_whisper
 
 

@@ -4268,7 +4268,7 @@ void do_trip( CHAR_DATA *ch, char *argument )
 	if (IS_SET(victim->off_flags,OFF_FAST) || IS_AFFECTED(victim,AFF_HASTE) || IS_SET(victim->off_flags, OFF_DODGE))
 		tripdiff++;
 
-	WAIT_STATE(ch, 8);
+	WAIT_STATE(ch, PULSE_VIOLENCE);
 
 	if(is_affected(victim,gsn_precognition) && number_percent() > 50)
 	{

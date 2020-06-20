@@ -2225,6 +2225,10 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
     &gsn_majesty,           SLOT(0),     0, 12, "",         "Your aura of greatness fades away.",   "" },
 
+    { "spark of rage",  { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+  { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+    &gsn_sparkofrage,           SLOT(0),     0, 12, "",         "The aura of hatred following you begins to fade.",   "" },
+
 //    --Protean--
     { "claws",    { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,

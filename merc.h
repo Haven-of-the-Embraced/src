@@ -2928,6 +2928,7 @@ extern sh_int  gsn_track;
 extern sh_int  gsn_cloakshadow;
 extern sh_int  gsn_nocturne;
 extern sh_int  gsn_majesty;
+extern sh_int  gsn_passion;
 extern sh_int  gsn_quietus_weakness;
 extern sh_int  gsn_acidblood;
 extern sh_int  gsn_quietus_bloodcurse;

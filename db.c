@@ -4873,6 +4873,7 @@ sh_int          gsn_cure_blindness;
 sh_int          gsn_cure_poison;
 sh_int          gsn_dispel;
 sh_int          gsn_earthquake;
+sh_int          gsn_heat_metal;
 sh_int          gsn_lightning_bolt;
 sh_int          gsn_ray_of_truth;
 sh_int          gsn_remove_curse;

@@ -2863,6 +2863,7 @@ extern  sh_int          gsn_cure_blindness;
 extern  sh_int          gsn_cure_poison;
 extern  sh_int          gsn_dispel;
 extern  sh_int          gsn_earthquake;
+extern  sh_int          gsn_heat_metal;
 extern  sh_int          gsn_lightning_bolt;
 extern  sh_int          gsn_ray_of_truth;
 extern  sh_int          gsn_remove_curse;

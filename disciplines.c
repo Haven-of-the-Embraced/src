@@ -4339,6 +4339,11 @@ void do_majesty(CHAR_DATA *ch, char *argument)
     return;
 }
 
+void do_passion(CHAR_DATA *ch, char *argument)
+{
+
+    return;
+}
 
 void do_entrancement(CHAR_DATA *ch, char *argument)
 {

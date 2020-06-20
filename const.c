@@ -1550,7 +1550,7 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
 
     { "heat metal",       { 102, 16, 102, 23, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 	{ 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_heat_metal,   TAR_CHAR_OFFENSIVE, POS_FIGHTING,
-    NULL,           SLOT(516),  25, 18, "spell",        "!Heat Metal!",     ""},
+    &gsn_heat_metal,           SLOT(516),  25, 18, "searing equipment",        "!Heat Metal!",     ""},
 
     { "holy word",        { 102, 36, 102, 42, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 	{ 2,  2,  4,  4, 1, 1, 1, 1, 1, 1, 0, 0, 0}, spell_holy_word,    TAR_IGNORE, POS_FIGHTING,

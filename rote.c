@@ -617,6 +617,8 @@ void rote_destroymatter( CHAR_DATA *ch, int success, CHAR_DATA *victim )
           return;
         }
 
+        success = -1;
+
     if (success < 0)
     {
       act("The feedback from trying to alter reality causes your equipment to heat and burn!", ch, obj, victim, TO_CHAR);
@@ -624,7 +626,7 @@ void rote_destroymatter( CHAR_DATA *ch, int success, CHAR_DATA *victim )
       act("$n yelps in pain and surprise!", ch, obj, victim, TO_NOTVICT);
 /* Need to figure out how to trigger heat metal on self.
   Syntax: spell_heat_metal( int sn, int level, CHAR_DATA *ch, void *vo,int target )*/
-      spell_heat_metal( 0, ch->level + 10, ch, ch, 0 );
+      spell_heat_metal( gsn_heat_metal, ch->level / 2 + 50, ch, ch, 0 );
 
       return;
     }

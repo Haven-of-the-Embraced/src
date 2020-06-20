@@ -3170,7 +3170,7 @@ void do_charsheet2 (CHAR_DATA * ch, char *argument)
         send_to_char(buf, sch);
         send_to_char("<======================================================================>\n\r",sch);
     }
-    if(ch->race == race_lookup("human") && ch->clan == clan_lookup("mage"))
+    if(ch->race == race_lookup("human") && clan_table[ch->clan].clan_type == TYPE_TRADITION)
     {
         send_to_char("\n\r |<=-------------------------=Advantages=---------------------------=>|\n\r",sch);
         send_to_char(" |                                                                    |\n\r",sch);

@@ -24,10 +24,16 @@ void affects_update (void) {
         damage(ch, ch, (ch->max_hit / (50*get_attribute(ch, STAMINA))),
             gsn_poison,DAM_POISON,FALSE);
 
-    if (is_affected(ch, gsn_shadowplay))
+    if (is_affected(ch, gsn_shadowplay) && get_affect_level(ch, gsn_shadowplay) != 0)
     {
         int level = get_affect_level(ch, gsn_shadowplay);
-        if (number_percent() < 4 * level)
+        if ( godice(level, 8) > 0
+        && ch->race != race_lookup("vampire") && ch->race != race_lookup("methuselah")
+        && ch->race != race_lookup("construct") && ch->race != race_lookup("wraith")
+        && ch->race != race_lookup("spirit") && ch->race != race_lookup("elemental")
+        && ch->race != race_lookup("ooze") && ch->race != race_lookup("shadow")
+        && ch->race != race_lookup("undead") && ch->race != race_lookup("vegetation")
+        )
         {
             act( "$n chokes and gags as shadows try to suffocate $m.", ch, NULL, NULL, TO_ROOM );
             send_to_char( "You gag and struggle to breathe through the shadows in your throat.\n\r", ch );

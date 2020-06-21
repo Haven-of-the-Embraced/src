@@ -3741,7 +3741,7 @@ void do_shadowplay (CHAR_DATA *ch, char *argument)
     af.where     = TO_AFFECTS;
     af.type      = gsn_shadowplay;
     af.level     = 0;
-    af.duration  = (5+(ch->pcdata->discipline[OBTENEBRATION]*10))-ch->gen;
+    af.duration  = 10 + (ch->pcdata->discipline[OBTENEBRATION]*5);
     af.location  = APPLY_NONE;
     af.modifier  = 0;
     af.bitvector = 0;
@@ -3750,12 +3750,12 @@ void do_shadowplay (CHAR_DATA *ch, char *argument)
   }
   else
   {
-    if(!is_affected(ch,gsn_shadowform)) ch->pblood -= 10;
-
     if ((victim = get_char_room(ch, NULL, arg)) != NULL)
     {
       sh_int success;
+      if(!is_affected(ch,gsn_shadowform)) ch->pblood -= 10;
       success = godice(get_attribute(ch, WITS) + ch->pcdata->discipline[OBTENEBRATION], 7);
+      
       if ( success > 0)
       {
         AFFECT_DATA af;
@@ -3768,17 +3768,15 @@ void do_shadowplay (CHAR_DATA *ch, char *argument)
           af.where     = TO_AFFECTS;
           af.type      = gsn_shadowplay;
           af.level     = ch->pcdata->discipline[OBTENEBRATION];
-          af.duration  = 1 + ch->pcdata->discipline[OBTENEBRATION];
+          af.duration  = success;
           af.location  = APPLY_CS_STA;
-          af.modifier  = -(ch->pcdata->discipline[OBTENEBRATION]/2);
-          af.bitvector = AFF_BLIND;
+          af.modifier  = -1;
+          af.bitvector = 0;
           affect_to_char( victim, &af );
           af.location  = APPLY_HITROLL;
-          af.modifier  = -20*ch->pcdata->discipline[OBTENEBRATION];
-          if (ch->pcdata->discipline[OBTENEBRATION] > 2)
-            af.bitvector = AFF_SLOW;
-          else
-            af.bitvector = 0;
+          af.modifier  = -(success*ch->level);
+          if (success > 3)
+            af.bitvector = AFF_BLIND;
           affect_to_char( victim, &af );
         }
 

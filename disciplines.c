@@ -3762,44 +3762,51 @@ void do_shadowplay (CHAR_DATA *ch, char *argument)
       if(!is_affected(ch,gsn_shadowform)) ch->pblood -= 10;
       success = godice(get_attribute(ch, WITS) + ch->pcdata->discipline[OBTENEBRATION], 7);
 
-      if ( success > 0)
+      if (success <= 0)
       {
-        AFFECT_DATA af;
-        act("You send shadows to blind and suffocate $N!", ch, NULL, victim, TO_CHAR);
-        act("Shadows leap from the corners at $n's command and fill your mouth and eyes!", ch, NULL, victim, TO_VICT);
-        act("$n commands shadows to leap into $N's mouth and eyes!", ch, NULL, victim, TO_ROOM);
+        act("Your shadows writhe and twist, but miss your target!", ch, NULL, victim, TO_CHAR);
+        act("Shadows leap and flicker about, then settle back down.", ch, NULL, victim, TO_VICT);
+        act("Shadows leap and flit about, then settle down.", ch, NULL, victim, TO_ROOM);
 
-        if (!is_affected(victim, gsn_shadowplay))
+        if (success < 0)
         {
-          af.where     = TO_AFFECTS;
-          af.type      = gsn_shadowplay;
-          af.level     = ch->pcdata->discipline[OBTENEBRATION];
-          af.duration  = success;
-          af.location  = APPLY_CS_STA;
-          af.modifier  = -1;
-          af.bitvector = 0;
-          affect_to_char( victim, &af );
-          af.location  = APPLY_HITROLL;
-          af.modifier  = -(success*ch->level);
-          if (success > 3)
-            af.bitvector = AFF_BLIND;
-          affect_to_char( victim, &af );
-        }
-
-        if (success > 1)
-        {
-          act("Your shadows writhe and constrict around $N!", ch, NULL, victim, TO_CHAR);
-          act("The shadows writhe and constrict around you!", ch, NULL, victim, TO_VICT);
-          act("$N writhes as the shadows constrict $S!", ch, NULL, victim, TO_ROOM);
-          damage(ch, victim, success*(ch->level/2), gsn_shadowplay, DAM_BASH, TRUE);
+          act("Without warning, the shadows turn on you!", ch, NULL, victim, TO_CHAR);
+          act("Shadows creep from behind $n's form, attacking suddenly!", ch, NULL, victim, TO_ROOM);
+          damage(ch, ch, (ch->level/5), gsn_shadowplay, DAM_BASH, TRUE);
         }
         return;
       }
-      else
+
+      AFFECT_DATA af;
+      act("You send shadows to blind and suffocate $N!", ch, NULL, victim, TO_CHAR);
+      act("Shadows leap from the corners at $n's command and fill your mouth and eyes!", ch, NULL, victim, TO_VICT);
+      act("$n commands shadows to leap into $N's mouth and eyes!", ch, NULL, victim, TO_ROOM);
+
+      if (!is_affected(victim, gsn_shadowplay))
       {
-        send_to_char("You fail to summon shadows to suffocate your target.\n\r", ch);
-        return;
+        af.where     = TO_AFFECTS;
+        af.type      = gsn_shadowplay;
+        af.level     = ch->pcdata->discipline[OBTENEBRATION];
+        af.duration  = success;
+        af.location  = APPLY_CS_STA;
+        af.modifier  = -1;
+        af.bitvector = 0;
+        affect_to_char( victim, &af );
+        af.location  = APPLY_HITROLL;
+        af.modifier  = -(success*ch->level);
+        if (success > 3)
+          af.bitvector = AFF_BLIND;
+        affect_to_char( victim, &af );
       }
+
+      if (success > 1)
+      {
+        act("Your shadows writhe and constrict around $N!", ch, NULL, victim, TO_CHAR);
+        act("The shadows writhe and constrict around you!", ch, NULL, victim, TO_VICT);
+        act("$N writhes as the shadows constrict $S!", ch, NULL, victim, TO_ROOM);
+        damage(ch, victim, success*(ch->level/2), gsn_shadowplay, DAM_BASH, TRUE);
+      }
+      return;
     }
     else
     {

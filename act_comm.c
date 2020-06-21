@@ -1181,21 +1181,21 @@ void do_say( CHAR_DATA *ch, char *argument )
             if (!IS_NPC(mob) && IS_SET(mob->act, PLR_IC))
             mob->pcdata->room_last_pose = 0;
 
-            if ( IS_NPC(mob) && HAS_TRIGGER_MOB( mob, TRIG_SPEECH )
+            if ( IS_NPC(mob) && SAME_UMBRA(ch,mob)  && HAS_TRIGGER_MOB( mob, TRIG_SPEECH )
             &&   mob->position == mob->pIndexData->default_pos )
             p_act_trigger( argument, mob, NULL, NULL, ch, NULL, NULL, TRIG_SPEECH );
 
             for ( obj = mob->carrying; obj; obj = obj_next )
             {
                 obj_next = obj->next_content;
-                if ( HAS_TRIGGER_OBJ( obj, TRIG_SPEECH ) )
+                if ( HAS_TRIGGER_OBJ( obj, TRIG_SPEECH ) && SAME_UMBRA_OBJ(ch, obj))
                     p_act_trigger( argument, NULL, obj, NULL, ch, NULL, NULL, TRIG_SPEECH );
             }
         }
         for ( obj = ch->in_room->contents; obj; obj = obj_next )
         {
             obj_next = obj->next_content;
-            if ( HAS_TRIGGER_OBJ( obj, TRIG_SPEECH ) )
+            if ( HAS_TRIGGER_OBJ( obj, TRIG_SPEECH ) && SAME_UMBRA_OBJ(ch, obj))
             p_act_trigger( argument, NULL, obj, NULL, ch, NULL, NULL, TRIG_SPEECH );
         }
 

@@ -3692,103 +3692,111 @@ return;
 
 void do_shadowplay (CHAR_DATA *ch, char *argument)
 {
-   AFFECT_DATA af;
-   char arg[MIL];
-   CHAR_DATA *victim;
-     one_argument(argument, arg);
+  AFFECT_DATA af;
+  char arg[MIL];
+  CHAR_DATA *victim;
+  one_argument(argument, arg);
 
+  if (IS_NPC(ch)) return;
 
-    if (IS_NPC(ch)) return;
+  if(!IS_VAMP(ch))
+  {
+    send_to_char("You are not a vampire!\n\r" ,ch);
+    return;
+  }
 
-    if(!IS_VAMP(ch))
+  if ( IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
+  {
+    send_to_char("Your blood curse prevents it!\n\r" ,ch);
+    return;
+  }
+
+  if (ch->pcdata->discipline[OBTENEBRATION] < 1)
+  {
+    send_to_char( "You are not skilled enough in your powers of Obtenebration!.\n\r", ch );
+    return;
+  }
+
+  if (arg[0] == '\0')
+  {
+    if ( ch->pblood < 20 && !is_affected(ch,gsn_shadowform))
     {
-        send_to_char("You are not a vampire!\n\r" ,ch);
-        return;
+      send_to_char( "You don't have enough blood.\n\r", ch );
+      return;
     }
-    if ( IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
+
+    if (is_affected(ch, gsn_shadowplay))
     {
-        send_to_char("Your blood curse prevents it!\n\r" ,ch);
-        return;
+      send_to_char("Living shadows already flow around your form!\n\r", ch);
+      return;
     }
 
-        if (ch->pcdata->discipline[OBTENEBRATION] < 1)
-    {
-        send_to_char( "You are not skilled enough in your powers of Obtenebration!.\n\r", ch );
-        return;
-    }
-
-
-    if (arg[0] == '\0')
-    {
-        if ( ch->pblood < 20 && !is_affected(ch,gsn_shadowform))
-    {
-        send_to_char( "You don't have enough blood.\n\r", ch );
-        return;
-    }
     if(!is_affected(ch,gsn_shadowform)) ch->pblood -= 10;
 
-    act( "$n vanishes into the shadows.",  ch, NULL, NULL, TO_NOTVICT );
-    send_to_char("You veil yourself in darkness from those around you.\n\r" ,ch);
+    act( "Shadows warp and flow, surrounding $n.",  ch, NULL, NULL, TO_NOTVICT );
+    send_to_char("You stretch and warp the darkness harnessed from the area.\n\r" ,ch);
 
     af.where     = TO_AFFECTS;
-    af.type      = gsn_invis;
-    af.level     = ch->pcdata->discipline[OBTENEBRATION];
+    af.type      = gsn_shadowplay;
+    af.level     = 0;
     af.duration  = (5+(ch->pcdata->discipline[OBTENEBRATION]*10))-ch->gen;
     af.location  = APPLY_NONE;
     af.modifier  = 0;
-    af.bitvector = AFF_INVISIBLE;
+    af.bitvector = 0;
     affect_to_char( ch, &af );
     return;
-} else {
+  }
+  else
+  {
     WAIT_STATE( ch, 6 );
-            if ( ch->pblood < 20 && !is_affected(ch,gsn_shadowform))
-    {
-        send_to_char( "You don't have enough blood.\n\r", ch );
-        return;
-    }
+
     if(!is_affected(ch,gsn_shadowform)) ch->pblood -= 10;
 
-        if ((victim = get_char_room(ch, NULL, arg)) != NULL)
-        {
-        sh_int success;
-        success = godice(get_attribute(ch, WITS) + ch->pcdata->discipline[OBTENEBRATION], 7);
-        if ( success > 0)
-        {
-            AFFECT_DATA af;
-            act("You send shadows to blind and suffocate $N!", ch, NULL, victim, TO_CHAR);
-            act("Shadows leap from the corners at $n's command and fill your mouth and eyes!", ch, NULL, victim, TO_VICT);
-            act("$n commands shadows to leap into $N's mouth and eyes!", ch, NULL, victim, TO_ROOM);
+    if ((victim = get_char_room(ch, NULL, arg)) != NULL)
+    {
+      sh_int success;
+      success = godice(get_attribute(ch, WITS) + ch->pcdata->discipline[OBTENEBRATION], 7);
+      if ( success > 0)
+      {
+        AFFECT_DATA af;
+        act("You send shadows to blind and suffocate $N!", ch, NULL, victim, TO_CHAR);
+        act("Shadows leap from the corners at $n's command and fill your mouth and eyes!", ch, NULL, victim, TO_VICT);
+        act("$n commands shadows to leap into $N's mouth and eyes!", ch, NULL, victim, TO_ROOM);
 
-            if (!is_affected(victim, gsn_shadowplay))
-            {
-            af.where     = TO_AFFECTS;
-            af.type      = gsn_shadowplay;
-            af.level     = ch->pcdata->discipline[OBTENEBRATION];
-            af.duration  = 1 + ch->pcdata->discipline[OBTENEBRATION];
-            af.location  = APPLY_CS_STA;
-            af.modifier  = -(ch->pcdata->discipline[OBTENEBRATION]/2);
-            af.bitvector = AFF_BLIND;
-            affect_to_char( victim, &af );
-            af.location  = APPLY_HITROLL;
-            af.modifier  = -20*ch->pcdata->discipline[OBTENEBRATION];
-            if (ch->pcdata->discipline[OBTENEBRATION] > 2)
-                af.bitvector = AFF_SLOW;
-            else
-                af.bitvector = 0;
-            affect_to_char( victim, &af );
-            }
+        if (!is_affected(victim, gsn_shadowplay))
+        {
+          af.where     = TO_AFFECTS;
+          af.type      = gsn_shadowplay;
+          af.level     = ch->pcdata->discipline[OBTENEBRATION];
+          af.duration  = 1 + ch->pcdata->discipline[OBTENEBRATION];
+          af.location  = APPLY_CS_STA;
+          af.modifier  = -(ch->pcdata->discipline[OBTENEBRATION]/2);
+          af.bitvector = AFF_BLIND;
+          affect_to_char( victim, &af );
+          af.location  = APPLY_HITROLL;
+          af.modifier  = -20*ch->pcdata->discipline[OBTENEBRATION];
+          if (ch->pcdata->discipline[OBTENEBRATION] > 2)
+            af.bitvector = AFF_SLOW;
+          else
+            af.bitvector = 0;
+          affect_to_char( victim, &af );
+        }
 
-            if (success > 1)
-                damage(ch, victim, success*(ch->level/2), gsn_shadowplay, DAM_BASH, TRUE);
-        } else {
-            send_to_char("You fail to summon shadows to suffocate your target.\n\r", ch);
-            return;
-        }
-        } else {
-            send_to_char("Attack whom with shadows?\n\r", ch);
-            return;
-        }
+        if (success > 1)
+          damage(ch, victim, success*(ch->level/2), gsn_shadowplay, DAM_BASH, TRUE);
+      }
+      else
+      {
+        send_to_char("You fail to summon shadows to suffocate your target.\n\r", ch);
+        return;
+      }
     }
+    else
+    {
+      send_to_char("Attack whom with shadows?\n\r", ch);
+      return;
+    }
+  }
 }
 
 void do_nightshades(CHAR_DATA *ch, char *argument)

@@ -1957,7 +1957,7 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
 /* Vampire crap */
     { "shadowplay",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_SLEEPING,
-    &gsn_shadowplay,            SLOT(403),   0, 12, "shadowplay",         "The shadows smothering you fade away.", "" },
+    &gsn_shadowplay,            SLOT(403),   0, 12, "shadowplay",         "The shadows surrounding you fade away.", "" },
 
     { "vampire frenzy",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, vamp_frenzy,    TAR_CHAR_SELF,      POS_SLEEPING,

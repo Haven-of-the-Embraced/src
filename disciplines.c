@@ -3713,18 +3713,20 @@ void do_shadowplay (CHAR_DATA *ch, char *argument)
 
   if (ch->pcdata->discipline[OBTENEBRATION] < 1)
   {
-    send_to_char( "You are not skilled enough in your powers of Obtenebration!.\n\r", ch );
+    send_to_char( "You are not skilled enough in your powers of Obtenebration!\n\r", ch );
     return;
   }
 
+  if ( ch->pblood < 20 && !is_affected(ch,gsn_shadowform))
+  {
+    send_to_char( "You don't have enough blood.\n\r", ch );
+    return;
+  }
+
+  WAIT_STATE( ch, 6 );
+
   if (arg[0] == '\0')
   {
-    if ( ch->pblood < 20 && !is_affected(ch,gsn_shadowform))
-    {
-      send_to_char( "You don't have enough blood.\n\r", ch );
-      return;
-    }
-
     if (is_affected(ch, gsn_shadowplay))
     {
       send_to_char("Living shadows already flow around your form!\n\r", ch);
@@ -3748,8 +3750,6 @@ void do_shadowplay (CHAR_DATA *ch, char *argument)
   }
   else
   {
-    WAIT_STATE( ch, 6 );
-
     if(!is_affected(ch,gsn_shadowform)) ch->pblood -= 10;
 
     if ((victim = get_char_room(ch, NULL, arg)) != NULL)

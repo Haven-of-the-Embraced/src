@@ -3752,10 +3752,16 @@ void do_shadowplay (CHAR_DATA *ch, char *argument)
   {
     if ((victim = get_char_room(ch, NULL, arg)) != NULL)
     {
+      if (is_affected(victim, gsn_shadowform))
+      {
+        send_to_char("Your target is already surrounded by tangible shadow.\n\r", ch);
+        return;
+      }
+
       sh_int success;
       if(!is_affected(ch,gsn_shadowform)) ch->pblood -= 10;
       success = godice(get_attribute(ch, WITS) + ch->pcdata->discipline[OBTENEBRATION], 7);
-      
+
       if ( success > 0)
       {
         AFFECT_DATA af;
@@ -3781,7 +3787,13 @@ void do_shadowplay (CHAR_DATA *ch, char *argument)
         }
 
         if (success > 1)
+        {
+          act("Your shadows writhe and constrict around $N!", ch, NULL, victim, TO_CHAR);
+          act("The shadows writhe and constrict around you!", ch, NULL, victim, TO_VICT);
+          act("$N writhes as the shadows constrict $S!", ch, NULL, victim, TO_ROOM);
           damage(ch, victim, success*(ch->level/2), gsn_shadowplay, DAM_BASH, TRUE);
+        }
+        return;
       }
       else
       {

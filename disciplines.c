@@ -4341,7 +4341,61 @@ void do_majesty(CHAR_DATA *ch, char *argument)
 
 void do_passion(CHAR_DATA *ch, char *argument)
 {
+    CHAR_DATA *victim;
+   AFFECT_DATA af;
+   int success, dice;
 
+    if (IS_NPC(ch)) return;
+
+   if(!IS_VAMP(ch))
+    {
+        send_to_char("You are not a vampire!\n\r" ,ch);
+        return;
+    }
+    if ( is_affected( ch, gsn_passion ) )
+    {
+        send_to_char( "You quell the passions of those around you, no longer suffering their wrath.\n\r", ch );
+        affect_strip(ch, gsn_passion);
+        return;
+    }
+
+    if ( IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
+    {
+        send_to_char("Your blood curse prevents it!\n\r" ,ch);
+        return;
+    }
+
+    if (ch->pcdata->discipline[PRESENCE] < 6)
+    {
+        send_to_char( "You are not skilled enough in Presence!\n\r", ch );
+        return;
+    }
+
+    if ( ch->pblood < 25 )
+    {
+        send_to_char( "You don't have enough blood.\n\r", ch );
+        return;
+    }
+
+    if ((victim = get_char_room(ch, NULL, argument)) == NULL)
+    {
+        sendch("Upon whom do you wish to levy this aura of pure revulsion?\n\r", ch);
+        return;
+    }
+
+    ch->pblood -= 20;
+
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_passion;
+    af.level     = ch->level;
+    af.location  = 0;
+    af.modifier  = 0;
+    af.duration  = 8;
+    af.bitvector = 0;
+    affect_to_char( victim, &af );
+
+    send_to_char("Your very presence begins to elicit such hatred that those around you begin to make attempts on your life!\n\r" ,victim);
+    act( "You feel suddenly enraged at the sight of $n, unable to stop yourself from trying to end $s existence!",  victim, NULL, NULL, TO_NOTVICT );
     return;
 }
 

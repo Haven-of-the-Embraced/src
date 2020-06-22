@@ -550,6 +550,7 @@ void do_quelltheherd(CHAR_DATA *ch, char *argument)
 
     WAIT_STATE( ch, 24 );
     success = godice(get_attribute(ch,STRENGTH)+ch->csabilities[CSABIL_INTIMIDATION],7);
+    success += stealth_int_shadowplay(ch, 7);
 
     if (success == 0) {
         act( "And it seems to have no effect..", ch, NULL, victim, TO_CHAR);
@@ -2030,6 +2031,7 @@ void do_command(CHAR_DATA *ch, char *argument)
     if (victim->level > ch->level*2)
         diff++;
     success = godice(get_attribute(ch, MANIPULATION) + ch->csabilities[CSABIL_INTIMIDATION], diff);
+    success += stealth_int_shadowplay(ch, diff);
 
     if (success < 1)
     {
@@ -7602,6 +7604,7 @@ void do_mortalterrors( CHAR_DATA *ch, char *argument)
                   if (diff > 10) diff = 10;
                   if (diff < 4)  diff = 4;
                   success = godice(dicepool, diff);
+                  success += stealth_int_shadowplay(ch, diff);
                   if (success < 0)
                   {
                       sendch("Your shades recoil and disappear back to the Abyss.\n\r", ch);

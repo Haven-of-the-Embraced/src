@@ -769,7 +769,13 @@ int get_ability2( CHAR_DATA *ch, int stat )
 
 int get_discipline( CHAR_DATA *ch, int disc)
 {
-    return 0;
+    if (!IS_VAMP(ch))
+        return 0;
+
+    if (!IS_NPC(ch))
+        return ch->pcdata->discipline[disc];
+
+    return ch->level / 24;
 }
 
 /* command for returning max training score */

@@ -767,6 +767,11 @@ int get_ability2( CHAR_DATA *ch, int stat )
     return ch->pcdata->cssec_abil[stat];
 }
 
+int get_discipline( CHAR_DATA *ch, int disc)
+{
+    return 0;
+}
+
 /* command for returning max training score */
 int get_max_train( CHAR_DATA *ch, int stat )
 {

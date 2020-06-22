@@ -3336,6 +3336,7 @@ void do_unseenpresence(CHAR_DATA *ch, char *argument)
     ch->pblood -= 15;
     dice = get_attribute(ch, WITS) + get_ability(ch, CSABIL_STEALTH);
     success = godice(dice, UMAX(5, 9 - level));
+    success += stealth_int_shadowplay(ch, UMAX(5, 9 - level));
 
     if (success < 1)
     {

@@ -4607,6 +4607,7 @@ void do_backstab( CHAR_DATA *ch, char *argument )
     }
     dice = get_attribute(ch, DEXTERITY) + get_ability(ch, CSABIL_STEALTH);
     successes = godice(dice, diff);
+    successes += stealth_int_shadowplay(ch,diff);
     damdice = d10_damdice(ch, victim) + successes;
     damsuccess = godice(damdice, 4);
     modifier = d10_modifier(ch);
@@ -5543,6 +5544,7 @@ void do_assassinate( CHAR_DATA *ch, char *argument )
       resistdice = 0;
 
     success = godice(dice, diff);
+    success += stealth_int_shadowplay(ch, diff);
     resistsuccess = godice(resistdice, resistdiff);
 
     if (IS_DEBUGGING(ch))
@@ -6131,6 +6133,7 @@ void do_slip( CHAR_DATA *ch, char *argument )
         }
 
         success = godice(dice, diff);
+        success += stealth_int_shadowplay(ch, diff);
         resistdice = get_attribute(victim, PERCEPTION) +
                  get_ability(victim, CSABIL_ALERTNESS);
         resist = godice(resistdice, resistdiff);

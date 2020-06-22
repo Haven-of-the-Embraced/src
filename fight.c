@@ -4317,7 +4317,7 @@ void do_trip( CHAR_DATA *ch, char *argument )
 		check_improve(ch,gsn_trip,TRUE,6);
     gain_exp(ch, 3*tripsuccess);
 
-		tripdamage = godice(get_attribute(ch, STRENGTH) + ch->pcdata->discipline[POTENCE], 6);
+		tripdamage = godice(get_attribute(ch, STRENGTH) + get_discipline(ch, POTENCE), 6);
 		damage(ch, victim, tripdamage*ch->level, gsn_trip, DAM_BASH, TRUE);
 
 		if (IS_SET(victim->parts,PART_LEGS))

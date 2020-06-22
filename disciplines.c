@@ -3752,12 +3752,6 @@ void do_shadowplay (CHAR_DATA *ch, char *argument)
   {
     if ((victim = get_char_room(ch, NULL, arg)) != NULL)
     {
-      if (is_affected(victim, gsn_shadowform))
-      {
-        send_to_char("Your target is already surrounded by tangible shadow.\n\r", ch);
-        return;
-      }
-
       sh_int success;
       if(!is_affected(ch,gsn_shadowform)) ch->pblood -= 10;
       success = godice(get_attribute(ch, WITS) + ch->pcdata->discipline[OBTENEBRATION], 7);
@@ -3782,7 +3776,9 @@ void do_shadowplay (CHAR_DATA *ch, char *argument)
       act("Shadows leap from the corners at $n's command and fill your mouth and eyes!", ch, NULL, victim, TO_VICT);
       act("$n commands shadows to leap into $N's mouth and eyes!", ch, NULL, victim, TO_ROOM);
 
-      if (!is_affected(victim, gsn_shadowplay))
+      if (is_affected(victim, gsn_shadowplay))
+        send_to_char("Your shadows seem to be partially mitigated by the tangible shadows already surrounding your target.\n\r", ch);
+      else
       {
         af.where     = TO_AFFECTS;
         af.type      = gsn_shadowplay;

@@ -352,6 +352,7 @@ void move_char( CHAR_DATA *ch, int door, bool follow )
     {
     	if(IS_AFFECTED(ch, AFF_SNEAK) || IS_AFFECTED(ch, AFF2_UNSEEN) || IS_AFFECTED(ch,AFF_HIDE))
     		stealth = godice(get_attribute(ch,WITS)+ch->csabilities[CSABIL_STEALTH],6);
+        stealth += stealth_int_shadowplay(ch, 6);
 
     	for (reflective = ch->in_room->contents; reflective != NULL; reflective = reflective->next_content)
     	{

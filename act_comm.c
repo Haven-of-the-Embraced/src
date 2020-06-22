@@ -66,6 +66,7 @@ void check_unseen(CHAR_DATA *ch, int type)
         case UNSEEN_MOVE: diff = 9;break;
     }
     success = godice(get_attribute(ch, WITS) + ch->csabilities[CSABIL_STEALTH], diff);
+    success += stealth_int_shadowplay(ch, diff);
     if (success < 1)
     {
         affect_strip(ch, gsn_unseen);

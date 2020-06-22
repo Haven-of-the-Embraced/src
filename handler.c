@@ -1387,7 +1387,17 @@ void affect_join( CHAR_DATA *ch, AFFECT_DATA *paf )
     return;
 }
 
-
+/*
+ * Check if char has self induced shadowplay (+1 stealth/intimidation die)
+ * Return 1 dice result if so.
+*/
+int stealth_int_shadowplay( CHAR_DATA *ch, int diff )
+{
+	if (is_affected(ch, gsn_shadowplay) && get_affect_level(ch, gsn_shadowplay) == 0)
+		return godice(1, diff);
+	else
+		return 0;
+}
 
 /*
  * Move a char out of a room.

@@ -396,7 +396,8 @@ int main( int argc, char **argv )
     /*
      * Initialize Signal Handler
      */
-     init_signals();
+
+    // init_signals();
     /*
      * Memory debugging if needed.
      */

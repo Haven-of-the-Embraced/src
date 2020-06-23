@@ -484,6 +484,7 @@ DECLARE_DO_FUN( do_chant    );
 DECLARE_DO_FUN( do_setarena );
 DECLARE_DO_FUN( do_project  );
 DECLARE_DO_FUN( do_vigor    );
+DECLARE_DO_FUN( do_glower   );
 DECLARE_DO_FUN( do_waylay   );
 DECLARE_DO_FUN( do_fortress     );
 DECLARE_DO_FUN( do_qpoint   );

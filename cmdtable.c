@@ -179,6 +179,7 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "drain",      do_drain},
     { "chant",      do_chant},
     { "vigor",      do_vigor},
+    { "glower",     do_glower},
     { "waylay",     do_waylay},
     { "fleshcraft",     do_fleshcraft },
     { "bonecraft",      do_bonecraft},

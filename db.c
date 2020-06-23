@@ -4955,6 +4955,7 @@ sh_int      gsn_renown;
 sh_int      gsn_second_kick;
 sh_int      gsn_slow;
 sh_int      gsn_vigor;
+sh_int      gsn_glower;
 sh_int      gsn_waylay;
 sh_int      gsn_fortress;
 sh_int      gsn_arena;

@@ -264,6 +264,7 @@ return;
 void do_glower(CHAR_DATA *ch, char *argument)
 {
   AFFECT_DATA af;
+  int rbf_success = 0, rbf_diff = 7, rbf_duration = 0;
 
   if (IS_NPC(ch))
     return;
@@ -280,6 +281,27 @@ void do_glower(CHAR_DATA *ch, char *argument)
     send_to_char("You cannot muster the willpower to glower at your opponents.\n\r", ch);
     return;
   }
+
+  ch->cswillpower--;
+
+  rbf_success = godice(get_attribute(ch, CHARISMA) + ch->csabilities[CSABIL_INTIMIDATION], 6);
+
+  if (rbf_success < 1)
+  {
+    act("", ch, NULL, NULL, TO_CHAR);
+    act("", ch, NULL, NULL, TO_NOTVICT);
+    return;
+  }
+
+  if (rbf_success == 0)
+  {
+    act("", ch, NULL, NULL, TO_CHAR);
+    act("", ch, NULL, NULL, TO_NOTVICT);
+    return;
+  }
+
+  act("", ch, NULL, NULL, TO_CHAR);
+  act("", ch, NULL, NULL, TO_NOTVICT);
 
   return;
 }

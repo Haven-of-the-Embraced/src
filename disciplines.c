@@ -4339,7 +4339,7 @@ void do_majesty(CHAR_DATA *ch, char *argument)
     return;
 }
 
-void do_passion(CHAR_DATA *ch, char *argument)
+void do_sparkofrage(CHAR_DATA *ch, char *argument)
 {
     CHAR_DATA *victim;
    AFFECT_DATA af;
@@ -4352,10 +4352,10 @@ void do_passion(CHAR_DATA *ch, char *argument)
         send_to_char("You are not a vampire!\n\r" ,ch);
         return;
     }
-    if ( is_affected( ch, gsn_passion ) )
+    if ( is_affected( ch, gsn_sparkofrage ) )
     {
         send_to_char( "You quell the passions of those around you, no longer suffering their wrath.\n\r", ch );
-        affect_strip(ch, gsn_passion);
+        affect_strip(ch, gsn_sparkofrage);
         return;
     }
 
@@ -4386,7 +4386,7 @@ void do_passion(CHAR_DATA *ch, char *argument)
     ch->pblood -= 20;
 
     af.where     = TO_AFFECTS;
-    af.type      = gsn_passion;
+    af.type      = gsn_sparkofrage;
     af.level     = ch->level;
     af.location  = 0;
     af.modifier  = 0;

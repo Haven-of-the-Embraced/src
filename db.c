@@ -4944,7 +4944,7 @@ sh_int          gsn_track;
 sh_int          gsn_cloakshadow;
 sh_int          gsn_nocturne;
 sh_int          gsn_majesty;
-sh_int          gsn_passion;
+sh_int          gsn_sparkofrage;
 sh_int          gsn_quietus_weakness;
 sh_int          gsn_acidblood;
 sh_int          gsn_quietus_bloodcurse;

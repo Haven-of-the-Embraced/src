@@ -261,6 +261,29 @@ void do_chant(CHAR_DATA *ch, char *argument )
 return;
 }
 
+void do_glower(CHAR_DATA *ch, char *argument)
+{
+  AFFECT_DATA af;
+
+  if (IS_NPC(ch))
+    return;
+
+    if (is_affected(ch, gsn_glower))
+    {
+      send_to_char("You relax your hardened facial expression.\n\r", ch);
+      affect_strip(ch, gsn_glower);
+      return;
+    }
+
+  if (ch->cswillpower < 1)
+  {
+    send_to_char("You cannot muster the willpower to glower at your opponents.\n\r", ch);
+    return;
+  }
+
+  return;
+}
+
 void do_vigor(CHAR_DATA *ch, char *argument)
 {
     AFFECT_DATA af;

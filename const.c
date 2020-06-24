@@ -1028,6 +1028,9 @@ const struct cs_skill_type csskill_table [] =
     {"waylay", &gsn_waylay, 55,
     {CSABIL_STEALTH, 3, ABIL}, {CSABIL_MELEE, 1, ABIL} },
 
+    {"glower", &gsn_glower, 50,
+    {CSABIL_INTIMIDATION, 3, ABIL}, {CSABIL_NONE, 0, ABIL} },
+
     {"ground", &gsn_ground, 30,
     {CSABIL_BRAWL, 3, ABIL}, {CSABIL_NONE, 0, ABIL} },
 
@@ -1849,6 +1852,10 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
     { "fast healing",     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,     TAR_IGNORE,     POS_SLEEPING,
     &gsn_fast_healing,  SLOT( 0),   0,  0, "",         "!Fast Healing!",   "" },
+
+    { "glower", { 50, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_IGNORE, POS_STANDING,
+    &gsn_glower, SLOT( 0),    0,  0,    "",         "Your intense expression softens after a while.",     ""    },
 
     { "haggle",       { 5, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,     TAR_IGNORE,     POS_RESTING,

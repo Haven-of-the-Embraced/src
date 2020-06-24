@@ -218,21 +218,6 @@ void interpret( CHAR_DATA *ch, char *argument )
         fclose( fp );
         fpReserve = fopen( NULL_FILE, "r" );
     }
-    /*
-     * No hiding.
-     */
-/*    REMOVE_BIT( ch->affected_by, AFF_HIDE ); */
-
-    /*
-     * Remove veil and earthmeld.
-     */
-    if(is_affected(ch,gsn_earthmeld) && str_prefix( argument, "regenerate" ))
-    {
-        act("$n emerges from the earth in a shower of dirt.",ch,NULL,NULL,TO_NOTVICT);
-        act("You emerge from from the earth in a shower of dirt.",ch,NULL,NULL,TO_CHAR);
-        affect_strip(ch,gsn_earthmeld);
-    }
-  /*  if(ch->obfuscate < 6) REMOVE_BIT(ch->affected2_by, AFF2_VEIL);*/
 
     /*
      * Implement freeze command.
@@ -265,73 +250,6 @@ void interpret( CHAR_DATA *ch, char *argument )
     argument = one_argument( argument, command );
     }
 
-    //While trapped in Gauntlet, only certain commands allowed
-    if (!IS_NPC(ch) && is_affected(ch, gsn_trappedingauntlet) &&
-    	str_prefix(command, "ooc") &&
-    	str_prefix(command, "inventory") &&
-    	str_prefix(command, "who") &&
-    	str_prefix(command, "score") &&
-    	str_prefix(command, "affect") &&
-    	str_prefix(command, "look") &&
-    	str_prefix(command, "where") &&
-    	str_prefix(command, "time") &&
-    	str_prefix(command, "charsheet") &&
-    	str_prefix(command, "cs1") &&
-    	str_prefix(command, "cs2") &&
-    	str_prefix(command, "cs3") &&
-    	str_prefix(command, "plead") &&
-    	str_prefix(command, "freebie") &&
-    	str_prefix(command, "prompt") &&
-    	str_prefix(command, "group") &&
-    	str_prefix(command, "traditiontalk") &&
-    	str_prefix(command, "tell") &&
-    	str_prefix(command, "wizlist") &&
-    	str_prefix(command, "afk") &&
-    	str_prefix(command, "gtell") &&
-    	str_prefix(command, "reply") &&
-    	str_prefix(command, "quit"))
-    {
-    	send_to_char("What is left of your body refuses to do anything while still entangled in the Gauntlet.\n\r", ch);
-    	return;
-    }
-
-
-    if(IS_SET(ch->act,PLR_SPEC) && !IS_NPC(ch) &&
-        str_prefix(command, "north") && str_prefix(command, "south") &&
-        str_prefix(command, "east") && str_prefix(command, "west") &&
-        str_prefix(command, "up") && str_prefix(command, "down") &&
-        str_prefix(command, "ooc") && str_prefix(command, "recall") &&
-        str_prefix(command, "inventory") && str_prefix(command, "who") &&
-        str_prefix(command, "score") && str_prefix(command, "affect") &&
-        str_prefix(command, "look") && str_prefix(command, "glance") &&
-        str_prefix(command, "where") && str_prefix(command, "scan") &&
-        str_prefix(command, "eat") && str_prefix(command, "drink") &&
-        str_prefix(command, "time"))
-    {
-        send_to_char( "You are unable to do that while in spectate mode.\n\r", ch );
-        return;
-    }
-/*Sengir moved losing veil here, can use certain commands while veiled*/
-    if ((!IS_NPC(ch) && ch->pcdata->discipline[OBFUSCATE] < 6) &&
-            str_prefix (command, "veil") &&
-            str_prefix(command, "beseech blissful") &&
-            str_prefix(command, "ooc") &&
-            str_prefix(command, "inventory") &&
-            str_prefix(command, "who") &&
-            str_prefix(command, "score") &&
-            str_prefix(command, "affects") &&
-            str_prefix(command, "look") &&
-            str_prefix(command, "glance") &&
-            str_prefix(command, "where") &&
-            str_prefix(command, "scan") &&
-            str_prefix(command, "time") &&
-            str_prefix(command, "charsheet") &&
-            str_prefix(command, "cs1") &&
-            str_prefix(command, "cs2") &&
-            str_prefix(command, "cs3")) {
-        REMOVE_BIT(ch->affected2_by, AFF2_VEIL);
-        affect_strip(ch, gsn_veil);
-        }
     /*
      * Look for command in command table.
      */
@@ -372,6 +290,9 @@ void interpret( CHAR_DATA *ch, char *argument )
         bug("No pCmd!", 0);
         return;
     }
+
+    if (!can_do_cmd(ch, pCmd))
+        return;
 
     if ( pCmd->log == LOG_NEVER )
     strcpy( logline, "" );

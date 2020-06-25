@@ -284,7 +284,17 @@ void do_glower(CHAR_DATA *ch, char *argument)
 
   ch->cswillpower--;
 
-  rbf_success = godice(get_attribute(ch, CHARISMA) + ch->csabilities[CSABIL_INTIMIDATION], 6);
+  if (is_affected(ch, gsn_awe) || is_affected(ch, gsn_majesty))
+    rbf_diff--;
+  if (is_affected(ch, gsn_berserk) || is_affected(ch, gsn_garou_frenzy)
+  || is_affected(ch, gsn_thaumaturgy_frenzy) || is_affected(ch, gsn_vamp_frenzy)
+  || is_affected(ch, gsn_gleam) || is_affected(ch, gsn_rage))
+    rbf_diff--;
+  if (is_affected(ch, gsn_botched_presence))
+    rbf_diff++;
+  rbf_success = godice(get_attribute(ch, CHARISMA) + ch->csabilities[CSABIL_INTIMIDATION], rbf_diff);
+  rbf_success += stealth_int_shadowplay(ch, rbf_diff);
+  rbf_duration = godice(get_attribute(ch, STAMINA) + ch->csabilities[CSABIL_INTIMIDATION], rbf_diff);
 
   if (rbf_success < 1)
   {

@@ -327,11 +327,13 @@ void do_glower(CHAR_DATA *ch, char *argument)
     act("You attempt to glare about the room, but feel that others are unimpressed.", ch, NULL, NULL, TO_CHAR);
     act("$n tries to look tough, but you feel unimpressed.", ch, NULL, NULL, TO_NOTVICT);
     WAIT_STATE(ch, PULSE_VIOLENCE);
+    check_improve(ch,gsn_glower,FALSE,5);
     return;
   }
 
   act("You set your facial features into the fiercest glower you can muster.", ch, NULL, NULL, TO_CHAR);
   act("$n glowers about the room, looking like $s is not to be trifled with.", ch, NULL, NULL, TO_NOTVICT);
+  check_improve(ch,gsn_glower,TRUE,8);
 
   af.where     = TO_AFFECTS;
 	af.type      = gsn_glower;

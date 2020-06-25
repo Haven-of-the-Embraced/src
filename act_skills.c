@@ -332,7 +332,7 @@ void do_glower(CHAR_DATA *ch, char *argument)
   }
 
   act("You set your facial features into the fiercest glower you can muster.", ch, NULL, NULL, TO_CHAR);
-  act("$n glowers about the room, looking like $s is not to be trifled with.", ch, NULL, NULL, TO_NOTVICT);
+  act("$n glowers about the room, looking like $e is not to be trifled with.", ch, NULL, NULL, TO_NOTVICT);
   check_improve(ch,gsn_glower,TRUE,8);
 
   af.where     = TO_AFFECTS;

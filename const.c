@@ -1855,7 +1855,7 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
 
     { "glower", { 50, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_IGNORE, POS_STANDING,
-    &gsn_glower, SLOT( 0),    0,  0,    "",         "Your intense expression softens after a while.",     ""    },
+    &gsn_glower, SLOT( 0),    0,  0,    "",         "You relax your facial expressions to your normal countenance.",     ""    },
 
     { "haggle",       { 5, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,     TAR_IGNORE,     POS_RESTING,

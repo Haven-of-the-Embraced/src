@@ -271,8 +271,13 @@ void do_glower(CHAR_DATA *ch, char *argument)
 
     if (is_affected(ch, gsn_glower))
     {
-      send_to_char("You relax your hardened facial expression.\n\r", ch);
-      affect_strip(ch, gsn_glower);
+      if (get_affect_level(ch, gsn_glower) == 0)
+        send_to_char("You don't have the confidence to overcome your last comical attempt yet.\n\r", ch);
+      else
+      {
+        send_to_char("You relax your hardened facial expression.\n\r", ch);
+        affect_strip(ch, gsn_glower);
+      }
       return;
     }
 
@@ -295,24 +300,49 @@ void do_glower(CHAR_DATA *ch, char *argument)
   rbf_success = godice(get_attribute(ch, CHARISMA) + ch->csabilities[CSABIL_INTIMIDATION], rbf_diff);
   rbf_success += stealth_int_shadowplay(ch, rbf_diff);
   rbf_duration = godice(get_attribute(ch, STAMINA) + ch->csabilities[CSABIL_INTIMIDATION], rbf_diff);
+  if (rbf_duration < 1)
+    rbf_duration = 1;
+
+  WAIT_STATE(ch, PULSE_VIOLENCE * 2);
 
   if (rbf_success < 1)
   {
-    act("", ch, NULL, NULL, TO_CHAR);
-    act("", ch, NULL, NULL, TO_NOTVICT);
+    act("You attempt to put on your meanest face, but end up looking comical instead.", ch, NULL, NULL, TO_CHAR);
+    act("$n twists $s face up comically.", ch, NULL, NULL, TO_NOTVICT);
+
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_glower;
+    af.level     = 0;
+    af.location  = 0;
+    af.modifier  = 0;
+    af.duration  = 2;
+    af.bitvector = 0;
+    affect_to_char( ch, &af );
+
     return;
   }
 
   if (rbf_success == 0)
   {
-    act("", ch, NULL, NULL, TO_CHAR);
-    act("", ch, NULL, NULL, TO_NOTVICT);
+    act("You attempt to glare about the room, but feel that others are unimpressed.", ch, NULL, NULL, TO_CHAR);
+    act("$n tries to look tough, but you feel unimpressed.", ch, NULL, NULL, TO_NOTVICT);
+    WAIT_STATE(ch, PULSE_VIOLENCE);
     return;
   }
 
-  act("", ch, NULL, NULL, TO_CHAR);
-  act("", ch, NULL, NULL, TO_NOTVICT);
+  act("You set your facial features into the fiercest glower you can muster.", ch, NULL, NULL, TO_CHAR);
+  act("$n glowers about the room, looking like $s is not to be trifled with.", ch, NULL, NULL, TO_NOTVICT);
 
+  af.where     = TO_AFFECTS;
+	af.type      = gsn_glower;
+	af.level     = ch->level + rbf_success;
+	af.location  = 0;
+	af.modifier  = 0;
+	af.duration  = rbf_duration*5;
+	af.bitvector = 0;
+	affect_to_char( ch, &af );
+
+  gain_exp(ch, (rbf_success + rbf_duration) * 5);
   return;
 }
 

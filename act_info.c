@@ -5078,7 +5078,7 @@ void do_addict (CHAR_DATA *ch, char *argument)
                 mins = mins % 60;
                 sprintf(buf, " %s {D[{w%5d{mh{w%2.2d{mm{D][{W%5.2f{w%%{D]{w %-15s{D - {y%s{x", buf2, hours, mins,bonus, vch->name, ctime(&vch->logon));
             } else {
-            sprintf(buf, " %s {D[{m%8dm{D][{W%4d{w%%{D]{w %-15s{D - {y%s{x", buf2, mins, 0, vch->name, ctime(&vch->logon));
+            sprintf(buf, " %s {D[{m%8dm{D][{W%5d{w%%{D]{w %-15s{D - {y%s{x", buf2, mins, 0, vch->name, ctime(&vch->logon));
             }
         add_buf(output, buf);
         }
@@ -5102,7 +5102,7 @@ void do_addict (CHAR_DATA *ch, char *argument)
             mins = mins % 60;
             sprintf(buf, " %s {D[{w%5d{mh{w%2.2d{mm{D][{W%5.2f{w%%{D] - {y%s{x",buf2, hours, mins, bonus, ctime(&ch->logon));
         } else {
-            sprintf(buf, " %s {D[{w%8d{mm{D][{w-----{D] - {y%s{x",buf2, mins, ctime(&ch->logon));
+            sprintf(buf, " %s {D[{w%8d{mm{D][{w------{D] - {y%s{x",buf2, mins, ctime(&ch->logon));
         }
     add_buf(output, buf);
 

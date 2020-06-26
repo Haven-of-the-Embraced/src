@@ -340,7 +340,7 @@ void do_glower(CHAR_DATA *ch, char *argument)
 	af.level     = ch->level + rbf_success;
 	af.location  = 0;
 	af.modifier  = 0;
-	af.duration  = rbf_duration*5;
+	af.duration  = rbf_duration*7;
 	af.bitvector = 0;
 	affect_to_char( ch, &af );
 

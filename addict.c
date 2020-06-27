@@ -92,7 +92,6 @@ void load_player_list()
     }
 
     fclose(fp);
-    unlink(PLAYERLIST_FILE);
 
 }
 

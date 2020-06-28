@@ -3056,6 +3056,7 @@ char *affect_bit_name( int vector )
     if ( vector & AFF_DARK_VISION   ) strcat( buf, " dark_vision"   );
     if ( vector & AFF_FANGS         ) strcat( buf, " fangs"         );
     if ( vector & AFF_SHIFT         ) strcat( buf, " shift"         );
+    if ( vector & AFF_XP_BOOST      ) strcat( buf, " xp_boost"      );
     return ( buf[0] != '\0' ) ? buf+1 : "none";
 }
 

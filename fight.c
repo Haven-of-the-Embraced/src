@@ -5579,11 +5579,16 @@ void do_assassinate( CHAR_DATA *ch, char *argument )
       if (IS_DEBUGGING(ch))
         cprintf(ch, "damdice:%d mod:%d damsucc:%d\n\r", damdice, modifier, damsuccess);
 
-      act( "$N screams as you place your dagger in their spine!", ch, NULL, victim, TO_CHAR );
-      act( "$n plants his dagger into your spine, your body spasms in pain.", ch, NULL, victim, TO_VICT );
-      act( "$n stabs $N in the spine!", ch, NULL, victim, TO_NOTVICT );
-      d10_damage(ch, victim, damsuccess, modifier, gsn_assassinate, DAM_PIERCE, DEFENSE_SOAK, TRUE, TRUE);
-      return;
+        if (d10_damage(ch, victim, damsuccess, modifier, gsn_assassinate, DAM_PIERCE, DEFENSE_SOAK, TRUE, TRUE))
+      {
+        act( "$N screams as you place your dagger in their spine!", ch, NULL, victim, TO_CHAR );
+        act( "$n plants his dagger into your spine, your body spasms in pain.", ch, NULL, victim, TO_VICT );
+        act( "$n stabs $N in the spine!", ch, NULL, victim, TO_NOTVICT );
+      } else {
+        check_improve(ch,gsn_assassinate,FALSE,4);
+        do_function(ch, &do_backstab, arg);
+     }
+     return;
     } else {
       check_improve(ch,gsn_assassinate,FALSE,4);
       do_function(ch, &do_backstab, arg);

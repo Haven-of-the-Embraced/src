@@ -671,8 +671,8 @@ int get_trust( CHAR_DATA *ch )
     if (ch->trust)
     return ch->trust;
 
-    if ( IS_NPC(ch) && ch->level >= LEVEL_HERO )
-    return LEVEL_HERO - 1;
+    if ( IS_NPC(ch) && ch->level > LEVEL_HERO )
+    return LEVEL_HERO;
     else
     return ch->level;
 }

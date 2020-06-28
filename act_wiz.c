@@ -1773,19 +1773,15 @@ void do_ostat( CHAR_DATA *ch, char *argument )
               send_to_char("lance\n\r",ch);
               break;
             default:
-              send_to_char("unknown\n\r",ch);
-              break;
-          }
-
-          if (obj->pIndexData->new_format)
-            sprintf(buf,"Damage is %dd%d (average %d)\n\r",
-            obj->value[1],obj->value[2],
-            (1 + obj->value[2]) * obj->value[1] / 2);
-          else
-            sprintf( buf, "Damage is %d to %d (average %d)\n\r",
-                obj->value[1], obj->value[2],
-                ( obj->value[1] + obj->value[2] ) / 2 );
-          send_to_char( buf, ch );
+            send_to_char("unknown\n\r",ch);
+            break;
+        }
+        sprintf(buf,"Stock Value Damage is %dd%d (average %d)\n\r",
+        obj->value[1],obj->value[2],
+        (1 + obj->value[2]) * obj->value[1] / 2);
+        send_to_char( buf, ch );
+        sprintf(buf, "D10 Damage Dice Bonus: {D({r+%d{D){x\n\r", obj->value[1] / 20);
+        send_to_char(buf, ch);
 
           sprintf(buf,"Damage noun is %s.\n\r",
           (obj->value[3] > 0 && obj->value[3] < MAX_DAMAGE_MESSAGE) ?

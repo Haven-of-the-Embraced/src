@@ -3802,15 +3802,8 @@ void do_lore( CHAR_DATA *ch, char *argument )
                     case(WEAPON_LANCE): send_to_char("lance.\n\r",ch);  break;
                     default     : send_to_char("unknown.\n\r",ch);  break;
                 }
-                if (obj->pIndexData->new_format)
-                    sprintf(buf,"Damage is %dd%d (average %d).\n\r",
-                    obj->value[1],obj->value[2],
-                    (1 + obj->value[2]) * obj->value[1] / 2);
-                else
-                    sprintf( buf, "Damage is %d to %d (average %d).\n\r",
-                    obj->value[1], obj->value[2],
-                    ( obj->value[1] + obj->value[2] ) / 2 );
-                send_to_char( buf, ch );
+                sprintf(buf, "D10 Damage Dice Bonus: {D({r+%d{D){x\n\r", obj->value[1] / 20);
+                send_to_char(buf, ch);
                 if (obj->value[4])  /* weapon flags */
                 {
                     sprintf(buf,"Weapons flags: %s\n\r",weapon_bit_name(obj->value[4]));

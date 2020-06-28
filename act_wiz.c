@@ -1676,148 +1676,148 @@ void do_ostat( CHAR_DATA *ch, char *argument )
         case ITEM_SCROLL:
         case ITEM_POTION:
         case ITEM_PILL:
-        sprintf( buf, "Level %d spells of:", obj->value[0] );
-        send_to_char( buf, ch );
+          sprintf( buf, "Level %d spells of:", obj->value[0] );
+          send_to_char( buf, ch );
 
-        if ( obj->value[1] >= 0 && obj->value[1] < MAX_SKILL )
-        {
+          if ( obj->value[1] >= 0 && obj->value[1] < MAX_SKILL )
+          {
             send_to_char( " '", ch );
             send_to_char( skill_table[obj->value[1]].name, ch );
             send_to_char( "'", ch );
-        }
+          }
 
-        if ( obj->value[2] >= 0 && obj->value[2] < MAX_SKILL )
-        {
+          if ( obj->value[2] >= 0 && obj->value[2] < MAX_SKILL )
+          {
             send_to_char( " '", ch );
             send_to_char( skill_table[obj->value[2]].name, ch );
             send_to_char( "'", ch );
-        }
+          }
 
-        if ( obj->value[3] >= 0 && obj->value[3] < MAX_SKILL )
-        {
+          if ( obj->value[3] >= 0 && obj->value[3] < MAX_SKILL )
+          {
             send_to_char( " '", ch );
             send_to_char( skill_table[obj->value[3]].name, ch );
             send_to_char( "'", ch );
-        }
+          }
 
-        if (obj->value[4] >= 0 && obj->value[4] < MAX_SKILL)
-        {
-        send_to_char(" '",ch);
-        send_to_char(skill_table[obj->value[4]].name,ch);
-        send_to_char("'",ch);
-        }
+          if (obj->value[4] >= 0 && obj->value[4] < MAX_SKILL)
+          {
+            send_to_char(" '",ch);
+            send_to_char(skill_table[obj->value[4]].name,ch);
+            send_to_char("'",ch);
+          }
 
-        send_to_char( ".\n\r", ch );
-    break;
+          send_to_char( ".\n\r", ch );
+          break;
 
-    case ITEM_TRAP:
-        sprintf(buf,"Trap has %s type damage for %d more charges\n\r",trap_bit_name(obj->value[0]), obj->value[3]);
-        send_to_char(buf,ch);
-    break;
+        case ITEM_TRAP:
+          sprintf(buf,"Trap has %s type damage for %d more charges\n\r",trap_bit_name(obj->value[0]), obj->value[3]);
+          send_to_char(buf,ch);
+          break;
 
         case ITEM_WAND:
         case ITEM_STAFF:
-        sprintf( buf, "Has %d(%d) charges of level %d",
+          sprintf( buf, "Has %d(%d) charges of level %d",
             obj->value[1], obj->value[2], obj->value[0] );
-        send_to_char( buf, ch );
+          send_to_char( buf, ch );
 
-        if ( obj->value[3] >= 0 && obj->value[3] < MAX_SKILL )
-        {
+          if ( obj->value[3] >= 0 && obj->value[3] < MAX_SKILL )
+          {
             send_to_char( " '", ch );
             send_to_char( skill_table[obj->value[3]].name, ch );
             send_to_char( "'", ch );
-        }
+          }
 
-        send_to_char( ".\n\r", ch );
-    break;
+          send_to_char( ".\n\r", ch );
+          break;
 
-    case ITEM_DRINK_CON:
-        sprintf(buf,"It holds %s-colored %s.\n\r",
-        liq_table[obj->value[2]].liq_color,
-        liq_table[obj->value[2]].liq_name);
-        send_to_char(buf,ch);
-        break;
-
+        case ITEM_DRINK_CON:
+          sprintf(buf,"It holds %s-colored %s.\n\r",
+          liq_table[obj->value[2]].liq_color,
+          liq_table[obj->value[2]].liq_name);
+          send_to_char(buf,ch);
+          break;
 
         case ITEM_WEAPON:
-        send_to_char("Weapon type is ",ch);
-        switch (obj->value[0])
-        {
+          send_to_char("Weapon type is ",ch);
+          switch (obj->value[0])
+          {
             case(WEAPON_EXOTIC):
-            send_to_char("exotic\n\r",ch);
-            break;
+              send_to_char("exotic\n\r",ch);
+              break;
             case(WEAPON_SWORD):
-            send_to_char("sword\n\r",ch);
-            break;
+              send_to_char("sword\n\r",ch);
+              break;
             case(WEAPON_DAGGER):
-            send_to_char("dagger\n\r",ch);
-            break;
+              send_to_char("dagger\n\r",ch);
+              break;
             case(WEAPON_SPEAR):
-            send_to_char("spear/staff\n\r",ch);
-            break;
+              send_to_char("spear/staff\n\r",ch);
+              break;
             case(WEAPON_MACE):
-            send_to_char("mace/club\n\r",ch);
-            break;
-        case(WEAPON_AXE):
-            send_to_char("axe\n\r",ch);
-            break;
+              send_to_char("mace/club\n\r",ch);
+              break;
+            case(WEAPON_AXE):
+              send_to_char("axe\n\r",ch);
+              break;
             case(WEAPON_FLAIL):
-            send_to_char("flail\n\r",ch);
-            break;
+              send_to_char("flail\n\r",ch);
+              break;
             case(WEAPON_WHIP):
-            send_to_char("whip\n\r",ch);
-            break;
+              send_to_char("whip\n\r",ch);
+              break;
             case(WEAPON_POLEARM):
-            send_to_char("polearm\n\r",ch);
-            break;
+              send_to_char("polearm\n\r",ch);
+              break;
             case(WEAPON_LANCE):
-            send_to_char("lance\n\r",ch);
-            break;
+              send_to_char("lance\n\r",ch);
+              break;
             default:
-            send_to_char("unknown\n\r",ch);
-            break;
-        }
-        if (obj->pIndexData->new_format)
+              send_to_char("unknown\n\r",ch);
+              break;
+          }
+
+          if (obj->pIndexData->new_format)
             sprintf(buf,"Damage is %dd%d (average %d)\n\r",
             obj->value[1],obj->value[2],
             (1 + obj->value[2]) * obj->value[1] / 2);
-        else
+          else
             sprintf( buf, "Damage is %d to %d (average %d)\n\r",
                 obj->value[1], obj->value[2],
                 ( obj->value[1] + obj->value[2] ) / 2 );
-        send_to_char( buf, ch );
+          send_to_char( buf, ch );
 
-        sprintf(buf,"Damage noun is %s.\n\r",
-        (obj->value[3] > 0 && obj->value[3] < MAX_DAMAGE_MESSAGE) ?
+          sprintf(buf,"Damage noun is %s.\n\r",
+          (obj->value[3] > 0 && obj->value[3] < MAX_DAMAGE_MESSAGE) ?
             attack_table[obj->value[3]].noun : "undefined");
-        send_to_char(buf,ch);
+          send_to_char(buf,ch);
 
-        if (obj->value[4])  /* weapon flags */
-        {
+          if (obj->value[4])  /* weapon flags */
+          {
             sprintf(buf,"Weapons flags: %s\n\r",
             weapon_bit_name(obj->value[4]));
             send_to_char(buf,ch);
-            }
-    break;
+          }
+          break;
 
         case ITEM_ARMOR:
-        sprintf( buf,
-        "Armor class is %d pierce, %d bash, %d slash, and %d vs. magic\n\r",
+          sprintf( buf,
+            "Armor class is %d pierce, %d bash, %d slash, and %d vs. magic\n\r",
             obj->value[0], obj->value[1], obj->value[2], obj->value[3] );
-        send_to_char( buf, ch );
-    break;
+          send_to_char( buf, ch );
+          break;
 
         case ITEM_CONTAINER:
-            sprintf(buf,"Capacity: %d#  Maximum weight: %d#  flags: %s\n\r",
-                obj->value[0], obj->value[3], cont_bit_name(obj->value[1]));
-            send_to_char(buf,ch);
-            if (obj->value[4] != 100)
-            {
-                sprintf(buf,"Weight multiplier: %d%%\n\r",
+          sprintf(buf,"Capacity: %d#  Maximum weight: %d#  flags: %s\n\r",
+            obj->value[0], obj->value[3], cont_bit_name(obj->value[1]));
+          send_to_char(buf,ch);
+          if (obj->value[4] != 100)
+          {
+            sprintf(buf,"Weight multiplier: %d%%\n\r",
             obj->value[4]);
-                send_to_char(buf,ch);
-            }
-        break;
+            send_to_char(buf,ch);
+          }
+          break;
     }
 
 

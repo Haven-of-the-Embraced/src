@@ -1647,14 +1647,14 @@ void wear_obj( CHAR_DATA *ch, OBJ_DATA *obj, bool fReplace )
     return;
     }
 
-    if ( CAN_WEAR( obj, ITEM_WEAR_BODY ) )
+    if ( CAN_WEAR( obj, ITEM_WEAR_TORSO ) )
     {
 
-    if ( !remove_obj( ch, WEAR_BODY, fReplace ) )
+    if ( !remove_obj( ch, WEAR_TORSO, fReplace ) )
         return;
     act( "$n wears $p on $s torso.",   ch, obj, NULL, TO_ROOM );
     act( "You wear $p on your torso.", ch, obj, NULL, TO_CHAR );
-    equip_char( ch, obj, WEAR_BODY );
+    equip_char( ch, obj, WEAR_TORSO );
     return;
     }
 
@@ -1713,14 +1713,14 @@ void wear_obj( CHAR_DATA *ch, OBJ_DATA *obj, bool fReplace )
     return;
     }
 
-    if ( CAN_WEAR( obj, ITEM_WEAR_ABOUT ) )
+    if ( CAN_WEAR( obj, ITEM_WEAR_BODY ) )
     {
 
-    if ( !remove_obj( ch, WEAR_ABOUT, fReplace ) )
+    if ( !remove_obj( ch, WEAR_BODY, fReplace ) )
         return;
     act( "$n wears $p about $s torso.",   ch, obj, NULL, TO_ROOM );
     act( "You wear $p about your torso.", ch, obj, NULL, TO_CHAR );
-    equip_char( ch, obj, WEAR_ABOUT );
+    equip_char( ch, obj, WEAR_BODY );
     return;
     }
 
@@ -1953,7 +1953,7 @@ if ( IS_AFFECTED(ch, AFF_SHIFT) || ch->changed == CHANGED_LUPUS || is_affected(c
         {
 /*          if (ch->changed == CHANGED_CRINOS)
                 {
-                    if(IS_SET(obj->wear_flags,  ITEM_WEAR_BODY) ||
+                    if(IS_SET(obj->wear_flags,  ITEM_WEAR_TORSO) ||
                         IS_SET(obj->wear_flags,  ITEM_HOLD) ||
                         IS_SET(obj->wear_flags,  ITEM_WIELD) ||
                         IS_SET(obj->wear_flags,  ITEM_LIGHT) ||

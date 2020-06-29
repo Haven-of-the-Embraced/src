@@ -411,12 +411,12 @@ void do_outfit ( CHAR_DATA *ch, char *argument )
         equip_char( ch, obj, WEAR_LIGHT );
     }
 
-    if ( ( obj = get_eq_char( ch, WEAR_BODY ) ) == NULL )
+    if ( ( obj = get_eq_char( ch, WEAR_TORSO ) ) == NULL )
     {
     obj = create_object( get_obj_index(OBJ_VNUM_SCHOOL_VEST), 0 );
     obj->cost = 0;
         obj_to_char( obj, ch );
-        equip_char( ch, obj, WEAR_BODY );
+        equip_char( ch, obj, WEAR_TORSO );
     }
 
     /* do the weapon thing */

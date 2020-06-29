@@ -1632,7 +1632,7 @@ int apply_ac( OBJ_DATA *obj, int iWear, int type )
 
     switch ( iWear )
     {
-    case WEAR_BODY: return 3 * obj->value[type];
+    case WEAR_TORSO: return 3 * obj->value[type];
     case WEAR_HEAD: return 2 * obj->value[type];
     case WEAR_LEGS: return 2 * obj->value[type];
     case WEAR_FEET: return     obj->value[type];
@@ -1641,7 +1641,7 @@ int apply_ac( OBJ_DATA *obj, int iWear, int type )
     case WEAR_SHIELD:   return     obj->value[type];
     case WEAR_NECK_1:   return     obj->value[type];
     case WEAR_NECK_2:   return     obj->value[type];
-    case WEAR_ABOUT:    return 2 * obj->value[type];
+    case WEAR_BODY:    return 2 * obj->value[type];
     case WEAR_WAIST:    return     obj->value[type];
     case WEAR_WRIST_L:  return     obj->value[type];
     case WEAR_WRIST_R:  return     obj->value[type];
@@ -3289,14 +3289,14 @@ char *wear_bit_name(int wear_flags)
     if (wear_flags & ITEM_TAKE      ) strcat(buf, " take");
     if (wear_flags & ITEM_WEAR_FINGER   ) strcat(buf, " finger");
     if (wear_flags & ITEM_WEAR_NECK ) strcat(buf, " neck");
-    if (wear_flags & ITEM_WEAR_BODY ) strcat(buf, " torso");
+    if (wear_flags & ITEM_WEAR_TORSO ) strcat(buf, " torso");
     if (wear_flags & ITEM_WEAR_HEAD ) strcat(buf, " head");
     if (wear_flags & ITEM_WEAR_LEGS ) strcat(buf, " legs");
     if (wear_flags & ITEM_WEAR_FEET ) strcat(buf, " feet");
     if (wear_flags & ITEM_WEAR_HANDS    ) strcat(buf, " hands");
     if (wear_flags & ITEM_WEAR_ARMS ) strcat(buf, " arms");
     if (wear_flags & ITEM_WEAR_SHIELD   ) strcat(buf, " shield");
-    if (wear_flags & ITEM_WEAR_ABOUT    ) strcat(buf, " body");
+    if (wear_flags & ITEM_WEAR_BODY    ) strcat(buf, " body");
     if (wear_flags & ITEM_WEAR_WAIST    ) strcat(buf, " waist");
     if (wear_flags & ITEM_WEAR_WRIST    ) strcat(buf, " wrist");
     if (wear_flags & ITEM_WIELD     ) strcat(buf, " wield");

@@ -7182,7 +7182,6 @@ bool copyover_handler()
     char buf [100], buf2[100], buf3[MSL];
     extern int port,control; /* db.c */
 
-    save_player_list();
     fp = fopen (COPYOVER_FILE, "w");
 
     if (!fp)
@@ -7450,8 +7449,6 @@ void copyover_recover ()
 
     }
    fclose (fp);
-
-   load_player_list();
 
     for (d = descriptor_list; d ; d = d->next)
     {

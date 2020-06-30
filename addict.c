@@ -115,8 +115,5 @@ double get_addict_mult(CHAR_DATA *ch)
     if (bonus > 15)
         bonus = 15;
 
-    if (FIRST(ch))
-        bonus += 1;
-
     return bonus;
 }

@@ -2510,18 +2510,6 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
     char_list   = ch;
     pcdata      = ch->pcdata;
 
-    if (!IS_IMMORTAL(ch))
-    {
-        if (!pc_first)
-            pc_first = pcdata;
-        else {
-            pcdata->pc_next = NULL;
-            pcdata->pc_prev = pc_last;
-            pc_last->pc_next = pcdata;
-            }
-        pc_last = pcdata;
-}
-
     d->connected    = CON_PLAYING;
     reset_char(ch);
     stop_fighting( ch, TRUE );

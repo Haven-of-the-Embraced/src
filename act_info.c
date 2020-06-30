@@ -2340,9 +2340,6 @@ void do_who( CHAR_DATA *ch, char *argument )
 
             }
 
-        if (!IS_IMMORTAL(wch) && ADDICTED(wch) && FIRST(wch))
-                sprintf(tags, "{w | {r<{w-{D[{yADDICTED{D]{w-{r>{w |");
-
         if (IS_SET(wch->comm, COMM_AFK) && wch->timer < 1000)
                 sprintf(tags, "{w |  {D**{GAFK{D** {r({w%3d{r) {w|", wch->timer);
         else if (IS_SET(wch->comm, COMM_AFK) && wch->timer >= 1000)
@@ -5055,17 +5052,6 @@ void do_addict (CHAR_DATA *ch, char *argument)
             mins = secs / 60;
             hours = mins / 60;
 
-            if (IS_IMMORTAL(vch))
-                sprintf(buf2, "{W!!!{x");
-            else if (vch->pcdata == pc_first)
-                sprintf(buf2, "{G^^^{x");
-            else if (vch->pcdata == pc_last)
-                sprintf(buf2, "{Rvvv{x");
-            else if (pc_first && pc_first->next == vch->pcdata)
-                sprintf(buf2, "{Y>>>{x");
-            else
-                sprintf(buf2, "{y---{x");
-
             if (hours)
             {
                 if (!IS_IMMORTAL(vch))
@@ -5076,9 +5062,9 @@ void do_addict (CHAR_DATA *ch, char *argument)
                 }
 
                 mins = mins % 60;
-                sprintf(buf, " %s {D[{w%5d{mh{w%2.2d{mm{D][{W%5.2f{w%%{D]{w %-15s{D - {y%s{x", buf2, hours, mins,bonus, vch->name, ctime(&vch->logon));
+                sprintf(buf, "{D[{w%5d{mh{w%2.2d{mm{D][{W%5.2f{w%%{D]{w %-15s{D - {y%s{x", hours, mins,bonus, vch->name, ctime(&vch->logon));
             } else {
-            sprintf(buf, " %s {D[{m%8dm{D][{W%5d{w%%{D]{w %-15s{D - {y%s{x", buf2, mins, 0, vch->name, ctime(&vch->logon));
+            sprintf(buf, "{D[{m%8dm{D][{W%5d{w%%{D]{w %-15s{D - {y%s{x", mins, 0, vch->name, ctime(&vch->logon));
             }
         add_buf(output, buf);
         }
@@ -5089,20 +5075,13 @@ void do_addict (CHAR_DATA *ch, char *argument)
         mins = secs / 60;
         hours = mins / 60;
 
-        if(ch->pcdata == pc_first)
-            sprintf(buf2, "{G^^^{x");
-        else if (ch->pcdata == pc_last)
-            sprintf(buf2, "{Rvvv{x");
-        else
-            sprintf(buf2, "{y---{x");
-
         if (hours)
         {
             bonus = get_addict_mult(ch);
             mins = mins % 60;
-            sprintf(buf, " %s {D[{w%5d{mh{w%2.2d{mm{D][{W%5.2f{w%%{D] - {y%s{x",buf2, hours, mins, bonus, ctime(&ch->logon));
+            sprintf(buf, "{D[{w%5d{mh{w%2.2d{mm{D][{W%5.2f{w%%{D] - {y%s{x", hours, mins, bonus, ctime(&ch->logon));
         } else {
-            sprintf(buf, " %s {D[{w%8d{mm{D][{w------{D] - {y%s{x",buf2, mins, ctime(&ch->logon));
+            sprintf(buf, "{D[{w%8d{mm{D][{w------{D] - {y%s{x", mins, ctime(&ch->logon));
         }
     add_buf(output, buf);
 

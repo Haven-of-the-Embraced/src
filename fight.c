@@ -955,7 +955,7 @@ void one_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt )
         else
         level = poison->level;
 
-        if (!saves_spell(level / 2,victim,DAM_POISON))
+        if (!IS_AFFECTED(victim, AFF_POISON) && !saves_spell(level / 2,victim,DAM_POISON))
         {
         send_to_char("You feel poison coursing through your veins.",
             victim);
@@ -1904,7 +1904,7 @@ if (DEBUG_MESSAGES || IS_DEBUGGING(ch)){
         else
         level = poison->level;
 
-        if (!saves_spell(level / 2,victim,DAM_POISON))
+        if (!IS_AFFECTED(victim, AFF_POISON) && !saves_spell(level / 2,victim,DAM_POISON))
         {
         send_to_char("You feel poison coursing through your veins.",
             victim);

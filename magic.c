@@ -3977,7 +3977,7 @@ void spell_poison( int sn, int level, CHAR_DATA *ch, void *vo, int target )
 
     victim = (CHAR_DATA *) vo;
 
-    if ( saves_spell( level, victim,DAM_POISON) )
+    if ( saves_spell( level, victim,DAM_POISON) || IS_AFFECTED(victim, AFF_POISON))
     {
     act("$n turns slightly green, but it passes.",victim,NULL,NULL,TO_ROOM);
     send_to_char("You feel momentarily ill, but it passes.\n\r",victim);

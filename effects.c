@@ -464,14 +464,13 @@ void poison_effect(void *vo,int level, int dam, int target)
         OBJ_DATA *obj, *obj_next;
 
 	/* chance of poisoning */
-        if (!saves_spell(level / 4 + dam / 20,victim,DAM_POISON))
+        if (!IS_AFFECTED(victim, AFF_POISON) && !saves_spell(level / 4 + dam / 20,victim,DAM_POISON))
         {
-	    AFFECT_DATA af;
+          AFFECT_DATA af;
 
             send_to_char("You feel poison coursing through your veins.\n\r",
                 victim);
             act("$n looks very ill.",victim,NULL,NULL,TO_ROOM);
-
             af.where     = TO_AFFECTS;
             af.type      = gsn_poison;
             af.level     = level;

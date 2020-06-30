@@ -291,7 +291,7 @@ void interpret( CHAR_DATA *ch, char *argument )
         return;
     }
 
-    if (!can_do_cmd(ch, pCmd))
+    if (!IS_NPC(ch) && !can_do_cmd(ch, pCmd))
         return;
 
     if ( pCmd->log == LOG_NEVER )

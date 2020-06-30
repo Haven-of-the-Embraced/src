@@ -156,7 +156,7 @@ bool can_do_cmd(CHAR_DATA *ch, CMD_DATA *pCmd)
             return TRUE;
         }
 /*Sengir moved losing veil here, can use certain commands while veiled*/
-    if ((IS_AFFECTED2(ch, AFF2_VEIL) || is_affected(ch, gsn_veil)) && ch->pcdata->discipline[OBFUSCATE] < 6 &&
+    if ((IS_AFFECTED2(ch, AFF2_VEIL) || is_affected(ch, gsn_veil)) && get_discipline(ch, OBFUSCATE) < 6 &&
             str_cmp (pCmd->name, "veil")        && str_cmp(pCmd->name, "beseech blissful") &&
             str_cmp( pCmd->name, "regenerate" )   &&
             str_cmp(pCmd->name, "ooc")          && str_cmp(pCmd->name, "inventory") &&

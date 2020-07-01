@@ -1780,18 +1780,61 @@ void rote_controlgauntlet(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DAT
   		return;
   	}
 
-    if(success < 0)
+    switch(gauntlet_diff)
+  	{
+  		default:
+  			success_needed = 6;
+  			break;
+  		case 0:
+  		case 1:
+  		case 2:
+  		case 3:
+  			success_needed = 1;
+  			break;
+  		case 4:
+  		case 5:
+  			success_needed = 2;
+  			break;
+  		case 6:
+  			success_needed = 3;
+  			break;
+  		case 7:
+  			success_needed = 4;
+  			break;
+  		case 8:
+  		case 9:
+  		case 10:
+  			success_needed = 5;
+  			break;
+  	}
+
+    if (success < 0)
     {
-        act( "You start to step into the Umbra... and suddenly feel a tugging sensation as you're caught within the Gauntlet!",  ch, NULL, NULL, TO_CHAR    );
-        act( "A vague look of terror crosses $n's features before they suddenly cease to exist in this reality.",  ch, NULL, NULL, TO_NOTVICT );
-        char_from_room( ch );
-        char_to_room( ch, location );
-        do_function(ch, &do_look, "auto" );
-        return;
+      act( "You begin to weave and pull to pierce the Gauntlet, but get trapped between realms instead!",  ch, NULL, NULL, TO_CHAR    );
+      act( "A vague look of terror crosses $n's features before they suddenly cease to exist in this reality.",  ch, NULL, NULL, TO_NOTVICT );
+
+      if (!IS_AFFECTED2(ch, AFF2_UMBRA))
+    		pass_gauntlet(ch, FALSE);
+
+    	af.where	=	TO_AFFECTS;
+    	af.type		=	gsn_trappedingauntlet;
+    	af.level	=	gauntlet_diff;
+    	af.duration	=	(success_needed) / 2 + 1;
+    	af.modifier	=	0;
+    	af.location	=	0;
+    	af.bitvector	=	0;
+    	affect_to_char( ch, &af );
+
+    	d10_damage(ch, ch, avatar_storm, ch->level + (ch->avatar * 5), gsn_magick, DAM_NEGATIVE, DEFENSE_NONE, TRUE, TRUE);
+    	return;
     }
 
     if (success < success_needed)
     {
+      act( "Tugging at the Gauntlet, you meet with resistance and energy feedback.",  ch, NULL, NULL, TO_CHAR    );
+      act( "$n weaves and wavers $s hands, staring into the distance with a blank look on $s face.",  ch, NULL, NULL, TO_NOTVICT );
+      WAIT_STATE(ch, (success_needed - success)*3);
+      d10_damage(ch, ch, avatar_storm, ch->level + (ch->avatar * 5), gsn_magick, DAM_NEGATIVE, DEFENSE_NONE, TRUE, TRUE);
       return;
     }
 

@@ -1759,7 +1759,7 @@ void rote_stepsideways(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *
 void rote_controlgauntlet(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
 {
     ROOM_INDEX_DATA *location;
-    OBJ_DATA *rift;
+    OBJ_DATA *rift, *rift2;
     AFFECT_DATA af;
     int gauntlet_diff = get_gauntlet(ch);
     int success_needed;
@@ -1838,7 +1838,26 @@ void rote_controlgauntlet(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DAT
       return;
     }
 
+    rift = create_object(get_obj_index(OBJ_VNUM_RIFT),0);
+    rift->timer = success;
+    rift->value[3] = victim->in_room->vnum;
+    obj_to_room(rift,ch->in_room);
+    rift2 = create_object(get_obj_index(OBJ_VNUM_RIFT),0);
+    SET_BIT(rift2->extra_flags, ITEM_UMBRA);
+    rift2->timer = success;
+    rift2->value[3] = victim->in_room->vnum;
+    obj_to_room(rift2, ch->in_room);
 
+    if (IS_AFFECTED2(ch, AFF2_UMBRA))
+    {
+      act("$n begins peeling away reality, revealing $p across the realms.",ch,rift2,NULL,TO_ROOM);
+      act("You peel away layers from reality, piercing the Gauntlet via $p.",ch,rift2,NULL,TO_CHAR);
+    }
+    else
+    {
+      act("$n begins peeling away reality, revealing $p across the realms.",ch,rift,NULL,TO_ROOM);
+      act("You peel away layers from reality, piercing the Gauntlet via $p.",ch,rift,NULL,TO_CHAR);
+    }
     return;
 }
 

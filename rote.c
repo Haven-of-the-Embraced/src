@@ -1758,21 +1758,29 @@ void rote_stepsideways(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *
 
 void rote_controlgauntlet(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
 {
-    CHAR_DATA *gch;
-    OBJ_DATA *obj_next;
     ROOM_INDEX_DATA *location;
+    OBJ_DATA *rift;
+    AFFECT_DATA af;
+    int gauntlet_diff = get_gauntlet(ch);
+    int success_needed;
+    int avatar_storm = godice(ch->paradox + ch->arete, 6);
+
+    if (avatar_storm < 0)
+  		avatar_storm = 0;
 
     if ( ( location = get_room_index( ROOM_VNUM_PARADOX ) ) == NULL )
     {
         send_to_char( "Error! Contact the imms at once!\n\r", ch );
         return;
     }
-    if ( ch->in_room == location )
-        return;
 
-    stop_fighting( ch, TRUE );
+    if (ch->position == POS_FIGHTING)
+  	{
+  		send_to_char("Your concentration was broken because you are fighting!\n\r", ch);
+  		return;
+  	}
 
-    if(success < get_gauntlet(ch))
+    if(success < 0)
     {
         act( "You start to step into the Umbra... and suddenly feel a tugging sensation as you're caught within the Gauntlet!",  ch, NULL, NULL, TO_CHAR    );
         act( "A vague look of terror crosses $n's features before they suddenly cease to exist in this reality.",  ch, NULL, NULL, TO_NOTVICT );
@@ -1781,43 +1789,13 @@ void rote_controlgauntlet(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DAT
         do_function(ch, &do_look, "auto" );
         return;
     }
-    if(IS_AFFECTED2(ch, AFF2_UMBRA))
-    {
-        for ( gch = ch->in_room->people; gch != NULL; gch = gch->next_in_room )
-        {
-            if ( !is_same_group( gch, ch ))
-                continue;
-            stop_fighting( gch, TRUE );
-            REMOVE_BIT(gch->affected2_by, AFF2_UMBRA);
-            act( "You step sideways, pass the Gauntlet and leave the Umbra.",  gch, NULL, NULL, TO_CHAR    );
-            act( "$n suddenly appears in this reality!",  gch, NULL, victim, TO_NOTVICT );
-            for ( obj = ch->carrying; obj != NULL; obj = obj_next )
-            {
-                obj_next = obj->next_content;
-                REMOVE_BIT(obj->extra_flags,ITEM_UMBRA);
-            }
 
-            do_function(gch, &do_look, "auto" );
-        }
-        return;
-    }
-    for ( gch = ch->in_room->people; gch != NULL; gch = gch->next_in_room )
+    if (success < success_needed)
     {
-        if ( !is_same_group( gch, ch ))
-            continue;
-        stop_fighting( gch, TRUE );
-        act( "You step sideways, pass through the Gauntlet and enter the Umbra.",  gch, NULL, NULL, TO_CHAR    );
-        act( "$n fades from existance in this reality.",  gch, NULL, NULL, TO_NOTVICT );
-        SET_BIT(gch->affected2_by, AFF2_UMBRA);
-        for ( obj = ch->carrying; obj != NULL; obj = obj_next )
-        {
-            obj_next = obj->next_content;
-            SET_BIT(obj->extra_flags,ITEM_UMBRA);
-        }
-
-        act( "$n fades into existance within the Penumbra.",  gch, NULL, NULL, TO_NOTVICT );
-        do_function(gch, &do_look, "auto" );
+      return;
     }
+
+
     return;
 }
 

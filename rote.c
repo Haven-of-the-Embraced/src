@@ -946,15 +946,19 @@ void rote_mergelocalities(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DAT
     }
 
     portal = create_object(get_obj_index(OBJ_VNUM_PORTAL),0);
-    portal->timer = -1;
+    portal->timer = success * 5;
     portal->value[3] = victim->in_room->vnum;
+    obj_to_room(portal, ch->in_room);
 
-    obj_to_room(portal,ch->in_room);
+    portal2 = create_object(get_obj_index(OBJ_VNUM_PORTAL),0);
+    portal2->timer = success * 5;
+    portal2->value[3] = ch->in_room->vnum;
+    obj_to_room(portal2,victim->in_room);
 
-    act("$n opens a hole in the Tellurian, creating $p to span two locations.",ch,portal,NULL,TO_ROOM);
+    act("$n opens a hole in reality, creating $p to span two locations.",ch,portal,NULL,TO_ROOM);
     act("You rip a hole directly through the Tellurian, widening $p to merge two locations.",ch,portal,NULL,TO_CHAR);
-    act("A gaping hole rips in reality, and $p now spans between two locations.",ch,portal2,victim,TO_ROOM);
-    act("A tear in reality appears in front of you, leaving $p to merge two locations.",ch,portal2,victim,TO_VICT);
+    act("A gaping hole rips in reality, and $p now spans between two locations.",victim,portal2,NULL,TO_ROOM);
+    act("A tear in reality appears in front of you, leaving $p to merge two locations.",victim,portal2,NULL,TO_CHAR);
     return;
 }
 void rote_senselife(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)

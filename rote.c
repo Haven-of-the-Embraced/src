@@ -945,6 +945,16 @@ void rote_mergelocalities(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DAT
         return;
     }
 
+    if (success < 0)
+    {
+      return;
+    }
+
+    if (success == 0)
+    {
+      return;
+    }
+
     portal = create_object(get_obj_index(OBJ_VNUM_PORTAL),0);
     portal->timer = success * 5;
     portal->value[3] = victim->in_room->vnum;
@@ -961,6 +971,7 @@ void rote_mergelocalities(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DAT
     act("A tear in reality appears in front of you, leaving $p to merge two locations.",victim,portal2,NULL,TO_CHAR);
     return;
 }
+
 void rote_senselife(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
 {
     AFFECT_DATA *paf;

@@ -7129,8 +7129,6 @@ void do_horrid(CHAR_DATA *ch, char *argument)
             ch->hit = ch->max_hit;
         act( "$n's body slowly shrinks and alters back into their 'normal' form.", ch, NULL, NULL, TO_NOTVICT );
         ch->dam_type = 17;
-        if ( !IS_AFFECTED(ch, AFF_FANGS))
-            do_function(ch, &do_fangs, "" );
         return;
     }
 
@@ -7327,8 +7325,6 @@ void do_chiropteranmarauder(CHAR_DATA *ch, char *argument)
 		act( "Your leathery wings merge with your body as you return to your normal form.", ch, NULL, NULL, TO_CHAR );
 		act( "$n's body slowly alters from a horrid half-bat form to something more humanoid.", ch, NULL, NULL, TO_NOTVICT );
 		ch->dam_type = 17;
-		if ( !IS_AFFECTED(ch, AFF_FANGS))
-			do_function(ch, &do_fangs, "" );
 		return;
 	}
 

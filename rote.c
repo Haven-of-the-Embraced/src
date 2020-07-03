@@ -932,16 +932,22 @@ void rote_mergelocalities(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DAT
 
     if(victim->in_room == NULL
     ||   IS_SET(victim->in_room->room_flags, ROOM_SAFE)
+    ||   IS_SET(ch->in_room->room_flags, ROOM_SAFE)
     ||   IS_SET(victim->in_room->room_flags, ROOM_PRIVATE)
-	||   IS_SET(victim->in_room->room_flags, ROOM_NOTELE)
-	||   IS_SET(victim->in_room->area->area_flags, AREA_NOTELE)
+    ||   IS_SET(ch->in_room->room_flags, ROOM_PRIVATE)
+	  ||   IS_SET(victim->in_room->room_flags, ROOM_NOTELE)
+	  ||   IS_SET(ch->in_room->room_flags, ROOM_NOTELE)
+	  ||   IS_SET(victim->in_room->area->area_flags, AREA_NOTELE)
+	  ||   IS_SET(ch->in_room->area->area_flags, AREA_NOTELE)
     ||   IS_SET(victim->in_room->room_flags, ROOM_SOLITARY)
+    ||   IS_SET(ch->in_room->room_flags, ROOM_SOLITARY)
     ||   IS_SET(victim->in_room->room_flags, ROOM_NO_RECALL)
     ||   IS_SET(ch->in_room->room_flags, ROOM_NO_RECALL)
     ||   IS_SET(victim->imm_flags,IMM_SUMMON)
+    ||   IS_SET(victim->act,PLR_ARENA)
     ||   IS_SET(ch->act,PLR_ARENA))
     {
-        send_to_char( "You understanding of reality does not extend to defying the base laws of the universal structure.\n\r", ch );
+        send_to_char( "Your understanding of reality does not extend to defying the base laws of the universal structure.\n\r", ch );
         return;
     }
 

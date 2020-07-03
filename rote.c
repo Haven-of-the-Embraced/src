@@ -1832,7 +1832,7 @@ void rote_controlgauntlet(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DAT
     if (success < success_needed)
     {
       act( "Tugging at the Gauntlet, you meet with resistance and energy feedback.",  ch, NULL, NULL, TO_CHAR    );
-      act( "$n weaves and wavers $s hands, staring into the distance with a blank look on $s face.",  ch, NULL, NULL, TO_NOTVICT );
+      act( "$n weaves and waves $s hands, staring into the distance with a blank look on $s face.",  ch, NULL, NULL, TO_NOTVICT );
       WAIT_STATE(ch, (success_needed - success)*3);
       d10_damage(ch, ch, avatar_storm, ch->level + (ch->avatar * 5), gsn_magick, DAM_NEGATIVE, DEFENSE_NONE, TRUE, TRUE);
       return;

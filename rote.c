@@ -922,6 +922,7 @@ void rote_conjoinlocalities(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_D
 void rote_mergelocalities(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
 {
     OBJ_DATA *portal;
+    OBJ_DATA *portal2;
 
     if(victim == ch)
     {
@@ -950,8 +951,10 @@ void rote_mergelocalities(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DAT
 
     obj_to_room(portal,ch->in_room);
 
-    act("$n opens a hole in the fabric of space and time, thus creating $p.",ch,portal,NULL,TO_ROOM);
-    act("You create a hole in space and time, pouring extra Quintessential energy into it, then forming it into $p.",ch,portal,NULL,TO_CHAR);
+    act("$n opens a hole in the Tellurian, creating $p to span two locations.",ch,portal,NULL,TO_ROOM);
+    act("You rip a hole directly through the Tellurian, widening $p to merge two locations.",ch,portal,NULL,TO_CHAR);
+    act("A gaping hole rips in reality, and $p now spans between two locations.",ch,portal2,victim,TO_ROOM);
+    act("A tear in reality appears in front of you, leaving $p to merge two locations.",ch,portal2,victim,TO_VICT);
     return;
 }
 void rote_senselife(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)

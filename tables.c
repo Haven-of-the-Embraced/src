@@ -1613,7 +1613,7 @@ const struct    rote_type   rote_table  [MAX_ROTE]  =
     {   "Correspondence Perceptions",rote_correspondenceperceptions,2, 0, 0, 0, 0, 0, 0, 0, 0, TARGET_ROOM, 2, 2, FALSE, FALSE},
     {   "Seven League Stride",rote_sevenleaguestride,3, 0, 0, 0, 0, 0, 0, 0, 0, TARGET_ROOM, 3, 3, TRUE, FALSE},
     {   "Conjoin Localities",   rote_conjoinlocalities,     4, 0, 0, 0, 0, 0, 0, 0, 0, TARGET_ROOM, 4, 4, TRUE, FALSE},
-    {   "Merge Localities",     rote_mergelocalities,       5, 0, 0, 0, 0, 0, 0, 0, 0, TARGET_ROOM, 50,7, TRUE, FALSE},
+    {   "Merge Localities",     rote_mergelocalities,       5, 0, 0, 0, 0, 0, 0, 0, 0, TARGET_ROOM, 25,7, TRUE, FALSE},
     {   "Sense Life",           rote_senselife,             0, 0, 0, 1, 0, 0, 0, 0, 0, TARGET_CHAR, 1, 1, FALSE, FALSE},
     {   "Little Good Death",    rote_littlegooddeath,       0, 0, 0, 2, 0, 0, 0, 0, 0, TARGET_CHAR, 2, 2, TRUE, FALSE},
     {   "Heal Self",            rote_healself,              0, 0, 0, 2, 0, 0, 0, 0, 0, TARGET_NONE, 3, 3, FALSE, FALSE},

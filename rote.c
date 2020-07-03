@@ -962,12 +962,12 @@ void rote_mergelocalities(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DAT
     }
 
     portal = create_object(get_obj_index(OBJ_VNUM_PORTAL),0);
-    portal->timer = success * 5;
+    portal->timer = success * 3;
     portal->value[3] = victim->in_room->vnum;
     obj_to_room(portal, ch->in_room);
 
     portal2 = create_object(get_obj_index(OBJ_VNUM_PORTAL),0);
-    portal2->timer = success * 5;
+    portal2->timer = success * 3;
     portal2->value[3] = ch->in_room->vnum;
     obj_to_room(portal2,victim->in_room);
 

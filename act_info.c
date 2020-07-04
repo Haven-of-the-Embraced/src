@@ -1219,6 +1219,7 @@ void do_look( CHAR_DATA *ch, char *argument )
     && !IS_AFFECTED(ch, AFF_DARK_VISION))
     {
     send_to_char( "It is {Dpitch black{x ... \n\r", ch );
+    show_list_to_char( ch->in_room->contents, ch, FALSE, FALSE );
     show_char_to_char( ch->in_room->people, ch );
     return;
     }

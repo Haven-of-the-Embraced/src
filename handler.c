@@ -2904,7 +2904,7 @@ bool can_see_obj( CHAR_DATA *ch, OBJ_DATA *obj )
     if ( obj->item_type == ITEM_LIGHT && obj->value[2] != 0 )
     return TRUE;
 
-    if ( IS_OBJ_STAT(obj,ITEM_GLOW))
+    if ( IS_OBJ_STAT(obj,ITEM_GLOW) || (IS_OBJ_STAT(obj, ITEM_ILLUMINATE)))
     return TRUE;
 
     if ( room_is_dark( ch->in_room ) && !IS_AFFECTED(ch, AFF_DARK_VISION) )

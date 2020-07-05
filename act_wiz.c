@@ -1713,10 +1713,16 @@ void do_ostat( CHAR_DATA *ch, char *argument )
           break;
 
         case ITEM_DRINK_CON:
-          sprintf(buf,"It holds %s-colored %s.\n\r",
+          send_to_char("{c-----------------------{YVALUES{c------------------------{x\n\r", ch);
+          sprintf(buf, "Liquid Max          : %d  \n\rLiquid Remaining    : %d  \n\rCurrent Liquid      : %s %s \n\rPoisoned            : %s  \n\r{R**Currently Unused**{x: %d\n\r",
+          obj->value[0],
+          obj->value[1],
           liq_table[obj->value[2]].liq_color,
-          liq_table[obj->value[2]].liq_name);
-          send_to_char(buf,ch);
+          liq_table[obj->value[2]].liq_name,
+          obj->value[3] != 0 ? "Yes" : "No",
+          obj->value[4]);
+          send_to_char(buf, ch);
+          send_to_char("{c-----------------------------------------------------{x\n\r", ch);
           break;
 
         case ITEM_WEAPON:

@@ -1701,18 +1701,15 @@ void do_ostat( CHAR_DATA *ch, char *argument )
 
         case ITEM_WAND:
         case ITEM_STAFF:
-          sprintf( buf, "Has %d(%d) charges of level %d",
-            obj->value[1], obj->value[2], obj->value[0] );
-          send_to_char( buf, ch );
-
-          if ( obj->value[3] >= 0 && obj->value[3] < MAX_SKILL )
-          {
-            send_to_char( " '", ch );
-            send_to_char( skill_table[obj->value[3]].name, ch );
-            send_to_char( "'", ch );
-          }
-
-          send_to_char( ".\n\r", ch );
+          send_to_char("{c-----------------------{YVALUES{c------------------------{x\n\r", ch);
+          sprintf(buf, "Spell Level         : %d  \n\rCurrent Charges     : %d  \n\rMaximum Charges     : %d  \n\rSpell               : %s  \n\r{R**Currently Unused**{x: %d\n\r",
+          obj->value[0],
+          obj->value[1],
+          obj->value[2],
+          obj->value[3] >= 0 && obj->value[3] < MAX_SKILL ? skill_table[obj->value[3]].name : "{RInvalid Spell #{x",
+          obj->value[4]);
+          send_to_char(buf, ch);
+          send_to_char("{c-----------------------------------------------------{x\n\r", ch);
           break;
 
         case ITEM_DRINK_CON:

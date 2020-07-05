@@ -1676,39 +1676,16 @@ void do_ostat( CHAR_DATA *ch, char *argument )
         case ITEM_SCROLL:
         case ITEM_POTION:
         case ITEM_PILL:
-          sprintf( buf, "Level %d spells of:", obj->value[0] );
-          send_to_char( buf, ch );
-
-          if ( obj->value[1] >= 0 && obj->value[1] < MAX_SKILL )
-          {
-            send_to_char( " '", ch );
-            send_to_char( skill_table[obj->value[1]].name, ch );
-            send_to_char( "'", ch );
-          }
-
-          if ( obj->value[2] >= 0 && obj->value[2] < MAX_SKILL )
-          {
-            send_to_char( " '", ch );
-            send_to_char( skill_table[obj->value[2]].name, ch );
-            send_to_char( "'", ch );
-          }
-
-          if ( obj->value[3] >= 0 && obj->value[3] < MAX_SKILL )
-          {
-            send_to_char( " '", ch );
-            send_to_char( skill_table[obj->value[3]].name, ch );
-            send_to_char( "'", ch );
-          }
-
-          if (obj->value[4] >= 0 && obj->value[4] < MAX_SKILL)
-          {
-            send_to_char(" '",ch);
-            send_to_char(skill_table[obj->value[4]].name,ch);
-            send_to_char("'",ch);
-          }
-
-          send_to_char( ".\n\r", ch );
-          break;
+          send_to_char("{c-----------------------{YVALUES{c------------------------{x\n\r", ch);
+          sprintf(buf, "Spell Level         : %d  \n\rFirst Spell         : %s  \n\rSecond Spell        : %s  \n\rThird Spell         : %s  \n\rFourth Spell        : %s\n\r",
+            obj->value[0],
+            obj->value[1] >= 0 && obj->value[1] < MAX_SKILL ? skill_table[obj->value[1]].name : "{RInvalid Spell #{x",
+            obj->value[2] >= 0 && obj->value[2] < MAX_SKILL ? skill_table[obj->value[2]].name : "{RInvalid Spell #{x",
+            obj->value[3] >= 0 && obj->value[3] < MAX_SKILL ? skill_table[obj->value[3]].name : "{RInvalid Spell #{x",
+            obj->value[4] >= 0 && obj->value[4] < MAX_SKILL ? skill_table[obj->value[4]].name : "{RInvalid Spell #{x");
+          send_to_char(buf, ch);
+          send_to_char("{c-----------------------------------------------------{x\n\r", ch);
+        break;
 
         case ITEM_TRAP:
           sprintf(buf,"Trap has %s type damage for %d more charges\n\r",trap_bit_name(obj->value[0]), obj->value[3]);

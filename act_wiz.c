@@ -1688,9 +1688,16 @@ void do_ostat( CHAR_DATA *ch, char *argument )
         break;
 
         case ITEM_TRAP:
-          sprintf(buf,"Trap has %s type damage for %d more charges\n\r",trap_bit_name(obj->value[0]), obj->value[3]);
-          send_to_char(buf,ch);
-          break;
+          send_to_char("{c-----------------------{YVALUES{c------------------------{x\n\r", ch);
+          sprintf(buf, "Damage Types        : %s  \n\rTriggers            : %s  \n\rTargets             : %s  \n\rCharges Remaining   : %d  \n\r{R**Currently Unused**{x: %d\n\r",
+            flag_string( trap_flags, obj->value[0]),
+            flag_string( trigger_flags, obj->value[1]),
+            flag_string( focus_flags, obj->value[2]),
+            obj->value[3],
+            obj->value[4]);
+          send_to_char(buf, ch);
+          send_to_char("{c-----------------------------------------------------{x\n\r", ch);
+        break;
 
         case ITEM_WAND:
         case ITEM_STAFF:

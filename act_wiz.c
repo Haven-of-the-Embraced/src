@@ -1743,10 +1743,15 @@ void do_ostat( CHAR_DATA *ch, char *argument )
           break;
 
         case ITEM_ARMOR:
-          sprintf( buf,
-            "Armor class is %d pierce, %d bash, %d slash, and %d vs. magic\n\r",
-            obj->value[0], obj->value[1], obj->value[2], obj->value[3] );
+          send_to_char("{c-----------------------{YVALUES{c------------------------{x\n\r", ch);
+          sprintf(buf, "Piercing Armor      : %d  \n\rBashing Armor       : %d  \n\rSlashing Armor      : %d  \n\rMagic Armor         : %d  \n\r{R**Currently Unused**{x: %d\n\r",
+          obj->value[0],
+          obj->value[1],
+          obj->value[2],
+          obj->value[3],
+          obj->value[4]);
           send_to_char( buf, ch );
+          send_to_char("{c-----------------------------------------------------{x\n\r", ch);
           break;
 
         case ITEM_CONTAINER:

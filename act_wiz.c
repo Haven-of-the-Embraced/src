@@ -1726,61 +1726,20 @@ void do_ostat( CHAR_DATA *ch, char *argument )
           break;
 
         case ITEM_WEAPON:
-          send_to_char("Weapon type is ",ch);
-          switch (obj->value[0])
-          {
-            case(WEAPON_EXOTIC):
-              send_to_char("exotic\n\r",ch);
-              break;
-            case(WEAPON_SWORD):
-              send_to_char("sword\n\r",ch);
-              break;
-            case(WEAPON_DAGGER):
-              send_to_char("dagger\n\r",ch);
-              break;
-            case(WEAPON_SPEAR):
-              send_to_char("spear/staff\n\r",ch);
-              break;
-            case(WEAPON_MACE):
-              send_to_char("mace/club\n\r",ch);
-              break;
-            case(WEAPON_AXE):
-              send_to_char("axe\n\r",ch);
-              break;
-            case(WEAPON_FLAIL):
-              send_to_char("flail\n\r",ch);
-              break;
-            case(WEAPON_WHIP):
-              send_to_char("whip\n\r",ch);
-              break;
-            case(WEAPON_POLEARM):
-              send_to_char("polearm\n\r",ch);
-              break;
-            case(WEAPON_LANCE):
-              send_to_char("lance\n\r",ch);
-              break;
-            default:
-            send_to_char("unknown\n\r",ch);
-            break;
-        }
-        sprintf(buf,"Stock Value Damage is %dd%d (average %d)\n\r",
-        obj->value[1],obj->value[2],
-        (1 + obj->value[2]) * obj->value[1] / 2);
-        send_to_char( buf, ch );
-        sprintf(buf, "D10 Damage Dice Bonus: {D({r+%d{D){x\n\r", obj->value[1] / 20);
-        send_to_char(buf, ch);
-
-          sprintf(buf,"Damage noun is %s.\n\r",
-          (obj->value[3] > 0 && obj->value[3] < MAX_DAMAGE_MESSAGE) ?
-            attack_table[obj->value[3]].noun : "undefined");
-          send_to_char(buf,ch);
-
-          if (obj->value[4])  /* weapon flags */
-          {
-            sprintf(buf,"Weapons flags: %s\n\r",
-            weapon_bit_name(obj->value[4]));
-            send_to_char(buf,ch);
-          }
+          send_to_char("{c-----------------------{YVALUES{c------------------------{x\n\r", ch);
+          sprintf(buf, "Weapon Type         : %s  \n\rD10 Damage Dice     : %d  \n\rStock Damage Dice   : %dd%d (Avg. %d) \n\rDamage Type         : %s  \n\rWeapon Flags        : %s\n\r",
+          obj->value[0] == WEAPON_EXOTIC ? "exotic" : obj->value[0] == WEAPON_SWORD ? "sword" :
+          obj->value[0] == WEAPON_DAGGER ? "dagger" : obj->value[0] == WEAPON_SPEAR ? "spear/staff" :
+          obj->value[0] == WEAPON_MACE ? "mace/club" : obj->value[0] == WEAPON_AXE ? "axe" :
+          obj->value[0] == WEAPON_FLAIL ? "flail" : obj->value[0] == WEAPON_WHIP ? "whip" :
+          obj->value[0] == WEAPON_POLEARM ? "polearm" : obj->value[0] == WEAPON_LANCE ? "lance" :
+          "unknown",
+          obj->value[1] / 20,
+          obj->value[1],obj->value[2], (1 + obj->value[2]) * obj->value[1] / 2,
+          obj->value[3] > 0 && obj->value[3] < MAX_DAMAGE_MESSAGE ? attack_table[obj->value[3]].noun : "undefined",
+          weapon_bit_name(obj->value[4]));
+          send_to_char(buf, ch);
+          send_to_char("{c-----------------------------------------------------{x\n\r", ch);
           break;
 
         case ITEM_ARMOR:

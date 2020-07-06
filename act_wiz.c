@@ -1755,16 +1755,6 @@ void do_ostat( CHAR_DATA *ch, char *argument )
           break;
 
         case ITEM_CONTAINER:
-          sprintf(buf,"Capacity: %d#  Maximum weight: %d#  flags: %s\n\r",
-            obj->value[0], obj->value[3], cont_bit_name(obj->value[1]));
-          send_to_char(buf,ch);
-          if (obj->value[4] != 100)
-          {
-            sprintf(buf,"Weight multiplier: %d%%\n\r",
-            obj->value[4]);
-            send_to_char(buf,ch);
-          }
-
           send_to_char("{c-----------------------{YVALUES{c------------------------{x\n\r", ch);
           sprintf(buf, "Hold Capacity       : %d Items  \n\rContainer Flags     : %s  \n\r{R**Currently Unused**{x: %d\n\rMaximum Weight      : %d#  \n\rWeight Multiplier   : %d%%  \n\r",
           obj->value[0],

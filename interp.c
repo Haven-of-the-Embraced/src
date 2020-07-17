@@ -111,7 +111,7 @@ bool can_do_cmd(CHAR_DATA *ch, CMD_DATA *pCmd)
     //While trapped in Gauntlet, only certain commands allowed
     if (is_affected(ch, gsn_trappedingauntlet) &&    	str_cmp(pCmd->name, "ooc") &&
     	str_cmp(pCmd->name, "inventory") && str_cmp(pCmd->name, "who") &&
-    	str_cmp(pCmd->name, "score") &&    	str_cmp(pCmd->name, "affect") &&
+    	str_cmp(pCmd->name, "score") &&    	str_cmp(pCmd->name, "affects") &&
     	str_cmp(pCmd->name, "look") &&    	str_cmp(pCmd->name, "where") &&
     	str_cmp(pCmd->name, "time") &&    	str_cmp(pCmd->name, "charsheet") &&
     	str_cmp(pCmd->name, "cs1") &&    	str_cmp(pCmd->name, "cs2") &&
@@ -133,7 +133,7 @@ bool can_do_cmd(CHAR_DATA *ch, CMD_DATA *pCmd)
         str_cmp(pCmd->name, "up")           && str_cmp(pCmd->name, "down") &&
         str_cmp(pCmd->name, "ooc")          && str_cmp(pCmd->name, "recall") &&
         str_cmp(pCmd->name, "inventory")    && str_cmp(pCmd->name, "who") &&
-        str_cmp(pCmd->name, "score")        && str_cmp(pCmd->name, "affect") &&
+        str_cmp(pCmd->name, "score")        && str_cmp(pCmd->name, "affects") &&
         str_cmp(pCmd->name, "look")         && str_cmp(pCmd->name, "glance") &&
         str_cmp(pCmd->name, "where")        && str_cmp(pCmd->name, "scan") &&
         str_cmp(pCmd->name, "eat")          && str_cmp(pCmd->name, "drink") &&

@@ -1827,6 +1827,25 @@ void do_ostat( CHAR_DATA *ch, char *argument )
               send_to_char( buf, ch );
           send_to_char("{c-----------------------------------------------------{x\n\r", ch);
               break;
+
+        case ITEM_TREASURE:
+        case ITEM_TRASH:
+        case ITEM_KEY:
+        case ITEM_FOOD:
+        case ITEM_MONEY:
+        case ITEM_BOAT:
+        case ITEM_FOUNTAIN:
+        case ITEM_PROTECT:
+        case ITEM_MAP:
+        case ITEM_WARPSTONE:
+        case ITEM_RESOURCE:
+        case ITEM_ROOMKEY:
+        case ITEM_GEM:
+        case ITEM_JEWELRY:
+        case ITEM_JUKEBOX:
+        case ITEM_TOOL:
+        case ITEM_CRAFTED:
+          break;
     }
 
     if ( obj->extra_descr != NULL || obj->pIndexData->extra_descr != NULL )

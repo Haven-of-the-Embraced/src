@@ -525,9 +525,13 @@ void reset_char(CHAR_DATA *ch)
      OBJ_DATA *obj;
      AFFECT_DATA *af;
      int i, oldbp, oldgen;
+     bool fanged = FALSE;
 
      if (IS_NPC(ch))
     return;
+
+    if (IS_AFFECTED(ch, AFF_FANGS))
+      fanged = TRUE;
 
     /* do a FULL reset */
     for (loc = 0; loc < MAX_WEAR; loc++)
@@ -676,6 +680,9 @@ void reset_char(CHAR_DATA *ch)
         ch->gen = oldgen;
         ch->max_pblood = oldbp;
     }
+
+    if (fanged == TRUE)
+      SET_BIT(ch->affected_by, AFF_FANGS);
 }
 
 

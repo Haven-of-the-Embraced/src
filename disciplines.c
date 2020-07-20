@@ -6412,6 +6412,13 @@ void do_theft(CHAR_DATA *ch, char *argument)
         send_to_char("You are not a vampire!\n\r" ,ch);
         return;
     }
+
+    if (ch->pcdata->discipline[THAUMATURGY] < 4)
+    {
+        send_to_char( "You are not skilled enough in the arts of Thaumaturgy!\n\r", ch );
+        return;
+    }
+
     if ( ( victim = get_char_room( ch, NULL, argument ) ) == NULL )
     {
         send_to_char( "Steal the lifeblood from whom?\n\r", ch );
@@ -6429,6 +6436,9 @@ void do_theft(CHAR_DATA *ch, char *argument)
         return;
     }
 
+    if (is_safe(ch, victim))
+      return;
+
     if(ch->race == race_lookup("dhampire"))
     {
         if (ch->cswillpower == 0)
@@ -6440,15 +6450,9 @@ void do_theft(CHAR_DATA *ch, char *argument)
         ch->cswillpower--;
     }
 
-    if(ch->race == race_lookup("ghoul"))
+    if(ch->race == race_lookup("ghoul") && (!IS_VAMP(victim)))
     {
-        send_to_char("You must only feed from your master!\n\r",ch);
-        return;
-    }
-
-    if (ch->pcdata->discipline[THAUMATURGY] < 4)
-    {
-        send_to_char( "You are not skilled enough in the arts of Thaumaturgy!\n\r", ch );
+        send_to_char("You can only gain sustenance from vampiric vitae!\n\r",ch);
         return;
     }
 
@@ -6464,15 +6468,13 @@ void do_theft(CHAR_DATA *ch, char *argument)
         return;
     }
 
-
-
     if (victim->position == POS_TORPOR)
     {
         send_to_char("Your target is already in {RT{ro{Drp{ro{Rr{x, finish the job!\n\r", ch);
         return;
     }
 
-    if (victim->race == race_lookup("centipede") || victim->race == race_lookup("construct") || victim->race == race_lookup("wraith") || victim->race == race_lookup("undead") || victim->race == race_lookup("spirit") || victim->race == race_lookup("bane") || victim->race == race_lookup("spider") )
+    if (!has_blood(victim))
     {
         send_to_char("Your target has no blood to drain!\n\r", ch);
         return;
@@ -6515,38 +6517,8 @@ void do_theft(CHAR_DATA *ch, char *argument)
     gain_exp(ch, dicesuccess);
 
     return;
-/*
-    if(victim->level > ch->level)
-    chance += 10;
-    if(!IS_NPC(victim) && victim->gen < ch->gen)
-    chance += 10;
-
-    if((number_range(1,100)+chance) < 75)
-    {
-        act( "You steal some of $N's sweet vitae!",  ch, NULL, victim, TO_CHAR );
-        act( "A stream of blood flies from $N to $n!",  ch, NULL, victim, TO_NOTVICT );
-        act( "You feel weakened as $n steals some of your blood!",  ch, NULL, victim, TO_VICT );
-        if(!IS_NPC(victim) && IS_VAMP(victim))
-        {
-            multi_hit( victim, ch, TYPE_UNDEFINED );
-            victim->pblood -= victim->level/4;
-        }
-        else
-            damage(ch,victim, (ch->level*ch->pcdata->discipline[THAUMATURGY]), gsn_theft, DAM_FIRE, TRUE);
-        ch->pblood += victim->level/5;
-    }
-    else
-    {
-        act( "You try to steal some of $N's vitae but fail loosing your own in the process!",  ch, NULL, victim, TO_CHAR );
-        act( "Blood spurts from $n as they fail to steal vitae from $N!",  ch, NULL, victim, TO_NOTVICT );
-        act( "Blood spurts from $n as they fail to steal your vitae!",  ch, NULL, victim, TO_VICT );
-        ch->pblood -= 20;
-    }
-    if(ch->pblood > ch->max_pblood) ch->pblood = ch->max_pblood;
-    return;
-
-*/
 }
+
 void do_cauldron(CHAR_DATA *ch, char *argument)
 {
    CHAR_DATA *victim;

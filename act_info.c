@@ -2420,9 +2420,9 @@ void do_who( CHAR_DATA *ch, char *argument )
     add_buf(output, plist);
       sprintf(buf2," {w+----------------+---------------------+--------------+----------------------+\n\r");
     add_buf(output,buf2);
-    sprintf( buf2, "{w |__{gPlayer{w_{gStats{w__|    {DPlaying Now{w:%2d   |__{cMUD{w__{cStats{w__|    {DUptime{w:%2d{Dh{w%2d{Dm     |{x\n\r", vMatch, uphours, upmins );
+    sprintf( buf2, "{w |__{gPlayer{w_{gStats{w__|    {DPlaying Now{w:%2d   |__{cMUD{w__{cStats{w__|    {DUptime{w:%3d{Dh{w%2d{Dm{W    |{x\n\r", vMatch, uphours, upmins, uphours > 99 ? "" : " " );
     add_buf(output,buf2);
-    sprintf(buf2, "{w |  {DMost Online{w:%2d    {DSince Reboot{w:%2d   |  {DGXp{w: %-6d      {DXP Mod{w: %d{Dx{w        |{x\n\r", max_players, most_players, global_xp, xpawardmult);
+    sprintf(buf2, "{w |  {DMost Online{w:%2d    {DSince Reboot{w:%2d   |  {DGXp{w: %-6d      {DXP Mod{w:  %d{Dx{w       |{x\n\r", max_players, most_players, global_xp, xpawardmult);
     add_buf(output, buf2);
     add_buf(output, "{w<==============================================================================>{x\n\r");
     if (doubleexp) {

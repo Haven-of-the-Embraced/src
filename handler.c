@@ -565,6 +565,25 @@ void reset_char(CHAR_DATA *ch)
                 }
             }
     }
+
+    /*Resetting hp/mana/move modifiers by non-obj affects*/
+    if ( ch->affected != NULL )
+    {
+      for ( af = ch->affected; af != NULL; af = af->next )
+      {
+        {
+          mod = af->modifier;
+          switch(af->location)
+          {
+            case APPLY_SEX:     ch->sex         -= mod;         break;
+            case APPLY_MANA:    ch->max_mana    -= mod;         break;
+            case APPLY_HIT:     ch->max_hit     -= mod;         break;
+            case APPLY_MOVE:    ch->max_move    -= mod;         break;
+          }
+        }
+      }
+    }
+
     /* now reset the permanent stats */
     ch->pcdata->perm_hit    = ch->max_hit;
     ch->pcdata->perm_mana   = ch->max_mana;

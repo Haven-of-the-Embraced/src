@@ -1696,6 +1696,21 @@ void do_score( CHAR_DATA *ch, char *argument )
 	BUFFER *output;
 	output = new_buf();
 	int hours = (ch->played + (int) (current_time - ch->logon) ) / 3600;
+  OBJ_DATA *wield;
+  int basedamage = get_attribute(ch, STRENGTH);
+
+  //Basic Damage Calculations for D10
+  wield = get_eq_char( ch, WEAR_WIELD );
+  if (wield)
+    basedamage += (wield->value[1])/20;
+  if (!wield && ((ch->race == race_lookup("garou") && is_affected(ch, gsn_claws)) || is_affected(ch, gsn_wingclaws)))
+    basedamage += 2;
+  if (!wield && is_affected(ch, gsn_gift_razorclaws))
+    basedamage += 1;
+  if (!IS_NPC(ch) && IS_VAMP(ch))
+    basedamage += ch->pcdata->discipline[POTENCE];
+  if (!IS_NPC(ch) && IS_MAGE(ch) && ch->sphere[SPHERE_MATTER] > 0)
+    basedamage += 1+ch->sphere[SPHERE_MATTER]/2;
 
 	add_buf(output, "\n\r{w                          __, _, ____,__  _,____,_,  _,{x\n\r");
 	add_buf(output, "{w                         (-|__| (-/_|(-\\  /(-|_,(-|\\ | {x\n\r");
@@ -1707,11 +1722,11 @@ void do_score( CHAR_DATA *ch, char *argument )
 	add_buf(output,buf);
 	sprintf(buf,"{D     | |{w  HP:   {g%5d{x/{g%5d{w    Agg Damage: {r%5d{w    Play Hours:   {D%5d {D | |{x\n\r",(int) ch->hit,(int) ch->max_hit,(int) ch->agg_dam,hours);
 	add_buf(output,buf);
-	sprintf(buf,"{D     |/ {w  Mana: {c%5d{x/{c%5d{w    Hitroll:    {c%5d{w    Hours IC:     {c%5d   {D\\|{x\n\r",(int) ch->mana, (int)ch->max_mana, GET_HITROLL(ch),IS_NPC(ch) ? 0 : ch->pcdata->IC_total/60);
+	sprintf(buf,"{D     |/ {w  Mana: {c%5d{x/{c%5d{w    Hitroll:    {c%5d{w    Hours IC:     {c%5d   {D\\|{x\n\r",(int) ch->mana, (int)ch->max_mana, GET_HITROLL(ch), IS_NPC(ch) ? 0 : ch->pcdata->IC_total/60);
 	add_buf(output,buf);
 	sprintf(buf,"{D     |  {w  Move: {y%5d{x/{y%5d{w    Damroll:    {c%5d{w    Freebies:     {c%5d    {D|{x\n\r", (int) ch->move,(int) ch->max_move, GET_DAMROLL(ch), ch->freebie);
 	add_buf(output,buf);
-	sprintf(buf,"{D     |{w    Armor:     {wPierce:{D%5d{w Bash:{D%5d{w  Slash:{D%5d{w Magic:{D%5d      {D|{x\n\r", GET_AC(ch,AC_PIERCE),GET_AC(ch,AC_BASH),GET_AC(ch,AC_SLASH),GET_AC(ch,AC_EXOTIC));
+	sprintf(buf,"{D     |{w    Armor:     {wPierce:{D%5d{w  Bash:{D%5d{w  Slash:{D%5d{w  Magic:{D%5d    {D|{x\n\r", GET_AC(ch,AC_PIERCE),GET_AC(ch,AC_BASH),GET_AC(ch,AC_SLASH),GET_AC(ch,AC_EXOTIC));
 	add_buf(output,buf);
 	add_buf(output,"{D     |    {wGold:      Silver:   In Bank:     Carried:     Weight:           {D|{x\n\r");
 	sprintf(buf,"{D     |    {y%-9d{x",ch->gold);
@@ -1734,6 +1749,12 @@ void do_score( CHAR_DATA *ch, char *argument )
 			add_buf(output,buf);
 		}
 
+    /*D10 Relevant Info*/
+		add_buf(output,"     {D|>--------------------------{WD10 Information{D--------------------------<|{x\n\r");
+    sprintf(buf,"{D     |{w    Armor Dice:     {wPierce:{D%3d{w   Bash:{D%3d{w   Slash:{D%3d{w   Other:{D%3d    {D|{x\n\r", get_armor_diff(ch, ch, DAM_PIERCE), get_armor_diff(ch, ch, DAM_BASH), get_armor_diff(ch, ch, DAM_SLASH), get_armor_diff(ch, ch, DAM_ENERGY));
+    add_buf(output, buf);
+	  sprintf(buf,"{D     |  {w  Attack Roll Dice: {c%2d                   {xAttack Damage Dice: {c%2d    {D|{x\n\r", GET_HITROLL(ch) / 200, basedamage);
+    add_buf(output, buf);
 		/* Show vamp info. I replaced the whole clan table check as I don't believe its needed anymore. I didn't use
 			IS_VAMP() cause I didn't want dhamps and ghouls to be shown this info. */
 		if(ch->race == race_lookup("vampire") || ch->race == race_lookup("methuselah"))
@@ -1844,7 +1865,7 @@ void do_score( CHAR_DATA *ch, char *argument )
 
 		/* IC time and such could be moved here if we need the space in the future. I'd recommend renaming Achievement to
 			Other Info and putting the PVP flag here along with any other crap we may need in the future.*/
-		add_buf(output,"     {D|>-----------------------------{WAchievement{D---------------------------<|{x\n\r");
+		add_buf(output,"     {D|>----------------------------{WAchievement{D----------------------------<|{x\n\r");
 
 		/* Here's the previous version that took two lines. I kinda like it better, but I prefer to have
 			the extra line if we can get it. So lets go with the below version instead */

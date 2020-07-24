@@ -419,24 +419,18 @@ void do_vigor(CHAR_DATA *ch, char *argument)
       return;
     }
 
+    act("Centering your mind, you recall your vigorous training of your body's natural abilities.",ch,NULL,ch,TO_CHAR);
+    act("$n takes a few deep breaths, and seems to begin moving fluidly and methodically.",ch,NULL,ch,TO_NOTVICT);
+
     af.where     = TO_AFFECTS;
     af.type      = gsn_vigor;
-    af.level     = ch->level;
-    af.duration  = ch->level/4;
-    af.modifier  = ch->max_move;
+    af.level     = vigorsuccess;
+    af.duration  = 5 * vigorsuccess + 10;
+    af.modifier  = (get_attribute(ch, STAMINA) * 100);
     af.location  = APPLY_MOVE;
     af.bitvector = AFF_HASTE;
     affect_to_char( ch, &af );
 
-    af.where     = TO_AFFECTS;
-    af.type      = gsn_vigor;
-    af.level     = ch->level;
-    af.duration  = ch->level/4;
-    af.modifier  = 10;
-    af.location  = APPLY_HITROLL;
-    affect_to_char( ch, &af );
-    send_to_char( "You feel your speed and stamina increasing!\n\r", ch );
-    act("$n huffs and puffs and suddenly seems to be moving much quicker.",ch,NULL,ch,TO_NOTVICT);
     check_improve(ch,gsn_vigor,TRUE,4);
     return;
 }

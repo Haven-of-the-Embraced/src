@@ -430,8 +430,22 @@ void do_vigor(CHAR_DATA *ch, char *argument)
     af.location  = APPLY_MOVE;
     af.bitvector = AFF_HASTE;
     affect_to_char( ch, &af );
-
     check_improve(ch,gsn_vigor,TRUE,4);
+
+    if (vigorsuccess > 3)
+    {
+      act("All of the knowledge flows from your memory to your movements, flawlessly mimicking your training.", ch, NULL, NULL, TO_CHAR);
+      af.where     = TO_AFFECTS;
+      af.type      = gsn_vigor;
+      af.level     = vigorsuccess;
+      af.duration  = 5 * vigorsuccess + 10;
+      af.modifier  = 20 * vigorsuccess;
+      af.location  = APPLY_HITROLL;
+      af.bitvector = 0;
+      affect_to_char( ch, &af );
+    }
+
+    gain_exp(ch, vigorsuccess * 4 + 5);
     return;
 }
 

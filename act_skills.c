@@ -354,6 +354,12 @@ void do_vigor(CHAR_DATA *ch, char *argument)
     int vigorsuccess = 0;
     int vigordiff = 7;
 
+    if (is_affected(ch, gsn_forget))
+    {
+      send_to_char("The details of your speed and stamina training seem foggy and distant.\n\r", ch);
+      return;
+    }
+
     if(ch->mana < ch->level / 2)
     {
         send_to_char("You do not have enough mana.\n\r", ch);
@@ -376,6 +382,13 @@ void do_vigor(CHAR_DATA *ch, char *argument)
     ch->cswillpower--;
 
     WAIT_STATE( ch, skill_table[gsn_vigor].beats );
+
+    if (is_affected(ch, gsn_berserk) || is_affected(ch, gsn_garou_frenzy) || is_affected(ch, gsn_vamp_frenzy)
+    || is_affected(ch, gsn_thaumaturgy_frenzy) || is_affected(ch, gsn_rage))
+      vigordiff++;
+
+    if (IS_AFFECTED(ch, AFF_CALM) || is_affected(ch, gsn_gift_resistpain))
+      vigordiff--;
 
     vigorsuccess = godice(get_attribute(ch, STAMINA) + ch->csabilities[CSABIL_ATHLETICS], vigordiff);
 

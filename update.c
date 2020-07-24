@@ -329,6 +329,10 @@ int move_gain( CHAR_DATA *ch )
     case POS_RESTING:  gain += (get_attribute(ch, STAMINA) * 5) / 2;  break;
     }
 
+    //New vigor move regen Bonus
+    if (is_affected(ch, gsn_vigor) && get_affect_level(ch, gsn_vigor) > 0)
+      gain += get_attribute(ch, STAMINA) * get_affect_level(ch, gsn_vigor) + 5;
+
     if ( ch->pcdata->condition[COND_HUNGER]   == 0 )
         gain /= 2;
 

@@ -377,6 +377,18 @@ void do_vigor(CHAR_DATA *ch, char *argument)
 
     WAIT_STATE( ch, skill_table[gsn_vigor].beats );
 
+    vigorsuccess = godice(get_attribute(ch, STAMINA) + ch->csabilities[CSABIL_ATHLETICS], vigordiff);
+
+    if (vigorsuccess < 0)
+    {
+      return;
+    }
+
+    if (vigorsuccess == 0)
+    {
+      return;
+    }
+
     if( get_skill(ch,gsn_vigor) < number_percent())
     {
         send_to_char( "You fail to enhanced your speed.\n\r", ch );

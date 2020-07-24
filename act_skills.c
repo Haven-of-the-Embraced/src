@@ -354,6 +354,12 @@ void do_vigor(CHAR_DATA *ch, char *argument)
     int vigorsuccess = 0;
     int vigordiff = 7;
 
+    if (is_affected(ch, gsn_vigor) && get_affect_level(ch, gsn_vigor) == 0)
+    {
+      send_to_char("Try as you might, you still cannot remember your training yet.\n\r", ch);
+      return;
+    }
+
     if (is_affected(ch, gsn_forget))
     {
       send_to_char("The details of your speed and stamina training seem foggy and distant.\n\r", ch);
@@ -390,23 +396,27 @@ void do_vigor(CHAR_DATA *ch, char *argument)
     if (IS_AFFECTED(ch, AFF_CALM) || is_affected(ch, gsn_gift_resistpain))
       vigordiff--;
 
-    vigorsuccess = godice(get_attribute(ch, STAMINA) + ch->csabilities[CSABIL_ATHLETICS], vigordiff);
+    vigorsuccess = godice(get_attribute(ch, STAMINA) + ch->csabilities[CSABIL_ATHLETICS], vigordiff) * (get_skill(ch, gsn_vigor) / 100);
 
     if (vigorsuccess < 0)
     {
+      act("You spend an extended amount of time trying to recall your speed and stamina training, but to no avail.", ch, NULL, NULL, TO_CHAR);
+      af.where     = TO_AFFECTS;
+      af.type      = gsn_vigor;
+      af.level     = 0;
+      af.duration  = 1;
+      af.modifier  = 0;
+      af.location  = 0;
+      af.bitvector = 0;
+      affect_to_char( ch, &af );
       return;
     }
 
     if (vigorsuccess == 0)
     {
+      act("You fail to recall the proper methods for maximizing your speed and stamina.", ch, NULL, NULL, TO_CHAR);
+      check_improve(ch,gsn_vigor,FALSE,4);
       return;
-    }
-
-    if( get_skill(ch,gsn_vigor) < number_percent())
-    {
-        send_to_char( "You fail to enhanced your speed.\n\r", ch );
-        return;
-        check_improve(ch,gsn_vigor,FALSE,4);
     }
 
     af.where     = TO_AFFECTS;

@@ -351,11 +351,19 @@ void do_glower(CHAR_DATA *ch, char *argument)
 void do_vigor(CHAR_DATA *ch, char *argument)
 {
     AFFECT_DATA af;
+    int vigorsuccess = 0;
+    int vigordiff = 7;
 
-    if(ch->mana < 50)
+    if(ch->mana < ch->level / 2)
     {
         send_to_char("You do not have enough mana.\n\r", ch);
         return;
+    }
+
+    if(ch->cswillpower < 1)
+    {
+      send_to_char("You do not have the willpower to focus on your speed and stamina training.\n\r", ch);
+      return;
     }
 
     if(IS_AFFECTED(ch,AFF_HASTE))
@@ -364,7 +372,11 @@ void do_vigor(CHAR_DATA *ch, char *argument)
         return;
     }
 
+    ch->mana -= ch->level / 2;
+    ch->cswillpower--;
+
     WAIT_STATE( ch, skill_table[gsn_vigor].beats );
+
     if( get_skill(ch,gsn_vigor) < number_percent())
     {
         send_to_char( "You fail to enhanced your speed.\n\r", ch );
@@ -372,7 +384,6 @@ void do_vigor(CHAR_DATA *ch, char *argument)
         check_improve(ch,gsn_vigor,FALSE,4);
     }
 
-    ch->mana -= 50;
     af.where     = TO_AFFECTS;
     af.type      = gsn_vigor;
     af.level     = ch->level;

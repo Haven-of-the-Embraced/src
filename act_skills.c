@@ -352,7 +352,7 @@ void do_vigor(CHAR_DATA *ch, char *argument)
 {
     AFFECT_DATA af;
     int vigorsuccess = 0;
-    int vigordiff = 7;
+    int vigordiff = 6;
 
     if (is_affected(ch, gsn_vigor) && get_affect_level(ch, gsn_vigor) == 0)
     {
@@ -396,7 +396,7 @@ void do_vigor(CHAR_DATA *ch, char *argument)
     if (IS_AFFECTED(ch, AFF_CALM) || is_affected(ch, gsn_gift_resistpain))
       vigordiff--;
 
-    vigorsuccess = godice(get_attribute(ch, STAMINA) + ch->csabilities[CSABIL_ATHLETICS], vigordiff) * (get_skill(ch, gsn_vigor) / 100);
+    vigorsuccess = godice(get_attribute(ch, STAMINA) + ch->csabilities[CSABIL_ATHLETICS], vigordiff);
 
     if (vigorsuccess < 0)
     {
@@ -415,7 +415,7 @@ void do_vigor(CHAR_DATA *ch, char *argument)
     if (vigorsuccess == 0)
     {
       act("You fail to recall the proper methods for maximizing your speed and stamina.", ch, NULL, NULL, TO_CHAR);
-      check_improve(ch,gsn_vigor,FALSE,4);
+      check_improve(ch,gsn_vigor,FALSE,6);
       return;
     }
 
@@ -430,7 +430,7 @@ void do_vigor(CHAR_DATA *ch, char *argument)
     af.location  = APPLY_MOVE;
     af.bitvector = AFF_HASTE;
     affect_to_char( ch, &af );
-    check_improve(ch,gsn_vigor,TRUE,4);
+    check_improve(ch,gsn_vigor,TRUE,6);
 
     if (vigorsuccess > 3)
     {

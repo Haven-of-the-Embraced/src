@@ -1853,7 +1853,30 @@ void spell_gift_strengthofwill( int sn, int level, CHAR_DATA *ch, void *vo, int 
 //must touch the person
 //grants one extra die on all mental rolls for the next scene, also adds one to the diff of rage rolls (no work on dead creatures)
 //
-void spell_gift_breathofthewyld( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_breathofthewyld( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  CHAR_DATA *victim = (CHAR_DATA *) vo;
+  AFFECT_DATA *af;
+  int success, difficulty = 6;
+
+    if( IS_SET(victim->in_room->sector_type, SECT_INSIDE) || IS_SET(victim->in_room->sector_type, SECT_CITY)
+    || IS_SET(victim->in_room->sector_type, SECT_UNUSED) )
+    {
+      send_to_char("Gaia's influence is not strong enough here to impart her vitality.\n\r", ch);
+      return;
+    }
+
+    if (victim->race == race_lookup("vampire") || victim->race == race_lookup("methuselah")
+    || victim->race == race_lookup("spirit") || victim->race == race_lookup("bane")
+    || victim->race == race_lookup("construct"))
+    {
+      send_to_char("That target is not a naturally living being, and Gaia will not lend her aid.\n\r", ch);
+      return;
+    }
+
+    if (victim->race == race_lookup("garou") || victim->race == race_lookup("fera") )
+      difficulty--;
+
     return;
 }
 //“Man’s Skin”

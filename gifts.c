@@ -1877,6 +1877,22 @@ void spell_gift_breathofthewyld( int sn, int level, CHAR_DATA *ch, void *vo, int
     if (victim->race == race_lookup("garou") || victim->race == race_lookup("fera") )
       difficulty--;
 
+    success = godice(ch->pcdata->gnosis[PERM], difficulty);
+
+    if (success < 0)
+    {
+      act("", ch, NULL, victim, TO_CHAR);
+      act("", ch, NULL, victim, TO_VICT);
+      act("", ch, NULL, victim, TO_NOTVICT);
+      return;
+    }
+
+    if (success ==0)
+    {
+      act("You fail to commune with the spirits of nature at this time.", ch, NULL, victim, TO_CHAR);
+      return;
+    }
+
     return;
 }
 //“Man’s Skin”

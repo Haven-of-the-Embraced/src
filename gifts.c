@@ -1856,7 +1856,7 @@ void spell_gift_strengthofwill( int sn, int level, CHAR_DATA *ch, void *vo, int 
 void spell_gift_breathofthewyld( int sn, int level, CHAR_DATA *ch, void *vo, int target)
 {
   CHAR_DATA *victim = (CHAR_DATA *) vo;
-  AFFECT_DATA *af;
+  AFFECT_DATA af;
   int success, difficulty = 6;
 
     if( IS_SET(victim->in_room->sector_type, SECT_INSIDE) || IS_SET(victim->in_room->sector_type, SECT_CITY)
@@ -1887,11 +1887,33 @@ void spell_gift_breathofthewyld( int sn, int level, CHAR_DATA *ch, void *vo, int
       return;
     }
 
-    if (success ==0)
+    if (success == 0)
     {
       act("You fail to commune with the spirits of nature at this time.", ch, NULL, victim, TO_CHAR);
       return;
     }
+
+    if (ch == victim)
+      act("You feel a rush of energy and clarity of thought from Gaia's blessing.", ch, NULL, victim, TO_CHAR);
+    else
+      act("You touch $N, imparting a rush of energy from Gaia.", ch, NULL, victim, TO_CHAR);
+    act("$n places a hand upon your shoulder, and you suddenly feel a clarity of thought.", ch, NULL, victim, TO_VICT);
+    act("$n places a hand upon $N's shoulder.", ch, NULL, victim, TO_NOTVICT);
+
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_gift_breathofthewyld;
+    af.level     = ch->pcdata->rank;
+    af.duration  = (success * 5) + (ch->pcdata->rank * 2);
+    af.modifier  = 1;
+    af.location  = APPLY_CS_PER;
+    af.bitvector = 0;
+    affect_to_char( ch, &af );
+
+    af.location  = APPLY_CS_INT;
+    affect_to_char( ch, &af );
+
+    af.location  = APPLY_CS_WIT;
+    affect_to_char( ch, &af );
 
     return;
 }

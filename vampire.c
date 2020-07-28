@@ -323,8 +323,7 @@ void do_feed(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if( ( ch->race == race_lookup("human") || ch->race == race_lookup("mage") ) &&
-        clan_table[ch->clan].clan_type != TYPE_TRADITION && clan_table[ch->clan].clan_type != TYPE_TRIBE)
+    if(ch->race == race_lookup("human") && clan_table[ch->clan].clan_type != TYPE_TRADITION && clan_table[ch->clan].clan_type != TYPE_TRIBE)
     {
         if(str_cmp(argument,"ghoul"))
         {

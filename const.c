@@ -626,6 +626,7 @@ const   struct  race_type   race_table  []      =
     }
 };
 
+/*  **IMPORTANT**  pc_race_table[] order MUST match beginning of race_table   */
 const   struct  pc_race_type    pc_race_table   []  =
 {
     { "null race", "", 0, { 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100 },
@@ -668,13 +669,14 @@ const   struct  pc_race_type    pc_race_table   []  =
     { "" },
     { 13, 13, 13, 13, 13 }, { 22, 22, 22, 22, 22 }, SIZE_MEDIUM
     },
+    /*Gilean removed old mage race from PC
     {
     "mage",    "Mage",    0,  { 125, 125, 125, 125, 125, 125, 125, 125, 125, 125, 125, 125, 125 },
     { "" },
     { 13, 13, 13, 13, 13 }, { 20, 20, 20, 20, 20 }, SIZE_MEDIUM
     },
 
-/*
+
       {
     "elf",      " Elf ",    -1, { 100, 125,  100, 120, 100, 100, 100, 100, 100, 100, 100, 100, 100 },
     { "sneak", "hide" },

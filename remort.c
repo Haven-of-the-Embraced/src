@@ -77,7 +77,7 @@ void do_remort(CHAR_DATA *ch, char *argument)
     if(!str_cmp(arg, "garou"))
     {
 
-        if(ch->race == race_lookup("mage") || clan_table[ch->clan].clan_type == TYPE_TRADITION)
+        if(clan_table[ch->clan].clan_type == TYPE_TRADITION)
         {
             send_to_char("If you were to do that, you'd lose your control over reality!\n\r",ch);
             return;

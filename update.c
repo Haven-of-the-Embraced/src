@@ -1003,7 +1003,7 @@ if (ch->qpoints > MAX_QPOINTS)
     }
 
 /*  New Mage Code */
-    if(ch->race == race_lookup("mage") || clan_table[ch->clan].clan_type == TYPE_TRADITION)
+    if(clan_table[ch->clan].clan_type == TYPE_TRADITION)
     {
         if (ch->paradox > 0)
             if (number_range(1, 3) == 1)

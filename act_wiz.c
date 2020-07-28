@@ -8242,7 +8242,7 @@ void do_arename( CHAR_DATA *ch, char *argument )
     ch->mana        = ch->max_mana;
     ch->move        = ch->max_move;
     ch->pblood      = ch->max_pblood;
-    if(ch->race == race_lookup("mage") || clan_table[ch->clan].clan_type == TYPE_TRADITION)
+    if(clan_table[ch->clan].clan_type == TYPE_TRADITION)
     {
         ch->quintessence = ch->max_quintessence;
         if(ch->paradox)

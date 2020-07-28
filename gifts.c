@@ -1881,9 +1881,8 @@ void spell_gift_breathofthewyld( int sn, int level, CHAR_DATA *ch, void *vo, int
 
     if (success < 0)
     {
-      act("", ch, NULL, victim, TO_CHAR);
-      act("", ch, NULL, victim, TO_VICT);
-      act("", ch, NULL, victim, TO_NOTVICT);
+      act("You try to impart some of Gaia's energy, but cannot seem to get in touch with your spiritual side.", ch, NULL, victim, TO_CHAR);
+      WAIT_STATE(ch, PULSE_VIOLENCE * 6);
       return;
     }
 

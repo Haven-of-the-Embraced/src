@@ -407,7 +407,7 @@ const   struct  race_type   race_table  []      =
     },
 
     {
-      "mage",        TRUE,
+      "mage",        FALSE,
       0,      0,      0,
       IMM_SUNLIGHT,       RES_POISON|RES_NEGATIVE,      VULN_MENTAL,
       A|H|M|V,    A|B|C|D|E|F|G|H|I|J|K

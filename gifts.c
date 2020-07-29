@@ -1859,8 +1859,8 @@ void spell_gift_breathofthewyld( int sn, int level, CHAR_DATA *ch, void *vo, int
   AFFECT_DATA af;
   int success, difficulty = 6;
 
-    if( IS_SET(victim->in_room->sector_type, SECT_INSIDE) || IS_SET(victim->in_room->sector_type, SECT_CITY)
-    || IS_SET(victim->in_room->sector_type, SECT_UNUSED) )
+    if( ch->in_room->sector_type == SECT_INSIDE || ch->in_room->sector_type == SECT_CITY
+    || ch->in_room->sector_type == SECT_UNUSED )
     {
       send_to_char("Gaia's influence is not strong enough here to impart her vitality.\n\r", ch);
       return;

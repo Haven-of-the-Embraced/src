@@ -2628,8 +2628,8 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
     &gsn_gift_strengthofwill,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
      {   "breath of the wyld", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_breathofthewyld,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_breathofthewyld,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_breathofthewyld,  TAR_CHAR_DEFENSIVE, POS_STANDING,
+    &gsn_gift_breathofthewyld,          SLOT( 0),        0,     12, "",             "Gaia's rush of energy and clarity of thought fades from your mind.",        "" },
 
      {   "mans skin", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
      { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_mansskin,  TAR_IGNORE, POS_STANDING,

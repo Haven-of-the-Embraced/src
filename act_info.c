@@ -1697,10 +1697,17 @@ void do_score( CHAR_DATA *ch, char *argument )
 	output = new_buf();
 	int hours = (ch->played + (int) (current_time - ch->logon) ) / 3600;
   OBJ_DATA *wield;
-  int basedamage = get_attribute(ch, STRENGTH);
-
-  //Basic Damage Calculations for D10
   wield = get_eq_char( ch, WEAR_WIELD );
+  int basedamage = get_attribute(ch, STRENGTH);
+  int baseattack = get_attribute(ch, DEXTERITY);
+
+  //Basic Attack Roll Calculations for D10
+  if (wield)
+    baseattack += ch->csabilities[CSABIL_MELEE];
+  else
+    baseattack += ch->csabilities[CSABIL_BRAWL];
+  baseattack += GET_HITROLL(ch) / 200;
+  //Basic Damage Calculations for D10
   if (wield)
     basedamage += (wield->value[1])/20;
   if (!wield && ((ch->race == race_lookup("garou") && is_affected(ch, gsn_claws)) || is_affected(ch, gsn_wingclaws)))
@@ -1753,7 +1760,7 @@ void do_score( CHAR_DATA *ch, char *argument )
 		add_buf(output,"     {D|>--------------------------{WD10 Information{D--------------------------<|{x\n\r");
     sprintf(buf,"{D     |{w    Armor Dice:     {wPierce:{D%3d{w   Bash:{D%3d{w   Slash:{D%3d{w   Other:{D%3d    {D|{x\n\r", get_armor_diff(ch, ch, DAM_PIERCE), get_armor_diff(ch, ch, DAM_BASH), get_armor_diff(ch, ch, DAM_SLASH), get_armor_diff(ch, ch, DAM_ENERGY));
     add_buf(output, buf);
-	  sprintf(buf,"{D     |  {w  Attack Roll Dice: {c%2d                   {xAttack Damage Dice: {c%2d    {D|{x\n\r", GET_HITROLL(ch) / 200, basedamage);
+	  sprintf(buf,"{D     |  {w  Attack Roll Dice: {c%2d                   {xAttack Damage Dice: {c%2d    {D|{x\n\r", baseattack, basedamage);
     add_buf(output, buf);
 		/* Show vamp info. I replaced the whole clan table check as I don't believe its needed anymore. I didn't use
 			IS_VAMP() cause I didn't want dhamps and ghouls to be shown this info. */

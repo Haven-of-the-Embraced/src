@@ -1408,6 +1408,14 @@ void do_telepathy( CHAR_DATA *ch, char *argument )
         return;
     }
 
+    if (IS_SET(victim->act, ACT_QUESTMOB))
+    {
+      send_to_char("Quit trying to cheat the system!  You should be ashamed of yourself.\n\r", ch);
+      sprintf(buf,"%s thought they were sneaky and tried to use Telepathy on %s.  I stopped them.",ch->name, victim->name);
+      wiznet(buf,ch,NULL,WIZ_FLAGS,0,0);
+      return;
+    }
+
     if (!can_see_room(ch, victim->in_room))
     {
         send_to_char("Their presence seems to be clouded by something...\n\r", ch);
@@ -1473,6 +1481,7 @@ void do_telepathy( CHAR_DATA *ch, char *argument )
 void do_dash(CHAR_DATA *ch, char *argument)
 {
     CHAR_DATA *victim;
+    char buf[MSL];
 
     if (IS_NPC(ch)) return;
 
@@ -1514,6 +1523,14 @@ void do_dash(CHAR_DATA *ch, char *argument)
     {
         send_to_char( "They aren't here.\n\r", ch );
         return;
+    }
+
+    if (IS_SET(victim->act, ACT_QUESTMOB))
+    {
+      send_to_char("Quit trying to cheat the system!  You should be ashamed of yourself.\n\r", ch);
+      sprintf(buf,"%s thought they were sneaky and tried to Dash to %s.  I stopped them.",ch->name, victim->name);
+      wiznet(buf,ch,NULL,WIZ_FLAGS,0,0);
+      return;
     }
 
     if (IS_NPC(victim) && victim->pIndexData->pShop != NULL)
@@ -4407,6 +4424,15 @@ void do_summon(CHAR_DATA *ch, char *argument)
         send_to_char("Send a mental summons to whom?\n\r",ch);
         return;
     }
+
+    if (IS_SET(victim->act, ACT_QUESTMOB))
+    {
+      send_to_char("Quit trying to cheat the system!  You should be ashamed of yourself.\n\r", ch);
+      sprintf(buf,"%s thought they were sneaky and tried to Summon %s.  I stopped them.",ch->name, victim->name);
+      wiznet(buf,ch,NULL,WIZ_FLAGS,0,0);
+      return;
+    }
+
     if (IS_NPC(victim) && victim->pIndexData->pShop != NULL)
     {
         send_to_char("You fear that it may hinder your future purchases.\n\r",ch);

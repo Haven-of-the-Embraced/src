@@ -1874,6 +1874,12 @@ void spell_gift_breathofthewyld( int sn, int level, CHAR_DATA *ch, void *vo, int
       return;
     }
 
+    if (is_affected(victim, gsn_gift_breathofthewyld) || is_affected(victim, gsn_empower))
+    {
+        send_to_char("Your target's mind is already heightened beyond normal capacity.\n\r", ch);
+        return;
+    }
+
     if (victim->race == race_lookup("garou") || victim->race == race_lookup("fera") )
       difficulty--;
 
@@ -1906,13 +1912,13 @@ void spell_gift_breathofthewyld( int sn, int level, CHAR_DATA *ch, void *vo, int
     af.modifier  = 1;
     af.location  = APPLY_CS_PER;
     af.bitvector = 0;
-    affect_to_char( ch, &af );
+    affect_to_char( victim, &af );
 
     af.location  = APPLY_CS_INT;
-    affect_to_char( ch, &af );
+    affect_to_char( victim, &af );
 
     af.location  = APPLY_CS_WIT;
-    affect_to_char( ch, &af );
+    affect_to_char( victim, &af );
 
     return;
 }

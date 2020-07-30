@@ -4396,6 +4396,8 @@ void do_entrancement(CHAR_DATA *ch, char *argument)
 void do_summon(CHAR_DATA *ch, char *argument)
 {
    CHAR_DATA *victim;
+   char buf[MSL];
+   
     if(!IS_VAMP(ch))
     {
         send_to_char("You are not a vampire!\n\r" ,ch);

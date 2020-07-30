@@ -2785,6 +2785,7 @@ void do_where( CHAR_DATA *ch, char *argument )
         if ( victim->in_room != NULL
         &&   victim->in_room->area == ch->in_room->area
         &&   !IS_AFFECTED(victim, AFF_HIDE)
+        &&   !IS_SET(victim->act, ACT_QUESTMOB)
 /*      &&   !IS_AFFECTED(victim, AFF_SNEAK) */
         &&   can_see( ch, victim )
         &&   is_name( arg, victim->name ) )

@@ -5247,7 +5247,7 @@ void kill_em(CHAR_DATA *ch,CHAR_DATA *victim)
         return;
 
     /* new arena code */
-        if (IS_SET(victim->act,PLR_ARENA))
+        if (!IS_NPC(victim) && IS_SET(victim->act,PLR_ARENA))
         {
                 stop_fighting( victim, TRUE );
                 death_cry( victim );
@@ -5305,6 +5305,8 @@ void kill_em(CHAR_DATA *ch,CHAR_DATA *victim)
                 victim->move            = victim->max_move;
                 return;
         }
+        /*End Arena Death Code*/
+
     one_argument(victim->name, mobname);
         if(str_cmp(mobname, "corpse"))
         group_gain( ch, victim );

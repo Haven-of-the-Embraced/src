@@ -1411,7 +1411,7 @@ void do_telepathy( CHAR_DATA *ch, char *argument )
     if (IS_SET(victim->act, ACT_QUESTMOB))
     {
       send_to_char("Quit trying to cheat the system!  You should be ashamed of yourself.\n\r", ch);
-      sprintf(buf,"%s thought they were sneaky and tried to use Telepathy on %s.  I stopped them.",ch->name, victim->name);
+      sprintf(buf,"FLAG:: %s thought they were sneaky and tried to use Telepathy on %s.\n\r    Don't worry, I stopped them.",ch->name, victim->name);
       wiznet(buf,ch,NULL,WIZ_FLAGS,0,0);
       return;
     }
@@ -1528,7 +1528,7 @@ void do_dash(CHAR_DATA *ch, char *argument)
     if (IS_SET(victim->act, ACT_QUESTMOB))
     {
       send_to_char("Quit trying to cheat the system!  You should be ashamed of yourself.\n\r", ch);
-      sprintf(buf,"%s thought they were sneaky and tried to Dash to %s.  I stopped them.",ch->name, victim->name);
+      sprintf(buf,"FLAG:: %s thought they were sneaky and tried to Dash to %s.\n\r  Don't worry, I stopped them.",ch->name, victim->name);
       wiznet(buf,ch,NULL,WIZ_FLAGS,0,0);
       return;
     }
@@ -4397,7 +4397,7 @@ void do_summon(CHAR_DATA *ch, char *argument)
 {
    CHAR_DATA *victim;
    char buf[MSL];
-   
+
     if(!IS_VAMP(ch))
     {
         send_to_char("You are not a vampire!\n\r" ,ch);
@@ -4430,7 +4430,7 @@ void do_summon(CHAR_DATA *ch, char *argument)
     if (IS_SET(victim->act, ACT_QUESTMOB))
     {
       send_to_char("Quit trying to cheat the system!  You should be ashamed of yourself.\n\r", ch);
-      sprintf(buf,"%s thought they were sneaky and tried to Summon %s.  I stopped them.",ch->name, victim->name);
+      sprintf(buf,"FLAG:: %s thought they were sneaky and tried to Summon %s.\n\r    Don't worry, I stopped them.",ch->name, victim->name);
       wiznet(buf,ch,NULL,WIZ_FLAGS,0,0);
       return;
     }

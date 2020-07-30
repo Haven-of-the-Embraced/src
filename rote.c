@@ -843,7 +843,7 @@ void rote_correspondenceperceptions(CHAR_DATA *ch, int success, CHAR_DATA *victi
     if (IS_SET(victim->act, ACT_QUESTMOB))
     {
       send_to_char("Quit trying to cheat the system!  You should be ashamed of yourself.\n\r", ch);
-      sprintf(buf,"%s thought they were sneaky and tried to scry on %s with Correspondence Perceptions.  I stopped them.",ch->name, victim->name);
+      sprintf(buf,"FLAG:: %s thought they were sneaky and tried to scry on %s with Correspondence Perceptions.\n\r    Don't worry, I stopped them.",ch->name, victim->name);
       wiznet(buf,ch,NULL,WIZ_FLAGS,0,0);
       return;
     }
@@ -873,7 +873,7 @@ void rote_sevenleaguestride(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_D
     if (IS_SET(victim->act, ACT_QUESTMOB))
     {
       send_to_char("Quit trying to cheat the system!  You should be ashamed of yourself.\n\r", ch);
-      sprintf(buf,"%s thought they were sneaky and tried to Seven League Stride to %s.  I stopped them.",ch->name, victim->name);
+      sprintf(buf,"FLAG:: %s thought they were sneaky and tried to Seven League Stride to %s.\n\r    Don't worry, I stopped them.",ch->name, victim->name);
       wiznet(buf,ch,NULL,WIZ_FLAGS,0,0);
       return;
     }
@@ -918,7 +918,7 @@ void rote_conjoinlocalities(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_D
     if (IS_SET(victim->act, ACT_QUESTMOB))
     {
       send_to_char("Quit trying to cheat the system!  You should be ashamed of yourself.\n\r", ch);
-      sprintf(buf,"%s thought they were sneaky and tried to Conjoin Localities to %s.  I stopped them.",ch->name, victim->name);
+      sprintf(buf,"FLAG:: %s thought they were sneaky and tried to Conjoin Localities to %s.\n\r    Don't worry, I stopped them.",ch->name, victim->name);
       wiznet(buf,ch,NULL,WIZ_FLAGS,0,0);
       return;
     }
@@ -963,7 +963,7 @@ void rote_mergelocalities(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DAT
     if (IS_SET(victim->act, ACT_QUESTMOB))
     {
       send_to_char("Quit trying to cheat the system!  You should be ashamed of yourself.\n\r", ch);
-      sprintf(buf,"%s thought they were sneaky and tried to Merge Localities to %s.  I stopped them.",ch->name, victim->name);
+      sprintf(buf,"FLAG:: %s thought they were sneaky and tried to Merge Localities to %s.\n\r    Don't worry, I stopped them.",ch->name, victim->name);
       wiznet(buf,ch,NULL,WIZ_FLAGS,0,0);
       return;
     }

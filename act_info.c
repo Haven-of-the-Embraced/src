@@ -257,6 +257,10 @@ void show_char_to_char_0( CHAR_DATA *victim, CHAR_DATA *ch )
     char buf[MAX_STRING_LENGTH],message[MAX_STRING_LENGTH];
 
     buf[0] = '\0';
+
+    if (IS_NPC(victim) && IS_SET(victim->act, ACT_QUESTMOB) && IS_IMMORTAL(ch))
+      strcat( buf, "{W*{D!{GQ{gu{ce{Cst{cM{go{Gb{D!{W*{y "        );
+
     if (IS_NPC(victim) && IS_SET(victim->act2, ACT2_INFLUENCE) &&
         !IS_NPC(ch) && IS_SET(ch->act2, PLR2_PVP))
     {
@@ -299,7 +303,7 @@ void show_char_to_char_0( CHAR_DATA *victim, CHAR_DATA *ch )
     if(IS_SET(victim->imm_flags,IMM_SUNLIGHT) && (victim->race == race_lookup("vampire") || victim->race == race_lookup("methuselah")))    strcat( buf, "{x({DShadowy{x){y "  );
     if(IS_SET(victim->act,PLR_IC))      strcat( buf, "{x{D({CIC{D){x{y "    );
     if(IS_SET(victim->act,PLR_SPEC) && !IS_NPC(victim))     strcat( buf, "{x({GSpec{x){y "  );
-    if(IS_SET(victim->act,PLR_ARENA))       strcat( buf, "{x({RArena{x){y " );
+    if(!IS_NPC(victim) && IS_SET(victim->act,PLR_ARENA))       strcat( buf, "{x({RArena{x){y " );
     if ( IS_AFFECTED2(victim, AFF2_FIRESHIELD)   ) strcat( buf, "{x({YGodly Aura{x){y " );
     if ( IS_AFFECTED2(victim, AFF2_HOLYSHIELD)   ) strcat( buf, "{x({WRadiant Aura{x){y " );
     if ( IS_AFFECTED2(victim, AFF2_DARKSHIELD)   ) strcat( buf, "{x({DDark Aura{x){y " );

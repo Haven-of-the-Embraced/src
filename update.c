@@ -791,8 +791,8 @@ void char_update( void )
     {
             /* check to see if we need to go home */
             if (IS_NPC(ch) && ch->zone != NULL && ch->zone != ch->in_room->area
-            &&  ch->fighting == NULL
-        && !IS_AFFECTED(ch,AFF_CHARM))
+            &&  ch->fighting == NULL && !IS_AFFECTED(ch,AFF_CHARM)
+            && !IS_SET(ch->act, ACT_QUESTMOB))
             {
                 if (!IS_UMBRA(ch) && number_percent() < 60)
                 {

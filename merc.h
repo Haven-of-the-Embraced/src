@@ -1466,7 +1466,7 @@ struct  kill_data
 #define ITEM_MAGIC      (G)
 #define ITEM_NODROP     (H)
 #define ITEM_BLESS      (I)
-//#define ITEM_ANTI_GOOD      (J)
+#define ITEM_PAUSE_TIMER    (J)
 #define ITEM_REFLECTIVE     (K)
 //#define ITEM_ANTI_NEUTRAL   (L)
 #define ITEM_NOREMOVE       (M)

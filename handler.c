@@ -3107,7 +3107,7 @@ char *extra_bit_name( int extra_flags )
     if ( extra_flags & ITEM_MAGIC        ) strcat( buf, " magic"        );
     if ( extra_flags & ITEM_NODROP       ) strcat( buf, " nodrop"       );
     if ( extra_flags & ITEM_BLESS        ) strcat( buf, " bless"        );
-    //if ( extra_flags & ITEM_ANTI_GOOD    ) strcat( buf, " anti-good"    );
+    if ( extra_flags & ITEM_PAUSE_TIMER  ) strcat( buf, " pause-timer"    );
     if ( extra_flags & ITEM_REFLECTIVE   ) strcat( buf, " reflective"    );
     //if ( extra_flags & ITEM_ANTI_NEUTRAL ) strcat( buf, " anti-neutral" );
     if ( extra_flags & ITEM_NOREMOVE     ) strcat( buf, " noremove"     );

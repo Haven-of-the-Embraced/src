@@ -1840,10 +1840,21 @@ void do_ostat( CHAR_DATA *ch, char *argument )
           send_to_char("{c-----------------------------------------------------{x\n\r", ch);
           break;
 
+        case ITEM_MONEY:
+          send_to_char("{c-----------------------{YVALUES{c------------------------{x\n\r", ch);
+          sprintf(buf, "Silver Pieces                    : %d  \n\r{R**Currently Unused**{x: %d  \n\r{R**Currently Unused**{x: %d  \n\r{R**Currently Unused**{x: %d  \n\r{R**Currently Unused**{x: %d\n\r",
+            obj->value[0],
+            obj->value[1],
+            obj->value[2],
+            obj->value[3],
+            obj->value[4]);
+          send_to_char(buf, ch);
+          send_to_char("{c-----------------------------------------------------{x\n\r", ch);
+          break;
+
         case ITEM_TREASURE:
         case ITEM_TRASH:
         case ITEM_KEY:
-        case ITEM_MONEY:
         case ITEM_BOAT:
         case ITEM_FOUNTAIN:
         case ITEM_PROTECT:

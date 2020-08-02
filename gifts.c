@@ -1859,6 +1859,12 @@ void spell_gift_breathofthewyld( int sn, int level, CHAR_DATA *ch, void *vo, int
   AFFECT_DATA af;
   int success, difficulty = 6;
 
+    if (is_affected(ch, gsn_forget))
+    {
+      send_to_char("The details of how to properly enact this Gift seem a bit fuzzy at the moment.\n\r", ch);
+      return;
+    }
+
     if( ch->in_room->sector_type == SECT_INSIDE || ch->in_room->sector_type == SECT_CITY
     || ch->in_room->sector_type == SECT_UNUSED )
     {
@@ -1876,25 +1882,39 @@ void spell_gift_breathofthewyld( int sn, int level, CHAR_DATA *ch, void *vo, int
 
     if (is_affected(victim, gsn_gift_breathofthewyld) || is_affected(victim, gsn_empower))
     {
+      if (victim == ch)
+        send_to_char("Your mind has already been heightened through mystical means.\n\r", ch);
+      else
         send_to_char("Your target's mind is already heightened beyond normal capacity.\n\r", ch);
-        return;
+      return;
     }
 
     if (victim->race == race_lookup("garou") || victim->race == race_lookup("fera") )
       difficulty--;
 
+    WAIT_STATE(ch, PULSE_VIOLENCE);
     success = godice(ch->pcdata->gnosis[PERM], difficulty);
 
     if (success < 0)
     {
-      act("You try to impart some of Gaia's energy, but cannot seem to get in touch with your spiritual side.", ch, NULL, victim, TO_CHAR);
-      WAIT_STATE(ch, PULSE_VIOLENCE * 6);
+      act("As you try to enact the actions necessary for channeling Gaia's essence, you feel a sudden backlash of spiritual energy, leaving your mind in a cloudy state.", ch, NULL, victim, TO_CHAR);
+      act("$n's face slacks for a minute, staring off into space and ignoring the world around $m.", ch, NULL, victim, TO_NOTVICT);
+
+      af.where     = TO_AFFECTS;
+      af.type      = gsn_forget;
+      af.level     = ch->pcdata->rank;
+      af.duration  = -(success);
+      af.modifier  = -1;
+      af.location  = APPLY_CS_WIT;
+      af.bitvector = 0;
+      affect_to_char( victim, &af );
       return;
     }
 
     if (success == 0)
     {
-      act("You fail to commune with the spirits of nature at this time.", ch, NULL, victim, TO_CHAR);
+      act("You try to impart some of Gaia's energy, but cannot seem to get in touch with your spiritual side.", ch, NULL, victim, TO_CHAR);
+      WAIT_STATE(ch, PULSE_VIOLENCE * 6);
       return;
     }
 

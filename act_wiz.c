@@ -1834,7 +1834,7 @@ void do_ostat( CHAR_DATA *ch, char *argument )
             obj->value[0],
             obj->value[1],
             obj->value[2],
-            obj->value[3] != 0 ? "Yes" : "No" ),
+            obj->value[3] != 0 ? "Yes" : "No",
             obj->value[4]);
           send_to_char(buf, ch);
           send_to_char("{c-----------------------------------------------------{x\n\r", ch);
@@ -1857,7 +1857,7 @@ void do_ostat( CHAR_DATA *ch, char *argument )
           sprintf(buf, "Liquid Total        : %d  \n\rLiquid Left         : %d  \n\rLiquid Type         : %s  \n\r{R**Currently Unused**{x: %d  \n\r{R**Currently Unused**{x: %d\n\r",
             obj->value[0],
             obj->value[1],
-            liq_table[obj->value[2]].liq_name, 
+            liq_table[obj->value[2]].liq_name,
             obj->value[3],
             obj->value[4]);
           send_to_char(buf, ch);
@@ -1870,9 +1870,9 @@ void do_ostat( CHAR_DATA *ch, char *argument )
         case ITEM_BOAT:
         case ITEM_PROTECT:
         case ITEM_MAP:
-        case ITEM_WARPSTONE:
+        case ITEM_WARP_STONE:
         case ITEM_RESOURCE:
-        case ITEM_ROOMKEY:
+        case ITEM_ROOM_KEY:
         case ITEM_GEM:
         case ITEM_JEWELRY:
         case ITEM_JUKEBOX:

@@ -1361,6 +1361,9 @@ void obj_update( void )
         if ( !obj )
             continue;
 
+    if ( obj->wear_loc == WEAR_NONE && IS_SET(obj->extra_flags, ITEM_PAUSE_TIMER) )
+      continue;
+
     if ( obj->timer <= 0 || --obj->timer > 0 )
         continue;
 

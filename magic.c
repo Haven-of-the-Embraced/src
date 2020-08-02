@@ -3020,22 +3020,22 @@ void spell_giant_strength(int sn,int level,CHAR_DATA *ch,void *vo,int target)
     if ( is_affected( victim, sn ) )
     {
     if (victim == ch)
-      send_to_char("You are already as strong as you can get!\n\r",ch);
+      send_to_char("You are already as strong as you can get from this mystical means!\n\r",ch);
     else
-      act("$N can't get any stronger.",ch,NULL,victim,TO_CHAR);
+      act("$N can't get any stronger through this mystical way.",ch,NULL,victim,TO_CHAR);
     return;
     }
 
     af.where     = TO_AFFECTS;
     af.type      = sn;
     af.level     = level;
-    af.duration  = level;
-    af.location  = APPLY_STR;
-    af.modifier  = 1 + (level >= 18) + (level >= 25) + (level >= 32);
+    af.duration  = 1 + (level / 33);
+    af.location  = APPLY_CS_STR;
+    af.modifier  = 1;
     af.bitvector = 0;
     affect_to_char( victim, &af );
-    send_to_char( "Your muscles surge with heightened power!\n\r", victim );
-    act("$n's muscles surge with heightened power.",victim,NULL,NULL,TO_ROOM);
+    send_to_char( "You flex to your audience as your muscles surge with heightened power!\n\r", victim );
+    act("$n flexes as $s muscles surge with heightened power.",victim,NULL,NULL,TO_ROOM);
     return;
 }
 

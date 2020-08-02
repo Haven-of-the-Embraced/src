@@ -1535,7 +1535,7 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
 
     { "giant strength",   {  11, 102, 22, 20, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_giant_strength,   TAR_CHAR_DEFENSIVE, POS_STANDING,
-    NULL,           SLOT(39),   20, 12, "",         "You feel weaker.", "" },
+    NULL,           SLOT(39),   20, 12, "",         "You begin to feel weaker as the mystical energy leaves your muscles.", "" },
 
     { "harm",         { 102, 23, 102, 28, 102, 102, 102, 102, 102, 102, 33, 102, 102 },
 	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 5, 5, 1}, spell_harm,     TAR_CHAR_OFFENSIVE, POS_FIGHTING,

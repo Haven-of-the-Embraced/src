@@ -1845,6 +1845,15 @@ void do_ostat( CHAR_DATA *ch, char *argument )
         case ITEM_JUKEBOX:
         case ITEM_TOOL:
         case ITEM_CRAFTED:
+          send_to_char("{c-----------------------{YVALUES{c------------------------{x\n\r", ch);
+          sprintf(buf, "{R**Currently Unused**{x: %d  \n\r{R**Currently Unused**{x: %d  \n\r{R**Currently Unused**{x: %d  \n\r{R**Currently Unused**{x: %d  \n\r{R**Currently Unused**{x: %d\n\r",
+            obj->value[0],
+            obj->value[1],
+            obj->value[2],
+            obj->value[3],
+            obj->value[4]);
+          send_to_char(buf, ch);
+          send_to_char("{c-----------------------------------------------------{x\n\r", ch);
           break;
     }
 

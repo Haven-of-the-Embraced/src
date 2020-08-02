@@ -1987,7 +1987,7 @@ void do_follow( CHAR_DATA *ch, char *argument )
     send_to_char( "Follow whom?\n\r", ch );
     return;
     }
-    if(IS_SET(ch->act,PLR_ARENA))
+    if(!IS_NPC(ch) && IS_SET(ch->act,PLR_ARENA))
     {
     send_to_char("No following in the Arena!\n\r",ch);
     return;
@@ -2319,7 +2319,7 @@ void do_group( CHAR_DATA *ch, char *argument )
     argument = one_argument( argument, arg2);
 
 
-    if (IS_SET(ch->act,PLR_ARENA))
+    if (!IS_NPC(ch) && IS_SET(ch->act,PLR_ARENA))
     {
     send_to_char( "No grouping in the arena!\n\r", ch );
     return;
@@ -2980,7 +2980,7 @@ void do_promote_leader( CHAR_DATA *ch, char *argument )
 
     one_argument( argument, arg );
 
-    if (IS_SET(ch->act,PLR_ARENA))
+    if (!IS_NPC(ch) && IS_SET(ch->act,PLR_ARENA))
     {
     send_to_char( "No grouping in the arena!\n\r", ch );
     return;

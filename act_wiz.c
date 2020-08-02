@@ -1828,10 +1828,21 @@ void do_ostat( CHAR_DATA *ch, char *argument )
           send_to_char("{c-----------------------------------------------------{x\n\r", ch);
               break;
 
+        case ITEM_FOOD:
+          send_to_char("{c-----------------------{YVALUES{c------------------------{x\n\r", ch);
+          sprintf(buf, "Food Hours          : %d  \n\rFull Hours          : %d  \n\r{R**Currently Unused**{x: %d  \n\rPoisoned            : %s  \n\r{R**Currently Unused**{x: %d\n\r",
+            obj->value[0],
+            obj->value[1],
+            obj->value[2],
+            obj->value[3] != 0 ? "Yes" : "No" ),
+            obj->value[4]);
+          send_to_char(buf, ch);
+          send_to_char("{c-----------------------------------------------------{x\n\r", ch);
+          break;
+
         case ITEM_TREASURE:
         case ITEM_TRASH:
         case ITEM_KEY:
-        case ITEM_FOOD:
         case ITEM_MONEY:
         case ITEM_BOAT:
         case ITEM_FOUNTAIN:

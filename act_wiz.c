@@ -1864,6 +1864,18 @@ void do_ostat( CHAR_DATA *ch, char *argument )
           send_to_char("{c-----------------------------------------------------{x\n\r", ch);
           break;
 
+        case ITEM_TOOL:
+        send_to_char("{c-----------------------{YVALUES{c------------------------{x\n\r", ch);
+        sprintf(buf, "Quality             : %d  \n\rTool Type           : %s  \n\r{R**Currently Unused**{x: %d  \n\r{R**Currently Unused**{x: %d  \n\r{R**Currently Unused**{x: %d\n\r",
+          obj->value[0],
+          tool_table[obj->value[1]].tool_name,
+          obj->value[2],
+          obj->value[3],
+          obj->value[4]);
+        send_to_char(buf, ch);
+        send_to_char("{c-----------------------------------------------------{x\n\r", ch);
+        break;
+
         case ITEM_TREASURE:
         case ITEM_TRASH:
         case ITEM_KEY:
@@ -1876,7 +1888,6 @@ void do_ostat( CHAR_DATA *ch, char *argument )
         case ITEM_GEM:
         case ITEM_JEWELRY:
         case ITEM_JUKEBOX:
-        case ITEM_TOOL:
         case ITEM_CRAFTED:
           send_to_char("{c-----------------------{YVALUES{c------------------------{x\n\r", ch);
           sprintf(buf, "{R**Currently Unused**{x: %d  \n\r{R**Currently Unused**{x: %d  \n\r{R**Currently Unused**{x: %d  \n\r{R**Currently Unused**{x: %d  \n\r{R**Currently Unused**{x: %d\n\r",

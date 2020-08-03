@@ -1865,16 +1865,28 @@ void do_ostat( CHAR_DATA *ch, char *argument )
           break;
 
         case ITEM_TOOL:
-        send_to_char("{c-----------------------{YVALUES{c------------------------{x\n\r", ch);
-        sprintf(buf, "Quality             : %d  \n\rTool Type           : %s  \n\r{R**Currently Unused**{x: %d  \n\r{R**Currently Unused**{x: %d  \n\r{R**Currently Unused**{x: %d\n\r",
-          obj->value[0],
-          tool_table[obj->value[1]].tool_name,
-          obj->value[2],
-          obj->value[3],
-          obj->value[4]);
-        send_to_char(buf, ch);
-        send_to_char("{c-----------------------------------------------------{x\n\r", ch);
-        break;
+          send_to_char("{c-----------------------{YVALUES{c------------------------{x\n\r", ch);
+          sprintf(buf, "Quality             : %d  \n\rTool Type           : %s  \n\r{R**Currently Unused**{x: %d  \n\r{R**Currently Unused**{x: %d  \n\r{R**Currently Unused**{x: %d\n\r",
+            obj->value[0],
+            tool_table[obj->value[1]].tool_name,
+            obj->value[2],
+            obj->value[3],
+            obj->value[4]);
+          send_to_char(buf, ch);
+          send_to_char("{c-----------------------------------------------------{x\n\r", ch);
+          break;
+
+        case ITEM_CRAFTED:
+          send_to_char("{c-----------------------{YVALUES{c------------------------{x\n\r", ch);
+          sprintf(buf, "Quality             : %d  \n\rCrafted Type        : %s  \n\rAugmentation 1      : %d  \n\rAugmentation 2      : %d  \n\rAugmentation 3      : %d\n\r",
+            obj->value[0],
+            crafted_table[obj->value[1]].crafted_name,
+            obj->value[2],
+            obj->value[3],
+            obj->value[4]);
+          send_to_char(buf, ch);
+          send_to_char("{c-----------------------------------------------------{x\n\r", ch);
+          break;
 
         case ITEM_TREASURE:
         case ITEM_TRASH:
@@ -1888,7 +1900,6 @@ void do_ostat( CHAR_DATA *ch, char *argument )
         case ITEM_GEM:
         case ITEM_JEWELRY:
         case ITEM_JUKEBOX:
-        case ITEM_CRAFTED:
           send_to_char("{c-----------------------{YVALUES{c------------------------{x\n\r", ch);
           sprintf(buf, "{R**Currently Unused**{x: %d  \n\r{R**Currently Unused**{x: %d  \n\r{R**Currently Unused**{x: %d  \n\r{R**Currently Unused**{x: %d  \n\r{R**Currently Unused**{x: %d\n\r",
             obj->value[0],

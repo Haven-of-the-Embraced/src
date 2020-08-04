@@ -7170,7 +7170,7 @@ void do_horrid(CHAR_DATA *ch, char *argument)
     af.level    = ch->level;
     af.duration = -1;
     af.location = APPLY_CS_STR;
-    af.modifier = 4;
+    af.modifier = 3;
     af.bitvector    = 0;
     affect_to_char( ch, &af );
 
@@ -7179,7 +7179,7 @@ void do_horrid(CHAR_DATA *ch, char *argument)
     af.level    = ch->level;
     af.duration = -1;
     af.location = APPLY_CS_DEX;
-    af.modifier = 4;
+    af.modifier = 3;
     af.bitvector    = 0;
     affect_to_char( ch, &af );
 

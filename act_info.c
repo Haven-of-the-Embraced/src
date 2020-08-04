@@ -759,69 +759,69 @@ void do_autolist(CHAR_DATA *ch, char *argument)
 
     send_to_char("autoassist     ",ch);
     if (IS_SET(ch->act,PLR_AUTOASSIST))
-        send_to_char("ON\n\r",ch);
+        send_to_char("{G* ON{x\n\r",ch);
     else
-        send_to_char("OFF\n\r",ch);
+        send_to_char("{RX OFF{x\n\r",ch);
 
     send_to_char("autoexit       ",ch);
     if (IS_SET(ch->act,PLR_AUTOEXIT))
-        send_to_char("ON\n\r",ch);
+        send_to_char("{G* ON{x\n\r",ch);
     else
-        send_to_char("OFF\n\r",ch);
+        send_to_char("{RX OFF{x\n\r",ch);
 
     send_to_char("autogold       ",ch);
     if (IS_SET(ch->act,PLR_AUTOGOLD))
-        send_to_char("ON\n\r",ch);
+        send_to_char("{G* ON{x\n\r",ch);
     else
-        send_to_char("OFF\n\r",ch);
+        send_to_char("{RX OFF{x\n\r",ch);
 
     send_to_char("autoloot       ",ch);
     if (IS_SET(ch->act,PLR_AUTOLOOT))
-        send_to_char("ON\n\r",ch);
+        send_to_char("{G* ON{x\n\r",ch);
     else
-        send_to_char("OFF\n\r",ch);
+        send_to_char("{RX OFF{x\n\r",ch);
 
     send_to_char("autosac        ",ch);
     if (IS_SET(ch->act,PLR_AUTOSAC))
-        send_to_char("ON\n\r",ch);
+        send_to_char("{G* ON{x\n\r",ch);
     else
-        send_to_char("OFF\n\r",ch);
+        send_to_char("{RX OFF{x\n\r",ch);
 
     send_to_char("colour         ",ch);
     if (IS_SET(ch->act,PLR_COLOUR))
-        send_to_char("ON\n\r",ch);
+        send_to_char("{G* ON{x\n\r",ch);
     else
-        send_to_char("OFF\n\r",ch);
+        send_to_char("{RX OFF{x\n\r",ch);
 
     send_to_char("autosplit      ",ch);
     if (IS_SET(ch->act,PLR_AUTOSPLIT))
-        send_to_char("ON\n\r",ch);
+        send_to_char("{G* ON{x\n\r",ch);
     else
-        send_to_char("OFF\n\r",ch);
+        send_to_char("{RX OFF{x\n\r",ch);
 
     send_to_char("compact mode   ",ch);
     if (IS_SET(ch->comm,COMM_COMPACT))
-        send_to_char("ON\n\r",ch);
+        send_to_char("{G* ON{x\n\r",ch);
     else
-        send_to_char("OFF\n\r",ch);
+        send_to_char("{RX OFF{x\n\r",ch);
 
     send_to_char("prompt         ",ch);
     if (IS_SET(ch->comm,COMM_PROMPT))
-    send_to_char("ON\n\r",ch);
+        send_to_char("{G* ON{x\n\r",ch);
     else
-    send_to_char("OFF\n\r",ch);
+        send_to_char("{RX OFF{x\n\r",ch);
 
     send_to_char("combine items  ",ch);
     if (IS_SET(ch->comm,COMM_COMBINE))
-    send_to_char("ON\n\r",ch);
+        send_to_char("{G* ON{x\n\r",ch);
     else
-    send_to_char("OFF\n\r",ch);
+        send_to_char("{RX OFF{x\n\r",ch);
 
     send_to_char("combat brief   ",ch);
     if (IS_SET(ch->comm,COMM_COMBAT_BRIEF))
-    send_to_char("ON\n\r",ch);
+        send_to_char("{G* ON{x\n\r",ch);
     else
-    send_to_char("OFF\n\r",ch);
+        send_to_char("{RX OFF{x\n\r",ch);
 
     if (!IS_SET(ch->act,PLR_CANLOOT))
     send_to_char("Your corpse is safe from thieves.\n\r",ch);

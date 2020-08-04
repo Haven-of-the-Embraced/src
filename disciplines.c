@@ -7165,17 +7165,6 @@ void do_horrid(CHAR_DATA *ch, char *argument)
     act( "Your body slowly shifts into that of a horrible Zulo.", ch, NULL, NULL, TO_CHAR );
     act( "$n's size doubles as their body is altered into that of a horrible Zulo.", ch, NULL, NULL,TO_NOTVICT );
 
-
-    af.where     = TO_AFFECTS;
-    af.type      = gsn_vicissitude_horrid;
-    af.level     = ch->level;
-    af.duration  = -1;
-    af.location  = APPLY_HIT;
-    af.modifier  = 8 * UMAX(20, ch->level);
-    af.bitvector = 0;
-    affect_to_char( ch, &af );
-
-
     af.where    = TO_AFFECTS;
     af.type     = gsn_vicissitude_horrid;
     af.level    = ch->level;

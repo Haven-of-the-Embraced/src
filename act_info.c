@@ -823,6 +823,18 @@ void do_autolist(CHAR_DATA *ch, char *argument)
     else
         send_to_char("{RX OFF{x\n\r",ch);
 
+    send_to_char("no short desc  ",ch);
+    if (IS_SET(ch->act2,PLR2_NOSHORTDESC))
+        send_to_char("{G* ON{x\n\r",ch);
+    else
+        send_to_char("{RX OFF{x\n\r",ch);
+
+    send_to_char("battleprompt   ",ch);
+    if (IS_SET(ch->act2,PLR2_BATTLEPROMPT))
+        send_to_char("{G* ON{x\n\r",ch);
+    else
+        send_to_char("{RX OFF{x\n\r",ch);
+
     if (!IS_SET(ch->act,PLR_CANLOOT))
     send_to_char("Your corpse is safe from thieves.\n\r",ch);
     else

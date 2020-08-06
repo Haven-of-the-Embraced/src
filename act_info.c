@@ -751,109 +751,119 @@ void do_wizlist(CHAR_DATA *ch, char *argument)
 void do_autolist(CHAR_DATA *ch, char *argument)
 {
     /* lists most player flags */
+    char buf[MSL];
+
     if (IS_NPC(ch))
       return;
 
-    send_to_char("   action     status\n\r",ch);
-    send_to_char("---------------------\n\r",ch);
+    sprintf(buf, "   {WCharacter Options:  {D%s{x\n\r", ch->name);
+    send_to_char(buf, ch);
+    send_to_char("   {WCommand    Status   Current Affect{x\n\r",ch);
+    send_to_char("-------------------------------------------------------------------------\n\r",ch);
 
     send_to_char("autoassist     ",ch);
     if (IS_SET(ch->act,PLR_AUTOASSIST))
-        send_to_char("{G* ON{x\n\r",ch);
+        send_to_char("{G* ON{x  {gWill automatically assist your party in a fight.{x\n\r",ch);
     else
-        send_to_char("{RX OFF{x\n\r",ch);
+        send_to_char("{RX OFF{x {rWill not automatically assist your party in a fight.{x\n\r",ch);
 
     send_to_char("autoexit       ",ch);
     if (IS_SET(ch->act,PLR_AUTOEXIT))
-        send_to_char("{G* ON{x\n\r",ch);
+        send_to_char("{G* ON{x  {gObvious exits are displayed in each room.{x\n\r",ch);
     else
-        send_to_char("{RX OFF{x\n\r",ch);
+        send_to_char("{RX OFF{x {rNo exits displayed in each room.{x\n\r",ch);
 
     send_to_char("autogold       ",ch);
     if (IS_SET(ch->act,PLR_AUTOGOLD))
-        send_to_char("{G* ON{x\n\r",ch);
+        send_to_char("{G* ON{x  {gWill automatically loot gold from corpses.{x\n\r",ch);
     else
-        send_to_char("{RX OFF{x\n\r",ch);
+        send_to_char("{RX OFF{x {rWill not automatically loot gold from corpses.{x\n\r",ch);
 
     send_to_char("autoloot       ",ch);
     if (IS_SET(ch->act,PLR_AUTOLOOT))
-        send_to_char("{G* ON{x\n\r",ch);
+        send_to_char("{G* ON{x  {gWill automatically loot items from corpses.{x\n\r",ch);
     else
-        send_to_char("{RX OFF{x\n\r",ch);
+        send_to_char("{RX OFF{x {rWill not automatically loot items from corpses.{x\n\r",ch);
 
     send_to_char("autosac        ",ch);
     if (IS_SET(ch->act,PLR_AUTOSAC))
-        send_to_char("{G* ON{x\n\r",ch);
+        send_to_char("{G* ON{x  {gWill automatically sacrifice a corpse upon killing mob.{x\n\r",ch);
     else
-        send_to_char("{RX OFF{x\n\r",ch);
+        send_to_char("{RX OFF{x {rWill not automatically sacrifice corpse upon killing of mob.{x\n\r",ch);
 
     send_to_char("colour         ",ch);
     if (IS_SET(ch->act,PLR_COLOUR))
-        send_to_char("{G* ON{x\n\r",ch);
+        send_to_char("{G* ON{x  {gMUD is displayed with ANSI color.{x\n\r",ch);
     else
-        send_to_char("{RX OFF{x\n\r",ch);
+        send_to_char("{RX OFF{x {rMUD will not show color.{x\n\r",ch);
 
     send_to_char("autosplit      ",ch);
     if (IS_SET(ch->act,PLR_AUTOSPLIT))
-        send_to_char("{G* ON{x\n\r",ch);
+        send_to_char("{G* ON{x  {gWill automatically split looted gold evenly with party.{x\n\r",ch);
     else
-        send_to_char("{RX OFF{x\n\r",ch);
+        send_to_char("{RX OFF{x {rWill not automatically split looted gold with party.{x\n\r",ch);
 
-    send_to_char("compact mode   ",ch);
+    send_to_char("compact        ",ch);
     if (IS_SET(ch->comm,COMM_COMPACT))
-        send_to_char("{G* ON{x\n\r",ch);
+        send_to_char("{G* ON{x  {gShows a space between the display and prompt.{x\n\r",ch);
     else
-        send_to_char("{RX OFF{x\n\r",ch);
+        send_to_char("{RX OFF{x {rNo space between display and prompt.{x\n\r",ch);
 
     send_to_char("prompt         ",ch);
     if (IS_SET(ch->comm,COMM_PROMPT))
-        send_to_char("{G* ON{x\n\r",ch);
+        send_to_char("{G* ON{x  {gShows your active prompt.{x\n\r",ch);
     else
-        send_to_char("{RX OFF{x\n\r",ch);
+        send_to_char("{RX OFF{x {rNo prompt shown.{x\n\r",ch);
 
-    send_to_char("combine items  ",ch);
+    send_to_char("combine        ",ch);
     if (IS_SET(ch->comm,COMM_COMBINE))
-        send_to_char("{G* ON{x\n\r",ch);
+        send_to_char("{G* ON{x  {gStacked items in inventory.{x\n\r",ch);
     else
-        send_to_char("{RX OFF{x\n\r",ch);
+        send_to_char("{RX OFF{x {rItems separated in inventory.{x\n\r",ch);
 
-    send_to_char("combat brief   ",ch);
+    send_to_char("combat         ",ch);
     if (IS_SET(ch->comm,COMM_COMBAT_BRIEF))
-        send_to_char("{G* ON{x\n\r",ch);
+        send_to_char("{G* ON{x  {gPrevents extra combat descriptions.{x\n\r",ch);
     else
-        send_to_char("{RX OFF{x\n\r",ch);
+        send_to_char("{RX OFF{x {rCombat descriptions will show.{x\n\r",ch);
 
-    send_to_char("no short desc  ",ch);
+    send_to_char("noshort        ",ch);
     if (IS_SET(ch->act2,PLR2_NOSHORTDESC))
-        send_to_char("{G* ON{x\n\r",ch);
+        send_to_char("{G* ON{x  {gShow Player name instead of short descriptions.{x\n\r",ch);
     else
-        send_to_char("{RX OFF{x\n\r",ch);
+        send_to_char("{RX OFF{x {rShow Player short description rather than name.{x\n\r",ch);
 
     send_to_char("battleprompt   ",ch);
     if (IS_SET(ch->act2,PLR2_BATTLEPROMPT))
-        send_to_char("{G* ON{x\n\r",ch);
+        send_to_char("{G* ON{x  {gShows info on who is tanking in group.{x\n\r",ch);
     else
-        send_to_char("{RX OFF{x\n\r",ch);
+        send_to_char("{RX OFF{x {rNo group tank info shown.{x\n\r",ch);
 
+    send_to_char("noloot         ",ch);
     if (!IS_SET(ch->act,PLR_CANLOOT))
-    send_to_char("Your corpse is safe from thieves.\n\r",ch);
+    send_to_char("{G* ON{x  {gYour corpse is safe from thieves (and other players).{x\n\r",ch);
     else
-        send_to_char("Your corpse may be looted.\n\r",ch);
+        send_to_char("{RX OFF{x {rYour corpse may be looted by other players.{x\n\r",ch);
 
+    send_to_char("nosummon       ",ch);
     if (IS_SET(ch->act,PLR_NOSUMMON))
-    send_to_char("You cannot be summoned.\n\r",ch);
+    send_to_char("{G* ON{x  {gYou cannot be summoned.{x\n\r",ch);
     else
-    send_to_char("You can be summoned.\n\r",ch);
+    send_to_char("{RX OFF{x {rYou can be summoned.{x\n\r",ch);
 
+    send_to_char("nofollow       ",ch);
     if (IS_SET(ch->act,PLR_NOFOLLOW))
-    send_to_char("You do not welcome followers.\n\r",ch);
+    send_to_char("{G* ON{x  {gYou do not welcome followers.{x\n\r",ch);
     else
-    send_to_char("You accept followers.\n\r",ch);
+    send_to_char("{RX OFF{x {rYou accept followers.{x\n\r",ch);
 
+    send_to_char("icmode         ",ch);
     if (IS_SET(ch->act,PLR_IC))
-    send_to_char("You are in IC mode.\n\r", ch);
+    send_to_char("{G* ON{x  {gYou are in IC mode.{x\n\r", ch);
     else
-    send_to_char("You are in OOC mode.\n\r", ch);
+    send_to_char("{RX OFF{x {rYou are in OOC mode.{x\n\r", ch);
+
+    send_to_char("-------------------------------------------------------------------------\n\r",ch);
 }
 
 void do_autoassist(CHAR_DATA *ch, char *argument)

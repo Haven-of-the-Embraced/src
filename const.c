@@ -2181,6 +2181,10 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
     &gsn_bandage,          SLOT( 0),        0,     24, "failure",             "You remove your bloody bandages to make room for clean ones.",      "" },
 
+    { "bleeding",       { 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+	{ 1,  1,  1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_null,       TAR_OBJ_CHAR_OFF,   POS_FIGHTING,
+    &gsn_bleeding,        SLOT(33),   10, 12, "bleeding",       "Your bleeding trickles and stops, your wounds finally scab over.", "" },
+
 /* advanced class stuff */
     { "divine strength",             { 150, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 50, 102 },
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,

@@ -12,6 +12,7 @@ void affects_update (void) {
     CHAR_DATA *ch;
     CHAR_DATA *ch_next;
     AFFECT_DATA af;
+    int level;
 
     /* Examine all mobs. */
     for ( ch = char_list; ch != NULL; ch = ch_next )
@@ -24,9 +25,17 @@ void affects_update (void) {
         damage(ch, ch, (ch->max_hit / (50*get_attribute(ch, STAMINA))),
             gsn_poison,DAM_POISON,FALSE);
 
+    if (is_affected(ch, gsn_bleeding))
+    {
+      level = get_affect_level(ch, gsn_bleeding);
+      act("Your wounds continue to bleed out.", ch, NULL, NULL, TO_CHAR);
+      if (godice(get_attribute(ch, STAMINA), 8) < get_affect_level(ch, gsn_bleeding))
+        damage(ch, ch, (level*ch->level/10), gsn_bleeding, DAM_AGGREVATED, TRUE);
+    }
+
     if (is_affected(ch, gsn_shadowplay) && get_affect_level(ch, gsn_shadowplay) != 0)
     {
-        int level = get_affect_level(ch, gsn_shadowplay);
+        level = get_affect_level(ch, gsn_shadowplay);
         if ( godice(level, 8) > 0
         && ch->race != race_lookup("vampire") && ch->race != race_lookup("methuselah")
         && ch->race != race_lookup("construct") && ch->race != race_lookup("wraith")

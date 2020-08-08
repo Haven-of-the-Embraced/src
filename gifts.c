@@ -2261,8 +2261,29 @@ void spell_gift_huntersharmony( int sn, int level, CHAR_DATA *ch, void *vo, int 
 // charisma + intimidation diff 6
 // Foes flinch and lose a point of initiative.
 // Majesty-like effect that causes mobs to attack someone else first.
-void spell_gift_visageoffenris( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
+void spell_gift_visageoffenris( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  CHAR_DATA *rch;
+  AFFECT_DATA af;
+  int successes;
+
+  for ( rch = ch->in_room->people; rch != NULL; rch = rch->next_in_room )
+  {
+    if ( rch->fighting != NULL )
+      stop_fighting( rch, TRUE );
+  }
+
+  af.where     = TO_AFFECTS;
+  af.type      = gsn_gift_visageoffenris;
+  af.level     = 1;
+  af.duration  = successes;
+  af.modifier  = 0;
+  af.location  = 0;
+  af.bitvector = 0;
+  affect_to_char( ch, &af );
+  return;
+
+  return;
 }
 // Rank 2
 

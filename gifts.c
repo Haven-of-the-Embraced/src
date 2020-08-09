@@ -2267,6 +2267,19 @@ void spell_gift_visageoffenris( int sn, int level, CHAR_DATA *ch, void *vo, int 
   AFFECT_DATA af;
   int successes;
 
+  if (is_affected(ch, gsn_gift_visageoffenris))
+  {
+    if (get_affect_level(ch, gsn_gift_visageoffenris) == 0)
+    {
+      act("Fenrir has not yet forgiven your last pathetic attempt to cow others in his name.", ch, NULL, NULL, TO_CHAR);
+      return;
+    }
+
+    affect_strip(ch, gsn_gift_visageoffenris);
+    act("You release Fenrir's gift, gaining your regular countenance.", ch, NULL, NULL, TO_CHAR);
+    return;
+  }
+
   successes = godice(get_attribute(ch, CHARISMA) + get_ability(ch, CSABIL_INTIMIDATION), 6);
 
   if (successes < 0)

@@ -2720,20 +2720,34 @@ CHAR_DATA *find_keeper( CHAR_DATA *ch )
     open = str_dup(get_time_string(pShop->open_hour));
     close = str_dup(get_time_string(pShop->close_hour));
 
-    if ( time_info.hour < pShop->open_hour )
+    if ( pShop->open_hour < pShop->close_hour )
     {
-    do_function(keeper, &do_say, "Sorry, I am closed. Come back later.");
-    sprintf(buf, "My hours of operation are from %s to %s.", open, close);
-    do_function(keeper, &do_say, buf);
-    return NULL;
+      if ( time_info.hour < pShop->open_hour )
+      {
+        do_function(keeper, &do_say, "Sorry, I am closed. Come back later.");
+        sprintf(buf, "My hours of operation are from %s to %s.", open, close);
+        do_function(keeper, &do_say, buf);
+        return NULL;
+      }
+
+      if ( time_info.hour > pShop->close_hour )
+      {
+        do_function(keeper, &do_say, "Sorry, I am closed. Come back tomorrow.");
+        sprintf(buf, "My hours of operation are from %s to %s.", open, close);
+        do_function(keeper, &do_say, buf);
+        return NULL;
+      }
     }
 
-    if ( time_info.hour > pShop->close_hour )
+    if ( pShop->open_hour > pShop->close_hour )
     {
-    do_function(keeper, &do_say, "Sorry, I am closed. Come back tomorrow.");
-    sprintf(buf, "My hours of operation are from %s to %s.", open, close);
-    do_function(keeper, &do_say, buf);
-    return NULL;
+      if (( time_info.hour < pShop->open_hour ) && (time_info.hour > pShop->close_hour ))
+      {
+        do_function(keeper, &do_say, "Sorry, I am closed. Come back later.");
+        sprintf(buf, "My hours of operation are from %s to %s.", open, close);
+        do_function(keeper, &do_say, buf);
+        return NULL;
+      }
     }
 
     return keeper;

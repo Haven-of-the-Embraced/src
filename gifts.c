@@ -2271,12 +2271,12 @@ void spell_gift_visageoffenris( int sn, int level, CHAR_DATA *ch, void *vo, int 
   {
     if (get_affect_level(ch, gsn_gift_visageoffenris) == 0)
     {
-      act("Fenrir has not yet forgiven your last pathetic attempt to cow others in his name.", ch, NULL, NULL, TO_CHAR);
+      act("Fenris has not yet forgiven your last pathetic attempt to cow others in his name.", ch, NULL, NULL, TO_CHAR);
       return;
     }
 
     affect_strip(ch, gsn_gift_visageoffenris);
-    act("You release Fenrir's gift, gaining your regular countenance.", ch, NULL, NULL, TO_CHAR);
+    act("You release Fenris's gift, gaining your regular countenance.", ch, NULL, NULL, TO_CHAR);
     return;
   }
 
@@ -2316,10 +2316,11 @@ void spell_gift_visageoffenris( int sn, int level, CHAR_DATA *ch, void *vo, int 
 
   for ( rch = ch->in_room->people; rch != NULL; rch = rch->next_in_room )
   {
-    if ( rch->fighting != NULL )
+    if ( rch->fighting != NULL && (rch->level <= ch->level + 10 + successes)
+      && (IS_NPC(rch) && !IS_SET(rch->off_flags, OFF_ULTRA_MOB)) && !IS_SET(rch->imm_flags,IMM_CHARM))
       stop_fighting( rch, TRUE );
     if (rch == ch)
-      act("Using your Gaia bestowed gift, you command respect and fear from those around you.", ch, NULL, rch, TO_CHAR);
+      act("Using your Gaia bestowed gift, you command respect and fear from those around you in the name of Fenris.", ch, NULL, rch, TO_CHAR);
     else
       act("With a stern glare, $n appears much more fearsome, cowing you into brief submission and respect.", ch, NULL, rch, TO_VICT);
   }
@@ -2332,7 +2333,6 @@ void spell_gift_visageoffenris( int sn, int level, CHAR_DATA *ch, void *vo, int 
   af.location  = 0;
   af.bitvector = 0;
   affect_to_char( ch, &af );
-  return;
 
   return;
 }

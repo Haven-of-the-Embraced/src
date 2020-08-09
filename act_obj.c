@@ -2687,6 +2687,15 @@ CHAR_DATA *find_keeper( CHAR_DATA *ch )
     }
 
     /*
+     * Invisible or hidden people.
+     */
+    if ( !can_see( keeper, ch ) )
+    {
+    do_function(keeper, &do_say, "I don't trade with folks I can't see.");
+    return NULL;
+    }
+
+    /*
      * Undesirables.
      *
     if ( !IS_NPC(ch) && IS_SET(ch->act, PLR_KILLER) )
@@ -2724,15 +2733,6 @@ CHAR_DATA *find_keeper( CHAR_DATA *ch )
     do_function(keeper, &do_say, "Sorry, I am closed. Come back tomorrow.");
     sprintf(buf, "My hours of operation are from %s to %s.", open, close);
     do_function(keeper, &do_say, buf);
-    return NULL;
-    }
-
-    /*
-     * Invisible or hidden people.
-     */
-    if ( !can_see( keeper, ch ) )
-    {
-    do_function(keeper, &do_say, "I don't trade with folks I can't see.");
     return NULL;
     }
 

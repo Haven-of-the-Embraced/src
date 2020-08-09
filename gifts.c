@@ -2271,6 +2271,18 @@ void spell_gift_visageoffenris( int sn, int level, CHAR_DATA *ch, void *vo, int 
 
   if (successes < 0)
   {
+    act("You attempt to command respect and fear from those around you, but everyone only seems to laugh.", ch, NULL, rch, TO_CHAR);
+    act("$n tries to appear more intimidating, but the affect only appears comical.", ch, NULL, rch, TO_NOTVICT);
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_gift_visageoffenris;
+    af.level     = 0;
+    af.duration  = 2;
+    af.modifier  = 1;
+    af.location  = APPLY_CS_CHA;
+    af.bitvector = 0;
+    affect_to_char( ch, &af );
+    af.location  = APPLY_CS_MAN;
+    affect_to_char( ch, &af );
     return;
   }
 
@@ -2278,6 +2290,14 @@ void spell_gift_visageoffenris( int sn, int level, CHAR_DATA *ch, void *vo, int 
   {
     act("You attempt to command respect and fear from those around you, but nobody seems impressed.", ch, NULL, rch, TO_CHAR);
     act("$n tries to appear more intimidating, but you aren't impressed in the slightest.", ch, NULL, rch, TO_NOTVICT);
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_gift_visageoffenris;
+    af.level     = 0;
+    af.duration  = 1;
+    af.modifier  = 0;
+    af.location  = 0;
+    af.bitvector = 0;
+    affect_to_char( ch, &af );
     return;
   }
 
@@ -2293,7 +2313,7 @@ void spell_gift_visageoffenris( int sn, int level, CHAR_DATA *ch, void *vo, int 
 
   af.where     = TO_AFFECTS;
   af.type      = gsn_gift_visageoffenris;
-  af.level     = 1;
+  af.level     = ch->level;
   af.duration  = successes;
   af.modifier  = 0;
   af.location  = 0;

@@ -1383,7 +1383,7 @@ const struct    gift_type   gift_table  [MAX_GIFTS_CODED]  =
     {   "halo of the sun", 				0,     24, 0,     0,      0,          CHILDREN_OF_GAIA, 5,   0},
     {   "the living wood", 				0,     24, 0,     0,      0,          CHILDREN_OF_GAIA, 5,   0},
     {   "hunters harmony", 				0,     24, 0,     0,      0,          FENRIR,   1,   0},
-    {   "visage of fenris", 			0,     24, 0,     0,      0,          FENRIR,   1,   0},
+    {   "visage of fenris", 			1,     24, 0,     0,      0,          FENRIR,   1,   0},
     {   "halt the cowards flight", 		0,     24, 0,     0,      0,          FENRIR,   2,   0},
     {   "sense guilt", 					0,     24, 0,     0,      0,          FENRIR,   2,   0},
     {   "might of thor", 				0,     24, 0,     0,      0,          FENRIR,   3,   0},

@@ -2744,8 +2744,8 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
     &gsn_gift_huntersharmony,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     {   "visage of fenris", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_visageoffenris,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_visageoffenris,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_visageoffenris,  TAR_IGNORE, POS_FIGHTING,
+    &gsn_gift_visageoffenris,          SLOT( 0),        0,     12, "",             "The power of Fenris leaves your body, leaving you less intimidating.",        "" },
 
     {   "halt the cowards flight", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
      { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_haltthecowardsflight,  TAR_IGNORE, POS_STANDING,

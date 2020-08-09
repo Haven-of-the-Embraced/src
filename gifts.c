@@ -2267,10 +2267,28 @@ void spell_gift_visageoffenris( int sn, int level, CHAR_DATA *ch, void *vo, int 
   AFFECT_DATA af;
   int successes;
 
+  successes = godice(get_attribute(ch, CHARISMA) + get_ability(ch, CSABIL_INTIMIDATION), 6);
+
+  if (successes < 0)
+  {
+    return;
+  }
+
+  if (successes == 0)
+  {
+    act("You attempt to command respect and fear from those around you, but nobody seems impressed.", ch, NULL, rch, TO_CHAR);
+    act("$n tries to appear more intimidating, but you aren't impressed in the slightest.", ch, NULL, rch, TO_NOTVICT);
+    return;
+  }
+
   for ( rch = ch->in_room->people; rch != NULL; rch = rch->next_in_room )
   {
     if ( rch->fighting != NULL )
       stop_fighting( rch, TRUE );
+    if (rch == ch)
+      act("Using your Gaia bestowed gift, you command respect and fear from those around you.", ch, NULL, rch, TO_CHAR);
+    else
+      act("With a stern glare, $n appears much more fearsome, cowing you into brief submission and respect.", ch, NULL, rch, TO_VICT);
   }
 
   af.where     = TO_AFFECTS;

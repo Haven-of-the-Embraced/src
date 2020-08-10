@@ -1112,6 +1112,8 @@ if (ch->qpoints > MAX_QPOINTS)
        }
         // Doing math ahead of time so variables match
         qpaward = UMIN(200+ch->remorts, qpgain);
+        if (qpaward > 50)
+          qpaward = 50;
 
        if (ch->pcdata->last_pose < 8)
         {

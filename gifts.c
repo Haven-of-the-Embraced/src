@@ -2280,6 +2280,13 @@ void spell_gift_visageoffenris( int sn, int level, CHAR_DATA *ch, void *vo, int 
     return;
   }
 
+  if (ch->cswillpower < 1)
+  {
+    send_to_char("Your do not have enough Willpower to be worthy of this mighty gift from Fenris.\n\r", ch);
+    return;
+  }
+
+  ch->cswillpower--;
   successes = godice(get_attribute(ch, CHARISMA) + get_ability(ch, CSABIL_INTIMIDATION), 6);
 
   if (successes < 0)
@@ -2327,8 +2334,8 @@ void spell_gift_visageoffenris( int sn, int level, CHAR_DATA *ch, void *vo, int 
 
   af.where     = TO_AFFECTS;
   af.type      = gsn_gift_visageoffenris;
-  af.level     = ch->level;
-  af.duration  = successes;
+  af.level     = ch->level + successes;
+  af.duration  = successes + 3;
   af.modifier  = 0;
   af.location  = 0;
   af.bitvector = 0;

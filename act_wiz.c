@@ -7409,7 +7409,13 @@ void do_copyover (CHAR_DATA *ch, char * argument)
     do_function( NULL, &do_asave, "quests");
     write_to_descriptor (ch->desc->descriptor, "Proceeding to copyover...\n\r", 0);
 
-    sprintf (buf, "\n\r *** COPYOVER by %s - please remain seated!\n\r", ch->name);
+    sprintf (buf, "\n\r\n\r *** Pull the Lever, Kronk! \n\r\n\r");
+
+    for (d = descriptor_list; d ; d = d->next)
+    {
+        write_to_descriptor(d->descriptor, buf, 0);
+    }
+
 
     if (!copyover_handler())
     {
@@ -7452,7 +7458,7 @@ void copyover_recover ()
             break;
 
         /* Write something, and check if it goes error-free */
-        if (!write_to_descriptor (desc, "\n\rRestoring from copyover...\n\r",0))
+        if (!write_to_descriptor (desc, "\n\r *** WRONG LEEVEEEEEEERRRRRRRR!!\n\r",0))
         {
             close (desc); /* nope */
             continue;
@@ -7514,8 +7520,7 @@ void copyover_recover ()
                 char_to_room(d->character->pet,d->character->in_room);
                 act("$n materializes!.",d->character->pet,NULL,NULL,TO_ROOM);
             }
-            sendch ("\n\r{DCopyover recovery complete.{x\n\r", d->character);
-            sendch ("{DYour group should have persisted over copyover. \n\rIf it did not, You'll have to {wfollow{D your leader again.{x\n\r", d->character);
+            sendch ("\n\r{DYour molecules have been restabilized.\n\r{wYou may feel violently ill. This is completely normal.{x\n\r", d->character);
         }
             extern bool slaughter;
     extern bool doubleexp;

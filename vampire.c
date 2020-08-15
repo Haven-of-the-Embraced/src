@@ -458,16 +458,14 @@ void do_feed(CHAR_DATA *ch, char *argument)
         else name = victim->name;
         chance = number_range(1, 100);
         diff = 6;
-        if (is_affected(victim, gsn_celbuff))
-            diff += 2;
-        if (is_affected(ch, gsn_celbuff))
-            diff -= 1;
-        if (IS_AFFECTED(ch,AFF_SLOW) || IS_AFFECTED(victim, AFF_HASTE))
+        if (IS_AFFECTED(ch,AFF_SLOW) || IS_AFFECTED(victim, AFF_HASTE) || is_affected(victim, gsn_celbuff))
             diff += 1;
-        if (IS_AFFECTED(victim,AFF_SLOW) || IS_AFFECTED(ch, AFF_HASTE))
+        if (IS_AFFECTED(victim,AFF_SLOW) || IS_AFFECTED(ch, AFF_HASTE) || is_affected(ch, gsn_celbuff))
             diff -= 1;
         if (victim->hit < victim->max_hit/2)
-            diff -= 2;
+            diff -= 1;
+        if (is_affected(victim, gsn_bleeding))
+            diff--;
 
         success = godice(get_attribute(ch, DEXTERITY) + ch->csabilities[CSABIL_ATHLETICS] + ch->pcdata->csbackgrounds[CSBACK_HERD], diff);
 

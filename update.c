@@ -1124,6 +1124,7 @@ if (ch->qpoints > MAX_QPOINTS)
              ch->totalqpoints += qpaward;
         }
 
+/*
        if (doubleexp)
            {
            qpaward = qpaward*2;
@@ -1137,7 +1138,7 @@ if (ch->qpoints > MAX_QPOINTS)
            ch->qpoints += qpaward;
            ch->totalqpoints += qpaward;
        }
-
+*/
 
        if (ch->qpoints > MAX_QPOINTS)
            ch->qpoints = MAX_QPOINTS;

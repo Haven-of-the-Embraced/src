@@ -7373,7 +7373,7 @@ void do_copyover (CHAR_DATA *ch, char * argument)
                 sprintf(bcolor, "{W");
 
     /*Format it up.*/
-            sprintf(buf3, "%s[ %s %3d %-6.6s %3d %3d %3d> {D<{w%2d{D> %s%s@%s{x\n\r",
+            sprintf(buf3, "%s[ %s %3d %-6.6s %3d %3d %3d> {D<{w%4d{D> %s%s@%s{x\n\r",
             bcolor, (wch->pcdata->true_sex == 1) ? "M" : "F",
             wch->level, pc_race_table[wch->race].who_name,
             (int) wch->hit*100/(wch->max_hit==0?1:wch->max_hit),
@@ -7387,10 +7387,10 @@ void do_copyover (CHAR_DATA *ch, char * argument)
             }
         sendch("\n\r{W*Type 'copyover legend' for color codes.*{x\n\r", ch);
         sendch("{D     L{x\n\r", ch);
-        sendch("{D     E   R          M    M    I     N        H{x\n\r", ch);
-        sendch("{D  S  V   A          A    O    D     A        O{x\n\r", ch);
-        sendch("{D  E  E   C      H   N    V    L     M        S{x\n\r", ch);
-        sendch("{D  X  L   E      P   A    E    E     E        T{x\n\r", ch);
+        sendch("{D     E   R          M    M     I     N        H{x\n\r", ch);
+        sendch("{D  S  V   A          A    O     D     A        O{x\n\r", ch);
+        sendch("{D  E  E   C      H   N    V     L     M        S{x\n\r", ch);
+        sendch("{D  X  L   E      P   A    E     E     E        T{x\n\r", ch);
         page_to_char(buf_string(output), ch);
         free_buf(output);
         return;

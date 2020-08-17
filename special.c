@@ -1469,6 +1469,7 @@ bool spec_potence( CHAR_DATA *ch )
     CHAR_DATA *v_next;
     char *spell;
     int sn, num;
+    int potence, successes, damagesuccess;
 
     if ( ch->position != POS_FIGHTING )
         return FALSE;
@@ -1483,7 +1484,18 @@ bool spec_potence( CHAR_DATA *ch )
     if ( victim == NULL )
         return FALSE;
 
-    act( "$n roars and suddenly attacks with inhuman strength!",ch,NULL, victim, TO_ROOM );
+    act( "$n roars and winds up for a massive roundhouse punch!",ch,NULL, victim, TO_ROOM );
+
+    successes = godice(get_attribute(ch, DEXTERITY) + get_ability(ch, CSABIL_BRAWL), 6);
+    if (successes <= 0)
+    {
+      act("$n's swing goes wide, missing you!", ch, NULL, victim, TO_VICT);
+      act("$n's swing misses $N by a wide margin!", NULL, victim, TO_NOTVICT);
+      return FALSE;
+    }
+    potence = ch->level / 24;
+    damagesuccesses = godice(get_attribute(ch, STRENGTH) + potence, 6);
+
     damage( ch, ch, ch->max_hit/4, gsn_vamp_frenzy, DAM_FIRE, TRUE);
     multi_hit(ch,victim, TYPE_UNDEFINED);
     if(ch->level >= 25)

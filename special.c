@@ -73,6 +73,7 @@ DECLARE_SPEC_FUN(   spec_stake      );
 DECLARE_SPEC_FUN(   spec_bo_dog     );
 DECLARE_SPEC_FUN(   spec_lag        );
 DECLARE_SPEC_FUN(   spec_celerity   );
+DECLARE_SPEC_FUN(   spec_potence    );
 DECLARE_SPEC_FUN(   spec_questmaster);
 DECLARE_SPEC_FUN(   spec_evil_eye   );
 
@@ -110,6 +111,7 @@ const   struct  spec_type    spec_table[] =
     {   "spec_bo_dog",      spec_bo_dog     },
     {   "spec_lag",     spec_lag        },
     {   "spec_celerity",        spec_celerity       },
+    {   "spec_potence",         spec_potence        },
     {   "spec_questmaster",     spec_questmaster},
     {   "spec_jarjar",          spec_jarjar},
     {   "spec_evil_eye",        spec_evil_eye},
@@ -1460,7 +1462,7 @@ bool spec_celerity( CHAR_DATA *ch )
         multi_hit(ch,victim, TYPE_UNDEFINED);
     return TRUE;
 }
-/*
+
 bool spec_potence( CHAR_DATA *ch )
 {
     CHAR_DATA *victim;
@@ -1495,7 +1497,6 @@ bool spec_potence( CHAR_DATA *ch )
     }
     return TRUE;
 }
-*/
 
 bool spec_cast_acid( CHAR_DATA *ch )
 {

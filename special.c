@@ -74,7 +74,7 @@ DECLARE_SPEC_FUN(   spec_bo_dog     );
 DECLARE_SPEC_FUN(   spec_lag        );
 DECLARE_SPEC_FUN(   spec_celerity   );
 DECLARE_SPEC_FUN(   spec_questmaster);
-
+DECLARE_SPEC_FUN(   spec_evil_eye   );
 
 
 /* the function table */
@@ -112,6 +112,7 @@ const   struct  spec_type    spec_table[] =
     {   "spec_celerity",        spec_celerity       },
     {   "spec_questmaster",     spec_questmaster},
     {   "spec_jarjar",          spec_jarjar},
+    {   "spec_evil_eye",        spec_evil_eye},
     {   NULL,               NULL            }
 };
 
@@ -1608,4 +1609,75 @@ bool spec_cast_fire( CHAR_DATA *ch )
 
     (*skill_table[sn].spell_fun) ( sn, ch->level, ch, victim,TARGET_CHAR);
     return TRUE;
+}
+
+// Gilean's new mob spec progs
+bool spec_evil_eye( CHAR_DATA *ch )
+{
+  CHAR_DATA *victim;
+  CHAR_DATA *v_next;
+  int evileye = ch->level / 20;
+  int evileyesuccess = 0;
+  int evileyeaffect = 0;
+
+  if (ch->stopped > 0 || !IS_AWAKE(ch) || ch->position != POS_FIGHTING )
+    return FALSE;
+
+  evileyesuccess = godice(get_attribute(ch, MANIPULATION) + evileye, 5);
+  if (evileyesuccess <= 0)
+    return FALSE;
+
+  for(victim = ch->in_room->people; victim != NULL; victim = v_next )
+  {
+    v_next = victim->next_in_room;
+    if ( victim->fighting == ch && number_bits( 2 ) == 0 )
+      break;
+  }
+
+  if ( victim == NULL )
+    return FALSE;
+
+    AFFECT_DATA af;
+    act("With a sly look, $n focuses $s gaze directly at you, seemingly piercing you to your core.", ch, NULL, victim, TO_VICT);
+    act("$n shoots a quick look over at $N, who flinches momentarily.", ch, NULL, victim, TO_NOTVICT);
+    if(!IS_AFFECTED(victim, AFF_CURSE))
+    {
+      af.where     = TO_AFFECTS;
+      af.type      = gsn_curse;
+      af.level     = victim->level;
+      af.duration  = evileyesuccess + 5;
+      af.modifier  = 0;
+      af.location  = 0;
+      af.bitvector = AFF_CURSE;
+
+      evileyeaffect = number_range(0,4);
+      switch(evileyesuccess)
+      {
+        case 1:
+                af.modifier = ch->level * 10;
+                af.location = APPLY_AC;
+                act("$n utters quite loudly, '{WI hope your gear rots in this weather!'{x", ch, NULL, NULL, TO_NOTVICT);
+                break;
+        case 2:
+                af.modifier = -2;
+                af.location = APPLY_CS_DEX;
+                act("$n spits out in anger, '{WMay you be as graceful as a cow on ice!'{x", ch, NULL, NULL, TO_NOTVICT);
+                break;
+        case 3:
+                af.modifier = -(victim->level * 10);
+                af.location = APPLY_MOVE;
+                act("$n intones briefly, '{WLet the weariness of your mind work through your muscles!'", ch, NULL, NULL, TO_NOTVICT);
+                break;
+        default:
+                af.modifier  = -(ch->level) * 5;
+                af.location  = APPLY_HITROLL;
+                act("$n jeers, '{WYou cannot hit the broad side of your mother's rear end!{x", ch, NULL, NULL, TO_NOTVICT);
+                break;
+      }
+      affect_to_char( victim, &af );
+
+      send_to_char("You feel uneasy under the scrutiny of the Evil Eye.\n\r", victim);
+    }
+
+  return TRUE;
 }

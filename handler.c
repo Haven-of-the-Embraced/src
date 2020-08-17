@@ -716,9 +716,36 @@ int IS_VAMP( CHAR_DATA *ch )
     else
     return 0;
 }
+
 bool has_blood( CHAR_DATA *ch )
 {
 	if(
+	ch->race == race_lookup("bane") ||
+  ch->race == race_lookup("centipede") ||
+	ch->race == race_lookup("construct") ||
+	ch->race == race_lookup("elemental") ||
+	ch->race == race_lookup("insect") ||
+  ch->race == race_lookup("ooze") ||
+	ch->race == race_lookup("shadow") ||
+	ch->race == race_lookup("spider") ||
+	ch->race == race_lookup("spirit") ||
+	ch->race == race_lookup("undead") ||
+	ch->race == race_lookup("vegetation") ||
+	ch->race == race_lookup("wraith") ||
+  ch->race == race_lookup("placeholder") ||
+	ch->race == race_lookup("unique")
+    )
+		return FALSE;
+
+	else
+		return TRUE;
+}
+
+bool breathes( CHAR_DATA *ch )
+{
+	if(
+  ch->race == race_lookup("methuselah") ||
+  ch->race == race_lookup("vampire") ||
 	ch->race == race_lookup("bane") ||
   ch->race == race_lookup("centipede") ||
 	ch->race == race_lookup("construct") ||

@@ -1471,7 +1471,7 @@ bool spec_potence( CHAR_DATA *ch )
     int sn, num;
     int potence, successes, damagesuccess;
 
-    if ( ch->position != POS_FIGHTING )
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected(ch, gsn_forget))
         return FALSE;
 
     for ( victim = ch->in_room->people; victim != NULL; victim = v_next )
@@ -1484,29 +1484,24 @@ bool spec_potence( CHAR_DATA *ch )
     if ( victim == NULL )
         return FALSE;
 
-    act( "$n roars and winds up for a massive roundhouse punch!",ch,NULL, victim, TO_ROOM );
+    act( "$n roars and winds up for a massive roundhouse punch!", ch, NULL, victim, TO_ROOM );
 
     successes = godice(get_attribute(ch, DEXTERITY) + get_ability(ch, CSABIL_BRAWL), 6);
     if (successes <= 0)
     {
       act("$n's swing goes wide, missing you!", ch, NULL, victim, TO_VICT);
-      act("$n's swing misses $N by a wide margin!", NULL, victim, TO_NOTVICT);
+      act("$n's swing misses $N by a wide margin!", ch, NULL, victim, TO_NOTVICT);
       return FALSE;
     }
     potence = ch->level / 24;
-    damagesuccesses = godice(get_attribute(ch, STRENGTH) + potence, 6);
+    damagesuccess = godice(get_attribute(ch, STRENGTH) + potence, 6);
 
-    damage( ch, ch, ch->max_hit/4, gsn_vamp_frenzy, DAM_FIRE, TRUE);
-    multi_hit(ch,victim, TYPE_UNDEFINED);
-    if(ch->level >= 25)
-        multi_hit(ch,victim, TYPE_UNDEFINED);
-    if(ch->level >= 50)
-        multi_hit(ch,victim, TYPE_UNDEFINED);
-    if(ch->level >= 75)
-        multi_hit(ch,victim, TYPE_UNDEFINED);
-    if(ch->level >= 100)
-        multi_hit(ch,victim, TYPE_UNDEFINED);
-    }
+    act("With a resounding crack, $n's punch collides into your chest cavity!", ch, NULL, victim, TO_VICT);
+    act("With a loud crack, $n punches $N directly in the chest!", ch, NULL, victim, TO_NOTVICT);
+    d10_damage(ch, victim, damagesuccess, ch->level*4, gsn_hand_to_hand, DAM_BASH, DEFENSE_ARMOR, TRUE, TRUE);
+    DAZE_STATE(victim, 3*PULSE_VIOLENCE);
+    victim->stopped += 1 + successes;
+
     return TRUE;
 }
 

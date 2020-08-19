@@ -299,7 +299,7 @@ void spell_gift_staredown( int sn, int level, CHAR_DATA *ch, void *vo, int targe
       act( "$N pauses for a moment, frozen in fear.",  ch, NULL, victim, TO_NOTVICT );
       act( "$N freezes with fear under your fierce gaze.",  ch, NULL, victim, TO_CHAR );
       act( "$n's gaze fills you with terror as you freeze momentarily with fear.",  ch, NULL, victim, TO_VICT );
-      ch->stopped += staresuccess * 2;
+      victim->stopped += staresuccess * 2;
       return;
     }
 

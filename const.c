@@ -1835,7 +1835,7 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
 
     { "hand to hand",     { 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,     TAR_IGNORE,     POS_FIGHTING,
-    &gsn_hand_to_hand,  SLOT( 0),   0,  0, "",         "!Hand to Hand!",   "" },
+    &gsn_hand_to_hand,  SLOT( 0),   0,  0, "punch",         "!Hand to Hand!",   "" },
 
     { "kick",                 { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_CHAR_OFFENSIVE,     POS_FIGHTING,

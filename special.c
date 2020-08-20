@@ -1469,7 +1469,7 @@ bool spec_potence( CHAR_DATA *ch )
     CHAR_DATA *v_next;
     char *spell;
     int sn, num;
-    int potence, successes, damagesuccess;
+    int potence, successes, damagesuccess, damagemod;
 
     if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected(ch, gsn_forget))
         return FALSE;
@@ -1493,12 +1493,18 @@ bool spec_potence( CHAR_DATA *ch )
       act("$n's swing misses $N by a wide margin!", ch, NULL, victim, TO_NOTVICT);
       return FALSE;
     }
-    potence = ch->level / 24;
+    potence = ch->level / 12;
     damagesuccess = godice(get_attribute(ch, STRENGTH) + potence, 6);
+    if (damagesuccess <= 0)
+      damagesuccess = 1;
+    damagemod = number_range(ch->level * 3 / 2, ch->level * 2);
 
     act("With a resounding crack, $n's punch collides into your chest cavity!", ch, NULL, victim, TO_VICT);
     act("With a loud crack, $n punches $N directly in the chest!", ch, NULL, victim, TO_NOTVICT);
-    d10_damage(ch, victim, damagesuccess, ch->level*4, gsn_hand_to_hand, DAM_BASH, DEFENSE_ARMOR, TRUE, TRUE);
+/*  -- D10 damage calculations removed until d10 for mobs fixed and calculated correctly
+    d10_damage(ch, victim, damagesuccess, damagemod*4 , gsn_hand_to_hand, DAM_BASH, DEFENSE_ARMOR, TRUE, TRUE);
+*/
+    damage(ch, victim, damagemod * damagesuccess, gsn_hand_to_hand, DAM_BASH, TRUE);
     DAZE_STATE(victim, 3*PULSE_VIOLENCE);
     victim->stopped += 1 + successes;
 

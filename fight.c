@@ -5023,9 +5023,7 @@ void do_disarm( CHAR_DATA *ch, char *argument )
 {
     CHAR_DATA *victim;
     OBJ_DATA *obj;
-    int chance,hth,ch_weapon,vict_weapon,ch_vict_weapon;
-
-    hth = 0;
+    OBJ_DATA *wielded;
 
     if (IS_SET(ch->act,PLR_ARENA))
     {
@@ -5033,17 +5031,17 @@ void do_disarm( CHAR_DATA *ch, char *argument )
         return;
     }
 
-    if ((chance = get_skill(ch,gsn_disarm)) == 0)
+    if ((get_skill(ch,gsn_disarm)) == 0)
     {
-    send_to_char( "You don't know how to disarm opponents.\n\r", ch );
+    send_to_char( "You don't know the proper disarming techniques.\n\r", ch );
     return;
     }
 
-    if ( get_eq_char( ch, WEAR_WIELD ) == NULL
-    &&   ((hth = get_skill(ch,gsn_hand_to_hand)) == 0
+    if ( wielded = get_eq_char( ch, WEAR_WIELD ) == NULL
+    &&   ((get_skill(ch,gsn_hand_to_hand)) == 0
     ||    (IS_NPC(ch) && !IS_SET(ch->off_flags,OFF_DISARM))))
     {
-    send_to_char( "You must wield a weapon to disarm.\n\r", ch );
+    send_to_char( "You must be wielding a weapon to disarm your opponent.\n\r", ch );
     return;
     }
 
@@ -5059,41 +5057,45 @@ void do_disarm( CHAR_DATA *ch, char *argument )
     return;
     }
 
-    if (IS_SET(victim->imm_flags, IMM_DISARM))
+    if (!IS_NPC(ch) && ch->move <= ch->level / 4)
     {
-        WAIT_STATE(ch,skill_table[gsn_disarm].beats);
-		act("You fail to disarm $N.",ch,NULL,victim,TO_CHAR);
-		act("$n tries to disarm you, but fails.",ch,NULL,victim,TO_VICT);
-		act("$n tries to disarm $N, but fails.",ch,NULL,victim,TO_NOTVICT);
-        return;
+      send_to_char("You are too tired to pull off that maneuver.\n\r", ch);
+      return;
     }
 
-    /* find weapon skills */
-    ch_weapon = get_weapon_skill(ch,get_weapon_sn(ch));
-    vict_weapon = get_weapon_skill(victim,get_weapon_sn(victim));
-    ch_vict_weapon = get_weapon_skill(ch,get_weapon_sn(victim));
+    if (!IS_NPC(ch))
+      ch->move -= ch->level / 4;
 
-	if (IS_NPC(ch))
-	{
-		/* modifiers */
-		/* skill */
-		if ( get_eq_char(ch,WEAR_WIELD) == NULL)
-		chance = chance * hth/150;
-		else
-		chance = chance * ch_weapon/100;
+	   int success, dice, diff;
+	   success = dice = diff = 0;
+	   // Disarm is rolled as a regular attack, but if the successes are greater than
+	   // victim/s strength, they take no damage and the weapon goes flying.
+	   dice = get_attribute(ch, DEXTERITY) + get_ability(ch, CSABIL_MELEE);
+     if (wielded == NULL && !IS_NPC(ch))
+      success = godice(dice,8);
+     else
+	    success = godice(dice, 7);
 
-		chance += (ch_vict_weapon/2 - vict_weapon) / 2;
+     if (success < 0)
+     {
+       act("You strike at a perceived opening, only to find yourself disarmed by $N's quick maneuver!", ch, NULL, victim, TO_CHAR);
+       act("With quick precision, you knock $n's weapon away, foiling $s attack!", ch, NULL, victim, TO_VICT);
+       act("$n strikes out at $N's weapon, but has $s own weapon knocked away instead!", ch, NULL, victim, TO_NOTVICT);
+		   disarm( victim, ch );
+       return;
+     }
 
-		/* dex vs. strength */
-		chance += get_curr_stat(ch,STAT_DEX);
-		chance -= 2 * get_curr_stat(victim,STAT_STR);
+    if (success == 0)
+    {
+      act("You try to strike at $N's weapon, but $E deftly moves away.", ch, NULL, victim, TO_CHAR);
+      act("$n tries to strike at your weapon, but you react quickly and move to the side.", ch, NULL, victim, TO_VICT);
+      act("With a quick movement, $n strikes at $N's weapon, but misses completely.", ch, NULL, victim, TO_NOTVICT);
+  		WAIT_STATE(ch,skill_table[gsn_disarm].beats);
+			check_improve(ch,gsn_disarm,FALSE,2);
+      return;
+    }
 
-		/* level */
-		chance += (ch->level - victim->level);
-		chance /= 2;
-
-
-		if(is_affected(victim,gsn_precognition) && number_percent() > 50)
+    if(is_affected(victim,gsn_precognition) && number_percent() > 50)
 		{
     		act("You attempt to disarm $N, but $E twists to the side, holding $S weapon tightly!", ch, NULL, victim, TO_CHAR);
     		act("You sense $n striking in to try and disarm you, but you twist to the side and hold your weapon tightly.", ch, NULL, victim, TO_VICT);
@@ -5101,69 +5103,40 @@ void do_disarm( CHAR_DATA *ch, char *argument )
     		return;
 		}
 
-		/* and now the attack */
-		if (number_percent() < chance)
+		diff = get_attribute(victim, STRENGTH);
+
+		if (diff > 6)
+			diff = 6;
+		if (diff < 1)
+			diff = 1;
+
+		if (success > diff)
 		{
+      if (IS_SET(victim->imm_flags, IMM_DISARM) || IS_SET(victim->off_flags, OFF_ULTRA_MOB))
+        {
+          WAIT_STATE(ch,skill_table[gsn_disarm].beats);
+          act("Your attack lands true, but $N manages to hold $S weapon tightly.",ch,NULL,victim,TO_CHAR);
+          act("$n tries to disarm you, but you hold tightly to your weapon.",ch,NULL,victim,TO_VICT);
+          act("$n tries to disarm $N, but seems to have failed.",ch,NULL,victim,TO_NOTVICT);
+          return;
+        }
 			WAIT_STATE( ch, skill_table[gsn_disarm].beats );
-		disarm( ch, victim );
-		check_improve(ch,gsn_disarm,TRUE,2);
+      act("Sensing an opening, you strike out at $N's weapon!", ch, NULL, victim, TO_CHAR);
+      act("$n strikes swiftly, aiming for your weapon!", ch, NULL, victim, TO_VICT);
+      act("$n strikes out towards $N's weapon!", ch, NULL, victim, TO_NOTVICT);
+			disarm( ch, victim );
+			check_improve(ch,gsn_disarm,TRUE,6);
 		}
-		else
+    else
 		{
-		WAIT_STATE(ch,skill_table[gsn_disarm].beats);
-		act("You fail to disarm $N.",ch,NULL,victim,TO_CHAR);
-		act("$n tries to disarm you, but fails.",ch,NULL,victim,TO_VICT);
-		act("$n tries to disarm $N, but fails.",ch,NULL,victim,TO_NOTVICT);
-		check_improve(ch,gsn_disarm,FALSE,2);
-		}
-		return;
-	} else
-		{ // CH is pc.
-		int success, dice, diff;
-		success = dice = diff = 0;
-		// Disarm is rolled as a regular attack, but if the successes are greater than
-		// victim/s strength, they take no damage and the weapon goes flying.
-		dice = get_attribute(ch, DEXTERITY) + get_ability(ch, CSABIL_MELEE);
-		success = godice(dice, 7);
-
-		if (success > 0)
-		{
-			if (IS_NPC(victim))
-				diff = (victim->level/12);
-			else
-				diff = get_attribute(ch, STRENGTH);
-
-			if (diff > 6)
-				diff = 6;
-			if (diff < 1)
-				diff = 1;
-
-			if (success > diff)
-			{
-				WAIT_STATE( ch, skill_table[gsn_disarm].beats );
-				disarm( ch, victim );
-				check_improve(ch,gsn_disarm,TRUE,2);
-			} else
-				{
-				act("You fail to disarm $N, hitting $M instead.", ch, NULL, victim, TO_CHAR);
-				WAIT_STATE(ch,skill_table[gsn_disarm].beats);
-				one_hit( ch, victim, TYPE_UNDEFINED );
-				check_improve(ch,gsn_disarm,FALSE,2);
-				return;
-				}
-		} else {
+			act("You miss your opening to strike at $N, but still manage to try for a connecting attack.", ch, NULL, victim, TO_CHAR);
 			WAIT_STATE(ch,skill_table[gsn_disarm].beats);
-			act("You fail to disarm $N.",ch,NULL,victim,TO_CHAR);
-			act("$n tries to disarm you, but fails.",ch,NULL,victim,TO_VICT);
-			act("$n tries to disarm $N, but fails.",ch,NULL,victim,TO_NOTVICT);
+			one_hit( ch, victim, TYPE_UNDEFINED );
 			check_improve(ch,gsn_disarm,FALSE,2);
+			return;
 		}
-
-	}
-
-
+    gain_exp(ch, success * 2);
 }
-
 
 
 void do_surrender( CHAR_DATA *ch, char *argument )

@@ -1316,19 +1316,19 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
  * Magic spells.
  */
 
-    {    "reserved", { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { "reserved", { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, 0, TAR_IGNORE, POS_STANDING,
     NULL, SLOT( 0),    0,  0,    "",         "",     ""    },
 
-    {    "acid blast", { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+    { "acid blast", { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
     { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_acid_blast, TAR_CHAR_OFFENSIVE, POS_FIGHTING,
     NULL, SLOT(70),   20, 12, "acid blast",       "!Acid Blast!"    },
 
-    {    "armor", {  7,  2, 10, 5, 102, 102, 102, 102, 102, 102, 11, 20, 10},
+    { "armor", {  7,  2, 10, 5, 102, 102, 102, 102, 102, 102, 11, 20, 10},
     { 1,  1,  2,  2 , 1, 1, 1, 1, 1, 1, 2, 2, 2}, spell_armor, TAR_CHAR_DEFENSIVE, POS_STANDING,
     NULL,           SLOT( 1),    5, 12,    "",         "You feel less armored.",   ""    },
 
-    {     "bless", { 102,  7, 102, 8, 102, 102, 102, 102, 102, 102, 68, 102, 102 },
+    { "bless", { 102,  7, 102, 8, 102, 102, 102, 102, 102, 102, 68, 102, 102 },
     { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 2, 2, 2}, spell_bless, TAR_OBJ_CHAR_DEF,   POS_STANDING,
     NULL,           SLOT( 3),    5, 12,    "",   "You feel less righteous.",    "$p's holy aura fades."    },
 
@@ -1344,377 +1344,405 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
     { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 4, 4, 4}, spell_call_lightning,   TAR_IGNORE,     POS_FIGHTING,
     &gsn_call_lightning,           SLOT( 6),   15, 12, "lightning bolt",   "!Call Lightning!", "" },
 
-    {   "calm",         { 48, 16, 50, 20 , 102, 102, 102, 102, 102, 102, 21, 25, 16},
+    { "calm",         { 48, 16, 50, 20 , 102, 102, 102, 102, 102, 102, 21, 25, 16},
     { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 2, 2, 2}, spell_calm,     TAR_IGNORE,     POS_FIGHTING,
     NULL,           SLOT(509),  30, 12, "",         "You have lost your peace of mind.",    "" },
 
     { "cancellation",     { 18, 26, 34, 34, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_cancellation, TAR_CHAR_DEFENSIVE, POS_FIGHTING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_cancellation, TAR_CHAR_DEFENSIVE, POS_FIGHTING,
     NULL,           SLOT(507),  20, 12, ""          "!cancellation!",   "" },
 
     { "cause critical",   { 102,  13, 102, 19, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_cause_critical,   TAR_CHAR_OFFENSIVE, POS_FIGHTING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_cause_critical,   TAR_CHAR_OFFENSIVE, POS_FIGHTING,
     NULL,           SLOT(63),   20, 12, "spell",        "!Cause Critical!", "" },
 
     { "cause light",      { 102,  1, 102, 3, 102, 102, 102, 102, 102, 102, 1, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_cause_light,  TAR_CHAR_OFFENSIVE, POS_FIGHTING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_cause_light,  TAR_CHAR_OFFENSIVE, POS_FIGHTING,
     &gsn_cause_light,           SLOT(62),   15, 12, "spell",        "!Cause Light!",    "" },
 
     { "cause serious",    { 102,  7, 102, 10, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_cause_serious,    TAR_CHAR_OFFENSIVE, POS_FIGHTING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_cause_serious,    TAR_CHAR_OFFENSIVE, POS_FIGHTING,
     NULL,           SLOT(64),   17, 12, "spell",        "!Cause Serious!",  "" },
 
     { "chain lightning",  { 33, 102, 39, 36, 102, 102, 102, 102, 102, 102, 37, 102, 30 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 4, 4, 4}, spell_chain_lightning,  TAR_CHAR_OFFENSIVE, POS_FIGHTING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 4, 4, 4}, spell_chain_lightning,  TAR_CHAR_OFFENSIVE, POS_FIGHTING,
     NULL,           SLOT(500),  25, 12, "lightning",        "!Chain Lightning!",    "" },
 
     { "change sex",       { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_change_sex,   TAR_CHAR_DEFENSIVE, POS_FIGHTING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_change_sex,   TAR_CHAR_DEFENSIVE, POS_FIGHTING,
     NULL,           SLOT(82),   15, 12, "",         "Your body feels familiar again.",  "" },
 
     { "change alignment",     { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_change_alignment, TAR_CHAR_DEFENSIVE, POS_FIGHTING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_change_alignment, TAR_CHAR_DEFENSIVE, POS_FIGHTING,
     NULL,           SLOT(45),   15, 12, "",         "Your aura returns to normal.", "" },
 
     { "charm person",     { 20, 102, 25, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_charm_person, TAR_CHAR_OFFENSIVE, POS_STANDING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_charm_person, TAR_CHAR_OFFENSIVE, POS_STANDING,
     &gsn_charm_person,  SLOT( 7),    5, 12, "",         "You feel more self-confident.",    "" },
 
     { "chill touch",      {  4, 102, 6, 6, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_chill_touch,  TAR_CHAR_OFFENSIVE, POS_FIGHTING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_chill_touch,  TAR_CHAR_OFFENSIVE, POS_FIGHTING,
     NULL,           SLOT( 8),   15, 12, "chilling touch",   "You feel less cold.",  "" },
 
     { "colour spray",     { 16, 102, 22, 20, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_colour_spray, TAR_CHAR_OFFENSIVE, POS_FIGHTING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_colour_spray, TAR_CHAR_OFFENSIVE, POS_FIGHTING,
     NULL,           SLOT(10),   15, 12, "colour spray",     "!Colour Spray!",   "" },
 
     { "continual light",  {  6,  4, 6, 9, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_continual_light,  TAR_IGNORE,     POS_STANDING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_continual_light,  TAR_IGNORE,     POS_STANDING,
     NULL,           SLOT(57),    7, 12, "",         "!Continual Light!",    "" },
 
     { "control weather",  { 15, 19, 28, 22, 102, 102, 102, 102, 102, 102, 15, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 2, 2, 2}, spell_control_weather,  TAR_IGNORE,     POS_STANDING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 2, 2, 2}, spell_control_weather,  TAR_IGNORE,     POS_STANDING,
     NULL,           SLOT(11),   25, 12, "",         "!Control Weather!",    "" },
 
     { "create food",      { 10, 5, 11, 12, 102, 102, 102, 102, 102, 102, 1, 1, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 2, 2, 2}, spell_create_food,  TAR_IGNORE,     POS_STANDING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 2, 2, 2}, spell_create_food,  TAR_IGNORE,     POS_STANDING,
     &gsn_create_food,           SLOT(12),    5, 12, "",         "!Create Food!",    "" },
 
     { "create rose",      { 16, 11, 10, 24, 102, 102, 102, 102, 102, 102, 29, 102, 102 },
-	{ 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 2, 2, 2 }, spell_create_rose,  TAR_IGNORE,     POS_STANDING,
+    { 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 2, 2, 2 }, spell_create_rose,  TAR_IGNORE,     POS_STANDING,
     NULL,           SLOT(511),  30,     12, "",         "!Create Rose!",    "" },
 
     { "create spring",    { 14, 17, 23, 20, 102, 102, 102, 102, 102, 102, 27, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 2, 2, 2}, spell_create_spring,    TAR_IGNORE,     POS_STANDING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 2, 2, 2}, spell_create_spring,    TAR_IGNORE,     POS_STANDING,
     &gsn_create_spring,           SLOT(80),   20, 12, "",         "!Create Spring!",  "" },
 
     { "create water",     { 8,  3, 12, 11, 102, 102, 102, 102, 102, 102, 3, 5, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 2, 2, 2}, spell_create_water, TAR_OBJ_INV,        POS_STANDING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 2, 2, 2}, spell_create_water, TAR_OBJ_INV,        POS_STANDING,
     &gsn_create_water,           SLOT(13),    5, 12, "",         "!Create Water!",   "" },
 
     { "cure blindness",   { 102,  6, 102, 8 , 102, 102, 102, 102, 102, 102, 7, 102, 102},
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 2, 2}, spell_cure_blindness,   TAR_CHAR_DEFENSIVE, POS_FIGHTING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 2, 2}, spell_cure_blindness,   TAR_CHAR_DEFENSIVE, POS_FIGHTING,
     &gsn_cure_blindness,           SLOT(14),    5, 12, "",         "!Cure Blindness!", "" },
 
     { "cure critical",    { 102,  13, 102, 19, 102, 102, 102, 102, 102, 102, 41, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_cure_critical,    TAR_CHAR_DEFENSIVE, POS_FIGHTING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_cure_critical,    TAR_CHAR_DEFENSIVE, POS_FIGHTING,
     NULL,           SLOT(15),   20, 12, "",         "!Cure Critical!",  "" },
 
     { "zeal",     {  102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 5},
-	{ 1,  1,  2,  2 , 1, 1, 1, 1, 1, 1, 1, 1, 3}, spell_zeal,     TAR_CHAR_SELF,  POS_STANDING,
+    { 1,  1,  2,  2 , 1, 1, 1, 1, 1, 1, 1, 1, 3}, spell_zeal,     TAR_CHAR_SELF,  POS_STANDING,
     &gsn_zeal,           SLOT( 49),   40,    12, "",         "The glory of God slowly fades from your body.",    "" },
 
     { "cure light",       { 102,  1, 102, 3, 102, 102, 102, 102, 102, 102, 5, 30, 1 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 2, 2}, spell_cure_light,   TAR_CHAR_DEFENSIVE, POS_FIGHTING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 2, 2}, spell_cure_light,   TAR_CHAR_DEFENSIVE, POS_FIGHTING,
     NULL,           SLOT(16),   10, 12, "",         "!Cure Light!",     "" },
 
     { "cure poison",      { 102,  14, 102, 16, 102, 102, 102, 102, 102, 102, 13, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 2, 2, 2}, spell_cure_poison,  TAR_CHAR_DEFENSIVE, POS_STANDING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 2, 2, 2}, spell_cure_poison,  TAR_CHAR_DEFENSIVE, POS_STANDING,
     &gsn_cure_poison,           SLOT(43),    5, 12, "",         "!Cure Poison!",    "" },
 
     { "cure serious",     { 102,  7, 102, 10, 102, 102, 102, 102, 102, 102, 25, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_cure_serious, TAR_CHAR_DEFENSIVE, POS_FIGHTING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_cure_serious, TAR_CHAR_DEFENSIVE, POS_FIGHTING,
     NULL,           SLOT(61),   15, 12, "",         "!Cure Serious!",   "" },
 
     { "curse",        { 18, 18, 26, 22, 102, 102, 102, 102, 102, 102, 43, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 4, 4, 4}, spell_curse,        TAR_OBJ_CHAR_OFF,   POS_FIGHTING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 4, 4, 4}, spell_curse,        TAR_OBJ_CHAR_OFF,   POS_FIGHTING,
     &gsn_curse,     SLOT(17),   20, 12, "curse",        "The curse wears off.", "$p is no longer impure." },
 
     { "demonfire",        { 102, 34, 102, 45, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_demonfire,    TAR_CHAR_OFFENSIVE, POS_FIGHTING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_demonfire,    TAR_CHAR_OFFENSIVE, POS_FIGHTING,
     NULL,           SLOT(505),  20, 12, "torments",     "!Demonfire!",      "" },
 
     { "detect evil",      { 11,  4, 12, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_detect_evil,  TAR_CHAR_SELF,      POS_STANDING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_detect_evil,  TAR_CHAR_SELF,      POS_STANDING,
     NULL,           SLOT(18),    5, 12, "",         "The red in your vision disappears.",   "" },
 
     { "detect good",          { 11,  4, 12, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_detect_good,      TAR_CHAR_SELF,          POS_STANDING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_detect_good,      TAR_CHAR_SELF,          POS_STANDING,
     NULL,                   SLOT(513),        5,     12, "",                     "The gold in your vision disappears.",  "" },
 
     { "detect hidden",    { 15, 11, 12, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_detect_hidden,    TAR_CHAR_SELF,      POS_STANDING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_detect_hidden,    TAR_CHAR_SELF,      POS_STANDING,
     &gsn_detect_hidden,         SLOT(44),    5, 12, "",         "You feel less aware of your surroundings.", "" },
 
     { "detect invis",     {  3,  8, 6, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_detect_invis, TAR_CHAR_SELF,      POS_STANDING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_detect_invis, TAR_CHAR_SELF,      POS_STANDING,
     &gsn_detect_invis,          SLOT(19),    5, 12, "",         "You no longer see invisible objects.", "" },
 
     { "detect magic",     {  2,  6, 5, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_detect_magic, TAR_CHAR_SELF,      POS_STANDING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_detect_magic, TAR_CHAR_SELF,      POS_STANDING,
     NULL,           SLOT(20),    5, 12, "",         "The detect magic wears off.",  "" },
 
     { "detect poison",    { 15,  7, 9, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_detect_poison,    TAR_OBJ_INV,        POS_STANDING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_detect_poison,    TAR_OBJ_INV,        POS_STANDING,
     NULL,           SLOT(21),    5, 12, "",         "!Detect Poison!",  "" },
 
     { "dispel evil",      { 102, 15, 102, 21, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_dispel_evil,  TAR_CHAR_OFFENSIVE, POS_FIGHTING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_dispel_evil,  TAR_CHAR_OFFENSIVE, POS_FIGHTING,
     NULL,           SLOT(22),   15, 12, "dispel evil",      "!Dispel Evil!",    "" },
 
     { "dispel good",          { 102, 15, 102, 21, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_dispel_good,      TAR_CHAR_OFFENSIVE,     POS_FIGHTING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_dispel_good,      TAR_CHAR_OFFENSIVE,     POS_FIGHTING,
     NULL,                   SLOT(512),      15,     12, "dispel good",          "!Dispel Good!",    "" },
 
     { "dispel magic",     { 16, 24, 30, 30, 102, 102, 102, 102, 102, 102, 70, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 2, 1, 1}, spell_dispel_magic, TAR_CHAR_OFFENSIVE, POS_FIGHTING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 2, 1, 1}, spell_dispel_magic, TAR_CHAR_OFFENSIVE, POS_FIGHTING,
     &gsn_dispel,           SLOT(59),   15, 12, "",         "!Dispel Magic!",   "" },
 
     { "earthquake",       { 102,  10, 102, 14, 102, 102, 102, 102, 102, 102, 45, 102, 45 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 4, 4, 4}, spell_earthquake,   TAR_IGNORE,     POS_FIGHTING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 4, 4, 4}, spell_earthquake,   TAR_IGNORE,     POS_FIGHTING,
     &gsn_earthquake,           SLOT(23),   15, 12, "earthquake",       "!Earthquake!",     "" },
 
     { "enchant armor",    { 16, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 2,  2,  4,  4, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_enchant_armor,    TAR_OBJ_INV,        POS_STANDING,
+    { 2,  2,  4,  4, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_enchant_armor,    TAR_OBJ_INV,        POS_STANDING,
     NULL,           SLOT(510),  100,    24, "",         "!Enchant Armor!",  "" },
 
     { "enchant weapon",   { 17, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 2,  2, 4,  4, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_enchant_weapon,   TAR_OBJ_INV,        POS_STANDING,
+    { 2,  2, 4,  4, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_enchant_weapon,   TAR_OBJ_INV,        POS_STANDING,
     NULL,           SLOT(24),   100,    24, "",         "!Enchant Weapon!", "" },
 
     { "energy drain",     { 19, 22, 26, 23, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_energy_drain, TAR_CHAR_OFFENSIVE, POS_FIGHTING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_energy_drain, TAR_CHAR_OFFENSIVE, POS_FIGHTING,
     NULL,           SLOT(25),   35, 12, "energy drain",     "!Energy Drain!",   "" },
 
     { "faerie fire",      {  6,  3, 5, 8, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_faerie_fire,  TAR_CHAR_OFFENSIVE, POS_FIGHTING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_faerie_fire,  TAR_CHAR_OFFENSIVE, POS_FIGHTING,
     NULL,           SLOT(72),    5, 12, "faerie fire",      "The pink aura around you fades away.", "" },
 
     { "faerie fog",       { 14, 21, 16, 24, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_faerie_fog,   TAR_IGNORE,     POS_STANDING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_faerie_fog,   TAR_IGNORE,     POS_STANDING,
     NULL,           SLOT(73),   12, 12, "faerie fog",       "!Faerie Fog!",     "" },
 
     { "farsight",     { 14, 16, 16, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_farsight,     TAR_IGNORE,     POS_STANDING,
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_farsight,     TAR_IGNORE,     POS_STANDING,
     NULL,           SLOT(521),  36, 20, "farsight",     "!Farsight!",       "" },
 
     { "fireball",     { 22, 102, 30, 26, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_fireball,     TAR_CHAR_OFFENSIVE, POS_FIGHTING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_fireball,     TAR_CHAR_OFFENSIVE, POS_FIGHTING,
     NULL,           SLOT(26),   15, 12, "fireball",     "!Fireball!",       "" },
 
     { "fireproof",        { 13, 12, 19, 18, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_fireproof,    TAR_OBJ_INV,        POS_STANDING,
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_fireproof,    TAR_OBJ_INV,        POS_STANDING,
     NULL,           SLOT(523),  10, 12, "",         "", "$p's protective aura fades." },
 
     { "flamestrike",      { 102, 20, 102, 27, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_flamestrike,  TAR_CHAR_OFFENSIVE, POS_FIGHTING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_flamestrike,  TAR_CHAR_OFFENSIVE, POS_FIGHTING,
     NULL,           SLOT(65),   20, 12, "flamestrike",      "!Flamestrike!",        "" },
 
     { "fly",          { 10, 18, 20, 22, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_fly,      TAR_CHAR_DEFENSIVE, POS_STANDING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_fly,      TAR_CHAR_DEFENSIVE, POS_STANDING,
     NULL,           SLOT(56),   10, 18, "",         "You slowly float to the ground.",  "" },
 
     { "floating disc",    {  4, 10, 7, 16, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_floating_disc,    TAR_IGNORE,     POS_STANDING,
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_floating_disc,    TAR_IGNORE,     POS_STANDING,
     NULL,           SLOT(522),  40, 24, "",         "!Floating disc!",  "" },
 
     { "frenzy",               { 102, 24, 102, 26, 102, 102, 102, 102, 102, 102, 75, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_frenzy,           TAR_CHAR_DEFENSIVE,     POS_STANDING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_frenzy,           TAR_CHAR_DEFENSIVE,     POS_STANDING,
     NULL,                   SLOT(504),      30,     24, "",                     "Your rage ebbs.",  "" },
 
     { "gate",         { 27, 17, 32, 28, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_gate,     TAR_IGNORE,     POS_FIGHTING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_gate,     TAR_IGNORE,     POS_FIGHTING,
     NULL,           SLOT(83),   80, 12, "",         "!Gate!",       "" },
 
     { "giant strength",   {  11, 102, 22, 20, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_giant_strength,   TAR_CHAR_DEFENSIVE, POS_STANDING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_giant_strength,   TAR_CHAR_DEFENSIVE, POS_STANDING,
     NULL,           SLOT(39),   20, 12, "",         "You begin to feel weaker as the mystical energy leaves your muscles.", "" },
 
     { "harm",         { 102, 23, 102, 28, 102, 102, 102, 102, 102, 102, 33, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 5, 5, 1}, spell_harm,     TAR_CHAR_OFFENSIVE, POS_FIGHTING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 5, 5, 1}, spell_harm,     TAR_CHAR_OFFENSIVE, POS_FIGHTING,
     NULL,           SLOT(27),   35, 12, "harm spell",       "!Harm!",       "" },
 
     { "haste",        { 21, 102, 26, 29, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_haste,        TAR_CHAR_DEFENSIVE, POS_FIGHTING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_haste,        TAR_CHAR_DEFENSIVE, POS_FIGHTING,
     NULL,           SLOT(502),  30, 12, "",         "You feel yourself slow down.", "" },
 
     { "XP Boost",  { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_xp_boost,    TAR_CHAR_DEFENSIVE,      POS_RESTING,
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_xp_boost,    TAR_CHAR_DEFENSIVE,      POS_RESTING,
     &gsn_xp_boost,           SLOT(0),     0, 12, "",         "",  "" },
 
     { "heal",         { 102, 21, 33, 30, 102, 102, 102, 102, 102, 102, 50, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_heal,     TAR_CHAR_DEFENSIVE, POS_FIGHTING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_heal,     TAR_CHAR_DEFENSIVE, POS_FIGHTING,
     NULL,           SLOT(28),   100,    12, "",         "!Heal!",       "" },
 
     { "heat metal",       { 102, 16, 102, 23, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_heat_metal,   TAR_CHAR_OFFENSIVE, POS_FIGHTING,
+    { 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_heat_metal,   TAR_CHAR_OFFENSIVE, POS_FIGHTING,
     &gsn_heat_metal,           SLOT(516),  25, 18, "searing equipment",        "!Heat Metal!",     ""},
 
     { "holy word",        { 102, 36, 102, 42, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 2,  2,  4,  4, 1, 1, 1, 1, 1, 1, 0, 0, 0}, spell_holy_word,    TAR_IGNORE, POS_FIGHTING,
+    { 2,  2,  4,  4, 1, 1, 1, 1, 1, 1, 0, 0, 0}, spell_holy_word,    TAR_IGNORE, POS_FIGHTING,
     NULL,           SLOT(506),  200,    24, "divine wrath",     "!Holy Word!",      "" },
 
     { "identify",     { 15, 16, 18, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_identify,     TAR_OBJ_INV,        POS_STANDING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_identify,     TAR_OBJ_INV,        POS_STANDING,
     NULL,           SLOT(53),   12, 24, "",         "!Identify!",       "" },
 
     { "infravision",      {  9,  13, 10, 16, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_infravision,  TAR_CHAR_DEFENSIVE, POS_STANDING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_infravision,  TAR_CHAR_DEFENSIVE, POS_STANDING,
     NULL,           SLOT(77),    5, 18, "",         "You no longer see in the dark.",   "" },
 
     { "intervention",     {  102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_intervention, TAR_CHAR_DEFENSIVE, POS_STANDING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_intervention, TAR_CHAR_DEFENSIVE, POS_STANDING,
     NULL,           SLOT(78),    5, 18, "",         "The awe of divine intervention slowly fades.", "" },
 
     { "invisibility",     {  5, 102, 9, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_invis,        TAR_OBJ_CHAR_DEF,   POS_STANDING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_invis,        TAR_OBJ_CHAR_DEF,   POS_STANDING,
     &gsn_invis,     SLOT(29),    5, 12, "",         "You are no longer invisible.", "$p fades into view." },
 
     { "know alignment",   {  12,  9, 20, 102, 102, 102, 102, 102, 102, 102, 20, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_know_alignment,   TAR_CHAR_DEFENSIVE, POS_FIGHTING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_know_alignment,   TAR_CHAR_DEFENSIVE, POS_FIGHTING,
     NULL,           SLOT(58),    9, 12, "",         "!Know Alignment!", "" },
 
     { "lightning bolt",   {  13, 23, 18, 16, 102, 102, 102, 102, 102, 102, 37, 102, 25 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 4, 4, 4}, spell_lightning_bolt,   TAR_CHAR_OFFENSIVE, POS_FIGHTING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 4, 4, 4}, spell_lightning_bolt,   TAR_CHAR_OFFENSIVE, POS_FIGHTING,
     &gsn_lightning_bolt,           SLOT(30),   15, 12, "lightning bolt",   "!Lightning Bolt!", "" },
 
     { "locate object",    {  9, 15, 11, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_locate_object,    TAR_IGNORE,     POS_STANDING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_locate_object,    TAR_IGNORE,     POS_STANDING,
     NULL,           SLOT(31),   20, 18, "",         "!Locate Object!",  "" },
 
     { "magic missile",    {  1, 102, 2, 2, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_magic_missile,    TAR_CHAR_OFFENSIVE, POS_FIGHTING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_magic_missile,    TAR_CHAR_OFFENSIVE, POS_FIGHTING,
     NULL,           SLOT(32),   15, 12, "magic missile",    "!Magic Missile!",  "" },
 
     { "mass healing",     { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 75, 102, 102 },
-	{ 2,  2,  4,  4, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_mass_healing, TAR_IGNORE,     POS_STANDING,
+    { 2,  2,  4,  4, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_mass_healing, TAR_IGNORE,     POS_STANDING,
     &gsn_mass_healing,          SLOT(508),  250,    12, "",         "!Mass Healing!",   "" },
 
     { "mass invis",       { 22, 25, 31, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_mass_invis,   TAR_IGNORE,     POS_STANDING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_mass_invis,   TAR_IGNORE,     POS_STANDING,
     &gsn_mass_invis,    SLOT(69),   20, 24, "",         "You are no longer invisible.",     "" },
 
     { "nexus",                { 40, 35, 50, 45, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 2,  2,  4,  4, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_nexus,            TAR_IGNORE,             POS_STANDING,
+    { 2,  2,  4,  4, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_nexus,            TAR_IGNORE,             POS_STANDING,
     NULL,                   SLOT(520),       150,   36, "",                     "!Nexus!",      "" },
 
     { "pass door",        { 24, 32, 25, 37, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_pass_door,    TAR_CHAR_SELF,      POS_STANDING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_pass_door,    TAR_CHAR_SELF,      POS_STANDING,
     NULL,           SLOT(74),   20, 12, "",         "You feel solid again.",    "" },
 
     { "poison",       { 17,  12, 15, 21, 102, 102, 102, 102, 102, 102, 35, 83, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 3, 3, 3}, spell_poison,       TAR_OBJ_CHAR_OFF,   POS_FIGHTING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 3, 3, 3}, spell_poison,       TAR_OBJ_CHAR_OFF,   POS_FIGHTING,
     &gsn_poison,        SLOT(33),   10, 12, "poison",       "You feel less sick.", "The poison on $p dries up." },
 
     { "aggravated damage",        { 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 0,  0,  0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_agg_damage,       TAR_OBJ_CHAR_OFF,   POS_FIGHTING,
+    { 0,  0,  0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_agg_damage,       TAR_OBJ_CHAR_OFF,   POS_FIGHTING,
     &gsn_agg_damage,        SLOT(33),   10, 12, "aggravated damage",        "You sigh in relief as your wounds finally heal.", "$p looses it's ability to generate aggravated damage." },
 
     { "portal",               { 35, 30, 45, 40, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
-	{ 2,  2,  4,  4, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_portal,           TAR_IGNORE,             POS_STANDING,
+    { 2,  2,  4,  4, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_portal,           TAR_IGNORE,             POS_STANDING,
     NULL,                   SLOT(519),       100,     24, "",                     "!Portal!",     "" },
 
     { "protection evil",  { 12,  9, 17, 11, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_protection_evil,  TAR_CHAR_SELF,      POS_STANDING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_protection_evil,  TAR_CHAR_SELF,      POS_STANDING,
     NULL,           SLOT(34),   5,  12, "",         "You feel less protected.", "" },
 
     { "protection good",      { 12,  9, 17, 11, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_protection_good,  TAR_CHAR_SELF,          POS_STANDING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_protection_good,  TAR_CHAR_SELF,          POS_STANDING,
     NULL,                   SLOT(514),       5,     12, "",                     "You feel less protected.", "" },
 
     { "ray of truth",         { 102, 35, 102, 47, 102, 102, 102, 102, 102, 102, 47, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 5, 5, 5}, spell_ray_of_truth,     TAR_CHAR_OFFENSIVE,     POS_FIGHTING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 5, 5, 5}, spell_ray_of_truth,     TAR_CHAR_OFFENSIVE,     POS_FIGHTING,
     &gsn_ray_of_truth,                   SLOT(518),      20,     12, "ray of truth",         "!Ray of Truth!",   "" },
 
     { "recharge",     { 9, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_recharge,     TAR_OBJ_INV,        POS_STANDING,
+    { 1, 1, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_recharge,     TAR_OBJ_INV,        POS_STANDING,
     NULL,           SLOT(517),  60, 24, "",         "!Recharge!",       "" },
 
     { "refresh",      {  8,  5, 12, 9, 102, 102, 102, 102, 102, 102, 9, 15, 1 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 2, 2, 2}, spell_refresh,      TAR_CHAR_DEFENSIVE, POS_STANDING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 2, 2, 2}, spell_refresh,      TAR_CHAR_DEFENSIVE, POS_STANDING,
     NULL,           SLOT(81),   12, 18, "refresh",      "!Refresh!",        "" },
 
     { "remove curse",     { 102, 18, 102, 22, 102, 102, 102, 102, 102, 102, 17, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 2, 2, 2}, spell_remove_curse, TAR_OBJ_CHAR_DEF,   POS_STANDING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 2, 2, 2}, spell_remove_curse, TAR_OBJ_CHAR_DEF,   POS_STANDING,
     &gsn_remove_curse,           SLOT(35),    5, 12, "",         "!Remove Curse!",   "" },
 
     { "sanctuary",        { 36, 20, 42, 30, 102, 102, 102, 102, 102, 102, 50, 50, 50 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 5, 5, 5}, spell_sanctuary,    TAR_CHAR_DEFENSIVE, POS_STANDING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 5, 5, 5}, spell_sanctuary,    TAR_CHAR_DEFENSIVE, POS_STANDING,
     &gsn_sanctuary,     SLOT(36),   125,    12, "",         "The white aura around your body fades.", "" },
 
     { "shield",       { 20, 35, 35, 40, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_shield,       TAR_CHAR_DEFENSIVE, POS_STANDING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_shield,       TAR_CHAR_DEFENSIVE, POS_STANDING,
     NULL,           SLOT(67),   12, 18, "",         "Your force shield shimmers then fades away.", "" },
 
     { "lightning fist",   {  10, 102, 14, 13, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_lightning_fist,   TAR_CHAR_OFFENSIVE, POS_FIGHTING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_lightning_fist,   TAR_CHAR_OFFENSIVE, POS_FIGHTING,
     NULL,           SLOT(53),   15, 12, "lightning fist",   "!Lightning Fist!", "" },
 
     { "sleep",        { 10, 102, 11, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_sleep,        TAR_CHAR_OFFENSIVE, POS_STANDING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_sleep,        TAR_CHAR_OFFENSIVE, POS_STANDING,
     &gsn_sleep,     SLOT(38),   15, 12, "",         "You feel less tired.", "" },
 
     { "slow",                 { 23, 30, 29, 32, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_slow,             TAR_CHAR_OFFENSIVE,     POS_FIGHTING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_slow,             TAR_CHAR_OFFENSIVE,     POS_FIGHTING,
     &gsn_slow,                   SLOT(515),      30,     12, "",                     "You feel yourself speed up.",  "" },
 
     { "stone skin",       { 25, 40, 40, 45, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_stone_skin,   TAR_CHAR_SELF,      POS_STANDING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_stone_skin,   TAR_CHAR_SELF,      POS_STANDING,
     NULL,           SLOT(66),   12, 18, "",         "Your skin feels soft again.",  "" },
 
     { "summon",       { 24, 12, 29, 22, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
-	{ 1,  1,  2,  2, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_summon,       TAR_IGNORE,     POS_STANDING,
+    { 1,  1,  2,  2, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_summon,       TAR_IGNORE,     POS_STANDING,
     NULL,           SLOT(40),   50, 12, "",         "!Summon!",     "" },
 
     { "teleport",     {  13, 22, 25, 36, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_teleport,     TAR_CHAR_SELF,      POS_FIGHTING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_teleport,     TAR_CHAR_SELF,      POS_FIGHTING,
     &gsn_teleport,          SLOT( 2),   35, 12, "",         "!Teleport!",       "" },
 
     { "ventriloquate",    {  1, 102, 2, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_ventriloquate,    TAR_IGNORE,     POS_STANDING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_ventriloquate,    TAR_IGNORE,     POS_STANDING,
     NULL,           SLOT(41),    5, 12, "",         "!Ventriloquate!",  "" },
 
     { "weaken",       {  11, 14, 16, 17, 102, 102, 102, 102, 102, 102, 23, 30, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 4, 4, 4}, spell_weaken,       TAR_CHAR_OFFENSIVE, POS_FIGHTING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 4, 4, 4}, spell_weaken,       TAR_CHAR_OFFENSIVE, POS_FIGHTING,
     &gsn_weaken,            SLOT(68),   20, 12, "spell",        "You feel stronger.",   "" },
 
     { "word of recall",   { 32, 28, 40, 30, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_word_of_recall,   TAR_CHAR_SELF,      POS_RESTING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_word_of_recall,   TAR_CHAR_SELF,      POS_RESTING,
     NULL,           SLOT(42),    5, 12, "",         "!Word of Recall!", "" },
 
     { "acid breath",      { 31, 32, 33, 34, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_acid_breath,  TAR_CHAR_OFFENSIVE, POS_FIGHTING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_acid_breath,  TAR_CHAR_OFFENSIVE, POS_FIGHTING,
     NULL,           SLOT(200),  100,    24, "blast of acid",    "!Acid Breath!",    "" },
 
     { "fire breath",      { 40, 45, 50, 51, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_fire_breath,  TAR_CHAR_OFFENSIVE, POS_FIGHTING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_fire_breath,  TAR_CHAR_OFFENSIVE, POS_FIGHTING,
     NULL,           SLOT(201),  200,    24, "blast of flame",   "The smoke leaves your eyes.",  "" },
 
     { "frost breath",     { 34, 36, 38, 40, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_frost_breath, TAR_CHAR_OFFENSIVE, POS_FIGHTING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_frost_breath, TAR_CHAR_OFFENSIVE, POS_FIGHTING,
     NULL,           SLOT(202),  125,    24, "blast of frost",   "!Frost Breath!",   "" },
 
     { "gas breath",       { 39, 43, 47, 50, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_gas_breath,   TAR_IGNORE,     POS_FIGHTING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_gas_breath,   TAR_IGNORE,     POS_FIGHTING,
     NULL,           SLOT(203),  175,    24, "blast of gas",     "!Gas Breath!",     "" },
 
     { "lightning breath", { 37, 40, 43, 46, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_lightning_breath, TAR_CHAR_OFFENSIVE, POS_FIGHTING,
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_lightning_breath, TAR_CHAR_OFFENSIVE, POS_FIGHTING,
     NULL,           SLOT(204),  150,    24, "blast of lightning",   "!Lightning Breath!",   "" },
 
     { "wrath of god", { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_wrath_of_god, TAR_CHAR_OFFENSIVE,     POS_FIGHTING,
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_wrath_of_god, TAR_CHAR_OFFENSIVE,     POS_FIGHTING,
     NULL,                     SLOT(666),     0, 12, "wrath of god",      "!wrath of god!",  "" },
+
+    { "radiant aura",     {  102, 102,102,102, 102, 102, 102, 102, 102, 102, 40, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_holyshield,   TAR_CHAR_SELF,      POS_STANDING,
+    &gsn_holyshield,            SLOT(0),     0, 12, "radiant aura",         "Your Radiant blessing slowly slips away...", "" },
+
+    { "dark aura",        {  102, 102,102,102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_darkshield,   TAR_CHAR_SELF,      POS_STANDING,
+    &gsn_darkshield,            SLOT(0),     0, 12, "dark aura",            "Your evil aura of darkness slowly slips away...", "" },
+
+    { "static charge",        {  102, 102,102,102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_shockshield,  TAR_CHAR_SELF,      POS_STANDING,
+    &gsn_shockshield,           SLOT(0),     0, 12, "lightning touch",          "The static field around your body fades away...", "" },
+
+    { "mana", { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_mana, TAR_CHAR_SELF,      POS_RESTING,
+    NULL,           SLOT(0),     0, 12, "",         "!Mana!",   "" },
+
+    { "blood potion", { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_blood,    TAR_CHAR_SELF,      POS_RESTING,
+    NULL,           SLOT(0),     0, 12, "",         "!Blood!",  "" },
+
+    { "human blood",  { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_blood,    TAR_CHAR_SELF,      POS_RESTING,
+    NULL,           SLOT(0),     0, 12, "",         "!Blood!",  "" },
+
+    { "kindred vitae",    { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_vampire_blood,    TAR_CHAR_SELF,      POS_RESTING,
+    NULL,           SLOT(0),     0, 12, "",         "!Blood!",  "" },
 
 /* combat and weapons skills */
     { "axe",{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
@@ -1926,37 +1954,9 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
     &gsn_fireshield,            SLOT(0),     0, 12, "fireshield",           "Your fireshield fizzles and disappears...", "" },
 
-    { "radiant aura",     {  102, 102,102,102, 102, 102, 102, 102, 102, 102, 40, 102, 102 },
-	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_holyshield,   TAR_CHAR_SELF,      POS_STANDING,
-    &gsn_holyshield,            SLOT(0),     0, 12, "radiant aura",         "Your Radiant blessing slowly slips away...", "" },
-
-    { "dark aura",        {  102, 102,102,102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_darkshield,   TAR_CHAR_SELF,      POS_STANDING,
-    &gsn_darkshield,            SLOT(0),     0, 12, "dark aura",            "Your evil aura of darkness slowly slips away...", "" },
-
-    { "static charge",        {  102, 102,102,102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_shockshield,  TAR_CHAR_SELF,      POS_STANDING,
-    &gsn_shockshield,           SLOT(0),     0, 12, "lightning touch",          "The static field around your body fades away...", "" },
-
     { "chant",    { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 10, 60, 70 },
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
     &gsn_chant,         SLOT(0),     0, 12, "",         "!chant!",  "" },
-
-    { "mana", { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_mana, TAR_CHAR_SELF,      POS_RESTING,
-    NULL,           SLOT(0),     0, 12, "",         "!Mana!",   "" },
-
-    { "blood potion", { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_blood,    TAR_CHAR_SELF,      POS_RESTING,
-    NULL,           SLOT(0),     0, 12, "",         "!Blood!",  "" },
-
-    { "human blood",  { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_blood,    TAR_CHAR_SELF,      POS_RESTING,
-    NULL,           SLOT(0),     0, 12, "",         "!Blood!",  "" },
-
-    { "kindred vitae",    { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_vampire_blood,    TAR_CHAR_SELF,      POS_RESTING,
-    NULL,           SLOT(0),     0, 12, "",         "!Blood!",  "" },
 
     { "botched allies",       {  102, 102,102,102, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
@@ -3056,7 +3056,6 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
     &gsn_negationfield,          SLOT( 0),        0,     24, "",             "You sense your ability to negate the magicks of others fading.",       "" },
 
-
 /*
   ----Immortal Functions----
 */
@@ -3064,6 +3063,9 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_null, TAR_CHAR_SELF,      POS_STANDING,
     &gsn_touch,                     SLOT(0),     0, 12, "",      "The touch of the Gods fades from your body...",    "" },
 
+/*
+  ----Unused Skills / Spells / GSNS----
+*/
 
 // END OF TABLE.
 };

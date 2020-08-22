@@ -32,32 +32,10 @@
  char *gift_target_name;
 char *trueargs;
 
-void spell_gift_innerstrength( int sn, int level, CHAR_DATA *ch, void *vo, int target )
-{
-    AFFECT_DATA af;
 
-    if(is_affected(ch, gsn_gift_innerstrength))
-    {
-        send_to_char("You cannot find the calm of mind needed to release your Rage right now.\n\r",ch);
-        return;
-    }
-    af.where        = TO_AFFECTS;
-    af.type         = gsn_gift_innerstrength;
-    af.level        = level;
-    af.duration     = 12;
-    af.modifier     = -(ch->rage);
-    af.location     = APPLY_AC;
-    af.bitvector    = 0;
-    affect_to_char(ch, &af);
-
-    ch->rage = 0;
-    ch->position = POS_SITTING;
-
-    send_to_char("You sit and calm your mind, transforming your Rage into strength of will.\n\r",ch);
-    act("$n sits and meditates a moment then seems much calmer.",ch,NULL,NULL,TO_ROOM);
-    return;
-}
-
+//Wendigo Gift
+//Rank 3
+//"Bloody Feast"
 void spell_gift_bloodyfeast( int sn, int level, CHAR_DATA *ch, void *vo, int target )
 {
     OBJ_DATA *obj;
@@ -105,7 +83,7 @@ void spell_gift_bloodyfeast( int sn, int level, CHAR_DATA *ch, void *vo, int tar
     return;
 }
 
-//Garou Gifts
+/*======Garou Gifts======*/
 //Here I will list garou gifts, organized by Breed, Auspice, and Tribe, and then by Rank. I will include: Any point costs, Any rolls, The spirit that teaches it, Ideas for quest to learn it, and ideas for affects.
 //
 //
@@ -871,6 +849,35 @@ void spell_gift_sensetheunnatural( int sn, int level, CHAR_DATA *ch, void *vo, i
 void spell_gift_devilschild( int sn, int level, CHAR_DATA *ch, void *vo, int target){
     return;
 }
+
+//"Catfeet"
+//cat spirits
+//Roll:  None
+//
+void spell_gift_catfeet( int sn, int level, CHAR_DATA *ch, void *vo, int target )
+{
+    AFFECT_DATA af;
+
+    if(is_affected(ch, gsn_gift_catfeet))
+    {
+        send_to_char("You thank the feline spirits as your grace and balance slowly fade.\n\r",ch);
+        affect_strip(ch,gsn_gift_catfeet);
+        return;
+    }
+
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_gift_catfeet;
+    af.level     = level;
+    af.duration  = level;
+    af.modifier  = 0;
+    af.location  = APPLY_NONE;
+    af.bitvector = 0;
+    affect_to_char( ch, &af );
+    send_to_char("Calling upon the grace of the feline spirits, your body acquires extraordinary balance.\n\r",ch);
+    act("$n howls a soft dirge to the skies, and begins to move with a feline grace.",ch,NULL,NULL,TO_ROOM);
+    return;
+}
+
 //
 //“Name the Spirit”
 //cat spirits
@@ -2221,31 +2228,6 @@ void spell_gift_thelivingwood( int sn, int level, CHAR_DATA *ch, void *vo, int t
 //
 //
 
-void spell_gift_catfeet( int sn, int level, CHAR_DATA *ch, void *vo, int target )
-{
-    AFFECT_DATA af;
-
-    if(is_affected(ch, gsn_gift_catfeet))
-    {
-        send_to_char("You thank the feline spirits as your grace and balance slowly fade.\n\r",ch);
-        affect_strip(ch,gsn_gift_catfeet);
-        return;
-    }
-
-    af.where     = TO_AFFECTS;
-    af.type      = gsn_gift_catfeet;
-    af.level     = level;
-    af.duration  = level;
-    af.modifier  = 0;
-    af.location  = APPLY_NONE;
-    af.bitvector = 0;
-    affect_to_char( ch, &af );
-    send_to_char("Calling upon the grace of the feline spirits, your body acquires extraordinary balance.\n\r",ch);
-    act("$n howls a soft dirge to the skies, and begins to move with a feline grace.",ch,NULL,NULL,TO_ROOM);
-    return;
-}
-
-
 // Fenrir
 //Rank 1
 
@@ -2384,7 +2366,7 @@ void spell_gift_ironcannotpierce( int sn, int level, CHAR_DATA *ch, void *vo, in
 void spell_gift_blazeofglory( int sn, int level, CHAR_DATA *ch, void *vo, int target){
     return;
 }
-
+//Rank 5
 void spell_gift_hordeofvalhalla( int sn, int level, CHAR_DATA *ch, void *vo, int target){
     return;
 }
@@ -2393,10 +2375,12 @@ void spell_gift_distractthefool( int sn, int level, CHAR_DATA *ch, void *vo, int
     return;
 }
 
+//Fianna
+//Rank 1
 void spell_gift_faerielight( int sn, int level, CHAR_DATA *ch, void *vo, int target){
     return;
 }
-
+//Rank 2
 void spell_gift_howlofthebanshee( int sn, int level, CHAR_DATA *ch, void *vo, int target){
     return;
 }
@@ -2412,7 +2396,7 @@ void spell_gift_faerieaid( int sn, int level, CHAR_DATA *ch, void *vo, int targe
 void spell_gift_woadling( int sn, int level, CHAR_DATA *ch, void *vo, int target){
     return;
 }
-
+//Rank 4
 void spell_gift_balorsgaze( int sn, int level, CHAR_DATA *ch, void *vo, int target){
     return;
 }
@@ -2424,7 +2408,7 @@ void spell_gift_semblance( int sn, int level, CHAR_DATA *ch, void *vo, int targe
 void spell_gift_fogonthemoor( int sn, int level, CHAR_DATA *ch, void *vo, int target){
     return;
 }
-
+//Rank 5
 void spell_gift_giftofthespriggan( int sn, int level, CHAR_DATA *ch, void *vo, int target){
     return;
 }
@@ -2612,6 +2596,43 @@ void spell_gift_commandtheblaze( int sn, int level, CHAR_DATA *ch, void *vo, int
     return;
 }
 
+//Stargazers
+//Rank 1
+
+//Rank 2
+
+//Rank 3
+//"Inner Strength"
+void spell_gift_innerstrength( int sn, int level, CHAR_DATA *ch, void *vo, int target )
+{
+    AFFECT_DATA af;
+
+    if(is_affected(ch, gsn_gift_innerstrength))
+    {
+        send_to_char("You cannot find the calm of mind needed to release your Rage right now.\n\r",ch);
+        return;
+    }
+    af.where        = TO_AFFECTS;
+    af.type         = gsn_gift_innerstrength;
+    af.level        = level;
+    af.duration     = 12;
+    af.modifier     = -(ch->rage);
+    af.location     = APPLY_AC;
+    af.bitvector    = 0;
+    affect_to_char(ch, &af);
+
+    ch->rage = 0;
+    ch->position = POS_SITTING;
+
+    send_to_char("You sit and calm your mind, transforming your Rage into strength of will.\n\r",ch);
+    act("$n sits and meditates a moment then seems much calmer.",ch,NULL,NULL,TO_ROOM);
+    return;
+}
+
+//Rank 4
+//Rank 5
+
+/*======End Gifts======*/
 
 void do_beseech(CHAR_DATA *ch, char *argument)
 {

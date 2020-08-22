@@ -2216,7 +2216,7 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
     &gsn_arena,          SLOT( 0),        0,     24, "",             "You may now recall from the {RArena{x.",       "" },
 
-/* ritual stuff */
+/* Generic Old Ritual Stuff */
     { "Stored: Inferno",             { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
     &gsn_store_inferno,          SLOT( 0),        0,     24, "Inferno",             "You loose control on your stored Ritual: Inferno",      "" },
@@ -2229,10 +2229,6 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
     &gsn_blood_magic,          SLOT( 0),        0,     24, "blood magic",             "You feel your blood magic fading away.",        "" },
 
-    { "incorporeal passage",      { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, spell_null,     TAR_CHAR_SELF,      POS_STANDING,
-    &gsn_incorporeal_passage,   SLOT( 0),   0,  12, "smashed mirror",   "Your body slowly solidifies as the ritual wears off.",     "" },
-
     { "bonecrafting",     { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_CHAR_SELF,             POS_STANDING,
     &gsn_vicissitude_bonecraft,          SLOT( 0),        0,     48, "bone spikes",             "Your body slowly reforms into its normal skeletal structure.",      "" },
@@ -2242,8 +2238,45 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
 */
 
 //  ***Disciplines***
+//    --Animalism--
+
+//    --Auspex--
+
+//    --Celerity--
+
+//    --Chimerstry--
+
+//    --Dementation--
+
+//    --Dominate--
+
+//    --Fortitude--
+
+//    --Mortis--
+
+//    --Obfuscate--
+
+//    --Obtenebration--
+
+//    --Potence--
+
+//    --Presence--
+
+//    --Protean--
+
+//    --Quietus--
+
+//    --Serpentis--
+
+//    --Thaumaturgy: Path of Blood--
+
+//    --Vicissitude--
 
 //  ***Rituals***
+//    --Thaumaturgy--
+    { "incorporeal passage",      { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, spell_null,     TAR_CHAR_SELF,      POS_STANDING,
+    &gsn_incorporeal_passage,   SLOT( 0),   0,  12, "smashed mirror",   "Your body slowly solidifies as the ritual wears off.",     "" },
 
 /*
   -----Werewolf Affects-----
@@ -2269,6 +2302,45 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
     &gsn_rage,                     SLOT(0),  0, 12, "",      "Your rage slowly fades.", "" },
 
 //  ***Gifts***
+//    --Homid--
+
+//    --Metis--
+
+//    --Lupus--
+
+//    --Ragabash--
+
+//    --Theurge--
+
+//    --Philodox--
+
+//    --Galliard--
+
+//    --Ahroun--
+
+//    --Black Furies--
+
+//    --Bone Gnawers--
+
+//    --Children of Gaia--
+
+//    --Get of Fenris--
+
+//    --Fianna--
+
+//    --Red Talons--
+
+//    --Shadow Lords--
+
+//    --Silent Striders--
+
+//    --Silver Fangs--
+
+//    --Stargazers--
+
+//    --Warders of Men--
+
+
     { "staredown",        { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_staredown,             TAR_CHAR_OFFENSIVE,             POS_FIGHTING,
     NULL,          SLOT( 0),        0,     12, "",             "!STAREDOWN!",      "" },

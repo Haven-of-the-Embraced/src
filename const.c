@@ -1547,7 +1547,7 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
     { "haste",        { 21, 102, 26, 29, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_haste,        TAR_CHAR_DEFENSIVE, POS_FIGHTING,
     NULL,           SLOT(502),  30, 12, "",         "You feel yourself slow down.", "" },
-//xp boost
+
     { "XP Boost",  { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_xp_boost,    TAR_CHAR_DEFENSIVE,      POS_RESTING,
     &gsn_xp_boost,           SLOT(0),     0, 12, "",         "",  "" },
@@ -1719,14 +1719,6 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
     { "caern: healing",       { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 	{ 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 }, spell_caern_healing,   TAR_IGNORE,     POS_FIGHTING,
     NULL,                   SLOT(402),      0,      12, "healing",  "!healing!",    "" },
-
-    { "tass: quintessence",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, spell_rote_quintessence,    TAR_IGNORE, POS_RESTING,
-    NULL,       SLOT(402),  0,  12, "rush of quintessence", "!quintessencerush!",   "" },
-
-/*  { "quintessential bond",  { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, spell_null, TAR_IGNORE, POS_RESTING,
-    &gsn_quintessentialbond,    SLOT(0),    0,  12, "", "!quintessentialbond!", "" }, */
 
 /* combat and weapons skills */
     { "axe",{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
@@ -2931,47 +2923,94 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
     &gsn_gift_redirectpain,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
 
+/*
+  ------Vampire Affects-----
+*/
 
-/* Mage rotes */
+//  ***Disciplines***
+
+//  ***Rituals***
+
+/*
+  -----Werewolf Affects-----
+*/
+
+//  ***Gifts***
+
+//  ***Caern Affects***
+
+/*
+  -------Mage Affects-------
+*/
+    { "tass: quintessence",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, spell_rote_quintessence,    TAR_IGNORE, POS_RESTING,
+    NULL,       SLOT(402),  0,  12, "rush of quintessence", "!quintessencerush!",   "" },
+
+/*  { "quintessential bond",  { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, spell_null, TAR_IGNORE, POS_RESTING,
+    &gsn_quintessentialbond,    SLOT(0),    0,  12, "", "!quintessentialbond!", "" }, */
+
+    { "magick",               { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
+    &gsn_magick,          SLOT( 0),        0,     24, "magick",             "The magick infusing you slowly fades...",        "" },
+
+
+//  ***Rotes***
+//    --Correspondence--
+
+//    --Entropy--
+    { "control randomness",    { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,    TAR_IGNORE,      POS_STANDING,
+    &gsn_controlrandomness,     SLOT( 0),  0,  24, "",  "You feel your power to control random events slowly fade.",   "" },
+
+//    --Forces--
+    { "kinetic shield",           { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     \
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
+    &gsn_kineticshield,          SLOT( 0),        0,     24, "",             "Your ability to deflect physical blows fades away.",       "" },
+
+//    --Life--
+
+//    --Matter--
+
+//    --Mind--
     { "empower",              { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
-    &gsn_empower,          SLOT( 0),        0,     24, "",             "Your mind seems to dim as the forces of reality wash away your clarity of thought.",       "" },
+    { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,     TAR_IGNORE,      POS_STANDING,
+    &gsn_empower,          SLOT( 0),        0,     24, "",  "Your mind seems to dim as the forces of reality wash away your clarity of thought.",   "" },
 
-    { "control randomness",               { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
-    &gsn_controlrandomness,          SLOT( 0),        0,     24, "",             "You feel your power to control random events slowly fade.",        "" },
+//    --Prime--
 
+//    --Spirit--
     { "spirit sight",		{ 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,	TAR_IGNORE,	POS_STANDING,
     &gsn_spiritsight,	SLOT( 0),	0,	24, "",	"Your ethereal senses shift back to this reality.", ""},
 
     { "trapped in gauntlet",   { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-  	{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_IGNORE,         POS_STANDING,
-  	&gsn_trappedingauntlet,        SLOT( 0),     0,    24, "",  "Your very Essence finally untangles itself from the Gauntlet!",  "" },
+    { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_IGNORE,         POS_STANDING,
+    &gsn_trappedingauntlet,        SLOT( 0),     0,    24, "",  "Your very Essence finally untangles itself from the Gauntlet!",  "" },
 
+//    --Time--
     { "precognition",             { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
     &gsn_precognition,          SLOT( 0),        0,     24, "",             "Your foresight of time fades away as you lose focus.",     "" },
 
     { "time alteration",          { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
     &gsn_timealteration,          SLOT( 0),        0,     24, "",             "Your pattern can no longer take the stress of such time dilation.",        "" },
 
     { "sidestep time",            { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
     &gsn_sidesteptime,          SLOT( 0),        0,     24, "",             "You step back into the normal stream of time.",        "" },
 
-    { "kinetic shield",           { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     \
-	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
-    &gsn_kineticshield,          SLOT( 0),        0,     24, "",             "Your ability to deflect physical blows fades away.",       "" },
+//    --Extra Combination Sphere Rotes--
 
     { "negation field",           { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
     &gsn_negationfield,          SLOT( 0),        0,     24, "",             "You sense your ability to negate the magicks of others fading.",       "" },
 
-    { "magick",               { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
-    &gsn_magick,          SLOT( 0),        0,     24, "magick",             "The magick infusing you slowly fades...",        "" },
+
+/*
+  ----Immortal Functions----
+*/
 
 // END OF TABLE.
 };

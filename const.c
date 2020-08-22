@@ -973,6 +973,41 @@ const   struct  crafted_type    crafted_table   []  =
 
 const struct cs_skill_type csskill_table [] =
 {
+//Weapon Skills and Hand to Hand
+    {"axe", &gsn_axe,  1,
+    {CSABIL_MELEE, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
+
+    {"dagger", &gsn_dagger, 1,
+    {CSABIL_MELEE, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
+
+    {"flail", &gsn_flail, 1,
+    {CSABIL_MELEE, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
+
+    {"lance", &gsn_lance, 1,
+    {CSABIL_MELEE, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
+
+    {"mace", &gsn_mace, 1,
+    {CSABIL_MELEE, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
+
+    {"polearm", &gsn_polearm, 1,
+    {CSABIL_MELEE, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
+
+    {"spear", &gsn_spear, 1,
+    {CSABIL_MELEE, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
+
+    {"sword", &gsn_sword, 1,
+    {CSABIL_MELEE, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
+
+    {"whip", &gsn_whip, 1,
+    {CSABIL_MELEE, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
+
+    {"hand to hand", &gsn_hand_to_hand,  1,
+    {CSABIL_BRAWL, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
+
+//Skills
+    //    {"alertness", &gsn_alertness, 0,
+    //    {CSABIL_ALERTNESS, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
+
     {"assassinate", &gsn_assassinate, 50,
     {CSABIL_MELEE, 5, ABIL}, {CSABIL_MEDICINE, 3, ABIL} },
 
@@ -981,6 +1016,9 @@ const struct cs_skill_type csskill_table [] =
 
     {"bandage", &gsn_bandage, 1,
     {CSABIL_MEDICINE, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
+
+    {"bash", &gsn_bash, 10,
+    {CSABIL_MELEE, 2, ABIL}, {CSABIL_NONE, 0, ABIL} },
 
     {"berserk", &gsn_berserk, 40,
     {CSABIL_INTIMIDATION, 3, ABIL}, {CSABIL_HEARTHWISDOM, 1, ABIL} },
@@ -1021,17 +1059,14 @@ const struct cs_skill_type csskill_table [] =
     {"envenom", &gsn_envenom, 45,
     {CSABIL_HEARTHWISDOM, 2, ABIL}, {CSABIL_NONE, 0, ABIL} },
 
-//    {"alertness", &gsn_alertness, 0
-//    {CSABIL_ALERTNESS, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
-
     {"fortress", &gsn_fortress, 60,
     {CSABIL_CRAFTS, 3, ABIL}, {CSABIL_SURVIVAL, 1, ABIL} },
 
-    {"waylay", &gsn_waylay, 55,
-    {CSABIL_STEALTH, 3, ABIL}, {CSABIL_MELEE, 1, ABIL} },
-
     {"glower", &gsn_glower, 50,
     {CSABIL_INTIMIDATION, 3, ABIL}, {CSABIL_NONE, 0, ABIL} },
+
+    {"gouge", &gsn_gouge, 25,
+    {CSABIL_BRAWL, 5, ABIL}, {CSABIL_NONE, 0, ABIL} },
 
     {"ground", &gsn_ground, 30,
     {CSABIL_BRAWL, 3, ABIL}, {CSABIL_NONE, 0, ABIL} },
@@ -1044,6 +1079,9 @@ const struct cs_skill_type csskill_table [] =
 
     {"hide", &gsn_hide, 20,
     {CSABIL_STEALTH, 3, ABIL}, {CSABIL_NONE, 0, ABIL} },
+
+    {"kick", &gsn_kick, 1,
+    {CSABIL_BRAWL, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
 
     {"knights training", &gsn_knight_training, 65,
     {CSABIL_MELEE, 5, ABIL}, {CSABIL_ETIQUETTE, 1, ABIL} },
@@ -1114,42 +1152,10 @@ const struct cs_skill_type csskill_table [] =
     {"warcry", &gsn_warcry, 65,
     {CSABIL_INTIMIDATION, 4, ABIL}, {CSABIL_LEADERSHIP, 2, ABIL} },
 
-    {"kick", &gsn_kick, 1,
-    {CSABIL_BRAWL, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
+    {"waylay", &gsn_waylay, 55,
+    {CSABIL_STEALTH, 3, ABIL}, {CSABIL_MELEE, 1, ABIL} },
 
-    {"bash", &gsn_bash, 10,
-    {CSABIL_MELEE, 2, ABIL}, {CSABIL_NONE, 0, ABIL} },
-
-    {"axe", &gsn_axe,  1,
-    {CSABIL_MELEE, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
-
-    {"dagger", &gsn_dagger, 1,
-    {CSABIL_MELEE, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
-
-    {"flail", &gsn_flail, 1,
-    {CSABIL_MELEE, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
-
-    {"mace", &gsn_mace, 1,
-    {CSABIL_MELEE, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
-
-    {"polearm", &gsn_polearm, 1,
-    {CSABIL_MELEE, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
-
-    {"whip", &gsn_whip, 1,
-    {CSABIL_MELEE, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
-
-    {"spear", &gsn_spear, 1,
-    {CSABIL_MELEE, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
-
-    {"sword", &gsn_sword, 1,
-    {CSABIL_MELEE, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
-
-    {"lance", &gsn_lance, 1,
-    {CSABIL_MELEE, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
-
-    {"hand to hand", &gsn_hand_to_hand,  1,
-    {CSABIL_BRAWL, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
-
+//Prayers
     {"blindness", &gsn_blindness, 45,
     {CSABIL_OCCULT, 3, ABIL}, {CSABIL_HEARTHWISDOM, 1, ABIL} },
 
@@ -1194,9 +1200,6 @@ const struct cs_skill_type csskill_table [] =
 
     {"zeal", &gsn_zeal, 15,
     {CSABIL_THEOLOGY, 3, ABIL}, {CSABIL_EXPRESSION, 3, ABIL} },
-
-    {"gouge", &gsn_gouge, 25,
-    {CSABIL_BRAWL, 5, ABIL}, {CSABIL_NONE, 0, ABIL} },
 
     { NULL, 0, 0, {-1, 0, ABIL}, {-1, 0, ABIL}}
 

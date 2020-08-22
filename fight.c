@@ -686,6 +686,8 @@ void one_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt )
     sn = -1;
     genbonus = 0;
 
+    AFFECT_DATA af;
+
 
     /* just in case */
     if (victim == ch || ch == NULL || victim == NULL)
@@ -845,8 +847,7 @@ void one_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt )
         //Two handed weapons potentially do double damage.
         if (IS_WEAPON_STAT(wield,WEAPON_TWO_HANDS))
             dam = number_range(dam, 2*dam/3);
-    if (!IS_NPC(ch) && IS_WEAPON_STAT(wield, WEAPON_SHARP))
-        dam = number_range(dam, 2*dam/3);
+
     }
     else
         dam = number_range( 1 + 4 * skill/100, 2 * ch->level/3 * skill/100);
@@ -1034,6 +1035,23 @@ void one_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt )
         ch->hit += dam/2;
         ch->mana += dam/8;
         ch->move += dam/4;
+    }
+
+    if (ch->fighting == victim && IS_WEAPON_STAT(wield, WEAPON_SHARP))
+    {
+      if (!is_affected(victim, gsn_bleeding))
+      {
+        if (number_range(1, 10) <= 2)
+        af.where     = TO_AFFECTS;
+        af.type      = gsn_bleeding;
+        af.level     = ch->level / 40;
+        af.duration  = ch->level / 40;
+        af.location  = APPLY_NONE;
+        af.modifier  = 0;
+        af.bitvector = 0;
+        affect_to_char(victim, &af);
+        act("$p slices into you, leaving a bleeding wound!", ch, wield, victim, TO_VICT);
+      }
     }
 
     if (ch->fighting == victim && IS_WEAPON_STAT(wield,WEAPON_FLAMING))

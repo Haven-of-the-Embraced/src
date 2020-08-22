@@ -31,8 +31,8 @@ void affects_update (void) {
       act("Your wounds continue to bleed out.", ch, NULL, NULL, TO_CHAR);
       if (godice(get_attribute(ch, STAMINA), 8) < get_affect_level(ch, gsn_bleeding))
       {
-        damage(ch, ch, (level*ch->level/15), gsn_bleeding, DAM_AGGREVATED, TRUE);
-        if (!IS_NPC(ch) && number_percent() > 70)
+        damage(ch, ch, (level*ch->level/25), gsn_bleeding, DAM_AGGREVATED, TRUE);
+        if (!IS_NPC(ch) && number_percent() > 75)
           ch->pblood--;
       }
     }

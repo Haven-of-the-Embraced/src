@@ -3368,7 +3368,7 @@ int xp_compute( CHAR_DATA *gch, CHAR_DATA *victim, int total_levels )
         if (xpstat == 0 && global_xp > 149999)
             {
             xpstat = 1;
-            if (number_range(1,100) <= 20)
+            if (number_range(1,100) <= 25)
                 {
                  doubleexp = TRUE;
                  xpawardmult = 2;
@@ -3399,10 +3399,27 @@ int xp_compute( CHAR_DATA *gch, CHAR_DATA *victim, int total_levels )
 
                 }
             }
-        if (xpstat == 2 && global_xp > 249999)
+            if (xpstat == 2 && global_xp > 224999)
+                {
+                xpstat = 3;
+                if (number_range(1,100) <= 55)
+                    {
+                     doubleexp = TRUE;
+                     xpawardmult = 2;
+                     for ( d = descriptor_list; d; d = d->next )
+                        {
+                            if ( d->connected == CON_PLAYING )
+                            {
+                                send_to_char( "{G****{YIt's {RD{Go{Mu{Yb{Bl{Ce {RE{Gx{Mp{Y time!{G****{x\n\r", d->character );
+                            }
+                        }
+
+                    }
+                }
+        if (xpstat == 3 && global_xp > 249999)
             {
-            xpstat = 3;
-            if (number_range(1,100) <= 50)
+            xpstat = 4;
+            if (number_range(1,100) <= 70)
                 {
                  doubleexp = TRUE;
                  xpawardmult = 2;
@@ -3416,10 +3433,27 @@ int xp_compute( CHAR_DATA *gch, CHAR_DATA *victim, int total_levels )
 
                 }
             }
-        if (xpstat == 3 && global_xp > 300000)
+            if (xpstat == 4 && global_xp > 274999)
+                {
+                xpstat = 5;
+                if (number_range(1,100) <= 85)
+                    {
+                     doubleexp = TRUE;
+                     xpawardmult = 2;
+                     for ( d = descriptor_list; d; d = d->next )
+                        {
+                            if ( d->connected == CON_PLAYING )
+                            {
+                                send_to_char( "{G****{YIt's {RD{Go{Mu{Yb{Bl{Ce {RE{Gx{Mp{Y time!{G****{x\n\r", d->character );
+                            }
+                        }
+
+                    }
+                }
+        if (xpstat == 5 && global_xp > 300000)
             {
              doubleexp = TRUE;
-             xpstat = 4;
+             xpstat = 6;
              xpawardmult = 3;
              for ( d = descriptor_list; d; d = d->next )
                     {

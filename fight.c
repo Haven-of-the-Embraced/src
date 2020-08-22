@@ -1984,6 +1984,24 @@ if (DEBUG_MESSAGES || IS_DEBUGGING(ch)){
         }
     }
 
+    if (ch->fighting == victim && IS_WEAPON_STAT( wield, WEAPON_SHARP))
+    {
+      if (!is_affected(victim, gsn_bleeding) && tohit >= 4)
+      {
+        AFFECT_DATA af;
+        af.where     = TO_AFFECTS;
+        af.type      = gsn_bleeding;
+        af.level     = tohit;
+        af.duration  = 1 + tohit / 3;
+        af.location  = APPLY_NONE;
+        af.modifier  = 0;
+        af.bitvector = 0;
+        affect_to_char( victim, &af );
+        act("Your attack slices open a bleeding wound!", ch, wield, victim, TO_CHAR);
+        act("$p slices into you, leaving a bleeding wound!", ch, wield, victim, TO_VICT);
+
+      }
+    }
 
         if (ch->fighting == victim && IS_WEAPON_STAT(wield,WEAPON_VAMPIRIC))
     {

@@ -1910,169 +1910,13 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,     TAR_IGNORE,     POS_STANDING,
     &gsn_riding,        SLOT( 0),   0,  12, "",         "!Riding!",     "" },
 
-    { "blood rage",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, thaumaturgy_frenzy, TAR_CHAR_SELF,      POS_SLEEPING,
-    &gsn_thaumaturgy_frenzy,            SLOT(405),   0, 12, "frenzy",           "Your frenzy slowly fades away.", "" },
-
-    { "ignis fatuus",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_SLEEPING,
-    &gsn_ignis_fatuus,            SLOT(405),   0, 12, "ignis",           "Your confusion fades away.", "" },
-
-    { "chimaera",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_SLEEPING,
-    &gsn_chimaera,            SLOT(0),   0, 12, "chimaera",           "!chimaera!", "" },
-
-    { "phantasm",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_SLEEPING,
-    &gsn_phantasm,            SLOT(0),   0, 12, "phantasm",           "The illusion masking your true position fades away.", "" },
-
-    { "horrid reality",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_SLEEPING,
-    &gsn_horridreality,            SLOT(0),   0, 12, "horrid reality",           "!Horrid Reality!", "" },
-
-    { "chimerstry",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_SLEEPING,
-    &gsn_chimerstry,            SLOT(0),   0, 12, "chimerstry",           "You once again feel strong enough to twist reality to your whim.", "" },
-
-    { "blood of potency", { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_SLEEPING,
-    &gsn_bloodofpotency,            SLOT(405),   0, 12, "",         "You feel suddenly weaker as the potency of your blood returns to normal.", "" },
-
-    { "theft of vitae",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_SLEEPING,
-    &gsn_theft,         SLOT(406),   0, 12, "theft",            "", "" },
-
-    { "cauldron of blood",    { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_SLEEPING,
-    &gsn_cauldron,          SLOT(406),   0, 12, "boiling blood",            "", "" },
-
-    { "arms of the abyss",    { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_SLEEPING,
-    &gsn_armsoftheabyss,            SLOT(405),   0, 12, "",         "The shadowy Tendrils fade away.", "" },
-
-    { "shadowplay",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_SLEEPING,
-    &gsn_shadowplay,            SLOT(403),   0, 12, "shadowplay",         "The shadows surrounding you fade away.", "" },
-
-    { "vampire frenzy",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, vamp_frenzy,    TAR_CHAR_SELF,      POS_SLEEPING,
-    &gsn_vamp_frenzy,           SLOT(403),   0, 12, "frenzy",           "Your frenzy slowly fades away.", "" },
-
-    { "claws",    { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
-    &gsn_claws,         SLOT(0),     0, 12, "",         "Your claws slide back under your nails.",  "" },
-
-    { "celerity", { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
-    &gsn_celbuff,           SLOT(0),     0, 12, "",         "The world suddenly seems to speed up around you, as your vitae enhanced speed fades away.", "" },
-
-    { "gleam",    { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
-    &gsn_gleam,         SLOT(0),     0, 12, "",         "Your eyes cease to glow as your vitae enhanced vision returns to normal.", "" },
-
-    { "shift",    { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
-    &gsn_shift,                     SLOT(0),     0, 12, "",      "You loose control over your shifted form.",   "" },
-
-    { "horrid form",  { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
-    &gsn_vicissitude_horrid,                     SLOT(0),    0, 12, "",      "Your form shrinks and you slowly return to your 'normal' form.",  "" },
-
-    { "chiropteran marauder",  { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-  	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
-  	&gsn_vicissitude_chiropteran,	SLOT(0), 0, 12, "", "Your leathery wings merge with your body as you return to your normal form.",  "" },
-
-    { "wing claws",  { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-  	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
-  	&gsn_wingclaws,	SLOT(0), 0, 12, "", "Your bony claws retract from the ends of your winged hands.",  "" },
-
-    { "awe",  { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
-    &gsn_awe,           SLOT(0),     0, 12, "",         "The impressive social mystique you bolstered slowly fades away.",  "" },
-
-    { "botched presence", { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
-    &gsn_botched_presence,      SLOT(0),    0,  12, "botched presence",         "You feel prepared to show your face in public again.", "" },
-
-    { "torpor",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, spell_null, TAR_CHAR_SELF,      POS_TORPOR,
-    &gsn_torpor,        SLOT(0),    0,  12, "",     "You feel strong enough to try to rise from Torpor.",   "" },
-
-    { "arise",    { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, spell_null, TAR_CHAR_SELF,      POS_TORPOR,
-    &gsn_arise,     SLOT(0),    0,  12, "",     "!arise!",  "" },
-
-    { "unseen",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, spell_null, TAR_CHAR_SELF,      POS_TORPOR,
-    &gsn_unseen,        SLOT(0),    0,  12, "",     "Your power to vanish from the minds of other fades and you become visible.",   "" },
-
-    { "veil",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, spell_null, TAR_CHAR_SELF,      POS_TORPOR,
-    &gsn_veil,        SLOT(0),    0,  12, "",     "Your power to vanish from the minds of other fades and you become visible.",   "" },
-
-    { "majesty",  { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
-    &gsn_majesty,           SLOT(0),     0, 12, "",         "Your aura of greatness fades away.",   "" },
-
-    { "weakness", { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
-    &gsn_quietus_weakness,          SLOT(0),     0, 12, "",         "Your strength returns as the weakness fades.", "" },
-
-    { "blood curse",  { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
-    &gsn_quietus_bloodcurse,            SLOT(0),     0, 12, "",         "You sigh in relief as your blood purifys the curse away.", "" },
-
-    { "shroud of night",  { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
-    &gsn_cloakshadow,           SLOT(0),     0, 12, "",         "Your cloak of shadows fades away...",  "" },
-
-    { "cloak the gathering",  { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
-    &gsn_cloak_the_gathering,           SLOT(0),     0, 12, "",         "Your cloak of shadows fades away...",  "" },
-
     { "track",    { 102, 102, 102, 102, 30, 30, 30, 30, 30, 30, 30, 30, 30 },
 	{ 0,  0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_null, TAR_CHAR_SELF,      POS_STANDING,
     &gsn_track,         SLOT(0),     0, 12, "",         "!Track!",  "" },
 
-    { "acidblood",    { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
-    &gsn_acidblood,         SLOT(0),     0, 12, "acidic blood",         "!acid blood!", "" },
-
     { "regenerate",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
     &gsn_regen,         SLOT(0),     0, 12, "",         "Your body has rested enough to heal aggravated damage again.", "" },
-
-    { "blood buff",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, spell_null, TAR_CHAR_SELF,      POS_FIGHTING,
-    &gsn_blood_buff,        SLOT(0),    0,  8, "buffed blood",     "The enhanced power coursing through your veins slowly subsides.",  "" },
-
-    { "reveal",       {  102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
-    &gsn_reveal,            SLOT(0),     0, 12, "",         "Your heightened senses fade away, leaving you aware of only the mundane world once again.",    "" },
-
-	{ "astrally lost",   { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_IGNORE,         POS_STANDING,
-	&gsn_astrallylost,        SLOT( 0),     0,    24, "",      "Out of the corner of your eye, you spot your silver astral cord that leads back to your physical body!",  "" },
-
-	{ "astral projection",   { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,  TAR_IGNORE,        POS_STANDING,
-	&gsn_astralprojection,     SLOT( 0),    0,    24, "",     "!!Wearoffmsg!!",     ""},
-
-	{ "forgetful mind",       {  102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
-    &gsn_forget,            SLOT(0),     0, 12, "",         "Your memory slowly returns...", "" },
-
-    { "earthmeld",        {  102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
-    &gsn_earthmeld,         SLOT(0),     0, 12, "",         "You emerge from the earth in a shower of dirt.", "" },
-
-    { "shadowform",       {  102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
-    &gsn_shadowform,            SLOT(0),     0, 12, "",         "Your shadowy form fades away.", "" },
-
-    { "mask",     {  102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
-    &gsn_mask,          SLOT(0),     0, 12, "",         "Your Mask of a Thousand Faces fades away revealing your true guise.", "" },
 
     { "elemental soul",       {  102, 102,102,102, 50, 50, 50, 50, 50, 50, 50, 50, 50 },
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
@@ -2098,10 +1942,6 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
     &gsn_chant,         SLOT(0),     0, 12, "",         "!chant!",  "" },
 
-    { "vampire regen",        { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_null,        TAR_CHAR_SELF, POS_STANDING,
-    &gsn_vampire_regen,           SLOT(502),  30, 12, "",         "You stop regenerating.", "" },
-
     { "mana", { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_mana, TAR_CHAR_SELF,      POS_RESTING,
     NULL,           SLOT(0),     0, 12, "",         "!Mana!",   "" },
@@ -2110,7 +1950,6 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_blood,    TAR_CHAR_SELF,      POS_RESTING,
     NULL,           SLOT(0),     0, 12, "",         "!Blood!",  "" },
 
-    //Matthew adding random skills.
     { "human blood",  { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_blood,    TAR_CHAR_SELF,      POS_RESTING,
     NULL,           SLOT(0),     0, 12, "",         "!Blood!",  "" },
@@ -2155,7 +1994,6 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
 	{ 1,  1,  1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_null,       TAR_OBJ_CHAR_OFF,   POS_FIGHTING,
     &gsn_bleeding,        SLOT(33),   10, 12, "bleeding",       "Your bleeding trickles and stops, your wounds finally scab over.", "" },
 
-/* advanced class stuff */
     { "divine strength",             { 150, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 50, 102 },
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
     &gsn_divine_strength,          SLOT( 0),        0,     24, "",             "Your divine blessing slowly fades away.",      "" },
@@ -2229,48 +2067,196 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
     &gsn_blood_magic,          SLOT( 0),        0,     24, "blood magic",             "You feel your blood magic fading away.",        "" },
 
-    { "bonecrafting",     { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_CHAR_SELF,             POS_STANDING,
-    &gsn_vicissitude_bonecraft,          SLOT( 0),        0,     48, "bone spikes",             "Your body slowly reforms into its normal skeletal structure.",      "" },
-
 /*
   ------Vampire Affects-----
 */
+    { "torpor",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, spell_null, TAR_CHAR_SELF,      POS_TORPOR,
+    &gsn_torpor,        SLOT(0),    0,  12, "",     "You feel strong enough to try to rise from Torpor.",   "" },
+
+    { "arise",    { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, spell_null, TAR_CHAR_SELF,      POS_TORPOR,
+    &gsn_arise,     SLOT(0),    0,  12, "",     "!arise!",  "" },
+
+    { "blood buff",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, spell_null, TAR_CHAR_SELF,      POS_FIGHTING,
+    &gsn_blood_buff,        SLOT(0),    0,  8, "buffed blood",     "The enhanced power coursing through your veins slowly subsides.",  "" },
+
+    { "vampire regen",        { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_null,        TAR_CHAR_SELF, POS_STANDING,
+    &gsn_vampire_regen,           SLOT(502),  30, 12, "",         "You stop regenerating.", "" },
+
+    { "vampire frenzy",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, vamp_frenzy,    TAR_CHAR_SELF,      POS_SLEEPING,
+    &gsn_vamp_frenzy,           SLOT(403),   0, 12, "frenzy",           "Your frenzy slowly fades away.", "" },
 
 //  ***Disciplines***
 //    --Animalism--
 
 //    --Auspex--
+    { "reveal",       {  102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+    &gsn_reveal,            SLOT(0),     0, 12, "",         "Your heightened senses fade away, leaving you aware of only the mundane world once again.",    "" },
+
+    { "astrally lost",   { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_IGNORE,         POS_STANDING,
+    &gsn_astrallylost,        SLOT( 0),     0,    24, "",      "Out of the corner of your eye, you spot your silver astral cord that leads back to your physical body!",  "" },
+
+    { "astral projection",   { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,  TAR_IGNORE,        POS_STANDING,
+    &gsn_astralprojection,     SLOT( 0),    0,    24, "",     "!!Wearoffmsg!!",     ""},
 
 //    --Celerity--
+    { "celerity", { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+    &gsn_celbuff,           SLOT(0),     0, 12, "",         "The world suddenly seems to speed up around you, as your vitae enhanced speed fades away.", "" },
 
 //    --Chimerstry--
+    { "ignis fatuus",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_SLEEPING,
+    &gsn_ignis_fatuus,            SLOT(405),   0, 12, "ignis",           "Your confusion fades away.", "" },
+
+    { "chimaera",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_SLEEPING,
+    &gsn_chimaera,            SLOT(0),   0, 12, "chimaera",           "!chimaera!", "" },
+
+    { "phantasm",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_SLEEPING,
+    &gsn_phantasm,            SLOT(0),   0, 12, "phantasm",           "The illusion masking your true position fades away.", "" },
+
+    { "horrid reality",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_SLEEPING,
+    &gsn_horridreality,            SLOT(0),   0, 12, "horrid reality",           "!Horrid Reality!", "" },
+
+    { "chimerstry",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_SLEEPING,
+    &gsn_chimerstry,            SLOT(0),   0, 12, "chimerstry",           "You once again feel strong enough to twist reality to your whim.", "" },
 
 //    --Dementation--
 
 //    --Dominate--
+    { "forgetful mind",       {  102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+    &gsn_forget,            SLOT(0),     0, 12, "",         "Your memory slowly returns...", "" },
 
 //    --Fortitude--
 
 //    --Mortis--
 
 //    --Obfuscate--
+    { "unseen",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, spell_null, TAR_CHAR_SELF,      POS_TORPOR,
+    &gsn_unseen,        SLOT(0),    0,  12, "",     "Your power to vanish from the minds of other fades and you become visible.",   "" },
+
+    { "veil",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, spell_null, TAR_CHAR_SELF,      POS_TORPOR,
+    &gsn_veil,        SLOT(0),    0,  12, "",     "Your power to vanish from the minds of other fades and you become visible.",   "" },
+
+    { "cloak the gathering",  { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+    &gsn_cloak_the_gathering,           SLOT(0),     0, 12, "",         "Your cloak of shadows fades away...",  "" },
+
+    { "mask",     {  102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+    &gsn_mask,          SLOT(0),     0, 12, "",         "Your Mask of a Thousand Faces fades away revealing your true guise.", "" },
 
 //    --Obtenebration--
+    { "arms of the abyss",    { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_SLEEPING,
+    &gsn_armsoftheabyss,            SLOT(405),   0, 12, "",         "The shadowy Tendrils fade away.", "" },
+
+    { "shadowplay",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_SLEEPING,
+    &gsn_shadowplay,            SLOT(403),   0, 12, "shadowplay",         "The shadows surrounding you fade away.", "" },
+
+    { "shroud of night",  { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+    &gsn_cloakshadow,           SLOT(0),     0, 12, "",         "Your cloak of shadows fades away...",  "" },
+
+    { "shadowform",       {  102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+    &gsn_shadowform,            SLOT(0),     0, 12, "",         "Your shadowy form fades away.", "" },
 
 //    --Potence--
 
 //    --Presence--
+    { "awe",  { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+    &gsn_awe,           SLOT(0),     0, 12, "",         "The impressive social mystique you bolstered slowly fades away.",  "" },
+
+    { "botched presence", { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+    &gsn_botched_presence,      SLOT(0),    0,  12, "botched presence",         "You feel prepared to show your face in public again.", "" },
+
+    { "majesty",  { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+    &gsn_majesty,           SLOT(0),     0, 12, "",         "Your aura of greatness fades away.",   "" },
 
 //    --Protean--
+    { "claws",    { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+    &gsn_claws,         SLOT(0),     0, 12, "",         "Your claws slide back under your nails.",  "" },
+
+    { "gleam",    { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+    &gsn_gleam,         SLOT(0),     0, 12, "",         "Your eyes cease to glow as your vitae enhanced vision returns to normal.", "" },
+
+    { "shift",    { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+    &gsn_shift,                     SLOT(0),     0, 12, "",      "You loose control over your shifted form.",   "" },
+
+    { "earthmeld",        {  102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+    &gsn_earthmeld,         SLOT(0),     0, 12, "",         "You emerge from the earth in a shower of dirt.", "" },
 
 //    --Quietus--
+    { "weakness", { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+    &gsn_quietus_weakness,          SLOT(0),     0, 12, "",         "Your strength returns as the weakness fades.", "" },
+
+    { "blood curse",  { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+    &gsn_quietus_bloodcurse,            SLOT(0),     0, 12, "",         "You sigh in relief as your blood purifys the curse away.", "" },
+
+    { "acidblood",    { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+    &gsn_acidblood,         SLOT(0),     0, 12, "acidic blood",         "!acid blood!", "" },
 
 //    --Serpentis--
 
 //    --Thaumaturgy: Path of Blood--
+    { "blood rage",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, thaumaturgy_frenzy, TAR_CHAR_SELF,      POS_SLEEPING,
+    &gsn_thaumaturgy_frenzy,            SLOT(405),   0, 12, "frenzy",           "Your frenzy slowly fades away.", "" },
+
+    { "blood of potency", { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+	  { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_SLEEPING,
+    &gsn_bloodofpotency,            SLOT(405),   0, 12, "",         "You feel suddenly weaker as the potency of your blood returns to normal.", "" },
+
+    { "theft of vitae",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_SLEEPING,
+    &gsn_theft,         SLOT(406),   0, 12, "theft",            "", "" },
+
+    { "cauldron of blood",    { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_SLEEPING,
+    &gsn_cauldron,          SLOT(406),   0, 12, "boiling blood",            "", "" },
 
 //    --Vicissitude--
+    { "bonecrafting",     { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_CHAR_SELF,             POS_STANDING,
+    &gsn_vicissitude_bonecraft,          SLOT( 0),        0,     48, "bone spikes",             "Your body slowly reforms into its normal skeletal structure.",      "" },
+
+    { "horrid form",  { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+    &gsn_vicissitude_horrid,                     SLOT(0),    0, 12, "",      "Your form shrinks and you slowly return to your 'normal' form.",  "" },
+
+    { "chiropteran marauder",  { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+  	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+  	&gsn_vicissitude_chiropteran,	SLOT(0), 0, 12, "", "Your leathery wings merge with your body as you return to your normal form.",  "" },
+
+    { "wing claws",  { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+  	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+  	&gsn_wingclaws,	SLOT(0), 0, 12, "", "Your bony claws retract from the ends of your winged hands.",  "" },
 
 //  ***Rituals***
 //    --Thaumaturgy--

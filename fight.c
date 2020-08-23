@@ -1910,10 +1910,10 @@ if (DEBUG_MESSAGES || IS_DEBUGGING(ch)){
     /* but do we have a funky weapon? */
     if (result && wield != NULL)
     {
-    int dam;
+      int dam;
 
-    if (ch->fighting == victim && IS_WEAPON_STAT(wield,WEAPON_POISON))
-    {
+      if (ch->fighting == victim && IS_WEAPON_STAT(wield,WEAPON_POISON))
+      {
         int level;
         AFFECT_DATA *poison, af;
 
@@ -1951,10 +1951,10 @@ if (DEBUG_MESSAGES || IS_DEBUGGING(ch)){
             affect_remove_obj(wield, poison);
             }
         }
-    }
+      }
 
-    if (ch->fighting == victim && IS_WEAPON_STAT(wield,WEAPON_SLOW))
-    {
+      if (ch->fighting == victim && IS_WEAPON_STAT(wield,WEAPON_SLOW))
+      {
         int level;
         AFFECT_DATA *slow, af;
         if ((slow = affect_find(wield->affected,gsn_slow)) == NULL)
@@ -1982,9 +1982,70 @@ if (DEBUG_MESSAGES || IS_DEBUGGING(ch)){
                 if (slow->level == 0 || slow->duration == 0)
             act("The taint on $p has worn off.",ch,wield,victim,TO_CHAR);
         }
+      }
+
+      if (ch->fighting == victim && (IS_WEAPON_STAT( wield, WEAPON_SHARP) ))
+      {
+        if (!is_affected(victim, gsn_bleeding) && tohit >= 4)
+        {
+          AFFECT_DATA af;
+          af.where     = TO_AFFECTS;
+          af.type      = gsn_bleeding;
+          af.level     = tohit;
+          af.duration  = 1 + tohit / 3;
+          af.location  = APPLY_NONE;
+          af.modifier  = 0;
+          af.bitvector = 0;
+          affect_to_char( victim, &af );
+          act("Your attack slices open a bleeding wound!", ch, wield, victim, TO_CHAR);
+          act("$p slices into you, leaving a bleeding wound!", ch, wield, victim, TO_VICT);
+        }
+      }
+
+      if (ch->fighting == victim && IS_WEAPON_STAT(wield,WEAPON_VAMPIRIC))
+      {
+        dam = number_range(5, wield->level / 2 + 10);
+        act2("$p draws life from $n.",victim,wield,ch,TO_ROOM);
+        act2("You feel $p drawing your life away.",victim,wield,ch,TO_CHAR);
+        damage(ch,victim,dam,0,DAM_NEGATIVE,FALSE);
+        victim->mana -= dam/4;
+        victim->move -= dam/2;
+        ch->hit += dam/2;
+        ch->mana += dam/8;
+        ch->move += dam/4;
+      }
+
+      if (ch->fighting == victim && IS_WEAPON_STAT(wield,WEAPON_FLAMING))
+      {
+        dam = number_range(1,wield->level / 4 + 1);
+        act2("$n is burned by $p.",victim,wield,ch,TO_ROOM);
+        act2("$p sears your flesh.",victim,wield,ch,TO_CHAR);
+        fire_effect( (void *) victim,wield->level/2,dam,TARGET_CHAR);
+        damage(ch,victim,dam,0,DAM_FIRE,FALSE);
+      }
+
+      if (ch->fighting == victim && IS_WEAPON_STAT(wield,WEAPON_FROST))
+      {
+        dam = number_range(1,wield->level / 6 + 2);
+        act2("$p freezes $n.",victim,wield,ch,TO_ROOM);
+        act2("The cold touch of $p surrounds you with ice.",
+        victim,wield,NULL,TO_CHAR);
+        cold_effect(victim,wield->level/2,dam,TARGET_CHAR);
+        damage(ch,victim,dam,0,DAM_COLD,FALSE);
+      }
+
+      if (ch->fighting == victim && IS_WEAPON_STAT(wield,WEAPON_SHOCKING))
+      {
+        dam = number_range(1,wield->level/5 + 2);
+        act2("$n is struck by lightning from $p.",victim,wield,ch,TO_ROOM);
+        act2("You are shocked by $p.",victim,wield,ch,TO_CHAR);
+        shock_effect(victim,wield->level/2,dam,TARGET_CHAR);
+        damage(ch,victim,dam,0,DAM_LIGHTNING,FALSE);
+      }
     }
 
-    if (ch->fighting == victim && IS_WEAPON_STAT( wield, WEAPON_SHARP))
+/* Claws chance to cause bleed */
+    if (result && wield == NULL && ch->fighting == victim && ( is_affected(ch, gsn_claws) || is_affected(ch, gsn_wingclaws)))
     {
       if (!is_affected(victim, gsn_bleeding) && tohit >= 4)
       {
@@ -1997,54 +2058,10 @@ if (DEBUG_MESSAGES || IS_DEBUGGING(ch)){
         af.modifier  = 0;
         af.bitvector = 0;
         affect_to_char( victim, &af );
-        act("Your attack slices open a bleeding wound!", ch, wield, victim, TO_CHAR);
-        act("$p slices into you, leaving a bleeding wound!", ch, wield, victim, TO_VICT);
-
+        act("Your slicing claw attack opens a bleeding wound on $N!", ch, NULL, victim, TO_CHAR);
+        act("You are left with a bleeding wound from $n's claws!", ch, NULL, victim, TO_VICT);
       }
     }
-
-        if (ch->fighting == victim && IS_WEAPON_STAT(wield,WEAPON_VAMPIRIC))
-    {
-        dam = number_range(5, wield->level / 2 + 10);
-        act2("$p draws life from $n.",victim,wield,ch,TO_ROOM);
-        act2("You feel $p drawing your life away.",victim,wield,ch,TO_CHAR);
-        damage(ch,victim,dam,0,DAM_NEGATIVE,FALSE);
-        victim->mana -= dam/4;
-        victim->move -= dam/2;
-        ch->hit += dam/2;
-        ch->mana += dam/8;
-        ch->move += dam/4;
-    }
-
-    if (ch->fighting == victim && IS_WEAPON_STAT(wield,WEAPON_FLAMING))
-    {
-        dam = number_range(1,wield->level / 4 + 1);
-        act2("$n is burned by $p.",victim,wield,ch,TO_ROOM);
-        act2("$p sears your flesh.",victim,wield,ch,TO_CHAR);
-        fire_effect( (void *) victim,wield->level/2,dam,TARGET_CHAR);
-        damage(ch,victim,dam,0,DAM_FIRE,FALSE);
-    }
-
-    if (ch->fighting == victim && IS_WEAPON_STAT(wield,WEAPON_FROST))
-    {
-        dam = number_range(1,wield->level / 6 + 2);
-        act2("$p freezes $n.",victim,wield,ch,TO_ROOM);
-        act2("The cold touch of $p surrounds you with ice.",
-        victim,wield,NULL,TO_CHAR);
-        cold_effect(victim,wield->level/2,dam,TARGET_CHAR);
-        damage(ch,victim,dam,0,DAM_COLD,FALSE);
-    }
-
-    if (ch->fighting == victim && IS_WEAPON_STAT(wield,WEAPON_SHOCKING))
-    {
-        dam = number_range(1,wield->level/5 + 2);
-        act2("$n is struck by lightning from $p.",victim,wield,ch,TO_ROOM);
-        act2("You are shocked by $p.",victim,wield,ch,TO_CHAR);
-        shock_effect(victim,wield->level/2,dam,TARGET_CHAR);
-        damage(ch,victim,dam,0,DAM_LIGHTNING,FALSE);
-    }
-    }
-
 
     tail_chain( );
     return;

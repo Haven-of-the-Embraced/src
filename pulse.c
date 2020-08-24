@@ -25,15 +25,18 @@ void affects_update (void) {
         damage(ch, ch, (ch->max_hit / (50*get_attribute(ch, STAMINA))),
             gsn_poison,DAM_POISON,FALSE);
 
-    if (is_affected(ch, gsn_bleeding) & has_blood(ch))
+    if (is_affected(ch, gsn_bleeding) && has_blood(ch) && ch->hit > 10 * ch->level / 50)
     {
       level = get_affect_level(ch, gsn_bleeding);
-      act("Your wounds continue to bleed out.", ch, NULL, NULL, TO_CHAR);
-      if (godice(get_attribute(ch, STAMINA), 8) < get_affect_level(ch, gsn_bleeding))
+      if (godice(get_attribute(ch, STAMINA), 8) < 1)
       {
-        damage(ch, ch, (level*ch->level/25), gsn_bleeding, DAM_AGGREVATED, TRUE);
-        if (!IS_NPC(ch) && number_percent() > 75)
+        act("Your wounds continue to bleed out.", ch, NULL, NULL, TO_CHAR);
+        act("$n continues to bleed from $s open wounds.", ch, NULL, NULL, TO_NOTVICT);
+        damage(ch, ch, (level * ch->level / 50), gsn_bleeding, DAM_AGGREVATED, TRUE);
+        if (!IS_NPC(ch) && number_percent() > 85)
+        {
           ch->pblood--;
+        }
       }
     }
 

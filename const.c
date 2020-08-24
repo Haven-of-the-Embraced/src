@@ -400,6 +400,13 @@ const   struct  race_type   race_table  []      =
     },
 
     {
+      "kuei-jin",     FALSE,
+      0,              0,   0,
+      0,              RES_POISON,     VULN_FIRE|VULN_SUNLIGHT,
+      FORM_SENTIENT|FORM_BIPED|FORM_MAMMAL|FORM_UNDEAD,    PART_HEAD|PART_ARMS|PART_LEGS|PART_HEART|PART_BRAINS|PART_GUTS|PART_HANDS|PART_FEET|PART_FINGERS|PART_EAR|PART_EYE
+    },
+
+    {
       "lizard",       FALSE,
       0,      0,      0,
       0,      RES_POISON, VULN_COLD,
@@ -453,6 +460,13 @@ const   struct  race_type   race_table  []      =
       0,      0,      OFF_DODGE|OFF_FAST,
       0,      0,      0,
       A|G|V,      A|C|D|E|F|H|J|K
+    },
+
+    {
+      "romani",       FALSE,
+      0,      0,      OFF_KICK_DIRT|ASSIST_RACE,
+      0,              RES_MAGIC,      VULN_DROWNING,
+      FORM_EDIBLE|FORM_ANIMAL|FORM_SENTIENT|FORM_BIPED|FORM_MAMMAL,    A|B|C|D|E|F|G|H|I|J|K
     },
 
     {
@@ -532,20 +546,6 @@ const   struct  race_type   race_table  []      =
       0,      0,      0,
       0,      0,      0,
       0,      0
-    },
-
-    {
-      "duergar",              FALSE,
-      0,              AFF_INFRARED,   0,
-      0,              RES_MAGIC|RES_POISON|RES_DISEASE, VULN_DROWNING,
-      A|H|M|V,        A|B|C|D|E|F|G|H|I|J|K
-    },
-
-    {
-      "gnome",                FALSE,
-      0,              AFF_INFRARED,   0,
-      0,              RES_POISON,     VULN_BASH,
-      A|H|M|V,        A|B|C|D|E|F|G|H|I|J|K
     },
 
     {

@@ -5683,6 +5683,11 @@ void do_divine_strength(CHAR_DATA *ch, char *argument )
 		send_to_char("You do not have the willpower required to focus a serious prayer.\n\r", ch);
 		return;
 	}
+  if (is_affected(ch, gsn_laryngitis))
+  {
+    send_to_char("Your throat is still too soer to recite a proper prayer to your deity.\n\r", ch);
+    return;
+  }
 	if (ch->move < focus)
 	{
 		send_to_char("You are too tired to offer up a proper prayer to your deity.\n\r", ch);

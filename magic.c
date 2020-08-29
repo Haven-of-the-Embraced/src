@@ -337,6 +337,12 @@ void do_cast( CHAR_DATA *ch, char *argument )
     return;
     }
 
+    if (is_affected(ch, gsn_laryngitis))
+    {
+      send_to_char("Your throat is still too sore to recite proper prayers.\n\r", ch);
+      return;
+    }
+
     if (ch->level + 2 == csskill_table[csn].level)
     mana = 50;
     else

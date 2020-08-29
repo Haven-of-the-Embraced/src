@@ -49,6 +49,13 @@ void do_feralspeech(CHAR_DATA *ch, char *argument)
                 send_to_char("Disabled on players due to the potential for abuse.\n\r", ch);
                 return;
         }
+
+    if (is_affected(ch, gsn_laryngitis))
+    {
+      send_to_char("Your throat is too sore to properly mimic the speech of animals.\n\r", ch);
+      return;
+    }
+
     if ( IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
     {
         send_to_char("Your blood curse prevents it!\n\r" ,ch);
@@ -198,6 +205,12 @@ void do_beckoning(CHAR_DATA *ch, char *argument)
     {
         send_to_char( "Error: please inform the Coders!\n\r", ch );
         return;
+    }
+
+    if (is_affected(ch, gsn_laryngitis))
+    {
+      send_to_char("Your throat is too sore to call out for animal aid.\n\r", ch);
+      return;
     }
 
     dicesuccess = godice(get_attribute(ch, CHARISMA) + ch->csabilities[CSABIL_SURVIVAL], 6);
@@ -377,6 +390,11 @@ void do_songofserenity(CHAR_DATA *ch, char *argument)
         send_to_char( "You are not skilled enough in Animalism!.\n\r", ch );
         return;
     }
+    if (is_affected(ch, gsn_laryngitis))
+    {
+      send_to_char("Your throat is too sore to sing.\n\r", ch);
+      return;
+    }
     if ( victim == ch )
     {
         send_to_char( "Your already pretty calm!\n\r", ch );
@@ -538,7 +556,11 @@ void do_quelltheherd(CHAR_DATA *ch, char *argument)
         return;
     }
 
-
+    if (is_affected(ch, gsn_laryngitis))
+    {
+      send_to_char("Your throat is too sore to sing your song.\n\r", ch);
+      return;
+    }
 
     if ( ch->pblood < 40 )
     {
@@ -1964,8 +1986,14 @@ void do_command(CHAR_DATA *ch, char *argument)
     }
     if (ch->pcdata->discipline[DOMINATE] < 1)
     {
-        send_to_char( "You are not trained in Domination!.\n\r", ch );
+        send_to_char( "Hey, you.  You are not trained in Dominate!\n\r", ch );
         return;
+    }
+
+    if (is_affected(ch, gsn_laryngitis))
+    {
+      send_to_char("You cannot speak clearly enough with a sore throat to Dominate someone.\n\r", ch);
+      return;
     }
         if (ch->pblood < 20)
     {
@@ -2146,7 +2174,7 @@ void do_mesmerize(CHAR_DATA *ch, char *argument)
     }
     if (ch->pcdata->discipline[DOMINATE] < 2)
     {
-        send_to_char( "You are not trained in Domination!.\n\r", ch );
+        send_to_char( "You are not trained in Dominate!\n\r", ch );
         return;
     }
     if ( arg1[0] == '\0' || arg2[0] == '\0')
@@ -2159,6 +2187,13 @@ void do_mesmerize(CHAR_DATA *ch, char *argument)
         send_to_char( "Nobody here by that name.\n\r", ch );
         return;
     }
+
+    if (is_affected(ch, gsn_laryngitis))
+    {
+      send_to_char("You cannot speak clearly enough with a sore throat to Mesmerize your victim.\n\r", ch);
+      return;
+    }
+
     if (!IS_NPC(victim))
     {
         send_to_char("Disabled on players due to the potential for abuse.\n\r", ch);
@@ -2258,7 +2293,7 @@ void do_conditioning(CHAR_DATA *ch, char *argument)
     }
     if (ch->pcdata->discipline[DOMINATE] < 4)
     {
-        send_to_char( "You are not skilled enough in Dominate!.\n\r", ch );
+        send_to_char( "You are not skilled enough in Dominate!\n\r", ch );
         return;
     }
     if ( IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
@@ -2270,6 +2305,12 @@ void do_conditioning(CHAR_DATA *ch, char *argument)
     {
         send_to_char( "Nobody here by that name.\n\r", ch );
         return;
+    }
+
+    if (is_affected(ch, gsn_laryngitis))
+    {
+      send_to_char("Your throat is still too swollen to Condition your target properly.\n\r", ch);
+      return;
     }
 
         if (!IS_NPC(victim))
@@ -4288,9 +4329,16 @@ void do_entrancement(CHAR_DATA *ch, char *argument)
 
     if (ch->pcdata->discipline[PRESENCE] < 3)
     {
-        send_to_char( "You are not skilled enough in Presence!.\n\r", ch );
+        send_to_char( "You are not skilled enough in Presence!\n\r", ch );
         return;
     }
+
+    if (is_affected(ch, gsn_laryngitis))
+    {
+      send_to_char("Your throat is still too sore to properly Entrance your subjects with your fancy words.\n\r", ch);
+      return;
+    }
+
     if (!str_prefix(argument,"delete"))
     {
         send_to_char("That will NOT be done.\n\r",ch);

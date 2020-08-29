@@ -1418,6 +1418,12 @@ void spell_gift_callofthewyld( int sn, int level, CHAR_DATA *ch, void *vo, int t
     AFFECT_DATA af;
     CHAR_DATA *gch;
 
+    if (is_affected(ch, gsn_laryngitis))
+    {
+      act( "You attempt a savage howl, but your enflamed throat causes it to come out broken and disjointed.", ch, NULL, NULL, TO_CHAR );
+      return;
+    }
+
     act( "You let forth a savage howl of rage and praise to Luna.", ch, NULL, NULL, TO_CHAR );
     act( "$n lets forth a savage howl.", ch, NULL, NULL, TO_ROOM );
 

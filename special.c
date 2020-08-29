@@ -1517,7 +1517,7 @@ bool spec_shadowplay( CHAR_DATA *ch )
 {
   CHAR_DATA *victim;
   CHAR_DATA *v_next;
-  int shadowsuccess;
+  int shadowsuccess, obtenebration;
 
   if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected(ch, gsn_forget))
       return FALSE;
@@ -1531,6 +1531,19 @@ bool spec_shadowplay( CHAR_DATA *ch )
 
   if ( victim == NULL )
     return FALSE;
+
+  if ( is_affected(victim, gsn_shadowplay))
+    return FALSE;
+
+  act( "Darkness rises from $n's shadow and gathers around $s form.", ch, NULL, victim, TO_ROOM );
+  obtenebration = ch->level / 20;
+  shadowsuccess = godice(get_attribute(ch, WITS) + obtenebration, 6);
+
+  if (shadowsuccess <= 0)
+  {
+    act("The darkness flails and dissipates as quickly as it formed.", ch, NULL, victim, TO_ROOM);
+    return FALSE;
+  }
 
   return TRUE;
 }

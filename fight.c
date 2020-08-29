@@ -6242,6 +6242,8 @@ void do_warcry( CHAR_DATA *ch, char *argument )
 {
     CHAR_DATA *victim;
     CHAR_DATA *vict_next;
+    int warcrysuccess;
+    AFFECT_DATA af;
 
     if ( get_skill(ch, gsn_warcry) == 0)
     {
@@ -6262,8 +6264,30 @@ void do_warcry( CHAR_DATA *ch, char *argument )
     }
 
     WAIT_STATE( ch, skill_table[gsn_warcry].beats );
-    if ( get_skill(ch,gsn_warcry) > number_percent())
+    warcrysuccess = godice(get_attribute(ch, MANIPULATION) + get_ability(ch, CSABIL_INTIMIDATION), 6);
+
+    if (warcrysuccess < 0)
     {
+      act( "You strain your throat while trying to shout!",  ch, NULL, NULL, TO_CHAR );
+      af.where     = TO_AFFECTS;
+      af.type      = gsn_laryngitis;
+      af.level     = ch->level;
+      af.duration  = -(warcrysuccess);
+      af.location  = 0;
+      af.modifier  = 0;
+      af.bitvector = 0;
+      affect_to_char( ch, &af );
+      return;
+    }
+
+    if (warcrysuccess == 0)
+    {
+      act( "You let out a squeak of a warcry!",  ch, NULL, NULL, TO_CHAR    );
+      act( "$n attempts a mighty warcry, and succeeds only in letting out a tiny squeak.", ch, NULL, NULL, TO_ROOM    );
+      check_improve(ch,gsn_warcry,FALSE,2);
+      return;
+    }
+
       act( "You bellow a loud warcry!",  ch, NULL, NULL, TO_CHAR    );
       ch->move -= (ch->level / 3) + 30;
       check_improve(ch,gsn_warcry,TRUE,2);
@@ -6284,13 +6308,7 @@ void do_warcry( CHAR_DATA *ch, char *argument )
             continue;
         }
       }
-    }
-    else
-    {
-      act( "You let out a squeak of a warcry!",  ch, NULL, NULL, TO_CHAR    );
-      act( "$n attempts a mighty warcry, and succeeds only in letting out a tiny squeak.", ch, NULL, NULL, TO_ROOM    );
-      check_improve(ch,gsn_warcry,FALSE,2);
-    }
+
       return;
 }
 

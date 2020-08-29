@@ -6243,44 +6243,55 @@ void do_warcry( CHAR_DATA *ch, char *argument )
     CHAR_DATA *victim;
     CHAR_DATA *vict_next;
 
-        if ( get_skill(ch, gsn_warcry) == 0)
-        {
-                send_to_char("You are better off sticking to your own arts.\n\r", ch );
-                return;
-        }
+    if ( get_skill(ch, gsn_warcry) == 0)
+    {
+      send_to_char("You are better off sticking to your own arts.\n\r", ch );
+      return;
+    }
 
-        WAIT_STATE( ch, skill_table[gsn_warcry].beats );
-        if ( get_skill(ch,gsn_warcry) > number_percent())
-        {
+    if (is_affected(ch, gsn_laryngitis))
+    {
+      send_to_char("Your throat is too enflamed to shout your warcry.\n\r", ch);
+      return;
+    }
 
-                act( "You bellow a loud warcry!",  ch, NULL, NULL, TO_CHAR    );
-                ch->move -= ch->level / 2;
-                check_improve(ch,gsn_warcry,TRUE,2);
-                for ( victim = char_list; victim != NULL; victim = vict_next )
-                {
-                        vict_next       = victim->next;
-                        if(!IS_NPC(victim))
-                            continue;
-                        if ( victim->in_room == NULL )
-                                continue;
-                        if ( victim->in_room == ch->in_room && SAME_UMBRA(ch, victim))
-                        {
-                                if ( victim != ch && !is_safe_spell(ch,victim,TRUE))
-                                {
-                                        damage( ch,victim,ch->level, gsn_warcry, DAM_SOUND,TRUE);
-                                        act( "$n bellows a loud warcry that hurts your ears!", ch, NULL, victim, TO_ROOM    );
-                                }
-                                continue;
-                        }
-                }
-        }
-        else
+    if (ch->move < (ch->level/3) + 30)
+    {
+      send_to_char("You are too tired to shout right now.\n\r", ch);
+      return;
+    }
+
+    WAIT_STATE( ch, skill_table[gsn_warcry].beats );
+    if ( get_skill(ch,gsn_warcry) > number_percent())
+    {
+      act( "You bellow a loud warcry!",  ch, NULL, NULL, TO_CHAR    );
+      ch->move -= (ch->level / 3) + 30;
+      check_improve(ch,gsn_warcry,TRUE,2);
+      for ( victim = char_list; victim != NULL; victim = vict_next )
+      {
+        vict_next       = victim->next;
+        if(!IS_NPC(victim))
+          continue;
+        if ( victim->in_room == NULL )
+          continue;
+        if ( victim->in_room == ch->in_room && SAME_UMBRA(ch, victim))
         {
-                act( "You let out a squeak of a warcry!",  ch, NULL, NULL, TO_CHAR    );
-                act( "$n attempts a mighty warcry, and succeeds only in letting out a tiny squeak.", ch, NULL, NULL, TO_ROOM    );
-                check_improve(ch,gsn_warcry,FALSE,2);
+          if ( victim != ch && !is_safe_spell(ch,victim,TRUE))
+          {
+            damage( ch,victim,ch->level, gsn_warcry, DAM_SOUND,TRUE);
+            act( "$n bellows a loud warcry that hurts your ears!", ch, NULL, victim, TO_ROOM    );
+          }
+            continue;
         }
-        return;
+      }
+    }
+    else
+    {
+      act( "You let out a squeak of a warcry!",  ch, NULL, NULL, TO_CHAR    );
+      act( "$n attempts a mighty warcry, and succeeds only in letting out a tiny squeak.", ch, NULL, NULL, TO_ROOM    );
+      check_improve(ch,gsn_warcry,FALSE,2);
+    }
+      return;
 }
 
 void do_behead( CHAR_DATA *ch, char *argument )

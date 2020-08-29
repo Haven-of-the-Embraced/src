@@ -6288,28 +6288,40 @@ void do_warcry( CHAR_DATA *ch, char *argument )
       return;
     }
 
-      act( "You bellow a loud warcry!",  ch, NULL, NULL, TO_CHAR    );
-      ch->move -= (ch->level / 3) + 30;
-      check_improve(ch,gsn_warcry,TRUE,2);
-      for ( victim = char_list; victim != NULL; victim = vict_next )
-      {
-        vict_next       = victim->next;
-        if(!IS_NPC(victim))
-          continue;
-        if ( victim->in_room == NULL )
-          continue;
-        if ( victim->in_room == ch->in_room && SAME_UMBRA(ch, victim))
-        {
-          if ( victim != ch && !is_safe_spell(ch,victim,TRUE))
-          {
-            damage( ch,victim,ch->level, gsn_warcry, DAM_SOUND,TRUE);
-            act( "$n bellows a loud warcry that hurts your ears!", ch, NULL, victim, TO_ROOM    );
-          }
-            continue;
-        }
-      }
+    act( "You bellow a loud warcry to challenge your foes!",  ch, NULL, NULL, TO_CHAR );
+    act( "$n bellows a ferocious warcry!", ch, NULL, NULL, TO_NOTVICT );
+    ch->move -= (ch->level / 3) + 30;
+    check_improve(ch,gsn_warcry,TRUE,2);
+    gain_exp(ch, warcrysuccess * 4);
 
-      return;
+    for ( victim = char_list; victim != NULL; victim = vict_next )
+    {
+      vict_next = victim->next;
+      if(!IS_NPC(victim) || victim->in_room == NULL )
+        continue;
+
+      if ( victim->in_room == ch->in_room && SAME_UMBRA(ch, victim))
+      {
+        if ( victim != ch && !is_safe_spell(ch,victim,TRUE))
+        {
+          damage( ch, victim, warcrysuccess * (ch->level/5), gsn_warcry, DAM_SOUND,TRUE);
+          if (warcrysuccess > 4 && !IS_SET(victim->imm_flags,IMM_SOUND))
+          {
+            act( "$n's shout resonates in your ear, deafening you briefly!", ch, NULL, victim, TO_VICT );
+            af.where     = TO_AFFECTS;
+            af.type      = gsn_deafened;
+            af.level     = warcrysuccess;
+            af.duration  = 1;
+            af.location  = APPLY_CS_PER;
+            af.modifier  = -1;
+            af.bitvector = 0;
+            affect_to_char( victim, &af );
+          }
+        }
+          continue;
+      }
+    }
+    return;
 }
 
 void do_behead( CHAR_DATA *ch, char *argument )

@@ -1518,6 +1518,7 @@ bool spec_shadowplay( CHAR_DATA *ch )
   CHAR_DATA *victim;
   CHAR_DATA *v_next;
   int shadowsuccess, obtenebration;
+  AFFECT_DATA af;
 
   if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected(ch, gsn_forget))
       return FALSE;
@@ -1535,15 +1536,36 @@ bool spec_shadowplay( CHAR_DATA *ch )
   if ( is_affected(victim, gsn_shadowplay))
     return FALSE;
 
-  act( "Darkness rises from $n's shadow and gathers around $s form.", ch, NULL, victim, TO_ROOM );
+  act( "{DDarkness{x rises from $n's {Ds{wh{Dad{wo{Dw{x and gathers around $s form.", ch, NULL, victim, TO_ROOM );
   obtenebration = ch->level / 20;
   shadowsuccess = godice(get_attribute(ch, WITS) + obtenebration, 6);
 
   if (shadowsuccess <= 0)
   {
-    act("The darkness flails and dissipates as quickly as it formed.", ch, NULL, victim, TO_ROOM);
+    act("With but a quick flicker, the {Ddarkness{x dissipates as quickly as it appeared.", ch, NULL, victim, TO_ROOM);
     return FALSE;
   }
+
+  act("You send shadows to blind and suffocate $N!", ch, NULL, victim, TO_CHAR);
+  act("{DSh{wad{Dows{x leap at $n's command and fill your mouth and eyes!", ch, NULL, victim, TO_VICT);
+  act("{DSh{wad{Dows{x leap from $n's form and attack $N!", ch, NULL, victim, TO_NOTVICT);
+
+  af.where     = TO_AFFECTS;
+  af.type      = gsn_shadowplay;
+  af.level     = obtenebration;
+  af.duration  = 1;
+  af.location  = APPLY_CS_STA;
+  af.modifier  = -1;
+  af.bitvector = 0;
+  affect_to_char( victim, &af );
+  af.location  = APPLY_HITROLL;
+  af.modifier  = -(shadowsuccess*ch->level);
+  if (shadowsuccess > 3)
+  {
+    af.bitvector = AFF_BLIND;
+    act("{WThe {Ds{wh{Dad{wo{Dws {Wwrithe about your face, over your eyes and obstructing your vision!{x", ch, NULL, victim, TO_VICT);
+  }
+  affect_to_char( victim, &af );
 
   return TRUE;
 }

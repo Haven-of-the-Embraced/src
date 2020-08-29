@@ -74,6 +74,7 @@ DECLARE_SPEC_FUN(   spec_bo_dog     );
 DECLARE_SPEC_FUN(   spec_lag        );
 DECLARE_SPEC_FUN(   spec_celerity   );
 DECLARE_SPEC_FUN(   spec_potence    );
+DECLARE_SPEC_FUN(   spec_shadowplay );
 DECLARE_SPEC_FUN(   spec_questmaster);
 DECLARE_SPEC_FUN(   spec_evil_eye   );
 
@@ -112,6 +113,7 @@ const   struct  spec_type    spec_table[] =
     {   "spec_lag",     spec_lag        },
     {   "spec_celerity",        spec_celerity       },
     {   "spec_potence",         spec_potence        },
+    {   "spec_shadowplay",      spec_shadowplay     },
     {   "spec_questmaster",     spec_questmaster},
     {   "spec_jarjar",          spec_jarjar},
     {   "spec_evil_eye",        spec_evil_eye},
@@ -1510,6 +1512,29 @@ bool spec_potence( CHAR_DATA *ch )
 
     return TRUE;
 }
+
+bool spec_shadowplay( CHAR_DATA *ch )
+{
+  CHAR_DATA *victim;
+  CHAR_DATA *v_next;
+  int shadowsuccess;
+
+  if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected(ch, gsn_forget))
+      return FALSE;
+
+  for ( victim = ch->in_room->people; victim != NULL; victim = v_next )
+  {
+    v_next = victim->next_in_room;
+    if ( victim->fighting == ch && number_bits( 2 ) == 0 )
+      break;
+  }
+
+  if ( victim == NULL )
+    return FALSE;
+
+  return TRUE;
+}
+
 
 bool spec_cast_acid( CHAR_DATA *ch )
 {

@@ -2054,6 +2054,15 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
     &gsn_arena,          SLOT( 0),        0,     24, "",             "You may now recall from the {RArena{x.",       "" },
 
+/* Skill Related Debuffs */
+{ "deafened", { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+&gsn_deafened,      SLOT(0),    0,  12, "deafened",         "Noises assualt your eardrums as your hearing returns.", "" },
+
+{ "laryngitis", { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+&gsn_laryngitis,      SLOT(0),    0,  12, "laryngitis",         "The swelling in your throat heals and you are able to talk again.", "" },
+
 /* Generic Old Ritual Stuff */
     { "Stored: Inferno",             { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,

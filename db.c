@@ -4948,6 +4948,8 @@ sh_int      gsn_bandage;
 sh_int          gsn_mass_healing;
 sh_int      gsn_ground;
 sh_int      gsn_warcry;
+sh_int      gsn_deafened;
+sh_int      gsn_laryngitis;
 sh_int      gsn_headbutt;
 sh_int      gsn_blast;
 sh_int      gsn_slip;

@@ -6247,10 +6247,11 @@ void do_warcry( CHAR_DATA *ch, char *argument )
 {
     CHAR_DATA *victim;
     CHAR_DATA *vict_next;
-    int warcrysuccess;
+    CHAR_DATA *fch;
+    int warcrysuccess, warcryskill;
     AFFECT_DATA af;
 
-    if ( get_skill(ch, gsn_warcry) == 0)
+    if ( (warcryskill = get_skill(ch, gsn_warcry)) == 0)
     {
       send_to_char("You are better off sticking to your own arts.\n\r", ch );
       return;
@@ -6307,10 +6308,20 @@ void do_warcry( CHAR_DATA *ch, char *argument )
 
       if ( victim->in_room == ch->in_room && SAME_UMBRA(ch, victim))
       {
-        if ( victim != ch && !is_safe_spell(ch,victim,TRUE))
+        if ( victim != ch && !is_safe_spell(ch,victim,TRUE)
+        && !is_affected(victim, gsn_deafened) && !IS_SET(victim->imm_flags,IMM_SOUND))
         {
-          damage( ch, victim, warcrysuccess * (ch->level/5), gsn_warcry, DAM_SOUND,TRUE);
-          if (warcrysuccess > 4 && !IS_SET(victim->imm_flags,IMM_SOUND))
+/*       ** Taunt Removed until Figured out how to make it work properly **
+          fch = victim->fighting;
+          act("$N's focus shifts to you and $E attacks!", ch, NULL, victim, TO_CHAR);
+          if (victim->fighting != NULL)
+            stop_fighting(victim, TRUE);
+          if (fch->fighting != NULL)
+            stop_fighting(fch, TRUE);
+          set_fighting(victim, ch);
+          set_fighting(ch, victim);
+*/
+          if ((IS_SET(victim->res_flags, RES_SOUND) && warcrysuccess > 3 ) || warcrysuccess > 2 )
           {
             act( "$n's shout resonates in your ear, deafening you briefly!", ch, NULL, victim, TO_VICT );
             af.where     = TO_AFFECTS;
@@ -6322,6 +6333,11 @@ void do_warcry( CHAR_DATA *ch, char *argument )
             af.bitvector = 0;
             affect_to_char( victim, &af );
           }
+//        Change up damage to higher success once Taunting is fixed
+//          if (warcrysuccess > 2)
+//          {
+            damage( ch, victim, warcrysuccess * (ch->level/5) * warcryskill / 100, gsn_warcry, DAM_SOUND,TRUE);
+//          }
         }
           continue;
       }

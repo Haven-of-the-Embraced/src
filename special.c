@@ -1389,7 +1389,7 @@ bool spec_lasombra( CHAR_DATA *ch )
     switch ( number_range( 0,2 ) )
     {
     case 0:
-    case 1: return spec_shadowplay (ch);
+    case 1: return spec_obtenebration (ch);
     case 2: return spec_potence (ch);
     }
 
@@ -1508,9 +1508,9 @@ bool spec_obtenebration( CHAR_DATA *ch )
 
     switch ( number_range( 0,2 ) )
     {
-    case 0: return spec_shadowplay (ch);
-    case 1: return spec_nocturne (ch);
-    case 2: return spec_shadowplay (ch);
+    case 0:
+    case 1: return spec_shadowplay (ch);
+    case 2: return spec_nocturne (ch);
     }
 
     return FALSE;

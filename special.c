@@ -42,81 +42,89 @@
 /*
  * The following special functions are available for mobiles.
  */
-DECLARE_SPEC_FUN(   spec_breath_any     );
-DECLARE_SPEC_FUN(   spec_breath_acid    );
-DECLARE_SPEC_FUN(   spec_breath_fire    );
-DECLARE_SPEC_FUN(   spec_breath_frost   );
-DECLARE_SPEC_FUN(   spec_breath_gas     );
+DECLARE_SPEC_FUN(   spec_breath_any         );
+DECLARE_SPEC_FUN(   spec_breath_acid        );
+DECLARE_SPEC_FUN(   spec_breath_fire        );
+DECLARE_SPEC_FUN(   spec_breath_frost       );
+DECLARE_SPEC_FUN(   spec_breath_gas         );
 DECLARE_SPEC_FUN(   spec_breath_lightning   );
-DECLARE_SPEC_FUN(   spec_cast_adept     );
-DECLARE_SPEC_FUN(   spec_cast_cleric    );
-DECLARE_SPEC_FUN(   spec_cast_judge     );
-DECLARE_SPEC_FUN(   spec_cast_mage      );
-DECLARE_SPEC_FUN(   spec_cast_undead    );
-DECLARE_SPEC_FUN(   spec_executioner    );
-DECLARE_SPEC_FUN(   spec_fido       );
-DECLARE_SPEC_FUN(   spec_guard      );
-DECLARE_SPEC_FUN(   spec_janitor        );
-DECLARE_SPEC_FUN(   spec_mayor      );
-DECLARE_SPEC_FUN(   spec_poison     );
-DECLARE_SPEC_FUN(   spec_thief      );
-DECLARE_SPEC_FUN(   spec_nasty      );
-DECLARE_SPEC_FUN(   spec_troll_member   );
-DECLARE_SPEC_FUN(   spec_ogre_member    );
-DECLARE_SPEC_FUN(   spec_patrolman      );
-DECLARE_SPEC_FUN(   spec_jarjar     );
-DECLARE_SPEC_FUN(   spec_cast_lightning);
-DECLARE_SPEC_FUN(   spec_cast_acid);
-DECLARE_SPEC_FUN(   spec_cast_cold);
-DECLARE_SPEC_FUN(   spec_cast_fire);
-DECLARE_SPEC_FUN(   spec_stake      );
-DECLARE_SPEC_FUN(   spec_bo_dog     );
-DECLARE_SPEC_FUN(   spec_lag        );
-DECLARE_SPEC_FUN(   spec_celerity   );
-DECLARE_SPEC_FUN(   spec_potence    );
-DECLARE_SPEC_FUN(   spec_shadowplay );
-DECLARE_SPEC_FUN(   spec_questmaster);
-DECLARE_SPEC_FUN(   spec_evil_eye   );
+DECLARE_SPEC_FUN(   spec_cast_adept         );
+DECLARE_SPEC_FUN(   spec_cast_cleric        );
+DECLARE_SPEC_FUN(   spec_cast_judge         );
+DECLARE_SPEC_FUN(   spec_cast_mage          );
+DECLARE_SPEC_FUN(   spec_cast_undead        );
+DECLARE_SPEC_FUN(   spec_executioner        );
+DECLARE_SPEC_FUN(   spec_fido               );
+DECLARE_SPEC_FUN(   spec_guard              );
+DECLARE_SPEC_FUN(   spec_janitor            );
+DECLARE_SPEC_FUN(   spec_mayor              );
+DECLARE_SPEC_FUN(   spec_poison             );
+DECLARE_SPEC_FUN(   spec_thief              );
+DECLARE_SPEC_FUN(   spec_nasty              );
+DECLARE_SPEC_FUN(   spec_troll_member       );
+DECLARE_SPEC_FUN(   spec_ogre_member        );
+DECLARE_SPEC_FUN(   spec_patrolman          );
+DECLARE_SPEC_FUN(   spec_jarjar             );
+DECLARE_SPEC_FUN(   spec_cast_lightning     );
+DECLARE_SPEC_FUN(   spec_cast_acid          );
+DECLARE_SPEC_FUN(   spec_cast_cold          );
+DECLARE_SPEC_FUN(   spec_cast_fire          );
+DECLARE_SPEC_FUN(   spec_stake              );
+DECLARE_SPEC_FUN(   spec_bo_dog             );
+DECLARE_SPEC_FUN(   spec_lag                );
+DECLARE_SPEC_FUN(   spec_lasombra           );
+DECLARE_SPEC_FUN(   spec_celerity           );
+DECLARE_SPEC_FUN(   spec_potence            );
+DECLARE_SPEC_FUN(   spec_shadowplay         );
+DECLARE_SPEC_FUN(   spec_questmaster        );
+DECLARE_SPEC_FUN(   spec_evil_eye           );
 
 
 /* the function table */
 const   struct  spec_type    spec_table[] =
 {
-    {   "spec_breath_any",      spec_breath_any     },
-    {   "spec_breath_acid",     spec_breath_acid    },
-    {   "spec_breath_fire",     spec_breath_fire    },
-    {   "spec_breath_frost",        spec_breath_frost   },
-    {   "spec_breath_gas",      spec_breath_gas     },
-    {   "spec_breath_lightning",    spec_breath_lightning   },
-    {   "spec_cast_adept",      spec_cast_adept     },
-    {   "spec_cast_cleric",     spec_cast_cleric    },
-    {   "spec_cast_judge",      spec_cast_judge     },
-    {   "spec_cast_mage",       spec_cast_mage      },
-    {   "spec_cast_undead",     spec_cast_undead    },
-    {   "spec_executioner",     spec_executioner    },
-    {   "spec_fido",            spec_fido       },
-    {   "spec_guard",           spec_guard      },
-    {   "spec_janitor",         spec_janitor        },
-    {   "spec_mayor",           spec_mayor      },
-    {   "spec_poison",          spec_poison     },
-    {   "spec_thief",           spec_thief      },
-    {   "spec_nasty",           spec_nasty      },
-    {   "spec_troll_member",        spec_troll_member   },
-    {   "spec_ogre_member",     spec_ogre_member    },
-    {   "spec_patrolman",       spec_patrolman      },
-    {   "spec_cast_lightning",  spec_cast_lightning},
-    {   "spec_cast_acid",       spec_cast_acid},
-    {   "spec_cast_cold",       spec_cast_cold},
-    {   "spec_cast_fire",       spec_cast_fire},
-    {   "spec_stake",       spec_stake      },
-    {   "spec_bo_dog",      spec_bo_dog     },
-    {   "spec_lag",     spec_lag        },
-    {   "spec_celerity",        spec_celerity       },
-    {   "spec_potence",         spec_potence        },
-    {   "spec_shadowplay",      spec_shadowplay     },
-    {   "spec_questmaster",     spec_questmaster},
-    {   "spec_jarjar",          spec_jarjar},
-    {   "spec_evil_eye",        spec_evil_eye},
+// Breath Weapons
+    {   "spec_breath_any",        spec_breath_any       },
+    {   "spec_breath_acid",       spec_breath_acid      },
+    {   "spec_breath_fire",       spec_breath_fire      },
+    {   "spec_breath_frost",      spec_breath_frost     },
+    {   "spec_breath_gas",        spec_breath_gas       },
+    {   "spec_breath_lightning",  spec_breath_lightning },
+// Casting Groups
+    {   "spec_cast_adept",        spec_cast_adept       },
+    {   "spec_cast_cleric",       spec_cast_cleric      },
+    {   "spec_cast_judge",        spec_cast_judge       },
+    {   "spec_cast_mage",         spec_cast_mage        },
+    {   "spec_cast_undead",       spec_cast_undead      },
+    {   "spec_cast_lightning",    spec_cast_lightning   },
+    {   "spec_cast_acid",         spec_cast_acid        },
+    {   "spec_cast_cold",         spec_cast_cold        },
+    {   "spec_cast_fire",         spec_cast_fire        },
+    {   "spec_executioner",       spec_executioner      },
+    {   "spec_fido",              spec_fido             },
+    {   "spec_guard",             spec_guard            },
+    {   "spec_janitor",           spec_janitor          },
+    {   "spec_mayor",             spec_mayor            },
+    {   "spec_poison",            spec_poison           },
+    {   "spec_thief",             spec_thief            },
+    {   "spec_nasty",             spec_nasty            },
+    {   "spec_troll_member",      spec_troll_member     },
+    {   "spec_ogre_member",       spec_ogre_member      },
+    {   "spec_patrolman",         spec_patrolman        },
+    {   "spec_stake",             spec_stake            },
+    {   "spec_bo_dog",            spec_bo_dog           },
+    {   "spec_lag",               spec_lag              },
+// Clans
+    {   "spec_lasombra",          spec_lasombra         },
+// Disciplines
+    {   "spec_celerity",          spec_celerity         },
+    {   "spec_potence",           spec_potence          },
+    {   "spec_shadowplay",        spec_shadowplay       },
+// Numina/Romani
+    {   "spec_evil_eye",          spec_evil_eye         },
+// Miscellaneous
+    {   "spec_questmaster",       spec_questmaster      },
+    {   "spec_jarjar",            spec_jarjar           },
     {   NULL,               NULL            }
 };
 
@@ -1364,6 +1372,31 @@ bool spec_lag( CHAR_DATA *ch )
     }
     return TRUE;
 }
+
+bool spec_lasombra( CHAR_DATA *ch )
+{
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0)
+    return FALSE;
+
+    if(is_affected( ch, gsn_forget ))
+    return FALSE;
+
+    switch ( number_bits( 3 ) )
+    {
+    case 0: return spec_breath_fire     ( ch );
+    case 1:
+    case 2: return spec_breath_lightning    ( ch );
+    case 3: return spec_breath_gas      ( ch );
+    case 4: return spec_breath_acid     ( ch );
+    case 5:
+    case 6:
+    case 7: return spec_breath_frost        ( ch );
+    }
+
+    return FALSE;
+}
+
+
 /*
 bool spec_dominate( CHAR_DATA *ch )
 {

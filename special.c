@@ -1623,15 +1623,40 @@ bool spec_shadowplay( CHAR_DATA *ch )
 
 bool spec_nocturne( CHAR_DATA *ch )
 {
-    if ( ch->position != POS_FIGHTING || ch->stopped > 0)
+  CHAR_DATA *victim;
+  CHAR_DATA *v_next;
+  AFFECT_DATA af;
+  int obtenebration, obtensuccess;
+
+  obtenebration = (ch->level / 20) + 1;
+  obtensuccess = godice(obtenebration, 6);
+
+  if (number_range(0,2) < 2)
     return FALSE;
 
-    if(is_affected( ch, gsn_forget ))
+  if ( ch->position != POS_FIGHTING || ch->stopped > 0
+    || is_affected(ch, gsn_forget) || obtensuccess <= 0)
     return FALSE;
 
+  for ( victim = ch->in_room->people; victim != NULL; victim = v_next )
+  {
+    v_next = victim->next_in_room;
+    if ( is_affected(victim, gsn_nocturne))
+      continue;
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_nocturne;
+    af.level     = obtenebration;
+    af.duration  = 0;
+    af.location  = APPLY_NONE;
+    af.modifier  = 0;
+    af.bitvector = AFF_BLIND;
+    affect_to_char( victim, &af );
+    act("{DMystical Darkness descends across the area, dropping like a curtain of the empty void.{x", ch, NULL, NULL, TO_CHAR);
+    act("{DMystical Darkness descends across the area, dropping like a curtain of the empty void.{x", ch, NULL, victim, TO_VICT);
+    act("The darkness clings to your eyes, impairing your sight!", ch, NULL, victim, TO_VICT);
+  }
 
-
-    return FALSE;
+  return TRUE;
 }
 
 bool spec_cast_acid( CHAR_DATA *ch )

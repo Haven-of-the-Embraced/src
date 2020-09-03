@@ -2182,6 +2182,10 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
     &gsn_cloakshadow,           SLOT(0),     0, 12, "",         "Your cloak of shadows fades away...",  "" },
 
+    { "nocturne",  { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+    &gsn_nocturne,           SLOT(0),     0, 12, "",         "The darkness lifts from around you.",  "" },
+
     { "shadowform",       {  102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
     &gsn_shadowform,            SLOT(0),     0, 12, "",         "Your shadowy form fades away.", "" },

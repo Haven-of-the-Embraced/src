@@ -74,6 +74,7 @@ DECLARE_SPEC_FUN(   spec_bo_dog             );
 DECLARE_SPEC_FUN(   spec_lag                );
 DECLARE_SPEC_FUN(   spec_lasombra           );
 DECLARE_SPEC_FUN(   spec_celerity           );
+DECLARE_SPEC_FUN(   spec_dominate           );
 DECLARE_SPEC_FUN(   spec_obtenebration      );
 DECLARE_SPEC_FUN(   spec_potence            );
 DECLARE_SPEC_FUN(   spec_shadowplay         );
@@ -120,6 +121,7 @@ const   struct  spec_type    spec_table[] =
     {   "spec_lasombra",          spec_lasombra         },
 // Disciplines
     {   "spec_celerity",          spec_celerity         },
+    {   "spec_dominate",          spec_dominate         },
     {   "spec_obtenebration",     spec_obtenebration    },
     {   "spec_potence",           spec_potence          },
 // Individual Discipline Powers
@@ -1388,7 +1390,7 @@ bool spec_lasombra( CHAR_DATA *ch )
 
     switch ( number_range( 0,2 ) )
     {
-    case 0:
+    case 0: return spec_dominate (ch);
     case 1: return spec_obtenebration (ch);
     case 2: return spec_potence (ch);
     }
@@ -1496,6 +1498,24 @@ bool spec_celerity( CHAR_DATA *ch )
     if(ch->level >= 100)
         multi_hit(ch,victim, TYPE_UNDEFINED);
     return TRUE;
+}
+
+bool spec_dominate( CHAR_DATA *ch )
+{
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0)
+    return FALSE;
+
+    if(is_affected( ch, gsn_forget ))
+    return FALSE;
+
+    switch ( number_range( 0,2 ) )
+    {
+    case 0:
+    case 1:
+    case 2: return TRUE;
+    }
+
+    return FALSE;
 }
 
 bool spec_obtenebration( CHAR_DATA *ch )

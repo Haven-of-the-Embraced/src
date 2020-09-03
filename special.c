@@ -74,8 +74,10 @@ DECLARE_SPEC_FUN(   spec_bo_dog             );
 DECLARE_SPEC_FUN(   spec_lag                );
 DECLARE_SPEC_FUN(   spec_lasombra           );
 DECLARE_SPEC_FUN(   spec_celerity           );
+DECLARE_SPEC_FUN(   spec_obtenebration      );
 DECLARE_SPEC_FUN(   spec_potence            );
 DECLARE_SPEC_FUN(   spec_shadowplay         );
+DECLARE_SPEC_FUN(   spec_nocturne           );
 DECLARE_SPEC_FUN(   spec_questmaster        );
 DECLARE_SPEC_FUN(   spec_evil_eye           );
 
@@ -118,8 +120,11 @@ const   struct  spec_type    spec_table[] =
     {   "spec_lasombra",          spec_lasombra         },
 // Disciplines
     {   "spec_celerity",          spec_celerity         },
+    {   "spec_obtenebration",     spec_obtenebration    },
     {   "spec_potence",           spec_potence          },
+// Individual Discipline Powers
     {   "spec_shadowplay",        spec_shadowplay       },
+    {   "spec_nocturne",          spec_nocturne         },
 // Numina/Romani
     {   "spec_evil_eye",          spec_evil_eye         },
 // Miscellaneous
@@ -1381,16 +1386,11 @@ bool spec_lasombra( CHAR_DATA *ch )
     if(is_affected( ch, gsn_forget ))
     return FALSE;
 
-    switch ( number_bits( 3 ) )
+    switch ( number_range( 0,2 ) )
     {
-    case 0: return spec_breath_fire     ( ch );
-    case 1:
-    case 2: return spec_breath_lightning    ( ch );
-    case 3: return spec_breath_gas      ( ch );
-    case 4: return spec_breath_acid     ( ch );
-    case 5:
-    case 6:
-    case 7: return spec_breath_frost        ( ch );
+    case 0:
+    case 1: return spec_shadowplay (ch);
+    case 2: return spec_potence (ch);
     }
 
     return FALSE;
@@ -1498,6 +1498,24 @@ bool spec_celerity( CHAR_DATA *ch )
     return TRUE;
 }
 
+bool spec_obtenebration( CHAR_DATA *ch )
+{
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0)
+    return FALSE;
+
+    if(is_affected( ch, gsn_forget ))
+    return FALSE;
+
+    switch ( number_range( 0,2 ) )
+    {
+    case 0: return spec_shadowplay (ch);
+    case 1: return spec_nocturne (ch);
+    case 2: return spec_shadowplay (ch);
+    }
+
+    return FALSE;
+}
+
 bool spec_potence( CHAR_DATA *ch )
 {
     CHAR_DATA *victim;
@@ -1603,6 +1621,18 @@ bool spec_shadowplay( CHAR_DATA *ch )
   return TRUE;
 }
 
+bool spec_nocturne( CHAR_DATA *ch )
+{
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0)
+    return FALSE;
+
+    if(is_affected( ch, gsn_forget ))
+    return FALSE;
+
+
+
+    return FALSE;
+}
 
 bool spec_cast_acid( CHAR_DATA *ch )
 {

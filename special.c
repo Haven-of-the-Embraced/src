@@ -77,6 +77,7 @@ DECLARE_SPEC_FUN(   spec_celerity           );
 DECLARE_SPEC_FUN(   spec_dominate           );
 DECLARE_SPEC_FUN(   spec_obtenebration      );
 DECLARE_SPEC_FUN(   spec_potence            );
+DECLARE_SPEC_FUN(   spec_command            );
 DECLARE_SPEC_FUN(   spec_shadowplay         );
 DECLARE_SPEC_FUN(   spec_nocturne           );
 DECLARE_SPEC_FUN(   spec_questmaster        );
@@ -125,6 +126,7 @@ const   struct  spec_type    spec_table[] =
     {   "spec_obtenebration",     spec_obtenebration    },
     {   "spec_potence",           spec_potence          },
 // Individual Discipline Powers
+    {   "spec_command",           spec_command          },
     {   "spec_shadowplay",        spec_shadowplay       },
     {   "spec_nocturne",          spec_nocturne         },
 // Numina/Romani
@@ -1398,73 +1400,6 @@ bool spec_lasombra( CHAR_DATA *ch )
     return FALSE;
 }
 
-
-/*
-bool spec_dominate( CHAR_DATA *ch )
-{
-    CHAR_DATA *victim;
-    CHAR_DATA *v_next;
-    char *spell;
-    int sn, num;
-
-    if ( ch->position != POS_FIGHTING )
-        return FALSE;
-
-    for ( victim = ch->in_room->people; victim != NULL; victim = v_next )
-    {
-        v_next = victim->next_in_room;
-        if ( victim->fighting == ch && number_bits( 2 ) == 0 )
-            break;
-    }
-
-    if ( victim == NULL )
-        return FALSE;
-
-
-    switch(5)
-    {
-        case 1:
-                act( "$n chuckles madly at your foolish attempt and looks into your eyes...", ch, NULL, victim, TO_VICT );
-                act( "$n chuckles madly at $N and looks deep into their eyes...", ch, NULL, victim, TO_NOTVICT );
-                do_function(victim, &do_remove, "all");
-                break;
-        case 2:
-                act( "$n glares at you and shouts 'RUN!'", ch, NULL, victim, TO_VICT );
-                act( "$n glares at $N and shouts 'RUN!'", ch, NULL, victim, TO_NOTVICT );
-                do_function(victim, &do_flee, "auto");
-                break;
-        case 3:
-                act( "$n looks deeply into your eyes then whispers 'Go away.'", ch, NULL, victim, TO_VICT );
-                act( "$n looks deeply into your eyes then whispers 'Go away.'", ch, NULL, victim, TO_NOTVICT );
-                do_function(victim, &do_recall, "");
-                break;
-        case 4:
-                act( "$n peers into your eyes then says 'Sleep my pretty...'", ch, NULL, victim, TO_VICT );
-                act( "$n peers into $N's eyes then says 'Sleep my pretty...'", ch, NULL, victim, TO_NOTVICT );
-                do_function(victim, &do_sleep, "");
-                break;
-        case 5:
-                act( "$n seems to gather strength then suddenly shouts 'ENOUGH!'", ch, NULL, victim, TO_ROOM );
-                for ( victim = ch->in_room->people; victim != NULL; victim = v_next )
-                {
-                    v_next = victim->next_in_room;
-                    if ( victim->fighting == ch)
-                    {
-                        do_function(victim, &do_flee, "flee");
-                        do_function(victim, &do_flee, "recall");
-                        do_function(victim, &do_flee, "sleep");
-                    }
-                    break;
-                }
-        default:
-                act( "$n waves $N away.", ch, NULL, victim, TO_NOTVICT );
-                act( "$n waves you away.", ch, NULL, victim, TO_VICT );
-                do_function(victim, &do_flee, "flee");
-                break;
-    }
-    return TRUE;
-}
-*/
 bool spec_celerity( CHAR_DATA *ch )
 {
     CHAR_DATA *victim;
@@ -1512,7 +1447,7 @@ bool spec_dominate( CHAR_DATA *ch )
     {
     case 0:
     case 1:
-    case 2: return TRUE;
+    case 2: return spec_command (ch);
     }
 
     return FALSE;
@@ -1583,6 +1518,62 @@ bool spec_potence( CHAR_DATA *ch )
 
     return TRUE;
 }
+
+bool spec_command( CHAR_DATA *ch )
+{
+    CHAR_DATA *victim;
+    CHAR_DATA *v_next;
+    AFFECT_DATA af;
+
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected(ch, gsn_forget))
+        return FALSE;
+
+    for ( victim = ch->in_room->people; victim != NULL; victim = v_next )
+    {
+        v_next = victim->next_in_room;
+        if (( victim->fighting == ch && number_bits( 2 ) == 0 ) && !is_affected(victim, gsn_deafened))
+            break;
+    }
+
+    if ( victim == NULL )
+        return FALSE;
+
+    switch(number_range(1,3))
+    {
+        case 1: 
+                act( "$n chuckles and stares deep into your eyes, 'You look uncomfortable in that garb.  Strip for me, puppet.'", ch, NULL, victim, TO_VICT );
+                act( "$n chuckles, looks deep into $N's eyes, saying 'You look uncomfortable in that garb.  Strip for me, puppet.'", ch, NULL, victim, TO_NOTVICT );
+                do_function(victim, &do_remove, "all");
+                break;
+        case 2:
+                act( "$n glares at you and shouts 'Run!'", ch, NULL, victim, TO_VICT );
+                act( "$n glares at $N and shouts 'Run!'", ch, NULL, victim, TO_NOTVICT );
+                do_function(victim, &do_flee, "auto");
+                break;
+        case 3:
+                act( "$n peers into your eyes, then says 'Sleep my pretty...'", ch, NULL, victim, TO_VICT );
+                act( "$n peers into $N's eyes, then says 'Sleep my pretty...'", ch, NULL, victim, TO_NOTVICT );
+                stop_fighting(victim, ch);
+                do_function(victim, &do_sleep, "");
+                af.where     = TO_AFFECTS;
+                af.type      = gsn_sleep;
+                af.level     = ch->level/6;
+                af.duration  = number_range(1,3);
+                af.location  = 0;
+                af.modifier  = 0;
+                af.bitvector = AFF_SLEEP;
+                affect_to_char( victim, &af );
+                break;
+
+        default:
+                act( "$n waves $N away.", ch, NULL, victim, TO_NOTVICT );
+                act( "$n waves you away.", ch, NULL, victim, TO_VICT );
+                do_function(victim, &do_flee, "flee");
+                break;
+    }
+    return TRUE;
+}
+
 
 bool spec_shadowplay( CHAR_DATA *ch )
 {

@@ -169,6 +169,18 @@ char *spec_name( SPEC_FUN *function)
 
     return NULL;
 }
+
+/* Prototype for spec_function
+
+bool spec_( CHAR_DATA *ch )
+{
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
+    return FALSE;
+
+    return FALSE;
+}
+*/
+
 bool spec_questmaster(CHAR_DATA *ch)
 {
     if (IS_NPC(ch))
@@ -1591,11 +1603,41 @@ bool spec_mesmerize( CHAR_DATA *ch )
 
 bool spec_forgetfulmind( CHAR_DATA *ch )
 {
+  CHAR_DATA *victim;
+  CHAR_DATA *v_next;
+  int dominate;
+  AFFECT_DATA af;
+
     if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
     return FALSE;
 
+    for ( victim = ch->in_room->people; victim != NULL; victim = v_next )
+    {
+      v_next = victim->next_in_room;
+      if ( victim->fighting == ch && number_bits( 2 ) == 0 )
+        break;
+    }
 
-    return FALSE;
+    if ( victim == NULL )
+      return FALSE;
+
+    if ( is_affected(victim, gsn_forget))
+      return FALSE;
+
+    act("You catch $n's eyes and stare deeply, manipulating memories!", ch, NULL, victim, TO_CHAR);
+    act("You find yourself staring deeply into $n's eyes, as your mind gets hazy.", ch, NULL, victim, TO_VICT);
+    act("$n stares deeply into $N's eyes, who seems to falter for a moment.", ch, NULL, victim, TO_NOTVICT);
+
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_forget;
+    af.level     = dominate;
+    af.duration  = 1;
+    af.location  = 0;
+    af.modifier  = 0;
+    af.bitvector = 0;
+    affect_to_char( victim, &af );
+
+    return TRUE;
 }
 
 bool spec_shadowplay( CHAR_DATA *ch )

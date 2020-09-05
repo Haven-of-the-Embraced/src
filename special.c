@@ -53,6 +53,10 @@ DECLARE_SPEC_FUN(   spec_cast_cleric        );
 DECLARE_SPEC_FUN(   spec_cast_judge         );
 DECLARE_SPEC_FUN(   spec_cast_mage          );
 DECLARE_SPEC_FUN(   spec_cast_undead        );
+DECLARE_SPEC_FUN(   spec_cast_lightning     );
+DECLARE_SPEC_FUN(   spec_cast_acid          );
+DECLARE_SPEC_FUN(   spec_cast_cold          );
+DECLARE_SPEC_FUN(   spec_cast_fire          );
 DECLARE_SPEC_FUN(   spec_executioner        );
 DECLARE_SPEC_FUN(   spec_fido               );
 DECLARE_SPEC_FUN(   spec_guard              );
@@ -64,11 +68,6 @@ DECLARE_SPEC_FUN(   spec_nasty              );
 DECLARE_SPEC_FUN(   spec_troll_member       );
 DECLARE_SPEC_FUN(   spec_ogre_member        );
 DECLARE_SPEC_FUN(   spec_patrolman          );
-DECLARE_SPEC_FUN(   spec_jarjar             );
-DECLARE_SPEC_FUN(   spec_cast_lightning     );
-DECLARE_SPEC_FUN(   spec_cast_acid          );
-DECLARE_SPEC_FUN(   spec_cast_cold          );
-DECLARE_SPEC_FUN(   spec_cast_fire          );
 DECLARE_SPEC_FUN(   spec_stake              );
 DECLARE_SPEC_FUN(   spec_bo_dog             );
 DECLARE_SPEC_FUN(   spec_lag                );
@@ -78,11 +77,13 @@ DECLARE_SPEC_FUN(   spec_dominate           );
 DECLARE_SPEC_FUN(   spec_obtenebration      );
 DECLARE_SPEC_FUN(   spec_potence            );
 DECLARE_SPEC_FUN(   spec_command            );
+DECLARE_SPEC_FUN(   spec_mesmerize          );
+DECLARE_SPEC_FUN(   spec_forgetfulmind      );
 DECLARE_SPEC_FUN(   spec_shadowplay         );
 DECLARE_SPEC_FUN(   spec_nocturne           );
-DECLARE_SPEC_FUN(   spec_questmaster        );
 DECLARE_SPEC_FUN(   spec_evil_eye           );
-
+DECLARE_SPEC_FUN(   spec_questmaster        );
+DECLARE_SPEC_FUN(   spec_jarjar             );
 
 /* the function table */
 const   struct  spec_type    spec_table[] =
@@ -127,6 +128,8 @@ const   struct  spec_type    spec_table[] =
     {   "spec_potence",           spec_potence          },
 // Individual Discipline Powers
     {   "spec_command",           spec_command          },
+    {   "spec_mesmerize",         spec_mesmerize        },
+    {   "spec_forgetfulmind",     spec_forgetfulmind    },
     {   "spec_shadowplay",        spec_shadowplay       },
     {   "spec_nocturne",          spec_nocturne         },
 // Numina/Romani
@@ -1437,17 +1440,14 @@ bool spec_celerity( CHAR_DATA *ch )
 
 bool spec_dominate( CHAR_DATA *ch )
 {
-    if ( ch->position != POS_FIGHTING || ch->stopped > 0)
-    return FALSE;
-
-    if(is_affected( ch, gsn_forget ))
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
     return FALSE;
 
     switch ( number_range( 0,2 ) )
     {
-    case 0:
-    case 1:
-    case 2: return spec_command (ch);
+    case 0: return spec_command (ch);
+    case 1: return spec_mesmerize (ch);
+    case 2: return spec_forgetfulmind (ch);
     }
 
     return FALSE;
@@ -1540,7 +1540,7 @@ bool spec_command( CHAR_DATA *ch )
 
     switch(number_range(1,3))
     {
-        case 1: 
+        case 1:
                 act( "$n chuckles and stares deep into your eyes, 'You look uncomfortable in that garb.  Strip for me, puppet.'", ch, NULL, victim, TO_VICT );
                 act( "$n chuckles, looks deep into $N's eyes, saying 'You look uncomfortable in that garb.  Strip for me, puppet.'", ch, NULL, victim, TO_NOTVICT );
                 do_function(victim, &do_remove, "all");
@@ -1574,6 +1574,29 @@ bool spec_command( CHAR_DATA *ch )
     return TRUE;
 }
 
+bool spec_mesmerize( CHAR_DATA *ch )
+{
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
+    return FALSE;
+
+    switch ( number_range( 0,2 ) )
+    {
+    case 0: return TRUE;
+    case 1: return TRUE;
+    case 2: return TRUE;
+    }
+
+    return FALSE;
+}
+
+bool spec_forgetfulmind( CHAR_DATA *ch )
+{
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
+    return FALSE;
+
+
+    return FALSE;
+}
 
 bool spec_shadowplay( CHAR_DATA *ch )
 {

@@ -1588,14 +1588,45 @@ bool spec_command( CHAR_DATA *ch )
 
 bool spec_mesmerize( CHAR_DATA *ch )
 {
+  CHAR_DATA *victim;
+  CHAR_DATA *v_next;
+  OBJ_DATA *wield;
+  char buf[MSL], weapon[MSL], mob[MSL];
+
     if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
     return FALSE;
 
+    for ( victim = ch->in_room->people; victim != NULL; victim = v_next )
+    {
+        v_next = victim->next_in_room;
+        if (( victim->fighting == ch && number_bits( 2 ) == 0 ) && !is_affected(victim, gsn_deafened))
+            break;
+    }
+
+    if ( victim == NULL )
+        return FALSE;
+
+    if ( ( wield = get_eq_char( victim, WEAR_WIELD ) ) == NULL )
+      return FALSE;
+
     switch ( number_range( 0,2 ) )
     {
-    case 0: return TRUE;
-    case 1: return TRUE;
-    case 2: return TRUE;
+      case 0:
+      case 1:
+      case 2:
+              act( "Smiling slyly, $n looks at $N and says, '{WYou are going to hurt someone with that.  Why don't you give it to me?{x'", ch, NULL, victim, TO_NOTVICT );
+              act( "Smiling slyly, $n looks at you and says, '{WYou are going to hurt someone with that.  Why don't you give it to me?{x'", ch, NULL, victim, TO_VICT );
+              act( "With an intense urge, you find yourself complying without fail.", ch, NULL, victim, TO_VICT);
+              sprintf(weapon, "%s", wield->name);
+              do_function(victim, &do_remove, weapon);
+              do_function(ch, &do_say, weapon);
+              sprintf(mob, "%s", ch->name);
+              do_function(ch, &do_say, mob);
+              one_argument(weapon, weapon);
+              one_argument(mob, mob);
+              sprintf(buf, "%s %s", weapon, mob);
+              do_function(victim, &do_give, buf);
+              do_function(ch, &do_say, buf);
     }
 
     return FALSE;

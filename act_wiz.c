@@ -4680,6 +4680,16 @@ void restore_one(CHAR_DATA *ch, CHAR_DATA *victim, bool show) {
         affect_strip(victim,gsn_quietus_weakness);
         affect_strip(victim,gsn_regen);
         affect_strip(victim,gsn_forget);
+        affect_strip(victim,gsn_laryngitis);
+        affect_strip(victim,gsn_deafened);
+        affect_strip(victim,gsn_botched_presence);
+        affect_strip(victim,gsn_bleeding);
+        affect_strip(victim,gsn_nocturne);
+
+        if (is_affected(victim, gsn_shadowplay) && get_affect_level(victim, gsn_shadowplay) != 0)
+          affect_strip(victim, gsn_shadowplay);
+        if (is_affected(victim, gsn_glower) && get_affect_level(victim, gsn_glower) == 0)
+          affect_strip(victim, gsn_glower);
 
         victim->agg_dam = 0;
         victim->hit     = victim->max_hit;

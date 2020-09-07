@@ -71,7 +71,22 @@ DECLARE_SPEC_FUN(   spec_patrolman          );
 DECLARE_SPEC_FUN(   spec_stake              );
 DECLARE_SPEC_FUN(   spec_bo_dog             );
 DECLARE_SPEC_FUN(   spec_lag                );
+DECLARE_SPEC_FUN(   spec_assamite           );
+DECLARE_SPEC_FUN(   spec_baali              );
+DECLARE_SPEC_FUN(   spec_brujah             );
+DECLARE_SPEC_FUN(   spec_cappadocian        );
+DECLARE_SPEC_FUN(   spec_followersofset     );
+DECLARE_SPEC_FUN(   spec_gangrel            );
+DECLARE_SPEC_FUN(   spec_gargoyle           );
 DECLARE_SPEC_FUN(   spec_lasombra           );
+DECLARE_SPEC_FUN(   spec_malkavian          );
+DECLARE_SPEC_FUN(   spec_nosferatu          );
+DECLARE_SPEC_FUN(   spec_ravnos             );
+DECLARE_SPEC_FUN(   spec_salubri            );
+DECLARE_SPEC_FUN(   spec_toreador           );
+DECLARE_SPEC_FUN(   spec_tremere            );
+DECLARE_SPEC_FUN(   spec_tzimisce           );
+DECLARE_SPEC_FUN(   spec_ventrue            );
 DECLARE_SPEC_FUN(   spec_celerity           );
 DECLARE_SPEC_FUN(   spec_dominate           );
 DECLARE_SPEC_FUN(   spec_obtenebration      );
@@ -120,7 +135,22 @@ const   struct  spec_type    spec_table[] =
     {   "spec_bo_dog",            spec_bo_dog           },
     {   "spec_lag",               spec_lag              },
 // Clans
+    {   "spec_assamite",          spec_assamite         },
+    {   "spec_baali",             spec_baali            },
+    {   "spec_brujah",            spec_brujah           },
+    {   "spec_cappadocian",       spec_cappadocian      },
+    {   "spec_followersofset",    spec_followersofset   },
+    {   "spec_gangrel",           spec_gangrel          },
+    {   "spec_gargoyle",          spec_gargoyle         },
     {   "spec_lasombra",          spec_lasombra         },
+    {   "spec_malkavian",         spec_malkavian        },
+    {   "spec_nosferatu",         spec_nosferatu        },
+    {   "spec_ravnos",            spec_ravnos           },
+    {   "spec_salubri",           spec_salubri          },
+    {   "spec_toreador",          spec_toreador         },
+    {   "spec_tremere",           spec_tremere          },
+    {   "spec_tzimisce",          spec_tzimisce         },
+    {   "spec_ventrue",           spec_ventrue          },
 // Disciplines
     {   "spec_celerity",          spec_celerity         },
     {   "spec_dominate",          spec_dominate         },

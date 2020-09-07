@@ -1397,12 +1397,10 @@ bool spec_lag( CHAR_DATA *ch )
     return TRUE;
 }
 
+/* Clan Specs */
 bool spec_lasombra( CHAR_DATA *ch )
 {
-    if ( ch->position != POS_FIGHTING || ch->stopped > 0)
-    return FALSE;
-
-    if(is_affected( ch, gsn_forget ))
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
     return FALSE;
 
     switch ( number_range( 0,2 ) )
@@ -1415,6 +1413,7 @@ bool spec_lasombra( CHAR_DATA *ch )
     return FALSE;
 }
 
+/* Discipline Specs */
 bool spec_celerity( CHAR_DATA *ch )
 {
     CHAR_DATA *victim;
@@ -1531,6 +1530,7 @@ bool spec_potence( CHAR_DATA *ch )
     return TRUE;
 }
 
+/* Dominate Specs */
 bool spec_command( CHAR_DATA *ch )
 {
     CHAR_DATA *victim;
@@ -1543,7 +1543,8 @@ bool spec_command( CHAR_DATA *ch )
     for ( victim = ch->in_room->people; victim != NULL; victim = v_next )
     {
         v_next = victim->next_in_room;
-        if (( victim->fighting == ch && number_bits( 2 ) == 0 ) && !is_affected(victim, gsn_deafened))
+        if (( victim->fighting == ch && number_bits( 2 ) == 0 )
+        && !is_affected(victim, gsn_deafened) && can_see(victim, ch) && can_see(ch, victim))
             break;
     }
 
@@ -1599,7 +1600,8 @@ bool spec_mesmerize( CHAR_DATA *ch )
     for ( victim = ch->in_room->people; victim != NULL; victim = v_next )
     {
         v_next = victim->next_in_room;
-        if (( victim->fighting == ch && number_bits( 2 ) == 0 ) && !is_affected(victim, gsn_deafened))
+        if (( victim->fighting == ch && number_bits( 2 ) == 0 )
+        && !is_affected(victim, gsn_deafened) && can_see(victim, ch) && can_see(ch, victim))
             break;
     }
 
@@ -1645,7 +1647,8 @@ bool spec_forgetfulmind( CHAR_DATA *ch )
     for ( victim = ch->in_room->people; victim != NULL; victim = v_next )
     {
       v_next = victim->next_in_room;
-      if ( victim->fighting == ch && number_bits( 2 ) == 0 )
+      if ( victim->fighting == ch && number_bits( 2 ) == 0
+      && can_see(victim, ch) && can_see(ch, victim))
         break;
     }
 
@@ -1671,6 +1674,7 @@ bool spec_forgetfulmind( CHAR_DATA *ch )
     return TRUE;
 }
 
+/* Obtenebration Specs */
 bool spec_shadowplay( CHAR_DATA *ch )
 {
   CHAR_DATA *victim;

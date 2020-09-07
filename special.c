@@ -120,6 +120,7 @@ const   struct  spec_type    spec_table[] =
     {   "spec_cast_acid",         spec_cast_acid        },
     {   "spec_cast_cold",         spec_cast_cold        },
     {   "spec_cast_fire",         spec_cast_fire        },
+// Specialty Progs
     {   "spec_executioner",       spec_executioner      },
     {   "spec_fido",              spec_fido             },
     {   "spec_guard",             spec_guard            },
@@ -1428,6 +1429,62 @@ bool spec_lag( CHAR_DATA *ch )
 }
 
 /* Clan Specs */
+bool spec_assamite( CHAR_DATA *ch )
+{
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
+    return FALSE;
+
+    return FALSE;
+}
+
+bool spec_baali( CHAR_DATA *ch )
+{
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
+    return FALSE;
+
+    return FALSE;
+}
+
+bool spec_brujah( CHAR_DATA *ch )
+{
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
+    return FALSE;
+
+    return FALSE;
+}
+
+bool spec_cappadocian( CHAR_DATA *ch )
+{
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
+    return FALSE;
+
+    return FALSE;
+}
+
+bool spec_followersofset( CHAR_DATA *ch )
+{
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
+    return FALSE;
+
+    return FALSE;
+}
+
+bool spec_gangrel( CHAR_DATA *ch )
+{
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
+    return FALSE;
+
+    return FALSE;
+}
+
+bool spec_gargoyle( CHAR_DATA *ch )
+{
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
+    return FALSE;
+
+    return FALSE;
+}
+
 bool spec_lasombra( CHAR_DATA *ch )
 {
     if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
@@ -1439,6 +1496,70 @@ bool spec_lasombra( CHAR_DATA *ch )
     case 1: return spec_obtenebration (ch);
     case 2: return spec_potence (ch);
     }
+
+    return FALSE;
+}
+
+bool spec_malkavian( CHAR_DATA *ch )
+{
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
+    return FALSE;
+
+    return FALSE;
+}
+
+bool spec_nosferatu( CHAR_DATA *ch )
+{
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
+    return FALSE;
+
+    return FALSE;
+}
+
+bool spec_ravnos( CHAR_DATA *ch )
+{
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
+    return FALSE;
+
+    return FALSE;
+}
+
+bool spec_salubri( CHAR_DATA *ch )
+{
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
+    return FALSE;
+
+    return FALSE;
+}
+
+bool spec_toreador( CHAR_DATA *ch )
+{
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
+    return FALSE;
+
+    return FALSE;
+}
+
+bool spec_tremere( CHAR_DATA *ch )
+{
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
+    return FALSE;
+
+    return FALSE;
+}
+
+bool spec_tzimisce( CHAR_DATA *ch )
+{
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
+    return FALSE;
+
+    return FALSE;
+}
+
+bool spec_ventrue( CHAR_DATA *ch )
+{
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
+    return FALSE;
 
     return FALSE;
 }

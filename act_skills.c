@@ -263,7 +263,7 @@ return;
 
 /* classify <target>      Int+AnKen, Diff6
 Only used on natural mobs, basic info
-1: keyword/race/size
+1: keyword/race/sex/size
 2: damtype/level/form/parts
 3: imm/res/vuln
 4: affects/off_flags
@@ -313,8 +313,16 @@ void do_classify(CHAR_DATA *ch, char *argument)
   ch->movement -= ch->level / 2;
 
   if (success < 0)
-  { send_to_char("You are unable to read their aura.\n\r", ch);
-  return;
+  {
+    send_to_char("You try to focus, but cannot seem to recall any specific information.\n\r", ch);
+    WAIT_STATE(ch, 6);
+    return;
+  }
+
+  if (success == 0)
+  {
+    send_to_char("You fail to recall any pertinent information about this species.\n\r", ch);
+    return;
   }
 
   sprintf( buf, "%s is %d years old.\n\r", victim->name, get_age(victim));

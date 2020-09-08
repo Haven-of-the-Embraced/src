@@ -767,6 +767,44 @@ bool breathes( CHAR_DATA *ch )
 		return TRUE;
 }
 
+bool is_natural( CHAR_DATA *ch )
+{
+  if (
+    ch->race == race_lookup("dhampire") ||
+    ch->race == race_lookup("garou") ||
+  	ch->race == race_lookup("ghoul") ||
+    ch->race == race_lookup("human") ||
+    ch->race == race_lookup("methuselah") ||
+  	ch->race == race_lookup("vampire") ||
+  	ch->race == race_lookup("abomination") ||
+  	ch->race == race_lookup("bane") ||
+    ch->race == race_lookup("bygone") ||
+  	ch->race == race_lookup("construct") ||
+  	ch->race == race_lookup("demon") ||
+  	ch->race == race_lookup("dragon") ||
+  	ch->race == race_lookup("elemental") ||
+  	ch->race == race_lookup("faerie") ||
+  	ch->race == race_lookup("fera") ||
+    ch->race == race_lookup("kinfolk") ||
+    ch->race == race_lookup("vampire") ||
+  	ch->race == race_lookup("kuei-jin") ||
+    ch->race == race_lookup("mage") ||
+  	ch->race == race_lookup("ooze") ||
+  	ch->race == race_lookup("romani") ||
+  	ch->race == race_lookup("shadow") ||
+    ch->race == race_lookup("spirit") ||
+  	ch->race == race_lookup("undead") ||
+  	ch->race == race_lookup("vegetation") ||
+  	ch->race == race_lookup("wraith") ||
+  	ch->race == race_lookup("placeholder") ||
+  	ch->race == race_lookup("unique")
+    )
+    return FALSE;
+
+  else
+    return TRUE;
+}
+
 /*
  * Retrieve a character's age.
  */

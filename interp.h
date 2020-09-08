@@ -457,6 +457,7 @@ DECLARE_DO_FUN( do_divine_strength  );
 DECLARE_DO_FUN( do_stake    );
 DECLARE_DO_FUN( do_diablerize   );
 DECLARE_DO_FUN( do_lore );
+DECLARE_DO_FUN( do_classify );
 DECLARE_DO_FUN( do_dip  );
 DECLARE_DO_FUN( do_invoke   );
 DECLARE_DO_FUN( do_activate );

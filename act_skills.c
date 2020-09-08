@@ -261,6 +261,147 @@ void do_chant(CHAR_DATA *ch, char *argument )
 return;
 }
 
+/* classify <target>      Int+AnKen, Diff6
+Only used on natural mobs, basic info
+1: keyword/race/size
+2: damtype/level/form/parts
+3: imm/res/vuln
+4: affects/off_flags
+*/
+void do_classify(CHAR_DATA *ch, char *argument)
+{
+  char arg1 [MAX_INPUT_LENGTH];
+  char buf[MAX_STRING_LENGTH];
+  CHAR_DATA *victim;
+  int success;
+  argument = one_argument( argument, arg1 );
+
+  if (IS_NPC(ch)) return;
+
+  if (get_ability(ch, CSABIL_ANIMAL_KEN) < 0)
+  {
+    send_to_char("You have not studied the animal kingdom enough to learn any helpful information.\n\r", ch);
+    return;
+  }
+
+  if (ch->movement < ch->level / 2)
+  {
+      send_to_char( "You are too tired to figure out a classification for your target.\n\r", ch );
+      return;
+  }
+
+  if ( arg1[0] == '\0')
+  {
+      send_to_char( "View whom?\n\r", ch );
+      return;
+  }
+
+  if ( ( victim = get_char_room( ch, NULL, arg1 ) ) == NULL )
+  {
+      send_to_char( "View whom?\n\r", ch );
+      return;
+  }
+
+  if (!is_natural(vicim))
+  {
+    act("$N does not seem to be a natrual, non-humanoid member of the animal kingdom.", ch, NULL, victim, TO_CHAR);
+    return;
+  }
+
+  success = godice(get_attribute(ch, INTELLIGENCE) + ch->csabilities[CSABIL_ANIMAL_KEN], 7);
+
+  ch->movement -= ch->level / 2;
+
+  if (success < 0)
+  { send_to_char("You are unable to read their aura.\n\r", ch);
+  return;
+  }
+
+  sprintf( buf, "%s is %d years old.\n\r", victim->name, get_age(victim));
+  send_to_char( buf, ch );
+
+  sprintf(buf, "%s is a %s %s.\n\r",
+  victim->name,
+  victim->sex == 0 ? "sexless" : victim->sex == 1 ? "male" : "female",
+  race_table[victim->race].name);
+  send_to_char(buf,ch);
+
+  if(success > 1)
+  {
+      sprintf( buf,
+      "They have %d/%d hit, %d/%d mana and %d/%d movement.\n\r",
+      victim->hit,  victim->max_hit,
+      victim->mana, victim->max_mana,
+      victim->move, victim->max_move);
+      send_to_char( buf, ch );
+
+  }
+  if(success > 2)
+  {
+      switch ( victim->position )
+      {
+      case POS_TORPOR:
+      send_to_char( "They are in Torpor.\n\r",        ch );
+      break;
+      case POS_DEAD:
+      send_to_char( "They are DEAD!!\n\r",        ch );
+      break;
+      case POS_MORTAL:
+      send_to_char( "They are mortally wounded.\n\r", ch );
+      break;
+      case POS_INCAP:
+      send_to_char( "They are incapacitated.\n\r",    ch );
+      break;
+      case POS_STUNNED:
+      send_to_char( "They are stunned.\n\r",      ch );
+      break;
+      case POS_SLEEPING:
+      send_to_char( "They are sleeping.\n\r",     ch );
+      break;
+      case POS_RESTING:
+      send_to_char( "They are resting.\n\r",      ch );
+      break;
+      case POS_SITTING:
+      send_to_char( "They are sitting.\n\r",      ch );
+      break;
+      case POS_STANDING:
+      send_to_char( "They are standing.\n\r",     ch );
+      break;
+      case POS_FIGHTING:
+      send_to_char( "They are fighting.\n\r",     ch );
+      break;
+      }
+
+      sprintf( buf,"Armor: pierce: %d  bash: %d  slash: %d  magic: %d\n\r",
+          GET_AC(victim,AC_PIERCE),
+          GET_AC(victim,AC_BASH),
+          GET_AC(victim,AC_SLASH),
+          GET_AC(victim,AC_EXOTIC));
+          send_to_char(buf,ch);
+
+      sprintf( buf, "They have: Hitroll: %d  Damroll: %d.\n\r",
+          GET_HITROLL(victim), GET_DAMROLL(victim) );
+      send_to_char( buf, ch );
+
+      sprintf( buf, "Their alignment is %d.\n\r", victim->alignment );
+      send_to_char( buf, ch );
+  }
+  if(success > 3)
+  {
+      if(IS_VAMP(victim))
+      {
+      sprintf(buf, "Their Generation is %d.\n\r", victim->gen);
+      send_to_char(buf,ch);
+      sprintf(buf, "Their Sire is %s.\n\r", victim->sire);
+      send_to_char(buf,ch);
+      sprintf(buf, "They have %d Blood Points.\n\r", victim->pblood);
+      send_to_char(buf,ch);
+      }
+  }
+
+  return;
+}
+
 void do_glower(CHAR_DATA *ch, char *argument)
 {
   AFFECT_DATA af;

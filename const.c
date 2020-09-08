@@ -1035,6 +1035,9 @@ const struct cs_skill_type csskill_table [] =
     {"chant", &gsn_chant, 15,
     {CSABIL_NONE, 0, ABIL}, {CSABIL_NONE, 0, ABIL} },
 
+    {"classify", &gsn_classify, 15
+    {CSABIL_ANIMAL_KEN, 1, ABIL}, {CSABIL_NONE, 0, ABIL}},
+
     {"critical strike", &gsn_critical_strike, 70,
     {CSABIL_MEDICINE, 3, ABIL}, {CSABIL_MELEE, 2, ABIL} },
 
@@ -1870,6 +1873,10 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
     &gsn_fifth_attack,     SLOT( 0),        0,     0, "",                     "!Fifth Attack!",   "" },
 
 /* non-combat skills */
+    { "classify", { 15, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_IGNORE, POS_STANDING,
+    &gsn_classify, SLOT( 0),    0,  0,    "",         "",     ""    },
+
     { "fast healing",     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,     TAR_IGNORE,     POS_SLEEPING,
     &gsn_fast_healing,  SLOT( 0),   0,  0, "",         "!Fast Healing!",   "" },

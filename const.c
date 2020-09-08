@@ -1035,7 +1035,7 @@ const struct cs_skill_type csskill_table [] =
     {"chant", &gsn_chant, 15,
     {CSABIL_NONE, 0, ABIL}, {CSABIL_NONE, 0, ABIL} },
 
-    {"classify", &gsn_classify, 15
+    {"classify", &gsn_classify, 15,
     {CSABIL_ANIMAL_KEN, 1, ABIL}, {CSABIL_NONE, 0, ABIL}},
 
     {"critical strike", &gsn_critical_strike, 70,

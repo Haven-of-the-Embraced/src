@@ -277,7 +277,7 @@ void do_classify(CHAR_DATA *ch, char *argument)
     return;
   }
 
-  if (ch->movement < ch->level / 2)
+  if (ch->move < ch->level / 2)
   {
       send_to_char( "You are too tired to figure out a classification for your target.\n\r", ch );
       return;
@@ -295,15 +295,17 @@ void do_classify(CHAR_DATA *ch, char *argument)
       return;
   }
 
-  if (!is_natural(vicim))
+  if (!is_natural(victim))
   {
-    act("$N does not seem to be a natrual, non-humanoid member of the animal kingdom.", ch, NULL, victim, TO_CHAR);
+    act("$N does not seem to be a natural, non-humanoid member of the animal kingdom.", ch, NULL, victim, TO_CHAR);
     return;
   }
 
   success = godice(get_attribute(ch, INTELLIGENCE) + ch->csabilities[CSABIL_ANIMAL_KEN], 7);
 
-  ch->movement -= ch->level / 2;
+  ch->move -= ch->level / 2;
+
+  success = 0;
 
   if (success < 0)
   {
@@ -317,9 +319,6 @@ void do_classify(CHAR_DATA *ch, char *argument)
     send_to_char("You fail to recall any pertinent information about this species.\n\r", ch);
     return;
   }
-
-  sprintf( buf, "%s is %d years old.\n\r", victim->name, get_age(victim));
-  send_to_char( buf, ch );
 
   sprintf(buf, "%s is a %s-sized, %s %s.\n\r",
   victim->short_descr,
@@ -338,69 +337,19 @@ void do_classify(CHAR_DATA *ch, char *argument)
     send_to_char(buf,ch);
   }
 
-  //3: imm/res/vuln
   if(success > 2)
   {
-      switch ( victim->position )
-      {
-      case POS_TORPOR:
-      send_to_char( "They are in Torpor.\n\r",        ch );
-      break;
-      case POS_DEAD:
-      send_to_char( "They are DEAD!!\n\r",        ch );
-      break;
-      case POS_MORTAL:
-      send_to_char( "They are mortally wounded.\n\r", ch );
-      break;
-      case POS_INCAP:
-      send_to_char( "They are incapacitated.\n\r",    ch );
-      break;
-      case POS_STUNNED:
-      send_to_char( "They are stunned.\n\r",      ch );
-      break;
-      case POS_SLEEPING:
-      send_to_char( "They are sleeping.\n\r",     ch );
-      break;
-      case POS_RESTING:
-      send_to_char( "They are resting.\n\r",      ch );
-      break;
-      case POS_SITTING:
-      send_to_char( "They are sitting.\n\r",      ch );
-      break;
-      case POS_STANDING:
-      send_to_char( "They are standing.\n\r",     ch );
-      break;
-      case POS_FIGHTING:
-      send_to_char( "They are fighting.\n\r",     ch );
-      break;
-      }
-
-      sprintf( buf,"Armor: pierce: %d  bash: %d  slash: %d  magic: %d\n\r",
-          GET_AC(victim,AC_PIERCE),
-          GET_AC(victim,AC_BASH),
-          GET_AC(victim,AC_SLASH),
-          GET_AC(victim,AC_EXOTIC));
-          send_to_char(buf,ch);
-
-      sprintf( buf, "They have: Hitroll: %d  Damroll: %d.\n\r",
-          GET_HITROLL(victim), GET_DAMROLL(victim) );
-      send_to_char( buf, ch );
-
-      sprintf( buf, "Their alignment is %d.\n\r", victim->alignment );
-      send_to_char( buf, ch );
+    sprintf(buf, "Immune    : %s\n\rResist    : %s\n\rVulnerable: %s\n\r",
+    imm_bit_name(victim->imm_flags), imm_bit_name(victim->res_flags), imm_bit_name(victim->vuln_flags));
+    send_to_char(buf,ch);
   }
-//  4: affects/off_flags
+
   if(success > 3)
   {
-      if(IS_VAMP(victim))
-      {
-      sprintf(buf, "Their Generation is %d.\n\r", victim->gen);
-      send_to_char(buf,ch);
-      sprintf(buf, "Their Sire is %s.\n\r", victim->sire);
-      send_to_char(buf,ch);
-      sprintf(buf, "They have %d Blood Points.\n\r", victim->pblood);
-      send_to_char(buf,ch);
-      }
+    sprintf(buf, "Offense   : %s\n\r",off_bit_name(victim->off_flags));
+    send_to_char(buf,ch);
+    sprintf(buf, "Affected by %s\n\r",affect_bit_name(victim->affected_by));
+    send_to_char(buf,ch);
   }
 
   return;

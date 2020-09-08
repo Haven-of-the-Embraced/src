@@ -261,13 +261,6 @@ void do_chant(CHAR_DATA *ch, char *argument )
 return;
 }
 
-/* classify <target>      Int+AnKen, Diff6
-Only used on natural mobs, basic info
-1: keyword/race/sex/size
-2: damtype/level/form/parts
-3: imm/res/vuln
-4: affects/off_flags
-*/
 void do_classify(CHAR_DATA *ch, char *argument)
 {
   char arg1 [MAX_INPUT_LENGTH];
@@ -328,22 +321,24 @@ void do_classify(CHAR_DATA *ch, char *argument)
   sprintf( buf, "%s is %d years old.\n\r", victim->name, get_age(victim));
   send_to_char( buf, ch );
 
-  sprintf(buf, "%s is a %s %s.\n\r",
-  victim->name,
+  sprintf(buf, "%s is a %s-sized, %s %s.\n\r",
+  victim->short_descr,
+  size_table[victim->size].name,
   victim->sex == 0 ? "sexless" : victim->sex == 1 ? "male" : "female",
   race_table[victim->race].name);
   send_to_char(buf,ch);
 
   if(success > 1)
   {
-      sprintf( buf,
-      "They have %d/%d hit, %d/%d mana and %d/%d movement.\n\r",
-      victim->hit,  victim->max_hit,
-      victim->mana, victim->max_mana,
-      victim->move, victim->max_move);
-      send_to_char( buf, ch );
-
+    sprintf( buf, "Level: %3d   Damage Type: %s\n\r",
+      victim->level, attack_table[victim->dam_type].noun );
+    send_to_char(buf,ch);
+    sprintf(buf, "Form: %s\n\rParts: %s\n\r",
+    form_bit_name(victim->form), part_bit_name(victim->parts));
+    send_to_char(buf,ch);
   }
+
+  //3: imm/res/vuln
   if(success > 2)
   {
       switch ( victim->position )
@@ -394,6 +389,7 @@ void do_classify(CHAR_DATA *ch, char *argument)
       sprintf( buf, "Their alignment is %d.\n\r", victim->alignment );
       send_to_char( buf, ch );
   }
+//  4: affects/off_flags
   if(success > 3)
   {
       if(IS_VAMP(victim))

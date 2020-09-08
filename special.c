@@ -87,10 +87,26 @@ DECLARE_SPEC_FUN(   spec_toreador           );
 DECLARE_SPEC_FUN(   spec_tremere            );
 DECLARE_SPEC_FUN(   spec_tzimisce           );
 DECLARE_SPEC_FUN(   spec_ventrue            );
+/* DECLARE_SPEC_FUN(   spec_animalism          );
+DECLARE_SPEC_FUN(   spec_auspex             ); */
 DECLARE_SPEC_FUN(   spec_celerity           );
+/* DECLARE_SPEC_FUN(   spec_chimerstry         );
+DECLARE_SPEC_FUN(   spec_daimoinon          );
+DECLARE_SPEC_FUN(   spec_dementation        ); */
 DECLARE_SPEC_FUN(   spec_dominate           );
+/* DECLARE_SPEC_FUN(   spec_fortitude          );
+DECLARE_SPEC_FUN(   spec_mortis             );
+DECLARE_SPEC_FUN(   spec_obeah              );
+DECLARE_SPEC_FUN(   spec_obfuscate          ); */
 DECLARE_SPEC_FUN(   spec_obtenebration      );
 DECLARE_SPEC_FUN(   spec_potence            );
+/* DECLARE_SPEC_FUN(   spec_presence           );
+DECLARE_SPEC_FUN(   spec_protean            );
+DECLARE_SPEC_FUN(   spec_quietus            );
+DECLARE_SPEC_FUN(   spec_serpentis          );
+DECLARE_SPEC_FUN(   spec_thaum_pathofblood  );
+DECLARE_SPEC_FUN(   spec_valeran            );
+DECLARE_SPEC_FUN(   spec_vicissitude        ); */
 DECLARE_SPEC_FUN(   spec_command            );
 DECLARE_SPEC_FUN(   spec_mesmerize          );
 DECLARE_SPEC_FUN(   spec_forgetfulmind      );

@@ -94,7 +94,8 @@ DECLARE_SPEC_FUN(   spec_celerity           );
 DECLARE_SPEC_FUN(   spec_daimoinon          );
 DECLARE_SPEC_FUN(   spec_dementation        ); */
 DECLARE_SPEC_FUN(   spec_dominate           );
-/* DECLARE_SPEC_FUN(   spec_fortitude          );
+/* DECLARE_SPEC_FUN(   spec_flight             );
+DECLARE_SPEC_FUN(   spec_fortitude          );
 DECLARE_SPEC_FUN(   spec_mortis             );
 DECLARE_SPEC_FUN(   spec_obeah              );
 DECLARE_SPEC_FUN(   spec_obfuscate          ); */
@@ -104,7 +105,7 @@ DECLARE_SPEC_FUN(   spec_potence            );
 DECLARE_SPEC_FUN(   spec_protean            );
 DECLARE_SPEC_FUN(   spec_quietus            );
 DECLARE_SPEC_FUN(   spec_serpentis          );
-DECLARE_SPEC_FUN(   spec_thaum_pathofblood  );
+DECLARE_SPEC_FUN(   spec_thaum_regovitae    );
 DECLARE_SPEC_FUN(   spec_valeran            );
 DECLARE_SPEC_FUN(   spec_vicissitude        ); */
 DECLARE_SPEC_FUN(   spec_command            );
@@ -169,10 +170,28 @@ const   struct  spec_type    spec_table[] =
     {   "spec_tzimisce",          spec_tzimisce         },
     {   "spec_ventrue",           spec_ventrue          },
 // Disciplines
+/*    {   "spec_animalism",         spec_animalism        },
+    {   "spec_auspex",            spec_auspex           },  */
     {   "spec_celerity",          spec_celerity         },
+/*    {   "spec_chimerstry",        spec_chimerstry       },
+    {   "spec_daimoinon",         spec_daimoinon        },
+    {   "spec_dementation",       spec_dementation      }, */
     {   "spec_dominate",          spec_dominate         },
+/*    {   "spec_flight",            spec_flight           },
+    {   "spec_fortitude",         spec_fortitude        },
+    {   "spec_mortis",            spec_mortis           },
+    {   "spec_obeah",             spec_obeah            },
+    {   "spec_obfuscate",         spec_obfuscate        },*/
     {   "spec_obtenebration",     spec_obtenebration    },
     {   "spec_potence",           spec_potence          },
+/*    {   "spec_presence",          spec_presence          },
+    {   "spec_protean",           spec_protean          },
+    {   "spec_quietus",           spec_quietus          },
+    {   "spec_serpentis",         spec_serpentis        },
+    {   "spec_thaum_regovitae",   spec_thaum_regovitae  },
+    {   "spec_valeran",           spec_valeran          },
+    {   "spec_vicissitude",       spec_vicissitude      },
+*/
 // Individual Discipline Powers
     {   "spec_command",           spec_command          },
     {   "spec_mesmerize",         spec_mesmerize        },
@@ -1448,24 +1467,45 @@ bool spec_lag( CHAR_DATA *ch )
 bool spec_assamite( CHAR_DATA *ch )
 {
     if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
-    return FALSE;
-
+      return FALSE;
+/*
+      switch ( number_range( 0,2 ) )
+      {
+      case 0: return spec_celerity (ch);
+      case 1: return spec_obfuscate (ch);
+      case 2: return spec_quietus (ch);
+      }
+*/
     return FALSE;
 }
 
 bool spec_baali( CHAR_DATA *ch )
 {
     if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
-    return FALSE;
-
+      return FALSE;
+    /*
+          switch ( number_range( 0,2 ) )
+          {
+          case 0: return spec_daimoinon (ch);
+          case 1: return spec_obfuscate (ch);
+          case 2: return spec_presence (ch);
+          }
+    */
     return FALSE;
 }
 
 bool spec_brujah( CHAR_DATA *ch )
 {
     if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
-    return FALSE;
-
+      return FALSE;
+      /*
+            switch ( number_range( 0,2 ) )
+            {
+            case 0: return spec_celerity (ch);
+            case 1: return spec_potence (ch);
+            case 2: return spec_presence (ch);
+            }
+      */
     return FALSE;
 }
 
@@ -1473,7 +1513,14 @@ bool spec_cappadocian( CHAR_DATA *ch )
 {
     if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
     return FALSE;
-
+    /*
+          switch ( number_range( 0,2 ) )
+          {
+          case 0: return spec_auspex (ch);
+          case 1: return spec_fortitude (ch);
+          case 2: return spec_mortis (ch);
+          }
+    */
     return FALSE;
 }
 
@@ -1481,7 +1528,14 @@ bool spec_followersofset( CHAR_DATA *ch )
 {
     if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
     return FALSE;
-
+    /*
+          switch ( number_range( 0,2 ) )
+          {
+          case 0: return spec_obfuscate (ch);
+          case 1: return spec_presence (ch);
+          case 2: return spec_serpentis (ch);
+          }
+    */
     return FALSE;
 }
 
@@ -1489,7 +1543,14 @@ bool spec_gangrel( CHAR_DATA *ch )
 {
     if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
     return FALSE;
-
+    /*
+          switch ( number_range( 0,2 ) )
+          {
+          case 0: return spec_animalism (ch);
+          case 1: return spec_fortitude (ch);
+          case 2: return spec_protean (ch);
+          }
+    */
     return FALSE;
 }
 
@@ -1497,7 +1558,14 @@ bool spec_gargoyle( CHAR_DATA *ch )
 {
     if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
     return FALSE;
-
+    /*
+          switch ( number_range( 0,2 ) )
+          {
+          case 0: return spec_flight (ch);
+          case 1: return spec_fortitude (ch);
+          case 2: return spec_potence (ch);
+          }
+    */
     return FALSE;
 }
 
@@ -1520,7 +1588,14 @@ bool spec_malkavian( CHAR_DATA *ch )
 {
     if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
     return FALSE;
-
+    /*
+          switch ( number_range( 0,2 ) )
+          {
+          case 0: return spec_auspex (ch);
+          case 1: return spec_dementation (ch);
+          case 2: return spec_obfuscate (ch);
+          }
+    */
     return FALSE;
 }
 
@@ -1528,7 +1603,14 @@ bool spec_nosferatu( CHAR_DATA *ch )
 {
     if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
     return FALSE;
-
+    /*
+          switch ( number_range( 0,2 ) )
+          {
+          case 0: return spec_animalism (ch);
+          case 1: return spec_obfuscate (ch);
+          case 2: return spec_potence (ch);
+          }
+    */
     return FALSE;
 }
 
@@ -1536,7 +1618,14 @@ bool spec_ravnos( CHAR_DATA *ch )
 {
     if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
     return FALSE;
-
+    /*
+          switch ( number_range( 0,2 ) )
+          {
+          case 0: return spec_animalism (ch);
+          case 1: return spec_chimerstry (ch);
+          case 2: return spec_fortitude (ch);
+          }
+    */
     return FALSE;
 }
 
@@ -1544,7 +1633,15 @@ bool spec_salubri( CHAR_DATA *ch )
 {
     if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
     return FALSE;
-
+    /*
+          switch ( number_range( 0,3 ) )
+          {
+          case 0: return spec_auspex (ch);
+          case 1: return spec_fortitude (ch);
+          case 2: return spec_obeah (ch);
+          case 3: return spec_valeran (ch);
+          }
+    */
     return FALSE;
 }
 
@@ -1552,7 +1649,14 @@ bool spec_toreador( CHAR_DATA *ch )
 {
     if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
     return FALSE;
-
+    /*
+          switch ( number_range( 0,2 ) )
+          {
+          case 0: return spec_auspex (ch);
+          case 1: return spec_celerity (ch);
+          case 2: return spec_presence (ch);
+          }
+    */
     return FALSE;
 }
 
@@ -1560,7 +1664,14 @@ bool spec_tremere( CHAR_DATA *ch )
 {
     if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
     return FALSE;
-
+    /*
+          switch ( number_range( 0,2 ) )
+          {
+          case 0: return spec_auspex (ch);
+          case 1: return spec_dominate (ch);
+          case 2: return spec_thaum_regovitae (ch);
+          }
+    */
     return FALSE;
 }
 
@@ -1568,7 +1679,14 @@ bool spec_tzimisce( CHAR_DATA *ch )
 {
     if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
     return FALSE;
-
+    /*
+          switch ( number_range( 0,2 ) )
+          {
+          case 0: return spec_animalism (ch);
+          case 1: return spec_auspex (ch);
+          case 2: return spec_vicissitude (ch);
+          }
+    */
     return FALSE;
 }
 
@@ -1576,7 +1694,14 @@ bool spec_ventrue( CHAR_DATA *ch )
 {
     if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
     return FALSE;
-
+    /*
+          switch ( number_range( 0,2 ) )
+          {
+          case 0: return spec_dominate (ch);
+          case 1: return spec_fortitude (ch);
+          case 2: return spec_presence (ch);
+          }
+    */
     return FALSE;
 }
 

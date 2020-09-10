@@ -1818,10 +1818,14 @@ void unequip_char( CHAR_DATA *ch, OBJ_DATA *obj )
     AFFECT_DATA *lpaf = NULL;
     AFFECT_DATA *lpaf_next = NULL;
     int i;
+    char error[MSL];
 
     if ( obj->wear_loc == WEAR_NONE )
     {
-    bug( "Unequip_char: already unequipped.", 0 );
+      sprintf(error, "Unequip_char: %s (V#%d) in Room V#%d -- %s (V#%d) already unequipped.",
+      ch->short_descr, IS_NPC(ch) ? ch->pIndexData->vnum : 0,
+      ch->in_room->vnum, obj->short_descr, obj->pIndexData->vnum);
+    bug( error, 0 );
     return;
     }
 

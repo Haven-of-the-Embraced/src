@@ -1906,6 +1906,7 @@ bool spec_mesmerize( CHAR_DATA *ch )
   CHAR_DATA *v_next;
   OBJ_DATA *wield;
   char buf[MSL], weapon[MSL], mob[MSL];
+  int success;
 
     if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
     return FALSE;
@@ -1924,24 +1925,37 @@ bool spec_mesmerize( CHAR_DATA *ch )
     if ( ( wield = get_eq_char( victim, WEAR_WIELD ) ) == NULL )
       return FALSE;
 
-    switch ( number_range( 0,2 ) )
+    success = godice(get_attribute(ch, MANIPULATION) + get_ability(ch, CSABIL_LEADERSHIP), 6);
+
+    if (success <= 0)
+      return FALSE;
+
+    switch ( number_range( 0,6 ) )
     {
       case 0:
       case 1:
       case 2:
+      case 3:
+      case 4:
+      case 5:
               act( "Smiling slyly, $n looks at $N and says, '{WYou are going to hurt someone with that.  Why don't you give it to me?{x'", ch, NULL, victim, TO_NOTVICT );
               act( "Smiling slyly, $n looks at you and says, '{WYou are going to hurt someone with that.  Why don't you give it to me?{x'", ch, NULL, victim, TO_VICT );
               act( "With an intense urge, you find yourself complying without fail.", ch, NULL, victim, TO_VICT);
               sprintf(weapon, "%s", wield->name);
               do_function(victim, &do_remove, weapon);
-              do_function(ch, &do_say, weapon);
               sprintf(mob, "%s", ch->name);
-              do_function(ch, &do_say, mob);
               one_argument(weapon, weapon);
               one_argument(mob, mob);
               sprintf(buf, "%s %s", weapon, mob);
               do_function(victim, &do_give, buf);
-              do_function(ch, &do_say, buf);
+              break;
+      case 6:
+              act( "With a stern countenance, $n looks at $N and says, '{WYou cannot hope to win.  You need to rush on home before you get hurt!{x'", ch, NULL, victim, TO_NOTVICT );
+              act( "With a stern countenance, $n looks at you and says, '{WYou cannot hope to win.  You need to rush on home before you get hurt!{x'", ch, NULL, victim, TO_VICT );
+              do_function(victim, &do_flee, "auto");
+              act( "With an overwhelming sense of self-preservation, you decide to recall to safety!", ch, NULL, victim, TO_VICT);
+              do_function(victim, &do_recall, "");
+              break;
     }
 
     return FALSE;

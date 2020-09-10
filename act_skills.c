@@ -277,40 +277,38 @@ void do_classify(CHAR_DATA *ch, char *argument)
     return;
   }
 
-  if (ch->move < ch->level / 2)
+  if (ch->move < ch->level / 2 + 15)
   {
       send_to_char( "You are too tired to figure out a classification for your target.\n\r", ch );
       return;
   }
 
+  if (is_affected(ch, gsn_forget))
+  {
+    send_to_char( "Your memory seems fuzzy and you cannot recall any information.\n\r", ch );
+    return;
+  }
+
   if ( arg1[0] == '\0')
   {
-      send_to_char( "View whom?\n\r", ch );
+      send_to_char( "Determine classification for whom?\n\r", ch );
       return;
   }
 
   if ( ( victim = get_char_room( ch, NULL, arg1 ) ) == NULL )
   {
-      send_to_char( "View whom?\n\r", ch );
+      send_to_char( "Determine classification for whom?\n\r", ch );
       return;
   }
 
-  if (!is_natural(victim))
-  {
-    act("$N does not seem to be a natural, non-humanoid member of the animal kingdom.", ch, NULL, victim, TO_CHAR);
-    return;
-  }
-
   success = godice(get_attribute(ch, INTELLIGENCE) + ch->csabilities[CSABIL_ANIMAL_KEN], 7);
-
-  ch->move -= ch->level / 2;
-
-  success = 0;
+  WAIT_STATE(ch, 16);
+  ch->move -= ch->level / 2 + 15;
 
   if (success < 0)
   {
     send_to_char("You try to focus, but cannot seem to recall any specific information.\n\r", ch);
-    WAIT_STATE(ch, 6);
+    WAIT_STATE(ch, 16);
     return;
   }
 
@@ -320,38 +318,44 @@ void do_classify(CHAR_DATA *ch, char *argument)
     return;
   }
 
-  sprintf(buf, "%s is a %s-sized, %s %s.\n\r",
+  if (!is_natural(victim))
+  {
+    act("$N does not seem to be a natural, non-humanoid member of the animal kingdom.", ch, NULL, victim, TO_CHAR);
+    return;
+  }
+
+  sprintf(buf, "%s is a %s-sized, %s %s and is approximately %d years old.\n\r",
   victim->short_descr,
   size_table[victim->size].name,
   victim->sex == 0 ? "sexless" : victim->sex == 1 ? "male" : "female",
-  race_table[victim->race].name);
+  race_table[victim->race].name, get_age(victim));
   send_to_char(buf,ch);
 
   if(success > 1)
   {
-    sprintf( buf, "Level: %3d   Damage Type: %s\n\r",
+    sprintf( buf, "Your target is level %d, and does %s-type damage.\n\r",
       victim->level, attack_table[victim->dam_type].noun );
     send_to_char(buf,ch);
-    sprintf(buf, "Form: %s\n\rParts: %s\n\r",
-    form_bit_name(victim->form), part_bit_name(victim->parts));
+    sprintf(buf, "Parts     : %s\n\r", part_bit_name(victim->parts));
     send_to_char(buf,ch);
   }
 
   if(success > 2)
   {
-    sprintf(buf, "Immune    : %s\n\rResist    : %s\n\rVulnerable: %s\n\r",
+    sprintf(buf, "Immunity  : %s\n\rResistant : %s\n\rVulnerable: %s\n\r",
     imm_bit_name(victim->imm_flags), imm_bit_name(victim->res_flags), imm_bit_name(victim->vuln_flags));
     send_to_char(buf,ch);
   }
 
   if(success > 3)
   {
-    sprintf(buf, "Offense   : %s\n\r",off_bit_name(victim->off_flags));
+    sprintf(buf, "Abilities : %s\n\r",off_bit_name(victim->off_flags));
     send_to_char(buf,ch);
-    sprintf(buf, "Affected by %s\n\r",affect_bit_name(victim->affected_by));
+    sprintf(buf, "Affects   : %s\n\r",affect_bit_name(victim->affected_by));
     send_to_char(buf,ch);
   }
 
+  gain_exp(ch, success*2);
   return;
 }
 

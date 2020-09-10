@@ -2056,24 +2056,32 @@ void do_command(CHAR_DATA *ch, char *argument)
      && victim->race != race_lookup("garou")
      && victim->race != race_lookup("methuselah")
      && victim->race != race_lookup("dhampire")
+     && victim->race != race_lookup("faerie")
+     && victim->race != race_lookup("fera")
+     && victim->race != race_lookup("mage")
+     && victim->race != race_lookup("romani")
+     && victim->race != race_lookup("demon")
+     && victim->race != race_lookup("kuei-jin")
+     && victim->race != race_lookup("dragon")
+     && victim->race != race_lookup("fomor")
      || !IS_SET(victim->form,FORM_SENTIENT)) {
-         send_to_char("Your powers of Domminate only work on sentient, humanoid beings.\n\r", ch);
+         send_to_char("Your powers of Dominate only work on sentient, humanoid beings.\n\r", ch);
          return;
      }
     ch->pblood -= 10;
     diff = 5;
     if (victim->race != race_lookup("human"))
-        diff += 2;
-    if (victim->level > ch->level)
+        diff ++;
+    if (victim->level > ch->level + 5)
         diff++;
-    if (victim->level > ch->level*2)
+    if (victim->level > ch->level + 15)
         diff++;
     success = godice(get_attribute(ch, MANIPULATION) + ch->csabilities[CSABIL_INTIMIDATION], diff);
     success += stealth_int_shadowplay(ch, diff);
 
     if (success < 1)
     {
-        sprintf( buf, "%s resists your power of Domination!\n\r", victim->name );
+        sprintf( buf, "%s resists your power of Dominate!\n\r", victim->name );
         send_to_char(buf,ch);
         sprintf( buf, "%s attempts to dominate your mind!\n\r", ch->name );
         send_to_char(buf,victim);

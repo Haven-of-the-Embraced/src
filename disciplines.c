@@ -1995,7 +1995,7 @@ void do_command(CHAR_DATA *ch, char *argument)
       send_to_char("You cannot speak clearly enough with a sore throat to Dominate someone.\n\r", ch);
       return;
     }
-        if (ch->pblood < 20)
+        if (ch->pblood < 10)
     {
         send_to_char( "You don't have enough blood.\n\r", ch );
         return;
@@ -2068,7 +2068,7 @@ void do_command(CHAR_DATA *ch, char *argument)
          send_to_char("Your powers of Dominate only work on sentient, humanoid beings.\n\r", ch);
          return;
      }
-    ch->pblood -= 10;
+    ch->pblood -= 5;
     diff = 5;
     if (victim->race != race_lookup("human"))
         diff ++;
@@ -2080,10 +2080,11 @@ void do_command(CHAR_DATA *ch, char *argument)
     success += stealth_int_shadowplay(ch, diff);
     if (IS_SET(victim->res_flags, RES_MENTAL))
       success--;
+    WAIT_STATE(ch, 6);
 
     sprintf( buf, "%s locks eyes with you and says, '{W%s{x'.\n\r", ch->name, arg2 );
     send_to_char(buf,victim);
-    sprintf( buf, "You lock eyes with %s, stressing the word as you say '{W%s{x'.\n\r", victim->short_descr, arg2 );
+    sprintf( buf, "You lock eyes with %s, stressing a single word as you say '{W%s{x'.\n\r", victim->short_descr, arg2 );
     send_to_char(buf,ch);
     act( "$n stares into $N's eyes a moment then whispers a command.",  ch, NULL, victim, TO_NOTVICT );
 
@@ -2103,7 +2104,9 @@ void do_command(CHAR_DATA *ch, char *argument)
       return;
     }
 
-    if (success == 0)
+    if (success == 0 || IS_SET(victim->imm_flags, IMM_MENTAL)
+    || (victim->level > ch->level + 10
+    && ( victim->race == race_lookup("vampire") || victim->race == race_lookup("methuselah"))) )
     {
         sprintf( buf, "%s appears to resist your power of Dominate!\n\r", victim->short_descr );
         send_to_char(buf,ch);
@@ -2112,12 +2115,10 @@ void do_command(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    sprintf( buf, "%s commands you to '%s'.\n\r", ch->name, arg2 );
+    sprintf( buf, "You feel an unresistable urge to %s, and comply immediately.\n\r", arg2 );
     send_to_char(buf,victim);
-    sprintf( buf, "You command %s to '%s'.\n\r", victim->short_descr, arg2 );
-    send_to_char(buf,ch);
-    act( "$n stares into $N's eyes a moment then whispers a command.",  ch, NULL, victim, TO_NOTVICT );
     interpret( victim, arg2 );
+    gain_exp(ch,success);
 
     return;
 }

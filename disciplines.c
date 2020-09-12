@@ -1966,7 +1966,7 @@ void do_command(CHAR_DATA *ch, char *argument)
    char buf[MAX_STRING_LENGTH];
    CHAR_DATA *victim;
    int success, diff;
-     AFFECT_DATA af;
+   AFFECT_DATA af;
    success = diff = 0;
 
     argument = one_argument( argument, arg1 );
@@ -2078,22 +2078,46 @@ void do_command(CHAR_DATA *ch, char *argument)
         diff++;
     success = godice(get_attribute(ch, MANIPULATION) + ch->csabilities[CSABIL_INTIMIDATION], diff);
     success += stealth_int_shadowplay(ch, diff);
+    if (IS_SET(victim->res_flags, RES_MENTAL))
+      success--;
 
-    if (success < 1)
+    sprintf( buf, "%s locks eyes with you and says, '{W%s{x'.\n\r", ch->name, arg2 );
+    send_to_char(buf,victim);
+    sprintf( buf, "You lock eyes with %s, stressing the word as you say '{W%s{x'.\n\r", victim->short_descr, arg2 );
+    send_to_char(buf,ch);
+    act( "$n stares into $N's eyes a moment then whispers a command.",  ch, NULL, victim, TO_NOTVICT );
+
+    if (success < 0)
     {
-        sprintf( buf, "%s resists your power of Dominate!\n\r", victim->name );
+      act("$N seems to have no problem ignoring your command completely.", ch, NULL, victim, TO_CHAR);
+      if (!IS_SET(victim->imm_flags, IMM_MENTAL))
+      {
+        af.where     = TO_AFFECTS;
+        af.type      = gsn_magick;
+        af.level     = ch->level;
+        af.duration  = 5;
+        af.location  = APPLY_NONE;
+        af.modifier  = 0;
+        af.bitvector = IMM_MENTAL;
+      }
+      return;
+    }
+
+    if (success == 0)
+    {
+        sprintf( buf, "%s appears to resist your power of Dominate!\n\r", victim->short_descr );
         send_to_char(buf,ch);
-        sprintf( buf, "%s attempts to dominate your mind!\n\r", ch->name );
+        sprintf( buf, "You feel a strange compulsion to %s, but manage to shrug it off.\n\r", arg2 );
         send_to_char(buf,victim);
         return;
-    } else {
+    }
+
     sprintf( buf, "%s commands you to '%s'.\n\r", ch->name, arg2 );
     send_to_char(buf,victim);
-    sprintf( buf, "You command %s to '%s'.\n\r", victim->name, arg2 );
+    sprintf( buf, "You command %s to '%s'.\n\r", victim->short_descr, arg2 );
     send_to_char(buf,ch);
     act( "$n stares into $N's eyes a moment then whispers a command.",  ch, NULL, victim, TO_NOTVICT );
     interpret( victim, arg2 );
-    }
 
     return;
 }

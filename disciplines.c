@@ -2021,6 +2021,12 @@ void do_command(CHAR_DATA *ch, char *argument)
         return;
     }
 
+    if (!can_see(victim, ch))
+    {
+      send_to_char("Your target must be able to see you to lock eyes.\n\r", ch);
+      return;
+    }
+
     if (!str_prefix(arg2,"delete"))
     {
         send_to_char("That will NOT be done.\n\r",ch);
@@ -2076,9 +2082,13 @@ void do_command(CHAR_DATA *ch, char *argument)
         diff++;
     if (victim->level > ch->level + 15)
         diff++;
+    if (victim->position == POS_FIGHTING || ch->position == POS_FIGHTING)
+        diff++;
+    if (IS_SET(victim->vuln_flags, VULN_MENTAL) || IS_SET(victim->vuln_flags, VULN_CHARM))
+        diff--;
     success = godice(get_attribute(ch, MANIPULATION) + ch->csabilities[CSABIL_INTIMIDATION], diff);
     success += stealth_int_shadowplay(ch, diff);
-    if (IS_SET(victim->res_flags, RES_MENTAL))
+    if (IS_SET(victim->res_flags, RES_MENTAL) || IS_SET(victim->res_flags, RES_CHARM))
       success--;
     WAIT_STATE(ch, 6);
 
@@ -2087,6 +2097,12 @@ void do_command(CHAR_DATA *ch, char *argument)
     sprintf( buf, "You lock eyes with %s, stressing a single word as you say '{W%s{x'.\n\r", victim->short_descr, arg2 );
     send_to_char(buf,ch);
     act( "$n stares into $N's eyes a moment then whispers a command.",  ch, NULL, victim, TO_NOTVICT );
+
+    if (is_affected(victim, gsn_deafened))
+    {
+      act("$N does not seem to have heard your command at all.", ch, NULL, victim, TO_CHAR);
+      return;
+    }
 
     if (success < 0)
     {
@@ -2100,11 +2116,23 @@ void do_command(CHAR_DATA *ch, char *argument)
         af.location  = APPLY_NONE;
         af.modifier  = 0;
         af.bitvector = IMM_MENTAL;
+        affect_to_char(victim, &af);
+      }
+      if (!IS_SET(victim->imm_flags, IMM_CHARM))
+      {
+        af.where     = TO_AFFECTS;
+        af.type      = gsn_magick;
+        af.level     = ch->level;
+        af.duration  = 5;
+        af.location  = APPLY_NONE;
+        af.modifier  = 0;
+        af.bitvector = IMM_CHARM;
+        affect_to_char(victim, &af);
       }
       return;
     }
 
-    if (success == 0 || IS_SET(victim->imm_flags, IMM_MENTAL)
+    if (success == 0 || IS_SET(victim->imm_flags, IMM_MENTAL) || IS_SET(victim->imm_flags, IMM_CHARM)
     || (victim->level > ch->level + 10
     && ( victim->race == race_lookup("vampire") || victim->race == race_lookup("methuselah"))) )
     {
@@ -2115,7 +2143,7 @@ void do_command(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    sprintf( buf, "You feel an unresistable urge to %s, and comply immediately.\n\r", arg2 );
+    sprintf( buf, "You feel an unresistable urge to '{c%s{x', and comply immediately.\n\r", arg2 );
     send_to_char(buf,victim);
     interpret( victim, arg2 );
     gain_exp(ch,success);

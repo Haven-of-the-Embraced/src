@@ -101,8 +101,8 @@ DECLARE_SPEC_FUN(   spec_obeah              );
 DECLARE_SPEC_FUN(   spec_obfuscate          ); */
 DECLARE_SPEC_FUN(   spec_obtenebration      );
 DECLARE_SPEC_FUN(   spec_potence            );
-/* DECLARE_SPEC_FUN(   spec_presence           );
-DECLARE_SPEC_FUN(   spec_protean            );
+DECLARE_SPEC_FUN(   spec_presence           );
+/* DECLARE_SPEC_FUN(   spec_protean            );
 DECLARE_SPEC_FUN(   spec_quietus            );
 DECLARE_SPEC_FUN(   spec_serpentis          );
 DECLARE_SPEC_FUN(   spec_thaum_regovitae    );
@@ -113,6 +113,7 @@ DECLARE_SPEC_FUN(   spec_mesmerize          );
 DECLARE_SPEC_FUN(   spec_forgetfulmind      );
 DECLARE_SPEC_FUN(   spec_shadowplay         );
 DECLARE_SPEC_FUN(   spec_nocturne           );
+DECLARE_SPEC_FUN(   spec_dreadgaze          );
 DECLARE_SPEC_FUN(   spec_evil_eye           );
 DECLARE_SPEC_FUN(   spec_questmaster        );
 DECLARE_SPEC_FUN(   spec_jarjar             );
@@ -184,8 +185,8 @@ const   struct  spec_type    spec_table[] =
     {   "spec_obfuscate",         spec_obfuscate        },*/
     {   "spec_obtenebration",     spec_obtenebration    },
     {   "spec_potence",           spec_potence          },
-/*    {   "spec_presence",          spec_presence          },
-    {   "spec_protean",           spec_protean          },
+    {   "spec_presence",          spec_presence          },
+/*    {   "spec_protean",           spec_protean          },
     {   "spec_quietus",           spec_quietus          },
     {   "spec_serpentis",         spec_serpentis        },
     {   "spec_thaum_regovitae",   spec_thaum_regovitae  },
@@ -198,6 +199,7 @@ const   struct  spec_type    spec_table[] =
     {   "spec_forgetfulmind",     spec_forgetfulmind    },
     {   "spec_shadowplay",        spec_shadowplay       },
     {   "spec_nocturne",          spec_nocturne         },
+    {   "spec_dreadgaze",         spec_dreadgaze        },
 // Numina/Romani
     {   "spec_evil_eye",          spec_evil_eye         },
 // Miscellaneous
@@ -1822,6 +1824,25 @@ bool spec_potence( CHAR_DATA *ch )
     return TRUE;
 }
 
+bool spec_presence( CHAR_DATA *ch )
+{
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
+    return FALSE;
+
+    switch ( number_range( 0,2 ) )
+    {
+/*    case 0: return spec_awe (ch);
+    case 1: return spec_dreadgaze (ch);
+    case 2: return spec_entrancement (ch); */
+
+    case 0:
+    case 1:
+    case 2: return spec_dreadgaze (ch);
+    }
+
+    return FALSE;
+}
+
 /* Dominate Specs */
 bool spec_command( CHAR_DATA *ch )
 {
@@ -2062,6 +2083,57 @@ bool spec_nocturne( CHAR_DATA *ch )
   return TRUE;
 }
 
+/* Presence Specs */
+/*bool spec_awe( CHAR_DATA *ch )
+{
+  return FALSE;
+}
+*/
+bool spec_dreadgaze( CHAR_DATA *ch)
+{
+  CHAR_DATA *victim;
+  CHAR_DATA *v_next;
+  int dreadsuccess, dreaddiff;
+
+  if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected(ch, gsn_forget))
+      return FALSE;
+
+  for ( victim = ch->in_room->people; victim != NULL; victim = v_next )
+  {
+      v_next = victim->next_in_room;
+      if (( victim->fighting == ch && number_bits( 2 ) == 0 )
+      &&  can_see(victim, ch) && can_see(ch, victim))
+          break;
+  }
+
+  if ( victim == NULL )
+      return FALSE;
+
+  if (!IS_NPC(victim))
+    dreaddiff = get_attribute(victim, WITS) + victim->pcdata->csvirtues[CSVIRT_COURAGE];
+  else
+    dreaddiff = get_attribute(victim, WITS) + (victim->level/25);
+
+      act( "$n bares $s fangs and hisses at you!", ch, NULL, victim, TO_VICT );
+      act( "$n bares sharp fangs and hisses at $N!", ch, NULL, victim, TO_NOTVICT );
+
+  dreadsuccess = godice(get_attribute(ch, CHARISMA) + get_ability(ch, CSABIL_INTIMIDATION), dreaddiff);
+
+  if (dreadsuccess <= 0)
+    return FALSE;
+
+  act("You are filled with an intense fear that rattles you to your core, and you attempt to flee immediately!", ch, NULL, victim, TO_VICT);
+  do_function(victim, &do_flee, "auto");
+
+  return TRUE;
+}
+
+/*bool spec_entrancement( CHAR_DATA *ch)
+{
+  return FALSE;
+}
+*/
+/********************************/
 bool spec_cast_acid( CHAR_DATA *ch )
 {
     CHAR_DATA *victim;

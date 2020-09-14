@@ -1672,10 +1672,10 @@ void do_create( CHAR_DATA *ch, char *argument )
             send_to_char("The next step is setting up your abilities. Abilities are numeric values for what your\n\r",ch);
             send_to_char("character knows and can learn.\n\r\n\r",ch);
 
-            send_to_char("Abilities are devided into three sections:\n\r",ch);
+            send_to_char("Abilities are divided into three sections:\n\r",ch);
             send_to_char("Talents, which are what you intuitively know naturally without instruction,\n\r",ch);
-            send_to_char("Skills which are abilities learned through training, apprenticeship or other instruction.\n\r",ch);
-            send_to_char("Knowledges are the traits that you gained through schooling or book-learning.\n\r\n\r",ch);
+            send_to_char("Skills, which are abilities learned through training, apprenticeship or other instruction.\n\r",ch);
+            send_to_char("Knowledges are the traits that you have gained through schooling or book-learning.\n\r\n\r",ch);
             send_to_char("You must choose your Primary, Secondary and Tertiary abilities to continue.\n\r",ch);
             send_to_char("Please assign your Primary by typing 'create primary <section>' then do the same for\n\r",ch);
             send_to_char("Secondary and Tertiary.\n\r",ch);
@@ -1687,8 +1687,8 @@ void do_create( CHAR_DATA *ch, char *argument )
         }
         else if(ch->pcdata->progress == 5)
         {
-            send_to_char("Your almost finished with this process. Next is setting your Virtues.\n\r\n\r",ch);
-            send_to_char("Virtues are the moral guidelines for your character. What your character feels about\n\r",ch);
+            send_to_char("You are almost finished with this process. Next is setting your Virtues.\n\r\n\r",ch);
+            send_to_char("Virtues are the moral guidelines for your character, what your character feels about\n\r",ch);
             send_to_char("him/herself and the world around them.\n\r\n\r",ch);
             send_to_char("There are three Virtues:\n\r",ch);
             send_to_char("Conscience is your ability to tell what's 'right' from what's 'wrong'.\n\r",ch);
@@ -1730,12 +1730,12 @@ void do_create( CHAR_DATA *ch, char *argument )
     {
         if(arg2[0] == '\0' && ch->pcdata->progress == 1)
         {
-            send_to_char("The sentax is create <primary/secondary/tertiary> <physical/social/mental>\n\r",ch);
+            send_to_char("The syntax is create <primary/secondary/tertiary> <physical/social/mental>\n\r",ch);
             return;
         }
         if(arg2[0] == '\0' && ch->pcdata->progress == 3)
         {
-            send_to_char("The sentax is create <primary/secondary/tertiary> <skills/talents/knowledges>\n\r",ch);
+            send_to_char("The syntax is create <primary/secondary/tertiary> <skills/talents/knowledges>\n\r",ch);
             return;
         }
         if(ch->pcdata->progress == 1 && ch->pcdata->stat[PHYSICAL] > 0 && ch->pcdata->stat[SOCIAL] > 0 && ch->pcdata->stat[MENTAL] > 0)
@@ -2078,7 +2078,7 @@ void do_create( CHAR_DATA *ch, char *argument )
                 }
                 if(ch->clan == clan_lookup("nosferatu"))
                 {
-                    send_to_char("You can't increase your Appearance. Your just too darned ugly.\n\r",ch);
+                    send_to_char("You can't increase your Appearance. You're just too darned ugly.\n\r",ch);
                     return;
                 }
                 ch->csattributes[CSATTRIB_APPEARANCE]++;

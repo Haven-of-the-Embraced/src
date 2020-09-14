@@ -4413,7 +4413,7 @@ void do_trip( CHAR_DATA *ch, char *argument )
 			if (knockdown < 1)
 			{
 				act("Your swift maneuver sweeps $N's legs out from under $M, and $E crashes to the ground.",ch,NULL,victim,TO_CHAR);
-				act("$n's attack cactches you by surprise, and you lose your balance.",ch,NULL,victim,TO_VICT);
+				act("$n's attack catches you by surprise, and you lose your balance.",ch,NULL,victim,TO_VICT);
 				act("With a swift maneuver, $n sweeps $N's legs out from under $S.",ch,NULL,victim,TO_NOTVICT);
 				WAIT_STATE(victim, PULSE_VIOLENCE * tripsuccess);
 				WAIT_STATE(ch,skill_table[gsn_trip].beats);

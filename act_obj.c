@@ -4257,7 +4257,7 @@ void do_learn(CHAR_DATA *ch, char *argument)
 
             ch->csabilities[i]++;
             extract_obj( obj );
-            send_to_char("You concentrate intently on the mystical tome and feel you have a grasp on it's concepts.\n\rThe tome fades from existance.\n\r",ch);
+            send_to_char("You concentrate intently on the mystical tome and feel you have a grasp on it's concepts.\n\rThe tome fades from existence.\n\r",ch);
             cskill_update(ch, TRUE);
             return;
         }
@@ -4280,7 +4280,7 @@ void do_learn(CHAR_DATA *ch, char *argument)
             }
             ch->csattributes[i]++;
             extract_obj( obj );
-            send_to_char("You concentrate intently on the mystical tome and feel you have a grasp on it's concepts.\n\rThe tome fades from existance.\n\r",ch);
+            send_to_char("You concentrate intently on the mystical tome and feel you have a grasp on it's concepts.\n\rThe tome fades from existence.\n\r",ch);
             cskill_update(ch, TRUE);
             return;
         }
@@ -4297,7 +4297,7 @@ void do_learn(CHAR_DATA *ch, char *argument)
         }
         ch->pcdata->csvirtues[CSVIRT_CONSCIENCE]++;
         extract_obj( obj );
-        send_to_char("You concentrate intently on the mystical tome and feel you have a grasp on it's concepts.\n\rThe tome fades from existance.\n\r",ch);
+        send_to_char("You concentrate intently on the mystical tome and feel you have a grasp on it's concepts.\n\rThe tome fades from existence.\n\r",ch);
         return;
     }
     if(!str_cmp( stat, "self-control") || !str_prefix( arg, "self_control"))
@@ -4310,7 +4310,7 @@ void do_learn(CHAR_DATA *ch, char *argument)
         }
         ch->pcdata->csvirtues[CSVIRT_SELF_CONTROL]++;
         extract_obj( obj );
-        send_to_char("You concentrate intently on the mystical tome and feel you have a grasp on it's concepts.\n\rThe tome fades from existance.\n\r",ch);
+        send_to_char("You concentrate intently on the mystical tome and feel you have a grasp on it's concepts.\n\rThe tome fades from existence.\n\r",ch);
         return;
     }
     if(!str_cmp( stat, "courage"))
@@ -4323,7 +4323,7 @@ void do_learn(CHAR_DATA *ch, char *argument)
         }
         ch->pcdata->csvirtues[CSVIRT_COURAGE]++;
         extract_obj( obj );
-        send_to_char("You concentrate intently on the mystical tome and feel you have a grasp on it's concepts.\n\rThe tome fades from existance.\n\r",ch);
+        send_to_char("You concentrate intently on the mystical tome and feel you have a grasp on it's concepts.\n\rThe tome fades from existence.\n\r",ch);
         return;
     }
     if(!str_cmp( stat, "willpower"))
@@ -4337,7 +4337,7 @@ void do_learn(CHAR_DATA *ch, char *argument)
         ch->csmax_willpower++;
         ch->cswillpower++;
         extract_obj( obj );
-        send_to_char("You concentrate intently on the mystical tome and feel you have a grasp on it's concepts.\n\rThe tome fades from existance.\n\r",ch);
+        send_to_char("You concentrate intently on the mystical tome and feel you have a grasp on it's concepts.\n\rThe tome fades from existence.\n\r",ch);
         return;
     }
     if(!str_cmp( stat, "humanity"))
@@ -4353,7 +4353,7 @@ void do_learn(CHAR_DATA *ch, char *argument)
 */
         ch->pcdata->cshumanity++;
         extract_obj( obj );
-        send_to_char("You concentrate intently on the mystical tome and feel you have a grasp on it's concepts.\n\rThe tome fades from existance.\n\r",ch);
+        send_to_char("You concentrate intently on the mystical tome and feel you have a grasp on it's concepts.\n\rThe tome fades from existence.\n\r",ch);
         return;
     }
 
@@ -4974,7 +4974,7 @@ void do_donate( CHAR_DATA *ch, char *argument)
    {
       if (!can_drop_obj(ch, obj) && ch->level < 101)
       {
-         send_to_char("Its stuck to you.\n\r",ch);
+         send_to_char("It seems to be stuck to you.\n\r",ch);
          return;
       }
       if ((obj->item_type == ITEM_CORPSE_NPC) ||

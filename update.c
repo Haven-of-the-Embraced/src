@@ -523,7 +523,7 @@ void weather_update( void )
 
     case  6:
     weather_info.sunlight = SUN_RISE;
-    strcat( buf, "Cresting on the horizion, the sun makes its daily appearance, and chases away the terrors of the previous night.\n\r" );
+    strcat( buf, "Cresting on the horizon, the sun makes its daily appearance, and chases away the terrors of the previous night.\n\r" );
     break;
 
    /* Jocelyn and Sengir Noontime message.*/
@@ -536,7 +536,7 @@ void weather_update( void )
 
     case 19:
     weather_info.sunlight = SUN_SET;
-    strcat( buf, "Slowly sinking from the sky, the sun dips below the western horizion, giving way to the night.\n\r" );
+    strcat( buf, "Slowly sinking from the sky, the sun dips below the western horizon, giving way to the night.\n\r" );
     break;
 
     case 20:

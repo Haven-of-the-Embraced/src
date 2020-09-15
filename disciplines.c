@@ -650,6 +650,7 @@ void do_quelltheherd(CHAR_DATA *ch, char *argument)
 void do_reveal(CHAR_DATA *ch, char *argument)
 {
     AFFECT_DATA af;
+    int revealsuccess = 0;
 
     if (IS_NPC(ch)) return;
 
@@ -671,7 +672,7 @@ void do_reveal(CHAR_DATA *ch, char *argument)
         send_to_char("Your blood curse prevents it!\n\r" ,ch);
         return;
     }
-    
+
     if(!can_use_disc(ch,AUSPEX,1,20,TRUE))
         return;
 
@@ -682,25 +683,24 @@ void do_reveal(CHAR_DATA *ch, char *argument)
     }
 
     ch->pblood -= 5;
-
     send_to_char( "You expand your five senses to inhuman levels, indulging in sensations no mere mortal could even begin to comprehend.\n\r", ch);
+    revealsuccess = godice(get_attribute(ch, PERCEPTION) + get_ability(ch, CSABIL_ALERTNESS), 6);
+    if (revealsuccess < 1)
+      revealsuccess = 1;
 
     af.where     = TO_AFFECTS;
     af.type      = gsn_reveal;
     af.level     = ch->pcdata->discipline[AUSPEX];
-    af.duration  = ch->level/2 + ch->pcdata->discipline[AUSPEX]*10;
-    af.location  = APPLY_NONE;
-    af.modifier  = 0;
-    af.bitvector = 0;
-    affect_to_char( ch, &af );
-
-    af.where     = TO_AFFECTS;
-    af.type      = gsn_reveal;
-    af.level     = ch->pcdata->discipline[AUSPEX];
-    af.duration  = ch->level/2 + ch->pcdata->discipline[AUSPEX]*10;
+    af.duration  = 20 + (revealsuccess * 10);
     af.location  = APPLY_NONE;
     af.modifier  = 0;
     af.bitvector = AFF_DETECT_HIDDEN;
+    affect_to_char( ch, &af );
+
+    af.bitvector = VULN_SOUND;
+    affect_to_char( ch, &af );
+
+    af.bitvector = VULN_LIGHT;
     affect_to_char( ch, &af );
 
     return;

@@ -666,50 +666,42 @@ void do_reveal(CHAR_DATA *ch, char *argument)
         return;
     }
 
-
     if ( IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
     {
         send_to_char("Your blood curse prevents it!\n\r" ,ch);
         return;
     }
+    
     if(!can_use_disc(ch,AUSPEX,1,20,TRUE))
         return;
-/*  if(ch->pcdata->discipline[AUSPEX] < 1)
-    {
-        send_to_char( "You are not trained in Auspex!\n\r", ch );
-        return;
-    }
-*/
-    if (ch->pblood < 20)
+
+    if (ch->pblood < 10)
     {
         send_to_char( "You do not have enough blood.\n\r", ch );
         return;
     }
 
-    ch->pblood -= 10;
+    ch->pblood -= 5;
 
     send_to_char( "You expand your five senses to inhuman levels, indulging in sensations no mere mortal could even begin to comprehend.\n\r", ch);
 
-        af.where     = TO_AFFECTS;
-        af.type      = gsn_reveal;
-        af.level     = ch->pcdata->discipline[AUSPEX];
-        af.duration  = ch->level/2 + ch->pcdata->discipline[AUSPEX]*10;
-        af.location  = APPLY_NONE;
-        af.modifier  = 0;
-        af.bitvector = 0;
-        affect_to_char( ch, &af );
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_reveal;
+    af.level     = ch->pcdata->discipline[AUSPEX];
+    af.duration  = ch->level/2 + ch->pcdata->discipline[AUSPEX]*10;
+    af.location  = APPLY_NONE;
+    af.modifier  = 0;
+    af.bitvector = 0;
+    affect_to_char( ch, &af );
 
-    if (ch->pcdata->discipline[AUSPEX] >= 2 && !IS_AFFECTED(ch,AFF_DETECT_HIDDEN))
-    {
-        af.where     = TO_AFFECTS;
-        af.type      = gsn_reveal;
-        af.level     = ch->pcdata->discipline[AUSPEX];
-        af.duration  = ch->level/2 + ch->pcdata->discipline[AUSPEX]*10;
-        af.location  = APPLY_NONE;
-        af.modifier  = 0;
-        af.bitvector = AFF_DETECT_HIDDEN;
-        affect_to_char( ch, &af );
-    }
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_reveal;
+    af.level     = ch->pcdata->discipline[AUSPEX];
+    af.duration  = ch->level/2 + ch->pcdata->discipline[AUSPEX]*10;
+    af.location  = APPLY_NONE;
+    af.modifier  = 0;
+    af.bitvector = AFF_DETECT_HIDDEN;
+    affect_to_char( ch, &af );
 
     return;
 }

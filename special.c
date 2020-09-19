@@ -2103,8 +2103,14 @@ bool spec_armsoftheabyss( CHAR_DATA *ch )
 {
   CHAR_DATA *victim;
   CHAR_DATA *v_next;
-  
-    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
+  AFFECT_DATA af;
+  int obtenebration, obtensuccess;
+
+    obtenebration = (ch->level / 20) + 1;
+    obtensuccess = godice(get_attribute(ch, MANIPULATION) + get_ability(ch, CSABIL_OCCULT), 7);
+
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget )
+      || obtensuccess <= 0 )
     return FALSE;
 
     for ( victim = ch->in_room->people; victim != NULL; victim = v_next )
@@ -2117,6 +2123,18 @@ bool spec_armsoftheabyss( CHAR_DATA *ch )
 
     if ( victim == NULL )
         return FALSE;
+
+    if (is_affected(victim, gsn_armsoftheabyss))
+      return FALSE;
+
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_armsoftheabyss;
+    af.level     = obtenebration;
+    af.duration  = 1;
+    af.location  = APPLY_STR;
+    af.modifier  = -1;
+    af.bitvector = 0;
+    affect_to_char( victim, &af );
 
     return FALSE;
 }

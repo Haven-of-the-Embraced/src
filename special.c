@@ -71,15 +71,15 @@ DECLARE_SPEC_FUN(   spec_patrolman          );
 DECLARE_SPEC_FUN(   spec_stake              );
 DECLARE_SPEC_FUN(   spec_bo_dog             );
 DECLARE_SPEC_FUN(   spec_lag                );
-DECLARE_SPEC_FUN(   spec_assamite           );
+/* DECLARE_SPEC_FUN(   spec_assamite           );
 DECLARE_SPEC_FUN(   spec_baali              );
 DECLARE_SPEC_FUN(   spec_brujah             );
 DECLARE_SPEC_FUN(   spec_cappadocian        );
 DECLARE_SPEC_FUN(   spec_followersofset     );
 DECLARE_SPEC_FUN(   spec_gangrel            );
-DECLARE_SPEC_FUN(   spec_gargoyle           );
+DECLARE_SPEC_FUN(   spec_gargoyle           );*/
 DECLARE_SPEC_FUN(   spec_lasombra           );
-DECLARE_SPEC_FUN(   spec_malkavian          );
+/* DECLARE_SPEC_FUN(   spec_malkavian          );
 DECLARE_SPEC_FUN(   spec_nosferatu          );
 DECLARE_SPEC_FUN(   spec_ravnos             );
 DECLARE_SPEC_FUN(   spec_salubri            );
@@ -87,7 +87,7 @@ DECLARE_SPEC_FUN(   spec_toreador           );
 DECLARE_SPEC_FUN(   spec_tremere            );
 DECLARE_SPEC_FUN(   spec_tzimisce           );
 DECLARE_SPEC_FUN(   spec_ventrue            );
-/* DECLARE_SPEC_FUN(   spec_animalism          );
+DECLARE_SPEC_FUN(   spec_animalism          );
 DECLARE_SPEC_FUN(   spec_auspex             ); */
 DECLARE_SPEC_FUN(   spec_celerity           );
 /* DECLARE_SPEC_FUN(   spec_chimerstry         );
@@ -113,6 +113,7 @@ DECLARE_SPEC_FUN(   spec_mesmerize          );
 DECLARE_SPEC_FUN(   spec_forgetfulmind      );
 DECLARE_SPEC_FUN(   spec_shadowplay         );
 DECLARE_SPEC_FUN(   spec_nocturne           );
+DECLARE_SPEC_FUN(   spec_armsoftheabyss     );
 DECLARE_SPEC_FUN(   spec_dreadgaze          );
 DECLARE_SPEC_FUN(   spec_evil_eye           );
 DECLARE_SPEC_FUN(   spec_questmaster        );
@@ -154,22 +155,22 @@ const   struct  spec_type    spec_table[] =
     {   "spec_bo_dog",            spec_bo_dog           },
     {   "spec_lag",               spec_lag              },
 // Clans
-    {   "spec_assamite",          spec_assamite         },
+/*    {   "spec_assamite",          spec_assamite         },
     {   "spec_baali",             spec_baali            },
     {   "spec_brujah",            spec_brujah           },
     {   "spec_cappadocian",       spec_cappadocian      },
     {   "spec_followersofset",    spec_followersofset   },
     {   "spec_gangrel",           spec_gangrel          },
-    {   "spec_gargoyle",          spec_gargoyle         },
+    {   "spec_gargoyle",          spec_gargoyle         },*/
     {   "spec_lasombra",          spec_lasombra         },
-    {   "spec_malkavian",         spec_malkavian        },
+/*    {   "spec_malkavian",         spec_malkavian        },
     {   "spec_nosferatu",         spec_nosferatu        },
     {   "spec_ravnos",            spec_ravnos           },
     {   "spec_salubri",           spec_salubri          },
     {   "spec_toreador",          spec_toreador         },
     {   "spec_tremere",           spec_tremere          },
     {   "spec_tzimisce",          spec_tzimisce         },
-    {   "spec_ventrue",           spec_ventrue          },
+    {   "spec_ventrue",           spec_ventrue          },*/
 // Disciplines
 /*    {   "spec_animalism",         spec_animalism        },
     {   "spec_auspex",            spec_auspex           },  */
@@ -199,6 +200,7 @@ const   struct  spec_type    spec_table[] =
     {   "spec_forgetfulmind",     spec_forgetfulmind    },
     {   "spec_shadowplay",        spec_shadowplay       },
     {   "spec_nocturne",          spec_nocturne         },
+    {   "spec_armsoftheabyss",    spec_armsoftheabyss   },
     {   "spec_dreadgaze",         spec_dreadgaze        },
 // Numina/Romani
     {   "spec_evil_eye",          spec_evil_eye         },
@@ -1768,9 +1770,9 @@ bool spec_obtenebration( CHAR_DATA *ch )
 
     switch ( number_range( 0,2 ) )
     {
-    case 0:
-    case 1: return spec_shadowplay (ch);
-    case 2: return spec_nocturne (ch);
+    case 0: return spec_shadowplay (ch);
+    case 1: return spec_nocturne (ch);
+    case 2: return spec_armsoftheabyss (ch);
     }
 
     return FALSE;
@@ -2096,6 +2098,29 @@ bool spec_nocturne( CHAR_DATA *ch )
 
   return TRUE;
 }
+
+bool spec_armsoftheabyss( CHAR_DATA *ch )
+{
+  CHAR_DATA *victim;
+  CHAR_DATA *v_next;
+  
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
+    return FALSE;
+
+    for ( victim = ch->in_room->people; victim != NULL; victim = v_next )
+    {
+        v_next = victim->next_in_room;
+        if (( victim->fighting == ch && number_bits( 2 ) == 0 )
+        &&  can_see(ch, victim))
+            break;
+    }
+
+    if ( victim == NULL )
+        return FALSE;
+
+    return FALSE;
+}
+
 
 /* Presence Specs */
 /*bool spec_awe( CHAR_DATA *ch )

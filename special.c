@@ -2251,6 +2251,29 @@ bool spec_dreadgaze( CHAR_DATA *ch)
   return FALSE;
 }
 */
+
+/* Serpentis Specs */
+bool spec_eyesoftheserpent( CHAR_DATA *ch )
+{
+  CHAR_DATA *victim;
+  CHAR_DATA *v_next;
+  int serpentis, eyessuccess;
+
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
+    return FALSE;
+
+    for ( victim = ch->in_room->people; victim != NULL; victim = v_next )
+    {
+        v_next = victim->next_in_room;
+        if (( victim->fighting == ch && number_bits( 2 ) == 0 )
+        &&  can_see(victim, ch) && can_see(ch, victim))
+            break;
+    }
+
+
+    return FALSE;
+}
+
 /********************************/
 bool spec_cast_acid( CHAR_DATA *ch )
 {

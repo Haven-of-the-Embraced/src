@@ -201,6 +201,7 @@ const   struct  spec_type    spec_table[] =
     {   "spec_shadowplay",        spec_shadowplay       },
     {   "spec_nocturne",          spec_nocturne         },
     {   "spec_armsoftheabyss",    spec_armsoftheabyss   },
+    {   "spec_awe",               spec_awe              },
     {   "spec_dreadgaze",         spec_dreadgaze        },
 // Numina/Romani
     {   "spec_evil_eye",          spec_evil_eye         },
@@ -1838,7 +1839,7 @@ bool spec_presence( CHAR_DATA *ch )
     case 2: return spec_entrancement (ch); */
 
     case 0:
-    case 1:
+    case 1: return spec_awe (ch);
     case 2: return spec_dreadgaze (ch);
     }
 
@@ -2148,11 +2149,29 @@ bool spec_armsoftheabyss( CHAR_DATA *ch )
 
 
 /* Presence Specs */
-/*bool spec_awe( CHAR_DATA *ch )
+bool spec_awe( CHAR_DATA *ch )
 {
+  CHAR_DATA *victim;
+  CHAR_DATA *v_next;
+  int dreadsuccess, dreaddiff;
+
+  if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected(ch, gsn_forget))
+      return FALSE;
+
+  for ( victim = ch->in_room->people; victim != NULL; victim = v_next )
+  {
+      v_next = victim->next_in_room;
+      if (( victim->fighting == ch && number_bits( 2 ) == 0 )
+      &&  can_see(victim, ch) && can_see(ch, victim))
+          break;
+  }
+
+  if ( victim == NULL )
+      return FALSE;
+
   return FALSE;
 }
-*/
+
 bool spec_dreadgaze( CHAR_DATA *ch)
 {
   CHAR_DATA *victim;

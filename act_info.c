@@ -1960,34 +1960,34 @@ void do_affects(CHAR_DATA *ch, char *argument )
 
     if ( ch->affected != NULL )
     {
-    send_to_char( "You are affected by the following spells:\n\r", ch );
+    send_to_char( "-----------<<<<<<<<<<<===========================>>>>>>>>>>>-----------\n\r", ch );
+    send_to_char( "|                   -<=     Current Affects     =>-                   |\n\r", ch );
+    send_to_char( "|       Name                  :   Modifies         Amount    Duration |\n\r", ch );
+    send_to_char( "-----------------------------------------------------------------------\n\r", ch );
     for ( paf = ch->affected; paf != NULL; paf = paf->next )
     {
         if (paf_last != NULL && paf->type == paf_last->type)
-/*      if (ch->level >= 20)    */
-            sprintf( buf, "                      ");
-/*      else
-            continue;
-*/
+            sprintf( buf, "                              ");
         else
-            sprintf( buf, "Spell: %-15s", skill_table[paf->type].name );
+            sprintf( buf, "%-30s", skill_table[paf->type].name );
 
         send_to_char( buf, ch );
 
         sprintf( buf,
-            ": modifies %s by %d ",
+            ": %-17s   %-5d   ",
             affect_loc_name( paf->location ),
             paf->modifier);
         send_to_char( buf, ch );
         if ( paf->duration == -1 )
             sprintf( buf, "permanently" );
         else
-            sprintf( buf, "for %d hours", paf->duration );
+            sprintf( buf, " %-3d hour%s", paf->duration, paf->duration == 1 ? " " : "s" );
         send_to_char( buf, ch );
 
         send_to_char( "\n\r", ch );
         paf_last = paf;
     }
+    send_to_char( "-----------<<<<<<<<<<<===========================>>>>>>>>>>>-----------\n\r", ch );
     }
     else
     send_to_char("You are not affected by any spells.\n\r",ch);

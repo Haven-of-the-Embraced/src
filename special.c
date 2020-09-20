@@ -2132,13 +2132,13 @@ bool spec_armsoftheabyss( CHAR_DATA *ch )
 
     act( "The tendrils reach out and hold you firmly, preventing you from moving!", ch, NULL, victim, TO_VICT );
     act( "The tendrils strike out and hold $N tightly!", ch, NULL, victim, TO_NOTVICT );
-    damage(ch, victim, ch->level / 2 * obtensuccess, gsn_armsoftheabyss, DAM_BASH, TRUE);
+    damage(ch, victim, ch->level / 5 * obtenebration * obtensuccess, gsn_armsoftheabyss, DAM_BASH, TRUE);
 
     af.where     = TO_AFFECTS;
     af.type      = gsn_armsoftheabyss;
     af.level     = obtenebration;
     af.duration  = 1;
-    af.location  = APPLY_STR;
+    af.location  = APPLY_CS_DEX;
     af.modifier  = -1;
     af.bitvector = 0;
     affect_to_char( victim, &af );

@@ -4685,6 +4685,7 @@ void restore_one(CHAR_DATA *ch, CHAR_DATA *victim, bool show) {
         affect_strip(victim,gsn_botched_presence);
         affect_strip(victim,gsn_bleeding);
         affect_strip(victim,gsn_nocturne);
+        affect_strip(victim,gsn_armsoftheabyss);
 
         if (is_affected(victim, gsn_shadowplay) && get_affect_level(victim, gsn_shadowplay) != 0)
           affect_strip(victim, gsn_shadowplay);

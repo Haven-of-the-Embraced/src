@@ -4935,8 +4935,8 @@ sh_int          gsn_celbuff;
 sh_int          gsn_gleam;
 sh_int          gsn_astralprojection;
 sh_int          gsn_astrallylost;
-/*Botched Presence Affect*/
 sh_int          gsn_botched_presence;
+sh_int          gsn_socialdisgrace;
 sh_int          gsn_track;
 sh_int          gsn_cloakshadow;
 sh_int          gsn_nocturne;
@@ -4986,6 +4986,7 @@ sh_int          gsn_store_assamiteacid;
 sh_int          gsn_blood_magic;
 sh_int          gsn_fetish;
 sh_int          gsn_forget;
+sh_int          gsn_mental_resilience;
 sh_int          gsn_mask;
 sh_int          gsn_cloak_the_gathering;
 sh_int          gsn_earthmeld;

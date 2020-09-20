@@ -72,9 +72,9 @@ DECLARE_SPEC_FUN(   spec_stake              );
 DECLARE_SPEC_FUN(   spec_bo_dog             );
 DECLARE_SPEC_FUN(   spec_lag                );
 /* DECLARE_SPEC_FUN(   spec_assamite           );
-DECLARE_SPEC_FUN(   spec_baali              );
+DECLARE_SPEC_FUN(   spec_baali              ); */
 DECLARE_SPEC_FUN(   spec_brujah             );
-DECLARE_SPEC_FUN(   spec_cappadocian        );
+/* DECLARE_SPEC_FUN(   spec_cappadocian        );
 DECLARE_SPEC_FUN(   spec_followersofset     );
 DECLARE_SPEC_FUN(   spec_gangrel            );
 DECLARE_SPEC_FUN(   spec_gargoyle           );*/
@@ -156,9 +156,9 @@ const   struct  spec_type    spec_table[] =
     {   "spec_lag",               spec_lag              },
 // Clans
 /*    {   "spec_assamite",          spec_assamite         },
-    {   "spec_baali",             spec_baali            },
+    {   "spec_baali",             spec_baali            }, */
     {   "spec_brujah",            spec_brujah           },
-    {   "spec_cappadocian",       spec_cappadocian      },
+/*    {   "spec_cappadocian",       spec_cappadocian      },
     {   "spec_followersofset",    spec_followersofset   },
     {   "spec_gangrel",           spec_gangrel          },
     {   "spec_gargoyle",          spec_gargoyle         },*/
@@ -1502,14 +1502,14 @@ bool spec_brujah( CHAR_DATA *ch )
 {
     if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
       return FALSE;
-      /*
-            switch ( number_range( 0,2 ) )
-            {
-            case 0: return spec_celerity (ch);
-            case 1: return spec_potence (ch);
-            case 2: return spec_presence (ch);
-            }
-      */
+
+    switch ( number_range( 0,2 ) )
+    {
+      case 0: return spec_celerity (ch);
+      case 1: return spec_potence (ch);
+      case 2: return spec_presence (ch);
+    }
+
     return FALSE;
 }
 

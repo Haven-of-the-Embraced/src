@@ -2188,7 +2188,7 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
 //    --Obtenebration--
     { "arms of the abyss",    { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_SLEEPING,
-    &gsn_armsoftheabyss,            SLOT(405),   0, 12, "",         "The shadowy Tendrils fade away.", "" },
+    &gsn_armsoftheabyss,            SLOT(405),   0, 12, "shadow tendrils",         "The shadowy Tendrils fade away.", "" },
 
     { "shadowplay",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_SLEEPING,

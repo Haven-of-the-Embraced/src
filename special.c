@@ -2109,8 +2109,7 @@ bool spec_armsoftheabyss( CHAR_DATA *ch )
     obtenebration = (ch->level / 20) + 1;
     obtensuccess = godice(get_attribute(ch, MANIPULATION) + get_ability(ch, CSABIL_OCCULT), 7);
 
-    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget )
-      || obtensuccess <= 0 )
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
     return FALSE;
 
     for ( victim = ch->in_room->people; victim != NULL; victim = v_next )
@@ -2127,6 +2126,14 @@ bool spec_armsoftheabyss( CHAR_DATA *ch )
     if (is_affected(victim, gsn_armsoftheabyss))
       return FALSE;
 
+    act( "$n smiles as large, shadow tendrils grow and writhe from $s form.", ch, NULL, victim, TO_ROOM );
+    if (obtensuccess <= 0)
+      return FALSE;
+
+    act( "The tendrils reach out and hold you firmly, preventing you from moving!", ch, NULL, victim, TO_VICT );
+    act( "The tendrils strike out and hold $N tightly!", ch, NULL, victim, TO_NOTVICT );
+    damage(ch, victim, ch->level / 2 * obtensuccess, gsn_armsoftheabyss, DAM_BASH, TRUE);
+
     af.where     = TO_AFFECTS;
     af.type      = gsn_armsoftheabyss;
     af.level     = obtenebration;
@@ -2136,7 +2143,7 @@ bool spec_armsoftheabyss( CHAR_DATA *ch )
     af.bitvector = 0;
     affect_to_char( victim, &af );
 
-    return FALSE;
+    return TRUE;
 }
 
 

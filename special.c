@@ -103,9 +103,9 @@ DECLARE_SPEC_FUN(   spec_obtenebration      );
 DECLARE_SPEC_FUN(   spec_potence            );
 DECLARE_SPEC_FUN(   spec_presence           );
 /* DECLARE_SPEC_FUN(   spec_protean            );
-DECLARE_SPEC_FUN(   spec_quietus            );
+DECLARE_SPEC_FUN(   spec_quietus            ); */
 DECLARE_SPEC_FUN(   spec_serpentis          );
-DECLARE_SPEC_FUN(   spec_thaum_regovitae    );
+/* DECLARE_SPEC_FUN(   spec_thaum_regovitae    );
 DECLARE_SPEC_FUN(   spec_valeran            );
 DECLARE_SPEC_FUN(   spec_vicissitude        ); */
 DECLARE_SPEC_FUN(   spec_command            );
@@ -116,6 +116,7 @@ DECLARE_SPEC_FUN(   spec_nocturne           );
 DECLARE_SPEC_FUN(   spec_armsoftheabyss     );
 DECLARE_SPEC_FUN(   spec_awe                );
 DECLARE_SPEC_FUN(   spec_dreadgaze          );
+DECLARE_SPEC_FUN(   spec_eyesoftheserpent   );
 DECLARE_SPEC_FUN(   spec_evil_eye           );
 DECLARE_SPEC_FUN(   spec_questmaster        );
 DECLARE_SPEC_FUN(   spec_jarjar             );
@@ -189,9 +190,9 @@ const   struct  spec_type    spec_table[] =
     {   "spec_potence",           spec_potence          },
     {   "spec_presence",          spec_presence          },
 /*    {   "spec_protean",           spec_protean          },
-    {   "spec_quietus",           spec_quietus          },
+    {   "spec_quietus",           spec_quietus          },*/
     {   "spec_serpentis",         spec_serpentis        },
-    {   "spec_thaum_regovitae",   spec_thaum_regovitae  },
+/*    {   "spec_thaum_regovitae",   spec_thaum_regovitae  },
     {   "spec_valeran",           spec_valeran          },
     {   "spec_vicissitude",       spec_vicissitude      },
 */
@@ -204,6 +205,7 @@ const   struct  spec_type    spec_table[] =
     {   "spec_armsoftheabyss",    spec_armsoftheabyss   },
     {   "spec_awe",               spec_awe              },
     {   "spec_dreadgaze",         spec_dreadgaze        },
+    {   "spec_eyesoftheserpent",  spec_eyesoftheserpent },
 // Numina/Romani
     {   "spec_evil_eye",          spec_evil_eye         },
 // Miscellaneous
@@ -1842,6 +1844,25 @@ bool spec_presence( CHAR_DATA *ch )
     case 0:
     case 1: return spec_awe (ch);
     case 2: return spec_dreadgaze (ch);
+    }
+
+    return FALSE;
+}
+
+bool spec_serpentis( CHAR_DATA *ch )
+{
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
+    return FALSE;
+
+    switch ( number_range( 0,2 ) )
+    {
+/*    case 0: return spec_awe (ch);
+    case 1: return spec_dreadgaze (ch);
+    case 2: return spec_entrancement (ch); */
+
+    case 0:
+    case 1:
+    case 2: return spec_eyesoftheserpent (ch);
     }
 
     return FALSE;

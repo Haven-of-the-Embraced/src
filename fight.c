@@ -4745,9 +4745,15 @@ void do_flee( CHAR_DATA *ch, char *argument )
     return;
     }
 
-    if ( is_affected( ch, gsn_vamp_frenzy ) || is_affected( ch, gsn_garou_frenzy ) || is_affected(ch, gsn_thaumaturgy_frenzy) || is_affected(ch,gsn_armsoftheabyss))
+    if ( is_affected( ch, gsn_vamp_frenzy ) || is_affected( ch, gsn_garou_frenzy ) || is_affected(ch, gsn_thaumaturgy_frenzy) )
     {
         send_to_char("Your frenzy prevents you from fleeing!\n\r",ch);
+        return;
+    }
+
+    if (is_affected(ch,gsn_armsoftheabyss))
+    {
+        send_to_char("The shadowy tendrils holds you firmly, preventing you from fleeing!\n\r",ch);
         return;
     }
 

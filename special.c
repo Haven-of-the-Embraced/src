@@ -114,6 +114,7 @@ DECLARE_SPEC_FUN(   spec_forgetfulmind      );
 DECLARE_SPEC_FUN(   spec_shadowplay         );
 DECLARE_SPEC_FUN(   spec_nocturne           );
 DECLARE_SPEC_FUN(   spec_armsoftheabyss     );
+DECLARE_SPEC_FUN(   spec_awe                );
 DECLARE_SPEC_FUN(   spec_dreadgaze          );
 DECLARE_SPEC_FUN(   spec_evil_eye           );
 DECLARE_SPEC_FUN(   spec_questmaster        );
@@ -2153,23 +2154,36 @@ bool spec_awe( CHAR_DATA *ch )
 {
   CHAR_DATA *victim;
   CHAR_DATA *v_next;
-  int dreadsuccess, dreaddiff;
+  AFFECT_DATA af;
+  int presence, awesuccess;
 
   if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected(ch, gsn_forget))
       return FALSE;
 
+  presence = (ch->level / 20) + 1;
+  awesuccess = godice(get_attribute(ch, CHARISMA) + get_ability(ch, CSABIL_PERFORMANCE), 7);
+
+  if (awesuccess <= 0)
+    return FALSE;
+
   for ( victim = ch->in_room->people; victim != NULL; victim = v_next )
   {
-      v_next = victim->next_in_room;
-      if (( victim->fighting == ch && number_bits( 2 ) == 0 )
-      &&  can_see(victim, ch) && can_see(ch, victim))
-          break;
+    v_next = victim->next_in_room;
+    if ( is_affected(victim, gsn_awe))
+      continue;
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_awe;
+    af.level     = presence;
+    af.duration  = awesuccess;
+    af.location  = APPLY_HITROLL;
+    af.modifier  = -3 * ch->level;
+    af.bitvector = 0;
+    affect_to_char( victim, &af );
+    act("You magnify your innate social magnetism.", ch, NULL, NULL, TO_CHAR);
+    act("You feel your attention drawn to $n, and start to question any actions against $m.", ch, NULL, victim, TO_VICT);
   }
 
-  if ( victim == NULL )
-      return FALSE;
-
-  return FALSE;
+  return TRUE;
 }
 
 bool spec_dreadgaze( CHAR_DATA *ch)

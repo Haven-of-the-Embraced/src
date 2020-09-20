@@ -2070,6 +2070,11 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
 { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
 &gsn_laryngitis,      SLOT(0),    0,  12, "laryngitis",         "The swelling in your throat heals and you are able to talk again.", "" },
 
+{ "socially disgraced",       {  102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+&gsn_socialdisgrace,            SLOT(0),     0, 12, "",         "You finally feel comfortable showing your face in social circumstances again.", "" },
+
+
 /* Generic Old Ritual Stuff */
     { "Stored: Inferno",             { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
@@ -2154,6 +2159,10 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
     { "forgetful mind",       {  102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
     &gsn_forget,            SLOT(0),     0, 12, "",         "Your memory slowly returns...", "" },
+
+    { "mental resilience",       {  102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+    &gsn_mental_resilience,            SLOT(0),     0, 12, "",         "Your increased mental resistance has faded.", "" },
 
 //    --Fortitude--
 

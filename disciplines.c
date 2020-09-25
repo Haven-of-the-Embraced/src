@@ -697,6 +697,7 @@ void do_reveal(CHAR_DATA *ch, char *argument)
     af.bitvector = AFF_DETECT_HIDDEN;
     affect_to_char( ch, &af );
 
+    af.where     = TO_VULN;
     af.bitvector = VULN_SOUND;
     affect_to_char( ch, &af );
 

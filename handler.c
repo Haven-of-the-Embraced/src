@@ -3348,6 +3348,7 @@ char *imm_bit_name(int imm_flags)
     if (imm_flags & IMM_DISARM) strcat(buf, " disarm");
     if (imm_flags & IMM_DROWNING    ) strcat(buf, " drowning");
     if (imm_flags & IMM_LIGHT       ) strcat(buf, " light");
+    if (imm_flags & IMM_SOUND       ) strcat(buf, " sound");
     if (imm_flags & VULN_IRON       ) strcat(buf, " iron");
     if (imm_flags & VULN_WOOD       ) strcat(buf, " wood");
     if (imm_flags & VULN_SILVER ) strcat(buf, " silver");

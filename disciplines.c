@@ -6188,6 +6188,7 @@ void do_taste( CHAR_DATA *ch, char *argument )
         send_to_char("Your blood curse prevents it!\n\r" ,ch);
         return;
     }
+
     if(ch->pcdata->discipline[THAUMATURGY] < 1)
     {
     send_to_char( "You are not trained in Thaumaturgy!\n\r", ch );
@@ -6240,13 +6241,10 @@ void do_taste( CHAR_DATA *ch, char *argument )
     act( "$n tastes $N's blood.", ch, argument, victim, TO_NOTVICT );
     act( "$n tastes your blood and gains information on you!", ch, argument, victim, TO_VICT );
 
-    sprintf( buf, "%s is %d years old.\n\r", IS_NPC(victim) ? victim->short_descr : victim->name, get_age(victim));
-    send_to_char( buf, ch );
-
-    sprintf(buf, "%s is a %s %s.\n\r",
+    sprintf(buf, "%s is a %s %s, and is approximatly %d years old.\n\r",
     IS_NPC(victim) ? victim->short_descr : victim->name,
     victim->sex == 0 ? "sexless" : victim->sex == 1 ? "male" : "female",
-    race_table[victim->race].name);
+    race_table[victim->race].name, get_age(victim));
     send_to_char(buf,ch);
 
     if(!IS_NPC(victim) && IS_VAMP(victim))

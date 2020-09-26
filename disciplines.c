@@ -6173,6 +6173,7 @@ void do_taste( CHAR_DATA *ch, char *argument )
 {
     char buf[MAX_STRING_LENGTH];
     CHAR_DATA *victim;
+    int tasteroll = 0;
 
     if (IS_NPC(ch)) return;
 
@@ -6193,7 +6194,7 @@ void do_taste( CHAR_DATA *ch, char *argument )
     return;
     }
 
-    if (ch->pblood < 20)
+    if (ch->pblood < 15)
     {
         send_to_char( "You do not have enough blood.\n\r", ch );
         return;
@@ -6205,8 +6206,37 @@ void do_taste( CHAR_DATA *ch, char *argument )
         return;
     }
 
+    if (!has_blood(victim))
+    {
+      send_to_char("Your victim doesn't seem to have any blood to glean information from.\n\r", ch );
+      return;
+    }
+/*
+    if (!is_affected(victim, gsn_bleeding))
+    {
+      send_to_char("Your victim is not willingly giving up any blood for you to test.  Perhaps if you make your target bleed...\n\r", ch);
+      return;
+    }
+*/
+    tasteroll = godice(ch->csmax_willpower, 4);
     ch->pblood -= 10;
-    act( "You taste $N's blood and gain insight on them.", ch, argument, victim, TO_CHAR );
+
+    if (tasteroll < 0)
+    {
+      act( "You fail to control the force of will needed to enact Thaumaturgical practices, and you are stunned momentarily.", ch, argument, victim, TO_CHAR );
+      WAIT_STATE(ch, 12);
+      return;
+    }
+
+    if (tasteroll == 0)
+    {
+      act( "You manage to taste $N's blood briefly, but fail to gain insight on $m.", ch, argument, victim, TO_CHAR );
+      act( "$n takes a quick taste of $N's blood.", ch, argument, victim, TO_NOTVICT );
+      act( "$n manages to take a quick taste of your blood.", ch, argument, victim, TO_VICT );
+      return;
+    }
+
+    act( "You taste $N's blood and gain insight on $m.", ch, argument, victim, TO_CHAR );
     act( "$n tastes $N's blood.", ch, argument, victim, TO_NOTVICT );
     act( "$n tastes your blood and gains information on you!", ch, argument, victim, TO_VICT );
 
@@ -6219,8 +6249,6 @@ void do_taste( CHAR_DATA *ch, char *argument )
     race_table[victim->race].name);
     send_to_char(buf,ch);
 
-    sprintf( buf, "Their alignment is %d.\n\r", victim->alignment );
-        send_to_char( buf, ch );
     if(!IS_NPC(victim) && IS_VAMP(victim))
     {
         sprintf(buf, "Their Generation is %d.\n\r", victim->gen);

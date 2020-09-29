@@ -6247,17 +6247,55 @@ void do_taste( CHAR_DATA *ch, char *argument )
     race_table[victim->race].name, get_age(victim));
     send_to_char(buf,ch);
 
-    if(!IS_NPC(victim) && IS_VAMP(victim))
+    if (tasteroll >= 2)
     {
-        sprintf(buf, "Their Generation is %d.\n\r", victim->gen);
+      sprintf(buf, "Based upon the blood, %s state of health indicates roughly %d hit points remaining.\n\r",
+      victim->sex == 0 ? "its" : victim->sex == 1 ? "his" : "her", victim->hit);
+      send_to_char(buf,ch);
+      if (is_affected(victim, gsn_poison))
+        act("$N's blood has the slight taste of poison coursing through it.", ch, NULL, victim, TO_CHAR);
+    }
+
+    if (tasteroll >= 2 && !IS_NPC(victim) && IS_VAMP(victim))
+    {
+      sprintf(buf, "%s has %d Blood Points remaining, and %s Generation is %d.\n\r",
+      IS_NPC(victim) ? capitalize(victim->short_descr) : victim->name, victim->pblood,
+      victim->sex == 0 ? "its" : victim->sex == 1 ? "his" : "her", victim->gen);
+      send_to_char(buf,ch);
+    }
+
+    if (tasteroll >= 3 && !IS_NPC(victim) && IS_VAMP(victim))
+    {
+      sprintf(buf, "%s is a member of Clan %s.\n\r",
+      victim->sex == 0 ? "It" : victim->sex == 1 ? "He" : "She",
+      capitalize(clan_table[victim->clan].name));
+      send_to_char(buf,ch);
+      if (is_affected(victim, gsn_bloodofpotency))
+      {
+        sprintf(buf, "%s's blood seems to have a mystical potency as it flows through %s body.\n\r",
+        IS_NPC(victim) ? victim->short_descr : victim->name,
+        victim->sex == 0 ? "its" : victim->sex == 1 ? "his" : "her", victim->gen);
         send_to_char(buf,ch);
-        sprintf(buf, "Their Sire is %s.\n\r", victim->sire);
+      }
+    }
+
+    if (tasteroll >= 4 && !IS_NPC(victim) && IS_VAMP(victim))
+    {
+      sprintf(buf, "Tracing back the blood lineage, %s sire is %s.\n\r",
+      victim->sex == 0 ? "its" : victim->sex == 1 ? "his" : "her",
+      victim->sire);
+      send_to_char(buf,ch);
+      if (is_affected(victim, gsn_bloodofpotency))
+      {
+        sprintf(buf, "%s's blood seems to have a mystical potency as it flows through %s body.\n\r",
+        IS_NPC(victim) ? capitalize(victim->short_descr) : victim->name,
+        victim->sex == 0 ? "its" : victim->sex == 1 ? "his" : "her", victim->gen);
         send_to_char(buf,ch);
-        sprintf(buf, "They have %d Blood Points.\n\r", victim->pblood);
-        send_to_char(buf,ch);
+      }
     }
     return;
 }
+
 void do_bloodrage( CHAR_DATA *ch, char *argument)
 {
     CHAR_DATA *victim;

@@ -6212,7 +6212,7 @@ void do_taste( CHAR_DATA *ch, char *argument )
       send_to_char("Your victim doesn't seem to have any blood to glean information from.\n\r", ch );
       return;
     }
-/*
+/*   To be added back in once bleeding is added in more places
     if (!is_affected(victim, gsn_bleeding))
     {
       send_to_char("Your victim is not willingly giving up any blood for you to test.  Perhaps if you make your target bleed...\n\r", ch);
@@ -6231,17 +6231,17 @@ void do_taste( CHAR_DATA *ch, char *argument )
 
     if (tasteroll == 0)
     {
-      act( "You manage to taste $N's blood briefly, but fail to gain insight on $m.", ch, argument, victim, TO_CHAR );
+      act( "You manage to taste $N's blood briefly, but fail to gain insight on $M.", ch, argument, victim, TO_CHAR );
       act( "$n takes a quick taste of $N's blood.", ch, argument, victim, TO_NOTVICT );
       act( "$n manages to take a quick taste of your blood.", ch, argument, victim, TO_VICT );
       return;
     }
 
-    act( "You taste $N's blood and gain insight on $m.", ch, argument, victim, TO_CHAR );
+    act( "After tasting $N's blood, you gain a flash of insight granted by the blood.", ch, argument, victim, TO_CHAR );
     act( "$n tastes $N's blood.", ch, argument, victim, TO_NOTVICT );
     act( "$n tastes your blood and gains information on you!", ch, argument, victim, TO_VICT );
 
-    sprintf(buf, "%s is a %s %s, and is approximatly %d years old.\n\r",
+    sprintf(buf, "%s is a %s %s, who is somewhere in the ballpark of %d years old.\n\r",
     IS_NPC(victim) ? victim->short_descr : victim->name,
     victim->sex == 0 ? "sexless" : victim->sex == 1 ? "male" : "female",
     race_table[victim->race].name, get_age(victim));
@@ -6249,7 +6249,7 @@ void do_taste( CHAR_DATA *ch, char *argument )
 
     if (tasteroll >= 2)
     {
-      sprintf(buf, "Based upon the blood, %s state of health indicates roughly %d hit points remaining.\n\r",
+      sprintf(buf, "Based upon the blood, %s state of health indicates roughly %d hit points remain.\n\r",
       victim->sex == 0 ? "its" : victim->sex == 1 ? "his" : "her", victim->hit);
       send_to_char(buf,ch);
       if (is_affected(victim, gsn_poison))
@@ -6258,16 +6258,34 @@ void do_taste( CHAR_DATA *ch, char *argument )
 
     if (tasteroll >= 2 && !IS_NPC(victim) && IS_VAMP(victim))
     {
-      sprintf(buf, "%s has %d Blood Points remaining, and %s Generation is %d.\n\r",
-      IS_NPC(victim) ? capitalize(victim->short_descr) : victim->name, victim->pblood,
-      victim->sex == 0 ? "its" : victim->sex == 1 ? "his" : "her", victim->gen);
+      sprintf(buf, "Approximately %d Blood Points remain in %s system, and ",
+      victim->pblood / 10, victim->sex == 0 ? "its" : victim->sex == 1 ? "his" : "her");
       send_to_char(buf,ch);
+      if (victim->race == race_lookup("vampire") || victim->race == race_lookup("methuselah"))
+      {
+        sprintf(buf, "%s is a member of the %s Generation.\n\r",
+          victim->sex == 0 ? "it" : victim->sex == 1 ? "he" : "she",
+          victim->pcdata->csgeneration == 1 ? "First" : victim->pcdata->csgeneration == 2 ? "Second" : victim->pcdata->csgeneration == 3 ? "Third" :
+          victim->pcdata->csgeneration == 4 ? "Fourth" : victim->pcdata->csgeneration == 5 ? "Fifth" : victim->pcdata->csgeneration == 6 ? "Sixth" : victim->pcdata->csgeneration == 7 ? "Seventh" :
+          victim->pcdata->csgeneration == 8 ? "Eighth" : victim->pcdata->csgeneration == 9 ? "Ninth" : victim->pcdata->csgeneration == 10 ? "Tenth" : victim->pcdata->csgeneration == 11 ? "Eleventh" :
+          victim->pcdata->csgeneration == 12 ? "Twelfth" : victim->pcdata->csgeneration == 13 ? "Thirteenth" : "Unknown");
+        send_to_char(buf, ch);
+      }
+      if (victim->race == race_lookup("ghoul"))
+      {
+        sprintf(buf, "%s is under a %s Blood Bond.\n\r",
+          victim->sex == 0 ? "it" : victim->sex == 1 ? "he" : "she",
+          victim->bonded == 0 ? "Nonexistant" : victim->bonded == 1 ? "Minor" : victim->bonded == 2 ? "Moderate" : victim->bonded == 3 ? "Complete" : "Complete");
+        send_to_char(buf, ch);
+      }
+
     }
 
     if (tasteroll >= 3 && !IS_NPC(victim) && IS_VAMP(victim))
     {
-      sprintf(buf, "%s is a member of Clan %s.\n\r",
+      sprintf(buf, "%s is %s Clan %s.\n\r",
       victim->sex == 0 ? "It" : victim->sex == 1 ? "He" : "She",
+      victim->race == race_lookup("ghoul") ? "in service to" : "a member of",
       capitalize(clan_table[victim->clan].name));
       send_to_char(buf,ch);
       if (is_affected(victim, gsn_bloodofpotency))
@@ -6281,9 +6299,10 @@ void do_taste( CHAR_DATA *ch, char *argument )
 
     if (tasteroll >= 4 && !IS_NPC(victim) && IS_VAMP(victim))
     {
-      sprintf(buf, "Tracing back the blood lineage, %s sire is %s.\n\r",
+      sprintf(buf, "Tracing back the blood lineage, %s %s is %s.\n\r",
       victim->sex == 0 ? "its" : victim->sex == 1 ? "his" : "her",
-      victim->sire);
+      victim->race == race_lookup("ghoul") ? "domitor" : "sire",
+      victim->race == race_lookup("ghoul") ? victim->vamp_master : victim->sire);
       send_to_char(buf,ch);
       if (is_affected(victim, gsn_bloodofpotency))
       {
@@ -6293,6 +6312,8 @@ void do_taste( CHAR_DATA *ch, char *argument )
         send_to_char(buf,ch);
       }
     }
+
+    gain_exp(ch, tasteroll*2);
     return;
 }
 

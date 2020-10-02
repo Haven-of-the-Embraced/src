@@ -4802,6 +4802,7 @@ void do_rescue( CHAR_DATA *ch, char *argument )
     char arg[MAX_INPUT_LENGTH];
     CHAR_DATA *victim;
     CHAR_DATA *fch;
+    int rescuesuccess = 0;
 
     one_argument( argument, arg );
     if ( arg[0] == '\0' )
@@ -4845,6 +4846,19 @@ void do_rescue( CHAR_DATA *ch, char *argument )
         send_to_char("Your hand passes right through them...\n\r",ch);
         return;
     }
+
+    rescuesuccess = godice(get_attribute(ch, WITS) + get_ability(ch, CSABIL_BRAWL), 7);
+
+    if (rescuesuccess < 0)
+    {
+      return;
+    }
+
+    if (rescuesuccess == 0)
+    {
+      return;
+    }
+
 
     WAIT_STATE( ch, skill_table[gsn_rescue].beats );
     if ( number_percent( ) > get_skill(ch,gsn_rescue))

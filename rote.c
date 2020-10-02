@@ -1542,13 +1542,16 @@ void rote_spiritsight(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *o
         return;
     }
 
-    if(is_affected(ch, gsn_spiritsight) || IS_AFFECTED2(ch, AFF2_UMBRA))
+    if(is_affected(ch, gsn_spiritsight))
     {
         send_to_char("You are already viewing the etheral plane of existance.\n\r",ch);
         return;
     }
 
     send_to_char("You expand your vision to see the etheral plane of existance.\n\r" ,ch);
+
+    if (IS_AFFECTED2(ch, AFF2_UMBRA))
+      send_to_char("The additional vision has no additional affect while currently in the Umbra.\n\r", ch);
 
     af.where     = TO_AFFECTS;
     af.type      = gsn_spiritsight;

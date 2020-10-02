@@ -4847,30 +4847,30 @@ void do_rescue( CHAR_DATA *ch, char *argument )
         return;
     }
 
+    WAIT_STATE( ch, skill_table[gsn_rescue].beats );
     rescuesuccess = godice(get_attribute(ch, WITS) + get_ability(ch, CSABIL_BRAWL), 7);
 
     if (rescuesuccess < 0)
     {
+      act( "You stumble ungracefully while attempting to rescue $N!",  ch, NULL, victim, TO_CHAR    );
+      act( "$n stumbles while trying to intervene between you and your attacker!", ch, NULL, victim, TO_VICT    );
+      act( "$n stumbles awkwardly while trying to positing $mself to rescue $N!",  ch, NULL, victim, TO_NOTVICT );
+      WAIT_STATE( ch, skill_table[gsn_rescue].beats * 6);
       return;
     }
 
     if (rescuesuccess == 0)
     {
+      act( "You fail to rescue $N from $S attacker!",  ch, NULL, victim, TO_CHAR    );
+      act( "$n tries to intervene, but fails to rescue you from your attacker!", ch, NULL, victim, TO_VICT    );
+      act( "$n tries to rescue $N from $S attacker, but fails!",  ch, NULL, victim, TO_NOTVICT );
+      check_improve(ch,gsn_rescue,FALSE,1);
       return;
     }
 
-
-    WAIT_STATE( ch, skill_table[gsn_rescue].beats );
-    if ( number_percent( ) > get_skill(ch,gsn_rescue))
-    {
-    send_to_char( "You fail the rescue.\n\r", ch );
-    check_improve(ch,gsn_rescue,FALSE,1);
-    return;
-    }
-
-    act( "You rescue $N!",  ch, NULL, victim, TO_CHAR    );
-    act( "$n rescues you!", ch, NULL, victim, TO_VICT    );
-    act( "$n rescues $N!",  ch, NULL, victim, TO_NOTVICT );
+    act( "You step in quickly to rescue $N from $S attacker!",  ch, NULL, victim, TO_CHAR    );
+    act( "$n intervenes and rescues you from your attacker!", ch, NULL, victim, TO_VICT    );
+    act( "$n moves quickly and rescues $N from $S attacker!",  ch, NULL, victim, TO_NOTVICT );
     check_improve(ch,gsn_rescue,TRUE,1);
 
     stop_fighting( fch, FALSE );

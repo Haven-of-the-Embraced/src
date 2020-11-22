@@ -554,24 +554,26 @@ void spell_gift_sensewyrm( int sn, int level, CHAR_DATA *ch, void *vo, int targe
 //Roll: Dexterity + Primal Urge (diff 6)
 //The metis can shed a layer of fur and skin, slipping from an opponents grasp or escaping damage from a weapon as it merely slides off her body. (Add to armor. Make resistant to bashing damage. short duration, long recovery. 2-3 ticks active, 10-12 ticks unusuable.)
 //Cost: 1 willpower
-void spell_gift_shed( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-
-
+void spell_gift_shed( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
     AFFECT_DATA af;
+    int shed_success = 0;
 
     if (ch->cswillpower < 1)
     {
         sendch("You do not possess the strength of Will to activate this gift.\n\r", ch);
         return;
-        }
+    }
 
-     if (is_affected(ch, gsn_gift_shed))
-     {
+    if (is_affected(ch, gsn_gift_shed))
+    {
         sendch("You are already shedding fur and flesh!\n\r", ch);
         return;
-        }
+    }
 
-	ch->cswillpower--;
+    ch->cswillpower--;
+
+    shed_success = godice(get_attribute(DEXTERITY)+ch->pcdata->primal_urge, 7);
 
     af.where        = TO_RESIST;
     af.type         = gsn_gift_shed;

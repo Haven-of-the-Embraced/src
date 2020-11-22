@@ -1354,14 +1354,14 @@ bool damage(CHAR_DATA *ch,CHAR_DATA *victim,int dam,int dt,int dam_type,
         dam = 0;
     }
 
+    if(dam < 0) dam = 0;
+
     if (show)
         dam_message( ch, victim, dam, dt, immune );
 
-    if(dam < 0) dam = 0;
-
-
     if (dam == 0)
     return FALSE;
+
     /*
      * Hurt the victim.
      * Inform the victim of his new state.

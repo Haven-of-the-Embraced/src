@@ -577,11 +577,22 @@ void spell_gift_shed( int sn, int level, CHAR_DATA *ch, void *vo, int target)
 
     if (shed_success < 0)
     {
+      act("You reach out to the spirits of the serpents, and feel a sharp bite as your skin shreds and rips, losing most of your fur.", ch, NULL, NULL, TO_CHAR);
+
+      af.where        = TO_VULN;
+      af.type         = gsn_gift_shed;
+      af.level        = -1;
+      af.duration     = -(shed_success);
+      af.modifier     = 0;
+      af.location     = 0;
+      af.bitvector    = VULN_BASH;
+      affect_to_char(ch, &af);
       return;
     }
 
     if (shed_success == 0)
     {
+      act("Your plea to the spirits seems to go unanswered.", ch, NULL, NULL, TO_CHAR);
       return;
     }
 

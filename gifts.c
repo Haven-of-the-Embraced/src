@@ -573,12 +573,22 @@ void spell_gift_shed( int sn, int level, CHAR_DATA *ch, void *vo, int target)
 
     ch->cswillpower--;
 
-    shed_success = godice(get_attribute(DEXTERITY)+ch->pcdata->primal_urge, 7);
+    shed_success = godice(get_attribute(ch, DEXTERITY)+ch->pcdata->primal_urge, 7);
+
+    if (shed_success < 0)
+    {
+      return;
+    }
+
+    if (shed_success == 0)
+    {
+      return;
+    }
 
     af.where        = TO_RESIST;
     af.type         = gsn_gift_shed;
-    af.level        = ch->pcdata->rank;
-    af.duration     = ch->pcdata->gnosis[PERM]/2;
+    af.level        = shed_success;
+    af.duration     = (ch->pcdata->gnosis[PERM]) + (shed_success*3);
     af.modifier     = 0;
     af.location     = 0;
     af.bitvector    = RES_BASH;

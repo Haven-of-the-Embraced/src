@@ -4847,6 +4847,13 @@ void do_rescue( CHAR_DATA *ch, char *argument )
         return;
     }
 
+    if (ch->move < ch->level / 10)
+    {
+      send_to_char("You are too tired to attempt to rescue anyone.\n\r", ch);
+      return;
+    }
+
+    ch->move -= ch->level / 10;
     WAIT_STATE( ch, skill_table[gsn_rescue].beats );
     rescuesuccess = godice(get_attribute(ch, WITS) + get_ability(ch, CSABIL_BRAWL), 7);
 
@@ -4854,7 +4861,7 @@ void do_rescue( CHAR_DATA *ch, char *argument )
     {
       act( "You stumble ungracefully while attempting to rescue $N!",  ch, NULL, victim, TO_CHAR    );
       act( "$n stumbles while trying to intervene between you and your attacker!", ch, NULL, victim, TO_VICT    );
-      act( "$n stumbles awkwardly while trying to positing $mself to rescue $N!",  ch, NULL, victim, TO_NOTVICT );
+      act( "$n stumbles awkwardly while trying to position $mself to rescue $N!",  ch, NULL, victim, TO_NOTVICT );
       WAIT_STATE( ch, skill_table[gsn_rescue].beats * 6);
       return;
     }
@@ -4871,13 +4878,20 @@ void do_rescue( CHAR_DATA *ch, char *argument )
     act( "You step in quickly to rescue $N from $S attacker!",  ch, NULL, victim, TO_CHAR    );
     act( "$n intervenes and rescues you from your attacker!", ch, NULL, victim, TO_VICT    );
     act( "$n moves quickly and rescues $N from $S attacker!",  ch, NULL, victim, TO_NOTVICT );
-    check_improve(ch,gsn_rescue,TRUE,1);
+    check_improve(ch,gsn_rescue,TRUE,3);
+    gain_exp(ch, rescuesuccess * 2);
 
     stop_fighting( fch, FALSE );
     stop_fighting( victim, FALSE );
 
     set_fighting( ch, fch );
     set_fighting( fch, ch );
+
+    if (rescuesuccess >= 4)
+    {
+      act( "Your swift intervention catches the enemy off-guard, allowing you a chance at a surprise attack!", ch, NULL, victim, TO_CHAR );
+      multi_hit(ch, fch, TYPE_UNDEFINED);
+    }
     return;
 }
 

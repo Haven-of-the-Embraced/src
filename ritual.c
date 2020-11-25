@@ -851,7 +851,7 @@ void do_invoke(CHAR_DATA *ch, char *argument)
     if(acount == 1)
     {
         if(!IS_IMMORTAL(ch))
-            WAIT_STATE( ch, PULSE_TICK*3 );
+            WAIT_STATE( ch, PULSE_TICK );
 
         act("Ygolonac manifests suddenly, and begins to dance and chant in a hypnotic rhythm.", ch,NULL,NULL,TO_ALL);
         act("A mad cacophony fills your head with the unintelligible, yet fully understood words.", ch,NULL,NULL,TO_ALL);
@@ -860,12 +860,12 @@ void do_invoke(CHAR_DATA *ch, char *argument)
         for ( victim = char_list; victim != NULL; victim = vict_next )
         {
           vict_next = victim->next;
-          if (victim->in_room == NULL)
+          if (victim->in_room == NULL || victim == ch)
             continue;
 
           if ( victim->in_room == ch->in_room && SAME_UMBRA(ch, victim))
           {
-            if ( victim->level > ch->level || IS_SET(victim->off_flags, OFF_ULTRA_MOB))
+            if ( victim->level > ch->level || IS_SET(victim->off_flags, OFF_ULTRA_MOB) || IS_SET(victim->act, ACT_QUESTMOB))
             {
               act("A small rivulet of blood creeps from your nose, as the world twists and malforms momentarily.\n\r", ch, NULL, victim, TO_VICT);
               act("Everything seemed wrong for a brief moment, but it all appears normal again.", ch, NULL, victim, TO_VICT);
@@ -874,23 +874,24 @@ void do_invoke(CHAR_DATA *ch, char *argument)
 
             act("Dark tentacles manifest at the edge of your vision, waving rhythmically to Ygolonac's chanting.\n\r", ch, NULL, victim, TO_VICT);
             act("Trying to catch a better glimpse, they disappear and the entire world darkens; all you know ceases to exist.", ch, NULL, victim, TO_VICT);
+            act("Without a word, $n slumps to the ground, $s body completely devoid of life.", victim, NULL, NULL, TO_ROOM);
+            raw_kill( victim );
             continue;
           }
         }
 
-        act("You are totally awed as Matthew restores your wounds.", ch,NULL,NULL,TO_CHAR);
-
-
+        act("Dark tentacles manifest at the edge of your vision, waving rhythmically to Ygolonac's chanting.\n\r", ch, NULL, NULL, TO_CHAR);
+        act("Trying to catch a better glimpse, they disappear and the entire world darkens; all you know ceases to exist.", ch, NULL, NULL, TO_CHAR);
+        act("Without a word, $n slumps to the ground, $s body completely devoid of life.", victim, NULL, NULL, TO_ROOM);
+        raw_kill( ch );
         return;
-        }
-        else
-        {
-            send_to_char( "You do not have the required shiny sacrifice!\n\r", ch );
-            return;
-        }
     }
-
-
+    else
+    {
+      send_to_char( "Ygolonac requires an expensive, shiny sacrifice.\n\r", ch );
+      return;
+    }
+  }
 
 send_to_char( "Invoke which Ritual?\n\r", ch );
 return;

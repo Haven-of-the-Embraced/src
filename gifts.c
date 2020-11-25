@@ -584,7 +584,7 @@ void spell_gift_shed( int sn, int level, CHAR_DATA *ch, void *vo, int target)
       af.level        = -1;
       af.duration     = -(shed_success);
       af.modifier     = 0;
-      af.location     = 0;
+      af.location     = APPLY_NONE;
       af.bitvector    = VULN_BASH;
       affect_to_char(ch, &af);
       return;
@@ -596,6 +596,8 @@ void spell_gift_shed( int sn, int level, CHAR_DATA *ch, void *vo, int target)
       return;
     }
 
+    act("Your fur and skin begin to loosen, ready to fall out at any moment.", ch, NULL, NULL, TO_CHAR);
+
     af.where        = TO_RESIST;
     af.type         = gsn_gift_shed;
     af.level        = shed_success;
@@ -604,7 +606,8 @@ void spell_gift_shed( int sn, int level, CHAR_DATA *ch, void *vo, int target)
     af.location     = 0;
     af.bitvector    = RES_BASH;
     affect_to_char(ch, &af);
-    sendch("Your fur begins to feel loose, as if it could fall out at any moment!\n\r", ch);
+
+    gain_exp(ch, shed_success);
     return;
 }
 //

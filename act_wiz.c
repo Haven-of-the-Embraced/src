@@ -1702,7 +1702,7 @@ void do_ostat( CHAR_DATA *ch, char *argument )
         case ITEM_WAND:
         case ITEM_STAFF:
           send_to_char("{c-----------------------{YVALUES{c------------------------{x\n\r", ch);
-          sprintf(buf, "Spell Level         : %d  \n\rCurrent Charges     : %d  \n\rMaximum Charges     : %d  \n\rSpell               : %s  \n\r{R**Currently Unused**{x: %d\n\r",
+          sprintf(buf, "Spell Level         : %d  \n\rMaximum Charges     : %d  \n\rCurrent Charges     : %d  \n\rSpell               : %s  \n\r{R**Currently Unused**{x: %d\n\r",
           obj->value[0],
           obj->value[1],
           obj->value[2],

@@ -190,6 +190,7 @@ void do_invoke(CHAR_DATA *ch, char *argument)
     OBJ_DATA *obj;
     OBJ_DATA *obj_next;
     CHAR_DATA *victim;
+    CHAR_DATA *vict_next;
     AFFECT_DATA af;
     char arg1[MAX_INPUT_LENGTH];
     char arg2[MAX_INPUT_LENGTH];
@@ -824,6 +825,61 @@ void do_invoke(CHAR_DATA *ch, char *argument)
         af.modifier  = 0;
         af.bitvector = AFF_SANCTUARY;
         affect_to_char( ch, &af );
+
+        return;
+        }
+        else
+        {
+            send_to_char( "You do not have the required shiny sacrifice!\n\r", ch );
+            return;
+        }
+    }
+
+    if (!str_prefix(arg1,"ygolnacs tentacles"))
+    {
+        for ( obj = ch->carrying; obj != NULL; obj = obj_next )
+        {
+            obj_next = obj->next_content;
+            if(!str_cmp(obj->short_descr, "a chunk of platinum") && acount < 1)
+            {
+                extract_obj( obj );
+                acount += 1;
+            }
+        }
+    act("$n starts to chant and dance in a circle!", ch,NULL,NULL,TO_ROOM);
+    act("You place the components in a circle and begin to chant.", ch,NULL,NULL,TO_CHAR);
+    if(acount == 1)
+    {
+        if(!IS_IMMORTAL(ch))
+            WAIT_STATE( ch, PULSE_TICK*3 );
+
+        act("Ygolonac manifests suddenly, and begins to dance and chant in a hypnotic rhythm.", ch,NULL,NULL,TO_ALL);
+        act("A mad cacophony fills your head with the unintelligible, yet fully understood words.", ch,NULL,NULL,TO_ALL);
+        act("{W'In his house at R'lyeh, dead Cthulhu waits, dreaming.'{x", ch,NULL,NULL,TO_ALL);
+
+        for ( victim = char_list; victim != NULL; victim = vict_next )
+        {
+          vict_next = victim->next;
+          if (victim->in_room == NULL)
+            continue;
+
+          if ( victim->in_room == ch->in_room && SAME_UMBRA(ch, victim))
+          {
+            if ( victim->level > ch->level || IS_SET(victim->off_flags, OFF_ULTRA_MOB))
+            {
+              act("A small rivulet of blood creeps from your nose, as the world twists and malforms momentarily.\n\r", ch, NULL, victim, TO_VICT);
+              act("Everything seemed wrong for a brief moment, but it all appears normal again.", ch, NULL, victim, TO_VICT);
+              continue;
+            }
+
+            act("Dark tentacles manifest at the edge of your vision, waving rhythmically to Ygolonac's chanting.\n\r", ch, NULL, victim, TO_VICT);
+            act("Trying to catch a better glimpse, they disappear and the entire world darkens; all you know ceases to exist.", ch, NULL, victim, TO_VICT);
+            continue;
+          }
+        }
+
+        act("You are totally awed as Matthew restores your wounds.", ch,NULL,NULL,TO_CHAR);
+
 
         return;
         }

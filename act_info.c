@@ -107,7 +107,7 @@ char *format_obj_to_char( OBJ_DATA *obj, CHAR_DATA *ch, bool fShort )
 
     if ( IS_IMMORTAL(ch) && IS_OBJ_STAT(obj, ITEM_UMBRA) && !IS_AFFECTED2(ch, AFF2_UMBRA)      )   strcat( buf, "(Umbra) "   );
     if ((is_affected(ch, gsn_spiritsight) || is_affected(ch, gsn_gift_pulseoftheinvisible))
-        && IS_OBJ_STAT(obj, ITEM_UMBRA) && !IS_AFFECTED(ch, AFF2_UMBRA)) strcat(buf, "(Indistinct) ");
+        && (IS_OBJ_STAT(obj, ITEM_UMBRA) && !SAME_UMBRA_OBJ(ch, obj))) strcat(buf, "(Indistinct) ");
     if ( IS_OBJ_STAT(obj, ITEM_INVIS)     )   strcat( buf, "(Invis) "     );
     if ( IS_OBJ_STAT(obj, ITEM_ILLUMINATE) )    strcat( buf, "(Illuminating) ");
     if (IS_AFFECTED(ch, AFF_DETECT_GOOD)

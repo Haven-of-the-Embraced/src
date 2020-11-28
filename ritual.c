@@ -853,9 +853,11 @@ void do_invoke(CHAR_DATA *ch, char *argument)
         if(!IS_IMMORTAL(ch))
             WAIT_STATE( ch, PULSE_TICK );
 
-        act("Ygolonac manifests suddenly, and begins to dance and chant in a hypnotic rhythm.", ch,NULL,NULL,TO_ALL);
-        act("A mad cacophony fills your head with the unintelligible, yet fully understood words.", ch,NULL,NULL,TO_ALL);
-        act("{W'In his house at R'lyeh, dead Cthulhu waits, dreaming.'{x", ch,NULL,NULL,TO_ALL);
+        act("\n\r{D<<<<<<<<<<<<<<<<<<<<[[[[[[[[[[|||||||||||||||]]]]]]]]]]>>>>>>>>>>>>>>>>>>>>{x", ch, NULL, NULL, TO_ALL);
+        act("Ygolonac manifests suddenly, and begins to dance and chant in a hypnotic", ch,NULL,NULL,TO_ALL);
+        act("{xrhythm.  A mad cacophony fills your head with unintelligible, yet fully", ch,NULL,NULL,TO_ALL);
+        act("{xunderstood words.  {W'In his house at R'lyeh, dead Cthulhu waits, dreaming.'{x", ch,NULL,NULL,TO_ALL);
+        act("{D<<<<<<<<<<<<<<<<<<<<[[[[[[[[[[|||||||||||||||]]]]]]]]]]>>>>>>>>>>>>>>>>>>>>{x", ch, NULL, NULL, TO_ALL);
 
         for ( victim = char_list; victim != NULL; victim = vict_next )
         {
@@ -867,22 +869,28 @@ void do_invoke(CHAR_DATA *ch, char *argument)
           {
             if ( victim->level > ch->level || IS_SET(victim->off_flags, OFF_ULTRA_MOB) || IS_SET(victim->act, ACT_QUESTMOB))
             {
-              act("A small rivulet of blood creeps from your nose, as the world twists and malforms momentarily.\n\r", ch, NULL, victim, TO_VICT);
-              act("Everything seemed wrong for a brief moment, but it all appears normal again.", ch, NULL, victim, TO_VICT);
+              act("A small rivulet of {rblood{x creeps from your nose, as the world twists and", ch, NULL, victim, TO_VICT);
+              act("{xmalforms momentarily.  Everything seems {yw{xron{yg{x for a brief moment, but it", ch, NULL, victim, TO_VICT);
+              act("{xall appears normal after but a few fleeting moments of time.", ch, NULL, victim, TO_VICT);
+              act("{D<<<<<<<<<<<<<<<<<<<<[[[[[[[[[[|||||||||||||||]]]]]]]]]]>>>>>>>>>>>>>>>>>>>>{x", ch, NULL, victim, TO_VICT);
               continue;
             }
 
-            act("Dark tentacles manifest at the edge of your vision, waving rhythmically to Ygolonac's chanting.\n\r", ch, NULL, victim, TO_VICT);
-            act("Trying to catch a better glimpse, they disappear and the entire world darkens; all you know ceases to exist.", ch, NULL, victim, TO_VICT);
-            act("Without a word, $n slumps to the ground, $s body completely devoid of life.", victim, NULL, NULL, TO_ROOM);
+            act("{D<<<<<<<<<<<<<<<<<<<<[[[[[[[[[[|||||||||||||||]]]]]]]]]]>>>>>>>>>>>>>>>>>>>>{x", ch, NULL, victim, TO_VICT);
+            act("Dark tentacles manifest at the edge of your vision, waving rhythmically to", ch, NULL, victim, TO_VICT);
+            act("Ygolonac's chanting.  Trying to catch a better glimpse, they disappear and", ch, NULL, victim, TO_VICT);
+            act("{xthe entire world darkens; all you know ceases to exist.", ch, NULL, victim, TO_VICT);
+            act("$n slumps to the ground, $s body completely devoid of signs of life.", victim, NULL, NULL, TO_ROOM);
             raw_kill( victim );
             continue;
           }
         }
 
-        act("Dark tentacles manifest at the edge of your vision, waving rhythmically to Ygolonac's chanting.\n\r", ch, NULL, NULL, TO_CHAR);
-        act("Trying to catch a better glimpse, they disappear and the entire world darkens; all you know ceases to exist.", ch, NULL, NULL, TO_CHAR);
-        act("Without a word, $n slumps to the ground, $s body completely devoid of life.", victim, NULL, NULL, TO_ROOM);
+        act("{D<<<<<<<<<<<<<<<<<<<<[[[[[[[[[[|||||||||||||||]]]]]]]]]]>>>>>>>>>>>>>>>>>>>>{x", ch, NULL, NULL, TO_CHAR);
+        act("Dark tentacles manifest at the edge of your vision, waving rhythmically to", ch, NULL, NULL, TO_CHAR);
+        act("Ygolonac's chanting.  Trying to catch a better glimpse, they disappear and", ch, NULL, NULL, TO_CHAR);
+        act("{xthe entire world darkens; all you know ceases to exist.", ch, NULL, victim, TO_CHAR);
+        act("$n slumps to the ground, $s body completely devoid of signs of life.", ch, NULL, NULL, TO_ROOM);
         raw_kill( ch );
         return;
     }

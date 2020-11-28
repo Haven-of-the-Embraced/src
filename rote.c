@@ -730,16 +730,15 @@ void rote_firestorm(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj
     act( "$n peers intently at $N who suddenly bursts into flame!",  ch, NULL, victim, TO_NOTVICT );
     act( "A wall of flame consumes you as a flash of heat engulfs your body and burns away at your skin!",  ch, NULL, victim, TO_VICT );
 
-
-    damage( ch, victim, success*ch->level*6, gsn_magick, DAM_FIRE, TRUE);
-
     if (success >= 4)
     {
         act( "Your magickal flames ignite and burn brightly, fueled by your whims, and blind $N with smoke and fire!", ch, NULL, victim, TO_CHAR);
-        act( "The flames leap into $N's face, blinding $S with smoke and flame!", ch, NULL, victim, TO_NOTVICT);
+        act( "The flames leap into $N's face, blinding $M with smoke and flame!", ch, NULL, victim, TO_NOTVICT);
         act( "The flames leap into your face, blinding you with searing pain!", ch, NULL, victim, TO_VICT);
         fire_effect(victim, success, ch->level, TARGET_CHAR);
     }
+
+    damage( ch, victim, success*ch->level*6, gsn_magick, DAM_FIRE, TRUE);
 
     return;
 }
@@ -1812,7 +1811,11 @@ void rote_stepsideways(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *
     		act( "Concentrating intently, you feel a tingling sensation as your physical body navigates the Gauntlet to the spirit realm on the other side.",  ch, NULL, NULL, TO_CHAR    );
     		act( "$n's body becomes slowly translucent, before $s melts into thin air.",  ch, NULL, NULL, TO_NOTVICT );
     		WAIT_STATE(ch, (success_needed - success)*3);
+        send_to_char("{y***************{Y**************************{y***************{x\n\r", ch);
+        send_to_char("The energies of the {yGauntlet{x flay apart your Avatar!\n\r", ch);
     		d10_damage(ch, ch, avatar_storm, (ch->level / 5) + ch->avatar * 5, gsn_magick, DAM_NEGATIVE, DEFENSE_NONE, TRUE, TRUE);
+        send_to_char("{y***************{Y**************************{y***************{x\n\r", ch);
+        send_to_char("\n\r", ch);
     		do_function(ch, &do_look, "auto");
     		return;
     	}

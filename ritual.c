@@ -867,11 +867,12 @@ void do_invoke(CHAR_DATA *ch, char *argument)
 
           if ( victim->in_room == ch->in_room && SAME_UMBRA(ch, victim))
           {
-            if ( victim->level > ch->level || IS_SET(victim->off_flags, OFF_ULTRA_MOB) || IS_SET(victim->act, ACT_QUESTMOB))
+            if ( victim->level > ch->level || IS_SET(victim->off_flags, OFF_ULTRA_MOB) || IS_SET(victim->act, ACT_QUESTMOB)
+                || (IS_NPC(victim) && victim->pIndexData->pShop != NULL) )
             {
               act("A small rivulet of {rblood{x creeps from your nose, as the world twists and", ch, NULL, victim, TO_VICT);
-              act("{xmalforms momentarily.  Everything seems {yw{xron{yg{x for a brief moment, but it", ch, NULL, victim, TO_VICT);
-              act("{xall appears normal after but a few fleeting moments of time.", ch, NULL, victim, TO_VICT);
+              act("{xmalforms momentarily.  Everything seems {yw{xr{yo{xn{yg{x for a brief moment, but it", ch, NULL, victim, TO_VICT);
+              act("{xall appears normal after a few fleeting moments of time.", ch, NULL, victim, TO_VICT);
               act("{D<<<<<<<<<<<<<<<<<<<<[[[[[[[[[[|||||||||||||||]]]]]]]]]]>>>>>>>>>>>>>>>>>>>>{x", ch, NULL, victim, TO_VICT);
               continue;
             }

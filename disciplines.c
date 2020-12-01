@@ -4741,12 +4741,12 @@ void do_claws(CHAR_DATA *ch, char *argument)
         affect_to_char( ch, &af );
         return;
     }//if garou
+
     if((!IS_VAMP(ch)))
     {
         send_to_char("You are not a Vampire!\n\r",ch);
         return;
     }
-
 
 //Leave in for now to clear out chars with old claws.
     weapon = get_eq_char(ch,WEAR_WIELD);
@@ -4780,18 +4780,12 @@ void do_claws(CHAR_DATA *ch, char *argument)
   		return;
   	}
 
-    if (ch->pblood < 30)
+    if (ch->pblood < 11)
     {
         send_to_char( "You do not have enough blood.\n\r", ch );
         return;
     }
-    ch->pblood -= 20;
-    claws = create_object(get_obj_index(OBJ_VNUM_CLAWS), 0);
-    claws->level = ch->level;
-    claws->value[1] = 3*ch->level/5 + (ch->gen <= 8 ? 30:20);
-    claws->value[2] = 1 + ch->pcdata->discipline[PROTEAN];
-    obj_to_char(claws,ch);
-    equip_char( ch, claws, WEAR_WIELD );
+    ch->pblood -= 10;
 
     af.where     = TO_AFFECTS;
     af.type      = gsn_claws;

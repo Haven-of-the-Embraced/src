@@ -4748,11 +4748,11 @@ void do_claws(CHAR_DATA *ch, char *argument)
     }
 
 
-
+//Leave in for now to clear out chars with old claws.
     weapon = get_eq_char(ch,WEAR_WIELD);
     if (weapon != NULL)
     {
-        if ( is_affected( ch, gsn_claws ) || weapon->pIndexData->vnum == OBJ_VNUM_CLAWS)
+        if ( weapon->pIndexData->vnum == OBJ_VNUM_CLAWS)
         {
             affect_strip(ch,gsn_claws);
             if(weapon == NULL) return;
@@ -4761,11 +4761,6 @@ void do_claws(CHAR_DATA *ch, char *argument)
             act("$n's claws slide back under their fingernails.",ch,NULL,NULL,TO_NOTVICT);
             return;
         }
-    }
-    if( weapon != NULL)
-    {
-        send_to_char( "You cannot have claws and wield a weapon as well!\n\r", ch );
-        return;
     }
 
     if (IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))

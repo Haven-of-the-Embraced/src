@@ -1581,7 +1581,7 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
 
     { "invigorate",      {  8,  5, 12, 9, 102, 102, 102, 102, 102, 102, 9, 15, 1 },
     { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 2, 2, 2}, spell_invigorate,      TAR_CHAR_DEFENSIVE, POS_STANDING,
-    NULL,           SLOT(81),   12, 18, "invigorate",      "!Invigorate!",        "" },
+    NULL,           SLOT(81),   20, 25, "invigorate",      "!Invigorate!",        "" },
 
     { "invisibility",     {  5, 102, 9, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_invis,        TAR_OBJ_CHAR_DEF,   POS_STANDING,

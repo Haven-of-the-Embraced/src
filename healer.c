@@ -65,58 +65,59 @@ void do_heal(CHAR_DATA *ch, char *argument)
     {
         /* display price list */
 	act("$N says 'I offer the following spells:'",ch,NULL,mob,TO_CHAR);
-	send_to_char("  spell: description            <Lvl 49/Lvl 50>\n\r\n\r",ch);
-	send_to_char("  light: cure light wounds      10 gold/20 gold\n\r",ch);
-	send_to_char("  serious: cure serious wounds  15 gold/30 gold\n\r",ch);
-	send_to_char("  critic: cure critical wounds  25 gold/50 gold\n\r",ch);
-	send_to_char("  heal: healing spell          100 gold/200 gold\n\r",ch);
-	send_to_char("  blind: cure blindness         50 gold/100 gold\n\r",ch);
-	send_to_char("  poison:  cure poison          50 gold/100 gold\n\r",ch);
-	send_to_char("  uncurse: remove curse         50 gold/100 gold\n\r",ch);
-	send_to_char("  refresh: restore movement      5 gold/10 gold\n\r",ch);
-	send_to_char("  mana:  restore mana	          10 gold/20 gold\n\r",ch);
+	send_to_char("  Spell:         Description             |Lvl < 49 / Lvl 50+ |\n\r\n\r",ch);
+	send_to_char("  light:         cure light wounds         10 gold /  20 gold\n\r",ch);
+	send_to_char("  serious:       cure serious wounds       15 gold /  30 gold\n\r",ch);
+	send_to_char("  critic:        cure critical wounds      25 gold /  50 gold\n\r",ch);
+	send_to_char("  heal:          healing spell            100 gold / 200 gold\n\r",ch);
+	send_to_char("  blind:         cure blindness            50 gold / 100 gold\n\r",ch);
+	send_to_char("  poison:        cure poison               50 gold / 100 gold\n\r",ch);
+	send_to_char("  uncurse:       remove curse              50 gold / 100 gold\n\r",ch);
+	send_to_char("  refresh:       restore movement           5 gold /  10 gold\n\r",ch);
+  send_to_char("  invigorate:    powerful refresh         100 gold / 200 gold\n\r", ch);
+	send_to_char("  mana:          restore mana              10 gold /  20 gold\n\r",ch);
 	send_to_char(" Type heal <type> to be healed.\n\r",ch);
 	return;
     }
 
     if (!str_prefix(arg,"light"))
     {
-        spell = spell_cure_light;
-	sn    = skill_lookup("cure light");
-	words = "judicandus dies";
-	 cost  = 1000;
+      spell = spell_cure_light;
+      sn    = skill_lookup("cure light");
+      words = "judicandus dies";
+	    cost  = 1000;
     }
 
     else if (!str_prefix(arg,"serious"))
     {
-	spell = spell_cure_serious;
-	sn    = skill_lookup("cure serious");
-	words = "judicandus gzfuajg";
-	cost  = 1600;
+      spell = spell_cure_serious;
+      sn    = skill_lookup("cure serious");
+      words = "judicandus gzfuajg";
+      cost  = 1600;
     }
 
     else if (!str_prefix(arg,"critical"))
     {
-	spell = spell_cure_critical;
-	sn    = skill_lookup("cure critical");
-	words = "judicandus qfuhuqar";
-	cost  = 2500;
+      spell = spell_cure_critical;
+      sn    = skill_lookup("cure critical");
+      words = "judicandus qfuhuqar";
+      cost  = 2500;
     }
 
     else if (!str_prefix(arg,"heal"))
     {
-	spell = spell_heal;
-	sn = skill_lookup("heal");
-	words = "pzar";
-	cost  = 10000;
+      spell = spell_heal;
+      sn = skill_lookup("heal");
+      words = "pzar";
+      cost  = 10000;
     }
 
     else if (!str_prefix(arg,"blindness"))
     {
-	spell = spell_cure_blindness;
-	sn    = skill_lookup("cure blindness");
-      	words = "judicandus noselacri";
-        cost  = 5000;
+      spell = spell_cure_blindness;
+      sn    = skill_lookup("cure blindness");
+      words = "judicandus noselacri";
+      cost  = 5000;
     }
 
 /*    else if (!str_prefix(arg,"disease"))
@@ -129,18 +130,18 @@ void do_heal(CHAR_DATA *ch, char *argument)
 
     else if (!str_prefix(arg,"poison"))
     {
-	spell = spell_cure_poison;
-	sn    = skill_lookup("cure poison");
-	words = "judicandus sausabru";
-	cost  = 5000;
+      spell = spell_cure_poison;
+      sn    = skill_lookup("cure poison");
+      words = "judicandus sausabru";
+      cost  = 5000;
     }
 
     else if (!str_prefix(arg,"uncurse") || !str_prefix(arg,"curse"))
     {
-	spell = spell_remove_curse;
-	sn    = skill_lookup("remove curse");
-	words = "candussido judifgz";
-	cost  = 5000;
+      spell = spell_remove_curse;
+      sn    = skill_lookup("remove curse");
+      words = "candussido judifgz";
+      cost  = 5000;
     }
 
     else if (!str_prefix(arg,"mana") || !str_prefix(arg,"energize"))
@@ -151,13 +152,20 @@ void do_heal(CHAR_DATA *ch, char *argument)
         cost = 1000;
     }
 
-
     else if (!str_prefix(arg,"refresh") || !str_prefix(arg,"moves"))
     {
-	spell =  spell_refresh;
-	sn    = skill_lookup("refresh");
-	words = "candusima";
-	cost  = 500;
+	     spell =  spell_refresh;
+       sn    = skill_lookup("refresh");
+       words = "candusima";
+       cost  = 500;
+    }
+
+    else if (!str_prefix(arg,"invig") || !str_prefix(arg,"invigorate"))
+    {
+      spell =  spell_invigorate;
+      sn    = skill_lookup("invigorate");
+      words = "stimulatus";
+      cost  = 10000;
     }
 
     else

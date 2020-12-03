@@ -1645,7 +1645,7 @@ int d10_damdice( CHAR_DATA *ch, CHAR_DATA *victim)
     }
     // Race Bonuses
     // Garou bonus with claws or Chiropteran Marauder bone claws, +2 for claws.
-    if (!wield && ((ch->race == race_lookup("garou") && is_affected(ch, gsn_claws)) || is_affected(ch, gsn_wingclaws)))
+    if (!wield && ( is_affected(ch, gsn_claws) || is_affected(ch, gsn_wingclaws)))
         dice += 2;
     // Razor Claws or Horrid Form gives +1
     if (!wield && (is_affected(ch, gsn_gift_razorclaws) || is_affected(ch, gsn_vicissitude_horrid)))

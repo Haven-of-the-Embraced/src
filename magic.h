@@ -98,6 +98,7 @@ DECLARE_SPELL_FUN(      spell_holy_word		);
 DECLARE_SPELL_FUN(	spell_identify		);
 DECLARE_SPELL_FUN(	spell_infravision	);
 DECLARE_SPELL_FUN(	spell_intervention	);
+DECLARE_SPELL_FUN(  spell_invigorate        );
 DECLARE_SPELL_FUN(	spell_invis		);
 DECLARE_SPELL_FUN(	spell_know_alignment	);
 DECLARE_SPELL_FUN(	spell_lightning_bolt	);
@@ -316,4 +317,3 @@ DECLARE_SPELL_FUN(spell_gift_attunement);
 DECLARE_SPELL_FUN(spell_gift_doppelganger);
 DECLARE_SPELL_FUN(spell_gift_commandtheblaze);
 DECLARE_SPELL_FUN(spell_gift_redirectpain);
-

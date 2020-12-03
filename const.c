@@ -1579,6 +1579,10 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
     { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_intervention, TAR_CHAR_DEFENSIVE, POS_STANDING,
     NULL,           SLOT(78),    5, 18, "",         "The awe of divine intervention slowly fades.", "" },
 
+    { "invigorate",      {  8,  5, 12, 9, 102, 102, 102, 102, 102, 102, 9, 15, 1 },
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 2, 2, 2}, spell_invigorate,      TAR_CHAR_DEFENSIVE, POS_STANDING,
+    NULL,           SLOT(81),   12, 18, "invigorate",      "!Invigorate!",        "" },
+
     { "invisibility",     {  5, 102, 9, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_invis,        TAR_OBJ_CHAR_DEF,   POS_STANDING,
     &gsn_invis,     SLOT(29),    5, 12, "",         "You are no longer invisible.", "$p fades into view." },

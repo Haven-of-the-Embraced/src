@@ -3616,14 +3616,13 @@ void spell_infravision( int sn, int level, CHAR_DATA *ch, void *vo,int target )
 void spell_invigorate( int sn, int level, CHAR_DATA *ch, void *vo,int target )
 {
     CHAR_DATA *victim = (CHAR_DATA *) vo;
-    if (!IS_NPC(ch))
-    victim->move = UMIN( victim->move + level + (3*(get_attribute(ch,STAMINA) + ch->csabilities[CSABIL_THEOLOGY])), victim->max_move );
-    else
-    victim->move = UMIN( victim->move + level, victim->max_move);
+
+    victim->move = UMIN( victim->move + (level * (get_attribute(ch,STAMINA) + ch->csabilities[CSABIL_THEOLOGY])), victim->max_move );
+
     if (victim->max_move == victim->move)
-        send_to_char("You feel fully refreshed!\n\r",victim);
+        send_to_char("You feel completely refreshed!\n\r",victim);
     else
-        send_to_char( "You feel less tired.\n\r", victim );
+        send_to_char( "Your body feels invigorated and refreshed.\n\r", victim );
     if ( ch != victim )
         send_to_char( "Ok.\n\r", ch );
     return;

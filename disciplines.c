@@ -4763,6 +4763,14 @@ void do_claws(CHAR_DATA *ch, char *argument)
         }
     }
 
+    if (is_affected(ch, gsn_claws))
+    {
+      affect_strip(ch,gsn_claws);
+      send_to_char("Your claws slide back under your nails.\n\r", ch);
+      act("$n's claws slide back under their fingernails.",ch,NULL,NULL,TO_NOTVICT);
+      return;
+    }
+
     if (IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
     {
         send_to_char("Your blood curse prevents it!\n\r" ,ch);

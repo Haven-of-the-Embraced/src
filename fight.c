@@ -1776,7 +1776,7 @@ void d10_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt)
         dt += wield->value[3];
     else
         {
-            if ((ch->race == race_lookup("garou") && is_affected(ch, gsn_claws)) || is_affected(ch, gsn_wingclaws))
+            if ( is_affected(ch, gsn_claws) || is_affected(ch, gsn_wingclaws))
                 dt += attack_lookup("claws");
             else
                 dt += ch->dam_type;

@@ -1736,7 +1736,7 @@ void do_score( CHAR_DATA *ch, char *argument )
   //Basic Damage Calculations for D10
   if (wield)
     basedamage += (wield->value[1])/20;
-  if (!wield && ((ch->race == race_lookup("garou") && is_affected(ch, gsn_claws)) || is_affected(ch, gsn_wingclaws)))
+  if (!wield && (is_affected(ch, gsn_claws) || is_affected(ch, gsn_wingclaws)))
     basedamage += 2;
   if (!wield && (is_affected(ch, gsn_gift_razorclaws) || is_affected(ch, gsn_vicissitude_horrid)))
     basedamage += 1;

@@ -2322,11 +2322,12 @@ void do_mstat( CHAR_DATA *ch, char *argument )
     for ( paf = victim->affected; paf != NULL; paf = paf->next )
     {
     sprintf( buf,
-        "Spell: '%s' modifies %s by %d for %d hours with bits %s, level %d.\n\r",
+        "Spell: '%s' modifies %s by %d for %d hours with bits %s%s, level %d.\n\r",
         skill_table[(int) paf->type].name,
         affect_loc_name( paf->location ),
         paf->modifier,
         paf->duration,
+        paf->where == TO_RESIST ? "res_" : paf->where == TO_IMMUNE ? "imm_" : paf->where == TO_VULN ? "vuln_" : "",
         paf->where == TO_RESIST ? imm_bit_name(paf->bitvector) : paf->where == TO_VULN ? imm_bit_name(paf->bitvector) :
         paf->where == TO_IMMUNE ? imm_bit_name(paf->bitvector) :
         paf->where == TO_AFFECTS2 ? affect2_bit_name(paf->bitvector) : affect_bit_name( paf->bitvector ),
@@ -2580,11 +2581,12 @@ void do_pstat( CHAR_DATA *ch, char *argument )
     for ( paf = victim->affected; paf != NULL; paf = paf->next )
     {
     sprintf( buf,
-        "Spell: '%s' modifies %s by %d for %d hours with bits %s, level %d.\n\r",
+        "Spell: '%s' modifies %s by %d for %d hours with bits %s%s, level %d.\n\r",
         skill_table[(int) paf->type].name,
         affect_loc_name( paf->location ),
         paf->modifier,
         paf->duration,
+        paf->where == TO_RESIST ? "res_" : paf->where == TO_IMMUNE ? "imm_" : paf->where == TO_VULN ? "vuln_" : "",
         paf->where == TO_RESIST ? imm_bit_name(paf->bitvector) : paf->where == TO_VULN ? imm_bit_name(paf->bitvector) :
         paf->where == TO_IMMUNE ? imm_bit_name(paf->bitvector) :
         paf->where == TO_AFFECTS ? affect_bit_name( paf->bitvector ) : affect2_bit_name( paf->bitvector ),

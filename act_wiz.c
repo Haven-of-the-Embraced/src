@@ -2583,6 +2583,8 @@ void do_pstat( CHAR_DATA *ch, char *argument )
         affect_loc_name( paf->location ),
         paf->modifier,
         paf->duration,
+        paf->where == TO_RESIST ? imm_bit_name(paf->bitvector) : paf->where == TO_VULN ? imm_bit_name(paf->bitvector) :
+        paf->where == TO_IMMUNE ? imm_bit_name(paf->bitvector) :
         paf->where == TO_AFFECTS ? affect_bit_name( paf->bitvector ) : affect2_bit_name( paf->bitvector ),
         paf->level
         );

@@ -4547,14 +4547,18 @@ void spell_stone_skin( int sn, int level, CHAR_DATA *ch, void *vo,int target )
     return;
     }
 
-    af.where     = TO_AFFECTS;
-    af.type      = sn;
-    af.level     = level;
-    af.duration  = level;
-    af.location  = APPLY_AC;
-    af.modifier  = -40;
-    af.bitvector = 0;
-    affect_to_char( victim, &af );
+    af.where        = TO_RESIST;
+    af.type         = sn;
+    af.level        = level;
+    af.duration     = 1;
+    af.modifier     = 0;
+    af.location     = APPLY_NONE;
+    af.bitvector    = RES_PIERCE;
+    affect_to_char(ch, &af);
+    af.bitvector    = RES_SLASH;
+    affect_to_char(ch, &af);
+
+
     act( "$n's skin turns to stone.", victim, NULL, NULL, TO_ROOM );
     send_to_char( "Your skin turns to stone.\n\r", victim );
     return;

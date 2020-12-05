@@ -4540,17 +4540,17 @@ void spell_stone_skin( int sn, int level, CHAR_DATA *ch, void *vo,int target )
 
     if ( is_affected( ch, sn ) )
     {
-    if (victim == ch)
-      send_to_char("Your skin is already as hard as a rock.\n\r",ch);
-    else
-      act("$N is already as hard as can be.",ch,NULL,victim,TO_CHAR);
-    return;
+      if (victim == ch)
+        send_to_char("Your skin already has a stony complexion.\n\r",ch);
+      else
+        act("$N's skin is already turned to stone.",ch,NULL,victim,TO_CHAR);
+      return;
     }
 
     af.where        = TO_RESIST;
     af.type         = sn;
     af.level        = level;
-    af.duration     = 1;
+    af.duration     = (level / 10) + 5;
     af.modifier     = 0;
     af.location     = APPLY_NONE;
     af.bitvector    = RES_PIERCE;
@@ -4558,9 +4558,8 @@ void spell_stone_skin( int sn, int level, CHAR_DATA *ch, void *vo,int target )
     af.bitvector    = RES_SLASH;
     affect_to_char(ch, &af);
 
-
     act( "$n's skin turns to stone.", victim, NULL, NULL, TO_ROOM );
-    send_to_char( "Your skin turns to stone.\n\r", victim );
+    send_to_char( "Your skin takes on a hard, stony complexion.\n\r", victim );
     return;
 }
 

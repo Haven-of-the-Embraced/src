@@ -160,15 +160,19 @@ void do_drain(CHAR_DATA *ch, char *argument)
         kill_em(ch, victim);
         WAIT_STATE(ch, 24);
         return;
-    } else if (success == 0) {
+    }
+    else if (success == 0)
+    {
         send_to_char("... and miss the vein completely.\n\r", ch);
         act("$n tries to drain blood from $N... but misses the vein!", ch, NULL, victim, TO_NOTVICT);
         WAIT_STATE(ch, 24);
         return;
-    } else {
+    }
+    else
+    {
         send_to_char("... and succeed in draining their blood into a vial.\n\r", ch);
         act("$n tries to drain blood from $N... and fills a vial with the crimson liquid.", ch, NULL, victim, TO_NOTVICT);
-        bpotion->value[0] = 10;
+        bpotion->value[0] = 10 + success;
         bpotion->value[1] = skill_lookup("kindred vitae");
         sprintf(buf, "a vial of %s's blood", victim->short_descr);
         bpotion->short_descr = str_dup(buf);
@@ -177,11 +181,12 @@ void do_drain(CHAR_DATA *ch, char *argument)
         extract_obj(vial);
         obj_to_char(bpotion,ch);
         raw_kill(victim);
+        gain_exp(ch,success*10);
         WAIT_STATE(ch, 24);
         return;
     }
 
-    }
+  }
 
 }
 

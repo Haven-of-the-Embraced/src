@@ -4383,20 +4383,38 @@ void do_sparkofrage(CHAR_DATA *ch, char *argument)
         return;
     }
 
+    dice = get_attribute(ch, MANIPULATION) + get_ability(ch, CSABIL_SUBTERFUGE);
+    success = godice(dice, 8);
+
     ch->pblood -= 20;
 
-    af.where     = TO_AFFECTS;
-    af.type      = gsn_sparkofrage;
-    af.level     = ch->level;
-    af.location  = 0;
-    af.modifier  = 0;
-    af.duration  = 8;
-    af.bitvector = 0;
-    affect_to_char( victim, &af );
+    if (success > 0)
+    {
 
-    send_to_char("Your very presence begins to elicit such hatred that those around you begin to make attempts on your life!\n\r" ,victim);
-    act( "You feel suddenly enraged at the sight of $n, unable to stop yourself from trying to end $s existence!",  victim, NULL, NULL, TO_NOTVICT );
-    return;
+        af.where     = TO_AFFECTS;
+        af.type      = gsn_sparkofrage;
+        af.level     = ch->level;
+        af.location  = 0;
+        af.modifier  = 0;
+        af.duration  = 8;
+        af.bitvector = 0;
+        affect_to_char( victim, &af );
+
+        send_to_char("Your very presence begins to elicit such hatred that those around you begin to make attempts on your life!\n\r" ,victim);
+        act( "You feel suddenly enraged at the sight of $n, unable to stop yourself from trying to end $s existence!",  victim, NULL, NULL, TO_NOTVICT );
+        return;
+    } else {
+      af.where    = TO_AFFECTS;
+      af.type     = gsn_botched_presence;
+      af.level    = ch->pcdata->discipline[PRESENCE];
+      af.duration = 5;
+      af.location = APPLY_NONE;
+      af.modifier = 0;
+      af.bitvector    = 0;
+      affect_to_char( ch, &af);
+      sendch("You fail to elicit the intended rage and end up only hating yourself.\n\r", ch);
+      return;
+      }
 }
 
 void do_entrancement(CHAR_DATA *ch, char *argument)

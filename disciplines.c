@@ -4352,12 +4352,6 @@ void do_sparkofrage(CHAR_DATA *ch, char *argument)
         send_to_char("You are not a vampire!\n\r" ,ch);
         return;
     }
-    if ( is_affected( ch, gsn_sparkofrage ) )
-    {
-        send_to_char( "You quell the passions of those around you, no longer suffering their wrath.\n\r", ch );
-        affect_strip(ch, gsn_sparkofrage);
-        return;
-    }
 
     if ( IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
     {
@@ -4378,8 +4372,11 @@ void do_sparkofrage(CHAR_DATA *ch, char *argument)
     }
 
     if ((victim = get_char_room(ch, NULL, argument)) == NULL)
+      victim = ch;
+
+    if ( is_affected( victim, gsn_sparkofrage ) )
     {
-        sendch("Upon whom do you wish to levy this aura of pure revulsion?\n\r", ch);
+        send_to_char( "You cannot make the aura of revulsion any stronger!\n\r", ch );
         return;
     }
 

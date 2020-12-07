@@ -2169,6 +2169,12 @@ bool d10_damage(CHAR_DATA *ch, CHAR_DATA *victim, int damsuccess, int modifier, 
     REMOVE_BIT( ch->affected_by, AFF_INVISIBLE );
     act( "$n fades into existence.", ch, NULL, NULL, TO_ROOM );
     }
+    
+    if(IS_AFFECTED(ch, AFF_HIDE))
+    {
+      affect_strip(ch, gsn_hide);
+      REMOVE_BIT(ch->affected_by, AFF_HIDE);
+    }
 
     if (DEBUG_MESSAGES || IS_DEBUGGING(ch))	{
         cprintf(ch, "d{W%d{x ", damsuccess);

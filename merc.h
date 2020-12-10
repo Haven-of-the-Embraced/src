@@ -192,7 +192,7 @@ typedef void ROOM_FUN	args( ( ROOM_INDEX_DATA *room, char *argument ) );
 #define MAX_ALIAS           5
 #define MAX_CLASS           13
 #define MAX_PC_RACE         1
-#define MAX_CLAN            31
+#define MAX_CLAN            33
 #define MAX_SECT            7
 #define MAX_TRADITION       6
 #define MAX_ROTE            41
@@ -3697,6 +3697,8 @@ void auto_note          args ( (char *recipient, char *subject, char *body) );
 #define BONE_GNAWER      6
 #define SILVER_FANG         7
 #define WARDERSOFMEN        8
+#define RED_TALON           9
+#define SILENT_STRIDER      10
 
 /* new garou totems */
 #define SPIRIT_PEGASUS              0

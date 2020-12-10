@@ -325,14 +325,14 @@ void do_garouconvert(CHAR_DATA *ch, char *argument)
             send_to_char("That is not a valid Auspice.\n\r",ch);
             return;
         }
-        send_to_char("Now it's time to pick a Tribe. Valid Tribes are Black Furies, Children of Gaia, Fianna,\n\rFenrir, Shadow Lords, Bone Gnawers, Silver Fangs and Warders of Men.\n\rSee the helpfile for each before deciding.\n\rType gogarou <tribe> to continue.\n\r",ch);
+        send_to_char("Now it's time to pick a Tribe. Valid Tribes are Black Furies, Bone Gnawers, Children of Gaia, Fenrir, Fianna,\n\rRed Talons, Shadow Lords, Silent Striders, Silver Fangs and Warders of Men.\n\rSee the helpfile for each before deciding.\n\rType gogarou <tribe> to continue.\n\r",ch);
         return;
     }
     if(ch->pcdata->tribe == 0)
     {
         if(argument[0] == '\0')
         {
-            send_to_char("You must pick a Tribe. Valid Tribes are Black Furies, Children of Gaia, Fianna,\n\rFenrir, Shadow Lords, Bone Gnawers, Silver Fangs and Warders of Men.\n\rSee the helpfile for each before deciding.\n\rType gogarou <tribe> to continue.\n\r",ch);
+            send_to_char("You must pick a Tribe. Valid Tribes are Black Furies, Bone Gnawers, Children of Gaia, Fenrir, Fianna,\n\rRed Talons, Shadow Lords, Silent Striders, Silver Fangs and Warders of Men.\n\rSee the helpfile for each before deciding.\n\rType gogarou <tribe> to continue.\n\r",ch);
             return;
         }
         if(!str_prefix( argument, "black furies"))
@@ -359,11 +359,23 @@ void do_garouconvert(CHAR_DATA *ch, char *argument)
             ch->pcdata->tribe = FENRIR;
             ch->clan = clan_lookup("fenrir");
         }
+        else if(!str_prefix( argument, "red talons"))
+        {
+            send_to_char("Alright. You are now a Red Talon.\n\r",ch);
+            ch->pcdata->tribe = RED_TALON;
+            ch->clan = clan_lookup("redtalon");
+        }
         else if(!str_prefix( argument, "shadow lords"))
         {
             send_to_char("Alright. You are now a Shadow Lord.\n\r",ch);
             ch->pcdata->tribe = SHADOW_LORD;
             ch->clan = clan_lookup("shadowlord");
+        }
+        else if(!str_prefix( argument, "silent strider"))
+        {
+            send_to_char("Alright. You are now a Silent Strider.\n\r",ch);
+            ch->pcdata->tribe = SILENT_STRIDER;
+            ch->clan = clan_lookup("silentstrider");
         }
         else if(!str_prefix( argument, "bone gnawer"))
         {

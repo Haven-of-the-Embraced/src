@@ -1665,6 +1665,8 @@ const struct    tribe_type  tribe_table []  =
     {   "Bone Gnawer",  "Gnawer",      SPIRIT_RAT},
     {   "Silver Fangs",     "Fang",         SPIRIT_FALCON},
     {   "Warders Of Men",  "Warder",    SPIRIT_COCKROACH},
+		{		"Red Talons",		"Redtalon",			SPIRIT_GRIFFIN},
+		{		"Silent Striders",	"Striders",	SPIRIT_OWL},
 };
 
 

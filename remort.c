@@ -410,6 +410,15 @@ void do_remort(CHAR_DATA *ch, char *argument)
             if(obj->wear_loc != WEAR_NONE)
             unequip_char( ch, obj );
         }
+
+        if (ch->race == race_lookup("garou") &&
+            ch->pcdata->shiftform != HOMID)
+        {
+          act( "You assume the form of Man.", ch, NULL, NULL, TO_CHAR );
+          act( "$n's form shrinks to that of a normal human.", ch, NULL, NULL, TO_NOTVICT );
+          ch->pcdata->shiftform = HOMID;
+        }
+
         while ( ch->affected )
             affect_remove( ch, ch->affected );
         ch->affected_by = race_table[ch->race].aff;

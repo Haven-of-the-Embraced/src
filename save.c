@@ -1078,6 +1078,8 @@ if (ch->version <= 9) {
         case BONE_GNAWER: ch->clan = clan_lookup("bonegnawer");break;
         case SILVER_FANG: ch->clan = clan_lookup("silverfang");break;
         case WARDERSOFMEN: ch->clan = clan_lookup("wardersofmen");break;
+        case RED_TALON: ch->clan = clan_lookup("redtalon");break;
+        case SILENT_STRIDER: ch->clan = clan_lookup("silentstrider");break;
         }
     } else if (ch->race == race_lookup("human") && ch->clan == clan_lookup("mage")) {
         if (ch->tradition == tradition_lookup("Akashic Brotherhood"))

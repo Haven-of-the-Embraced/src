@@ -237,7 +237,7 @@ void do_garouconvert(CHAR_DATA *ch, char *argument)
     {
         if(argument[0] == '\0')
         {
-            send_to_char("You must now pick a Breed. Valid Breeds are Homid, Metis and Lupus.\n\rSee the helpfile for each before deciding.\n\rType gogarou <breed> to continue.\n\r",ch);
+            send_to_char("{g      -=[You must now pick a Breed]=-{x\n\rValid Breeds:\n\r    Homid, Metis and Lupus.\n\rSee the helpfile for each before deciding.\n\r{r    *{xType gogarou <breed> to continue.\n\r",ch);
             return;
         }
         if(!str_prefix( argument, "homid" ))
@@ -266,7 +266,7 @@ void do_garouconvert(CHAR_DATA *ch, char *argument)
             send_to_char("That's not a valid breed. Please choose a Breed.\n\r",ch);
             return;
         }
-        send_to_char("Now it's time to pick an Auspice. Type gogarou <auspice> to continue.\n\r",ch);
+        send_to_char("{g      -=[You must now pick an Auspice]=-{x\n\rValid Auspices:\n\r    Ragabash, Theurge, Philodox, Galliard, and Ahroun.\n\rSee the helpfile for each before deciding.\n\r{r    *{xType gogarou <auspice> to continue.\n\r",ch);
         return;
     }
     if(ch->pcdata->auspice == 0)
@@ -325,14 +325,14 @@ void do_garouconvert(CHAR_DATA *ch, char *argument)
             send_to_char("That is not a valid Auspice.\n\r",ch);
             return;
         }
-        send_to_char("Now it's time to pick a Tribe. Valid Tribes are Black Furies, Bone Gnawers, Children of Gaia, Fenrir, Fianna,\n\rRed Talons, Shadow Lords, Silent Striders, Silver Fangs and Warders of Men.\n\rSee the helpfile for each before deciding.\n\rType gogarou <tribe> to continue.\n\r",ch);
+        send_to_char("{g      -=[You must now pick a Tribe]=-{x\n\rValid Tribes:\n\r Black Furies, Bone Gnawers, Children of Gaia, Fenrir, Fianna, Red Talons, \n\r Shadow Lords, Silent Striders, Silver Fangs and Warders of Men.\n\rSee the helpfile for each before deciding.\n\r{r    *{xType gogarou <tribe> to continue.\n\r",ch);
         return;
     }
     if(ch->pcdata->tribe == 0)
     {
         if(argument[0] == '\0')
         {
-            send_to_char("You must pick a Tribe. Valid Tribes are Black Furies, Bone Gnawers, Children of Gaia, Fenrir, Fianna,\n\rRed Talons, Shadow Lords, Silent Striders, Silver Fangs and Warders of Men.\n\rSee the helpfile for each before deciding.\n\rType gogarou <tribe> to continue.\n\r",ch);
+            send_to_char("You must pick a Tribe. Valid Tribes are Black Furies, Bone Gnawers, Children of Gaia, Fenrir,\n\rFianna, Red Talons, Shadow Lords, Silent Striders, Silver Fangs and Warders of Men.\n\rSee the helpfile for each before deciding.\n\rType gogarou <tribe> to continue.\n\r",ch);
             return;
         }
         if(!str_prefix( argument, "black furies"))
@@ -400,7 +400,7 @@ void do_garouconvert(CHAR_DATA *ch, char *argument)
             send_to_char("That is not a valid Tribe. Please pick a tribe.\n\r",ch);
             return;
         }
-        send_to_char("It's now time to pick your fur color.\n\rPlease type gogarou <fur color> where fur color is a realistic one-word color that wolves would have for fur.\n\rThis is impossible to undo. Choose wisely.\n\r",ch);
+        send_to_char("{g    -=[You must now pick your Fur Color]=-{x\n\rFur Color:  Please set your fur color to a realistic one-word color\n\r that wolves would have for fur.  This is impossible to undo. Choose wisely.\n\r{r    *{xType gogarou <fur color> to continue.\n\r",ch);
         return;
     }
 
@@ -408,7 +408,7 @@ void do_garouconvert(CHAR_DATA *ch, char *argument)
     {
         if(argument[0] == '\0')
         {
-            send_to_char("You must pick a fur color. Type gogarou <fur color>. Remember, you cannot undo this. Choose wisely.\n\r",ch);
+            send_to_char("You must pick a fur color. Type gogarou <fur color>. Remember, you cannot undo this. Choose wisely.\n\r{r    *{xType gogarou <fur color> to continue.\n\r",ch);
             return;
         }
         smash_tilde( argument );

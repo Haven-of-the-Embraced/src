@@ -2313,32 +2313,6 @@ void do_who( CHAR_DATA *ch, char *argument )
      * Parse arguments.
      */
     nNumber = 0;
-    for ( ;; )
-    {
-        char arg[MAX_STRING_LENGTH];
-
-        argument = one_argument( argument, arg );
-        if ( arg[0] == '\0' )
-            break;
-
-        if ( is_number( arg ) )
-        {
-            switch ( ++nNumber )
-            {
-            case 1: iLevelLower = atoi( arg ); break;
-            case 2: iLevelUpper = atoi( arg ); break;
-            default:
-                send_to_char( "Only two level numbers allowed.\n\r", ch );
-                return;
-            }
-        }
-        else
-        {
-            sendch("Who display no longer supports class or race specifier.\n\r", ch);
-            return;
-
-        }
-    }
 
     /* hack to prevent players from seeing guild and clan on who */
      fClanRestrict = FALSE;

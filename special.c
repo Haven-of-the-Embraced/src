@@ -117,6 +117,7 @@ DECLARE_SPEC_FUN(   spec_armsoftheabyss     );
 DECLARE_SPEC_FUN(   spec_awe                );
 DECLARE_SPEC_FUN(   spec_dreadgaze          );
 DECLARE_SPEC_FUN(   spec_eyesoftheserpent   );
+DECLARE_SPEC_FUN(   spec_tongueoftheasp     );
 DECLARE_SPEC_FUN(   spec_evil_eye           );
 DECLARE_SPEC_FUN(   spec_questmaster        );
 DECLARE_SPEC_FUN(   spec_jarjar             );
@@ -206,6 +207,7 @@ const   struct  spec_type    spec_table[] =
     {   "spec_awe",               spec_awe              },
     {   "spec_dreadgaze",         spec_dreadgaze        },
     {   "spec_eyesoftheserpent",  spec_eyesoftheserpent },
+    {   "spec_tongueoftheasp",    spec_tongueoftheasp   },
 // Numina/Romani
     {   "spec_evil_eye",          spec_evil_eye         },
 // Miscellaneous
@@ -2254,6 +2256,38 @@ bool spec_dreadgaze( CHAR_DATA *ch)
 
 /* Serpentis Specs */
 bool spec_eyesoftheserpent( CHAR_DATA *ch )
+{
+  CHAR_DATA *victim;
+  CHAR_DATA *v_next;
+  int serpentis, eyessuccess;
+
+  serpentis = (ch->level / 20) + 1;
+  eyessuccess = godice(get_attribute(ch, WITS) + get_ability(ch, CSABIL_ALERTNESS), 7);
+
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
+    return FALSE;
+
+    for ( victim = ch->in_room->people; victim != NULL; victim = v_next )
+    {
+        v_next = victim->next_in_room;
+        if (( victim->fighting == ch && number_bits( 2 ) == 0 )
+        &&  can_see(victim, ch) && can_see(ch, victim))
+            break;
+    }
+
+    if (victim == NULL || eyessuccess <= 0 || victim->stopped > 0)
+      return FALSE;
+
+    act("You turn and catch $N's eyes with your hypnotic gaze.", ch, NULL, NULL, TO_CHAR);
+    act("You watch as $n's eyes turn {ygolden{x, and you become transfixed in $s gaze!", ch, NULL, victim, TO_VICT);
+    act("$n's eyes turn {ygolden{x as $e locks gaze with $N.", ch, NULL, victim, TO_NOTVICT);
+
+    victim->stopped += eyessuccess * 3;
+
+    return FALSE;
+}
+
+bool spec_tongueoftheasp( CHAR_DATA *ch )
 {
   CHAR_DATA *victim;
   CHAR_DATA *v_next;

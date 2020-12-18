@@ -620,7 +620,7 @@ void show_char_to_char( CHAR_DATA *list, CHAR_DATA *ch )
                 show_char_to_char_0( MOUNTED(rch), ch );
     }
     else if ( room_is_dark( ch->in_room ) && IS_AFFECTED(rch, AFF_INFRARED )
-              && SAME_UMBRA(ch, rch));
+              && SAME_UMBRA(ch, rch))
     {
         send_to_char( "You see glowing red eyes watching YOU!\n\r", ch );
     }

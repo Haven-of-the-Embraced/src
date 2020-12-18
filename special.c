@@ -2291,10 +2291,10 @@ bool spec_tongueoftheasp( CHAR_DATA *ch )
 {
   CHAR_DATA *victim;
   CHAR_DATA *v_next;
-  int serpentis, eyessuccess;
+  int serpentis, tonguesuccess, damagesuccess;
 
   serpentis = (ch->level / 20) + 1;
-  eyessuccess = godice(get_attribute(ch, WITS) + get_ability(ch, CSABIL_ALERTNESS), 7);
+  tonguesuccess = godice(get_attribute(ch, DEXTERITY) + get_ability(ch, CSABIL_BRAWL), 7);
 
     if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
     return FALSE;
@@ -2307,16 +2307,18 @@ bool spec_tongueoftheasp( CHAR_DATA *ch )
             break;
     }
 
-    if (victim == NULL || eyessuccess <= 0 || victim->stopped > 0)
+    if (victim == NULL || tonguesuccess <= 0 )
       return FALSE;
 
-    act("You turn and catch $N's eyes with your hypnotic gaze.", ch, NULL, NULL, TO_CHAR);
-    act("You watch as $n's eyes turn {ygolden{x, and you become transfixed in $s gaze!", ch, NULL, victim, TO_VICT);
-    act("$n's eyes turn {ygolden{x as $e locks gaze with $N.", ch, NULL, victim, TO_NOTVICT);
+    act("You lash out with your forked tongue, slicing into $N's neck.", ch, NULL, victim, TO_CHAR);
+    act("You flinch in pain as $n's forked tongue slices open a wound on your neck!", ch, NULL, victim, TO_VICT);
+    act("$n's forked tongue lashes out and strikes $N.", ch, NULL, victim, TO_NOTVICT);
 
-    victim->stopped += eyessuccess * 3;
+    damagesuccess = godice(get_attribute(ch, STRENGTH),6);
+    if (damagesuccess < 0)
+      damagesuccess = 0;
 
-    return FALSE;
+    return TRUE;
 }
 
 /********************************/

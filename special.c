@@ -2291,7 +2291,8 @@ bool spec_tongueoftheasp( CHAR_DATA *ch )
 {
   CHAR_DATA *victim;
   CHAR_DATA *v_next;
-  int serpentis, tonguesuccess, damagesuccess;
+  int serpentis, tonguesuccess, damagesuccess, damagemod;
+  AFFECT_DATA af;
 
   serpentis = (ch->level / 20) + 1;
   tonguesuccess = godice(get_attribute(ch, DEXTERITY) + get_ability(ch, CSABIL_BRAWL), 7);
@@ -2315,9 +2316,22 @@ bool spec_tongueoftheasp( CHAR_DATA *ch )
     act("$n's forked tongue lashes out and strikes $N.", ch, NULL, victim, TO_NOTVICT);
 
     damagesuccess = godice(get_attribute(ch, STRENGTH),6);
-    if (damagesuccess < 0)
-      damagesuccess = 0;
+    if (damagesuccess <= 0)
+      damagesuccess = 1;
 
+    damagemod = number_range(ch->level * 3 / 2, ch->level * 2);
+    damage(ch, victim, damagemod * damagesuccess, gsn_hand_to_hand, DAM_BASH, TRUE);
+    if (damagesuccess >= 2 && !is_affected(victim, gsn_bleeding));
+    {
+      af.where     = TO_AFFECTS;
+      af.type      = gsn_bleeding;
+      af.level     = ch->level / 40;
+      af.duration  = ch->level / 40;
+      af.location  = APPLY_NONE;
+      af.modifier  = 0;
+      af.bitvector = 0;
+      affect_to_char(victim, &af);
+    }
     return TRUE;
 }
 

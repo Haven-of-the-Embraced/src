@@ -2306,7 +2306,7 @@ void spell_gift_visageoffenris( int sn, int level, CHAR_DATA *ch, void *vo, int 
     af.type      = gsn_gift_visageoffenris;
     af.level     = 0;
     af.duration  = 2;
-    af.modifier  = 1;
+    af.modifier  = -1;
     af.location  = APPLY_CS_CHA;
     af.bitvector = 0;
     affect_to_char( ch, &af );
@@ -2349,6 +2349,8 @@ void spell_gift_visageoffenris( int sn, int level, CHAR_DATA *ch, void *vo, int 
   af.location  = 0;
   af.bitvector = 0;
   affect_to_char( ch, &af );
+
+  gain_exp(ch, successes * 5);
 
   return;
 }

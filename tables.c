@@ -1269,7 +1269,7 @@ const struct    gift_type   gift_table  [MAX_GIFTS_CODED]  =
     {   "Gift of the Porcupine",    	1,     24, 0,     METIS,  0,          0,        4,   0},
     {   "Blissful Ignorance",       	1,     24, 0,     0,      RAGABASH,   0,        2,   0},
     {   "Pulse of the Invisible",   	1,     24, 0,     0,      THEURGE,    0,        3,   0},
-    {   "Catfeet",                  	1,     24, 0,     LUPUS,  0,          0,        5,   0},
+    {   "Catfeet",                  	1,     24, 0,     LUPUS,  0,          0,        3,   0},
     {   "Resist Pain",              	1,     24, 0,     0,      PHILODOX,   CHILDREN_OF_GAIA, 1,   0},//Fenrir
     {   "Call of the Wyld",         	1,     24, 0,     0,      GALLIARD,   0,        1,   0},
     {   "Razor Claws",              	1,     24, 0,     0,      AHROUN,     FENRIR,        1,   0},

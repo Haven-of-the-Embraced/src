@@ -33,59 +33,11 @@
 char *trueargs;
 
 
-//Wendigo Gift
-//Rank 3
-//"Bloody Feast"
-void spell_gift_bloodyfeast( int sn, int level, CHAR_DATA *ch, void *vo, int target )
-{
-    OBJ_DATA *obj;
-    AFFECT_DATA af;
-
-    if ((obj = get_obj_here( ch, NULL, "corpse" )) == NULL)
-    {
-        send_to_char("Feast upon what?\n\r",ch);
-        return;
-    }
-    if(obj->item_type != ITEM_CORPSE_NPC)
-    {
-        send_to_char("You cannot feast upon that.\n\r",ch);
-        return;
-    }
-    if(obj->level == 0 || obj->timer < 2)
-    {
-        send_to_char("You cannot find any fresh meat left on it.\n\r",ch);
-        return;
-    }
-
-    if (ch->pcdata->condition[COND_FULL] > 40 )
-    {
-        send_to_char( "You are too full to feast.\n\r", ch );
-        return;
-    }
-
-    act( "$n squats over $p and devours its flesh in a fury, splashing blood and entrails everywhere.",  ch, obj, NULL, TO_ROOM );
-    act( "You squat over $p and tear it to shreds, devowering the fresh,\n\rwarm, bloody meat with great enjoyment.", ch, obj, NULL, TO_CHAR );
-
-    af.where        = TO_AFFECTS;
-    af.type         = gsn_gift_bloodyfeast;
-    af.level        = level;
-    af.duration     = level/5;
-    af.modifier     = 10;
-    af.location     = APPLY_DAMROLL;
-    af.bitvector    = 0;
-    affect_to_char(ch, &af);
-
-    gain_condition( ch, COND_FULL, obj->level/10);
-    gain_condition( ch, COND_HUNGER, obj->level/10);
-    ch->rage += 5;
-
-    extract_obj( obj );
-    return;
-}
-
 /*======Garou Gifts======*/
-//Here I will list garou gifts, organized by Breed, Auspice, and Tribe, and then by Rank. I will include: Any point costs, Any rolls, The spirit that teaches it, Ideas for quest to learn it, and ideas for affects.
-//
+/*Here I will list garou gifts, organized by Breed, Auspice, and Tribe, and then by Rank.
+I will include: Any point costs, Any rolls, The spirit that teaches it, Ideas for quest to learn it,
+and ideas for affects.
+*/
 //
 //Breeds
 //Homid
@@ -1981,13 +1933,13 @@ void spell_gift_breathofthewyld( int sn, int level, CHAR_DATA *ch, void *vo, int
 //char + subterfuge diff 7
 //illusion to make your female self look like a man for a scene or until you shift forms
 //
+void spell_gift_mansskin( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
 
 //“Sense Wyrm” duplicate gift
 //same as Metis Gift
 //
-void spell_gift_mansskin( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
 //Rank Two
 //
 //“Curse of Aeolus”
@@ -2266,6 +2218,8 @@ void spell_gift_huntersharmony( int sn, int level, CHAR_DATA *ch, void *vo, int 
     return;
 }
 
+//Resist Pain - Duplicate gift, as the Philodox gift
+
 // Visage of Fenris
 // charisma + intimidation diff 6
 // Foes flinch and lose a point of initiative.
@@ -2384,6 +2338,8 @@ void spell_gift_mightofthor( int sn, int level, CHAR_DATA *ch, void *vo, int tar
 void spell_gift_redirectpain( int sh, int level, CHAR_DATA *ch, void *vo, int target) {
 	return;
 }
+
+//Rank 4
 void spell_gift_berserkerssong( int sn, int level, CHAR_DATA *ch, void *vo, int target){
     return;
 }
@@ -2392,23 +2348,27 @@ void spell_gift_ironcannotpierce( int sn, int level, CHAR_DATA *ch, void *vo, in
     return;
 }
 
+//Rank 5
 void spell_gift_blazeofglory( int sn, int level, CHAR_DATA *ch, void *vo, int target){
     return;
 }
-//Rank 5
-void spell_gift_hordeofvalhalla( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
 
-void spell_gift_distractthefool( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_hordeofvalhalla( int sn, int level, CHAR_DATA *ch, void *vo, int target){
     return;
 }
 
 //Fianna
 //Rank 1
+void spell_gift_distractthefool( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+    return;
+}
+
 void spell_gift_faerielight( int sn, int level, CHAR_DATA *ch, void *vo, int target){
     return;
 }
+
+//Resist Toxin - Duplicate gift, as Bone Gnawer gift
+
 //Rank 2
 void spell_gift_howlofthebanshee( int sn, int level, CHAR_DATA *ch, void *vo, int target){
     return;
@@ -2418,6 +2378,7 @@ void spell_gift_warriorsdraught( int sn, int level, CHAR_DATA *ch, void *vo, int
     return;
 }
 
+//Rank 3
 void spell_gift_faerieaid( int sn, int level, CHAR_DATA *ch, void *vo, int target){
     return;
 }
@@ -2433,15 +2394,25 @@ void spell_gift_balorsgaze( int sn, int level, CHAR_DATA *ch, void *vo, int targ
 void spell_gift_semblance( int sn, int level, CHAR_DATA *ch, void *vo, int target){
     return;
 }
-
+//Rank 5
 void spell_gift_fogonthemoor( int sn, int level, CHAR_DATA *ch, void *vo, int target){
     return;
 }
-//Rank 5
+
 void spell_gift_giftofthespriggan( int sn, int level, CHAR_DATA *ch, void *vo, int target){
     return;
 }
 
+//Red Talons
+//Rank 1
+//Rank 2
+//Rank 3
+//Rank 4
+//Rank 5
+
+//Shadow Lords
+
+//Rank 1
 void spell_gift_auraofconfidence( int sn, int level, CHAR_DATA *ch, void *vo, int target){
     return;
 }
@@ -2453,11 +2424,13 @@ void spell_gift_fatalflaw( int sn, int level, CHAR_DATA *ch, void *vo, int targe
 void spell_gift_seizingtheedge( int sn, int level, CHAR_DATA *ch, void *vo, int target){
     return;
 }
-
+//Rank 2
 void spell_gift_clapofthunder( int sn, int level, CHAR_DATA *ch, void *vo, int target){
     return;
 }
+//Luna's Armor - Duplicate gift, as ChildrenofGaia
 
+//Rank 3
 void spell_gift_ravenscurse( int sn, int level, CHAR_DATA *ch, void *vo, int target){
     return;
 }
@@ -2465,7 +2438,7 @@ void spell_gift_ravenscurse( int sn, int level, CHAR_DATA *ch, void *vo, int tar
 void spell_gift_shadowcutting( int sn, int level, CHAR_DATA *ch, void *vo, int target){
     return;
 }
-
+//Rank 4
 void spell_gift_dolorousstroke( int sn, int level, CHAR_DATA *ch, void *vo, int target){
     return;
 }
@@ -2473,7 +2446,7 @@ void spell_gift_dolorousstroke( int sn, int level, CHAR_DATA *ch, void *vo, int 
 void spell_gift_strengthofthedominator( int sn, int level, CHAR_DATA *ch, void *vo, int target){
     return;
 }
-
+//Rank 5
 void spell_gift_shadowpack( int sn, int level, CHAR_DATA *ch, void *vo, int target){
     return;
 }
@@ -2482,6 +2455,15 @@ void spell_gift_obedience( int sn, int level, CHAR_DATA *ch, void *vo, int targe
     return;
 }
 
+//Silent Striders
+//Rank 1
+//Rank 2
+//Rank 3
+//Rank 4
+//Rank 5
+
+//Silver Fangs
+//Rank 1
 void spell_gift_eyeofthefalcon( int sn, int level, CHAR_DATA *ch, void *vo, int target){
     return;
 }
@@ -2569,10 +2551,16 @@ void spell_gift_lambentfire( int sn, int level, CHAR_DATA *ch, void *vo, int tar
   return;
 }
 
+//Sense Wyrm - Duplicate gift, as METIS
+
+//Rank 2
 void spell_gift_empathy( int sn, int level, CHAR_DATA *ch, void *vo, int target){
     return;
 }
 
+//Luna's Armor - duplicate gift, as ChildrenofGaia
+
+//Rank 3
 void spell_gift_exceptionalswordplay( int sn, int level, CHAR_DATA *ch, void *vo, int target){
     return;
 }
@@ -2580,7 +2568,7 @@ void spell_gift_exceptionalswordplay( int sn, int level, CHAR_DATA *ch, void *vo
 void spell_gift_wrathofgaia( int sn, int level, CHAR_DATA *ch, void *vo, int target){
     return;
 }
-
+//Rank 4
 void spell_gift_lordlywill( int sn, int level, CHAR_DATA *ch, void *vo, int target){
     return;
 }
@@ -2588,7 +2576,7 @@ void spell_gift_lordlywill( int sn, int level, CHAR_DATA *ch, void *vo, int targ
 void spell_gift_sidestepdeath( int sn, int level, CHAR_DATA *ch, void *vo, int target){
     return;
 }
-
+//Rank 5
 void spell_gift_lunasavenger( int sn, int level, CHAR_DATA *ch, void *vo, int target){
     return;
 }
@@ -2597,6 +2585,8 @@ void spell_gift_pawsofthenewborncub( int sn, int level, CHAR_DATA *ch, void *vo,
     return;
 }
 
+//Warders of Men
+//Rank 1
 void spell_gift_artisanscommand( int sn, int level, CHAR_DATA *ch, void *vo, int target){
     return;
 }
@@ -2605,14 +2595,21 @@ void spell_gift_giftofsalt( int sn, int level, CHAR_DATA *ch, void *vo, int targ
     return;
 }
 
+//Persuasion - duplicate gift, same as Homid
+
+//Rank 2
 void spell_gift_maskthepredator( int sn, int level, CHAR_DATA *ch, void *vo, int target){
     return;
 }
+
+//Rank 3
+//Reshape Object - duplicate gift, as HOMID
 
 void spell_gift_tongues( int sn, int level, CHAR_DATA *ch, void *vo, int target){
     return;
 }
 
+//Rank 4
 void spell_gift_attunement( int sn, int level, CHAR_DATA *ch, void *vo, int target){
     return;
 }
@@ -2621,9 +2618,13 @@ void spell_gift_doppelganger( int sn, int level, CHAR_DATA *ch, void *vo, int ta
     return;
 }
 
+//Rank 5
 void spell_gift_commandtheblaze( int sn, int level, CHAR_DATA *ch, void *vo, int target){
     return;
 }
+//False Comfort, duplicate gift, as HOMID
+
+/* * * * * Uncoded/Invalid Tribes * * * * */
 
 //Stargazers
 //Rank 1
@@ -2658,6 +2659,60 @@ void spell_gift_innerstrength( int sn, int level, CHAR_DATA *ch, void *vo, int t
     return;
 }
 
+//Rank 4
+//Rank 5
+
+//Wendigo Gift
+//Rank 1
+//Rank 2
+//Rank 3
+//"Bloody Feast"
+void spell_gift_bloodyfeast( int sn, int level, CHAR_DATA *ch, void *vo, int target )
+{
+    OBJ_DATA *obj;
+    AFFECT_DATA af;
+
+    if ((obj = get_obj_here( ch, NULL, "corpse" )) == NULL)
+    {
+        send_to_char("Feast upon what?\n\r",ch);
+        return;
+    }
+    if(obj->item_type != ITEM_CORPSE_NPC)
+    {
+        send_to_char("You cannot feast upon that.\n\r",ch);
+        return;
+    }
+    if(obj->level == 0 || obj->timer < 2)
+    {
+        send_to_char("You cannot find any fresh meat left on it.\n\r",ch);
+        return;
+    }
+
+    if (ch->pcdata->condition[COND_FULL] > 40 )
+    {
+        send_to_char( "You are too full to feast.\n\r", ch );
+        return;
+    }
+
+    act( "$n squats over $p and devours its flesh in a fury, splashing blood and entrails everywhere.",  ch, obj, NULL, TO_ROOM );
+    act( "You squat over $p and tear it to shreds, devowering the fresh,\n\rwarm, bloody meat with great enjoyment.", ch, obj, NULL, TO_CHAR );
+
+    af.where        = TO_AFFECTS;
+    af.type         = gsn_gift_bloodyfeast;
+    af.level        = level;
+    af.duration     = level/5;
+    af.modifier     = 10;
+    af.location     = APPLY_DAMROLL;
+    af.bitvector    = 0;
+    affect_to_char(ch, &af);
+
+    gain_condition( ch, COND_FULL, obj->level/10);
+    gain_condition( ch, COND_HUNGER, obj->level/10);
+    ch->rage += 5;
+
+    extract_obj( obj );
+    return;
+}
 //Rank 4
 //Rank 5
 

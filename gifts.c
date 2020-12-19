@@ -1618,14 +1618,24 @@ void spell_gift_fallingtouch( int sn, int level, CHAR_DATA *ch, void *vo, int ta
             return;
     }
 
+    if (ch->move < ch->level / 20)
+    {
+      send_to_char("You are too tired to perform this ability.\n\r", ch);
+      return;
+    }
+
+    ch->move -= ch->level / 20;
     diff = get_attribute(victim, STAMINA) + get_ability(victim, CSABIL_ATHLETICS);
     dicesuccess = godice(get_attribute(ch, DEXTERITY) + ch->csabilities[CSABIL_MEDICINE], diff);
+
+    WAIT_STATE(ch, 3);
 
     if(dicesuccess <= 0)
     {
         act("You miss $N!", ch, NULL, victim, TO_CHAR);
         act("$n tries to reach out and touch you and misses!", ch, NULL, victim, TO_VICT);
         act("$n tries to reach out and touch $N, but misses.", ch, NULL, victim, TO_NOTVICT);
+        WAIT_STATE(ch, 6);
         return;
     }
 
@@ -1635,7 +1645,7 @@ void spell_gift_fallingtouch( int sn, int level, CHAR_DATA *ch, void *vo, int ta
 
     STOPPED(victim, UMAX(2, dicesuccess) * PULSE_VIOLENCE);
 
-    damage(ch, victim, dicesuccess*UMAX(5, ch->level/2), gsn_gift_fallingtouch, DAM_ENERGY, TRUE);
+    damage(ch, victim, dicesuccess*UMAX(5, ch->level/2), gsn_gift_fallingtouch, DAM_BASH, TRUE);
     victim->position = POS_RESTING;
 
     return;

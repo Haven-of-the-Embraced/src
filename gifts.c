@@ -1644,9 +1644,9 @@ void spell_gift_fallingtouch( int sn, int level, CHAR_DATA *ch, void *vo, int ta
     act( "$n reaches out and touches $N, sending $M sprawling!", ch, NULL, victim, TO_ROOM );
 
     STOPPED(victim, UMAX(2, dicesuccess) * PULSE_VIOLENCE);
-
-    damage(ch, victim, dicesuccess*UMAX(5, ch->level/2), gsn_gift_fallingtouch, DAM_BASH, TRUE);
+    damage(ch, victim, dicesuccess*UMAX(5, ch->level * 3 / 2), gsn_gift_fallingtouch, DAM_BASH, TRUE);
     victim->position = POS_RESTING;
+    gain_exp(ch, dicesuccess*2);
 
     return;
 }

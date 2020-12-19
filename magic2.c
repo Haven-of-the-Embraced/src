@@ -396,6 +396,11 @@ void spell_blood( int sn, int level, CHAR_DATA *ch, void *vo, int target )
         ch->pblood = ch->max_pblood;
 
     send_to_char( "You gulp down the blood with great pleasure.\n\r", ch );
+    if (is_affected(ch, gsn_vamp_frenzy))
+    {
+      affect_strip(ch, gsn_vamp_frenzy);
+      send_to_char("The sweet taste of blood satiates your frenzied hunger.\n\r", ch);
+    }
 
     return;
 }
@@ -421,7 +426,11 @@ void spell_vampire_blood( int sn, int level, CHAR_DATA *ch, void *vo, int target
         ch->pblood = ch->max_pblood;
 
     send_to_char( "You gulp down the blood with great pleasure.\n\r", ch );
-
+    if (is_affected(ch, gsn_vamp_frenzy))
+    {
+      affect_strip(ch, gsn_vamp_frenzy);
+      send_to_char("The sweet taste of {rVitae{x satiates your frenzied hunger.\n\r", ch);
+    }
     return;
 }
 
@@ -550,4 +559,3 @@ void spell_wrath_of_god( int sn, int level, CHAR_DATA *ch, void *vo,int target )
     damage( ch, victim, 15000, sn, DAM_FIRE ,TRUE);
     return;
 }
-

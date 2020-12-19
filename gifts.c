@@ -1618,20 +1618,8 @@ void spell_gift_fallingtouch( int sn, int level, CHAR_DATA *ch, void *vo, int ta
             return;
     }
 
-    if (IS_NPC(victim))
-    {
-        diff = victim->level / 12;
-        if (diff < 4)
-            diff = 4;
-        if (diff > 9)
-            diff = 9;
-    } else
-    {
-        diff = get_attribute(victim, STAMINA) + get_ability(victim, CSABIL_ATHLETICS);
-    }
-
+    diff = get_attribute(victim, STAMINA) + get_ability(victim, CSABIL_ATHLETICS);
     dicesuccess = godice(get_attribute(ch, DEXTERITY) + ch->csabilities[CSABIL_MEDICINE], diff);
-
 
     if(dicesuccess <= 0)
     {
@@ -1641,17 +1629,14 @@ void spell_gift_fallingtouch( int sn, int level, CHAR_DATA *ch, void *vo, int ta
         return;
     }
 
-
-        act( "You reach out and touch $N, sending $M sprawling!", ch, NULL, victim, TO_CHAR );
-        act( "$n reaches out and touches you, and you are sent sprawling!", ch, NULL, victim, TO_VICT );
-        act( "$n reaches out and touches $N, sending $M sprawling!", ch, NULL, victim, TO_ROOM );
+    act( "You reach out and touch $N, sending $M sprawling!", ch, NULL, victim, TO_CHAR );
+    act( "$n reaches out and touches you, and you are sent sprawling!", ch, NULL, victim, TO_VICT );
+    act( "$n reaches out and touches $N, sending $M sprawling!", ch, NULL, victim, TO_ROOM );
 
     STOPPED(victim, UMAX(2, dicesuccess) * PULSE_VIOLENCE);
 
     damage(ch, victim, dicesuccess*UMAX(5, ch->level/2), gsn_gift_fallingtouch, DAM_ENERGY, TRUE);
     victim->position = POS_RESTING;
-
-
 
     return;
 }

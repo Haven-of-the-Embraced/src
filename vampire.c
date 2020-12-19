@@ -1085,23 +1085,23 @@ void vamp_frenzy( int sn, int level, CHAR_DATA *ch, void *vo, int target )
    }
   }
 */
+
+  if (!is_affected(ch, gsn_vamp_frenzy))
+  {
     af.where     = TO_AFFECTS2;
     af.type      = gsn_vamp_frenzy;
     af.level     = level;
     af.duration  = -1;
     af.location  = APPLY_HITROLL;
-    af.modifier  = -10;
+    af.modifier  = -200;
     af.bitvector = AFF2_VAMP_FRENZY;
     affect_to_char( ch, &af );
 
-    af.location  = APPLY_SAVING_SPELL;
-    af.modifier  = +10;
-    affect_to_char( ch, &af );
-
     af.location  = APPLY_AC;
-    af.modifier  = +100;
+    af.modifier  = +200;
     affect_to_char( ch, &af );
-    damage( ch, ch, ch->max_hit/3, gsn_vamp_frenzy, DAM_FIRE, TRUE);
+  }
+    damage( ch, ch, ch->level, gsn_vamp_frenzy, DAM_FIRE, TRUE);
     return;
 }
 

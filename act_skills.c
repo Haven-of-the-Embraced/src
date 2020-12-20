@@ -336,22 +336,25 @@ void do_classify(CHAR_DATA *ch, char *argument)
     sprintf( buf, "Your target is level %d, and does %s-type damage.\n\r",
       victim->level, attack_table[victim->dam_type].noun );
     send_to_char(buf,ch);
-    sprintf(buf, "Parts     : %s\n\r", part_bit_name(victim->parts));
+    sprintf(buf, "Parts        : %s\n\r", part_bit_name(victim->parts));
     send_to_char(buf,ch);
   }
 
-  if(success > 2)
+  if (success > 2)
   {
-    sprintf(buf, "Immunity  : %s\n\rResistant : %s\n\rVulnerable: %s\n\r",
-    imm_bit_name(victim->imm_flags), imm_bit_name(victim->res_flags), imm_bit_name(victim->vuln_flags));
+    sprintf(buf, "Immune to    : %s\n\r", imm_bit_name(victim->imm_flags));
+    send_to_char(buf,ch);
+    sprintf(buf, "Resistant to : %s\n\r", imm_bit_name(victim->res_flags));
+    send_to_char(buf,ch);
+    sprintf(buf, "Vulnerable to: %s\n\r", imm_bit_name(victim->vuln_flags));
     send_to_char(buf,ch);
   }
 
   if(success > 3)
   {
-    sprintf(buf, "Abilities : %s\n\r",off_bit_name(victim->off_flags));
+    sprintf(buf, "Tactics      : %s\n\r",off_bit_name(victim->off_flags));
     send_to_char(buf,ch);
-    sprintf(buf, "Affects   : %s\n\r",affect_bit_name(victim->affected_by));
+    sprintf(buf, "Abilities    : %s\n\r",affect_bit_name(victim->affected_by));
     send_to_char(buf,ch);
   }
 

@@ -324,40 +324,54 @@ void do_classify(CHAR_DATA *ch, char *argument)
     return;
   }
 
-  sprintf(buf, "%s is a %s-sized, %s %s and is approximately %d years old.\n\r",
-  victim->short_descr,
+    send_to_char("+========================= ANIMAL CLASSIFICATION ========================+\n\r", ch);
+  sprintf(buf, "| %s is a %s-sized, %s %s.\n\r",
+  capitalize(victim->short_descr),
   size_table[victim->size].name,
   victim->sex == 0 ? "sexless" : victim->sex == 1 ? "male" : "female",
-  race_table[victim->race].name, get_age(victim));
+  race_table[victim->race].name);
   send_to_char(buf,ch);
+  sprintf( buf, "| %s is level %d, %d years old, and does %s-type damage.\n\r",
+    victim->sex == 0 ? "It" : victim->sex == 1 ? "He" : "She",
+    victim->level,   get_age(victim),
+    attack_table[victim->dam_type].noun );
+  send_to_char(buf,ch);
+    sprintf(buf, "| Commonly considered a creature with %s Intelligence.\n\r", IS_SET(victim->form, FORM_SENTIENT) ? "a {Chigh{x" : "{clittle{x or {Dno{x");
+    send_to_char(buf, ch);
 
   if(success > 1)
   {
-    sprintf( buf, "Your target is level %d, and does %s-type damage.\n\r",
-      victim->level, attack_table[victim->dam_type].noun );
-    send_to_char(buf,ch);
-    sprintf(buf, "Parts        : %s\n\r", part_bit_name(victim->parts));
+    send_to_char("+============================ PHYSICAL TRAITS ===========================+\n\r", ch);
+    sprintf(buf, "%s", IS_SET(victim->form, FORM_POISON) ? "|    {R*****{x Use extreme caution, known to be {gp{Do{gi{Ds{go{Dn{go{Du{gs{x! {R*****{x\n\r" : "");
+    send_to_char(buf, ch);
+    sprintf(buf, "| %s\n\r", IS_SET(victim->form, FORM_EDIBLE) ? "    {YSome{x of this creature's parts are considered edible." : "          {YNone{x of this creature's parts are edible.");
+    send_to_char(buf, ch);
+    send_to_char("+---------------------------- Creature Parts ----------------------------+\n\r", ch);
+    sprintf(buf, "| %s\n\r", part_bit_name(victim->parts));
     send_to_char(buf,ch);
   }
 
   if (success > 2)
   {
-    sprintf(buf, "Immune to    : %s\n\r", imm_bit_name(victim->imm_flags));
+    send_to_char("+------------------------------------------------------------------------+\n\r", ch);
+    sprintf(buf, "| Immune to    : %s\n\r", imm_bit_name(victim->imm_flags));
     send_to_char(buf,ch);
-    sprintf(buf, "Resistant to : %s\n\r", imm_bit_name(victim->res_flags));
+    sprintf(buf, "| Resistant to : %s\n\r", imm_bit_name(victim->res_flags));
     send_to_char(buf,ch);
-    sprintf(buf, "Vulnerable to: %s\n\r", imm_bit_name(victim->vuln_flags));
+    sprintf(buf, "| Vulnerable to: %s\n\r", imm_bit_name(victim->vuln_flags));
     send_to_char(buf,ch);
   }
 
   if(success > 3)
   {
-    sprintf(buf, "Tactics      : %s\n\r",off_bit_name(victim->off_flags));
+    sprintf(buf, "| Abilities    : %s\n\r",affect_bit_name(victim->affected_by));
     send_to_char(buf,ch);
-    sprintf(buf, "Abilities    : %s\n\r",affect_bit_name(victim->affected_by));
+    send_to_char("+========================== BEHAVIORAL TRAITS ===========================+\n\r", ch);
+    sprintf(buf, "| Tactics      : %s\n\r",off_bit_name(victim->off_flags));
     send_to_char(buf,ch);
   }
 
+  send_to_char("+========================================================================+\n\r", ch);
   gain_exp(ch, success*2);
   return;
 }

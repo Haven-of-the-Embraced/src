@@ -2102,7 +2102,7 @@ void do_command(CHAR_DATA *ch, char *argument)
       act("$N seems to have no problem ignoring your command completely.", ch, NULL, victim, TO_CHAR);
       if (!IS_SET(victim->imm_flags, IMM_MENTAL))
       {
-        af.where     = TO_AFFECTS;
+        af.where     = TO_IMMUNE;
         af.type      = gsn_mental_resilience;
         af.level     = ch->level;
         af.duration  = 5;
@@ -2113,7 +2113,7 @@ void do_command(CHAR_DATA *ch, char *argument)
       }
       if (!IS_SET(victim->imm_flags, IMM_CHARM))
       {
-        af.where     = TO_AFFECTS;
+        af.where     = TO_IMMUNE;
         af.type      = gsn_mental_resilience;
         af.level     = ch->level;
         af.duration  = 5;

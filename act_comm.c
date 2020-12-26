@@ -1721,7 +1721,7 @@ void do_pose( CHAR_DATA *ch, char *argument )
     if ( d->connected == CON_PLAYING
     &&   d->character->in_room == ch->in_room )
     {
-            cprintf(d->character, "%s> %s\n\r", ch->name, argument);
+            cprintf(d->character, "{g[{DPose - %s{g] :: {x%s\n\r", ch->name, argument);
 
     }
     }

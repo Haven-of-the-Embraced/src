@@ -2925,6 +2925,7 @@ void do_charsheet (CHAR_DATA * ch, char *argument)
     char arg[MSL];
     CHAR_DATA *sch;
     CHAR_DATA *xch;
+    ROOM_INDEX_DATA *home;
 
     one_argument(argument, arg);
     if (arg[0] != '\0')
@@ -2946,6 +2947,8 @@ void do_charsheet (CHAR_DATA * ch, char *argument)
         sch = ch;
 
     if(IS_NPC(sch)) return;
+
+home = get_room_index(ch->pcdata->home);
 
 send_to_char("\n\r              |     |                            |      |\n\r",sch);
 send_to_char("              |\\   /|                            |\\    /|\n\r",sch);
@@ -2976,7 +2979,7 @@ if(ch->race == race_lookup("vampire"))
     send_to_char(buf,sch);
     sprintf(buf," |  Clan:   %s   ",center(capitalize(clan_table[ch->clan].name),19," "));
     send_to_char(buf,sch);
-    sprintf(buf,"  %s       :Haven |\n\r",center("Unset",20," "));
+    sprintf(buf,"  %s     :Haven |\n\r", home ? center(home->name,22," ") : center("Unset",22," "));
     send_to_char(buf,sch);
 
 }
@@ -2988,7 +2991,9 @@ if(ch->race == race_lookup("ghoul"))
     send_to_char(buf,sch);
     sprintf(buf," |  Domitor Clan:   %s  ",center(capitalize(clan_table[ch->clan].name),12," "));
     send_to_char(buf,sch);
-    sprintf(buf,"  %s    :Bond |\n\r",center(ch->bonded == 0 ? "None" : ch->bonded == 1 ? "Lv 1" : ch->bonded == 2 ? "Lv 2" : ch->bonded == 3 ? "Lv 3" : "Lv3",19," "));
+    sprintf(buf,"  %s    :Bond |\n\r",center(ch->bonded == 0 ? "None" : ch->bonded == 1 ? "Lv 1" : ch->bonded == 2 ? "Lv 2" : ch->bonded == 3 ? "Lv 3" : "Lv3",24," "));
+    send_to_char(buf,sch);
+    sprintf(buf," |                                  %s     :Haven |\n\r", home ? center(home->name,22," ") : center("Unset",22," "));
     send_to_char(buf,sch);
 
 }

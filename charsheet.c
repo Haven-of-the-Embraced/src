@@ -2977,9 +2977,9 @@ if(ch->race == race_lookup("vampire"))
         ch->pcdata->csgeneration == 8 ? "Eighth" : ch->pcdata->csgeneration == 9 ? "Ninth" : ch->pcdata->csgeneration == 10 ? "Tenth" : ch->pcdata->csgeneration == 11 ? "Eleventh" :
         ch->pcdata->csgeneration == 12 ? "Twelfth" : ch->pcdata->csgeneration == 13 ? "Thirteenth" : "Unknown",20," "));
     send_to_char(buf,sch);
-    sprintf(buf," |  Clan:   %s   ",center(capitalize(clan_table[ch->clan].name),19," "));
+    sprintf(buf," |  Clan:  %s  ",center(capitalize(clan_table[ch->clan].name),19," "));
     send_to_char(buf,sch);
-    sprintf(buf,"  %s     :Haven |\n\r", home ? center(home->name,22," ") : center("Unset",22," "));
+    sprintf(buf,"  %s :Haven |\n\r", home ? center(home->name,28," ") : center("Unset",28," "));
     send_to_char(buf,sch);
 
 }
@@ -2993,7 +2993,7 @@ if(ch->race == race_lookup("ghoul"))
     send_to_char(buf,sch);
     sprintf(buf,"  %s    :Bond |\n\r",center(ch->bonded == 0 ? "None" : ch->bonded == 1 ? "Lv 1" : ch->bonded == 2 ? "Lv 2" : ch->bonded == 3 ? "Lv 3" : "Lv3",24," "));
     send_to_char(buf,sch);
-    sprintf(buf," |                                  %s     :Haven |\n\r", home ? center(home->name,22," ") : center("Unset",22," "));
+    sprintf(buf," |                                %s :Haven |\n\r", home ? center(home->name,28," ") : center("Unset",28," "));
     send_to_char(buf,sch);
 
 }
@@ -3003,11 +3003,11 @@ if(ch->race == race_lookup("garou"))
     send_to_char(buf,sch);
     sprintf(buf," %s  :Tribe |\n\r",center(capitalize(clan_table[ch->clan].name),24," "));
     send_to_char(buf,sch);
-    sprintf(buf," |  Auspice:  %s   ",center(ch->pcdata->auspice == RAGABASH ? "Ragabash" : ch->pcdata->auspice ==THEURGE ? "Theurge" :
+    sprintf(buf," |  Auspice:  %s  ",center(ch->pcdata->auspice == RAGABASH ? "Ragabash" : ch->pcdata->auspice ==THEURGE ? "Theurge" :
         ch->pcdata->auspice == PHILODOX ? "Philodox" : ch->pcdata->auspice == GALLIARD ? "Galliard" : ch->pcdata->auspice == AHROUN ?
-        "Ahroun" : "Error",19," "));
+        "Ahroun" : "Error",18," "));
     send_to_char(buf,sch);
-    sprintf(buf,"  %s       :Home |\n\r",center("Unset",19," "));
+    sprintf(buf," %s :Home |\n\r",home ? center(home->name,28," ") : center("Unset",28," "));
     send_to_char(buf,sch);
 }
 if(ch->race == race_lookup("human") && ch->clan == clan_lookup("mage"))

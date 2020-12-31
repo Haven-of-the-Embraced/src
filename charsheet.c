@@ -3010,12 +3010,17 @@ if(ch->race == race_lookup("garou"))
     sprintf(buf," %s :Home |\n\r",home ? center(home->name,28," ") : center("Unset",28," "));
     send_to_char(buf,sch);
 }
-if(ch->race == race_lookup("human") && ch->clan == clan_lookup("mage"))
+if(ch->race == race_lookup("human") && clan_table[ch->clan].clan_type == TYPE_TRADITION)
 {
     sprintf(buf," |  Tradition: %s ",center(capitalize(tradition_table[ch->tradition].name),19," "));
     send_to_char(buf,sch);
     sprintf(buf," %s :Essence |\n\r",center("None",24," "));
     send_to_char(buf,sch);
+}
+if(ch->race == race_lookup("human"))
+{
+  sprintf(buf," |                                %s  :Home |\n\r", home ? center(home->name,28," ") : center("Unset",28," "));
+  send_to_char(buf,sch);
 }
 send_to_char(" |                                                                    |\n\r",sch);
 send_to_char(" |<=-------------------------=Attributes=---------------------------=>|\n\r",sch);

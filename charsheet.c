@@ -2968,7 +2968,7 @@ sprintf(buf," |  Race: %s    v",center(capitalize(race_table[ch->race].name),21,
 send_to_char(buf,sch);
 sprintf(buf,"  %s :Demeanor |\n\r",center("None",21," "));
 send_to_char(buf,sch);
-if(ch->race == race_lookup("vampire"))
+if(ch->race == race_lookup("vampire") || ch->race == race_lookup("methuselah"))
 {
     sprintf(buf," |  Sire:   %s  ",center(ch->sire,21," "));
     send_to_char(buf,sch);

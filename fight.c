@@ -2169,7 +2169,7 @@ bool d10_damage(CHAR_DATA *ch, CHAR_DATA *victim, int damsuccess, int modifier, 
     REMOVE_BIT( ch->affected_by, AFF_INVISIBLE );
     act( "$n fades into existence.", ch, NULL, NULL, TO_ROOM );
     }
-    
+
     if(IS_AFFECTED(ch, AFF_HIDE))
     {
       affect_strip(ch, gsn_hide);
@@ -3148,11 +3148,21 @@ void make_corpse( CHAR_DATA *ch )
     }
     }
 
-        if( ch->race == race_lookup("MIB") ||
-            ch->race == race_lookup("spirit") ||
-            ch->race == race_lookup("wraith") ||
-            ch->race == race_lookup("bane") )
-            return;
+        if( ch->race == race_lookup("MIB") )
+        {
+          act("As it falls to the ground, $n's body melts away into nothingness.", ch, NULL, NULL, TO_ROOM);
+          return;
+        }
+        if (ch->race == race_lookup("spirit") || ch->race == race_lookup("bane"))
+        {
+          act("After a brief flickering, $n fades from sight as if it had never existed.", ch, NULL, NULL, TO_ROOM);
+          return;
+        }
+        if (ch->race == race_lookup("wraith"))
+        {
+          act("An unholy shriek bellows from $n, as $e is sucked into a briefly appearing void.", ch, NULL, NULL, TO_ROOM);
+          return;
+        }
 
     if(fetish != NULL)
         obj_to_char(fetish,ch);

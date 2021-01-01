@@ -3852,16 +3852,29 @@ void do_gwho(CHAR_DATA *ch, char *argument )
     send_to_char(" ______________________________________________ \n\r", ch);
     if(ch->race == race_lookup("vampire") || ch->race == race_lookup("methuselah") || ch->race == race_lookup("ghoul"))
     {
-        sprintf(buf,"Members of clan {W%s{x:\n\r", capitalize(clan_table[ch->clan].name));
-        send_to_char(buf,ch);
-        send_to_char("[Lvl  | Name   | Gen | Hit Points |  Mana   | Movement | Blood ]\n\r", ch);
+      sprintf( buf, ":%s:\n\r", center("{RClan Members{x", 46, " "));
+      send_to_char(buf,ch);
+      sprintf( buf, ":{y%s{x:\n\r", center(capitalize(clan_table[ch->clan].name), 46, " "));
+      send_to_char(buf,ch);
+      sprintf( buf, ": Leader - %-12s   Banker - %-12s:\n\r", capitalize(clan_table[ch->clan].leader), capitalize(clan_table[ch->clan].banker));
+      send_to_char(buf, ch);
+      send_to_char(":----------------------------------------------:\n\r", ch);
+      sprintf( buf, ":%s:\n\r", center("{YCurrently Online{x", 46, "_"));
+      send_to_char(buf, ch);
+      send_to_char(": Lvl | Name           || Generation           :\n\r", ch);
     }
     else if(ch->race == race_lookup("garou"))
     {
-        sprintf( buf, "Your brothers and sisters in the {W%s tribe{x:\n\r", capitalize(clan_table[ch->clan].name));
-        send_to_char(buf,ch);
-        send_to_char("[Lvl  | Name   | Rank | Hit Points |  Mana   | Movement | Rage | Renown]\n\r", ch);
-    }
+      sprintf( buf, ":%s:\n\r", center("{GTribe Members{x", 46, " "));
+      send_to_char(buf,ch);
+      sprintf( buf, ":{y%s{x:\n\r", center(capitalize(tribe_table[ch->pcdata->tribe].name), 46, " "));
+      send_to_char(buf,ch);
+      sprintf( buf, ": Leader - %-12s   Banker - %-12s:\n\r", capitalize(clan_table[ch->clan].leader), capitalize(clan_table[ch->clan].banker));
+      send_to_char(buf, ch);
+      send_to_char(":----------------------------------------------:\n\r", ch);
+      sprintf( buf, ":%s:\n\r", center("{YCurrently Online{x", 46, "_"));
+      send_to_char(buf, ch);
+      send_to_char(": Lvl | Name           || Rank                 :\n\r", ch);    }
     else if(ch->clan == clan_lookup("watcher"))
     {
         sprintf( buf, "Your silent brethren of the {W%s{x sect of the Inquisition{x:\n\r", capitalize(clan_table[ch->clan].name));
@@ -3890,37 +3903,27 @@ void do_gwho(CHAR_DATA *ch, char *argument )
         if ( d->connected == CON_PLAYING && ch->clan == victim->clan && !IS_IMMORTAL(victim))
         {
             if(victim->race == race_lookup("vampire") || victim->race == race_lookup("methuselah"))
-                sprintf( buf, "[%d%s | %s: | %d | %d/%d | %d/%d | %d/%d | %d ]\n\r",
-                    victim->level,
-                    victim->level < 100 ? " " : "",
-                    victim->name,
-                    victim->gen,
-                    victim->hit, victim->max_hit,
-                    victim->mana, victim->max_mana,
-                    victim->move, victim->max_move,
-                    victim->pblood/10);
+              sprintf( buf, ": %s%d | %-15s|| %s           :\n\r",
+                victim->level < 10 ? "  " : victim->level < 100 ? " " : "",
+                victim->level,
+                victim->name,
+                victim->pcdata->csgeneration == 1 ? "First     " : victim->pcdata->csgeneration == 2 ? "Second    " : victim->pcdata->csgeneration == 3 ? "Third     " :
+                victim->pcdata->csgeneration == 4 ? "Fourth    " : victim->pcdata->csgeneration == 5 ? "Fifth     " : victim->pcdata->csgeneration == 6 ? "Sixth     " : victim->pcdata->csgeneration == 7 ? "Seventh   " :
+                victim->pcdata->csgeneration == 8 ? "Eighth    " : victim->pcdata->csgeneration == 9 ? "Ninth     " : victim->pcdata->csgeneration == 10 ? "Tenth     " : victim->pcdata->csgeneration == 11 ? "Eleventh  " :
+                victim->pcdata->csgeneration == 12 ? "Twelfth   " : victim->pcdata->csgeneration == 13 ? "Thirteenth" : "Unknown   ");
             else if(victim->race == race_lookup("ghoul"))
-                sprintf( buf, "[%d%s | %s: | %s | %d/%d | %d/%d | %d/%d | %d ]\n\r",
-                    victim->level,
-                    victim->level < 100 ? " " : "",
-                    victim->name,
-                    "{rG{x",
-                    victim->hit, victim->max_hit,
-                    victim->mana, victim->max_mana,
-                    victim->move, victim->max_move,
-                    victim->pblood/10);
+              sprintf( buf, ": %s%d | %-15s|| %s           :\n\r",
+                victim->level < 10 ? "  " : victim->level < 100 ? " " : "",
+                victim->level,
+                victim->name,
+                "{rGhoul{x     ");
             else if(victim->race == race_lookup("garou"))
-                sprintf( buf, "[%d%s | %s: | %d | %d/%d | %d/%d | %d/%d | %d |  %d  ]\n\r",
-                    victim->level,
-                    victim->level < 100 ? " " : "",
-                    victim->name,
-                    victim->rank,
-                    victim->hit, victim->max_hit,
-                    victim->mana, victim->max_mana,
-                    victim->move, victim->max_move,
-                    victim->rage,
-                    victim->renown);
-
+              sprintf( buf, ": %s%d | %-15s|| %s         :\n\r",
+                victim->level < 10 ? "  " : victim->level < 100 ? " " : "",
+                victim->level,
+                victim->name,
+                victim->rank == 1 ? "Cliath      " : victim->rank == 2 ? "Fostern     " : victim->rank == 3 ? "Adren       " :
+                victim->rank == 4 ? "Athro       " : victim->rank == 5 ? "Elder       " : "Pup         ");
             else if(victim->clan == clan_lookup("watcher"))
                 sprintf( buf, "[%d%s | %s | %s | %d/%d | %d/%d | %d/%d]\n\r",
                     victim->level,
@@ -3936,7 +3939,7 @@ void do_gwho(CHAR_DATA *ch, char *argument )
                     victim->level,
                     victim->name,
                     victim->rank == 1 ? "Apprentice  " : victim->rank == 2 ? "Disciple    " : victim->rank == 8 ? "Master      " : victim->rank == 9 ? "Mentor      " : "Leader      ");
-                    send_to_char( buf, ch);
+            send_to_char( buf, ch);
         }
     }
     send_to_char(" TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT \n\r", ch);

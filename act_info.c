@@ -3843,10 +3843,13 @@ void do_gwho(CHAR_DATA *ch, char *argument )
 
     if(ch->clan == 0)
     {
-        send_to_char("You are not in a clan or guild!\n\r", ch);
+        send_to_char("+----------------------------------------+\n\r", ch);
+        send_to_char("| You are not in a {RClan{y/{GTribe{y/{CTradition{x. |\n\r", ch);
+        send_to_char("+----------------------------------------+\n\r", ch);
         return;
     }
 
+    send_to_char(" ______________________________________________ \n\r", ch);
     if(ch->race == race_lookup("vampire") || ch->race == race_lookup("methuselah") || ch->race == race_lookup("ghoul"))
     {
         sprintf(buf,"Members of clan {W%s{x:\n\r", capitalize(clan_table[ch->clan].name));
@@ -3867,10 +3870,18 @@ void do_gwho(CHAR_DATA *ch, char *argument )
     }
     else
     {
-        sprintf( buf, "Members of the %s guild:\n\r", capitalize(clan_table[ch->clan].name));
-        send_to_char(buf,ch);
-        send_to_char("[Lvl  |  Tradition  | Name   | Rank | Hit Points |  Mana   | Movement ]\n\r", ch);
+      sprintf( buf, ":%s:\n\r", center("{CTradition Members{x", 46, " "));
+      send_to_char(buf,ch);
+      sprintf( buf, ":{y%s{x:\n\r", center(capitalize(tradition_table[ch->tradition].name), 46, " "));
+      send_to_char(buf,ch);
+      sprintf( buf, ": Leader - %-12s   Banker - %-12s:\n\r", capitalize(clan_table[ch->clan].leader), capitalize(clan_table[ch->clan].banker));
+      send_to_char(buf, ch);
+      send_to_char(":----------------------------------------------:\n\r", ch);
+      sprintf( buf, ":%s:\n\r", center("{YCurrently Online{x", 46, "_"));
+      send_to_char(buf, ch);
+      send_to_char(": Lvl | Name           || Rank                 :\n\r", ch);
     }
+    send_to_char(":==============================================:\n\r", ch);
 
     for ( d = descriptor_list; d != NULL; d = d->next )
     {
@@ -3920,18 +3931,15 @@ void do_gwho(CHAR_DATA *ch, char *argument )
                     victim->mana, victim->max_mana,
                     victim->move, victim->max_move);
             else
-                sprintf( buf, "[%d%s | %s | %s: | %s | %d/%d | %d/%d | %d/%d]\n\r",
+                sprintf( buf, ": %s%d | %-15s|| %s         :\n\r",
+                    victim->level < 10 ? "  " : victim->level < 100 ? " " : "",
                     victim->level,
-                    victim->level < 100 ? " " : "",
-                    tradition_table[victim->tradition].name,
                     victim->name,
-                    victim->rank == 1 ? "Appr" : victim->rank == 2 ? "Disc" : victim->rank == 8 ? "Mast" : victim->rank == 9 ? "Ment" : "Lead",
-                    victim->hit, victim->max_hit,
-                    victim->mana, victim->max_mana,
-                    victim->move, victim->max_move);
+                    victim->rank == 1 ? "Apprentice  " : victim->rank == 2 ? "Disciple    " : victim->rank == 8 ? "Master      " : victim->rank == 9 ? "Mentor      " : "Leader      ");
                     send_to_char( buf, ch);
         }
     }
+    send_to_char(" TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT \n\r", ch);
     return;
 }
 

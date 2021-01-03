@@ -1148,6 +1148,16 @@ void do_rpavailable(CHAR_DATA *ch, char *argument)
   if (IS_NPC(ch))
     return;
 
+    if (!IS_SET(ch->act2,PLR2_RP_AVAILABLE))
+    {
+      send_to_char("You now show as being available and looking for RP.\n\r",ch);
+      SET_BIT(ch->act2,PLR2_RP_AVAILABLE);
+    }
+    else
+    {
+      send_to_char("You no longer show being available and looking for RP.\n\r",ch);
+      REMOVE_BIT(ch->act2,PLR2_RP_AVAILABLE);
+    }
   return;
 }
 
@@ -2389,7 +2399,6 @@ void do_who( CHAR_DATA *ch, char *argument )
 
         if (IS_SET(wch->act2, PLR2_RP_AVAILABLE) &&
             !IS_SET(wch->comm, COMM_AFK) && wch->timer < 18)
-          sprintf(tags, "{w |                |");
           sprintf(tags, "{w |{y[{MLooking For RP{y]{x|");
         if (IS_SET(wch->act, PLR_IC)) {sprintf(tags, "{w | {w({CIn-Character{w){w |");}
         if (IS_SET(wch->comm, COMM_QUIET)) {sprintf(tags, "{w |  {c<{yQuiet Mode{c>{w  |");}

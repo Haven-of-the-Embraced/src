@@ -3287,6 +3287,7 @@ char *act2_bit_name( int act_flags )
     if (act_flags & PLR2_BATTLEPROMPT) strcat(buf, " battleprompt");
     if (act_flags & PLR2_DEBUG) strcat(buf, " debug");
     if (act_flags & PLR2_DEBUGMSG) strcat(buf, " debugmsg");
+    if (act_flags & PLR2_RP_AVAILABLE) strcat(buf, " rpavailable");
     }
     return ( buf[0] != '\0' ) ? buf+1 : "none";
 }

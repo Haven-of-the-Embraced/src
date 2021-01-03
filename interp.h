@@ -222,6 +222,7 @@ DECLARE_DO_FUN( do_nochannels   );
 DECLARE_DO_FUN( do_noemote  );
 DECLARE_DO_FUN( do_nofollow );
 DECLARE_DO_FUN( do_ic       );
+DECLARE_DO_FUN( do_rpavailable);
 DECLARE_DO_FUN( do_noloot   );
 DECLARE_DO_FUN( do_north    );
 DECLARE_DO_FUN( do_noshout  );

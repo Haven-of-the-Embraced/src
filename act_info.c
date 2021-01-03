@@ -1143,6 +1143,14 @@ void do_ic(CHAR_DATA *ch, char *argument)
     return;
 }
 
+void do_rpavailable(CHAR_DATA *ch, char *argument)
+{
+  if (IS_NPC(ch))
+    return;
+
+  return;
+}
+
 void do_noshortdesc(CHAR_DATA *ch, char *argument)
 {
     if (IS_NPC(ch))

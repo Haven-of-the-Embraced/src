@@ -301,6 +301,7 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "nofollow",   do_nofollow },
     { "icmode",     do_ic},
     { "goic",       do_ic},
+    { "rpavailable",  do_rpavailable},
     { "noloot",     do_noloot},
     { "nosummon",   do_nosummon },
 	{ "nocondition", do_nocondition },

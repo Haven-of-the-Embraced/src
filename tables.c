@@ -349,6 +349,7 @@ const struct flag_type plr2_flags[] =
 	{   "battleprompt",          N,  FALSE   },
 	{   "debug",          O,  FALSE   },
 	{   "debugmsg",          P,  FALSE   },
+	{		"rp_available",			Q,	FALSE	},
     {   NULL,           0,  0   }
 };
 

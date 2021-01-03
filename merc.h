@@ -1864,6 +1864,7 @@ struct  kill_data
 #define PLR2_BATTLEPROMPT (N) // Show battle prompt in combat.
 #define PLR2_DEBUG        (O) // Flag char a debugger
 #define PLR2_DEBUGMSG     (P) // Show debug messages
+#define PLR2_RP_AVAILABLE (Q) // Show player looking for RP
 
 
 /* RT comm flags -- may be used on both mobs and chars */

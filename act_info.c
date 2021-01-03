@@ -2379,7 +2379,10 @@ void do_who( CHAR_DATA *ch, char *argument )
         else if (wch->timer >= 1000)
             sprintf(tags, "{w | {D**{RIDLE{D** {r({w%4d{r){w|", wch->timer);
 
-
+        if (IS_SET(wch->act2, PLR2_RP_AVAILABLE) &&
+            !IS_SET(wch->comm, COMM_AFK) && wch->timer < 18)
+          sprintf(tags, "{w |                |");
+          sprintf(tags, "{w |{y[{MLooking For RP{y]{x|");
         if (IS_SET(wch->act, PLR_IC)) {sprintf(tags, "{w | {w({CIn-Character{w){w |");}
         if (IS_SET(wch->comm, COMM_QUIET)) {sprintf(tags, "{w |  {c<{yQuiet Mode{c>{w  |");}
 

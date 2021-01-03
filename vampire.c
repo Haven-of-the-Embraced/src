@@ -316,7 +316,7 @@ void do_feed(CHAR_DATA *ch, char *argument)
         send_to_char("Overcoming your mortal aversion, you give in to your vampiric side, if only for a moment.\n\r", ch);
 
     }
-// Ghouls disabled - UGHA
+
     if(ch->race == race_lookup("ghoul"))
     {
         send_to_char("You must either be willingly nourished by a Kindred, or take sustenance from a beheaded vampire corpse.\n\r",ch);
@@ -480,23 +480,23 @@ void do_feed(CHAR_DATA *ch, char *argument)
             WAIT_STATE(ch, 12);
             affect_strip(ch, gsn_vamp_frenzy);
             affect_strip(ch, gsn_torpor);
-            sprintf(buf, "You sink your fangs into %s to feed off their blood...\n\r", name);
-            send_to_char(buf, ch);
+            act("You sink your fangs deep into $N's neck,", ch, NULL, victim, TO_CHAR);
             if(!IS_NPC(victim))
             {
                 sprintf(buf, "%s bites your neck and feeds off of you!\n\r", ch->name);
                 send_to_char(buf,victim);
             }
-            act("$n bites $N and drinks their blood!", ch,NULL,victim,TO_NOTVICT);
+            act("$n lunges forward and bites $N's neck!", ch,NULL,victim,TO_NOTVICT);
             bloodgain = godice(get_attribute(ch, STRENGTH) + success, 6);
+            gain_exp(ch, success);
             if (victim->hit > victim->max_hit/2)
                 bloodgain -= 2;
 
             if (bloodgain < 1) {
-                send_to_char("and fail to drain any vitae from them.\n\r", ch);
+                act(" but fail to drain any blood from $M.\n\r", ch, NULL, victim, TO_CHAR);
                 return;
             }
-            send_to_char("and are rewarded with sweet warm vitae to sate your hunger.\n\r", ch);
+            send_to_char(" and are rewarded with sweet, warm blood to sate your hunger.\n\r", ch);
             victim->hit -= number_range(bloodgain*8,bloodgain*12);
             gain_condition( ch, COND_FULL, bloodgain);
             bloodgain *= 2;
@@ -521,8 +521,7 @@ void do_feed(CHAR_DATA *ch, char *argument)
         else
         {
             WAIT_STATE( ch, 12 );
-            sprintf(buf, "%s evades your attempt to feed from them!\n\r", name);
-            send_to_char(buf,ch);
+            act("$N evades your attempt to feed from $M!", ch, NULL, victim, TO_CHAR);
             if(!IS_NPC(victim))
             {
                 sprintf(buf, "You barely evade %s's attempt to feed from you!\n\r", ch->name);

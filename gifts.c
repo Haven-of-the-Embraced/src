@@ -2417,8 +2417,89 @@ void spell_gift_auraofconfidence( int sn, int level, CHAR_DATA *ch, void *vo, in
     return;
 }
 
-void spell_gift_fatalflaw( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_fatalflaw( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  CHAR_DATA *victim = (CHAR_DATA *) vo;
+  AFFECT_DATA af;
+  char buf[MSL];
+  int successes = 0;
+  int difficulty = 6;
+
+  if (IS_NPC(ch))
     return;
+/*
+  if (!IS_NPC(victim))
+  {
+    send_to_char("You cannot use this Gift on players.\n\r", ch);
+    return;
+  }
+*/
+  if (is_affected(ch, gsn_gift_fatalflaw))
+  {
+    send_to_char("Your current target is no longer worth your time, you now prepare for studying your next quarry.\n\r", ch);
+    affect_strip(ch, gsn_gift_fatalflaw);
+    return;
+  }
+
+  if (ch == victim)
+  {
+          send_to_char("You already know yourself well enough.\n\r", ch );
+          return;
+  }
+
+  if (ch->move < ch->level / 5)
+  {
+    send_to_char("You are too tired to pinpoint your target's weaknesses.\n\r", ch);
+    return;
+  }
+
+  if (ch->position == POS_FIGHTING)
+  {
+    send_to_char("You cannot concentrate in battle long enough to try and gauge your opponent.\n\r", ch);
+    return;
+  }
+
+//  difficulty = get_attribute(victim, WITS) + get_ability(victim, CSABIL_SUBTERFUGE);
+  successes = godice(get_attribute(ch, PERCEPTION) + get_ability(ch, CSABIL_EMPATHY), difficulty);
+  ch->move -= ch->level / 5;
+  WAIT_STATE(ch, 12);
+
+  if (successes < 0)
+  {
+    act("After careful consideration, you determine that $N is perfect, and has no flaws whatsoever.", ch, NULL, victim, TO_CHAR);
+    WAIT_STATE(ch, 6);
+    return;
+  }
+
+  if (successes == 0)
+  {
+    act("Try as you might, no weaknesses are found regarding $N.", ch, NULL, victim, TO_CHAR);
+    WAIT_STATE(ch, 6);
+    return;
+  }
+
+  act("Focusing your attention solely on $N, you manage to size $M up and pinpoint $S flaws.", ch, NULL, victim, TO_CHAR);
+
+  af.where     = TO_AFFECTS;
+  af.type      = gsn_gift_fatalflaw;
+  af.level     = successes;
+  af.duration  = (2 * successes) + 10;
+//af.modifier holds mob vnum for comparison in d10_damage to get +1 die if against same mob
+//  af.modifier  = victim->pIndexData->vnum;
+  af.modifier = 0;
+  af.location  = 0;
+  af.bitvector = 0;
+  affect_to_char( ch, &af );
+
+  if (successes > 3)
+  {
+    sprintf(buf, "With a sudden flash of insight, you pinpoint all of %s's weaknesses: \n\r    - %s\n\r", imm_bit_name(victim->vuln_flags));
+    send_to_char(buf,ch);
+  }
+
+  gain_exp(ch, successes*2);
+
+  return;
 }
 
 void spell_gift_seizingtheedge( int sn, int level, CHAR_DATA *ch, void *vo, int target){

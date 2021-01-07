@@ -1403,7 +1403,7 @@ const struct    gift_type   gift_table  [MAX_GIFTS_CODED]  =
     {   "fog on the moor", 				0,     24, 0,     0,      0,          FIANNA,   5,   0},
     {   "gift of the spriggan", 		0,     24, 0,     0,      0,          FIANNA,   5,   0},
     {   "aura of confidence", 			0,     24, 0,     0,      0,          SHADOW_LORD, 1,   0},
-    {   "fatal flaw", 					0,     24, 0,     0,      0,          SHADOW_LORD, 1,   0},
+    {   "fatal flaw", 					1,     24, 0,     0,      0,          SHADOW_LORD, 1,   0},
     {   "seizing the edge", 			0,     24, 0,     0,      0,          SHADOW_LORD, 1,   0},
     {   "clap of thunder", 				0,     24, 0,     0,      0,          SHADOW_LORD, 2,   0},
     {   "ravens curse", 				0,     24, 0,     0,      0,          SHADOW_LORD, 3,   0},

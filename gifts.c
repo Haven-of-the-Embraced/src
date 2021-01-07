@@ -2420,17 +2420,22 @@ void spell_gift_auraofconfidence( int sn, int level, CHAR_DATA *ch, void *vo, in
 void spell_gift_fatalflaw( int sn, int level, CHAR_DATA *ch, void *vo, int target)
 {
   CHAR_DATA *victim = (CHAR_DATA *) vo;
+  MOB_INDEX_DATA *vMob;
   AFFECT_DATA af;
   char buf[MSL];
   int successes = 0;
   int difficulty = 6;
+  int quarry = 0;
 
   if (IS_NPC(ch))
     return;
 
   if (is_affected(ch, gsn_gift_fatalflaw))
   {
-    send_to_char("Your current target is no longer worth your time, you now prepare for studying your next quarry.\n\r", ch);
+    quarry = get_affect_modifier(ch, gsn_gift_fatalflaw);
+    vMob = get_mob_index(quarry);
+    sprintf(buf, "%s is no longer worth your time, and you prepare for studying your next quarry.\n\r", capitalize(vMob->short_descr));
+    send_to_char(buf, ch);
     affect_strip(ch, gsn_gift_fatalflaw);
     return;
   }

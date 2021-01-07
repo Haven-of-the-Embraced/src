@@ -2459,11 +2459,11 @@ void spell_gift_fatalflaw( int sn, int level, CHAR_DATA *ch, void *vo, int targe
     return;
   }
 
-//  difficulty = get_attribute(victim, WITS) + get_ability(victim, CSABIL_SUBTERFUGE);
+  difficulty = get_attribute(victim, WITS) + get_ability(victim, CSABIL_SUBTERFUGE);
   successes = godice(get_attribute(ch, PERCEPTION) + get_ability(ch, CSABIL_EMPATHY), difficulty);
   ch->move -= ch->level / 5;
   WAIT_STATE(ch, 12);
-successes = 1;
+
   if (successes < 0)
   {
     act("After careful consideration and observing your target for some time,\n\r you determine that $N is perfect, and has no flaws whatsoever.", ch, NULL, victim, TO_CHAR);
@@ -2486,14 +2486,13 @@ successes = 1;
   af.duration  = (2 * successes) + 10;
 //af.modifier holds mob vnum for comparison in d10_damage to get +1 die if against same mob
   af.modifier  = victim->pIndexData->vnum;
-//  af.modifier = 0;
   af.location  = 0;
   af.bitvector = 0;
   affect_to_char( ch, &af );
 
   if (successes > 3)
   {
-    sprintf(buf, "With a sudden flash of insight, you pinpoint all of %s's weaknesses: \n\r    - %s\n\r", imm_bit_name(victim->vuln_flags));
+    sprintf(buf, "With a sudden flash of insight, you realise that %s is weak to:\n\r{r[{Y%s{r]{x\n\r", victim->short_descr, imm_bit_name(victim->vuln_flags));
     send_to_char(buf,ch);
   }
 

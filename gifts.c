@@ -2427,17 +2427,17 @@ void spell_gift_fatalflaw( int sn, int level, CHAR_DATA *ch, void *vo, int targe
 
   if (IS_NPC(ch))
     return;
-/*
-  if (!IS_NPC(victim))
-  {
-    send_to_char("You cannot use this Gift on players.\n\r", ch);
-    return;
-  }
-*/
+
   if (is_affected(ch, gsn_gift_fatalflaw))
   {
     send_to_char("Your current target is no longer worth your time, you now prepare for studying your next quarry.\n\r", ch);
     affect_strip(ch, gsn_gift_fatalflaw);
+    return;
+  }
+
+  if (!IS_NPC(victim))
+  {
+    send_to_char("{R*You cannot use this Gift on players.{x\n\r", ch);
     return;
   }
 
@@ -2463,11 +2463,11 @@ void spell_gift_fatalflaw( int sn, int level, CHAR_DATA *ch, void *vo, int targe
   successes = godice(get_attribute(ch, PERCEPTION) + get_ability(ch, CSABIL_EMPATHY), difficulty);
   ch->move -= ch->level / 5;
   WAIT_STATE(ch, 12);
-
+successes = 1;
   if (successes < 0)
   {
-    act("After careful consideration, you determine that $N is perfect, and has no flaws whatsoever.", ch, NULL, victim, TO_CHAR);
-    WAIT_STATE(ch, 6);
+    act("After careful consideration and observing your target for some time,\n\r you determine that $N is perfect, and has no flaws whatsoever.", ch, NULL, victim, TO_CHAR);
+    WAIT_STATE(ch, 12);
     return;
   }
 
@@ -2478,15 +2478,15 @@ void spell_gift_fatalflaw( int sn, int level, CHAR_DATA *ch, void *vo, int targe
     return;
   }
 
-  act("Focusing your attention solely on $N, you manage to size $M up and pinpoint $S flaws.", ch, NULL, victim, TO_CHAR);
+  act("Focusing your attention solely on $N, you manage to size $M up \n\rand pinpoint $S most promient flaw to exploit.", ch, NULL, victim, TO_CHAR);
 
   af.where     = TO_AFFECTS;
   af.type      = gsn_gift_fatalflaw;
   af.level     = successes;
   af.duration  = (2 * successes) + 10;
 //af.modifier holds mob vnum for comparison in d10_damage to get +1 die if against same mob
-//  af.modifier  = victim->pIndexData->vnum;
-  af.modifier = 0;
+  af.modifier  = victim->pIndexData->vnum;
+//  af.modifier = 0;
   af.location  = 0;
   af.bitvector = 0;
   affect_to_char( ch, &af );

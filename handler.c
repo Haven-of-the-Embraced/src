@@ -1467,6 +1467,21 @@ int get_affect_level( CHAR_DATA *ch, int sn )
     return 0;
 }
 
+/*
+ * Return affect modifier.
+ */
+int get_affect_modifier( CHAR_DATA *ch, int sn )
+{
+    AFFECT_DATA *paf;
+
+    for ( paf = ch->affected; paf != NULL; paf = paf->next )
+    {
+    if ( paf->type == sn )
+        return paf->modifier;
+    }
+
+    return 0;
+}
 
 /*
  * Add or enhance an affect.

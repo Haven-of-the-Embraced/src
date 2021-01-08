@@ -2020,14 +2020,6 @@ void do_affects(CHAR_DATA *ch, char *argument )
     }
     if (specialaffect)
     {
-/*      send_to_char( "----------------------------------------------------------------------------\n\r", ch );
-      sprintf(buf, "| {yFatal Flaw Opponent{x |{g%s{x|\n\r", center(capitalize(qMob->short_descr), 52, " "));
-      send_to_char(buf, ch);
-      sprintf(buf2, "[Targeted for {Y%d hour%s{x]", fatalflawaf->duration, fatalflawaf->duration != 1 ? "s" : "");
-      sprintf(buf, "|                     |%s|\n\r", center(buf2, 52, " "));
-      send_to_char(buf, ch);
-*/
-      //Testing different variations
       send_to_char( "|------------------+=======[  {yGIFT: FATAL FLAW{x ]=======+-------------------|\n\r", ch );
       send_to_char( "|                   Current Opponent                   |   Time Remaining  |\n\r", ch );
       sprintf(buf2, "{Y%d hour%s{x", fatalflawaf->duration, fatalflawaf->duration != 1 ? "s" : "");

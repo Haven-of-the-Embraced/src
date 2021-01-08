@@ -2903,7 +2903,7 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
 
     {   "fatal flaw", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_fatalflaw,  TAR_CHAR_DEFENSIVE, POS_STANDING,
-    &gsn_gift_fatalflaw,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+    &gsn_gift_fatalflaw,          SLOT( 0),        0,     12, "",             "Your Fatal Flaw opponent is no longer worth your time.",        "" },
 
     {   "seizing the edge", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_seizingtheedge,  TAR_IGNORE, POS_STANDING,

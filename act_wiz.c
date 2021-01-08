@@ -2378,6 +2378,7 @@ void do_mstat( CHAR_DATA *ch, char *argument )
 void do_pstat( CHAR_DATA *ch, char *argument )
 {
     char buf[MAX_STRING_LENGTH];
+    char buf2[MSL];
     char arg[MAX_INPUT_LENGTH];
     AFFECT_DATA *paf;
     CHAR_DATA *victim;
@@ -2519,23 +2520,27 @@ void do_pstat( CHAR_DATA *ch, char *argument )
     if(victim->pcdata->breed > 0 && victim->pcdata->auspice > 0)
     {
         send_to_char("{g[-------------------===    Garou Info     ===-------------------]{x\n\r",ch);
-        sprintf(buf," Breed: %-13s Auspice: %-13s Tribe: %-13s\n\r",
+        sprintf(buf," Breed: %-8s    Auspice: %-12s Tribe: %-13s\n\r",
             victim->pcdata->breed == LUPUS ? "Lupus" : victim->pcdata->breed == METIS ? "Metis" :
             "Homid", victim->pcdata->auspice == RAGABASH ? "Ragabash" : victim->pcdata->auspice == THEURGE ?
             "Theurge" : victim->pcdata->auspice == PHILODOX ? "Philodox" : victim->pcdata->auspice == GALLIARD ?
             "Galliard" : "Ahroun", capitalize(clan_table[victim->clan].name));
         send_to_char(buf,ch);
-        send_to_char("{g+---------------------     Renown Info    ----------------------+{x\n\r",ch);
-        sprintf(buf," Glory %2d [%2d]            Honor %2d [%2d]           Wisdom %2d [%2d]\n\r",
-          ch->pcdata->renown[GLORY], ch->pcdata->renown[TEMP_GLORY],
-          ch->pcdata->renown[HONOR], ch->pcdata->renown[TEMP_HONOR],
-          ch->pcdata->renown[WISDOM], ch->pcdata->renown[TEMP_WISDOM]);
-        send_to_char(buf, ch);
-        sprintf(buf," Society Rank: %-10s\n\r",
+        sprintf(buf, " Primal-Urge: %2d           Rage: %2d(%2d)           Gnosis: %2d(%2d) \n\r",
+          victim->pcdata->primal_urge, ch->pcdata->rage[PERM], ch->pcdata->rage[TEMP], ch->pcdata->gnosis[PERM], ch->pcdata->gnosis[TEMP]);
+        send_to_char(buf,ch);
+        sprintf(buf2,"  Renown Rank: {G[{W%s{G]{g  ",
           victim->rank == 1 ? "Cliath" : victim->rank == 2 ? "Fostern" : victim->rank == 3 ? "Adren" :
           victim->rank == 4 ? "Athro" : victim->rank == 5 ? "Elder" : "Pup");
-        send_to_char(buf,ch);
-        send_to_char("{g[---------------------------------------------------------------]{x\n\r",ch);
+        sprintf(buf, "{g+%s+{x\n\r", center(buf2, 63, "-"));
+        send_to_char(buf, ch);
+        sprintf(buf," Glory: %2d (%2d)           Honor: %2d (%2d)         Wisdom: %2d (%2d)\n\r",
+          victim->pcdata->renown[GLORY], victim->pcdata->renown[TEMP_GLORY],
+          victim->pcdata->renown[HONOR], victim->pcdata->renown[TEMP_HONOR],
+          victim->pcdata->renown[WISDOM], victim->pcdata->renown[TEMP_WISDOM]);
+        send_to_char(buf, ch);
+        send_to_char("{g[-------------------===    Gifts Known    ===-------------------]{x\n\r",ch);
+        send_to_char("{g[-------------------==========HHHHH==========-------------------]{x\n\r",ch);
     }
 
     if (!IS_NPC(victim) && victim->race == race_lookup("vampire") || victim->race == race_lookup("methuselah"))

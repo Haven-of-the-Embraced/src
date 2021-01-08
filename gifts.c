@@ -2434,7 +2434,13 @@ void spell_gift_fatalflaw( int sn, int level, CHAR_DATA *ch, void *vo, int targe
   {
     quarry = get_affect_modifier(ch, gsn_gift_fatalflaw);
     vMob = get_mob_index(quarry);
-    sprintf(buf, "%s is no longer worth your time, and you prepare for studying your next opponent.\n\r", capitalize(vMob->short_descr));
+    if (get_affect_level(ch, gsn_gift_fatalflaw) == 0)
+    {
+      sprintf(buf, "You are still in awe over %s's perfection, and have trouble getting over this fact.\n\r", vMob->short_descr);
+      send_to_char(buf, ch);
+      return;
+    }
+    sprintf(buf, "You decide that %s is no longer worth your time, and prepare for studying your next opponent.\n\r", capitalize(vMob->short_descr));
     send_to_char(buf, ch);
     affect_strip(ch, gsn_gift_fatalflaw);
     return;
@@ -2452,7 +2458,7 @@ void spell_gift_fatalflaw( int sn, int level, CHAR_DATA *ch, void *vo, int targe
           return;
   }
 
-  if (ch->move < ch->level / 5)
+  if (ch->move < ch->level)
   {
     send_to_char("You are too tired to pinpoint your target's weaknesses.\n\r", ch);
     return;
@@ -2466,20 +2472,39 @@ void spell_gift_fatalflaw( int sn, int level, CHAR_DATA *ch, void *vo, int targe
 
   difficulty = get_attribute(victim, WITS) + get_ability(victim, CSABIL_SUBTERFUGE);
   successes = godice(get_attribute(ch, PERCEPTION) + get_ability(ch, CSABIL_EMPATHY), difficulty);
-  ch->move -= ch->level / 5;
+  ch->move -= ch->level;
   WAIT_STATE(ch, 12);
 
   if (successes < 0)
   {
     act("After careful consideration and observing your target for some time,\n\r you determine that $N is perfect, and has no flaws whatsoever.", ch, NULL, victim, TO_CHAR);
     WAIT_STATE(ch, 12);
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_gift_fatalflaw;
+    af.level     = 0;
+    af.duration  = -(successes) + 1;
+  //af.modifier holds mob vnum for comparison in d10_damage to get +1 die if against same mob
+    af.modifier  = victim->pIndexData->vnum;
+    af.location  = 0;
+    af.bitvector = 0;
+    affect_to_char( ch, &af );
+
     return;
   }
 
   if (successes == 0)
   {
-    act("Try as you might, no weaknesses are found regarding $N.", ch, NULL, victim, TO_CHAR);
-    WAIT_STATE(ch, 6);
+    act("Even though you are watching closely, $N betrays no obvious weaknesses.", ch, NULL, victim, TO_CHAR);
+    WAIT_STATE(ch, 9);
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_gift_fatalflaw;
+    af.level     = 0;
+    af.duration  = successes;
+  //af.modifier holds mob vnum for comparison in d10_damage to get +1 die if against same mob
+    af.modifier  = victim->pIndexData->vnum;
+    af.location  = 0;
+    af.bitvector = 0;
+    affect_to_char( ch, &af );
     return;
   }
 

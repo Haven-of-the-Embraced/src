@@ -2434,7 +2434,7 @@ void spell_gift_fatalflaw( int sn, int level, CHAR_DATA *ch, void *vo, int targe
   {
     quarry = get_affect_modifier(ch, gsn_gift_fatalflaw);
     vMob = get_mob_index(quarry);
-    sprintf(buf, "%s is no longer worth your time, and you prepare for studying your next quarry.\n\r", capitalize(vMob->short_descr));
+    sprintf(buf, "%s is no longer worth your time, and you prepare for studying your next opponent.\n\r", capitalize(vMob->short_descr));
     send_to_char(buf, ch);
     affect_strip(ch, gsn_gift_fatalflaw);
     return;
@@ -2483,7 +2483,7 @@ void spell_gift_fatalflaw( int sn, int level, CHAR_DATA *ch, void *vo, int targe
     return;
   }
 
-  act("Focusing your attention solely on $N, you manage to size $M up \n\rand pinpoint $S most promient flaw to exploit.", ch, NULL, victim, TO_CHAR);
+  act("Focusing your attention solely on $N, you manage to size $M up \n\rand pinpoint $S most prominent flaw to exploit.", ch, NULL, victim, TO_CHAR);
 
   af.where     = TO_AFFECTS;
   af.type      = gsn_gift_fatalflaw;

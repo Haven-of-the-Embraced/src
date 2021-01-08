@@ -1974,7 +1974,11 @@ void do_clans (CHAR_DATA *ch, char *argument)
 void do_affects(CHAR_DATA *ch, char *argument )
 {
     AFFECT_DATA *paf, *paf_last = NULL;
-    char buf[MAX_STRING_LENGTH];
+    AFFECT_DATA *fatalflawaf;
+    MOB_INDEX_DATA *qMob;
+    char buf[MAX_STRING_LENGTH], buf2 [MSL];
+    bool specialaffect = FALSE;
+    int quarry = 0;
 
     if ( ch->affected != NULL )
     {
@@ -1985,6 +1989,14 @@ void do_affects(CHAR_DATA *ch, char *argument )
     send_to_char( "----------------------------------------------------------------------------\n\r", ch );
     for ( paf = ch->affected; paf != NULL; paf = paf->next )
     {
+        if (paf->type == gsn_gift_fatalflaw)
+        {
+          specialaffect = TRUE;
+          fatalflawaf = paf;
+          quarry = fatalflawaf->modifier;
+          qMob = get_mob_index(quarry);
+          continue;
+        }
         if (paf_last != NULL && paf->type == paf_last->type)
             sprintf( buf, "                                ");
         else
@@ -2005,6 +2017,24 @@ void do_affects(CHAR_DATA *ch, char *argument )
 
         send_to_char( "\n\r", ch );
         paf_last = paf;
+    }
+    if (specialaffect)
+    {
+/*      send_to_char( "----------------------------------------------------------------------------\n\r", ch );
+      sprintf(buf, "| {yFatal Flaw Opponent{x |{g%s{x|\n\r", center(capitalize(qMob->short_descr), 52, " "));
+      send_to_char(buf, ch);
+      sprintf(buf2, "[Targeted for {Y%d hour%s{x]", fatalflawaf->duration, fatalflawaf->duration != 1 ? "s" : "");
+      sprintf(buf, "|                     |%s|\n\r", center(buf2, 52, " "));
+      send_to_char(buf, ch);
+*/
+      //Testing different variations
+      send_to_char( "|------------------+=======[  {yGIFT: FATAL FLAW{x ]=======+-------------------|\n\r", ch );
+      send_to_char( "|                   Current Opponent                   |   Time Remaining  |\n\r", ch );
+      sprintf(buf2, "{Y%d hour%s{x", fatalflawaf->duration, fatalflawaf->duration != 1 ? "s" : "");
+      sprintf(buf, "| {g%s{x |", center(capitalize(qMob->short_descr), 52, " "));
+      send_to_char(buf, ch);
+      sprintf(buf, "%s|\n\r", center(buf2, 19, " "));
+      send_to_char(buf, ch);
     }
     send_to_char( "------------<<<<<<<<<<<<============================>>>>>>>>>>>>------------\n\r", ch );
     }

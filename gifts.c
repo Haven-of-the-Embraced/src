@@ -1186,7 +1186,7 @@ void spell_gift_pulseoftheinvisible( int sn, int level, CHAR_DATA *ch, void *vo,
 
     if ( is_affected( ch, gsn_gift_pulseoftheinvisible ) )
     {
-        send_to_char("You reinforce your sight of the unseen.\n\r",ch);
+        send_to_char("You shift your sight back to the mundane.\n\r",ch);
         affect_strip(ch,gsn_gift_pulseoftheinvisible);
     }
     else
@@ -1198,16 +1198,7 @@ void spell_gift_pulseoftheinvisible( int sn, int level, CHAR_DATA *ch, void *vo,
     af.duration  = (level*2) + 10;
     af.modifier  = 0;
     af.location  = APPLY_NONE;
-    af.bitvector = AFF_DETECT_INVIS;
-    affect_to_char( ch, &af );
-
-    af.where     = TO_AFFECTS;
-    af.type      = gsn_gift_pulseoftheinvisible;
-    af.level     = level;
-    af.duration  = (level*2) + 10;
-    af.modifier  = 0;
-    af.location  = APPLY_NONE;
-    af.bitvector = AFF_DETECT_HIDDEN;
+    af.bitvector = 0;
     affect_to_char( ch, &af );
     act("$n's eyes turn a pale, unearthly white for a moment then fade back to normal.",ch,NULL,NULL,TO_ROOM);
     return;

@@ -2027,6 +2027,13 @@ void do_affects(CHAR_DATA *ch, char *argument )
       send_to_char(buf, ch);
       sprintf(buf, "%s|\n\r", center(buf2, 19, " "));
       send_to_char(buf, ch);
+      if (get_affect_level(ch, gsn_gift_fatalflaw) == 0)
+      {
+        send_to_char( "|------------------+-----------------------------------+-------------------|\n\r", ch );
+        sprintf(buf2, "{x You refuse to believe that %s is perfect, {R", qMob->short_descr);
+        sprintf(buf, "|{R %s{x |\n\r| {R************ {xand cannot focus on any new opponent right now. {R*********** {x|\n\r", center(buf2, 72, "*"));
+        send_to_char(buf, ch);
+      }
     }
     send_to_char( "------------<<<<<<<<<<<<============================>>>>>>>>>>>>------------\n\r", ch );
     }

@@ -2518,13 +2518,24 @@ void do_pstat( CHAR_DATA *ch, char *argument )
     }
     if(victim->pcdata->breed > 0 && victim->pcdata->auspice > 0)
     {
-        send_to_char("{g----Garou Info:{x",ch);
-        sprintf(buf,"Breed: %s  Auspice: %s  Tribe: %s\n\r",
+        send_to_char("{g[-------------------===    Garou Info     ===-------------------]{x\n\r",ch);
+        sprintf(buf," Breed: %-13s Auspice: %-13s Tribe: %-13s\n\r",
             victim->pcdata->breed == LUPUS ? "Lupus" : victim->pcdata->breed == METIS ? "Metis" :
             "Homid", victim->pcdata->auspice == RAGABASH ? "Ragabash" : victim->pcdata->auspice == THEURGE ?
             "Theurge" : victim->pcdata->auspice == PHILODOX ? "Philodox" : victim->pcdata->auspice == GALLIARD ?
             "Galliard" : "Ahroun", capitalize(clan_table[victim->clan].name));
         send_to_char(buf,ch);
+        send_to_char("{g+---------------------     Renown Info    ----------------------+{x\n\r",ch);
+        sprintf(buf," Glory %2d [%2d]            Honor %2d [%2d]           Wisdom %2d [%2d]\n\r",
+          ch->pcdata->renown[GLORY], ch->pcdata->renown[TEMP_GLORY],
+          ch->pcdata->renown[HONOR], ch->pcdata->renown[TEMP_HONOR],
+          ch->pcdata->renown[WISDOM], ch->pcdata->renown[TEMP_WISDOM]);
+        send_to_char(buf, ch);
+        sprintf(buf," Society Rank: %-10s\n\r",
+          victim->rank == 1 ? "Cliath" : victim->rank == 2 ? "Fostern" : victim->rank == 3 ? "Adren" :
+          victim->rank == 4 ? "Athro" : victim->rank == 5 ? "Elder" : "Pup");
+        send_to_char(buf,ch);
+        send_to_char("{g[---------------------------------------------------------------]{x\n\r",ch);
     }
 
     if (!IS_NPC(victim) && victim->race == race_lookup("vampire") || victim->race == race_lookup("methuselah"))

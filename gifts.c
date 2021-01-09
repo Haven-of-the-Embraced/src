@@ -1674,6 +1674,11 @@ void spell_gift_razorclaws( int sn, int level, CHAR_DATA *ch, void *vo, int targ
 {
     AFFECT_DATA af;
     OBJ_DATA *obj;
+    ROOM_INDEX_DATA *environment;
+    environment = ch->in_room;
+    int rocks = environment->sector_type;
+    int diff = 6;
+    int successes = 0;
 
     if ( ch->pcdata->shiftform < GLABRO)
     {
@@ -1687,24 +1692,29 @@ void spell_gift_razorclaws( int sn, int level, CHAR_DATA *ch, void *vo, int targ
         return;
     }
 
+    if (ch->pcdata->rage[TEMP] < 1)
+    {
+      send_to_char("You do not have enough Rage to activate this Gift.\n\r",ch);
+      return;
+    }
+
+    if (rocks == SECT_INSIDE || rocks == SECT_WATER_SWIM || rocks == SECT_WATER_NOSWIM ||
+    rocks == SECT_UNUSED || rocks == SECT_AIR || rocks == SECT_WATER_DROWN ||
+    rocks == SECT_HOT || rocks == SECT_COLD || rocks == SECT_NODE)
+    {
+      send_to_char("There are no rocks nearby to sharpen your claws.", ch);
+      return;
+    }
+
     af.where      = TO_AFFECTS;
-    af.type   = gsn_gift_razorclaws;
+    af.type       = gsn_gift_razorclaws;
     af.level      = ch->level;
     af.duration  = 5 + level / 4;
     af.location  = APPLY_DAMROLL;
     af.modifier  = ch->level;
     af.bitvector = 0;
     affect_to_char( ch, &af );
-/*
-    af.where    = TO_AFFECTS;
-    af.type     = gsn_gift_razorclaws;
-    af.level    = ch->level;
-    af.duration = 24;
-    af.location = APPLY_NONE;
-    af.modifier = 0;
-    af.bitvector    = 0;
-    affect_to_char( ch, &af );
-*/
+
     act("You scrape your claws across stones and sharpen them to a razor edge.",ch,NULL,NULL,TO_CHAR);
     act("$n scrapes $s claws across stones to sharpen them.",ch,NULL,NULL,TO_NOTVICT);
     return;

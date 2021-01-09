@@ -1314,7 +1314,8 @@ void cskill_update(CHAR_DATA *ch, bool show)
 
 const   struct  skill_type  skill_table [MAX_SKILL] =
 {
-
+// TOTAL SKILLS AS OF 1/9/21 =  426
+// MAX_SKILL INCREASED TO 430
 /*
  * Magic spells.
  */

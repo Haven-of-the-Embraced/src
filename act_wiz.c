@@ -2530,8 +2530,13 @@ void do_pstat( CHAR_DATA *ch, char *argument )
             "Theurge" : victim->pcdata->auspice == PHILODOX ? "Philodox" : victim->pcdata->auspice == GALLIARD ?
             "Galliard" : "Ahroun", capitalize(clan_table[victim->clan].name));
         send_to_char(buf,ch);
+        sprintf(buf, " Form: %-7s             Fur Color: %-25s\n\r",
+          victim->pcdata->shiftform == LUPUS ? "Lupus" : victim->pcdata->shiftform == HISPO ? "Hispo" :
+          victim->pcdata->shiftform == CRINOS ? "Crinos" : victim->pcdata->shiftform == GLABRO ? "Glabro" :
+          victim->pcdata->shiftform == HOMID ? "Homid" : "ERROR!", victim->pcdata->garou_fur);
+        send_to_char(buf, ch);
         sprintf(buf, " Primal-Urge: %2d           Rage: %2d (%2d)          Gnosis: %2d (%2d) \n\r",
-          victim->pcdata->primal_urge, ch->pcdata->rage[PERM], ch->pcdata->rage[TEMP], ch->pcdata->gnosis[PERM], ch->pcdata->gnosis[TEMP]);
+          victim->pcdata->primal_urge, victim->pcdata->rage[PERM], victim->pcdata->rage[TEMP], victim->pcdata->gnosis[PERM], victim->pcdata->gnosis[TEMP]);
         send_to_char(buf,ch);
         sprintf(buf2,"  Renown Rank: {G[{W%s{G]{g  ",
           victim->rank == 1 ? "Cliath" : victim->rank == 2 ? "Fostern" : victim->rank == 3 ? "Adren" :

@@ -40,8 +40,8 @@ const struct hometown_type hometown_table[MAX_HOMETOWN] =
 {
 	{"None", 			ROOM_VNUM_TEMPLE},
 	{"Chester", 	701},
-	{"Figueres",	13959},
 	{"Geneva",  	10995},
+	{"Figueres",	13959},
 	{"Venice",		3452}
 };
 

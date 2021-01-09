@@ -2957,6 +2957,7 @@ extern sh_int  gsn_skin;
 extern sh_int  gsn_change;
 extern sh_int  gsn_retreat;
 extern sh_int  gsn_behead;
+extern sh_int  gsn_hometown_change;
 
 /* New disc stuff */
 extern sh_int  gsn_regen;

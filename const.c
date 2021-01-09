@@ -2065,6 +2065,10 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
     &gsn_arena,          SLOT( 0),        0,     24, "",             "You may now recall from the {RArena{x.",       "" },
 
+  { "hometown change", { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+  { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+    &gsn_hometown_change,   SLOT(0),    0,  12, "hometown changed", "You may now set a new hometown once again.", "" },
+
 /* Skill Related Debuffs */
 { "deafened", { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,

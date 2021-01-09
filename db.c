@@ -4968,6 +4968,7 @@ sh_int      gsn_glower;
 sh_int      gsn_waylay;
 sh_int      gsn_fortress;
 sh_int      gsn_arena;
+sh_int      gsn_hometown_change;
 sh_int          gsn_scry;
 sh_int          gsn_brew;
 sh_int          gsn_skin;

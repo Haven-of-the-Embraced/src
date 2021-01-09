@@ -2224,13 +2224,15 @@ void do_hometown (CHAR_DATA *ch, char *argument)
     if (!str_cmp(arg2, "confirm"))
     {
         ch->qpoints -= 250;
-        cprintf(ch, "Setting hometown to %s.\n\r{Y250QP{x deducted.  {g%dQP{x remaining.", hometown_table[hn].name, ch->qpoints);
+        sendch(" +-----------------------------------------------+\n\r", ch);
+        cprintf(ch, " +    Setting new hometown to:   %10s      +\n\r +    {Y250QP{x deducted.    {g%6dQP{x remaining.     +\n\r", hometown_table[hn].name, ch->qpoints);
+        sendch(" +-----------------------------------------------+\n\r", ch);
         ch->pcdata->hometown = hn;
 
         af.where      = TO_AFFECTS;
         af.type       = gsn_hometown_change;
         af.level      = 0;
-        af.duration   = 5;
+        af.duration   = 1;
         af.modifier   = 0;
         af.location   = APPLY_NONE;
         af.bitvector  = 0;

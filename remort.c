@@ -219,7 +219,7 @@ void do_remort(CHAR_DATA *ch, char *argument)
         save_char_obj(ch);
         return;
     }
-    if(!str_cmp(arg, "human"))
+/*    if(!str_cmp(arg, "human"))
     {
         int i;
 
@@ -351,7 +351,7 @@ void do_remort(CHAR_DATA *ch, char *argument)
         save_char_obj(ch);
         return;
     }
-
+*/
  if (!str_cmp(arg, "rank"))
     {
         bool canrank = FALSE;

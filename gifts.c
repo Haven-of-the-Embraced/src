@@ -1677,7 +1677,7 @@ void spell_gift_razorclaws( int sn, int level, CHAR_DATA *ch, void *vo, int targ
     ROOM_INDEX_DATA *environment;
     environment = ch->in_room;
     int rocks = environment->sector_type;
-    int diff = 6;
+    int diff = 7;
     int successes = 0;
 
     if ( ch->pcdata->shiftform < GLABRO)
@@ -1705,6 +1705,16 @@ void spell_gift_razorclaws( int sn, int level, CHAR_DATA *ch, void *vo, int targ
       send_to_char("There are no rocks nearby to sharpen your claws.", ch);
       return;
     }
+
+    if (rocks == SECT_CITY || rocks == SECT_DESERT)
+      diff++;
+
+    if (rocks == SECT_MOUNTAIN)
+      diff -= 2;
+
+    successes = dice(get_attribute(ch, PERCEPTION) + get_ability(ch, CSABIL_SURVIVAL), diff);
+    if (successes < 0)
+      successes = 0;
 
     af.where      = TO_AFFECTS;
     af.type       = gsn_gift_razorclaws;

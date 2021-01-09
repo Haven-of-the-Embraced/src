@@ -2067,12 +2067,12 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
 
   { "hometown change", { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
   { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
-    &gsn_hometown_change,   SLOT(0),    0,  12, "hometown changed", "You may now set a new hometown once again.", "" },
+    &gsn_hometown_change,   SLOT(0),    0,  12, "hometown changed", " {R __________________________________________{x\n\r{R [{xYou may now set a new {Chometown{x once again.{R]{x\n\r  {RTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT", "" },
 
 /* Skill Related Debuffs */
 { "deafened", { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
-&gsn_deafened,      SLOT(0),    0,  12, "deafened",         "Noises assualt your eardrums as your hearing returns.", "" },
+&gsn_deafened,      SLOT(0),    0,  12, "deafened",         "Noises assault your eardrums as your hearing returns.", "" },
 
 { "laryngitis", { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,

@@ -740,6 +740,9 @@ void spell_gift_heightenedsenses( int sn, int level, CHAR_DATA *ch, void *vo, in
     affect_to_char( ch, &af );
 
     af.where     = TO_AFFECTS2;
+    af.level     = ch->rank;
+    af.modifier  = 0;
+    af.location  = 0;
     af.bitvector = AFF2_DETECT_UNSEEN;
     affect_to_char(ch, &af );
     return;

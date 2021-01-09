@@ -1712,21 +1712,23 @@ void spell_gift_razorclaws( int sn, int level, CHAR_DATA *ch, void *vo, int targ
     if (rocks == SECT_MOUNTAIN)
       diff -= 2;
 
-    successes = dice(get_attribute(ch, PERCEPTION) + get_ability(ch, CSABIL_SURVIVAL), diff);
+    ch->pcdata->rage[TEMP]--;
+
+    successes = godice(get_attribute(ch, PERCEPTION) + get_ability(ch, CSABIL_SURVIVAL), diff);
     if (successes < 0)
       successes = 0;
 
     af.where      = TO_AFFECTS;
     af.type       = gsn_gift_razorclaws;
-    af.level      = ch->level;
-    af.duration  = 5 + level / 4;
+    af.level      = successes;
+    af.duration  = (successes * 3) + 15;
     af.location  = APPLY_DAMROLL;
-    af.modifier  = ch->level;
+    af.modifier  = (successes * 10) + 50;
     af.bitvector = 0;
     affect_to_char( ch, &af );
 
-    act("You scrape your claws across stones and sharpen them to a razor edge.",ch,NULL,NULL,TO_CHAR);
-    act("$n scrapes $s claws across stones to sharpen them.",ch,NULL,NULL,TO_NOTVICT);
+    act("You scrape your claws across nearby stones and sharpen them to a razor edge.",ch,NULL,NULL,TO_CHAR);
+    act("$n scrapes $s claws across nearby stones to sharpen them.",ch,NULL,NULL,TO_NOTVICT);
     return;
 }
 //Rank Two

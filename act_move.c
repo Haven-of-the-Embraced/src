@@ -2190,16 +2190,21 @@ void do_hometown (CHAR_DATA *ch, char *argument)
     {
         int i, col;
         col = 0;
-        sendch("Hometowns Available: \n\r", ch);
+        sendch("               {y______________________{x\n\r", ch);
+        sendch(" +{D================{y!!!  CITIES  !!!{D==============={x+\n\r", ch);
+        sendch(" +             {y``````````````````````{x            +\n\r", ch);
+        sendch(" +  You may select from the following Hometowns. +\n\r", ch);
+        sendch(" +-----------------------------------------------+", ch);
         for (i = 1; i < MAX_HOMETOWN; i++)
         {
-            cprintf(ch, "%s ", hometown_table[i].name);
-            if (++col > 5)
-            {
-                sendch("\n\r", ch);
-                col = 0;
-            }
+          if (col == 0)
+            sendch("\n\r", ch);
+          cprintf(ch, " {G%s{x ", center(hometown_table[i].name, 10, " "));
+          if (++col > 3)
+            col = 0;
         }
+
+        sendch("\n\r +{D============={y=====HHHHHHHHHHHH====={D============{x+\n\r", ch);
         return;
     }
 
@@ -2225,14 +2230,14 @@ void do_hometown (CHAR_DATA *ch, char *argument)
     {
         ch->qpoints -= 250;
         sendch(" +-----------------------------------------------+\n\r", ch);
-        cprintf(ch, " +    Setting new hometown to:   %10s      +\n\r +    {Y250QP{x deducted.    {g%6dQP{x remaining.     +\n\r", hometown_table[hn].name, ch->qpoints);
+        cprintf(ch, " +    Setting new hometown to:   {y%10s{x      +\n\r +    {Y250QP{x deducted.    {g%6dQP{x remaining.     +\n\r", hometown_table[hn].name, ch->qpoints);
         sendch(" +-----------------------------------------------+\n\r", ch);
         ch->pcdata->hometown = hn;
 
         af.where      = TO_AFFECTS;
         af.type       = gsn_hometown_change;
         af.level      = 0;
-        af.duration   = 1;
+        af.duration   = 500;
         af.modifier   = 0;
         af.location   = APPLY_NONE;
         af.bitvector  = 0;

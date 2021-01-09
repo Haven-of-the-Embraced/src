@@ -2164,16 +2164,16 @@ void do_hometown (CHAR_DATA *ch, char *argument)
         sendch("Syntax:          hometown <city>\n\r", ch);
         sendch("                 hometown list\n\r", ch);
         sendch("\n\r", ch);
-        sendch("Hometown may only be set once, you will be asked to confirm your choice.\n\r", ch);
+        sendch("Hometown may be changed for a cost of {c250 Quest Points{x.\n\r", ch);
         return;
     }
 
-    if (ch->pcdata->hometown > 0)
+/*    if (ch->pcdata->hometown > 0)
     {
         sendch("Your hometown has already been set! See an Immortal if this is an error.\n\r", ch);
         return;
     }
-
+*/
     if (!str_prefix(arg1, "list"))
     {
         int i, col;
@@ -2197,6 +2197,18 @@ void do_hometown (CHAR_DATA *ch, char *argument)
         return;
     }
 
+    if (is_affected(ch, gsn_hometown_change))
+    {
+      send_to_char("You have already changed hometown recently.  Wait a while before doing it again.\n\r", ch);
+      return;
+    }
+
+    if (ch->qpoints < 250)
+    {
+      send_to_char("It costs {c250 Quest Points{x to be able to change your Hometown location.\n\r", ch);
+      return;
+    }
+
     if (!str_cmp(arg2, "confirm"))
     {
         cprintf(ch, "Setting hometown to %s.\n\r", hometown_table[hn].name);
@@ -2205,8 +2217,8 @@ void do_hometown (CHAR_DATA *ch, char *argument)
     }
     else
     {
-        cprintf(ch, "To set your recall location to %s, type 'hometown %s confirm'\n\r",
-                hometown_table[hn].name, hometown_table[hn].name);
+        cprintf(ch, "To set your recall location to %s, type 'hometown %s confirm'\n\rRemember, you will be charged {c250QP{x for this change.\n\r",
+          hometown_table[hn].name, hometown_table[hn].name);
         return;
     }
 

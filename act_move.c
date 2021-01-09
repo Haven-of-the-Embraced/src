@@ -2155,17 +2155,29 @@ void do_hometown (CHAR_DATA *ch, char *argument)
     int hn;
     char arg1[MSL];
     char arg2[MSL];
+    AFFECT_DATA af;
 
     argument = one_argument(argument, arg1);
     argument = one_argument(argument, arg2);
 
     if (IS_NULLSTR(arg1))
     {
-        sendch("Syntax:          hometown <city>\n\r", ch);
-        sendch("                 hometown list\n\r", ch);
-        sendch("\n\r", ch);
-        sendch("Hometown may be changed for a cost of {c250 Quest Points{x.\n\r", ch);
-        return;
+      sendch("                    ____________\n\r", ch);
+      sendch(" +==================  HOMETOWN  =================+\n\r", ch);
+      sendch(" +   Allows you to set your city {CRecall{x point.   +\n\r", ch);
+      sendch(" +      Check the list for current cities.       +\n\r", ch);
+      sendch(" +-----------------------------------------------+\n\r", ch);
+      sendch(" + Syntax:          hometown <city>              +\n\r", ch);
+      sendch(" +                  hometown list                +\n\r", ch);
+      sendch(" +-----------------------------------------------+\n\r", ch);
+      sendch(" + Cost  :          {Y250 Quest Points{x             +\n\r", ch);
+      if (is_affected(ch, gsn_hometown_change))
+      {
+        sendch(" +-----------------------------------------------+\n\r", ch);
+        sendch(" +   {R*{x You have changed hometown recently,       +\n\r +       and cannot do so again so soon.   {R*{x     +\n\r", ch);
+      }
+      sendch(" +===============================================+\n\r", ch);
+      return;
     }
 
 /*    if (ch->pcdata->hometown > 0)
@@ -2205,19 +2217,29 @@ void do_hometown (CHAR_DATA *ch, char *argument)
 
     if (ch->qpoints < 250)
     {
-      send_to_char("It costs {c250 Quest Points{x to be able to change your Hometown location.\n\r", ch);
+      send_to_char("It costs {Y250 Quest Points{x to be able to change your Hometown location.\n\r", ch);
       return;
     }
 
     if (!str_cmp(arg2, "confirm"))
     {
-        cprintf(ch, "Setting hometown to %s.\n\r", hometown_table[hn].name);
+        ch->qpoints -= 250;
+        cprintf(ch, "Setting hometown to %s.\n\r{Y250QP{x deducted.  {g%dQP{x remaining.", hometown_table[hn].name, ch->qpoints);
         ch->pcdata->hometown = hn;
+
+        af.where      = TO_AFFECTS;
+        af.type       = gsn_hometown_change;
+        af.level      = 0;
+        af.duration   = 5;
+        af.modifier   = 0;
+        af.location   = APPLY_NONE;
+        af.bitvector  = 0;
+        affect_to_char( ch, &af );
         return;
     }
     else
     {
-        cprintf(ch, "To set your recall location to %s, type 'hometown %s confirm'\n\rRemember, you will be charged {c250QP{x for this change.\n\r",
+        cprintf(ch, "To set your recall location to %s, type 'hometown %s confirm'\n\rRemember, you will be charged {Y250QP{x for this change.\n\r",
           hometown_table[hn].name, hometown_table[hn].name);
         return;
     }

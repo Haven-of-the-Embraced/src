@@ -531,6 +531,8 @@ void do_remort(CHAR_DATA *ch, char *argument)
         ch->agg_dam = 0;
         ch->pcdata->rage[TEMP] = ch->pcdata->rage[PERM];
         ch->pcdata->gnosis[TEMP] = ch->pcdata->gnosis[PERM];
+        ch->paradox = 0;
+        ch->quintessence = ch->max_quintessence;
         ch->exp   = exp_per_level(ch,ch->pcdata->points) * UMAX( 1, ch->level );
         send_to_char( "You are reborn more powerful!\n\r", ch );
         ch->freebie += 3;

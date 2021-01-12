@@ -453,6 +453,7 @@ void do_remort(CHAR_DATA *ch, char *argument)
         ch->pblood = ch->max_pblood;
         ch->remorts += 1;
         ch->agg_dam = 0;
+        ch->cswillpower = ch->csmax_willpower;
         ch->pcdata->rage[TEMP] = ch->pcdata->rage[PERM];
         ch->pcdata->gnosis[TEMP] = ch->pcdata->gnosis[PERM];
         ch->currentkills = 0;
@@ -529,6 +530,7 @@ void do_remort(CHAR_DATA *ch, char *argument)
         ch->pblood = ch->max_pblood;
         ch->remorts += 1;
         ch->agg_dam = 0;
+        ch->cswillpower = ch->csmax_willpower;
         ch->pcdata->rage[TEMP] = ch->pcdata->rage[PERM];
         ch->pcdata->gnosis[TEMP] = ch->pcdata->gnosis[PERM];
         ch->paradox = 0;

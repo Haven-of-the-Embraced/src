@@ -1124,8 +1124,6 @@ void generate_quest(CHAR_DATA *ch, CHAR_DATA *questman)
     {
             if (quest_level_diff(ch->level, vsearch->level) == TRUE
                 && vsearch->pShop == NULL
-            && !IS_SET(vsearch->act, ACT_TRAIN)
-            && !IS_SET(vsearch->act, ACT_PRACTICE)
             && !IS_SET(vsearch->act, ACT_IS_HEALER)
         && !IS_SET(vsearch->act, ACT_PET)
         && !IS_SET(vsearch->affected_by, AFF_CHARM)

@@ -2721,10 +2721,22 @@ bool set_obj_values( CHAR_DATA *ch, OBJ_INDEX_DATA *pObj, int value_num, char *a
             default:
             do_help( ch, "ITEM_LIGHT" );
                 return FALSE;
+            case 0:
+              send_to_char( "LIGHT REPLENISH RATE SET.\n\r\n\r", ch );
+              pObj->value[0] = atoi( argument );
+              break;
+            case 1:
+              send_to_char( "LIGHT REPLENISH CHANCE SET.\n\r\n\r", ch );
+              pObj->value[1] = atoi( argument );
+              break;
             case 2:
-                send_to_char( "HOURS OF LIGHT SET.\n\r\n\r", ch );
-                pObj->value[2] = atoi( argument );
-                break;
+              send_to_char( "HOURS OF LIGHT SET.\n\r\n\r", ch );
+              pObj->value[2] = atoi( argument );
+              break;
+            case 3:
+              send_to_char( "MAXIMUM LIGHT HOURS SET.\n\r\n\r", ch );
+              pObj->value[3] = atoi( argument );
+              break;
         }
             break;
 

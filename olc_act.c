@@ -2497,12 +2497,17 @@ void show_obj_values( CHAR_DATA *ch, OBJ_INDEX_DATA *obj )
         break;
 
     case ITEM_LIGHT:
-            if ( obj->value[2] == -1 || obj->value[2] == 999 ) /* ROM OLC */
-        sprintf( buf, "[v2] Light:  Infinite[-1]\n\r" );
-            else
-        sprintf( buf, "[v2] Light:  [%d]\n\r", obj->value[2] );
-        send_to_char( buf, ch );
-        break;
+      sprintf(buf, "Replenish Rate      : %d %s  \n\rReplenish Chance    : %d%  \n\rCurrent Light Hours : %d %s  \n\rMax Light Hours   : %d %s \n\r{R**Currently Unused**{x: %d\n\r",
+        obj->value[0],
+        obj->value[0] == 0 ? "[None]" : "",
+        obj->value[1],
+        obj->value[2],
+        obj->value[2] == -1 || obj->value[2] == 999 ? "[Infinite]" : "",
+        obj->value[3],
+        obj->value[3] == -1 || obj->value[3] == 999 ? "[Infinite]" : "",
+        obj->value[4]);
+      send_to_char( buf, ch );
+      break;
 
     case ITEM_WAND:
     case ITEM_STAFF:

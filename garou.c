@@ -921,9 +921,7 @@ void do_garou( CHAR_DATA *ch, char *argument )
 
     if ( (pMobIndex = get_mob_index(mob_vnum) ) != NULL )
     {
-            if (!IS_SET(pMobIndex->act, ACT_TRAIN)
-            && !IS_SET(pMobIndex->act, ACT_PRACTICE)
-            && !IS_SET(pMobIndex->act, ACT_IS_HEALER)
+            if (!IS_SET(pMobIndex->act, ACT_IS_HEALER)
         && !IS_SET(pMobIndex->act, ACT_PET)
         && !IS_SET(pMobIndex->affected_by, AFF_CHARM)
         && !IS_SET(pMobIndex->affected_by, AFF_INVISIBLE)) break;

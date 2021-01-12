@@ -2144,6 +2144,196 @@ void do_command(CHAR_DATA *ch, char *argument)
     return;
 }
 
+void do_mesmerize(CHAR_DATA *ch, char *argument)
+{
+   char arg1[MAX_INPUT_LENGTH],arg2[MAX_INPUT_LENGTH];
+   char buf[MAX_STRING_LENGTH];
+   CHAR_DATA *victim;
+   int success, diff;
+   AFFECT_DATA af;
+   success = diff = 0;
+
+    argument = one_argument( argument, arg1 );
+    argument = one_argument( argument, arg2 );
+
+    if (IS_NPC(ch)) return;
+
+    if(!IS_VAMP(ch))
+    {
+        send_to_char("You are not a vampire!\n\r" ,ch);
+        return;
+    }
+    if ( IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
+    {
+        send_to_char("Your blood curse prevents it!\n\r" ,ch);
+        return;
+    }
+    if (ch->pcdata->discipline[DOMINATE] < 2)
+    {
+        send_to_char( "You are not trained enough in Dominate!\n\r", ch );
+        return;
+    }
+    if ( arg1[0] == '\0' || arg2[0] == '\0')
+    {
+        send_to_char("Mesmerize whom to do what?\n\r", ch );
+        return;
+    }
+    if ( ( victim = get_char_room( ch, NULL, arg1 ) ) == NULL )
+    {
+        send_to_char( "Nobody here by that name.\n\r", ch );
+        return;
+    }
+
+    if (is_affected(ch, gsn_laryngitis))
+    {
+      send_to_char("You cannot speak clearly enough with a sore throat to Mesmerize your victim.\n\r", ch);
+      return;
+    }
+
+    if (!IS_NPC(victim))
+    {
+        send_to_char("Disabled on players due to the potential for abuse.\n\r", ch);
+        return;
+    }
+    if (IS_NPC(victim) && victim->pIndexData->pShop != NULL)
+    {
+        send_to_char("You fear that it may hinder your future purchases.\n\r",ch);
+        return;
+    }
+
+    if (!can_see(victim, ch))
+    {
+      send_to_char("Your target must be able to see you to lock eyes.\n\r", ch);
+      return;
+    }
+
+
+    if (!str_prefix(arg2,"delete"))
+    {
+        send_to_char("That will NOT be done.\n\r",ch);
+        return;
+    }
+
+    if (!str_prefix(arg2,"ic"))
+        {
+                send_to_char("Nope!\n\r",ch);
+                return;
+        }
+    if (!str_prefix(arg2, "quit"))
+        {
+                send_to_char("I don't think so!.\n\r", ch);
+                return;
+        }
+
+    if ( victim == ch )
+    {
+        send_to_char( "You get a headache trying to command yourself.\n\r", ch );
+        return;
+    }
+    if ( IS_IMMORTAL(victim))
+    {
+        send_to_char( "Yeah, right.\n\r", ch );
+        return;
+    }
+    if ( ch->pblood < 15 )
+    {
+        send_to_char( "You don't have enough blood.\n\r", ch );
+        return;
+    }
+    if (victim->race != race_lookup("human")
+     && victim->race != race_lookup("vampire")
+     && victim->race != race_lookup("ghoul")
+     && victim->race != race_lookup("garou")
+     && victim->race != race_lookup("methuselah")
+     && victim->race != race_lookup("dhampire")
+     && victim->race != race_lookup("faerie")
+     && victim->race != race_lookup("fera")
+     && victim->race != race_lookup("mage")
+     && victim->race != race_lookup("romani")
+     && victim->race != race_lookup("demon")
+     && victim->race != race_lookup("kuei-jin")
+     && victim->race != race_lookup("dragon")
+     && victim->race != race_lookup("fomor")
+     || !IS_SET(victim->form,FORM_SENTIENT)) {
+         send_to_char("Your powers of Dominate only work on sentient, humanoid beings.\n\r", ch);
+         return;
+     }
+    ch->pblood -= 10;
+    diff = 5;
+    if (victim->race != race_lookup("human"))
+        diff ++;
+    if (victim->level > ch->level + 5)
+        diff++;
+    if (victim->level > ch->level + 15)
+        diff++;
+    if (victim->position == POS_FIGHTING || ch->position == POS_FIGHTING)
+        diff++;
+    if (IS_SET(victim->vuln_flags, VULN_MENTAL) || IS_SET(victim->vuln_flags, VULN_CHARM))
+        diff--;
+    success = godice(get_attribute(ch, MANIPULATION) + ch->csabilities[CSABIL_LEADERSHIP], diff);
+    success += stealth_int_shadowplay(ch, diff);
+    if (IS_SET(victim->res_flags, RES_MENTAL) || IS_SET(victim->res_flags, RES_CHARM))
+      success--;
+    WAIT_STATE(ch, 6);
+
+    sprintf( buf, "%s locks eyes with you and says, '{W%s{x'.\n\r", ch->name, arg2 );
+    send_to_char(buf,victim);
+    sprintf( buf, "You lock eyes with %s, speaking in a commanding tone as you say, '{W%s{x'.\n\r", victim->short_descr, arg2 );
+    send_to_char(buf,ch);
+    act( "$n stares into $N's eyes a moment then whispers to %M.",  ch, NULL, victim, TO_NOTVICT );
+
+    if (is_affected(victim, gsn_deafened))
+    {
+      act("$N does not seem to have heard your command at all.", ch, NULL, victim, TO_CHAR);
+      return;
+    }
+
+    if (success < 0)
+    {
+      act("$N seems to have no problem ignoring your command completely.", ch, NULL, victim, TO_CHAR);
+      if (!IS_SET(victim->imm_flags, IMM_MENTAL))
+      {
+        af.where     = TO_IMMUNE;
+        af.type      = gsn_mental_resilience;
+        af.level     = ch->level;
+        af.duration  = 5;
+        af.location  = APPLY_NONE;
+        af.modifier  = 0;
+        af.bitvector = IMM_MENTAL;
+        affect_to_char(victim, &af);
+      }
+      if (!IS_SET(victim->imm_flags, IMM_CHARM))
+      {
+        af.where     = TO_IMMUNE;
+        af.type      = gsn_mental_resilience;
+        af.level     = ch->level;
+        af.duration  = 5;
+        af.location  = APPLY_NONE;
+        af.modifier  = 0;
+        af.bitvector = IMM_CHARM;
+        affect_to_char(victim, &af);
+      }
+      return;
+    }
+
+    if (success == 0 || IS_SET(victim->imm_flags, IMM_MENTAL) || IS_SET(victim->imm_flags, IMM_CHARM)
+    || (victim->level > ch->level + 10
+    && ( victim->race == race_lookup("vampire") || victim->race == race_lookup("methuselah"))) )
+    {
+        sprintf( buf, "%s appears to resist your power of Dominate!\n\r", victim->short_descr );
+        send_to_char(buf,ch);
+        sprintf( buf, "You feel a strange compulsion, but manage to shrug it off.\n\r", arg2 );
+        send_to_char(buf,victim);
+        return;
+    }
+
+    sprintf( buf, "You feel an unresistable urge to '{c%s{x', and comply immediately.\n\r", arg2 );
+    send_to_char(buf,victim);
+    interpret( victim, arg2 );
+    gain_exp(ch,success * 2);
+
+    return;
+}
 
 void do_forgetful (CHAR_DATA *ch, char *argument)
 {
@@ -2198,135 +2388,6 @@ void do_forgetful (CHAR_DATA *ch, char *argument)
     af.bitvector = 0;
     affect_to_char( victim, &af );
     multi_hit( victim, ch, TYPE_UNDEFINED );
-    return;
-}
-
-
-void do_mesmerize(CHAR_DATA *ch, char *argument)
-{
-   char arg1[MAX_INPUT_LENGTH],arg2[MAX_INPUT_LENGTH];
-   char buf[MAX_STRING_LENGTH];
-   CHAR_DATA *victim;
-   int success, diff;
-     AFFECT_DATA af;
-   success = diff = 0;
-
-    argument = one_argument( argument, arg1 );
-    argument = one_argument( argument, arg2 );
-
-    if (IS_NPC(ch)) return;
-
-    if(!IS_VAMP(ch))
-    {
-        send_to_char("You are not a vampire!\n\r" ,ch);
-        return;
-    }
-    if ( IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
-    {
-        send_to_char("Your blood curse prevents it!\n\r" ,ch);
-        return;
-    }
-    if (ch->pcdata->discipline[DOMINATE] < 2)
-    {
-        send_to_char( "You are not trained in Dominate!\n\r", ch );
-        return;
-    }
-    if ( arg1[0] == '\0' || arg2[0] == '\0')
-    {
-        send_to_char("Mesmerize whom to do what?\n\r", ch );
-        return;
-    }
-    if ( ( victim = get_char_room( ch, NULL, arg1 ) ) == NULL )
-    {
-        send_to_char( "Nobody here by that name.\n\r", ch );
-        return;
-    }
-
-    if (is_affected(ch, gsn_laryngitis))
-    {
-      send_to_char("You cannot speak clearly enough with a sore throat to Mesmerize your victim.\n\r", ch);
-      return;
-    }
-
-    if (!IS_NPC(victim))
-    {
-        send_to_char("Disabled on players due to the potential for abuse.\n\r", ch);
-        return;
-    }
-    if (IS_NPC(victim) && victim->pIndexData->pShop != NULL)
-    {
-        send_to_char("You fear that it may hinder your future purchases.\n\r",ch);
-        return;
-    }
-
-    if (!str_prefix(arg2,"delete"))
-    {
-        send_to_char("That will NOT be done.\n\r",ch);
-        return;
-    }
-
-    if (!str_prefix(arg2,"ic"))
-        {
-                send_to_char("Nope!\n\r",ch);
-                return;
-        }
-    if (!str_prefix(arg2, "quit"))
-        {
-                send_to_char("I don't think so!.\n\r", ch);
-                return;
-        }
-
-    if ( victim == ch )
-    {
-        send_to_char( "You get a headache trying to command yourself.\n\r", ch );
-        return;
-    }
-    if ( IS_IMMORTAL(victim))
-    {
-        send_to_char( "Yeah, right.\n\r", ch );
-        return;
-    }
-    if ( ch->pblood < 30 )
-    {
-        send_to_char( "You don't have enough blood.\n\r", ch );
-        return;
-    }
-    if (victim->race != race_lookup("human")
-     && victim->race != race_lookup("vampire")
-     && victim->race != race_lookup("ghoul")
-     && victim->race != race_lookup("garou")
-     && victim->race != race_lookup("methuselah")
-     && victim->race != race_lookup("dhampire")
-     || !IS_SET(victim->form,FORM_SENTIENT)) {
-         send_to_char("Your powers of Domminate only work on sentient, humanoid beings.\n\r", ch);
-         return;
-     }
-    ch->pblood -= 20;
-    diff = 5;
-    if (victim->race != race_lookup("human"))
-        diff += 2;
-    if (victim->level > ch->level)
-        diff++;
-    if (victim->level > ch->level*2)
-        diff++;
-    success = godice(get_attribute(ch, MANIPULATION) + ch->csabilities[CSABIL_LEADERSHIP], diff);
-
-    if (success < 1)
-    {
-        sprintf( buf, "%s resists your power of Domination!\n\r", victim->name );
-        send_to_char(buf,ch);
-        sprintf( buf, "%s attempts to dominate your mind!\n\r", ch->name );
-        send_to_char(buf,victim);
-        return;
-    } else {
-    sprintf( buf, "%s manipulates your mind, forcing you to '%s'.\n\r", ch->name, arg2 );
-    send_to_char(buf,victim);
-    sprintf( buf, "You force %s to '%s'.\n\r", victim->name, arg2 );
-    send_to_char(buf,ch);
-    act( "$n stares into $N's eyes a moment then whispers a command.",  ch, NULL, victim, TO_NOTVICT );
-    interpret( victim, arg2 );
-    }
-
     return;
 }
 

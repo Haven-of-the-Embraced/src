@@ -2440,7 +2440,6 @@ void mob_charsheet (CHAR_DATA *mob, MOB_INDEX_DATA *pMobIndex)
         mob->race == race_lookup("cat") ||
         mob->race == race_lookup("centipede") ||
         mob->race == race_lookup("dog") ||
-        mob->race == race_lookup("fido") ||
         mob->race == race_lookup("fox") ||
         mob->race == race_lookup("lizard") ||
         mob->race == race_lookup("pig") ||

@@ -125,11 +125,11 @@ extern int flag_lookup( const char *word, const struct flag_type *flag_table );
 const char * fn_keyword[] =
 {
     "rand",     /* if rand 30       - if random number < 30 */
-    "mobhere",      /* if mobhere fido  - is there a 'fido' here */
+    "mobhere",      /* if mobhere dog  - is there a 'dog' here */
     "objhere",      /* if objhere bottle    - is there a 'bottle' here */
             /* if mobhere 1233  - is there mob vnum 1233 here */
             /* if objhere 1233  - is there obj vnum 1233 here */
-    "mobexists",    /* if mobexists fido    - is there a fido somewhere */
+    "mobexists",    /* if mobexists dog    - is there a dog somewhere */
     "objexists",    /* if objexists sword   - is there a sword somewhere */
 
     "people",       /* if people > 4    - does room contain > 4 people */
@@ -2803,7 +2803,7 @@ bool p_time_trigger( CHAR_DATA *mob, OBJ_DATA *obj, ROOM_INDEX_DATA *room,
         char buf[MSL];
         sprintf(buf, "TIME trigger received bad type %s (%d).", prog_type_to_name(type), type);
         bug(buf, 0);
-        return FALSE;        
+        return FALSE;
     }
 
     if ( mob )

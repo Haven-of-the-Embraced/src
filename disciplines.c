@@ -123,7 +123,7 @@ void do_feralspeech(CHAR_DATA *ch, char *argument)
     }
     if(victim->race != race_lookup("bat") && victim->race != race_lookup("bear") &&
         victim->race != race_lookup("cat") && victim->race != race_lookup("centipede") &&
-        victim->race != race_lookup("dog") && victim->race != race_lookup("fido") &&
+        victim->race != race_lookup("dog") &&
         victim->race != race_lookup("fox") && victim->race != race_lookup("lizard") &&
         victim->race != race_lookup("pig") && victim->race != race_lookup("rabbit") &&
         victim->race != race_lookup("snake") && victim->race != race_lookup("song bird") &&
@@ -7149,7 +7149,6 @@ void do_fleshcraft(CHAR_DATA *ch, char *argument)
     if ( !str_prefix(arg,"hellhound"))
     {
         if(mob->race != race_lookup("wolf") &&
-                mob->race != race_lookup("fido") &&
                 mob->race != race_lookup("dog"))
         {
             send_to_char("This must be preformed upon a Canine.\n\r",ch);

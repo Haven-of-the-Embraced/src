@@ -1053,7 +1053,8 @@ bool spec_janitor( CHAR_DATA *ch )
     for ( trash = ch->in_room->contents; trash != NULL; trash = trash_next )
     {
     trash_next = trash->next_content;
-    if ( !IS_SET( trash->wear_flags, ITEM_TAKE ) || !can_loot(ch,trash) || count_users(trash))
+    if ( !IS_SET( trash->wear_flags, ITEM_TAKE ) || !can_loot(ch,trash) || count_users(trash)
+        || trash->item_type == ITEM_CORPSE_PC || trash->item_type == ITEM_CORPSE_NPC )
         continue;
     if ( trash->item_type == ITEM_DRINK_CON
     ||   trash->item_type == ITEM_TRASH

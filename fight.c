@@ -2697,9 +2697,7 @@ bool is_safe_spell(CHAR_DATA *ch, CHAR_DATA *victim, bool area )
         return TRUE;
 
     /* no killing healers, trainers, etc */
-    if (IS_SET(victim->act,ACT_TRAIN)
-    ||  IS_SET(victim->act,ACT_PRACTICE)
-    ||  IS_SET(victim->act,ACT_IS_HEALER)
+    if ( IS_SET(victim->act,ACT_IS_HEALER)
     ||  IS_SET(victim->act,ACT_IS_CHANGER))
         return TRUE;
 

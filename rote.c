@@ -1536,7 +1536,7 @@ void rote_spiritsight(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *o
 
     if (IS_NPC(ch)) return;
 
-    if(victim != ch) 
+    if(victim != ch)
     {
         send_to_char("You can only use this effect on yourself.\n\r",ch);
         return;
@@ -1588,18 +1588,34 @@ void rote_callspirit(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *ob
     }
 
     act( "Concentrating, you call out across the Gauntlet and deep into the Umbra.", ch, NULL, mob, TO_CHAR );
+    mob = create_mobile( pMobIndex );
 
     if (success < 0)
     {
+      char_to_room( mob, ch->in_room );
+      mob->level  = ch->level;
+      mob->max_hit = ch->max_hit / 4;
+      mob->hitroll = ch->hitroll;
+      mob->damroll = ch->damroll;
+      mob->hit = mob->max_hit;
+      mob->short_descr = str_dup("a ravenous spectre");
+      mob->long_descr = str_dup("Lured from the depths of the Tempest, a shadowy spectre lunges for its prey.\n\r");
+      mob->name = str_dup("ravenous spectre");
+
+      act("A shadowy form rips through the Gauntlet and into existence, and it turns immediately upon you!", ch, NULL, NULL, TO_CHAR);
+      act("Seemingly out of nowhere, a shadowy figure emerges and immediately attacks $n!", ch, NULL, NULL, TO_NOTVICT);
+      act("Shrieking, $N says, '{DYour soul will be a feast for Oblivion!{x'", ch, NULL, mob, TO_ROOM);
+      multi_hit( mob, ch, TYPE_UNDEFINED );
       return;
     }
 
     if (success == 0)
     {
+      act("Your call seems to have gone unanswered, as nothing responds from across the Gauntlet.", ch, NULL, NULL, TO_CHAR);
+      WAIT_STATE(ch, 9);
       return;
     }
 
-    mob = create_mobile( pMobIndex );
     char_to_room( mob, ch->in_room );
 
     act( "A disruption in the Gauntlet appears before you, and $N tears through into this reality.", ch, NULL, mob, TO_CHAR );

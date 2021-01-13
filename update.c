@@ -1372,13 +1372,13 @@ void obj_update( void )
       rch = obj->carried_by;
       if (number_range(1,100) <= obj->value[1])
       {
-        sprintf(buf, "%s pulses briefly with a soft light.{x\n\r", capitalize(obj->short_descr));
+        sprintf(buf, "For the briefest of moments, %s pulses with a soft light.{x\n\r", obj->short_descr);
         send_to_char(buf, rch);
           obj->value[2] += obj->value[0];
         if (obj->value[2] >= obj->value[3])
         {
           obj->value[2] = obj->value[3];
-          sprintf(buf, "%s flashes brightly for a moment, then subsides.\n\r{x", obj->value[2]);
+          sprintf(buf, "Flashing brightly, %s then dims and subsides.\n\r{x", obj->short_descr);
           send_to_char(buf, rch);
         }
       }

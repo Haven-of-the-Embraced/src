@@ -2712,6 +2712,8 @@ void show_obj_values( CHAR_DATA *ch, OBJ_INDEX_DATA *obj )
 
 bool set_obj_values( CHAR_DATA *ch, OBJ_INDEX_DATA *pObj, int value_num, char *argument)
 {
+    int set_value = atoi(argument);
+
     switch( pObj->item_type )
     {
         default:
@@ -2724,7 +2726,7 @@ bool set_obj_values( CHAR_DATA *ch, OBJ_INDEX_DATA *pObj, int value_num, char *a
             do_help( ch, "ITEM_LIGHT" );
                 return FALSE;
             case 0:
-              if (value_num < 0 || value_num > 10)
+              if (set_value < 0 || set_value > 10)
               {
                 send_to_char("Light Replenish Value is between 0 [No Replenish] and 10.\n\r", ch);
                 break;
@@ -2733,7 +2735,7 @@ bool set_obj_values( CHAR_DATA *ch, OBJ_INDEX_DATA *pObj, int value_num, char *a
               pObj->value[0] = atoi( argument );
               break;
             case 1:
-              if (value_num < 0 || value_num > 100)
+              if (set_value < 0 || set_value > 100)
               {
                 send_to_char("Light Replenish Chance (%) is between 0 [No Chance] and 100.\n\r", ch);
                 break;
@@ -2742,16 +2744,16 @@ bool set_obj_values( CHAR_DATA *ch, OBJ_INDEX_DATA *pObj, int value_num, char *a
               pObj->value[1] = atoi( argument );
               break;
             case 2:
-              if (value_num < -1 || value_num > pObj-value[2])
+              if (set_value < -1 || set_value > pObj->value[3])
               {
-                send_to_char("Light Replenish Value is between -1 [Infinite] and the Maximum Hours set.\n\r", ch);
+                send_to_char("Current Light Hours is between -1 [Infinite] and the Maximum Hours set.\n\r", ch);
                 break;
               }
               send_to_char( "HOURS OF LIGHT SET.\n\r\n\r", ch );
               pObj->value[2] = atoi( argument );
               break;
             case 3:
-              if (value_num < -1 || value_num > 999)
+              if (set_value < -1 || set_value > 999)
               {
                 send_to_char("Maximum Light Hours is between -1 [Infinite] and 999.\n\r", ch);
                 break;

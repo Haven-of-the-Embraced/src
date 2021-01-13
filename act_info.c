@@ -622,7 +622,7 @@ void show_char_to_char( CHAR_DATA *list, CHAR_DATA *ch )
     else if ( room_is_dark( ch->in_room ) && IS_AFFECTED(rch, AFF_INFRARED )
               && SAME_UMBRA(ch, rch))
     {
-        send_to_char( "You see glowing red eyes watching YOU!\n\r", ch );
+        send_to_char( "{yA pair of {rglowing red eyes{y lurks in the darkness.{x\n\r", ch );
     }
     }
 

@@ -1125,8 +1125,8 @@ const struct flag_type furniture_flags[]=
 
 const struct flag_type light_flags[]=
 {
-		{		"flames", LIGHT_FLAMES,			FALSE 	},
-		{		"mystical", LIGHT_MYSTICAL,	FALSE 	},
+		{		"flames", LIGHT_FLAMES,			TRUE 	},
+		{		"mystical", LIGHT_MYSTICAL,	TRUE 	},
 		{		NULL,					0,						0		}
 };
 

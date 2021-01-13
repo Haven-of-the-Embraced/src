@@ -3484,6 +3484,18 @@ char *weapon_bit_name(int weapon_flags)
     return ( buf[0] != '\0' ) ? buf+1 : "none";
 }
 
+char *light_bit_name( int light_flags)
+{
+    static char buf[512];
+
+    buf[0] = '\0';
+
+    if (light_flags & LIGHT_FLAMES ) strcat(buf, " flames");
+    if (light_flags & LIGHT_MYSTICAL ) strcat(buf, " mystical");
+
+    return (buf[0] != '\0' ) ? buf+1 : "none";
+}
+
 char *cont_bit_name( int cont_flags)
 {
     static char buf[512];

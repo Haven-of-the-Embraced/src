@@ -4027,6 +4027,7 @@ char *  weapon_bit_name args( ( int weapon_flags ) );
 char *  comm_bit_name   args( ( int comm_flags ) );
 char *  cont_bit_name   args( ( int cont_flags) );
 char *  trap_bit_name   args( ( int trap_flags ) );
+char *  light_bit_name  args( ( int light_flags ) );
 char *  trigger_bit_name    args( ( int trigger_flags ) );
 char *  focus_bit_name  args( ( int focus_flags ) );
 char *  match_length    args( ( char *text, int length ) );

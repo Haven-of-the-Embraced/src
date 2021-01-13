@@ -462,7 +462,7 @@ void show_char_to_char_0( CHAR_DATA *victim, CHAR_DATA *ch )
     break;
     }
 
-    strcat( buf, "\n\r" );
+    strcat( buf, "{x\n\r" );
     buf[0] = UPPER(buf[0]);
     send_to_char( buf, ch );
     return;

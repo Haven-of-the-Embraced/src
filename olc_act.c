@@ -2498,7 +2498,7 @@ void show_obj_values( CHAR_DATA *ch, OBJ_INDEX_DATA *obj )
 
     case ITEM_LIGHT:
       send_to_char("{c-----------------------{YVALUES{c------------------------{x\n\r", ch);
-      sprintf(buf, "Replenish Rate      : %3d %s  \n\rReplenish Chance    : %3d%  \n\rCurrent Light Hours : %3d %s  \n\rMax Light Hours     : %3d %s \n\r{R**Currently Unused**{x: %d\n\r",
+      sprintf(buf, "v[0] Replenish Rate      : %3d %s  \n\rv[1] Replenish Chance    : %3d%  \n\rv[2] Current Light Hours : %3d %s  \n\rv[3] Max Light Hours     : %3d %s \n\r{R**Currently Unused**{x: %d\n\r",
         obj->value[0],
         obj->value[0] == 0 ? "[{yNo Replenish{x]" : "Per Update",
         obj->value[1],
@@ -2744,18 +2744,18 @@ bool set_obj_values( CHAR_DATA *ch, OBJ_INDEX_DATA *pObj, int value_num, char *a
               pObj->value[1] = atoi( argument );
               break;
             case 2:
-              if (set_value < -1 || set_value > pObj->value[3])
+              if (set_value < -1 || set_value > pObj->value[3] || set_value == 0)
               {
-                send_to_char("Current Light Hours is between -1 [Infinite] and the Maximum Hours set.\n\r", ch);
+                send_to_char("Current Light Hours can be set to:  -1 [Infinite], or between 1 and Maximum Light Hours.\n\r", ch);
                 break;
               }
               send_to_char( "HOURS OF LIGHT SET.\n\r\n\r", ch );
               pObj->value[2] = atoi( argument );
               break;
             case 3:
-              if (set_value < -1 || set_value > 999)
+              if (set_value < -1 || set_value > 999 || set_value == 0)
               {
-                send_to_char("Maximum Light Hours is between -1 [Infinite] and 999.\n\r", ch);
+                send_to_char("Maximum Light Hours can be set to:  -1 [Infinite], or between 1 and 999.\n\r", ch);
                 break;
               }
               send_to_char( "MAXIMUM LIGHT HOURS SET.\n\r\n\r", ch );

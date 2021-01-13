@@ -850,7 +850,8 @@ void char_update( void )
             --ch->in_room->light;
             act( "$p casts its last bit of illumination before dimming to nothingness.", ch, obj, NULL, TO_ROOM );
             act( "$p flickers and sputters before finally going out.", ch, obj, NULL, TO_CHAR );
-            extract_obj( obj );
+            if (obj->value[1] == 0)
+              extract_obj( obj );
         }
         else if ( obj->value[2] <= 5 && ch->in_room != NULL)
             act("$p flickers briefly, struggling to continue illuminating.",ch,obj,NULL,TO_CHAR);

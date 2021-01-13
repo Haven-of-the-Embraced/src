@@ -2499,7 +2499,7 @@ void show_obj_values( CHAR_DATA *ch, OBJ_INDEX_DATA *obj )
 
     case ITEM_LIGHT:
       send_to_char("{c-----------------------{YVALUES{c------------------------{x\n\r", ch);
-      sprintf(buf, "v[0] Replenish Rate      : %3d %s  \n\rv[1] Replenish Chance    : %3d%  \n\rv[2] Current Light Hours : %3d %s  \n\rv[3] Max Light Hours     : %3d %s \n\r{R**Currently Unused**{x: %d\n\r",
+      sprintf(buf, "v[0] Replenish Rate      : %3d %s  \n\rv[1] Replenish Chance    : %3d%  \n\rv[2] Current Light Hours : %3d %s  \n\rv[3] Max Light Hours     : %3d %s \n\rv[4] Light Flags         : %s\n\r",
         obj->value[0],
         obj->value[0] == 0 ? "[{yNo Replenish{x]" : "Per Update",
         obj->value[1],
@@ -2507,7 +2507,7 @@ void show_obj_values( CHAR_DATA *ch, OBJ_INDEX_DATA *obj )
         obj->value[2] == -1 || obj->value[2] == 999 ? "[{MInfinite{x]" : "",
         obj->value[3],
         obj->value[3] == -1 || obj->value[3] == 999 ? "[{MInfinite{x]" : "",
-        obj->value[4]);
+        flag_string( light_flags, obj->value[4]));
       send_to_char( buf, ch );
       send_to_char("{c-----------------------------------------------------{x\n\r", ch);
       break;
@@ -2761,6 +2761,9 @@ bool set_obj_values( CHAR_DATA *ch, OBJ_INDEX_DATA *pObj, int value_num, char *a
               }
               send_to_char( "MAXIMUM LIGHT HOURS SET.\n\r\n\r", ch );
               pObj->value[3] = atoi( argument );
+              break;
+            case 4:
+              ALT_FLAGVALUE_TOGGLE( pObj->value[4], light_flags, argument );
               break;
         }
             break;

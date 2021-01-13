@@ -850,7 +850,7 @@ void char_update( void )
             --ch->in_room->light;
             act( "$p casts its last bit of illumination before dimming to nothingness.", ch, obj, NULL, TO_ROOM );
             act( "$p flickers and sputters before finally going out.", ch, obj, NULL, TO_CHAR );
-            if (obj->value[2] == 0)
+            if (obj->value[2] == 0 && obj->value[1] == 0)
               extract_obj( obj );
         }
         else if ( obj->value[2] <= 5 && ch->in_room != NULL)
@@ -1367,7 +1367,7 @@ void obj_update( void )
             continue;
 
     if (obj->item_type == ITEM_LIGHT && obj->wear_loc == WEAR_NONE &&
-        obj->value[2] < obj->value[3] && obj->value[1] > 0)
+        obj->value[2] < obj->value[3] && obj->value[1] > 0 && obj->value[0] > 0)
     {
       rch = obj->carried_by;
       if (number_range(1,100) <= obj->value[1])

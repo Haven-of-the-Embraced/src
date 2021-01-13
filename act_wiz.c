@@ -1793,14 +1793,14 @@ void do_ostat( CHAR_DATA *ch, char *argument )
 
           case ITEM_LIGHT:
           send_to_char("{c-----------------------{YVALUES{c------------------------{x\n\r", ch);
-          sprintf(buf, "Replenish Rate      : %d %s  \n\rReplenish Chance    : %d%  \n\rCurrent Light Hours : %d %s  \n\rMax Light Hours   : %d %s \n\r{R**Currently Unused**{x: %d\n\r",
+          sprintf(buf, "Replenish Rate      : %3d %s  \n\rReplenish Chance    : %3d%  \n\rCurrent Light Hours : %3d %s  \n\rMax Light Hours     : %3d %s \n\r{R**Currently Unused**{x: %d\n\r",
             obj->value[0],
-            obj->value[0] == 0 ? "[None]" : "",
+            obj->value[0] == 0 ? "[{yNo Replenish{x]" : "Per Update",
             obj->value[1],
             obj->value[2],
-            obj->value[2] == -1 || obj->value[2] == 999 ? "[Infinite]" : "",
+            obj->value[2] == -1 || obj->value[2] == 999 ? "[{MInfinite{x]" : "",
             obj->value[3],
-            obj->value[3] == -1 || obj->value[3] == 999 ? "[Infinite]" : "",
+            obj->value[3] == -1 || obj->value[3] == 999 ? "[{MInfinite{x]" : "",
             obj->value[4]);
           send_to_char(buf, ch);
           send_to_char("{c-----------------------------------------------------{x\n\r", ch);

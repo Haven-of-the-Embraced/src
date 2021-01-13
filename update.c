@@ -850,7 +850,7 @@ void char_update( void )
             --ch->in_room->light;
             act( "$p casts its last bit of illumination before dimming to nothingness.", ch, obj, NULL, TO_ROOM );
             act( "$p flickers and sputters before finally going out.", ch, obj, NULL, TO_CHAR );
-            if (obj->value[1] == 0)
+            if (obj->value[2] == 0)
               extract_obj( obj );
         }
         else if ( obj->value[2] <= 5 && ch->in_room != NULL)
@@ -1313,6 +1313,7 @@ void obj_update( void )
     OBJ_DATA *obj;
     OBJ_DATA *obj_next;
     AFFECT_DATA *paf, *paf_next;
+    char buf[MSL];
 
     for ( obj = object_list; obj != NULL; obj = obj_next )
     {
@@ -1364,6 +1365,24 @@ void obj_update( void )
         /* Make sure the object is still there before proceeding */
         if ( !obj )
             continue;
+
+    if (obj->item_type == ITEM_LIGHT && obj->wear_loc == WEAR_NONE &&
+        obj->value[2] < obj->value[3] && obj->value[1] > 0)
+    {
+      rch = obj->carried_by;
+      if (number_range(1,100) <= obj->value[1])
+      {
+        sprintf(buf, "%s pulses briefly with a soft light.{x\n\r", capitalize(obj->short_descr));
+        send_to_char(buf, rch);
+          obj->value[2] += obj->value[0];
+        if (obj->value[2] >= obj->value[3])
+        {
+          obj->value[2] = obj->value[3];
+          sprintf(buf, "%s flashes brightly for a moment, then subsides.\n\r{x", obj->value[2]);
+          send_to_char(buf, rch);
+        }
+      }
+    }
 
     if ( obj->wear_loc == WEAR_NONE && IS_SET(obj->extra_flags, ITEM_PAUSE_TIMER) )
       continue;

@@ -1123,6 +1123,13 @@ const struct flag_type furniture_flags[]=
     {   NULL,         0,            0   }
 };
 
+const struct flag_type light_flags[]=
+{
+		{		"flames", LIGHT_FLAMES,			FALSE 	},
+		{		"mystical", LIGHT_MYSTICAL,	FALSE 	},
+		{		NULL,					0,						0		}
+};
+
 const struct flag_type trap_flags[]=
 {
     {   "bash",   TRAP_BASH,    TRUE    },

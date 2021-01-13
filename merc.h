@@ -1565,8 +1565,9 @@ struct  kill_data
 #define PUT_IN          (O)
 #define PUT_INSIDE      (P)
 
-
-
+/* light flags */
+#define LIGHT_FLAMES    (A)
+#define LIGHT_MYSTICAL  (B)
 
 /*
  * Apply types (for affects).

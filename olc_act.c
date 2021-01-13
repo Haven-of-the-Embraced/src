@@ -130,6 +130,7 @@ const struct olc_help_type help_table[] =
         {"clan",    clan_flags, "Clan flags."},
     {   "crafted",      crafted_table,      "Crafted item types."        },
     {   "trap", trap_flags,  "Trap flags."       },
+    {   "light", light_flags,   "Special Light Flags."},
     {   NULL,       NULL,        NULL                }
 };
 

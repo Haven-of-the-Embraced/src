@@ -1536,22 +1536,19 @@ void rote_spiritsight(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *o
 
     if (IS_NPC(ch)) return;
 
-    if(victim != ch)
+    if(victim != ch) 
     {
         send_to_char("You can only use this effect on yourself.\n\r",ch);
         return;
     }
 
-    if(is_affected(ch, gsn_spiritsight))
+    if(is_affected(ch, gsn_spiritsight) || IS_AFFECTED2(ch, AFF2_UMBRA))
     {
         send_to_char("You are already viewing the etheral plane of existance.\n\r",ch);
         return;
     }
 
     send_to_char("You expand your vision to see the etheral plane of existance.\n\r" ,ch);
-
-    if (IS_AFFECTED2(ch, AFF2_UMBRA))
-      send_to_char("The additional vision has no additional affect while currently in the Umbra.\n\r", ch);
 
     af.where     = TO_AFFECTS;
     af.type      = gsn_spiritsight;
@@ -1590,8 +1587,26 @@ void rote_callspirit(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *ob
         return;
     }
 
+    act( "Concentrating, you call out across the Gauntlet and deep into the Umbra.", ch, NULL, mob, TO_CHAR );
+
+    if (success < 0)
+    {
+      return;
+    }
+
+    if (success == 0)
+    {
+      return;
+    }
+
     mob = create_mobile( pMobIndex );
     char_to_room( mob, ch->in_room );
+
+    act( "A disruption in the Gauntlet appears before you, and $N tears through into this reality.", ch, NULL, mob, TO_CHAR );
+    act( "With eyes seemingly boring into your soul, $E rasps, '{WI have answered, what is thy bidding?{x'", ch, NULL, mob, TO_CHAR);
+    act( "With a look of anguish and pain, $N materializes before your very eyes!", ch, NULL, mob, TO_NOTVICT );
+    act( "In a raspy voice, $E looks at $n and says, '{WI have answered, what is they bidding?{x'", ch, NULL, mob, TO_NOTVICT);
+
     add_follower( mob, ch );
     mob->leader = ch;
     mob->level  = ch->level;
@@ -1600,9 +1615,6 @@ void rote_callspirit(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *ob
     mob->hitroll = ch->hitroll;
     mob->damroll = ch->damroll * 2 / 3;
     mob->hit = mob->max_hit;
-
-    act( "$n summons forth $N!", ch, NULL, mob, TO_NOTVICT );
-    send_to_char("You summon forth a spirit from the Umbra to serve your needs.\n\r" ,ch);
 
     af.where     = TO_AFFECTS;
     af.type      = gsn_charm_person;

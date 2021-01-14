@@ -2649,15 +2649,13 @@ void do_pstat( CHAR_DATA *ch, char *argument )
     if (victim->avatar > 0)
     {
       send_to_char("{c[--------------------===    Mage Info     ===--------------------]{x\n\r",ch);
-        sprintf(buf,"Tradition: %s  Mentor: %s  Apprentice: %s  Rank: %s\n\r",
-        capitalize(tradition_table[victim->tradition].name),
-        victim->sire ? victim->sire : "none",
-// new haven fix    victim->apprentice == "(null)" ? "none" : victim->apprentice ? "none" : victim->apprentice,
-        victim->apprentice ? "none" : victim->apprentice,
-        victim->rank == 1 ? "Apprentice" :
-        victim->rank == 2 ? "Disciple" :
-        victim->rank == 8 ? "Master" :
-        victim->rank == 9 ? "Mentor" : "Leader");
+      sprintf(buf, " Tradition: %s     Rank:  %s     Avatar: %d\n\r", center(capitalize(tradition_table[victim->tradition].name), 16, "*"),
+        victim->rank == 1 ? "Apprentice" : victim->rank == 2 ? " Disciple " :
+        victim->rank == 8 ? "  Master  " : victim->rank == 9 ? "  Mentor  " : "  Leader  ",
+        victim->avatar);
+      send_to_char(buf, ch);
+      sprintf(buf, " Mentor:   %s    Apprentice:  %s\n\r", center(victim->sire ? victim->sire : "None", 18, "*"),
+        center(victim->apprentice ? "None" : victim->apprentice, 18, "*"));
         send_to_char(buf,ch);
         send_to_char("{c[-------------------==========HHHHHH==========-------------------]{x\n\r",ch);
     }

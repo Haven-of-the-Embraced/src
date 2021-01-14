@@ -2598,7 +2598,7 @@ void do_pstat( CHAR_DATA *ch, char *argument )
             continue;
           else
           {
-            sprintf(buf, "%s %-15s : %d ", col == 1 ? "\n\r" : "", disc_table[i].name, victim->pcdata->discipline[i]);
+            sprintf(buf, "%s %-15s : %d %s", col == 1 ? "\n\r" : "", disc_table[i].name, victim->pcdata->discipline[i], col != 3 ? "{r|{x" : " ");
             send_to_char(buf, ch);
             col++;
             if (col > 3)
@@ -2612,15 +2612,38 @@ void do_pstat( CHAR_DATA *ch, char *argument )
     if (!IS_NPC(victim) && victim->race == race_lookup("ghoul"))
     {
       send_to_char("{r[--------------------===    Ghoul Info    ===--------------------]{x\n\r",ch);
-        sprintf(buf,"Generation: %d(%d)  Master: %s  Dpoints: %d  Blood: %d/%d\n\r",
-        victim->gen,
-        victim->pcdata->csgeneration,
-        victim->vamp_master,
-        victim->dpoints,
+      sprintf(buf, " Domitor:   %s  ", center(victim->vamp_master, 17, " "));
+      send_to_char(buf, ch);
+      sprintf(buf,"    Domitor Clan: %s \n\r", center(capitalize(clan_table[victim->clan].name), 16, " "));
+      send_to_char(buf, ch);
+      sprintf(buf, " Domitor Gen: %s        ", center(victim->pcdata->csgeneration == 4 ? "Methuselah" : victim->pcdata->csgeneration == 5 ? "Fifth" :
+      victim->pcdata->csgeneration == 6 ? "Sixth" : victim->pcdata->csgeneration == 7 ? "Seventh" :
+      victim->pcdata->csgeneration == 8 ? "Eighth" : victim->pcdata->csgeneration == 9 ? "Ninth" :
+      victim->pcdata->csgeneration == 10 ? "Tenth" : victim->pcdata->csgeneration == 11 ? "Eleventh" :
+      victim->pcdata->csgeneration == 12 ? "Twelvth" : victim->pcdata->csgeneration == 13 ? "Thirteenth" : "Negligent",12," "));
+      send_to_char(buf,ch);
+      sprintf(buf," Blood Bond:   %s \n\r Blood Pool:     %2d/%2d\n\r",
+      center(victim->bonded == 0 ? "None" : victim->bonded == 1 ? "Lv 1" : victim->bonded == 2 ? "Lv 2" :
+      victim->bonded == 3 ? "Lv 3" : "Lv 3",16," "),
         victim->pblood/10,
         victim->max_pblood/10);
-        send_to_char(buf,ch);
-        send_to_char("{r[-------------------==========HHHHHH==========-------------------]{x\n\r",ch);
+      send_to_char(buf,ch);
+      send_to_char("{r+----------------------     Disciplines    ----------------------+{x",ch);
+      for (i = 1; i < MAX_DISC; i++)
+      {
+        if (victim->pcdata->discipline[i] == 0)
+          continue;
+        else
+        {
+          sprintf(buf, "%s %-15s : %d %s", col == 1 ? "\n\r" : "", disc_table[i].name, victim->pcdata->discipline[i], col != 3 ? "{r|{x" : " ");
+          send_to_char(buf, ch);
+          col++;
+          if (col > 3)
+            col = 1;
+        }
+      }
+      send_to_char("\n\r", ch);
+      send_to_char("{r[-------------------==========HHHHHH==========-------------------]{x\n\r",ch);
     }
 
     if (victim->avatar > 0)

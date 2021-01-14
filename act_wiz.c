@@ -2516,13 +2516,15 @@ void do_pstat( CHAR_DATA *ch, char *argument )
 
     if(IS_IMMORTAL(victim))
     {
-        send_to_char("{W------Imm Info:{x",ch);
+      send_to_char("{y[--------------------===   Immortal Info  ===--------------------]{x\n\r",ch);
         sprintf(buf, "Security: %d     Trust: %d     Wizinvis: %d     Incog: %d\n\r",
         victim->pcdata->security,        get_trust(victim),        victim->invis_level,
         victim->incog_level);
         send_to_char( buf, ch );
         sprintf(buf, "Wiziname: %s     Immtitle: %s\n\r", victim->pcdata->wiziname, victim->pcdata->immtitle);
+        send_to_char("{y[-------------------==========HHHHHH==========-------------------]{x\n\r",ch);
     }
+
     if(victim->pcdata->breed > 0 && victim->pcdata->auspice > 0)
     {
         send_to_char("{g[--------------------===    Garou Info    ===--------------------]{x\n\r",ch);
@@ -2576,21 +2578,25 @@ void do_pstat( CHAR_DATA *ch, char *argument )
 
     if (!IS_NPC(victim) && victim->race == race_lookup("vampire") || victim->race == race_lookup("methuselah"))
     {
-        send_to_char("{r--Vampire Info:{x",ch);
-        sprintf(buf,"Clan: %s  Generation: %d(%d)  Sire: %s Childer: %d Blood: %d/%d\n\r",
+      send_to_char("{r[--------------------===   Vampire Info   ===--------------------]{x\n\r",ch);
+        sprintf(buf," Clan: %-15s  Generation: %2d(%2d)   Sire: %s \n\r",
         capitalize(clan_table[victim->clan].name),
         victim->gen,
         victim->pcdata->csgeneration,
-        victim->sire,
-        victim->childer,
-        victim->pblood/10,
-        victim->max_pblood/10);
+        center(victim->sire, 15, " "));
         send_to_char(buf,ch);
+        sprintf(buf," Fangs: %s       Childer: %2d       Blood Pool: %2d/%2d\n\r",
+          IS_AFFECTED(victim, AFF_FANGS) ? "Extended    " : "Concealed   ",
+          victim->childer,
+          victim->pblood/10,
+          victim->max_pblood/10);
+        send_to_char(buf,ch);
+        send_to_char("{r[-------------------==========HHHHHH==========-------------------]{x\n\r",ch);
     }
 
     if (!IS_NPC(victim) && victim->race == race_lookup("ghoul"))
     {
-        send_to_char("{r----Ghoul Info:{x",ch);
+      send_to_char("{r[--------------------===    Ghoul Info    ===--------------------]{x\n\r",ch);
         sprintf(buf,"Generation: %d(%d)  Master: %s  Dpoints: %d  Blood: %d/%d\n\r",
         victim->gen,
         victim->pcdata->csgeneration,
@@ -2599,10 +2605,12 @@ void do_pstat( CHAR_DATA *ch, char *argument )
         victim->pblood/10,
         victim->max_pblood/10);
         send_to_char(buf,ch);
+        send_to_char("{r[-------------------==========HHHHHH==========-------------------]{x\n\r",ch);
     }
+
     if (victim->avatar > 0)
     {
-        send_to_char("{c-----Mage Info:{x",ch);
+      send_to_char("{c[--------------------===    Mage Info     ===--------------------]{x\n\r",ch);
         sprintf(buf,"Tradition: %s  Mentor: %s  Apprentice: %s  Rank: %s\n\r",
         capitalize(tradition_table[victim->tradition].name),
         victim->sire ? victim->sire : "none",
@@ -2613,13 +2621,15 @@ void do_pstat( CHAR_DATA *ch, char *argument )
         victim->rank == 8 ? "Master" :
         victim->rank == 9 ? "Mentor" : "Leader");
         send_to_char(buf,ch);
+        send_to_char("{c[-------------------==========HHHHHH==========-------------------]{x\n\r",ch);
     }
+
         if (!IS_NPC(victim) && victim->pcdata->playernotes != NULL)
     {
         send_to_char("{W--Player Notes:{x\n\r", ch);
-        send_to_char("=================================================================\n\r", ch);
+        send_to_char("==================================================================\n\r", ch);
         printf_to_char(ch,"%s", victim->pcdata->playernotes);
-        send_to_char("=================================================================\n\r", ch);
+        send_to_char("==================================================================\n\r", ch);
     }
 
     if(victim->affected != NULL)

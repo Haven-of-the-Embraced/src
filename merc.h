@@ -1566,8 +1566,13 @@ struct  kill_data
 #define PUT_INSIDE      (P)
 
 /* light flags */
-#define LIGHT_FLAMES    (A)
-#define LIGHT_MYSTICAL  (B)
+#define LIGHT_FLAMES        (A)
+#define LIGHT_MYSTICAL      (B)
+#define LIGHT_INTENSE       (C)
+#define LIGHT_WEAK          (D)
+#define LIGHT_INTERMITTENT  (E)
+#define LIGHT_PULSING       (F)
+#define LIGHT_RECHARGE      (G)
 
 /*
  * Apply types (for affects).

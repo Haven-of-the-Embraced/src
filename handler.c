@@ -3490,8 +3490,13 @@ char *light_bit_name( int light_flags)
 
     buf[0] = '\0';
 
-    if (light_flags & LIGHT_FLAMES ) strcat(buf, " flames");
-    if (light_flags & LIGHT_MYSTICAL ) strcat(buf, " mystical");
+    if (light_flags & LIGHT_FLAMES        ) strcat(buf, " flames");
+    if (light_flags & LIGHT_MYSTICAL      ) strcat(buf, " mystical");
+    if (light_flags & LIGHT_INTENSE       ) strcat(buf, " intense");
+    if (light_flags & LIGHT_WEAK          ) strcat(buf, " weak");
+    if (light_flags & LIGHT_INTERMITTENT  ) strcat(buf, " intermittent");
+    if (light_flags & LIGHT_PULSING       ) strcat(buf, " pulsing");
+    if (light_flags & LIGHT_RECHARGE      ) strcat(buf, " recharge");
 
     return (buf[0] != '\0' ) ? buf+1 : "none";
 }

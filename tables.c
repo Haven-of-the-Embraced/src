@@ -1125,9 +1125,14 @@ const struct flag_type furniture_flags[]=
 
 const struct flag_type light_flags[]=
 {
-		{		"flames", LIGHT_FLAMES,			TRUE 	},
-		{		"mystical", LIGHT_MYSTICAL,	TRUE 	},
-		{		NULL,					0,						0		}
+		{		"flames", 			LIGHT_FLAMES,				TRUE 	},
+		{		"mystical", 		LIGHT_MYSTICAL,			TRUE 	},
+		{		"intense",			LIGHT_INTENSE,			TRUE	},
+		{		"weak",					LIGHT_WEAK,					TRUE	},
+		{		"intermittent",	LIGHT_INTERMITTENT,	TRUE	},
+		{		"pulsing",			LIGHT_PULSING,			TRUE	},
+		{		"recharge",			LIGHT_RECHARGE,			TRUE	},
+		{		NULL,				0,								0			}
 };
 
 const struct flag_type trap_flags[]=

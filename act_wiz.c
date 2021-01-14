@@ -2591,6 +2591,21 @@ void do_pstat( CHAR_DATA *ch, char *argument )
           victim->pblood/10,
           victim->max_pblood/10);
         send_to_char(buf,ch);
+        send_to_char("{r+----------------------     Disciplines    ----------------------+{x",ch);
+        for (i = 1; i < MAX_DISC; i++)
+        {
+          if (victim->pcdata->discipline[i] == 0)
+            continue;
+          else
+          {
+            sprintf(buf, "%s %-15s : %d ", col == 1 ? "\n\r" : "", disc_table[i].name, victim->pcdata->discipline[i]);
+            send_to_char(buf, ch);
+            col++;
+            if (col > 3)
+              col = 1;
+          }
+        }
+        send_to_char("\n\r", ch);
         send_to_char("{r[-------------------==========HHHHHH==========-------------------]{x\n\r",ch);
     }
 

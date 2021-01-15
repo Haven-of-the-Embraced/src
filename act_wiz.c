@@ -2649,15 +2649,30 @@ void do_pstat( CHAR_DATA *ch, char *argument )
     if (victim->avatar > 0)
     {
       send_to_char("{c[--------------------===    Mage Info     ===--------------------]{x\n\r",ch);
-      sprintf(buf, " Tradition: %s     Rank:  %s     Avatar: %d\n\r", center(capitalize(tradition_table[victim->tradition].name), 16, "*"),
+      sprintf(buf, " Tradition: %s     Rank:  %s     Avatar: %d\n\r", center(capitalize(tradition_table[victim->tradition].name), 16, " "),
         victim->rank == 1 ? "Apprentice" : victim->rank == 2 ? " Disciple " :
         victim->rank == 8 ? "  Master  " : victim->rank == 9 ? "  Mentor  " : "  Leader  ",
         victim->avatar);
       send_to_char(buf, ch);
-      sprintf(buf, " Mentor:   %s    Apprentice:  %s\n\r", center(victim->sire ? victim->sire : "None", 18, "*"),
-        center(victim->apprentice ? "None" : victim->apprentice, 18, "*"));
+      sprintf(buf, " Mentor:   %s    Apprentice:  %s\n\r", center(victim->sire ? victim->sire : "None", 18, " "),
+        center(victim->apprentice ? "None" : victim->apprentice, 18, " "));
         send_to_char(buf,ch);
-        send_to_char("{c[-------------------==========HHHHHH==========-------------------]{x\n\r",ch);
+      send_to_char("{c+----------------------      Spheres       ----------------------+{x",ch);
+      for(i = 0;i <= MAX_SPHERE;i++)
+      {
+        if (victim->sphere[i] == 0)
+          continue;
+        else
+        {
+          sprintf(buf, "%s %-15s : %d %s", col == 1 ? "\n\r" : "", capitalize(sphere_table[i].name), victim->sphere[i], col != 3 ? "{c|{x" : " ");
+          send_to_char(buf, ch);
+          col++;
+          if (col > 3)
+            col = 1;
+        }
+      }
+      send_to_char("\n\r",ch);
+      send_to_char("{c[-------------------==========HHHHHH==========-------------------]{x\n\r",ch);
     }
 
         if (!IS_NPC(victim) && victim->pcdata->playernotes != NULL)

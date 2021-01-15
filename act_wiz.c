@@ -2649,7 +2649,7 @@ void do_pstat( CHAR_DATA *ch, char *argument )
     if (victim->avatar > 0)
     {
       send_to_char("{c[--------------------===    Mage Info     ===--------------------]{x\n\r",ch);
-      sprintf(buf, " Tradition: %s     Rank:  %s     Avatar: %d\n\r", center(capitalize(tradition_table[victim->tradition].name), 16, " "),
+      sprintf(buf, " Tradition: %s     Rank:  %s    Avatar:   %d\n\r", center(capitalize(tradition_table[victim->tradition].name), 16, " "),
         victim->rank == 1 ? "Apprentice" : victim->rank == 2 ? " Disciple " :
         victim->rank == 8 ? "  Master  " : victim->rank == 9 ? "  Mentor  " : "  Leader  ",
         victim->avatar);
@@ -2657,6 +2657,9 @@ void do_pstat( CHAR_DATA *ch, char *argument )
       sprintf(buf, " Mentor:   %s    Apprentice:  %s\n\r", center(victim->sire ? victim->sire : "None", 18, " "),
         center(victim->apprentice ? "None" : victim->apprentice, 18, " "));
         send_to_char(buf,ch);
+      sprintf(buf, " Arete:   %d           Quintessence:  %3d/%3d         Paradox: %3d\n\r", victim->arete,
+        victim->quintessence, victim->max_quintessence, victim->paradox);
+      send_to_char(buf,ch);
       send_to_char("{c+----------------------      Spheres       ----------------------+{x",ch);
       for(i = 0;i <= MAX_SPHERE;i++)
       {

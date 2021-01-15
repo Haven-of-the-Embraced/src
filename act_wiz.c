@@ -2678,40 +2678,43 @@ void do_pstat( CHAR_DATA *ch, char *argument )
       send_to_char("{c[-------------------==========HHHHHH==========-------------------]{x\n\r",ch);
     }
 
-        if (!IS_NPC(victim) && victim->pcdata->playernotes != NULL)
+    if (!IS_NPC(victim) && victim->pcdata->playernotes != NULL)
     {
-        send_to_char("{W--Player Notes:{x\n\r", ch);
-        send_to_char("==================================================================\n\r", ch);
-        printf_to_char(ch,"%s", victim->pcdata->playernotes);
-        send_to_char("==================================================================\n\r", ch);
+      send_to_char("{D[-------------------{W===    Player Notes    ==={D-------------------]{x\n\r", ch);
+      printf_to_char(ch,"%s", victim->pcdata->playernotes);
+      send_to_char("{D+----------------------      {WPVP Info      {D----------------------+{x\n\r",ch);
+      sprintf(buf, " PVP Status:   %s        ", IS_SET(victim->act2, PLR2_PVP) ? "  {RActive{x  " : " {rInactive{x ");
+      send_to_char(buf, ch);
+      if (!IS_NPC(victim) && victim->pcdata->kill_target != NULL && str_cmp(victim->pcdata->kill_target, "null") &&
+          str_cmp(victim->pcdata->kill_target, "(null)"))
+        sprintf(buf2,"%s",center(victim->pcdata->kill_target, 20, " "));
+      else
+        sprintf(buf2, "     No Target      ");
+      sprintf(buf, " PK Target: {r%s{x\n\r", buf2);
+      send_to_char(buf,ch);
     }
+      send_to_char("{D[-------------------{W==========HHHHHH=========={D-------------------]{x\n\r",ch);
 
     if(victim->affected != NULL)
-        send_to_char("{y-------Affects:{x\n\r",ch);
+      send_to_char("{y[--------------------===     Affects      ===--------------------]{x\n\r",ch);
 
     for ( paf = victim->affected; paf != NULL; paf = paf->next )
     {
     sprintf( buf,
-        "Spell: '%s' modifies %s by %d for %d hours with bits %s%s, level %d.\n\r",
+        " {y'{W%s{y'{W(Lvl-%3d){x: modifies %s by %d for %d ticks with bits %s%s.\n\r",
         skill_table[(int) paf->type].name,
+        paf->level,
         affect_loc_name( paf->location ),
         paf->modifier,
         paf->duration,
         paf->where == TO_RESIST ? "res_" : paf->where == TO_IMMUNE ? "imm_" : paf->where == TO_VULN ? "vuln_" : "",
         paf->where == TO_RESIST ? imm_bit_name(paf->bitvector) : paf->where == TO_VULN ? imm_bit_name(paf->bitvector) :
         paf->where == TO_IMMUNE ? imm_bit_name(paf->bitvector) :
-        paf->where == TO_AFFECTS ? affect_bit_name( paf->bitvector ) : affect2_bit_name( paf->bitvector ),
-        paf->level
+        paf->where == TO_AFFECTS ? affect_bit_name( paf->bitvector ) : affect2_bit_name( paf->bitvector )
         );
     send_to_char( buf, ch );
     }
 
-    if (!IS_NPC(victim) && victim->pcdata->kill_target != NULL && str_cmp(victim->pcdata->kill_target, "null") &&
-        str_cmp(victim->pcdata->kill_target, "(null)"))
-    {
-        sprintf(buf,"\n\r{R%s has player killing permission on %s!{x\n\r",victim->name,victim->pcdata->kill_target);
-        send_to_char(buf,ch);
-    }
     return;
 }
 

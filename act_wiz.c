@@ -2700,17 +2700,22 @@ void do_pstat( CHAR_DATA *ch, char *argument )
 
     for ( paf = victim->affected; paf != NULL; paf = paf->next )
     {
+    if (paf->bitvector == 0)
+      sprintf(buf2, "%s", "\n\r");
+    else
+      sprintf(buf2, "\n\r      Associated Bit [{y%s%s{x]\n\r",
+        paf->where == TO_RESIST ? "res_" : paf->where == TO_IMMUNE ? "imm_" : paf->where == TO_VULN ? "vuln_" : "",
+        paf->where == TO_RESIST ? imm_bit_name(paf->bitvector) : paf->where == TO_VULN ? imm_bit_name(paf->bitvector) :
+        paf->where == TO_IMMUNE ? imm_bit_name(paf->bitvector) :
+        paf->where == TO_AFFECTS ? affect_bit_name( paf->bitvector ) : affect2_bit_name( paf->bitvector ));
     sprintf( buf,
-        " {y'{W%s{y'{W(Lvl-%3d){x: modifies %s by %d for %d ticks with bits %s%s.\n\r",
+        " {y'{W%-15s{y'{W(Lvl-%3d){x: %15s (%4d) - %3d ticks%s",
         skill_table[(int) paf->type].name,
         paf->level,
         affect_loc_name( paf->location ),
         paf->modifier,
         paf->duration,
-        paf->where == TO_RESIST ? "res_" : paf->where == TO_IMMUNE ? "imm_" : paf->where == TO_VULN ? "vuln_" : "",
-        paf->where == TO_RESIST ? imm_bit_name(paf->bitvector) : paf->where == TO_VULN ? imm_bit_name(paf->bitvector) :
-        paf->where == TO_IMMUNE ? imm_bit_name(paf->bitvector) :
-        paf->where == TO_AFFECTS ? affect_bit_name( paf->bitvector ) : affect2_bit_name( paf->bitvector )
+        buf2
         );
     send_to_char( buf, ch );
     }

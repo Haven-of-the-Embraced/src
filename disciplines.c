@@ -2148,13 +2148,14 @@ void do_mesmerize(CHAR_DATA *ch, char *argument)
 {
    char arg1[MAX_INPUT_LENGTH],arg2[MAX_INPUT_LENGTH];
    char buf[MAX_STRING_LENGTH];
+   char *argument2 = argument;
    CHAR_DATA *victim;
    int success, diff;
    AFFECT_DATA af;
    success = diff = 0;
 
     argument = one_argument( argument, arg1 );
-//    argument = one_argument( argument, arg2 );
+    argument2 = one_argument( argument, arg2 );
 
     if (IS_NPC(ch)) return;
 
@@ -2277,21 +2278,21 @@ void do_mesmerize(CHAR_DATA *ch, char *argument)
         diff ++;
     if (victim->level > ch->level + 5)
         diff++;
-    if (victim->level > ch->level + 15)
+    if (victim->level > ch->level + 10)
         diff++;
     if (victim->position == POS_FIGHTING || ch->position == POS_FIGHTING)
         diff++;
     if (IS_SET(victim->vuln_flags, VULN_MENTAL) || IS_SET(victim->vuln_flags, VULN_CHARM))
-        diff--;
+        diff-= 2;
+        if (IS_SET(victim->res_flags, RES_MENTAL) || IS_SET(victim->res_flags, RES_CHARM))
+          success--;
     success = godice(get_attribute(ch, MANIPULATION) + ch->csabilities[CSABIL_LEADERSHIP], diff);
     success += stealth_int_shadowplay(ch, diff);
-    if (IS_SET(victim->res_flags, RES_MENTAL) || IS_SET(victim->res_flags, RES_CHARM))
-      success--;
     WAIT_STATE(ch, 6);
 
-    sprintf( buf, "%s locks eyes with you and says, '{W%s{x'.\n\r", ch->name, arg2 );
+    sprintf( buf, "%s locks eyes with you and says, '{W%s{x'.\n\r", ch->name, argument );
     send_to_char(buf,victim);
-    sprintf( buf, "You lock eyes with %s, speaking in a commanding tone as you say, '{W%s{x'.\n\r", victim->short_descr, arg2 );
+    sprintf( buf, "You lock eyes with %s, speaking in a commanding tone as you say, '{W%s{x'.\n\r", victim->short_descr, argument );
     send_to_char(buf,ch);
     act( "$n stares into $N's eyes a moment then whispers to %M.",  ch, NULL, victim, TO_NOTVICT );
 
@@ -2329,9 +2330,10 @@ void do_mesmerize(CHAR_DATA *ch, char *argument)
       return;
     }
 
-    if (success == 0 || IS_SET(victim->imm_flags, IMM_MENTAL) || IS_SET(victim->imm_flags, IMM_CHARM)
+    if (success == 0 || IS_SET(victim->off_flags, OFF_ULTRA_MOB)
+    || IS_SET(victim->imm_flags, IMM_MENTAL) || IS_SET(victim->imm_flags, IMM_CHARM)
     || (victim->level > ch->level + 10
-    && ( victim->race == race_lookup("vampire") || victim->race == race_lookup("methuselah"))) )
+     && ( victim->race == race_lookup("vampire") || victim->race == race_lookup("methuselah"))) )
     {
         sprintf( buf, "%s appears to resist your power of Dominate!\n\r", victim->short_descr );
         send_to_char(buf,ch);
@@ -2340,9 +2342,9 @@ void do_mesmerize(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    sprintf( buf, "You feel an unresistable urge to '{c%s{x', and comply immediately.\n\r", arg2 );
+    sprintf( buf, "You feel an unresistable urge to '{c%s{x', and comply immediately.\n\r", argument );
     send_to_char(buf,victim);
-    interpret( victim, arg2 );
+    interpret( victim, argument );
     gain_exp(ch,success * 2);
 
     return;

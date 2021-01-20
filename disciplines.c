@@ -2154,7 +2154,7 @@ void do_mesmerize(CHAR_DATA *ch, char *argument)
    success = diff = 0;
 
     argument = one_argument( argument, arg1 );
-    argument = one_argument( argument, arg2 );
+//    argument = one_argument( argument, arg2 );
 
     if (IS_NPC(ch)) return;
 
@@ -2173,11 +2173,24 @@ void do_mesmerize(CHAR_DATA *ch, char *argument)
         send_to_char( "You are not trained enough in Dominate!\n\r", ch );
         return;
     }
-    if ( arg1[0] == '\0' || arg2[0] == '\0')
+/*    if ( arg1[0] == '\0' || arg2[0] == '\0')
     {
         send_to_char("Mesmerize whom to do what?\n\r", ch );
         return;
     }
+*/
+  if (arg1[0] == '\0')
+  {
+    send_to_char("Mesmerize whom?\n\r", ch);
+    return;
+  }
+
+  if (argument == '\0')
+  {
+    act("What do you wish to Mesmerize $N into doing?", ch, NULL, arg1, TO_CHAR);
+    return;
+  }
+
     if ( ( victim = get_char_room( ch, NULL, arg1 ) ) == NULL )
     {
         send_to_char( "Nobody here by that name.\n\r", ch );

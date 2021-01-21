@@ -2354,6 +2354,7 @@ void do_forgetful (CHAR_DATA *ch, char *argument)
 {
    CHAR_DATA *victim;
    AFFECT_DATA af;
+   int forget = 0, diff = 0;
 
     if (IS_NPC(ch)) return;
 
@@ -2375,21 +2376,81 @@ void do_forgetful (CHAR_DATA *ch, char *argument)
     }
        if ( (victim = get_char_room(ch, NULL, argument)) == NULL)
     {
-        send_to_char( "Dominate whom?\n\r", ch );
+        send_to_char( "Remove memories from whom?\n\r", ch );
         return;
     }
+
+    if (victim->race != race_lookup("human")
+     && victim->race != race_lookup("vampire")
+     && victim->race != race_lookup("ghoul")
+     && victim->race != race_lookup("garou")
+     && victim->race != race_lookup("methuselah")
+     && victim->race != race_lookup("dhampire")
+     && victim->race != race_lookup("faerie")
+     && victim->race != race_lookup("fera")
+     && victim->race != race_lookup("mage")
+     && victim->race != race_lookup("romani")
+     && victim->race != race_lookup("demon")
+     && victim->race != race_lookup("kuei-jin")
+     && victim->race != race_lookup("dragon")
+     && victim->race != race_lookup("fomor")
+     || !IS_SET(victim->form,FORM_SENTIENT))
+     {
+         send_to_char("Your powers of Dominate only work on sentient, humanoid beings.\n\r", ch);
+         return;
+     }
+
     if (IS_NPC(victim) && victim->pIndexData->pShop != NULL)
     {
         send_to_char("You fear that it may hinder your future purchases.\n\r",ch);
         return;
     }
 
-        if ( ch->pblood < 30 )
+    if (!can_see(victim, ch))
     {
-        send_to_char( "You don't have enough blood.\n\r", ch );
+      send_to_char("Your target must be able to see you to lock eyes.\n\r", ch);
+      return;
+    }
+
+    if (is_affected(ch, gsn_laryngitis))
+    {
+      send_to_char("You cannot speak clearly enough with a sore throat to Mesmerize your victim.\n\r", ch);
+      return;
+    }
+
+    if ( ch->pblood < 10 )
+    {
+        send_to_char( "You don't have enough blood to remove your target's memories.\n\r", ch );
         return;
     }
-    ch->pblood -= 20;
+    ch->pblood -= 10;
+
+    if (!IS_NPC (victim))
+      diff = victim->cswillpower;
+    else
+    {
+      diff = 5;
+      if (victim->race != race_lookup("human"))
+        diff ++;
+      if (victim->level > ch->level + 5)
+        diff++;
+      if (victim->level > ch->level + 10)
+        diff++;
+      if (IS_SET(victim->vuln_flags, VULN_MENTAL) || IS_SET(victim->vuln_flags, VULN_CHARM))
+        diff-= 2;
+      if (IS_SET(victim->res_flags, RES_MENTAL) || IS_SET(victim->res_flags, RES_CHARM))
+        diff++;
+    }
+
+    if (forget < 0)
+    {
+      return;
+    }
+
+    if(forget == 0)
+    {
+      return;
+    }
 
     act( "$n stares a moment into $N's eyes. $N suddenly seems dazed.",  ch, NULL, victim, TO_NOTVICT );
     act( "You stare into $N's eyes and rob them of their memories.",  ch, NULL, victim, TO_CHAR );

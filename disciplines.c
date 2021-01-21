@@ -2423,6 +2423,12 @@ void do_forgetful (CHAR_DATA *ch, char *argument)
       return;
     }
 
+    if (is_affected(victim, gsn_forget))
+    {
+      send_to_char("Your victim seems to have already had memories altered in some form.\n\r", ch);
+      return;
+    }
+
     if ( ch->pblood < 10 )
     {
         send_to_char( "You don't have enough blood to remove your target's memories.\n\r", ch );
@@ -2484,8 +2490,14 @@ void do_forgetful (CHAR_DATA *ch, char *argument)
       return;
     }
 
-    if(forget == 0)
+    if (forget == 0 || IS_SET(victim->off_flags, OFF_ULTRA_MOB)
+    || IS_SET(victim->imm_flags, IMM_MENTAL) || IS_SET(victim->imm_flags, IMM_CHARM)
+    || (victim->level > ch->level + 10
+     && ( victim->race == race_lookup("vampire") || victim->race == race_lookup("methuselah"))) )
     {
+      act("$N seems to be unaffected by your mental probing.", ch, NULL, victim, TO_CHAR);
+      act("You feel a slight mental tug, before overcoming the feeling of intrusion.", ch, NULL, victim, TO_VICT);
+      WAIT_STATE(ch, 6);
       return;
     }
 

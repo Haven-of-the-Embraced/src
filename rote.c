@@ -1645,6 +1645,30 @@ void rote_callspirit(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *ob
 
 void rote_timesense(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
 {
+  AFFECT_DATA af;
+
+  if(victim != ch)
+  {
+   send_to_char("You can only use this effect on yourself.\n\r",ch);
+   return;
+  }
+
+  if(is_affected(ch,gsn_timesense))
+  {
+   send_to_char("You are already observing the ebb and flow of time.\n\r",ch);
+   return;
+  }
+
+  af.where     = TO_AFFECTS;
+  af.type      = gsn_timesense;
+  af.level     = ch->sphere[SPHERE_TIME];
+  af.duration  = (success * 5) + 15;
+  af.location  = APPLY_NONE;
+  af.modifier  = 0;
+  af.bitvector = 0;
+  affect_to_char( victim, &af );
+
+  send_to_char("You attune yourself to the flow of time, taking note of its alterations.\n\r",ch);
   return;
 }
 

@@ -288,6 +288,13 @@ void show_char_to_char_0( CHAR_DATA *victim, CHAR_DATA *ch )
     if ( victim->invis_level >= LEVEL_HERO    ) strcat( buf, "{x(Wizi){y "       );
     if ( IS_AFFECTED(victim, AFF_HIDE)        ) strcat( buf, "{x({yHide{x){y "       );
     if ( IS_AFFECTED(victim, AFF_CHARM)       ) strcat( buf, "{x({BCharmed{x){y "    );
+    if ( is_affected(ch, gsn_timesense) &&
+      (IS_AFFECTED(victim, AFF_HASTE) || IS_SET(victim->off_flags, OFF_FAST) ||
+        is_affected(victim, gsn_celbuff) || is_affected(victim, gsn_rage) ||
+        is_affected(victim, gsn_timealteration)) ) strcat( buf, "{x{D({YAccelerated{D){y "   );
+    if ( is_affected(ch, gsn_timesense) &&
+        (is_affected(victim, gsn_slow) || IS_AFFECTED(victim, AFF_SLOW)  ))
+        strcat( buf, "{x{Y({DDecelerated{Y){y "   );
     if ( IS_AFFECTED(victim, AFF_PASS_DOOR)   ) strcat( buf, "{x({cTranslucent{x){y ");
     if ( IS_AFFECTED2(victim, AFF2_MAJESTY)   ) strcat( buf, "{x({RM{Da{rj{Res{rt{Di{Rc{x){y " );
     if ( IS_AFFECTED(victim, AFF_FAERIE_FIRE) ) strcat( buf, "{x({MPink Aura{x){y "  );

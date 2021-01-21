@@ -1552,7 +1552,7 @@ void rote_primesense(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *ob
   af.duration  = (success * 5) + 15;
   af.location  = APPLY_NONE;
   af.modifier  = 0;
-  af.bitvector = 0;
+  af.bitvector = AFF_DETECT_MAGIC;
   affect_to_char( victim, &af );
 
   send_to_char("You open yourself up to the energy of the world, seeing Quintessence in all its glory.\n\r",ch);

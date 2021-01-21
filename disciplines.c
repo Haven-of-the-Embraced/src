@@ -2354,6 +2354,10 @@ void do_forgetful (CHAR_DATA *ch, char *argument)
    CHAR_DATA *victim;
    AFFECT_DATA af;
    int forget = 0, diff = 0;
+   char arg1[MSL], arg2[MSL];
+
+   argument = one_argument(argument, arg1);
+   argument = one_argument(argument, arg2);
 
     if (IS_NPC(ch)) return;
 
@@ -2373,10 +2377,16 @@ void do_forgetful (CHAR_DATA *ch, char *argument)
         send_to_char( "You are not skilled enough in your powers of Dominate!.\n\r", ch );
         return;
     }
-       if ( (victim = get_char_room(ch, NULL, argument)) == NULL)
+       if ( (victim = get_char_room(ch, NULL, arg1)) == NULL)
     {
         send_to_char( "Remove memories from whom?\n\r", ch );
         return;
+    }
+
+    if (victim == ch)
+    {
+      send_to_char("You cannot delve into and alter your own memories.\n\r", ch);
+      return;
     }
 
     if (victim->race != race_lookup("human")
@@ -2419,21 +2429,39 @@ void do_forgetful (CHAR_DATA *ch, char *argument)
 
     if (is_affected(ch, gsn_laryngitis))
     {
-      send_to_char("You cannot speak clearly enough with a sore throat to Mesmerize your victim.\n\r", ch);
-      return;
-    }
-
-    if (is_affected(victim, gsn_forget))
-    {
-      send_to_char("Your victim seems to have already had memories altered in some form.\n\r", ch);
+      send_to_char("You cannot speak clearly enough with a sore throat to properly question your victim.\n\r", ch);
       return;
     }
 
     if ( ch->pblood < 10 )
     {
-        send_to_char( "You don't have enough blood to remove your target's memories.\n\r", ch );
+        send_to_char( "You don't have enough blood to alter your target's memories.\n\r", ch );
         return;
     }
+
+    if (is_affected(victim, gsn_forget))
+    {
+      act("It appears that $N has already had $S memories altered previously.", ch, NULL, victim, TO_CHAR);
+      WAIT_STATE(ch, 6);
+      if (get_affect_level(victim, gsn_forget) > ch->pcdata->discipline[DOMINATE])
+        send_to_char("The memory alteration seems to be beyond your capabilities to restore.\n\r", ch);
+      else
+      {
+        forget = godice(get_attribute(ch, WITS) + ch->csabilities[CSABIL_EMPATHY], 6);
+        ch->pblood -= 10;
+        if (forget > 0)
+        {
+          act("You reconstruct $N's memories piece by piece.", ch, NULL, victim, TO_CHAR);
+          act("You feel pieces of your memory falling back into place as $n looks into your eyes.", ch, NULL, victim, TO_VICT);
+          affect_strip(victim, gsn_forget);
+        }
+        else
+          send_to_char("You cannot seem to piece back the memories into place.\n\r", ch);
+        return;
+      }
+      return;
+    }
+
     ch->pblood -= 10;
 
     if (!IS_NPC (victim))

@@ -2487,6 +2487,7 @@ void do_forgetful (CHAR_DATA *ch, char *argument)
         af.bitvector = IMM_CHARM;
         affect_to_char(victim, &af);
       }
+      multi_hit( victim, ch, TYPE_UNDEFINED );
       return;
     }
 
@@ -2498,21 +2499,24 @@ void do_forgetful (CHAR_DATA *ch, char *argument)
       act("$N seems to be unaffected by your mental probing.", ch, NULL, victim, TO_CHAR);
       act("You feel a slight mental tug, before overcoming the feeling of intrusion.", ch, NULL, victim, TO_VICT);
       WAIT_STATE(ch, 6);
+      multi_hit( victim, ch, TYPE_UNDEFINED );
       return;
     }
 
-    act( "$n stares a moment into $N's eyes. $N suddenly seems dazed.",  ch, NULL, victim, TO_NOTVICT );
-    act( "You stare into $N's eyes and rob them of their memories.",  ch, NULL, victim, TO_CHAR );
+    act( "As if in a trance, $S's expression goes slack and $E seems dazed.",  ch, NULL, victim, TO_NOTVICT );
+    act( "Your probing draws forth and removes memories from $M, altered as you see fit.",  ch, NULL, victim, TO_CHAR );
 
     af.where     = TO_AFFECTS;
     af.type      = gsn_forget;
-    af.level     = ch->level + ch->pcdata->discipline[DOMINATE];
-    af.duration  = ch->level/2 + ch->pcdata->discipline[DOMINATE];
+    if (!IS_NPC(ch))
+      af.level     = ch->pcdata->discipline[DOMINATE];
+    else
+      af.level    = (ch->level / 25) + 1;
+    af.duration  = forget;
     af.location  = APPLY_NONE;
     af.modifier  = 0;
     af.bitvector = 0;
     affect_to_char( victim, &af );
-    multi_hit( victim, ch, TYPE_UNDEFINED );
     return;
 }
 

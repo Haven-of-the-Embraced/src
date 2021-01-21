@@ -3021,7 +3021,7 @@ extern  sh_int  gsn_kineticshield;
 extern  sh_int  gsn_spiritsight;
 extern  sh_int  gsn_trappedingauntlet;
 extern  sh_int  gsn_empower;
-extern  sh_int  gsn_primsese;
+extern  sh_int  gsn_primesense;
 extern  sh_int  gsn_timesense;
 extern  sh_int  gsn_precognition;
 extern  sh_int  gsn_timealteration;

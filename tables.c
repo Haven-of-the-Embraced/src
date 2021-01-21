@@ -1643,7 +1643,7 @@ const struct    rote_type   rote_table  [MAX_ROTE]  =
     {   "Subconscious Turmoil", rote_subconsciousturmoil,   0, 0, 0, 0, 0, 2, 0, 0, 0, TARGET_CHAR, 2, 2, FALSE, FALSE},
     {   "Mental Link",          rote_mentallink,            0, 0, 0, 0, 0, 3, 0, 0, 0, TARGET_NONE, 3, 3, FALSE, FALSE},
     {   "Control Minds",        rote_controlminds,          0, 0, 0, 0, 0, 4, 0, 0, 0, TARGET_CHAR, 25, 4, TRUE, FALSE},
-		{		"Prime Sense",					rote_primsesense,						0, 0, 0, 0, 0, 0, 1, 0, 0, TARGET_NONE, 1, 1, FALSE, FALSE},
+		{		"Prime Sense",					rote_primesense,						0, 0, 0, 0, 0, 0, 1, 0, 0, TARGET_NONE, 1, 1, FALSE, FALSE},
     {   "Spirit Sight",         rote_spiritsight,           0, 0, 0, 0, 0, 0, 0, 1, 0, TARGET_NONE, 1, 1, FALSE, FALSE},
     {   "Call Spirit",          rote_callspirit,            0, 0, 0, 0, 0, 0, 0, 2, 0, TARGET_NONE, 25, 2, TRUE, TRUE},
     {   "Step Sideways",        rote_stepsideways,          0, 0, 0, 0, 0, 0, 0, 3, 0, TARGET_NONE, 3, 3, TRUE, TRUE},

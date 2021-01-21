@@ -1011,10 +1011,10 @@ if (ch->qpoints > MAX_QPOINTS)
                 ch->paradox--;
         if (ch->quintessence+ch->paradox < ch->max_quintessence)
             ch->quintessence += ch->avatar*(3 + ch->pcdata->csbackgrounds[CSBACK_FOUNT]);
-        if (ch->in_room->sector_type == SECT_NODE)
+        if (ch->in_room->sector_type == SECT_NODE && is_affected(ch, gsn_primesense))
         {
             send_to_char("{MYour body siphons off a little of the mystical energy permeating the room.{x\n\r", ch);
-            ch->quintessence += ch->avatar*6;
+            ch->quintessence += ch->avatar+1;
         }
         if(ch->quintessence+ch->paradox > ch->max_quintessence) ch->quintessence -= ((ch->quintessence+ch->paradox) - ch->max_quintessence);
     }

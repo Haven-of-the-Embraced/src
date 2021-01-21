@@ -2399,6 +2399,12 @@ void do_forgetful (CHAR_DATA *ch, char *argument)
          return;
      }
 
+    if (victim->position == POS_FIGHTING || ch->position == POS_FIGHTING)
+    {
+      send_to_char("You cannot take the time to delve into your target's memories if either of you is fighting.\n\r", ch);
+      return;
+    }
+
     if (IS_NPC(victim) && victim->pIndexData->pShop != NULL)
     {
         send_to_char("You fear that it may hinder your future purchases.\n\r",ch);
@@ -2441,8 +2447,40 @@ void do_forgetful (CHAR_DATA *ch, char *argument)
         diff++;
     }
 
+    forget = godice(get_attribute(ch, WITS) + ch->csabilities[CSABIL_SUBTERFUGE], diff);
+    WAIT_STATE(ch, 6);
+
+    act("$n locks eyes with you, asking probing questions with a strangely hypnotic voice.", ch, NULL, victim, TO_VICT);
+    act("You begin to speak soothingly and slowly to $N as you stare into $S eyes, trying to probe the depths of $S mind.", ch, NULL, victim, TO_CHAR);
+    act( "$n stares into $N's eyes, speaking in a soft and soothing, almost hypnotic voice.",  ch, NULL, victim, TO_NOTVICT );
+
     if (forget < 0)
     {
+      act("You feel an intense mental pressure, as $N breaks your hypnotic trance!", ch, NULL, victim, TO_CHAR);
+      act("With a moment of clarity, you manage to snap out of the hypnotic reverie and avert your gaze.", ch, NULL, victim, TO_VICT);
+
+      if (!IS_SET(victim->imm_flags, IMM_MENTAL))
+      {
+        af.where     = TO_IMMUNE;
+        af.type      = gsn_mental_resilience;
+        af.level     = ch->level;
+        af.duration  = 5;
+        af.location  = APPLY_NONE;
+        af.modifier  = 0;
+        af.bitvector = IMM_MENTAL;
+        affect_to_char(victim, &af);
+      }
+      if (!IS_SET(victim->imm_flags, IMM_CHARM))
+      {
+        af.where     = TO_IMMUNE;
+        af.type      = gsn_mental_resilience;
+        af.level     = ch->level;
+        af.duration  = 5;
+        af.location  = APPLY_NONE;
+        af.modifier  = 0;
+        af.bitvector = IMM_CHARM;
+        affect_to_char(victim, &af);
+      }
       return;
     }
 

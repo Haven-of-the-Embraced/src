@@ -65,9 +65,9 @@ DECLARE_ROTE_FUN(	rote_callspirit					);
 DECLARE_ROTE_FUN(	rote_stepsideways				);
 DECLARE_ROTE_FUN(	rote_controlgauntlet			);
 DECLARE_ROTE_FUN(	rote_umbralrescue				);
+DECLARE_ROTE_FUN( rote_timesense            );
 DECLARE_ROTE_FUN(	rote_precognition				);
 DECLARE_ROTE_FUN(	rote_timealteration				);
 DECLARE_ROTE_FUN(	rote_stoptheclock				);
 DECLARE_ROTE_FUN(	rote_sidesteptime				);
 DECLARE_ROTE_FUN(	rote_negationfield				);
-

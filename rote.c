@@ -1643,6 +1643,11 @@ void rote_callspirit(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *ob
     return;
 }
 
+void rote_timesense(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
+{
+  return;
+}
+
 void rote_precognition(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
 {
    AFFECT_DATA af;

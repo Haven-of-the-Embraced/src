@@ -1999,6 +1999,8 @@ bool spec_forgetfulmind( CHAR_DATA *ch )
     if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
     return FALSE;
 
+    dominate = (ch->level / 25) + 1;
+
     for ( victim = ch->in_room->people; victim != NULL; victim = v_next )
     {
       v_next = victim->next_in_room;

@@ -2284,10 +2284,9 @@ void do_mesmerize(CHAR_DATA *ch, char *argument)
         diff++;
     if (IS_SET(victim->vuln_flags, VULN_MENTAL) || IS_SET(victim->vuln_flags, VULN_CHARM))
         diff-= 2;
-        if (IS_SET(victim->res_flags, RES_MENTAL) || IS_SET(victim->res_flags, RES_CHARM))
-          success--;
+    if (IS_SET(victim->res_flags, RES_MENTAL) || IS_SET(victim->res_flags, RES_CHARM))
+      diff++;
     success = godice(get_attribute(ch, MANIPULATION) + ch->csabilities[CSABIL_LEADERSHIP], diff);
-    success += stealth_int_shadowplay(ch, diff);
     WAIT_STATE(ch, 6);
 
     sprintf( buf, "%s locks eyes with you and says, '{W%s{x'.\n\r", ch->name, argument );

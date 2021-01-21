@@ -1530,6 +1530,35 @@ void rote_controlminds(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *
     return;
 }
 
+void rote_primesense(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
+{
+  AFFECT_DATA af;
+
+  if(victim != ch)
+  {
+   send_to_char("You can only use this effect on yourself.\n\r",ch);
+   return;
+  }
+
+  if(is_affected(ch,gsn_primesense))
+  {
+   send_to_char("The flow of Quintessential energy already permeates your vision.\n\r",ch);
+   return;
+  }
+
+  af.where     = TO_AFFECTS;
+  af.type      = gsn_primesense;
+  af.level     = ch->sphere[SPHERE_PRIME];
+  af.duration  = (success * 5) + 15;
+  af.location  = APPLY_NONE;
+  af.modifier  = 0;
+  af.bitvector = 0;
+  affect_to_char( victim, &af );
+
+  send_to_char("You open yourself up to the energy of the world, seeing Quintessence in all its glory.\n\r",ch);
+  return;
+}
+
 void rote_spiritsight(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
 {
     AFFECT_DATA af;

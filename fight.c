@@ -310,19 +310,16 @@ void multi_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt )
     /*Time Intrinsic. Acts like Celerity for Mages.
      */
 
-    if(!IS_NPC(ch) && ch->sphere[SPHERE_TIME] > 0 && dt != gsn_backstab)
+    if(!IS_NPC(ch) && is_affected(ch,gsn_timealteration) > 0 && dt != gsn_backstab)
     {
         for(i = ch->sphere[SPHERE_TIME];i > 0;i--)
         {
-            if((i >= 3 && number_range(1, 80) <= (get_attribute(ch,DEXTERITY)*10)) ||
-               (i < 3 && number_range(1, 200) <= (get_attribute(ch, DEXTERITY) *10)))
+            if(number_range(1, 100) <= (get_attribute(ch, DEXTERITY) *10))
                 one_hit(ch,victim,dt);
         }
     }
 
-    if(is_affected(ch,gsn_timealteration))
-        one_hit( ch, victim, dt );
-    if(is_affected(ch,gsn_timealteration) && dt != gsn_backstab)
+    if(is_affected(ch,gsn_timealteration) && dt == gsn_backstab)
         one_hit(ch, victim, dt);
 
     if(!IS_NPC(ch) && is_affected(ch,gsn_rage) && dt != gsn_backstab)

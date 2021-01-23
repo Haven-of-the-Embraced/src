@@ -61,6 +61,7 @@ DECLARE_ROTE_FUN(	rote_subconsciousturmoil		);
 DECLARE_ROTE_FUN(	rote_mentallink					);
 DECLARE_ROTE_FUN(	rote_controlminds				);
 DECLARE_ROTE_FUN( rote_primesense          );
+DECLARE_ROTE_FUN( rote_quintessencebolt    );
 DECLARE_ROTE_FUN(	rote_spiritsight				);
 DECLARE_ROTE_FUN(	rote_callspirit					);
 DECLARE_ROTE_FUN(	rote_stepsideways				);

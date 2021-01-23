@@ -1750,8 +1750,8 @@ void rote_timealteration(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA
 
     af.where     = TO_AFFECTS;
     af.type      = gsn_timealteration;
-    af.level     = ch->level;
-    af.duration  = (success*ch->avatar) + 5;
+    af.level     = ch->sphere[SPHERE_TIME];
+    af.duration  = (success*5) + 10;
     af.location  = APPLY_NONE;
     af.modifier  = 0;
     af.bitvector = 0;

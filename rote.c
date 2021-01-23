@@ -1559,6 +1559,26 @@ void rote_primesense(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *ob
   return;
 }
 
+void rote_quintessencebolt(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
+{
+    if (IS_NPC(ch)) return;
+
+    act( "Pulling raw Quintessence from the surroundings, you hurl a pulsating bolt of {Ysupercharged energy{x at $N!",  ch, NULL, victim, TO_CHAR    );
+    act( "$n hurls a blinding bolt of pure energy directly at $N!",  ch, NULL, victim, TO_NOTVICT );
+    act( "A pulsing bolt of energy arcs from $n, ravaging your body to your very core!",  ch, NULL, victim, TO_VICT );
+
+    if (success >= 4)
+    {
+        act( "You watch in satisfaction as the energy rips through $N's pattern!", ch, NULL, victim, TO_CHAR);
+        act( "The energy rips its way through your body, causing unimaginable pain!", ch, NULL, victim, TO_VICT);
+        victim->agg_dam += success * ch->level;
+    }
+
+    damage( ch, victim, success*ch->level*2, gsn_magick, DAM_ENERGY, TRUE);
+
+    return;
+}
+
 void rote_spiritsight(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
 {
     AFFECT_DATA af;

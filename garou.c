@@ -634,10 +634,35 @@ do_packtactics(CHAR_DATA *ch, char *argument)
 {
   char arg1[MAX_INPUT_LENGTH];
   char arg2[MAX_INPUT_LENGTH];
+  CHAR_DATA *victim;
 
   argument = one_argument( argument, arg1 );
   argument = one_argument( argument, arg2 );
-  
+
+  if (ch->race != race_lookup("garou"))
+  {
+    send_to_char("Huh?\n\r", ch);
+    return;
+  }
+
+  if (ch->cswillpower < 1)
+  {
+    send_to_char("You do not have the willpower to lead your brethren in a tactful maneuver.\n\r", ch);
+    return;
+  }
+
+  if (arg1 == "\0")
+  {
+    send_to_char("The command to direct your packmates is:\n\r  packtactics <target> <tactic>\n\r  Valid tactics: Fur Gnarl, Harrying, Savage\n\r", ch);
+    return;
+  }
+
+  if ( ( victim = get_char_room( ch, NULL, arg1 ) ) == NULL)
+  {
+    send_to_char("You do not have a valid target to attack.\n\r", ch);
+    return;
+  }
+
   return;
 }
 

@@ -637,7 +637,7 @@ do_packtactics(CHAR_DATA *ch, char *argument)
   CHAR_DATA *victim;
   CHAR_DATA *rch, *rch_next;
   bool packmates = FALSE;
-  int tactics = 0;
+  int tactics = 0, damage = 0;
 
   argument = one_argument( argument, arg1 );
   argument = one_argument( argument, arg2 );
@@ -711,23 +711,41 @@ do_packtactics(CHAR_DATA *ch, char *argument)
 
     if (tactics < 0)
     {
-      act("", ch, NULL, victim, TO_CHAR);
-      act("", ch, NULL, victim, TO_VICT);
-      act("", ch, NULL, victim, TO_NOTVICT);
+      act("You attempt to knock down $N for your teammates, but stumble on your lunge!", ch, NULL, victim, TO_CHAR);
+      act("$n lunges towards you, but stumbles and misses by a wide margin.", ch, NULL, victim, TO_VICT);
+      act("$n tries to lunge at $N, but only manages to stumble ungracefully.", ch, NULL, victim, TO_NOTVICT);
+      WAIT_STATE(ch, 9);
       return;
     }
 
     if (tactics == 0)
     {
-      act("", ch, NULL, victim, TO_CHAR);
-      act("", ch, NULL, victim, TO_VICT);
-      act("", ch, NULL, victim, TO_NOTVICT);
+      act("You collide with $N, trying to topple $M, but $E rebounds quickly.", ch, NULL, victim, TO_CHAR);
+      act("$n collides directly with you, rocking your balance briefly.", ch, NULL, victim, TO_VICT);
+      act("$n collides with $N, but both combatants manage to remain standing.", ch, NULL, victim, TO_NOTVICT);
+      WAIT_STATE(ch, 3);
       return;
     }
 
-    act("", ch, NULL, victim, TO_CHAR);
-    act("", ch, NULL, victim, TO_VICT);
-    act("", ch, NULL, victim, TO_NOTVICT);
+    act("Moving quickly, you collide with $N and bring $M to the ground.", ch, NULL, victim, TO_CHAR);
+    act("$n tackles you, bringing you to the ground.", ch, NULL, victim, TO_VICT);
+    act("$n tackles $N, bringing $M down to the ground.", ch, NULL, victim, TO_NOTVICT);
+
+    damage = godice(get_attribute(ch, STRENGTH),6);
+    d10_damage(ch, victim, damage, ch->level * 3, gsn_bash, DAM_BASH, DEFENSE_FULL, TRUE, FALSE);
+
+    for ( rch = ch->in_room->people; rch != NULL; rch = rch_next )
+    {
+        rch_next = rch->next_in_room;
+        if ( !IS_NPC(rch) && is_same_group(ch,rch) && rch != ch
+            && rch->race == race_lookup("garou") && rch->pcdata->shiftform >= CRINOS)
+        {
+          act("Sensing an opening, you quickly lunge at $N and slash $M with your powerful jaws!", rch, NULL, victim, TO_CHAR);
+          act("You let out howl of pain as $n bites down on your prone body!", rch, NULL, victim, TO_VICT);
+          act("Darting in, $n seizes an opening and savagely bites $N's prone form!", rch, NULL, victim, TO_NOTVICT);
+          d10_damage(rch, victim, damage, ch->level * 3, attack_lookup("bite"), DAM_PIERCE, DEFENSE_ARMOR, TRUE, FALSE);
+        }
+    }
   }
 
   return;

@@ -637,6 +637,7 @@ do_packtactics(CHAR_DATA *ch, char *argument)
   CHAR_DATA *victim;
   CHAR_DATA *rch, *rch_next;
   bool packmates = FALSE;
+  int tactics = 0;
 
   argument = one_argument( argument, arg1 );
   argument = one_argument( argument, arg2 );
@@ -655,7 +656,7 @@ do_packtactics(CHAR_DATA *ch, char *argument)
 
   if (arg1 == "\0")
   {
-    send_to_char("The command to direct your packmates is:\n\r  packtactics <target> <tactic>\n\r  Valid tactics: fur gnarl, harrying, savage\n\r", ch);
+    send_to_char("The command to direct your packmates is:\n\r  packtactics <target> <tactic>\n\r  Valid tactics: fur gnarl[{runcoded{x], harrying[{runcoded{x], savage\n\r", ch);
     return;
   }
 
@@ -665,7 +666,10 @@ do_packtactics(CHAR_DATA *ch, char *argument)
     return;
   }
 
-  if (str_cmp(arg2, "fur gnarl") || str_cmp(arg2, "harrying") || str_cmp(arg2, "savage"))
+  if (str_cmp(arg2, "fur gnarl")
+//  || str_cmp(arg2, "harrying")
+//  || str_cmp(arg2, "savage")
+  )
   {
     send_to_char("That is not a valid tactic.\n\r", ch);
     return;
@@ -685,6 +689,45 @@ do_packtactics(CHAR_DATA *ch, char *argument)
   {
     send_to_char("You have no other warriors of Gaia nearby to aid in such a tactic.\n\r", ch);
     return;
+  }
+
+  ch->cswillpower--;
+
+/*  if (!str_cmp(arg2, "fur gnarl"))
+  {
+
+  }
+
+
+  else if (!str_cmp(arg2, "harrying"))
+  {
+
+  }
+
+
+  else */
+  {
+    tactics = godice(get_attribute(DEXTERITY)+get_ability(CSABIL_BRAWL), 6);
+
+    if (tactics < 0)
+    {
+      act("", ch, NULL, victim, TO_CHAR);
+      act("", ch, NULL, victim, TO_VICT);
+      act("", ch, NULL, victim, TO_NOTVICT);
+      return;
+    }
+
+    if (tactics == 0)
+    {
+      act("", ch, NULL, victim, TO_CHAR);
+      act("", ch, NULL, victim, TO_VICT);
+      act("", ch, NULL, victim, TO_NOTVICT);
+      return;
+    }
+
+    act("", ch, NULL, victim, TO_CHAR);
+    act("", ch, NULL, victim, TO_VICT);
+    act("", ch, NULL, victim, TO_NOTVICT);
   }
 
   return;

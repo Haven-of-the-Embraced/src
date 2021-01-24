@@ -676,5 +676,6 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "rage",       do_rage},
     { "stepsideways",   do_stepsideways},
     { "meditate",       do_meditate},
+    { "packtactics",    do_packtactics},
     { NULL,         NULL            }
 };

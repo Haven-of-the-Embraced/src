@@ -630,6 +630,17 @@ void do_stepsideways(CHAR_DATA *ch, char *argument)
     }
 }
 
+do_packtactics(CHAR_DATA *ch, char *argument)
+{
+  char arg1[MAX_INPUT_LENGTH];
+  char arg2[MAX_INPUT_LENGTH];
+
+  argument = one_argument( argument, arg1 );
+  argument = one_argument( argument, arg2 );
+  
+  return;
+}
+
 void renown_gain(CHAR_DATA *ch)
 {
     int renown, chance, type;

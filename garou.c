@@ -635,6 +635,8 @@ do_packtactics(CHAR_DATA *ch, char *argument)
   char arg1[MAX_INPUT_LENGTH];
   char arg2[MAX_INPUT_LENGTH];
   CHAR_DATA *victim;
+  CHAR_DATA *rch, *rch_next;
+  bool packmates = FALSE;
 
   argument = one_argument( argument, arg1 );
   argument = one_argument( argument, arg2 );
@@ -653,13 +655,35 @@ do_packtactics(CHAR_DATA *ch, char *argument)
 
   if (arg1 == "\0")
   {
-    send_to_char("The command to direct your packmates is:\n\r  packtactics <target> <tactic>\n\r  Valid tactics: Fur Gnarl, Harrying, Savage\n\r", ch);
+    send_to_char("The command to direct your packmates is:\n\r  packtactics <target> <tactic>\n\r  Valid tactics: fur gnarl, harrying, savage\n\r", ch);
     return;
   }
 
   if ( ( victim = get_char_room( ch, NULL, arg1 ) ) == NULL)
   {
     send_to_char("You do not have a valid target to attack.\n\r", ch);
+    return;
+  }
+
+  if (str_cmp(arg2, "fur gnarl") || str_cmp(arg2, "harrying") || str_cmp(arg2, "savage"))
+  {
+    send_to_char("That is not a valid tactic.\n\r", ch);
+    return;
+  }
+
+  for ( rch = ch->in_room->people; rch != NULL; rch = rch_next )
+  {
+      rch_next = rch->next_in_room;
+      if ( !IS_NPC(rch) && rch->race == race_lookup("garou") && is_same_group(ch,rch) && rch != ch)
+      {
+        packmates = TRUE;
+        break;
+      }
+  }
+
+  if (packmates == FALSE)
+  {
+    send_to_char("You have no other warriors of Gaia nearby to aid in such a tactic.\n\r", ch);
     return;
   }
 

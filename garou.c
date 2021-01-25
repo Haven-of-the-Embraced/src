@@ -630,7 +630,7 @@ void do_stepsideways(CHAR_DATA *ch, char *argument)
     }
 }
 
-do_packtactics(CHAR_DATA *ch, char *argument)
+void do_packtactics(CHAR_DATA *ch, char *argument)
 {
   char arg1[MAX_INPUT_LENGTH];
   char arg2[MAX_INPUT_LENGTH];
@@ -654,7 +654,7 @@ do_packtactics(CHAR_DATA *ch, char *argument)
     return;
   }
 
-  if (arg1 == "\0")
+  if (arg1 == NULL)
   {
     send_to_char("The command to direct your packmates is:\n\r  packtactics <target> <tactic>\n\r  Valid tactics: fur gnarl[{runcoded{x], harrying[{runcoded{x], savage\n\r", ch);
     return;
@@ -666,12 +666,14 @@ do_packtactics(CHAR_DATA *ch, char *argument)
     return;
   }
 
-  if (str_cmp(arg2, "fur gnarl")
+  if (
+/*    str_cmp(arg2, "fur gnarl")
 //  || str_cmp(arg2, "harrying")
-//  || str_cmp(arg2, "savage")
+  ||*/ str_cmp(arg2, "savage")
   )
   {
     send_to_char("That is not a valid tactic.\n\r", ch);
+    send_to_char("The command to direct your packmates is:\n\r  packtactics <target> <tactic>\n\r  Valid tactics: fur gnarl[{runcoded{x], harrying[{runcoded{x], savage\n\r", ch);
     return;
   }
 
@@ -707,7 +709,7 @@ do_packtactics(CHAR_DATA *ch, char *argument)
 
   else */
   {
-    tactics = godice(get_attribute(DEXTERITY)+get_ability(CSABIL_BRAWL), 6);
+    tactics = godice(get_attribute(ch, DEXTERITY)+get_ability(ch, CSABIL_BRAWL), 6);
 
     if (tactics < 0)
     {
@@ -743,6 +745,7 @@ do_packtactics(CHAR_DATA *ch, char *argument)
           act("Sensing an opening, you quickly lunge at $N and slash $M with your powerful jaws!", rch, NULL, victim, TO_CHAR);
           act("You let out howl of pain as $n bites down on your prone body!", rch, NULL, victim, TO_VICT);
           act("Darting in, $n seizes an opening and savagely bites $N's prone form!", rch, NULL, victim, TO_NOTVICT);
+          damage = godice(get_attribute(rch, STRENGTH + 1),6);
           d10_damage(rch, victim, damage, ch->level * 3, attack_lookup("bite"), DAM_PIERCE, DEFENSE_ARMOR, TRUE, FALSE);
         }
     }

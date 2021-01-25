@@ -654,15 +654,9 @@ void do_packtactics(CHAR_DATA *ch, char *argument)
     return;
   }
 
-  if (arg1 == NULL)
-  {
-    send_to_char("The command to direct your packmates is:\n\r  packtactics <target> <tactic>\n\r  Valid tactics: fur gnarl[{runcoded{x], harrying[{runcoded{x], savage\n\r", ch);
-    return;
-  }
-
   if ( ( victim = get_char_room( ch, NULL, arg1 ) ) == NULL)
   {
-    send_to_char("You do not have a valid target to attack.\n\r", ch);
+    send_to_char("The command to direct your packmates is:\n\r  packtactics <target> <tactic>\n\r  Valid tactics: fur gnarl[{runcoded{x], harrying[{runcoded{x], savage\n\r", ch);
     return;
   }
 
@@ -734,7 +728,7 @@ void do_packtactics(CHAR_DATA *ch, char *argument)
     act("$n tackles $N, bringing $M down to the ground.", ch, NULL, victim, TO_NOTVICT);
 
     damage = godice(get_attribute(ch, STRENGTH),6);
-    d10_damage(ch, victim, damage, ch->level * 3, gsn_bash, DAM_BASH, DEFENSE_FULL, TRUE, FALSE);
+    d10_damage(ch, victim, damage, ch->level * 5, gsn_garou_frenzy, DAM_BASH, DEFENSE_FULL, TRUE, FALSE);
 
     for ( rch = ch->in_room->people; rch != NULL; rch = rch_next )
     {
@@ -746,7 +740,7 @@ void do_packtactics(CHAR_DATA *ch, char *argument)
           act("You let out howl of pain as $n bites down on your prone body!", rch, NULL, victim, TO_VICT);
           act("Darting in, $n seizes an opening and savagely bites $N's prone form!", rch, NULL, victim, TO_NOTVICT);
           damage = godice(get_attribute(rch, STRENGTH + 1),6);
-          d10_damage(rch, victim, damage, ch->level * 3, attack_lookup("bite"), DAM_PIERCE, DEFENSE_ARMOR, TRUE, FALSE);
+          d10_damage(rch, victim, damage, ch->level * 4, gsn_garou_frenzy, DAM_PIERCE, DEFENSE_ARMOR, TRUE, FALSE);
         }
     }
   }

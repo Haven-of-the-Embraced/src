@@ -3678,6 +3678,43 @@ bool *has_room_bit(int room_flags, char *room_bit)
     return FALSE;
 }
 
+/*
+  Returns TRUE if Room matches Clan input
+*/
+bool *room_clan_only(int clan_room, char *clan_input)
+{
+    if (clan_room == 1  && (!str_cmp(clan_input, "none"))               ) return TRUE;
+    if (clan_room == 2  && (!str_cmp(clan_input, "malkavian"))          ) return TRUE;
+    if (clan_room == 3  && (!str_cmp(clan_input, "assamite"))           ) return TRUE;
+    if (clan_room == 4  && (!str_cmp(clan_input, "cappacocian"))        ) return TRUE;
+    if (clan_room == 5  && (!str_cmp(clan_input, "gangrel"))            ) return TRUE;
+    if (clan_room == 6  && (!str_cmp(clan_input, "nosferatu"))          ) return TRUE;
+    if (clan_room == 7  && (!str_cmp(clan_input, "toreador"))           ) return TRUE;
+    if (clan_room == 8  && (!str_cmp(clan_input, "brujah"))             ) return TRUE;
+    if (clan_room == 9  && (!str_cmp(clan_input, "ventrue"))            ) return TRUE;
+    if (clan_room == 10 && (!str_cmp(clan_input, "tremere"))            ) return TRUE;
+    if (clan_room == 11 && (!str_cmp(clan_input, "lasombra"))           ) return TRUE;
+    if (clan_room == 12 && (!str_cmp(clan_input, "tzimisce"))           ) return TRUE;
+    if (clan_room == 13 && (!str_cmp(clan_input, "mage"))               ) return TRUE;
+    if (clan_room == 14 && (!str_cmp(clan_input, "blackfury"))          ) return TRUE;
+    if (clan_room == 15 && (!str_cmp(clan_input, "shadowlord"))         ) return TRUE;
+    if (clan_room == 16 && (!str_cmp(clan_input, "fenrir"))             ) return TRUE;
+    if (clan_room == 17 && (!str_cmp(clan_input, "silverfang"))         ) return TRUE;
+    if (clan_room == 18 && (!str_cmp(clan_input, "wardersofmen"))       ) return TRUE;
+    if (clan_room == 19 && (!str_cmp(clan_input, "childrenofgaia"))     ) return TRUE;
+    if (clan_room == 20 && (!str_cmp(clan_input, "fianna"))             ) return TRUE;
+    if (clan_room == 21 && (!str_cmp(clan_input, "bonegnawer"))         ) return TRUE;
+    if (clan_room == 22 && (!str_cmp(clan_input, "akashicbrotherhood")) ) return TRUE;
+    if (clan_room == 23 && (!str_cmp(clan_input, "dreamspeakers"))      ) return TRUE;
+    if (clan_room == 24 && (!str_cmp(clan_input, "euthanatos"))         ) return TRUE;
+    if (clan_room == 25 && (!str_cmp(clan_input, "verbena"))            ) return TRUE;
+    if (clan_room == 26 && (!str_cmp(clan_input, "orderofhermes"))      ) return TRUE;
+    if (clan_room == 27 && (!str_cmp(clan_input, "ravnos"))             ) return TRUE;
+    if (clan_room == 28 && (!str_cmp(clan_input, "redtalon"))           ) return TRUE;
+    if (clan_room == 29 && (!str_cmp(clan_input, "silentstrider"))      ) return TRUE;
+
+    return FALSE;
+}
 
 char *match_length( char *text, int length )
 {

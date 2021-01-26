@@ -3037,7 +3037,7 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
         send_to_char( "{WSyntax is   : {xflagfind <obj/mob/room> <type> <flag>\n\r", ch );
         send_to_char( "{WObj types   : {xextra, wear, affect, damage, type, weapon, special, spell\n\r",ch);
         send_to_char( "{WMob types   : {xlevel, race, special, shop, aff, aff2, act, act2, off, res, vuln, imm, attr, abil\n\r",ch);
-        send_to_char( "{WRoom types  : {xsector, room\n\r",ch);
+        send_to_char( "{WRoom types  : {xsector, room, clan, owner\n\r",ch);
         send_to_char( "{WSyntax Note : {xSee '{chelp flagfind{x' for special syntax.\n\r", ch);
         return;
     }
@@ -3528,7 +3528,7 @@ void do_areaflagfind( CHAR_DATA *ch, char *argument )
         send_to_char( "{WSyntax is   : {xflagfind <obj/mob/room> <type> <flag>\n\r", ch );
         send_to_char( "{WObj types   : {xextra, wear, affect, damage, type, weapon, special, spell\n\r",ch);
         send_to_char( "{WMob types   : {xlevel, race, special, shop, aff, aff2, act, act2, off, res, vuln, imm, attr, abil\n\r",ch);
-        send_to_char( "{WRoom types  : {xsector, room\n\r",ch);
+        send_to_char( "{WRoom types  : {xsector, room, clan, owner\n\r",ch);
         send_to_char( "{WSyntax Note : {xSee '{chelp flagfind{x' for special syntax.\n\r", ch);
         return;
     }

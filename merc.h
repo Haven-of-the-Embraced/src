@@ -4039,6 +4039,7 @@ char *  trigger_bit_name    args( ( int trigger_flags ) );
 char *  focus_bit_name  args( ( int focus_flags ) );
 bool *  has_weapon_bit      args( ( int weapon_flags, char *weapon_bit ) );
 bool *  has_room_bit        args( ( int room_flags, char *room_bit ) );
+bool *  room_clan_only      args( ( int clan_room, char *clan_input) );
 char *  match_length    args( ( char *text, int length ) );
 char *  center      args( ( char *argument, int width, char *fill ) );
 char *  dots        args( ( int num, bool plus ) );

@@ -3624,6 +3624,25 @@ char *focus_bit_name(int focus_flags)
     return ( buf[0] != '\0' ) ? buf+1 : "none";
 }
 
+/*
+  Returns TRUE if weapon has requested bit
+*/
+bool *has_weapon_bit(int weapon_flags, char *weapon_bit)
+{
+    if (weapon_flags & WEAPON_FLAMING    && (!str_cmp(weapon_bit, "flaming"))    ) return TRUE;
+    if (weapon_flags & WEAPON_FROST      && (!str_cmp(weapon_bit, "frost"))      ) return TRUE;
+    if (weapon_flags & WEAPON_VAMPIRIC   && (!str_cmp(weapon_bit, "vampiric"))   ) return TRUE;
+    if (weapon_flags & WEAPON_SHARP      && (!str_cmp(weapon_bit, "sharp"))      ) return TRUE;
+    if (weapon_flags & WEAPON_VORPAL     && (!str_cmp(weapon_bit, "vorpol"))     ) return TRUE;
+    if (weapon_flags & WEAPON_TWO_HANDS  && (!str_cmp(weapon_bit, "twohands"))   ) return TRUE;
+    if (weapon_flags & WEAPON_SHOCKING   && (!str_cmp(weapon_bit, "shocking"))   ) return TRUE;
+    if (weapon_flags & WEAPON_POISON     && (!str_cmp(weapon_bit, "poison"))     ) return TRUE;
+    if (weapon_flags & WEAPON_SLOW       && (!str_cmp(weapon_bit, "slow"))       ) return TRUE;
+    if (weapon_flags & WEAPON_AGG_DAMAGE && (!str_cmp(weapon_bit, "agg_damage")) ) return TRUE;
+
+    return FALSE;
+}
+
 
 
 char *match_length( char *text, int length )

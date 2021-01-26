@@ -3464,6 +3464,18 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                         add_buf(buffer,buf);
                     }
                 }
+
+                if(!str_prefix(arg2, "owner"))
+                {
+                  if (!str_cmp(pRoomIndex->owner, arg3))
+                  {
+                    found = TRUE;
+                    count++;
+                    sprintf( buf, " (%3d) [%5d] %s\n\r", count, pRoomIndex->vnum, pRoomIndex->name);
+                    add_buf(buffer,buf);
+                  }
+                }
+
             }
         }
     }
@@ -3953,6 +3965,17 @@ void do_areaflagfind( CHAR_DATA *ch, char *argument )
                         sprintf( buf, " (%3d) [%5d] %s\n\r", count, pRoomIndex->vnum, pRoomIndex->name);
                         add_buf(buffer,buf);
                     }
+                }
+
+                if(!str_prefix(arg2, "owner"))
+                {
+                  if (!str_cmp(pRoomIndex->owner, arg3))
+                  {
+                    found = TRUE;
+                    count++;
+                    sprintf( buf, " (%3d) [%5d] %s\n\r", count, pRoomIndex->vnum, pRoomIndex->name);
+                    add_buf(buffer,buf);
+                  }
                 }
 
             }

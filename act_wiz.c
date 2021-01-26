@@ -3445,7 +3445,7 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
 
                 if(!str_prefix(arg2, "room"))
                 {
-                    if (!str_cmp(arg3, flag_string(room_flags, pRoomIndex->room_flags)))
+                    if (has_room_bit(pRoomIndex->room_flags, arg3))
                     {
                         found = TRUE;
                         count++;
@@ -3924,7 +3924,7 @@ void do_areaflagfind( CHAR_DATA *ch, char *argument )
 
                 if(!str_prefix(arg2, "room"))
                 {
-                    if (!str_cmp(arg3, flag_string(room_flags, pRoomIndex->room_flags)))
+                    if (has_room_bit(pRoomIndex->room_flags, arg3))
                     {
                         found = TRUE;
                         count++;

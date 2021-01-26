@@ -3643,6 +3643,40 @@ bool *has_weapon_bit(int weapon_flags, char *weapon_bit)
     return FALSE;
 }
 
+/*
+  Returns TRUE if Room has requested bit
+*/
+bool *has_room_bit(int room_flags, char *room_bit)
+{
+    if (room_flags & ROOM_DARK          && (!str_cmp(room_bit, "dark"))         ) return TRUE;
+    if (room_flags & ROOM_NO_MOB        && (!str_cmp(room_bit, "no_mob"))       ) return TRUE;
+    if (room_flags & ROOM_INDOORS       && (!str_cmp(room_bit, "indoors"))      ) return TRUE;
+    if (room_flags & ROOM_PRIVATE       && (!str_cmp(room_bit, "private"))      ) return TRUE;
+    if (room_flags & ROOM_SAFE          && (!str_cmp(room_bit, "safe"))         ) return TRUE;
+    if (room_flags & ROOM_SOLITARY      && (!str_cmp(room_bit, "solitary"))     ) return TRUE;
+    if (room_flags & ROOM_PET_SHOP      && (!str_cmp(room_bit, "pet_shop"))     ) return TRUE;
+    if (room_flags & ROOM_MOUNT_SHOP    && (!str_cmp(room_bit, "mount_shop"))   ) return TRUE;
+    if (room_flags & ROOM_NO_RECALL     && (!str_cmp(room_bit, "no_recall"))    ) return TRUE;
+    if (room_flags & ROOM_IMP_ONLY      && (!str_cmp(room_bit, "imp_only"))     ) return TRUE;
+    if (room_flags & ROOM_GODS_ONLY     && (!str_cmp(room_bit, "gods_only"))    ) return TRUE;
+    if (room_flags & ROOM_HEROES_ONLY   && (!str_cmp(room_bit, "heroes_only"))  ) return TRUE;
+    if (room_flags & ROOM_NEWBIES_ONLY  && (!str_cmp(room_bit, "newbies_only")) ) return TRUE;
+    if (room_flags & ROOM_LAW           && (!str_cmp(room_bit, "law"))          ) return TRUE;
+    if (room_flags & ROOM_NOWHERE       && (!str_cmp(room_bit, "nowhere"))      ) return TRUE;
+    if (room_flags & ROOM_FORGE         && (!str_cmp(room_bit, "forge"))        ) return TRUE;
+    if (room_flags & ROOM_NO_QUIT       && (!str_cmp(room_bit, "no_quit"))      ) return TRUE;
+    if (room_flags & ROOM_UMBRA         && (!str_cmp(room_bit, "umbra"))        ) return TRUE;
+    if (room_flags & ROOM_BANK          && (!str_cmp(room_bit, "bank"))         ) return TRUE;
+    if (room_flags & ROOM_UNDERWATER    && (!str_cmp(room_bit, "underwater"))   ) return TRUE;
+    if (room_flags & ROOM_HUMAN_ONLY    && (!str_cmp(room_bit, "human_only"))   ) return TRUE;
+    if (room_flags & ROOM_GHOUL_ONLY    && (!str_cmp(room_bit, "ghoul_only"))   ) return TRUE;
+    if (room_flags & ROOM_VAMPIRE_ONLY  && (!str_cmp(room_bit, "vampire_only")) ) return TRUE;
+    if (room_flags & ROOM_GAROU_ONLY    && (!str_cmp(room_bit, "garou_only"))   ) return TRUE;
+    if (room_flags & ROOM_MAGE_ONLY     && (!str_cmp(room_bit, "mage_only"))    ) return TRUE;
+    if (room_flags & ROOM_NOTELE        && (!str_cmp(room_bit, "no_teleport"))  ) return TRUE;
+
+    return FALSE;
+}
 
 
 char *match_length( char *text, int length )

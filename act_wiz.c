@@ -3379,7 +3379,7 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                 }
                 else if(!str_prefix(arg2,"special"))
                 {
-                    if(pObjIndex->item_type == ITEM_WEAPON && !str_prefix(weapon_bit_name(pObjIndex->value[4]), arg3))
+                    if(pObjIndex->item_type == ITEM_WEAPON && has_weapon_bit(pObjIndex->value[4], arg3))
                     {
                         found = TRUE;
                         count++;
@@ -3858,7 +3858,7 @@ void do_areaflagfind( CHAR_DATA *ch, char *argument )
                 }
                 else if(!str_prefix(arg2,"special"))
                 {
-                    if(pObjIndex->item_type == ITEM_WEAPON && !str_prefix(weapon_bit_name(pObjIndex->value[4]), arg3))
+                    if(pObjIndex->item_type == ITEM_WEAPON && has_weapon_bit(pObjIndex->value[4], arg3))
                     {
                         found = TRUE;
                         count++;

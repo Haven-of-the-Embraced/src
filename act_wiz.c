@@ -2408,9 +2408,9 @@ void do_pstat( CHAR_DATA *ch, char *argument )
         return;
     }
 
-    sendch("{m----Basic Info:{x\n\r", ch);
-    send_to_char("{y                     _______----------_______{x\n\r",ch);
-    sprintf(buf, "{y[--------------------! {W%s{y !--------------------]{x\n\r", center(victim->name, 20, " "));
+    send_to_char("{y                __________---------======---------__________{x\n\r",ch);
+    sprintf(buf2, "%s {W%s {D[{W%3d{D]{x", !IS_NULLSTR(victim->pcdata->pretitle) ? victim->pcdata->pretitle : "", victim->name, victim->level);
+    sprintf(buf, "{y[---------------! {W%s{y !---------------]{x\n\r", center(buf2, 40, " "));
     send_to_char(buf, ch);
     if (victim->cheater)
     {
@@ -2419,20 +2419,14 @@ void do_pstat( CHAR_DATA *ch, char *argument )
 
     if(IS_IMMORTAL(victim))
     {
-      send_to_char("{Y[--------------------===   Immortal Info  ===--------------------]{x\n\r",ch);
-        sprintf(buf, " Security: %d      Trust: %3d      Wizinvis: %3d       Incog: %3d\n\r",
+      send_to_char("{Y[-----------------------=====   Immortal Info  =====-----------------------]{x\n\r",ch);
+        sprintf(buf, "{Y| {xSecurity: %d      Trust: %3d      Wizinvis: %3d       Incog: %3d {Y|{x\n\r",
         victim->pcdata->security,        get_trust(victim),        victim->invis_level,
         victim->incog_level);
         send_to_char( buf, ch );
-        sprintf(buf, " Wiziname: %-20s       Immtitle: %s\n\r", victim->pcdata->wiziname, victim->pcdata->immtitle);
+        sprintf(buf, "{Y| {xWiziname: %-20s       Immtitle: %s {Y|{x\n\r", victim->pcdata->wiziname, victim->pcdata->immtitle);
         send_to_char(buf, ch);
     }
-
-    send_to_char("{W[--------------------===    Basic Info    ===--------------------]{x\n\r",ch);
-    sprintf( buf, "Name: {W%s{x %s(%s[%d])  Clan: %s\n\r",
-    victim->name, victim->cheater ? "{R({DCheater!{R){x " : "",
-    IS_IMMORTAL(victim) ? "an Immortal" : "a Player", victim->level,  clan_table[victim->clan].name);
-    send_to_char( buf, ch );
 
     sprintf( buf,"Race: %s    Sex: %s Exp: %d  Room: %d\n\r",
     race_table[victim->race].name,

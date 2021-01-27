@@ -2384,6 +2384,8 @@ void do_pstat( CHAR_DATA *ch, char *argument )
     char arg[MAX_INPUT_LENGTH];
     AFFECT_DATA *paf;
     CHAR_DATA *victim;
+    ROOM_INDEX_DATA *room;
+    ROOM_INDEX_DATA *house;
     int i;
     int col = 1;
     BUFFER *buffer;
@@ -2408,6 +2410,9 @@ void do_pstat( CHAR_DATA *ch, char *argument )
         return;
     }
 
+    room = victim->in_room;
+    house = victim->pcdata->home;
+
     send_to_char("{y                __________---------======---------__________{x\n\r",ch);
     sprintf(buf2, "%s {W%s {D[{W%3d{D]{x", !IS_NULLSTR(victim->pcdata->pretitle) ? victim->pcdata->pretitle : "", victim->name, victim->level);
     sprintf(buf, "{y[---------------! {W%s{y !---------------]{x\n\r", center(buf2, 40, " "));
@@ -2416,6 +2421,10 @@ void do_pstat( CHAR_DATA *ch, char *argument )
     {
       send_to_char("{y|  {R({DCheater!{R)  ({DCheater!{R)   ({DCheater!{R)   ({DCheater!{R)  ({DCheater!{R)  {y|{x\n\r", ch);
     }
+    sprintf(buf, "{y| {xIn Room:  %s (%5d)    Idle: %d tick%s  {y|{x\n\r",
+      room->vnum == NULL ? center("Unknown Room", 36, " " : center(room->name, 36, " "),
+      room->vnum == NULL ? 0 : room->vnum, victim->timer, victim->timer == 1 ? " " : "s");
+    send_to_char(buf, ch);
 
     if(IS_IMMORTAL(victim))
     {
@@ -2455,7 +2464,7 @@ void do_pstat( CHAR_DATA *ch, char *argument )
     victim->agg_dam );
     send_to_char( buf, ch );
 
-/*    sprintf(buf, "{W| Current Room: %s (%d)    Housing: %s (%d) |\n\r Hometown: %15s \n\r",
+/*    sprintf(buf, "{W| Housing: %s (%d) |\n\r Hometown: %15s \n\r",
         hometown_table[victim->pcdata->hometown].name;
     send_to_char(buf, ch);
 */

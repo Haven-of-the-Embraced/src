@@ -2428,17 +2428,33 @@ void do_pstat( CHAR_DATA *ch, char *argument )
         send_to_char(buf, ch);
     }
 
-    sprintf( buf,"Race: %s    Sex: %s Exp: %d  Room: %d\n\r",
-    race_table[victim->race].name,
-    sex_table[victim->sex].name, victim->exp,
-    victim->in_room == NULL    ?        0 : victim->in_room->vnum);
+    send_to_char("{W[-----------------------=====    Player Info   =====-----------------------]{x\n\r",ch);
+    sprintf(buf, "{W| Race: %-12s  Sex(True): %-6s(%-6s)   Age: %6d(%7d hrs) |{x\n\r",
+    race_table[victim->race].name, sex_table[victim->sex].name,  sex_table[victim->pcdata->true_sex].name,
+    get_age(victim), (int) (victim->played + current_time - victim->logon) / 3600);
+    send_to_char(buf, ch);
+
+    sprintf(buf, "{W| Remorts: %4d    Freebies: %3d   ImmClass: %d    Last Level: %7d hrs  |{x\n\r",
+    victim->remorts, victim->freebie, victim->pcdata->immclass, victim->pcdata->last_level);
     send_to_char( buf, ch );
 
-    sprintf( buf, "Hp: %d/%d(%d)  Mana: %d/%d(%d)  Move: %d/%d(%d)  Agg: %d\n\r",
+  send_to_char("\n\r", ch);
+    sprintf( buf, "{W| Hp: %4d/%4d(%4d) Mana: %4d/%4d(%4d) Move: %4d/%4d(%4d) Agg: %4d |{x\n\r",
     victim->hit,         victim->max_hit,       victim->pcdata->perm_hit,
     victim->mana,        victim->max_mana,      victim->pcdata->perm_mana,
     victim->move,        victim->max_move,      victim->pcdata->perm_move,
     victim->agg_dam );
+    send_to_char( buf, ch );
+
+/*    sprintf(buf, "{W| Current Room: %s (%d)    Housing: %s (%d) |\n\r Hometown: %15s \n\r",
+        hometown_table[victim->pcdata->hometown].name;
+    send_to_char(buf, ch);
+*/
+  send_to_char("\n\r", ch);
+    sprintf( buf,"Race: %s    Sex: %s Exp: %d  Room: %d\n\r",
+    race_table[victim->race].name,
+    sex_table[victim->sex].name, victim->exp,
+    victim->in_room == NULL    ?        0 : victim->in_room->vnum);
     send_to_char( buf, ch );
 
     sprintf( buf,"Age: %d(%dhrs)  Hit: %d  Dam: %d  Saves: %d  Trains: %d  Pracs: %d\n\r",

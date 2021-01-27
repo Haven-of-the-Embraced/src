@@ -2420,11 +2420,11 @@ void do_pstat( CHAR_DATA *ch, char *argument )
     if(IS_IMMORTAL(victim))
     {
       send_to_char("{Y[-----------------------=====   Immortal Info  =====-----------------------]{x\n\r",ch);
-        sprintf(buf, "{Y| {xSecurity: %d      Trust: %3d      Wizinvis: %3d       Incog: %3d {Y|{x\n\r",
+        sprintf(buf, "{Y| {xSecurity: %d       Trust: %3d        Wizinvis: %3d         Incognito: %3d {Y|{x\n\r",
         victim->pcdata->security,        get_trust(victim),        victim->invis_level,
         victim->incog_level);
         send_to_char( buf, ch );
-        sprintf(buf, "{Y| {xWiziname: %-20s       Immtitle: %s {Y|{x\n\r", victim->pcdata->wiziname, victim->pcdata->immtitle);
+        sprintf(buf, "{Y| {xWiziname: %-20s            Immtitle: %-20s       {Y|{x\n\r", victim->pcdata->wiziname, victim->pcdata->immtitle);
         send_to_char(buf, ch);
     }
 

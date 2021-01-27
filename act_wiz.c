@@ -2428,14 +2428,23 @@ void do_pstat( CHAR_DATA *ch, char *argument )
         send_to_char(buf, ch);
     }
 
+    if (!IS_IMMORTAL(victim))
+    {
+      send_to_char("{M[-----------------------=====   Mortal Trust   =====-----------------------]{x\n\r",ch);
+      sprintf(buf, "{M| {xImmtalk: %s            ImmClass:  %d           Trusted Level: %4d {M|\n\r{x",
+        IS_SET(victim->act, PLR_IMMTALK) ? "  [Yes]  " : "  (No)   ",
+        victim->pcdata->immclass, get_trust(victim));
+      send_to_char(buf, ch);
+    }
+
     send_to_char("{W[-----------------------=====    Player Info   =====-----------------------]{x\n\r",ch);
     sprintf(buf, "{W| Race: %-12s  Sex(True): %-6s(%-6s)   Age: %6d(%7d hrs) |{x\n\r",
     race_table[victim->race].name, sex_table[victim->sex].name,  sex_table[victim->pcdata->true_sex].name,
     get_age(victim), (int) (victim->played + current_time - victim->logon) / 3600);
     send_to_char(buf, ch);
 
-    sprintf(buf, "{W| Remorts: %4d    Freebies: %3d   ImmClass: %d    Last Level: %7d hrs  |{x\n\r",
-    victim->remorts, victim->freebie, victim->pcdata->immclass, victim->pcdata->last_level);
+    sprintf(buf, "{W| Remorts: %4d    Freebies: %3d   Exp: %7d   Last Level: %7d hrs  |{x\n\r",
+    victim->remorts, victim->freebie, victim->exp, victim->pcdata->last_level);
     send_to_char( buf, ch );
 
   send_to_char("\n\r", ch);

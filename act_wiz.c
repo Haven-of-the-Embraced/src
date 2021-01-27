@@ -2408,56 +2408,27 @@ void do_pstat( CHAR_DATA *ch, char *argument )
         return;
     }
 
-        send_to_char("\n\r{g----Char Flags:{x\n\r",ch);
-
-    sprintf( buf, "Fighting: %s\n\r",
-    victim->fighting ? victim->fighting->name : "(none)" );
-    send_to_char( buf, ch );
-
-    sprintf(buf, "Act: %s\n\r",act_bit_name(victim->act));
-    send_to_char(buf,ch);
-
-    sprintf(buf, "Act2: %s\n\r", act2_bit_name(victim->act2));
-    sendch(buf, ch);
-
-    if (victim->comm)
-    {
-        sprintf(buf,"Comm: %s\n\r",comm_bit_name(victim->comm));
-        send_to_char(buf,ch);
-    }
-
-    if (victim->imm_flags)
-    {
-    sprintf(buf, "Immune: %s\n\r",imm_bit_name(victim->imm_flags));
-    send_to_char(buf,ch);
-    }
-
-    if (victim->res_flags)
-    {
-    sprintf(buf, "Resist: %s\n\r", imm_bit_name(victim->res_flags));
-    send_to_char(buf,ch);
-    }
-
-    if (victim->vuln_flags)
-    {
-    sprintf(buf, "Vulnerable: %s\n\r", imm_bit_name(victim->vuln_flags));
-    send_to_char(buf,ch);
-    }
-
-    if (victim->affected_by)
-    {
-    sprintf(buf, "Affected by %s\n\r",
-        affect_bit_name(victim->affected_by));
-    send_to_char(buf,ch);
-    }
-
-    if (victim->affected2_by)
-    {
-         sprintf(buf, "Also affected by %s\n\r",
-            affect2_bit_name(victim->affected2_by) );
-        send_to_char(buf,ch);
-    }
     sendch("{m----Basic Info:{x\n\r", ch);
+    send_to_char("{y                     _______----------_______{x\n\r",ch);
+    sprintf(buf, "{y[--------------------! {W%s{y !--------------------]{x\n\r", center(victim->name, 20, " "));
+    send_to_char(buf, ch);
+    if (victim->cheater)
+    {
+      send_to_char("{y|  {R({DCheater!{R)  ({DCheater!{R)   ({DCheater!{R)   ({DCheater!{R)  ({DCheater!{R)  {y|{x\n\r", ch);
+    }
+
+    if(IS_IMMORTAL(victim))
+    {
+      send_to_char("{Y[--------------------===   Immortal Info  ===--------------------]{x\n\r",ch);
+        sprintf(buf, " Security: %d      Trust: %3d      Wizinvis: %3d       Incog: %3d\n\r",
+        victim->pcdata->security,        get_trust(victim),        victim->invis_level,
+        victim->incog_level);
+        send_to_char( buf, ch );
+        sprintf(buf, " Wiziname: %-20s       Immtitle: %s\n\r", victim->pcdata->wiziname, victim->pcdata->immtitle);
+        send_to_char(buf, ch);
+    }
+
+    send_to_char("{W[--------------------===    Basic Info    ===--------------------]{x\n\r",ch);
     sprintf( buf, "Name: {W%s{x %s(%s[%d])  Clan: %s\n\r",
     victim->name, victim->cheater ? "{R({DCheater!{R){x " : "",
     IS_IMMORTAL(victim) ? "an Immortal" : "a Player", victim->level,  clan_table[victim->clan].name);
@@ -2514,15 +2485,54 @@ void do_pstat( CHAR_DATA *ch, char *argument )
     if (!IS_NPC(victim) && victim->pcdata->immclass > 0)
         cprintf(ch, "ImmClass: %d\n\r", victim->pcdata->immclass);
 
-    if(IS_IMMORTAL(victim))
+    send_to_char("\n\r{g----Char Flags:{x\n\r",ch);
+
+    sprintf( buf, "Fighting: %s\n\r",
+    victim->fighting ? victim->fighting->name : "(none)" );
+    send_to_char( buf, ch );
+
+    sprintf(buf, "Act: %s\n\r",act_bit_name(victim->act));
+    send_to_char(buf,ch);
+
+    sprintf(buf, "Act2: %s\n\r", act2_bit_name(victim->act2));
+    sendch(buf, ch);
+
+    if (victim->comm)
     {
-      send_to_char("{y[--------------------===   Immortal Info  ===--------------------]{x\n\r",ch);
-        sprintf(buf, "Security: %d     Trust: %d     Wizinvis: %d     Incog: %d\n\r",
-        victim->pcdata->security,        get_trust(victim),        victim->invis_level,
-        victim->incog_level);
-        send_to_char( buf, ch );
-        sprintf(buf, "Wiziname: %s     Immtitle: %s\n\r", victim->pcdata->wiziname, victim->pcdata->immtitle);
-        send_to_char("{y[-------------------==========HHHHHH==========-------------------]{x\n\r",ch);
+        sprintf(buf,"Comm: %s\n\r",comm_bit_name(victim->comm));
+        send_to_char(buf,ch);
+    }
+
+    if (victim->imm_flags)
+    {
+    sprintf(buf, "Immune: %s\n\r",imm_bit_name(victim->imm_flags));
+    send_to_char(buf,ch);
+    }
+
+    if (victim->res_flags)
+    {
+    sprintf(buf, "Resist: %s\n\r", imm_bit_name(victim->res_flags));
+    send_to_char(buf,ch);
+    }
+
+    if (victim->vuln_flags)
+    {
+    sprintf(buf, "Vulnerable: %s\n\r", imm_bit_name(victim->vuln_flags));
+    send_to_char(buf,ch);
+    }
+
+    if (victim->affected_by)
+    {
+    sprintf(buf, "Affected by %s\n\r",
+        affect_bit_name(victim->affected_by));
+    send_to_char(buf,ch);
+    }
+
+    if (victim->affected2_by)
+    {
+         sprintf(buf, "Also affected by %s\n\r",
+            affect2_bit_name(victim->affected2_by) );
+        send_to_char(buf,ch);
     }
 
     if(victim->pcdata->breed > 0 && victim->pcdata->auspice > 0)

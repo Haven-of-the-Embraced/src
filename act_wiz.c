@@ -2384,6 +2384,7 @@ void do_pstat( CHAR_DATA *ch, char *argument )
     char arg[MAX_INPUT_LENGTH];
     AFFECT_DATA *paf;
     CHAR_DATA *victim;
+    int hometown;
     ROOM_INDEX_DATA *room;
     ROOM_INDEX_DATA *house;
     int i;
@@ -2411,7 +2412,8 @@ void do_pstat( CHAR_DATA *ch, char *argument )
     }
 
     room = victim->in_room;
-    house = victim->pcdata->home;
+    hometown = victim->pcdata->hometown;
+    house = get_room_index(victim->pcdata->home);
 
     send_to_char("{y                __________---------======---------__________{x\n\r",ch);
     sprintf(buf2, "%s {W%s {D[{W%3d{D]{x", !IS_NULLSTR(victim->pcdata->pretitle) ? victim->pcdata->pretitle : "", victim->name, victim->level);
@@ -2457,22 +2459,21 @@ void do_pstat( CHAR_DATA *ch, char *argument )
     send_to_char( buf, ch );
 
     send_to_char("{W[----------------------------      Society     ----------------------------]{x\n\r",ch);
+    sprintf(buf, "{W| {xHome: <%5d> %-30s   Hometown: %-15s {W|{x\n\r",
+        house ? house->vnum : 0, house ? house->name : "Unset", hometown_table[hometown].name);
+    send_to_char(buf, ch);
     sprintf( buf, "{W| {xGold: %-15d  Silver: %-15d  In Bank: %-15d{W |\n\r",
     victim->gold, victim->silver, victim->pcdata->bank);
     send_to_char( buf, ch );
 
     send_to_char("{W[----------------------------                  ----------------------------]{x\n\r",ch);
-    sprintf( buf, "{W| Hp: %4d/%4d(%4d)      Mana: %4d/%4d(%4d)     Move: %4d/%4d(%4d) |{x\n\r",
+    sprintf( buf, "{W| {xHp: %4d/%4d(%4d)      Mana: %4d/%4d(%4d)     Move: %4d/%4d(%4d) {W|{x\n\r{W| {xAggDamage: %d {W|{x\n\r",
     victim->hit,         victim->max_hit,       victim->pcdata->perm_hit,
     victim->mana,        victim->max_mana,      victim->pcdata->perm_mana,
-    victim->move,        victim->max_move,      victim->pcdata->perm_move
+    victim->move,        victim->max_move,      victim->pcdata->perm_move,
+    victim->agg_dam
     );
     send_to_char( buf, ch );
-
-/*    sprintf(buf, "{W| Housing: %s (%d) |\n\r Hometown: %15s \n\r",
-        hometown_table[victim->pcdata->hometown].name;  victim->agg_dam
-    send_to_char(buf, ch);
-*/
 
     sprintf( buf,"Age: %d(%dhrs)  Hit: %d  Dam: %d  Saves: %d  Trains: %d  Pracs: %d\n\r",
     get_age(victim),

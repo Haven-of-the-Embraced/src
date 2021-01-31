@@ -2454,14 +2454,25 @@ void do_pstat( CHAR_DATA *ch, char *argument )
     get_age(victim), (int) (victim->played + current_time - victim->logon) / 3600);
     send_to_char(buf, ch);
 
-    sprintf(buf, "{W| Remorts: %4d    Freebies: %3d   Exp: %7d   Last Level: %7d hrs  |{x\n\r",
+    sprintf(buf, "{W| {xRemorts: %4d    Freebies: %3d   Exp: %7d   Last Level: %7d hrs  {W|{x\n\r",
     victim->remorts, victim->freebie, victim->exp, victim->pcdata->last_level);
+    send_to_char( buf, ch );
+
+    sprintf( buf, "{W| {xThirst: %3d          Hunger: %3d          Full: %3d          Drunk: %3d  {W|{x\n\r",
+    victim->pcdata->condition[COND_THIRST],
+    victim->pcdata->condition[COND_HUNGER],
+    victim->pcdata->condition[COND_FULL],
+    victim->pcdata->condition[COND_DRUNK]);
+    send_to_char(buf, ch);
+    sprintf( buf, "{W| {xItems Carried: %4d/%4d                   Items Weight: %7d/%7d {W|{x\n\r",
+    victim->carry_number, can_carry_n(victim), get_carry_weight(victim) / 10, can_carry_w(ch)/10);
     send_to_char( buf, ch );
 
     send_to_char("{W[----------------------------      Society     ----------------------------]{x\n\r",ch);
     sprintf(buf, "{W| {xHome: <%5d> %-30s   Hometown: %-15s {W|{x\n\r",
         house ? house->vnum : 0, house ? house->name : "Unset", hometown_table[hometown].name);
     send_to_char(buf, ch);
+
     sprintf( buf, "{W| {xGold: %-15d  Silver: %-15d  In Bank: %-15d{W |\n\r",
     victim->gold, victim->silver, victim->pcdata->bank);
     send_to_char( buf, ch );
@@ -2490,15 +2501,6 @@ void do_pstat( CHAR_DATA *ch, char *argument )
     sprintf(buf, "Wimpy: %d  LLevel: %d  Remorts: %d  Freebies: %d  QP: %d\n\r",
     victim->wimpy, victim->pcdata->last_level, victim->remorts, victim->freebie,
     victim->qpoints);
-    send_to_char( buf, ch );
-
-    sprintf( buf, "Thirst: %d  Hunger: %d  Full: %d  Drunk: %d  Carry: %d Weight: %ld\n\r",
-    victim->pcdata->condition[COND_THIRST],
-    victim->pcdata->condition[COND_HUNGER],
-    victim->pcdata->condition[COND_FULL],
-    victim->pcdata->condition[COND_DRUNK],
-    victim->carry_number,
-    get_carry_weight(victim) / 10);
     send_to_char( buf, ch );
 
     sprintf( buf, "Gold: %ld  Silver: %ld  Group leader: %s  Timer: %d\n\r",

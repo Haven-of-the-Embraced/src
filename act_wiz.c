@@ -2422,7 +2422,7 @@ void do_pstat( CHAR_DATA *ch, char *argument )
       send_to_char("{y|  {R({DCheater!{R)  ({DCheater!{R)   ({DCheater!{R)   ({DCheater!{R)  ({DCheater!{R)  {y|{x\n\r", ch);
     }
     sprintf(buf, "{y| {xIn Room:  %s (%5d)    Idle: %d tick%s  {y|{x\n\r",
-      room->vnum == NULL ? center("Unknown Room", 36, " " : center(room->name, 36, " "),
+      room->vnum == NULL ? center("Unknown Room", 36, " ") : center(room->name, 36, " "),
       room->vnum == NULL ? 0 : room->vnum, victim->timer, victim->timer == 1 ? " " : "s");
     send_to_char(buf, ch);
 
@@ -2456,24 +2456,23 @@ void do_pstat( CHAR_DATA *ch, char *argument )
     victim->remorts, victim->freebie, victim->exp, victim->pcdata->last_level);
     send_to_char( buf, ch );
 
-  send_to_char("\n\r", ch);
-    sprintf( buf, "{W| Hp: %4d/%4d(%4d) Mana: %4d/%4d(%4d) Move: %4d/%4d(%4d) Agg: %4d |{x\n\r",
+    send_to_char("{W[----------------------------      Society     ----------------------------]{x\n\r",ch);
+    sprintf( buf, "{W| {xGold: %-15d  Silver: %-15d  In Bank: %-15d{W |\n\r",
+    victim->gold, victim->silver, victim->pcdata->bank);
+    send_to_char( buf, ch );
+
+    send_to_char("{W[----------------------------                  ----------------------------]{x\n\r",ch);
+    sprintf( buf, "{W| Hp: %4d/%4d(%4d)      Mana: %4d/%4d(%4d)     Move: %4d/%4d(%4d) |{x\n\r",
     victim->hit,         victim->max_hit,       victim->pcdata->perm_hit,
     victim->mana,        victim->max_mana,      victim->pcdata->perm_mana,
-    victim->move,        victim->max_move,      victim->pcdata->perm_move,
-    victim->agg_dam );
+    victim->move,        victim->max_move,      victim->pcdata->perm_move
+    );
     send_to_char( buf, ch );
 
 /*    sprintf(buf, "{W| Housing: %s (%d) |\n\r Hometown: %15s \n\r",
-        hometown_table[victim->pcdata->hometown].name;
+        hometown_table[victim->pcdata->hometown].name;  victim->agg_dam
     send_to_char(buf, ch);
 */
-  send_to_char("\n\r", ch);
-    sprintf( buf,"Race: %s    Sex: %s Exp: %d  Room: %d\n\r",
-    race_table[victim->race].name,
-    sex_table[victim->sex].name, victim->exp,
-    victim->in_room == NULL    ?        0 : victim->in_room->vnum);
-    send_to_char( buf, ch );
 
     sprintf( buf,"Age: %d(%dhrs)  Hit: %d  Dam: %d  Saves: %d  Trains: %d  Pracs: %d\n\r",
     get_age(victim),
@@ -2508,10 +2507,6 @@ void do_pstat( CHAR_DATA *ch, char *argument )
 
     sprintf (buf, "IC Hours: %ld  Bank: %d\n\r", victim->pcdata->IC_total/60, victim->pcdata->bank );
     send_to_char(buf, ch);
-
-
-    if (!IS_NPC(victim) && victim->pcdata->immclass > 0)
-        cprintf(ch, "ImmClass: %d\n\r", victim->pcdata->immclass);
 
     send_to_char("\n\r{g----Char Flags:{x\n\r",ch);
 

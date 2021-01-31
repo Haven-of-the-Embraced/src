@@ -2502,8 +2502,7 @@ void do_pstat( CHAR_DATA *ch, char *argument )
     sprintf( buf, "{W| {xHp: %4d/%4d(%4d)      Mana: %4d/%4d(%4d)     Move: %4d/%4d(%4d) {W|{x\n\r",
     victim->hit,         victim->max_hit,       victim->pcdata->perm_hit,
     victim->mana,        victim->max_mana,      victim->pcdata->perm_mana,
-    victim->move,        victim->max_move,      victim->pcdata->perm_move,
-    victim->agg_dam
+    victim->move,        victim->max_move,      victim->pcdata->perm_move
     );
     send_to_char( buf, ch );
 
@@ -2511,20 +2510,22 @@ void do_pstat( CHAR_DATA *ch, char *argument )
     victim->agg_dam, victim->wimpy, victim->stopped);
     send_to_char(buf, ch);
 
-    sprintf( buf,"Age: %d(%dhrs)  Hit: %d  Dam: %d  Saves: %d  Trains: %d  Pracs: %d\n\r",
-    get_age(victim),
-    (int) (victim->played + current_time - victim->logon) / 3600,
-    GET_HITROLL(victim), GET_DAMROLL(victim), victim->saving_throw,
-    victim->train, victim->practice);
-    send_to_char( buf, ch );
-
-    sprintf(buf,"Armor: pierce: %d  bash: %d  slash: %d  magic: %d\n\r",
-        GET_AC(victim,AC_PIERCE), GET_AC(victim,AC_BASH),
-        GET_AC(victim,AC_SLASH),  GET_AC(victim,AC_EXOTIC));
+    sprintf( buf, "{W| Hitroll [{DD10 Dice{x]: %5d [{D+%2d{x]       Damroll [{DDamage Mod{x]: %5d [{D+%3d{x] {W|{x\n\r",
+      GET_HITROLL(victim), GET_HITROLL(victim)/200,
+      GET_DAMROLL(victim), GET_DAMROLL(victim)/50);
     send_to_char(buf,ch);
 
-    send_to_char("\n\r{g----Char Flags:{x\n\r",ch);
+    sprintf(buf,"{W| {x  Armor    :      Piercing       Bashing       Slashing        Magical   {W|{x\n\r");
+    send_to_char(buf,ch);
+    sprintf(buf,"{W| {x ROM[{DD10{x]  :      %5d[{D%2d{x]     %5d[{D%2d{x]      %5d[{D%2d{x]      %5d[{D%2d{x]  {W|{x\n\r",
+        GET_AC(victim,AC_PIERCE), get_armor_diff(victim, victim, DAM_PIERCE),
+        GET_AC(victim,AC_BASH), get_armor_diff(victim, victim, DAM_BASH),
+        GET_AC(victim,AC_SLASH), get_armor_diff(victim, victim, DAM_SLASH),
+        GET_AC(victim,AC_EXOTIC), get_armor_diff(ch, ch, DAM_ENERGY)
+        );
+    send_to_char(buf,ch);
 
+    send_to_char("{b+----------------------------     {B[ {WFlags {B]    {b----------------------------+{x\n\r",ch);
     sprintf(buf, "Act: %s\n\r",act_bit_name(victim->act));
     send_to_char(buf,ch);
 
@@ -2617,7 +2618,6 @@ void do_pstat( CHAR_DATA *ch, char *argument )
         }
         page_to_char(buf_string(buffer), ch);
         send_to_char("\n\r", ch);
-        send_to_char("{g[-------------------==========HHHHHH==========-------------------]{x\n\r",ch);
     }
 
     if (!IS_NPC(victim) && victim->race == race_lookup("vampire") || victim->race == race_lookup("methuselah"))
@@ -2723,6 +2723,7 @@ void do_pstat( CHAR_DATA *ch, char *argument )
     {
       send_to_char("{D[-------------------{m========    {WPlayer Notes    {m========{D-------------------]{x\n\r", ch);
       printf_to_char(ch,"  %s", victim->pcdata->playernotes);
+      send_to_char("{D+-------------------{m--------     {WEnd  Notes     {m--------{D-------------------+{x\n\r", ch);
     }
 
 

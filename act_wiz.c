@@ -2458,6 +2458,10 @@ void do_pstat( CHAR_DATA *ch, char *argument )
     victim->remorts, victim->freebie, victim->exp, victim->pcdata->last_level);
     send_to_char( buf, ch );
 
+    sprintf(buf, "{W| {xQuest Points: %5d    IC Hours: %5d {W|{x\n\r",
+      victim->qpoints, victim->pcdata->IC_total/60);
+    send_to_char(buf, ch);
+
     sprintf( buf, "{W| {xThirst: %3d          Hunger: %3d          Full: %3d          Drunk: %3d  {W|{x\n\r",
     victim->pcdata->condition[COND_THIRST],
     victim->pcdata->condition[COND_HUNGER],
@@ -2468,7 +2472,7 @@ void do_pstat( CHAR_DATA *ch, char *argument )
     victim->carry_number, can_carry_n(victim), get_carry_weight(victim) / 10, can_carry_w(ch)/10);
     send_to_char( buf, ch );
 
-    send_to_char("{W[----------------------------      Society     ----------------------------]{x\n\r",ch);
+    send_to_char("{W+----------------------------      Society     ----------------------------+{x\n\r",ch);
     sprintf(buf, "{W| {xHome: <%5d> %-30s   Hometown: %-15s {W|{x\n\r",
         house ? house->vnum : 0, house ? house->name : "Unset", hometown_table[hometown].name);
     send_to_char(buf, ch);
@@ -2477,14 +2481,35 @@ void do_pstat( CHAR_DATA *ch, char *argument )
     victim->gold, victim->silver, victim->pcdata->bank);
     send_to_char( buf, ch );
 
-    send_to_char("{W[----------------------------                  ----------------------------]{x\n\r",ch);
-    sprintf( buf, "{W| {xHp: %4d/%4d(%4d)      Mana: %4d/%4d(%4d)     Move: %4d/%4d(%4d) {W|{x\n\r{W| {xAggDamage: %d {W|{x\n\r",
+    send_to_char("{D+---------------------------      {WPVP Info      {D---------------------------+{x\n\r",ch);
+    sprintf(buf, "{D| {xPVP Status:   %s        ", IS_SET(victim->act2, PLR2_PVP) ? "  {RActive{x  " : " {rInactive{x ");
+    send_to_char(buf, ch);
+    if (!IS_NPC(victim) && victim->pcdata->kill_target != NULL && str_cmp(victim->pcdata->kill_target, "null") &&
+        str_cmp(victim->pcdata->kill_target, "(null)"))
+      sprintf(buf2,"%s",center(victim->pcdata->kill_target, 20, " "));
+    else
+      sprintf(buf2, "     No Target      ");
+    sprintf(buf, "         PK Target: {r%s {D|{x\n\r", buf2);
+    send_to_char(buf,ch);
+
+    send_to_char("{W+----------------------------      Combat      ----------------------------+{x\n\r",ch);
+    sprintf( buf, "{W| {xLeader: %-15s  Pet: %-15s  Fighting: %-15s {W|{x\n\r",
+    victim->leader ? victim->leader->name   : "Self",
+    victim->pet ? victim->pet->name : "None",
+    victim->fighting ? victim->fighting->name : "None" );
+    send_to_char( buf, ch );
+
+    sprintf( buf, "{W| {xHp: %4d/%4d(%4d)      Mana: %4d/%4d(%4d)     Move: %4d/%4d(%4d) {W|{x\n\r",
     victim->hit,         victim->max_hit,       victim->pcdata->perm_hit,
     victim->mana,        victim->max_mana,      victim->pcdata->perm_mana,
     victim->move,        victim->max_move,      victim->pcdata->perm_move,
     victim->agg_dam
     );
     send_to_char( buf, ch );
+
+    sprintf( buf, "{W| {xAggDamage: %5d              Wimpy: %5d                Stopped:  %3d  {W|{x\n\r",
+    victim->agg_dam, victim->wimpy, victim->stopped);
+    send_to_char(buf, ch);
 
     sprintf( buf,"Age: %d(%dhrs)  Hit: %d  Dam: %d  Saves: %d  Trains: %d  Pracs: %d\n\r",
     get_age(victim),
@@ -2498,24 +2523,7 @@ void do_pstat( CHAR_DATA *ch, char *argument )
         GET_AC(victim,AC_SLASH),  GET_AC(victim,AC_EXOTIC));
     send_to_char(buf,ch);
 
-    sprintf(buf, "Wimpy: %d  LLevel: %d  Remorts: %d  Freebies: %d  QP: %d\n\r",
-    victim->wimpy, victim->pcdata->last_level, victim->remorts, victim->freebie,
-    victim->qpoints);
-    send_to_char( buf, ch );
-
-    sprintf( buf, "Gold: %ld  Silver: %ld  Group leader: %s  Timer: %d\n\r",
-    victim->gold, victim->silver,
-    victim->leader ? victim->leader->name   : "(none)", victim->timer);
-    send_to_char( buf, ch );
-
-    sprintf (buf, "IC Hours: %ld  Bank: %d\n\r", victim->pcdata->IC_total/60, victim->pcdata->bank );
-    send_to_char(buf, ch);
-
     send_to_char("\n\r{g----Char Flags:{x\n\r",ch);
-
-    sprintf( buf, "Fighting: %s\n\r",
-    victim->fighting ? victim->fighting->name : "(none)" );
-    send_to_char( buf, ch );
 
     sprintf(buf, "Act: %s\n\r",act_bit_name(victim->act));
     send_to_char(buf,ch);
@@ -2642,7 +2650,6 @@ void do_pstat( CHAR_DATA *ch, char *argument )
           }
         }
         send_to_char("\n\r", ch);
-        send_to_char("{r[-------------------==========HHHHHH==========-------------------]{x\n\r",ch);
     }
 
     if (!IS_NPC(victim) && victim->race == race_lookup("ghoul"))
@@ -2679,7 +2686,6 @@ void do_pstat( CHAR_DATA *ch, char *argument )
         }
       }
       send_to_char("\n\r", ch);
-      send_to_char("{r[-------------------==========HHHHHH==========-------------------]{x\n\r",ch);
     }
 
     if (victim->avatar > 0)
@@ -2711,25 +2717,14 @@ void do_pstat( CHAR_DATA *ch, char *argument )
         }
       }
       send_to_char("\n\r",ch);
-      send_to_char("{c[-------------------==========HHHHHH==========-------------------]{x\n\r",ch);
     }
 
     if (!IS_NPC(victim) && victim->pcdata->playernotes != NULL)
     {
-      send_to_char("{D[-------------------{W===    Player Notes    ==={D-------------------]{x\n\r", ch);
-      printf_to_char(ch,"%s", victim->pcdata->playernotes);
-      send_to_char("{D+----------------------      {WPVP Info      {D----------------------+{x\n\r",ch);
-      sprintf(buf, " PVP Status:   %s        ", IS_SET(victim->act2, PLR2_PVP) ? "  {RActive{x  " : " {rInactive{x ");
-      send_to_char(buf, ch);
-      if (!IS_NPC(victim) && victim->pcdata->kill_target != NULL && str_cmp(victim->pcdata->kill_target, "null") &&
-          str_cmp(victim->pcdata->kill_target, "(null)"))
-        sprintf(buf2,"%s",center(victim->pcdata->kill_target, 20, " "));
-      else
-        sprintf(buf2, "     No Target      ");
-      sprintf(buf, " PK Target: {r%s{x\n\r", buf2);
-      send_to_char(buf,ch);
+      send_to_char("{D[-------------------{m========    {WPlayer Notes    {m========{D-------------------]{x\n\r", ch);
+      printf_to_char(ch,"  %s", victim->pcdata->playernotes);
     }
-      send_to_char("{D[-------------------{W==========HHHHHH=========={D-------------------]{x\n\r",ch);
+
 
     if(victim->affected != NULL)
       send_to_char("{y[--------------------===     Affects      ===--------------------]{x\n\r",ch);

@@ -2573,26 +2573,26 @@ void do_pstat( CHAR_DATA *ch, char *argument )
     if(victim->pcdata->breed > 0 && victim->pcdata->auspice > 0)
     {
         send_to_char("{g[-----------------------=====    Garou Info    =====-----------------------]{x\n\r",ch);
-        sprintf(buf," Breed: %-8s      Auspice: %-12s   Tribe: %-13s\n\r",
+        sprintf(buf,"{g|{x Breed: %-8s            Auspice: %-12s    Tribe: %-13s {g|{x\n\r",
             victim->pcdata->breed == LUPUS ? "Lupus" : victim->pcdata->breed == METIS ? "Metis" :
             "Homid", victim->pcdata->auspice == RAGABASH ? "Ragabash" : victim->pcdata->auspice == THEURGE ?
             "Theurge" : victim->pcdata->auspice == PHILODOX ? "Philodox" : victim->pcdata->auspice == GALLIARD ?
             "Galliard" : "Ahroun", capitalize(clan_table[victim->clan].name));
         send_to_char(buf,ch);
-        sprintf(buf, " Form: %-7s             Fur Color: %-25s\n\r",
+        sprintf(buf, "{g| {xForm: %-7s                      Fur Color: %-25s  {g|{x\n\r",
           victim->pcdata->shiftform == LUPUS ? "Lupus" : victim->pcdata->shiftform == HISPO ? "Hispo" :
           victim->pcdata->shiftform == CRINOS ? "Crinos" : victim->pcdata->shiftform == GLABRO ? "Glabro" :
           victim->pcdata->shiftform == HOMID ? "Homid" : "ERROR!", victim->pcdata->garou_fur);
         send_to_char(buf, ch);
-        sprintf(buf, " Primal-Urge: %2d           Rage: %2d (%2d)          Gnosis: %2d (%2d) \n\r",
+        sprintf(buf, "{g| {xPrimal-Urge: %2d           Rage(Temp): %2d (%2d)      Gnosis(Temp): %2d (%2d) {g|{x\n\r",
           victim->pcdata->primal_urge, victim->pcdata->rage[PERM], victim->pcdata->rage[TEMP], victim->pcdata->gnosis[PERM], victim->pcdata->gnosis[TEMP]);
         send_to_char(buf,ch);
         sprintf(buf2,"  Renown Rank: {G[{W%s{G]{g  ",
           victim->rank == 1 ? "Cliath" : victim->rank == 2 ? "Fostern" : victim->rank == 3 ? "Adren" :
           victim->rank == 4 ? "Athro" : victim->rank == 5 ? "Elder" : "Pup");
-        sprintf(buf, "{g+%s+{x\n\r", center(buf2, 64, "-"));
+        sprintf(buf, "{g+%s+{x\n\r", center(buf2, 74, "-"));
         send_to_char(buf, ch);
-        sprintf(buf," Glory: %2d (%2d)           Honor: %2d (%2d)          Wisdom: %2d (%2d)\n\r",
+        sprintf(buf,"{g| {xGlory(Temp): %2d (%2d)      Honor(Temp): %2d (%2d)     Wisdom(Temp): %2d (%2d) {g|{x\n\r",
           victim->pcdata->renown[GLORY], victim->pcdata->renown[TEMP_GLORY],
           victim->pcdata->renown[HONOR], victim->pcdata->renown[TEMP_HONOR],
           victim->pcdata->renown[WISDOM], victim->pcdata->renown[TEMP_WISDOM]);
@@ -2605,10 +2605,10 @@ void do_pstat( CHAR_DATA *ch, char *argument )
           else
           {
             if (col < 2)
-              sprintf(buf, " %-30s", capitalize(gift_table[victim->pcdata->gift[i]].name));
+              sprintf(buf, "{g|  {x%-32s  ", capitalize(gift_table[victim->pcdata->gift[i]].name));
             else if (col == 2)
             {
-              sprintf(buf, " %s\n\r", capitalize(gift_table[victim->pcdata->gift[i]].name));
+              sprintf(buf, "{g|  {x%-32s   {g|{x\n\r", capitalize(gift_table[victim->pcdata->gift[i]].name));
               col = 0;
             }
 
@@ -2617,7 +2617,8 @@ void do_pstat( CHAR_DATA *ch, char *argument )
           }
         }
         page_to_char(buf_string(buffer), ch);
-        send_to_char("\n\r", ch);
+        if (col == 2)
+          send_to_char("{g|                                     |{x\n\r", ch);
     }
 
     if (!IS_NPC(victim) && victim->race == race_lookup("vampire") || victim->race == race_lookup("methuselah"))
@@ -2733,26 +2734,27 @@ void do_pstat( CHAR_DATA *ch, char *argument )
         victim->quintessence, victim->max_quintessence, victim->paradox);
       send_to_char(buf,ch);
       send_to_char("{c+---------------------------      Spheres       ---------------------------+{x",ch);
-      for(i = 0;i <= MAX_SPHERE;i++)
+      for (i = 1; i < MAX_SPHERE; i++)
       {
         if (victim->sphere[i] == 0)
           continue;
         else
         {
-          sprintf(buf, "%s %-15s : %d %s", col == 1 ? "\n\r" : "", capitalize(sphere_table[i].name), victim->sphere[i], col != 3 ? "{c|{x" : " ");
+          sprintf(buf, " %s %-15s : %d   {c|{x", col == 1 ? "\n\r{c| {x" : "", capitalize(sphere_table[i].name), victim->sphere[i]);
           send_to_char(buf, ch);
           col++;
           if (col > 3)
             col = 1;
         }
       }
-      send_to_char("\n\r",ch);
+      sprintf(buf, "%s\n\r", col == 2 ? "{c                        |                        |{x" : col == 3 ? "                        {c|{x" : "");
+      send_to_char(buf, ch);
     }
 
     if (!IS_NPC(victim) && victim->pcdata->playernotes != NULL)
     {
       send_to_char("{D[-------------------{m========    {WPlayer Notes    {m========{D-------------------]{x\n\r", ch);
-      printf_to_char(ch,"  %s", victim->pcdata->playernotes);
+      printf_to_char(ch,"%s", victim->pcdata->playernotes);
       send_to_char("{D+-------------------{m--------     {WEnd  Notes     {m--------{D-------------------+{x\n\r", ch);
     }
 

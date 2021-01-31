@@ -2572,7 +2572,7 @@ void do_pstat( CHAR_DATA *ch, char *argument )
 
     if(victim->pcdata->breed > 0 && victim->pcdata->auspice > 0)
     {
-        send_to_char("{g[--------------------===    Garou Info    ===--------------------]{x\n\r",ch);
+        send_to_char("{g[-----------------------=====    Garou Info    =====-----------------------]{x\n\r",ch);
         sprintf(buf," Breed: %-8s      Auspice: %-12s   Tribe: %-13s\n\r",
             victim->pcdata->breed == LUPUS ? "Lupus" : victim->pcdata->breed == METIS ? "Metis" :
             "Homid", victim->pcdata->auspice == RAGABASH ? "Ragabash" : victim->pcdata->auspice == THEURGE ?
@@ -2597,7 +2597,7 @@ void do_pstat( CHAR_DATA *ch, char *argument )
           victim->pcdata->renown[HONOR], victim->pcdata->renown[TEMP_HONOR],
           victim->pcdata->renown[WISDOM], victim->pcdata->renown[TEMP_WISDOM]);
         send_to_char(buf, ch);
-        send_to_char("{g+----------------------    Gifts  Known    ----------------------+{x\n\r",ch);
+        send_to_char("{g+---------------------------    Gifts  Known    ---------------------------+{x\n\r",ch);
         for (i = 0; i < MAX_GIFT; i++)
         {
           if (victim->pcdata->gift[i] == 0)
@@ -2622,7 +2622,7 @@ void do_pstat( CHAR_DATA *ch, char *argument )
 
     if (!IS_NPC(victim) && victim->race == race_lookup("vampire") || victim->race == race_lookup("methuselah"))
     {
-      send_to_char("{r[--------------------===   Vampire Info   ===--------------------]{x\n\r",ch);
+      send_to_char("{r[-----------------------=====   Vampire Info   =====-----------------------]{x\n\r",ch);
         sprintf(buf," Clan: %-15s  Generation: %2d(%2d)   Sire: %s \n\r",
         capitalize(clan_table[victim->clan].name),
         victim->gen,
@@ -2655,7 +2655,7 @@ void do_pstat( CHAR_DATA *ch, char *argument )
 
     if (!IS_NPC(victim) && victim->race == race_lookup("ghoul"))
     {
-      send_to_char("{r[--------------------===    Ghoul Info    ===--------------------]{x\n\r",ch);
+      send_to_char("{r[-----------------------=====    Ghoul Info    =====-----------------------]{x\n\r",ch);
       sprintf(buf, " Domitor:   %s  ", center(victim->vamp_master, 17, " "));
       send_to_char(buf, ch);
       sprintf(buf,"    Domitor Clan: %s \n\r", center(capitalize(clan_table[victim->clan].name), 16, " "));
@@ -2720,7 +2720,7 @@ void do_pstat( CHAR_DATA *ch, char *argument )
 
     if (victim->avatar > 0)
     {
-      send_to_char("{c[--------------------===    Mage Info     ===--------------------]{x\n\r",ch);
+      send_to_char("{c[-----------------------=====    Mage Info     =====-----------------------]{x\n\r",ch);
       sprintf(buf, " Tradition: %s     Rank:  %s    Avatar:   %d\n\r", center(capitalize(tradition_table[victim->tradition].name), 16, " "),
         victim->rank == 1 ? "Apprentice" : victim->rank == 2 ? " Disciple " :
         victim->rank == 8 ? "  Master  " : victim->rank == 9 ? "  Mentor  " : "  Leader  ",
@@ -2732,7 +2732,7 @@ void do_pstat( CHAR_DATA *ch, char *argument )
       sprintf(buf, " Arete:   %d           Quintessence:  %3d/%3d         Paradox: %3d\n\r", victim->arete,
         victim->quintessence, victim->max_quintessence, victim->paradox);
       send_to_char(buf,ch);
-      send_to_char("{c+----------------------      Spheres       ----------------------+{x",ch);
+      send_to_char("{c+---------------------------      Spheres       ---------------------------+{x",ch);
       for(i = 0;i <= MAX_SPHERE;i++)
       {
         if (victim->sphere[i] == 0)

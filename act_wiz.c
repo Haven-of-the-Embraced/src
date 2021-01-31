@@ -2526,46 +2526,46 @@ void do_pstat( CHAR_DATA *ch, char *argument )
     send_to_char(buf,ch);
 
     send_to_char("{b+----------------------------     {B[ {WFlags {B]    {b----------------------------+{x\n\r",ch);
-    sprintf(buf, "Act: %s\n\r",act_bit_name(victim->act));
+    sprintf(buf, "{b- {xAct: %s\n\r",act_bit_name(victim->act));
     send_to_char(buf,ch);
 
-    sprintf(buf, "Act2: %s\n\r", act2_bit_name(victim->act2));
+    sprintf(buf, "{b- {xAct2: %s\n\r", act2_bit_name(victim->act2));
     sendch(buf, ch);
 
     if (victim->comm)
     {
-        sprintf(buf,"Comm: %s\n\r",comm_bit_name(victim->comm));
+        sprintf(buf,"{b- {xComm: %s\n\r",comm_bit_name(victim->comm));
         send_to_char(buf,ch);
     }
 
     if (victim->imm_flags)
     {
-    sprintf(buf, "Immune: %s\n\r",imm_bit_name(victim->imm_flags));
+    sprintf(buf, "{b- {xImmune: %s\n\r",imm_bit_name(victim->imm_flags));
     send_to_char(buf,ch);
     }
 
     if (victim->res_flags)
     {
-    sprintf(buf, "Resist: %s\n\r", imm_bit_name(victim->res_flags));
+    sprintf(buf, "{b- {xResist: %s\n\r", imm_bit_name(victim->res_flags));
     send_to_char(buf,ch);
     }
 
     if (victim->vuln_flags)
     {
-    sprintf(buf, "Vulnerable: %s\n\r", imm_bit_name(victim->vuln_flags));
+    sprintf(buf, "{b- {xVulnerable: %s\n\r", imm_bit_name(victim->vuln_flags));
     send_to_char(buf,ch);
     }
 
     if (victim->affected_by)
     {
-    sprintf(buf, "Affected by %s\n\r",
+    sprintf(buf, "{b- {xAffected by %s\n\r",
         affect_bit_name(victim->affected_by));
     send_to_char(buf,ch);
     }
 
     if (victim->affected2_by)
     {
-         sprintf(buf, "Also affected by %s\n\r",
+         sprintf(buf, "{b- {xAlso affected by %s\n\r",
             affect2_bit_name(victim->affected2_by) );
         send_to_char(buf,ch);
     }
@@ -2635,21 +2635,22 @@ void do_pstat( CHAR_DATA *ch, char *argument )
           victim->pblood/10,
           victim->max_pblood/10);
         send_to_char(buf,ch);
-        send_to_char("{r+----------------------     Disciplines    ----------------------+{x",ch);
+        send_to_char("{r+----------------------------    Disciplines   ----------------------------+{x",ch);
         for (i = 1; i < MAX_DISC; i++)
         {
           if (victim->pcdata->discipline[i] == 0)
             continue;
           else
           {
-            sprintf(buf, "%s %-15s : %d %s", col == 1 ? "\n\r" : "", disc_table[i].name, victim->pcdata->discipline[i], col != 3 ? "{r|{x" : " ");
+            sprintf(buf, " %s %-15s : %d   {r|{x", col == 1 ? "\n\r{r| {x" : "", disc_table[i].name, victim->pcdata->discipline[i]);
             send_to_char(buf, ch);
             col++;
             if (col > 3)
               col = 1;
           }
         }
-        send_to_char("\n\r", ch);
+        sprintf(buf, "%s\n\r", col == 2 ? "{r                        |                        |{x" : col == 3 ? "                        {r|{x" : "");
+        send_to_char(buf, ch);
     }
 
     if (!IS_NPC(victim) && victim->race == race_lookup("ghoul"))
@@ -2671,21 +2672,50 @@ void do_pstat( CHAR_DATA *ch, char *argument )
         victim->pblood/10,
         victim->max_pblood/10);
       send_to_char(buf,ch);
-      send_to_char("{r+----------------------     Disciplines    ----------------------+{x",ch);
+      send_to_char("{r+----------------------------    Disciplines   ----------------------------+{x",ch);
       for (i = 1; i < MAX_DISC; i++)
       {
         if (victim->pcdata->discipline[i] == 0)
           continue;
         else
         {
-          sprintf(buf, "%s %-15s : %d %s", col == 1 ? "\n\r" : "", disc_table[i].name, victim->pcdata->discipline[i], col != 3 ? "{r|{x" : " ");
+          sprintf(buf, " %s %-15s : %d   {r|{x", col == 1 ? "\n\r{r| {x" : "", disc_table[i].name, victim->pcdata->discipline[i]);
           send_to_char(buf, ch);
           col++;
           if (col > 3)
             col = 1;
         }
       }
-      send_to_char("\n\r", ch);
+      sprintf(buf, "%s\n\r", col == 2 ? "{r                        |                        |{x" : col == 3 ? "                        {r|{x" : "");
+      send_to_char(buf, ch);
+    }
+
+    if (!IS_NPC(victim) && victim->race == race_lookup("dhampire"))
+    {
+      send_to_char("{r[-----------------------=====  Daywalker Info  =====-----------------------]{x\n\r",ch);
+        sprintf(buf,"{r| {xClan: %-15s       Fangs: %s        Blood Pool: %2d/%2d{r |{x\n\r",
+        capitalize(clan_table[victim->clan].name),
+        IS_AFFECTED(victim, AFF_FANGS) ? "Extended    " : "Concealed   ",
+        victim->pblood/10,
+        victim->max_pblood/10
+        );
+      send_to_char(buf,ch);
+      send_to_char("{r+----------------------------    Disciplines   ----------------------------+{x",ch);
+      for (i = 1; i < MAX_DISC; i++)
+      {
+        if (victim->pcdata->discipline[i] == 0)
+          continue;
+        else
+        {
+          sprintf(buf, " %s %-15s : %d   {r|{x", col == 1 ? "\n\r{r| {x" : "", disc_table[i].name, victim->pcdata->discipline[i]);
+          send_to_char(buf, ch);
+          col++;
+          if (col > 3)
+            col = 1;
+        }
+      }
+      sprintf(buf, "%s\n\r", col == 2 ? "{r                        |                        |{x" : col == 3 ? "                        {r|{x" : "");
+      send_to_char(buf, ch);
     }
 
     if (victim->avatar > 0)

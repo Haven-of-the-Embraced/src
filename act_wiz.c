@@ -2579,13 +2579,13 @@ void do_pstat( CHAR_DATA *ch, char *argument )
     if (!IS_NPC(victim) && victim->race == race_lookup("vampire") || victim->race == race_lookup("methuselah"))
     {
       send_to_char("{r[-----------------------=====   Vampire Info   =====-----------------------]{x\n\r",ch);
-        sprintf(buf," Clan: %-15s  Generation: %2d(%2d)   Sire: %s \n\r",
+        sprintf(buf,"{r|{x Clan: %-15s      Generation: %2d(%2d)   Sire: %s    {r|{x\n\r",
         capitalize(clan_table[victim->clan].name),
         victim->gen,
         victim->pcdata->csgeneration,
         center(victim->sire, 15, " "));
         send_to_char(buf,ch);
-        sprintf(buf," Fangs: %s       Childer: %2d       Blood Pool: %2d/%2d\n\r",
+        sprintf(buf,"{r|{x Fangs: %s           Childer: %2d              Blood Pool: %2d/%2d {r|{x\n\r",
           IS_AFFECTED(victim, AFF_FANGS) ? "Extended    " : "Concealed   ",
           victim->childer,
           victim->pblood/10,
@@ -2612,19 +2612,19 @@ void do_pstat( CHAR_DATA *ch, char *argument )
     if (!IS_NPC(victim) && victim->race == race_lookup("ghoul"))
     {
       send_to_char("{r[-----------------------=====    Ghoul Info    =====-----------------------]{x\n\r",ch);
-      sprintf(buf, " Domitor:   %s  ", center(victim->vamp_master, 17, " "));
+      sprintf(buf, "{r|{x Domitor:   %s  ", center(victim->vamp_master, 17, " "));
       send_to_char(buf, ch);
-      sprintf(buf,"    Domitor Clan: %s \n\r", center(capitalize(clan_table[victim->clan].name), 16, " "));
+      sprintf(buf,"        Domitor Clan: %s {r|{x\n\r", center(capitalize(clan_table[victim->clan].name), 20, " "));
       send_to_char(buf, ch);
-      sprintf(buf, " Domitor Gen: %s        ", center(victim->pcdata->csgeneration == 4 ? "Methuselah" : victim->pcdata->csgeneration == 5 ? "Fifth" :
+      sprintf(buf, "{r|{x Domitor Gen: %s        ", center(victim->pcdata->csgeneration == 4 ? "Methuselah" : victim->pcdata->csgeneration == 5 ? "Fifth" :
       victim->pcdata->csgeneration == 6 ? "Sixth" : victim->pcdata->csgeneration == 7 ? "Seventh" :
       victim->pcdata->csgeneration == 8 ? "Eighth" : victim->pcdata->csgeneration == 9 ? "Ninth" :
       victim->pcdata->csgeneration == 10 ? "Tenth" : victim->pcdata->csgeneration == 11 ? "Eleventh" :
       victim->pcdata->csgeneration == 12 ? "Twelvth" : victim->pcdata->csgeneration == 13 ? "Thirteenth" : "Negligent",12," "));
       send_to_char(buf,ch);
-      sprintf(buf," Blood Bond:   %s \n\r Blood Pool:     %2d/%2d\n\r",
-      center(victim->bonded == 0 ? "None" : victim->bonded == 1 ? "Lv 1" : victim->bonded == 2 ? "Lv 2" :
-      victim->bonded == 3 ? "Lv 3" : "Lv 3",16," "),
+      sprintf(buf,"     Blood Bond:     %s   {r|{x\n\r{r|{x Blood Pool:     %2d/%2d                 Age:             Unknown           {r|{x\n\r",
+      center(victim->bonded == 0 ? "None" : victim->bonded == 1 ? "Level 1" : victim->bonded == 2 ? "Level 2" :
+      victim->bonded == 3 ? "Level 3" : "Level 3",16," "),
         victim->pblood/10,
         victim->max_pblood/10);
       send_to_char(buf,ch);
@@ -2677,15 +2677,15 @@ void do_pstat( CHAR_DATA *ch, char *argument )
     if (victim->avatar > 0)
     {
       send_to_char("{c[-----------------------=====    Mage Info     =====-----------------------]{x\n\r",ch);
-      sprintf(buf, " Tradition: %s     Rank:  %s    Avatar:   %d\n\r", center(capitalize(tradition_table[victim->tradition].name), 16, " "),
+      sprintf(buf, "{c|{x Tradition: %s      Rank:  %s           Avatar:   %d {c|{x\n\r", center(capitalize(tradition_table[victim->tradition].name), 16, " "),
         victim->rank == 1 ? "Apprentice" : victim->rank == 2 ? " Disciple " :
         victim->rank == 8 ? "  Master  " : victim->rank == 9 ? "  Mentor  " : "  Leader  ",
         victim->avatar);
       send_to_char(buf, ch);
-      sprintf(buf, " Mentor:   %s    Apprentice:  %s\n\r", center(victim->sire ? victim->sire : "None", 18, " "),
+      sprintf(buf, "{c| {xMentor:   %s         Apprentice:  %s     {c|{x\n\r", center(victim->sire ? victim->sire : "None", 18, " "),
         center(victim->apprentice ? "None" : victim->apprentice, 18, " "));
         send_to_char(buf,ch);
-      sprintf(buf, " Arete:   %d           Quintessence:  %3d/%3d         Paradox: %3d\n\r", victim->arete,
+      sprintf(buf, "{c|{x Arete:   %d               Quintessence:  %3d/%3d             Paradox: %3d {c|{x\n\r", victim->arete,
         victim->quintessence, victim->max_quintessence, victim->paradox);
       send_to_char(buf,ch);
       send_to_char("{c+---------------------------      Spheres       ---------------------------+{x",ch);

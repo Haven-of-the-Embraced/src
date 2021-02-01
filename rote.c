@@ -246,26 +246,29 @@ void do_rote(CHAR_DATA *ch, char *argument)
         if(extra && roll >= ((rote_table[rote].diff+3)/2)) success++;
         else if(roll >= rote_table[rote].diff+3) success++;
     }
+
     if(success == 0)
     {
-        if (rote_table[rote].vulgar && number_percent() < ch->paradox)
+      if (rote_table[rote].passthrough)
+        (*rote_table[rote].rote_fun) (ch,success,victim,obj);
+      else if (rote_table[rote].vulgar && number_percent() < ch->paradox)
         {
-        send_to_char("A cold chill enters your body as you feel the eye of Paradox swing towards you.\n\r",ch);
-        paradox_check(ch,rote_table[rote].vulgar);
-        } else {
-        send_to_char("The forces of Paradox smooth reality out before the effect can take place.\n\r",ch);
+          paradox_check(ch,rote_table[rote].vulgar);
+          send_to_char("A cold chill enters your body as you feel the eye of Paradox swing towards you.\n\r",ch);
         }
-        if (rote_table[rote].passthrough)
-            (*rote_table[rote].rote_fun) (ch,success,victim,obj);
-        return;
-    }
+      else
+          send_to_char("The forces of Paradox smooth reality out before the effect can take place.\n\r",ch);
+      return;
+      }
+
     if(success < 0)
     {
+      if (rote_table[rote].passthrough)
+        (*rote_table[rote].rote_fun) (ch,success,victim,obj);
+      else
         send_to_char("A cold chill enters your body as you feel the eye of Paradox swing towards you.\n\r",ch);
-        paradox_check(ch,rote_table[rote].vulgar);
-        if (rote_table[rote].passthrough)
-            (*rote_table[rote].rote_fun) (ch,success,victim,obj);
-        return;
+      paradox_check(ch,rote_table[rote].vulgar);
+      return;
     }
     if(!IS_AFFECTED2(ch,AFF2_UMBRA) && rote_table[rote].vulgar) ch->paradox++;
     while(ch->quintessence+ch->paradox > ch->max_quintessence)

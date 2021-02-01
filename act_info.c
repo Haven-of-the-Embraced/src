@@ -324,6 +324,7 @@ void show_char_to_char_0( CHAR_DATA *victim, CHAR_DATA *ch )
                         strcat( buf, "(THIEF) "      );
     if (IS_NPC(victim) &&ch->questmob > 0 && victim->pIndexData->vnum == ch->questmob)
         strcat( buf, "[TARGET] ");
+    strcat( buf, "{y");
     if ( victim->position == victim->start_pos && victim->long_descr[0] != '\0' )
     {
     strcat( buf, victim->long_descr );

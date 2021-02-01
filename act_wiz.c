@@ -2525,51 +2525,6 @@ void do_pstat( CHAR_DATA *ch, char *argument )
         );
     send_to_char(buf,ch);
 
-    send_to_char("{b+----------------------------     {B[ {WFlags {B]    {b----------------------------+{x\n\r",ch);
-    sprintf(buf, "{b- {xAct: %s\n\r",act_bit_name(victim->act));
-    send_to_char(buf,ch);
-
-    sprintf(buf, "{b- {xAct2: %s\n\r", act2_bit_name(victim->act2));
-    sendch(buf, ch);
-
-    if (victim->comm)
-    {
-        sprintf(buf,"{b- {xComm: %s\n\r",comm_bit_name(victim->comm));
-        send_to_char(buf,ch);
-    }
-
-    if (victim->imm_flags)
-    {
-    sprintf(buf, "{b- {xImmune: %s\n\r",imm_bit_name(victim->imm_flags));
-    send_to_char(buf,ch);
-    }
-
-    if (victim->res_flags)
-    {
-    sprintf(buf, "{b- {xResist: %s\n\r", imm_bit_name(victim->res_flags));
-    send_to_char(buf,ch);
-    }
-
-    if (victim->vuln_flags)
-    {
-    sprintf(buf, "{b- {xVulnerable: %s\n\r", imm_bit_name(victim->vuln_flags));
-    send_to_char(buf,ch);
-    }
-
-    if (victim->affected_by)
-    {
-    sprintf(buf, "{b- {xAffected by %s\n\r",
-        affect_bit_name(victim->affected_by));
-    send_to_char(buf,ch);
-    }
-
-    if (victim->affected2_by)
-    {
-         sprintf(buf, "{b- {xAlso affected by %s\n\r",
-            affect2_bit_name(victim->affected2_by) );
-        send_to_char(buf,ch);
-    }
-
     if(victim->pcdata->breed > 0 && victim->pcdata->auspice > 0)
     {
         send_to_char("{g[-----------------------=====    Garou Info    =====-----------------------]{x\n\r",ch);
@@ -2758,9 +2713,53 @@ void do_pstat( CHAR_DATA *ch, char *argument )
       send_to_char("{D+-------------------{m--------     {WEnd  Notes     {m--------{D-------------------+{x\n\r", ch);
     }
 
+    send_to_char("{b+----------------------------     {B[ {WFlags {B]    {b----------------------------+{x\n\r",ch);
+    sprintf(buf, "{b- {xAct: %s\n\r",act_bit_name(victim->act));
+    send_to_char(buf,ch);
+
+    sprintf(buf, "{b- {xAct2: %s\n\r", act2_bit_name(victim->act2));
+    sendch(buf, ch);
+
+    if (victim->comm)
+    {
+        sprintf(buf,"{b- {xComm: %s\n\r",comm_bit_name(victim->comm));
+        send_to_char(buf,ch);
+    }
+
+    if (victim->imm_flags)
+    {
+    sprintf(buf, "{b- {xImmune: %s\n\r",imm_bit_name(victim->imm_flags));
+    send_to_char(buf,ch);
+    }
+
+    if (victim->res_flags)
+    {
+    sprintf(buf, "{b- {xResist: %s\n\r", imm_bit_name(victim->res_flags));
+    send_to_char(buf,ch);
+    }
+
+    if (victim->vuln_flags)
+    {
+    sprintf(buf, "{b- {xVulnerable: %s\n\r", imm_bit_name(victim->vuln_flags));
+    send_to_char(buf,ch);
+    }
+
+    if (victim->affected_by)
+    {
+    sprintf(buf, "{b- {xAffected by %s\n\r",
+        affect_bit_name(victim->affected_by));
+    send_to_char(buf,ch);
+    }
+
+    if (victim->affected2_by)
+    {
+         sprintf(buf, "{b- {xAlso affected by %s\n\r",
+            affect2_bit_name(victim->affected2_by) );
+        send_to_char(buf,ch);
+    }
 
     if(victim->affected != NULL)
-      send_to_char("{y[--------------------===     Affects      ===--------------------]{x\n\r",ch);
+      send_to_char("{y[-----------------------=====     Affects      =====-----------------------]{x\n\r",ch);
 
     for ( paf = victim->affected; paf != NULL; paf = paf->next )
     {
@@ -2773,12 +2772,13 @@ void do_pstat( CHAR_DATA *ch, char *argument )
         paf->where == TO_IMMUNE ? imm_bit_name(paf->bitvector) :
         paf->where == TO_AFFECTS ? affect_bit_name( paf->bitvector ) : affect2_bit_name( paf->bitvector ));
     sprintf( buf,
-        " {y'{W%-15s{y'{W(Lvl-%3d){x: %15s (%4d) - %3d ticks%s",
+        " {y'{W%-18s{y'{W(Lvl-%3d){x: %18s (%4d) - %3d %s%s",
         skill_table[(int) paf->type].name,
         paf->level,
         affect_loc_name( paf->location ),
         paf->modifier,
         paf->duration,
+        paf->duration == -1 ? "permanently" : paf->duration == 1 ? "tick " : "ticks",
         buf2
         );
     send_to_char( buf, ch );

@@ -1566,6 +1566,23 @@ void rote_quintessencebolt(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DA
 {
     if (IS_NPC(ch)) return;
 
+    if (success < 0)
+    {
+      act("The {Yraw energy{x of Quintessence spins wildly out of control as you attempt to harness it!", ch, NULL, victim, TO_CHAR);
+      act("A brief flash of energy erupts from $n, as $e shrieks in agony!", ch, NULL, victim, TO_NOTVICT);
+      damage( ch, ch, ch->level*2, gsn_magick, DAM_ENERGY, TRUE);
+      ch->agg_dam += ch->level;
+      paradox_check(ch,rote_table[rote_lookup("quintessence bolt")].vulgar);
+      return;
+    }
+
+    if (success == 0)
+    {
+      act("You feel a brief burning sensation as the raw Quintessence slips out of your grasp, and back into the world.", ch, NULL, victim, TO_CHAR);
+      paradox_check(ch,rote_table[rote_lookup("quintessence bolt")].vulgar);
+      return;
+    }
+
     act( "Pulling raw Quintessence from the surroundings, you hurl a pulsating bolt of {Ysupercharged energy{x at $N!",  ch, NULL, victim, TO_CHAR    );
     act( "$n hurls a blinding bolt of pure energy directly at $N!",  ch, NULL, victim, TO_NOTVICT );
     act( "A pulsing bolt of energy arcs from $n, ravaging your body to your very core!",  ch, NULL, victim, TO_VICT );
@@ -1577,7 +1594,7 @@ void rote_quintessencebolt(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DA
         victim->agg_dam += success * ch->level;
     }
 
-    damage( ch, victim, success*ch->level*2, gsn_magick, DAM_ENERGY, TRUE);
+    damage( ch, victim, success*ch->level*3, gsn_magick, DAM_ENERGY, TRUE);
 
     return;
 }

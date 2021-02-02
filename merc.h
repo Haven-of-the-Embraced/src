@@ -939,6 +939,9 @@ struct  kill_data
 
 // act2 bits.
 #define ACT2_INFLUENCE         (A)
+#define ACT2_BLOOD_DOLL        (B)
+#define ACT2_RETAINER          (C)
+#define ACT2_ULTRA_MOB         (D)
 #define ACT2_IS_NPC            (E)
 
 /*Mobile Templates*/

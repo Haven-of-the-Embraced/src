@@ -3280,9 +3280,11 @@ char *act2_bit_name( int act_flags )
 
     if (IS_SET(act_flags,ACT2_IS_NPC))
     {
-    strcat(buf," npc");
-    if (act_flags & ACT2_INFLUENCE ) strcat(buf, " influence");
-
+      strcat(buf," npc");
+      if (act_flags & ACT2_INFLUENCE      ) strcat(buf, " influence"    );
+      if (act_flags & ACT2_BLOOD_DOLL     ) strcat(buf, " blood_doll"   );
+      if (act_flags & ACT2_RETAINER       ) strcat(buf, " retainer"     );
+      if (act_flags & ACT2_ULTRA_MOB      ) strcat(buf, " ultra_mob"    );
     }
     else
     {

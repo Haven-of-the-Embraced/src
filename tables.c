@@ -271,6 +271,9 @@ const struct flag_type abil_flags[] =
 const struct flag_type act2_flags[] =
 {
     { "influence",      A,  TRUE    },
+		{ "blood_doll",			B,	TRUE		},
+		{ "retainer",				C,	TRUE		},
+		{ "ultra_mob",			D,	TRUE		},
     { "npc",            E,  FALSE   },
     { NULL,             0,  FALSE   }
 };

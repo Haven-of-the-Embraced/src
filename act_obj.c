@@ -1438,22 +1438,29 @@ void do_eat( CHAR_DATA *ch, char *argument )
 
     if ( !IS_IMMORTAL(ch) )
     {
-    if ( obj->item_type != ITEM_FOOD && obj->item_type != ITEM_PILL )
-    {
+      if ( obj->item_type != ITEM_FOOD && obj->item_type != ITEM_PILL )
+      {
         send_to_char( "That's not edible.\n\r", ch );
         return;
-    }
+      }
 
-    if ( !IS_NPC(ch) && ch->pcdata->condition[COND_FULL] > 40 )
-    {
+      if ( !IS_NPC(ch) && ch->pcdata->condition[COND_FULL] > 40 )
+      {
         send_to_char( "You are too full to eat more.\n\r", ch );
         return;
+      }
     }
-    }
+
     if((ch->race == race_lookup("vampire") || ch->race == race_lookup("methuselah")) && !IS_IMMORTAL(ch) && obj->item_type != ITEM_PILL)
     {
         send_to_char("You cannot eat things!\n\r" ,ch);
         return;
+    }
+
+    if (obj->item_type == ITEM_PILL && obj->level > ch->level)
+    {
+      send_to_char("That item is too powerful to eat.\n\r", ch);
+      return;
     }
 
     act( "$n eats $p.",  ch, obj, NULL, TO_ROOM );
@@ -1461,56 +1468,44 @@ void do_eat( CHAR_DATA *ch, char *argument )
 
     switch ( obj->item_type )
     {
-
-    case ITEM_FOOD:
-    if ( !IS_NPC(ch) )
-    {
-        int condition;
-
-/*      if(obj->pIndexData->vnum == OBJ_VNUM_TORN_HEART && ch->race == race_lookup("garou"))
+      case ITEM_FOOD:
+        if ( !IS_NPC(ch) )
         {
-            act( "$n lets forth a loud roar, releasing $s rage!",  ch, NULL, NULL, TO_ROOM );
-            act( "You let forth a loud roar of rage!", ch, NULL, NULL, TO_CHAR );
-            ch->hit += 100;
-            if(ch->hit > ch->max_hit) ch->hit = ch->max_hit;
-            ch->rage -= 10;
-            if(ch->rage < 0) ch->rage = 0;
+          int condition;
+
+          condition = ch->pcdata->condition[COND_HUNGER];
+          gain_condition( ch, COND_FULL, obj->value[0] );
+          gain_condition( ch, COND_HUNGER, obj->value[1]);
+          if ( condition == 0 && ch->pcdata->condition[COND_HUNGER] > 0 )
+            send_to_char( "You are no longer hungry.\n\r", ch );
+          else if ( ch->pcdata->condition[COND_FULL] > 40 )
+          send_to_char( "You are full.\n\r", ch );
         }
-*/
 
-        condition = ch->pcdata->condition[COND_HUNGER];
-        gain_condition( ch, COND_FULL, obj->value[0] );
-        gain_condition( ch, COND_HUNGER, obj->value[1]);
-        if ( condition == 0 && ch->pcdata->condition[COND_HUNGER] > 0 )
-        send_to_char( "You are no longer hungry.\n\r", ch );
-        else if ( ch->pcdata->condition[COND_FULL] > 40 )
-        send_to_char( "You are full.\n\r", ch );
-    }
-
-    if ( obj->value[3] != 0 )
-    {
+        if ( obj->value[3] != 0 )
+        {
         /* The food was poisoned! */
-        AFFECT_DATA af;
+          AFFECT_DATA af;
 
-        act( "$n chokes and gags.", ch, 0, 0, TO_ROOM );
-        send_to_char( "You choke and gag.\n\r", ch );
+          act( "$n chokes and gags.", ch, 0, 0, TO_ROOM );
+          send_to_char( "You choke and gag.\n\r", ch );
 
-        af.where     = TO_AFFECTS;
-        af.type      = gsn_poison;
-        af.level     = number_fuzzy(obj->value[0]);
-        af.duration  = 2 * obj->value[0];
-        af.location  = APPLY_NONE;
-        af.modifier  = 0;
-        af.bitvector = AFF_POISON;
-        affect_join( ch, &af );
-    }
-    break;
+          af.where     = TO_AFFECTS;
+          af.type      = gsn_poison;
+          af.level     = number_fuzzy(obj->value[0]);
+          af.duration  = 2 * obj->value[0];
+          af.location  = APPLY_NONE;
+          af.modifier  = 0;
+          af.bitvector = AFF_POISON;
+          affect_join( ch, &af );
+        }
+        break;
 
-    case ITEM_PILL:
-    obj_cast_spell( obj->value[1], obj->value[0], ch, ch, NULL );
-    obj_cast_spell( obj->value[2], obj->value[0], ch, ch, NULL );
-    obj_cast_spell( obj->value[3], obj->value[0], ch, ch, NULL );
-    break;
+      case ITEM_PILL:
+        obj_cast_spell( obj->value[1], obj->value[0], ch, ch, NULL );
+        obj_cast_spell( obj->value[2], obj->value[0], ch, ch, NULL );
+        obj_cast_spell( obj->value[3], obj->value[0], ch, ch, NULL );
+        break;
     }
 
     extract_obj( obj );

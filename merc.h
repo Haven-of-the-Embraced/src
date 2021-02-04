@@ -1630,6 +1630,7 @@ struct  kill_data
 #define CONT_CLOSED           4
 #define CONT_LOCKED           8
 #define CONT_PUT_ON          16
+#define CONT_CAULDRON             32
 
 #define sendch(buf, ch) send_to_char(buf, ch)
 

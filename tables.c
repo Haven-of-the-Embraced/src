@@ -956,7 +956,8 @@ const struct flag_type container_flags[] =
     {   "pickproof",        2,      TRUE    },
     {   "closed",       4,      TRUE    },
     {   "locked",       8,      TRUE    },
-    {   "puton",        16,     TRUE    },
+    {   "put_on",        16,     TRUE    },
+		{		"cauldron",					32,			TRUE		},
     {   NULL,           0,      0   }
 };
 

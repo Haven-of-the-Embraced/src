@@ -3509,10 +3509,12 @@ char *cont_bit_name( int cont_flags)
 
     buf[0] = '\0';
 
-    if (cont_flags & CONT_CLOSEABLE ) strcat(buf, " closable");
+    if (cont_flags & CONT_CLOSEABLE ) strcat(buf, " closeable");
     if (cont_flags & CONT_PICKPROOF ) strcat(buf, " pickproof");
     if (cont_flags & CONT_CLOSED    ) strcat(buf, " closed");
     if (cont_flags & CONT_LOCKED    ) strcat(buf, " locked");
+    if (cont_flags & CONT_PUT_ON    ) strcat(buf, " put_on");
+    if (cont_flags & CONT_CAULDRON  ) strcat(buf, " cauldron");
 
     return (buf[0] != '\0' ) ? buf+1 : "none";
 }

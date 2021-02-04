@@ -3193,7 +3193,7 @@ char *extra_bit_name( int extra_flags )
     if ( extra_flags & ITEM_BLESS        ) strcat( buf, " bless"        );
     if ( extra_flags & ITEM_PAUSE_TIMER  ) strcat( buf, " pause-timer"    );
     if ( extra_flags & ITEM_REFLECTIVE   ) strcat( buf, " reflective"    );
-    //if ( extra_flags & ITEM_ANTI_NEUTRAL ) strcat( buf, " anti-neutral" );
+    if ( extra_flags & ITEM_SCALING      ) strcat( buf, " scaling"      );
     if ( extra_flags & ITEM_NOREMOVE     ) strcat( buf, " noremove"     );
     if ( extra_flags & ITEM_INVENTORY    ) strcat( buf, " inventory"    );
     if ( extra_flags & ITEM_NOPURGE  ) strcat( buf, " nopurge"  );

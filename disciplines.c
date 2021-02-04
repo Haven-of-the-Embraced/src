@@ -6265,7 +6265,8 @@ void do_bloodcurse(CHAR_DATA *ch, char *argument)
    CHAR_DATA *victim;
    char buf[MAX_STRING_LENGTH];
    char arg[MAX_INPUT_LENGTH];
-   int chance;
+   int success = 0;
+   int diff = 7;
 
     if (IS_NPC(ch)) return;
 
@@ -6286,7 +6287,7 @@ void do_bloodcurse(CHAR_DATA *ch, char *argument)
         send_to_char("They are not a vampire!\n\r" ,ch);
         return;
     }
-    if(IS_NPC(victim)) return;
+
     if ( IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
     {
         send_to_char("Your blood curse prevents it!\n\r" ,ch);
@@ -6303,18 +6304,32 @@ void do_bloodcurse(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if(ch->pblood < 30)
+    if(ch->pblood < 15)
     {
             send_to_char( "You don't have enough blood!\n\r", ch );
         return;
     }
-    ch->pblood -= 20;
-    if(ch->gen <= victim->gen) chance += 10;
-    else chance -= 10;
-    if(get_curr_stat(ch,STAT_DEX) >= get_curr_stat(victim,STAT_DEX)) chance += 10;
-    else chance -= 10;
 
-    if(chance < 50)
+    ch->pblood -= 15;
+    if(ch->level >= victim->level)
+      diff--;
+    if (victim->position < POS_FIGHTING)
+      diff--;
+
+    WAIT_STATE( ch, 12 );
+    success = godice(get_attribute(ch, DEXTERITY)+get_ability(ch, CSABIL_BRAWL), diff);
+
+    if (success < 0)
+    {
+      act("You stumble while trying to grab $N.", ch, NULL, victim, TO_CHAR);
+      act("$n stumbles while reaching for you!", ch, NULL, victim, TO_VICT);
+      act("$n stumbles while reaching for $N.", ch, NULL, victim, TO_NOTVICT);
+      multi_hit(victim, ch, TYPE_UNDEFINED);
+      WAIT_STATE(ch, 6);
+      return;
+    }
+
+    if(success == 0)
     {
         sprintf(buf, "%s attempts to grasp you and fails!\n\r", ch->name);
         send_to_char(buf,victim);
@@ -6324,12 +6339,10 @@ void do_bloodcurse(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    WAIT_STATE( ch, 12 );
-
     af.where     = TO_AFFECTS2;
     af.type      = gsn_quietus_bloodcurse;
     af.level     = ch->level;
-    af.duration  = 4;
+    af.duration  = success;
     af.location  = 0;
     af.modifier  = 0;
     af.bitvector = AFF2_QUIETUS_BLOODCURSE;

@@ -167,19 +167,19 @@ int hit_gain( CHAR_DATA *ch )
 
     if ( IS_NPC(ch) )
     {
-    gain =  5 + ch->level;
-    if (IS_AFFECTED(ch,AFF_REGENERATION))
+      if (IS_VAMP(ch) && IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
+        return 0;
+      gain =  5 + ch->level;
+      if (IS_AFFECTED(ch,AFF_REGENERATION))
         gain *= 2;
 
-    switch(ch->position)
-    {
+      switch(ch->position)
+      {
         default :       gain /= 2;          break;
         case POS_SLEEPING:  gain = 3 * gain/2;      break;
         case POS_RESTING:                   break;
         case POS_FIGHTING:  gain /= 3;          break;
-    }
-
-
+      }
     }
     else
     {

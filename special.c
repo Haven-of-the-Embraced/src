@@ -1726,7 +1726,7 @@ bool spec_celerity( CHAR_DATA *ch )
 */
     if(ch->stopped > 0) return FALSE;
 
-    if ( ch->position != POS_FIGHTING )
+    if ( ch->position != POS_FIGHTING || IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
         return FALSE;
 
     for ( victim = ch->in_room->people; victim != NULL; victim = v_next )
@@ -2039,7 +2039,8 @@ bool spec_shadowplay( CHAR_DATA *ch )
   int shadowsuccess, obtenebration;
   AFFECT_DATA af;
 
-  if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected(ch, gsn_forget))
+  if ( ch->position != POS_FIGHTING || ch->stopped > 0
+    || is_affected(ch, gsn_forget) || IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
       return FALSE;
 
   for ( victim = ch->in_room->people; victim != NULL; victim = v_next )
@@ -2137,7 +2138,8 @@ bool spec_armsoftheabyss( CHAR_DATA *ch )
     obtenebration = (ch->level / 20) + 1;
     obtensuccess = godice(get_attribute(ch, MANIPULATION) + get_ability(ch, CSABIL_OCCULT), 7);
 
-    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0
+      || is_affected( ch, gsn_forget ) || IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
     return FALSE;
 
     for ( victim = ch->in_room->people; victim != NULL; victim = v_next )

@@ -499,7 +499,7 @@ int get_weapon_skill(CHAR_DATA *ch, int sn)
     if (IS_NPC(ch))
     {
     if (sn == -1)
-        skill = 65 + (ch->csabilities[CSABIL_MELEE] * 7);
+        skill = 50 + (ch->csabilities[CSABIL_MELEE] * 7);
     else if (sn == gsn_hand_to_hand)
         skill = 40 + 2 * ch->level;
     else
@@ -509,7 +509,7 @@ int get_weapon_skill(CHAR_DATA *ch, int sn)
     else
     {
     if (sn == -1)
-        skill = 65 + (ch->csabilities[CSABIL_MELEE] * 7);
+        skill = 50 + (ch->csabilities[CSABIL_MELEE] * 7);
     else
         skill = ch->pcdata->learned[sn];
     }

@@ -6271,7 +6271,7 @@ void do_bloodcurse(CHAR_DATA *ch, char *argument)
     if (IS_NPC(ch)) return;
 
     argument = one_argument( argument, arg );
-    chance = number_range(1, 100);
+
     if(!IS_VAMP(ch))
     {
         send_to_char("You are not a vampire!\n\r" ,ch);
@@ -6304,13 +6304,13 @@ void do_bloodcurse(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if(ch->pblood < 15)
+    if(ch->pblood < 10)
     {
             send_to_char( "You don't have enough blood!\n\r", ch );
         return;
     }
 
-    ch->pblood -= 15;
+    ch->pblood -= 10;
     if(ch->level >= victim->level)
       diff--;
     if (victim->position < POS_FIGHTING)
@@ -6342,7 +6342,7 @@ void do_bloodcurse(CHAR_DATA *ch, char *argument)
     af.where     = TO_AFFECTS2;
     af.type      = gsn_quietus_bloodcurse;
     af.level     = ch->level;
-    af.duration  = success;
+    af.duration  = success+2;
     af.location  = 0;
     af.modifier  = 0;
     af.bitvector = AFF2_QUIETUS_BLOODCURSE;

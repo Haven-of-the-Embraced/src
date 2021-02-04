@@ -1712,145 +1712,6 @@ void rote_callspirit(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *ob
     return;
 }
 
-void rote_timesense(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
-{
-  AFFECT_DATA af;
-
-  if(victim != ch)
-  {
-   send_to_char("You can only use this effect on yourself.\n\r",ch);
-   return;
-  }
-
-  if(is_affected(ch,gsn_timesense))
-  {
-   send_to_char("You are already observing the ebb and flow of time.\n\r",ch);
-   return;
-  }
-
-  af.where     = TO_AFFECTS;
-  af.type      = gsn_timesense;
-  af.level     = ch->sphere[SPHERE_TIME];
-  af.duration  = (success * 5) + 15;
-  af.location  = APPLY_NONE;
-  af.modifier  = 0;
-  af.bitvector = 0;
-  affect_to_char( victim, &af );
-
-  send_to_char("You attune yourself to the flow of time, taking note of its alterations.\n\r",ch);
-  return;
-}
-
-void rote_precognition(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
-{
-   AFFECT_DATA af;
-
-    if(victim != ch)
-    {
-        send_to_char("You can only use this effect on yourself.\n\r",ch);
-        return;
-    }
-
-    if(is_affected(ch,gsn_precognition))
-    {
-        send_to_char("You are already more aware of the flow of Time.\n\r",ch);
-        return;
-    }
-
-
-    af.where     = TO_AFFECTS;
-    af.type      = gsn_precognition;
-    af.level     = ch->level;
-    af.duration  = (ch->avatar * success) + 5;
-    af.location  = APPLY_NONE;
-    af.modifier  = 0;
-    af.bitvector = 0;
-    affect_to_char( victim, &af );
-
-    send_to_char("You open your eyes to all the possibilities in the stream of time.\n\r",ch);
-    return;
-}
-
-void rote_timealteration(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
-{
-   AFFECT_DATA af;
-
-    if(victim != ch)
-    {
-        send_to_char("You can only use this effect on yourself.\n\r",ch);
-        return;
-    }
-
-    if(is_affected(ch,gsn_timealteration))
-    {
-        send_to_char("You are already altering the flow of time around your body, to do much more is to risk the Quintessence leaking from your Pattern.\n\r",ch);
-        return;
-    }
-
-
-    af.where     = TO_AFFECTS;
-    af.type      = gsn_timealteration;
-    af.level     = ch->sphere[SPHERE_TIME];
-    af.duration  = (success*5) + 10;
-    af.location  = APPLY_NONE;
-    af.modifier  = 0;
-    af.bitvector = 0;
-    affect_to_char( victim, &af );
-
-    send_to_char("You dilate the fabric of time around your body allowing you to appear to move more swiftly.\n\r",ch);
-    return;
-}
-
-void rote_stoptheclock(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
-{
-    if (IS_NPC(ch)) return;
-
-    if(victim->stopped > 0)
-    {
-        send_to_char("You have already frozen time around this being.\n\r",ch);
-        return;
-    }
-
-    act( "$n waves a hand at $N who suddenly seems frozen!",  ch, NULL, victim, TO_NOTVICT    );
-    act( "You suddenly find time rushing by too fast to perceive.",  ch, NULL, victim, TO_VICT );
-    act( "You feel the strain of the world bending to your whim as you stop the flow of time itself around $N.", ch, NULL, victim, TO_CHAR );
-    victim->stopped = success*PULSE_VIOLENCE;
-    damage( ch, victim, 0, gsn_magick, DAM_MENTAL, FALSE);
-    return;
-}
-
-
-void rote_sidesteptime(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
-{
-   AFFECT_DATA af;
-
-    if(victim != ch)
-    {
-        send_to_char("You can only use this effect on yourself.\n\r",ch);
-        return;
-    }
-
-    if(is_affected(ch,gsn_sidesteptime))
-    {
-        send_to_char("You are already outside of time.\n\r",ch);
-        return;
-    }
-
-    stop_fighting( ch, TRUE );
-
-    af.where     = TO_AFFECTS;
-    af.type      = gsn_sidesteptime;
-    af.level     = ch->level;
-    af.duration  = success;
-    af.location  = APPLY_NONE;
-    af.modifier  = 0;
-    af.bitvector = 0;
-    affect_to_char( victim, &af );
-
-    send_to_char("You impose your Will onto the timeline and step outside of time.\n\r",ch);
-    return;
-}
-
 void rote_stepsideways(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
 {
     ROOM_INDEX_DATA *location;
@@ -2086,6 +1947,145 @@ void rote_umbralrescue(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *
     act( "You open a hole in reality and $N steps forth!",  ch, NULL, victim, TO_CHAR    );
     act( "A hole in reality opens before you and you are sucked in!",  ch, NULL, victim, TO_VICT    );
     act( "$N is drawn into this reality by $n!",  ch, NULL, victim, TO_NOTVICT );
+    return;
+}
+
+void rote_timesense(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
+{
+  AFFECT_DATA af;
+
+  if(victim != ch)
+  {
+   send_to_char("You can only use this effect on yourself.\n\r",ch);
+   return;
+  }
+
+  if(is_affected(ch,gsn_timesense))
+  {
+   send_to_char("You are already observing the ebb and flow of time.\n\r",ch);
+   return;
+  }
+
+  af.where     = TO_AFFECTS;
+  af.type      = gsn_timesense;
+  af.level     = ch->sphere[SPHERE_TIME];
+  af.duration  = (success * 5) + 15;
+  af.location  = APPLY_NONE;
+  af.modifier  = 0;
+  af.bitvector = 0;
+  affect_to_char( victim, &af );
+
+  send_to_char("You attune yourself to the flow of time, taking note of its alterations.\n\r",ch);
+  return;
+}
+
+void rote_precognition(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
+{
+   AFFECT_DATA af;
+
+    if(victim != ch)
+    {
+        send_to_char("You can only use this effect on yourself.\n\r",ch);
+        return;
+    }
+
+    if(is_affected(ch,gsn_precognition))
+    {
+        send_to_char("You are already more aware of the flow of Time.\n\r",ch);
+        return;
+    }
+
+
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_precognition;
+    af.level     = ch->level;
+    af.duration  = (ch->avatar * success) + 5;
+    af.location  = APPLY_NONE;
+    af.modifier  = 0;
+    af.bitvector = 0;
+    affect_to_char( victim, &af );
+
+    send_to_char("You open your eyes to all the possibilities in the stream of time.\n\r",ch);
+    return;
+}
+
+void rote_timealteration(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
+{
+   AFFECT_DATA af;
+
+    if(victim != ch)
+    {
+        send_to_char("You can only use this effect on yourself.\n\r",ch);
+        return;
+    }
+
+    if(is_affected(ch,gsn_timealteration))
+    {
+        send_to_char("You are already altering the flow of time around your body, to do much more is to risk the Quintessence leaking from your Pattern.\n\r",ch);
+        return;
+    }
+
+
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_timealteration;
+    af.level     = ch->sphere[SPHERE_TIME];
+    af.duration  = (success*5) + 10;
+    af.location  = APPLY_NONE;
+    af.modifier  = 0;
+    af.bitvector = 0;
+    affect_to_char( victim, &af );
+
+    send_to_char("You dilate the fabric of time around your body allowing you to appear to move more swiftly.\n\r",ch);
+    return;
+}
+
+void rote_stoptheclock(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
+{
+    if (IS_NPC(ch)) return;
+
+    if(victim->stopped > 0)
+    {
+        send_to_char("You have already frozen time around this being.\n\r",ch);
+        return;
+    }
+
+    act( "$n waves a hand at $N who suddenly seems frozen!",  ch, NULL, victim, TO_NOTVICT    );
+    act( "You suddenly find time rushing by too fast to perceive.",  ch, NULL, victim, TO_VICT );
+    act( "You feel the strain of the world bending to your whim as you stop the flow of time itself around $N.", ch, NULL, victim, TO_CHAR );
+    victim->stopped = success*PULSE_VIOLENCE;
+    damage( ch, victim, 0, gsn_magick, DAM_MENTAL, FALSE);
+    return;
+}
+
+
+void rote_sidesteptime(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
+{
+   AFFECT_DATA af;
+
+    if(victim != ch)
+    {
+        send_to_char("You can only use this effect on yourself.\n\r",ch);
+        return;
+    }
+
+    if(is_affected(ch,gsn_sidesteptime))
+    {
+        send_to_char("You are already outside of time.\n\r",ch);
+        return;
+    }
+
+    stop_fighting( ch, TRUE );
+
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_sidesteptime;
+    af.level     = ch->level;
+    af.duration  = success;
+    af.location  = APPLY_NONE;
+    af.modifier  = 0;
+    af.bitvector = 0;
+    affect_to_char( victim, &af );
+
+    send_to_char("You impose your Will onto the timeline and step outside of time.\n\r",ch);
     return;
 }
 

@@ -6284,7 +6284,7 @@ void do_bloodcurse(CHAR_DATA *ch, char *argument)
     }
     if(!IS_VAMP(victim))
     {
-        send_to_char("They are not a vampire!\n\r" ,ch);
+        send_to_char("Your target does not have vampiric vitae.\n\r" ,ch);
         return;
     }
 
@@ -6293,6 +6293,12 @@ void do_bloodcurse(CHAR_DATA *ch, char *argument)
         send_to_char("Your blood curse prevents it!\n\r" ,ch);
         return;
     }
+
+    if (IS_AFFECTED2(victim, AFF2_QUIETUS_BLOODCURSE))
+    {
+      send_to_char("Your target's blood has already been cursed.\n\r", ch);
+      return;
+    }
     if(victim == ch)
     {
         send_to_char( "You cannot do this to yourself!\n\r", ch );
@@ -6300,13 +6306,13 @@ void do_bloodcurse(CHAR_DATA *ch, char *argument)
     }
     if (ch->pcdata->discipline[QUIETUS] < 3)
     {
-        send_to_char( "You are not skilled enough in Quietus!.\n\r", ch );
+        send_to_char( "You are not skilled enough in Quietus!\n\r", ch );
         return;
     }
 
     if(ch->pblood < 10)
     {
-            send_to_char( "You don't have enough blood!\n\r", ch );
+        send_to_char( "You don't have enough blood!\n\r", ch );
         return;
     }
 
@@ -6352,7 +6358,7 @@ void do_bloodcurse(CHAR_DATA *ch, char *argument)
     send_to_char(buf,victim);
     sprintf(buf, "You lay a curse on %s's blood!\n\r", victim->name);
     send_to_char(buf,ch);
-    act("$N gasps as $n curses their blood!", ch,NULL,victim,TO_NOTVICT);
+    act("$N gasps as $n curses $S blood!", ch,NULL,victim,TO_NOTVICT);
     multi_hit( victim, ch, TYPE_UNDEFINED );
     return;
 }

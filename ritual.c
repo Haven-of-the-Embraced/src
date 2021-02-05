@@ -317,7 +317,7 @@ void do_invoke(CHAR_DATA *ch, char *argument)
         }
     }
 
-    if (!str_prefix(arg1,"ygolnacs tentacles"))
+    if (!str_prefix(arg1,"ygolonacs tentacles"))
     {
         for ( obj = ch->carrying; obj != NULL; obj = obj_next )
         {
@@ -349,8 +349,9 @@ void do_invoke(CHAR_DATA *ch, char *argument)
 
           if ( victim->in_room == ch->in_room && SAME_UMBRA(ch, victim))
           {
-            if ( victim->level > ch->level || IS_SET(victim->off_flags, OFF_ULTRA_MOB) || IS_SET(victim->act, ACT_QUESTMOB)
-                || (IS_NPC(victim) && victim->pIndexData->pShop != NULL) )
+            if (IS_IMMORTAL(victim) || victim->level > ch->level ||
+                IS_SET(victim->off_flags, OFF_ULTRA_MOB) || IS_SET(victim->act, ACT_QUESTMOB) ||
+               (IS_NPC(victim) && victim->pIndexData->pShop != NULL) )
             {
               act("A small rivulet of {rblood{x creeps from your nose, as the world twists and", ch, NULL, victim, TO_VICT);
               act("{xmalforms momentarily.  Everything seems {yw{xr{yo{xn{yg{x for a brief moment, but it", ch, NULL, victim, TO_VICT);

@@ -3995,6 +3995,14 @@ void do_dip(CHAR_DATA *ch, char *argument)
     if (chance >= 0)
       obj->timer = -1;
 
+    if (obj2->condition <= 0)
+    {
+      act("You throw away $P, as its preservative properties have run out.", ch, obj, obj2, TO_CHAR);
+      act("$n throws away $P.", ch, obj, obj2, TO_ROOM);
+      extract_obj(obj2);
+    }
+
+    gain_exp(ch, chance);
     return;
 }
 

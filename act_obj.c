@@ -3957,6 +3957,14 @@ void do_dip(CHAR_DATA *ch, char *argument)
         send_to_char( "That item cannot be preserved!\n\r", ch );
         return;
     }
+
+    if (obj2->condition <= 0)
+    {
+      send_to_char("That preservative has been used up.  You toss it away.\n\r", ch);
+      extract_obj(obj2);
+      return;
+    }
+
     chance = godice(get_attribute(ch, INTELLIGENCE) + get_ability(ch, CSABIL_SURVIVAL), 6);
 
     act( "You dip $p into $P.", ch, obj, obj2, TO_CHAR );

@@ -3970,15 +3970,31 @@ void do_dip(CHAR_DATA *ch, char *argument)
     act( "You dip $p into $P.", ch, obj, obj2, TO_CHAR );
     act( "$n dips $p into $P.", ch, obj, obj2, TO_ROOM );
 
-    if(chance < 1)
+    obj2->condition -= 3;
+
+    if(chance < 0)
     {
-        act( "You curse as $p sizzles, smokes then disappears!", ch, obj, obj2, TO_CHAR );
-        act( "$n curses as $p sizzles, smokes then disappears!", ch, obj, obj2, TO_ROOM );
+        act( "You curse as you ruin $p while trying to preserve it, and throw it away.", ch, obj, obj2, TO_CHAR );
+        act( "$n curses and throws away $p.", ch, obj, obj2, TO_ROOM );
         extract_obj( obj );
-        return;
+        obj2->condition -= 10;
     }
 
-    obj->timer = -1;
+    if (chance == 0)
+    {
+      act( "You mutter as you had to attempt multiple times to properly preserve $p fully.", ch, obj, obj2, TO_CHAR );
+      act( "$n mutters in disappointment while looking over $p.", ch, obj, obj2, TO_ROOM );
+      obj->condition -= 6;
+    }
+
+    if (chance > 0)
+    {
+      act( "You feel satisfied that you were able to preserve $p fully.", ch, obj, obj2, TO_CHAR );
+    }
+
+    if (chance >= 0)
+      obj->timer = -1;
+
     return;
 }
 

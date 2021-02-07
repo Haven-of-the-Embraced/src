@@ -1435,6 +1435,8 @@ REDIT( redit_show )
     for ( door = 0; door < MAX_DIR; door++ )
     {
     EXIT_DATA *pexit;
+    EXIT_DATA *revexit;
+    ROOM_INDEX_DATA *revroom;
 
     if ( ( pexit = pRoom->exit[door] ) )
     {
@@ -1442,8 +1444,14 @@ REDIT( redit_show )
         char reset_state[MAX_STRING_LENGTH];
         char *state;
         int i, length;
+        bool oneway = FALSE;
 
-        sprintf( buf, "-%-5s to [%5d] Key: [%5d] ",
+        revroom = get_room_index(pexit->u1.to_room->vnum);
+        if ( ( revexit = revroom->exit[rev_dir[door]]) == NULL)
+          oneway = TRUE;
+
+        sprintf( buf, "-%s%-5s to [%5d] Key: [%5d] ",
+        oneway == TRUE ? "{Y[1Way]{x " : "{y[2Way]{x ",
         capitalize(dir_name[door]),
         pexit->u1.to_room ? pexit->u1.to_room->vnum : 0,      /* ROM OLC */
         pexit->key );

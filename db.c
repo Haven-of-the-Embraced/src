@@ -2805,6 +2805,7 @@ OBJ_DATA *create_object( OBJ_INDEX_DATA *pObjIndex, int level )
     obj->value[4]   = pObjIndex->value[4];
     obj->weight     = pObjIndex->weight;
     obj->timer      = pObjIndex->timer;
+    obj->condition  = pObjIndex->condition;
 
     if (level == -1 || pObjIndex->new_format)
     obj->cost   = pObjIndex->cost;

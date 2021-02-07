@@ -871,6 +871,12 @@ void do_autolist(CHAR_DATA *ch, char *argument)
     else
     send_to_char("{RX OFF{x {rYou are in OOC mode.{x\n\r", ch);
 
+    send_to_char("rpavailable    ",ch);
+    if (IS_SET(ch->act2,PLR2_RP_AVAILABLE))
+    send_to_char("{G* ON{x  {gYou are displaying available for RP.{x\n\r", ch);
+    else
+    send_to_char("{RX OFF{x {rYou are not showing available for RP.{x\n\r", ch);
+
     send_to_char("-------------------------------------------------------------------------\n\r",ch);
 }
 

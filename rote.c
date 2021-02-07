@@ -491,10 +491,24 @@ void rote_perceiveentropy(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DAT
     char buf[MAX_STRING_LENGTH];
 
     if (IS_NPC(ch)) return;
-
-
-    sprintf(buf, "You sense that this being is a %d year old %s.\n\r",get_age(victim), race_table[victim->race].name);
+    send_to_char("+======================== SENSE FATE AND FORTUNE  =======================+\n\r", ch);
+    send_to_char("|   You tap into the realm of Entropic states surrounding your target.   |\n\r", ch);
+    sprintf(buf, "+===================[ %s ]=====================+\n\r", capitalize(center(victim->short_descr, 28, " ")));
+    send_to_char(buf, ch);
+    sprintf(buf, "|                   [       Age: %3d year%s old     ]                     |\n\r",
+      get_age(victim), get_age(victim) == 1 ? " " : "s");
     send_to_char(buf,ch);
+
+    if(success > 1 )
+    {
+      send_to_char("+------------------------------------------------------------------------+\n\r", ch);
+      sprintf(buf, "| Immune to    : %s\n\r", imm_bit_name(victim->imm_flags));
+      send_to_char(buf,ch);
+      sprintf(buf, "| Resistant to : %s\n\r", imm_bit_name(victim->res_flags));
+      send_to_char(buf,ch);
+      sprintf(buf, "| Vulnerable to: %s\n\r", imm_bit_name(victim->vuln_flags));
+      send_to_char(buf,ch);
+    }
 
     if(success >= 2)
     {
@@ -543,11 +557,7 @@ void rote_perceiveentropy(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DAT
         sprintf( buf, "Their alignment is %d.\n\r", victim->alignment );
         send_to_char( buf, ch );
     }
-    if(success >= 4)
-    {
-        sprintf(buf, "They are vulnerable to %s\n\r", imm_bit_name(victim->vuln_flags));
-        send_to_char(buf,ch);
-    }
+
     return;
 }
 

@@ -493,11 +493,24 @@ void rote_perceiveentropy(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DAT
     if (IS_NPC(ch)) return;
     send_to_char("+======================== SENSE FATE AND FORTUNE  =======================+\n\r", ch);
     send_to_char("|   You tap into the realm of Entropic states surrounding your target.   |\n\r", ch);
-    sprintf(buf, "+===================[ %s ]=====================+\n\r", capitalize(center(victim->short_descr, 28, " ")));
+    if (IS_NPC(victim))
+      sprintf(buf, "+====================[ %s ]====================+\n\r", center(victim->short_descr, 28, " "));
+    else
+      sprintf(buf, "+====================[ %s ]====================+\n\r", center(victim->name, 28, " "));
     send_to_char(buf, ch);
-    sprintf(buf, "|                   [       Age: %3d year%s old     ]                     |\n\r",
+    sprintf(buf, "|                    [       Age: %3d year%s old     ]                    |\n\r",
       get_age(victim), get_age(victim) == 1 ? " " : "s");
     send_to_char(buf,ch);
+    if (is_affected(victim, gsn_curse) || IS_AFFECTED(victim, AFF_CURSE))
+      send_to_char("|        {DA dark fate seems to loom over this individual's future.{x        |\n\r", ch);
+    if (is_affected(victim, gsn_touch))
+      send_to_char("|   {YThe highest of the pantheons seem to favor your target with grace.{x   |\n\r", ch);
+    if (is_affected(victim, skill_lookup("bless")))
+      send_to_char("|              {WThe gods smile upon this favored individual.{x              |\n\r", ch);
+    if (is_affected(victim, gsn_forget))
+      send_to_char("|             {mEntropic energies blanket your target's mind.{x              |\n\r", ch);
+    if (IS_SET(victim->act2, ACT2_INFLUENCE))
+      send_to_char("|       {BGreat, influential things await this target in the future.{x       |\n\r", ch);
 
     if(success > 1 )
     {

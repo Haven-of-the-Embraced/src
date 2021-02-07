@@ -3087,6 +3087,8 @@ void make_corpse( CHAR_DATA *ch )
     if (obj->wear_loc == WEAR_FLOAT)
         floating = TRUE;
     obj_from_char( obj );
+    if (obj->item_type == ITEM_PILL)
+        obj->timer = number_range(500,1000);
     if (obj->item_type == ITEM_POTION)
         obj->timer = number_range(500,1000);
     if (obj->item_type == ITEM_SCROLL)

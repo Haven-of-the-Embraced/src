@@ -3952,16 +3952,23 @@ void do_dip(CHAR_DATA *ch, char *argument)
         send_to_char( "That isn't a preservative!\n\r", ch );
         return;
     }
+
+    if (obj2->condition <= 0)
+    {
+      send_to_char("That preservative has been used up.  You toss it away.\n\r", ch);
+      extract_obj(obj2);
+      return;
+    }
+
     if ( obj->item_type != ITEM_FOOD )
     {
         send_to_char( "That item cannot be preserved!\n\r", ch );
         return;
     }
 
-    if (obj2->condition <= 0)
+    if ( obj->timer == -1)
     {
-      send_to_char("That preservative has been used up.  You toss it away.\n\r", ch);
-      extract_obj(obj2);
+      send_to_char("That item is already preserved to stand the test of time.\n\r", ch);
       return;
     }
 

@@ -510,54 +510,17 @@ void rote_perceiveentropy(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DAT
       send_to_char(buf,ch);
     }
 
-    if(success >= 2)
+    if(success >= 3)
     {
-        sprintf(buf, "They have %d/%d HP, %d/%d Mana and %d/%d movement.\n\r",
+      send_to_char("+------------------------------------------------------------------------+\n\r", ch);
+      sprintf(buf, "| %6d/%6d Health     %6d/%6d Mana     %6d/%6d Movement |\n\r",
         victim->hit,  victim->max_hit,
         victim->mana, victim->max_mana,
         victim->move, victim->max_move);
-        send_to_char(buf,ch);
-    }
-    if(success >= 3)
-    {
-        switch ( victim->position )
-        {
-            case POS_TORPOR:
-            send_to_char( "They are in Torpor.\n\r",        ch );
-            break;
-            case POS_DEAD:
-            send_to_char( "They are DEAD!!\n\r",        ch );
-            break;
-            case POS_MORTAL:
-            send_to_char( "They are mortally wounded.\n\r", ch );
-            break;
-            case POS_INCAP:
-            send_to_char( "They are incapacitated.\n\r",    ch );
-            break;
-            case POS_STUNNED:
-            send_to_char( "They are stunned.\n\r",      ch );
-            break;
-            case POS_SLEEPING:
-            send_to_char( "They are sleeping.\n\r",     ch );
-            break;
-            case POS_RESTING:
-            send_to_char( "They are resting.\n\r",      ch );
-            break;
-            case POS_SITTING:
-            send_to_char( "They are sitting.\n\r",      ch );
-            break;
-            case POS_STANDING:
-            send_to_char( "They are standing.\n\r",     ch );
-            break;
-            case POS_FIGHTING:
-            send_to_char( "They are fighting.\n\r",     ch );
-            break;
-        }
-
-        sprintf( buf, "Their alignment is %d.\n\r", victim->alignment );
-        send_to_char( buf, ch );
+      send_to_char(buf,ch);
     }
 
+    send_to_char("+------------------------------------------------------------------------+\n\r", ch);
     return;
 }
 

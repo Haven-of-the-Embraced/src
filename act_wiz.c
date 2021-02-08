@@ -2381,6 +2381,7 @@ void do_pstat( CHAR_DATA *ch, char *argument )
 {
     char buf[MAX_STRING_LENGTH];
     char buf2[MSL];
+    char buf3[MSL];
     char arg[MAX_INPUT_LENGTH];
     AFFECT_DATA *paf;
     CHAR_DATA *victim;
@@ -2414,6 +2415,7 @@ void do_pstat( CHAR_DATA *ch, char *argument )
     room = victim->in_room;
     hometown = victim->pcdata->hometown;
     house = get_room_index(victim->pcdata->home);
+    sprintf(buf3, "%s", victim->pcdata->immtitle);
 
     send_to_char("{y                __________---------======---------__________{x\n\r",ch);
     sprintf(buf2, "%s {W%s {D[{W%3d{D]{x", !IS_NULLSTR(victim->pcdata->pretitle) ? victim->pcdata->pretitle : "", victim->name, victim->level);
@@ -2423,7 +2425,7 @@ void do_pstat( CHAR_DATA *ch, char *argument )
     {
       send_to_char("{y|  {R({DCheater!{R)  ({DCheater!{R)   ({DCheater!{R)   ({DCheater!{R)  ({DCheater!{R)  {y|{x\n\r", ch);
     }
-    sprintf(buf, "{y| {xIn Room:  %s (%5d)    Idle: %d tick%s  {y|{x\n\r",
+    sprintf(buf, "{y| {xIn Room:  %s (%5d)    Idle: %3dtick%s {y|{x\n\r",
       room->vnum == NULL ? center("Unknown Room", 36, " ") : center(room->name, 36, " "),
       room->vnum == NULL ? 0 : room->vnum, victim->timer, victim->timer == 1 ? " " : "s");
     send_to_char(buf, ch);
@@ -2435,7 +2437,7 @@ void do_pstat( CHAR_DATA *ch, char *argument )
         victim->pcdata->security,        get_trust(victim),        victim->invis_level,
         victim->incog_level);
         send_to_char( buf, ch );
-        sprintf(buf, "{Y| {xWiziname: %-20s            Immtitle: %-20s       {Y|{x\n\r", victim->pcdata->wiziname, victim->pcdata->immtitle);
+        sprintf(buf, "{Y| {xWiziname: %-20s            Immtitle: %-20s       {Y|{x\n\r", victim->pcdata->wiziname, buf3);
         send_to_char(buf, ch);
     }
 
@@ -2454,7 +2456,7 @@ void do_pstat( CHAR_DATA *ch, char *argument )
     get_age(victim), (int) (victim->played + current_time - victim->logon) / 3600);
     send_to_char(buf, ch);
 
-    sprintf(buf, "{W| {xRemorts: %4d    Freebies: %3d   Exp: %7d   Last Level: %7d hrs  {W|{x\n\r",
+    sprintf(buf, "{W| {xRemorts: %4d    Freebies: %4d   Exp: %7d   Last Level: %7d hrs {W|{x\n\r",
     victim->remorts, victim->freebie, victim->exp, victim->pcdata->last_level);
     send_to_char( buf, ch );
 
@@ -2527,6 +2529,7 @@ void do_pstat( CHAR_DATA *ch, char *argument )
 
     if(victim->pcdata->breed > 0 && victim->pcdata->auspice > 0)
     {
+        col = 1;
         send_to_char("{g[-----------------------=====    Garou Info    =====-----------------------]{x\n\r",ch);
         sprintf(buf,"{g|{x Breed: %-8s            Auspice: %-12s    Tribe: %-13s {g|{x\n\r",
             victim->pcdata->breed == LUPUS ? "Lupus" : victim->pcdata->breed == METIS ? "Metis" :
@@ -2578,6 +2581,7 @@ void do_pstat( CHAR_DATA *ch, char *argument )
 
     if (!IS_NPC(victim) && victim->race == race_lookup("vampire") || victim->race == race_lookup("methuselah"))
     {
+      col = 1;
       send_to_char("{r[-----------------------=====   Vampire Info   =====-----------------------]{x\n\r",ch);
         sprintf(buf,"{r|{x Clan: %-15s      Generation: %2d(%2d)   Sire: %s    {r|{x\n\r",
         capitalize(clan_table[victim->clan].name),
@@ -2611,6 +2615,7 @@ void do_pstat( CHAR_DATA *ch, char *argument )
 
     if (!IS_NPC(victim) && victim->race == race_lookup("ghoul"))
     {
+      col = 1;
       send_to_char("{r[-----------------------=====    Ghoul Info    =====-----------------------]{x\n\r",ch);
       sprintf(buf, "{r|{x Domitor:   %s  ", center(victim->vamp_master, 17, " "));
       send_to_char(buf, ch);
@@ -2648,6 +2653,7 @@ void do_pstat( CHAR_DATA *ch, char *argument )
 
     if (!IS_NPC(victim) && victim->race == race_lookup("dhampire"))
     {
+      col = 1;
       send_to_char("{r[-----------------------=====  Daywalker Info  =====-----------------------]{x\n\r",ch);
         sprintf(buf,"{r| {xClan: %-15s       Fangs: %s        Blood Pool: %2d/%2d{r |{x\n\r",
         capitalize(clan_table[victim->clan].name),
@@ -2676,6 +2682,7 @@ void do_pstat( CHAR_DATA *ch, char *argument )
 
     if (victim->avatar > 0)
     {
+      col = 1;
       send_to_char("{c[-----------------------=====    Mage Info     =====-----------------------]{x\n\r",ch);
       sprintf(buf, "{c|{x Tradition: %s      Rank:  %s           Avatar:   %d {c|{x\n\r", center(capitalize(tradition_table[victim->tradition].name), 16, " "),
         victim->rank == 1 ? "Apprentice" : victim->rank == 2 ? " Disciple " :
@@ -2685,7 +2692,7 @@ void do_pstat( CHAR_DATA *ch, char *argument )
       sprintf(buf, "{c| {xMentor:   %s         Apprentice:  %s     {c|{x\n\r", center(victim->sire ? victim->sire : "None", 18, " "),
         center(victim->apprentice ? "None" : victim->apprentice, 18, " "));
         send_to_char(buf,ch);
-      sprintf(buf, "{c|{x Arete:   %d               Quintessence:  %3d/%3d             Paradox: %3d {c|{x\n\r", victim->arete,
+      sprintf(buf, "{c|{x Arete:   %2d              Quintessence:  %3d/%3d             Paradox: %3d {c|{x\n\r", victim->arete,
         victim->quintessence, victim->max_quintessence, victim->paradox);
       send_to_char(buf,ch);
       send_to_char("{c+---------------------------      Spheres       ---------------------------+{x",ch);

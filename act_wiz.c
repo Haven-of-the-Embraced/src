@@ -2368,7 +2368,7 @@ void do_mstat( CHAR_DATA *ch, char *argument )
     send_to_char(buf,ch);
     sprintf(buf, " | Legerdemain____%s   Stealth________%s   Hearth Wisdom__%s |\n\r",dots(victim->csabilities[CSABIL_LEGERDEMAIN], FALSE),dots(victim->csabilities[CSABIL_STEALTH], FALSE),dots(victim->csabilities[CSABIL_HEARTHWISDOM], FALSE));
     send_to_char(buf,ch);
-    sprintf(buf, " | subterfuge_____%s   Survival_______%s   Theology_______%s |\n\r",dots(victim->csabilities[CSABIL_SUBTERFUGE], FALSE),dots(victim->csabilities[CSABIL_SURVIVAL], FALSE),dots(victim->csabilities[CSABIL_THEOLOGY], FALSE));
+    sprintf(buf, " | Subterfuge_____%s   Survival_______%s   Theology_______%s |\n\r",dots(victim->csabilities[CSABIL_SUBTERFUGE], FALSE),dots(victim->csabilities[CSABIL_SURVIVAL], FALSE),dots(victim->csabilities[CSABIL_THEOLOGY], FALSE));
     send_to_char(buf,ch);
     send_to_char(" |                                                                    |\n\r",ch);
     send_to_char("<======================================================================>\n\r",ch);
@@ -2521,7 +2521,7 @@ void do_pstat( CHAR_DATA *ch, char *argument )
         GET_AC(victim,AC_PIERCE), get_armor_diff(victim, victim, DAM_PIERCE),
         GET_AC(victim,AC_BASH), get_armor_diff(victim, victim, DAM_BASH),
         GET_AC(victim,AC_SLASH), get_armor_diff(victim, victim, DAM_SLASH),
-        GET_AC(victim,AC_EXOTIC), get_armor_diff(ch, ch, DAM_ENERGY)
+        GET_AC(victim,AC_EXOTIC), get_armor_diff(victim, victim, DAM_ENERGY)
         );
     send_to_char(buf,ch);
 

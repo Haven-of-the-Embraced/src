@@ -1432,6 +1432,8 @@ REDIT( redit_show )
     else
     strcat( buf1, "none]\n\r" );
 
+    strcat( buf1, "\n\r  V=====[    Exit Information    ]=====V\n\r");
+
     for ( door = 0; door < MAX_DIR; door++ )
     {
     EXIT_DATA *pexit;
@@ -1447,12 +1449,13 @@ REDIT( redit_show )
         bool oneway = FALSE;
 
         revroom = get_room_index(pexit->u1.to_room->vnum);
-        if ( ( revexit = revroom->exit[rev_dir[door]]) == NULL)
+        if ( ( revexit = revroom->exit[rev_dir[door]]) == NULL ||
+              revexit->u1.to_room->vnum != pRoom->vnum)
           oneway = TRUE;
 
-        sprintf( buf, "-%s%-5s to [%5d] Key: [%5d] ",
-        oneway == TRUE ? "{Y[1Way]{x " : "{y[2Way]{x ",
+        sprintf( buf, "> %-5s %sto [%5d]   Key: [%5d] \n\r",
         capitalize(dir_name[door]),
+        oneway == TRUE ? "{Y[1Way]{x " : "{y[2Way]{x ",
         pexit->u1.to_room ? pexit->u1.to_room->vnum : 0,      /* ROM OLC */
         pexit->key );
         strcat( buf1, buf );
@@ -1463,7 +1466,7 @@ REDIT( redit_show )
          */
         strcpy( reset_state, flag_string( exit_flags, pexit->rs_flags ) );
         state = flag_string( exit_flags, pexit->exit_info );
-        strcat( buf1, " Exit flags: [" );
+        strcat( buf1, "   Flags: [" );
         for (; ;)
         {
         state = one_argument( state, word );

@@ -4150,7 +4150,7 @@ char *dots3( int num, bool space)
 
 bool grudge_check(CHAR_DATA *ch, CHAR_DATA *victim)
 {
-    if(victim && (ch->grudge == victim || (!is_aggsafe(victim, ch) && is_affected(victim, gsn_sparkofrage))))
+    if(victim && (ch->grudge == victim))
     return TRUE;
     else return FALSE;
 }

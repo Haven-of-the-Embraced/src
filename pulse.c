@@ -11,6 +11,8 @@
 void affects_update (void) {
     CHAR_DATA *ch;
     CHAR_DATA *ch_next;
+    CHAR_DATA *rch;
+    CHAR_DATA *rch_next;
     AFFECT_DATA af;
     int level;
 
@@ -95,6 +97,20 @@ void affects_update (void) {
     if (IS_NPC(ch))
         continue;
 
+    if (is_affected(ch, gsn_sparkofrage))
+    {
+      for ( rch = ch->in_room->people; rch != NULL; rch = rch_next )
+      {
+          rch_next = rch->next_in_room;
+
+          if (!IS_NPC(rch) || is_aggsafe(rch, ch) || ch->fighting)
+              continue;
+
+              act("$n shrieks wildly and charges at you, overcome with rage!",ch,NULL,rch,TO_VICT);
+              act("$n shrieks wildly and charges at $N... intent on ending their life.",ch,NULL,rch,TO_NOTVICT);
+              multi_hit( ch, rch, TYPE_UNDEFINED );
+      }
+    }
 
 
     } //for char_list

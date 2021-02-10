@@ -831,7 +831,7 @@ void fwrite_obj( CHAR_DATA *ch, OBJ_DATA *obj, FILE *fp, int iNest )
 
     for ( paf = obj->affected; paf != NULL; paf = paf->next )
     {
-    if (paf->type < 0 || paf->type >= MAX_SKILL)
+    if (paf->type < 0 || paf->type >= MAX_SKILL || paf->duration < 0)
         continue;
         fprintf( fp, "Affc '%s' %3d %3d %3d %3d %3d %10d\n",
             skill_table[paf->type].name,
@@ -2410,8 +2410,12 @@ void fread_obj( CHAR_DATA *ch, FILE *fp )
                 paf->modifier   = fread_number( fp );
                 paf->location   = fread_number( fp );
                 paf->bitvector  = fread_number( fp );
-                paf->next       = obj->affected;
-                obj->affected   = paf;
+                if (paf->duration > 0)
+                {
+                    paf->next       = obj->affected;
+                    obj->affected   = paf;
+
+                  }
                 fMatch          = TRUE;
                 break;
             }

@@ -2409,12 +2409,6 @@ void do_forgetful (CHAR_DATA *ch, char *argument)
          return;
      }
 
-    if (victim->position == POS_FIGHTING || ch->position == POS_FIGHTING)
-    {
-      send_to_char("You cannot take the time to delve into your target's memories if either of you is fighting.\n\r", ch);
-      return;
-    }
-
     if (IS_NPC(victim) && victim->pIndexData->pShop != NULL)
     {
         send_to_char("You fear that it may hinder your future purchases.\n\r",ch);
@@ -2441,13 +2435,16 @@ void do_forgetful (CHAR_DATA *ch, char *argument)
 
     if (is_affected(victim, gsn_forget))
     {
+      diff = 6;
       act("It appears that $N has already had $S memories altered previously.", ch, NULL, victim, TO_CHAR);
       WAIT_STATE(ch, 6);
       if (get_affect_level(victim, gsn_forget) > ch->pcdata->discipline[DOMINATE])
         send_to_char("The memory alteration seems to be beyond your capabilities to restore.\n\r", ch);
       else
       {
-        forget = godice(get_attribute(ch, WITS) + ch->csabilities[CSABIL_EMPATHY], 6);
+        if (victim->position == POS_FIGHTING || ch->position == POS_FIGHTING)
+          diff += 2;
+        forget = godice(get_attribute(ch, WITS) + ch->csabilities[CSABIL_EMPATHY], diff);
         ch->pblood -= 10;
         if (forget > 0)
         {
@@ -2480,6 +2477,11 @@ void do_forgetful (CHAR_DATA *ch, char *argument)
       if (IS_SET(victim->res_flags, RES_MENTAL) || IS_SET(victim->res_flags, RES_CHARM))
         diff++;
     }
+
+    if (victim->position == POS_FIGHTING || ch->position == POS_FIGHTING)
+      diff += 2;
+    if (diff > 10)
+      diff = 10;
 
     forget = godice(get_attribute(ch, WITS) + ch->csabilities[CSABIL_SUBTERFUGE], diff);
     WAIT_STATE(ch, 6);
@@ -2613,14 +2615,24 @@ void do_conditioning(CHAR_DATA *ch, char *argument)
         send_to_char("You fear that it may hinder your future purchases.\n\r",ch);
         return;
     }
+
     if (victim->race != race_lookup("human")
      && victim->race != race_lookup("vampire")
      && victim->race != race_lookup("ghoul")
      && victim->race != race_lookup("garou")
      && victim->race != race_lookup("methuselah")
      && victim->race != race_lookup("dhampire")
-     || !IS_SET(victim->form,FORM_SENTIENT)) {
-         send_to_char("Your powers of Domminate only work on sentient, humanoid beings.\n\r", ch);
+     && victim->race != race_lookup("faerie")
+     && victim->race != race_lookup("fera")
+     && victim->race != race_lookup("mage")
+     && victim->race != race_lookup("romani")
+     && victim->race != race_lookup("demon")
+     && victim->race != race_lookup("kuei-jin")
+     && victim->race != race_lookup("dragon")
+     && victim->race != race_lookup("fomor")
+     || !IS_SET(victim->form,FORM_SENTIENT))
+     {
+         send_to_char("Your powers of Dominate only work on sentient, humanoid beings.\n\r", ch);
          return;
      }
 

@@ -107,7 +107,7 @@ void affects_update (void) {
               continue;
 
               act("$n shrieks wildly and charges at you, overcome with rage!",rch,NULL,ch,TO_VICT);
-              act("$n shrieks wildly and charges at $N... intent on ending their life.",rch,NULL,ch,TO_NOTVICT);
+              act("$n shrieks wildly and charges at $N... intent on ending $S life.",rch,NULL,ch,TO_NOTVICT);
               multi_hit( rch, ch, TYPE_UNDEFINED );
       }
     }

@@ -106,9 +106,9 @@ void affects_update (void) {
           if (!IS_NPC(rch) || is_aggsafe(rch, ch) || ch->fighting)
               continue;
 
-              act("$n shrieks wildly and charges at you, overcome with rage!",ch,NULL,rch,TO_VICT);
-              act("$n shrieks wildly and charges at $N... intent on ending their life.",ch,NULL,rch,TO_NOTVICT);
-              multi_hit( ch, rch, TYPE_UNDEFINED );
+              act("$n shrieks wildly and charges at you, overcome with rage!",rch,NULL,ch,TO_VICT);
+              act("$n shrieks wildly and charges at $N... intent on ending their life.",rch,NULL,ch,TO_NOTVICT);
+              multi_hit( rch, ch, TYPE_UNDEFINED );
       }
     }
 

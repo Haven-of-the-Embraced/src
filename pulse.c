@@ -103,7 +103,7 @@ void affects_update (void) {
       {
           rch_next = rch->next_in_room;
 
-          if (!IS_NPC(rch) || is_aggsafe(rch, ch) || ch->fighting)
+          if (!IS_NPC(rch) || is_aggsafe(rch, ch) || rch->fighting)
               continue;
 
               act("$n shrieks wildly and charges at you, overcome with rage!",rch,NULL,ch,TO_VICT);

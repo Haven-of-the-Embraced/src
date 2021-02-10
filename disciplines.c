@@ -2329,7 +2329,7 @@ void do_mesmerize(CHAR_DATA *ch, char *argument)
       return;
     }
 
-    if (success == 0 || IS_SET(victim->off_flags, OFF_ULTRA_MOB)
+    if (success == 0 || IS_SET(victim->act2, ACT2_ULTRA_MOB)
     || IS_SET(victim->imm_flags, IMM_MENTAL) || IS_SET(victim->imm_flags, IMM_CHARM)
     || (victim->level > ch->level + 10
      && ( victim->race == race_lookup("vampire") || victim->race == race_lookup("methuselah"))) )
@@ -2519,7 +2519,7 @@ void do_forgetful (CHAR_DATA *ch, char *argument)
       return;
     }
 
-    if (forget == 0 || IS_SET(victim->off_flags, OFF_ULTRA_MOB)
+    if (forget == 0 || IS_SET(victim->act2, ACT2_ULTRA_MOB)
     || IS_SET(victim->imm_flags, IMM_MENTAL) || IS_SET(victim->imm_flags, IMM_CHARM)
     || (victim->level > ch->level + 10
      && ( victim->race == race_lookup("vampire") || victim->race == race_lookup("methuselah"))) )

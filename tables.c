@@ -437,7 +437,7 @@ const struct flag_type off_flags[] =
     {   "second_attack",        V,  TRUE    },
     {   "third_attack",     W,  TRUE    },
     {   "fourth_attack",        X,  TRUE    },
-    {   "ultra_mob",        Y,  TRUE    },
+//    {   "ultra_mob",        Y,  TRUE    },
     {   "sphere_entropy",   Z,  TRUE    },
     {   "sphere_forces",    aa, TRUE    },
     {   "sphere_life",      bb, TRUE    },

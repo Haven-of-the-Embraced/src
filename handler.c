@@ -3550,7 +3550,7 @@ char *off_bit_name(int off_flags)
     if (off_flags & OFF_SECOND_ATTACK   ) strcat(buf, " second_attack");
     if (off_flags & OFF_THIRD_ATTACK    ) strcat(buf, " third_attack");
     if (off_flags & OFF_FOURTH_ATTACK   ) strcat(buf, " fourth_attack");
-    if (off_flags & OFF_ULTRA_MOB   ) strcat(buf, " ultra_mob");
+//    if (off_flags & OFF_ULTRA_MOB   ) strcat(buf, " ultra_mob");
     if (off_flags & OFF_SPHERE_ENTROPY  ) strcat(buf, " sphere_entropy");
     if (off_flags & OFF_SPHERE_FORCES   ) strcat(buf, " sphere_forces");
     if (off_flags & OFF_SPHERE_LIFE ) strcat(buf, " sphere_life");

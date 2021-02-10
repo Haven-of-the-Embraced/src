@@ -593,14 +593,14 @@ const   struct  race_type   race_table  []      =
 
     {
       "Marauder",             FALSE,
-      ACT_AGGRESSIVE,             AFF_DETECT_INVIS|AFF_DETECT_HIDDEN|AFF_DARK_VISION, OFF_ULTRA_MOB,
+      ACT_AGGRESSIVE,             AFF_DETECT_INVIS|AFF_DETECT_HIDDEN|AFF_DARK_VISION,
       IMM_CHARM,      RES_MAGIC, VULN_MENTAL,
       A|H|M|V,        A|B|C|D|E|F|G|H|I|J|K
     },
 
     {
       "Nephandi",             FALSE,
-      0,              AFF_DETECT_INVIS|AFF_DETECT_HIDDEN|AFF_DARK_VISION, OFF_ULTRA_MOB,
+      0,              AFF_DETECT_INVIS|AFF_DETECT_HIDDEN|AFF_DARK_VISION,
       IMM_MENTAL|IMM_NEGATIVE,        RES_WEAPON|RES_MAGIC, VULN_HOLY,
       A|H|M|V,        A|B|C|D|E|F|G|H|I|J|K
     },

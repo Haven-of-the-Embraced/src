@@ -246,7 +246,7 @@ void spell_gift_staredown( int sn, int level, CHAR_DATA *ch, void *vo, int targe
 
     gain_exp(ch, staresuccess);
 
-    if(victim->race == race_lookup("garou") || IS_SET(victim->off_flags, OFF_ULTRA_MOB))
+    if(victim->race == race_lookup("garou") || IS_SET(victim->act2, ACT2_ULTRA_MOB))
     {
       act( "$N pauses for a moment, frozen in fear.",  ch, NULL, victim, TO_NOTVICT );
       act( "$N freezes with fear under your fierce gaze.",  ch, NULL, victim, TO_CHAR );
@@ -2303,7 +2303,7 @@ void spell_gift_visageoffenris( int sn, int level, CHAR_DATA *ch, void *vo, int 
   for ( rch = ch->in_room->people; rch != NULL; rch = rch->next_in_room )
   {
     if ( rch->fighting != NULL && (rch->level <= ch->level + 10 + successes)
-      && (IS_NPC(rch) && !IS_SET(rch->off_flags, OFF_ULTRA_MOB)) && !IS_SET(rch->imm_flags,IMM_CHARM))
+      && (IS_NPC(rch) && !IS_SET(rch->act2_flags, ACT2_ULTRA_MOB)) && !IS_SET(rch->imm_flags,IMM_CHARM))
       stop_fighting( rch, TRUE );
     if (rch == ch)
       act("Using your Gaia bestowed gift, you command respect and fear from those around you in the name of Fenris.", ch, NULL, rch, TO_CHAR);

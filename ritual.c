@@ -350,7 +350,7 @@ void do_invoke(CHAR_DATA *ch, char *argument)
           if ( victim->in_room == ch->in_room && SAME_UMBRA(ch, victim))
           {
             if (IS_IMMORTAL(victim) || victim->level > ch->level ||
-                IS_SET(victim->off_flags, OFF_ULTRA_MOB) || IS_SET(victim->act, ACT_QUESTMOB) ||
+                IS_SET(victim->act2, ACT2_ULTRA_MOB) || IS_SET(victim->act, ACT_QUESTMOB) ||
                (IS_NPC(victim) && victim->pIndexData->pShop != NULL) )
             {
               act("A small rivulet of {rblood{x creeps from your nose, as the world twists and", ch, NULL, victim, TO_VICT);

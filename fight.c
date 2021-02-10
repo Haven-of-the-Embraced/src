@@ -5322,7 +5322,7 @@ void do_disarm( CHAR_DATA *ch, char *argument )
 
 		if (success > diff)
 		{
-      if (IS_SET(victim->imm_flags, IMM_DISARM) || IS_SET(victim->off_flags, OFF_ULTRA_MOB))
+      if (IS_SET(victim->imm_flags, IMM_DISARM) || IS_SET(victim->act2, ACT2_ULTRA_MOB))
         {
           WAIT_STATE(ch,skill_table[gsn_disarm].beats);
           act("Your attack lands true, but $N manages to hold $S weapon tightly.",ch,NULL,victim,TO_CHAR);

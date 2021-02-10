@@ -1076,7 +1076,7 @@ struct  kill_data
 #define OFF_SECOND_ATTACK   (V)
 #define OFF_THIRD_ATTACK    (W)
 #define OFF_FOURTH_ATTACK   (X)
-#define OFF_ULTRA_MOB       (Y)
+//#define OFF_ULTRA_MOB       (Y)
 #define OFF_SPHERE_ENTROPY  (Z)
 #define OFF_SPHERE_FORCES   (aa)
 #define OFF_SPHERE_LIFE     (bb)

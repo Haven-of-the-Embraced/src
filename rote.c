@@ -897,6 +897,14 @@ void rote_sevenleaguestride(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_D
     	return;
     }
 
+    if (success == 0)
+    {
+    	act("Focusing upon a distant place, reality bends briefly in front of you before snapping back in place.", ch, NULL, victim, TO_CHAR);
+    	act("The space in front of $n seems to bend for a split second, before snapping back into place.", ch, NULL, victim, TO_NOTVICT);
+    	WAIT_STATE(ch, 9);
+    	return;
+    }
+
     act("Focusing upon a distant location, you fold the physical {Ds{wp{Wa{wc{De{x in front of you and step through to your destination.",ch,NULL,victim,TO_CHAR);
     act("The {Ds{wp{Wa{wc{De{x immediately in front of $n seems to warp for just a moment, before $e takes a step forward and vanishes altogether!",ch,NULL,victim,TO_ROOM);
     char_from_room( ch );

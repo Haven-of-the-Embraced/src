@@ -2673,8 +2673,39 @@ void do_conditioning(CHAR_DATA *ch, char *argument)
     if (IS_SET(victim->res_flags, RES_CHARM) || IS_SET(victim->res_flags, RES_MENTAL))
       diff++;
     if (IS_SET(victim->vuln_flags, VULN_CHARM) || IS_SET(victim->vuln_flags, VULN_MENTAL))
-      diff--;
+      diff-= 2;
     success = godice(get_attribute(ch, MANIPULATION) + ch->csabilities[CSABIL_LEADERSHIP], diff);
+
+    if (success < 0)
+    {
+      act( "$n stares deeply into your eyes, as if $e is expecting something.", ch, NULL, victim, TO_VICT );
+      act( "$n stares into $N's eyes for an extended period of time, unmoving.", ch, NULL, victim, TO_NOTVICT );
+      act( "You try to exert your total control of $N, but $E seems to be unfazed!", ch, NULL, victim, TO_CHAR );
+
+      if (!IS_SET(victim->imm_flags, IMM_MENTAL))
+      {
+        af.where     = TO_IMMUNE;
+        af.type      = gsn_mental_resilience;
+        af.level     = ch->level;
+        af.duration  = 20;
+        af.location  = APPLY_NONE;
+        af.modifier  = 0;
+        af.bitvector = IMM_MENTAL;
+        affect_to_char(victim, &af);
+      }
+      if (!IS_SET(victim->imm_flags, IMM_CHARM))
+      {
+        af.where     = TO_IMMUNE;
+        af.type      = gsn_mental_resilience;
+        af.level     = ch->level;
+        af.duration  = 20;
+        af.location  = APPLY_NONE;
+        af.modifier  = 0;
+        af.bitvector = IMM_CHARM;
+        affect_to_char(victim, &af);
+      }
+      return;
+    }
 
     if (success > 0)
     {

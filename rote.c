@@ -961,6 +961,13 @@ void rote_conjoinlocalities(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_D
     		return;
     	}
 
+      if (success == 0)
+      {
+      	act("Focusing upon a distant place, reality bends briefly in front of you before snapping back in place.", ch, NULL, victim, TO_CHAR);
+      	act("The space in front of $n seems to bend for a split second, before snapping back into place.", ch, NULL, victim, TO_NOTVICT);
+      	WAIT_STATE(ch, 9);
+      	return;
+      }
 
     portal = create_object(get_obj_index(OBJ_VNUM_PORTAL),0);
     portal->timer = success;

@@ -2604,7 +2604,7 @@ void do_conditioning(CHAR_DATA *ch, char *argument)
         send_to_char( "You cannot command that many creatures at once!\n\r",ch );
         return;
     }
-    if ( ch->pblood < 50 )
+    if ( ch->pblood < 30 )
     {
         send_to_char( "You don't have enough blood.\n\r", ch );
         return;
@@ -2652,23 +2652,28 @@ void do_conditioning(CHAR_DATA *ch, char *argument)
     if ( IS_AFFECTED(victim, AFF_CHARM)
     ||   IS_AFFECTED(ch, AFF_CHARM)
     ||   IS_SET(victim->imm_flags,IMM_CHARM)
-    ||   saves_spell( ch->level, victim,DAM_CHARM))
+    ||   saves_spell( ch->level, victim,DAM_CHARM)
+    ||   IS_SET(victim->act2, ACT2_ULTRA_MOB))
     {
         act( "$n stares into your eyes... and fails to Condition you!", ch, NULL, victim, TO_VICT );
         act( "$n stares into $N's eyes... and fails to Condition them!", ch, NULL, victim, TO_NOTVICT );
         act( "You fail to Condition $N!", ch, NULL, victim, TO_CHAR );
         return;
     }
-    ch->pblood -= 40;
+    ch->pblood -= 25;
     sh_int diff, success;
-    diff = success = 0;
-        diff = 7;
+    success = 0;
+    diff = 5;
     if (victim->race != race_lookup("human"))
-        diff += 2;
+      diff += 2;
     if (victim->level > ch->level)
-        diff++;
-    if (victim->level > ch->level*2)
-        diff++;
+      diff++;
+    if (victim->level > ch->level + 10)
+      diff++;
+    if (IS_SET(victim->res_flags, RES_CHARM) || IS_SET(victim->res_flags, RES_MENTAL))
+      diff++;
+    if (IS_SET(victim->vuln_flags, VULN_CHARM) || IS_SET(victim->vuln_flags, VULN_MENTAL))
+      diff--;
     success = godice(get_attribute(ch, MANIPULATION) + ch->csabilities[CSABIL_LEADERSHIP], diff);
 
     if (success > 0)

@@ -2648,17 +2648,6 @@ void do_conditioning(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if ( IS_AFFECTED(victim, AFF_CHARM)
-    ||   IS_AFFECTED(ch, AFF_CHARM)
-    ||   IS_SET(victim->imm_flags,IMM_CHARM)
-    ||   saves_spell( ch->level, victim,DAM_CHARM)
-    ||   IS_SET(victim->act2, ACT2_ULTRA_MOB))
-    {
-        act( "$n stares into your eyes... and fails to Condition you!", ch, NULL, victim, TO_VICT );
-        act( "$n stares into $N's eyes... and fails to Condition them!", ch, NULL, victim, TO_NOTVICT );
-        act( "You fail to Condition $N!", ch, NULL, victim, TO_CHAR );
-        return;
-    }
     ch->pblood -= 25;
     sh_int diff, success;
     success = 0;
@@ -2713,6 +2702,18 @@ void do_conditioning(CHAR_DATA *ch, char *argument)
       act( "You cannot seem to exert control over $N.", ch, NULL, victim, TO_CHAR );
       WAIT_STATE(ch, 6);
       return;
+    }
+
+    if ( IS_AFFECTED(victim, AFF_CHARM)
+    ||   IS_AFFECTED(ch, AFF_CHARM)
+    ||   IS_SET(victim->imm_flags,IMM_CHARM)
+    ||   saves_spell( ch->level, victim,DAM_CHARM)
+    ||   IS_SET(victim->act2, ACT2_ULTRA_MOB))
+    {
+        act( "$n stares into your eyes, but you shrug off the mental intrusion with no problem.", ch, NULL, victim, TO_VICT );
+        act( "$n stares into $N's eyes, and seems perplexed at the lack of response.", ch, NULL, victim, TO_NOTVICT );
+        act( "You feel a barrier of mental resistance as you try to Condition $N.", ch, NULL, victim, TO_CHAR );
+        return;
     }
 
     if (success > 0)

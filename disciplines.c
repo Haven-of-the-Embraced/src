@@ -2581,6 +2581,12 @@ void do_conditioning(CHAR_DATA *ch, char *argument)
         return;
     }
 
+    if (!can_see(ch, victim) || !can_see(victim, ch))
+    {
+      send_to_char("You must be able to make eye contact to bend your potential servant's will.\n\r", ch);
+      return;
+    }
+
     if (is_affected(ch, gsn_laryngitis))
     {
       send_to_char("Your throat is still too swollen to Condition your target properly.\n\r", ch);
@@ -2608,6 +2614,12 @@ void do_conditioning(CHAR_DATA *ch, char *argument)
     {
         send_to_char( "You don't have enough blood.\n\r", ch );
         return;
+    }
+
+    if (is_affected(ch, gsn_laryngitis))
+    {
+      send_to_char("Your throat is too sore to properly coax anyone to be your servant.\n\r", ch);
+      return;
     }
 
     if (IS_NPC(victim) && victim->pIndexData->pShop != NULL)
@@ -2704,6 +2716,14 @@ void do_conditioning(CHAR_DATA *ch, char *argument)
       return;
     }
 
+    if (is_affected(victim, gsn_deafened))
+    {
+      act( "$n stares into your eyes and speaks, but you cannot hear a single word.", ch, NULL, victim, TO_VICT );
+      act( "$n stares into $N's eyes, and seems perplexed at the lack of response.", ch, NULL, victim, TO_NOTVICT );
+      act( "You speak to $N, trying to coax $M to your whims, but $E doesn't seem to hear you.", ch, NULL, victim, TO_CHAR );
+      return;
+    }
+
     if ( IS_AFFECTED(victim, AFF_CHARM)
     ||   IS_AFFECTED(ch, AFF_CHARM)
     ||   IS_SET(victim->imm_flags,IMM_CHARM)
@@ -2716,8 +2736,6 @@ void do_conditioning(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if (success > 0)
-    {
     if ( victim->master )
     stop_follower( victim );
     add_follower( victim, ch );
@@ -2725,23 +2743,20 @@ void do_conditioning(CHAR_DATA *ch, char *argument)
     ch->pet = victim;
     af.where     = TO_AFFECTS;
     af.type      = gsn_charm_person;
-    af.level     = ch->level;
-    af.duration  = ch->pcdata->discipline[DOMINATE]*5;
+    af.level     = ch->pcdata->discipline[DOMINATE];
+    if (success > 4)
+      af.duration = -1;
+    else
+      af.duration  = success * 10 + 25;
     af.location  = 0;
     af.modifier  = 0;
     af.bitvector = AFF_CHARM;
     affect_to_char( victim, &af );
-    act( "$n Conditions your mind!", ch, NULL, victim, TO_VICT );
+    act( "With a strange feeling of complacency, you submit to $n's will.", ch, NULL, victim, TO_VICT );
     if ( ch != victim )
-    act("$N submits to your will.",ch,NULL,victim,TO_CHAR);
-    act( "$n conditions $N's mind with a penetrating gaze.",  ch, NULL, victim, TO_NOTVICT );
-    } else {
-                act( "$n stares into your eyes... and fails to Condition you!", ch, NULL, victim, TO_VICT );
-        act( "$n stares into $N's eyes... and fails to Condition them!", ch, NULL, victim, TO_NOTVICT );
-        act( "You fail to Condition $N!", ch, NULL, victim, TO_CHAR );
-        return;
-    }
-
+      act("$N offers little resistance as $E submits to your every whim.",ch,NULL,victim,TO_CHAR);
+    act( "With a longing look and some coaxing, $N begins to follow $n obediently.",  ch, NULL, victim, TO_NOTVICT );
+    gain_exp(ch, success * 10);
     return;
 }
 

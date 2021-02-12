@@ -851,6 +851,7 @@ void rote_correspondenceperceptions(CHAR_DATA *ch, int success, CHAR_DATA *victi
 void rote_sevenleaguestride(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
 {
     char buf[MSL];
+    ROOM_INDEX_DATA *pRoomIndex;
 
     if(victim == ch)
     {
@@ -882,6 +883,18 @@ void rote_sevenleaguestride(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_D
     {
         send_to_char( "You may not enter that room.\n\r", ch );
         return;
+    }
+
+    if (success < 0)
+    {
+      pRoomIndex = get_random_room(victim);
+      act("Focusing upon a distant location, you fold the physical {Ds{wp{Wa{wc{De{x in front of you and step through to your destination.",ch,NULL,victim,TO_CHAR);
+      act("The {Ds{wp{Wa{wc{De{x immediately in front of $n seems to warp for just a moment, before $e takes a step forward and vanishes altogether!",ch,NULL,victim,TO_ROOM);
+      char_from_room( ch );
+      char_to_room( ch, pRoomIndex );
+      act("A strong presence can be felt before the physical {Ds{wp{Wa{wc{De{x nearby suddenly folds in on itself; $n steps out of the distortion.",ch,NULL,victim,TO_ROOM);
+      do_function(ch, &do_look, "auto" );
+    	return;
     }
 
     act("Focusing upon a distant location, you fold the physical {Ds{wp{Wa{wc{De{x in front of you and step through to your destination.",ch,NULL,victim,TO_CHAR);

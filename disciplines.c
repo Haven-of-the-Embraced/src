@@ -2636,7 +2636,6 @@ void do_conditioning(CHAR_DATA *ch, char *argument)
          return;
      }
 
-
     for (gch = char_list; gch != NULL; gch = gch->next)
     {
         if (is_same_group(gch, ch) && gch != ch)
@@ -2704,6 +2703,15 @@ void do_conditioning(CHAR_DATA *ch, char *argument)
         af.bitvector = IMM_CHARM;
         affect_to_char(victim, &af);
       }
+      return;
+    }
+
+    if (success == 0)
+    {
+      act( "$n stares deeply into your eyes, as if $e is expecting something.", ch, NULL, victim, TO_VICT );
+      act( "$n stares into $N's eyes for an extended period of time, unmoving.", ch, NULL, victim, TO_NOTVICT );
+      act( "You cannot seem to exert control over $N.", ch, NULL, victim, TO_CHAR );
+      WAIT_STATE(ch, 6);
       return;
     }
 

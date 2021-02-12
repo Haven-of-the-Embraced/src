@@ -2303,7 +2303,7 @@ void spell_gift_visageoffenris( int sn, int level, CHAR_DATA *ch, void *vo, int 
   for ( rch = ch->in_room->people; rch != NULL; rch = rch->next_in_room )
   {
     if ( rch->fighting != NULL && (rch->level <= ch->level + 10 + successes)
-      && (IS_NPC(rch) && !IS_SET(rch->act2_flags, ACT2_ULTRA_MOB)) && !IS_SET(rch->imm_flags,IMM_CHARM))
+      && (IS_NPC(rch) && !IS_SET(rch->act2, ACT2_ULTRA_MOB)) && !IS_SET(rch->imm_flags,IMM_CHARM))
       stop_fighting( rch, TRUE );
     if (rch == ch)
       act("Using your Gaia bestowed gift, you command respect and fear from those around you in the name of Fenris.", ch, NULL, rch, TO_CHAR);

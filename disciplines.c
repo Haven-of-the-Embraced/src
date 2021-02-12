@@ -2736,6 +2736,13 @@ void do_conditioning(CHAR_DATA *ch, char *argument)
         return;
     }
 
+    act( "With a strange feeling of complacency, you submit to $n's will.", ch, NULL, victim, TO_VICT );
+    if ( ch != victim )
+      act("After coaxing, $N offers little resistance as $E submits to your every whim.",ch,NULL,victim,TO_CHAR);
+    act( "With a longing look and some coaxing, $N begins to follow $n obediently.",  ch, NULL, victim, TO_NOTVICT );
+    if (success > 4)
+      act("With pure adoration on $S face, $N pledges $S undying loyalty to you.", ch, NULL, victim, TO_CHAR);
+
     if ( victim->master )
     stop_follower( victim );
     add_follower( victim, ch );
@@ -2752,10 +2759,6 @@ void do_conditioning(CHAR_DATA *ch, char *argument)
     af.modifier  = 0;
     af.bitvector = AFF_CHARM;
     affect_to_char( victim, &af );
-    act( "With a strange feeling of complacency, you submit to $n's will.", ch, NULL, victim, TO_VICT );
-    if ( ch != victim )
-      act("$N offers little resistance as $E submits to your every whim.",ch,NULL,victim,TO_CHAR);
-    act( "With a longing look and some coaxing, $N begins to follow $n obediently.",  ch, NULL, victim, TO_NOTVICT );
     gain_exp(ch, success * 10);
     return;
 }

@@ -916,6 +916,7 @@ void rote_sevenleaguestride(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_D
 void rote_conjoinlocalities(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
 {
     OBJ_DATA *portal;
+    ROOM_INDEX_DATA *pRoomIndex;
     char buf[MSL];
 
     if(victim == ch)
@@ -945,6 +946,21 @@ void rote_conjoinlocalities(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_D
         send_to_char( "You understanding of reality does not extend to defying the base laws of the universal structure.\n\r", ch );
         return;
     }
+
+    if (success < 0)
+    	{
+        portal = create_object(get_obj_index(OBJ_VNUM_PORTAL),0);
+    	  SET_BIT(portal->value[2], GATE_RANDOM);
+        portal->timer = success;
+        portal->value[3] = victim->in_room->vnum;
+
+        obj_to_room(portal,ch->in_room);
+
+        act("$n opens a hole in the fabric of space and time, thus creating $p.",ch,portal,NULL,TO_ROOM);
+        act("You create a hole in space and time then form it into $p.",ch,portal,NULL,TO_CHAR);
+    		return;
+    	}
+
 
     portal = create_object(get_obj_index(OBJ_VNUM_PORTAL),0);
     portal->timer = success;

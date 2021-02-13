@@ -2331,15 +2331,17 @@ void do_group( CHAR_DATA *ch, char *argument )
     CHAR_DATA *leader;
 
     leader = (ch->leader != NULL) ? ch->leader : ch;
-    sprintf( buf, "%s's group:\n\r", PERS(leader, ch,TRUE) );
+    send_to_char(" {D _________________________________________________________________________{x \n\r", ch);
+    sprintf( buf, "{D /    {y%s's group:{x              ({GGood{x  {YFair  {RCritical{x)                 {D/{x \n\r", PERS(leader, ch,TRUE) );
     send_to_char( buf, ch );
+    send_to_char("{D/________________________________________________________________________/{x \n\r", ch);
 
     for ( gch = char_list; gch != NULL; gch = gch->next )
     {
         if ( is_same_group( gch, ch ) )
         {
         sprintf( buf,
-        "[%3d] %-20s HP: %s%3d{x% MN: %s%3d{x% MV: %s%3d{x%  {x%5d xp tnl\n\r",
+        "[%3d] %-26s HP: %s%3d%{x MN: %s%3d%{x MV: %s%3d%{x  {x%5d xp tnl\n\r",
             gch->level,
             capitalize( PERS(gch, ch, TRUE) ),
             100 * gch->hit / gch->max_hit < 15 ? "{R" : 100 * gch->hit / gch->max_hit < 50 ? "{Y" : "{G",
@@ -2352,6 +2354,7 @@ void do_group( CHAR_DATA *ch, char *argument )
         send_to_char( buf, ch );
         }
     }
+    send_to_char("{D+------------------------------------------------------------------------+{x \n\r", ch);
     return;
     }
 

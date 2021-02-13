@@ -2471,7 +2471,7 @@ void do_pstat( CHAR_DATA *ch, char *argument )
     victim->pcdata->condition[COND_DRUNK]);
     send_to_char(buf, ch);
     sprintf( buf, "{W| {xItems Carried: %4d/%4d                   Items Weight: %7d/%7d {W|{x\n\r",
-    victim->carry_number, can_carry_n(victim), get_carry_weight(victim) / 10, can_carry_w(ch)/10);
+    victim->carry_number, can_carry_n(victim), get_carry_weight(victim) / 10, can_carry_w(victim)/10);
     send_to_char( buf, ch );
 
     send_to_char("{W+----------------------------      Society     ----------------------------+{x\n\r",ch);
@@ -2696,7 +2696,7 @@ void do_pstat( CHAR_DATA *ch, char *argument )
         victim->quintessence, victim->max_quintessence, victim->paradox);
       send_to_char(buf,ch);
       send_to_char("{c+---------------------------      Spheres       ---------------------------+{x",ch);
-      for (i = 1; i < MAX_SPHERE; i++)
+      for (i = 1; i <= MAX_SPHERE; i++)
       {
         if (victim->sphere[i] == 0)
           continue;

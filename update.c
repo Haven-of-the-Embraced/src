@@ -1371,7 +1371,7 @@ void obj_update( void )
             continue;
 
     if (obj->item_type == ITEM_LIGHT && obj->wear_loc == WEAR_NONE &&
-        obj->value[2] < obj->value[3] && obj->value[1] > 0 && obj->value[0] > 0)
+        obj->value[2] < obj->value[3] && IS_LIGHT_FLAG(obj, LIGHT_RECHARGE))
     {
       rch = obj->carried_by;
       if (number_range(1,100) <= obj->value[1])

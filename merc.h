@@ -3182,6 +3182,7 @@ void    channel_to_char args( (const char *txt, CHAR_DATA*ch) );
 #define CAN_WEAR(obj, part) (IS_SET((obj)->wear_flags,  (part)))
 #define IS_OBJ_STAT(obj, stat)  (IS_SET((obj)->extra_flags, (stat)))
 #define IS_WEAPON_STAT(obj,stat)(IS_SET((obj)->value[4],(stat)))
+#define IS_LIGHT_FLAG(obj,flag)(IS_SET((obj)->value[4],(flag)))
 #define WEIGHT_MULT(obj)    ((obj)->item_type == ITEM_CONTAINER ? \
     (obj)->value[4] : 100)
 #define IS_REFLECTIVE(obj) (IS_SET((obj)->extra_flags, ITEM_REFLECTIVE ))

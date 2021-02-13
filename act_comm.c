@@ -2339,13 +2339,16 @@ void do_group( CHAR_DATA *ch, char *argument )
         if ( is_same_group( gch, ch ) )
         {
         sprintf( buf,
-        "[%2d] %-16s %4d/%4d hp %4d/%4d mana %4d/%4d mv %5d xp\n\r",
+        "[%3d] %-20s HP: %s%3d{x% MN: %s%3d{x% MV: %s%3d{x%  {x%5d xp tnl\n\r",
             gch->level,
             capitalize( PERS(gch, ch, TRUE) ),
-            gch->hit,   gch->max_hit,
-            gch->mana,  gch->max_mana,
-            gch->move,  gch->max_move,
-            gch->exp    );
+            100 * gch->hit / gch->max_hit < 15 ? "{R" : 100 * gch->hit / gch->max_hit < 50 ? "{Y" : "{G",
+            100 * gch->hit / gch->max_hit,
+            100 * gch->mana / gch->max_mana < 15 ? "{R" : 100 * gch->mana / gch->max_mana < 50 ? "{Y" : "{G",
+            100 * gch->mana / gch->max_mana,
+            100 * gch->move / gch->max_move < 15 ? "{R" : 100 * gch->move / gch->max_move < 50 ? "{Y" : "{G",
+            100 * gch->move / gch->max_move,
+            IS_NPC(gch) ? 0 : ((gch->level + 1) * exp_per_level(gch,gch->pcdata->points) - gch->exp) );
         send_to_char( buf, ch );
         }
     }

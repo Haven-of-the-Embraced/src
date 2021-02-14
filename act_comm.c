@@ -2310,6 +2310,7 @@ void do_order( CHAR_DATA *ch, char *argument )
 void do_group( CHAR_DATA *ch, char *argument )
 {
     char buf[MAX_STRING_LENGTH];
+    char buf2[MSL];
     char arg[MAX_INPUT_LENGTH];
     char arg2[MAX_INPUT_LENGTH];
     CHAR_DATA *victim;
@@ -2338,16 +2339,17 @@ void do_group( CHAR_DATA *ch, char *argument )
           followers++;
 
     send_to_char("  {D _________________________________________________________________________{x \n\r", ch);
-    sprintf( buf, "{D  /    {y%s's group:{x              ({GGood{x  {YFair  {RCritical{x)                 {D/{x \n\r", PERS(leader, ch,TRUE) );
-    send_to_char( buf, ch );
+    sprintf( buf2, "%s's group:", PERS(leader, ch,TRUE));
     if (ch == leader)
-      sprintf(buf, "{D /    {xYou may have %2d more follower%s out of a Maximum of %2d. %s{D             /{x \n\r",
+      sprintf(buf, "{D  / {xYou may have %2d more grouped follower%s out of a Maximum of %2d grouped. %s{D/{x \n\r",
         maxfollower-followers, maxfollower-followers == 1 ? "" : "s",
         maxfollower, maxfollower-followers == 1 ? " " : "");
     else
-      sprintf(buf, "{D /    {xWhen leading, you may have %2d follower%s.%s{D                            /{x \n\r",
+      sprintf(buf, "{D  / {xWhen leading, you may have up to %2d grouped follower%s.%s{D                 /{x \n\r",
         maxfollower, maxfollower == 1 ? "" : "s", maxfollower == 1 ? " " : "");
       send_to_char(buf, ch);
+      sprintf( buf, "{D /  {y%-30s{x   ({GGood{x  {YFair  {RCritical{x)               {D/{x \n\r", buf2 );
+      send_to_char( buf, ch );
     send_to_char("{D/________________________________________________________________________/{x \n\r", ch);
 
     for ( gch = char_list; gch != NULL; gch = gch->next )

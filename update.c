@@ -769,6 +769,7 @@ void char_update( void )
     int         ichours;
     int         bqp;
     int         qpaward;
+    int         rpxp, rpaddictxp;
     ch_quit = NULL;
 
     /* update save counter */
@@ -1150,9 +1151,12 @@ if (ch->qpoints > MAX_QPOINTS)
    Calculation: exp random 50-rphrs+100 max 370+remorts*2 */
 
    ichours = (ch->played + (int) (current_time - ch->logon)) / 3600;
-                gain_exp( ch, UMIN( (370 + ch->remorts)*2, number_range( ichours/8, (ichours/6 + ch->roleplaying))));
-        if (doubleexp)
-            gain_exp( ch, UMIN( (370 + ch->remorts)*2, number_range( ichours/8, (ichours/6 + ch->roleplaying))*xpawardmult));
+   rpxp = UMIN( (370 + ch->remorts)*2, number_range( ichours/8, (ichours/6 + ch->roleplaying)));
+   rpaddictxp = get_addict_bonus(ch, rpxp);
+   rpxp += rpaddictxp;
+   gain_exp(ch, rpxp);
+   if (doubleexp)
+      gain_exp( ch, UMIN( (370 + ch->remorts)*2, number_range( ichours/8, (ichours/6 + ch->roleplaying))*xpawardmult));
     }
 
     if(ch->race == race_lookup("vampire") || ch->race == race_lookup("methuselah"))

@@ -5175,7 +5175,7 @@ void do_addict (CHAR_DATA *ch, char *argument)
         }
 
     } else {
-        add_buf(output, "\n\r{D[POS][Play Time][Bonus ] - Login Time{x\n\r");
+        add_buf(output, "\n\r{D[Play Time][Bonus ] - Login Time{x\n\r");
         secs = ((int)current_time - ch->logon);
         mins = secs / 60;
         hours = mins / 60;

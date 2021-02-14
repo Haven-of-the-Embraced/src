@@ -2329,11 +2329,25 @@ void do_group( CHAR_DATA *ch, char *argument )
     {
     CHAR_DATA *gch;
     CHAR_DATA *leader;
+    int maxfollower = get_ability(ch, CSABIL_LEADERSHIP) * 2 + 1;
+    int followers = 0;
 
     leader = (ch->leader != NULL) ? ch->leader : ch;
-    send_to_char(" {D _________________________________________________________________________{x \n\r", ch);
-    sprintf( buf, "{D /    {y%s's group:{x              ({GGood{x  {YFair  {RCritical{x)                 {D/{x \n\r", PERS(leader, ch,TRUE) );
+    for ( gch = char_list; gch != NULL; gch = gch->next )
+        if ( is_same_group( gch, ch ) && gch != ch )
+          followers++;
+
+    send_to_char("  {D _________________________________________________________________________{x \n\r", ch);
+    sprintf( buf, "{D  /    {y%s's group:{x              ({GGood{x  {YFair  {RCritical{x)                 {D/{x \n\r", PERS(leader, ch,TRUE) );
     send_to_char( buf, ch );
+    if (ch == leader)
+      sprintf(buf, "{D /    {xYou may have %2d more follower%s out of a Maximum of %2d. %s{D             /{x \n\r",
+        maxfollower-followers, maxfollower-followers == 1 ? "" : "s",
+        maxfollower, maxfollower-followers == 1 ? " " : "");
+    else
+      sprintf(buf, "{D /    {xWhen leading, you may have %2d follower%s.%s{D                            /{x \n\r",
+        maxfollower, maxfollower == 1 ? "" : "s", maxfollower == 1 ? " " : "");
+      send_to_char(buf, ch);
     send_to_char("{D/________________________________________________________________________/{x \n\r", ch);
 
     for ( gch = char_list; gch != NULL; gch = gch->next )

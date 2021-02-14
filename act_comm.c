@@ -2362,10 +2362,10 @@ void do_group( CHAR_DATA *ch, char *argument )
             capitalize( PERS(gch, ch, TRUE) ),
             100 * gch->hit / gch->max_hit < 15 ? "{R" : 100 * gch->hit / gch->max_hit < 50 ? "{Y" : "{G",
             100 * gch->hit / gch->max_hit,
-            100 * gch->mana / gch->max_mana < 15 ? "{R" : 100 * gch->mana / gch->max_mana < 50 ? "{Y" : "{G",
-            100 * gch->mana / gch->max_mana,
-            100 * gch->move / gch->max_move < 15 ? "{R" : 100 * gch->move / gch->max_move < 50 ? "{Y" : "{G",
-            100 * gch->move / gch->max_move,
+            IS_NPC(gch) ? "{G" : 100 * gch->mana / gch->max_mana < 15 ? "{R" : 100 * gch->mana / gch->max_mana < 50 ? "{Y" : "{G",
+            IS_NPC(gch) ? 100 : 100 * gch->mana / gch->max_mana,
+            IS_NPC(gch) ? "{G" : 100 * gch->move / gch->max_move < 15 ? "{R" : 100 * gch->move / gch->max_move < 50 ? "{Y" : "{G",
+            IS_NPC(gch) ? 100 : 100 * gch->move / gch->max_move,
             IS_NPC(gch) ? 0 : ((gch->level + 1) * exp_per_level(gch,gch->pcdata->points) - gch->exp) );
         send_to_char( buf, ch );
         }

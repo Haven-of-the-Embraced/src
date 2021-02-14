@@ -2648,7 +2648,7 @@ bool is_aggsafe(CHAR_DATA *ch, CHAR_DATA *victim)
     /* NPC doing the killing */
     if (IS_NPC(ch))
     {
-        if (!IS_AWAKE(ch) || !SAME_UMBRA(ch, victim))
+        if (!can_see(ch, victim) || !IS_AWAKE(ch))
         return TRUE;
         /* safe room check */
         if (IS_SET(victim->in_room->room_flags,ROOM_SAFE))

@@ -3985,8 +3985,8 @@ void do_gwho(CHAR_DATA *ch, char *argument )
                 victim->level < 10 ? "  " : victim->level < 100 ? " " : "",
                 victim->level,
                 victim->name,
-                victim->rank == 1 ? "Cliath      " : victim->rank == 2 ? "Fostern     " : victim->rank == 3 ? "Adren       " :
-                victim->rank == 4 ? "Athro       " : victim->rank == 5 ? "Elder       " : "Pup         ");
+                victim->pcdata->rank == 1 ? "Cliath      " : victim->pcdata->rank == 2 ? "Fostern     " : victim->pcdata->rank == 3 ? "Adren       " :
+                victim->pcdata->rank == 4 ? "Athro       " : victim->pcdata->rank == 5 ? "Elder       " : "Pup         ");
             else if(victim->clan == clan_lookup("watcher"))
                 sprintf( buf, "[%d%s | %s | %s | %d/%d | %d/%d | %d/%d]\n\r",
                     victim->level,

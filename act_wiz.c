@@ -2546,8 +2546,8 @@ void do_pstat( CHAR_DATA *ch, char *argument )
           victim->pcdata->primal_urge, victim->pcdata->rage[PERM], victim->pcdata->rage[TEMP], victim->pcdata->gnosis[PERM], victim->pcdata->gnosis[TEMP]);
         send_to_char(buf,ch);
         sprintf(buf2,"  Renown Rank: {G[{W%s{G]{g  ",
-          victim->rank == 1 ? "Cliath" : victim->rank == 2 ? "Fostern" : victim->rank == 3 ? "Adren" :
-          victim->rank == 4 ? "Athro" : victim->rank == 5 ? "Elder" : "Pup");
+          victim->pcdata->rank == 1 ? "Cliath" : victim->pcdata->rank == 2 ? "Fostern" : victim->pcdata->rank == 3 ? "Adren" :
+          victim->pcdata->rank == 4 ? "Athro" : victim->pcdata->rank == 5 ? "Elder" : "Pup");
         sprintf(buf, "{g+%s+{x\n\r", center(buf2, 74, "-"));
         send_to_char(buf, ch);
         sprintf(buf,"{g| {xGlory(Temp): %2d (%2d)      Honor(Temp): %2d (%2d)     Wisdom(Temp): %2d (%2d) {g|{x\n\r",

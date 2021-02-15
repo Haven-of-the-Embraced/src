@@ -2602,49 +2602,6 @@ bool is_aggsafe(CHAR_DATA *ch, CHAR_DATA *victim)
     if (victim->fighting == ch || victim == ch)
     return FALSE;
 
-    if (IS_IMMORTAL(ch) && ch->level > LEVEL_IMMORTAL)
-    return FALSE;
-
-    /* killing mobiles */
-    if (IS_NPC(victim))
-    {
-
-    /* safe room? */
-    if (IS_SET(victim->in_room->room_flags,ROOM_SAFE))
-    {
-        return TRUE;
-    }
-
-    if (victim->pIndexData->pShop != NULL)
-    {
-        return TRUE;
-    }
-
-    /* no killing healers, trainers, etc */
-    if (IS_SET(victim->act,ACT_IS_HEALER)
-    ||  IS_SET(victim->act,ACT_IS_CHANGER))
-    {
-        return TRUE;
-    }
-
-    if (!IS_NPC(ch))
-    {
-        /* no pets */
-        if (IS_SET(victim->act,ACT_PET))
-        {
-        return TRUE;
-        }
-
-        /* no charmed creatures unless owner */
-        if (IS_AFFECTED(victim,AFF_CHARM) && ch != victim->master)
-        {
-        return TRUE;
-        }
-    }
-    }
-    /* killing players */
-    else
-    {
     /* NPC doing the killing */
     if (IS_NPC(ch))
     {
@@ -2656,13 +2613,22 @@ bool is_aggsafe(CHAR_DATA *ch, CHAR_DATA *victim)
         return TRUE;
         }
 
+        if (ch->pIndexData->pShop != NULL)
+        {
+            return TRUE;
+        }
+
+        if (IS_SET(ch->act,ACT_IS_HEALER)
+        ||  IS_SET(ch->act,ACT_IS_CHANGER))
+        {
+            return TRUE;
+        }
         /* charmed mobs and pets cannot attack players while owned */
         if (IS_AFFECTED(ch,AFF_CHARM) && ch->master != NULL
         &&  ch->master->fighting != victim)
         {
         return TRUE;
         }
-    }
     }
     return FALSE;
 }

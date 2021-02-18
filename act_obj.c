@@ -4076,7 +4076,33 @@ void do_rite( CHAR_DATA *ch, char *argument )
 
         ch->pcdata->gnosis[TEMP] -= 3;
         if ritemaster
+        {
           extract_obj(obj);
+          rites_roll = godice(4, 7);
+          act("The Ritemaster accepts the tribute and leads the garou present in a resonating howl.", ch, NULL, NULL, TO_ROOM);
+        }
+        else
+        {
+          rites_roll = godice(ch->pcdata->gnosis[PERM], 7);
+          act("You begin a resonating howl, pledging your energies to the Caern.", ch, NULL, NULL, TO_CHAR);
+          act("$n lifts $s head in a resonating howl, echoing throughout the area.", ch, NULL, NULL, TO_NOTVICT);
+        }
+
+        if (rites_roll < 0)
+        {
+          act("Midway through the Rite, you notice that the howling isn't as fluid as it should be.\n\rWith a pulse of energy, $p's spiritual essence dims, and finally winks out.", ch, caern, NULL, TO_CHAR);
+          act("Amidst the howling, $p pulses briefly and then subsides.", ch, caern, NULL, TO_NOTVICT);
+          caern->value[2] = 0;
+          return;
+        }
+
+        if (rites_roll == 0)
+        {
+          act("The howling subsides, but $p's spiritual essence seems unchanged.", ch, caern, NULL, TO_CHAR);
+          act("The howling reaches a final point, and then there is silence.", ch, caern, NULL, TO_NOTVICT);
+          return;
+        }
+
         caern->value[2] = caern->value[1];
         send_to_char("As you complete the Rite of Moot for this month, you feel the essence of the Caern revitalize.\n\r",ch);
         act( "$n completes the Rite of Moot.", ch, NULL, NULL, TO_ROOM );

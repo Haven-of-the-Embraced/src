@@ -2344,8 +2344,30 @@ bool spec_tongueoftheasp( CHAR_DATA *ch )
 
 bool spec_skinoftheadder( CHAR_DATA *ch )
 {
-    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
+    AFFECT_DATA af;
+
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 ||
+      is_affected( ch, gsn_forget ) || is_affected(ch, gsn_quietus_bloodcurse) ||
+      is_affected(ch, gsn_skinoftheadder))
       return FALSE;
+
+      act("You convert vitae from your system and your skin takes on a scaly, reptilian quality.", ch, NULL, NULL, TO_CHAR);
+      act("Before your eyes, $n's skin grows scaly and mottled.", ch, NULL, NULL, TO_NOTVICT);
+
+      af.where     = TO_RESIST;
+      af.type      = gsn_skinoftheadder;
+      af.level     = ch->level;
+      af.duration  = 1;
+      af.location  = 0;
+      af.modifier  = 0;
+      af.bitvector = RES_BASH;
+      affect_to_char( ch, &af );
+
+      af.bitvector = RES_SLASH;
+      affect_to_char( ch, &af );
+
+      af.bitvector = RES_PIERCE;
+      affect_to_char( ch, &af );
 
     return TRUE;
 }

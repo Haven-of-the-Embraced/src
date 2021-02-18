@@ -1856,18 +1856,28 @@ bool spec_presence( CHAR_DATA *ch )
 
 bool spec_serpentis( CHAR_DATA *ch )
 {
+  int serpentis = 2;
     if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
     return FALSE;
 
-    switch ( number_range( 0,2 ) )
-    {
-/*    case 0: return spec_awe (ch);
-    case 1: return spec_dreadgaze (ch);
-    case 2: return spec_entrancement (ch); */
+    if (ch->level >= 100)
+      serpentis = 5;
+    else if (ch->level >= 75)
+      serpentis = 5;
+    else if (ch->level >= 50)
+      serpentis = 5;
+    else if (ch->level >= 25)
+      serpentis = 4;
 
-    case 0:
-    case 1:
-    case 2: return spec_eyesoftheserpent (ch);
+    switch ( number_range( 0,serpentis ) )
+    {
+      case 0: return;
+      case 1:
+      case 2: return spec_eyesoftheserpent (ch);
+      case 3:
+      case 4: return spec_tongueoftheasp (ch);
+      //Less chance of gsn_skinoftheadder due to its power
+      case 5: return spec_skinoftheadder (ch);
     }
 
     return FALSE;

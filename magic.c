@@ -4957,10 +4957,10 @@ void spell_caern_rage(int sn,int level,CHAR_DATA *ch,void *vo,int target)
 {
     if(ch->race == race_lookup("garou"))
     {
-        ch->rage += level;
-        if(ch->rage > 100)
-            ch->rage = 100;
-        act("You howl in fury as your body surges with {rRage{x!", ch, NULL, NULL, TO_CHAR);
+        ch->pcdata->rage[TEMP] += 5;
+        if(ch->pcdata->rage[TEMP] > ch->pcdata->rage[PERM])
+            ch->pcdata->rage[TEMP] = ch->pcdata->rage[PERM];
+        act("The spirits of the Caern bless you with a furious {rRage{x!", ch, NULL, NULL, TO_CHAR);
         act("$n howls in fury!", ch, NULL, NULL, TO_ROOM);
     }
 

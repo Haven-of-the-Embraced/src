@@ -4025,6 +4025,8 @@ void do_rite( CHAR_DATA *ch, char *argument )
     ROOM_INDEX_DATA *old_room;
     MOB_INDEX_DATA *pMobIndex;
     int count=0;
+    int rites_roll = 0;
+    bool ritemaster = FALSE;
 
     one_argument( argument, arg );
 
@@ -4054,19 +4056,29 @@ void do_rite( CHAR_DATA *ch, char *argument )
 */
     if (!str_cmp(arg,"of Moot"))
     {
-            if (ch->pcdata->csbackgrounds[CSBACK_RITES] < 1)
+        if (ch->pcdata->csbackgrounds[CSBACK_RITES] < 1)
         {
-        sendch("You do not have the mystical knowledge to perform this rite.\n\r", ch);
-        return;
-        }
-        if ( ( obj = get_obj_here( ch, NULL, "platinum" ) ) == NULL )
-        {
-            send_to_char("This sacrifice is not great enough to please Gaia.\n\r",ch);
+          ritemaster = TRUE;
+          sendch("You do not have the mystical knowledge to perform this rite yourself,\n\r", ch);
+          if ( ( obj = get_obj_here( ch, NULL, "platinum" ) ) == NULL )
+          {
+            send_to_char("and the Ritesmaster summoned to assist requires proper payment.\n\r",ch);
             return;
+          }
+          send_to_char("but the Ritesmaster summoned to assist will gladly accept your tribute.\n\r", ch);
         }
-        extract_obj(obj);
+
+        if (ch->pcdata->gnosis[TEMP] < 4)
+        {
+          send_to_char("You do not have enough spiritual energy to recharge this Caern.\n\r", ch);
+          return;
+        }
+
+        ch->pcdata->gnosis[TEMP] -= 3;
+        if ritemaster
+          extract_obj(obj);
         caern->value[2] = caern->value[1];
-        send_to_char("You complete the Rite of Moot for this month.\n\r",ch);
+        send_to_char("As you complete the Rite of Moot for this month, you feel the essence of the Caern revitalize.\n\r",ch);
         act( "$n completes the Rite of Moot.", ch, NULL, NULL, TO_ROOM );
     }
     else if(!str_cmp(arg,"of the Opened Caern"))

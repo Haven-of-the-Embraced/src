@@ -2338,13 +2338,16 @@ bool spec_tongueoftheasp( CHAR_DATA *ch )
       damagesuccess = 1;
 
     damagemod = number_range(ch->level * 3 / 2, ch->level * 2);
-    damage(ch, victim, damagemod * damagesuccess, gsn_hand_to_hand, DAM_BASH, TRUE);
-    if (damagesuccess >= 2 && !is_affected(victim, gsn_bleeding));
+    damage(ch, victim, damagemod * damagesuccess, gsn_tongueoftheasp, DAM_SLASH, TRUE);
+    if ( damagesuccess >= 2 );
     {
+      if (is_affected(victim, gsn_bleeding))
+        affect_strip(victim, gsn_bleeding);
+
       af.where     = TO_AFFECTS;
       af.type      = gsn_bleeding;
       af.level     = ch->level / 40;
-      af.duration  = ch->level / 40;
+      af.duration  = 1;
       af.location  = APPLY_NONE;
       af.modifier  = 0;
       af.bitvector = 0;

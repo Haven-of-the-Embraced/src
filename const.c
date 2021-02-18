@@ -1314,12 +1314,12 @@ void cskill_update(CHAR_DATA *ch, bool show)
 
 const   struct  skill_type  skill_table [MAX_SKILL] =
 {
-// TOTAL SKILLS AS OF 1/9/21 =  426
+// TOTAL SKILLS AS OF 2/17/21 =  427
 // MAX_SKILL INCREASED TO 430
 /*
  * Magic spells.
  */
-
+//Total 108
     { "reserved", { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, 0, TAR_IGNORE, POS_STANDING,
     NULL, SLOT( 0),    0,  0,    "",         "",     ""    },
@@ -1752,7 +1752,8 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_vampire_blood,    TAR_CHAR_SELF,      POS_RESTING,
     NULL,           SLOT(0),     0, 12, "",         "!Blood!",  "" },
 
-/* combat and weapons skills */
+/* combat and weapons skills
+Total (31) */
     { "axe",{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_FIGHTING,
     &gsn_axe,               SLOT( 0),       0,      0, "",                     "!Axe!",        "" },
@@ -1877,7 +1878,8 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_FIGHTING,
     &gsn_fifth_attack,     SLOT( 0),        0,     0, "",                     "!Fifth Attack!",   "" },
 
-/* non-combat skills */
+/* non-combat skills
+Total (48) */
     { "classify", { 15, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_IGNORE, POS_STANDING,
     &gsn_classify, SLOT( 0),    0,  0,    "",         "",     ""    },
@@ -2070,7 +2072,8 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
   { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
     &gsn_hometown_change,   SLOT(0),    0,  12, "hometown changed", " {R __________________________________________{x\n\r{R [{xYou may now set a new {Chometown{x once again.{R]{x\n\r  {RTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT", "" },
 
-/* Skill Related Debuffs */
+/* Skill Related Debuffs
+Total (3) */
 { "deafened", { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
 &gsn_deafened,      SLOT(0),    0,  12, "deafened",         "Noises assault your eardrums as your hearing returns.", "" },
@@ -2084,7 +2087,8 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
 &gsn_socialdisgrace,            SLOT(0),     0, 12, "",         "You finally feel comfortable showing your face in social circumstances again.", "" },
 
 
-/* Generic Old Ritual Stuff */
+/* Generic Old Ritual Stuff
+Total (3) */
     { "Stored: Inferno",             { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
     &gsn_store_inferno,          SLOT( 0),        0,     24, "Inferno",             "You loose control on your stored Ritual: Inferno",      "" },
@@ -2099,6 +2103,7 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
 
 /*
   ------Vampire Affects-----
+  Total (5)
 */
     { "torpor",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, spell_null, TAR_CHAR_SELF,      POS_TORPOR,
@@ -2122,8 +2127,10 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
 
 //  ***Disciplines***
 //    --Animalism--
+// Total (0)
 
 //    --Auspex--
+// Total (3)
     { "reveal",       {  102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
     &gsn_reveal,            SLOT(0),     0, 12, "",         "Your heightened senses fade away, leaving you aware of only the mundane world once again.",    "" },
@@ -2137,11 +2144,13 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
     &gsn_astralprojection,     SLOT( 0),    0,    24, "",     "!!Wearoffmsg!!",     ""},
 
 //    --Celerity--
+// Total (1)
     { "celerity", { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
     &gsn_celbuff,           SLOT(0),     0, 12, "",         "The world suddenly seems to speed up around you, as your vitae enhanced speed fades away.", "" },
 
 //    --Chimerstry--
+// Total (5)
     { "ignis fatuus",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_SLEEPING,
     &gsn_ignis_fatuus,            SLOT(405),   0, 12, "ignis",           "Your confusion fades away.", "" },
@@ -2163,8 +2172,10 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
     &gsn_chimerstry,            SLOT(0),   0, 12, "chimerstry",           "You once again feel strong enough to twist reality to your whim.", "" },
 
 //    --Dementation--
+// Total (0)
 
 //    --Dominate--
+// Total (2)
     { "forgetful mind",       {  102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
     &gsn_forget,            SLOT(0),     0, 12, "",         "Your memory slowly returns...", "" },
@@ -2174,10 +2185,13 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
     &gsn_mental_resilience,            SLOT(0),     0, 12, "",         "Your increased mental resistance has faded.", "" },
 
 //    --Fortitude--
+// Total (0)
 
 //    --Mortis--
+// Total (0)
 
 //    --Obfuscate--
+// Total (4)
     { "unseen",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, spell_null, TAR_CHAR_SELF,      POS_TORPOR,
     &gsn_unseen,        SLOT(0),    0,  12, "",     "Your power to vanish from the minds of other fades and you become visible.",   "" },
@@ -2195,6 +2209,7 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
     &gsn_mask,          SLOT(0),     0, 12, "",         "Your Mask of a Thousand Faces fades away revealing your true guise.", "" },
 
 //    --Obtenebration--
+// Total (5)
     { "arms of the abyss",    { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_SLEEPING,
     &gsn_armsoftheabyss,            SLOT(405),   0, 12, "shadow tendrils",         "The shadowy tendrils release you, and fade away.", "" },
@@ -2216,8 +2231,10 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
     &gsn_shadowform,            SLOT(0),     0, 12, "",         "Your shadowy form fades away.", "" },
 
 //    --Potence--
+// Total (0)
 
 //    --Presence--
+// Total (4)
     { "awe",  { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
     &gsn_awe,           SLOT(0),     0, 12, "",         "The impressive social mystique you bolstered slowly fades away.",  "" },
@@ -2235,6 +2252,7 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
     &gsn_sparkofrage,           SLOT(0),     0, 12, "",         "The aura of hatred following you begins to fade.",   "" },
 
 //    --Protean--
+// Total (4)
     { "claws",    { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
     &gsn_claws,         SLOT(0),     0, 12, "",         "Your claws slide back under your nails.",  "" },
@@ -2252,6 +2270,7 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
     &gsn_earthmeld,         SLOT(0),     0, 12, "",         "You emerge from the earth in a shower of dirt.", "" },
 
 //    --Quietus--
+// Total (3)
     { "weakness", { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
     &gsn_quietus_weakness,          SLOT(0),     0, 12, "",         "Your strength returns as the weakness fades.", "" },
@@ -2265,8 +2284,13 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
     &gsn_acidblood,         SLOT(0),     0, 12, "acidic blood",         "!acid blood!", "" },
 
 //    --Serpentis--
+// Total (1)
+    { "skin of the adder",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_SLEEPING,
+    &gsn_skinoftheadder,            SLOT(0),   0, 12, "serpentine skin",  "", "" },
 
 //    --Thaumaturgy: Path of Blood--
+// Total (4)
     { "blood rage",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, thaumaturgy_frenzy, TAR_CHAR_SELF,      POS_SLEEPING,
     &gsn_thaumaturgy_frenzy,            SLOT(405),   0, 12, "frenzy",           "Your frenzy slowly fades away.", "" },
@@ -2284,6 +2308,7 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
     &gsn_cauldron,          SLOT(406),   0, 12, "boiling blood",            "", "" },
 
 //    --Vicissitude--
+// Total (4)
     { "bonecrafting",     { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_CHAR_SELF,             POS_STANDING,
     &gsn_vicissitude_bonecraft,          SLOT( 0),        0,     48, "bone spikes",             "Your body slowly reforms into its normal skeletal structure.",      "" },
@@ -2302,12 +2327,14 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
 
 //  ***Rituals***
 //    --Thaumaturgy--
+// Total (1)
     { "incorporeal passage",      { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, spell_null,     TAR_CHAR_SELF,      POS_STANDING,
     &gsn_incorporeal_passage,   SLOT( 0),   0,  12, "smashed mirror",   "Your body slowly solidifies as the ritual wears off.",     "" },
 
 /*
   -----Werewolf Affects-----
+  Total (5)
 */
     { "garou frenzy", { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, garou_frenzy,   TAR_CHAR_SELF,      POS_SLEEPING,
@@ -2331,6 +2358,7 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
 
 //  ***Gifts***
 //    --Homid--
+// Total (10)
     { "master of fire",  { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_masteroffire,             TAR_IGNORE,             POS_STANDING,
     &gsn_gift_masteroffire,          SLOT( 0),        0,     12, "",  "The blessing of the Elemental spirits of Fire leaves you.",        "" },
@@ -2372,6 +2400,7 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
     &gsn_gift_falsecomfort,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
 //    --Metis--
+// Total (11)
     { "create element", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_createelement,  TAR_IGNORE, POS_STANDING,
     &gsn_gift_createelement,          SLOT( 0),        0,     24, "elemental blast",             "!!Wearoffmsg!!",        "" },
@@ -2417,6 +2446,7 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
     &gsn_gift_totemgift,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
 //    --Lupus--
+// Total (12)
     { "hares leap", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_haresleap,  TAR_IGNORE, POS_STANDING,
     &gsn_gift_haresleap,          SLOT( 0),        0,     12, "",             "The blessing of the Hare spirits wears off.",        "" },
@@ -2466,6 +2496,7 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
     &gsn_gift_songofthegreatbeast,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
 //    --Ragabash--
+// Total (11)
     { "blur of the milky eye", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_blurofthemilkyeye,  TAR_IGNORE, POS_STANDING,
     &gsn_gift_blurofthemilkyeye,          SLOT( 0),        0,     12, "",             "Your form becomes solid once again.",        "" },
@@ -2511,6 +2542,7 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
     &gsn_gift_chimericalform,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
 //    --Theurge--
+// Total (10)
     { "mothers touch", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_motherstouch,  TAR_CHAR_DEFENSIVE, POS_STANDING,
     &gsn_gift_motherstouch,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
@@ -2552,6 +2584,7 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
     &gsn_gift_malleablespirit,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
 //    --Philodox--
+// Total (11)
     { "resist pain",              { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_resistpain,             TAR_CHAR_SELF,             POS_STANDING,
     &gsn_gift_resistpain,          SLOT( 0),        0,     12, "",             "You now have the courage to resist your wounds.",      "" },
@@ -2597,6 +2630,7 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
     &gsn_gift_geas,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
 //    --Galliard--
+// Total (11)
     { "beast spirit", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_beastspirit,  TAR_IGNORE, POS_STANDING,
     &gsn_gift_beastspirit,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
@@ -2642,6 +2676,7 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
     &gsn_gift_callforvengeance,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
 //    --Ahroun--
+// total (11)
     { "falling touch", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_fallingtouch,  TAR_CHAR_OFFENSIVE, POS_FIGHTING,
     &gsn_gift_fallingtouch,          SLOT( 0),        0,     12, "touch",             "!!Wearoffmsg!!",        "" },
@@ -2687,6 +2722,7 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
     &gsn_gift_strengthofwill,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
 //    --Black Furies--
+// Total (9)
     { "breath of the wyld", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_breathofthewyld,  TAR_CHAR_DEFENSIVE, POS_STANDING,
     &gsn_gift_breathofthewyld,          SLOT( 0),        0,     12, "",             "Gaia's rush of energy and clarity of thought fades from your mind.",        "" },
@@ -2724,6 +2760,7 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
     &gsn_gift_wyldwarp,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
 //    --Bone Gnawers--
+// Total (11)
     { "cookery", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_cookery,  TAR_IGNORE, POS_STANDING,
     &gsn_gift_cookery,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
@@ -2769,6 +2806,7 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
     &gsn_gift_survivor,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
 //    --Children of Gaia--
+// Total (8)
 {   "eves blessing", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_evesblessing,  TAR_IGNORE, POS_STANDING,
 &gsn_gift_evesblessing,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
@@ -2817,7 +2855,7 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
 
 //    --Warders of Men--
 
-
+// Total (49)
     { "inner strength",               { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_innerstrength,             TAR_CHAR_SELF,             POS_STANDING,
     &gsn_gift_innerstrength,          SLOT( 0),        0,     48, "",             "Your resolve has strengthened to the point that you can summon your Inner Strength again.",        "" },
@@ -3011,6 +3049,7 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
     &gsn_gift_redirectpain,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
 //  ***Caern Affects***
+// Total (2)
     { "caern: rage",      {120, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, spell_caern_rage,  TAR_IGNORE,     POS_FIGHTING,
     NULL,                   SLOT(401),      0,      12, "rage", "!rage!",   "" },
@@ -3021,6 +3060,7 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
 
 /*
   -------Mage Affects-------
+  Total (2)
 */
     { "tass: quintessence",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, spell_rote_quintessence,    TAR_IGNORE, POS_RESTING,
@@ -3037,33 +3077,41 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
 
 //  ***Rotes***
 //    --Correspondence--
+// Total (0)
 
 //    --Entropy--
+// Total (1)
     { "control randomness",    { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,    TAR_IGNORE,      POS_STANDING,
     &gsn_controlrandomness,     SLOT( 0),  0,  24, "",  "You feel your power to control random events slowly fade.",   "" },
 
 //    --Forces--
+// Total (1)
     { "kinetic shield",           { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     \
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
     &gsn_kineticshield,          SLOT( 0),        0,     24, "",             "Your ability to deflect physical blows fades away.",       "" },
 
 //    --Life--
+// Total (0)
 
 //    --Matter--
+// Total (0)
 
 //    --Mind--
+// Total (1)
     { "empower",              { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,     TAR_IGNORE,      POS_STANDING,
     &gsn_empower,          SLOT( 0),        0,     24, "",  "Your mind seems to dim as the forces of reality wash away your clarity of thought.",   "" },
 
 //    --Prime--
+// Total (1)
     { "prime sense",		{ 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,	TAR_IGNORE,	POS_STANDING,
     &gsn_primesense,	SLOT( 0),	0,	24, "",	"The flow of Quintessence through reality fades from your vision.", ""},
 
 
 //    --Spirit--
+// Total (2)
     { "spirit sight",		{ 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,	TAR_IGNORE,	POS_STANDING,
     &gsn_spiritsight,	SLOT( 0),	0,	24, "",	"Your ethereal senses shift back to this reality.", ""},
@@ -3073,6 +3121,7 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
     &gsn_trappedingauntlet,        SLOT( 0),     0,    24, "",  "Your very Essence finally untangles itself from the Gauntlet!",  "" },
 
 //    --Time--
+// Total (4)
     { "time sense",             { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
     &gsn_timesense,          SLOT( 0),        0,     24, "",             "Your sensing of the flow of time ebbs away.",     "" },
@@ -3089,14 +3138,16 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
     &gsn_sidesteptime,          SLOT( 0),        0,     24, "",             "You step back into the normal stream of time.",        "" },
 
-//    --Extra Combination Sphere Rotes--
-
+/*    --Extra Combination Sphere Rotes--
+Total (1)
+*/
     { "negation field",           { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
     &gsn_negationfield,          SLOT( 0),        0,     24, "",             "You sense your ability to negate the magicks of others fading.",       "" },
 
 /*
   ----Immortal Functions----
+Total (1)
 */
     { "touch",    { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_null, TAR_CHAR_SELF,      POS_STANDING,

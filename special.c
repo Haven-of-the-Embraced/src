@@ -118,6 +118,7 @@ DECLARE_SPEC_FUN(   spec_awe                );
 DECLARE_SPEC_FUN(   spec_dreadgaze          );
 DECLARE_SPEC_FUN(   spec_eyesoftheserpent   );
 DECLARE_SPEC_FUN(   spec_tongueoftheasp     );
+DECLARE_SPEC_FUN(   spec_skinoftheadder     );
 DECLARE_SPEC_FUN(   spec_evil_eye           );
 DECLARE_SPEC_FUN(   spec_questmaster        );
 DECLARE_SPEC_FUN(   spec_jarjar             );
@@ -208,6 +209,7 @@ const   struct  spec_type    spec_table[] =
     {   "spec_dreadgaze",         spec_dreadgaze        },
     {   "spec_eyesoftheserpent",  spec_eyesoftheserpent },
     {   "spec_tongueoftheasp",    spec_tongueoftheasp   },
+    {   "spec_skinoftheadder",    spec_skinoftheadder   },
 // Numina/Romani
     {   "spec_evil_eye",          spec_evil_eye         },
 // Miscellaneous
@@ -2337,6 +2339,14 @@ bool spec_tongueoftheasp( CHAR_DATA *ch )
       af.bitvector = 0;
       affect_to_char(victim, &af);
     }
+    return TRUE;
+}
+
+bool spec_skinoftheadder( CHAR_DATA *ch )
+{
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
+      return FALSE;
+
     return TRUE;
 }
 

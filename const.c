@@ -1314,8 +1314,8 @@ void cskill_update(CHAR_DATA *ch, bool show)
 
 const   struct  skill_type  skill_table [MAX_SKILL] =
 {
-// TOTAL SKILLS AS OF 2/17/21 =  427
-// MAX_SKILL INCREASED TO 430
+// TOTAL SKILLS AS OF 2/17/21 =  428
+// MAX_SKILL INCREASED TO 435
 /*
  * Magic spells.
  */
@@ -2284,7 +2284,11 @@ Total (3) */
     &gsn_acidblood,         SLOT(0),     0, 12, "acidic blood",         "!acid blood!", "" },
 
 //    --Serpentis--
-// Total (1)
+// Total (2)
+    { "tongue of the asp",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_SLEEPING,
+    &gsn_tongueoftheasp,            SLOT(0),   0, 12, "forked tongue",  "", "" },
+
     { "skin of the adder",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_SLEEPING,
     &gsn_skinoftheadder,            SLOT(0),   0, 12, "serpentine skin",  "", "" },

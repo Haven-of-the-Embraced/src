@@ -4950,6 +4950,7 @@ sh_int          gsn_quietus_weakness;
 sh_int          gsn_acidblood;
 sh_int          gsn_quietus_bloodcurse;
 sh_int          gsn_reveal;
+sh_int          gsn_tongueoftheasp;
 sh_int          gsn_skinoftheadder;
 sh_int          gsn_forget;
 sh_int          gsn_mental_resilience;

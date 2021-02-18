@@ -2944,6 +2944,7 @@ extern sh_int  gsn_quietus_weakness;
 extern sh_int  gsn_acidblood;
 extern sh_int  gsn_quietus_bloodcurse;
 extern sh_int  gsn_reveal;
+extern sh_int  gsn_skinoftheadder;
 extern sh_int  gsn_sanctus;
 extern sh_int  gsn_bandage;
 extern sh_int  gsn_ground;

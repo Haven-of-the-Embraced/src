@@ -4851,7 +4851,7 @@ sh_int          gsn_fourth_attack;
 sh_int          gsn_fifth_attack;
 sh_int          gsn_knight_training;
 
-
+/*Spells*/
 sh_int          gsn_blindness;
 sh_int          gsn_charm_person;
 sh_int          gsn_curse;
@@ -4914,6 +4914,7 @@ sh_int          gsn_staves;
 sh_int          gsn_wands;
 sh_int          gsn_recall;
 sh_int          gsn_riding;
+sh_int          gsn_track;
 sh_int      gsn_shift;
 sh_int      gsn_change;
 sh_int      gsn_touch;
@@ -4925,6 +4926,7 @@ sh_int      gsn_shockshield;
 
 sh_int      gsn_chant;
 
+/*Vampire*/
 sh_int          gsn_vamp_frenzy;
 sh_int          gsn_garou_frenzy;
 sh_int          gsn_thaumaturgy_frenzy;
@@ -4940,7 +4942,6 @@ sh_int          gsn_astralprojection;
 sh_int          gsn_astrallylost;
 sh_int          gsn_botched_presence;
 sh_int          gsn_socialdisgrace;
-sh_int          gsn_track;
 sh_int          gsn_cloakshadow;
 sh_int          gsn_nocturne;
 sh_int          gsn_majesty;
@@ -4949,6 +4950,39 @@ sh_int          gsn_quietus_weakness;
 sh_int          gsn_acidblood;
 sh_int          gsn_quietus_bloodcurse;
 sh_int          gsn_reveal;
+sh_int          gsn_skinoftheadder;
+sh_int          gsn_forget;
+sh_int          gsn_mental_resilience;
+sh_int          gsn_mask;
+sh_int          gsn_cloak_the_gathering;
+sh_int          gsn_earthmeld;
+sh_int          gsn_shadowform;
+sh_int          gsn_vicissitude_horrid;
+sh_int          gsn_vicissitude_bonecraft;
+sh_int          gsn_vicissitude_chiropteran;
+sh_int          gsn_wingclaws;
+sh_int          gsn_weaken;
+sh_int          gsn_shadowplay;
+/* New regen stuff */
+sh_int		gsn_vampire_regen;
+/* Ravnos Discs */
+sh_int		gsn_ignis_fatuus;
+sh_int      gsn_chimaera;
+sh_int      gsn_chimerstry;
+sh_int      gsn_phantasm;
+sh_int      gsn_horridreality;
+
+/* New disc gsns */
+sh_int          gsn_regen;
+sh_int          gsn_blood_buff;
+sh_int          gsn_torpor;
+sh_int          gsn_arise;
+sh_int          gsn_unseen;
+sh_int          gsn_veil;
+
+/*Sengir Thaum Rituals*/
+sh_int          gsn_incorporeal_passage;
+
 sh_int          gsn_sanctus;
 sh_int          gsn_bandage;
 sh_int          gsn_mass_healing;
@@ -4974,32 +5008,11 @@ sh_int          gsn_brew;
 sh_int          gsn_skin;
 sh_int      gsn_behead;
 
-/* New disc gsns */
-sh_int          gsn_regen;
-sh_int          gsn_blood_buff;
-sh_int          gsn_torpor;
-sh_int          gsn_arise;
-sh_int          gsn_unseen;
-sh_int          gsn_veil;
-
-/*Sengir Thaum Rituals*/
-sh_int          gsn_incorporeal_passage;
-
 /* ritual stuff */
 sh_int          gsn_store_inferno;
 sh_int          gsn_store_assamiteacid;
 sh_int          gsn_blood_magic;
 sh_int          gsn_fetish;
-sh_int          gsn_forget;
-sh_int          gsn_mental_resilience;
-sh_int          gsn_mask;
-sh_int          gsn_cloak_the_gathering;
-sh_int          gsn_earthmeld;
-sh_int          gsn_shadowform;
-sh_int          gsn_vicissitude_horrid;
-sh_int          gsn_vicissitude_bonecraft;
-sh_int          gsn_vicissitude_chiropteran;
-sh_int          gsn_wingclaws;
 
 /* trap crap */
 sh_int          gsn_bash_trap;
@@ -5034,21 +5047,11 @@ sh_int          gsn_botched_allies;
 sh_int          gsn_allies;
 sh_int          gsn_summoned_illusion;
 
-sh_int          gsn_weaken;
-sh_int          gsn_shadowplay;
 /* new garou stuff */
 sh_int          gsn_rage;
 sh_int          gsn_spirit_totem;
 /* Immortal bonus stuff */
 sh_int		gsn_xp_boost;
-/* New regen stuff */
-sh_int		gsn_vampire_regen;
-/* Ravnos Discs */
-sh_int		gsn_ignis_fatuus;
-sh_int      gsn_chimaera;
-sh_int      gsn_chimerstry;
-sh_int      gsn_phantasm;
-sh_int      gsn_horridreality;
 
 /* garou gifts */
 sh_int          gsn_gift_porcupine;

@@ -74,9 +74,9 @@ DECLARE_SPEC_FUN(   spec_lag                );
 /* DECLARE_SPEC_FUN(   spec_assamite           );
 DECLARE_SPEC_FUN(   spec_baali              ); */
 DECLARE_SPEC_FUN(   spec_brujah             );
-/* DECLARE_SPEC_FUN(   spec_cappadocian        );
+/* DECLARE_SPEC_FUN(   spec_cappadocian        );*/
 DECLARE_SPEC_FUN(   spec_followersofset     );
-DECLARE_SPEC_FUN(   spec_gangrel            );
+/*DECLARE_SPEC_FUN(   spec_gangrel            );
 DECLARE_SPEC_FUN(   spec_gargoyle           );*/
 DECLARE_SPEC_FUN(   spec_lasombra           );
 /* DECLARE_SPEC_FUN(   spec_malkavian          );
@@ -162,9 +162,9 @@ const   struct  spec_type    spec_table[] =
 /*    {   "spec_assamite",          spec_assamite         },
     {   "spec_baali",             spec_baali            }, */
     {   "spec_brujah",            spec_brujah           },
-/*    {   "spec_cappadocian",       spec_cappadocian      },
+/*    {   "spec_cappadocian",       spec_cappadocian      },*/
     {   "spec_followersofset",    spec_followersofset   },
-    {   "spec_gangrel",           spec_gangrel          },
+/*    {   "spec_gangrel",           spec_gangrel          },
     {   "spec_gargoyle",          spec_gargoyle         },*/
     {   "spec_lasombra",          spec_lasombra         },
 /*    {   "spec_malkavian",         spec_malkavian        },
@@ -1540,16 +1540,17 @@ bool spec_cappadocian( CHAR_DATA *ch )
 bool spec_followersofset( CHAR_DATA *ch )
 {
     if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
-    return FALSE;
-    /*
-          switch ( number_range( 0,2 ) )
-          {
-          case 0: return spec_obfuscate (ch);
-          case 1: return spec_presence (ch);
-          case 2: return spec_serpentis (ch);
-          }
-    */
-    return FALSE;
+      return FALSE;
+
+    switch ( number_range( 0,2 ) )
+    {
+      //case 0: return spec_obfuscate (ch);
+      case 0: return spec_serpentis(ch);
+      case 1: return spec_presence (ch);
+      case 2: return spec_serpentis (ch);
+    }
+
+    return TRUE;
 }
 
 bool spec_gangrel( CHAR_DATA *ch )

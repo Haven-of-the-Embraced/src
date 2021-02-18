@@ -4955,9 +4955,10 @@ void spell_lightning_breath(int sn,int level,CHAR_DATA *ch,void *vo,int target)
 /*Sengir changing spells into Caern usage*/
 void spell_caern_rage(int sn,int level,CHAR_DATA *ch,void *vo,int target)
 {
+  int rage = UMAX(1, level / 10);
     if(ch->race == race_lookup("garou"))
     {
-        ch->pcdata->rage[TEMP] += 5;
+        ch->pcdata->rage[TEMP] += rage;
         if(ch->pcdata->rage[TEMP] > ch->pcdata->rage[PERM])
             ch->pcdata->rage[TEMP] = ch->pcdata->rage[PERM];
         act("The spirits of the Caern bless you with a furious {rRage{x!", ch, NULL, NULL, TO_CHAR);

@@ -4075,7 +4075,7 @@ void do_rite( CHAR_DATA *ch, char *argument )
         }
 
         ch->pcdata->gnosis[TEMP] -= 3;
-        if ritemaster
+       if (ritemaster)
         {
           extract_obj(obj);
           rites_roll = godice(4, 7);
@@ -4105,7 +4105,7 @@ void do_rite( CHAR_DATA *ch, char *argument )
 
         caern->value[2] = caern->value[1];
         send_to_char("As you complete the Rite of Moot for this month, you feel the essence of the Caern revitalize.\n\r",ch);
-        act( "$n completes the Rite of Moot.", ch, NULL, NULL, TO_ROOM );
+        act( "The Rite of Moot concludes, and there is an almost palpable charge in the air.", ch, NULL, NULL, TO_ROOM );
     }
     else if(!str_cmp(arg,"of the Opened Caern"))
     {

@@ -1388,6 +1388,17 @@ void obj_update( void )
         }
       }
     }
+    else if (obj->item_type == ITEM_LIGHT && obj->wear_loc == WEAR_NONE &&
+        obj->value[2] < obj->value[3] && IS_LIGHT_FLAG(obj, LIGHT_RECHARGE) &&
+        obj->carried_by == NULL)
+    {
+      if (number_range(1,100) <= obj->value[1])
+      {
+        obj->value[2] += obj->value[0];
+        if (obj->value[2] >= obj->value[3])
+          obj->value[2] = obj->value[3];
+      }
+    }
 
     if ( obj->wear_loc == WEAR_NONE && IS_SET(obj->extra_flags, ITEM_PAUSE_TIMER) )
       continue;

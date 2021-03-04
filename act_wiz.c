@@ -9097,7 +9097,6 @@ void do_globalpower( CHAR_DATA *ch, char *argument )
                 }
             }
             slaughter = FALSE;
-            nosun = FALSE;
             }
         else
         {
@@ -9110,7 +9109,6 @@ void do_globalpower( CHAR_DATA *ch, char *argument )
                 }
             }
             slaughter = TRUE;
-            nosun = TRUE;
         }
         return;
     }

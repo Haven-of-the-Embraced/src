@@ -1530,6 +1530,8 @@ void bust_a_prompt( CHAR_DATA *ch )
     int cshealth = (ch->hit / HLEVELS(ch, 1));
     if (cshealth < 0)
         cshealth = 0;
+    if (cshealth > 7)
+        cshealth = 7;
 
     point = buf;
     str = ch->prompt;

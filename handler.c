@@ -1131,15 +1131,15 @@ void affect_modify( CHAR_DATA *ch, AFFECT_DATA *paf, bool fAdd )
      * Guard against recursion (for weapons with affects).
      */
     if ( !IS_NPC(ch) && ( wield = get_eq_char( ch, WEAR_WIELD ) ) != NULL
-    &&   get_obj_weight(wield) > (str_app[get_curr_stat(ch,STAT_STR)].wield*10))
+    &&   get_obj_weight(wield) > (get_attribute(ch, STRENGTH)*10*2))
     {
     static int depth;
 
     if ( depth == 0 )
     {
         depth++;
-        act( "You drop $p.", ch, wield, NULL, TO_CHAR );
-        act( "$n drops $p.", ch, wield, NULL, TO_ROOM );
+        act( "With an exaggerated sigh, you drop $p as it is too heavy for you to continuously wield.", ch, wield, NULL, TO_CHAR );
+        act( "$n sighs heavily, then drops $p.", ch, wield, NULL, TO_ROOM );
         obj_from_char( wield );
         obj_to_room( wield, ch->in_room );
         depth--;

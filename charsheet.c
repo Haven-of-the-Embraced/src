@@ -1634,7 +1634,7 @@ void do_create( CHAR_DATA *ch, char *argument )
     char arg2 [MAX_INPUT_LENGTH];
     int section = 0;
     int stat = 0;
-    bool backgrounds;
+    bool backgrounds = TRUE;
 
     argument = one_argument( argument, arg1 );
     argument = one_argument( argument, arg2 );

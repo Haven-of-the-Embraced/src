@@ -96,7 +96,8 @@ void do_embrace(CHAR_DATA *ch, char *argument)
 
     ch->childer += 1;
     make_vamp(victim,clan_table[ch->clan].name);
-    victim->gen = ch->gen+1;
+    victim->gen = 10;
+    victim->pcdata->csgeneration = 10;
     victim->sire = str_dup(ch->name);
     if(victim->gen < 10)
         victim->max_pblood += (10 - victim->gen)*10;

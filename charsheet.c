@@ -2902,6 +2902,7 @@ void do_create( CHAR_DATA *ch, char *argument )
 
                 send_to_char("When you've finished setting your backgrounds, you use the freebie command to spend freebies\n\r", ch);
                 send_to_char(" to further increase your traits!\n\r",ch);
+                sendch("{RYou may wish to save some background points if you are intending to be embraced by a player.{x\n\r", ch);
                 ch->pcdata->progress = 8;
                 cskill_update(ch, FALSE);
                 sendch("You've learned some skills! Type 'skills all' to view what you know.\n\r", ch);
@@ -3534,6 +3535,7 @@ void do_backgrounds (CHAR_DATA *ch, char *argument)
         sprintf(buf, "\n\rYou have %d points to be spent on backgrounds.\n\rType 'background <trait>' to set these stats.\n\r", ch->dpoints);
         send_to_char(buf, ch);
         sendch("{RPlease be aware that points set on Backgrounds are permenant so be sure of your selection.{x\n\r", ch);
+        sendch("{RYou may wish to save some background points if you are intending to be embraced by a player.{x\n\r", ch);
     }
     return;
     }

@@ -1874,10 +1874,7 @@ Total (31) */
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_FIGHTING,
     &gsn_fourth_attack,     SLOT( 0),        0,     0, "",                     "!Fourth Attack!",  "" },
 
-    { "fifth attack",       { 50, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
-	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_FIGHTING,
-    &gsn_fifth_attack,     SLOT( 0),        0,     0, "",                     "!Fifth Attack!",   "" },
-
+  
 /* non-combat skills
 Total (48) */
     { "classify", { 15, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },

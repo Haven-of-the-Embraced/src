@@ -4848,7 +4848,6 @@ sh_int          gsn_rescue;
 sh_int          gsn_second_attack;
 sh_int          gsn_third_attack;
 sh_int          gsn_fourth_attack;
-sh_int          gsn_fifth_attack;
 sh_int          gsn_knight_training;
 
 /*Spells*/

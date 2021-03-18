@@ -397,20 +397,6 @@ void multi_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt )
         return;
     }
 
-    chance = get_skill(ch,gsn_fifth_attack)/4;
-
-    if (IS_AFFECTED(ch,AFF_SLOW) || ch->in_room->sector_type == SECT_COLD)
-    chance /= 8;
-
-    if ( number_percent( ) < chance )
-    {
-    one_hit( ch, victim, dt );
-    check_improve(ch,gsn_fifth_attack,TRUE,10);
-    if ( ch->fighting != victim )
-        return;
-    }
-
-
     return;
 }
 

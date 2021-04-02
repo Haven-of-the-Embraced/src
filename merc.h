@@ -3167,7 +3167,7 @@ void    channel_to_char args( (const char *txt, CHAR_DATA*ch) );
 
 #define HAS_TRIGGER_MOB(ch,trig)    (IS_SET((ch)->pIndexData->mprog_flags,(trig)))
 #define HAS_TRIGGER_OBJ(obj,trig) (IS_SET((obj)->pIndexData->oprog_flags,(trig)))
-#define HAS_TRIGGER_ROOM(room,trig) (IS_SET((room)->rprog_flags,(trig)))
+#define HAS_TRIGGER_ROOM(room,trig) ((room) != NULL && IS_SET((room)->rprog_flags,(trig)))
 #define EDIT_CLAN(ch, Clan)     ( Clan = ch->desc->pEdit )
 #define IS_SWITCHED( ch )       ( ch->desc && ch->desc->original )
 #define IS_BUILDER(ch, Area)    ( !IS_NPC(ch) && !IS_SWITCHED( ch ) &&    \

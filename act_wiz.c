@@ -9710,6 +9710,7 @@ void do_pload( CHAR_DATA *ch, char *argument )
   /* bring player to imm */
   if ( d.character->in_room != NULL )
   {
+    d.character->was_in_room = d.character->in_room;
     char_to_room( d.character, ch->in_room); /* put in room imm is in */
   }
   act( "You have loaded $N.", ch, NULL, d.character, TO_CHAR);
@@ -9721,7 +9722,6 @@ void do_pload( CHAR_DATA *ch, char *argument )
      char_to_room(d.character->pet,d.character->in_room);
      act("$n has entered the game.",d.character->pet,NULL,NULL,TO_ROOM);
    }
-
 }
 
 /** Function: do_punload

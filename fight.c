@@ -2992,6 +2992,34 @@ void make_corpse( CHAR_DATA *ch )
       if (has_blood(ch))
         blood = (ch->level / 4) + 5;
 
+        if( ch->race == race_lookup("dhampire") ||
+            ch->race == race_lookup("garou") ||
+            ch->race == race_lookup("methuselah") ||
+            ch->race == race_lookup("bygone") ||
+            ch->race == race_lookup("dragon") ||
+            ch->race == race_lookup("fera"))
+          blood = blood * 3 / 2;
+
+        if( ch->race == race_lookup("amphibian") ||
+            ch->race == race_lookup("ape") ||
+            ch->race == race_lookup("bat") ||
+            ch->race == race_lookup("bear") ||
+            ch->race == race_lookup("cat") ||
+            ch->race == race_lookup("dog") ||
+            ch->race == race_lookup("fish") ||
+            ch->race == race_lookup("fox") ||
+            ch->race == race_lookup("lizard") ||
+            ch->race == race_lookup("marine mammal") ||
+            ch->race == race_lookup("monkey") ||
+            ch->race == race_lookup("pig") ||
+            ch->race == race_lookup("rabit") ||
+            ch->race == race_lookup("rodent") ||
+            ch->race == race_lookup("snake") ||
+            ch->race == race_lookup("song bird") ||
+            ch->race == race_lookup("water fowl") ||
+            ch->race == race_lookup("wolf"))
+          blood = blood / 2;
+
       corpse->value[1] = blood;
 
       if ( ch->gold > 0 )

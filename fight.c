@@ -2977,26 +2977,33 @@ void make_corpse( CHAR_DATA *ch )
     OBJ_DATA *fetish=NULL;
     OBJ_DATA *money;
     char *name;
+    int blood = 0;
 
     one_argument(ch->name, mobname);
 
 
     if ( IS_NPC(ch))
     {
-    name        = ch->short_descr;
-    corpse      = create_object(get_obj_index(OBJ_VNUM_CORPSE_NPC), 0);
-    corpse->timer   = number_range( 3, 6 );
-    corpse->value[0]    = ch->pIndexData->vnum;
-    if ( ch->gold > 0 )
-    {
+      name        = ch->short_descr;
+      corpse      = create_object(get_obj_index(OBJ_VNUM_CORPSE_NPC), 0);
+      corpse->timer   = number_range( 3, 6 );
+      corpse->value[0]    = ch->pIndexData->vnum;
+
+      if (has_blood(ch))
+        blood = (ch->level / 4) + 5;
+
+      corpse->value[1] = blood;
+
+      if ( ch->gold > 0 )
+      {
         money = create_money(ch->gold, ch->silver);
         if (IS_AFFECTED2(ch, AFF2_UMBRA))
             SET_BIT(money->extra_flags,ITEM_UMBRA);
         obj_to_obj(money, corpse);
         ch->gold = 0;
         ch->silver = 0;
-    }
-    corpse->cost = 0;
+      }
+      corpse->cost = 0;
     }
     else
     {

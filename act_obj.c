@@ -2058,8 +2058,9 @@ void do_remove( CHAR_DATA *ch, char *argument )
 void do_sacrifice( CHAR_DATA *ch, char *argument )
 {
     char arg[MAX_INPUT_LENGTH];
+    char* name;
     char buf[MAX_STRING_LENGTH];
-    OBJ_DATA *obj;
+    OBJ_DATA *obj, *obj_next;
     int silver;
 
     /* variables for AUTOSPLIT */
@@ -2077,6 +2078,20 @@ void do_sacrifice( CHAR_DATA *ch, char *argument )
     send_to_char(
         "The Immortals appreciate your offer and may accept it later.\n\r", ch );
     return;
+    }
+
+    if (!str_cmp(arg, "all"))
+    {
+      for (obj = ch->in_room->contents; obj; obj = obj_next)
+      {
+        if (!obj)
+          break;
+        name = str_dup(obj->name);
+        one_argument(name, arg);
+        obj_next = obj->next_content;
+        do_function(ch, &do_sacrifice, arg);
+      }
+      return;
     }
 
     obj = get_obj_list( ch, arg, ch->in_room->contents );

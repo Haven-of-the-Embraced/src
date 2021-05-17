@@ -3782,7 +3782,8 @@ void do_wipecs(CHAR_DATA *ch, char *argument)
     return;
     }
 
-    victim->freebie = 0;
+    victim->freebie = 15;
+    victim->freebie += victim->remorts * 3;
     for(i = 0; i < 30; i++)
         victim->csabilities[i] = 0;
 
@@ -3806,7 +3807,7 @@ void do_wipecs(CHAR_DATA *ch, char *argument)
     victim->pcdata->stat[SKILLS] = 0;
     victim->pcdata->stat[TALENTS] = 0;
     victim->pcdata->stat[KNOWLEDGES] = 0;
-    victim->dpoints = 0;
+    victim->dpoints = 5;
     send_to_char( "You reset their character sheet stats.\n\r", ch );
     send_to_char( "Your character sheet stats have been reset. Please log out of the mud and then back in.\n\r", victim );
 

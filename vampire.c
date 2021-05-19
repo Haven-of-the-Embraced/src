@@ -583,18 +583,18 @@ void do_feed(CHAR_DATA *ch, char *argument)
                     act("$n relieves $s hunger by feeding on a corpse.", ch,NULL,NULL,TO_NOTVICT);
                     send_to_char( "You feed on the corpse.\n\r", ch );
                 }
-/*Sengir tweaked feed corpse blood value to give some at lower level.*/
-                    ch->pblood += obj->level/5 + 5;
-                    obj->level = 0;
-                    gain_condition( ch, COND_FULL, 5);
-                    if( ch->pblood > ch->max_pblood)
-                    {
-                        ch->pblood=ch->max_pblood;
-                        gain_condition( ch, COND_FULL, 10);
-                        act("$n spits out the last of the blood from the corpse, having feasted $mself to excess.", ch, NULL, NULL, TO_NOTVICT);
-                        send_to_char("Your head begins swirling as you finish gorging yourself on precious blood.\n\r", ch);
-                        WAIT_STATE(ch, 2);
-                    }
+
+                ch->pblood += obj->value[1];
+                obj->value[1] = 0;
+                gain_condition( ch, COND_FULL, 5);
+                if( ch->pblood > ch->max_pblood)
+                {
+                    ch->pblood=ch->max_pblood;
+                    gain_condition( ch, COND_FULL, 10);
+                    act("$n spits out the last of the blood from the corpse, having feasted $mself to excess.", ch, NULL, NULL, TO_NOTVICT);
+                    send_to_char("Your head begins swirling as you finish gorging yourself on precious blood.\n\r", ch);
+                    WAIT_STATE(ch, 2);
+                }
 /* disabled to reduce lag... maybe - Ugha
                     if(!IS_NPC(ch) && IS_SET(ch->act,PLR_PUEBLO))
                         send_html("<img xch_sound=play href=http://haven.wolfpaw.net/pueblo/sounds/feed2.wav>",ch,TO_ROOM);

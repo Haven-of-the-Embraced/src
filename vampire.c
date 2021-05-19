@@ -535,7 +535,8 @@ void do_feed(CHAR_DATA *ch, char *argument)
     {
         if( obj->item_type == ITEM_CORPSE_PC || obj->item_type == ITEM_CORPSE_NPC)
         {
-            if(obj->value[1] <= 0)
+            bloodgain = obj->value[1];
+            if(bloodgain <= 0)
             {
                 send_to_char( "This corpse has no blood remaining.\n\r", ch );
                 return;
@@ -544,19 +545,10 @@ void do_feed(CHAR_DATA *ch, char *argument)
 
             affect_strip(ch,gsn_vamp_frenzy);
 
-            if(obj->timer < 2)
-            {
-              act("$n feeds from $p, but seems to become ill.", ch,obj,NULL,TO_NOTVICT);
-              spell_poison( gsn_poison, ch->level, ch, ch,TARGET_CHAR);
-              send_to_char( "You gag and turn green.\n\r", ch );
-            }
-            else
-            {
-              act("$n relieves $s hunger by feeding from $p.", ch,obj,NULL,TO_NOTVICT);
-              send_to_char( "You feed on the corpse.\n\r", ch );
-            }
+            act("$n relieves $s hunger by feeding from $p.", ch,obj,NULL,TO_NOTVICT);
+            send_to_char( "You feed on the corpse.\n\r", ch );
 
-            ch->pblood += obj->value[1];
+            ch->pblood += bloodgain;
             obj->value[1] = 0;
             gain_condition( ch, COND_FULL, 5);
             if( ch->pblood > ch->max_pblood)

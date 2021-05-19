@@ -431,7 +431,6 @@ void do_feed(CHAR_DATA *ch, char *argument)
         return;
     }
 
-
     if (!IS_AFFECTED(ch,AFF_FANGS) && ch->race != race_lookup("ghoul"))
     {
         send_to_char( "Your fangs aren't extended!\n\r", ch );
@@ -536,9 +535,9 @@ void do_feed(CHAR_DATA *ch, char *argument)
     {
         if( obj->item_type == ITEM_CORPSE_PC || obj->item_type == ITEM_CORPSE_NPC)
         {
-            if(obj->level == 0)
+            if(obj->value[1] <= 0)
             {
-                send_to_char( "This corpse has no life remaining.\n\r", ch );
+                send_to_char( "This corpse has no blood remaining.\n\r", ch );
                 return;
             }
             WAIT_STATE( ch, 12 );
@@ -557,8 +556,8 @@ void do_feed(CHAR_DATA *ch, char *argument)
                     act("$n relieves $s hunger by feeding on a corpse.", ch,NULL,NULL,TO_NOTVICT);
                     send_to_char( "You feed on the corpse.\n\r", ch );
                 }
-                    ch->pblood += ((obj->level/2) - ch->gen);
-                    obj->level = 0;
+                    ch->pblood += obj->value[1];
+                    obj->value[1] = 0;
                     WAIT_STATE( ch, 12 );
                     gain_condition( ch, COND_FULL, 5);
                     if( ch->pblood > ch->max_pblood){

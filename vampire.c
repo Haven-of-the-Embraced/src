@@ -543,61 +543,31 @@ void do_feed(CHAR_DATA *ch, char *argument)
             WAIT_STATE( ch, 12 );
 
             affect_strip(ch,gsn_vamp_frenzy);
-            if( obj->item_type == ITEM_CORPSE_PC)
-            {
-                if(obj->timer < 20)
-                {
-                    act("$n feeds from $p, but seems to become ill.", ch,obj,NULL,TO_NOTVICT);
-                    spell_poison( gsn_poison, ch->level, ch, ch,TARGET_CHAR);
-                    send_to_char( "You gag and turn green.\n\r", ch );
-                }
-                else
-                {
-                    act("$n relieves $s hunger by feeding from $p.", ch,obj,NULL,TO_NOTVICT);
-                    send_to_char( "You feed on the corpse.\n\r", ch );
-                }
-                    ch->pblood += obj->value[1];
-                    obj->value[1] = 0;
-                    WAIT_STATE( ch, 12 );
-                    gain_condition( ch, COND_FULL, 5);
-                    if( ch->pblood > ch->max_pblood)
-                    {
-                        ch->pblood=ch->max_pblood;
-                        gain_condition( ch, COND_FULL, 10);
-                    }
-                    return;
-            }
-            if( obj->item_type == ITEM_CORPSE_NPC)
-            {
-                if(obj->timer < 2)
-                {
-                    act("$n feeds from $p, but seems to become ill.", ch,obj,NULL,TO_NOTVICT);
-                    spell_poison( gsn_poison, ch->level, ch, ch,TARGET_CHAR);
-                    send_to_char( "You gag and turn green.\n\r", ch );
-                }
-                else
-                {
-                    act("$n relieves $s hunger by feeding from $p.", ch,obj,NULL,TO_NOTVICT);
-                    send_to_char( "You feed on the corpse.\n\r", ch );
-                }
 
-                ch->pblood += obj->value[1];
-                obj->value[1] = 0;
-                gain_condition( ch, COND_FULL, 5);
-                if( ch->pblood > ch->max_pblood)
-                {
-                    ch->pblood=ch->max_pblood;
-                    gain_condition( ch, COND_FULL, 10);
-                    act("$n spits out the last of the blood from the corpse, having feasted $mself to excess.", ch, NULL, NULL, TO_NOTVICT);
-                    send_to_char("Your head begins swirling as you finish gorging yourself on precious blood.\n\r", ch);
-                    WAIT_STATE(ch, 2);
-                }
-/* disabled to reduce lag... maybe - Ugha
-                    if(!IS_NPC(ch) && IS_SET(ch->act,PLR_PUEBLO))
-                        send_html("<img xch_sound=play href=http://haven.wolfpaw.net/pueblo/sounds/feed2.wav>",ch,TO_ROOM);
-*/
-                    return;
+            if(obj->timer < 2)
+            {
+              act("$n feeds from $p, but seems to become ill.", ch,obj,NULL,TO_NOTVICT);
+              spell_poison( gsn_poison, ch->level, ch, ch,TARGET_CHAR);
+              send_to_char( "You gag and turn green.\n\r", ch );
             }
+            else
+            {
+              act("$n relieves $s hunger by feeding from $p.", ch,obj,NULL,TO_NOTVICT);
+              send_to_char( "You feed on the corpse.\n\r", ch );
+            }
+
+            ch->pblood += obj->value[1];
+            obj->value[1] = 0;
+            gain_condition( ch, COND_FULL, 5);
+            if( ch->pblood > ch->max_pblood)
+            {
+              ch->pblood=ch->max_pblood;
+              gain_condition( ch, COND_FULL, 10);
+              act("$n spits out the last of the blood from the corpse, having feasted $mself to excess.", ch, NULL, NULL, TO_NOTVICT);
+              send_to_char("Your head begins swirling as you finish gorging yourself on precious blood.\n\r", ch);
+              WAIT_STATE(ch, 2);
+            }
+            return;
         }
         send_to_char( "That is not a valid corpse!\n\r", ch );
         return;

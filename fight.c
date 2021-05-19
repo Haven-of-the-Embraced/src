@@ -3012,7 +3012,7 @@ void make_corpse( CHAR_DATA *ch )
             ch->race == race_lookup("marine mammal") ||
             ch->race == race_lookup("monkey") ||
             ch->race == race_lookup("pig") ||
-            ch->race == race_lookup("rabit") ||
+            ch->race == race_lookup("rabbit") ||
             ch->race == race_lookup("rodent") ||
             ch->race == race_lookup("snake") ||
             ch->race == race_lookup("song bird") ||

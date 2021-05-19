@@ -2994,6 +2994,7 @@ void make_corpse( CHAR_DATA *ch )
 
         if( ch->race == race_lookup("dhampire") ||
             ch->race == race_lookup("garou") ||
+            ch->race == race_lookup("vampire") ||
             ch->race == race_lookup("methuselah") ||
             ch->race == race_lookup("bygone") ||
             ch->race == race_lookup("dragon") ||

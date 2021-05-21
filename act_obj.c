@@ -2080,7 +2080,7 @@ void do_sacrifice( CHAR_DATA *ch, char *argument )
     char* name;
     char buf[MAX_STRING_LENGTH];
     OBJ_DATA *obj, *obj_next;
-    int silver;
+    int silver, total, count;
 
     /* variables for AUTOSPLIT */
     CHAR_DATA *gch;
@@ -2101,15 +2101,50 @@ void do_sacrifice( CHAR_DATA *ch, char *argument )
 
     if (!str_cmp(arg, "all"))
     {
+      silver = total = count = 0;
+
       for (obj = ch->in_room->contents; obj; obj = obj_next)
       {
         if (!obj)
           break;
-        name = str_dup(obj->name);
-        one_argument(name, arg);
+
         obj_next = obj->next_content;
-        do_function(ch, &do_sacrifice, arg);
+
+        if (!acceptable_sacrifice(ch, obj))
+          continue;
+
+        silver = UMAX(1,obj->level * 3);
+        count++;
+        if (obj->item_type != ITEM_CORPSE_NPC && obj->item_type != ITEM_CORPSE_PC)
+            silver = UMIN(silver,obj->cost);
+
+        total += silver;
+        extract_obj(obj);
       }
+
+      if (IS_SET(ch->act,PLR_AUTOSPLIT) )
+      { /* AUTOSPLIT code */
+          members = 0;
+          for (gch = ch->in_room->people; gch != NULL; gch = gch->next_in_room )
+              {
+                  if ( is_same_group( gch, ch ) )
+                  members++;
+              }
+
+          ch->silver += total;
+          sprintf(buffer,"You sacrifice %d items to the gods! You receive %d silver!\n\r", count, total);
+          sendch(ch, buffer);
+
+          if ( members > 1 && total > 1)
+          {
+              sprintf(buffer,"%d",total);
+              do_function(ch, &do_split, buffer);
+          }
+      }
+
+      act( "$n sacrifices a number of items to the Immortals.", ch, NULL, NULL, TO_ROOM );
+      wiznet("$N sacrificed the whole room!",
+         ch,NULL,WIZ_SACCING,0,0);
       return;
     }
 
@@ -2120,32 +2155,10 @@ void do_sacrifice( CHAR_DATA *ch, char *argument )
     return;
     }
 
-    if ( obj->item_type == ITEM_CORPSE_PC )
+    if (!acceptable_sacrifice(ch, obj))
     {
-    if (obj->contains)
-        {
-       send_to_char(
-         "The Immortals wouldn't like that.\n\r",ch);
-       return;
-        }
-    }
-
-
-    if ( !CAN_WEAR(obj, ITEM_TAKE) || CAN_WEAR(obj, ITEM_NO_SAC))
-    {
-    act( "$p is not an acceptable sacrifice.", ch, obj, 0, TO_CHAR );
-    return;
-    }
-
-    if (obj->in_room != NULL)
-    {
-    for (gch = obj->in_room->people; gch != NULL; gch = gch->next_in_room)
-        if (gch->on == obj)
-        {
-        act("$N appears to be using $p.",
-            ch,obj,gch,TO_CHAR);
-        return;
-        }
+      send_to_char("That item cannot be sacrificed to the Gods.\n\r", ch);
+      return;
     }
 
     silver = UMAX(1,obj->level * 3);

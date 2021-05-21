@@ -2053,7 +2053,26 @@ void do_remove( CHAR_DATA *ch, char *argument )
     return;
 } */
 
+bool acceptable_sacrifice(CHAR_DATA *ch, OBJ_DATA *obj)
+{
+  CHAR_DATA *fch;
 
+  if ( obj->item_type == ITEM_CORPSE_PC && obj->contains)
+     return FALSE;
+
+  if ( !CAN_WEAR(obj, ITEM_TAKE) || CAN_WEAR(obj, ITEM_NO_SAC))
+  return FALSE;
+
+  if (obj->in_room != NULL)
+  {
+  for (fch = obj->in_room->people; fch != NULL; fch = fch->next_in_room)
+      if (fch->on == obj)
+        return FALSE;
+  }
+
+  return TRUE;
+
+}
 
 void do_sacrifice( CHAR_DATA *ch, char *argument )
 {

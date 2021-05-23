@@ -1620,6 +1620,12 @@ void fread_char( CHAR_DATA *ch, FILE *fp )
                 break;
             }
 
+        if (!str_cmp(word, "Hostname"))
+        {
+          fread_to_eol(fp);
+          fMatch = TRUE;
+        }
+
         break;
 
     case 'I':

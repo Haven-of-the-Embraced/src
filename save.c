@@ -190,7 +190,9 @@ void fwrite_char( CHAR_DATA *ch, FILE *fp )
             fprintf( fp, "Email %s~\n",ch->pcdata->email);
         }
     }
-    fprintf( fp, "Hostname %s~\n", ch->desc->host);
+    if (ch->desc)
+      fprintf( fp, "Hostname %s~\n", ch->desc->host);
+
     fprintf( fp, "Vers %d\n",   ch->version > 0 ? ch->version : 6);
     fprintf( fp, "Home %d\n", ch->pcdata->home );
     fprintf( fp, "Hometown %d\n", ch->pcdata->hometown);

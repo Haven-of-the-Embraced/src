@@ -1557,13 +1557,6 @@ void do_look( CHAR_DATA *ch, char *argument )
     return;
 }
 
-/* RT added back for the hell of it */
-/*void do_read (CHAR_DATA *ch, char *argument )
-{
-    do_function(ch, &do_look, argument);
-}
- I don't know why it was added 'for the hell of it'*/
-
 void do_examine( CHAR_DATA *ch, char *argument )
 {
     char buf[MAX_STRING_LENGTH];
@@ -1658,12 +1651,8 @@ void do_exits( CHAR_DATA *ch, char *argument )
     found = FALSE;
     for ( door = 0; door <= 5; door++ )
     {
-    if ( ( pexit = ch->in_room->exit[door] ) != NULL
-    &&   pexit->u1.to_room != NULL
-    &&   can_see_room(ch,pexit->u1.to_room)
-/*  &&   !IS_SET(pexit->exit_info, EX_CLOSED)
-    &&   (!IS_IMMORTAL(ch) && !IS_SET(pexit->exit_info, EX_HIDDEN)) */
-    )
+    if ( (pexit = ch->in_room->exit[door]) != NULL &&
+         pexit->u1.to_room != NULL && can_see_room(ch,pexit->u1.to_room))
     {
         if(IS_SET(pexit->exit_info, EX_HIDDEN) && !IS_IMMORTAL(ch))
         continue;
@@ -1803,8 +1792,6 @@ void do_score( CHAR_DATA *ch, char *argument )
 	sprintf(buf,"  {c%5hd{x/{D%-4d   {c%7ld{w/{D%-7d{D     {D|{x\n\r",ch->carry_number,can_carry_n(ch),get_carry_weight(ch)/10, can_carry_w(ch)/10);
 	add_buf(output,buf);
 
-	/* A check for NPCs preventing any additional info from showing up for mobs. If you want this to show up later for some reason,
-		gonna have to do it yourself.  - Ugha*/
 	if(!IS_NPC(ch))
 	{
 		/* Not sure where to put this. We can make it a line of Alert style data that we can add to in the future if needed. */
@@ -1820,8 +1807,6 @@ void do_score( CHAR_DATA *ch, char *argument )
     add_buf(output, buf);
 	  sprintf(buf,"{D     |  {w  Attack Roll Dice: {c%2d                   {xAttack Damage Dice: {c%2d    {D|{x\n\r", baseattack, basedamage);
     add_buf(output, buf);
-		/* Show vamp info. I replaced the whole clan table check as I don't believe its needed anymore. I didn't use
-			IS_VAMP() cause I didn't want dhamps and ghouls to be shown this info. */
 		if(ch->race == race_lookup("vampire") || ch->race == race_lookup("methuselah"))
 		{
 			add_buf(output,"     {D|>------------------------------{WVampire{D------------------------------<|{x\n\r");
@@ -1855,7 +1840,6 @@ void do_score( CHAR_DATA *ch, char *argument )
 			}
 		}
 
-		/* Do ghouls even exist anymore? What info do they need in score? */
 		if (ch->race == race_lookup("ghoul"))
 		{
 			add_buf(output,"     {D|>-------------------------------{WGhoul{D-------------------------------<|\n\r");
@@ -1890,8 +1874,6 @@ void do_score( CHAR_DATA *ch, char *argument )
 				add_buf(output,buf);
         }
 
-		/* What should be displayed for humans? "Oh no, you're a boring human. Sorry about that. Go die now loser, you shoulda
-			created a vamp."*/
 		if (ch->race == race_lookup("human") && ch->avatar == 0)
 		{
 			add_buf(output,"     {D|>-------------------------------{WHuman{D-------------------------------<|{x\n\r");
@@ -1900,9 +1882,6 @@ void do_score( CHAR_DATA *ch, char *argument )
 			add_buf(output, buf);
 		}
 
-		/* I didn't know if I should split up trust from actual imm levels, but I figured that could be done later so I just went with a
-			normal IS_IMMORTAL check for now.  All the IS_NPC checks are in case the larger check is removed to allow mobs to
-			see/show vamp/garou/mage info. All calls to pcdata should have IS_NPC checks methinks.*/
 		if (IS_IMMORTAL(ch) || (!IS_NPC(ch) && ch->pcdata->ip > 0))
 		{
 			add_buf(output,"     {D|>------------------------------{WImmortal{D-----------------------------<|{x\n\r");
@@ -1928,20 +1907,8 @@ void do_score( CHAR_DATA *ch, char *argument )
 			}
 		}
 
-		/* IC time and such could be moved here if we need the space in the future. I'd recommend renaming Achievement to
-			Other Info and putting the PVP flag here along with any other crap we may need in the future.*/
 		add_buf(output,"     {D|>----------------------------{WAchievement{D----------------------------<|{x\n\r");
 
-		/* Here's the previous version that took two lines. I kinda like it better, but I prefer to have
-			the extra line if we can get it. So lets go with the below version instead */
-//		sprintf(buf2,"Total Kills: %d          Current Kills: %d",ch->totalkills,ch->currentkills);
-//		sprintf(buf,"        %s\n\r",center(buf2,64," "));
-//		add_buf(output,buf);
-//		sprintf(buf2,"Highest Damage: %d      Quest Points: %d",ch->maxdamage,ch->qpoints);
-//		sprintf(buf,"        %s\n\r",center(buf2, 64, " "));
-//		add_buf(output,buf);
-
-		/* New version. Need to make sure it won't stretch insanely large when numbers near max. */
 		sprintf(buf2,"{wKills: {y%d  {wCurrent Kills: {y%d  {wTop Dam: {y%d{x", ch->totalkills,ch->currentkills,ch->maxdamage);
 		sprintf(buf,"{D     |%s{D|{x\n\r",center(buf2,69," "));
 		add_buf(output,buf);
@@ -2072,20 +2039,6 @@ char *  const   month_name  [] =
     "October", "November", "December", "error", "error",
     "error", "error", "error"
 };
-
-/* void do_time( CHAR_DATA *ch, char *argument )
-{
-    char buf[MAX_STRING_LENGTH];
-
-    if (time_info.hour < 0) time_info.hour = 1;
-
-    sprintf( buf,
-        "It is %d o'clock %s.\n\r",
-        (time_info.hour % 12 == 0) ? 12 : time_info.hour %12,
-        time_info.hour >= 12 ? "pm" : "am");
-    send_to_char(buf,ch);
-    return;
-} */
 
 void do_resettime( CHAR_DATA *ch, char *argument )
 {
@@ -3325,80 +3278,6 @@ void do_password( CHAR_DATA *ch, char *argument )
     return;
 }
 
-/* void do_shift( CHAR_DATA *ch, char *argument )
-{
-    int vnum;
-    char buf[MAX_STRING_LENGTH];
-    char arg[MAX_INPUT_LENGTH];
-    CHAR_DATA *victim;
-    ROOM_INDEX_DATA *location;
-
-    vnum = 0;
-
-    one_argument( argument, arg );
-    if ( arg[0] == '\0' )
-    {
-    if ( ch->desc == NULL )
-      return;
-
-    if ( ch->desc->original == NULL )
-    {
-      send_to_char( "{RWho do you want to shapeshift into?\n\r{x", ch );
-      return;
-    }
-
-    send_to_char(
-      "You return to your original form. Type replay to see any missed tells.\n\r", ch );
-    act ( "$n shifts into the shape of $N.", ch, NULL, ch->desc->original, TO_ROOM );
-    if (ch->prompt != NULL)
-    {
-      free_string(ch->prompt);
-      ch->prompt = NULL;
-    }
-
-    sprintf(buf,"$N returns from %s.",ch->short_descr);
-    wiznet(buf,ch->desc->original,0,WIZ_SWITCHES,WIZ_SECURE,get_trust(ch));
-
-    victim = ch->desc->character;
-    char_from_room( ch->desc->original );
-    char_to_room( ch->desc->original, victim->in_room );
-
-    ch->desc->character       = ch->desc->original;
-    ch->desc->original        = NULL;
-    ch->desc->character->desc = ch->desc;
-    ch->desc                  = NULL;
-
-    extract_char( victim, TRUE );
-
-    return;
-    }
-
-
-    if (!str_prefix(arg,"rat"))
-    {
-    vnum = MOB_VNUM_RAT;
-    }
-
-    victim = create_mobile( get_mob_index( vnum) );
-
-    ch->desc->character = victim;
-    ch->desc->original  = ch;
-    victim->desc         = ch->desc;
-    ch->desc            = NULL;
-    if (ch->prompt != NULL)
-        victim->prompt = str_dup(ch->prompt);
-    victim->comm = ch->comm;
-    victim->lines = ch->lines;
-    REMOVE_BIT(victim->act,ACT_AGGRESSIVE);
-
-    location = find_location( ch, "1" );
-    char_from_room(ch);
-    char_to_room(ch,location);
-    act( "$N has been transformed.", ch, NULL, victim , TO_ROOM );
-    act( "You have transform $N.", ch, NULL, victim, TO_CHAR);
-    return;
-} */
-
 void do_invite( CHAR_DATA *ch, char *argument )
 {
     char arg[MAX_INPUT_LENGTH];
@@ -3439,18 +3318,11 @@ void do_invite( CHAR_DATA *ch, char *argument )
         send_to_char( "You can only awaken the Sleepers with no ties to the supernatural!\n\r", ch );
         return;
     }
-        /*NEW MAGE CODE */
-
-/*
-    if(str_cmp(arg2,"old"))
-    {
-*/
         if(victim->race != race_lookup("human") && ch->clan == clan_lookup("mage"))
         {
             send_to_char("Only a Sleeper may be Awakened.\n\r",ch);
             return;
         }
-/*  } */
     if(victim->clan != 0)
     {
         send_to_char( "They are already in a guild!\n\r",ch);
@@ -3716,26 +3588,6 @@ void do_promote( CHAR_DATA *ch, char *argument )
         victim->rank = 10;
         return;
     }
-/*  else if(!str_prefix(arg2, "reward"))
-    {
-        if(victim->rank != 9)
-        {
-            send_to_char("They are not a mentor!\n\r",ch);
-            return;
-        }
-        if(victim->apprentice == NULL)
-        {
-            send_to_char("That Mentor does not have an Apprentice.\n\r",ch);
-            return;
-        }
-        send_to_char("You are rewarded for your hard work training your Apprentice.\n\r",victim);
-        send_to_char("You reward them for their hard work training their Apprentice.\n\r",ch);
-        victim->dpoints ++;
-        victim->apprentice = NULL;
-        victim->rank = 8;
-        return;
-    }
-*/
     else
         send_to_char("That is not a valid choice.\n\r",ch);
     return;
@@ -4200,127 +4052,6 @@ void do_glance( CHAR_DATA *ch, char *argument )
     return;
 }
 
-/* disabled
-for(i=0;i < 20;i++)
-{
-    if(ch->pcdata->csdisciplines[i])
-    {
-        sprintf(buf, " | %s%s",csdisc_table[i].name, dots(ch->pcdata->csdisciplines[i]));
-        found = TRUE;
-        sprintf(discs[i2], "%s",csdisc_table[i].name);
-        i2++;
-    }
-    if(found) break;
-}
-if(!found) sprintf(buf, " | _______________%s",dots(0));
-found = FALSE;
-send_to_char(buf,ch);
-*
-
-
-for(i=0;i < 20;i++)
-{
-    if(ch->pcdata->csbackgrounds[i])
-    {
-        sprintf(buf2, "   %s%s",csback_table[i].name,dots(ch->pcdata->csbackgrounds[i]));
-        found = TRUE;
-    }
-    if(found) break;
-}
-if(!found) sprintf(buf2, "_______________%s",dots(0));
-send_to_char(buf2,ch);
-sprintf(buf,"   Conscience_____%s |\n\r",dots(ch->pcdata->csvirtues[1]));
-send_to_char(buf,ch);
-*/
-
-/*
-for(i=0;i < 20;i++)
-{
-    if(ch->pcdata->csdisciplines[i] && !strcmp(discs[i2],csdisc_table[i].name))
-    {
-        sprintf(buf, "%s%s",csdisc_table[i].name, dots(ch->pcdata->csdisciplines[i]));
-        found = TRUE;
-        i2++;
-        sprintf(discs[i2],"%s",csdisc_table[i].name);
-    }
-    if(found) break;
-}
-if(!found) sprintf(buf, "_______________%s",dots(0));
-found = FALSE;
-send_to_char(buf,ch);
-for(i=0;i < 20;i++)
-{
-    if(ch->pcdata->csbackgrounds[i])
-    {
-        sprintf(buf2, "   %s%s",csback_table[i].name,dots(ch->pcdata->csbackgrounds[i]));
-        found = TRUE;
-    }
-    if(found) break;
-}
-if(!found) sprintf(buf2, "_______________%s",dots(0));
-send_to_char(buf2,ch);
-sprintf(buf,"                        |\n\r");
-send_to_char(buf,ch);
-*/
-
-/* Temp disabled til i add in a page 2
-
-send_to_char(" | _______________ooooo   _______________ooooo                        |\n\r",ch);
-send_to_char(" | _______________ooooo   _______________ooooo   Self-Control___*oooo |\n\r",ch);
-send_to_char(" | _______________ooooo   _______________ooooo                        |\n\r",ch);
-send_to_char(" | _______________ooooo   _______________ooooo   Courage________*oooo |\n\r",ch);
-send_to_char(" |                                                                    |\n\r",ch);
-send_to_char(" |<=----------------------------------------------------------------=>|\n\r",ch);
-send_to_char(" |                                                                    |\n\r",ch);
-send_to_char(" | <---Other Traits--->   <-----Humanity----->   <------Health------> |\n\r",ch);
-send_to_char(" | _______________ooooo   o o o o o o o o o o    Bruised            _ |\n\r",ch);
-send_to_char(" | _______________ooooo                          Hurt          -1   _ |\n\r",ch);
-send_to_char(" | _______________ooooo   <-----Willpower---->   Injured       -1   _ |\n\r",ch);
-send_to_char(" | _______________ooooo   o o o o o o o o o o    Wounded       -2   _ |\n\r",ch);
-send_to_char(" | _______________ooooo   _ _ _ _ _ _ _ _ _ _    Mauled        -2   _ |\n\r",ch);
-send_to_char(" | _______________ooooo                          Crippled      -5   _ |\n\r",ch);
-send_to_char(" | _______________ooooo   <----Blood Pool---->   Incapacitated      _ |\n\r",ch);
-send_to_char(" | _______________ooooo   _ _ _ _ _ _ _ _ _ _                         |\n\r",ch);
-send_to_char(" | _______________ooooo   _ _ _ _ _ _ _ _ _ _                         |\n\r",ch);
-send_to_char(" |                                                                    |\n\r",ch);
-send_to_char("<======================================================================>\n\r",ch);
-
-
-    return;
-}
-*/
-
-/*
-void do_qlog(CHAR_DATA *ch, char*argument)
-{
-    int i;
-    char buf[MAX_STRING_LENGTH];
-
-    if(IS_NPC(ch))
-    {
-        sprintf(buf,"My quest number is %d!",ch->quest);
-        do_function(ch, &do_say, buf);
-        return;
-    }
-
-
-    for(i = 0;i < MAX_QUEST;i++)
-    {
-        if(ch->pcdata->quest_id[i] != 0)
-        {
-            sprintf(buf,"The quest %s(%d) is %d%% done with the string:\n\r%s\n\r",
-            ch->pcdata->quest_name[i],
-            ch->pcdata->quest_id[i],
-            ch->pcdata->quest_step[i],
-            ch->pcdata->quest_string[i]);
-            send_to_char(buf,ch);
-        }
-    }
-    return;
-}
-*/
-
-
 void do_qlog(CHAR_DATA *ch, char *argument)
 {
     int i,quests, line;
@@ -4337,13 +4068,6 @@ void do_qlog(CHAR_DATA *ch, char *argument)
         do_function(ch, &do_say, temp_buf);
         return;
     }
-
-/*  start of page code
-    argument = one_argument(argument,arg1);
-
-    if(!is_number(arg1)) page = 1;
-    else    page = atoi(arg1);
-*/
 
     for(i = 0;i < MAX_QUEST;i++)
         if(ch->pcdata->quest_id[i] != 0) quests++;
@@ -4773,79 +4497,7 @@ void do_pnewpass( CHAR_DATA *ch, char *argument )
     send_to_char( "Ok.\n\r", ch );
     return;
 }
-/*
-void do_contacts( CHAR_DATA *ch, char *argument )
-{
-    char buf[MAX_STRING_LENGTH];
-    char arg1[MIL];
-    char arg2[MIL];
-    CHAR_DATA *victim;
-        AFFECT_DATA af;
-    OBJ_DATA *obj;
-    int success, diff;
-    success = diff = 0;
 
-    if (IS_NPC(ch)) return;
-
-    if(ch->pcdata->csbackgrounds[CSBACK_CONTACTS] < 1)
-    {
-        send_to_char( "You do not have any contacts to get information from!\n\r", ch );
-        return;
-    }
-
-    argument = one_argument(argument, arg1);
-    argument = one_argument(argument, arg2);
-
-    if ( arg1[0] == '\0' || arg2[0] == '\0')
-    {
-        send_to_char( "Gather information about what from your contacts?\n\r", ch );
-        send_to_char( "Syntax: contacts <mobile/object> <name>\n\r", ch);
-        return;
-    }
-
-    if (!str_cmp(arg1, "mobile")) {
-
-        if ( ( victim = get_char_world( ch, arg2 ) ) == NULL )
-        {
-            send_to_char( "Gather information about whom?\n\r", ch );
-            return;
-        }
-        diff = 6;
-        if (victim->level > ch->pcdata->csbackgrounds[CSBACK_CONTACTS] * 20)
-            diff += 2;
-        if (!IS_NPC(victim) && victim->pcdata->csbackgrounds[CSBACK_FAME] > 2)
-            diff -= 2;
-        sprintf(buf, "You ask your contacts to help you find %s...", IS_NPC(victim) ? victim->short_descr : victim->name);
-        success = godice(get_attribute(ch, MANIPULATION) + ch->csabilities[CSABIL_INTIMIDATION], diff);
-
-        if (success < 0)
-        {
-            send_to_char("... they find your demeanor insulting and refuse to help you!\n\r", ch);
-            af.where     = TO_AFFECTS;
-            af.type      = gsn_contacts;
-            af.level     = ch->level;
-            af.duration  = number_range(10, 25-ch->pcdata->csbackgrounds[CSBACK_CONTACTS]*2);
-            af.location  = 0;
-            af.modifier  = 0;
-            affect_to_char( ch, &af );
-            return;
-        } else if (success == 0) {
-            send_to_char("... and nobody seems to know who they even are.\n\r", ch);
-            return;
-        } else {
-            sprintf( buf, "... and after some searching they report back:\n\rYou can find %s in %s.\n\r",
-            IS_NPC(victim) ? victim->short_descr : victim->name, victim->in_room->name);
-            send_to_char( buf, ch );
-            if (success > 3) {
-                    sprintf("This is in %s\n\r", victim->in_room->area->name);
-                    send_to_char(buf, ch);
-            }
-        }
-
-    }
-
-}
-*/
 void do_checkhelps (CHAR_DATA *ch, char *argument)
 {
     char buf[MSL], buf2[MSL];
@@ -4883,9 +4535,6 @@ void do_checkhelps (CHAR_DATA *ch, char *argument)
             "log you wish to see.`x\r\n");
         sprintf(buf, "tail -n 10 " NOHELPS_FILE );
     }
-
-    //sprintf( buf2,"\r\n`^%s`x", format_titlebarf("Piping:`x %s", buf));
-    //add_buf(output,buf2);
 
     add_buf(output,get_piperesult(buf));
 
@@ -4933,9 +4582,6 @@ void do_checktypos (CHAR_DATA *ch, char *argument)
         sprintf(buf, "tail -n 10 " TYPO_FILE );
     }
 
-    //sprintf( buf2,"\r\n`^%s`x", format_titlebarf("Piping:`x %s", buf));
-    //add_buf(output,buf2);
-
     add_buf(output,get_piperesult(buf));
 
     page_to_char(buf_string(output), ch);
@@ -4982,9 +4628,6 @@ void do_checkbugs (CHAR_DATA *ch, char *argument)
         sprintf(buf, "tail -n 10 " BUG_FILE );
     }
 
-    //sprintf( buf2,"\r\n`^%s`x", format_titlebarf("Piping:`x %s", buf));
-    //add_buf(output,buf2);
-
     add_buf(output,get_piperesult(buf));
 
     page_to_char(buf_string(output), ch);
@@ -5030,9 +4673,6 @@ void do_systemlog (CHAR_DATA *ch, char *argument)
             "log you wish to see.`x\r\n");
         sprintf(buf, "tail -n 10 " SYSTEM_LOG );
     }
-
-    //sprintf( buf2,"\r\n`^%s`x", format_titlebarf("Piping:`x %s", buf));
-    //add_buf(output,buf2);
 
     add_buf(output,get_piperesult(buf));
 

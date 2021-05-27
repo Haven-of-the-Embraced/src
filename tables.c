@@ -149,42 +149,7 @@ const struct cdisc_type clandisc_table[MAX_CLAN] =
 
 
     };
-/* for clans */
-/*
-const struct clan_type clan_table[MAX_CLAN] =
-{
-      name,       who entry,  death-transfer room,    clan type
-    {   "",     "",     ROOM_VNUM_ALTAR,    0, {0, 0, 0}},
-    {   "loner",    "[ Loner ] ",   ROOM_VNUM_ALTAR,    TYPE_NONE, {0, 0, 0}    },
-    {   "malkavian",    "[Malkavian] ", ROOM_VNUM_ALTAR,    TYPE_CLAN, {DISC_AUSPEX, DISC_DOMINATE, DISC_OBFUSCATE} },
-    {   "assamite", "[Assamite] ",  ROOM_VNUM_ALTAR,    TYPE_CLAN, {DISC_CELERITY, DISC_OBFUSCATE, DISC_QUIETUS}    },
-    {   "cappadocian",  "[Cappadocian] ",   ROOM_VNUM_ALTAR,    TYPE_CLAN, {DISC_MORTIS, DISC_AUSPEX, DISC_FORTITUDE}   },
-    {   "gangrel",  "[Gangrel] ",   ROOM_VNUM_ALTAR,    TYPE_CLAN, {DISC_FORTITUDE, DISC_PROTEAN, DISC_ANIMALISM}   },
-    {   "nosferatu",    "[Nosferatu] ", ROOM_VNUM_ALTAR,    TYPE_CLAN, {DISC_OBFUSCATE, DISC_POTENCE, DISC_ANIMALISM}   },
-    {   "toreador", "[Toreador] ",  ROOM_VNUM_ALTAR,    TYPE_CLAN, {DISC_AUSPEX, DISC_CELERITY, DISC_PRESENCE}  },
-    {   "brujah",   "[Brujah] ",    ROOM_VNUM_ALTAR,    TYPE_CLAN, {DISC_CELERITY, DISC_POTENCE, DISC_PRESENCE} },
-    {   "ventrue",  "[Ventrue] ",   ROOM_VNUM_ALTAR,    TYPE_CLAN, {DISC_DOMINATE, DISC_FORTITUDE, DISC_PRESENCE}   },
-    {   "Tremere",  "[Tremere] ",   ROOM_VNUM_ALTAR,    TYPE_CLAN, {DISC_THAUMATURGY, DISC_DOMINATE, DISC_AUSPEX}   },
-    {   "Lasombra", "[Lasombra] ",  ROOM_VNUM_ALTAR,    TYPE_CLAN, {DISC_DOMINATE, DISC_OBTENEBRATION, DISC_POTENCE}    },
-    {   "Tzimisce", "[Tzimisce] ",  ROOM_VNUM_ALTAR,    TYPE_CLAN, {DISC_ANIMALISM, DISC_AUSPEX, DISC_VICISSITUDE}  },
-    {   "Mage", "[Mage] ",  ROOM_VNUM_ALTAR,    TYPE_TRADITION, {0, 0, 0}   },
-    {   "watcher",  "[Watcher] ",   ROOM_VNUM_ALTAR,    TYPE_NONE, {0, 0, 0}    },
-    {   "blackfury",    "[BlackFuries] ",   ROOM_VNUM_ALTAR,    TYPE_TRIBE, {0, 0, 0}   },
-    {   "shadowlord",   "[ShadowLord] ",    ROOM_VNUM_ALTAR,    TYPE_TRIBE, {0, 0, 0}   },
-    {   "fenrir",  "[Fenrir] ",   ROOM_VNUM_ALTAR,    TYPE_TRIBE, {0, 0, 0}   },
-    {   "silverfang",   "[SilverFang] ",    ROOM_VNUM_ALTAR,    TYPE_TRIBE, {0, 0, 0}   },
-    {   "wardersofmen",    "[WardersofMen] ", ROOM_VNUM_ALTAR,    TYPE_TRIBE, {0, 0, 0}   },
-    {   "childrenofgaia",   "[ChildrenofGaia] ",    ROOM_VNUM_ALTAR,    TYPE_TRIBE, {0, 0, 0}   },
-    {   "fianna",   "[Fianna] ",    ROOM_VNUM_ALTAR,    TYPE_TRIBE, {0, 0, 0}   },
-    {   "bonegnawer",    "[BoneGnawer] ", ROOM_VNUM_ALTAR,    TYPE_TRIBE, {0, 0, 0}   },
-    {   "akashicbrotherhood",   "[Akashic Brotherhood] ",   ROOM_VNUM_ALTAR,    TYPE_TRADITION, {0, 0, 0}   },
-    {   "dreamspeakers",    "[DreamSpeakers] ", ROOM_VNUM_ALTAR,    TYPE_TRADITION, {0, 0, 0}   },
-    {   "euthanatos",   "[Euthanatos] ",    ROOM_VNUM_ALTAR,    TYPE_TRADITION, {0, 0, 0}   },
-    {   "orderofhermes",    "[OrderOfHermes] ", ROOM_VNUM_ALTAR,    TYPE_TRADITION, {0, 0, 0}   },
-    {   "verbena",  "[Verbena] ",   ROOM_VNUM_ALTAR,    TYPE_TRADITION, {0, 0, 0}   },
-    {   "rom",      "[  ROM  ] ",   ROOM_VNUM_ALTAR,    TYPE_NONE, {0, 0, 0}    }
-};
-*/
+
 const struct sect_type sect_table[MAX_SECT] =
 {
     /*  name,       color name,     who entry,  hall room, vamp */

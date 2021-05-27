@@ -2543,44 +2543,7 @@ void do_colour( CHAR_DATA *ch, char *argument )
 
     return;
 }
-void do_pueblo( CHAR_DATA *ch, char *argument )
-{
-    char    arg[ MAX_STRING_LENGTH ];
 
-    argument = one_argument( argument, arg );
-
-/*  send_to_char("Pueblo has been disabled due to bugs.\n\r",ch);
-    return;
-*/
-    if( !*arg )
-    {
-/*  if( IS_SET( ch->act, PLR_COLOUR ) )
-    {
-        send_to_char("Colour disabled.\n\r",ch);
-        REMOVE_BIT( ch->act, PLR_COLOUR );
-    }
-*/
-    if( !IS_SET( ch->act, PLR_PUEBLO ) )
-    {
-        SET_BIT( ch->act, PLR_PUEBLO );
-        send_to_char( "Pueblo activated.\n\r", ch );
-    }
-    else
-    {
-        send_to_char_bw( "Pueblo deactivated\n\r", ch );
-        REMOVE_BIT( ch->act, PLR_PUEBLO );
-    }
-    return;
-    }
-    else
-    {
-        send_to_char("</xch_mudtext><xch_page clear=text><body bgcolor=black text=white><xch_page clear=text><xch_mudtext>",ch);
-        return;
-    }
-
-    return;
-}
-/**/
 void do_announce(CHAR_DATA *ch, char *argument )
 {
    char buf[MAX_STRING_LENGTH];

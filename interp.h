@@ -125,7 +125,6 @@ DECLARE_DO_FUN( do_clone    );
 DECLARE_DO_FUN( do_close    );
 DECLARE_DO_FUN( do_allowadmintalk);
 DECLARE_DO_FUN( do_colour       );  /* Colour Command By Lope */
-DECLARE_DO_FUN( do_pueblo   );
 DECLARE_DO_FUN( do_commands );
 DECLARE_DO_FUN( do_combine  );
 DECLARE_DO_FUN( do_compact  );
@@ -546,7 +545,7 @@ DECLARE_DO_FUN( do_wipecs   );
 DECLARE_DO_FUN( do_garouconvert );
 DECLARE_DO_FUN( do_rage );
 DECLARE_DO_FUN( do_stepsideways );
-DECLARE_DO_FUN( do_packtactics  ); 
+DECLARE_DO_FUN( do_packtactics  );
 DECLARE_DO_FUN( do_chop     );
 DECLARE_DO_FUN( do_prospect );
 DECLARE_DO_FUN( do_mine );

@@ -290,7 +290,6 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "brief",      do_brief},
     { "combat",     do_combat}, //DNM
     { "colour",     do_colour },
-    { "pueblo",     do_pueblo},
     { "color",      do_colour}, //DNM
     { "ansi",       do_colour}, //DNM
     { "combine",    do_combine},
@@ -676,6 +675,6 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "rage",       do_rage},
     { "stepsideways",   do_stepsideways},
     { "meditate",       do_meditate},
-    { "packtactics",    do_packtactics}, 
+    { "packtactics",    do_packtactics},
     { NULL,         NULL            }
 };

@@ -141,12 +141,6 @@ void do_channels( CHAR_DATA *ch, char *argument)
     else
       send_to_char("OFF\n\r",ch);
 
-/*    send_to_char("auction        ",ch);
-    if (!IS_SET(ch->comm,COMM_NOAUCTION))
-      send_to_char("ON\n\r",ch);
-    else
-      send_to_char("OFF\n\r",ch);
-*/
     send_to_char("music          ",ch);
     if (!IS_SET(ch->comm,COMM_NOMUSIC))
       send_to_char("ON\n\r",ch);
@@ -365,25 +359,7 @@ void do_afk ( CHAR_DATA *ch, char * argument)
      SET_BIT(ch->comm,COMM_AFK);
    }
 }
-/*
-void do_replay (CHAR_DATA *ch, char *argument)
-{
-    if (IS_NPC(ch))
-    {
-    send_to_char("You can't replay.\n\r",ch);
-    return;
-    }
 
-    if (buf_string(ch->pcdata->buffer)[0] == '\0')
-    {
-    send_to_char("You have no tells to replay.\n\r",ch);
-    return;
-    }
-
-    page_to_char(buf_string(ch->pcdata->buffer),ch);
-    clear_buf(ch->pcdata->buffer);
-}
-*/
 /* RT auction rewritten in ROM style */
 void do_auction( CHAR_DATA *ch, char *argument )
 {
@@ -587,16 +563,7 @@ void do_ooc( CHAR_DATA *ch, char *argument )
           return;
 
         }
-/*
-    if(!IS_IMMORTAL(ch))
-    {
-        ch->move -= 1;
-        if(ch->level > 10)
-            ch->move -=5;
-        if(ch->level >= 50)
-            ch->move -=5;
-    }
-*/
+
       REMOVE_BIT(ch->comm,COMM_NOOOC);
     if (IS_AFFECTED2(ch, AFF2_UMBRA))
         sprintf( buf, "{xYou OOC ({mUmbra{x) '{Y%s{x'\n\r", argument );
@@ -614,22 +581,6 @@ void do_ooc( CHAR_DATA *ch, char *argument )
              !IS_SET(victim->comm,COMM_NOOOC) &&
              !IS_SET(victim->comm,COMM_QUIET) )
         {
-/*      if (!can_see(d->character, ch))
-    {
-    if (IS_AFFECTED2(ch, AFF2_UMBRA))
-        sprintf( buf, "{xAn {mUmbral{x voice OOCs '{Y%s{x'\n\r",
-argument);
-    else
-             sprintf( buf, "{xSomeone OOCs '{Y%s{x'\n\r", argument);
-    }
-      else
-      {
-         if(!IS_NPC(ch))
-            sprintf( buf, "{x%s OOCs '{Y%s{x'\n\r", ch->name,argument);
-         else
-            sprintf( buf,"{x%s OOCs '{Y%s{x'\n\r", ch->short_descr, argument);
-      }
-      send_to_char( buf, d->character );*/
           act_new( "{x$n OOCs '{Y$t{x'",
                    ch,argument, d->character, TO_VICT,POS_TORPOR, TRUE );
         }
@@ -686,23 +637,6 @@ void do_chat( CHAR_DATA *ch, char *argument )
              !IS_SET(victim->comm,COMM_NOCHAT) &&
              !IS_SET(victim->comm,COMM_QUIET) )
         {
-/*      if (!can_see(d->character, ch))
-    {
-    if (IS_AFFECTED2(ch, AFF2_UMBRA))
-        sprintf( buf, "{xAn {mUmbral{x voice Chats '{c%s{x'\n\r",
-argument);
-    else
-             sprintf( buf, "{xSomeone Chats '{c%s{x'\n\r", argument);
-    }
-      else
-      {
-         if(!IS_NPC(ch))
-            sprintf( buf, "{x%s Chats '{c%s{x'\n\r", ch->name,argument);
-         else
-            sprintf( buf,"{x%s Chats '{c%s{x'\n\r", ch->short_descr, argument);
-      }
-      send_to_char( buf, d->character );
-      */
         act_new( "{x$n Chats '{c$t{x'", ch, argument, d->character, TO_VICT, POS_TORPOR, TRUE );
 
         }
@@ -1395,13 +1329,6 @@ void do_tell( CHAR_DATA *ch, char *argument )
     return;
     }
 
-/*
-    if ( !(IS_IMMORTAL(ch) && ch->level > LEVEL_IMMORTAL) && !IS_AWAKE(victim) )
-    {
-    act( "$E can't hear you.", ch, 0, victim, TO_CHAR );
-    return;
-    }
-*/
     if ((IS_SET(victim->comm,COMM_QUIET) || IS_SET(victim->comm,COMM_DEAF))
     && !IS_IMMORTAL(ch))
     {
@@ -1432,9 +1359,6 @@ void do_tell( CHAR_DATA *ch, char *argument )
     sprintf(buf2,"{x%s tells you '{Y%s{x'\n\r", PERS(ch,victim, TRUE),argument);
     send_to_char(buf2,victim);
     record_replay_event(victim, buf2);
-/*    act( "{xYou tell $N '{Y$t{x'", ch, argument, victim, TO_CHAR );
-    act_new("{x$n tells you '{Y$t{x'",ch,argument,victim,TO_VICT,POS_DEAD);
-*/
     victim->reply   = ch;
 
     if ( !IS_NPC(ch) && IS_NPC(victim) && HAS_TRIGGER_MOB(victim,TRIG_SPEECH) )
@@ -1508,10 +1432,6 @@ void do_reply( CHAR_DATA *ch, char *argument )
     send_to_char(buf2,victim);
     record_replay_event(victim, buf2);
 
-/*
-    act_new("You tell $N '{Y$t{x'",ch,argument,victim,TO_CHAR,POS_DEAD);
-    act_new("$n tells you '{Y$t{x'",ch,argument,victim,TO_VICT,POS_DEAD);
-*/
     victim->reply   = ch;
 
     return;
@@ -1858,25 +1778,7 @@ void do_quit( CHAR_DATA *ch, char *argument )
         char_from_room( ch );
         char_to_room( ch, location );
     }
-   /*
-   if ( IS_AFFECTED(ch, AFF_SHIFT))
-    {
-        if ( !IS_AFFECTED(ch, AFF_FANGS))
-        SET_BIT(ch->affected_by, AFF_FANGS);
 
-        do_function(ch, &do_shift, "");
-    }
-    if(ch->changed > 0)
-        do_function(ch, &do_changeform, "homid");
-
-    if (is_affected( ch, gsn_vicissitude_horrid ))
-    {
-        if ( !IS_AFFECTED(ch, AFF_FANGS))
-        SET_BIT(ch->affected_by, AFF_FANGS);
-
-        do_function(ch, &do_horrid, "");
-    }
-*/
    REMOVE_BIT(ch->act,PLR_ARENA);
        affect_strip(ch,gsn_meditation);
     if(is_affected( ch, gsn_chant ))
@@ -1894,16 +1796,6 @@ void do_quit( CHAR_DATA *ch, char *argument )
     REMOVE_BIT(ch->comm, COMM_DEAF);
     REMOVE_BIT(ch->comm, COMM_QUIET);
     REMOVE_BIT(ch->act, PLR_IC);
-/*  commented out by Ugha
-    if(is_affected( ch, gsn_bloodofpotency))
-    {
-        if( get_affect_level( ch, gsn_bloodofpotency ) < 0 )
-            ch->max_pblood += 20;
-
-        if( get_affect_level( ch, gsn_bloodofpotency ) >= 1 )
-            ch->max_pblood -= 10;
-    }
-*/
     quote = number_range(1,9);
     if(quote == 1)
         send_to_char("Sex is a good cure for headaches, repeat as needed\n\r - Hatchet, Creator of MERC\n\r",ch);
@@ -1926,7 +1818,6 @@ void do_quit( CHAR_DATA *ch, char *argument )
 
 
 
-/*   send_to_char("Alas, all good things must come to an end.\n\r",ch); */
 
     act( "$n has left the game.", ch, NULL, NULL, TO_ROOM );
     sprintf( log_buf, "%s has quit.", ch->name );
@@ -2041,31 +1932,6 @@ void do_follow( CHAR_DATA *ch, char *argument )
 
 void do_dismiss( CHAR_DATA *ch, char *argument )
 {
-/*    char arg[MAX_INPUT_LENGTH];
-    CHAR_DATA *victim;
-
-    one_argument( argument, arg );
-
-    if ( arg[0] == '\0' )
-    {
-    send_to_char( "Dismiss whom?\n\r", ch );
-    return;
-    }
-
-    if ( ( victim = get_char_room( ch, NULL, arg ) ) == NULL )
-    {
-    send_to_char( "They aren't here.\n\r", ch );
-    return;
-    }
-
-    if ( !IS_AFFECTED(victim, AFF_CHARM) || victim->master != ch || ch->pet != victim)
-    {
-    act( "You cannot dismiss $N!", ch, NULL, victim, TO_CHAR );
-    return;
-    }
-
-    stop_follower( ch );
-*/
     nuke_pets(ch);
     return;
 }

@@ -2425,11 +2425,12 @@ void do_pstat( CHAR_DATA *ch, char *argument )
     {
       send_to_char("{y|  {R({DCheater!{R)  ({DCheater!{R)  ({DCheater!{R)  ({DCheater!{R)  ({DCheater!{R)  ({DCheater!{R)  {y|{x\n\r", ch);
     }
-    sprintf(buf, "{y| {xIn Room:  %s (%5d)    Idle: %3dtick%s {y|{x\n\r",
-      room->vnum == NULL ? center("Unknown Room", 36, " ") : center(room->name, 36, " "),
-      room->vnum == NULL ? 0 : room->vnum, victim->timer, victim->timer == 1 ? " " : "s");
+    sprintf(buf, "{y| {xIn Room:  %s (%5d)   {y|{x\n\r",
+      room->vnum == NULL ? center("Unknown Room", 52, " ") : center(room->name, 52, " "),
+      room->vnum == NULL ? 0 : room->vnum );
     send_to_char(buf, ch);
-
+    sprintf(buf, "{y| {xCharacter Idle: %3dtick%s {y|{x\n\r", victim->timer, victim->timer == 1 ? " " : "s");
+    send_to_char(buf, ch);
     if(IS_IMMORTAL(victim))
     {
       send_to_char("{Y[-----------------------=====   Immortal Info  =====-----------------------]{x\n\r",ch);

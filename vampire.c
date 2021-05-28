@@ -1389,7 +1389,6 @@ void do_diablerize(CHAR_DATA *ch, char *argument)
     ch->pblood = 100;
     ch->freebie += 1;
     victim->race = race_lookup("human");
-    victim->size = pc_race_table[victim->race].size;
     if(victim->pcdata->points < 30) victim->pcdata->points = 30;
     victim->exp   = exp_per_level(victim,victim->pcdata->points) * UMAX( 1, victim->level );
     victim->pblood = 0;

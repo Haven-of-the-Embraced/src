@@ -2243,13 +2243,7 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
     ch->parts   = race_table[race].parts;
     ch->act2    = PLR2_NEWBIE;
 
-    /* add cost */
-    ch->pcdata->points = pc_race_table[race].points;
-    ch->size = pc_race_table[race].size;
-    if(d->pueblo == FALSE)
         write_to_buffer( d, "Does your client support ANSI color?[Y/N] ", 0 );
-    else
-            write_to_buffer( d, "Pueblo detected. Press Enter.\n\r", 0 );
         d->connected = CON_GET_COLOUR;
       break;
 

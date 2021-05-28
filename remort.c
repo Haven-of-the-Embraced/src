@@ -128,7 +128,6 @@ void do_remort(CHAR_DATA *ch, char *argument)
         ch->level    = 1;
         ch->clan = 0;
         ch->tradition = 0;
-        ch->size = pc_race_table[ch->race].size;
         if(ch->pcdata->points < 30) ch->pcdata->points = 30;
         ch->max_hit  = 100;
         ch->max_mana = 100;
@@ -608,7 +607,6 @@ void do_remort(CHAR_DATA *ch, char *argument)
         ch->level    = 1;
         ch->clan = clan_lookup(arg2);
         ch->tradition = tradition;
-        ch->size = pc_race_table[ch->race].size;
         if(ch->pcdata->points < 30) ch->pcdata->points = 30;
         ch->max_hit  = 100;
         ch->max_mana = 100;

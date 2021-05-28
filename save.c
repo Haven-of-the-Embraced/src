@@ -414,7 +414,7 @@ void fwrite_char( CHAR_DATA *ch, FILE *fp )
         fprintf( fp, "Plrnote %s~\n", ch->pcdata->playernotes);
     if (ch->prompt != NULL || !str_cmp(ch->prompt,"<%hhp %mm %vmv> "))
         fprintf( fp, "Prom %s~\n",      ch->prompt      );
-    fprintf( fp, "Race %s~\n", pc_race_table[ch->race].name );
+    fprintf( fp, "Race %s~\n", race_table[ch->race].name );
     if (ch->clan)
         fprintf( fp, "Clan %s~\n",clan_table[ch->clan].name);
     fprintf( fp, "Sex  %d\n",   ch->sex         );
@@ -990,7 +990,6 @@ bool load_char_obj( DESCRIPTOR_DATA *d, char *name )
     if (ch->race == 0)
         ch->race = race_lookup("human");
 
-    ch->size = pc_race_table[ch->race].size;
     ch->dam_type = 17; /*punch */
 
     ch->affected_by = ch->affected_by|race_table[ch->race].aff;

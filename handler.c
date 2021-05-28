@@ -818,23 +818,7 @@ int get_curr_stat( CHAR_DATA *ch, int stat )
 {
     int max;
 
-    if (IS_NPC(ch) || ch->level > LEVEL_IMMORTAL)
-    max = 25;
-
-    else
-    {
-    max = pc_race_table[ch->race].max_stats[stat] + 4;
-
-    if (class_table[ch->class].attr_prime == stat)
-        max += 2;
-
-    if ( ch->race == race_lookup("human"))
-        max += 1;
-
-    max = UMIN(max,25);
-    }
-
-    return URANGE(3,ch->perm_stat[stat] + ch->mod_stat[stat], max);
+    return 25;
 }
 
 int get_attribute( CHAR_DATA *ch, int stat )
@@ -876,21 +860,7 @@ int get_discipline( CHAR_DATA *ch, int disc)
 /* command for returning max training score */
 int get_max_train( CHAR_DATA *ch, int stat )
 {
-    int max;
-
-    if (IS_NPC(ch) || ch->level > LEVEL_IMMORTAL)
     return 25;
-
-    max = pc_race_table[ch->race].max_stats[stat];
-    if (class_table[ch->class].attr_prime == stat)
-    {
-    if (ch->race == race_lookup("human"))
-       max += 3;
-    else
-       max += 2;
-    }
-
-    return UMIN(max,25);
 }
 
 

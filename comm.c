@@ -445,7 +445,7 @@ int main( int argc, char **argv )
     /*
      * Get the port number.
      */
-    port = 4000;
+    port = 2000;
     if ( argc > 1 )
     {
         if ( !is_number( argv[1] ) )
@@ -490,7 +490,7 @@ int main( int argc, char **argv )
         control = init_socket( port );
 
     boot_db();
-    sprintf( log_buf, "ROM is ready to rock on port %d.", port );
+    sprintf( log_buf, "Haven is ready to rock on port %d.", port );
     log_string( log_buf );
 
     load_config();

@@ -3247,7 +3247,6 @@ extern  const   struct  item_type   item_table  [];
 extern  const   struct  wiznet_type wiznet_table    [];
 extern  const   struct  attack_type attack_table    [];
 extern  const   struct  race_type   race_table  [];
-extern  const   struct  pc_race_type    pc_race_table   [];
 extern  const   struct  spec_type   spec_table  [];
 extern  const   struct  cs_skill_type csskill_table[];
 extern  const   struct  liq_type    liq_table   [];

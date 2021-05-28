@@ -564,7 +564,7 @@ void do_feed(CHAR_DATA *ch, char *argument)
         send_to_char( "That is not a valid corpse!\n\r", ch );
         return;
     }
-    send_to_char( "BUG! Something screwed up!\n\r", ch );
+    send_to_char( "BUG! Something screwed up!  Inform the Immortal Staff immediately.\n\r", ch );
     return;
 }
 

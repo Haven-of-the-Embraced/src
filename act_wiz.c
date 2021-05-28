@@ -2423,7 +2423,7 @@ void do_pstat( CHAR_DATA *ch, char *argument )
     send_to_char(buf, ch);
     if (victim->cheater)
     {
-      send_to_char("{y|  {R({DCheater!{R)  ({DCheater!{R)   ({DCheater!{R)   ({DCheater!{R)  ({DCheater!{R)  {y|{x\n\r", ch);
+      send_to_char("{y|  {R({DCheater!{R)  ({DCheater!{R)  ({DCheater!{R)  ({DCheater!{R)  ({DCheater!{R)  ({DCheater!{R)  {y|{x\n\r", ch);
     }
     sprintf(buf, "{y| {xIn Room:  %s (%5d)    Idle: %3dtick%s {y|{x\n\r",
       room->vnum == NULL ? center("Unknown Room", 36, " ") : center(room->name, 36, " "),
@@ -2437,7 +2437,9 @@ void do_pstat( CHAR_DATA *ch, char *argument )
         victim->pcdata->security,        get_trust(victim),        victim->invis_level,
         victim->incog_level);
         send_to_char( buf, ch );
-        sprintf(buf, "{Y| {xWiziname: %-20s            Immtitle: %-20s       {Y|{x\n\r", victim->pcdata->wiziname, buf3);
+        sprintf(buf, "{Y| {xWiziname:  %s  {Y|{x\n\r", center(victim->pcdata->wiziname,60," "));
+        send_to_char(buf, ch);
+        sprintf(buf, "{Y| {xImmtitle:  %s  {Y|{x\n\r", center(victim->pcdata->immtitle,60," "));
         send_to_char(buf, ch);
     }
 
@@ -2460,7 +2462,8 @@ void do_pstat( CHAR_DATA *ch, char *argument )
     victim->remorts, victim->freebie, victim->exp, victim->pcdata->last_level);
     send_to_char( buf, ch );
 
-    sprintf(buf, "{W| {xQuest Points: %5d    IC Hours: %5d {W|{x\n\r",
+    sprintf(buf, "{W| {xICMode: %s{x  RPAvail: %s{x          Quest Points: %5d   IC Hours: %5d {W|{x\n\r",
+      IS_SET(victim->act, PLR_IC) ? "{gYes" : "{rNo ", IS_SET(victim->act2, PLR2_RP_AVAILABLE) ? "{gYes" : "{rNo ",
       victim->qpoints, victim->pcdata->IC_total/60);
     send_to_char(buf, ch);
 
@@ -9097,6 +9100,7 @@ void do_globalpower( CHAR_DATA *ch, char *argument )
                 }
             }
             slaughter = FALSE;
+            nosun = FALSE;
             }
         else
         {
@@ -9109,6 +9113,7 @@ void do_globalpower( CHAR_DATA *ch, char *argument )
                 }
             }
             slaughter = TRUE;
+            nosun = TRUE;
         }
         return;
     }
@@ -9710,7 +9715,6 @@ void do_pload( CHAR_DATA *ch, char *argument )
   /* bring player to imm */
   if ( d.character->in_room != NULL )
   {
-    d.character->was_in_room = d.character->in_room;
     char_to_room( d.character, ch->in_room); /* put in room imm is in */
   }
   act( "You have loaded $N.", ch, NULL, d.character, TO_CHAR);
@@ -9722,6 +9726,7 @@ void do_pload( CHAR_DATA *ch, char *argument )
      char_to_room(d.character->pet,d.character->in_room);
      act("$n has entered the game.",d.character->pet,NULL,NULL,TO_ROOM);
    }
+
 }
 
 /** Function: do_punload

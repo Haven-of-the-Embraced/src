@@ -2429,7 +2429,8 @@ void do_pstat( CHAR_DATA *ch, char *argument )
       room->vnum == NULL ? center("Unknown Room", 52, " ") : center(room->name, 52, " "),
       room->vnum == NULL ? 0 : room->vnum );
     send_to_char(buf, ch);
-    sprintf(buf, "{y| {xCharacter Idle: %3dtick%s {y|{x\n\r", victim->timer, victim->timer == 1 ? " " : "s");
+    sprintf(buf, "{y| {xCharacter Idle: %5d tick%s       %s {y|{x\n\r", victim->timer, victim->timer == 1 ? " " : "s",
+      victim->timer >= 30 ? "{r--->{D[[[[ {wCHARACTER HAS VOIDED OUT{D ]]]]{x" : "                                      ");
     send_to_char(buf, ch);
     if(IS_IMMORTAL(victim))
     {

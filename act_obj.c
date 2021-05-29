@@ -2993,6 +2993,13 @@ void do_buy( CHAR_DATA *ch, char *argument )
         "You're not powerful enough to master this pet.\n\r", ch );
         return;
     }
+
+    if ( (ch->silver + 100 * ch->gold) < cost )
+    {
+        send_to_char( "You can't afford it.\n\r", ch );
+        return;
+    }
+
     /* haggle */
         success = godice(get_attribute(ch, MANIPULATION) + ch->csabilities[CSABIL_COMMERCE], 6);
     if (success < 0)
@@ -3008,12 +3015,6 @@ void do_buy( CHAR_DATA *ch, char *argument )
         cost = (100-(success*2))*cost/100;
         check_improve(ch,gsn_haggle,TRUE,4);
 }
-
-    if ( (ch->silver + 100 * ch->gold) < cost )
-    {
-        send_to_char( "You can't afford it.\n\r", ch );
-        return;
-    }
 
     deduct_cost(ch,cost);
     pet         = create_mobile( pet->pIndexData );

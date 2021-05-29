@@ -4857,7 +4857,6 @@ sh_int          gsn_curse;
 sh_int          gsn_invis;
 sh_int          gsn_mass_invis;
 sh_int          gsn_poison;
-sh_int          gsn_agg_damage;
 sh_int          gsn_bleeding;
 sh_int          gsn_detect_hidden;
 sh_int          gsn_detect_invis;

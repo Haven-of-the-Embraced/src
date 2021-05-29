@@ -2858,7 +2858,6 @@ extern  sh_int  gsn_invis;
 extern  sh_int  gsn_mass_invis;
 extern  sh_int  gsn_plague;
 extern  sh_int  gsn_poison;
-extern  sh_int  gsn_agg_damage;
 extern  sh_int  gsn_bleeding;
 extern  sh_int  gsn_detect_hidden;
 extern  sh_int  gsn_detect_invis;

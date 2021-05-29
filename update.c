@@ -989,21 +989,6 @@ if (ch->qpoints > MAX_QPOINTS)
         damage(ch,ch,ch->max_hit/50,0,DAM_COLD,FALSE);
     }
 
-    if (is_affected(ch, gsn_agg_damage) && ch != NULL)
-    {
-        AFFECT_DATA *agg_damage;
-
-        agg_damage = affect_find(ch->affected,gsn_agg_damage);
-
-        if (agg_damage != NULL)
-        {
-            act( "$n screams in pain and cluches their wounds!", ch, NULL, NULL, TO_ROOM );
-            send_to_char( "You scream in pain from your injuries!\n\r", ch );
-          if(ch->position != POS_TORPOR)
-            damage(ch,ch,agg_damage->level,gsn_agg_damage, DAM_NEGATIVE,FALSE);
-        }
-    }
-
 /*  New Mage Code */
     if(clan_table[ch->clan].clan_type == TYPE_TRADITION)
     {

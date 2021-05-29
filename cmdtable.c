@@ -244,6 +244,7 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "equipment",  do_equipment},
     { "examine",    do_examine},
     { "help",       do_help },
+    { "helplist",   do_helplist },
     { "idea",       do_idea },
     { "motd",       do_motd },
     { "news",       do_news},

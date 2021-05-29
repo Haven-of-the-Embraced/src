@@ -2274,6 +2274,64 @@ void do_help( CHAR_DATA *ch, char *argument )
 }
 
 
+void do_helplist( CHAR_DATA *ch, char *argument )
+{
+    HELP_DATA *pHelp;
+    BUFFER *output;
+    bool found = FALSE;
+    char argall[MAX_INPUT_LENGTH],argone[MAX_INPUT_LENGTH];
+    int level;
+    char buf[MSL];
+
+    output = new_buf();
+
+    if ( argument[0] == '\0' ) {
+      send_to_char("You must give some word or partial word to search for. eg. 'helplist ki'.\n\r", ch);
+      return;
+    }
+
+    /* this parts handles help a b so that it returns help 'a b' */
+    argall[0] = '\0';
+    while (argument[0] != '\0' )
+    {
+    argument = one_argument(argument,argone);
+    if (argall[0] != '\0')
+        strcat(argall," ");
+    strcat(argall,argone);
+    }
+
+    for ( pHelp = help_first; pHelp != NULL; pHelp = pHelp->next )
+    {
+        level = (pHelp->level < 0) ? -1 * pHelp->level - 1 : pHelp->level;
+
+    if (level > get_trust( ch ) )
+        continue;
+
+      if ( is_name( argall, pHelp->keyword ) )
+      {
+          /* add seperator if found */
+          if (found)
+          add_buf(output,"");
+          if ( pHelp->level >= 0 && str_cmp( argall, "imotd" ) )
+          {
+              sprintf(buf, "{DKeywords:{c %s{x\n\r", pHelp->keyword);
+              add_buf(output,buf);
+          }
+
+          found = TRUE;
+      }
+    }
+
+    if (!found){
+        send_to_char( "No helps were found for that search string.n\r", ch );
+        return;
+      } else
+    page_to_char(buf_string(output),ch);
+    free_buf(output);
+}
+
+
+
 /* whois command */
 void do_whois (CHAR_DATA *ch, char *argument)
 { return; }

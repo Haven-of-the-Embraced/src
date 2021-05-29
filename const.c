@@ -1550,10 +1550,6 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
     { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 3, 3, 3}, spell_poison,       TAR_OBJ_CHAR_OFF,   POS_FIGHTING,
     &gsn_poison,        SLOT(33),   10, 12, "poison",       "You feel less sick.", "The poison on $p dries up." },
 
-    { "aggravated damage",        { 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 0,  0,  0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_agg_damage,       TAR_OBJ_CHAR_OFF,   POS_FIGHTING,
-    &gsn_agg_damage,        SLOT(33),   10, 12, "aggravated damage",        "You sigh in relief as your wounds finally heal.", "$p looses it's ability to generate aggravated damage." },
-
     { "portal",               { 35, 30, 45, 40, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
     { 2,  2,  4,  4, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_portal,           TAR_IGNORE,             POS_STANDING,
     NULL,                   SLOT(519),       100,     24, "",                     "!Portal!",     "" },

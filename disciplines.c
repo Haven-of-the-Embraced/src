@@ -6540,7 +6540,7 @@ void do_bloodagony(CHAR_DATA *ch, char *argument)
 
     af = new_affect();
     af->where     = TO_WEAPON;
-    af->type      = gsn_agg_damage;
+    af->type      = gsn_poison;
     af->level     = ch->level;
     af->duration  = ch->level*ch->pcdata->discipline[QUIETUS];
     af->location  = 0;

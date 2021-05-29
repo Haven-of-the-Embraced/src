@@ -1269,8 +1269,6 @@ void spell_gift_resistpain( int sn, int level, CHAR_DATA *ch, void *vo, int targ
 
     ch->hit += level*5;
     if(ch->hit > ch->max_hit) ch-> hit = ch->max_hit;
-    if(is_affected(ch, gsn_agg_damage))
-        affect_strip(ch,gsn_agg_damage);
 
     send_to_char("You snarl and growl to throw yourself into such a fury that you no longer feel the pain of your wounds.\n\r",ch);
     act("$n snarls and growls a moment, then seems to calm as their wounds no longer trouble them.",ch,NULL,NULL,TO_ROOM);

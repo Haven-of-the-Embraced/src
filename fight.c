@@ -3021,7 +3021,7 @@ void make_corpse( CHAR_DATA *ch )
             ch->race == race_lookup("wolf"))
           blood = blood / 2;
 
-      corpse->value[1] = blood;
+      corpse->value[2] = blood;
 
       if ( ch->gold > 0 )
       {

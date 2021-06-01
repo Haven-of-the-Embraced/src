@@ -1768,7 +1768,7 @@ void do_ostat( CHAR_DATA *ch, char *argument )
 
         case ITEM_CORPSE_NPC:
           send_to_char("{c-----------------------{YVALUES{c------------------------{x\n\r", ch);
-          sprintf(buf, "Mob Vnum Killed     : %d%s  \n\rBlood Left          : %d  \n\r{R**Currently Unused**{x: %d  \n\rPoisoned            : %s  \n\rBeneficial Affect   : %s\n\r",
+          sprintf(buf, "Mob Vnum Killed     : %d%s  \n\r{RDefault Open Corpse {x: %d  \n\rBlood Left          : %d  \n\rPoisoned            : %s  \n\rBeneficial Affect   : %s\n\r",
             obj->value[0],
             obj->value[0] == 0 ? " {r[Imm Built Obj/Not Mob Kill]{x" : "",
             obj->value[1],
@@ -1781,7 +1781,7 @@ void do_ostat( CHAR_DATA *ch, char *argument )
 
           case ITEM_CORPSE_PC:
             send_to_char("{c-----------------------{YVALUES{c------------------------{x\n\r", ch);
-            sprintf(buf, "{R**Currently Unused**{x: %d  \n\rBlood Left          : %d  \n\r{R**Currently Unused**{x: %d  \n\rPoisoned            : %s  \n\rBeneficial Affect   : %s\n\r",
+            sprintf(buf, "{R**Currently Unused**{x: %d  \n\r{RDefault Open Corpse {x: %d  \n\rBlood Left          : %d  \n\rPoisoned            : %s  \n\rBeneficial Affect   : %s\n\r",
               obj->value[0],
               obj->value[1],
               obj->value[2],

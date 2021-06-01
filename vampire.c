@@ -535,7 +535,7 @@ void do_feed(CHAR_DATA *ch, char *argument)
     {
         if( obj->item_type == ITEM_CORPSE_PC || obj->item_type == ITEM_CORPSE_NPC)
         {
-            bloodgain = obj->value[1];
+            bloodgain = obj->value[2];
             if(bloodgain <= 0)
             {
                 send_to_char( "This corpse has no blood remaining.\n\r", ch );
@@ -549,7 +549,7 @@ void do_feed(CHAR_DATA *ch, char *argument)
             send_to_char( "You feed on the corpse.\n\r", ch );
 
             ch->pblood += bloodgain;
-            obj->value[1] = 0;
+            obj->value[2] = 0;
             gain_condition( ch, COND_FULL, 5);
             if( ch->pblood > ch->max_pblood)
             {

@@ -6162,9 +6162,9 @@ void do_mset( CHAR_DATA *ch, char *argument )
         return;
     }
 
-    if ( value < 0 || value > 500 )
+    if ( value < 0 || value > 30000 )
     {
-        send_to_char("IC Hour range is 0 to 500.\n\r", ch);
+        send_to_char("IC Hour range is 0 to 30000.\n\r", ch);
         return;
     }
     victim->pcdata->IC_total = value*60;

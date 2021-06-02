@@ -1521,8 +1521,8 @@ void do_rstat( CHAR_DATA *ch, char *argument )
         send_to_char( buf, ch );
 
     sprintf( buf,
-        "Room flags: %d.\n\rDescription:\n\r%s",
-        location->room_flags,
+        "Room flags: %s\n\rDescription:\n\r%s",
+        room_bit_name(location->room_flags),
         location->description );
         send_to_char( buf, ch );
 

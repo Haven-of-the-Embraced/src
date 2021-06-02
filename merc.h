@@ -4041,6 +4041,7 @@ char *  trap_bit_name   args( ( int trap_flags ) );
 char *  light_bit_name  args( ( int light_flags ) );
 char *  trigger_bit_name    args( ( int trigger_flags ) );
 char *  focus_bit_name  args( ( int focus_flags ) );
+char *  room_bit_name   args( ( int room_flags ) );
 bool *  has_weapon_bit      args( ( int weapon_flags, char *weapon_bit ) );
 bool *  has_room_bit        args( ( int room_flags, char *room_bit ) );
 bool *  room_clan_only      args( ( int clan_room, char *clan_input) );

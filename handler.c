@@ -3617,6 +3617,40 @@ bool *has_weapon_bit(int weapon_flags, char *weapon_bit)
     return FALSE;
 }
 
+char *room_bit_name(int room_flags)
+{
+    static char buf[512];
+    buf[0] = '\0';
+    if ( room_flags & ROOM_DARK ) strcat(buf, " dark");
+    if ( room_flags & ROOM_NO_MOB ) strcat(buf, " no_mob");
+    if ( room_flags & ROOM_INDOORS ) strcat(buf, " indoors");
+    if ( room_flags & ROOM_PRIVATE ) strcat(buf, " private");
+    if ( room_flags & ROOM_SAFE ) strcat(buf, " safe");
+    if ( room_flags & ROOM_SOLITARY ) strcat(buf, " solitary");
+    if ( room_flags & ROOM_PET_SHOP ) strcat(buf, " pet_shop");
+    if ( room_flags & ROOM_MOUNT_SHOP ) strcat(buf, " mount_shop");
+    if ( room_flags & ROOM_NO_RECALL ) strcat(buf, " no_recall");
+    if ( room_flags & ROOM_IMP_ONLY ) strcat(buf, " imp_only");
+    if ( room_flags & ROOM_GODS_ONLY ) strcat(buf, " gods_only");
+    if ( room_flags & ROOM_HEROES_ONLY ) strcat(buf, " heroes_only");
+    if ( room_flags & ROOM_NEWBIES_ONLY ) strcat(buf, " newbies_only");
+    if ( room_flags & ROOM_LAW ) strcat(buf, " law");
+    if ( room_flags & ROOM_NOWHERE ) strcat(buf, " nowhere");
+    if ( room_flags & ROOM_FORGE ) strcat(buf, " forge");
+    if ( room_flags & ROOM_NO_QUIT ) strcat(buf, " no_quit");
+    if ( room_flags & ROOM_UMBRA ) strcat(buf, " umbra");
+    if ( room_flags & ROOM_BANK ) strcat(buf, " bank");
+    if ( room_flags & ROOM_UNDERWATER ) strcat(buf, " underwater");
+    if ( room_flags & ROOM_HUMAN_ONLY ) strcat(buf, " human_only");
+    if ( room_flags & ROOM_GHOUL_ONLY ) strcat(buf, " ghoul_only");
+    if ( room_flags & ROOM_VAMPIRE_ONLY ) strcat(buf, " vampire_only");
+    if ( room_flags & ROOM_GAROU_ONLY ) strcat(buf, " garou_only");
+    if ( room_flags & ROOM_MAGE_ONLY ) strcat(buf, " mage_only");
+    if ( room_flags & ROOM_NOTELE ) strcat(buf, " no_teleport");
+
+    return ( buf[0] != '\0' ) ? buf+1 : "none";
+}
+
 /*
   Returns TRUE if Room has requested bit
 */

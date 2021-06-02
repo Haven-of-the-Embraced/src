@@ -6154,6 +6154,23 @@ void do_mset( CHAR_DATA *ch, char *argument )
         return;
     }
 
+    if ( !str_prefix( arg2, "ichours" ) )
+    {
+    if ( IS_NPC(victim) )
+    {
+        send_to_char( "Not on NPC's.\n\r", ch );
+        return;
+    }
+
+    if ( value < 0 || value > 500 )
+    {
+        send_to_char("IC Hour range is 0 to 500.\n\r", ch);
+        return;
+    }
+    victim->pcdata->IC_total = value*60;
+    return;
+    }
+
    if ( !str_prefix( arg2, "remorts" ) )
     {
     if ( IS_NPC(victim) )

@@ -1963,7 +1963,7 @@ void do_affects(CHAR_DATA *ch, char *argument )
 
     if ( ch->affected != NULL )
     {
-    send_to_char( "------------<<<<<<<<<<<<============================>>>>>>>>>>>>------------\n\r", ch );
+    send_to_char( "\n\r------------<<<<<<<<<<<<============================>>>>>>>>>>>>------------\n\r", ch );
     send_to_char( "|                     -<=     Current Affects      =>-                     |\n\r", ch );
     send_to_char( "|                                                                          |\n\r", ch );
     send_to_char( "| Name                          : Modifies           Amount      Duration  |\n\r", ch );

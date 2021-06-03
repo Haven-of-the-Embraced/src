@@ -1195,7 +1195,7 @@ void spell_gift_pulseoftheinvisible( int sn, int level, CHAR_DATA *ch, void *vo,
     af.where     = TO_AFFECTS;
     af.type      = gsn_gift_pulseoftheinvisible;
     af.level     = level;
-    af.duration  = (level*2) + 10;
+    af.duration  = (ch->pcdata->gnosis[PERM]*2) + 10;
     af.modifier  = 0;
     af.location  = APPLY_NONE;
     af.bitvector = 0;
@@ -2862,7 +2862,7 @@ void do_beseech(CHAR_DATA *ch, char *argument)
 
     if (IS_NPC(ch))
       return;
-      
+
     if ( arg1[0] == '\0' )
     {
     send_to_char( "Beseech Gaia to bestow you what gift?\n\r", ch );

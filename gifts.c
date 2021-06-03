@@ -2860,6 +2860,9 @@ void do_beseech(CHAR_DATA *ch, char *argument)
     gift_target_name = one_argument( argument, arg1 );
     one_argument( gift_target_name, arg2 );
 
+    if (IS_NPC(ch))
+      return;
+      
     if ( arg1[0] == '\0' )
     {
     send_to_char( "Beseech Gaia to bestow you what gift?\n\r", ch );

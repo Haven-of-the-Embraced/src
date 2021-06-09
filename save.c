@@ -1337,14 +1337,8 @@ void fread_char( CHAR_DATA *ch, FILE *fp )
         if ( !str_cmp( word, "CSbackgrounds"  ))
         {
         int i;
-        if (ch->version < 12)
-        {
-        for (i = 0; i < 10; i ++)
-           ch->pcdata->csbackgrounds[i] = fread_number(fp);
-       } else {
         for (i = 0; i < MAX_CSBACK; i ++)
            ch->pcdata->csbackgrounds[i] = fread_number(fp);
-       }
         fMatch = TRUE;
         break;
         }

@@ -2133,7 +2133,7 @@ void do_sacrifice( CHAR_DATA *ch, char *argument )
 
           ch->silver += total;
           sprintf(buffer,"You sacrifice %d items to the gods! You receive %d silver!\n\r", count, total);
-          sendch(ch, buffer);
+          sendch(buffer, ch);
 
           if ( members > 1 && total > 1)
           {

@@ -5848,7 +5848,7 @@ void do_divine_strength(CHAR_DATA *ch, char *argument )
 
 	if (divinesuccess > 0)
 	{
-		act( "Smiling broadly, $n seems to be renewed with extra strength of purose.",  ch, NULL, NULL, TO_ROOM );
+		act( "Smiling broadly, $n seems to be renewed with extra strength of purpose.",  ch, NULL, NULL, TO_ROOM );
 		act( "A feeling of purpose and strength flows through your body as your deity grants your request for help.", ch, NULL, NULL, TO_CHAR);
 		check_improve(ch,gsn_divine_strength,TRUE,4);
     gain_exp(ch, divinesuccess * (15 + get_ability(ch, CSABIL_THEOLOGY)));

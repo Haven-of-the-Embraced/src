@@ -2388,6 +2388,7 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
     ch->csmax_willpower = ch->pcdata->csvirtues[COURAGE];
     ch->pcdata->cshumanity = ch->pcdata->csvirtues[CONSCIENCE]+ch->pcdata->csvirtues[SELF_CONTROL];
     ch->cswillpower = ch->csmax_willpower;
+    ch->dpoints = 5;
 
     write_to_buffer(d,"\n\rHaven of the Embraced is focused on Vampires but you may choose to start the game as a human\n\r",0);
     write_to_buffer(d,"if you wish. You may later be Embraced as a vampire if you choose, or your character may\n\r",0);

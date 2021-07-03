@@ -4935,6 +4935,7 @@ void restore_one(CHAR_DATA *ch, CHAR_DATA *victim, bool show) {
         affect_strip(victim,gsn_armsoftheabyss);
         affect_strip(victim,gsn_trappedingauntlet);
         affect_strip(victim,gsn_astrallylost);
+        affect_strip(victim, gsn_weaken);
 
         if (is_affected(victim, gsn_shadowplay) && get_affect_level(victim, gsn_shadowplay) != 0)
           affect_strip(victim, gsn_shadowplay);

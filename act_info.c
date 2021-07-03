@@ -4214,7 +4214,7 @@ void do_contact(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    sprintf(buf,"%s(%s): %s",ch->name,ch->pcdata->email,argument);
+    sprintf(buf,"%s (%s)\n\n-----\n\n%s\n",ch->name,ch->pcdata->email,argument);
     if(send_email("Contact","admin@havenmud.net",buf) == FALSE) send_to_char("Email bug. Please contact the immortals at once.",ch);
     else send_to_char("Your message has been sent to the Admins.\n\rThey will either log on to reply or reply via email to your registered email address.\n\rRemember: Abuse of this command results in nasty consequences you don't want to face.\n\r",ch);
     return;

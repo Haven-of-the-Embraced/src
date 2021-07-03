@@ -3942,7 +3942,7 @@ void do_register(CHAR_DATA *ch, char *argument)
 bool send_email(char *subject, char *address, char *body)
 {
     char buf [MAX_STRING_LENGTH];
-    sprintf(buf,"sendmail -f Admin@HavenMUD.net -i %s", address);
+    sprintf(buf,"sendmail -f admin@havenmud.net -i %s", address);
 
     FILE *mailer = popen(buf, "w");
     if(!mailer) return FALSE;

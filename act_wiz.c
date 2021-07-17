@@ -3046,6 +3046,7 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
 
     if ( arg1[0] == '\0' || arg2[0] == '\0' || arg3[0] == '\0')
     {
+        send_to_char( "\n\r", ch);
         send_to_char( "{y+=========================================================================+{x\n\r", ch);
         send_to_char( "{y| {WSyntax is   : {xflagfind <obj/mob/room> <type> <flag>                     {y|\n\r", ch );
         send_to_char( "{y| {RSyntax Note {W: {xSee '{chelp flagfind{x' for special syntax.                   {y|\n\r", ch);
@@ -3057,6 +3058,7 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
         send_to_char( "{y+-------------------------------------------------------------------------+{x\n\r", ch);
         send_to_char( "{y| {WRoom types  : {xsector, room, clan, owner                                 {y|\n\r",ch);
         send_to_char( "{y+=========================================================================+{x\n\r", ch);
+        send_to_char( "\n\r", ch);
 
         return;
     }
@@ -3565,12 +3567,19 @@ void do_areaflagfind( CHAR_DATA *ch, char *argument )
 
     if ( arg1[0] == '\0' || arg2[0] == '\0' || arg3[0] == '\0')
     {
-        send_to_char( "{WSyntax is   : {xflagfind <obj/mob/room> <type> <flag>\n\r", ch );
-        send_to_char( "{WObj types   : {xextra, wear, affect, damage, type, weapon, special, spell\n\r",ch);
-        send_to_char( "{WMob types   : {xlevel, race, special, shop, aff, aff2, act, act2, off, res, vuln, imm, attr, abil\n\r",ch);
-        send_to_char( "{WRoom types  : {xsector, room, clan, owner\n\r",ch);
-        send_to_char( "{WSyntax Note : {xSee '{chelp flagfind{x' for special syntax.\n\r", ch);
-        return;
+      send_to_char( "\n\r", ch);
+      send_to_char( "{y+=========================================================================+{x\n\r", ch);
+      send_to_char( "{y| {WSyntax is   : {xareaflagfind <obj/mob/room> <type> <flag>                 {y|\n\r", ch );
+      send_to_char( "{y| {RSyntax Note {W: {xSee '{chelp flagfind{x' for special syntax.                   {y|\n\r", ch);
+      send_to_char( "{y+=========================================================================+{x\n\r", ch);
+      send_to_char( "{y| {WObj types   : {xextra, wear, affect, damage, type, weapon, special, spell {y|\n\r",ch);
+      send_to_char( "{y+-------------------------------------------------------------------------+{x\n\r", ch);
+      send_to_char( "{y| {WMob types   : {xlevel, race, special, shop, aff, aff2, act, act2,         {y|\n\r",ch);
+      send_to_char( "{y| {W            : {xoff, res, vuln, imm, attr, abil, form, parts              {y|\n\r",ch);
+      send_to_char( "{y+-------------------------------------------------------------------------+{x\n\r", ch);
+      send_to_char( "{y| {WRoom types  : {xsector, room, clan, owner                                 {y|\n\r",ch);
+      send_to_char( "{y+=========================================================================+{x\n\r", ch);
+      send_to_char( "\n\r", ch);
     }
 
     pArea = ch->in_room->area;
@@ -3655,6 +3664,10 @@ void do_areaflagfind( CHAR_DATA *ch, char *argument )
             table = &attr_flags;
         else if (!str_prefix(arg2, "abilities"))
             table = &abil_flags;
+        else if (!str_prefix(arg2, "form"))
+            table = &form_flags;
+        else if (!str_prefix(arg2, "parts"))
+            table = &part_flags;
         else
             findflag = FALSE;
 
@@ -3832,6 +3845,23 @@ void do_areaflagfind( CHAR_DATA *ch, char *argument )
                     add_buf(buffer,buf);
                 }
 
+                if(!str_prefix(arg2, "form") && IS_SET(pMobIndex->form, affflag))
+                {
+                    found = TRUE;
+                    count++;
+                    sprintf( buf, "%s(%3d) [%5d] %s\n\r",
+                    pMobIndex->count ? "*" : " ",count, pMobIndex->vnum, pMobIndex->short_descr);
+                    add_buf(buffer,buf);
+                }
+
+                if(!str_prefix(arg2, "parts") && IS_SET(pMobIndex->parts, affflag))
+                {
+                    found = TRUE;
+                    count++;
+                    sprintf( buf, "%s(%3d) [%5d] %s\n\r",
+                    pMobIndex->count ? "*" : " ",count, pMobIndex->vnum, pMobIndex->short_descr);
+                    add_buf(buffer,buf);
+                }
 
             }
         }

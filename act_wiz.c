@@ -3134,7 +3134,7 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
             table = &abil_flags;
         else if (!str_prefix(arg2, "form"))
             table = &form_flags;
-        else if (!str_prefix(arg2, "part"))
+        else if (!str_prefix(arg2, "parts"))
             table = &part_flags;
         else
             findflag = FALSE;

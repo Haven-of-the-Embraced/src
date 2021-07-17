@@ -3054,7 +3054,7 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
         send_to_char( "{y| {WObj types   : {xextra, wear, affect, damage, type, weapon, special, spell {y|\n\r",ch);
         send_to_char( "{y+-------------------------------------------------------------------------+{x\n\r", ch);
         send_to_char( "{y| {WMob types   : {xlevel, race, special, shop, aff, aff2, act, act2,         {y|\n\r",ch);
-        send_to_char( "{y| {W            : {xoff, res, vuln, imm, attr, abil, form, parts              {y|\n\r",ch);
+        send_to_char( "{y| {W            : {xoff, res, vuln, imm, attr, abil, form, parts, size        {y|\n\r",ch);
         send_to_char( "{y+-------------------------------------------------------------------------+{x\n\r", ch);
         send_to_char( "{y| {WRoom types  : {xsector, room, clan, owner                                 {y|\n\r",ch);
         send_to_char( "{y+=========================================================================+{x\n\r", ch);
@@ -3138,6 +3138,8 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
             table = &form_flags;
         else if (!str_prefix(arg2, "parts"))
             table = &part_flags;
+        else if (!str_prefix(arg2, "size"))
+            table = &size_flags;
         else
             findflag = FALSE;
 
@@ -3325,6 +3327,14 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                 }
 
                 if(!str_prefix(arg2, "parts") && IS_SET(pMobIndex->parts, affflag))
+                {
+                    found = TRUE;
+                    count++;
+                    sprintf( buf, "%s(%3d) [%5d] %s\n\r",
+                    pMobIndex->count ? "*" : " ",count, pMobIndex->vnum, pMobIndex->short_descr);
+                    add_buf(buffer,buf);
+                }
+                if (!str_prefix(arg2, "size") && (pMobIndex->size == flag_value( size_flags, arg3)))
                 {
                     found = TRUE;
                     count++;
@@ -3575,7 +3585,7 @@ void do_areaflagfind( CHAR_DATA *ch, char *argument )
       send_to_char( "{y| {WObj types   : {xextra, wear, affect, damage, type, weapon, special, spell {y|\n\r",ch);
       send_to_char( "{y+-------------------------------------------------------------------------+{x\n\r", ch);
       send_to_char( "{y| {WMob types   : {xlevel, race, special, shop, aff, aff2, act, act2,         {y|\n\r",ch);
-      send_to_char( "{y| {W            : {xoff, res, vuln, imm, attr, abil, form, parts              {y|\n\r",ch);
+      send_to_char( "{y| {W            : {xoff, res, vuln, imm, attr, abil, form, parts, size        {y|\n\r",ch);
       send_to_char( "{y+-------------------------------------------------------------------------+{x\n\r", ch);
       send_to_char( "{y| {WRoom types  : {xsector, room, clan, owner                                 {y|\n\r",ch);
       send_to_char( "{y+=========================================================================+{x\n\r", ch);
@@ -3668,6 +3678,8 @@ void do_areaflagfind( CHAR_DATA *ch, char *argument )
             table = &form_flags;
         else if (!str_prefix(arg2, "parts"))
             table = &part_flags;
+        else if (!str_prefix(arg2, "size"))
+            table = &size_flags;
         else
             findflag = FALSE;
 
@@ -3863,6 +3875,14 @@ void do_areaflagfind( CHAR_DATA *ch, char *argument )
                     add_buf(buffer,buf);
                 }
 
+                if (!str_prefix(arg2, "size") && (pMobIndex->size == flag_value( size_flags, arg3)))
+                {
+                    found = TRUE;
+                    count++;
+                    sprintf( buf, "%s(%3d) [%5d] %s\n\r",
+                    pMobIndex->count ? "*" : " ",count, pMobIndex->vnum, pMobIndex->short_descr);
+                    add_buf(buffer,buf);
+                }
             }
         }
 

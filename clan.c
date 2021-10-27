@@ -489,6 +489,13 @@ void do_claim (CHAR_DATA *ch, char *argument)
         sendch("This area cannot be claimed as a domain.\n\r", ch);
         return;
     }
+
+    if (dom->clan == ch->clan)
+    {
+      sendch("Your clan already rules over this domain!\n\r", ch);
+      return;
+    }
+    
     argument = one_argument(argument, arg);
 
     if (str_cmp(arg, "confirm"))
@@ -554,7 +561,3 @@ void do_claim (CHAR_DATA *ch, char *argument)
     save_area(ch->in_room->area);
     return;
 }
-
-
-
-

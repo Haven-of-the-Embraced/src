@@ -962,35 +962,6 @@ bool is_exact_name(char *str, char *namelist )
     }
 }
 
-/* enchanted stuff for eq */
-void affect_enchant(OBJ_DATA *obj)
-{
-    /* okay, move all the old flags into new vectors if we have to */
-    if (!obj->enchanted)
-    {
-        AFFECT_DATA *paf, *af_new;
-        obj->enchanted = TRUE;
-
-        for (paf = obj->pIndexData->affected;
-             paf != NULL; paf = paf->next)
-        {
-        af_new = new_affect();
-
-            af_new->next = obj->affected;
-            obj->affected = af_new;
-
-        af_new->where   = paf->where;
-            af_new->type        = UMAX(0,paf->type);
-            af_new->level       = paf->level;
-            af_new->duration    = paf->duration;
-            af_new->location    = paf->location;
-            af_new->modifier    = paf->modifier;
-            af_new->bitvector   = paf->bitvector;
-        }
-    }
-}
-
-
 /*
  * Apply or remove an affect to a character.
  */

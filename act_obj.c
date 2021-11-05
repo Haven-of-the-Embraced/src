@@ -2210,6 +2210,9 @@ void do_quaff( CHAR_DATA *ch, char *argument )
 
     one_argument( argument, arg );
 
+    if (IS_NPC(ch))
+        return;
+
     if ( arg[0] == '\0' )
     {
     send_to_char( "Quaff what?\n\r", ch );

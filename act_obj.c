@@ -1931,12 +1931,12 @@ void do_wear( CHAR_DATA *ch, char *argument )
     send_to_char( "Wear, wield, or hold what?\n\r", ch );
     return;
     }
-/*
+
 if ( IS_AFFECTED(ch, AFF_SHIFT) || ch->changed == CHANGED_LUPUS || is_affected(ch,gsn_shadowform))
     {
     send_to_char( "You cannot wear things in this form!\n\r", ch );
     return;
-    }*/
+    }
     if ( !str_cmp( arg, "all" ) )
     {
     OBJ_DATA *obj_next;
@@ -1946,7 +1946,7 @@ if ( IS_AFFECTED(ch, AFF_SHIFT) || ch->changed == CHANGED_LUPUS || is_affected(c
         obj_next = obj->next_content;
         if ( obj->wear_loc == WEAR_NONE && can_see_obj( ch, obj ) )
         {
-/*          if (ch->changed == CHANGED_CRINOS)
+          if (ch->changed == CHANGED_CRINOS)
                 {
                     if(IS_SET(obj->wear_flags,  ITEM_WEAR_TORSO) ||
                         IS_SET(obj->wear_flags,  ITEM_HOLD) ||
@@ -1958,16 +1958,16 @@ if ( IS_AFFECTED(ch, AFF_SHIFT) || ch->changed == CHANGED_LUPUS || is_affected(c
                                 wear_obj( ch, obj, FALSE );
                 }
             else
-            */if(ch->race == race_lookup("vampire") || ch->race == race_lookup("methuselah"))
+            if(ch->race == race_lookup("vampire") || ch->race == race_lookup("methuselah"))
                 {
                     if(!IS_OBJ_STAT(obj,ITEM_BLESS))
                         wear_obj( ch, obj, FALSE );
                 }
-            /*else if(is_affected(ch,gsn_vicissitude_horrid))
+            else if(is_affected(ch,gsn_vicissitude_horrid))
                 {
                     if(IS_SET(obj->wear_flags, ITEM_LIGHT) || IS_SET(obj->wear_flags, ITEM_HOLD) || IS_SET(obj->wear_flags,  ITEM_WIELD) || IS_SET(obj->wear_flags, ITEM_WEAR_FLOAT))
                     wear_obj(ch,obj,FALSE);
-                } */
+                }
             else
                 wear_obj( ch, obj, FALSE );
         }

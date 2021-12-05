@@ -1946,15 +1946,15 @@ if ( IS_AFFECTED(ch, AFF_SHIFT) || ch->changed == CHANGED_LUPUS || is_affected(c
         obj_next = obj->next_content;
         if ( obj->wear_loc == WEAR_NONE && can_see_obj( ch, obj ) )
         {
-          if (ch->changed == CHANGED_CRINOS)
+          if (ch->changed == CHANGED_CRINOS ||
+              is_affected(ch,gsn_vicissitude_horrid) ||
+              is_affected( ch, gsn_vicissitude_chiropteran ))
                 {
-                    if(IS_SET(obj->wear_flags,  ITEM_WEAR_TORSO) ||
-                        IS_SET(obj->wear_flags,  ITEM_HOLD) ||
+                    if( IS_SET(obj->wear_flags,  ITEM_HOLD) ||
                         IS_SET(obj->wear_flags,  ITEM_WIELD) ||
                         IS_SET(obj->wear_flags,  ITEM_LIGHT) ||
-                        IS_SET(obj->wear_flags,  ITEM_WEAR_NECK) ||
-                        IS_SET(obj->wear_flags,  ITEM_WEAR_FLOAT) ||
-                        IS_SET(obj->wear_flags,  ITEM_WEAR_WRIST))
+                        IS_SET(obj->wear_flags,  ITEM_WEAR_SHIELD) ||
+                        IS_SET(obj->wear_flags,  ITEM_WEAR_FLOAT))
                                 wear_obj( ch, obj, FALSE );
                 }
             else
@@ -1962,11 +1962,6 @@ if ( IS_AFFECTED(ch, AFF_SHIFT) || ch->changed == CHANGED_LUPUS || is_affected(c
                 {
                     if(!IS_OBJ_STAT(obj,ITEM_BLESS))
                         wear_obj( ch, obj, FALSE );
-                }
-            else if(is_affected(ch,gsn_vicissitude_horrid))
-                {
-                    if(IS_SET(obj->wear_flags, ITEM_LIGHT) || IS_SET(obj->wear_flags, ITEM_HOLD) || IS_SET(obj->wear_flags,  ITEM_WIELD) || IS_SET(obj->wear_flags, ITEM_WEAR_FLOAT))
-                    wear_obj(ch,obj,FALSE);
                 }
             else
                 wear_obj( ch, obj, FALSE );

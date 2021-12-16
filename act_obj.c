@@ -92,46 +92,28 @@ bool can_loot(CHAR_DATA *ch, OBJ_DATA *obj)
 
 bool can_wear_in_form(CHAR_DATA *ch, OBJ_DATA *obj)
 {
-    /*if(ch->pcdata->shiftform == CRINOS)
+
+    if(ch->pcdata->shiftform == CRINOS ||
+        is_affected(ch,gsn_vicissitude_horrid) ||
+        is_affected( ch, gsn_vicissitude_chiropteran ))
     {
         if(CAN_WEAR(obj,ITEM_HOLD)      ||
         CAN_WEAR(obj,ITEM_WIELD)        ||
-        CAN_WEAR(obj,ITEM_WEAR_NECK)    ||
+        CAN_WEAR(obj,ITEM_LIGHT)        ||
         CAN_WEAR(obj,ITEM_WEAR_FLOAT)   ||
-        CAN_WEAR(obj,ITEM_WEAR_WRIST)   ||
-        CAN_WEAR(obj,ITEM_WEAR_SHIELD)  ||
-        CAN_WEAR(obj,ITEM_WEAR_FACE)    ||
-        CAN_WEAR(obj,ITEM_WEAR_EAR))
+        CAN_WEAR(obj,ITEM_WEAR_SHIELD))
             return TRUE;
         else
             return FALSE;
     }
-    if(ch->pcdata->shiftform == LUPUS  || ch->pcdata->shiftform == HISPO)
-    {
-        if(CAN_WEAR(obj,ITEM_WEAR_NECK) ||
-        CAN_WEAR(obj,ITEM_WEAR_FLOAT)   ||
-        CAN_WEAR(obj,ITEM_WEAR_EAR))
-        return TRUE;
-        else return FALSE;
-    }
-*/
-/*  for future expanded use change... less messy repeated crap code.
 
-    if(ch->race == race_lookup("vampire") || ch->race == race_lookup("methuselah"))
+    if(is_affected(ch, gsn_shift) || IS_AFFECTED(ch, AFF_SHIFT) || ch->pcdata->shiftform == LUPUS  || ch->pcdata->shiftform == HISPO)
     {
-        if(IS_OBJ_STAT(obj,ITEM_BLESS)) return FALSE;
-    }
-    if(is_affected(ch,gsn_vicissitude_horrid))
-    {
-        if(CAN_WEAR(obj,ITEM_HOLD)      ||
-        CAN_WEAR(obj,ITEM_WIELD)        ||
-        CAN_WEAR(obj,ITEM_WEAR_FLOAT)   ||
-        CAN_WEAR(obj,ITEM_WEAR_SHIELD)  ||
-        CAN_WEAR(obj,ITEM_WEAR_FACE))
+        if(CAN_WEAR(obj,ITEM_WEAR_FLOAT))
         return TRUE;
         else return FALSE;
     }
-*/
+
     return TRUE;
 }
 

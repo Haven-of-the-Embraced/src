@@ -187,11 +187,7 @@ bool shiftform(CHAR_DATA *ch, int desired, bool rage)
         af.bitvector = 0;
         affect_to_char( ch, &af );
 
-        for ( obj = ch->carrying; obj != NULL; obj = obj_next )
-        {
-            obj_next = obj->next_content;
-            if(obj->wear_loc != WEAR_NONE && !can_wear_in_form(ch,obj)) unequip_char( ch, obj );
-        }
+        check_equipment(ch);
 
         switch(ch->pcdata->shiftform)
         {

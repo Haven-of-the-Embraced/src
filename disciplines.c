@@ -5300,7 +5300,7 @@ void do_shift(CHAR_DATA *ch, char *argument)
     }
 
     WAIT_STATE(ch, 80);
-
+    check_equipment(ch);
     if ( !str_prefix( arg, "bat" ) )
     {
         if ( IS_AFFECTED(ch, AFF_SHIFT))
@@ -7734,6 +7734,8 @@ void do_horrid(CHAR_DATA *ch, char *argument)
     act( "Your body slowly shifts into that of a horrible Zulo.", ch, NULL, NULL, TO_CHAR );
     act( "$n's size doubles as their body is altered into that of a horrible Zulo.", ch, NULL, NULL,TO_NOTVICT );
 
+    check_equipment(ch);
+
     af.where    = TO_AFFECTS;
     af.type     = gsn_vicissitude_horrid;
     af.level    = ch->level;
@@ -7915,6 +7917,8 @@ void do_chiropteranmarauder(CHAR_DATA *ch, char *argument)
 
 	act( "You smile wickedly as you force your body into a terrifying form, composed of the best of both humanoid and chiropteran traits.", ch, NULL, NULL, TO_CHAR );
 	act( "$n's body shifts slowly as $e transforms into a monstrous bat-like form.", ch, NULL, NULL,TO_NOTVICT );
+
+    check_equipment(ch);
 
 	af.where     = TO_AFFECTS;
 	af.type      = gsn_vicissitude_chiropteran;

@@ -1845,6 +1845,18 @@ void unequip_char( CHAR_DATA *ch, OBJ_DATA *obj )
     return;
 }
 
+void check_equipment(CHAR_DATA *ch)
+{
+    OBJ_DATA *obj, *obj_next;
+
+    for ( obj = ch->carrying; obj != NULL; obj = obj_next )
+    {
+        obj_next = obj->next_content;
+        if(obj->wear_loc != WEAR_NONE && !can_wear_in_form(ch,obj)) unequip_char( ch, obj );
+    }
+
+    return;
+}
 
 
 /*

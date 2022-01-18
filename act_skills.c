@@ -271,7 +271,7 @@ void do_classify(CHAR_DATA *ch, char *argument)
 
   if (IS_NPC(ch)) return;
 
-  if (get_ability(ch, CSABIL_ANIMAL_KEN) < 0)
+  if (get_ability(ch, CSABIL_ANIMAL_KEN) < 1)
   {
     send_to_char("You have not studied the animal kingdom enough to learn any helpful information.\n\r", ch);
     return;

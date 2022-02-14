@@ -1561,67 +1561,46 @@ void do_examine( CHAR_DATA *ch, char *argument )
 {
     char buf[MAX_STRING_LENGTH];
     char arg[MAX_INPUT_LENGTH];
+    char condition[3];
     OBJ_DATA *obj;
 
     one_argument( argument, arg );
 
     if ( arg[0] == '\0' )
     {
-    send_to_char( "Examine what?\n\r", ch );
-    return;
+	send_to_char( "Examine what?\n\r", ch );
+	return;
     }
-
-    do_function(ch, &do_look, arg );
 
     if ( ( obj = get_obj_here( ch, NULL, arg ) ) != NULL )
     {
-    switch ( obj->item_type )
-    {
-    default:
-        break;
+	int cond = obj->condition;
+	sprintf( condition, "%s", cond == 0 ? "{D" : cond <= 15 ? "{r" : cond <= 45 ? "{y" : cond < 100 ? "{g" : "{W");
 
-    case ITEM_JUKEBOX:
-        do_function(ch, &do_play, "list");
-        break;
+	send_to_char( condition, ch );
+	send_to_char("()----------------------======ooooOOOOOOOOoooo======----------------------()\n\r",ch);
+	send_to_char(" |----------------------============================----------------------|{x\n\r",ch);
+	sprintf( buf,"%s | --{x Level %3d\n\r", condition, obj->level);
+	send_to_char( buf, ch );
+	sprintf( buf,"%s | --{x %s\n\r", condition, obj->name );
+	send_to_char( buf, ch );
 
-    case ITEM_MONEY:
-        if (obj->value[0] == 0)
-        {
-            if (obj->value[1] == 0)
-            sprintf(buf,"Odd...there's no coins in the pile.\n\r");
-        else if (obj->value[1] == 1)
-            sprintf(buf,"Wow. One gold coin.\n\r");
-        else
-            sprintf(buf,"There are %d gold coins in the pile.\n\r",
-            obj->value[1]);
-        }
-        else if (obj->value[1] == 0)
-        {
-        if (obj->value[0] == 1)
-            sprintf(buf,"Wow. One silver coin.\n\r");
-        else
-            sprintf(buf,"There are %d silver coins in the pile.\n\r",
-            obj->value[0]);
-        }
-        else
-        sprintf(buf,
-            "There are %d gold and %d silver coins in the pile.\n\r",
-            obj->value[1],obj->value[0]);
-        send_to_char(buf,ch);
-        break;
+	sprintf( buf,"%s | --{x %s\n\r | -- %s\n\r", condition, obj->short_descr, obj->description );
+	send_to_char( buf, ch );
 
-    case ITEM_DRINK_CON:
-    case ITEM_CONTAINER:
-    case ITEM_CORPSE_NPC:
-    case ITEM_CORPSE_PC:
-        sprintf(buf,"in %s",argument);
-        do_function(ch, &do_look, buf );
+	sprintf( buf,"%s | --{x %5d/%5d/%5d (10th pounds)\n\r", condition, obj->weight, get_obj_weight( obj ),get_true_weight(obj) );
+	send_to_char( buf, ch );
+
+	send_to_char( condition, ch );
+	send_to_char(" |----------------------============================----------------------|\n\r",ch);
+	send_to_char("()----------------------======ooooOOOOOOOOoooo======----------------------(){x\n\r",ch);
     }
-    }
+
+    else
+	send_to_char( "You don't see that item here.\n\r", ch);
 
     return;
 }
-
 
 
 /*

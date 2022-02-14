@@ -1579,16 +1579,19 @@ void do_examine( CHAR_DATA *ch, char *argument )
 
 	send_to_char( condition, ch );
 	send_to_char("()----------------------======ooooOOOOOOOOoooo======----------------------()\n\r",ch);
+   	sprintf( buf,"%s | --{x Level %3d  %s::{x  %s\n\r", condition, obj->level, condition, obj->short_descr);
+	send_to_char( buf, ch );
+    send_to_char( condition, ch );
 	send_to_char(" |----------------------============================----------------------|{x\n\r",ch);
-	sprintf( buf,"%s | --{x Level %3d\n\r", condition, obj->level);
-	send_to_char( buf, ch );
-	sprintf( buf,"%s | --{x %s\n\r", condition, obj->name );
+	sprintf( buf,"%s | --{x Keywords: %s\n\r", condition, obj->name );
 	send_to_char( buf, ch );
 
-	sprintf( buf,"%s | --{x %s\n\r | -- %s\n\r", condition, obj->short_descr, obj->description );
+	sprintf( buf,"%s | --{x %s\n\r", condition, obj->description );
 	send_to_char( buf, ch );
 
-	sprintf( buf,"%s | --{x %5d/%5d/%5d (10th pounds)\n\r", condition, obj->weight, get_obj_weight( obj ),get_true_weight(obj) );
+	sprintf( buf,"%s | --{x This item weighs approximately %5d pounds on its own.\n\r", condition, obj->weight / 10);
+	send_to_char( buf, ch );
+	sprintf( buf,"%s | --{x Factoring in any contents inside, the total weight is %5d.\n\r", condition, get_obj_weight(obj) / 10);
 	send_to_char( buf, ch );
 
 	send_to_char( condition, ch );

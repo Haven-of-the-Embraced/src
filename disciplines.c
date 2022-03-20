@@ -4658,18 +4658,22 @@ void do_sparkofrage(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if ( ch->pblood < 25 )
+    if (is_affected(ch, gsn_botched_presence))
     {
-        send_to_char( "You don't have enough blood.\n\r", ch );
+        send_to_char("You have not quite gotten over your last social disgrace.\n\r", ch);
         return;
     }
 
-    if ((victim = get_char_room(ch, NULL, argument)) == NULL)
-      victim = ch;
-
-    if ( is_affected( victim, gsn_sparkofrage ) )
+    if ( is_affected( ch, gsn_sparkofrage ))
     {
-        send_to_char( "You cannot make the aura of revulsion any stronger!\n\r", ch );
+        send_to_char( "You quell the aura of hatred surrounding you.\n\r", ch );
+        affect_strip(ch, gsn_sparkofrage);
+        return;
+    }
+
+    if ( ch->pblood < 25 )
+    {
+        send_to_char( "You don't have enough blood.\n\r", ch );
         return;
     }
 
@@ -4688,10 +4692,10 @@ void do_sparkofrage(CHAR_DATA *ch, char *argument)
         af.modifier  = 0;
         af.duration  = 8;
         af.bitvector = 0;
-        affect_to_char( victim, &af );
+        affect_to_char( ch, &af );
 
-        send_to_char("Your very presence begins to elicit such hatred that those around you begin to make attempts on your life!\n\r" ,victim);
-        act( "You feel suddenly enraged at the sight of $n, unable to stop yourself from trying to end $s existence!",  victim, NULL, NULL, TO_NOTVICT );
+        send_to_char("Your very presence begins to elicit such hatred that those around you begin to make attempts on your life!\n\r" ,ch);
+        act( "You feel suddenly enraged at the sight of $n, unable to stop yourself from trying to end $s existence!",  ch, NULL, NULL, TO_NOTVICT );
         return;
     } else {
       af.where    = TO_AFFECTS;

@@ -7999,12 +7999,16 @@ void do_clearaff(CHAR_DATA *ch, char *argument)
     sprintf( buf, "%s's affects have been cleared.\n\r", victim->name );
     send_to_char(buf,ch);
 
+    if (IS_NPC(victim))
+        return;
+
     if (victim->pcdata->shiftform != HOMID)
     {
       victim->pcdata->shiftform = HOMID;
       sprintf(buf, "%s has been shifted to Homid form.\n\r", victim->name);
       send_to_char(buf,ch);
     }
+
     return;
 }
 

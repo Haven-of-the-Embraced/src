@@ -785,6 +785,7 @@ void game_loop_mac_msdos( void )
 #if defined(unix)
 void game_loop_unix( int control )
 {
+    sh_int test_loops = MAX_TEST_LOOPS;
     static struct timeval null_time;
     struct timeval last_time;
 
@@ -995,8 +996,11 @@ void game_loop_unix( int control )
     current_time = (time_t) last_time.tv_sec;
 
     if (test_run)
-        merc_down = TRUE;
-
+	if (test_loops <= 0) {
+        	merc_down = TRUE;
+	} else { 
+		test_loops--;
+	}
     }
 
     return;

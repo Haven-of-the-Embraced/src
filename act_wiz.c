@@ -8208,7 +8208,7 @@ void do_vlist( CHAR_DATA *ch, char *argument )
             if ( ( pMobIndex = get_mob_index( vnum ) ) != NULL )
             {
                     found = TRUE;
-                    sprintf( buf, "{W[{G%5d{W] <{Blvl {M%3d{W> : {x%s\n\r", pMobIndex->vnum, pMobIndex->level, pMobIndex->short_descr );
+                    sprintf( buf, "{W[{G%5d{W] <{Blvl {M%3d{W> {W: {Ycnt{C%2d{W : {x%s\n\r", pMobIndex->vnum, pMobIndex->level, pMobIndex->count, pMobIndex->short_descr );
                     send_to_char( buf, ch );
             }
         }

@@ -1278,7 +1278,7 @@ void do_asave( CHAR_DATA *ch, char *argument )
     save_area_list();
     save_area( pArea );
 
-    send_to_char("Area saved.", ch);
+    send_to_char("Area saved.\n\r", ch);
     return;
     }
 

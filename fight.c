@@ -2162,6 +2162,7 @@ bool d10_damage(CHAR_DATA *ch, CHAR_DATA *victim, int damsuccess, int modifier, 
     if(IS_AFFECTED(ch, AFF_HIDE))
     {
       affect_strip(ch, gsn_hide);
+      affect_strip(ch, gsn_gift_blurofthemilkyeye);
       REMOVE_BIT(ch->affected_by, AFF_HIDE);
     }
 

@@ -683,7 +683,7 @@ void rote_perceiveforces(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA
     af.where     = TO_AFFECTS;
     af.type      = gsn_magick;
     af.level     = ch->level;
-    af.duration  = success*2*(ch->csabilities[CSABIL_ALERTNESS]+get_attribute(ch,PERCEPTION));
+    af.duration  = (success * 5) + 25;
     af.location  = APPLY_NONE;
     af.modifier  = 0;
     af.bitvector = AFF_INFRARED;
@@ -808,7 +808,7 @@ void rote_spatialperceptions(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_
     af.where     = TO_AFFECTS;
     af.type      = gsn_magick;
     af.level     = ch->level;
-    af.duration  = success*(ch->csabilities[CSABIL_ALERTNESS]+get_attribute(ch,PERCEPTION));
+  af.duration  = (success * 5) + 25;
     af.location  = APPLY_NONE;
     af.modifier  = 0;
     af.bitvector = AFF_DARK_VISION;
@@ -1652,7 +1652,7 @@ void rote_spiritsight(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *o
     af.where     = TO_AFFECTS;
     af.type      = gsn_spiritsight;
     af.level     = ch->level;
-    af.duration  = success*(ch->csabilities[CSABIL_ALERTNESS]+get_attribute(ch,PERCEPTION));
+  af.duration  = (success * 5) + 25;
     af.location  = APPLY_NONE;
     af.modifier  = 0;
     af.bitvector = 0;
@@ -1999,7 +1999,7 @@ void rote_timesense(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj
   af.where     = TO_AFFECTS;
   af.type      = gsn_timesense;
   af.level     = ch->sphere[SPHERE_TIME];
-  af.duration  = (success * 5) + 15;
+  af.duration  = (success * 5) + 25;
   af.location  = APPLY_NONE;
   af.modifier  = 0;
   af.bitvector = 0;

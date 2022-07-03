@@ -2954,6 +2954,7 @@ void do_blight(CHAR_DATA *ch, char *argument)
     multi_hit( victim, ch, TYPE_UNDEFINED );
     return;
 }
+
 void do_blackdeath(CHAR_DATA *ch, char *argument)
 {
    CHAR_DATA *victim;
@@ -2990,6 +2991,13 @@ void do_blackdeath(CHAR_DATA *ch, char *argument)
         send_to_char( "You don't have enough blood!\n\r", ch );
         return;
     }
+
+    if(!IS_NPC(victim) && (!IS_SET(victim->act,PLR_ARENA) || !IS_SET(ch->act2, PLR2_PVP) || !IS_SET(victim->act2, PLR2_PVP)))
+    {
+        send_to_char("Your target and yourself must both be PVP enabled to do that.\n\r", ch);
+        return;
+    }
+
     if(!IS_NPC(victim) && victim->race == race_lookup("vampire") && victim->gen < ch->gen)
     {
         send_to_char("That person is too close to Caine to kill outright.\n\r",ch);

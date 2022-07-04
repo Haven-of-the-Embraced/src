@@ -6,6 +6,11 @@ pipeline {
         }
     }
 
+    environment {
+    DISCORD_WEBHOOK     = 'https://discord.com/api/webhooks/993588346955759740/JUkZ3EuJ-utk4O8MLxM-NlTfh8NWbsXOY79LtkEc2jZ_m3QIPJGnGgMOKyTFJLWBEay6'
+
+    }
+    
     stages {
         stage('Clean') {
             when {
@@ -47,7 +52,7 @@ pipeline {
         }
     }
     post {
-        always {
+        changed {
             script {
                 def branch = BRANCH_NAME
                 def msg = "**Status:** " + currentBuild.currentResult.toLowerCase() + "\n"
@@ -57,15 +62,11 @@ pipeline {
                     currentBuild.changeSets.first().getLogs().each {
                         msg += "- `" + it.getCommitId().substring(0, 8) + "` *" + it.getComment().substring(0, it.getComment().length()-1) + "*\n"
                     }
-                } else {
-                    msg += "no changes for this run\n"
                 }
 
                 if (msg.length() > 1024) msg.take(msg.length() - 1024)
 
-                withCredentials([string(credentialsId: 'DiscordWebhook', variable: 'discordWebhook')]) {
-                    discordSend thumbnail: "https://havenmud.net/images/taskfailed.jpg", successful: currentBuild.resultIsBetterOrEqualTo('SUCCESS'), description: "${msg}", link: env.BUILD_URL, title: "HavenMUD:${branch} #${BUILD_NUMBER}", webhookURL: "${discordWebhook}"
-                }
+                discordSend thumbnail: "https://havenmud.net/images/taskfailed.jpg", successful: currentBuild.resultIsBetterOrEqualTo('SUCCESS'), description: "${msg}", link: env.BUILD_URL, title: "HavenMUD:${branch} #${BUILD_NUMBER}", webhookURL: "${DISCORD_WEBHOOK}"
             }
         }
     }

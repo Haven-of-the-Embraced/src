@@ -452,13 +452,13 @@ void do_skillmap(CHAR_DATA *ch, char *argument)
 
         if (has_secondary)
         {
-            sprintf(buf, "%16s %-3d %-15s %-2d  %-15s %-2d\n\r", csskill_table[i].name, csskill_table[i].level,
+            sprintf(buf, "%s%16s %-3d %-15s %-2d  %-15s %-2d{x\n\r", ch->pcdata->learned[*csskill_table[i].gsn] ? "" : "{c" , csskill_table[i].name, csskill_table[i].level,
                                                         primary, csskill_table[i].primary[DOT],
                                                         secondary, csskill_table[i].secondary[DOT]);
         }
         else
         {
-            sprintf(buf, "%16s %-3d %-15s %-2d\n\r", csskill_table[i].name, csskill_table[i].level,
+            sprintf(buf, "%s%16s %-3d %-15s %-2d{x\n\r", ch->pcdata->learned[*csskill_table[i].gsn] ? "" : "{c" , csskill_table[i].name, csskill_table[i].level,
                                                         primary, csskill_table[i].primary[DOT]);
         }
         add_buf(output, buf);

@@ -525,7 +525,7 @@ int find_door( CHAR_DATA *ch, char *arg )
         &&   is_name( arg, pexit->keyword ) )
         return door;
     }
-    act( "I see no $T here.", ch, NULL, arg, TO_CHAR );
+    //act( "I see no $T here.", ch, NULL, arg, TO_CHAR );
     return -1;
     }
 
@@ -597,8 +597,10 @@ void do_open( CHAR_DATA *ch, char *argument )
         for ( rch = to_room->people; rch != NULL; rch = rch->next_in_room )
         act( "The $d opens.", rch, NULL, pexit_rev->keyword, TO_CHAR );
     }
-    }
+
     return;
+    }
+
 
     if ( ( obj = get_obj_here( ch, NULL, arg ) ) != NULL )
     {

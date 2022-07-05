@@ -1090,9 +1090,9 @@ void rote_littlegooddeath(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DAT
         send_to_char("You cannot do this to yourself!\n\r",ch);
         return;
     }
-    if(!IS_NPC(victim) || victim->level > ch->level)
+    if(!IS_NPC(victim))
     {
-        send_to_char("This being is too powerful to harm in this way.\n\r",ch);
+        send_to_char("You cannot use this on players.\n\r",ch);
         return;
     }
     if(is_affected(victim,gsn_shadowform) || IS_AFFECTED2(victim, AFF2_MIST) || is_affected(victim,gsn_earthmeld))
@@ -1120,10 +1120,10 @@ void rote_littlegooddeath(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DAT
         return;
     }
 
-    if (success >= 5)
+    if (success >= 5 && victim->level <= ch->level + 10)
     {
         act("$n darts out a hand and touches $N who slumps over dead.",ch,NULL,victim,TO_NOTVICT);
-        act("You reach out and touch $N, disrupting the vital flows of Quintessence through their Life pattern.",ch,NULL,victim,TO_CHAR);
+        act("You reach out and touch $N, disrupting the vital flows of Quintessence through $S Life pattern.",ch,NULL,victim,TO_CHAR);
         kill_em(ch,victim);
         return;
     }

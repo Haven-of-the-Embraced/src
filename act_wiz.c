@@ -7743,10 +7743,10 @@ void do_copyover (CHAR_DATA *ch, char * argument)
             }
         sendch("\n\r{W*Type 'copyover legend' for color codes.*{x\n\r", ch);
         sendch("{D     L{x\n\r", ch);
-        sendch("{D     E   R          M    M     I     N        H{x\n\r", ch);
-        sendch("{D  S  V   A          A    O     D     A        O{x\n\r", ch);
-        sendch("{D  E  E   C      H   N    V     L     M        S{x\n\r", ch);
-        sendch("{D  X  L   E      P   A    E     E     E        T{x\n\r", ch);
+        sendch("{D     E       M   M     I     N        H{x\n\r", ch);
+        sendch("{D  S  V       A   O     D     A        O{x\n\r", ch);
+        sendch("{D  E  E   H   N   V     L     M        S{x\n\r", ch);
+        sendch("{D  X  L   P   A   E     E     E        T{x\n\r", ch);
         page_to_char(buf_string(output), ch);
         free_buf(output);
         return;

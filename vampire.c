@@ -974,29 +974,16 @@ void do_bloodbuff( CHAR_DATA *ch, char *argument )
     af.where    = TO_AFFECTS;
     af.type     = gsn_blood_buff;
     af.level    = 1;
-    af.duration = 7;
+    af.duration = 12;
     af.location = APPLY_CS_STR;
     af.modifier = 1;
     af.bitvector    = 0;
     affect_to_char( ch, &af );
 
-    af.where    = TO_AFFECTS;
-    af.type     = gsn_blood_buff;
-    af.level    = 1;
-    af.duration = 7;
     af.location = APPLY_CS_DEX;
-    af.modifier = 1;
-    af.bitvector    = 0;
     affect_to_char( ch, &af );
 
-    af.where    = TO_AFFECTS;
-    af.type     = gsn_blood_buff;
-    af.level    = 1;
-    af.duration = 7;
     af.location = APPLY_CS_STA;
-    af.modifier = 1;
-    af.bitvector    = 0;
-
     affect_to_char( ch, &af );
 
     return;

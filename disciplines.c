@@ -5397,10 +5397,25 @@ void do_shift(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if ( !str_prefix( arg, "wolf" ) )
+    if ( !str_prefix( arg, "wolf" ) || !str_prefix( arg, "tiger" ))
     {
-        act( "Your body slowly shifts forms into a wolf.", ch, NULL, NULL, TO_CHAR );
-        act( "$n shifts their form into that of a wolf.", ch, NULL, NULL, TO_NOTVICT );
+        if (!str_prefix( arg, "wolf"))
+        {
+            act( "Your body slowly shifts forms into a wolf.", ch, NULL, NULL, TO_CHAR );
+            act( "$n shifts their form into that of a wolf.", ch, NULL, NULL, TO_NOTVICT );
+            ch->short_descr = str_dup( "A large mountain wolf" );
+            sprintf(buf, "A large mountain wolf");
+            ch->shift = str_dup( buf );
+        }
+        else
+        {
+            act( "Your body slowly shifts forms into a tiger.", ch, NULL, NULL, TO_CHAR );
+            act( "$n shifts their form into that of a tiger.", ch, NULL, NULL, TO_NOTVICT );
+            ch->short_descr = str_dup( "A powerful looking tiger" );
+            sprintf(buf, "A powerful looking tiger");
+            ch->shift = str_dup( buf );
+        }
+
         ch->pblood -= 20;
         affect_strip(ch,gsn_reveal);
 
@@ -5408,150 +5423,34 @@ void do_shift(CHAR_DATA *ch, char *argument)
         af.type      = gsn_shift;
         af.level     = ch->pcdata->discipline[PROTEAN];
         af.duration  = 24;
-        af.location  = APPLY_HIT;
-        af.modifier  = 5*ch->level;
-        af.bitvector = 0;
-        affect_to_char( ch, &af );
-
-        af.where     = TO_AFFECTS;
-        af.type      = gsn_shift;
-        af.level     = ch->pcdata->discipline[PROTEAN];
-        af.duration  = 24;
-        af.location  = APPLY_MOVE;
-        af.modifier  = 5*ch->level;
-        af.bitvector = 0;
-        affect_to_char( ch, &af );
-
-        af.where     = TO_AFFECTS;
-        af.type      = gsn_shift;
-        af.level     = ch->pcdata->discipline[PROTEAN];
-        af.duration  = 24;
         af.location  = APPLY_CS_STR;
         af.modifier  = 1;
-        af.bitvector = 0;
-        affect_to_char( ch, &af );
-
-        af.where    = TO_AFFECTS;
-        af.type     = gsn_shift;
-        af.level    = ch->pcdata->discipline[PROTEAN];
-        af.duration = 24;
-        af.location = APPLY_CS_DEX;
-        af.modifier = 2;
-        af.bitvector    = 0;
-        affect_to_char( ch, &af );
-
-        af.where    = TO_AFFECTS;
-        af.type     = gsn_shift;
-        af.level    = ch->pcdata->discipline[PROTEAN];
-        af.duration = 24;
-        af.location = APPLY_CS_STA;
-        af.modifier = 2;
-        af.bitvector    = 0;
-        affect_to_char( ch, &af );
-
-        af.where    = TO_AFFECTS;
-        af.type     = gsn_shift;
-        af.level    = ch->pcdata->discipline[PROTEAN];
-        af.duration = 24;
-        af.location = APPLY_CS_MAN;
-        af.modifier = -3;
-        af.bitvector    = 0;
-        affect_to_char( ch, &af );
-
-        af.where     = TO_AFFECTS;
-        af.type      = gsn_shift;
-        af.level     = ch->pcdata->discipline[PROTEAN];
-        af.duration  = 24;
-        af.location  = APPLY_NONE;
-        af.modifier  = 0;
         af.bitvector = AFF_SHIFT;
         affect_to_char( ch, &af );
 
+        af.location  = APPLY_CS_DEX;
+        af.modifier  = 2;
+        affect_to_char( ch, &af );
+
+        af.location  = APPLY_CS_STA;
+        af.modifier  = 2;
+        affect_to_char( ch, &af );
+
+        af.location  = APPLY_CS_MAN;
+        af.modifier  = -3;
+        affect_to_char( ch, &af );
+
+        af.location  = APPLY_MOVE;
+        af.modifier  = 5*ch->level;
+        affect_to_char( ch, &af );
+
         if (ch->hit > ch->max_hit) ch->hit = ch->max_hit;
-        ch->short_descr = str_dup( "A large mountain wolf" );
-        sprintf(buf, "A large mountain wolf");
-            ch->shift = str_dup( buf );
+
         return;
     }
 
 //* Zelans extra form code below
 
-    if ( !str_prefix( arg, "tiger" ) )
-    {
-        act( "Your body slowly shifts forms into a tiger.", ch, NULL, NULL, TO_CHAR );
-        act( "$n shifts their form into that of a tiger.", ch, NULL, NULL, TO_NOTVICT );
-        ch->pblood -= 20;
-        affect_strip(ch,gsn_reveal);
-
-        af.where     = TO_AFFECTS;
-        af.type      = gsn_shift;
-        af.level     = ch->pcdata->discipline[PROTEAN];
-        af.duration  = 24;
-        af.location  = APPLY_HIT;
-        af.modifier  = 5*ch->level;
-        af.bitvector = 0;
-        affect_to_char( ch, &af );
-
-        af.where     = TO_AFFECTS;
-        af.type      = gsn_shift;
-        af.level     = ch->pcdata->discipline[PROTEAN];
-        af.duration  = 24;
-        af.location  = APPLY_MOVE;
-        af.modifier  = 5*ch->level;
-        af.bitvector = 0;
-        affect_to_char( ch, &af );
-
-        af.where     = TO_AFFECTS;
-        af.type      = gsn_shift;
-        af.level     = ch->pcdata->discipline[PROTEAN];
-        af.duration  = 24;
-        af.location  = APPLY_CS_STR;
-        af.modifier  = 1;
-        af.bitvector = 0;
-        affect_to_char( ch, &af );
-
-        af.where    = TO_AFFECTS;
-        af.type     = gsn_shift;
-        af.level    = ch->pcdata->discipline[PROTEAN];
-        af.duration = 24;
-        af.location = APPLY_CS_DEX;
-        af.modifier = 2;
-        af.bitvector    = 0;
-        affect_to_char( ch, &af );
-
-        af.where    = TO_AFFECTS;
-        af.type     = gsn_shift;
-        af.level    = ch->pcdata->discipline[PROTEAN];
-        af.duration = 24;
-        af.location = APPLY_CS_STA;
-        af.modifier = 2;
-        af.bitvector    = 0;
-        affect_to_char( ch, &af );
-
-        af.where    = TO_AFFECTS;
-        af.type     = gsn_shift;
-        af.level    = ch->pcdata->discipline[PROTEAN];
-        af.duration = 24;
-        af.location = APPLY_CS_MAN;
-        af.modifier = -3;
-        af.bitvector    = 0;
-        affect_to_char( ch, &af );
-
-        af.where     = TO_AFFECTS;
-        af.type      = gsn_shift;
-        af.level     = ch->pcdata->discipline[PROTEAN];
-        af.duration  = 24;
-        af.location  = APPLY_NONE;
-        af.modifier  = 0;
-        af.bitvector = AFF_SHIFT;
-        affect_to_char( ch, &af );
-
-        if (ch->hit > ch->max_hit) ch->hit = ch->max_hit;
-        ch->short_descr = str_dup( "A powerful looking tiger" );
-        sprintf(buf, "A powerful looking tiger");
-            ch->shift = str_dup( buf );
-        return;
-    }
 //Raven form
 
  if ( !str_prefix( arg, "raven" ) )

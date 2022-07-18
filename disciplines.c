@@ -5020,7 +5020,6 @@ void do_dreadgaze(CHAR_DATA *ch, char *argument)
 
 void do_gleam(CHAR_DATA *ch, char *argument)
 {
-
     AFFECT_DATA af;
 
     if (IS_NPC(ch)) return;
@@ -5031,7 +5030,6 @@ void do_gleam(CHAR_DATA *ch, char *argument)
         return;
     }
 
-
     if ( IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
     {
         send_to_char("Your blood curse prevents it!\n\r" ,ch);
@@ -5040,7 +5038,15 @@ void do_gleam(CHAR_DATA *ch, char *argument)
 
     if(ch->pcdata->discipline[PROTEAN] == 0)
     {
-        send_to_char( "Are not trained in Protean.\n\r", ch );
+        send_to_char( "You are not trained in Protean.\n\r", ch );
+        return;
+    }
+
+    if (is_affected(ch, gsn_gleam)) 
+    {
+        affect_strip(ch, gsn_gleam);
+        act( "$n's eyes cease to glow bright red.", ch, 0, 0, TO_NOTVICT );
+        send_to_char( "Your eyes cease to glow as your vitae enhanced vision returns to normal.\n\r", ch );
         return;
     }
 
@@ -5050,16 +5056,10 @@ void do_gleam(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if (is_affected(ch, gsn_gleam)) {
-    affect_strip(ch, gsn_gleam);
-    act( "$n's eyes cease to glow bright red.", ch, 0, 0, TO_NOTVICT );
-    send_to_char( "Your eyes cease to glow as your vitae enhanced vision returns to normal.\n\r", ch );
-    return;
-    }
-
     send_to_char("You cull forth the Beast and your eyes begin to glow red.\n\r",ch);
     act( "$n lets forth a savage growl and their eyes begin glowing red.", ch, 0, 0, TO_NOTVICT );
     ch->pblood -= 5;
+
     af.where     = TO_AFFECTS;
     af.type      = gsn_gleam;
     af.level     = ch->level;
@@ -5068,12 +5068,8 @@ void do_gleam(CHAR_DATA *ch, char *argument)
     af.modifier  = -1;
     af.bitvector = AFF_INFRARED;
     affect_to_char( ch, &af );
-    af.where     = TO_AFFECTS;
-    af.type      = gsn_gleam;
-    af.level     = ch->level;
-    af.duration  = -1;
+
     af.location  = APPLY_CS_MAN;
-    af.modifier  = -1;
     af.bitvector = AFF_DARK_VISION;
     affect_to_char( ch, &af );
     return;
@@ -5094,7 +5090,7 @@ void do_claws(CHAR_DATA *ch, char *argument)
         {
             if (ch->pcdata->shiftform == HISPO || ch->pcdata->shiftform == LUPUS)
             {
-                sendch("You cannot fight with fists.. You're a wolf.\n\r", ch);
+                sendch("You cannot fight with fists, you're a wolf.\n\r", ch);
                 return;
             }
             affect_strip(ch, gsn_claws);
@@ -5146,7 +5142,7 @@ void do_claws(CHAR_DATA *ch, char *argument)
     {
       affect_strip(ch,gsn_claws);
       send_to_char("Your claws slide back under your nails.\n\r", ch);
-      act("$n's claws slide back under their fingernails.",ch,NULL,NULL,TO_NOTVICT);
+      act("$n's claws slide back under $s fingernails.",ch,NULL,NULL,TO_NOTVICT);
       return;
     }
 
@@ -5272,22 +5268,24 @@ void do_shift(CHAR_DATA *ch, char *argument)
         return;
     }
 
-
-        if (is_affected(ch, gsn_vicissitude_horrid) || is_affected(ch, gsn_vicissitude_chiropteran))
-        {
+    if (is_affected(ch, gsn_vicissitude_horrid) || is_affected(ch, gsn_vicissitude_chiropteran))
+    {
         sendch("You have already altered your form!\n\r", ch);
         return;
-        }
+    }
+
     if ( IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
     {
         send_to_char("Your blood curse prevents it!\n\r" ,ch);
         return;
     }
+
     if(ch->pcdata->discipline[PROTEAN] < 4)
     {
         send_to_char( "You are not skilled enough in Protean to shift forms.\n\r", ch );
         return;
     }
+
     if ( is_affected( ch, gsn_claws ) )
         do_function(ch, &do_claws, " ");
 
@@ -5320,6 +5318,7 @@ void do_shift(CHAR_DATA *ch, char *argument)
             send_to_char( "You must return to vampire form first!\n\r", ch );
             return;
         }
+        
         if (ch->pblood < 20)
         {
             send_to_char( "You don't have enough blood!\n\r", ch );

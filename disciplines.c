@@ -5334,54 +5334,19 @@ void do_shift(CHAR_DATA *ch, char *argument)
         af.type      = gsn_shift;
         af.level     = ch->pcdata->discipline[PROTEAN];
         af.duration  = 24;
-        af.location  = APPLY_HIT;
-        af.modifier  = -(ch->level*2);
-        af.bitvector = 0;
-        affect_to_char( ch, &af );
-
-        af.where    = TO_AFFECTS;
-        af.type     = gsn_shift;
-        af.level    = ch->pcdata->discipline[PROTEAN];
-        af.duration = 24;
-        af.location = APPLY_MOVE;
-        af.modifier = ch->level*4;
-        af.bitvector    = 0;
-        affect_to_char( ch, &af );
-
-        af.where     = TO_AFFECTS;
-        af.type      = gsn_shift;
-        af.level     = ch->pcdata->discipline[PROTEAN];
-        af.duration  = 24;
-        af.location  = APPLY_NONE;
-        af.modifier  = 0;
-        af.bitvector = AFF_FLYING;
-        affect_to_char( ch, &af );
-
-        af.where     = TO_AFFECTS;
-        af.type      = gsn_shift;
-        af.level     = ch->pcdata->discipline[PROTEAN];
-        af.duration  = 24;
-        af.location  = APPLY_NONE;
-        af.modifier  = 0;
-        af.bitvector = AFF_DETECT_HIDDEN;
-        affect_to_char( ch, &af );
-
-        af.where     = TO_AFFECTS;
-        af.type      = gsn_shift;
-        af.level     = ch->pcdata->discipline[PROTEAN];
-        af.duration  = 24;
-        af.location  = APPLY_NONE;
-        af.modifier  = 0;
+        af.location  = APPLY_CS_STR;
+        af.modifier  = -(get_attribute(ch,STRENGTH)-2);
         af.bitvector = AFF_SHIFT;
         affect_to_char( ch, &af );
 
-        af.where    = TO_AFFECTS;
-        af.type     = gsn_shift;
-        af.level    = ch->pcdata->discipline[PROTEAN];
-        af.duration = 24;
-        af.location = APPLY_CS_STR;
-        af.modifier = -(get_attribute(ch,STRENGTH)-1);
-        af.bitvector    = 0;
+        af.location  = APPLY_CS_DEX;
+        af.modifier  = 1;
+        af.bitvector = AFF_FLYING;
+        affect_to_char( ch, &af );
+
+        af.location  = APPLY_MOVE;
+        af.modifier  = ch->level*4;
+        af.bitvector = AFF_DETECT_HIDDEN;
         affect_to_char( ch, &af );
 
         if (ch->hit > ch->max_hit) ch->hit = ch->max_hit;
@@ -5402,9 +5367,9 @@ void do_shift(CHAR_DATA *ch, char *argument)
         af.type      = gsn_shift;
         af.level     = ch->pcdata->discipline[PROTEAN];
         af.duration  = 24;
-        af.location  = APPLY_HIT;
-        af.modifier  = -(ch->level*2);
-        af.bitvector = 0;
+        af.location  = APPLY_CS_STR;
+        af.modifier  = -(get_attribute(ch,STRENGTH)-2);
+        af.bitvector = AFF_SHIFT;
         affect_to_char( ch, &af );
 
         af.where     = TO_AFFECTS;
@@ -5423,24 +5388,6 @@ void do_shift(CHAR_DATA *ch, char *argument)
         af.location  = APPLY_NONE;
         af.modifier  = 0;
         af.bitvector = AFF_HIDE;
-        affect_to_char( ch, &af );
-
-        af.where     = TO_AFFECTS;
-        af.type      = gsn_shift;
-        af.level     = ch->pcdata->discipline[PROTEAN];
-        af.duration  = 24;
-        af.location  = APPLY_NONE;
-        af.modifier  = 0;
-        af.bitvector = AFF_SHIFT;
-        affect_to_char( ch, &af );
-
-        af.where    = TO_AFFECTS;
-        af.type     = gsn_shift;
-        af.level    = ch->pcdata->discipline[PROTEAN];
-        af.duration = 24;
-        af.location = APPLY_CS_STR;
-        af.modifier = -(get_attribute(ch,STRENGTH)-1);
-        af.bitvector    = 0;
         affect_to_char( ch, &af );
 
         if (ch->hit > ch->max_hit) ch->hit = ch->max_hit;

@@ -5309,25 +5309,25 @@ void do_shift(CHAR_DATA *ch, char *argument)
         return;
     }
 
+    if ( IS_AFFECTED(ch, AFF_SHIFT))
+    {
+        send_to_char( "You must return to vampire form first!\n\r{WSyntax: {cshift{x\n\r", ch );
+        return;
+    }
+
+    if (ch->pblood < 25)
+    {
+        send_to_char( "You don't have enough blood!\n\r", ch );
+        return;
+    }
+
     WAIT_STATE(ch, 80);
 
     if ( !str_prefix( arg, "bat" ) )
     {
-        if ( IS_AFFECTED(ch, AFF_SHIFT))
-        {
-            send_to_char( "You must return to vampire form first!\n\r", ch );
-            return;
-        }
-        
-        if (ch->pblood < 20)
-        {
-            send_to_char( "You don't have enough blood!\n\r", ch );
-            return;
-        }
-
         act( "Your body slowly shifts forms into a bat.", ch, NULL, NULL, TO_CHAR );
         act( "$n shifts their form into that of a bat.", ch, NULL, NULL, TO_NOTVICT );
-        ch->pblood -= 10;
+        ch->pblood -= 20;
         affect_strip(ch,gsn_reveal);
 
         af.where     = TO_AFFECTS;
@@ -5393,20 +5393,9 @@ void do_shift(CHAR_DATA *ch, char *argument)
 
     if ( !str_prefix( arg, "rat" ) )
     {
-        if ( IS_AFFECTED(ch, AFF_SHIFT))
-        {
-            send_to_char( "You must return to vampire form first!\n\r", ch );
-            return;
-        }
-        if (ch->pblood < 20)
-        {
-            send_to_char( "You don't have enough blood!\n\r", ch );
-            return;
-        }
-
         act( "Your body slowly shifts forms into a rat.", ch, NULL, NULL, TO_CHAR );
         act( "$n shifts their form into that of a rat.", ch, NULL, NULL, TO_NOTVICT );
-        ch->pblood -= 10;
+        ch->pblood -= 20;
         affect_strip(ch,gsn_reveal);
 
         af.where     = TO_AFFECTS;
@@ -5463,19 +5452,9 @@ void do_shift(CHAR_DATA *ch, char *argument)
 
     if ( !str_prefix( arg, "wolf" ) )
     {
-        if ( IS_AFFECTED(ch, AFF_SHIFT))
-        {
-            send_to_char( "You must return to vampire form first!.\n\r", ch );
-            return;
-        }
-        if (ch->pblood < 50)
-        {
-            send_to_char( "You don't have enough blood!\n\r", ch );
-            return;
-        }
         act( "Your body slowly shifts forms into a wolf.", ch, NULL, NULL, TO_CHAR );
         act( "$n shifts their form into that of a wolf.", ch, NULL, NULL, TO_NOTVICT );
-        ch->pblood -= 40;
+        ch->pblood -= 20;
         affect_strip(ch,gsn_reveal);
 
         af.where     = TO_AFFECTS;
@@ -5552,20 +5531,9 @@ void do_shift(CHAR_DATA *ch, char *argument)
 
     if ( !str_prefix( arg, "tiger" ) )
     {
-        if ( IS_AFFECTED(ch, AFF_SHIFT))
-        {
-            send_to_char( "You must return to vampire form first!.\n\r", ch );
-            return;
-        }
-        if (ch->pblood < 50)
-        {
-            send_to_char( "You don't have enough blood!\n\r", ch );
-            return;
-        }
-
         act( "Your body slowly shifts forms into a tiger.", ch, NULL, NULL, TO_CHAR );
         act( "$n shifts their form into that of a tiger.", ch, NULL, NULL, TO_NOTVICT );
-        ch->pblood -= 40;
+        ch->pblood -= 20;
         affect_strip(ch,gsn_reveal);
 
         af.where     = TO_AFFECTS;
@@ -5641,17 +5609,6 @@ void do_shift(CHAR_DATA *ch, char *argument)
 
  if ( !str_prefix( arg, "raven" ) )
     {
-        if ( IS_AFFECTED(ch, AFF_SHIFT))
-        {
-            send_to_char( "You must return to vampire form first!.\n\r", ch );
-            return;
-        }
-        if (ch->pblood < 30)
-        {
-            send_to_char( "You don't have enough blood!\n\r", ch );
-            return;
-        }
-
         act( "Your body slowly shifts forms into a raven.", ch, NULL, NULL, TO_CHAR );
         act( "$n shifts their form into that of a raven.", ch, NULL, NULL, TO_NOTVICT );
         ch->pblood -= 20;
@@ -5720,20 +5677,9 @@ void do_shift(CHAR_DATA *ch, char *argument)
 // Bear form
  if ( !str_prefix( arg, "bear" ) )
     {
-        if ( IS_AFFECTED(ch, AFF_SHIFT))
-        {
-            send_to_char( "You must return to vampire form first!.\n\r", ch );
-            return;
-        }
-        if (ch->pblood < 90)
-        {
-            send_to_char( "You don't have enough blood!\n\r", ch );
-            return;
-        }
-
         act( "Your body slowly shifts forms into a bear.", ch, NULL, NULL, TO_CHAR );
         act( "$n shifts their form into that of a bear.", ch, NULL, NULL, TO_NOTVICT );
-        ch->pblood -= 80;
+        ch->pblood -= 20;
         affect_strip(ch,gsn_reveal);
 
         af.where     = TO_AFFECTS;
@@ -5808,24 +5754,14 @@ void do_shift(CHAR_DATA *ch, char *argument)
 // Shadowolf form
  if ( !str_prefix( arg, "shadowwolf" ) )
     {
-        if ( IS_AFFECTED(ch, AFF_SHIFT))
+        if(ch->pcdata->discipline[OBTENEBRATION] < 1)
         {
-            send_to_char( "You must return to vampire form first!.\n\r", ch );
+            send_to_char( "You are not skilled enough in Obtenebration!\n\r", ch );
             return;
         }
-        if (ch->pblood < 50)
-        {
-            send_to_char( "You don't have enough blood!\n\r", ch );
-            return;
-        }
-if(ch->pcdata->discipline[OBTENEBRATION] < 1)
-{
-        send_to_char( "You are not skilled enough in obtenebration!.\n\r", ch );
-        return;
-}
         act( "Your body slowly shifts forms into a shadow wolf.", ch, NULL, NULL, TO_CHAR );
         act( "$n shifts their form into that of a shadow wolf.", ch, NULL, NULL, TO_NOTVICT );
-        ch->pblood -= 45;
+        ch->pblood -= 20;
         affect_strip(ch,gsn_reveal);
 
         af.where     = TO_AFFECTS;
@@ -5900,21 +5836,9 @@ if(ch->pcdata->discipline[OBTENEBRATION] < 1)
 // Easter egg (Remove it at some point, syrup form)
 if ( !str_prefix( arg, "syrup" ) )
     {
-        if ( IS_AFFECTED(ch, AFF_SHIFT))
-        {
-            send_to_char( "You must return to vampire form first!.\n\r", ch );
-            return;
-        }
-        if (ch->pblood < 50)
-        {
-            send_to_char( "You don't have enough blood!\n\r", ch );
-            return;
-        }
-
         act( "Your body slowly shifts forms into good canadian maple syrup.", ch, NULL, NULL, TO_CHAR );
-
         act( "$n shifts their form into that of good canadian maple syrup.", ch, NULL, NULL, TO_NOTVICT );
-        ch->pblood -= 1;
+        ch->pblood -= 20;
         affect_strip(ch,gsn_reveal);
 
         af.where     = TO_AFFECTS;
@@ -5938,17 +5862,6 @@ if ( !str_prefix( arg, "syrup" ) )
 
     if ( !str_prefix( arg, "mist" ) )
     {
-        if ( IS_AFFECTED(ch, AFF_SHIFT))
-        {
-            send_to_char( "You must return to vampire form first.\n\r", ch );
-            return;
-        }
-        if (ch->pblood < 20)
-        {
-            send_to_char( "You don't have enough blood!\n\r", ch );
-            return;
-        }
-
         if(ch->pcdata->discipline[PROTEAN] < 5)
         {
             send_to_char( "You are not yet skilled enough to gain this complex form.\n\r", ch );
@@ -5957,7 +5870,7 @@ if ( !str_prefix( arg, "syrup" ) )
 
         act( "Your body slowly shifts forms into a watery mist.", ch, NULL, NULL, TO_CHAR );
         act( "$n shifts $s form into that of a watery mist.", ch, NULL, NULL, TO_NOTVICT );
-        ch->pblood -= 15;
+        ch->pblood -= 20;
         affect_strip(ch,gsn_reveal);
 
         af.where     = TO_AFFECTS;
@@ -6013,6 +5926,8 @@ if ( !str_prefix( arg, "syrup" ) )
     }
 
 send_to_char( "You may shift into bat, wolf, tiger, bear, rat, and raven forms.\n\r", ch );
+if (ch->pcdata->discipline[PROTEAN] >= 5)
+    send_to_char("You may also shift into mist form.\n\r", ch);
 return;
 }
 

@@ -5599,35 +5599,8 @@ if ( !str_prefix( arg, "syrup" ) )
         af.type      = gsn_shift;
         af.level     = ch->pcdata->discipline[PROTEAN];
         af.duration  = 24+ch->level;
-        af.location  = APPLY_HIT;
-        af.modifier  = -(3*ch->level);
-        af.bitvector = AFF_PASS_DOOR;
-        affect_to_char( ch, &af );
-
-        af.where     = TO_AFFECTS;
-        af.type      = gsn_shift;
-        af.level     = ch->pcdata->discipline[PROTEAN];
-        af.duration  = 24+ch->level;
-        af.location  = APPLY_NONE;
-        af.modifier  = 0;
-        af.bitvector = AFF_FANGS;
-        affect_to_char( ch, &af );
-
-        af.where     = TO_AFFECTS;
-        af.type      = gsn_shift;
-        af.level     = ch->pcdata->discipline[PROTEAN];
-        af.duration  = 24+ch->level;
-        af.location  = APPLY_NONE;
-        af.modifier  = 0;
-        af.bitvector = AFF_FLYING;
-        affect_to_char( ch, &af );
-
-        af.where     = TO_AFFECTS;
-        af.type      = gsn_shift;
-        af.level     = ch->pcdata->discipline[PROTEAN];
-        af.duration  = 24+ch->level;
-        af.location  = APPLY_NONE;
-        af.modifier  = 0;
+        af.location  = APPLY_MOVE;
+        af.modifier  = ch->level * 10;
         af.bitvector = AFF_SHIFT;
         affect_to_char( ch, &af );
 
@@ -5640,6 +5613,12 @@ if ( !str_prefix( arg, "syrup" ) )
         af.bitvector = AFF2_MIST;
         affect_to_char( ch, &af );
 
+        af.bitvector = AFF_PASS_DOOR;
+        affect_to_char( ch, &af );
+
+        af.bitvector = AFF_FLYING;
+        affect_to_char( ch, &af );
+
         if (ch->hit > ch->max_hit) ch->hit = ch->max_hit;
         ch->short_descr = str_dup( "A swirling mist" );
         sprintf(buf, "A watery mist swirling around");
@@ -5650,6 +5629,8 @@ if ( !str_prefix( arg, "syrup" ) )
 send_to_char( "You may shift into bat, wolf, tiger, bear, rat, and raven forms.\n\r", ch );
 if (ch->pcdata->discipline[PROTEAN] >= 5)
     send_to_char("You may also shift into mist form.\n\r", ch);
+if (ch->pcdata->discipline[OBTENEBRATION] >= 4)
+    send_to_char("You may also shift into shadowwolf form.\n\r", ch);
 return;
 }
 

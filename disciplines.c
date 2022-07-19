@@ -5480,63 +5480,26 @@ void do_shift(CHAR_DATA *ch, char *argument)
         af.type      = gsn_shift;
         af.level     = ch->pcdata->discipline[PROTEAN];
         af.duration  = 24;
-        af.location  = APPLY_HIT;
-        af.modifier  = 5*ch->level;
-        af.bitvector = 0;
-        affect_to_char( ch, &af );
-
-        af.where     = TO_AFFECTS;
-        af.type      = gsn_shift;
-        af.level     = ch->pcdata->discipline[PROTEAN];
-        af.duration  = 24;
-        af.location  = APPLY_MOVE;
-        af.modifier  = 3*ch->level;
-        af.bitvector = 0;
-        affect_to_char( ch, &af );
-
-        af.where     = TO_AFFECTS;
-        af.type      = gsn_shift;
-        af.level     = ch->pcdata->discipline[PROTEAN];
-        af.duration  = 24;
         af.location  = APPLY_CS_STR;
         af.modifier  = 4;
-        af.bitvector = 0;
+        af.bitvector = AFF_SHIFT;
         affect_to_char( ch, &af );
 
-        af.where    = TO_AFFECTS;
-        af.type     = gsn_shift;
-        af.level    = ch->pcdata->discipline[PROTEAN];
-        af.duration = 24;
         af.location = APPLY_CS_DEX;
         af.modifier = -1;
         af.bitvector    = 0;
         affect_to_char( ch, &af );
 
-        af.where    = TO_AFFECTS;
-        af.type     = gsn_shift;
-        af.level    = ch->pcdata->discipline[PROTEAN];
-        af.duration = 24;
         af.location = APPLY_CS_STA;
         af.modifier = 2;
-        af.bitvector    = 0;
         affect_to_char( ch, &af );
 
-        af.where    = TO_AFFECTS;
-        af.type     = gsn_shift;
-        af.level    = ch->pcdata->discipline[PROTEAN];
-        af.duration = 24;
         af.location = APPLY_CS_MAN;
         af.modifier = -3;
-        af.bitvector    = 0;
-        affect_to_char( ch, &af );
+         affect_to_char( ch, &af );
 
-        af.where     = TO_AFFECTS;
-        af.type      = gsn_shift;
-        af.level     = ch->pcdata->discipline[PROTEAN];
-        af.duration  = 24;
-        af.location  = APPLY_NONE;
-        af.modifier  = 0;
-        af.bitvector = AFF_SHIFT;
+        af.location = APPLY_CS_CHA;
+        af.modifier = -2;
         affect_to_char( ch, &af );
 
         if (ch->hit > ch->max_hit) ch->hit = ch->max_hit;
@@ -5548,7 +5511,7 @@ void do_shift(CHAR_DATA *ch, char *argument)
 // Shadowolf form
  if ( !str_prefix( arg, "shadowwolf" ) )
     {
-        if(ch->pcdata->discipline[OBTENEBRATION] < 1)
+        if(ch->pcdata->discipline[OBTENEBRATION] < 4)
         {
             send_to_char( "You are not skilled enough in Obtenebration!\n\r", ch );
             return;
@@ -5562,63 +5525,28 @@ void do_shift(CHAR_DATA *ch, char *argument)
         af.type      = gsn_shift;
         af.level     = ch->pcdata->discipline[PROTEAN];
         af.duration  = 24;
-        af.location  = APPLY_HIT;
-        af.modifier  = 10*ch->level;
+        af.location  = APPLY_CS_STR;
+        af.modifier  = 2;
+        af.bitvector = AFF_SHIFT;
+        affect_to_char( ch, &af );
+
+        af.location  = APPLY_CS_DEX;
+        af.modifier  = 1;
+        af.bitvector = AFF_HIDE;
+        affect_to_char( ch, &af );
+
+        af.location  = APPLY_CS_STA;
+        af.modifier  = 2;
+        af.bitvector = AFF_SNEAK;
+        affect_to_char( ch, &af );
+
+        af.location  = APPLY_CS_MAN;
+        af.modifier  = -3;
         af.bitvector = 0;
         affect_to_char( ch, &af );
 
-        af.where     = TO_AFFECTS;
-        af.type      = gsn_shift;
-        af.level     = ch->pcdata->discipline[PROTEAN];
-        af.duration  = 24;
         af.location  = APPLY_MOVE;
         af.modifier  = 10*ch->level;
-        af.bitvector = 0;
-        affect_to_char( ch, &af );
-
-        af.where     = TO_AFFECTS;
-        af.type      = gsn_shift;
-        af.level     = ch->pcdata->discipline[PROTEAN];
-        af.duration  = 24;
-        af.location  = APPLY_CS_STR;
-        af.modifier  = 3;
-        af.bitvector = 0;
-        affect_to_char( ch, &af );
-
-        af.where    = TO_AFFECTS;
-        af.type     = gsn_shift;
-        af.level    = ch->pcdata->discipline[PROTEAN];
-        af.duration = 24;
-        af.location = APPLY_CS_DEX;
-        af.modifier = -3;
-        af.bitvector    = 0;
-        affect_to_char( ch, &af );
-
-        af.where    = TO_AFFECTS;
-        af.type     = gsn_shift;
-        af.level    = ch->pcdata->discipline[PROTEAN];
-        af.duration = 24;
-        af.location = APPLY_CS_STA;
-        af.modifier = 2;
-        af.bitvector    = 0;
-        affect_to_char( ch, &af );
-
-        af.where    = TO_AFFECTS;
-        af.type     = gsn_shift;
-        af.level    = ch->pcdata->discipline[PROTEAN];
-        af.duration = 24;
-        af.location = APPLY_CS_MAN;
-        af.modifier = -3;
-        af.bitvector    = 0;
-        affect_to_char( ch, &af );
-
-        af.where     = TO_AFFECTS;
-        af.type      = gsn_shift;
-        af.level     = ch->pcdata->discipline[PROTEAN];
-        af.duration  = 24;
-        af.location  = APPLY_NONE;
-        af.modifier  = 0;
-        af.bitvector = AFF_SHIFT;
         affect_to_char( ch, &af );
 
         if (ch->hit > ch->max_hit) ch->hit = ch->max_hit;

@@ -5323,10 +5323,25 @@ void do_shift(CHAR_DATA *ch, char *argument)
 
     WAIT_STATE(ch, 80);
 
-    if ( !str_prefix( arg, "bat" ) )
+    if ( !str_prefix( arg, "bat" ) || !str_prefix( arg, "raven"))
     {
-        act( "Your body slowly shifts forms into a bat.", ch, NULL, NULL, TO_CHAR );
-        act( "$n shifts their form into that of a bat.", ch, NULL, NULL, TO_NOTVICT );
+        if ( !str_prefix( arg, "bat" ))
+        {
+            act( "Your body slowly shifts forms into a bat.", ch, NULL, NULL, TO_CHAR );
+            act( "$n shifts their form into that of a bat.", ch, NULL, NULL, TO_NOTVICT );
+            ch->short_descr = str_dup( "A strange bat" );
+            sprintf(buf, "A strange bat flittering about the room");
+            ch->shift = str_dup( buf );
+        }
+        else
+        {
+            act( "Your body slowly shifts forms into a raven.", ch, NULL, NULL, TO_CHAR );
+            act( "$n shifts their form into that of a raven.", ch, NULL, NULL, TO_NOTVICT );
+            ch->short_descr = str_dup( "A black raven" );
+            sprintf(buf, "A black raven");
+            ch->shift = str_dup( buf );
+        }
+
         ch->pblood -= 20;
         affect_strip(ch,gsn_reveal);
 
@@ -5345,21 +5360,23 @@ void do_shift(CHAR_DATA *ch, char *argument)
         affect_to_char( ch, &af );
 
         af.location  = APPLY_MOVE;
-        af.modifier  = ch->level*4;
-        af.bitvector = AFF_DETECT_HIDDEN;
+        af.modifier  = ch->level*7;
+        if ( !str_prefix( arg, "bat" ))
+            af.bitvector = AFF_DETECT_HIDDEN;
+        else
+            af.bitvector = 0;
         affect_to_char( ch, &af );
 
         if (ch->hit > ch->max_hit) ch->hit = ch->max_hit;
-        ch->short_descr = str_dup( "A strange bat" );
-        sprintf(buf, "A strange bat flittering about the room");
-            ch->shift = str_dup( buf );
+
         return;
     }
 
-    if ( !str_prefix( arg, "rat" ) )
+    if ( !str_prefix( arg, "rat" ))
     {
         act( "Your body slowly shifts forms into a rat.", ch, NULL, NULL, TO_CHAR );
         act( "$n shifts their form into that of a rat.", ch, NULL, NULL, TO_NOTVICT );
+
         ch->pblood -= 20;
         affect_strip(ch,gsn_reveal);
 
@@ -5393,7 +5410,7 @@ void do_shift(CHAR_DATA *ch, char *argument)
         if (ch->hit > ch->max_hit) ch->hit = ch->max_hit;
         ch->short_descr = str_dup( "An ugly rat" );
         sprintf(buf, "An ugly rat searching for food");
-            ch->shift = str_dup( buf );
+        ch->shift = str_dup( buf );
         return;
     }
 
@@ -5451,75 +5468,6 @@ void do_shift(CHAR_DATA *ch, char *argument)
 
 //* Zelans extra form code below
 
-//Raven form
-
- if ( !str_prefix( arg, "raven" ) )
-    {
-        act( "Your body slowly shifts forms into a raven.", ch, NULL, NULL, TO_CHAR );
-        act( "$n shifts their form into that of a raven.", ch, NULL, NULL, TO_NOTVICT );
-        ch->pblood -= 20;
-        affect_strip(ch,gsn_reveal);
-
-        af.where     = TO_AFFECTS;
-        af.type      = gsn_shift;
-        af.level     = ch->pcdata->discipline[PROTEAN];
-        af.duration  = 24;
-        af.location  = APPLY_HIT;
-        af.modifier  = 5*ch->level;
-        af.bitvector = AFF_SHIFT;
-        affect_to_char( ch, &af );
-
-        af.where     = TO_AFFECTS;
-        af.type      = gsn_shift;
-        af.level     = ch->pcdata->discipline[PROTEAN];
-        af.duration  = 24;
-        af.location  = APPLY_MOVE;
-        af.modifier  = 5*ch->level;
-        af.bitvector = AFF_FLYING;
-        affect_to_char( ch, &af );
-
-        af.where     = TO_AFFECTS;
-        af.type      = gsn_shift;
-        af.level     = ch->pcdata->discipline[PROTEAN];
-        af.duration  = 24;
-        af.location  = APPLY_CS_STR;
-        af.modifier  = -(get_attribute(ch, STRENGTH)-2);
-        af.bitvector = 0;
-        affect_to_char( ch, &af );
-
-        af.where    = TO_AFFECTS;
-        af.type     = gsn_shift;
-        af.level    = ch->pcdata->discipline[PROTEAN];
-        af.duration = 24;
-        af.location = APPLY_CS_DEX;
-        af.modifier = -(get_attribute(ch, DEXTERITY)-3);
-        af.bitvector    = 0;
-        affect_to_char( ch, &af );
-
-        af.where    = TO_AFFECTS;
-        af.type     = gsn_shift;
-        af.level    = ch->pcdata->discipline[PROTEAN];
-        af.duration = 24;
-        af.location = APPLY_CS_STA;
-        af.modifier = -(get_attribute(ch, STAMINA)-3);
-        af.bitvector    = 0;
-        affect_to_char( ch, &af );
-
-        af.where    = TO_AFFECTS;
-        af.type     = gsn_shift;
-        af.level    = ch->pcdata->discipline[PROTEAN];
-        af.duration = 24;
-        af.location = APPLY_CS_MAN;
-        af.modifier = -1;
-        af.bitvector    = 0;
-        affect_to_char( ch, &af );
-
-        if (ch->hit > ch->max_hit) ch->hit = ch->max_hit;
-        ch->short_descr = str_dup( "A black raven" );
-        sprintf(buf, "A black raven");
-            ch->shift = str_dup( buf );
-        return;
-    }
 // Bear form
  if ( !str_prefix( arg, "bear" ) )
     {

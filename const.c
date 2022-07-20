@@ -3218,7 +3218,7 @@ const   struct  group_type      group_table     [MAX_GROUP]     =
     "priest prayers",   { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0,-1, -1 },
     { "create food", "create water", "cure poison", "cure blindness",
       "refresh", "armor", "control weather", "remove curse", "frenzy",
-      "weaken", "know alignment", "create spring", "harm", "dispel magic",
+      "weaken", "create spring", "harm", "dispel magic",
       "blindness", "poison", "lightning bolt", "call lightning", "heal", "mass healing",
       "curse", "earthquake", "ray of truth", "sanctuary", "cure light",
       "radiant aura", "cure serious", "cure critical", "cause light", "bless"}
@@ -3279,7 +3279,7 @@ const   struct  group_type      group_table     [MAX_GROUP]     =
     "detection",        { 4, 3, 6, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 },
     { "detect evil", "detect good", "detect hidden", "detect invis",
       "detect magic", "detect poison", "farsight", "identify",
-      "know alignment", "locate object" }
+      "locate object" }
     },
 
     {
@@ -3323,8 +3323,7 @@ const   struct  group_type      group_table     [MAX_GROUP]     =
     {
     "protective",       { 4, 4, 7, 8, -1, -1, -1, -1, -1, -1, -1, -1, -1 },
     { "armor", "cancellation", "dispel magic", "fireproof",
-      "protection evil", "protection good", "sanctuary", "shield",
-      "stone skin" }
+      "sanctuary", "shield", "stone skin" }
     },
 
     {

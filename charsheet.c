@@ -742,7 +742,7 @@ void do_freebie(CHAR_DATA *ch, char *argument)
     int unlockpoints = max_unlock - ch->unlocksspent;
     int i, count=0, cost=0, step=0, tolearn=0;
     int costcounter;
-    costcounter = (ch->pcdata->csbackgrounds[CSBACK_GENERATION])*30;
+    int gencost;
     bool mentor = FALSE;
 	int li = 0;
 	int gn = 0;
@@ -787,11 +787,10 @@ void do_freebie(CHAR_DATA *ch, char *argument)
         send_to_char("New Discipline:          10\n\r",ch);
         send_to_char("Clan Discipline:         Current Rating*5\n\r",ch);
         send_to_char("Out Of Clan Discipline:  Current Rating*6\n\r",ch);
-        if (ch->pcdata->csbackgrounds[CSBACK_GENERATION] == 0)
-        send_to_char("{YGeneration{x:              10\n\r",ch);
-        if ((ch->pcdata->csbackgrounds[CSBACK_GENERATION] > 0) && (ch->pcdata->csbackgrounds[CSBACK_GENERATION] < 5))
+        if ((ch->pcdata->csbackgrounds[CSBACK_GENERATION] < 5))
         {
-        sprintf(buf,"Generation:              {Y%d{x\n\r",costcounter);
+        gencost = (ch->pcdata->csbackgrounds[CSBACK_GENERATION] == 0) ? 10 : (ch->pcdata->csbackgrounds[CSBACK_GENERATION] * 30);
+        sprintf(buf,"Generation:              {Y%d{x\n\r",gencost);
         send_to_char(buf,ch);
         }
     }
@@ -990,21 +989,7 @@ void do_freebie(CHAR_DATA *ch, char *argument)
                     return;
                 }
                 count = CSBACK_GENERATION;
-                switch (ch->pcdata->csbackgrounds[CSBACK_GENERATION]) {
-                case 0: minimictime = 0; minimage = 0 ; cost = 10; break;
-                case 1: minimictime = 0; minimage = 0; cost = 30; break;
-                case 2: minimictime = 0; minimage = 0; cost = 60; break;
-                case 3: minimictime = 0; minimage = 0; cost = 90; break;
-                case 4: minimictime = 0; minimage = 0; cost = 120; break; }
-
-                if (get_age(ch) < minimage) {
-                    send_to_char("You have not spent enough time on this character to purchase that level of Generation.\n\r", ch);
-                    return;
-                }
-                if ((ch->pcdata->IC_total/60) < minimictime) {
-                    send_to_char("You have not spent enough time in the IC affairs on Haven to purchase that level of Generation.\n\r", ch);
-			return;
-            }
+                cost = gencost;
     }
 
     if(!str_prefix( arg, "conscience"))

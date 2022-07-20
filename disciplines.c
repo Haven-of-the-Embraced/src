@@ -900,8 +900,6 @@ void do_auraperception( CHAR_DATA *ch, char *argument )
             GET_HITROLL(victim), GET_DAMROLL(victim) );
         send_to_char( buf, ch );
 
-        sprintf( buf, "Their alignment is %d.\n\r", victim->alignment );
-        send_to_char( buf, ch );
     }
     if(success > 3)
     {

@@ -1032,7 +1032,7 @@ void affect_modify( CHAR_DATA *ch, AFFECT_DATA *paf, bool fAdd )
     case APPLY_CLASS:                       break;
     case APPLY_LEVEL:                       break;
     case APPLY_AGE:                     break;
-    case APPLY_ALIGN:       ch->alignment       += mod; break;
+    case APPLY_ALIGN:                                   break;
     case APPLY_GENERATION:    ch->gen           += mod; break;
     case APPLY_CS_STR:      if(!IS_NPC(ch)) {ch->csattrib_mod[CSATTRIB_STRENGTH] += mod;} break;
     case APPLY_CS_DEX:      if(!IS_NPC(ch)) {ch->csattrib_mod[CSATTRIB_DEXTERITY]  += mod;} break;

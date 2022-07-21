@@ -1015,7 +1015,6 @@ void one_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt )
         damage(ch,victim,dam,0,DAM_NEGATIVE,FALSE);
         victim->mana -= dam/4;
         victim->move -= dam/2;
-/*      ch->alignment = UMAX(-1000,ch->alignment - 1); */
         ch->hit += dam/2;
         ch->mana += dam/8;
         ch->move += dam/4;
@@ -3438,7 +3437,6 @@ void group_gain( CHAR_DATA *ch, CHAR_DATA *victim )
 
 /*
  * Compute xp for a kill.
- * Also adjust alignment of killer.
  * Edit this function to change xp computations.
  */
 int xp_compute( CHAR_DATA *gch, CHAR_DATA *victim, int total_levels )

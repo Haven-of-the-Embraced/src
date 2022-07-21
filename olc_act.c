@@ -4386,16 +4386,8 @@ MEDIT( medit_align )
 
     EDIT_MOB(ch, pMob);
 
-    if ( argument[0] == '\0' || !is_number( argument ) )
-    {
-    send_to_char( "Syntax:  alignment [number]\n\r", ch );
+    send_to_char( "Alignment no loger used, left unset.\n\r", ch);
     return FALSE;
-    }
-
-    pMob->alignment = atoi( argument );
-
-    send_to_char( "Alignment set.\n\r", ch);
-    return TRUE;
 }
 
 

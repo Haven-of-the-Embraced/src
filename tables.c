@@ -838,7 +838,7 @@ const struct flag_type apply_flags[] =
     {   "savingbreath",     APPLY_SAVING_BREATH,    TRUE    },
     {   "savingspell",      APPLY_SAVING_SPELL, TRUE    },
     {   "spellaffect",      APPLY_SPELL_AFFECT, FALSE   },
-    {   "alignment",        APPLY_ALIGN,        TRUE    },
+    {   "alignment",        APPLY_ALIGN,        FALSE    },
     {   "generation",       APPLY_GENERATION,       TRUE    },
     {   "cs_strength",      APPLY_CS_STR,   TRUE    },
     {   "cs_dexterity",     APPLY_CS_DEX,   TRUE    },

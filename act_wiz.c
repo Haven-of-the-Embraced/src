@@ -2095,18 +2095,14 @@ void do_mstat( CHAR_DATA *ch, char *argument )
     send_to_char(buf,ch);
     }
 
-    sprintf( buf, "Hp: %d/%d  Mana: %d/%d  Move: %d/%d  Practices: %d\n\r",
+    sprintf( buf, "Hp: %d/%d  Mana: %d/%d  Move: %d/%d\n\r",
     victim->hit,         victim->max_hit,
     victim->mana,        victim->max_mana,
-    victim->move,        victim->max_move,
-    IS_NPC(ch) ? 0 : victim->practice );
+    victim->move,        victim->max_move );
     send_to_char( buf, ch );
 
-    sprintf( buf,
-    "Lv: %d    Align: %d  Gold: %ld  Silver: %ld  Exp: %d\n\r",
-    victim->level,
-    victim->alignment,
-    victim->gold, victim->silver, victim->exp );
+    sprintf( buf, "Lv: %d  Gold: %ld  Silver: %ld  Exp: %d\n\r",
+    victim->level, victim->gold, victim->silver, victim->exp );
     send_to_char( buf, ch );
 
     sprintf(buf,"Armor: pierce: %d  bash: %d  slash: %d  magic: %d\n\r",

@@ -1252,6 +1252,7 @@ void do_look( CHAR_DATA *ch, char *argument )
     char *pdesc;
     int door;
     int number,count;
+    bool nextline = FALSE;
 
     if ( ch->desc == NULL )
     return;
@@ -1291,7 +1292,10 @@ void do_look( CHAR_DATA *ch, char *argument )
     if ( arg1[0] == '\0' || !str_cmp( arg1, "auto" ) )
     {
     /* 'look' or 'look auto' */
-    send_to_char("{W+==========================================================================+{x\n\r", ch);
+    if(IS_AFFECTED2(ch,AFF2_UMBRA))
+      send_to_char("{W+============================={m[    Umbra    ]{x==============================+{x\n\r", ch);
+    else
+      send_to_char("{W+==========================================================================+{x\n\r", ch);
     if ( (IS_IMMORTAL(ch) && (IS_NPC(ch) || IS_SET(ch->act,PLR_HOLYLIGHT)))
     ||   IS_BUILDER(ch, ch->in_room->area) )
         sprintf(buf,"{W|Room %6d| ",ch->in_room->vnum);
@@ -1299,22 +1303,24 @@ void do_look( CHAR_DATA *ch, char *argument )
       sprintf(buf,"{W| ");
     send_to_char(buf,ch);
 
-    sprintf(buf,"%s{x", ch->in_room->name);
+    sprintf(buf,"%s{x\n\r", ch->in_room->name);
     send_to_char(buf,ch);
 
     if(ch->avatar > 0 && is_affected(ch, gsn_spiritsight))
     {
-        sprintf(buf," [Gauntlet: %d]",get_gauntlet(ch));
+        sprintf(buf,"{W| [{yGauntlet{W: %d] {x",get_gauntlet(ch));
         send_to_char(buf,ch);
+        nextline = TRUE;
     }
     	if(ch->clan && ch->in_room->area->domain)
 	{
-		sprintf(buf," [Influence {D%d{x]",ch->in_room->area->domain->influence[ch->clan]);
+		sprintf(buf,"{W| [{rInfluence{W: {D%d{x]",ch->in_room->area->domain->influence[ch->clan]);
 		send_to_char(buf,ch);
+    nextline = TRUE;
 	}
-    if(IS_AFFECTED2(ch,AFF2_UMBRA)) send_to_char(" [{mUmbra{x]",ch);
 
-    send_to_char( "\n\r", ch );
+    if (nextline)
+      send_to_char("\n\r", ch);
     send_to_char("{W+==========================================================================+{x\n\r", ch);
 
     if ( arg1[0] == '\0'

@@ -1293,9 +1293,9 @@ void do_look( CHAR_DATA *ch, char *argument )
     {
     /* 'look' or 'look auto' */
     if(IS_AFFECTED2(ch,AFF2_UMBRA))
-      send_to_char("{W+============================={m[    Umbra    ]{x==============================+{x\n\r", ch);
+      send_to_char("{W+============================={m[      Umbra      ]{x==============================+{x\n\r", ch);
     else
-      send_to_char("{W+==========================================================================+{x\n\r", ch);
+      send_to_char("{W+==============================================================================+{x\n\r", ch);
     if ( (IS_IMMORTAL(ch) && (IS_NPC(ch) || IS_SET(ch->act,PLR_HOLYLIGHT)))
     ||   IS_BUILDER(ch, ch->in_room->area) )
         sprintf(buf,"{W|Room %6d| ",ch->in_room->vnum);
@@ -1321,7 +1321,10 @@ void do_look( CHAR_DATA *ch, char *argument )
 
     if (nextline)
       send_to_char("\n\r", ch);
-    send_to_char("{W+==========================================================================+{x\n\r", ch);
+
+    if((ch->avatar > 0) && (ch->in_room->sector_type == SECT_NODE) && is_affected(ch, gsn_primesense))
+      send_to_char("{W| {MYou feel the pull and tug of raw Quintessential energy gathering in the room.{x\n\r", ch);
+    send_to_char("{W+==============================================================================+{x\n\r", ch);
 
     if ( arg1[0] == '\0'
     || ( !IS_NPC(ch) && !IS_SET(ch->comm, COMM_BRIEF) ) )
@@ -1343,10 +1346,6 @@ void do_look( CHAR_DATA *ch, char *argument )
             send_to_char("\n\r{WYour extraordinary senses detect something about this room:{x\n\r", ch);
             send_to_char(pdesc,ch);
         }
-
-/*Extra detect for mages with Prime1 (testing) - Sengir */
-        if((ch->avatar > 0) && (ch->in_room->sector_type == SECT_NODE) && (ch->sphere[SPHERE_PRIME] >= 1))
-            send_to_char("\n\r{MYou feel the pull and tug of raw Quintessential energy gathering in the room.{x\n\r", ch);
     }
 
         if ( !IS_NPC(ch) && IS_SET(ch->act, PLR_AUTOEXIT) )

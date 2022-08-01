@@ -1291,15 +1291,17 @@ void do_look( CHAR_DATA *ch, char *argument )
     if ( arg1[0] == '\0' || !str_cmp( arg1, "auto" ) )
     {
     /* 'look' or 'look auto' */
-    sprintf(buf,"{w%s{x", ch->in_room->name);
-    send_to_char(buf,ch);
-
+    send_to_char("{W+==========================================================================+{x\n\r", ch);
     if ( (IS_IMMORTAL(ch) && (IS_NPC(ch) || IS_SET(ch->act,PLR_HOLYLIGHT)))
     ||   IS_BUILDER(ch, ch->in_room->area) )
-    {
-        sprintf(buf," [Room %d]",ch->in_room->vnum);
-        send_to_char(buf,ch);
-    }
+        sprintf(buf,"{W|Room %6d| ",ch->in_room->vnum);
+    else
+      sprintf(buf,"{W| ");
+    send_to_char(buf,ch);
+
+    sprintf(buf,"%s{x", ch->in_room->name);
+    send_to_char(buf,ch);
+
     if(ch->avatar > 0 && is_affected(ch, gsn_spiritsight))
     {
         sprintf(buf," [Gauntlet: %d]",get_gauntlet(ch));
@@ -1311,7 +1313,9 @@ void do_look( CHAR_DATA *ch, char *argument )
 		send_to_char(buf,ch);
 	}
     if(IS_AFFECTED2(ch,AFF2_UMBRA)) send_to_char(" [{mUmbra{x]",ch);
+
     send_to_char( "\n\r", ch );
+    send_to_char("{W+==========================================================================+{x\n\r", ch);
 
     if ( arg1[0] == '\0'
     || ( !IS_NPC(ch) && !IS_SET(ch->comm, COMM_BRIEF) ) )

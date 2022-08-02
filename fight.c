@@ -3882,6 +3882,7 @@ void do_berserk( CHAR_DATA *ch, char *argument)
     int berserksuccess = 0;
     int berserkdiff = 6;
     int hp_percent;
+    AFFECT_DATA af;
 
     if ((get_skill(ch,gsn_berserk)) == 0
     ||  (IS_NPC(ch) && !IS_SET(ch->off_flags,OFF_BERSERK)))
@@ -3909,6 +3910,8 @@ void do_berserk( CHAR_DATA *ch, char *argument)
         return;
     }
 
+    ch->move -= ch->level / 5;
+
     /* damage -- below 50% of hp helps, above hurts */
     hp_percent = 100 * ch->hit/ch->max_hit;
 
@@ -3916,8 +3919,22 @@ void do_berserk( CHAR_DATA *ch, char *argument)
 
     if (berserksuccess < 0)
     {
-      act("$n gets a wild look in $s eyes.",ch,NULL,NULL,TO_CHAR);
-      act("$n gets a wild look in $s eyes.",ch,NULL,NULL,TO_NOTVICT);
+      act("Your anger overwhelms you so completely that you forego your own sense of safety.",ch,NULL,NULL,TO_CHAR);
+      WAIT_STATE(ch,4 * PULSE_VIOLENCE);
+
+      af.where    = TO_AFFECTS;
+      af.type     = gsn_berserk;
+      af.level    = ch->level;
+      af.duration = -(berserksuccess);
+      af.modifier = berserksuccess*50;
+      af.bitvector = AFF_BERSERK;
+      af.location = APPLY_HITROLL;
+      affect_to_char(ch,&af);
+
+      af.modifier = -(berserksuccess)*200;
+      af.location = APPLY_AC;
+      affect_to_char(ch,&af);
+      check_improve(ch,gsn_berserk,FALSE,6);
       return;
     }
 
@@ -3925,12 +3942,9 @@ void do_berserk( CHAR_DATA *ch, char *argument)
     {
       act("Your pulse speeds up for a brief moment, but you fail to get angry enough.",ch,NULL,NULL,TO_CHAR);
       WAIT_STATE(ch,2 * PULSE_VIOLENCE);
-      ch->move -= ch->level / 5;
       check_improve(ch,gsn_berserk,FALSE,6);
       return;
     }
-
-    AFFECT_DATA af;
 
     WAIT_STATE(ch,PULSE_VIOLENCE);
     ch->mana -= ch->level / 2;

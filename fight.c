@@ -3879,6 +3879,8 @@ void disarm( CHAR_DATA *ch, CHAR_DATA *victim )
 
 void do_berserk( CHAR_DATA *ch, char *argument)
 {
+    int berserksuccess = 0;
+    int berserkdiff = 6;
     int chance, hp_percent;
 
     if ((chance = get_skill(ch,gsn_berserk)) == 0
@@ -3922,6 +3924,22 @@ void do_berserk( CHAR_DATA *ch, char *argument)
     /* damage -- below 50% of hp helps, above hurts */
     hp_percent = 100 * ch->hit/ch->max_hit;
     chance += 25 - hp_percent/2;
+
+    berserksuccess = godice(get_attribute(ch, MANIPULATION) + ch->csabilities[CSABIL_INTIMIDATION], berserkdiff);
+
+    if (berserksuccess < 0)
+    {
+      act("$n gets a wild look in $s eyes.",ch,NULL,NULL,TO_CHAR);
+      act("$n gets a wild look in $s eyes.",ch,NULL,NULL,TO_NOTVICT);
+      return;
+    }
+
+    if (berserksuccess == 0)
+    {
+      act("$n gets a wild look in $s eyes.",ch,NULL,NULL,TO_CHAR);
+      act("$n gets a wild look in $s eyes.",ch,NULL,NULL,TO_NOTVICT);
+      return;
+    }
 
     if (number_percent() < chance)
     {

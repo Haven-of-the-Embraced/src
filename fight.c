@@ -3954,18 +3954,19 @@ void do_berserk( CHAR_DATA *ch, char *argument)
 
     af.where    = TO_AFFECTS;
     af.type     = gsn_berserk;
-    af.level    = ch->level;
-    af.duration = number_fuzzy(ch->level / 8);
-    af.modifier = UMAX(1,ch->level/5);
+    af.level    = berserksuccess;
+    af.duration = 10 + (berserksuccess * 5);
+    af.modifier = 10 + ch->level / 6 * berserksuccess;
     af.bitvector    = AFF_BERSERK;
-
     af.location = APPLY_HITROLL;
     affect_to_char(ch,&af);
 
+    af.bitvector = 0;
+    af.modifier = 10 + ch->level / 4 * berserksuccess;
     af.location = APPLY_DAMROLL;
     affect_to_char(ch,&af);
 
-    af.modifier = UMAX(10,10 * (ch->level/5));
+    af.modifier = ch->level / 5 * 10;
     af.location = APPLY_AC;
     affect_to_char(ch,&af);
 

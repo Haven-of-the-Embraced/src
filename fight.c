@@ -3923,8 +3923,10 @@ void do_berserk( CHAR_DATA *ch, char *argument)
 
     if (berserksuccess == 0)
     {
-      act("$n gets a wild look in $s eyes.",ch,NULL,NULL,TO_CHAR);
-      act("$n gets a wild look in $s eyes.",ch,NULL,NULL,TO_NOTVICT);
+      act("Your pulse speeds up for a brief moment, but you fail to get angry enough.",ch,NULL,NULL,TO_CHAR);
+      WAIT_STATE(ch,2 * PULSE_VIOLENCE);
+      ch->move -= ch->level / 5;
+      check_improve(ch,gsn_berserk,FALSE,6);
       return;
     }
 
@@ -3959,14 +3961,6 @@ void do_berserk( CHAR_DATA *ch, char *argument)
     af.location = APPLY_AC;
     affect_to_char(ch,&af);
 
-    {
-    WAIT_STATE(ch,2 * PULSE_VIOLENCE);
-    ch->mana -= ch->level / 4;
-    ch->move -= ch->level / 5;
-
-    send_to_char("Your pulse speeds up, but nothing happens.\n\r",ch);
-    check_improve(ch,gsn_berserk,FALSE,6);
-    }
 }
 
 void do_bash( CHAR_DATA *ch, char *argument )

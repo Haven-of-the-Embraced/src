@@ -212,11 +212,6 @@ void check_assist(CHAR_DATA *ch,CHAR_DATA *victim)
         ||   (IS_NPC(rch) && rch->race == ch->race
            && IS_SET(rch->off_flags,ASSIST_RACE))
 
-        ||   (IS_NPC(rch) && IS_SET(rch->off_flags,ASSIST_ALIGN)
-           &&   ((IS_GOOD(rch)    && IS_GOOD(ch))
-             ||  (IS_EVIL(rch)    && IS_EVIL(ch))
-             ||  (IS_NEUTRAL(rch) && IS_NEUTRAL(ch))))
-
         ||   (rch->pIndexData == ch->pIndexData
            && IS_SET(rch->off_flags,ASSIST_VNUM)))
 

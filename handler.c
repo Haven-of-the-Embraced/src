@@ -86,13 +86,6 @@ bool is_friend(CHAR_DATA *ch,CHAR_DATA *victim)
     if (IS_SET(ch->off_flags,ASSIST_RACE) && ch->race == victim->race)
     return TRUE;
 
-    if (IS_SET(ch->off_flags,ASSIST_ALIGN)
-    &&  !IS_SET(ch->act,ACT_NOALIGN) && !IS_SET(victim->act,ACT_NOALIGN)
-    &&  ((IS_GOOD(ch) && IS_GOOD(victim))
-    ||   (IS_EVIL(ch) && IS_EVIL(victim))
-    ||   (IS_NEUTRAL(ch) && IS_NEUTRAL(victim))))
-    return TRUE;
-
     return FALSE;
 }
 
@@ -3483,7 +3476,6 @@ char *off_bit_name(int off_flags)
     if (off_flags & OFF_TRIP        ) strcat(buf, " trip");
     if (off_flags & OFF_CRUSH       ) strcat(buf, " crush");
     if (off_flags & ASSIST_ALL      ) strcat(buf, " assist_all");
-    if (off_flags & ASSIST_ALIGN    ) strcat(buf, " assist_align");
     if (off_flags & ASSIST_RACE     ) strcat(buf, " assist_race");
     if (off_flags & ASSIST_PLAYERS  ) strcat(buf, " assist_players");
     if (off_flags & ASSIST_GUARD    ) strcat(buf, " assist_guard");
@@ -3491,7 +3483,6 @@ char *off_bit_name(int off_flags)
     if (off_flags & OFF_SECOND_ATTACK   ) strcat(buf, " second_attack");
     if (off_flags & OFF_THIRD_ATTACK    ) strcat(buf, " third_attack");
     if (off_flags & OFF_FOURTH_ATTACK   ) strcat(buf, " fourth_attack");
-//    if (off_flags & OFF_ULTRA_MOB   ) strcat(buf, " ultra_mob");
     if (off_flags & OFF_SPHERE_ENTROPY  ) strcat(buf, " sphere_entropy");
     if (off_flags & OFF_SPHERE_FORCES   ) strcat(buf, " sphere_forces");
     if (off_flags & OFF_SPHERE_LIFE ) strcat(buf, " sphere_life");

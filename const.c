@@ -564,7 +564,7 @@ const   struct  race_type   race_table  []      =
 
     {
       "modron",       FALSE,
-      0,      AFF_INFRARED,       ASSIST_RACE|ASSIST_ALIGN,
+      0,      AFF_INFRARED,       ASSIST_RACE,
       IMM_CHARM|IMM_DISEASE|IMM_MENTAL|IMM_HOLY|IMM_NEGATIVE,
         RES_FIRE|RES_COLD|RES_ACID, 0,
         H,      A|B|C|G|H|J|K

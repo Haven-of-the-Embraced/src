@@ -3931,8 +3931,9 @@ void do_berserk( CHAR_DATA *ch, char *argument)
       af.location = APPLY_HITROLL;
       affect_to_char(ch,&af);
 
-      af.modifier = -(berserksuccess)*200;
+      af.modifier = -(berserksuccess)*100;
       af.location = APPLY_AC;
+      af.bitvector = 0;
       affect_to_char(ch,&af);
       check_improve(ch,gsn_berserk,FALSE,6);
       return;
@@ -3947,13 +3948,6 @@ void do_berserk( CHAR_DATA *ch, char *argument)
     }
 
     WAIT_STATE(ch,PULSE_VIOLENCE);
-    ch->mana -= ch->level / 2;
-    ch->move -= ch->level / 5;
-
-    /* heal a little damage */
-    ch->hit += ch->level * 2;
-    ch->hit = UMIN(ch->hit,ch->max_hit);
-
     send_to_char("Your pulse races as you are consumed by rage!\n\r",ch);
     act("$n gets a wild look in $s eyes.",ch,NULL,NULL,TO_ROOM);
     check_improve(ch,gsn_berserk,TRUE,6);

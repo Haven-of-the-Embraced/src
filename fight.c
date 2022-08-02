@@ -3881,9 +3881,9 @@ void do_berserk( CHAR_DATA *ch, char *argument)
 {
     int berserksuccess = 0;
     int berserkdiff = 6;
-    int chance, hp_percent;
+    int hp_percent;
 
-    if ((chance = get_skill(ch,gsn_berserk)) == 0
+    if ((get_skill(ch,gsn_berserk)) == 0
     ||  (IS_NPC(ch) && !IS_SET(ch->off_flags,OFF_BERSERK)))
     {
     send_to_char("You turn red in the face, but nothing happens.\n\r",ch);
@@ -3903,27 +3903,14 @@ void do_berserk( CHAR_DATA *ch, char *argument)
     return;
     }
 
-    if (ch->mana < ch->level / 2)
-    {
-    send_to_char("You can't get up enough energy.\n\r",ch);
-    return;
-    }
-
     if (ch->move < ch->level / 5)
     {
         send_to_char("You are too tired to get angry.\n\r", ch);
         return;
     }
 
-    /* modifiers */
-
-    /* fighting */
-    if (ch->position == POS_FIGHTING)
-    chance += 10;
-
     /* damage -- below 50% of hp helps, above hurts */
     hp_percent = 100 * ch->hit/ch->max_hit;
-    chance += 25 - hp_percent/2;
 
     berserksuccess = godice(get_attribute(ch, MANIPULATION) + ch->csabilities[CSABIL_INTIMIDATION], berserkdiff);
 
@@ -3941,8 +3928,6 @@ void do_berserk( CHAR_DATA *ch, char *argument)
       return;
     }
 
-    if (number_percent() < chance)
-    {
     AFFECT_DATA af;
 
     WAIT_STATE(ch,PULSE_VIOLENCE);
@@ -3973,9 +3958,7 @@ void do_berserk( CHAR_DATA *ch, char *argument)
     af.modifier = UMAX(10,10 * (ch->level/5));
     af.location = APPLY_AC;
     affect_to_char(ch,&af);
-    }
 
-    else
     {
     WAIT_STATE(ch,2 * PULSE_VIOLENCE);
     ch->mana -= ch->level / 4;

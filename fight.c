@@ -3880,8 +3880,9 @@ void disarm( CHAR_DATA *ch, CHAR_DATA *victim )
 void do_berserk( CHAR_DATA *ch, char *argument)
 {
     int berserksuccess = 0;
-    int berserkdiff = 6;
+    int berserkdiff = 7;
     int hp_percent;
+    int critical = 0;
     AFFECT_DATA af;
 
     if ((get_skill(ch,gsn_berserk)) == 0
@@ -3912,10 +3913,16 @@ void do_berserk( CHAR_DATA *ch, char *argument)
 
     ch->move -= ch->level / 5;
 
-    /* damage -- below 50% of hp helps, above hurts */
+    /* lower hp = easier to get mad */
     hp_percent = 100 * ch->hit/ch->max_hit;
+    if (hp_percent < 75)
+      berserkdiff--;
+    if (hp_percent < 35)
+      berserkdiff--;
 
     berserksuccess = godice(get_attribute(ch, MANIPULATION) + ch->csabilities[CSABIL_INTIMIDATION], berserkdiff);
+    if (berserksuccess > 4)
+      critical = berserksuccess * 5;
 
     if (berserksuccess < 0)
     {
@@ -3924,7 +3931,7 @@ void do_berserk( CHAR_DATA *ch, char *argument)
 
       af.where    = TO_AFFECTS;
       af.type     = gsn_berserk;
-      af.level    = ch->level;
+      af.level    = 0;
       af.duration = -(berserksuccess);
       af.modifier = berserksuccess*50;
       af.bitvector = AFF_BERSERK;
@@ -3956,13 +3963,13 @@ void do_berserk( CHAR_DATA *ch, char *argument)
     af.type     = gsn_berserk;
     af.level    = berserksuccess;
     af.duration = 10 + (berserksuccess * 5);
-    af.modifier = 10 + ch->level / 6 * berserksuccess;
+    af.modifier = critical + 10 + ch->level / 6 * berserksuccess;
     af.bitvector    = AFF_BERSERK;
     af.location = APPLY_HITROLL;
     affect_to_char(ch,&af);
 
     af.bitvector = 0;
-    af.modifier = 10 + ch->level / 4 * berserksuccess;
+    af.modifier = critical + 10 + ch->level / 4 * berserksuccess;
     af.location = APPLY_DAMROLL;
     affect_to_char(ch,&af);
 
@@ -3970,6 +3977,8 @@ void do_berserk( CHAR_DATA *ch, char *argument)
     af.location = APPLY_AC;
     affect_to_char(ch,&af);
 
+    gain_exp(ch, berserksuccess*4);
+    return;
 }
 
 void do_bash( CHAR_DATA *ch, char *argument )

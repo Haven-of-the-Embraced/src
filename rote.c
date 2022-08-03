@@ -1361,6 +1361,13 @@ void rote_refinematter(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *
         return;
     }
 
+    if (!CAN_WEAR( obj, ITEM_WEAR_HEAD) && !CAN_WEAR( obj, ITEM_WEAR_TORSO)
+      && !CAN_WEAR( obj, ITEM_WEAR_LEGS) && !CAN_WEAR( obj, ITEM_WIELD))
+    {
+        send_to_char( "You can only enhance weapons, headpieces, body armor, and leggings.\n\r", ch );
+        return;
+    }
+
     af.where     = TO_OBJECT;
     af.type      = gsn_magick;
     af.level     = ch->level;

@@ -1605,7 +1605,7 @@ const struct    rote_type   rote_table  [MAX_ROTE]  =
     {   "Golden Wish",          rote_goldenwish,            0, 0, 0, 0, 2, 0, 0, 0, 0, TARGET_NONE, 2, 2, TRUE, FALSE},
     {   "Open Sesame",          rote_opensesame,            0, 0, 0, 0, 3, 0, 0, 0, 0, TARGET_NONE, 5, 7, TRUE, FALSE},
     {   "Quilted Form",         rote_quiltedform,           0, 0, 0, 0, 4, 0, 0, 0, 0, TARGET_OBJ,  4, 4, TRUE, FALSE},
-    {   "Refine Matter",        rote_refinematter,          0, 0, 0, 0, 5, 0, 2, 0, 0, TARGET_OBJ,  25, 7, TRUE, FALSE},
+    {   "Refine Matter",        rote_refinematter,          0, 0, 0, 0, 5, 0, 2, 0, 0, TARGET_OBJ,  5, 7, TRUE, FALSE},
     {   "Empower Self",         rote_empowerself,           0, 0, 0, 0, 0, 1, 0, 0, 0, TARGET_NONE, 1, 1, FALSE, FALSE},
     {   "Subconscious Turmoil", rote_subconsciousturmoil,   0, 0, 0, 0, 0, 2, 0, 0, 0, TARGET_CHAR, 2, 2, FALSE, FALSE},
     {   "Mental Link",          rote_mentallink,            0, 0, 0, 0, 0, 3, 0, 0, 0, TARGET_NONE, 3, 3, FALSE, FALSE},

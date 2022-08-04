@@ -1368,6 +1368,29 @@ void rote_refinematter(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *
         return;
     }
 
+    if (success < 0)
+    {
+      act("As you funnel Quintessence, your will falters and $p wavers slightly.",ch,obj,NULL,TO_CHAR);
+      act("$n stares intently at $p which seems to shift and warp slightly.",ch,obj,NULL,TO_NOTVICT);
+
+      af.where     = TO_OBJECT;
+      af.type      = gsn_magick;
+      af.level     = 0;
+      af.duration  = 1;
+      af.location  = APPLY_AC;
+      af.modifier  = 10;
+      af.bitvector = ITEM_IS_ENHANCED;
+      affect_to_obj(obj,&af);
+
+      return;
+    }
+
+    if (success == 0)
+    {
+      act("The Quintessence you channel for $p's enhancement grounds itself, and dissipates into the world.",ch,obj,NULL,TO_CHAR);
+      return;
+    }
+
     af.where     = TO_OBJECT;
     af.type      = gsn_magick;
     af.level     = ch->level;

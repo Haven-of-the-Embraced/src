@@ -5033,6 +5033,7 @@ sh_int          gsn_magick;
 sh_int          gsn_kineticshield;
 sh_int          gsn_spiritsight;
 sh_int          gsn_trappedingauntlet;
+sh_int          gsn_refinematter;
 sh_int          gsn_empower;
 sh_int          gsn_primesense;
 sh_int          gsn_timesense;

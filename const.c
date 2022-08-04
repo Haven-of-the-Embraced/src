@@ -3018,7 +3018,10 @@ Total (3) */
 // Total (0)
 
 //    --Matter--
-// Total (0)
+// Total (1)
+    { "refine Matter",     { 102, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,     TAR_IGNORE,     POS_STANDING,
+    &gsn_refinematter,          SLOT(0),     0, 12, "",         "The Quintessence dissipates from your equipment.", "" },\
 
 //    --Mind--
 // Total (1)

@@ -1374,11 +1374,14 @@ void rote_refinematter(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *
       act("$n stares intently at $p which seems to shift and warp slightly.",ch,obj,NULL,TO_NOTVICT);
 
       af.where     = TO_OBJECT;
-      af.type      = gsn_magick;
+      af.type      = gsn_refinematter;
       af.level     = 0;
       af.duration  = 1;
-      af.location  = APPLY_AC;
-      af.modifier  = 10;
+      if (CAN_WEAR( obj, ITEM_WIELD))
+        af.location  = APPLY_DAMROLL;
+      else
+        af.location  = APPLY_AC;
+      af.modifier  = 150;
       af.bitvector = ITEM_IS_ENHANCED;
       affect_to_obj(obj,&af);
 
@@ -1391,39 +1394,33 @@ void rote_refinematter(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *
       return;
     }
 
-    af.where     = TO_OBJECT;
-    af.type      = gsn_magick;
-    af.level     = ch->level;
-    af.duration  = -1;
-    af.location  = APPLY_AC;
-    af.modifier  = -100;
-    af.bitvector = 0;
-    affect_to_obj(obj,&af);
-
-    af.where     = TO_OBJECT;
-    af.type      = gsn_magick;
-    af.level     = ch->level;
-    af.duration  = -1;
-    af.location  = APPLY_HITROLL;
-    af.modifier  = 20;
-    af.bitvector = 0;
-    affect_to_obj(obj,&af);
-
-    af.where     = TO_OBJECT;
-    af.type      = gsn_magick;
-    af.level     = ch->level;
-    af.duration  = -1;
-    af.location  = APPLY_DAMROLL;
-    af.modifier  = 20;
-    af.bitvector = 0;
-    affect_to_obj(obj,&af);
-
-    SET_BIT(obj->extra_flags,ITEM_IS_ENHANCED);
-
+    if (CAN_WEAR(obj, ITEM_WIELD))
+    {
+      af.where     = TO_OBJECT;
+      af.type      = gsn_refinematter;
+      af.level     = success;
+      af.duration  = 50 + (success*10);
+      af.location  = APPLY_DAMROLL;
+      af.modifier  = 15 * success;
+      af.bitvector = ITEM_IS_ENHANCED;
+      affect_to_obj(obj,&af);
+    }
+    else
+    {
+      af.where     = TO_OBJECT;
+      af.type      = gsn_refinematter;
+      af.level     = success;
+      af.duration  = 50 + (success*10);
+      af.location  = APPLY_AC;
+      af.modifier  = -25 * success;
+      af.bitvector = ITEM_IS_ENHANCED;
+      affect_to_obj(obj,&af);
+    }
     act("You pour raw Quintessence into $p's pattern, refining it into a stronger form.",ch,obj,NULL,TO_CHAR);
     act("$n stares intently at $p which seems to shift and warp slightly.",ch,obj,NULL,TO_NOTVICT);
     return;
 }
+
 void rote_empowerself(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
 {
     AFFECT_DATA af;

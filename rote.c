@@ -1401,8 +1401,13 @@ void rote_refinematter(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *
       af.level     = success;
       af.duration  = 50 + (success*10);
       af.location  = APPLY_DAMROLL;
-      af.modifier  = 15 * success;
+      af.modifier  = 20 * success;
       af.bitvector = ITEM_IS_ENHANCED;
+      affect_to_obj(obj,&af);
+
+      af.location = APPLY_NONE;
+      af.modifier = 0;
+      af.bitvector  = ITEM_MAGIC;
       affect_to_obj(obj,&af);
     }
     else
@@ -1412,8 +1417,13 @@ void rote_refinematter(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *
       af.level     = success;
       af.duration  = 50 + (success*10);
       af.location  = APPLY_AC;
-      af.modifier  = -25 * success;
+      af.modifier  = -30 * success;
       af.bitvector = ITEM_IS_ENHANCED;
+      affect_to_obj(obj,&af);
+
+      af.location = APPLY_NONE;
+      af.modifier = 0;
+      af.bitvector  = ITEM_MAGIC;
       affect_to_obj(obj,&af);
     }
     act("You pour raw Quintessence into $p's pattern, refining it into a stronger form.",ch,obj,NULL,TO_CHAR);

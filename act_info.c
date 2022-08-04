@@ -1605,6 +1605,12 @@ void do_examine( CHAR_DATA *ch, char *argument )
 
 	send_to_char( condition, ch );
 	send_to_char(" |----------------------============================----------------------|\n\r",ch);
+  sprintf( buf, "");
+  if (obj->item_type == ITEM_LIGHT)
+    sprintf( buf,"%s | --{x This light will remain lit for %s\n\r", condition, obj->value[2] > 75 ? "an extremely long time." :
+            obj->value[2] > 50 ? "quite a while." : obj->value[2] > 25 ? "a bit longer." :
+            obj->value[2] > 10 ? "just a little longer." : "only a short time longer.");
+  send_to_char( buf, ch );
 	send_to_char("()----------------------======ooooOOOOOOOOoooo======----------------------(){x\n\r",ch);
     }
 

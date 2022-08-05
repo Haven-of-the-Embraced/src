@@ -1610,7 +1610,13 @@ void do_examine( CHAR_DATA *ch, char *argument )
     sprintf( buf,"%s | --{x This light will remain lit for %s\n\r", condition, obj->value[2] > 75 ? "an extremely long time." :
             obj->value[2] > 50 ? "quite a while." : obj->value[2] > 25 ? "a bit longer." :
             obj->value[2] > 10 ? "just a little longer." : "only a short time longer.");
+  if (obj->item_type == ITEM_FOOD)
+    if (obj->timer <= 0)
+      sprintf( buf, "%s | --{x This food appears to have been preserved.\n\r", condition);
+    else
+      sprintf( buf, "%s | --{x This food %s\n\r", condition, obj->timer >= 10 ? "is fresh." : "will spoil soon.");
   send_to_char( buf, ch );
+  send_to_char( condition, ch );
 	send_to_char("()----------------------======ooooOOOOOOOOoooo======----------------------(){x\n\r",ch);
     }
 

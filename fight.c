@@ -1609,10 +1609,6 @@ int d10_damdice( CHAR_DATA *ch, CHAR_DATA *victim)
 	if (!IS_NPC(ch) && IS_VAMP(ch))
 			dice += ch->pcdata->discipline[POTENCE];
 
-    // Mage Matter Intrinsic Ability
-    if (IS_MAGE(ch) && ch->sphere[SPHERE_MATTER] > 0)
-        dice += 1+ch->sphere[SPHERE_MATTER]/2;
-
     //Shadow Lords Gift: Fatal Flaw Bonus if victim == your current saved quarry
     //Quarry mob vnum saved under aff->modifier
     if (IS_NPC(victim) && is_affected(ch, gsn_gift_fatalflaw) &&

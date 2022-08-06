@@ -1221,30 +1221,6 @@ bool damage(CHAR_DATA *ch,CHAR_DATA *victim,int dam,int dt,int dam_type,
                  }
     }
 
-     if(victim->sphere[SPHERE_ENTROPY] > 0)
-    {
-        if(dam_type == DAM_PIERCE || dam_type == DAM_BASH || dam_type == DAM_SLASH)
-        {
-            if (DEBUG_MESSAGES || IS_DEBUGGING(ch))
-            cprintf( ch, "B4E: %d ", dam);
-
-            dam -= (dam/100)*(6*ch->sphere[SPHERE_ENTROPY]);
-				if (DEBUG_MESSAGES || IS_DEBUGGING(ch))
-            cprintf(ch, "AE: %d\n\r", dam);
-        }
-    }
-
-  if(victim->sphere[SPHERE_FORCES] > 0)
-    {
-        if(dam_type != DAM_PIERCE && dam_type != DAM_BASH && dam_type != DAM_SLASH)
-		if (DEBUG_MESSAGES || IS_DEBUGGING(ch))
-		cprintf(ch, "B4F: %d ", dam);
-
-            dam -= (dam/100)*(4*ch->sphere[SPHERE_FORCES]);
-			if (DEBUG_MESSAGES || IS_DEBUGGING(ch))
-		cprintf(ch, "AF: %d\n\r", dam);
-    }
-
     if ( is_affected( victim, gsn_sanctus ) )
       dam -= dam/4;
 

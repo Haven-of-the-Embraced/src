@@ -1598,9 +1598,7 @@ void do_examine( CHAR_DATA *ch, char *argument )
 	sprintf( buf,"%s | --{x %s\n\r", condition, obj->description );
 	send_to_char( buf, ch );
 
-	sprintf( buf,"%s | --{x This item weighs approximately %5d pounds on its own.\n\r", condition, obj->weight / 10);
-	send_to_char( buf, ch );
-	sprintf( buf,"%s | --{x Factoring in any contents inside, the total weight is %5d.\n\r", condition, get_obj_weight(obj) / 10);
+	sprintf( buf,"%s | --{x This item weighs approximately %5d pounds.\n\r", condition, obj->weight / 10);
 	send_to_char( buf, ch );
 
 	send_to_char( condition, ch );
@@ -1615,6 +1613,9 @@ void do_examine( CHAR_DATA *ch, char *argument )
       sprintf( buf, "%s | --{x This food appears to have been preserved.\n\r", condition);
     else
       sprintf( buf, "%s | --{x This food %s\n\r", condition, obj->timer >= 10 ? "is fresh." : "will spoil soon.");
+  if (obj->item_type == ITEM_CONTAINER || obj->item_type == ITEM_CORPSE_NPC || obj->item_type == ITEM_CORPSE_PC)
+    sprintf( buf,"%s | --{x Factoring in any contents inside, the total weight is approximately %5d pounds.\n\r", condition, get_obj_weight(obj) / 10);
+
   send_to_char( buf, ch );
   send_to_char( condition, ch );
 	send_to_char("()----------------------======ooooOOOOOOOOoooo======----------------------(){x\n\r",ch);

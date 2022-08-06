@@ -1615,7 +1615,14 @@ void do_examine( CHAR_DATA *ch, char *argument )
       sprintf( buf, "%s | --{x This food %s\n\r", condition, obj->timer >= 10 ? "is fresh." : "will spoil soon.");
   if (obj->item_type == ITEM_CONTAINER || obj->item_type == ITEM_CORPSE_NPC || obj->item_type == ITEM_CORPSE_PC)
     sprintf( buf,"%s | --{x Factoring in any contents inside, the total weight is approximately %5d pounds.\n\r", condition, get_obj_weight(obj) / 10);
-
+  if (obj->item_type == ITEM_DRINK_CON)
+    if ( obj->value[1] <= 0 )
+      sprintf( buf, "It is empty.\n\r");
+    else
+      sprintf( buf, "It's %sfilled with  a %s liquid.\n\r",
+        obj->value[1] < obj->value[0] / 4 ? "less than half-" :
+        obj->value[1] < 3 * obj->value[0] / 4 ? "about half-" : "more than half-",
+        liq_table[obj->value[2]].liq_color);
   send_to_char( buf, ch );
   send_to_char( condition, ch );
 	send_to_char("()----------------------======ooooOOOOOOOOoooo======----------------------(){x\n\r",ch);

@@ -3638,19 +3638,10 @@ int xp_compute( CHAR_DATA *gch, CHAR_DATA *victim, int total_levels )
     if (level_range >= -10)
         xp += gch->remorts / 2;
 
-    if(gch->sphere[SPHERE_MIND] > 0  && level_range > -10)
-        xp += 4*gch->sphere[SPHERE_MIND];
-
     /* standard exp cap */
     if(gch->wimpy == 0)
-    {
-        if(xp > 462+gch->remorts && (gch->sphere[SPHERE_MIND] < 1))
-            xp = ((462+gch->remorts)*xpawardmult);
-
-        if(gch->sphere[SPHERE_MIND] > 0 && xp > (462+gch->remorts+gch->sphere[SPHERE_MIND]*4))
-            xp = (462+gch->remorts+gch->sphere[SPHERE_MIND]*4)*xpawardmult;
-
-    }
+      if(xp > 462+gch->remorts)
+        xp = ((462+gch->remorts)*xpawardmult);
     else if(xp > 350) xp = 350; //keep e'm from being pansies
 
     /*Sengir added deduction for being afkish in group, not contributing*/

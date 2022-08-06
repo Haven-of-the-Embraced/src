@@ -100,11 +100,6 @@ void advance_level( CHAR_DATA *ch, bool hide )
     add_mana    = UMAX(  2, add_mana );
     add_move    = UMAX(  6, add_move );
 
-    if(ch->sphere[SPHERE_LIFE] > 0)
-    {
-        add_hp += ch->sphere[SPHERE_LIFE]*2;
-        add_move += ch->sphere[SPHERE_LIFE];
-    }
     ch->max_hit     += add_hp;
     ch->max_mana    += add_mana;
     ch->max_move    += add_move;

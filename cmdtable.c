@@ -174,6 +174,7 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "bloodcurse",     do_bloodcurse },
     { "lore",       do_lore},
     { "classify",   do_classify},
+    { "soothe",     do_soothe},
     { "dip",        do_dip },
     { "invoke",     do_invoke},
 /*    { "activate",     do_activate}, */

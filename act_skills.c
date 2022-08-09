@@ -378,6 +378,71 @@ void do_classify(CHAR_DATA *ch, char *argument)
   return;
 }
 
+void do_classify(CHAR_DATA *ch, char *argument)
+{
+  char arg1 [MAX_INPUT_LENGTH];
+  char buf[MAX_STRING_LENGTH];
+  CHAR_DATA *victim;
+  int success;
+  argument = one_argument( argument, arg1 );
+
+  if (IS_NPC(ch)) return;
+
+  if (get_ability(ch, CSABIL_ANIMAL_KEN) < 2)
+  {
+    send_to_char("You have not studied the animal kingdom enough to try and soothe this beast.\n\r", ch);
+    return;
+  }
+
+  if (ch->move < ch->level / 10)
+  {
+      send_to_char( "You are too tired to try and soothe this animal.\n\r", ch );
+      return;
+  }
+
+  if (is_affected(ch, gsn_forget))
+  {
+    send_to_char( "Your memory seems fuzzy and you cannot focus enough to soothe your target.\n\r", ch );
+    return;
+  }
+
+  if ( arg1[0] == '\0')
+  {
+      send_to_char( "Soothe which animal?\n\r", ch );
+      return;
+  }
+
+  if ( ( victim = get_char_room( ch, NULL, arg1 ) ) == NULL )
+  {
+      send_to_char( "Soothe which animal?\n\r", ch );
+      return;
+  }
+
+  success = godice(get_attribute(ch, INTELLIGENCE) + ch->csabilities[CSABIL_ANIMAL_KEN], 7);
+  WAIT_STATE(ch, 16);
+  ch->move -= ch->level / 2 + 15;
+
+  if (success < 0)
+  {
+    send_to_char("You try to focus, but cannot seem to recall any specific information.\n\r", ch);
+    WAIT_STATE(ch, 16);
+    return;
+  }
+
+  if (success == 0)
+  {
+    send_to_char("You fail to recall any pertinent information about this species.\n\r", ch);
+    return;
+  }
+
+  if (!is_natural(victim))
+  {
+    act("$N does not seem to be a natural, non-humanoid member of the animal kingdom.", ch, NULL, victim, TO_CHAR);
+    return;
+  }
+  return;
+}
+
 void do_glower(CHAR_DATA *ch, char *argument)
 {
   AFFECT_DATA af;

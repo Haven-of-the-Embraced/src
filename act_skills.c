@@ -378,11 +378,12 @@ void do_classify(CHAR_DATA *ch, char *argument)
   return;
 }
 
-void do_classify(CHAR_DATA *ch, char *argument)
+void do_soothe(CHAR_DATA *ch, char *argument)
 {
   char arg1 [MAX_INPUT_LENGTH];
   char buf[MAX_STRING_LENGTH];
   CHAR_DATA *victim;
+  AFFECT_DATA af;
   int success;
   argument = one_argument( argument, arg1 );
 
@@ -418,20 +419,35 @@ void do_classify(CHAR_DATA *ch, char *argument)
       return;
   }
 
-  success = godice(get_attribute(ch, INTELLIGENCE) + ch->csabilities[CSABIL_ANIMAL_KEN], 7);
-  WAIT_STATE(ch, 16);
-  ch->move -= ch->level / 2 + 15;
+  success = godice(get_attribute(ch, CHARISMA) + ch->csabilities[CSABIL_ANIMAL_KEN], 7);
+  WAIT_STATE(ch, 8);
+  ch->move -= ch->level / 10;
 
   if (success < 0)
   {
-    send_to_char("You try to focus, but cannot seem to recall any specific information.\n\r", ch);
-    WAIT_STATE(ch, 16);
+    act("Your attempts to calm $N only seem to enrage $M.", ch, NULL, victim, TO_CHAR);
+    act("$n tries to soothe $N, but only succeeds in enraging $M further.", ch, NULL, victim, TO_NOTVICT);
+    act("$N seems like a much bigger threat, causing you to feel much more enraged.", ch, NULL, victim, TO_VICT);
+    WAIT_STATE(ch, 8);
+
+      af.where    = TO_AFFECTS;
+      af.type     = gsn_berserk;
+      af.level    = 1;
+      af.duration = 2;
+      af.modifier = 50;
+      af.location = APPLY_HITROLL;
+      af.bitvector    = 0;
+      affect_to_char( ch, &af );
+
+      af.location = APPLY_DAMROLL;
+      affect_to_char( ch, &af );
+
     return;
   }
 
   if (success == 0)
   {
-    send_to_char("You fail to recall any pertinent information about this species.\n\r", ch);
+    send_to_char("Your attempt at soothing the beast seems to go unnoticed.\n\r", ch);
     return;
   }
 

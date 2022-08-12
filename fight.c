@@ -3612,9 +3612,11 @@ int xp_compute( CHAR_DATA *gch, CHAR_DATA *victim, int total_levels )
 
     /* standard exp cap */
     if(gch->wimpy == 0)
+    {
       if(xp > 462+gch->remorts)
         xp = ((462+gch->remorts)*xpawardmult);
-    else if(xp > 350) xp = 350; //keep e'm from being pansies
+    }
+    else if(xp > 462) xp = 462; //keep e'm from being pansies
 
     /*Sengir added deduction for being afkish in group, not contributing*/
     if (gch->timer > 10)

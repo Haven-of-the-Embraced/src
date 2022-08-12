@@ -4830,11 +4830,7 @@ void do_flee( CHAR_DATA *ch, char *argument )
     ch->in_room = now_in;
 
     if ( !IS_NPC(ch) )
-    {
         send_to_char( "You flee from combat!\n\r", ch );
-        send_to_char( "You lost 10 exp.\n\r", ch);
-        gain_exp( ch, -10 );
-    }
 
     stop_fighting( ch, TRUE );
     return;

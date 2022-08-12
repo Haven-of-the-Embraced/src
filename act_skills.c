@@ -389,10 +389,33 @@ void do_soothe(CHAR_DATA *ch, char *argument)
 
   if (IS_NPC(ch)) return;
 
+  if ( arg1[0] == '\0')
+  {
+      send_to_char( "Soothe which animal?\n\r", ch );
+      return;
+  }
+
+  if ( ( victim = get_char_room( ch, NULL, arg1 ) ) == NULL )
+  {
+      send_to_char( "Soothe which animal?\n\r", ch );
+      return;
+  }
+
   if (get_ability(ch, CSABIL_ANIMAL_KEN) < 2)
   {
     send_to_char("You have not studied the animal kingdom enough to try and soothe this beast.\n\r", ch);
     return;
+  }
+
+  if (!is_natural(victim))
+  {
+    act("$N does not seem to be a natural, non-humanoid member of the animal kingdom.", ch, NULL, victim, TO_CHAR);
+    return;
+  }
+
+  if (!higher_beast(victim))
+  {
+    send_to_char("This animal isn't evolved enough to understand your attempt.\n\r", ch);
   }
 
   if (ch->move < ch->level / 10)
@@ -405,18 +428,6 @@ void do_soothe(CHAR_DATA *ch, char *argument)
   {
     send_to_char( "Your memory seems fuzzy and you cannot focus enough to soothe your target.\n\r", ch );
     return;
-  }
-
-  if ( arg1[0] == '\0')
-  {
-      send_to_char( "Soothe which animal?\n\r", ch );
-      return;
-  }
-
-  if ( ( victim = get_char_room( ch, NULL, arg1 ) ) == NULL )
-  {
-      send_to_char( "Soothe which animal?\n\r", ch );
-      return;
   }
 
   success = godice(get_attribute(ch, CHARISMA) + ch->csabilities[CSABIL_ANIMAL_KEN], 7);
@@ -451,11 +462,7 @@ void do_soothe(CHAR_DATA *ch, char *argument)
     return;
   }
 
-  if (!is_natural(victim))
-  {
-    act("$N does not seem to be a natural, non-humanoid member of the animal kingdom.", ch, NULL, victim, TO_CHAR);
-    return;
-  }
+
   return;
 }
 

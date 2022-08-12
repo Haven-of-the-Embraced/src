@@ -385,6 +385,7 @@ void do_soothe(CHAR_DATA *ch, char *argument)
   CHAR_DATA *victim;
   AFFECT_DATA af;
   int success;
+  int difficulty = 7;
   argument = one_argument( argument, arg1 );
 
   if (IS_NPC(ch)) return;
@@ -430,7 +431,18 @@ void do_soothe(CHAR_DATA *ch, char *argument)
     return;
   }
 
-  success = godice(get_attribute(ch, CHARISMA) + ch->csabilities[CSABIL_ANIMAL_KEN], 7);
+  if ((victim->level > ch->level + 20) || IS_SET(victim->act2, ACT2_ULTRA_MOB))
+  {
+    send_to_char( "That creature is too powerful to soothe.\n\r", ch);
+    return;
+  }
+
+  if (victim->level < ch->level)
+    difficulty--;
+  if (victim->level > ch->level + 10)
+    difficulty++;
+
+  success = godice(get_attribute(ch, CHARISMA) + ch->csabilities[CSABIL_ANIMAL_KEN], difficulty);
   WAIT_STATE(ch, 8);
   ch->move -= ch->level / 10;
 

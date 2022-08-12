@@ -471,12 +471,13 @@ void do_soothe(CHAR_DATA *ch, char *argument)
   if (success == 0)
   {
     send_to_char("Your attempt at soothing the beast seems to go unnoticed.\n\r", ch);
+    check_improve(ch,gsn_soothe,FALSE,4);
     return;
   }
 
   act("Using slow movements and a calm voice, you soothe $N's savagery.", ch, NULL, victim, TO_CHAR);
-  act("$n speaks softly to $N, and $S calms down greatly.", ch, NULL, victim, TO_NOTVICT);
-  act("$N's actions and words are soothing, and $s seems to be friendly.", ch, NULL, victim, TO_VICT);
+  act("$n speaks softly to $N, and $E calms down greatly.", ch, NULL, victim, TO_NOTVICT);
+  act("$N's actions and words are soothing, and $e seems to be friendly.", ch, NULL, victim, TO_VICT);
 
   af.where    = TO_AFFECTS;
   af.type     = gsn_soothe;
@@ -485,12 +486,15 @@ void do_soothe(CHAR_DATA *ch, char *argument)
   af.modifier = 0;
   af.location = 0;
   af.bitvector    = AFF_CALM;
-  affect_to_char( ch, &af );
+  affect_to_char( victim, &af );
 
   if ( victim->fighting != NULL )
       stop_fighting( victim, TRUE );
   if (IS_NPC(victim) && IS_SET(victim->act,ACT_AGGRESSIVE))
       REMOVE_BIT(victim->act,ACT_AGGRESSIVE);
+
+  gain_exp(ch, success * 4);
+  check_improve(ch,gsn_soothe,TRUE,7);
 
   return;
 }

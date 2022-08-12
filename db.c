@@ -4905,6 +4905,7 @@ sh_int          gsn_haggle;
 sh_int          gsn_lore;
 sh_int          gsn_study;
 sh_int          gsn_classify;
+sh_int          gsn_soothe;
 sh_int          gsn_meditation;
 
 sh_int          gsn_scrolls;

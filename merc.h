@@ -2902,6 +2902,7 @@ extern sh_int  gsn_haggle;
 extern sh_int  gsn_lore;
 extern sh_int  gsn_study;
 extern sh_int  gsn_classify;
+extern sh_int  gsn_soothe;
 extern sh_int  gsn_meditation;
 
 extern sh_int  gsn_scrolls;

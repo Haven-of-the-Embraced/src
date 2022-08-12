@@ -1057,6 +1057,9 @@ const struct cs_skill_type csskill_table [] =
     {"sneak", &gsn_sneak,10,
     {CSABIL_STEALTH, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
 
+    {"soothe", &gsn_soothe, 20,
+    {CSABIL_ANIMAL_KEN, 2, ABIL}, {CSABIL_NONE, 0, ABIL}},
+
     {"staves", &gsn_staves, 5,
     {CSABIL_THEOLOGY, 2, ABIL}, {CSABIL_NONE, 0, ABIL} },
 
@@ -1779,6 +1782,10 @@ Total (31) */
     { "rescue",               { 10, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_FIGHTING,
     &gsn_rescue,            SLOT( 0),        0,     12, "",                     "!Rescue!",     "" },
+
+    { "soothe", { 20, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_IGNORE, POS_STANDING,
+    &gsn_soothe, SLOT( 0),    0,  0,    "",         "",     ""    },
 
     { "trip",         { 30, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,     TAR_IGNORE,     POS_FIGHTING,

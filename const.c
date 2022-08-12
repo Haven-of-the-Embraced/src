@@ -1785,7 +1785,7 @@ Total (31) */
 
     { "soothe", { 20, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_IGNORE, POS_STANDING,
-    &gsn_soothe, SLOT( 0),    0,  0,    "",         "",     ""    },
+    &gsn_soothe, SLOT( 0),    0,  0,    "",         "Your inner beast begins to emerge once again.",     ""    },
 
     { "trip",         { 30, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,     TAR_IGNORE,     POS_FIGHTING,

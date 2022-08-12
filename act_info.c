@@ -3228,6 +3228,16 @@ void do_wimpy( CHAR_DATA *ch, char *argument )
 
     one_argument( argument, arg );
 
+    if( !strcmp( arg, "show" ) )
+    {
+      send_to_char("{y                                | WIMPY |{x\n\r", ch);
+      send_to_char("{yW______________________________________________________________________________W{x\n\r", ch);
+      sprintf( buf, "{y|    {xYou will automatically try to flee when you drop to %5d hit points.     {y|{x\n\r", ch->wimpy );
+      send_to_char( buf, ch );
+      send_to_char("{yW------------------------------------------------------------------------------W{x\n\r", ch);
+      return;
+    }
+
     if ( arg[0] == '\0' )
     wimpy = ch->max_hit / 5;
     else

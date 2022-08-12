@@ -3232,7 +3232,10 @@ void do_wimpy( CHAR_DATA *ch, char *argument )
     {
       send_to_char("{y                                | WIMPY |{x\n\r", ch);
       send_to_char("{yW______________________________________________________________________________W{x\n\r", ch);
-      sprintf( buf, "{y|    {xYou will automatically try to flee when you drop to %5d hit points.     {y|{x\n\r", ch->wimpy );
+      if (ch->wimpy == 0)
+        sprintf( buf, "{y|     {xYou will never flee automatically.  Set your Wimpy above 0 to do so.     {y|{x\n\r");
+      else
+        sprintf( buf, "{y|    {xYou will automatically try to flee when you drop to %5d hit points.     {y|{x\n\r", ch->wimpy );
       send_to_char( buf, ch );
       send_to_char("{yW------------------------------------------------------------------------------W{x\n\r", ch);
       return;
@@ -3251,12 +3254,12 @@ void do_wimpy( CHAR_DATA *ch, char *argument )
 
     if ( wimpy > ch->max_hit/2 )
     {
-    send_to_char( "Such cowardice ill becomes you.\n\r", ch );
+    send_to_char( "Such cowardice ill becomes you.  Choose a lower value.\n\r", ch );
     return;
     }
 
     ch->wimpy   = wimpy;
-    sprintf( buf, "Wimpy set to %d hit points.\n\r", wimpy );
+    sprintf( buf, "Wimpy is now set to %d hit points.\n\r", wimpy );
     send_to_char( buf, ch );
     return;
 }

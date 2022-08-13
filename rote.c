@@ -1247,7 +1247,7 @@ void rote_betterbody(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *ob
     af.where    = TO_AFFECTS;
     af.type     = gsn_betterbody;
     af.level    = 1;
-    af.duration = 12;
+    af.duration = 10 + (success * 2);
     af.location = APPLY_CS_STR;
     af.modifier = 1;
     af.bitvector    = 0;

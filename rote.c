@@ -1196,14 +1196,53 @@ void rote_healother(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj
 void rote_betterbody(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
 {
     AFFECT_DATA af;
+    int botch;
 
     if (is_affected(ch, gsn_betterbody))
     {
+      if (get_affect_level(ch, gsn_betterbody) == -1)
+        send_to_char("Your Pattern is too strained to be altered further.\n\r", ch);
+      else
         send_to_char("You have already boosted your body's physical prowess!\n\r", ch);
-        return;
+      return;
     }
 
-    send_to_char("Spending precious {rVi{Rt{rae{x, you use the stolen blood running through your veins\n\rto augment your own physical capabilities.\n\r", ch);
+    if (success < 0)
+    {
+      act("You gently tug at your own Pattern, and accidentally rip part of it!",ch,NULL,NULL,TO_CHAR);
+      act("$n flashes a look of pain, as $s doubles over.",ch,NULL,NULL,TO_NOTVICT);
+
+      botch = number_range(1,3);
+
+      switch (botch)
+      {
+        default:
+          break;
+        case 1:   af.location = APPLY_CS_STR;
+          break;
+        case 2:   af.location = APPLY_CS_DEX;
+          break;
+        case 3:   af.location = APPLY_CS_STA;
+          break;
+      }
+
+      af.where    = TO_AFFECTS;
+      af.type     = gsn_betterbody;
+      af.level    = -1;
+      af.duration = 1;
+      af.modifier = -1;
+      af.bitvector    = 0;
+      affect_to_char( ch, &af );
+      return;
+    }
+
+    if (success == 0)
+    {
+      send_to_char("You gently nudge your Pattern into a strenghthened form, but it promptly revers back to normal.\n\r", ch);
+      return;
+    }
+
+    send_to_char("You tap into your own Pattern, altering your physical form to its peak.\n\r", ch);
 
     af.where    = TO_AFFECTS;
     af.type     = gsn_betterbody;

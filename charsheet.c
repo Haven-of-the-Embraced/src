@@ -3114,7 +3114,7 @@ void do_charsheet2 (CHAR_DATA * ch, char *argument)
         send_to_char(buf, sch);
         sprintf(buf, " | Serpentis______%s%s       Crippled    -5 %s |\n\r",dots(ch->pcdata->discipline[SERPENTIS], TRUE), bloodpooldot(ch->pblood/10, TRUE), cshealth < 2 ? "{RX{x" : "_");
         send_to_char(buf, sch);
-        sprintf(buf, " | Thaumaturgy____%s%s       Incapacitated  %s |\n\r",dots(ch->pcdata->discipline[THAUMATURGY], TRUE), bloodpooldot((ch->pblood/10) - 10, TRUE), cshealth < 1 ? "{RX{x" : "_");
+        sprintf(buf, " | Thaumaturgy____%s%s       Incapacitated  %s |\n\r",dots(ch->pcdata->discipline[THAUMATURGY], TRUE), bloodpooldot2((ch->pblood/10) - 10, TRUE), cshealth < 1 ? "{RX{x" : "_");
         send_to_char(buf, sch);
         sprintf(buf, " | Vicissitude____%s                                             |\n\r",dots(ch->pcdata->discipline[VICISSITUDE], TRUE));
         send_to_char(buf, sch);

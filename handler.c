@@ -4125,13 +4125,14 @@ char *bloodpooldot( int num, bool space)
             case 1:     return "[{RB{x| | | | | | | | | ]";
             case 2:     return "[{RB{x|{RB{x| | | | | | | | ]";
             case 3:     return "[{RB{x|{RB{x|{RB{x| | | | | | | ]";
-            case 4:     return "[{RB{x|{RB{x|{RB{x|{RB{x| | | | | | ]"
+            case 4:     return "[{RB{x|{RB{x|{RB{x|{RB{x| | | | | | ]";
             case 5:     return "[{RB{x|{RB{x|{RB{x|{RB{x|{RB{x| | | | | ]";
             case 6:     return "[{RB{x|{RB{x|{RB{x|{RB{x|{RB{x|{RB{x| | | | ]";
             case 7:     return "[{RB{x|{RB{x|{RB{x|{RB{x|{RB{x|{RB{x|{RB{x| | | ]";
             case 8:     return "[{RB{x|{RB{x|{RB{x|{RB{x|{RB{x|{RB{x|{RB{x|{RB{x| | ]";
             case 9:     return "[{RB{x|{RB{x|{RB{x|{RB{x|{RB{x|{RB{x|{RB{x|{RB{x|{RB{x| ]";
             case 10:    return "[{RB{x|{RB{x|{RB{x|{RB{x|{RB{x|{RB{x|{RB{x|{RB{x|{RB{x|{RB{x]";
+            default:    return "[ | | | | | | | | | ]";
         }
     }
     switch ( num )
@@ -4147,6 +4148,7 @@ char *bloodpooldot( int num, bool space)
         case 8:     return "{RBBBBBBBB{x__";
         case 9:     return "{RBBBBBBBBB{x_";
         case 10:    return "{RBBBBBBBBBB{x";
+        default:    return "[ | | | | | | | | | ]";
     }
 
     bug( "Invalid bloodpool dot rating: %d.", num );

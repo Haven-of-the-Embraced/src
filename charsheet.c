@@ -3110,11 +3110,11 @@ void do_charsheet2 (CHAR_DATA * ch, char *argument)
         send_to_char(buf, sch);
         sprintf(buf, " | Protean________%s %s        Wounded     -2 %s |\n\r",dots(ch->pcdata->discipline[PROTEAN], TRUE),dots3(ch->cswillpower, TRUE), cshealth < 4 ? "{RX{x" : "_");
         send_to_char(buf, sch);
-        sprintf(buf, " | Quietus________%s                            Mauled      -2 %s |\n\r",dots(ch->pcdata->discipline[QUIETUS], TRUE), cshealth < 3 ? "{RX{x" : "_");
+        sprintf(buf, " | Quietus________%s<-----Blood Pool---->       Mauled      -2 %s |\n\r",dots(ch->pcdata->discipline[QUIETUS], TRUE), cshealth < 3 ? "{RX{x" : "_");
         send_to_char(buf, sch);
-        sprintf(buf, " | Serpentis______%s                            Crippled    -5 %s |\n\r",dots(ch->pcdata->discipline[SERPENTIS], TRUE), cshealth < 2 ? "{RX{x" : "_");
+        sprintf(buf, " | Serpentis______%s%s       Crippled    -5 %s |\n\r",dots(ch->pcdata->discipline[SERPENTIS], TRUE), bloodpooldot(ch->pblood/10, TRUE), cshealth < 2 ? "{RX{x" : "_");
         send_to_char(buf, sch);
-        sprintf(buf, " | Thaumaturgy____%s                            Incapacitated  %s |\n\r",dots(ch->pcdata->discipline[THAUMATURGY], TRUE), cshealth < 1 ? "{RX{x" : "_");
+        sprintf(buf, " | Thaumaturgy____%s%s       Incapacitated  %s |\n\r",dots(ch->pcdata->discipline[THAUMATURGY], TRUE), bloodpooldot((ch->pblood/10) - 10, TRUE), cshealth < 1 ? "{RX{x" : "_");
         send_to_char(buf, sch);
         sprintf(buf, " | Vicissitude____%s                                             |\n\r",dots(ch->pcdata->discipline[VICISSITUDE], TRUE));
         send_to_char(buf, sch);

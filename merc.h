@@ -3021,6 +3021,7 @@ extern  sh_int  gsn_divine_strength;
 extern  sh_int  gsn_controlrandomness;
 extern  sh_int  gsn_magick;
 extern  sh_int  gsn_kineticshield;
+extern  sh_int  gsn_betterbody;
 extern  sh_int  gsn_spiritsight;
 extern  sh_int  gsn_trappedingauntlet;
 extern  sh_int  gsn_refinematter;

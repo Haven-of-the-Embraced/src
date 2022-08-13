@@ -5031,6 +5031,7 @@ sh_int          gsn_divine_strength;
 sh_int          gsn_controlrandomness;
 sh_int          gsn_magick;
 sh_int          gsn_kineticshield;
+sh_int          gsn_betterbody;
 sh_int          gsn_spiritsight;
 sh_int          gsn_trappedingauntlet;
 sh_int          gsn_refinematter;

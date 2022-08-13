@@ -1192,6 +1192,37 @@ void rote_healother(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj
     act("$n reaches out and lightly touches you. You feel healing energies enter your body and feel much better.",ch,NULL,victim,TO_VICT);
     return;
 }
+
+void rote_betterbody(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
+{
+    AFFECT_DATA af;
+
+    if (is_affected(ch, gsn_betterbody))
+    {
+        send_to_char("You have already boosted your body's physical prowess!\n\r", ch);
+        return;
+    }
+
+    send_to_char("Spending precious {rVi{Rt{rae{x, you use the stolen blood running through your veins\n\rto augment your own physical capabilities.\n\r", ch);
+
+    af.where    = TO_AFFECTS;
+    af.type     = gsn_betterbody;
+    af.level    = 1;
+    af.duration = 12;
+    af.location = APPLY_CS_STR;
+    af.modifier = 1;
+    af.bitvector    = 0;
+    affect_to_char( ch, &af );
+
+    af.location = APPLY_CS_DEX;
+    affect_to_char( ch, &af );
+
+    af.location = APPLY_CS_STA;
+    affect_to_char( ch, &af );
+
+    return;
+}
+
 void rote_cellularmitosis(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
 {
     CHAR_DATA *clone;

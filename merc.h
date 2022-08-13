@@ -4050,6 +4050,7 @@ char *  center      args( ( char *argument, int width, char *fill ) );
 char *  dots        args( ( int num, bool plus ) );
 char *  dots2       args( ( int num, bool space) );
 char *  dots3       args( ( int num, bool space ) );
+char *  bloodpooldot    args( ( int num, bool space ) );
 bool    is_clan_disc    args( (CHAR_DATA *ch, int disc));
 bool    update_csstats  args( (CHAR_DATA *ch));
 char *  strip_color     args( (const char *string) );

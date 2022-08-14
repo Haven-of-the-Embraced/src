@@ -1299,12 +1299,12 @@ void rote_mutateform(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *ob
     WAIT_STATE(ch, 80);
 
     if ( !str_prefix( arg, "owl" ) )
-
-            act( "Your body slowly shifts forms into an owl.", ch, NULL, NULL, TO_CHAR );
-            act( "$n shifts their form into that of an owl.", ch, NULL, NULL, TO_NOTVICT );
-            ch->short_descr = str_dup( "A brown and white owl" );
-            sprintf(buf, "A brown and white owl");
-            ch->shift = str_dup( buf );
+    {
+        act( "Your body slowly shifts forms into an owl.", ch, NULL, NULL, TO_CHAR );
+        act( "$n shifts their form into that of an owl.", ch, NULL, NULL, TO_NOTVICT );
+        ch->short_descr = str_dup( "A brown and white owl" );
+        sprintf(buf, "A brown and white owl");
+        ch->shift = str_dup( buf );
 
         af.where     = TO_AFFECTS;
         af.type      = gsn_mutateform;
@@ -1415,13 +1415,10 @@ void rote_mutateform(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *ob
         sprintf(buf, "A strong looking bear");
         ch->shift = str_dup( buf );
 
-        ch->pblood -= 20;
-        affect_strip(ch,gsn_reveal);
-
         af.where     = TO_AFFECTS;
-        af.type      = gsn_shift;
-        af.level     = ch->pcdata->discipline[PROTEAN];
-        af.duration  = 24;
+        af.type      = gsn_mutateform;
+        af.level     = success;
+        af.duration  = success * 10;
         af.location  = APPLY_CS_STR;
         af.modifier  = 3;
         af.bitvector = AFF_SHIFT;

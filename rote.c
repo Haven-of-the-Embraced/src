@@ -1262,6 +1262,225 @@ void rote_betterbody(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *ob
     return;
 }
 
+void rote_mutateform(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
+{
+    char arg [MAX_INPUT_LENGTH];
+    char buf[MAX_STRING_LENGTH];
+    OBJ_DATA *obj;
+    OBJ_DATA *obj_next;
+    AFFECT_DATA af;
+
+    argument = one_argument( argument, arg );
+
+    if ( arg[0] == '\0')
+    {
+        if ( IS_AFFECTED(ch, AFF_SHIFT))
+        {
+            send_to_char( "You shift back into your humanoid form.\n\r", ch );
+
+            affect_strip(ch,gsn_reveal);
+            affect_strip(ch,gsn_shift);
+            if (ch->hit > ch->max_hit) ch->hit = ch->max_hit;
+            ch->affected_by = race_table[ch->race].aff;
+            act( "$n's form slowly shifts into a more humanoid form.", ch, NULL, NULL, TO_NOTVICT );
+            ch->dam_type = 17;
+            if ( !IS_AFFECTED(ch, AFF_FANGS)) do_function(ch, &do_fangs, "" );
+            return;
+        }
+
+        send_to_char( "You may shift into bat, wolf, rat, bear, and raven forms.\n\r", ch );
+        return;
+    }
+
+    if ( IS_AFFECTED(ch, AFF_SHIFT))
+    {
+        send_to_char( "You must reform your Pattern back to normal first.\n\r{WSyntax: {crote 'mutate form'{x\n\r", ch );
+        return;
+    }
+
+    WAIT_STATE(ch, 80);
+
+    if ( !str_prefix( arg, "bat" ) || !str_prefix( arg, "raven"))
+    {
+        if ( !str_prefix( arg, "bat" ))
+        {
+            act( "Your body slowly shifts forms into a bat.", ch, NULL, NULL, TO_CHAR );
+            act( "$n shifts their form into that of a bat.", ch, NULL, NULL, TO_NOTVICT );
+            ch->short_descr = str_dup( "A strange bat" );
+            sprintf(buf, "A strange bat flittering about the room");
+            ch->shift = str_dup( buf );
+        }
+        else
+        {
+            act( "Your body slowly shifts forms into a raven.", ch, NULL, NULL, TO_CHAR );
+            act( "$n shifts their form into that of a raven.", ch, NULL, NULL, TO_NOTVICT );
+            ch->short_descr = str_dup( "A black raven" );
+            sprintf(buf, "A black raven");
+            ch->shift = str_dup( buf );
+        }
+
+        ch->pblood -= 20;
+        affect_strip(ch,gsn_reveal);
+
+        af.where     = TO_AFFECTS;
+        af.type      = gsn_shift;
+        af.level     = ch->pcdata->discipline[PROTEAN];
+        af.duration  = 24;
+        af.location  = APPLY_CS_STR;
+        af.modifier  = -1;
+        af.bitvector = AFF_SHIFT;
+        affect_to_char( ch, &af );
+
+        af.location  = APPLY_CS_DEX;
+        af.modifier  = 1;
+        af.bitvector = AFF_FLYING;
+        affect_to_char( ch, &af );
+
+        af.location  = APPLY_CS_MAN;
+        af.modifier  = -3;
+        af.bitvector = 0;
+        affect_to_char( ch, &af );
+
+        af.location  = APPLY_CS_PER;
+        af.modifier  = 3;
+        if ( !str_prefix( arg, "bat" ))
+            af.bitvector = AFF_DETECT_HIDDEN;
+        affect_to_char( ch, &af );
+
+        af.location  = APPLY_MOVE;
+        af.modifier  = ch->level*7;
+        affect_to_char( ch, &af );
+
+        return;
+    }
+
+    if ( !str_prefix( arg, "rat" ))
+    {
+        act( "Your body slowly shifts forms into a rat.", ch, NULL, NULL, TO_CHAR );
+        act( "$n shifts their form into that of a rat.", ch, NULL, NULL, TO_NOTVICT );
+        ch->short_descr = str_dup( "An ugly rat" );
+        sprintf(buf, "An ugly rat searching for food");
+        ch->shift = str_dup( buf );
+        ch->pblood -= 20;
+        affect_strip(ch,gsn_reveal);
+
+        af.where     = TO_AFFECTS;
+        af.type      = gsn_shift;
+        af.level     = ch->pcdata->discipline[PROTEAN];
+        af.duration  = 24;
+        af.location  = APPLY_CS_STR;
+        af.modifier  = -11;
+        af.bitvector = AFF_SHIFT;
+        affect_to_char( ch, &af );
+
+        af.where     = TO_AFFECTS;
+        af.type      = gsn_shift;
+        af.level     = ch->pcdata->discipline[PROTEAN];
+        af.duration  = 24;
+        af.location  = APPLY_CS_DEX;
+        af.modifier  = 2;
+        af.bitvector = AFF_SNEAK;
+        affect_to_char( ch, &af );
+
+        af.where     = TO_AFFECTS;
+        af.type      = gsn_shift;
+        af.level     = ch->pcdata->discipline[PROTEAN];
+        af.duration  = 24;
+        af.location  = APPLY_CS_STA;
+        af.modifier  = 2;
+        af.bitvector = AFF_HIDE;
+        affect_to_char( ch, &af );
+
+        af.where     = TO_AFFECTS;
+        af.type      = gsn_shift;
+        af.level     = ch->pcdata->discipline[PROTEAN];
+        af.duration  = 24;
+        af.location  = APPLY_CS_PER;
+        af.modifier  = 3;
+        af.bitvector = 0;
+        affect_to_char( ch, &af );
+
+        return;
+    }
+
+    if ( !str_prefix( arg, "wolf" ) )
+    {
+        act( "Your body slowly shifts forms into a wolf.", ch, NULL, NULL, TO_CHAR );
+        act( "$n shifts their form into that of a wolf.", ch, NULL, NULL, TO_NOTVICT );
+        ch->short_descr = str_dup( "A large mountain wolf" );
+        sprintf(buf, "A large mountain wolf");
+        ch->shift = str_dup( buf );
+
+        ch->pblood -= 20;
+        affect_strip(ch,gsn_reveal);
+
+        af.where     = TO_AFFECTS;
+        af.type      = gsn_shift;
+        af.level     = ch->pcdata->discipline[PROTEAN];
+        af.duration  = 24;
+        af.location  = APPLY_CS_STR;
+        af.modifier  = 1;
+        af.bitvector = AFF_SHIFT;
+        affect_to_char( ch, &af );
+
+        af.location  = APPLY_CS_DEX;
+        af.modifier  = 2;
+        affect_to_char( ch, &af );
+
+        af.location  = APPLY_CS_STA;
+        af.modifier  = 2;
+        affect_to_char( ch, &af );
+
+        af.location  = APPLY_CS_MAN;
+        af.modifier  = -3;
+        affect_to_char( ch, &af );
+
+        af.location  = APPLY_MOVE;
+        af.modifier  = 5*ch->level;
+        affect_to_char( ch, &af );
+
+        return;
+    }
+
+//* Zelans extra form code below
+
+// Bear form
+ if ( !str_prefix( arg, "bear" ) )
+    {
+        act( "Your body slowly shifts forms into a bear.", ch, NULL, NULL, TO_CHAR );
+        act( "$n shifts their form into that of a bear.", ch, NULL, NULL, TO_NOTVICT );
+        ch->short_descr = str_dup( "A strong looking bear" );
+        sprintf(buf, "A strong looking bear");
+        ch->shift = str_dup( buf );
+
+        ch->pblood -= 20;
+        affect_strip(ch,gsn_reveal);
+
+        af.where     = TO_AFFECTS;
+        af.type      = gsn_shift;
+        af.level     = ch->pcdata->discipline[PROTEAN];
+        af.duration  = 24;
+        af.location  = APPLY_CS_STR;
+        af.modifier  = 3;
+        af.bitvector = AFF_SHIFT;
+        affect_to_char( ch, &af );
+
+        af.location = APPLY_CS_STA;
+        af.modifier = 3;
+        affect_to_char( ch, &af );
+
+        af.location = APPLY_CS_MAN;
+        af.modifier = -3;
+        affect_to_char( ch, &af );
+
+        return;
+    }
+
+send_to_char( "You may shift into bat, wolf, bear, rat, and raven forms.\n\r", ch );
+
+return;
+}
+
 void rote_cellularmitosis(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
 {
     CHAR_DATA *clone;

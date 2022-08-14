@@ -3025,10 +3025,14 @@ Total (3) */
     &gsn_kineticshield,          SLOT( 0),        0,     24, "",             "Your ability to deflect physical blows fades away.",       "" },
 
 //    --Life--
-// Total (1)
+// Total (2)
     { "better body",           { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     \
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
     &gsn_betterbody,          SLOT( 0),        0,     24, "",             "Your body's Pattern can no longer hold it's peak form.",       "" },
+
+    { "mutate form",           { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },     \
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
+    &gsn_mutateform,          SLOT( 0),        0,     24, "",             "Your body's Pattern shifts back from its animal form.",       "" },
 
 //    --Matter--
 // Total (1)

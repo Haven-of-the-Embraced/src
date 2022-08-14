@@ -51,6 +51,7 @@ DECLARE_ROTE_FUN(	rote_littlegooddeath			);
 DECLARE_ROTE_FUN(	rote_healself					);
 DECLARE_ROTE_FUN(	rote_healother					);
 DECLARE_ROTE_FUN( rote_betterbody           );
+DECLARE_ROTE_FUN( rote_mutateform           );
 DECLARE_ROTE_FUN(	rote_cellularmitosis			);
 DECLARE_ROTE_FUN(	rote_matterperception			);
 DECLARE_ROTE_FUN(	rote_goldenwish					);

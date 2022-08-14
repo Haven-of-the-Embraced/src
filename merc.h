@@ -195,7 +195,7 @@ typedef void ROOM_FUN	args( ( ROOM_INDEX_DATA *room, char *argument ) );
 #define MAX_CLAN            33
 #define MAX_SECT            7
 #define MAX_TRADITION       6
-#define MAX_ROTE            45
+#define MAX_ROTE            46
 #define MAX_DAMAGE_MESSAGE  42
 #define MAX_TEST_LOOPS      3
 #define MAX_LEVEL          110
@@ -3026,6 +3026,7 @@ extern  sh_int  gsn_controlrandomness;
 extern  sh_int  gsn_magick;
 extern  sh_int  gsn_kineticshield;
 extern  sh_int  gsn_betterbody;
+extern  sh_int  gsn_mutateform;
 extern  sh_int  gsn_spiritsight;
 extern  sh_int  gsn_trappedingauntlet;
 extern  sh_int  gsn_refinematter;

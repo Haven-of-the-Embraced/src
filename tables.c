@@ -1604,6 +1604,7 @@ const struct    rote_type   rote_table  [MAX_ROTE]  =
     {   "Heal Self",            rote_healself,              0, 0, 0, 2, 0, 0, 0, 0, 0, TARGET_NONE, 3, 3, FALSE, FALSE},
     {   "Heal Other",           rote_healother,             0, 0, 0, 3, 0, 0, 0, 0, 0, TARGET_CHAR, 4, 4, TRUE, FALSE},
     {   "Better Body",          rote_betterbody,            0, 0, 0, 3, 0, 0, 0, 0, 0, TARGET_NONE, 4, 4, TRUE, TRUE},
+		{   "Better Body",          rote_mutateform,            0, 0, 0, 4, 0, 0, 0, 0, 0, TARGET_NONE, 5, 5, TRUE, TRUE},
     {   "Cellular Mitosis",     rote_cellularmitosis,       0, 0, 0, 5, 0, 0, 2, 0, 0, TARGET_CHAR, 25, 7, TRUE, FALSE},
     {   "Matter Perception",    rote_matterperception,      0, 0, 0, 0, 1, 0, 0, 0, 0, TARGET_NONE, 1, 1, FALSE, FALSE},
     {   "Golden Wish",          rote_goldenwish,            0, 0, 0, 0, 2, 0, 0, 0, 0, TARGET_NONE, 2, 2, TRUE, FALSE},

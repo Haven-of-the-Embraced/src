@@ -1286,7 +1286,7 @@ void rote_mutateform(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *ob
             return;
         }
 
-        send_to_char( "You may shift into bat, wolf, rat, bear, and raven forms.\n\r", ch );
+        send_to_char( "You may shift into owl, panther, squirrel, and bear forms.\n\r", ch );
         return;
     }
 
@@ -1298,32 +1298,18 @@ void rote_mutateform(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *ob
 
     WAIT_STATE(ch, 80);
 
-    if ( !str_prefix( arg, "bat" ) || !str_prefix( arg, "raven"))
-    {
-        if ( !str_prefix( arg, "bat" ))
-        {
-            act( "Your body slowly shifts forms into a bat.", ch, NULL, NULL, TO_CHAR );
-            act( "$n shifts their form into that of a bat.", ch, NULL, NULL, TO_NOTVICT );
-            ch->short_descr = str_dup( "A strange bat" );
-            sprintf(buf, "A strange bat flittering about the room");
-            ch->shift = str_dup( buf );
-        }
-        else
-        {
-            act( "Your body slowly shifts forms into a raven.", ch, NULL, NULL, TO_CHAR );
-            act( "$n shifts their form into that of a raven.", ch, NULL, NULL, TO_NOTVICT );
-            ch->short_descr = str_dup( "A black raven" );
-            sprintf(buf, "A black raven");
-            ch->shift = str_dup( buf );
-        }
+    if ( !str_prefix( arg, "owl" ) )
 
-        ch->pblood -= 20;
-        affect_strip(ch,gsn_reveal);
+            act( "Your body slowly shifts forms into an owl.", ch, NULL, NULL, TO_CHAR );
+            act( "$n shifts their form into that of an owl.", ch, NULL, NULL, TO_NOTVICT );
+            ch->short_descr = str_dup( "A brown and white owl" );
+            sprintf(buf, "A brown and white owl");
+            ch->shift = str_dup( buf );
 
         af.where     = TO_AFFECTS;
         af.type      = gsn_shift;
-        af.level     = ch->pcdata->discipline[PROTEAN];
-        af.duration  = 24;
+        af.level     = success;
+        af.duration  = success * 8;
         af.location  = APPLY_CS_STR;
         af.modifier  = -1;
         af.bitvector = AFF_SHIFT;
@@ -1341,8 +1327,7 @@ void rote_mutateform(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *ob
 
         af.location  = APPLY_CS_PER;
         af.modifier  = 3;
-        if ( !str_prefix( arg, "bat" ))
-            af.bitvector = AFF_DETECT_HIDDEN;
+        af.bitvector = AFF_DARK_VISION;
         affect_to_char( ch, &af );
 
         af.location  = APPLY_MOVE;
@@ -1474,7 +1459,7 @@ void rote_mutateform(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *ob
         return;
     }
 
-send_to_char( "You may shift into bat, wolf, bear, rat, and raven forms.\n\r", ch );
+send_to_char( "You may shift into owl, panther, bear, and squirrel forms.\n\r", ch );
 
 return;
 }

@@ -1371,28 +1371,25 @@ void rote_mutateform(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *ob
         return;
     }
 
-    if ( !str_prefix( arg, "wolf" ) )
+    if ( !str_prefix( arg, "panther" ) )
     {
-        act( "Your body slowly shifts forms into a wolf.", ch, NULL, NULL, TO_CHAR );
-        act( "$n shifts their form into that of a wolf.", ch, NULL, NULL, TO_NOTVICT );
-        ch->short_descr = str_dup( "A large mountain wolf" );
-        sprintf(buf, "A large mountain wolf");
+        act( "Your body slowly shifts forms into a panther.", ch, NULL, NULL, TO_CHAR );
+        act( "$n shifts their form into that of a panther.", ch, NULL, NULL, TO_NOTVICT );
+        ch->short_descr = str_dup( "A sleek gray panther" );
+        sprintf(buf, "A sleek gray panther");
         ch->shift = str_dup( buf );
 
-        ch->pblood -= 20;
-        affect_strip(ch,gsn_reveal);
-
         af.where     = TO_AFFECTS;
-        af.type      = gsn_shift;
-        af.level     = ch->pcdata->discipline[PROTEAN];
-        af.duration  = 24;
+        af.type      = gsn_mutateform;
+        af.level     = success;
+        af.duration  = success * 10;
         af.location  = APPLY_CS_STR;
-        af.modifier  = 1;
+        af.modifier  = 2;
         af.bitvector = AFF_SHIFT;
         affect_to_char( ch, &af );
 
         af.location  = APPLY_CS_DEX;
-        af.modifier  = 2;
+        af.modifier  = 3;
         affect_to_char( ch, &af );
 
         af.location  = APPLY_CS_STA;
@@ -1410,10 +1407,7 @@ void rote_mutateform(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *ob
         return;
     }
 
-//* Zelans extra form code below
-
-// Bear form
- if ( !str_prefix( arg, "bear" ) )
+    if ( !str_prefix( arg, "bear" ) )
     {
         act( "Your body slowly shifts forms into a bear.", ch, NULL, NULL, TO_CHAR );
         act( "$n shifts their form into that of a bear.", ch, NULL, NULL, TO_NOTVICT );

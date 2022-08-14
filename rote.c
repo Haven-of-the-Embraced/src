@@ -1307,9 +1307,9 @@ void rote_mutateform(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *ob
             ch->shift = str_dup( buf );
 
         af.where     = TO_AFFECTS;
-        af.type      = gsn_shift;
+        af.type      = gsn_mutateform;
         af.level     = success;
-        af.duration  = success * 8;
+        af.duration  = success * 10;
         af.location  = APPLY_CS_STR;
         af.modifier  = -1;
         af.bitvector = AFF_SHIFT;
@@ -1337,50 +1337,35 @@ void rote_mutateform(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *ob
         return;
     }
 
-    if ( !str_prefix( arg, "rat" ))
+    if ( !str_prefix( arg, "squirrel" ))
     {
-        act( "Your body slowly shifts forms into a rat.", ch, NULL, NULL, TO_CHAR );
-        act( "$n shifts their form into that of a rat.", ch, NULL, NULL, TO_NOTVICT );
-        ch->short_descr = str_dup( "An ugly rat" );
-        sprintf(buf, "An ugly rat searching for food");
+        act( "Your body slowly shifts forms into a squirrel.", ch, NULL, NULL, TO_CHAR );
+        act( "$n shifts their form into that of a squirrel.", ch, NULL, NULL, TO_NOTVICT );
+        ch->short_descr = str_dup( "An auburn colored squirrel" );
+        sprintf(buf, "An auburn colored squirrel");
         ch->shift = str_dup( buf );
-        ch->pblood -= 20;
-        affect_strip(ch,gsn_reveal);
 
         af.where     = TO_AFFECTS;
-        af.type      = gsn_shift;
-        af.level     = ch->pcdata->discipline[PROTEAN];
-        af.duration  = 24;
+        af.type      = gsn_mutateform;
+        af.level     = success;
+        af.duration  = success * 10;
         af.location  = APPLY_CS_STR;
-        af.modifier  = -11;
+        af.modifier  = -1;
         af.bitvector = AFF_SHIFT;
         affect_to_char( ch, &af );
 
-        af.where     = TO_AFFECTS;
-        af.type      = gsn_shift;
-        af.level     = ch->pcdata->discipline[PROTEAN];
-        af.duration  = 24;
         af.location  = APPLY_CS_DEX;
         af.modifier  = 2;
         af.bitvector = AFF_SNEAK;
         affect_to_char( ch, &af );
 
-        af.where     = TO_AFFECTS;
-        af.type      = gsn_shift;
-        af.level     = ch->pcdata->discipline[PROTEAN];
-        af.duration  = 24;
         af.location  = APPLY_CS_STA;
         af.modifier  = 2;
-        af.bitvector = AFF_HIDE;
+        af.bitvector = 0;
         affect_to_char( ch, &af );
 
-        af.where     = TO_AFFECTS;
-        af.type      = gsn_shift;
-        af.level     = ch->pcdata->discipline[PROTEAN];
-        af.duration  = 24;
         af.location  = APPLY_CS_PER;
         af.modifier  = 3;
-        af.bitvector = 0;
         affect_to_char( ch, &af );
 
         return;

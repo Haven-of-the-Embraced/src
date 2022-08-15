@@ -286,7 +286,11 @@ void do_rote(CHAR_DATA *ch, char *argument)
         send_to_char("Your opponent imposes his Will upon your Magicks and smooths out the effect before it can enter this reality.\n\r",ch);
         return;
     }
-    (*rote_table[rote].rote_fun) (ch,success,victim,obj);
+
+    if(rote == rote_lookup("mutate form"))
+      rote_mutateform(ch,success,arg2);
+    else
+      (*rote_table[rote].rote_fun) (ch,success,victim,obj);
     if (number_range(1, 3) == 2)
         gain_exp(ch, success*2);
     return;
@@ -1262,15 +1266,10 @@ void rote_betterbody(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *ob
     return;
 }
 
-void rote_mutateform(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
+void rote_mutateform(CHAR_DATA *ch, int success, char *arg)
 {
-    char arg [MAX_INPUT_LENGTH];
     char buf[MAX_STRING_LENGTH];
-    OBJ_DATA *obj;
-    OBJ_DATA *obj_next;
     AFFECT_DATA af;
-
-    argument = one_argument( argument, arg );
 
     if ( arg[0] == '\0')
     {
@@ -1287,11 +1286,12 @@ void rote_mutateform(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *ob
             ch->affected_by = race_table[ch->race].aff;
             act( "$n's form slowly shifts back into a humanoid form.", ch, NULL, NULL, TO_NOTVICT );
             ch->dam_type = 17;
-            ch->quintessence += 4;
+            ch->quintessence += 5;
             return;
         }
 
         send_to_char( "You may shift into owl, panther, squirrel, and bear forms.\n\r", ch );
+        ch->quintessence += 5;
         return;
     }
 

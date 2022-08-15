@@ -1290,7 +1290,7 @@ void rote_mutateform(CHAR_DATA *ch, int success, char *arg)
             return;
         }
 
-        send_to_char( "You may shift into owl, panther, squirrel, and bear forms.\n\r", ch );
+        send_to_char( "You may shift into owl, panther, squirrel, bear, and sloth forms.\n\r", ch );
         ch->quintessence += 5;
         return;
     }
@@ -1298,6 +1298,7 @@ void rote_mutateform(CHAR_DATA *ch, int success, char *arg)
     if ( IS_AFFECTED(ch, AFF_SHIFT))
     {
         send_to_char( "You must reform your Pattern back to normal first.\n\r{WSyntax: {crote 'mutate form'{x\n\r", ch );
+        ch->quintessence += 5;
         return;
     }
 
@@ -1341,11 +1342,11 @@ void rote_mutateform(CHAR_DATA *ch, int success, char *arg)
       return;
     }
 
-    WAIT_STATE(ch, 80);
+    WAIT_STATE(ch, 60);
 
     if ( !str_prefix( arg, "owl" ) )
     {
-        act( "Your body slowly shifts forms into an owl.", ch, NULL, NULL, TO_CHAR );
+        act( "You feel your body grow lighter as you shift into a night bird.", ch, NULL, NULL, TO_CHAR );
         act( "$n shifts their form into that of an owl.", ch, NULL, NULL, TO_NOTVICT );
         ch->short_descr = str_dup( "A brown and white owl" );
         sprintf(buf, "A brown and white owl");
@@ -1384,7 +1385,7 @@ void rote_mutateform(CHAR_DATA *ch, int success, char *arg)
 
     if ( !str_prefix( arg, "squirrel" ))
     {
-        act( "Your body slowly shifts forms into a squirrel.", ch, NULL, NULL, TO_CHAR );
+        act( "You shift forms, and suddenly gain a hankering for nuts.", ch, NULL, NULL, TO_CHAR );
         act( "$n shifts their form into that of a squirrel.", ch, NULL, NULL, TO_NOTVICT );
         ch->short_descr = str_dup( "An auburn colored squirrel" );
         sprintf(buf, "An auburn colored squirrel");
@@ -1418,7 +1419,7 @@ void rote_mutateform(CHAR_DATA *ch, int success, char *arg)
 
     if ( !str_prefix( arg, "panther" ) )
     {
-        act( "Your body slowly shifts forms into a panther.", ch, NULL, NULL, TO_CHAR );
+        act( "Your body grows sleeker, as you become a master hunter.", ch, NULL, NULL, TO_CHAR );
         act( "$n shifts their form into that of a panther.", ch, NULL, NULL, TO_NOTVICT );
         ch->short_descr = str_dup( "A sleek gray panther" );
         sprintf(buf, "A sleek gray panther");
@@ -1454,7 +1455,7 @@ void rote_mutateform(CHAR_DATA *ch, int success, char *arg)
 
     if ( !str_prefix( arg, "bear" ) )
     {
-        act( "Your body slowly shifts forms into a bear.", ch, NULL, NULL, TO_CHAR );
+        act( "With a might stretch, your body grows massive.", ch, NULL, NULL, TO_CHAR );
         act( "$n shifts their form into that of a bear.", ch, NULL, NULL, TO_NOTVICT );
         ch->short_descr = str_dup( "A strong looking bear" );
         sprintf(buf, "A strong looking bear");
@@ -1480,7 +1481,41 @@ void rote_mutateform(CHAR_DATA *ch, int success, char *arg)
         return;
     }
 
-send_to_char( "You may shift into owl, panther, bear, and squirrel forms.\n\r", ch );
+    if ( !str_prefix( arg, "sloth") )
+    {
+      act( "Your body shifts forms, and you feel very lethargic.", ch, NULL, NULL, TO_CHAR );
+      act( "$n shifts their form into that of a sloth.", ch, NULL, NULL, TO_NOTVICT );
+      ch->short_descr = str_dup( "A slow-moving sloth" );
+      sprintf(buf, "A slow-moving sloth");
+      ch->shift = str_dup( buf );
+
+      af.where     = TO_AFFECTS;
+      af.type      = gsn_mutateform;
+      af.level     = success;
+      af.duration  = success * 10;
+      af.location  = APPLY_CS_STR;
+      af.modifier  = -2;
+      af.bitvector = AFF_SHIFT;
+      affect_to_char( ch, &af );
+
+      af.location  = APPLY_CS_DEX;
+      af.modifier  = -4;
+      af.bitvector = AFF_SLOW;
+      affect_to_char( ch, &af );
+
+      af.location  = APPLY_CS_MAN;
+      af.modifier  = -3;
+      af.bitvector = 0;
+      affect_to_char( ch, &af );
+
+      af.location  = APPLY_MOVE;
+      af.modifier  = -ch->level;
+      affect_to_char( ch, &af );
+
+      return;
+    }
+
+send_to_char( "You may shift into owl, panther, bear, squirrel, and sloth forms.\n\r", ch );
 
 return;
 }

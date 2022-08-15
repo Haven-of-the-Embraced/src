@@ -1276,8 +1276,13 @@ void rote_mutateform(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *ob
     {
         if ( IS_AFFECTED(ch, AFF_SHIFT))
         {
-            send_to_char( "You shift back into your humanoid form.\n\r", ch );
+            if (is_affected(ch, gsn_mutateform) && get_affect_level(ch, gsn_mutateform) == 0)
+            {
+              send_to_char("Your body is moving too slowly to effectively change back from sloth form.\n\r", ch);
+              return;
+            }
 
+            send_to_char( "You shift back into your humanoid form.\n\r", ch );
             affect_strip(ch,gsn_mutateform);
             ch->affected_by = race_table[ch->race].aff;
             act( "$n's form slowly shifts back into a humanoid form.", ch, NULL, NULL, TO_NOTVICT );
@@ -1294,6 +1299,46 @@ void rote_mutateform(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *ob
     {
         send_to_char( "You must reform your Pattern back to normal first.\n\r{WSyntax: {crote 'mutate form'{x\n\r", ch );
         return;
+    }
+
+    if (success < 0)
+    {
+        act( "Your body shifts forms, and you feel very lethargic.", ch, NULL, NULL, TO_CHAR );
+        act( "$n shifts their form into that of a sloth.", ch, NULL, NULL, TO_NOTVICT );
+        ch->short_descr = str_dup( "A slow-moving sloth" );
+        sprintf(buf, "A slow-moving sloth");
+        ch->shift = str_dup( buf );
+
+        af.where     = TO_AFFECTS;
+        af.type      = gsn_mutateform;
+        af.level     = 0;
+        af.duration  = 2;
+        af.location  = APPLY_CS_STR;
+        af.modifier  = -2;
+        af.bitvector = AFF_SHIFT;
+        affect_to_char( ch, &af );
+
+        af.location  = APPLY_CS_DEX;
+        af.modifier  = -4;
+        af.bitvector = AFF_SLOW;
+        affect_to_char( ch, &af );
+
+        af.location  = APPLY_CS_MAN;
+        af.modifier  = -3;
+        af.bitvector = 0;
+        affect_to_char( ch, &af );
+
+        af.location  = APPLY_MOVE;
+        af.modifier  = -ch->level;
+        affect_to_char( ch, &af );
+
+        return;
+    }
+
+    if (success == 0)
+    {
+      send_to_char("You begin to tug and weave at your body to transmute into an animal, but your Pattern refuses to budge.\n\r", ch );
+      return;
     }
 
     WAIT_STATE(ch, 80);

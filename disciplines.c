@@ -5303,7 +5303,7 @@ void do_shift(CHAR_DATA *ch, char *argument)
             return;
         }
 
-        send_to_char( "You may shift into bat, wolf, rat, tiger, bear, and raven forms.\n\r", ch );
+        send_to_char( "You may shift into bat, wolf, rat, bear, and raven forms.\n\r", ch );
         return;
     }
 
@@ -5348,7 +5348,7 @@ void do_shift(CHAR_DATA *ch, char *argument)
         af.level     = ch->pcdata->discipline[PROTEAN];
         af.duration  = 24;
         af.location  = APPLY_CS_STR;
-        af.modifier  = -(get_attribute(ch,STRENGTH)-2);
+        af.modifier  = -1;
         af.bitvector = AFF_SHIFT;
         affect_to_char( ch, &af );
 
@@ -5357,15 +5357,20 @@ void do_shift(CHAR_DATA *ch, char *argument)
         af.bitvector = AFF_FLYING;
         affect_to_char( ch, &af );
 
-        af.location  = APPLY_MOVE;
-        af.modifier  = ch->level*7;
-        if ( !str_prefix( arg, "bat" ))
-            af.bitvector = AFF_DETECT_HIDDEN;
-        else
-            af.bitvector = 0;
+        af.location  = APPLY_CS_MAN;
+        af.modifier  = -3;
+        af.bitvector = 0;
         affect_to_char( ch, &af );
 
-        if (ch->hit > ch->max_hit) ch->hit = ch->max_hit;
+        af.location  = APPLY_CS_PER;
+        af.modifier  = 3;
+        if ( !str_prefix( arg, "bat" ))
+            af.bitvector = AFF_DETECT_HIDDEN;
+        affect_to_char( ch, &af );
+
+        af.location  = APPLY_MOVE;
+        af.modifier  = ch->level*7;
+        affect_to_char( ch, &af );
 
         return;
     }
@@ -5374,7 +5379,9 @@ void do_shift(CHAR_DATA *ch, char *argument)
     {
         act( "Your body slowly shifts forms into a rat.", ch, NULL, NULL, TO_CHAR );
         act( "$n shifts their form into that of a rat.", ch, NULL, NULL, TO_NOTVICT );
-
+        ch->short_descr = str_dup( "An ugly rat" );
+        sprintf(buf, "An ugly rat searching for food");
+        ch->shift = str_dup( buf );
         ch->pblood -= 20;
         affect_strip(ch,gsn_reveal);
 
@@ -5383,7 +5390,7 @@ void do_shift(CHAR_DATA *ch, char *argument)
         af.level     = ch->pcdata->discipline[PROTEAN];
         af.duration  = 24;
         af.location  = APPLY_CS_STR;
-        af.modifier  = -(get_attribute(ch,STRENGTH)-2);
+        af.modifier  = -11;
         af.bitvector = AFF_SHIFT;
         affect_to_char( ch, &af );
 
@@ -5391,8 +5398,8 @@ void do_shift(CHAR_DATA *ch, char *argument)
         af.type      = gsn_shift;
         af.level     = ch->pcdata->discipline[PROTEAN];
         af.duration  = 24;
-        af.location  = APPLY_NONE;
-        af.modifier  = 0;
+        af.location  = APPLY_CS_DEX;
+        af.modifier  = 2;
         af.bitvector = AFF_SNEAK;
         affect_to_char( ch, &af );
 
@@ -5400,36 +5407,30 @@ void do_shift(CHAR_DATA *ch, char *argument)
         af.type      = gsn_shift;
         af.level     = ch->pcdata->discipline[PROTEAN];
         af.duration  = 24;
-        af.location  = APPLY_NONE;
-        af.modifier  = 0;
+        af.location  = APPLY_CS_STA;
+        af.modifier  = 2;
         af.bitvector = AFF_HIDE;
         affect_to_char( ch, &af );
 
-        if (ch->hit > ch->max_hit) ch->hit = ch->max_hit;
-        ch->short_descr = str_dup( "An ugly rat" );
-        sprintf(buf, "An ugly rat searching for food");
-        ch->shift = str_dup( buf );
+        af.where     = TO_AFFECTS;
+        af.type      = gsn_shift;
+        af.level     = ch->pcdata->discipline[PROTEAN];
+        af.duration  = 24;
+        af.location  = APPLY_CS_PER;
+        af.modifier  = 3;
+        af.bitvector = 0;
+        affect_to_char( ch, &af );
+
         return;
     }
 
-    if ( !str_prefix( arg, "wolf" ) || !str_prefix( arg, "tiger" ))
+    if ( !str_prefix( arg, "wolf" ) )
     {
-        if (!str_prefix( arg, "wolf"))
-        {
-            act( "Your body slowly shifts forms into a wolf.", ch, NULL, NULL, TO_CHAR );
-            act( "$n shifts their form into that of a wolf.", ch, NULL, NULL, TO_NOTVICT );
-            ch->short_descr = str_dup( "A large mountain wolf" );
-            sprintf(buf, "A large mountain wolf");
-            ch->shift = str_dup( buf );
-        }
-        else
-        {
-            act( "Your body slowly shifts forms into a tiger.", ch, NULL, NULL, TO_CHAR );
-            act( "$n shifts their form into that of a tiger.", ch, NULL, NULL, TO_NOTVICT );
-            ch->short_descr = str_dup( "A powerful looking tiger" );
-            sprintf(buf, "A powerful looking tiger");
-            ch->shift = str_dup( buf );
-        }
+        act( "Your body slowly shifts forms into a wolf.", ch, NULL, NULL, TO_CHAR );
+        act( "$n shifts their form into that of a wolf.", ch, NULL, NULL, TO_NOTVICT );
+        ch->short_descr = str_dup( "A large mountain wolf" );
+        sprintf(buf, "A large mountain wolf");
+        ch->shift = str_dup( buf );
 
         ch->pblood -= 20;
         affect_strip(ch,gsn_reveal);
@@ -5459,8 +5460,6 @@ void do_shift(CHAR_DATA *ch, char *argument)
         af.modifier  = 5*ch->level;
         affect_to_char( ch, &af );
 
-        if (ch->hit > ch->max_hit) ch->hit = ch->max_hit;
-
         return;
     }
 
@@ -5471,6 +5470,10 @@ void do_shift(CHAR_DATA *ch, char *argument)
     {
         act( "Your body slowly shifts forms into a bear.", ch, NULL, NULL, TO_CHAR );
         act( "$n shifts their form into that of a bear.", ch, NULL, NULL, TO_NOTVICT );
+        ch->short_descr = str_dup( "A strong looking bear" );
+        sprintf(buf, "A strong looking bear");
+        ch->shift = str_dup( buf );
+
         ch->pblood -= 20;
         affect_strip(ch,gsn_reveal);
 
@@ -5479,80 +5482,21 @@ void do_shift(CHAR_DATA *ch, char *argument)
         af.level     = ch->pcdata->discipline[PROTEAN];
         af.duration  = 24;
         af.location  = APPLY_CS_STR;
-        af.modifier  = 4;
+        af.modifier  = 3;
         af.bitvector = AFF_SHIFT;
         affect_to_char( ch, &af );
 
-        af.location = APPLY_CS_DEX;
-        af.modifier = -1;
-        af.bitvector    = 0;
-        affect_to_char( ch, &af );
-
         af.location = APPLY_CS_STA;
-        af.modifier = 2;
+        af.modifier = 3;
         affect_to_char( ch, &af );
 
         af.location = APPLY_CS_MAN;
         af.modifier = -3;
-         affect_to_char( ch, &af );
-
-        af.location = APPLY_CS_CHA;
-        af.modifier = -2;
         affect_to_char( ch, &af );
 
-        if (ch->hit > ch->max_hit) ch->hit = ch->max_hit;
-        ch->short_descr = str_dup( "A strong looking bear" );
-        sprintf(buf, "A strong looking bear");
-            ch->shift = str_dup( buf );
         return;
     }
-// Shadowolf form
- if ( !str_prefix( arg, "shadowwolf" ) )
-    {
-        if(ch->pcdata->discipline[OBTENEBRATION] < 4)
-        {
-            send_to_char( "You are not skilled enough in Obtenebration!\n\r", ch );
-            return;
-        }
-        act( "Your body slowly shifts forms into a shadow wolf.", ch, NULL, NULL, TO_CHAR );
-        act( "$n shifts their form into that of a shadow wolf.", ch, NULL, NULL, TO_NOTVICT );
-        ch->pblood -= 20;
-        affect_strip(ch,gsn_reveal);
 
-        af.where     = TO_AFFECTS;
-        af.type      = gsn_shift;
-        af.level     = ch->pcdata->discipline[PROTEAN];
-        af.duration  = 24;
-        af.location  = APPLY_CS_STR;
-        af.modifier  = 2;
-        af.bitvector = AFF_SHIFT;
-        affect_to_char( ch, &af );
-
-        af.location  = APPLY_CS_DEX;
-        af.modifier  = 1;
-        af.bitvector = AFF_HIDE;
-        affect_to_char( ch, &af );
-
-        af.location  = APPLY_CS_STA;
-        af.modifier  = 2;
-        af.bitvector = AFF_SNEAK;
-        affect_to_char( ch, &af );
-
-        af.location  = APPLY_CS_MAN;
-        af.modifier  = -3;
-        af.bitvector = 0;
-        affect_to_char( ch, &af );
-
-        af.location  = APPLY_MOVE;
-        af.modifier  = 10*ch->level;
-        affect_to_char( ch, &af );
-
-        if (ch->hit > ch->max_hit) ch->hit = ch->max_hit;
-        ch->short_descr = str_dup( "A shadowy wolf" );
-        sprintf(buf, "A shadowy wolf");
-            ch->shift = str_dup( buf );
-        return;
-    }
 // Easter egg (Remove it at some point, syrup form)
 if ( !str_prefix( arg, "syrup" ) )
     {
@@ -5624,11 +5568,9 @@ if ( !str_prefix( arg, "syrup" ) )
         return;
     }
 
-send_to_char( "You may shift into bat, wolf, tiger, bear, rat, and raven forms.\n\r", ch );
+send_to_char( "You may shift into bat, wolf, bear, rat, and raven forms.\n\r", ch );
 if (ch->pcdata->discipline[PROTEAN] >= 5)
     send_to_char("You may also shift into mist form.\n\r", ch);
-if (ch->pcdata->discipline[OBTENEBRATION] >= 4)
-    send_to_char("You may also shift into shadowwolf form.\n\r", ch);
 return;
 }
 

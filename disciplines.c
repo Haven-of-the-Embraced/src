@@ -5040,7 +5040,7 @@ void do_gleam(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if (is_affected(ch, gsn_gleam)) 
+    if (is_affected(ch, gsn_gleam))
     {
         affect_strip(ch, gsn_gleam);
         act( "$n's eyes cease to glow bright red.", ch, 0, 0, TO_NOTVICT );

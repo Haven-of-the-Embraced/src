@@ -256,18 +256,3 @@ void do_unalias(CHAR_DATA *ch, char *argument)
     if (!found)
 	send_to_char("No alias of that name to remove.\n\r",ch);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

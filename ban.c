@@ -304,5 +304,3 @@ void do_allow( CHAR_DATA *ch, char *argument )
     send_to_char( "Site is not banned.\n\r", ch );
     return;
 }
-
-

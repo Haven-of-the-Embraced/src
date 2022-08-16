@@ -998,7 +998,7 @@ void game_loop_unix( int control )
     if (test_run)
 	if (test_loops <= 0) {
         	merc_down = TRUE;
-	} else { 
+	} else {
 		test_loops--;
 	}
     }

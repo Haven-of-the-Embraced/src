@@ -226,4 +226,3 @@ do_unseal(CHAR_DATA *ch, char *argument)
   send_to_char("You unseal the note.\n\r",ch);
   act("$n unseals a note.",ch,NULL,NULL,TO_ROOM);
 }
-

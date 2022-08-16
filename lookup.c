@@ -389,4 +389,3 @@ void add_like(CHAR_DATA *mob, CHAR_DATA *ch, int amount)
 
     return;
 }
-

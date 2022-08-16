@@ -40,4 +40,3 @@ HELP_AREA * had_lookup	args( (char *) );
 int	like_lookup	args( (CHAR_DATA *mob, CHAR_DATA *ch) );
 int	get_like	args( (CHAR_DATA *mob, CHAR_DATA *ch) );
 void add_like	args( (CHAR_DATA *mob, CHAR_DATA *ch, int amount) );
-

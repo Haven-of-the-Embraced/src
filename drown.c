@@ -55,4 +55,3 @@ void underwater_update( void )
         }
     }
 }
-

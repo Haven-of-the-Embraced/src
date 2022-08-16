@@ -588,4 +588,3 @@ void game_stop()
 	stay2 = FALSE;
 	return;
 }
-

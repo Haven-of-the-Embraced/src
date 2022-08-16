@@ -495,7 +495,7 @@ void do_claim (CHAR_DATA *ch, char *argument)
       sendch("Your clan already rules over this domain!\n\r", ch);
       return;
     }
-    
+
     argument = one_argument(argument, arg);
 
     if (str_cmp(arg, "confirm"))

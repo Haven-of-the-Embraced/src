@@ -736,7 +736,7 @@ bool spec_cast_cleric( CHAR_DATA *ch )
     case  8:
     case  9:
     case 10: min_level = 15; spell = "harm";           break;
-    case 11: 
+    case 11:
     default: min_level = 16; spell = "dispel magic";   break;
     }
 
@@ -824,7 +824,7 @@ bool spec_cast_mage( CHAR_DATA *ch )
     case  8: min_level = 14; spell = "slow";   break;
     case  9:
     case 10: min_level = 15; spell = "fireball";       break;
-    case 11: 
+    case 11:
     default: min_level = 20; spell = "acid blast";     break;
     }
 

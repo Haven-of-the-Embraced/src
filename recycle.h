@@ -117,4 +117,3 @@ void		free_help	args( ( HELP_DATA * ) );
 
 void free_sleep_data(SLEEP_DATA *sd);
 SLEEP_DATA *new_sleep_data(void);
-

@@ -1271,34 +1271,27 @@ void rote_mutateform(CHAR_DATA *ch, int success, char *arg)
     char buf[MAX_STRING_LENGTH];
     AFFECT_DATA af;
 
-    if ( arg[0] == '\0')
+    if (!str_prefix(arg, "human"))
     {
-        if ( IS_AFFECTED(ch, AFF_SHIFT))
-        {
-            if (is_affected(ch, gsn_mutateform) && get_affect_level(ch, gsn_mutateform) == 0)
-            {
-              send_to_char("Your body is moving too slowly to effectively change back from sloth form.\n\r", ch);
-              return;
-            }
-
-            send_to_char( "You shift back into your humanoid form.\n\r", ch );
-            affect_strip(ch,gsn_mutateform);
-            ch->affected_by = race_table[ch->race].aff;
-            act( "$n's form slowly shifts back into a humanoid form.", ch, NULL, NULL, TO_NOTVICT );
-            ch->dam_type = 17;
-            ch->quintessence += 5;
-            return;
-        }
-
-        send_to_char( "You may shift into owl, panther, squirrel, bear, and sloth forms.\n\r", ch );
-        ch->quintessence += 5;
+      ch->quintessence += 4;
+      if (is_affected(ch, gsn_mutateform) && get_affect_level(ch, gsn_mutateform) == 0)
+      {
+        send_to_char("Your body is moving too slowly to effectively change back from sloth form.\n\r", ch);
         return;
+      }
+
+      send_to_char( "You reset your Pattern back into humanoid form.\n\r", ch );
+      affect_strip(ch,gsn_mutateform);
+      ch->affected_by = race_table[ch->race].aff;
+      act( "$n's form slowly shifts back into a humanoid form.", ch, NULL, NULL, TO_NOTVICT );
+      ch->dam_type = 17;
+      return;
     }
 
     if ( IS_AFFECTED(ch, AFF_SHIFT))
     {
-        send_to_char( "You must reform your Pattern back to normal first.\n\r{WSyntax: {crote 'mutate form'{x\n\r", ch );
-        ch->quintessence += 5;
+        send_to_char( "You must reform your Pattern back to normal first.\n\r{WSyntax: {crote 'mutate form' human{x\n\r", ch );
+        ch->quintessence += 4;
         return;
     }
 
@@ -1515,9 +1508,9 @@ void rote_mutateform(CHAR_DATA *ch, int success, char *arg)
       return;
     }
 
-send_to_char( "You may shift into owl, panther, bear, squirrel, and sloth forms.\n\r", ch );
-
-return;
+    send_to_char( "You may shift into owl, panther, bear, squirrel, and sloth forms.\n\r", ch );
+    ch->quintessence += 5;
+    return;
 }
 
 void rote_cellularmitosis(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)

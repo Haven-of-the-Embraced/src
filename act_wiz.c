@@ -1890,6 +1890,42 @@ void do_ostat( CHAR_DATA *ch, char *argument )
           send_to_char("{c-----------------------------------------------------{x\n\r", ch);
           break;
 
+        case ITEM_PLASM:
+          send_to_char("{c-----------------------{YVALUES{c------------------------{x\n\r", ch);
+          sprintf(buf, "{R**Currently Unused**{x: %d  \n\r{R**Currently Unused**{x: %d  \n\r{R**Currently Unused**{x: %d  \n\r{R**Currently Unused**{x: %d  \n\r{R**Currently Unused**{x: %d\n\r",
+            obj->value[0],
+            obj->value[1],
+            obj->value[2],
+            obj->value[3],
+            obj->value[4]);
+          send_to_char(buf, ch);
+          send_to_char("{c-----------------------------------------------------{x\n\r", ch);
+          break;
+
+        case ITEM_LOCKPICK:
+          send_to_char("{c-----------------------{YVALUES{c------------------------{x\n\r", ch);
+          sprintf(buf, "{R**Currently Unused**{x: %d  \n\r{R**Currently Unused**{x: %d  \n\r{R**Currently Unused**{x: %d  \n\r{R**Currently Unused**{x: %d  \n\r{R**Currently Unused**{x: %d\n\r",
+            obj->value[0],
+            obj->value[1],
+            obj->value[2],
+            obj->value[3],
+            obj->value[4]);
+          send_to_char(buf, ch);
+          send_to_char("{c-----------------------------------------------------{x\n\r", ch);
+          break;
+
+        case ITEM_BLASTPOWDER:
+          send_to_char("{c-----------------------{YVALUES{c------------------------{x\n\r", ch);
+          sprintf(buf, "{R**Currently Unused**{x: %d  \n\r{R**Currently Unused**{x: %d  \n\r{R**Currently Unused**{x: %d  \n\r{R**Currently Unused**{x: %d  \n\r{R**Currently Unused**{x: %d\n\r",
+            obj->value[0],
+            obj->value[1],
+            obj->value[2],
+            obj->value[3],
+            obj->value[4]);
+          send_to_char(buf, ch);
+          send_to_char("{c-----------------------------------------------------{x\n\r", ch);
+          break;
+
         case ITEM_TREASURE:
         case ITEM_TRASH:
         case ITEM_KEY:

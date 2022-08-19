@@ -739,6 +739,9 @@ const struct flag_type type_flags[] =
     {   "trap",     ITEM_TRAP,      TRUE    },
     {   "tool",     ITEM_TOOL,      TRUE    },
     {   "crafted",      ITEM_CRAFTED,       TRUE    },
+		{		"plasm",				ITEM_PLASM, 				TRUE 		},
+		{		"lockpick",			ITEM_LOCKPICK,			TRUE		},
+		{		"blastpowder",	ITEM_BLASTPOWDER,		TRUE		},
     {   NULL,           0,          0   }
 };
 

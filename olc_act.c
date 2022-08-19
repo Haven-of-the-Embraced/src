@@ -3194,6 +3194,78 @@ bool set_obj_values( CHAR_DATA *ch, OBJ_INDEX_DATA *pObj, int value_num, char *a
         }
         break;
 
+    case ITEM_PLASM:
+      switch (value_num)
+      {
+        default:
+          do_help( ch, "ITEM_PLASM" );
+          return FALSE;
+        case 0:
+          if (set_value < 0 || set_value > 10)
+          {
+            send_to_char("Plasm Pieces is between 0 and 10.\n\r", ch);
+            break;
+          }
+          send_to_char( "PLASM PIECES SET.\n\r\n\r", ch );
+          pObj->value[0] = atoi( argument );
+          break;
+       }
+       break;
+
+   case ITEM_LOCKPICK:
+     switch (value_num)
+     {
+       default:
+         do_help( ch, "ITEM_LOCKPICK" );
+         return FALSE;
+       case 0:
+        if (set_value < 0 || set_value > 100)
+        {
+          send_to_char("Lockpick Durability is between 0 and 100.\n\r", ch);
+          break;
+        }
+         send_to_char( "LOCKPICK DURABILITY SET.\n\r\n\r", ch );
+         pObj->value[0] = atoi( argument );
+         break;
+       case 1:
+        if (set_value < -2 || set_value > 2)
+        {
+          send_to_char("Lockpick Difficulty is between -2 and 2.\n\r", ch);
+          break;
+        }
+        send_to_char( "LOCKPICK DIFFICULTY SET.\n\r\n\r", ch );
+        pObj->value[0] = atoi( argument );
+        break;
+      }
+      break;
+
+    case ITEM_LOCKPICK:
+      switch (value_num)
+      {
+        default:
+          do_help( ch, "ITEM_BLASTPOWDER" );
+          return FALSE;
+        case 0:
+         if (set_value < 0 || set_value > 10)
+         {
+           send_to_char("Blast Powder Charges is between 0 and 10.\n\r", ch);
+           break;
+         }
+         send_to_char( "BLASTPOWDER CHARGES SET.\n\r\n\r", ch );
+          pObj->value[0] = atoi( argument );
+          break;
+        case 1:
+          if (set_value < 1 || set_value > 10)
+          {
+           send_to_char("Blast Powder Damage is between 1 and 10.\n\r", ch);
+           break;
+          }
+          send_to_char( "BLASTPOWDER DAMAGE SET.\n\r\n\r", ch );
+           pObj->value[0] = atoi( argument );
+          break;
+         }
+         break;
+
     }
 
     show_obj_values( ch, pObj );

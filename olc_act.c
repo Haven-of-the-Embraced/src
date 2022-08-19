@@ -2715,6 +2715,36 @@ void show_obj_values( CHAR_DATA *ch, OBJ_INDEX_DATA *obj )
         obj->value[4]);
         send_to_char( buf, ch );
         break;
+
+      case ITEM_PLASM:
+        send_to_char("{c-----------------------{YVALUES{c------------------------{x\n\r", ch);
+        sprintf(buf, "v[0] Total Plasm         : %3d Pieces\n\r",
+          obj->value[0]);
+        send_to_char( buf, ch );
+        send_to_char("{c-----------------------------------------------------{x\n\r", ch);
+        break;
+
+      case ITEM_LOCKPICK:
+        send_to_char("{c-----------------------{YVALUES{c------------------------{x\n\r", ch);
+        sprintf(buf,
+          "v[0] Durability          : %3d \n\r"
+          "v[1] Difficulty          : %3d Adjustment\n\r",
+          obj->value[0],
+          obj->value[1]);
+        send_to_char( buf, ch );
+        send_to_char("{c-----------------------------------------------------{x\n\r", ch);
+        break;
+
+      case ITEM_BLASTPOWDER:
+        send_to_char("{c-----------------------{YVALUES{c------------------------{x\n\r", ch);
+        sprintf(buf,
+          "v[0] Charges             : %2d Charges\n\r"
+          "v[1] Damage Dice         : %2d Dice\n\r",
+          obj->value[0],
+          obj->value[1]);
+        send_to_char( buf, ch );
+        send_to_char("{c-----------------------------------------------------{x\n\r", ch);
+        break;
     }
 
     return;

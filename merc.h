@@ -1452,6 +1452,9 @@ struct  kill_data
 #define ITEM_JUKEBOX             34
 #define ITEM_TRAP            35
 #define ITEM_NOTEPAPER       36
+#define ITEM_PLASM            37
+#define ITEM_LOCKPICK         38
+#define ITEM_BLASTPOWDER      39
 
 
 

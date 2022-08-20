@@ -2474,7 +2474,11 @@ void fread_obj( CHAR_DATA *ch, FILE *fp )
           case ITEM_FOUNTAIN:
           case ITEM_PILL:
           case ITEM_PORTAL:
-          case ITEM_TRAP: break;
+          case ITEM_TRAP:
+          case ITEM_PLASM:
+          case ITEM_LOCKPICK:
+          case ITEM_BLASTPOWDER:
+            break;
           default:
             for (ic=0;ic<4;ic++)
               obj->value[ic] = obj->pIndexData->value[ic];

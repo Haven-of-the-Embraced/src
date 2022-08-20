@@ -3239,7 +3239,7 @@ bool set_obj_values( CHAR_DATA *ch, OBJ_INDEX_DATA *pObj, int value_num, char *a
       }
       break;
 
-    case ITEM_LOCKPICK:
+    case ITEM_BLASTPOWDER:
       switch (value_num)
       {
         default:

@@ -537,7 +537,7 @@ const   struct  race_type   race_table  []      =
 
     {
       "wraith",       FALSE,
-      0,      AFF_SNEAK|AFF_PASS_DOOR|AFF_DARK_VISION, OFF_FADE,
+      0,      AFF_SNEAK|AFF_PASS_DOOR|AFF_DARK_VISION, 0,
       IMM_POISON|IMM_DISEASE|IMM_DROWNING|IMM_SUNLIGHT,   RES_WEAPON|RES_COLD|RES_ACID|RES_FIRE,
       VULN_NEGATIVE|VULN_HOLY|VULN_ENERGY,
       C|D|H|I,    0

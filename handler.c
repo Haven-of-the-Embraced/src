@@ -3491,7 +3491,6 @@ char *off_bit_name(int off_flags)
     if (off_flags & OFF_BERSERK     ) strcat(buf, " berserk");
     if (off_flags & OFF_DISARM      ) strcat(buf, " disarm");
     if (off_flags & OFF_DODGE       ) strcat(buf, " dodge");
-    if (off_flags & OFF_FADE        ) strcat(buf, " fade");
     if (off_flags & OFF_FAST        ) strcat(buf, " fast");
     if (off_flags & OFF_KICK        ) strcat(buf, " kick");
     if (off_flags & OFF_KICK_DIRT   ) strcat(buf, " kick_dirt");

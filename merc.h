@@ -1059,7 +1059,7 @@ struct  kill_data
 #define OFF_BERSERK             (D)
 #define OFF_DISARM              (E)
 #define OFF_DODGE               (F)
-#define OFF_FADE                (G)
+
 #define OFF_FAST                (H)
 #define OFF_KICK                (I)
 #define OFF_KICK_DIRT           (J)

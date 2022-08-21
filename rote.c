@@ -1271,9 +1271,23 @@ void rote_mutateform(CHAR_DATA *ch, int success, char *arg)
     char buf[MAX_STRING_LENGTH];
     AFFECT_DATA af;
 
+    if (arg[0] == '\0')
+    {
+      send_to_char( "You may shift into: owl, panther, bear, squirrel, sloth\n\r", ch );
+      send_to_char( "You must shift back to human form before changing to another.\n\r", ch );
+      ch->paradox--;
+      ch->quintessence += 5;
+      return;
+    }
+
     if (!str_prefix(arg, "human"))
     {
       ch->quintessence += 4;
+      if (!is_affected(ch, gsn_mutateform))
+      {
+        send_to_char("You have not altered your body into another form.\n\r", ch);
+        return;
+      }
       if (is_affected(ch, gsn_mutateform) && get_affect_level(ch, gsn_mutateform) == 0)
       {
         send_to_char("Your body is moving too slowly to effectively change back from sloth form.\n\r", ch);
@@ -1527,8 +1541,6 @@ void rote_mutateform(CHAR_DATA *ch, int success, char *arg)
       return;
     }
 
-    send_to_char( "You may shift into owl, panther, bear, squirrel, and sloth forms.\n\r", ch );
-    ch->quintessence += 5;
     return;
 }
 

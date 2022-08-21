@@ -1313,7 +1313,7 @@ void rote_mutateform(CHAR_DATA *ch, int success, char *arg)
     if (success < 0)
     {
         act( "Your body shifts forms, and you feel very lethargic.", ch, NULL, NULL, TO_CHAR );
-        act( "$n shifts their form into that of a sloth.", ch, NULL, NULL, TO_NOTVICT );
+        act( "$n shifts $s form into that of a sloth.", ch, NULL, NULL, TO_NOTVICT );
         ch->short_descr = str_dup( "A slow-moving sloth" );
         sprintf(buf, "A slow-moving sloth");
         ch->shift = str_dup( buf );
@@ -1355,7 +1355,7 @@ void rote_mutateform(CHAR_DATA *ch, int success, char *arg)
     if ( !str_prefix( arg, "owl" ) )
     {
         act( "You feel your body grow lighter as you shift into a night bird.", ch, NULL, NULL, TO_CHAR );
-        act( "$n shifts their form into that of an owl.", ch, NULL, NULL, TO_NOTVICT );
+        act( "$n shifts $s form into that of an owl.", ch, NULL, NULL, TO_NOTVICT );
         ch->short_descr = str_dup( "A brown and white owl" );
         sprintf(buf, "A brown and white owl");
         ch->shift = str_dup( buf );
@@ -1394,7 +1394,7 @@ void rote_mutateform(CHAR_DATA *ch, int success, char *arg)
     if ( !str_prefix( arg, "squirrel" ))
     {
         act( "You shift forms, and suddenly gain a hankering for nuts.", ch, NULL, NULL, TO_CHAR );
-        act( "$n shifts their form into that of a squirrel.", ch, NULL, NULL, TO_NOTVICT );
+        act( "$n shifts $s form into that of a squirrel.", ch, NULL, NULL, TO_NOTVICT );
         ch->short_descr = str_dup( "An auburn colored squirrel" );
         sprintf(buf, "An auburn colored squirrel");
         ch->shift = str_dup( buf );
@@ -1428,7 +1428,7 @@ void rote_mutateform(CHAR_DATA *ch, int success, char *arg)
     if ( !str_prefix( arg, "panther" ) )
     {
         act( "Your body grows sleeker, as you become a master hunter.", ch, NULL, NULL, TO_CHAR );
-        act( "$n shifts their form into that of a panther.", ch, NULL, NULL, TO_NOTVICT );
+        act( "$n shifts $s form into that of a panther.", ch, NULL, NULL, TO_NOTVICT );
         ch->short_descr = str_dup( "A sleek gray panther" );
         sprintf(buf, "A sleek gray panther");
         ch->shift = str_dup( buf );
@@ -1472,8 +1472,8 @@ void rote_mutateform(CHAR_DATA *ch, int success, char *arg)
 
     if ( !str_prefix( arg, "bear" ) )
     {
-        act( "With a might stretch, your body grows massive.", ch, NULL, NULL, TO_CHAR );
-        act( "$n shifts their form into that of a bear.", ch, NULL, NULL, TO_NOTVICT );
+        act( "With a mighty stretch, your body grows massive.", ch, NULL, NULL, TO_CHAR );
+        act( "$n shifts $s form into that of a bear.", ch, NULL, NULL, TO_NOTVICT );
         ch->short_descr = str_dup( "A strong looking bear" );
         sprintf(buf, "A strong looking bear");
         ch->shift = str_dup( buf );

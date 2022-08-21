@@ -2711,8 +2711,26 @@ void spell_gift_pawsofthenewborncub( int sn, int level, CHAR_DATA *ch, void *vo,
 
 //Warders of Men
 //Rank 1
-void spell_gift_artisanscommand( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_artisanscommand( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  AFFECT_DATA af;
+
+  if (is_affected(ch, gsn_gift_artisanscommand))
+  {
+    send_to_char("You are already speaking to the spirits of rudimentary technology.\n\r", ch);
     return;
+  }
+
+  af.where        = TO_AFFECTS;
+  af.type         = gsn_gift_artisanscommand;
+  af.level        = 1;
+  af.duration     = 24;
+  af.modifier     = 0;
+  af.location     = 0;
+  af.bitvector    = 0;
+  affect_to_char(ch, &af);
+
+  return;
 }
 
 void spell_gift_giftofsalt( int sn, int level, CHAR_DATA *ch, void *vo, int target){

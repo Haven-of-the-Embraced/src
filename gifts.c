@@ -2714,6 +2714,7 @@ void spell_gift_pawsofthenewborncub( int sn, int level, CHAR_DATA *ch, void *vo,
 void spell_gift_artisanscommand( int sn, int level, CHAR_DATA *ch, void *vo, int target)
 {
   AFFECT_DATA af;
+  int success = 0;
 
   if (is_affected(ch, gsn_gift_artisanscommand))
   {
@@ -2721,10 +2722,19 @@ void spell_gift_artisanscommand( int sn, int level, CHAR_DATA *ch, void *vo, int
     return;
   }
 
+  if (ch->willpower < 1)
+  {
+    send_to_char("You do not have the Willpower to commune with spirits right now.\n\r", ch);
+    return;
+  }
+
+  ch->willpower--;
+  success = godice(get_attribute(ch,CSATTRIB_MANIPULATION) + vch->csabilities[CSABIL_CRAFTS], 7);
+
   af.where        = TO_AFFECTS;
   af.type         = gsn_gift_artisanscommand;
-  af.level        = 1;
-  af.duration     = 24;
+  af.level        = success;
+  af.duration     = (success * 2) + 20;
   af.modifier     = 0;
   af.location     = 0;
   af.bitvector    = 0;

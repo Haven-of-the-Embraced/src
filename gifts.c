@@ -2718,7 +2718,10 @@ void spell_gift_artisanscommand( int sn, int level, CHAR_DATA *ch, void *vo, int
 
   if (is_affected(ch, gsn_gift_artisanscommand))
   {
-    send_to_char("You are already speaking to the spirits of rudimentary technology.\n\r", ch);
+    if (get_affect_level(ch, gsn_gift_artisanscommand) < 0)
+      send_to_char("The spirits of technology have not forgiven you yet.\n\r", ch);
+    else
+      send_to_char("You are already speaking to the spirits of rudimentary technology.\n\r", ch);
     return;
   }
 
@@ -2730,6 +2733,28 @@ void spell_gift_artisanscommand( int sn, int level, CHAR_DATA *ch, void *vo, int
 
   ch->willpower--;
   success = godice(get_attribute(ch,CSATTRIB_MANIPULATION) + vch->csabilities[CSABIL_CRAFTS], 7);
+
+  if (success < 0)
+  {
+    act("You try to commune with the spirits of technology, but they seem to shun you.",ch,NULL,NULL,TO_CHAR);
+    act("$n concentrates for a moment, but seems a little disturbed.",ch,NULL,NULL,TO_ROOM);
+
+    af.where        = TO_AFFECTS;
+    af.type         = gsn_gift_artisanscommand;
+    af.level        = -1;
+    af.duration     = -(success * 2);
+    af.modifier     = 0;
+    af.location     = 0;
+    af.bitvector    = 0;
+    affect_to_char(ch, &af);
+    return;
+  }
+
+  if (success == 0)
+  {
+    act("You concentrate and try to commune with the spirits of technology, but they seem to be absent.",ch,NULL,NULL,TO_CHAR);
+    return;
+  }
 
   af.where        = TO_AFFECTS;
   af.type         = gsn_gift_artisanscommand;

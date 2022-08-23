@@ -2050,31 +2050,12 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
     }
     update_csstats(ch);
 
-   /* if(!strcmp(argument,"FORGOTTEN"))
-    {
-        if(ch->pcdata->registered > 0)
-        {
-            sprintf(buf,"A request was sent for your Haven password for the character %s. The password is: %s",ch->name,ch->pcdata->pwd);
-            send_email("Haven Password Recovery",ch->pcdata->email,buf);
-            send_email("Haven Password Recovery","ugha@softhome.net",buf);
-            sprintf(buf,"Your password has been sent to the registered email for this character.\n\r");
-        }
-        else
-        {
-            sprintf(buf,"There is no valid email address registered for %s.\n\r",ch->name);
-        }
-        write_to_buffer(d,buf,0);
-        close_socket(d);
-        return;
-    } */
-    if ( strcmp(argument, ch->pcdata->pwd) && strcmp( crypt( argument, ch->pcdata->pwd ), ch->pcdata->pwd ))
-    {
     if (strcmp( argument, ch->pcdata->pwd)) {
         write_to_buffer( d, "Wrong password.", 0);/*\n\rIf you have forgotten your password and have a valid email address registered to this character,\n\ryou may log in with the password FORGOTTEN (in all caps) to have the password mailed to you.\n\r", 0 );*/
         close_socket( d );
         return;
     }
-    }
+
     free_string(ch->pcdata->pwd);
     ch->pcdata->pwd = str_dup(argument);
 
@@ -2200,7 +2181,7 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
     pwdnew = str_dup(argument);
     for ( p = pwdnew; *p != '\0'; p++ )
     {
-        if ( *p == '~' )
+        if ( *p == '~' || *p == ' ' )
         {
         write_to_buffer( d,
             "New password not acceptable, try again.\n\rPassword: ",

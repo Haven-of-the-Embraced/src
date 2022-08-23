@@ -987,7 +987,11 @@ void do_unlock( CHAR_DATA *ch, char *argument )
         { send_to_char( "It's not closed.\n\r",        ch ); return; }
     if ( pexit->key < 0 )
         { send_to_char( "It can't be unlocked.\n\r",   ch ); return; }
-    if ( !has_key( ch, pexit->key) )
+    if ( !has_key( ch, pexit->key) &&
+        (!is_affected(ch, gsn_gift_artisanscommand) ||
+        get_affect_level(ch, gsn_gift_artisanscommand) < 0) &&
+        !IS_SET(pexit->exit_info, EX_PICKPROOF)
+        )
         { send_to_char( "You lack the key.\n\r",       ch ); return; }
     if ( !IS_SET(pexit->exit_info, EX_LOCKED) )
         { send_to_char( "It's already unlocked.\n\r",  ch ); return; }
@@ -1055,7 +1059,11 @@ void do_unlock( CHAR_DATA *ch, char *argument )
             { send_to_char( "It's not closed.\n\r",        ch ); return; }
         if ( obj->value[2] < 0 )
             { send_to_char( "It can't be unlocked.\n\r",   ch ); return; }
-        if ( !has_key( ch, obj->value[2] ) )
+        if ( !has_key( ch, obj->value[2] ) &&
+            (!is_affected(ch, gsn_gift_artisanscommand) ||
+            get_affect_level(ch, gsn_gift_artisanscommand) < 0) &&
+            !IS_SET(obj->value[1], CONT_PICKPROOF)
+            )
             { send_to_char( "You lack the key.\n\r",       ch ); return; }
         if ( !IS_SET(obj->value[1], CONT_LOCKED) )
             { send_to_char( "It's already unlocked.\n\r",  ch ); return; }

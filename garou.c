@@ -37,7 +37,7 @@ void do_shapeshift(CHAR_DATA *ch, char *argument)
 
     if ( arg[0] == '\0')
     {
-        send_to_char("Syntax: shift <form>\n\rWhere <form> is either Homid, Glabro, Crinos, Hispo or Lupus.\n\r",ch);
+        send_to_char("Syntax: shapeshift <form>\n\rWhere <form> is either Homid, Glabro, Crinos, Hispo or Lupus.\n\r",ch);
         return;
     }
     if(ch->pcdata->shift_count)

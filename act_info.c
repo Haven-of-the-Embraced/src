@@ -767,7 +767,7 @@ void do_autolist(CHAR_DATA *ch, char *argument)
     sprintf(buf, "   {WCharacter Options:  {D%s{x\n\r", ch->name);
     send_to_char(buf, ch);
     send_to_char("   {WCommand    Status   Current Affect{x\n\r",ch);
-    send_to_char("W----<    COMBAT    >---------------------------------------------------------W\n\r",ch);
+    send_to_char("W{Y----<    COMBAT    >---------------------------------------------------------{xW\n\r",ch);
 
     send_to_char("autoassist     ",ch);
     if (IS_SET(ch->act,PLR_AUTOASSIST))
@@ -811,7 +811,13 @@ void do_autolist(CHAR_DATA *ch, char *argument)
     else
       send_to_char("{RX OFF{x {rNo group tank info shown.{x\n\r",ch);
 
-    send_to_char("W----<  NON-COMBAT  >---------------------------------------------------------W\n\r",ch);
+    send_to_char("W{y----<  NON-COMBAT  >---------------------------------------------------------{xW\n\r",ch);
+
+    send_to_char("brief          ",ch);
+    if (IS_SET(ch->comm, COMM_BRIEF))
+    send_to_char("{G* ON{x  {gRoom descriptions hidden.{x\n\r",ch);
+else
+    send_to_char("{RX OFF{x {rFull room descriptions shown.{x\n\r",ch);
 
     send_to_char("autoexit       ",ch);
     if (IS_SET(ch->act,PLR_AUTOEXIT))

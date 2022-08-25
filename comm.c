@@ -2441,7 +2441,7 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
 	str_prefix(buf, "tremere") &&
 	str_prefix(buf, "malkavian") &&
 	str_prefix(buf, "nosferatu") &&
-        str_prefix(buf, "gangrel") &&
+  str_prefix(buf, "gangrel") &&
 	str_prefix(buf, "ventrue") &&
 	str_prefix(buf, "brujah" ) &&
 	str_prefix(buf, "toreador" ) &&
@@ -2449,7 +2449,7 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
     {
         write_to_buffer(d,"Invalid clan choice.\n\r",0);
         write_to_buffer(d,"Please choose a Clan (Assamite, Gangrel, Malkavian, Nosferatu, Tremere,\n\r", 0);
-	write_to_buffer(d,"Ravnos, Brujah, Toreador, Ventrue or help <clan>) ",0);
+        write_to_buffer(d,"Ravnos, Brujah, Toreador, Ventrue or help <clan>) ",0);
         d->connected = CON_PICK_CLAN;
         break;
     }
@@ -2464,6 +2464,8 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
     update_csstats(ch);
     write_to_buffer(d,"\n\r",2);
     SET_BIT( ch->act, PLR_AUTOEXIT );
+    SET_BIT( ch->act, PLR_AUTOGOLD );
+    SET_BIT( ch->act, PLR_AUTOLOOT );
     do_function(ch, &do_help, "motd");
     if(d->character->max_pblood < 100) d->character->max_pblood = 100;
     d->connected = CON_READ_MOTD;

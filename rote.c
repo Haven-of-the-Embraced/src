@@ -1286,6 +1286,7 @@ void rote_mutateform(CHAR_DATA *ch, int success, char *arg)
       if (!is_affected(ch, gsn_mutateform))
       {
         send_to_char("You have not altered your body into another form.\n\r", ch);
+        ch->paradox--;
         return;
       }
       if (is_affected(ch, gsn_mutateform) && get_affect_level(ch, gsn_mutateform) == 0)

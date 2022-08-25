@@ -5292,11 +5292,8 @@ void do_shift(CHAR_DATA *ch, char *argument)
         if ( IS_AFFECTED(ch, AFF_SHIFT))
         {
             send_to_char( "You shift back into your humanoid form.\n\r", ch );
-
-            affect_strip(ch,gsn_reveal);
             affect_strip(ch,gsn_shift);
             if (ch->hit > ch->max_hit) ch->hit = ch->max_hit;
-            ch->affected_by = race_table[ch->race].aff;
             act( "$n's form slowly shifts into a more humanoid form.", ch, NULL, NULL, TO_NOTVICT );
             ch->dam_type = 17;
             if ( !IS_AFFECTED(ch, AFF_FANGS)) do_function(ch, &do_fangs, "" );

@@ -884,11 +884,11 @@ bool load_char_obj( DESCRIPTOR_DATA *d, char *name )
     ch->name                = str_dup( name );
     ch->id              = get_pc_id();
     ch->race                = race_lookup("human");
-    ch->act             = PLR_NOSUMMON;
+    ch->act             = 0;
     ch->act2            = 0;
     ch->comm                = COMM_COMBINE
                     | COMM_PROMPT;
-    ch->prompt              = str_dup( "{c<%hhp %mm %vmv>{x " );
+    ch->prompt              = str_dup( "{c<%hhp %mm %vmv %wwillpower %Xtnl> [Exits: %e]{x " );
     ch->pcdata->confirm_delete      = FALSE;
     ch->pcdata->pwd         = str_dup( "" );
     ch->pcdata->bamfin          = str_dup( "" );

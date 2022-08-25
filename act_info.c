@@ -767,7 +767,7 @@ void do_autolist(CHAR_DATA *ch, char *argument)
     sprintf(buf, "   {WCharacter Options:  {D%s{x\n\r", ch->name);
     send_to_char(buf, ch);
     send_to_char("   {WCommand    Status   Current Affect{x\n\r",ch);
-    send_to_char("-------------------------------------------------------------------------\n\r",ch);
+    send_to_char("W----<    COMBAT    >---------------------------------------------------------W\n\r",ch);
 
     send_to_char("autoassist     ",ch);
     if (IS_SET(ch->act,PLR_AUTOASSIST))
@@ -775,41 +775,55 @@ void do_autolist(CHAR_DATA *ch, char *argument)
     else
         send_to_char("{RX OFF{x {rWill not automatically assist your party in a fight.{x\n\r",ch);
 
+    send_to_char("autogold       ",ch);
+    if (IS_SET(ch->act,PLR_AUTOGOLD))
+      send_to_char("{G* ON{x  {gWill automatically loot gold from corpses.{x\n\r",ch);
+    else
+      send_to_char("{RX OFF{x {rWill not automatically loot gold from corpses.{x\n\r",ch);
+
+    send_to_char("autoloot       ",ch);
+    if (IS_SET(ch->act,PLR_AUTOLOOT))
+        send_to_char("{G* ON{x  {gWill automatically loot items from corpses.{x\n\r",ch);
+    else
+      send_to_char("{RX OFF{x {rWill not automatically loot items from corpses.{x\n\r",ch);
+
+    send_to_char("autosac        ",ch);
+    if (IS_SET(ch->act,PLR_AUTOSAC))
+      send_to_char("{G* ON{x  {gWill automatically sacrifice a corpse upon killing mob.{x\n\r",ch);
+    else
+      send_to_char("{RX OFF{x {rWill not automatically sacrifice corpse upon killing of mob.{x\n\r",ch);
+
+    send_to_char("autosplit      ",ch);
+    if (IS_SET(ch->act,PLR_AUTOSPLIT))
+      send_to_char("{G* ON{x  {gWill automatically split looted gold evenly with party.{x\n\r",ch);
+    else
+      send_to_char("{RX OFF{x {rWill not automatically split looted gold with party.{x\n\r",ch);
+
+    send_to_char("combat         ",ch);
+    if (IS_SET(ch->comm,COMM_COMBAT_BRIEF))
+      send_to_char("{G* ON{x  {gPrevents extra combat descriptions.{x\n\r",ch);
+    else
+      send_to_char("{RX OFF{x {rCombat descriptions will show.{x\n\r",ch);
+
+    send_to_char("battleprompt   ",ch);
+    if (IS_SET(ch->act2,PLR2_BATTLEPROMPT))
+      send_to_char("{G* ON{x  {gShows info on who is tanking in group.{x\n\r",ch);
+    else
+      send_to_char("{RX OFF{x {rNo group tank info shown.{x\n\r",ch);
+
+    send_to_char("W----<  NON-COMBAT  >---------------------------------------------------------W\n\r",ch);
+
     send_to_char("autoexit       ",ch);
     if (IS_SET(ch->act,PLR_AUTOEXIT))
         send_to_char("{G* ON{x  {gObvious exits are displayed in each room.{x\n\r",ch);
     else
         send_to_char("{RX OFF{x {rNo exits displayed in each room.{x\n\r",ch);
 
-    send_to_char("autogold       ",ch);
-    if (IS_SET(ch->act,PLR_AUTOGOLD))
-        send_to_char("{G* ON{x  {gWill automatically loot gold from corpses.{x\n\r",ch);
-    else
-        send_to_char("{RX OFF{x {rWill not automatically loot gold from corpses.{x\n\r",ch);
-
-    send_to_char("autoloot       ",ch);
-    if (IS_SET(ch->act,PLR_AUTOLOOT))
-        send_to_char("{G* ON{x  {gWill automatically loot items from corpses.{x\n\r",ch);
-    else
-        send_to_char("{RX OFF{x {rWill not automatically loot items from corpses.{x\n\r",ch);
-
-    send_to_char("autosac        ",ch);
-    if (IS_SET(ch->act,PLR_AUTOSAC))
-        send_to_char("{G* ON{x  {gWill automatically sacrifice a corpse upon killing mob.{x\n\r",ch);
-    else
-        send_to_char("{RX OFF{x {rWill not automatically sacrifice corpse upon killing of mob.{x\n\r",ch);
-
     send_to_char("colour         ",ch);
     if (IS_SET(ch->act,PLR_COLOUR))
         send_to_char("{G* ON{x  {gMUD is displayed with ANSI color.{x\n\r",ch);
     else
         send_to_char("{RX OFF{x {rMUD will not show color.{x\n\r",ch);
-
-    send_to_char("autosplit      ",ch);
-    if (IS_SET(ch->act,PLR_AUTOSPLIT))
-        send_to_char("{G* ON{x  {gWill automatically split looted gold evenly with party.{x\n\r",ch);
-    else
-        send_to_char("{RX OFF{x {rWill not automatically split looted gold with party.{x\n\r",ch);
 
     send_to_char("compact        ",ch);
     if (IS_SET(ch->comm,COMM_COMPACT))
@@ -829,23 +843,11 @@ void do_autolist(CHAR_DATA *ch, char *argument)
     else
         send_to_char("{RX OFF{x {rItems separated in inventory.{x\n\r",ch);
 
-    send_to_char("combat         ",ch);
-    if (IS_SET(ch->comm,COMM_COMBAT_BRIEF))
-        send_to_char("{G* ON{x  {gPrevents extra combat descriptions.{x\n\r",ch);
-    else
-        send_to_char("{RX OFF{x {rCombat descriptions will show.{x\n\r",ch);
-
     send_to_char("noshort        ",ch);
     if (IS_SET(ch->act2,PLR2_NOSHORTDESC))
         send_to_char("{G* ON{x  {gShow Player name instead of short descriptions.{x\n\r",ch);
     else
         send_to_char("{RX OFF{x {rShow Player short description rather than name.{x\n\r",ch);
-
-    send_to_char("battleprompt   ",ch);
-    if (IS_SET(ch->act2,PLR2_BATTLEPROMPT))
-        send_to_char("{G* ON{x  {gShows info on who is tanking in group.{x\n\r",ch);
-    else
-        send_to_char("{RX OFF{x {rNo group tank info shown.{x\n\r",ch);
 
     send_to_char("noloot         ",ch);
     if (!IS_SET(ch->act,PLR_CANLOOT))
@@ -877,7 +879,7 @@ void do_autolist(CHAR_DATA *ch, char *argument)
     else
     send_to_char("{RX OFF{x {rYou are not showing available for RP.{x\n\r", ch);
 
-    send_to_char("-------------------------------------------------------------------------\n\r",ch);
+    send_to_char("M------------------------------------------------------------------------------M\n\r",ch);
 }
 
 void do_autoassist(CHAR_DATA *ch, char *argument)

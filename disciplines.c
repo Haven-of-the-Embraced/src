@@ -5460,6 +5460,15 @@ void do_shift(CHAR_DATA *ch, char *argument)
         af.modifier  = 5*ch->level;
         affect_to_char( ch, &af );
 
+        af.where     = TO_AFFECTS;
+        af.type      = gsn_claws;
+        af.level     = ch->level;
+        af.duration  = 24;
+        af.location  = APPLY_NONE;
+        af.modifier  = 0;
+        af.bitvector = 0;
+        affect_to_char( ch, &af );
+
         return;
     }
 
@@ -5492,6 +5501,15 @@ void do_shift(CHAR_DATA *ch, char *argument)
 
         af.location = APPLY_CS_MAN;
         af.modifier = -3;
+        affect_to_char( ch, &af );
+
+        af.where     = TO_AFFECTS;
+        af.type      = gsn_claws;
+        af.level     = ch->level;
+        af.duration  = 24;
+        af.location  = APPLY_NONE;
+        af.modifier  = 0;
+        af.bitvector = 0;
         affect_to_char( ch, &af );
 
         return;

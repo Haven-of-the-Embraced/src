@@ -1282,6 +1282,7 @@ void rote_mutateform(CHAR_DATA *ch, int success, char *arg)
 
       send_to_char( "You reset your Pattern back into humanoid form.\n\r", ch );
       affect_strip(ch,gsn_mutateform);
+      affect_strip(ch,gsn_claws);
       ch->affected_by = race_table[ch->race].aff;
       act( "$n's form slowly shifts back into a humanoid form.", ch, NULL, NULL, TO_NOTVICT );
       ch->dam_type = 17;
@@ -1443,6 +1444,15 @@ void rote_mutateform(CHAR_DATA *ch, int success, char *arg)
         af.modifier  = 5*ch->level;
         affect_to_char( ch, &af );
 
+        af.where     = TO_AFFECTS;
+        af.type      = gsn_claws;
+        af.level     = ch->level;
+        af.duration  = success * 10;
+        af.location  = APPLY_NONE;
+        af.modifier  = 0;
+        af.bitvector = 0;
+        affect_to_char( ch, &af );
+
         return;
     }
 
@@ -1469,6 +1479,15 @@ void rote_mutateform(CHAR_DATA *ch, int success, char *arg)
 
         af.location = APPLY_CS_MAN;
         af.modifier = -3;
+        affect_to_char( ch, &af );
+
+        af.where     = TO_AFFECTS;
+        af.type      = gsn_claws;
+        af.level     = ch->level;
+        af.duration  = success * 10;
+        af.location  = APPLY_NONE;
+        af.modifier  = 0;
+        af.bitvector = 0;
         affect_to_char( ch, &af );
 
         return;

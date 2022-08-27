@@ -2331,11 +2331,12 @@ void spell_gift_haltthecowardsflight( int sn, int level, CHAR_DATA *ch, void *vo
 {
    CHAR_DATA *victim;
    AFFECT_DATA af;
-
+   int successes;
+   int diff = 6;
 
     if ( ( victim = get_char_room( ch, NULL, argument ) ) == NULL )
     {
-        send_to_char( "Who?\n\r", ch );
+        send_to_char( "Whom are you trying to halt?\n\r", ch );
         return;
     }
 
@@ -2357,10 +2358,24 @@ void spell_gift_haltthecowardsflight( int sn, int level, CHAR_DATA *ch, void *vo
         return;
     }
 
+    if(ch->move < ch->level)
+    {
+      send_to_char("You are too tired to focus on your target.\n\r", ch);
+      return;
+    }
+
+    ch->move -= ch->level;
+
+    if(is_affected(victim, gsn_vamp_frenzy) || is_affected(victim, gsn_rage) || is_affected(victim, gsn_berserk)
+      || is_affected(victim, gsn_garou_frenzy) || is_affected(victim, gsn_thaumaturgy_frenzy))
+      diff++;
+
+    successes = godice(get_attribute(ch, CHARISMA) + get_ability(ch, CSABIL_INTIMIDATION), diff);
+
     af.where     = TO_AFFECTS;
     af.type      = gsn_gift_haltthecowardsflight;
     af.level     = ch->level;
-    af.duration  = 12;
+    af.duration  = successes * 2;
     af.location  = APPLY_CS_DEX;
     af.modifier  = -1;
     af.bitvector = AFF_SLOW;

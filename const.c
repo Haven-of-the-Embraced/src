@@ -2774,6 +2774,42 @@ Total (3) */
 
 //    --Get of Fenris--
 
+{   "hunters harmony", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_huntersharmony,  TAR_IGNORE, POS_STANDING,
+&gsn_gift_huntersharmony,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+
+{   "visage of fenris", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_visageoffenris,  TAR_IGNORE, POS_FIGHTING,
+&gsn_gift_visageoffenris,          SLOT( 0),        0,     12, "",             "The power of Fenris leaves your body, leaving you less intimidating.",        "" },
+
+{   "halt the cowards flight", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_haltthecowardsflight,  TAR_IGNORE, POS_STANDING,
+&gsn_gift_haltthecowardsflight,          SLOT( 0),        0,     12, "",             "The terror gripping you passes, allowing you to move more freely again.",        "" },
+
+{   "sense guilt", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_senseguilt,  TAR_IGNORE, POS_STANDING,
+&gsn_gift_senseguilt,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+
+{   "might of thor", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_mightofthor,  TAR_IGNORE, POS_STANDING,
+&gsn_gift_mightofthor,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+
+{   "berserkers song", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_berserkerssong,  TAR_IGNORE, POS_STANDING,
+&gsn_gift_berserkerssong,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+
+{   "iron cannot pierce", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_ironcannotpierce,  TAR_IGNORE, POS_STANDING,
+&gsn_gift_ironcannotpierce,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+
+{   "blaze of glory", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_blazeofglory,  TAR_IGNORE, POS_STANDING,
+&gsn_gift_blazeofglory,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+
+{   "horde of valhalla", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_hordeofvalhalla,  TAR_IGNORE, POS_STANDING,
+&gsn_gift_hordeofvalhalla,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+
 //    --Fianna--
 
 //    --Red Talons--
@@ -2796,42 +2832,6 @@ Total (3) */
     { "bloody feast",             { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_bloodyfeast,             TAR_IGNORE,             POS_STANDING,
     &gsn_gift_bloodyfeast,          SLOT( 0),        0,     12, "",             "The flesh you consumed loses it's power over you.",        "" },
-
-    {   "hunters harmony", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_huntersharmony,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_huntersharmony,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
-
-    {   "visage of fenris", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_visageoffenris,  TAR_IGNORE, POS_FIGHTING,
-    &gsn_gift_visageoffenris,          SLOT( 0),        0,     12, "",             "The power of Fenris leaves your body, leaving you less intimidating.",        "" },
-
-    {   "halt the cowards flight", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_haltthecowardsflight,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_haltthecowardsflight,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
-
-    {   "sense guilt", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_senseguilt,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_senseguilt,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
-
-    {   "might of thor", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_mightofthor,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_mightofthor,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
-
-    {   "berserkers song", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_berserkerssong,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_berserkerssong,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
-
-    {   "iron cannot pierce", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_ironcannotpierce,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_ironcannotpierce,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
-
-    {   "blaze of glory", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_blazeofglory,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_blazeofglory,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
-
-    {   "horde of valhalla", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_hordeofvalhalla,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_hordeofvalhalla,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     {   "distract the fool", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_distractthefool,  TAR_IGNORE, POS_STANDING,

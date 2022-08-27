@@ -2327,7 +2327,48 @@ void spell_gift_visageoffenris( int sn, int level, CHAR_DATA *ch, void *vo, int 
 //Halt the Cowards Flight
 // charisma + intimidation diff target wp
 // Stop mobs from fleeing, possibly slow them down in combat
-void spell_gift_haltthecowardsflight( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_haltthecowardsflight( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+   CHAR_DATA *victim;
+   AFFECT_DATA af;
+
+
+    if ( ( victim = get_char_room( ch, NULL, argument ) ) == NULL )
+    {
+        send_to_char( "Who?\n\r", ch );
+        return;
+    }
+
+    if(victim == ch)
+    {
+        send_to_char( "You cannot halt yourself!\n\r", ch );
+        return;
+    }
+
+    if (IS_NPC(victim) && victim->pIndexData->pShop != NULL)
+    {
+        send_to_char("You fear that it may hinder your future purchases.\n\r",ch);
+        return;
+    }
+
+    if(is_affected(victim,gsn_gift_haltthecowardsflight))
+    {
+        send_to_char("Your target has already been halted.\n\r",ch);
+        return;
+    }
+
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_gift_haltthecowardsflight;
+    af.level     = ch->level;
+    af.duration  = 12;
+    af.location  = APPLY_CS_DEX;
+    af.modifier  = -1;
+    af.bitvector = AFF_SLOW;
+    affect_to_char( victim, &af );
+
+    act( "You suddenly feel terrified by $n, and your body refuses to react as swiftly as normal!",  ch, NULL, victim, TO_VICT );
+    act( "$N appears to be terrified by $n!",  ch, NULL, victim, TO_NOTVICT );
+    act( "You concentrate for a moment, and $N becomes terrified of you!",  ch, NULL, victim, TO_CHAR );
     return;
 }
 

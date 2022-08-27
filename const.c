@@ -2951,7 +2951,7 @@ Total (3) */
 
     {   "artisans command", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_artisanscommand,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_artisanscommand,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+    &gsn_gift_artisanscommand,          SLOT( 0),        0,     12, "",             "You no longer commune with spirits of technology.",        "" },
 
     {   "gift of salt", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_giftofsalt,  TAR_IGNORE, POS_STANDING,

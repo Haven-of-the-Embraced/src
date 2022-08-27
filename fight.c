@@ -4808,6 +4808,12 @@ void do_flee( CHAR_DATA *ch, char *argument )
         return;
     }
 
+    if (is_affected(ch,gsn_gift_haltthecowardsflight))
+    {
+        send_to_char("You are too terrified to move swiftly enough to escape!\n\r",ch);
+        return;
+    }
+
     was_in = ch->in_room;
     for ( attempt = 0; attempt < 6; attempt++ )
     {

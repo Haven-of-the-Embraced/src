@@ -2329,12 +2329,12 @@ void spell_gift_visageoffenris( int sn, int level, CHAR_DATA *ch, void *vo, int 
 // Stop mobs from fleeing, possibly slow them down in combat
 void spell_gift_haltthecowardsflight( int sn, int level, CHAR_DATA *ch, void *vo, int target)
 {
-   CHAR_DATA *victim;
+   CHAR_DATA *victim = (CHAR_DATA *) vo;
    AFFECT_DATA af;
    int successes;
    int diff = 6;
 
-    if ( ( victim = get_char_room( ch, NULL, argument ) ) == NULL )
+    if ( victim == NULL )
     {
         send_to_char( "Whom are you trying to halt?\n\r", ch );
         return;

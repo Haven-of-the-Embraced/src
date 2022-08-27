@@ -2783,7 +2783,7 @@ Total (3) */
 &gsn_gift_visageoffenris,          SLOT( 0),        0,     12, "",             "The power of Fenris leaves your body, leaving you less intimidating.",        "" },
 
 {   "halt the cowards flight", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_haltthecowardsflight,  TAR_IGNORE, POS_STANDING,
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_haltthecowardsflight,  TAR_CHAR_DEFENSIVE, POS_STANDING,
 &gsn_gift_haltthecowardsflight,          SLOT( 0),        0,     12, "",             "The terror gripping you passes, allowing you to move more freely again.",        "" },
 
 {   "sense guilt", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },

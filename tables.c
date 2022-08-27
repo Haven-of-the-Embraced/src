@@ -1405,7 +1405,7 @@ const struct    gift_type   gift_table  [MAX_GIFTS_CODED]  =
     {   "sidestep death", 				0,     24, 0,     0,      0,          SILVER_FANG, 4,   0},
     {   "lunas avenger", 				0,     24, 0,     0,      0,          SILVER_FANG, 5,   0},
     {   "paws of the newborn cub", 		0,     24, 0,     0,      0,          SILVER_FANG, 5,   0},
-    {   "artisans command", 			0,     24, 0,     0,      0,          WARDERSOFMEN, 1,   0},
+    {   "artisans command", 			1,     24, 0,     0,      0,          WARDERSOFMEN, 1,   0},
     {   "gift of salt", 				0,     24, 0,     0,      0,          WARDERSOFMEN, 1,   0},
     {   "mask the predator", 			0,     24, 0,     0,      0,          WARDERSOFMEN, 2,   0},
     {   "tongues", 						0,     24, 0,     0,      0,          WARDERSOFMEN, 3,   0},

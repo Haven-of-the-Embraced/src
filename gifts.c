@@ -2725,14 +2725,14 @@ void spell_gift_artisanscommand( int sn, int level, CHAR_DATA *ch, void *vo, int
     return;
   }
 
-  if (ch->willpower < 1)
+  if (ch->cswillpower < 1)
   {
     send_to_char("You do not have the Willpower to commune with spirits right now.\n\r", ch);
     return;
   }
 
-  ch->willpower--;
-  success = godice(get_attribute(ch,CSATTRIB_MANIPULATION) + vch->csabilities[CSABIL_CRAFTS], 7);
+  ch->cswillpower--;
+  success = godice(get_attribute(ch,CSATTRIB_MANIPULATION) + ch->csabilities[CSABIL_CRAFTS], 7);
 
   if (success < 0)
   {

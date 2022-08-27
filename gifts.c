@@ -2372,6 +2372,26 @@ void spell_gift_haltthecowardsflight( int sn, int level, CHAR_DATA *ch, void *vo
 
     successes = godice(get_attribute(ch, CHARISMA) + get_ability(ch, CSABIL_INTIMIDATION), diff);
 
+    if(successes < 0)
+    {
+      act( "You feel a mental backlash, and your body becomes sluggish!",  ch, NULL, victim, TO_CHAR );
+      af.where     = TO_AFFECTS;
+      af.type      = gsn_gift_haltthecowardsflight;
+      af.level     = ch->level;
+      af.duration  = -successes;
+      af.location  = 0;
+      af.modifier  = 0;
+      af.bitvector = AFF_SLOW;
+      affect_to_char( ch, &af );
+      return;
+    }
+
+    if(successes == 0)
+    {
+      act( "You concentrate for a moment, but $N doesn't seem to be affected.",  ch, NULL, victim, TO_CHAR );
+      return;
+    }
+
     af.where     = TO_AFFECTS;
     af.type      = gsn_gift_haltthecowardsflight;
     af.level     = ch->level;

@@ -2756,6 +2756,8 @@ void spell_gift_artisanscommand( int sn, int level, CHAR_DATA *ch, void *vo, int
     return;
   }
 
+  act("You calm your mind and reach out to the spirits of technology, who respond to your commands.",ch,NULL,NULL,TO_CHAR);
+
   af.where        = TO_AFFECTS;
   af.type         = gsn_gift_artisanscommand;
   af.level        = success;

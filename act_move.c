@@ -989,14 +989,20 @@ void do_unlock( CHAR_DATA *ch, char *argument )
         { send_to_char( "It can't be unlocked.\n\r",   ch ); return; }
     if ( !has_key( ch, pexit->key) &&
         (!is_affected(ch, gsn_gift_artisanscommand) ||
-        get_affect_level(ch, gsn_gift_artisanscommand) < 0) &&
-        !IS_SET(pexit->exit_info, EX_PICKPROOF)
+        get_affect_level(ch, gsn_gift_artisanscommand) < 0)
         )
         { send_to_char( "You lack the key.\n\r",       ch ); return; }
     if ( !IS_SET(pexit->exit_info, EX_LOCKED) )
         { send_to_char( "It's already unlocked.\n\r",  ch ); return; }
+    if (IS_SET(pexit->exit_info, EX_PICKPROOF))
+    {
+      send_to_char("The spirits cannot seem to unlock the exit.\n\r", ch);
+      return;
+    }
 
     REMOVE_BIT(pexit->exit_info, EX_LOCKED);
+    if (is_affected(ch, gsn_gift_artisanscommand))
+      send_to_char("You ask the spirits of the lock to open, and they comply willingly.\n\r", ch);
     send_to_char( "*Click*\n\r", ch );
     act( "$n unlocks the $d.", ch, NULL, pexit->keyword, TO_ROOM );
 
@@ -1061,15 +1067,22 @@ void do_unlock( CHAR_DATA *ch, char *argument )
             { send_to_char( "It can't be unlocked.\n\r",   ch ); return; }
         if ( !has_key( ch, obj->value[2] ) &&
             (!is_affected(ch, gsn_gift_artisanscommand) ||
-            get_affect_level(ch, gsn_gift_artisanscommand) < 0) &&
-            !IS_SET(obj->value[1], CONT_PICKPROOF)
+            get_affect_level(ch, gsn_gift_artisanscommand) < 0)
             )
             { send_to_char( "You lack the key.\n\r",       ch ); return; }
         if ( !IS_SET(obj->value[1], CONT_LOCKED) )
             { send_to_char( "It's already unlocked.\n\r",  ch ); return; }
+        if (IS_SET(obj->value[1], CONT_PICKPROOF))
+        {
+          send_to_char("The spirits cannot seem to unlock this container.\n\r", ch);
+          return;
+        }
 
         REMOVE_BIT(obj->value[1], CONT_LOCKED);
-        act("You unlock $p.",ch,obj,NULL,TO_CHAR);
+        if (is_affected(ch, gsn_gift_artisanscommand))
+          send_to_char("You ask the spirits of technology to unlock the container, and they comply.\n\r", ch);
+        else
+          act("You unlock $p.",ch,obj,NULL,TO_CHAR);
         act( "$n unlocks $p.", ch, obj, NULL, TO_ROOM );
         return;
         }

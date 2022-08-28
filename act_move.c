@@ -994,7 +994,8 @@ void do_unlock( CHAR_DATA *ch, char *argument )
         { send_to_char( "You lack the key.\n\r",       ch ); return; }
     if ( !IS_SET(pexit->exit_info, EX_LOCKED) )
         { send_to_char( "It's already unlocked.\n\r",  ch ); return; }
-    if (IS_SET(pexit->exit_info, EX_PICKPROOF))
+    if (IS_SET(pexit->exit_info, EX_PICKPROOF) && !has_key(ch, pexit->key) &&
+        is_affected(ch, gsn_gift_artisanscommand))
     {
       send_to_char("The spirits cannot seem to unlock the exit.\n\r", ch);
       return;
@@ -1072,7 +1073,8 @@ void do_unlock( CHAR_DATA *ch, char *argument )
             { send_to_char( "You lack the key.\n\r",       ch ); return; }
         if ( !IS_SET(obj->value[1], CONT_LOCKED) )
             { send_to_char( "It's already unlocked.\n\r",  ch ); return; }
-        if (IS_SET(obj->value[1], CONT_PICKPROOF))
+        if (IS_SET(obj->value[1], CONT_PICKPROOF) && !has_key(ch, obj->value[2]) &&
+            is_affected(ch, gsn_gift_artisanscommand))
         {
           send_to_char("The spirits cannot seem to unlock this container.\n\r", ch);
           return;

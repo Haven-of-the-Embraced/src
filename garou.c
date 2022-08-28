@@ -431,9 +431,9 @@ void do_gogarou(CHAR_DATA *ch, char *argument)
         ch->pcdata->auspice == GALLIARD ? "Galliard" : "Ahroun", tribe_table[ch->pcdata->tribe].name,
         ch->pcdata->garou_fur, ch->pcdata->renown[HONOR], ch->pcdata->renown[GLORY], ch->pcdata->renown[WISDOM]);
         send_to_char(buf,ch);
-        send_to_char("Remember to go back through the 'create' process to reassign your CS stats!\n\r", ch);
-        send_to_char("Until you have done so, you will have no skills.\n\r", ch);
-        send_to_char("Also check out the new options in 'freebie'.\n\r",ch);
+        send_to_char("If you have not gone through the 'create' process since remorting Garou, you will need\n\r", ch);
+        send_to_char("to do so again. Until you have done so, you will have no skills.\n\r", ch);
+        send_to_char("Also check out the new options in 'freebie' and 'background'.\n\r",ch);
     }
 
     return;

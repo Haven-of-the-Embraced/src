@@ -207,9 +207,9 @@ void do_remort(CHAR_DATA *ch, char *argument)
         ch->freebie = 15 + (ch->remorts*3);
         cskill_update(ch, FALSE);
         send_to_char( "{WYou are now reborn one of Gaia's Chosen!{x\n\r\n\r", ch );
-        send_to_char("Remember to go back through the 'create' process to reassign your CS stats!\n\r", ch);
-        send_to_char("Until you have done so, you will have no skills. You must also type 'gogarou'\n\r", ch);
-        send_to_char( "to finish setting your Garou stats, such as auspice and fur color.\n\r", ch);
+        send_to_char("You will need to type '{cgogarou{x' to finish setting Garou stats such as Auspice and fur color.\n\r", ch);
+        send_to_char("You also have new background and traits to choose from, so your character sheet has been\n\r", ch);
+        send_to_char( "cleared. You will have {RNO SKILLS{x until you also complete the '{ccreate{x' process.\n\r", ch);
         ch->freebie += 3;
         ch->remorts++;
         ch->currentkills = 0;

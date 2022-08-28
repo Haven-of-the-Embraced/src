@@ -875,85 +875,6 @@ void do_freebie(CHAR_DATA *ch, char *argument)
         }
     }
 
-
-/*    for(i = 0; i < MAX_CSBACK; i++)
-    {
-        if(!str_prefix(arg, csback_table[i].name))
-        {
-            if(ch->pcdata->csbackgrounds[i] == 5)
-            {
-                sprintf(buf,"Your %s is already at max.\n\r",capitalize(csback_table[i].name));
-                send_to_char(buf,ch);
-                return;
-            }
-        switch (csback_table[i].race)
-        {
-            case CSBACK_VAMPIRE:
-                if (!IS_VAMP(ch))
-                {
-                    send_to_char("That is a Kindred background and you are not a vampire!\n\r", ch);
-                    return;
-                }
-                break;
-            case CSBACK_WEREWOLF:
-                if (ch->race != race_lookup("garou")) {
-                    send_to_char("That is a Garou background and you are not a werewolf!\n\r", ch);
-                    return;
-                }
-                break;
-            case CSBACK_MAGE:
-                if (ch->arete < 1 && ch->avatar < 1) {
-                    send_to_char("That is a Mage background and you are not a Mage!\n\r", ch);
-                    return;
-                }
-                break;
-            }
-            if (!str_prefix(arg, "generation"))
-            {
-                if (!IS_VAMP(ch)) {
-                    send_to_char("You cannot purchase this background.\n\r", ch);
-                    return;
-                }
-                step = 19;
-                sh_int minimictime;
-                sh_int minimage;
-                if (ch->pcdata->csbackgrounds[CSBACK_GENERATION] == 5)
-                {
-                    send_to_char("Your blood is already as potent as it can be.\n\r", ch);;
-                    return;
-                }
-                count = i;
-                switch (ch->pcdata->csbackgrounds[CSBACK_GENERATION]) {
-                case 0: minimictime = 30; minimage = 100; cost = 15; break;
-                case 1: minimictime = 60; minimage = 150; cost = 30; break;
-                case 2: minimictime = 90; minimage = 200; cost = 45; break;
-                case 3: minimictime = 120; minimage = 250; cost = 60; break;
-                case 4: minimictime = 150; minimage = 300; cost = 75; break; }
-
-                if (get_age(ch) < minimage) {
-                    send_to_char("You have not spent enough time on this character to purchase that level of Generation.\n\r", ch);
-                    return;
-                }
-                if ((ch->pcdata->IC_total/60) < minimictime) {
-                    send_to_char("You have not spent enough time in the IC affairs on Haven to purchase that level of Generation.\n\r", ch);
-            }
-            } else {
-
-            if (ch->pcdata->csbackgrounds[i] == 0)
-            {
-            cost = 7;
-            count = i;
-            step = 19;
-            break;
-        } else {
-            cost = ch->pcdata->csbackgrounds[i]*4;
-            count = i;
-            step = 19;
-            break;
-        }
-    }
-    }
-}*/
     if (!str_prefix(arg, "generation"))
             {
                 if (!IS_VAMP(ch)) {
@@ -2852,15 +2773,7 @@ void do_create( CHAR_DATA *ch, char *argument )
         {
             send_to_char("You've finished and finalized your traits!\n\r",ch);
             ch->pcdata->progress++;
-/*          if(ch->pcdata->progress == 7)
-            {
-                if(ch->freebie < (ch->remorts*3)/4) ch->freebie = (ch->remorts*3)/4;
 
-                ch->freebie += 5;
-                ch->pcdata->progress++;
-                send_to_char("You can now use the freebie command to spend freebies to further increase your traits!\n\r",ch);
-            }
-*/
             if(ch->pcdata->progress == 7)
             {
                 ch->pcdata->cshumanity = ch->pcdata->csvirtues[CSVIRT_CONSCIENCE]+ch->pcdata->csvirtues[CSVIRT_SELF_CONTROL];
@@ -2873,8 +2786,7 @@ void do_create( CHAR_DATA *ch, char *argument )
                 send_to_char("Advantage traits are all set.\n\r",ch);
                 send_to_char("You can now use the 'backgrounds' command to set your background traits. You have been\n\r",ch);
                 send_to_char("given 5 'background freebie' points to be spent on backgrounds using that command.\n\r", ch);
-                /*if(ch->freebie < (ch->remorts*3)/4) ch->freebie = (ch->remorts*3)/4;
-                ch->freebie += 5;*/
+
                 int i;
               for (i = 0;i < MAX_CSBACK;i++)
     {

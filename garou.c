@@ -424,73 +424,9 @@ void do_gogarou(CHAR_DATA *ch, char *argument)
     if(ch->pcdata->rank == 0)
     {
         ch->pcdata->rank = 1;
-        ch->pcdata->shiftform = 1;
-        send_to_char("Removing your Old Garou stats...\n\r",ch);
 
-
-        send_to_char("Removing equipment to help understand your character better...Done\n\r",ch);
-        for ( obj = ch->carrying; obj != NULL; obj = obj_next )
-        {
-            obj_next = obj->next_content;
-            if(obj->wear_loc != WEAR_NONE)
-                unequip_char( ch, obj );
-            if(obj->pIndexData->vnum == OBJ_VNUM_FETISH)
-            {
-                extract_obj( obj );
-                send_to_char("Removing Fetish... Done.\n\r",ch);
-            }
-        }
-
-        while ( ch->affected )
-            affect_remove( ch, ch->affected );
-
-        ch->changed = 0;
-        ch->affected_by = race_table[ch->race].aff;
-        send_to_char("Resetting affects... Done.\n\r",ch);
-
-        ch->renown = 0;
-        send_to_char("Removing Renown... Done.\n\r",ch);
-
-        ch->gift1 = NULL;
-        ch->gift2 = NULL;
-        ch->gift3 = NULL;
-        ch->gift4 = NULL;
-        ch->gift5 = NULL;
-        send_to_char("Removing Gifts... Done.\n\r",ch);
-
-        ch->breed = 0;
-        ch->auspice = 0;
-        send_to_char("Removing Tribe, Breed and Auspice... Done.\n\r",ch);
-
-        ch->freebie = (ch->remorts*3)+15;
-        for(i = 0; i < 30; i++)
-            ch->csabilities[i] = 0;
-
-        for(i = 0; i < 9; i++)
-            ch->csattributes[i] = 1;
-        for(i = 0; i < 30; i++)
-            ch->pcdata->cssec_abil[i] = 0;
-        for (i = 0; i < MAX_CSBACK; i++)
-            ch->pcdata->csbackgrounds[i] = 0;
-        for (i = 0; i < MAX_GIFT; i++)
-            ch->pcdata->gift[i] = 0;
-        ch->pcdata->csvirtues[CSVIRT_CONSCIENCE] = 1;
-        ch->pcdata->csvirtues[CSVIRT_SELF_CONTROL] = 1;
-        ch->pcdata->csvirtues[CSVIRT_COURAGE] = 1;
-        ch->csmax_willpower = 0;
-        ch->cswillpower = 0;
-        ch->pcdata->cshumanity = 0;
-        ch->pcdata->progress = 0;
-        ch->pcdata->stat[PHYSICAL] = 0;
-        ch->pcdata->stat[SOCIAL] = 0;
-        ch->pcdata->stat[MENTAL] = 0;
-        ch->pcdata->stat[SKILLS] = 0;
-        ch->pcdata->stat[TALENTS] = 0;
-        ch->pcdata->stat[KNOWLEDGES] = 0;
-        send_to_char("Resetting Character Sheet traits... Done.\n\r",ch);
-        cskill_update(ch, FALSE);
-        sprintf(buf, "Your all set! You are now: %s, %s %s of the %s tribe! You have %s fur.\n\rYour Renown is %d Honor, %d Glory and %d Wisdom. You are rank 1.\n\r", ch->name, ch->pcdata->breed == HOMID ? "Homid"
-        : ch->pcdata->breed == METIS ? "Metis" : "Lupus", ch->pcdata->auspice == RAGABASH ? "Ragabash" :
+        sprintf(buf, "Your all set! You are now: %s, %s %s of the %s tribe! You have %s fur.\n\rYour Renown is %d Honor, %d Glory and %d Wisdom. You are rank 1.\n\r",
+        ch->name, ch->pcdata->breed == HOMID ? "Homid" : ch->pcdata->breed == METIS ? "Metis" : "Lupus", ch->pcdata->auspice == RAGABASH ? "Ragabash" :
         ch->pcdata->auspice == THEURGE ? "Theurge" : ch->pcdata->auspice == PHILODOX ? "Philodox" :
         ch->pcdata->auspice == GALLIARD ? "Galliard" : "Ahroun", tribe_table[ch->pcdata->tribe].name,
         ch->pcdata->garou_fur, ch->pcdata->renown[HONOR], ch->pcdata->renown[GLORY], ch->pcdata->renown[WISDOM]);

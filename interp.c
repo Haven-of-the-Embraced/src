@@ -60,7 +60,6 @@ void free_cmd args( (CMD_DATA *cmd) );
 DO_FUN *dofun_lookup args( (const char *name) );
 
 DECLARE_REPEAT_FUN(do_potency, &do_bloodofpotency);
-DECLARE_REPEAT_FUN(do_gogarou, &do_garouconvert);
 DECLARE_REPEAT_FUN(do_wield, &do_wear);
 DECLARE_REPEAT_FUN(do_pray, &do_cast);
 DECLARE_REPEAT_FUN(do_spitblood, &do_acidblood);

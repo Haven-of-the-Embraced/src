@@ -544,7 +544,7 @@ DECLARE_DO_FUN( do_immmask);
 DECLARE_DO_FUN( do_magecast );
 DECLARE_DO_FUN( do_learn    );
 DECLARE_DO_FUN( do_wipecs   );
-DECLARE_DO_FUN( do_garouconvert );
+DECLARE_DO_FUN( do_gogarou );
 DECLARE_DO_FUN( do_rage );
 DECLARE_DO_FUN( do_stepsideways );
 DECLARE_DO_FUN( do_packtactics  );

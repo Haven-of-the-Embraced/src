@@ -106,7 +106,7 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "emote",      do_emote },
     { "vampire",        do_vampire  },
     { "magecast",       do_magecast },
-    { "gogarou",        do_garouconvert }, // DOES NOT MATCH.
+    { "gogarou",        do_gogarou }, // DOES NOT MATCH.
     { "mage",       do_mage },
     { "embrace",        do_embrace },
     { "claws",      do_claws },

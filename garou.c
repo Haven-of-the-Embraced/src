@@ -210,7 +210,7 @@ bool shiftform(CHAR_DATA *ch, int desired, bool rage)
     return TRUE;
 }
 
-void do_garouconvert(CHAR_DATA *ch, char *argument)
+void do_gogarou(CHAR_DATA *ch, char *argument)
 {
     char buf [MAX_STRING_LENGTH];
     OBJ_DATA *obj;

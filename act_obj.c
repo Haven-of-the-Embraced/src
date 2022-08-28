@@ -301,7 +301,8 @@ void do_get( CHAR_DATA *ch, char *argument )
         return;
     }
 
-if ( (IS_AFFECTED(ch, AFF_SHIFT) && (!is_affected(ch, gsn_vicissitude_horrid) && !is_affected(ch, gsn_vicissitude_chiropteran)) ) || ch->changed == CHANGED_LUPUS || is_affected(ch,gsn_shadowform))
+if ( (IS_AFFECTED(ch, AFF_SHIFT) && (!is_affected(ch, gsn_vicissitude_horrid) && !is_affected(ch, gsn_vicissitude_chiropteran)) )
+    || ch->pcdata->shiftform == HISPO || ch->pcdata->shiftform == LUPUS || is_affected(ch,gsn_shadowform))
     {
     send_to_char( "You do not have the proper form to pickup things!\n\r", ch );
     return;

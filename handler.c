@@ -1698,7 +1698,24 @@ OBJ_DATA *get_eq_char( CHAR_DATA *ch, int iWear )
     return NULL;
 }
 
+/*
+  Find and return BlastPowder in character do_inventory
+*/
+OBJ_DATA *get_consumable( CHAR_DATA *ch, int consumable )
+{
+    OBJ_DATA *obj;
 
+    if (ch == NULL)
+      return NULL;
+
+    for ( obj = ch->carrying; obj != NULL; obj = obj->next_content )
+    {
+      if ( obj->type == consumable )
+        return obj;
+    }
+
+    return NULL;
+}
 
 /*
  * Equip a char with an obj.

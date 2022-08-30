@@ -1637,6 +1637,13 @@ void do_examine( CHAR_DATA *ch, char *argument )
         liq_table[obj->value[2]].liq_color);
   if (obj->item_type == ITEM_TOOL)
     sprintf( buf, "%s | --{x This can be used as a %s.\n\r", condition, tool_table[obj->value[1]].tool_name);
+  if (obj->item_type == ITEM_BLASTPOWDER)
+    sprintf( buf, "%s | --{x This %s powder has %s.\n\r", condition,
+      obj->value[1] < 3 ? "weak" : obj->value[1] < 5 ? "average" :
+      obj->value[1] < 8 ? "potent" : "devastating",
+      obj->value[0] < 2 ? "a single charge left" :
+      obj->value[0] < 5 ? "very few charges left" :
+      "quite a few charges left");
   send_to_char( buf, ch );
   send_to_char( condition, ch );
 	send_to_char("()-----------------------=======ooooOOOOOOOOoooo=======-----------------------(){x\n\r",ch);

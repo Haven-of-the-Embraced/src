@@ -6213,24 +6213,19 @@ void do_blast( CHAR_DATA *ch, char *argument )
         return;
     }
 
-    if (ch->mana < ch->level)
-    {
-        send_to_char("You don't have the energy to spend on that right now.\n\r", ch);
-        return;
-    }
-    ch->mana -= ch->level;
+    obj->value[0]--;
 
-        WAIT_STATE( ch, skill_table[gsn_blast].beats );
+    WAIT_STATE( ch, skill_table[gsn_blast].beats );
 
     dicesuccess = godice(get_attribute(ch, DEXTERITY) + ch->csabilities[CSABIL_LEGERDEMAIN], 6);
 
         if(dicesuccess < 0)
         {
-
-                act( "You cough and gag as your blast misfires, blinding yourself briefly.", ch, NULL, victim, TO_CHAR );
-                act( "$n coughs and gags as smoke fills $s eyes.", ch, NULL, victim, TO_VICT );
-                act( "$n coughs and gags as smoke fills $s eyes.", ch, NULL, victim, TO_NOTVICT );
-                WAIT_STATE(ch, PULSE_VIOLENCE);
+          obj->value[0]--;
+          act( "You cough and gag as your blast misfires, blinding yourself briefly.", ch, NULL, victim, TO_CHAR );
+          act( "$n coughs and gags as smoke fills $s eyes.", ch, NULL, victim, TO_VICT );
+          act( "$n coughs and gags as smoke fills $s eyes.", ch, NULL, victim, TO_NOTVICT );
+          WAIT_STATE(ch, PULSE_VIOLENCE);
 
         damage(ch,ch,ch->level/2,gsn_blast,DAM_FIRE,TRUE);
         fire_effect(ch,ch->level,ch->level,TARGET_CHAR);
@@ -6240,12 +6235,12 @@ void do_blast( CHAR_DATA *ch, char *argument )
 
         else if (dicesuccess == 0)
         {
-
-                act( "Your blast misses $N!", ch, NULL, victim, TO_CHAR );
-                act( "$n sends a blast of flame and smoke that misses you.", ch, NULL, victim, TO_VICT );
-                act( "$n misses with $s blast of flame that was aimed at $N.", ch, NULL, victim, TO_ROOM );
-          		check_improve(ch,gsn_blast,FALSE,4);
-        		return;
+          obj->value[0]--;
+          act( "Your blast misses $N!", ch, NULL, victim, TO_CHAR );
+          act( "$n sends a blast of flame and smoke that misses you.", ch, NULL, victim, TO_VICT );
+          act( "$n misses with $s blast of flame that was aimed at $N.", ch, NULL, victim, TO_ROOM );
+      		check_improve(ch,gsn_blast,FALSE,4);
+      		return;
         }
 
     act("Using a bit of misdirection and legardemain, you send a blast of {Ds{wmok{De{x\n\rand {rf{yl{ra{ym{re{x directly at $N!", ch, NULL, victim, TO_CHAR);

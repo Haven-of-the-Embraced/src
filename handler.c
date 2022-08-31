@@ -1710,7 +1710,7 @@ OBJ_DATA *get_consumable( CHAR_DATA *ch, int consumable )
 
     for ( obj = ch->carrying; obj != NULL; obj = obj->next_content )
     {
-      if ( obj->type == consumable )
+      if ( obj->item_type == consumable )
         return obj;
     }
 

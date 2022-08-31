@@ -6183,7 +6183,7 @@ void do_gouge( CHAR_DATA *ch, char *argument )
 void do_blast( CHAR_DATA *ch, char *argument )
 {
     CHAR_DATA *victim;
-/*    int chance; */
+    OBJ_DATA  *obj;
     int dicesuccess;
 
         if (IS_NPC(ch))
@@ -6206,6 +6206,12 @@ void do_blast( CHAR_DATA *ch, char *argument )
                 send_to_char("Blast yourself? Odd...\n\r", ch );
                 return;
         }
+
+    if (obj = get_consumable(ch, ITEM_BLASTPOWDER) != NULL)
+    {
+        send_to_char("You are not carrying any viable blasting powder.\n\r", ch);
+        return;
+    }
 
     if (ch->mana < ch->level)
     {

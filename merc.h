@@ -237,6 +237,9 @@ typedef void ROOM_FUN	args( ( ROOM_INDEX_DATA *room, char *argument ) );
 #define AVATAR          (MAX_LEVEL - 8)
 #define HERO            LEVEL_HERO
 
+// For that one exception you told yourself is OK.
+#define MAGIC_NUMBER    42
+
 // Channel replaybuffer maxs.
 #define MAX_REPLAYTELL          (30)
 #define MAX_REPLAYROOM          (20)

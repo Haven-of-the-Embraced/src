@@ -1836,7 +1836,7 @@ if (DEBUG_MESSAGES || IS_DEBUGGING(ch)){
         // Cake in the code Ohno!
         //1% chance of rolling primal per hit, if less than full rage.
         // primal diff 4 + hpperc min/max 6/10
-        if( ch->pcdata->rage[TEMP] < ch->pcdata->rage[PERM] && number_range(1, 200) == 42 &&
+        if( ch->pcdata->rage[TEMP] < ch->pcdata->rage[PERM] && number_range(1, 200) == MAGIC_NUMBER &&
             godice(ch->pcdata->primal_urge,4+hppercent))
              {
             cprintf(ch,"You let loose a vicious howl as your bloodlust takes over!\n\r");

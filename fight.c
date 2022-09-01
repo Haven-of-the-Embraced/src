@@ -6185,6 +6185,7 @@ void do_blast( CHAR_DATA *ch, char *argument )
     CHAR_DATA *victim;
     OBJ_DATA  *obj;
     int dicesuccess;
+    int damagesuccess;
 
         if (IS_NPC(ch))
                 return;
@@ -6218,6 +6219,7 @@ void do_blast( CHAR_DATA *ch, char *argument )
     WAIT_STATE( ch, skill_table[gsn_blast].beats );
 
     dicesuccess = godice(get_attribute(ch, DEXTERITY) + ch->csabilities[CSABIL_LEGERDEMAIN], 6);
+    damagesuccess = godice(obj->value[1], 6);
 
         if(dicesuccess < 0)
         {
@@ -6227,10 +6229,9 @@ void do_blast( CHAR_DATA *ch, char *argument )
           act( "$n coughs and gags as smoke fills $s eyes.", ch, NULL, victim, TO_NOTVICT );
           WAIT_STATE(ch, PULSE_VIOLENCE);
 
-        damage(ch,ch,ch->level/2,gsn_blast,DAM_FIRE,TRUE);
+        damage(ch,ch,damagesuccess * ch->level/2,gsn_blast,DAM_FIRE,TRUE);
         fire_effect(ch,ch->level,ch->level,TARGET_CHAR);
         return;
-
         }
 
         else if (dicesuccess == 0)
@@ -6247,7 +6248,7 @@ void do_blast( CHAR_DATA *ch, char *argument )
     act("$n sends a blast of smoke and flame directly at you!", ch, NULL, victim, TO_VICT);
     act("$n sends a quick burst of smoke and flame towards $N.", ch, NULL, victim, TO_NOTVICT);
 
-    damage(ch, victim, dicesuccess * ch->level * 3 , gsn_blast, DAM_FIRE, TRUE);
+    damage(ch, victim, damagesuccess * ch->level * 5 , gsn_blast, DAM_FIRE, TRUE);
     fire_effect(victim, ch->level/2, number_range(1, ch->level+5), TARGET_CHAR);
 	check_improve(ch,gsn_blast,TRUE,8);
 

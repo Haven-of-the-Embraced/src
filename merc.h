@@ -2243,9 +2243,9 @@ struct  char_data
     /* stats */
     sh_int      perm_stat[MAX_STATS];
     sh_int      mod_stat[MAX_STATS];
-    sh_int      csattributes[9];
-    sh_int      csattrib_mod[9];
-    sh_int      csabilities[30];
+    sh_int      csattributes[MAX_ATTRIBUTES];
+    sh_int      csattrib_mod[MAX_ATTRIBUTES];
+    sh_int      csabilities[MAX_ABILITIES];
     sh_int      csmax_willpower;
     sh_int      cswillpower;
     long        attr_flags;

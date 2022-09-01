@@ -825,7 +825,7 @@ void do_freebie(CHAR_DATA *ch, char *argument)
         send_to_char(buf,ch);
         return;
     }
-    for(i = 0; i < 30; i++)
+    for(i = 0; i < MAX_ABILITIES; i++)
     {
         if(!str_prefix(arg, ability_table[i].name))
         {
@@ -853,7 +853,7 @@ void do_freebie(CHAR_DATA *ch, char *argument)
             break;
         }
     }
-    for(i = 0; i < 9; i++)
+    for(i = 0; i < MAX_ATTRIBUTES; i++)
     {
         if(!str_prefix(arg, attribute_table[i].name))
         {

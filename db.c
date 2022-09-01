@@ -2999,7 +2999,7 @@ void clear_char( CHAR_DATA *ch )
     ch->perm_stat[i] = 13;
     ch->mod_stat[i] = 0;
     }
-    for (i = 0; i <= MAX_CSATTRIBUTES; i ++)
+    for (i = 0; i < MAX_ATTRIBUTES; i ++)
         ch->csattrib_mod[i] = 0;
     return;
 }

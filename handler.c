@@ -321,7 +321,7 @@ bool update_csstats(CHAR_DATA *ch)
 {
     int i;
 
-    for (i = 0; i <= MAX_CSATTRIBUTES; i ++)
+    for (i = 0; i < MAX_ATTRIBUTES; i ++)
         if(ch->csattributes[i] == 0 || ch->csattributes[i] > 10)
                 ch->csattributes[i] = 1;
 
@@ -605,7 +605,7 @@ void reset_char(CHAR_DATA *ch)
     for (stat = 0; stat < MAX_STATS; stat++)
     ch->mod_stat[stat] = 0;
 
-    for (i = 0; i <= MAX_CSATTRIBUTES; i ++)
+    for (i = 0; i < MAX_ATTRIBUTES; i ++)
         ch->csattrib_mod[i] = 0;
 
     if (ch->pcdata->true_sex < 0 || ch->pcdata->true_sex > 2)

@@ -2329,12 +2329,12 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
         d->connected = CON_PICK_CHILDHOOD;
         break;
     }
-    for(i = 0; i <= MAX_CSATTRIBUTES; i++)
+    for(i = 0; i < MAX_ATTRIBUTES; i++)
         ch->csattributes[i] = cr_attribute_table[num].attribute[i];
 
     for(;;)
     {
-        num1 = number_range(0,MAX_CSATTRIBUTES);
+        num1 = number_range(0,MAX_ATTRIBUTES - 1);
         if(ch->csattributes[num1] < 4)
         {
             ch->csattributes[num1]++;
@@ -2342,7 +2342,7 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
         }
     }
 
-    for(i = 0; i <= MAX_CSABIL; i++)
+    for(i = 0; i < MAX_ABILITIES; i++)
         ch->csabilities[i] = cr_abil_table[num].abil[i];
 
     for(i = 0; i <= 2;i++)
@@ -2350,7 +2350,7 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
     num1 = 2;
     while (num1 > 0)
     {
-        if(ch->csabilities[(i = number_range(0,MAX_CSABIL))] < 4)
+        if(ch->csabilities[(i = number_range(0,MAX_ABILITIES - 1))] < 4)
         {
             ch->csabilities[i]++;
             num1--;

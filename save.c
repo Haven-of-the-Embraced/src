@@ -1291,7 +1291,7 @@ void fread_char( CHAR_DATA *ch, FILE *fp )
       if ( !str_cmp( word, "CSattributes"  ))
         {
         int i;
-        for (i = 0; i <= MAX_CSATTRIBUTES; i ++)
+        for (i = 0; i < MAX_ATTRIBUTES; i ++)
            ch->csattributes[i] = fread_number(fp);
         fMatch = TRUE;
         break;
@@ -1300,7 +1300,7 @@ void fread_char( CHAR_DATA *ch, FILE *fp )
         if ( !str_cmp( word, "CSattrib_mod"  ))
         {
         int i;
-        for (i = 0; i <= MAX_CSATTRIBUTES; i ++)
+        for (i = 0; i < MAX_ATTRIBUTES; i ++)
            ch->csattrib_mod[i] = fread_number(fp);
         fMatch = TRUE;
         break;
@@ -1309,7 +1309,7 @@ void fread_char( CHAR_DATA *ch, FILE *fp )
         if ( !str_cmp( word, "CSabilities"  ))
         {
         int i;
-        for (i = 0; i <= MAX_CSABIL; i ++)
+        for (i = 0; i < MAX_ABILITIES; i ++)
            ch->csabilities[i] = fread_number(fp);
         fMatch = TRUE;
         break;
@@ -1318,7 +1318,7 @@ void fread_char( CHAR_DATA *ch, FILE *fp )
         if ( !str_cmp( word, "CSsec_abil"  ))
         {
         int i;
-        for (i = 0; i <= MAX_CSABIL; i ++)
+        for (i = 0; i < MAX_ABILITIES; i ++)
            ch->pcdata->cssec_abil[i] = fread_number(fp);
         fMatch = TRUE;
         break;

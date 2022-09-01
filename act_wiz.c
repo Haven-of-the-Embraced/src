@@ -3427,6 +3427,21 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                         }
                     }
                 }
+                else if(!str_prefix(arg2,"apply"))
+                {
+                    for ( paf = pObjIndex->affected; paf != NULL; paf = paf->next )
+                    {
+                        if(paf->location > APPLY_NONE && !str_prefix(flag_string( apply_flags, paf->location ), arg3))
+                        {
+                            found = TRUE;
+                            count++;
+                            sprintf( buf, "%s(%3d) [%5d] (%s: %3d) %s\n\r",
+                            get_obj_world(ch,pObjIndex->name, FALSE) ? "*" : " ",
+                            count,pObjIndex->vnum, flag_string( apply_flags, paf->location ), paf->modifier, pObjIndex->short_descr );
+                            add_buf(buffer,buf);
+                        }
+                    }
+                }
                 else if(!str_prefix(arg2,"damage"))
                 {
                     if(pObjIndex->item_type == ITEM_WEAPON && pObjIndex->value[3] < MAX_DAMAGE_MESSAGE && !str_prefix(attack_table[pObjIndex->value[3]].noun, arg3))

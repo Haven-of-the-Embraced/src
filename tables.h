@@ -37,20 +37,20 @@ struct hometown_type
 
 struct cr_abil_type
 {
-    int abil[30];
+    int abil[MAX_ABILITIES];
     int virtue[3];
 };
 
 struct cr_attribute_type
 {
-    int attribute[9];
+    int attribute[MAX_ATTRIBUTES];
 };
 
 struct template_type
 {
     char *name;
-    sh_int attribute[9];
-    sh_int ability[30];
+    sh_int attribute[MAX_ATTRIBUTES];
+    sh_int ability[MAX_ABILITIES];
     sh_int willpower;
 };
 

@@ -1318,7 +1318,7 @@ void fread_char( CHAR_DATA *ch, FILE *fp )
         if ( !str_cmp( word, "CSsec_abil"  ))
         {
         int i;
-        for (i = 0; i < MAX_ABILITIES; i ++)
+        for (i = 0; i < MAX_SEC_ABILITIES; i ++)
            ch->pcdata->cssec_abil[i] = fread_number(fp);
         fMatch = TRUE;
         break;

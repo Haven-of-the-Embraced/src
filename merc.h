@@ -353,6 +353,7 @@ struct buf_type
 /* charsheet code */
 #define MAX_ATTRIBUTES          9
 #define MAX_ABILITIES           30
+#define MAX_SEC_ABILITIES       30
 #define MAX_DISC                18
 /* attributes */
 #define CSATTRIB_STRENGTH       0
@@ -2353,10 +2354,10 @@ struct  pc_data
     char *      cssire;
     sh_int      csgeneration;
     char *      cshaven;
-    int         csattributes[9];
-    int         csattrib_mod[9];
-    int         csabilities[30];
-    int         cssec_abil[30];
+    int         csattributes[MAX_ATTRIBUTES];
+    int         csattrib_mod[MAX_ATTRIBUTES];
+    int         csabilities[MAX_ABILITIES];
+    int         cssec_abil[MAX_SEC_ABILITIES];
     int         discipline[MAX_DISC];
     int         csbackgrounds[MAX_CSBACK];
     int         csvirtues[3];

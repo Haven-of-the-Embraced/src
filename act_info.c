@@ -1072,7 +1072,10 @@ void do_prompt(CHAR_DATA *ch, char *argument)
    else
    {
       if ( strlen(argument) > 120 )
-         argument[100] = '\0';
+      {
+          argument[100] = '\0';
+          send_to_char("Prompt too long! Truncated.\n\r", ch);
+      }
       strcpy( buf, argument );
       smash_tilde( buf );
       if (str_suffix("%c",buf))

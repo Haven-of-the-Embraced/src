@@ -5716,29 +5716,6 @@ void do_weakness(CHAR_DATA *ch, char *argument)
 
         multi_hit( victim, ch, TYPE_UNDEFINED);
 
-    if (IS_NPC(victim))
-    {
-        af.where     = TO_AFFECTS;
-        af.type      = gsn_quietus_weakness;
-        af.level     = ch->pcdata->discipline[QUIETUS];
-        af.duration  = dicesuccess  * (15 - ch->gen);
-        af.location  = APPLY_CON;
-        af.modifier  = -5;
-        af.bitvector = 0;
-        affect_to_char( victim, &af );
-
-        af.where    = TO_AFFECTS;
-        af.type     = gsn_quietus_weakness;
-        af.level    = ch->pcdata->discipline[QUIETUS];
-        af.duration = dicesuccess  * (15 - ch->gen);
-        af.location = APPLY_HIT;
-        af.modifier = -victim->level * 5;
-        af.bitvector    = 0;
-        affect_to_char( victim, &af );
-
-        return;
-    }
-
     af.where    = TO_AFFECTS;
     af.type     = gsn_quietus_weakness;
     af.level    = ch->pcdata->discipline[QUIETUS];

@@ -1433,7 +1433,7 @@ void spell_chill_touch( int sn, int level, CHAR_DATA *ch, void *vo,int target )
     af.type      = sn;
         af.level     = level;
     af.duration  = 6;
-    af.location  = APPLY_STR;
+    af.location  = APPLY_CS_STR;
     af.modifier  = -1;
     af.bitvector = 0;
     affect_join( victim, &af );
@@ -3923,7 +3923,7 @@ void spell_pass_door( int sn, int level, CHAR_DATA *ch, void *vo, int target )
     af.type       = sn;
     af.level      = level * 3/4;
     af.duration  = level;
-    af.location  = APPLY_STR;
+    af.location  = APPLY_CS_STR;
     af.modifier  = -5;
     af.bitvector = AFF_PLAGUE;
     affect_join(victim,&af);

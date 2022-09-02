@@ -1889,7 +1889,7 @@ if (DEBUG_MESSAGES || IS_DEBUGGING(ch)){
             af.type      = gsn_poison;
             af.level     = level;
             af.duration  = level / 10 + 1;
-            af.location  = APPLY_STR;
+            af.location  = APPLY_CS_STR;
             af.modifier  = -1;
             af.bitvector = AFF_POISON;
             affect_join( victim, &af );

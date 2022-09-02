@@ -3991,7 +3991,7 @@ void do_armsoftheabyss(CHAR_DATA *ch, char *argument)
     af.type      = gsn_armsoftheabyss;
     af.level     = ch->level;
     af.duration  = ch->pcdata->discipline[OBTENEBRATION];
-    af.location  = APPLY_STR;
+    af.location  = APPLY_CS_STR;
     af.modifier  = -2;
     af.bitvector = 0;
     affect_to_char( victim, &af );

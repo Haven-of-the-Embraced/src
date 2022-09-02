@@ -225,7 +225,7 @@ void cold_effect(void *vo, int level, int dam, int target)
             af.type      = skill_lookup("chill touch");
             af.level     = level;
             af.duration  = 6;
-            af.location  = APPLY_STR;
+            af.location  = APPLY_CS_STR;
             af.modifier  = -1;
             af.bitvector = 0;
             affect_join( victim, &af );

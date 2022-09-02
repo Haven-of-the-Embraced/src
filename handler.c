@@ -1602,7 +1602,7 @@ void char_to_room( CHAR_DATA *ch, ROOM_INDEX_DATA *pRoomIndex )
         plague.type         = gsn_plague;
         plague.level        = af->level - 1;
         plague.duration     = number_range(1,2 * plague.level);
-        plague.location     = APPLY_STR;
+        plague.location     = APPLY_CS_STR;
         plague.modifier     = -5;
         plague.bitvector    = AFF_PLAGUE;
 

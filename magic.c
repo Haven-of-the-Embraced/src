@@ -3105,7 +3105,7 @@ void spell_haste( int sn, int level, CHAR_DATA *ch, void *vo,int target )
       af.duration  = level/2;
     else
       af.duration  = level/4;
-    af.location  = APPLY_DEX;
+    af.location  = APPLY_CS_DEX;
     af.modifier  = 1 + (level >= 18) + (level >= 25) + (level >= 32);
     af.bitvector = AFF_HASTE;
     affect_to_char( victim, &af );
@@ -4521,7 +4521,7 @@ void spell_slow( int sn, int level, CHAR_DATA *ch, void *vo,int target )
     af.type      = sn;
     af.level     = level;
     af.duration  = level/2;
-    af.location  = APPLY_DEX;
+    af.location  = APPLY_CS_DEX;
     af.modifier  = -1 - (level >= 18) - (level >= 25) - (level >= 32);
     af.bitvector = AFF_SLOW;
     affect_to_char( victim, &af );

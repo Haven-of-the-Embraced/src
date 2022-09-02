@@ -2338,7 +2338,7 @@ CHAR_DATA *create_mobile( MOB_INDEX_DATA *pMobIndex )
         af.type      = skill_lookup("haste");
             af.level     = mob->level;
             af.duration  = -1;
-            af.location  = APPLY_DEX;
+            af.location  = APPLY_CS_DEX;
             af.modifier  = 1 + (mob->level >= 18) + (mob->level >= 25) +
                (mob->level >= 32);
             af.bitvector = AFF_HASTE;

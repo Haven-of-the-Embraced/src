@@ -1718,6 +1718,27 @@ OBJ_DATA *get_consumable( CHAR_DATA *ch, int consumable )
 }
 
 /*
+  Change charge of specific consumable
+*/
+void *use_consumable( CHAR_DATA *ch, OBJ_DATA *consumable, int change )
+{
+  OBJ_DATA  *obj = consumable;
+
+  if (ch == NULL)
+    return NULL;
+
+  obj->value[0] += change;
+
+  if (obj->value[0] <= 0)
+  {
+    act("$p is no longer usable, so you throw it away.", ch, obj, NULL, TO_CHAR);
+    act("$n tosses $p away.", ch, obj, NULL, TO_ROOM);
+    extract_obj(consumable);
+  }
+  return;
+}
+
+/*
  * Equip a char with an obj.
  */
 void equip_char( CHAR_DATA *ch, OBJ_DATA *obj, int iWear )

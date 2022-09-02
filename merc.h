@@ -3996,6 +3996,7 @@ void    obj_from_char   args( ( OBJ_DATA *obj ) );
 int apply_ac    args( ( OBJ_DATA *obj, int iWear, int type ) );
 OD *    get_eq_char args( ( CHAR_DATA *ch, int iWear ) );
 OD *    get_consumable args( ( CHAR_DATA *ch, int consumable ) );
+void    use_consumable args( ( CHAR_DATA *ch, OBJ_DATA *consumable ) );
 void    equip_char  args( ( CHAR_DATA *ch, OBJ_DATA *obj, int iWear ) );
 void    unequip_char    args( ( CHAR_DATA *ch, OBJ_DATA *obj ) );
 int count_obj_list  args( ( OBJ_INDEX_DATA *obj, OBJ_DATA *list ) );

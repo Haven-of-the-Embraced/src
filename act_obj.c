@@ -302,7 +302,7 @@ void do_get( CHAR_DATA *ch, char *argument )
     }
 
 if ( (IS_AFFECTED(ch, AFF_SHIFT) && (!is_affected(ch, gsn_vicissitude_horrid) && !is_affected(ch, gsn_vicissitude_chiropteran)) )
-    || ch->pcdata->shiftform == HISPO || ch->pcdata->shiftform == LUPUS || is_affected(ch,gsn_shadowform))
+     || is_affected(ch,gsn_shadowform) || (!IS_NPC(ch) && (ch->pcdata->shiftform == HISPO || ch->pcdata->shiftform == LUPUS)))
     {
     send_to_char( "You do not have the proper form to pickup things!\n\r", ch );
     return;

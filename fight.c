@@ -6214,7 +6214,7 @@ void do_blast( CHAR_DATA *ch, char *argument )
         return;
     }
 
-    obj->value[0]--;
+    use_consumable(ch, obj, -1);
 
     WAIT_STATE( ch, skill_table[gsn_blast].beats );
 
@@ -6223,7 +6223,7 @@ void do_blast( CHAR_DATA *ch, char *argument )
 
         if(dicesuccess < 0)
         {
-          obj->value[0]--;
+          use_consumable(ch, obj, -1);
           act( "You cough and gag as your blast misfires, blinding yourself briefly.", ch, NULL, victim, TO_CHAR );
           act( "$n coughs and gags as smoke fills $s eyes.", ch, NULL, victim, TO_VICT );
           act( "$n coughs and gags as smoke fills $s eyes.", ch, NULL, victim, TO_NOTVICT );
@@ -6236,7 +6236,7 @@ void do_blast( CHAR_DATA *ch, char *argument )
 
         else if (dicesuccess == 0)
         {
-          obj->value[0]--;
+          use_consumable(ch, obj, -1);
           act( "Your blast misses $N!", ch, NULL, victim, TO_CHAR );
           act( "$n sends a blast of flame and smoke that misses you.", ch, NULL, victim, TO_VICT );
           act( "$n misses with $s blast of flame that was aimed at $N.", ch, NULL, victim, TO_ROOM );

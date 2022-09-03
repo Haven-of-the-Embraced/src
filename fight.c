@@ -6208,7 +6208,7 @@ void do_blast( CHAR_DATA *ch, char *argument )
                 return;
         }
 
-    if (obj = get_consumable(ch, ITEM_BLASTPOWDER) == NULL)
+    if ((obj = get_consumable(ch, ITEM_BLASTPOWDER)) == NULL)
     {
         send_to_char("You are not carrying any viable blasting powder.\n\r", ch);
         return;

@@ -3252,13 +3252,13 @@ bool set_obj_values( CHAR_DATA *ch, OBJ_INDEX_DATA *pObj, int value_num, char *a
           pObj->value[0] = atoi( argument );
           break;
         case 1:
-          if (set_value < 1 || set_value > 10)
+          if (set_value < 1 || set_value > 5)
           {
-           send_to_char("Blast Powder Damage is between 1 and 10.\n\r", ch);
+           send_to_char("Blast Powder Damage is between 1 and 5.\n\r", ch);
            break;
           }
           send_to_char( "BLASTPOWDER DAMAGE SET.\n\r\n\r", ch );
-           pObj->value[0] = atoi( argument );
+           pObj->value[1] = atoi( argument );
           break;
          }
          break;

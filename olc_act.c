@@ -2635,12 +2635,9 @@ void show_obj_values( CHAR_DATA *ch, OBJ_INDEX_DATA *obj )
         break;
 
     case ITEM_CONTAINER:
-        sprintf( buf,
-        "[v0] Weight:     [%d kg]\n\r"
-        "[v1] Flags:      [%s]\n\r"
-        "[v2] Key:        [%d] %s\n\r"
-        "[v3] Capacity    [%d]\n\r"
-        "[v4] Weight Mult [%d]\n\r",
+      send_to_char("{c-----------------------{YVALUES{c------------------------{x\n\r", ch);
+      sprintf(buf,
+        "v[0] Maximum Weight      : %3d %s  \n\rv[1] Container Flags     : %3d%  \n\rv[2] Key                 : %3d %s  \n\rv[3] Max Capacity        : %3d %s \n\rv[4] Weight Multiplier   : %s\n\r",
         obj->value[0],
         flag_string( container_flags, obj->value[1] ),
         obj->value[2],
@@ -2648,7 +2645,8 @@ void show_obj_values( CHAR_DATA *ch, OBJ_INDEX_DATA *obj )
           ? get_obj_index(obj->value[2])->short_descr : "none",
         obj->value[3],
         obj->value[4] );
-        send_to_char( buf, ch );
+      send_to_char( buf, ch );
+      send_to_char("{c-----------------------------------------------------{x\n\r", ch);
         break;
 
     case ITEM_DRINK_CON:

@@ -509,11 +509,15 @@ void do_put( CHAR_DATA *ch, char *argument )
             return;
         }
 
-    if (get_obj_weight( obj ) + get_true_weight( container )
-         > (container->value[0] * 10)
-    ||  get_obj_weight(obj) > (container->value[3] * 10))
+    if (get_obj_weight( obj ) + get_true_weight( container ) > (container->value[0] * 10))
     {
-        send_to_char( "It won't fit.\n\r", ch );
+      send_to_char("The container is already at weight maximum.\n\r", ch);
+      return;
+    }
+
+    if (get_obj_number(obj) + get_obj_number(container) > (container->value[3] ))
+    {
+        send_to_char( "The container is already full.\n\r", ch );
         return;
     }
 

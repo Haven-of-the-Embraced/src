@@ -1613,8 +1613,9 @@ void do_examine( CHAR_DATA *ch, char *argument )
 	send_to_char(" |-----------------------==============================-----------------------|\n\r",ch);
   sprintf( buf, "");
   if (obj->item_type == ITEM_CONTAINER)
-    sprintf( buf, "%s | --{x Contains: {Y%d/%d {xmax items, combined weight of {y%d/%d{x lbs\n\r", condition,
-            get_obj_number(obj), obj->value[3], get_obj_weight(obj), obj->value[0]);
+    sprintf( buf, "%s | --{x Contains: {Y%d/%d {xmax items, combined weight of {y%d.%d/%d.%d{x lbs\n\r", condition,
+            get_obj_number(obj), obj->value[3], get_obj_weight(obj) / 10, get_obj_weight(obj) % 10,
+            obj->value[0] / 10, obj->value[0] % 10);
   if (obj->item_type == ITEM_LIGHT)
     sprintf( buf,"%s | --{x This light will remain lit for %s\n\r", condition, obj->value[2] > 75 ? "an extremely long time." :
             obj->value[2] > 50 ? "quite a while." : obj->value[2] > 25 ? "a bit longer." :

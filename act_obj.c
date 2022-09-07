@@ -3840,8 +3840,8 @@ void do_lore( CHAR_DATA *ch, char *argument )
             break;
 
             case ITEM_CONTAINER:
-                sprintf(buf,"Capacity: %d#  Maximum weight: %d#  flags: %s\n\r",
-                obj->value[3], obj->value[0], cont_bit_name(obj->value[1]));
+                sprintf(buf,"Capacity: %d#  Maximum weight: %d.%d#  flags: %s\n\r",
+                obj->value[3], obj->value[0] / 10, obj->value[0] % 10, cont_bit_name(obj->value[1]));
                 send_to_char(buf,ch);
                 if (obj->value[4] != 100)
                 {

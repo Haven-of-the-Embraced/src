@@ -3422,7 +3422,7 @@ void spell_identify( int sn, int level, CHAR_DATA *ch, void *vo,int target )
 
     case ITEM_CONTAINER:
     sprintf(buf,"Capacity: %d#  Maximum weight: %d#  flags: %s\n\r",
-        obj->value[0], obj->value[3], cont_bit_name(obj->value[1]));
+        obj->value[3], obj->value[0], cont_bit_name(obj->value[1]));
     send_to_char(buf,ch);
     if (obj->value[4] != 100)
     {

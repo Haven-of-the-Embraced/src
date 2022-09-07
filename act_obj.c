@@ -509,7 +509,7 @@ void do_put( CHAR_DATA *ch, char *argument )
             return;
         }
 
-    if (get_obj_weight( obj ) + get_true_weight( container ) > (container->value[0] * 10))
+    if (get_obj_weight( obj ) + get_true_weight( container ) > (container->value[0] ))
     {
       send_to_char("That addition would put the container over weight maximum.\n\r", ch);
       return;

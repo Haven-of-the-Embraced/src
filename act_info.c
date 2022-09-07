@@ -1595,11 +1595,11 @@ void do_examine( CHAR_DATA *ch, char *argument )
 	sprintf( condition, "%s", cond == 0 ? "{D" : cond <= 15 ? "{r" : cond <= 45 ? "{y" : cond < 100 ? "{g" : "{W");
 
 	send_to_char( condition, ch );
-	send_to_char("()----------------------======ooooOOOOOOOOoooo======----------------------()\n\r",ch);
+	send_to_char("()-----------------------=======ooooOOOOOOOOoooo=======-----------------------()\n\r",ch);
    	sprintf( buf,"%s | --{x Level %3d  %s::{x  %s\n\r", condition, obj->level, condition, obj->short_descr);
 	send_to_char( buf, ch );
     send_to_char( condition, ch );
-	send_to_char(" |----------------------============================----------------------|{x\n\r",ch);
+	send_to_char(" |-----------------------==============================-----------------------|{x\n\r",ch);
 	sprintf( buf,"%s | --{x Keywords: %s\n\r", condition, obj->name );
 	send_to_char( buf, ch );
 
@@ -1610,8 +1610,11 @@ void do_examine( CHAR_DATA *ch, char *argument )
 	send_to_char( buf, ch );
 
 	send_to_char( condition, ch );
-	send_to_char(" |----------------------============================----------------------|\n\r",ch);
+	send_to_char(" |-----------------------==============================-----------------------|\n\r",ch);
   sprintf( buf, "");
+  if (obj->item_type == ITEM_CONTAINER)
+    sprintf( buf, "%s | --{x Contains: {Y%d/%d {xmax items, combined weight of {y%d/%d{x lbs\n\r", condition,
+            get_obj_number(obj), obj->value[3], get_obj_weight(obj), obj->value[0]);
   if (obj->item_type == ITEM_LIGHT)
     sprintf( buf,"%s | --{x This light will remain lit for %s\n\r", condition, obj->value[2] > 75 ? "an extremely long time." :
             obj->value[2] > 50 ? "quite a while." : obj->value[2] > 25 ? "a bit longer." :
@@ -1621,7 +1624,7 @@ void do_examine( CHAR_DATA *ch, char *argument )
       sprintf( buf, "%s | --{x This food appears to have been preserved.\n\r", condition);
     else
       sprintf( buf, "%s | --{x This food %s\n\r", condition, obj->timer >= 10 ? "is fresh." : "will spoil soon.");
-  if (obj->item_type == ITEM_CONTAINER || obj->item_type == ITEM_CORPSE_NPC || obj->item_type == ITEM_CORPSE_PC)
+  if (obj->item_type == ITEM_CORPSE_NPC || obj->item_type == ITEM_CORPSE_PC)
     sprintf( buf,"%s | --{x Factoring in any contents inside, the total weight is approximately %5d pounds.\n\r", condition, get_obj_weight(obj) / 10);
   if (obj->item_type == ITEM_DRINK_CON)
     if ( obj->value[1] <= 0 )
@@ -1635,7 +1638,7 @@ void do_examine( CHAR_DATA *ch, char *argument )
     sprintf( buf, "%s | --{x This can be used as a %s.\n\r", condition, tool_table[obj->value[1]].tool_name);
   send_to_char( buf, ch );
   send_to_char( condition, ch );
-	send_to_char("()----------------------======ooooOOOOOOOOoooo======----------------------(){x\n\r",ch);
+	send_to_char("()-----------------------=======ooooOOOOOOOOoooo=======-----------------------(){x\n\r",ch);
     }
 
     else

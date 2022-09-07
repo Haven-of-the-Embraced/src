@@ -2637,7 +2637,7 @@ void show_obj_values( CHAR_DATA *ch, OBJ_INDEX_DATA *obj )
     case ITEM_CONTAINER:
       send_to_char("{c-----------------------{YVALUES{c------------------------{x\n\r", ch);
       sprintf(buf,
-        "v[0] Maximum Weight      : %3d %s  \n\rv[1] Container Flags     : %3d%  \n\rv[2] Key                 : %3d %s  \n\rv[3] Max Capacity        : %3d %s \n\rv[4] Weight Multiplier   : %s\n\r",
+        "v[0] Maximum Weight      : %5d lbs  \n\rv[1] Container Flags     : %s  \n\rv[2] Key                 : %5d %s  \n\rv[3] Max Capacity        : %5d items \n\rv[4] Weight Multiplier   : %5d % \n\r",
         obj->value[0],
         flag_string( container_flags, obj->value[1] ),
         obj->value[2],

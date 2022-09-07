@@ -511,7 +511,7 @@ void do_put( CHAR_DATA *ch, char *argument )
 
     if (get_obj_weight( obj ) + get_true_weight( container ) > (container->value[0] * 10))
     {
-      send_to_char("The container is already at weight maximum.\n\r", ch);
+      send_to_char("That addition would put the container over weight maximum.\n\r", ch);
       return;
     }
 

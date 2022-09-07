@@ -1756,7 +1756,7 @@ void do_ostat( CHAR_DATA *ch, char *argument )
 
         case ITEM_CONTAINER:
           send_to_char("{c-----------------------{YVALUES{c------------------------{x\n\r", ch);
-          sprintf(buf, "Hold Capacity       : %d Items  \n\rContainer Flags     : %s  \n\rKey                 : [%d] %s\n\rMaximum Weight      : %d#  \n\rWeight Multiplier   : %d%%  \n\r",
+          sprintf(buf, "v[0] Maximum Weight      : %5d lbs  \n\rv[1] Container Flags     : %s  \n\rv[2] Key                 : %5d %s  \n\rv[3] Max Capacity        : %5d items \n\rv[4] Weight Multiplier   : %5d %\n\r",
           obj->value[0],
           cont_bit_name(obj->value[1]),
           obj->value[2],

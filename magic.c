@@ -1647,30 +1647,6 @@ void spell_cure_critical( int sn, int level, CHAR_DATA *ch, void *vo,int target)
     return;
 }
 
-/* RT added to cure plague */
-/*void spell_cure_disease( int sn, int level, CHAR_DATA *ch,void *vo,int target)
-{
-    CHAR_DATA *victim = (CHAR_DATA *) vo;
-
-    if ( !is_affected( victim, gsn_plague ) )
-    {
-        if (victim == ch)
-          send_to_char("You aren't ill.\n\r",ch);
-        else
-          act("$N doesn't appear to be diseased.",ch,NULL,victim,TO_CHAR);
-        return;
-    }
-
-    if (check_dispel(level,victim,gsn_plague))
-    {
-    send_to_char("Your sores vanish.\n\r",victim);
-    act("$n looks relieved as $s sores vanish.",victim,NULL,NULL,TO_ROOM);
-    }
-    else
-    send_to_char("Spell failed.\n\r",ch);
-} */
-
-
 
 void spell_cure_light( int sn, int level, CHAR_DATA *ch, void *vo,int target)
 {
@@ -3901,38 +3877,6 @@ void spell_pass_door( int sn, int level, CHAR_DATA *ch, void *vo, int target )
     send_to_char( "You turn translucent.\n\r", victim );
     return;
 }
-
-/* RT plague spell, very nasty */
-
-/* void spell_plague( int sn, int level, CHAR_DATA *ch, void *vo, int target )
-{
-    CHAR_DATA *victim = (CHAR_DATA *) vo;
-    AFFECT_DATA af;
-
-    if (saves_spell(level,victim,DAM_DISEASE) ||
-        (IS_NPC(victim) && IS_SET(victim->act,ACT_UNDEAD)))
-    {
-    if (ch == victim)
-      send_to_char("You feel momentarily ill, but it passes.\n\r",ch);
-    else
-      act("$N seems to be unaffected.",ch,NULL,victim,TO_CHAR);
-    return;
-    }
-
-    af.where     = TO_AFFECTS;
-    af.type       = sn;
-    af.level      = level * 3/4;
-    af.duration  = level;
-    af.location  = APPLY_CS_STR;
-    af.modifier  = -5;
-    af.bitvector = AFF_PLAGUE;
-    affect_join(victim,&af);
-
-    send_to_char
-      ("You scream in agony as plague sores erupt from your skin.\n\r",victim);
-    act("$n screams in agony as plague sores erupt from $s skin.",
-    victim,NULL,NULL,TO_ROOM);
-} */
 
 void spell_poison( int sn, int level, CHAR_DATA *ch, void *vo, int target )
 {

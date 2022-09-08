@@ -3762,6 +3762,13 @@ void do_memory( CHAR_DATA *ch, char *argument )
     sprintf( buf, "Resets  %5d\n\r", top_reset     ); send_to_char( buf, ch );
     sprintf( buf, "Rooms   %5d\n\r", top_room      ); send_to_char( buf, ch );
     sprintf( buf, "Shops   %5d\n\r", top_shop      ); send_to_char( buf, ch );
+    sprintf( buf, "=============\n\r"); send_to_char( buf, ch );
+    sprintf( buf, "Sizeof(sh_int):    %4lu bytes  Range: -%-20.0lf to %-20.0lf\n\r", sizeof(sh_int), pow(2, (sizeof(sh_int) * 8) -1), pow(2, (sizeof(sh_int) * 8) -1)); send_to_char(buf, ch);
+    sprintf( buf, "Sizeof(int):       %4lu bytes  Range: -%-20.0lf to %-20.0lf\n\r", sizeof(int), pow(2, (sizeof(int) * 8) -1), pow(2, (sizeof(int) * 8) -1)); send_to_char(buf, ch);
+    sprintf( buf, "Sizeof(long):      %4lu bytes  Range: -%-20.0lf to %-20.0lf\n\r", sizeof(long), pow(2, (sizeof(long) * 8) -1), pow(2, (sizeof(long) * 8) -1)); send_to_char(buf, ch);
+    sprintf( buf, "Sizeof(char_data): %4lu bytes.\n\r", sizeof(CHAR_DATA)); send_to_char(buf, ch);
+    sprintf( buf, "Sizeof(pc_data):   %4lu bytes.\n\r", sizeof(PC_DATA)); send_to_char(buf, ch);
+    sprintf( buf, "Sizeof(obj_data):  %4lu bytes.\n\r", sizeof(OBJ_DATA)); send_to_char(buf, ch);
 
     sprintf( buf, "Strings %5d strings totaling %7d bytes (max %d).\n\r",
     nAllocString, sAllocString, MAX_STRING );

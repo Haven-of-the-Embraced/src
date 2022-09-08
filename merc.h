@@ -2498,6 +2498,7 @@ struct  obj_index_data
     int         cost;
     int         value[5];
     sh_int      timer;
+    sh_int      size;
 };
 
 
@@ -2537,6 +2538,7 @@ struct  obj_data
     sh_int      timer;
     int         value   [5];
     sh_int			oprog_delay;
+    sh_int      size;
 };
 
 

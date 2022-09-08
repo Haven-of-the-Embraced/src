@@ -343,6 +343,7 @@ void save_object( FILE *fp, OBJ_INDEX_DATA *pObjIndex )
     fprintf( fp, "%s ",      item_name(pObjIndex->item_type));
     fprintf( fp, "%s ",      fwrite_flag( pObjIndex->extra_flags, buf ) );
     fprintf( fp, "%s\n",     fwrite_flag( pObjIndex->wear_flags,  buf ) );
+    fprintf( fp, "%d %d %d %d\n",     pObjIndex->size, 0, 0, 0 );
 
 /*
  *  Using fwrite_flag to write most values gives a strange

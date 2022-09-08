@@ -252,7 +252,7 @@ DECLARE_OLC_FUN( oedit_value4       );  /* ROM */
 DECLARE_OLC_FUN( oedit_weight       );
 DECLARE_OLC_FUN( oedit_cost     );
 DECLARE_OLC_FUN( oedit_ed       );
-
+DECLARE_OLC_FUN( oedit_size       );
 DECLARE_OLC_FUN( oedit_extra            );  /* ROM */
 DECLARE_OLC_FUN( oedit_wear             );  /* ROM */
 DECLARE_OLC_FUN( oedit_type             );  /* ROM */

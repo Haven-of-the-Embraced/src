@@ -4079,6 +4079,31 @@ OEDIT( oedit_type )      /* Moved out of oedit() due to naming conflicts -- Hugi
     return FALSE;
 }
 
+
+OEDIT( oedit_size )      /* Moved out of oedit() due to naming conflicts -- Hugin */
+{
+    OBJ_INDEX_DATA *pObj;
+    int value;
+
+    if ( argument[0] != '\0' )
+    {
+    EDIT_OBJ(ch, pObj);
+
+    if ( ( value = flag_value( size_flags, argument ) ) != NO_FLAG )
+    {
+        pObj->size = value;
+
+        send_to_char( "Size set.\n\r", ch);
+
+        return TRUE;
+    }
+    }
+
+    send_to_char( "Syntax:  size [flag]\n\r"
+          "Type '? size' for a list of flags.\n\r", ch );
+    return FALSE;
+}
+
 OEDIT( oedit_material )
 {
     OBJ_INDEX_DATA *pObj;

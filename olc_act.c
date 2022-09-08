@@ -114,7 +114,7 @@ const struct olc_help_type help_table[] =
     {   "res",      res_flags,   "Mobile resistance."            },
     {   "vuln",     vuln_flags,  "Mobile vulnerability."     },
     {   "off",      off_flags,   "Mobile offensive behaviour."   },
-    {   "size",     size_flags,  "Mobile size."          },
+    {   "size",     size_flags,  "Mobile / Object size."          },
     {   "position",     position_flags,  "Mobile positions."             },
     {   "wclass",       weapon_class,    "Weapon class."                 },
     {   "wtype",        weapon_type2,    "Special weapon type."          },
@@ -3315,6 +3315,10 @@ OEDIT( oedit_show )
 
     sprintf( buf, "Timer:       [%5d]\n\r",               /* UGHA */
     pObj->timer );
+    send_to_char( buf, ch );
+
+    sprintf( buf, "Size:        [%5s]\n\r",
+    flag_string( size_flags, pObj->size ) );
     send_to_char( buf, ch );
 
     sprintf( buf, "Weight:      [%5d]\n\rCost:        [%5d]\n\r",

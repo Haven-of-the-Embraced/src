@@ -443,6 +443,11 @@ void load_objects( FILE *fp )
     CHECK_POS(pObjIndex->item_type, item_lookup(fread_word( fp )), "item_type" );
         pObjIndex->extra_flags          = fread_flag( fp );
         pObjIndex->wear_flags           = fread_flag( fp );
+        pObjIndex->size                 = fread_number (fp);
+        fread_number(fp);
+        fread_number(fp); //extra values stored to file 
+        fread_number(fp);
+
     switch(pObjIndex->item_type)
     {
     case ITEM_WEAPON:

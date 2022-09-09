@@ -1671,8 +1671,8 @@ void area_update( void )
     for ( pArea = area_first; pArea != NULL; pArea = pArea->next )
     {
 
-    if ( ++pArea->age < 3 )
-        continue;
+        if ( ++pArea->age < 3 || IS_SET( pArea->area_flags, AREA_UNLINKED ) )
+            continue;
 
     /*
      * Check age and reset.

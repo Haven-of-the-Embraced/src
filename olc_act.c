@@ -3321,8 +3321,8 @@ OEDIT( oedit_show )
     flag_string( size_flags, pObj->size ) );
     send_to_char( buf, ch );
 
-    sprintf( buf, "Weight:      [%5d]\n\rCost:        [%5d]\n\r",
-    pObj->weight, pObj->cost );
+    sprintf( buf, "Weight:      [%5d.%d]\n\rCost:        [%5d]\n\r",
+    pObj->weight / 10, pObj->weight % 10, pObj->cost );
     send_to_char( buf, ch );
 
     if ( pObj->extra_descr )

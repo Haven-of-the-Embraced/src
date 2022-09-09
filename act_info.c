@@ -1609,7 +1609,7 @@ void do_examine( CHAR_DATA *ch, char *argument )
 	sprintf( buf,"%s | --{x %s\n\r", condition, obj->description );
 	send_to_char( buf, ch );
 
-	sprintf( buf,"%s | --{x This item weighs approximately %5d pounds.\n\r", condition, obj->weight / 10);
+	sprintf( buf,"%s | --{x This item weighs approximately %d.%d pounds.\n\r", condition, obj->weight / 10, obj->weight % 10);
 	send_to_char( buf, ch );
 
 	send_to_char( condition, ch );

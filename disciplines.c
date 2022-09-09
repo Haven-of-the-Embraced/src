@@ -1168,11 +1168,11 @@ void do_touch( CHAR_DATA *ch, char *argument )
     }
 
     sprintf( buf,
-        "Object '%s' is type %s, extra flags %s.\n\rWeight is %d, value is %d, level is %d.\n\r",
+        "Object '%s' is type %s, extra flags %s.\n\rWeight is %d.%d, value is %d, level is %d.\n\r",
         obj->name,
         item_name(obj->item_type),
         extra_bit_name( obj->extra_flags ),
-        obj->weight / 10,
+        obj->weight / 10, obj->weight % 10,
         obj->cost,
         obj->level
         );

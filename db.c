@@ -5054,6 +5054,7 @@ sh_int          gsn_precognition;
 sh_int          gsn_timealteration;
 sh_int          gsn_sidesteptime;
 sh_int          gsn_negationfield;
+sh_int          gsn_touchofhelios;
 sh_int          gsn_quintessence;
 /*sh_int            gsn_quintessentialbond;*/
 sh_int          gsn_botched_allies;

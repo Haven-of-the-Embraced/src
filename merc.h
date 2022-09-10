@@ -3043,6 +3043,7 @@ extern  sh_int  gsn_precognition;
 extern  sh_int  gsn_timealteration;
 extern  sh_int  gsn_sidesteptime;
 extern  sh_int  gsn_negationfield;
+extern  sh_int  gsn_touchofhelios;
 /*extern  sh_int  gsn_quintessentialbond;*/
 // Matthew's random GSNs.
 extern  sh_int  gsn_botched_allies;

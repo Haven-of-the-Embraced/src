@@ -3088,6 +3088,9 @@ Total (1)
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
     &gsn_negationfield,          SLOT( 0),        0,     24, "",             "You sense your ability to negate the magicks of others fading.",       "" },
 
+    { "touch of helios",          { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
+    &gsn_touchofhelios,          SLOT( 0),        0,     24, "",             "You manage to blink away the blindness of the sunlight.",       "" },
 /*
   ----Immortal Functions----
 Total (1)

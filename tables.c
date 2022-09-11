@@ -42,7 +42,7 @@ const struct hometown_type hometown_table[MAX_HOMETOWN] =
 	{"Chester", 	701},
 	{"Geneva",  	10995},
 	{"Figueres",	13959},
-	{"Venice",		3452}
+	{"Venice",		1954}
 };
 
 const struct cr_abil_type cr_abil_table[3] =

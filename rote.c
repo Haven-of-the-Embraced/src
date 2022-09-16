@@ -782,16 +782,33 @@ void rote_crushofmountains(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DA
 
 void rote_touchofhelios(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
 {
+    AFFECT_DATA af;
+
     if (IS_NPC(ch)) return;
 
     act( "You bend reality and bring into existance a single ray of sunlight directed at $N!",  ch, NULL, victim, TO_CHAR    );
     act( "You are blinded briefly as $n directs a bright beam of sunlight towards $N!",  ch, NULL, victim, TO_NOTVICT    );
-    act( "All sight is stolen from you briefly as $n shines a brilliant beam of sunlight directly at you!",  ch, NULL, victim, TO_VICT );
+    act( "All sight is stolen from you briefly, as $n shines a brilliant beam of sunlight directly at you!",  ch, NULL, victim, TO_VICT );
 
     if(IS_SET(victim->vuln_flags,VULN_SUNLIGHT))
       damage( ch, victim, success*ch->level*14, gsn_magick, DAM_SUNLIGHT, TRUE);
     else
       damage( ch, victim, success*ch->level*8, gsn_magick, DAM_SUNLIGHT, TRUE);
+
+    if (success > 4)
+    {
+      af.where     = TO_AFFECTS;
+      af.type      = gsn_touchofhelios;
+      af.level     = success;
+      af.location  = 0;
+      af.modifier  = 0;
+      af.duration  = 1;
+      af.bitvector = AFF_BLIND;
+      affect_to_char( victim, &af );
+      act("$n is blinded momentarily by the sunlight beam.",victim,NULL,NULL,TO_ROOM);
+      act("A pinpointed sunlight beam blinds you momentarily!",victim,NULL,NULL,TO_CHAR);
+      return;
+    }
     return;
 }
 

@@ -173,18 +173,6 @@ char *prog_type_to_name( int type )
 
 /*
  * MOBprog section
- */
-
-void do_mob( CHAR_DATA *ch, char *argument )
-{
-    /*
-     * Security check!
-     */
-    if ( ch->desc != NULL && get_trust(ch) < MAX_LEVEL )
-	return;
-    mob_interpret( ch, argument );
-}
-/*
  * Mob command interpreter. Implemented separately for security and speed
  * reasons. A trivial hack of interpret()
  */

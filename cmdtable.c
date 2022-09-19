@@ -432,13 +432,6 @@ const   struct  cmdfun_type cmdfun_table    [] =
     /* changeling here so change parses first */
     { "changeling",     do_changeling},
 
-
-
-     /*
-     * Mob command interpreter (placed here for faster scan...)
-     */
-    { "mob",        do_mob},
-
     /*
      * Miscellaneous commands.
      */

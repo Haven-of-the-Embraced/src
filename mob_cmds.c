@@ -181,6 +181,13 @@ void mob_interpret( CHAR_DATA *ch, char *argument )
     char buf[MAX_STRING_LENGTH], command[MAX_INPUT_LENGTH];
     int cmd;
 
+	if (ch->desc != NULL)
+	{
+		sprintf( buf, "Mob_interpret: '%s' tried executing '%s' through mob_interpret.", ch->name, argument );
+	    bug( buf, 0 );
+		do_huh(ch, "");
+		return;
+	}
     argument = one_argument( argument, command );
 
     /*

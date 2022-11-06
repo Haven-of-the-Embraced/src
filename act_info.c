@@ -2574,14 +2574,16 @@ void do_who( CHAR_DATA *ch, char *argument )
       add_buf(output, "{w<==============================================================================>{x\n\r");
     }
 
-    if (doubleexp) {
-        if (xpawardmult == 2)
-            sprintf( buf2, "Double XP is ON!\n");
-        if (xpawardmult == 3)
-            sprintf(buf2, "Triple XP is ON!\n");
-        add_buf(output,buf2);
+    else if (doubleexp)
+    {
+      if (xpawardmult == 2)
+        sprintf( buf2, " =====                  {CGlobal Double XP Bonus{x is ACTIVE!                 ===== \n");
+      if (xpawardmult == 3)
+        sprintf( buf2, " =====                  {CGlobal Triple XP Bonus{x is ACTIVE!                 ===== \n");
+      add_buf(output,buf2);
+      add_buf(output, "{w<==============================================================================>{x\n\r");
     }
-page_to_char( buf_string(output), ch );
+    page_to_char( buf_string(output), ch );
     free_buf(output);
     return;
 }

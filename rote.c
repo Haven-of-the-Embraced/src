@@ -791,7 +791,7 @@ void rote_touchofhelios(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA 
     act( "All sight is stolen from you briefly, as $n shines a brilliant beam of sunlight directly at you!",  ch, NULL, victim, TO_VICT );
 
     if(IS_SET(victim->vuln_flags,VULN_SUNLIGHT))
-      damage( ch, victim, success*ch->level*14, gsn_magick, DAM_SUNLIGHT, TRUE);
+      damage( ch, victim, success*ch->level*16, gsn_magick, DAM_SUNLIGHT, TRUE);
     else
       damage( ch, victim, success*ch->level*8, gsn_magick, DAM_SUNLIGHT, TRUE);
 

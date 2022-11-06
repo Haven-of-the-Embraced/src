@@ -2574,9 +2574,7 @@ void do_who( CHAR_DATA *ch, char *argument )
       if (xpawardmult == 3)
           sprintf( buf2, " =====   The Immortals have granted a boon.  {CTriple XP Bonus{x is ACTIVE!   ===== \n");
       add_buf(output,buf2);
-      add_buf(output, "{w<==============================================================================>{x\n\r");
     }
-
     else if (doubleexp)
     {
       if (xpawardmult == 2)
@@ -2584,6 +2582,25 @@ void do_who( CHAR_DATA *ch, char *argument )
       if (xpawardmult == 3)
         sprintf( buf2, " =====                  {CGlobal Triple XP Bonus{x is ACTIVE!                 ===== \n");
       add_buf(output,buf2);
+    }
+
+    if (slaughter)
+    {
+      sprintf( buf2, " =====               {RGet to killing.  It's a SLAUGHTERFEST!{x               ===== \n");
+      add_buf(output,buf2);
+    }
+    if (doubledam)
+    {
+      sprintf( buf2, " =====                       {RDOUBLE DAMAGE is ACTIVE!{x                     ===== \n");
+      add_buf(output,buf2);
+    }
+    if (nosun)
+    {
+      sprintf( buf2, " =====                   {DDark clouds blout out the sun.{x                   ===== \n");
+      add_buf(output,buf2);
+    }
+    if (slaughter || doubledam || nosun || doubleexp || manualxp)
+    {
       add_buf(output, "{w<==============================================================================>{x\n\r");
     }
     page_to_char( buf_string(output), ch );

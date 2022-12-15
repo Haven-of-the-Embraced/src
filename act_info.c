@@ -2977,22 +2977,24 @@ void do_consider( CHAR_DATA *ch, char *argument )
     return;
     }
 
-    send_to_char("+========================= ANIMAL CLASSIFICATION ========================+\n\r", ch);
-    send_to_char("+=========================     CONSIDERATION     ========================+\n\r", ch);
-    sprintf(buf, "| %s \n\r", capitalize(victim->short_descr));
-
-
     diff = victim->level - ch->level;
 
-         if ( diff <= -10 ) msg = "You could possibly kill $N naked and weaponless.";
-    else if ( diff <=  -6 ) msg = "$N is little challenge for you.";
-    else if ( diff <=  -3 ) msg = "$N looks like $E might offer a little resistance.";
-    else if ( diff <=   1 ) msg = "$N seems to be a good match!";
-    else if ( diff <=   4 ) msg = "$N says 'Do you feel lucky, punk?'.";
-    else if ( diff <=   9 ) msg = "$N laughs at you mercilessly.";
-    else                    msg = "Death will thank you for your gift.";
+         if ( diff <=  -5 ) msg = "{D";
+    else if ( diff <=   5 ) msg = "{G";
+    else if ( diff <=  15 ) msg = "{Y";
+    else                    msg = "{R";
 
+    send_to_char("+=========================     CONSIDERATION     ========================+\n\r", ch);
+    sprintf(buf, "| %s%s{x (Level %3d) \n\r|", msg, capitalize(victim->short_descr), victim->level);
+    send_to_char(buf, ch);
+
+         if ( diff <=  -5 ) msg = "It is probably not worth your time to kill $N.";
+    else if ( diff <=   5 ) msg = "$N would be a good match for you.";
+    else if ( diff <=  15 ) msg = "$N might provide a bit of a challenge.";
+    else                    msg = "Only those sure of themselves should pick this fight.";
     act( msg, ch, NULL, victim, TO_CHAR );
+    send_to_char("+========================================================================+\n\r", ch);
+
     return;
 }
 

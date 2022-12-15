@@ -2961,21 +2961,26 @@ void do_consider( CHAR_DATA *ch, char *argument )
 
     if ( arg[0] == '\0' )
     {
-    send_to_char( "Consider killing whom?\n\r", ch );
+    send_to_char( "Whom do you wish to consider?\n\r", ch );
     return;
     }
 
     if ( ( victim = get_char_room( ch, NULL, arg ) ) == NULL )
     {
-    send_to_char( "They're not here.\n\r", ch );
+    send_to_char( "Your target is not here to consider.\n\r", ch );
     return;
     }
 
     if (is_safe(ch,victim))
     {
-    send_to_char("Don't even think about it.\n\r",ch);
+    send_to_char("It would not be wise to attack your target at this moment.\n\r",ch);
     return;
     }
+
+    send_to_char("+========================= ANIMAL CLASSIFICATION ========================+\n\r", ch);
+    send_to_char("+=========================     CONSIDERATION     ========================+\n\r", ch);
+    sprintf(buf, "| %s \n\r", capitalize(victim->short_descr));
+
 
     diff = victim->level - ch->level;
 

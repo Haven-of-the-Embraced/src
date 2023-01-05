@@ -2953,6 +2953,7 @@ void do_where( CHAR_DATA *ch, char *argument )
 void do_consider( CHAR_DATA *ch, char *argument )
 {
     char arg[MAX_INPUT_LENGTH];
+    char buf[MAX_STRING_LENGTH];
     CHAR_DATA *victim;
     char *msg;
     int diff;
@@ -2984,8 +2985,10 @@ void do_consider( CHAR_DATA *ch, char *argument )
     else if ( diff <=  15 ) msg = "{Y";
     else                    msg = "{R";
 
-    send_to_char("+=========================     CONSIDERATION     ========================+\n\r", ch);
-    sprintf(buf, "| %s%s{x (Level %3d) \n\r|", msg, capitalize(victim->short_descr), victim->level);
+    send_to_char("                          ( ( ( {M[Consider]{x ) ) ) \n\r", ch);
+    sprintf(buf, "__________________________( ( < %sLevel %4d {x> ) )__________________________\n\r", msg, victim->level);
+    send_to_char(buf, ch);
+    sprintf(buf, "  %s \n\r",  center(capitalize(victim->short_descr),70," "));
     send_to_char(buf, ch);
 
          if ( diff <=  -5 ) msg = "It is probably not worth your time to kill $N.";
@@ -2993,7 +2996,7 @@ void do_consider( CHAR_DATA *ch, char *argument )
     else if ( diff <=  15 ) msg = "$N might provide a bit of a challenge.";
     else                    msg = "Only those sure of themselves should pick this fight.";
     act( msg, ch, NULL, victim, TO_CHAR );
-    send_to_char("+========================================================================+\n\r", ch);
+    send_to_char("+======================================================================+\n\r", ch);
 
     return;
 }

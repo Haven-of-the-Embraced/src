@@ -948,6 +948,9 @@ struct  kill_data
 #define ACT2_RETAINER          (C)
 #define ACT2_ULTRA_MOB         (D)
 #define ACT2_IS_NPC            (E)
+#define ACT2_MOLIATE           (F)
+#define ACT2_BLACKSMITH        (G)
+#define ACT2_SOCIALITE         (H)
 
 /*Mobile Templates*/
 #define TEMPLATE_DEFAULT    0

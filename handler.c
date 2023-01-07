@@ -3240,6 +3240,9 @@ char *act2_bit_name( int act_flags )
       if (act_flags & ACT2_BLOOD_DOLL     ) strcat(buf, " blood_doll"   );
       if (act_flags & ACT2_RETAINER       ) strcat(buf, " retainer"     );
       if (act_flags & ACT2_ULTRA_MOB      ) strcat(buf, " ultra_mob"    );
+      if (act_flags & ACT2_MOLIATE        ) strcat(buf, " moliate"      );
+      if (act_flags & ACT2_BLACKSMITH     ) strcat(buf, " blacksmith"   );
+      if (act_flags & ACT2_SOCIALITE      ) strcat(buf, " socialite"    );
     }
     else
     {

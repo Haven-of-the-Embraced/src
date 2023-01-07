@@ -482,6 +482,7 @@ void show_char_to_char_1( CHAR_DATA *victim, CHAR_DATA *ch )
 {
     char buf[MAX_STRING_LENGTH];
     OBJ_DATA *obj;
+    AFFECT_DATA *charmduration;
     int iWear;
     int percent;
     bool found;
@@ -576,6 +577,11 @@ void show_char_to_char_1( CHAR_DATA *victim, CHAR_DATA *ch )
     buf[0] = UPPER(buf[0]);
     send_to_char( "\n\r", ch);
     send_to_char( buf, ch );
+
+    if (IS_AFFECTED(victim,AFF_CHARM) && victim->master == ch)
+    {
+      act("$N is your {Bcharmie{x.",ch,NULL,victim,TO_CHAR);
+    }
 
     found = FALSE;
     for ( iWear = 0; iWear < MAX_WEAR; iWear++ )

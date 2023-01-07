@@ -482,7 +482,7 @@ void show_char_to_char_1( CHAR_DATA *victim, CHAR_DATA *ch )
 {
     char buf[MAX_STRING_LENGTH];
     OBJ_DATA *obj;
-    AFFECT_DATA *charmduration;
+    AFFECT_DATA *paf;
     int iWear;
     int percent;
     bool found;
@@ -581,6 +581,13 @@ void show_char_to_char_1( CHAR_DATA *victim, CHAR_DATA *ch )
     if (IS_AFFECTED(victim,AFF_CHARM) && victim->master == ch)
     {
       act("$N is your {Bcharmie{x.",ch,NULL,victim,TO_CHAR);
+      for ( paf = victim->affected; paf != NULL; paf = paf->next )
+        if (paf->type == gsn_charm_person)
+        {
+          sprintf(buf,"%s will follow you for an additional %d hour%s.\n\r", victim->short_descr,
+          paf->duration, paf->duration == 1 ? "" : "s");
+          send_to_char(buf,ch);
+        }
     }
 
     found = FALSE;

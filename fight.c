@@ -5312,6 +5312,190 @@ void do_disarm( CHAR_DATA *ch, char *argument )
     gain_exp(ch, success * 2);
 }
 
+void do_bite(CHAR_DATA *ch, char *argument)
+{
+    CHAR_DATA *victim;
+//  char arg[MAX_INPUT_LENGTH];
+    int dicesuccess = 0;
+    int damagesuccess = 0;
+
+    if (argument[0] == '\0')
+    {
+        victim = ch->fighting;
+        if (victim == NULL)
+        {
+            if (!IS_NPC(ch))
+                send_to_char("Whom are you trying to bite?\n\r", ch);
+            return;
+        }
+    }
+
+    else if ((victim = get_char_room(ch, NULL, argument)) == NULL)
+    {
+        if (!IS_NPC(ch))
+            send_to_char("Your target seems to be conspicuously absent.\n\r", ch);
+        return;
+    }
+
+    if (victim == ch)
+    {
+        send_to_char("You bite yourself on the arm.\n\r", ch);
+        return;
+    }
+
+    if (IS_NPC(victim) && victim->pIndexData->pShop != NULL)
+    {
+        if (!IS_NPC(ch))
+            send_to_char("The shopkeeper would prefer to keep all limbs intact.\n\r", ch);
+        return;
+    }
+
+    if (is_safe(ch, victim))
+    {
+        if (!IS_NPC(ch))
+            send_to_char("You get the feeling that this might not be a good place to start a fight.\n\r", ch);
+        return;
+    }
+
+    if (!IS_NPC(ch))
+        ch->move -= ch->level / 4;
+
+    if (is_affected(victim, gsn_precognition) && number_percent() > 50)
+    {
+        act("Almost as if $E sees it coming, $N avoids your bite!", ch, NULL, victim, TO_CHAR);
+        act("With a brief flash of insight, you swiftly react and dodge $n's ferocious bite.", ch, NULL, victim, TO_VICT);
+        act("Without missing a beat, $N moves aside and dodges $n's bite.", ch, NULL, victim, TO_NOTVICT);
+        return;
+    }
+
+    dicesuccess = godice(get_attribute(ch, DEXTERITY) + ch->csabilities[CSABIL_BRAWL], 5);
+
+    WAIT_STATE(ch, 12);
+
+    if (dicesuccess < 0)
+    {
+        act("The momentum of a severely misjudged kick towards $N carries you around, \n\rcausing you to slip and fall.", ch, NULL, victim, TO_CHAR);
+        act("$n misses you with a wild kick and slips to the ground.", ch, NULL, victim, TO_VICT);
+        act("$n kicks out in $N's direction, but slips to the ground.", ch, NULL, victim, TO_NOTVICT);
+        WAIT_STATE(ch, PULSE_VIOLENCE);
+        ch->position = POS_RESTING;
+        return;
+    }
+
+    if (dicesuccess == 0)
+    {
+        act("With the tiniest overcompensation, your vicious kick misses $N by mere inches.", ch, NULL, victim, TO_CHAR);
+        act("$n's kick comes within a few inches of connecting solidly with your body.", ch, NULL, victim, TO_VICT);
+        act("$n's fierce kick nearly connects with $N.", ch, NULL, victim, TO_NOTVICT);
+        return;
+    }
+
+    if (dicesuccess > 0)
+    {
+        act("Your kick connects directly with $N's midsection, leaving a nasty mark.", ch, NULL, victim, TO_CHAR);
+        if (!IS_NPC(victim))
+            act("$N's foot collides directly to your midsection.", ch, NULL, victim, TO_VICT);
+        act("$n kicks out at $N, and connects with the blow.", ch, NULL, victim, TO_NOTVICT);
+        if (dicesuccess > 4)
+        {
+            act("$N doubles over as you knock the wind out of $M!", ch, NULL, victim, TO_CHAR);
+            act("$N doubles over as the wind is knocked out of $M.", ch, NULL, victim, TO_NOTVICT);
+            if (!IS_NPC(victim))
+                act("You feel the wind knocked out of you!", ch, NULL, victim, TO_VICT);
+            WAIT_STATE(victim, PULSE_VIOLENCE);
+        }
+
+        gain_exp(ch, dicesuccess*2);
+        check_improve(ch,gsn_kick,TRUE,2);
+    }
+
+    damagesuccess = godice(get_attribute(ch, STRENGTH) + ch->pcdata->discipline[POTENCE], 6);
+
+    if (IS_NPC(victim))
+    {
+        soakdice = 1;
+        if (ch->race == race_lookup("garou") || IS_VAMP(victim))     /*bonus for vamp/garou, and 66% chance Fort or Crinos*/
+        {
+            if(number_range(1, 3) != 2)
+                soakdice++;
+            soakdice++;
+        }
+
+        if (victim->size > SIZE_LARGE)
+            soakdice++;
+        if (victim->size < SIZE_MEDIUM)
+            soakdice--;
+    }
+
+    else
+        soakdice = godice(get_attribute(ch, STAMINA) + ch->pcdata->discipline[FORTITUDE], 6);
+
+    soaksuccess = godice(soakdice, 6);
+    if (soaksuccess < 0)
+        soaksuccess = 0;
+
+    damagesuccess = damagesuccess - soaksuccess;
+    if (damagesuccess < 0)
+        damagesuccess = 0;
+
+    damage(ch, victim, 2*(UMAX(15,damagesuccess * (ch->level * 2)))/3, gsn_kick, DAM_BASH, TRUE);
+
+/*Sengir Adding in for second kick */
+    if ((dicesuccess >= 4) && (get_skill(ch, gsn_second_kick) > 0))
+    {
+        act("With quick timing and incredible speed, you spin around and kick out at $N,", ch, NULL, victim, TO_CHAR);
+        act("$n spins around, bringing $s heel directly at you,", ch, NULL, victim, TO_VICT);
+        act("$n twists around, attempting another kick at $N,", ch, NULL, victim, TO_NOTVICT);
+
+        dicesuccess = godice(get_attribute(ch, DEXTERITY) + ch->csabilities[CSABIL_BRAWL], 6);
+
+        if (dicesuccess < 0)
+        {
+            act("but manage to turn too quickly, setting yourself off balance as you tumble to the ground.", ch, NULL, victim, TO_CHAR);
+            act("and stumbles to the ground as the momentum carries $s through the turn.", ch, NULL, victim, TO_VICT);
+            act("but falls to the ground, carried by the wild kick.", ch, NULL, victim, TO_NOTVICT);
+
+            WAIT_STATE(ch, PULSE_VIOLENCE);
+            ch->position = POS_RESTING;
+            return;
+        }
+
+        if (dicesuccess == 0)
+        {
+            act("but miss with your follow through kick.", ch, NULL, victim, TO_CHAR);
+            act("but misses by only a few inches on the follow through.", ch, NULL, victim, TO_VICT);
+            act("but misses with the second kick.", ch, NULL, victim, TO_NOTVICT);
+            return;
+        }
+
+        if (dicesuccess > 0)
+        {
+            act("colliding solidly once again with a devastating kick.", ch, NULL, victim, TO_CHAR);
+            act("and collides directly with your body with the second kick.", ch, NULL, victim, TO_VICT);
+            act("which connects as surely and forcefully as the first.", ch, NULL, victim, TO_NOTVICT);
+
+            gain_exp(ch, dicesuccess);
+
+            extradamage = dicesuccess - 1;
+            damagesuccess = godice(get_attribute(ch, STRENGTH) + ch->pcdata->discipline[POTENCE] + extradamage, 6);
+
+            soaksuccess = godice(soakdice, 6);
+            if (soaksuccess < 0)
+                soaksuccess = 0;
+
+            damagesuccess = damagesuccess - soaksuccess;
+            if (damagesuccess < 0)
+                damagesuccess = 0;
+
+            damage(ch, victim, 2*(UMAX(15,damagesuccess * ch->level))/3, gsn_kick, DAM_BASH, TRUE);
+
+        }
+
+    }
+
+    return;
+}
+
 
 void do_surrender( CHAR_DATA *ch, char *argument )
 {

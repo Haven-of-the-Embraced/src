@@ -1341,7 +1341,7 @@ void rote_mutateform(CHAR_DATA *ch, int success, char *arg)
 
         af.where     = TO_AFFECTS;
         af.type      = gsn_mutateform;
-        af.level     = 0;
+        af.level     = MUTATE_SLOTH;
         af.duration  = 2;
         af.location  = APPLY_CS_STR;
         af.modifier  = -2;
@@ -1383,7 +1383,7 @@ void rote_mutateform(CHAR_DATA *ch, int success, char *arg)
 
         af.where     = TO_AFFECTS;
         af.type      = gsn_mutateform;
-        af.level     = success;
+        af.level     = MUTATE_OWL;
         af.duration  = success * 10;
         af.location  = APPLY_CS_STR;
         af.modifier  = -1;
@@ -1422,7 +1422,7 @@ void rote_mutateform(CHAR_DATA *ch, int success, char *arg)
 
         af.where     = TO_AFFECTS;
         af.type      = gsn_mutateform;
-        af.level     = success;
+        af.level     = MUTATE_SQUIRREL;
         af.duration  = success * 10;
         af.location  = APPLY_CS_STR;
         af.modifier  = -1;
@@ -1456,7 +1456,7 @@ void rote_mutateform(CHAR_DATA *ch, int success, char *arg)
 
         af.where     = TO_AFFECTS;
         af.type      = gsn_mutateform;
-        af.level     = success;
+        af.level     = MUTATE_PANTHER;
         af.duration  = success * 10;
         af.location  = APPLY_CS_STR;
         af.modifier  = 2;
@@ -1501,7 +1501,7 @@ void rote_mutateform(CHAR_DATA *ch, int success, char *arg)
 
         af.where     = TO_AFFECTS;
         af.type      = gsn_mutateform;
-        af.level     = success;
+        af.level     = MUTATE_BEAR;
         af.duration  = success * 10;
         af.location  = APPLY_CS_STR;
         af.modifier  = 3;
@@ -1538,7 +1538,7 @@ void rote_mutateform(CHAR_DATA *ch, int success, char *arg)
 
       af.where     = TO_AFFECTS;
       af.type      = gsn_mutateform;
-      af.level     = success;
+      af.level     = MUTATE_SLOTH;
       af.duration  = success * 10;
       af.location  = APPLY_CS_STR;
       af.modifier  = -2;

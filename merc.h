@@ -2694,6 +2694,14 @@ struct  room_index_data
 #define CHIMERSTRY      15
 #define DEMENTATION     16
 #define SERPENTIS       17
+
+/* Life4 Mutate Forms */
+#define MUTATE_SLOTH        0
+#define MUTATE_OWL          1
+#define MUTATE_SQUIRREL     2
+#define MUTATE_PANTHER      3
+#define MUTATE_BEAR         4
+
 /*
  * Types of attacks.
  * Must be non-overlapping with spell/skill types,

@@ -5321,6 +5321,9 @@ void do_bite(CHAR_DATA *ch, char *argument)
     bool biteform = FALSE;
     int critical = 1;
 
+    if (IS_NPC(ch))
+      return;
+
     if (argument[0] == '\0')
     {
         victim = ch->fighting;
@@ -5345,12 +5348,9 @@ void do_bite(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if (is_affected(ch, AFF_SHIFT) &&
-      (ch->shift == "a large mountain wolf" || ch->shift == "a strong looking bear" ||
-       ch->shift == "a sleek gray panther" ))
-        biteform == TRUE;
-
-    if (!IS_AFFECTED(ch, AFF_FANGS) && (ch->pcdata->shiftform < CRINOS) && biteform == FALSE)
+    if (!IS_AFFECTED(ch, AFF_FANGS) && (ch->pcdata->shiftform < CRINOS) &&
+      get_affect_level(ch, gsn_mutateform) != MUTATE_PANTHER &&
+      get_affect_level(ch, gsn_mutateform) != MUTATE_BEAR)
     {
       send_to_char("You don't have sharp enough teeth to bite effectively.\n\r", ch);
       return;

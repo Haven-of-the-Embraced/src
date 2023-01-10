@@ -5370,7 +5370,7 @@ void do_bite(CHAR_DATA *ch, char *argument)
     }
 
     if (!IS_NPC(ch))
-        ch->move -= ch->level / 4;
+        ch->move -= ch->level / 5;
 
     if (is_affected(victim, gsn_precognition) && number_percent() > 50)
     {
@@ -5386,34 +5386,32 @@ void do_bite(CHAR_DATA *ch, char *argument)
 
     if (dicesuccess < 0)
     {
-        act("The momentum of a severely misjudged kick towards $N carries you around, \n\rcausing you to slip and fall.", ch, NULL, victim, TO_CHAR);
-        act("$n misses you with a wild kick and slips to the ground.", ch, NULL, victim, TO_VICT);
-        act("$n kicks out in $N's direction, but slips to the ground.", ch, NULL, victim, TO_NOTVICT);
+        act("You lunge towards $N, but your bite comes up empty.", ch, NULL, victim, TO_CHAR);
+        act("$n lunges towards you, baring $s teeth.", ch, NULL, victim, TO_VICT);
+        act("You watch as $n tries to bite at $N.", ch, NULL, victim, TO_NOTVICT);
         WAIT_STATE(ch, PULSE_VIOLENCE);
-        ch->position = POS_RESTING;
         return;
     }
 
     if (dicesuccess == 0)
     {
-        act("With the tiniest overcompensation, your vicious kick misses $N by mere inches.", ch, NULL, victim, TO_CHAR);
-        act("$n's kick comes within a few inches of connecting solidly with your body.", ch, NULL, victim, TO_VICT);
-        act("$n's fierce kick nearly connects with $N.", ch, NULL, victim, TO_NOTVICT);
+        act("You bite savagely at $N, but miss your target.", ch, NULL, victim, TO_CHAR);
+        act("$n's teeth snap closed near your body.", ch, NULL, victim, TO_VICT);
+        act("$n's bite misses $N.", ch, NULL, victim, TO_NOTVICT);
         return;
     }
 
     if (dicesuccess > 0)
     {
-        act("Your kick connects directly with $N's midsection, leaving a nasty mark.", ch, NULL, victim, TO_CHAR);
+        act("Baring your teeth, you gnash violently upon $N with a powerful bite.", ch, NULL, victim, TO_CHAR);
         if (!IS_NPC(victim))
-            act("$N's foot collides directly to your midsection.", ch, NULL, victim, TO_VICT);
-        act("$n kicks out at $N, and connects with the blow.", ch, NULL, victim, TO_NOTVICT);
+            act("$N bites down upon you, ripping into your body!", ch, NULL, victim, TO_VICT);
+        act("$n lunges at $N, biting $M violently.", ch, NULL, victim, TO_NOTVICT);
         if (dicesuccess > 4)
         {
-            act("$N doubles over as you knock the wind out of $M!", ch, NULL, victim, TO_CHAR);
-            act("$N doubles over as the wind is knocked out of $M.", ch, NULL, victim, TO_NOTVICT);
+            act("With precision targeting, you bite down on a sensitive area!", ch, NULL, victim, TO_CHAR);
             if (!IS_NPC(victim))
-                act("You feel the wind knocked out of you!", ch, NULL, victim, TO_VICT);
+                act("You flinch in pain as $n bites down hard!", ch, NULL, victim, TO_VICT);
             WAIT_STATE(victim, PULSE_VIOLENCE);
         }
 

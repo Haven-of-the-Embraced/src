@@ -391,6 +391,7 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "bash",       do_bash},
     { "bs",     do_backstab}, //DNM
     { "berserk",    do_berserk},
+    { "bite",       do_bite},
     { "dirt",       do_dirt},
     { "disarm",     do_disarm},
     { "flee",       do_flee},

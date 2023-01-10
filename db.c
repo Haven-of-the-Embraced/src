@@ -4906,6 +4906,7 @@ sh_int          gsn_whip;
 
 sh_int          gsn_bash;
 sh_int          gsn_berserk;
+sh_int          gsn_bite;
 sh_int          gsn_dirt;
 sh_int          gsn_hand_to_hand;
 sh_int          gsn_trip;

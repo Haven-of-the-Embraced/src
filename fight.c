@@ -5350,7 +5350,7 @@ void do_bite(CHAR_DATA *ch, char *argument)
        ch->shift == "a sleek gray panther" ))
         biteform == TRUE;
 
-    if (!affected(ch, AFF_FANGS) && (ch->pcdata->shiftform < CRINOS) && biteform == FALSE)
+    if (!IS_AFFECTED(ch, AFF_FANGS) && (ch->pcdata->shiftform < CRINOS) && biteform == FALSE)
     {
       send_to_char("You don't have sharp enough teeth to bite effectively.\n\r", ch);
       return;
@@ -5371,7 +5371,7 @@ void do_bite(CHAR_DATA *ch, char *argument)
     }
 
     if (!IS_NPC(ch))
-        ch->move -= ch->level / 5;
+        ch->move -= ch->level / 4;
 
     if (is_affected(victim, gsn_precognition) && number_percent() > 50)
     {
@@ -5425,7 +5425,7 @@ void do_bite(CHAR_DATA *ch, char *argument)
     if (damagesuccess < 0)
         damagesuccess = 0;
 
-    d10_damage(ch, victim, damagesuccess, ch->level * critical, gsn_bite, DAM_PIERCE, DEFENSE_FULL, TRUE, TRUE);
+    d10_damage(ch, victim, damagesuccess, ch->level * 2 / 3 * critical, gsn_bite, DAM_PIERCE, DEFENSE_FULL, TRUE, TRUE);
     return;
 }
 

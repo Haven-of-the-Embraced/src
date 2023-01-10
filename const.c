@@ -1734,6 +1734,10 @@ Total (31) */
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_FIGHTING,
     &gsn_berserk,           SLOT( 0),       0,      24, "",                     "You feel your pulse slow down.",   "" },
 
+    { "bite",        { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,              POS_FIGHTING,
+    &gsn_bite,              SLOT( 0),       0,      24, "vicious bite",           "!Bite!",     "" },
+
     { "dirt kicking",      { 5, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,     TAR_IGNORE,     POS_FIGHTING,
     &gsn_dirt,      SLOT( 0),   0,  24, "kicked dirt",      "You rub the dirt out of your eyes.",   "" },

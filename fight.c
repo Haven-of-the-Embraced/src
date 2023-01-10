@@ -5318,7 +5318,6 @@ void do_bite(CHAR_DATA *ch, char *argument)
 //  char arg[MAX_INPUT_LENGTH];
     int dicesuccess = 0;
     int damagesuccess = 0;
-    bool biteform = FALSE;
     int critical = 1;
 
     if (IS_NPC(ch))
@@ -5435,7 +5434,6 @@ void do_shred(CHAR_DATA *ch, char *argument)
 //  char arg[MAX_INPUT_LENGTH];
     int dicesuccess = 0;
     int damagesuccess = 0;
-    bool biteform = FALSE;
     int critical = 1;
 
     if (IS_NPC(ch))
@@ -5447,7 +5445,7 @@ void do_shred(CHAR_DATA *ch, char *argument)
         if (victim == NULL)
         {
             if (!IS_NPC(ch))
-                send_to_char("Whom are you trying to bite?\n\r", ch);
+                send_to_char("Whom are you trying to shred with your claws?\n\r", ch);
             return;
         }
     }
@@ -5461,22 +5459,20 @@ void do_shred(CHAR_DATA *ch, char *argument)
 
     if (victim == ch)
     {
-        send_to_char("You bite yourself on the arm.\n\r", ch);
+        send_to_char("Shredding yourself would do no good.\n\r", ch);
         return;
     }
 
-    if (!IS_AFFECTED(ch, AFF_FANGS) && (ch->pcdata->shiftform < CRINOS) &&
-      get_affect_level(ch, gsn_mutateform) != MUTATE_PANTHER &&
-      get_affect_level(ch, gsn_mutateform) != MUTATE_BEAR)
+    if (!is_affected(ch, gsn_claws) && !is_affected(ch, gsn_wingclaws))
     {
-      send_to_char("You don't have sharp enough teeth to bite effectively.\n\r", ch);
+      send_to_char("You need to have sharp claws to shred an enemy.\n\r", ch);
       return;
     }
 
     if (IS_NPC(victim) && victim->pIndexData->pShop != NULL)
     {
         if (!IS_NPC(ch))
-            send_to_char("The shopkeeper would prefer to keep all limbs intact.\n\r", ch);
+            send_to_char("Shredding the shopkeeper would be bad for future endeavors.\n\r", ch);
         return;
     }
 

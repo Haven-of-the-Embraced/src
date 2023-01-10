@@ -5434,7 +5434,6 @@ void do_shred(CHAR_DATA *ch, char *argument)
 //  char arg[MAX_INPUT_LENGTH];
     int dicesuccess = 0;
     int damagesuccess = 0;
-    int critical = 1;
 
     if (IS_NPC(ch))
       return;
@@ -5484,52 +5483,43 @@ void do_shred(CHAR_DATA *ch, char *argument)
     }
 
     if (!IS_NPC(ch))
-        ch->move -= ch->level / 4;
+        ch->move -= ch->level / 5;
 
     if (is_affected(victim, gsn_precognition) && number_percent() > 50)
     {
-        act("Almost as if $E sees it coming, $N avoids your bite!", ch, NULL, victim, TO_CHAR);
-        act("With a brief flash of insight, you swiftly react and dodge $n's ferocious bite.", ch, NULL, victim, TO_VICT);
-        act("Without missing a beat, $N moves aside and dodges $n's bite.", ch, NULL, victim, TO_NOTVICT);
+        act("$N moves out of the way of your shred attack, seconds before it connects!", ch, NULL, victim, TO_CHAR);
+        act("With a brief flash of insight, you swiftly react and dodge $n's shredding claws.", ch, NULL, victim, TO_VICT);
+        act("$N dodges away from $n's shred attack.", ch, NULL, victim, TO_NOTVICT);
         return;
     }
 
-    dicesuccess = godice(get_attribute(ch, DEXTERITY) + ch->csabilities[CSABIL_BRAWL], 5);
+    dicesuccess = godice(get_attribute(ch, DEXTERITY) + ch->csabilities[CSABIL_BRAWL], 6);
 
     WAIT_STATE(ch, 12);
 
     if (dicesuccess < 0)
     {
-        act("You lunge towards $N, but your bite comes up empty.", ch, NULL, victim, TO_CHAR);
-        act("$n lunges towards you, baring $s teeth.", ch, NULL, victim, TO_VICT);
-        act("You watch as $n tries to bite at $N.", ch, NULL, victim, TO_NOTVICT);
+        act("You try to shred $N with your claws, but miss horribly!", ch, NULL, victim, TO_CHAR);
+        act("$n tries to attack with $s claws, but misses completely.", ch, NULL, victim, TO_VICT);
+        act("$n makes a lunge at $N, attempting to shred $M to bits, but misses by a mile.", ch, NULL, victim, TO_NOTVICT);
         WAIT_STATE(ch, PULSE_VIOLENCE);
         return;
     }
 
     if (dicesuccess == 0)
     {
-        act("You bite savagely at $N, but miss your target.", ch, NULL, victim, TO_CHAR);
-        act("$n's teeth snap closed near your body.", ch, NULL, victim, TO_VICT);
-        act("$n's bite misses $N.", ch, NULL, victim, TO_NOTVICT);
+        act("You attack with your claws at $N, but miss completely.", ch, NULL, victim, TO_CHAR);
+        act("$n tries to lunge at you with $s claws, but misses.", ch, NULL, victim, TO_VICT);
+        act("$n's shredding misses $N.", ch, NULL, victim, TO_NOTVICT);
         return;
     }
 
     if (dicesuccess > 0)
     {
-        act("Baring your teeth, you gnash violently upon $N with a powerful bite.", ch, NULL, victim, TO_CHAR);
+        act("With a ferocious attack, you shred into $N with your claws!", ch, NULL, victim, TO_CHAR);
         if (!IS_NPC(victim))
-            act("$N bites down upon you, ripping into your body!", ch, NULL, victim, TO_VICT);
-        act("$n lunges at $N, biting $M violently.", ch, NULL, victim, TO_NOTVICT);
-        if (dicesuccess > 4)
-        {
-            act("With precision targeting, you bite down on a sensitive area!", ch, NULL, victim, TO_CHAR);
-            if (!IS_NPC(victim))
-                act("You flinch in pain as $n bites down hard!", ch, NULL, victim, TO_VICT);
-            WAIT_STATE(victim, PULSE_VIOLENCE);
-            critical = 1.5;
-        }
-
+            act("$N's claws shred into your body!", ch, NULL, victim, TO_VICT);
+        act("$n claws wildly at $N, shredding $M viciously.", ch, NULL, victim, TO_NOTVICT);
         gain_exp(ch, dicesuccess*2);
     }
 
@@ -5538,7 +5528,16 @@ void do_shred(CHAR_DATA *ch, char *argument)
     if (damagesuccess < 0)
         damagesuccess = 0;
 
-    d10_damage(ch, victim, damagesuccess, ch->level * 2 / 3 * critical, gsn_bite, DAM_PIERCE, DEFENSE_FULL, TRUE, TRUE);
+    d10_damage(ch, victim, damagesuccess, ch->level * 2 / 3, gsn_shred, DAM_SLASH, DEFENSE_FULL, TRUE, TRUE);
+    if (dicesuccess > 4)
+    {
+        act("With quick thinking, you turn and shred a second time at $N!", ch, NULL, victim, TO_CHAR);
+        if (!IS_NPC(victim))
+            act("$n turns and slashes a second time at you!", ch, NULL, victim, TO_VICT);
+        d10_damage(ch, victim, damagesuccess - 2, ch->level * 2 / 3, gsn_shred, DAM_SLASH, DEFENSE_FULL, TRUE, TRUE);
+
+        WAIT_STATE(victim, PULSE_VIOLENCE);
+    }
     return;
 }
 

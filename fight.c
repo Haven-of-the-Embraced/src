@@ -5319,6 +5319,7 @@ void do_bite(CHAR_DATA *ch, char *argument)
     int dicesuccess = 0;
     int damagesuccess = 0;
     bool biteform = FALSE;
+    int critical = 1;
 
     if (argument[0] == '\0')
     {
@@ -5413,18 +5414,18 @@ void do_bite(CHAR_DATA *ch, char *argument)
             if (!IS_NPC(victim))
                 act("You flinch in pain as $n bites down hard!", ch, NULL, victim, TO_VICT);
             WAIT_STATE(victim, PULSE_VIOLENCE);
+            critical = 1.5;
         }
 
         gain_exp(ch, dicesuccess*2);
     }
 
-    damagesuccess = godice(get_attribute(ch, STRENGTH) + ch->pcdata->discipline[POTENCE], 6);
+    damagesuccess = godice(get_attribute(ch, STRENGTH) + 1 + ch->pcdata->discipline[POTENCE], 6);
 
     if (damagesuccess < 0)
         damagesuccess = 0;
 
-    damage(ch, victim, 2*(UMAX(15,damagesuccess * (ch->level * 2)))/3, gsn_kick, DAM_BASH, TRUE);
-
+    d10_damage(ch, victim, damagesuccess, ch->level * critical, gsn_bite, DAM_PIERCE, DEFENSE_FULL, TRUE, TRUE);
     return;
 }
 

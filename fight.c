@@ -5318,6 +5318,7 @@ void do_bite(CHAR_DATA *ch, char *argument)
 //  char arg[MAX_INPUT_LENGTH];
     int dicesuccess = 0;
     int damagesuccess = 0;
+    bool biteform = FALSE;
 
     if (argument[0] == '\0')
     {
@@ -5341,6 +5342,17 @@ void do_bite(CHAR_DATA *ch, char *argument)
     {
         send_to_char("You bite yourself on the arm.\n\r", ch);
         return;
+    }
+
+    if (is_affected(ch, AFF_SHIFT) &&
+      (ch->shift == "a large mountain wolf" || ch->shift == "a strong looking bear" ||
+       ch->shift == "a sleek gray panther" ))
+        biteform == TRUE;
+
+    if (!affected(ch, AFF_FANGS) && (ch->pcdata->shiftform < CRINOS) && biteform == FALSE)
+    {
+      send_to_char("You don't have sharp enough teeth to bite effectively.\n\r", ch);
+      return;
     }
 
     if (IS_NPC(victim) && victim->pIndexData->pShop != NULL)

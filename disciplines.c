@@ -5327,6 +5327,7 @@ void do_shift(CHAR_DATA *ch, char *argument)
             ch->short_descr = str_dup( "A strange bat" );
             sprintf(buf, "A strange bat flittering about the room");
             ch->shift = str_dup( buf );
+            af.level = SHIFT_BAT;
         }
         else
         {
@@ -5335,6 +5336,7 @@ void do_shift(CHAR_DATA *ch, char *argument)
             ch->short_descr = str_dup( "A black raven" );
             sprintf(buf, "A black raven");
             ch->shift = str_dup( buf );
+            af.level = SHIFT_RAVEN;
         }
 
         ch->pblood -= 20;
@@ -5342,7 +5344,6 @@ void do_shift(CHAR_DATA *ch, char *argument)
 
         af.where     = TO_AFFECTS;
         af.type      = gsn_shift;
-        af.level     = ch->pcdata->discipline[PROTEAN];
         af.duration  = 24;
         af.location  = APPLY_CS_STR;
         af.modifier  = -1;
@@ -5384,7 +5385,7 @@ void do_shift(CHAR_DATA *ch, char *argument)
 
         af.where     = TO_AFFECTS;
         af.type      = gsn_shift;
-        af.level     = ch->pcdata->discipline[PROTEAN];
+        af.level     = SHIFT_RAT;
         af.duration  = 24;
         af.location  = APPLY_CS_STR;
         af.modifier  = -11;
@@ -5393,8 +5394,6 @@ void do_shift(CHAR_DATA *ch, char *argument)
 
         af.where     = TO_AFFECTS;
         af.type      = gsn_shift;
-        af.level     = ch->pcdata->discipline[PROTEAN];
-        af.duration  = 24;
         af.location  = APPLY_CS_DEX;
         af.modifier  = 2;
         af.bitvector = AFF_SNEAK;
@@ -5402,17 +5401,12 @@ void do_shift(CHAR_DATA *ch, char *argument)
 
         af.where     = TO_AFFECTS;
         af.type      = gsn_shift;
-        af.level     = ch->pcdata->discipline[PROTEAN];
-        af.duration  = 24;
         af.location  = APPLY_CS_STA;
-        af.modifier  = 2;
         af.bitvector = AFF_HIDE;
         affect_to_char( ch, &af );
 
         af.where     = TO_AFFECTS;
         af.type      = gsn_shift;
-        af.level     = ch->pcdata->discipline[PROTEAN];
-        af.duration  = 24;
         af.location  = APPLY_CS_PER;
         af.modifier  = 3;
         af.bitvector = 0;
@@ -5434,7 +5428,7 @@ void do_shift(CHAR_DATA *ch, char *argument)
 
         af.where     = TO_AFFECTS;
         af.type      = gsn_shift;
-        af.level     = ch->pcdata->discipline[PROTEAN];
+        af.level     = SHIFT_WOLF;
         af.duration  = 24;
         af.location  = APPLY_CS_STR;
         af.modifier  = 1;
@@ -5485,7 +5479,7 @@ void do_shift(CHAR_DATA *ch, char *argument)
 
         af.where     = TO_AFFECTS;
         af.type      = gsn_shift;
-        af.level     = ch->pcdata->discipline[PROTEAN];
+        af.level     = SHIFT_BEAR;
         af.duration  = 24;
         af.location  = APPLY_CS_STR;
         af.modifier  = 3;
@@ -5522,7 +5516,7 @@ if ( !str_prefix( arg, "syrup" ) )
 
         af.where     = TO_AFFECTS;
         af.type      = gsn_shift;
-        af.level     = ch->pcdata->discipline[PROTEAN];
+        af.level     = SHIFT_SYRUP;
         af.duration  = 24;
         af.location  = APPLY_NONE;
         af.modifier  = 0;
@@ -5554,26 +5548,23 @@ if ( !str_prefix( arg, "syrup" ) )
 
         af.where     = TO_AFFECTS;
         af.type      = gsn_shift;
-        af.level     = ch->pcdata->discipline[PROTEAN];
+        af.level     = SHIFT_MIST;
         af.duration  = 24+ch->level;
         af.location  = APPLY_MOVE;
         af.modifier  = ch->level * 10;
         af.bitvector = AFF_SHIFT;
         affect_to_char( ch, &af );
 
-        af.where     = TO_AFFECTS2;
-        af.type      = gsn_shift;
-        af.level     = ch->pcdata->discipline[PROTEAN];
-        af.duration  = 24+ch->level;
         af.location  = APPLY_NONE;
         af.modifier  = 0;
-        af.bitvector = AFF2_MIST;
-        affect_to_char( ch, &af );
-
         af.bitvector = AFF_PASS_DOOR;
         affect_to_char( ch, &af );
 
         af.bitvector = AFF_FLYING;
+        affect_to_char( ch, &af );
+
+        af.where     = TO_AFFECTS2;
+        af.bitvector = AFF2_MIST;
         affect_to_char( ch, &af );
 
         if (ch->hit > ch->max_hit) ch->hit = ch->max_hit;

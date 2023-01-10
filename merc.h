@@ -2695,7 +2695,22 @@ struct  room_index_data
 #define DEMENTATION     16
 #define SERPENTIS       17
 
-/* Life4 Mutate Forms */
+/*
+ * Protean4+ Shifted Forms
+ * Refers to Affect Level of Shift
+*/
+#define SHIFT_SYRUP         0
+#define SHIFT_RAT           1
+#define SHIFT_BAT           2
+#define SHIFT_RAVEN         3
+#define SHIFT_WOLF          4
+#define SHIFT_BEAR          5
+#define SHIFT_MIST          6
+
+/*
+ * Life4 Mutate Forms
+ * Refers to Affect level of Mutate Form
+*/
 #define MUTATE_SLOTH        0
 #define MUTATE_OWL          1
 #define MUTATE_SQUIRREL     2

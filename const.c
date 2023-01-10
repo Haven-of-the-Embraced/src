@@ -1790,6 +1790,10 @@ Total (31) */
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_FIGHTING,
     &gsn_rescue,            SLOT( 0),        0,     12, "",                     "!Rescue!",     "" },
 
+    { "shred",        { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,              POS_FIGHTING,
+    &gsn_shred,              SLOT( 0),       0,      24, "shredding claws",           "!Shred!",     "" },
+
     { "soothe", { 20, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_IGNORE, POS_STANDING,
     &gsn_soothe, SLOT( 0),    0,  0,    "",         "Your inner beast begins to emerge once again.",     ""    },

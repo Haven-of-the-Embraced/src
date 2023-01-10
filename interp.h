@@ -304,6 +304,7 @@ DECLARE_DO_FUN( do_scroll   );
 DECLARE_DO_FUN( do_sell );
 DECLARE_DO_FUN( do_set      );
 DECLARE_DO_FUN( do_shout    );
+DECLARE_DO_FUN( do_shred    );
 DECLARE_DO_FUN( do_smite    );
 DECLARE_DO_FUN( do_shutdow  );
 DECLARE_DO_FUN( do_shutdown );

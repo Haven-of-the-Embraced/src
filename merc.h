@@ -2913,6 +2913,7 @@ extern sh_int  gsn_berserk;
 extern sh_int  gsn_bite;
 extern sh_int  gsn_dirt;
 extern sh_int  gsn_hand_to_hand;
+extern sh_int  gsn_shred;
 extern sh_int  gsn_trip;
 
 extern sh_int  gsn_fast_healing;

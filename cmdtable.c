@@ -410,6 +410,7 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "project",        do_project},
     { "telepathy",      do_telepathy},
     { "touch",      do_touch},
+    { "shred",      do_shred},
     { "study",        do_study},
     { "skin",       do_skin},
     { "fortress",       do_fortress},

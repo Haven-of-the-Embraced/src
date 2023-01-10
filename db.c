@@ -4909,6 +4909,7 @@ sh_int          gsn_berserk;
 sh_int          gsn_bite;
 sh_int          gsn_dirt;
 sh_int          gsn_hand_to_hand;
+sh_int          gsn_shred;
 sh_int          gsn_trip;
 
 sh_int          gsn_fast_healing;

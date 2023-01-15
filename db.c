@@ -1773,7 +1773,8 @@ void reset_room( ROOM_INDEX_DATA *pRoom )
         }
     }
 /*Sengir adding natural Tass in the form of RARE faerie shrooms*/
-    if((pRoom->sector_type == SECT_NODE) && number_range(1, 20) == 1)
+    if((pRoom->sector_type == SECT_NODE) && pRoom->room_flags != ROOM_UMBRA &&
+        number_range(1, 20) == 1)
     {
         /*spawn*/
         OBJ_DATA *faeriemushroom;

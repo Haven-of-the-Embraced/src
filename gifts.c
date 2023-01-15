@@ -809,7 +809,42 @@ void spell_gift_leylines( int sn, int level, CHAR_DATA *ch, void *vo, int target
 //Roll: Perception + Primal Urge (Difficulty based on sector.)
 //Allows the garou to compensate for her vision completely using her sense of smell. Negates the effects of blindness, fireblindness, can see in darkness, can see invisible and hidden. Outdoors, woods, etc, low difficulty. cities, indoors, high difficulty. Very short duration, long recovery (2-3 ticks, 10-12 ticks)
 //Cost: None
-void spell_gift_scentofsight( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_scentofsight( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  AFFECT_DATA af;
+
+  if (is_affected(ch, gsn_gift_scentofsight))
+  {
+    sendch("You tone down your senses of smell and hearing back to normal.\n\r", ch);
+    affect_strip(ch, gsn_gift_scentofsight);
+    return;
+  }
+
+  if (ch->pcdata->gnosis[TEMP] < 1)
+  {
+    sendch("You do not have the spiritual reserves to activate this gift.\n\r", ch);
+    return;
+  }
+
+  ch->pcdata->gnosis[TEMP]--;
+  sendch("You senses increase tenfold and you take notice of things you missed before...\n\r",ch);
+
+  af.where     = TO_AFFECTS;
+  af.type      = sn;
+  af.level     = level;
+  af.duration  = ch->pcdata->gnosis[PERM] * 4;
+  af.modifier  = 1;
+  af.location  = APPLY_CS_PER;
+  af.bitvector = AFF_DETECT_HIDDEN;
+  affect_to_char( ch, &af );
+
+  af.where     = TO_AFFECTS2;
+  af.level     = ch->rank;
+  af.modifier  = 0;
+  af.location  = 0;
+  af.bitvector = AFF2_DETECT_UNSEEN;
+  affect_to_char(ch, &af );
+  return;
     return;
 }
 //

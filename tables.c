@@ -1283,7 +1283,7 @@ const struct    gift_type   gift_table  [MAX_GIFTS_CODED]  =
     {   "hares leap", 					1,     24, 0,     LUPUS,  0,          0,        1,   0},
     {   "heightened senses", 			1,     24, 0,     LUPUS,  0,          0,        1,   0},
     {   "ley lines", 					1,     24, 0,     LUPUS,  0,          0,        1,   0},
-    {   "scent of sight", 				0,     24, 0,     LUPUS,  0,          0,        2,   0},
+    {   "scent of sight", 				1,     24, 0,     LUPUS,  0,          0,        2,   0},
     {   "sense the unnatural", 			0,     24, 0,     LUPUS,  0,          0,        2,   0},
     {   "devils child", 				0,     24, 0,     LUPUS,  0,          0,        3,   0},
     {   "name the spirit", 				0,     24, 0,     LUPUS,  0,          0,        3,   0},

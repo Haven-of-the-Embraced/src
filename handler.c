@@ -2867,7 +2867,7 @@ bool can_see( CHAR_DATA *ch, CHAR_DATA *victim )
         (IS_NPC(ch) && IS_IMMORTAL(ch)))
         return TRUE;
 
-    if (IS_AFFECTED(ch, AFF_BLIND) )
+    if (IS_AFFECTED(ch, AFF_BLIND) && !is_affected(ch, gsn_gift_scentofsight))
         return FALSE;
 
     if (unseen_check(ch, victim) == FALSE)

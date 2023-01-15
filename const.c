@@ -2402,7 +2402,7 @@ Total (3) */
 
     { "scent of sight", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_scentofsight,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_scentofsight,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+    &gsn_gift_scentofsight,          SLOT( 0),        0,     12, "",             "Your senses of smell and sight return to normal.",        "" },
 
     { "sense the unnatural", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_sensetheunnatural,  TAR_IGNORE, POS_STANDING,

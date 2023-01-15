@@ -645,7 +645,7 @@ bool check_blind( CHAR_DATA *ch )
     if (!IS_NPC(ch) && IS_SET(ch->act,PLR_HOLYLIGHT))
     return TRUE;
 
-    if ( IS_AFFECTED(ch, AFF_BLIND) )
+    if ( IS_AFFECTED(ch, AFF_BLIND) && !is_affected(ch, gsn_gift_scentofsight))
     {
     send_to_char( "You can't see a thing!\n\r", ch );
     return FALSE;

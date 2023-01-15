@@ -835,15 +835,17 @@ void spell_gift_scentofsight( int sn, int level, CHAR_DATA *ch, void *vo, int ta
   {
     send_to_char("Your supplication to Gaea for extra senses seems to be in vain.\n\r", ch);
     WAIT_STATE(ch, 8);
+    return;
   }
 
   if (dicesuccess == 0)
   {
     send_to_char("Your senses do not seem to have increased as you expected.\n\r", ch);
     WAIT_STATE(ch, 2);
+    return;
   }
 
-  sendch("Your senses of smell and hearing sharpen drastcally, allowing you to compensate for sight.\n\r",ch);
+  sendch("Your senses of smell and hearing sharpen drastically, allowing you to compensate for sight.\n\r",ch);
 
   af.where     = TO_AFFECTS;
   af.type      = sn;
@@ -857,6 +859,8 @@ void spell_gift_scentofsight( int sn, int level, CHAR_DATA *ch, void *vo, int ta
   af.where      = TO_VULN;
   af.bitvector  = VULN_SOUND;
   affect_to_char(ch, &af);
+
+  gain_exp(ch, dicesuccess * 3);
 
   return;
 }

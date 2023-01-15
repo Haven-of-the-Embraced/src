@@ -1005,8 +1005,41 @@ void spell_gift_blurofthemilkyeye( int sn, int level, CHAR_DATA *ch, void *vo, i
 //fox spirit
 //Roll:None.
 //The garou can mask her scent completely, making her difficult to track. Once learned, gift is innate and always active unless the garou wishes to leave a scent. (We don’t have any sort of tracking system.. Find another gift.)
-void spell_gift_scentofrunningwater( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_scentofrunningwater( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  AFFECT_DATA af;
+  int success;
+
+  if (is_affected(ch, gsn_gift_scentofrunningwater))
+  {
+    sendch("You allow yourself to be tracked once again.\n\r", ch);
+    affect_strip(ch,gsn_gift_scentofrunningwater);
     return;
+  }
+
+  if (ch->move < ch->level / 10)
+  {
+    send_to_char("You are too tired to mask your scent.\n\r", ch);
+    return;
+  }
+
+  ch->move -= ch->level / 10;
+
+  success = godice(ch->pcdata->gnosis[PERM], 5);
+
+  sendch("You focus briefly and mask your scent from anyone attempting to track you.\n\r", ch);
+  af.where     = TO_AFFECTS;
+  af.type      = sn;
+  af.level     = level;
+  af.duration  = 25 + (success * 5);
+  af.modifier  = 0;
+  af.location  = APPLY_NONE;
+  af.bitvector = AFF_SNEAK;
+  affect_to_char( ch, &af );
+
+  gain_exp(ch, success);
+
+  return;
 }
 //
 //“Snow Running”

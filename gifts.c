@@ -830,7 +830,20 @@ void spell_gift_scentofsight( int sn, int level, CHAR_DATA *ch, void *vo, int ta
   dicesuccess = godice(get_attribute(ch, PERCEPTION) + get_ability2(ch, ch->pcdata->primal_urge), 7);
 
   ch->pcdata->gnosis[TEMP]--;
-  sendch("You senses increase tenfold and you take notice of things you missed before...\n\r",ch);
+
+  if (dicesuccess < 0)
+  {
+    send_to_char("Your supplication to Gaea for extra senses seems to be in vain.\n\r", ch);
+    WAIT_STATE(ch, 8);
+  }
+
+  if (dicesuccess == 0)
+  {
+    send_to_char("Your senses do not seem to have increased as you expected.\n\r", ch);
+    WAIT_STATE(ch, 2);
+  }
+
+  sendch("Your senses of smell and hearing sharpen drastcally, allowing you to compensate for sight.\n\r",ch);
 
   af.where     = TO_AFFECTS;
   af.type      = sn;
@@ -838,7 +851,7 @@ void spell_gift_scentofsight( int sn, int level, CHAR_DATA *ch, void *vo, int ta
   af.duration  = (dicesuccess * 10) + 20;
   af.modifier  = 0;
   af.location  = 0;
-  af.bitvector = 0;
+  af.bitvector = AFF_DARK_VISION;
   affect_to_char( ch, &af );
 
   af.where      = TO_VULN;

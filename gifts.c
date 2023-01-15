@@ -812,6 +812,7 @@ void spell_gift_leylines( int sn, int level, CHAR_DATA *ch, void *vo, int target
 void spell_gift_scentofsight( int sn, int level, CHAR_DATA *ch, void *vo, int target)
 {
   AFFECT_DATA af;
+  int dicesuccess;
 
   if (is_affected(ch, gsn_gift_scentofsight))
   {
@@ -826,26 +827,25 @@ void spell_gift_scentofsight( int sn, int level, CHAR_DATA *ch, void *vo, int ta
     return;
   }
 
+  dicesuccess = godice(get_attribute(ch, PERCEPTION) + get_ability2(ch, ch->pcdata->primal_urge), 7);
+
   ch->pcdata->gnosis[TEMP]--;
   sendch("You senses increase tenfold and you take notice of things you missed before...\n\r",ch);
 
   af.where     = TO_AFFECTS;
   af.type      = sn;
   af.level     = level;
-  af.duration  = ch->pcdata->gnosis[PERM] * 4;
-  af.modifier  = 1;
-  af.location  = APPLY_CS_PER;
-  af.bitvector = AFF_DETECT_HIDDEN;
-  affect_to_char( ch, &af );
-
-  af.where     = TO_AFFECTS2;
-  af.level     = ch->rank;
+  af.duration  = (dicesuccess * 10) + 20;
   af.modifier  = 0;
   af.location  = 0;
-  af.bitvector = AFF2_DETECT_UNSEEN;
-  affect_to_char(ch, &af );
+  af.bitvector = 0;
+  affect_to_char( ch, &af );
+
+  af.where      = TO_VULN;
+  af.bitvector  = VULN_SOUND;
+  affect_to_char(ch, &af);
+
   return;
-    return;
 }
 //
 //“Sense the Unnatural”

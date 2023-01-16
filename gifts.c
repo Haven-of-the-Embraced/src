@@ -2938,7 +2938,8 @@ void spell_gift_artisanscommand( int sn, int level, CHAR_DATA *ch, void *vo, int
 
 void spell_gift_giftofsalt( int sn, int level, CHAR_DATA *ch, void *vo, int target)
 {
-  OBJ_DATA *food;
+  OBJ_DATA *obj;
+  OBJ_DATA *obj_next;
   int gnosisroll;
 
   if (ch->pcdata->gnosis[TEMP] < 1)
@@ -2949,7 +2950,21 @@ void spell_gift_giftofsalt( int sn, int level, CHAR_DATA *ch, void *vo, int targ
 
   gnosisroll = godice(ch->pcdata->gnosis[PERM], 6);
   if (gnosisroll < 1)
+  {
     ch->pcdata->gnosis[TEMP]--;
+    send_to_char("The strain of preserving the food of the room has taxed your gnosis supply.\n\r", ch);
+  }
+
+  for ( obj = ch->in_room->contents; obj != NULL; obj = obj_next )
+  {
+    obj_next = obj->next_content;
+    if (obj->item_type == ITEM_FOOD)
+        if (obj->timer > 0)
+        {
+          act("$p has been preserved.", ch, obj, NULL, TO_CHAR);
+          obj->timer = -1;
+        }
+  }
   return;
 }
 

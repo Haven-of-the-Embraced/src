@@ -2936,8 +2936,21 @@ void spell_gift_artisanscommand( int sn, int level, CHAR_DATA *ch, void *vo, int
   return;
 }
 
-void spell_gift_giftofsalt( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_giftofsalt( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  OBJ_DATA *food;
+  int gnosisroll;
+
+  if (ch->pcdata->gnosis[TEMP] < 1)
+  {
+    send_to_char("You don't have the spiritual energy to attempt to activate this gift.\n\r", ch);
     return;
+  }
+
+  gnosisroll = godice(ch->pcdata->gnosis[PERM], 6);
+  if (gnosisroll < 1)
+    ch->pcdata->gnosis[TEMP]--;
+  return;
 }
 
 //Persuasion - duplicate gift, same as Homid

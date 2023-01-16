@@ -1049,6 +1049,7 @@ void spell_gift_scentofrunningwater( int sn, int level, CHAR_DATA *ch, void *vo,
 //Cost: 1 gnosis
 void spell_gift_snowrunning( int sn, int level, CHAR_DATA *ch, void *vo, int target){
         AFFECT_DATA af;
+        int success;
 
         if (is_affected(ch, sn))
         {
@@ -1060,6 +1061,8 @@ void spell_gift_snowrunning( int sn, int level, CHAR_DATA *ch, void *vo, int tar
             send_to_char("You do not possess the spiritual reserves to activate this gift.\n\r", ch);
         }
 
+        success = godice(ch->pcdata->gnosis[PERM], 6);
+
         ch->pcdata->gnosis[TEMP]--;
         af.where     = TO_AFFECTS;
         af.type      = sn;
@@ -1067,10 +1070,12 @@ void spell_gift_snowrunning( int sn, int level, CHAR_DATA *ch, void *vo, int tar
         af.modifier  = 0;
         af.location  = APPLY_NONE;
         af.bitvector    = 0;
-        af.duration  = 12 + ch->pcdata->gnosis[PERM];
+        af.duration  = 24 + (success * 3);
         affect_to_char( ch, &af );
         send_to_char( "You feel light and sure-footed, like you could pass any terrain with ease.\n\r", ch );
         act("$n seems lighter and more sure-footed.",ch,NULL,ch,TO_NOTVICT);
+
+        gain_exp(ch, success * 2);
 
         return;
 }

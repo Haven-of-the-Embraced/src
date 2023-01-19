@@ -2955,13 +2955,15 @@ void spell_gift_giftofsalt( int sn, int level, CHAR_DATA *ch, void *vo, int targ
     send_to_char("The strain of preserving the food of the room has taxed your gnosis supply.\n\r", ch);
   }
 
+  send_to_char("You shunt spiritual energy into the room, intending to preserve food.\n\r", ch);
+
   for ( obj = ch->in_room->contents; obj != NULL; obj = obj_next )
   {
     obj_next = obj->next_content;
     if (obj->item_type == ITEM_FOOD)
         if (obj->timer > 0)
         {
-          act("$p has been preserved.", ch, obj, NULL, TO_CHAR);
+          act("The freshness of $p has been preserved.", ch, obj, NULL, TO_CHAR);
           obj->timer = -1;
         }
   }

@@ -345,7 +345,7 @@ void spell_gift_createelement( int sn, int level, CHAR_DATA *ch, void *vo, int t
 		gift_target_name = one_argument(gift_target_name, arg1);
 		gift_target_name = one_argument(gift_target_name, arg2);
 		int success;
-    int mod;
+    int mod = ch->level;
 		int type = 0;
 
 		if (IS_NULLSTR(arg1) && IS_NULLSTR(arg2))
@@ -404,15 +404,22 @@ void spell_gift_createelement( int sn, int level, CHAR_DATA *ch, void *vo, int t
 		if (ch->pcdata->gnosis[TEMP] < 1)
 		{
         sendch("You do not possess the spiritual reserves to activate this gift.\n\r", ch);
-		return;
+        return;
 		}
 
 		ch->pcdata->gnosis[TEMP]--;
-		success = godice(ch->pcdata->gnosis[PERM], 7);
+		success = godice(ch->pcdata->gnosis[PERM], 6);
 
-		if (success < 1)
+    if (success < 0)
+    {
+      send_to_char("The elements you try to command turn against you!\n\r", ch);
+      d10_damage(ch, ch, -success, mod, gsn_gift_createelement, DAM_AGGREVATED, DEFENSE_NONE, TRUE, TRUE);
+      return;
+    }
+
+		if (success == 0)
 		{
-			sendch("You fail to create the desired element.\n\r", ch);
+			sendch("Your attempt to call forth the desired element.\n\r", ch);
 			return;
 		}
 

@@ -1396,6 +1396,7 @@ const struct    gift_type   gift_table  [MAX_GIFTS_CODED]  =
     {   "strength of the dominator", 	0,     24, 0,     0,      0,          SHADOW_LORD, 4,   0},
     {   "shadow pack", 					0,     24, 0,     0,      0,          SHADOW_LORD, 5,   0},
     {   "obedience", 					0,     24, 0,     0,      0,          SHADOW_LORD, 5,   0},
+		{		"speed of thought",			0,		24,		0,		0,		0,		SILENT_STRIDER,	1,	0},
     {   "eye of the falcon", 			1,     24, 0,     0,      0,          SILVER_FANG, 1,   0},
     {   "lambent fire", 				1,     24, 0,     0,      0,          SILVER_FANG, 1,   0},
     {   "empathy", 						0,     24, 0,     0,      0,          SILVER_FANG, 2,   0},

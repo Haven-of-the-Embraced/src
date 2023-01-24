@@ -2825,12 +2825,77 @@ Total (3) */
 //    --Shadow Lords--
 
 //    --Silent Striders--
+{   "speed of thought", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_speedofthought,  TAR_IGNORE, POS_STANDING,
+&gsn_gift_speedofthought,          SLOT( 0),        0,     12, "",             "Your supernatural swiftness fades from your body.",        "" },
 
 //    --Silver Fangs--
+{   "eye of the falcon", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_eyeofthefalcon,  TAR_IGNORE, POS_STANDING,
+&gsn_gift_eyeofthefalcon,          SLOT( 0),        0,     12, "",             "Your bird of prey sight fades away.",        "" },
+
+{   "lambent fire", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_lambentfire,  TAR_IGNORE, POS_STANDING,
+&gsn_gift_lambentfire,          SLOT( 0),        0,     12, "",             "The brilliant silver light emanating from your body slowly dims and winks out.",        "" },
+
+{   "empathy", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_empathy,  TAR_IGNORE, POS_STANDING,
+&gsn_gift_empathy,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+
+{   "exceptional wordplay", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_exceptionalswordplay,  TAR_IGNORE, POS_STANDING,
+&gsn_gift_exceptionalswordplay,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+
+{   "wrath of gaia", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_wrathofgaia,  TAR_IGNORE, POS_STANDING,
+&gsn_gift_wrathofgaia,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+
+{   "lordly will", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_lordlywill,  TAR_IGNORE, POS_STANDING,
+&gsn_gift_lordlywill,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+
+{   "sidestep death", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_sidestepdeath,  TAR_IGNORE, POS_STANDING,
+&gsn_gift_sidestepdeath,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+
+{   "lunas avenger", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_lunasavenger,  TAR_IGNORE, POS_STANDING,
+&gsn_gift_lunasavenger,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+
+{   "paws of the newborn cub", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_pawsofthenewborncub,  TAR_IGNORE, POS_STANDING,
+&gsn_gift_pawsofthenewborncub,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
 //    --Stargazers--
 
 //    --Warders of Men--
+{   "artisans command", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_artisanscommand,  TAR_IGNORE, POS_STANDING,
+&gsn_gift_artisanscommand,          SLOT( 0),        0,     12, "",             "You no longer commune with spirits of technology.",        "" },
+
+{   "gift of salt", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_giftofsalt,  TAR_IGNORE, POS_STANDING,
+&gsn_gift_giftofsalt,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+
+{   "mask the predator", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_maskthepredator,  TAR_IGNORE, POS_STANDING,
+&gsn_gift_maskthepredator,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+
+{   "tongues", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_tongues,  TAR_IGNORE, POS_STANDING,
+&gsn_gift_tongues,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+
+{   "attunement", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_attunement,  TAR_IGNORE, POS_STANDING,
+&gsn_gift_attunement,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+
+{   "doppelganger", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_doppelganger,  TAR_IGNORE, POS_STANDING,
+&gsn_gift_doppelganger,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+
+{   "command the blaze", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_commandtheblaze,  TAR_IGNORE, POS_STANDING,
+&gsn_gift_commandtheblaze,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
 // Total (49)
     { "inner strength",               { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
@@ -2920,70 +2985,6 @@ Total (3) */
     {   "obedience", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_obedience,  TAR_IGNORE, POS_STANDING,
     &gsn_gift_obedience,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
-
-    {   "eye of the falcon", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_eyeofthefalcon,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_eyeofthefalcon,          SLOT( 0),        0,     12, "",             "Your bird of prey sight fades away.",        "" },
-
-    {   "lambent fire", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_lambentfire,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_lambentfire,          SLOT( 0),        0,     12, "",             "The brilliant silver light emanating from your body slowly dims and winks out.",        "" },
-
-    {   "empathy", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_empathy,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_empathy,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
-
-    {   "exceptional wordplay", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_exceptionalswordplay,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_exceptionalswordplay,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
-
-    {   "wrath of gaia", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_wrathofgaia,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_wrathofgaia,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
-
-    {   "lordly will", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_lordlywill,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_lordlywill,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
-
-    {   "sidestep death", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_sidestepdeath,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_sidestepdeath,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
-
-    {   "lunas avenger", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_lunasavenger,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_lunasavenger,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
-
-    {   "paws of the newborn cub", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_pawsofthenewborncub,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_pawsofthenewborncub,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
-
-    {   "artisans command", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_artisanscommand,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_artisanscommand,          SLOT( 0),        0,     12, "",             "You no longer commune with spirits of technology.",        "" },
-
-    {   "gift of salt", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_giftofsalt,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_giftofsalt,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
-
-    {   "mask the predator", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_maskthepredator,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_maskthepredator,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
-
-    {   "tongues", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_tongues,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_tongues,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
-
-    {   "attunement", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_attunement,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_attunement,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
-
-    {   "doppelganger", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_doppelganger,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_doppelganger,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
-
-    {   "command the blaze", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_commandtheblaze,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_commandtheblaze,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     {   "redirect pain", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_redirectpain,  TAR_IGNORE, POS_STANDING,

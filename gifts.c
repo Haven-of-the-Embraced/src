@@ -2747,6 +2747,10 @@ void spell_gift_obedience( int sn, int level, CHAR_DATA *ch, void *vo, int targe
 
 //Silent Striders
 //Rank 1
+void spell_gift_speedofthought( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  return;
+}
 //Rank 2
 //Rank 3
 //Rank 4

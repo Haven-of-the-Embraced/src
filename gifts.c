@@ -388,18 +388,11 @@ void spell_gift_createelement( int sn, int level, CHAR_DATA *ch, void *vo, int t
 				}
 		}
 
-        if (victim == NULL)
-        {
-            sendch("They aren't here.\n\r", ch);
-            return;
-            }
-
 		if (type == AIR && !IS_AFFECTED(victim, AFF_FLYING))
 		{
 			sendch("They are not flying!\n\r", ch);
 			return;
 			}
-
 
 		if (type == WATER && (obj =  get_obj_carry(ch, arg2, ch)) == NULL)
 		{
@@ -431,11 +424,31 @@ void spell_gift_createelement( int sn, int level, CHAR_DATA *ch, void *vo, int t
 			act("$n looks at you while murmering something and suddenly.. You're engulfed in flames!", ch, NULL, victim, TO_VICT);
 			d10_damage(ch, victim, success, mod, gsn_gift_createelement, DAM_FIRE, DEFENSE_NONE, TRUE, TRUE);
 			WAIT_STATE(ch, PULSE_VIOLENCE);
+      if (success > 4)
+      {
+        act("The flames leap into $N's eyes, blinding $M!", ch, NULL, victim, TO_CHAR);
+        act("The flames leap into your eyes, burning your sockets!", ch, NULL, victim, TO_VICT);
+        act("$N howls in pain as the flames lick across $S face.", ch, NULL, victim, TO_NOTVICT);
+        fire_effect(victim, success, ch->level, TARGET_CHAR);
+      }
 			return;
 		}
 		if (type == WATER)
 		{
+      act("Focusing on $p, you summon the element of water to bubble forth into existance.", ch, obj, victim, TO_CHAR);
 			spell_create_water(sn, level, ch, (void *) obj, target);
+      if (success > 4)
+      {
+        act("The spirits of water cause $p to overflow, leaving a large puddle on the ground!", ch, obj, victim, TO_CHAR);
+        act("Water overflows from $p, leaving a large puddle on the ground.", ch, obj, victim, TO_NOTVICT);
+        OBJ_DATA *spring;
+        spring = create_object( get_obj_index( OBJ_VNUM_SPRING ), 0 );
+        spring->timer = success * 2;
+        spring->name = str_dup("puddle water");
+        spring->short_descr = str_dup("a large puddle of water");
+        spring->description = str_dup("A large puddle of clear water invites all to drink.");
+        obj_to_room( spring, ch->in_room );
+      }
 			return;
 		}
 		if (type == EARTH)

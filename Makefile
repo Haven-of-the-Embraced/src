@@ -3,7 +3,7 @@
 # Makefile for Rom24. Works fine on my Debian system.
 # You may need to use 'gmake' on BSD systems.
 
-MAKEFLAGS += --no-print-directory
+MAKEFLAGS += -j2 --no-print-directory
 ifneq ($(REAL_MAKE),1)
 # run_make will be called once (it's .PHONY target), 
 # even if make is called with several targets

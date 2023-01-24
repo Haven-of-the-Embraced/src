@@ -2749,6 +2749,31 @@ void spell_gift_obedience( int sn, int level, CHAR_DATA *ch, void *vo, int targe
 //Rank 1
 void spell_gift_speedofthought( int sn, int level, CHAR_DATA *ch, void *vo, int target)
 {
+  AFFECT_DATA af;
+
+  if (is_affected(ch, gsn_gift_speedofthought))
+  {
+    sendch("You slow your enhanced swiftness back to normal speed.\n\r", ch);
+    affect_strip(ch, gsn_gift_speedofthought);
+    return;
+  }
+
+  if (ch->pcdata->gnosis[TEMP] < 1)
+  {
+    sendch("You do not have the spiritual reserves to activate this gift.\n\r", ch);
+    return;
+  }
+  ch->pcdata->gnosis[TEMP]--;
+  sendch("You call upon spirits of speed, and begin to move swiftly.\n\r",ch);
+
+  af.where     = TO_AFFECTS;
+  af.type      = sn;
+  af.level     = level;
+  af.duration  = 50;
+  af.modifier  = (ch->level * 3) + 50;
+  af.location  = APPLY_MOVE;
+  af.bitvector = 0;
+  affect_to_char( ch, &af );
   return;
 }
 //Rank 2

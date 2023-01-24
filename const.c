@@ -2923,7 +2923,7 @@ Total (3) */
 
     {   "eye of the falcon", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_eyeofthefalcon,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_eyeofthefalcon,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+    &gsn_gift_eyeofthefalcon,          SLOT( 0),        0,     12, "",             "Your bird of prey sight fades away.",        "" },
 
     {   "lambent fire", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_lambentfire,  TAR_IGNORE, POS_STANDING,

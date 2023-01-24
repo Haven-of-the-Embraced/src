@@ -2754,8 +2754,35 @@ void spell_gift_obedience( int sn, int level, CHAR_DATA *ch, void *vo, int targe
 
 //Silver Fangs
 //Rank 1
-void spell_gift_eyeofthefalcon( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_eyeofthefalcon( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  AFFECT_DATA af;
+
+  if (is_affected(ch, gsn_gift_eyeofthefalcon))
+  {
+    sendch("You dull your vision to normal sensing, no longer viewing with bird of prey acuity.\n\r", ch);
+    affect_strip(ch, gsn_gift_eyeofthefalcon);
     return;
+  }
+
+  if (ch->pcdata->gnosis[TEMP] < 1)
+  {
+    sendch("You do not have the spiritual reserves to activate this gift.\n\r", ch);
+    return;
+  }
+  ch->pcdata->gnosis[TEMP]--;
+  sendch("Your eyesight sharpens to predatory avian clarity.\n\r",ch);
+
+  af.where     = TO_AFFECTS;
+  af.type      = sn;
+  af.level     = level;
+  af.duration  = 50;
+  af.modifier  = 1;
+  af.location  = APPLY_CS_PER;
+  af.bitvector = 0;
+  affect_to_char( ch, &af );
+
+  return;
 }
 
 void spell_gift_lambentfire( int sn, int level, CHAR_DATA *ch, void *vo, int target)

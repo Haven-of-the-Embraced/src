@@ -394,7 +394,7 @@ void spell_gift_createelement( int sn, int level, CHAR_DATA *ch, void *vo, int t
             return;
             }
 
-		if (type == AIR && (!is_affected(victim, gsn_fly) || !IS_AFFECTED(victim, AFF_FLYING)))
+		if (type == AIR && !IS_AFFECTED(victim, AFF_FLYING))
 		{
 			sendch("They are not flying!\n\r", ch);
 			return;
@@ -425,11 +425,11 @@ void spell_gift_createelement( int sn, int level, CHAR_DATA *ch, void *vo, int t
 
 		if (type == FIRE)
 		{
-			int mod = ch->remorts/5 + ch->level/10 + 5;
+			int mod = ch->level * 3;
 			act("You direct a blast of flames at $N!", ch, NULL, victim, TO_CHAR);
 			act("$n says thanks to the Elemental Spirits of Fire as a blast of flame engulfs $N!", ch, NULL, victim, TO_NOTVICT);
 			act("$n looks at you while murmering something and suddenly.. You're engulfed in flames!", ch, NULL, victim, TO_VICT);
-			d10_damage(ch, victim, UMIN(3, success), mod, gsn_gift_createelement, DAM_FIRE, DEFENSE_NONE, TRUE, TRUE);
+			d10_damage(ch, victim, success, mod, gsn_gift_createelement, DAM_FIRE, DEFENSE_NONE, TRUE, TRUE);
 			WAIT_STATE(ch, PULSE_VIOLENCE);
 			return;
 		}
@@ -440,21 +440,23 @@ void spell_gift_createelement( int sn, int level, CHAR_DATA *ch, void *vo, int t
 		}
 		if (type == EARTH)
 		{
-			int mod = ch->remorts/5 + ch->level/10 + 5;
+			int mod = ch->level * 3;
 			act("You create a bunch of heavy rocks to drop on $N!", ch, NULL, victim, TO_CHAR);
 			act("$n says thanks to the Elemental Spirits of Earth as rocks rain down from the heavens onto $N!", ch, NULL, victim, TO_NOTVICT);
 			act("$n looks at you while murmering something and suddenly.. boulders are raining down on your head!", ch, NULL, victim, TO_VICT);
-			d10_damage(ch, victim, UMIN(5, success), mod, gsn_gift_createelement, DAM_BASH, DEFENSE_FULL, TRUE, TRUE);
+			d10_damage(ch, victim, success, mod, gsn_gift_createelement, DAM_BASH, DEFENSE_FULL, TRUE, TRUE);
 			WAIT_STATE(ch, PULSE_VIOLENCE);
 			return;
 		}
 	    if (type == AIR)
 		{
+			int mod = ch->level * 3;
 			act("You create gusts of air to knock $N from the sky!", ch, NULL, victim, TO_CHAR);
 			act("$n says thanks to the Elemental Spirits of Air and gusts of air begin to buffet $N from the skies!", ch, NULL, victim, TO_NOTVICT);
 			act("$n looks at you while murmering something and suddenly.. strong winds blow you out of the sky!", ch, NULL, victim, TO_VICT);
 			affect_strip(victim, gsn_fly);
 			REMOVE_BIT(victim->affected_by, AFF_FLYING);
+      d10_damage(ch, victim, success, mod, gsn_gift_createelement, DAM_BASH, DEFENSE_FULL, TRUE, TRUE);
 			WAIT_STATE(ch, PULSE_VIOLENCE);
 			return;
 		}

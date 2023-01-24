@@ -345,6 +345,7 @@ void spell_gift_createelement( int sn, int level, CHAR_DATA *ch, void *vo, int t
 		gift_target_name = one_argument(gift_target_name, arg1);
 		gift_target_name = one_argument(gift_target_name, arg2);
 		int success;
+    int mod;
 		int type = 0;
 
 		if (IS_NULLSTR(arg1) && IS_NULLSTR(arg2))
@@ -407,7 +408,6 @@ void spell_gift_createelement( int sn, int level, CHAR_DATA *ch, void *vo, int t
 		}
 
 		ch->pcdata->gnosis[TEMP]--;
-
 		success = godice(ch->pcdata->gnosis[PERM], 7);
 
 		if (success < 1)
@@ -418,7 +418,7 @@ void spell_gift_createelement( int sn, int level, CHAR_DATA *ch, void *vo, int t
 
 		if (type == FIRE)
 		{
-			int mod = ch->level * 3;
+			mod = ch->level * 3;
 			act("You direct a blast of flames at $N!", ch, NULL, victim, TO_CHAR);
 			act("$n says thanks to the Elemental Spirits of Fire as a blast of flame engulfs $N!", ch, NULL, victim, TO_NOTVICT);
 			act("$n looks at you while murmering something and suddenly.. You're engulfed in flames!", ch, NULL, victim, TO_VICT);
@@ -453,17 +453,26 @@ void spell_gift_createelement( int sn, int level, CHAR_DATA *ch, void *vo, int t
 		}
 		if (type == EARTH)
 		{
-			int mod = ch->level * 3;
+			mod = ch->level * 3;
 			act("You create a bunch of heavy rocks to drop on $N!", ch, NULL, victim, TO_CHAR);
 			act("$n says thanks to the Elemental Spirits of Earth as rocks rain down from the heavens onto $N!", ch, NULL, victim, TO_NOTVICT);
 			act("$n looks at you while murmering something and suddenly.. boulders are raining down on your head!", ch, NULL, victim, TO_VICT);
 			d10_damage(ch, victim, success, mod, gsn_gift_createelement, DAM_BASH, DEFENSE_FULL, TRUE, TRUE);
 			WAIT_STATE(ch, PULSE_VIOLENCE);
+      if (success > 4)
+      {
+        act("The boulders collide with $N's head, jarring $M briefly!", ch, NULL, victim, TO_CHAR);
+        act("The boulders collide with $N's head, jarring $M briefly!", ch, NULL, victim, TO_ROOM);
+        DAZE_STATE(victim, success * PULSE_VIOLENCE);
+      }
 			return;
 		}
 	    if (type == AIR)
 		{
-			int mod = ch->level * 3;
+      if (success > 4)
+			   mod = ch->level * 4;
+      else
+          mod = ch->level;
 			act("You create gusts of air to knock $N from the sky!", ch, NULL, victim, TO_CHAR);
 			act("$n says thanks to the Elemental Spirits of Air and gusts of air begin to buffet $N from the skies!", ch, NULL, victim, TO_NOTVICT);
 			act("$n looks at you while murmering something and suddenly.. strong winds blow you out of the sky!", ch, NULL, victim, TO_VICT);

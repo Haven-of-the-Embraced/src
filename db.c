@@ -5206,6 +5206,7 @@ sh_int  gsn_gift_balorsgaze;
 sh_int  gsn_gift_semblance;
 sh_int  gsn_gift_fogonthemoor;
 sh_int  gsn_gift_giftofthespriggan;
+sh_int  gsn_gift_wolfatthedoor;
 sh_int  gsn_gift_auraofconfidence;
 sh_int  gsn_gift_fatalflaw;
 sh_int  gsn_gift_seizingtheedge;

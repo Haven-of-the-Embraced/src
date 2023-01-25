@@ -3919,6 +3919,7 @@ extern sh_int  gsn_gift_balorsgaze;
 extern sh_int  gsn_gift_semblance;
 extern sh_int  gsn_gift_fogonthemoor;
 extern sh_int  gsn_gift_giftofthespriggan;
+extern sh_int  gsn_gift_wolfatthedoor;
 extern sh_int  gsn_gift_auraofconfidence;
 extern sh_int  gsn_gift_fatalflaw;
 extern sh_int  gsn_gift_seizingtheedge;

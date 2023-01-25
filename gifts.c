@@ -2616,6 +2616,11 @@ void spell_gift_giftofthespriggan( int sn, int level, CHAR_DATA *ch, void *vo, i
 
 //Red Talons
 //Rank 1
+void spell_gift_wolfatthedoor( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+
+  return;
+}
 //Rank 2
 //Rank 3
 //Rank 4

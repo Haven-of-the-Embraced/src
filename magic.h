@@ -290,6 +290,7 @@ DECLARE_SPELL_FUN(spell_gift_balorsgaze);
 DECLARE_SPELL_FUN(spell_gift_semblance);
 DECLARE_SPELL_FUN(spell_gift_fogonthemoor);
 DECLARE_SPELL_FUN(spell_gift_giftofthespriggan);
+DECLARE_SPELL_FUN(spell_gift_wolfatthedoor);
 DECLARE_SPELL_FUN(spell_gift_auraofconfidence);
 DECLARE_SPELL_FUN(spell_gift_fatalflaw);
 DECLARE_SPELL_FUN(spell_gift_seizingtheedge);

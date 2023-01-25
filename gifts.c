@@ -2618,6 +2618,43 @@ void spell_gift_giftofthespriggan( int sn, int level, CHAR_DATA *ch, void *vo, i
 //Rank 1
 void spell_gift_wolfatthedoor( int sn, int level, CHAR_DATA *ch, void *vo, int target)
 {
+  AFFECT_DATA af;
+  int success;
+
+  if (IS_NPC(ch))
+    return;
+
+  if (!IS_NPC(victim))
+  {
+    send_to_char("{R*You cannot use this Gift on players.{x\n\r", ch);
+    return;
+  }
+
+  if (is_affected(victim, gsn_gift_wolfatthedoor))
+  {
+    send_to_char("Your target is already terrified of the wilderness.\n\r", ch);
+    return;
+  }
+
+  if (!human_variant(victim))
+  {
+    send_to_char("Your target does not seem to be human.\n\r", ch);
+    return;
+  }
+
+  if ( ch->position == POS_FIGHTING || victim->position == POS_FIGHTING)
+  {
+    send_to_char( "Neither you, nor your target, can be fighting to do this.\n\r", ch );
+    return;
+  }
+
+  if (ch->move < ch->level)
+  {
+    send_to_char("You are too tired to instill fear into your target.\n\r", ch);
+    return;
+  }
+
+  ch->move -= ch->level;
 
   return;
 }

@@ -823,6 +823,20 @@ bool higher_beast( CHAR_DATA *ch )
     return FALSE;
 }
 
+bool human_variant( CHAR_DATA *ch )
+{
+  if (
+      ch->race == race_lookup("human") ||
+      ch->race == race_lookup("kinfolk") ||
+      ch->race == race_lookup("mage") ||
+      ch->race == race_lookup("romani")
+      )
+      return TRUE;
+
+  else
+    return FALSE;
+}
+
 /*
  * Retrieve a character's age.
  */

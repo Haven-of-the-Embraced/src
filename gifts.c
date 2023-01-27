@@ -2648,6 +2648,18 @@ void spell_gift_wolfatthedoor( int sn, int level, CHAR_DATA *ch, void *vo, int t
     return;
   }
 
+  if (!can_see(ch, victim) || !can_see(victim, ch))
+  {
+    send_to_char("You and your target must be able to see each other's eyes to do this.\n\r", ch);
+    return;
+  }
+
+  if (!IS_SET(victim->parts, PART_EYE))
+  {
+    send_to_char("Your target does not have any eyes to lock with!\n\r", ch);
+    return;
+  }
+
   if (ch->move < ch->level)
   {
     send_to_char("You are too tired to instill fear into your target.\n\r", ch);

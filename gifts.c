@@ -2693,6 +2693,30 @@ void spell_gift_wolfatthedoor( int sn, int level, CHAR_DATA *ch, void *vo, int t
     return;
   }
 
+  ACT("With a look, you send the fear of the wilderness coursing through $N!", ch, NULL, victim, TO_CHAR);
+  act("With a moment of terror, the thought of the open wilderness fills you with dread.", ch, NULL, victim, TO_VICT);
+  act("$N gets a terrified look on $S face.", ch, NULL, victim, TO_NOTVICT);
+
+  af.where     = TO_AFFECTS;
+  af.type      = gsn_gift_wolfatthedoor;
+  af.level     = ch->level;
+  af.duration  = successes * 5;
+  af.modifier  = -2;
+  af.location  = APPLY_CS_CHA;
+  af.bitvector = 0;
+  affect_to_char( victim, &af );
+
+  af.location  = APPLY_CS_MAN;
+  affect_to_char( victim, &af );
+
+  af.location  = APPLY_CS_PER;
+  affect_to_char( victim, &af );
+
+  af.location  = APPLY_CS_INT;
+  affect_to_char( victim, &af );
+
+  af.location  = APPLY_CS_WIT;
+  affect_to_char( victim, &af );
 
   return;
 }

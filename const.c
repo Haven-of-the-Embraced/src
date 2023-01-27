@@ -2822,7 +2822,7 @@ Total (3) */
 
 //    --Red Talons--
 {   "wolf at the door", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_wolfatthedoor,  TAR_IGNORE, POS_STANDING,
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_wolfatthedoor,  TAR_CHAR_DEFENSIVE, POS_STANDING,
 &gsn_gift_wolfatthedoor,          SLOT( 0),        0,     12, "",             "Your fear of the wilderness subsides.",        "" },
 
 //    --Shadow Lords--

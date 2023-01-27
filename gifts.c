@@ -2619,6 +2619,7 @@ void spell_gift_giftofthespriggan( int sn, int level, CHAR_DATA *ch, void *vo, i
 void spell_gift_wolfatthedoor( int sn, int level, CHAR_DATA *ch, void *vo, int target)
 {
   AFFECT_DATA af;
+  CHAR_DATA *victim = (CHAR_DATA *) vo;
   int success;
 
   if (IS_NPC(ch))
@@ -2668,7 +2669,7 @@ void spell_gift_wolfatthedoor( int sn, int level, CHAR_DATA *ch, void *vo, int t
 
   ch->move -= ch->level;
 
-  success = godice(get_attribute(ch, CHARISMA) + ch->pc_data->primal_urge, 6);
+  success = godice(get_attribute(ch, CHARISMA) + ch->pcdata->primal_urge, 6);
 
   if (success < 0)
   {
@@ -2678,7 +2679,7 @@ void spell_gift_wolfatthedoor( int sn, int level, CHAR_DATA *ch, void *vo, int t
     af.where     = TO_AFFECTS;
     af.type      = gsn_gift_wolfatthedoor;
     af.level     = ch->level;
-    af.duration  = -(2 * successes);
+    af.duration  = -(2 * success);
     af.modifier  = -1;
     af.location  = APPLY_CS_CHA;
     af.bitvector = 0;
@@ -2705,14 +2706,14 @@ void spell_gift_wolfatthedoor( int sn, int level, CHAR_DATA *ch, void *vo, int t
     return;
   }
 
-  ACT("With a look, you send the fear of the wilderness coursing through $N!", ch, NULL, victim, TO_CHAR);
+  act("With a look, you send the fear of the wilderness coursing through $N!", ch, NULL, victim, TO_CHAR);
   act("With a moment of terror, the thought of the open wilderness fills you with dread.", ch, NULL, victim, TO_VICT);
   act("$N gets a terrified look on $S face.", ch, NULL, victim, TO_NOTVICT);
 
   af.where     = TO_AFFECTS;
   af.type      = gsn_gift_wolfatthedoor;
   af.level     = ch->level;
-  af.duration  = successes * 5;
+  af.duration  = success * 5;
   af.modifier  = -2;
   af.location  = APPLY_CS_CHA;
   af.bitvector = 0;

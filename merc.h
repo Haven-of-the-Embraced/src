@@ -185,7 +185,7 @@ typedef void ROOM_FUN	args( ( ROOM_INDEX_DATA *room, char *argument ) );
 #define MAX_SOCIALS       256
 #define MAX_SKILL         440
 #define MAX_GIFT          90
-#define MAX_GIFTS_CODED   164
+#define MAX_GIFTS_CODED   170
 #define MAX_BREW        24
 #define MAX_GROUP          45
 #define MAX_IN_GROUP           30

@@ -2637,6 +2637,12 @@ void spell_gift_wolfatthedoor( int sn, int level, CHAR_DATA *ch, void *vo, int t
     return;
   }
 
+  if (is_affected(ch, gsn_gift_wolfatthedoor))
+  {
+    send_to_char("You are too terrified to instill fear in another.\n\r", ch);
+    return;
+  }
+
   if (!human_variant(victim))
   {
     send_to_char("Your target does not seem to be human.\n\r", ch);

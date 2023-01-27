@@ -2656,6 +2656,44 @@ void spell_gift_wolfatthedoor( int sn, int level, CHAR_DATA *ch, void *vo, int t
 
   ch->move -= ch->level;
 
+  success = godice(get_attribute(ch, CHARISMA) + ch->pc_data->primal_urge, 6);
+
+  if (success < 0)
+  {
+    act("With a moment of terror, the thought of the open wilderness fills you with dread.", ch, NULL, victim, TO_CHAR);
+    act("$n gets a terrified look on $s face.", ch, NULL, victim, TO_ROOM);
+
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_gift_wolfatthedoor;
+    af.level     = ch->level;
+    af.duration  = -(2 * successes);
+    af.modifier  = -1;
+    af.location  = APPLY_CS_CHA;
+    af.bitvector = 0;
+    affect_to_char( ch, &af );
+
+    af.location  = APPLY_CS_MAN;
+    affect_to_char( ch, &af );
+
+    af.location  = APPLY_CS_PER;
+    affect_to_char( ch, &af );
+
+    af.location  = APPLY_CS_INT;
+    affect_to_char( ch, &af );
+
+    af.location  = APPLY_CS_WIT;
+    affect_to_char( ch, &af );
+
+    return;
+  }
+
+  if (success == 0)
+  {
+    act("You shoot a look at $N, but $E seems unfazed.", ch, NULL, victim, TO_CHAR);
+    return;
+  }
+
+
   return;
 }
 //Rank 2

@@ -1320,7 +1320,7 @@ const struct    gift_type   gift_table  [MAX_GIFTS_CODED]  =
     {   "scent of beyond", 				0,     24, 0,     0,      PHILODOX,   0,        4,   0},
     {   "earthfriends pact", 			0,     24, 0,     0,      PHILODOX,   0,        5,   0},
     {   "geas", 						0,     24, 0,     0,      PHILODOX,   0,        5,   0},
-    {   "beast speech", 				0,     24, 0,     0,      GALLIARD,   0,        1,   0},
+    {   "beast speech", 				0,     24, 0,     0,      GALLIARD,   RED_TALON,  1,   0},
     {   "walking dream", 				0,     24, 0,     0,      GALLIARD,   0,        1,   0},
     {   "call of the wyrm", 			0,     24, 0,     0,      GALLIARD,   0,        2,   0},
     {   "distractions", 				0,     24, 0,     0,      GALLIARD,   0,        2,   0},
@@ -1396,7 +1396,6 @@ const struct    gift_type   gift_table  [MAX_GIFTS_CODED]  =
     {   "strength of the dominator", 	0,     24, 0,     0,      0,          SHADOW_LORD, 4,   0},
     {   "shadow pack", 					0,     24, 0,     0,      0,          SHADOW_LORD, 5,   0},
     {   "obedience", 					0,     24, 0,     0,      0,          SHADOW_LORD, 5,   0},
-		{		"speed of thought",			1,		24,		0,		0,		0,		SILENT_STRIDER,	1,	0},
     {   "eye of the falcon", 			1,     24, 0,     0,      0,          SILVER_FANG, 1,   0},
     {   "lambent fire", 				1,     24, 0,     0,      0,          SILVER_FANG, 1,   0},
     {   "empathy", 						0,     24, 0,     0,      0,          SILVER_FANG, 2,   0},
@@ -1414,6 +1413,8 @@ const struct    gift_type   gift_table  [MAX_GIFTS_CODED]  =
     {   "doppelganger", 				0,     24, 0,     0,      0,          WARDERSOFMEN, 4,   0},
     {   "command the blaze",			0,     24, 0,     0,      0,          WARDERSOFMEN, 5,   0},
     {   "redirect pain",                0,     24, 0,     0,      0,          FENRIR,   3,   0},
+		{		"speed of thought",			1,		24,		0,		0, 		0,		SILENT_STRIDER,	1,	0},
+    {   "wolf at the door",        	1,     24,  0,     0,      0,      RED_TALON,    1,   0},
     {   NULL,                        	0,       0,  0,     0,      0,          0,      0,   0}
     };
 

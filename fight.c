@@ -1615,6 +1615,14 @@ int d10_damdice( CHAR_DATA *ch, CHAR_DATA *victim)
     victim->pIndexData->vnum == get_affect_modifier(ch, gsn_gift_fatalflaw))
       dice++;
 
+      //Mage Entropy 2
+      if (is_affected(ch, gsn_controlrandomness) && number_percent( ) < get_affect_level(ch, gsn_controlrandomness) * 4)
+      {
+          dice += get_affect_level(ch, gsn_controlrandomness);
+          act("Fate smiles upon you as your attack strikes towards a critical part of $N's defenses!",ch,NULL,victim,TO_CHAR);
+
+      }
+
 		/*
 		 * Skill Bonuses.
 		 */
@@ -1640,13 +1648,6 @@ int d10_damdice( CHAR_DATA *ch, CHAR_DATA *victim)
 
 		if ( !IS_NPC(ch) && check_critical(ch,victim) )
 			dice += get_attribute(ch, STRENGTH);
-
-                if (is_affected(ch, gsn_controlrandomness) && number_percent( ) < (2*ch->sphere[SPHERE_ENTROPY]))
-                {
-                    dice += get_attribute(ch, STRENGTH);
-                    act("Fate smiles upon you and you critically strike $N!",ch,NULL,victim,TO_CHAR);
-                }
-
 
 		dice += get_attribute(ch, STRENGTH);
 

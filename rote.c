@@ -847,7 +847,9 @@ void rote_crushofmountains(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DA
     act( "The room seems to shift and bend, suddenly everyone is pulled towards $N as they nearly implode!",  ch, NULL, victim, TO_NOTVICT    );
     act( "The air thickens around you, grating your bones, forcing the air from your lungs in an endless, silent scream as the last of your life is crushed from your body!",  ch, NULL, victim, TO_VICT );
 
-    damage( ch, victim, success*ch->level*12, gsn_magick, DAM_NEGATIVE, TRUE);
+//    damage( ch, victim, success*ch->level*12, gsn_magick, DAM_NEGATIVE, TRUE);
+    d10_damage( ch, victim, success, ch->level * 4, gsn_magick, DAM_NEGATIVE, DEFENSE_NONE, TRUE, TRUE);
+
     return;
 }
 
@@ -862,9 +864,13 @@ void rote_touchofhelios(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA 
     act( "All sight is stolen from you briefly, as $n shines a brilliant beam of sunlight directly at you!",  ch, NULL, victim, TO_VICT );
 
     if(IS_SET(victim->vuln_flags,VULN_SUNLIGHT))
-      damage( ch, victim, success*ch->level*16, gsn_magick, DAM_SUNLIGHT, TRUE);
+//      damage( ch, victim, success*ch->level*16, gsn_magick, DAM_SUNLIGHT, TRUE);
+      d10_damage( ch, victim, success, ch->level * 5, gsn_magick, DAM_SUNLIGHT, DEFENSE_NONE, TRUE, TRUE);
+
     else
-      damage( ch, victim, success*ch->level*8, gsn_magick, DAM_SUNLIGHT, TRUE);
+//      damage( ch, victim, success*ch->level*8, gsn_magick, DAM_SUNLIGHT, TRUE);
+      d10_damage( ch, victim, success, ch->level * 2, gsn_magick, DAM_SUNLIGHT, DEFENSE_NONE, TRUE, TRUE);
+
 
     if (success > 4)
     {

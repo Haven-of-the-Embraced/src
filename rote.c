@@ -659,7 +659,8 @@ void rote_witherlife(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *ob
 
     act( "You reach out and touch $N who screams in anguish and agony!",  ch, NULL, victim, TO_CHAR    );
     act( "$n reaches out and touches $N who suddenly screams in agony!",  ch, NULL, victim, TO_NOTVICT );
-    damage( ch, victim, success*ch->level*8, gsn_magick, DAM_DISEASE, TRUE);
+//    damage( ch, victim, success*ch->level*8, gsn_magick, DAM_DISEASE, TRUE);
+    d10_damage( ch, victim, success, ch->level * 3, gsn_magick, DAM_DISEASE, DEFENSE_NONE, TRUE, TRUE);
 
     if (success >= 4)
     {
@@ -773,7 +774,8 @@ void rote_dischargestatic(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DAT
     act( "$n's hair stands on end a moment before pointing at $N who gets a real charge out of it!",  ch, NULL, victim, TO_NOTVICT );
     act( "$n points at you and.. zzzzzZAP! You have an electrifying experience!",  ch, NULL, victim, TO_VICT    );
 
-    damage( ch, victim, success*ch->level*3, gsn_magick, DAM_LIGHTNING, TRUE);
+//    damage( ch, victim, success*ch->level*3, gsn_magick, DAM_LIGHTNING, TRUE);
+    d10_damage( ch, victim, success, ch->level, gsn_magick, DAM_LIGHTNING, DEFENSE_NONE, TRUE, TRUE);
     if (success > 4 )
     {
         STOPPED(victim, 2*PULSE_VIOLENCE);
@@ -799,7 +801,8 @@ void rote_firestorm(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj
         fire_effect(victim, success, ch->level, TARGET_CHAR);
     }
 
-    damage( ch, victim, success*ch->level*6, gsn_magick, DAM_FIRE, TRUE);
+//    damage( ch, victim, success*ch->level*6, gsn_magick, DAM_FIRE, TRUE);
+    d10_damage( ch, victim, success, ch->level * 2, gsn_magick, DAM_FIRE, DEFENSE_NONE, TRUE, TRUE);
 
     return;
 }

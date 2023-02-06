@@ -4019,6 +4019,7 @@ void    affect_strip    args( ( CHAR_DATA *ch, int sn ) );
 bool    is_affected args( ( CHAR_DATA *ch, int sn ) );
 int     get_affect_level    args( ( CHAR_DATA *ch, int sn ) );
 int     get_affect_modifier args( ( CHAR_DATA *ch, int sn ) );
+int     get_affect_duration args( ( CHAR_DATA *ch, int sn ) );
 void    affect_join args( ( CHAR_DATA *ch, AFFECT_DATA *paf ) );
 int     stealth_int_shadowplay   args( (CHAR_DATA *ch, int diff) );
 void    char_from_room  args( ( CHAR_DATA *ch ) );

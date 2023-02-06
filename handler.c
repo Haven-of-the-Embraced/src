@@ -1457,6 +1457,22 @@ int get_affect_modifier( CHAR_DATA *ch, int sn )
 }
 
 /*
+ * Return affect duration.
+ */
+int get_affect_duration( CHAR_DATA *ch, int sn )
+{
+    AFFECT_DATA *paf;
+
+    for ( paf = ch->affected; paf != NULL; paf = paf->next )
+    {
+    if ( paf->type == sn )
+        return paf->duration;
+    }
+
+    return 0;
+}
+
+/*
  * Add or enhance an affect.
  */
 void affect_join( CHAR_DATA *ch, AFFECT_DATA *paf )

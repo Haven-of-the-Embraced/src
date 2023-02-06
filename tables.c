@@ -1589,7 +1589,7 @@ const struct    rote_type   rote_table  [MAX_ROTE]  =
     {   "Control Randomness",   rote_controlrandomness,     0, 2, 0, 0, 0, 0, 0, 0, 0, TARGET_NONE, 2, 2, FALSE, FALSE},
     {   "Destroy Matter",       rote_destroymatter,         0, 3, 0, 0, 0, 0, 0, 0, 0, TARGET_CHAR, 3, 3, TRUE, TRUE},
     {   "Wither Life",          rote_witherlife,            0, 4, 0, 0, 0, 0, 0, 0, 0, TARGET_CHAR, 4, 4, TRUE, TRUE},
-    {   "Entropic Mind",        rote_entropicmind,          0, 5, 0, 0, 0, 0, 0, 0, 0, TARGET_CHAR, 5, 5, FALSE, FALSE},
+    {   "Entropic Mind",        rote_entropicmind,          0, 5, 0, 0, 0, 0, 0, 0, 0, TARGET_CHAR, 5, 5, FALSE, TRUE},
     {   "Perceive Forces",      rote_perceiveforces,        0, 0, 1, 0, 0, 0, 0, 0, 0, TARGET_NONE, 1, 1, FALSE, FALSE},
     {   "Discharge Static",     rote_dischargestatic,       0, 0, 2, 0, 0, 0, 0, 0, 0, TARGET_CHAR, 2, 2, TRUE, FALSE},
     {   "Firestorm",            rote_firestorm,             0, 0, 3, 0, 0, 0, 2, 0, 0, TARGET_CHAR, 3, 3, TRUE, FALSE},

@@ -687,6 +687,27 @@ void rote_entropicmind(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *
 
     if (!IS_NPC(victim)) return;
 
+    if (success < 0)
+    {
+      act("Entropic energies rush through your mind, and you can't seem to remember why.", ch, NULL, victim, TO_CHAR);
+
+      af.where     = TO_AFFECTS;
+      af.type      = gsn_forget;
+      af.level     = 1;
+      af.duration  = -success;
+      af.location  = APPLY_CS_INT;
+      af.modifier  = -1;
+      af.bitvector = 0;
+      affect_to_char( ch, &af );
+      return;
+    }
+
+    if (success == 0)
+    {
+      act("You focus your entropic energies at $N's mind, but nothing seems to happen.", ch, NULL, victim, TO_CHAR);
+      return;
+    }
+
     act( "You advance the entropic chaos in $N's mind to an advanced state.",  ch, NULL, victim, TO_CHAR );
 
     af.where     = TO_AFFECTS;

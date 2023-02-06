@@ -1315,7 +1315,7 @@ void rote_betterbody(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *ob
     if (success < 0)
     {
       act("You gently tug at your own Pattern, and accidentally rip part of it!",ch,NULL,NULL,TO_CHAR);
-      act("$n flashes a look of pain, as $s doubles over.",ch,NULL,NULL,TO_NOTVICT);
+      act("$n flashes a look of pain, as $e doubles over.",ch,NULL,NULL,TO_NOTVICT);
 
       botch = number_range(1,3);
 
@@ -1352,7 +1352,7 @@ void rote_betterbody(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *ob
     af.where    = TO_AFFECTS;
     af.type     = gsn_betterbody;
     af.level    = 1;
-    af.duration = 10 + (success * 2);
+    af.duration = 15 + (success * 2);
     af.location = APPLY_CS_STR;
     af.modifier = 1;
     af.bitvector    = 0;

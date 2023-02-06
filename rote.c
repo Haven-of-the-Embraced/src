@@ -563,8 +563,8 @@ void rote_controlrandomness(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_D
 
     af.where     = TO_AFFECTS;
     af.type      = gsn_controlrandomness;
-    af.level     = ch->level;
-    af.duration  = 3*success;
+    af.level     = success;
+    af.duration  = 5*success;
     af.location  = APPLY_NONE;
     af.modifier  = 0;
     af.bitvector = 0;

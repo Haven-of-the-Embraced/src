@@ -691,12 +691,23 @@ void rote_entropicmind(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *
 
     af.where     = TO_AFFECTS;
     af.type      = gsn_forget;
-    af.level     = ch->level;
-    af.duration  = success*ch->avatar;
-    af.location  = APPLY_NONE;
-    af.modifier  = 0;
+    af.level     = success;
+    af.duration  = success*3 + 5;
+    af.location  = APPLY_CS_INT;
+    af.modifier  = -2;
     af.bitvector = 0;
     affect_to_char( victim, &af );
+
+    if (success > 4)
+    {
+      act( "The entropic energies take hold of $N and enfeeble $S mind even more!",  ch, NULL, victim, TO_CHAR );
+
+      af.location = APPLY_CS_PER;
+      affect_to_char(victim, &af);
+      af.location = APPLY_CS_WIT;
+      affect_to_char(victim, &af);
+    }
+
     multi_hit( victim, ch, TYPE_UNDEFINED );
     return;
 }

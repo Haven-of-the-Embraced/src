@@ -1390,7 +1390,7 @@ void rote_mutateform(CHAR_DATA *ch, int success, char *arg)
         ch->paradox--;
         return;
       }
-      if (is_affected(ch, gsn_mutateform) && get_affect_level(ch, gsn_mutateform) == 0)
+      if (is_affected(ch, gsn_mutateform) && get_affect_level(ch, gsn_mutateform) == -1)
       {
         send_to_char("Your body is moving too slowly to effectively change back from sloth form.\n\r", ch);
         return;
@@ -1422,7 +1422,7 @@ void rote_mutateform(CHAR_DATA *ch, int success, char *arg)
 
         af.where     = TO_AFFECTS;
         af.type      = gsn_mutateform;
-        af.level     = MUTATE_SLOTH;
+        af.level     = -1;
         af.duration  = 2;
         af.location  = APPLY_CS_STR;
         af.modifier  = -2;
@@ -1465,7 +1465,7 @@ void rote_mutateform(CHAR_DATA *ch, int success, char *arg)
         af.where     = TO_AFFECTS;
         af.type      = gsn_mutateform;
         af.level     = MUTATE_OWL;
-        af.duration  = success * 10;
+        af.duration  = success * 15;
         af.location  = APPLY_CS_STR;
         af.modifier  = -1;
         af.bitvector = AFF_SHIFT;
@@ -1504,7 +1504,7 @@ void rote_mutateform(CHAR_DATA *ch, int success, char *arg)
         af.where     = TO_AFFECTS;
         af.type      = gsn_mutateform;
         af.level     = MUTATE_SQUIRREL;
-        af.duration  = success * 10;
+        af.duration  = success * 15;
         af.location  = APPLY_CS_STR;
         af.modifier  = -1;
         af.bitvector = AFF_SHIFT;
@@ -1538,7 +1538,7 @@ void rote_mutateform(CHAR_DATA *ch, int success, char *arg)
         af.where     = TO_AFFECTS;
         af.type      = gsn_mutateform;
         af.level     = MUTATE_PANTHER;
-        af.duration  = success * 10;
+        af.duration  = success * 15;
         af.location  = APPLY_CS_STR;
         af.modifier  = 2;
         af.bitvector = AFF_SHIFT;
@@ -1583,7 +1583,7 @@ void rote_mutateform(CHAR_DATA *ch, int success, char *arg)
         af.where     = TO_AFFECTS;
         af.type      = gsn_mutateform;
         af.level     = MUTATE_BEAR;
-        af.duration  = success * 10;
+        af.duration  = success * 15;
         af.location  = APPLY_CS_STR;
         af.modifier  = 3;
         af.bitvector = AFF_SHIFT;
@@ -1620,7 +1620,7 @@ void rote_mutateform(CHAR_DATA *ch, int success, char *arg)
       af.where     = TO_AFFECTS;
       af.type      = gsn_mutateform;
       af.level     = MUTATE_SLOTH;
-      af.duration  = success * 10;
+      af.duration  = success * 15;
       af.location  = APPLY_CS_STR;
       af.modifier  = -2;
       af.bitvector = AFF_SHIFT;

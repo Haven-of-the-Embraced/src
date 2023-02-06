@@ -632,6 +632,8 @@ void rote_destroymatter( CHAR_DATA *ch, int success, CHAR_DATA *victim )
 
 void rote_witherlife(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
 {
+    AFFECT_DATA af;
+
     if (IS_NPC(ch)) return;
 
     if (success < 0)

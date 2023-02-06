@@ -2630,13 +2630,13 @@ void rote_negationfield(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA 
 
     stop_fighting( ch, TRUE );
 
-    af.where     = TO_AFFECTS;
+    af.where     = TO_RESIST;
     af.type      = gsn_negationfield;
-    af.level     = ch->level;
-    af.duration  = ch->level*ch->avatar;
+    af.level     = success;
+    af.duration  = 15 + success;
     af.location  = APPLY_NONE;
     af.modifier  = 0;
-    af.bitvector = 0;
+    af.bitvector = RES_MAGIC;
     affect_to_char( victim, &af );
 
     send_to_char("You summon about yourself a field of negative energy to protect yourself from the magicks of others.\n\r",ch);

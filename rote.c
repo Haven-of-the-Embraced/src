@@ -1211,7 +1211,9 @@ void rote_littlegooddeath(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DAT
     {
         act("Your heart skips a few beats as it spasms wildly!", ch, NULL, victim, TO_CHAR);
         act("$n looks stricken and holds a hand to $s heart, swooning.", ch, NULL, victim, TO_ROOM);
-        damage(ch, ch, ch->level * 3, gsn_magick, DAM_HARM, TRUE);
+//        damage(ch, ch, ch->level * 3, gsn_magick, DAM_HARM, TRUE);
+        d10_damage( ch, ch, -success, ch->level / 3, gsn_magick, DAM_HARM, DEFENSE_NONE, TRUE, TRUE);
+
         return;
     }
 
@@ -1229,7 +1231,9 @@ void rote_littlegooddeath(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DAT
         return;
     }
 
-    damage(ch, victim, success * ch->level * 2, gsn_magick, DAM_HARM, TRUE);
+//    damage(ch, victim, success * ch->level * 2, gsn_magick, DAM_HARM, TRUE);
+    d10_damage( ch, victim, success, ch->level, gsn_magick, DAM_HARM, DEFENSE_NONE, TRUE, TRUE);
+
     return;
 }
 void rote_healself(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
@@ -1928,7 +1932,9 @@ void rote_subconsciousturmoil(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ
     act( "You suddenly have a flashback of the most traumatic event of your life.. the strain is agony.",  ch, NULL, victim, TO_VICT );
     act("$N flinches momentarily as a painful look crosses $s features.", ch, NULL, victim, TO_NOTVICT);
 
-    damage( ch, victim, success * ch->level * 2, gsn_magick, DAM_MENTAL, TRUE);
+//    damage( ch, victim, success * ch->level * 2, gsn_magick, DAM_MENTAL, TRUE);
+    d10_damage( ch, victim, success, ch->level * 2 / 3, gsn_magick, DAM_MENTAL, DEFENSE_NONE, TRUE, TRUE);
+
     return;
 }
 void rote_mentallink(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
@@ -2084,7 +2090,8 @@ void rote_quintessencebolt(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DA
     {
       act("The {Yraw energy{x of Quintessence spins wildly out of control as you attempt to harness it!", ch, NULL, victim, TO_CHAR);
       act("A brief flash of energy erupts from $n, as $e shrieks in agony!", ch, NULL, victim, TO_NOTVICT);
-      damage( ch, ch, ch->level*2, gsn_magick, DAM_ENERGY, TRUE);
+//      damage( ch, ch, ch->level*2, gsn_magick, DAM_ENERGY, TRUE);
+      d10_damage( ch, ch, -success, ch->level, gsn_magick, DAM_ENERGY, DEFENSE_NONE, TRUE, TRUE);
       ch->agg_dam += ch->level;
       paradox_check(ch,rote_table[rote_lookup("quintessence bolt")].vulgar);
       return;
@@ -2108,7 +2115,9 @@ void rote_quintessencebolt(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DA
         victim->agg_dam += success * ch->level;
     }
 
-    damage( ch, victim, success*ch->level*3, gsn_magick, DAM_ENERGY, TRUE);
+//    damage( ch, victim, success*ch->level*3, gsn_magick, DAM_ENERGY, TRUE);
+    d10_damage( ch, victim, success, ch->level, gsn_magick, DAM_ENERGY, DEFENSE_NONE, TRUE, TRUE);
+
 
     return;
 }

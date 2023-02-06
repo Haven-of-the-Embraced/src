@@ -637,13 +637,27 @@ void rote_witherlife(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *ob
 
     act( "You reach out and touch $N who screams in anguish and agony!",  ch, NULL, victim, TO_CHAR    );
     act( "$n reaches out and touches $N who suddenly screams in agony!",  ch, NULL, victim, TO_NOTVICT );
-
-/*  if (success >= 5)
-    {
-
-    }
-*/
     damage( ch, victim, success*ch->level*8, gsn_magick, DAM_DISEASE, TRUE);
+
+    if (success >= 4)
+    {
+      act("You watch closely as the entropic energies wrack $N's body, weakening $M.", ch, NULL, victim, TO_CHAR);
+      act("Your body flares in excrutiating pain as entropic energies ravage you!", ch, NULL, victim, TO_VICT);
+      act("$N writhes in agony as $S body is weakened!", ch, NULL, victim, TO_NOTVICT);
+
+      af.where     = TO_AFFECTS;
+      af.type      = gsn_quietus_weakness;
+      af.level     = success;
+      af.duration  = success*5;
+      af.location  = APPLY_CS_STR;
+      af.modifier  = -1;
+      af.bitvector = 0;
+      affect_to_char( victim, &af );
+
+      af.location  = APPLY_CS_STA;
+      affect_to_char( victim, &af );
+    }
+
     return;
 }
 

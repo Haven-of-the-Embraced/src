@@ -210,14 +210,14 @@ void do_rote(CHAR_DATA *ch, char *argument)
     if(arg3[0] != '\0' && !str_prefix(arg3,"extra")) extra = TRUE;
     if(extra)
     {
-        if(ch->quintessence < rote_table[rote].quintessence*2)
+        if(ch->quintessence < rote_table[rote].quintessence + 1)
         {
             send_to_char("You do not possess enough Quintessential energy to enact that powerful of an effect.\n\r",ch);
             return;
         }
         else
         {
-            ch->quintessence -= rote_table[rote].quintessence*2;
+            ch->quintessence -= rote_table[rote].quintessence + 1;
             extra = TRUE;
         }
     }
@@ -243,7 +243,7 @@ void do_rote(CHAR_DATA *ch, char *argument)
     {
         roll = number_range(1,10);
         if(roll == 1) success--;
-        if(extra && roll >= ((rote_table[rote].diff+3)/2)) success++;
+        if(extra && roll >= (rote_table[rote].diff+2)) success++;
         else if(roll >= rote_table[rote].diff+3) success++;
     }
 

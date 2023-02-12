@@ -2624,7 +2624,7 @@ void rote_negationfield(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA 
 
     if(is_affected(ch,gsn_negationfield))
     {
-        send_to_char("You are already protecting yourselves from the energies of others.\n\r",ch);
+        send_to_char("You are already protecting yourself from the energies of others.\n\r",ch);
         return;
     }
 
@@ -2637,6 +2637,14 @@ void rote_negationfield(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA 
     af.location  = APPLY_NONE;
     af.modifier  = 0;
     af.bitvector = RES_MAGIC;
+
+    if (success > 4)
+    {
+      af.where    = TO_IMMUNE;
+      af.duration = 7 + success;
+      af.bitvector = IMM_MAGIC;
+    }
+
     affect_to_char( victim, &af );
 
     send_to_char("You summon about yourself a field of negative energy to protect yourself from the magicks of others.\n\r",ch);

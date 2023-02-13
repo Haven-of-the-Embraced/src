@@ -1629,6 +1629,7 @@ const struct    rote_type   rote_table  [MAX_ROTE]  =
     {   "Time Alteration",      rote_timealteration,        0, 0, 0, 0, 0, 0, 0, 0, 3, TARGET_NONE, 10, 3, TRUE, FALSE},
     {   "Stop the Clock",       rote_stoptheclock,          0, 0, 0, 0, 0, 0, 0, 0, 4, TARGET_CHAR, 10, 4, TRUE, FALSE},
     {   "Sidestep Time",        rote_sidesteptime,          0, 0, 0, 0, 0, 0, 0, 0, 5, TARGET_NONE, 15, 5, TRUE, FALSE},
+		{		"Camouflage Discernment",rote_camouflagediscernment, 1, 0, 0, 1, 0, 1, 0, 0, 0, TARGET_NONE, 1, 1, FALSE, TRUE},
     {   "Negation Field",       rote_negationfield,         0, 0, 3, 0, 2, 0, 5, 0, 0, TARGET_NONE, 15, 5, TRUE, FALSE}
 };
 

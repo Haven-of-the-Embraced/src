@@ -2612,6 +2612,36 @@ void rote_sidesteptime(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *
     return;
 }
 
+//Combination Rotes
+
+void rote_camouflagediscernment(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
+{
+   AFFECT_DATA af;
+
+    if(victim != ch)
+    {
+        send_to_char("You can only use this effect on yourself.\n\r",ch);
+        return;
+    }
+
+    if(IS_AFFECTED(ch, AFF_DETECT_HIDDEN))
+    {
+        send_to_char("You are already aware of everything around you.\n\r",ch);
+        return;
+    }
+
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_camouflagediscernment;
+    af.level     = success;
+    af.duration  = UMAX(success*(ch->csabilities[CSABIL_ALERTNESS]+get_attribute(ch,PERCEPTION)),10);
+    af.location  = APPLY_NONE;
+    af.modifier  = 0;
+    af.bitvector = AFF_DETECT_HIDDEN;
+    affect_to_char( victim, &af );
+    send_to_char("Focusing on thoughts nearby, you pinpoint life forms hiding in the room.\n\r",ch);
+    return;
+}
+
 void rote_negationfield(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
 {
    AFFECT_DATA af;

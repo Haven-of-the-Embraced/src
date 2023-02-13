@@ -1563,7 +1563,7 @@ void rote_mutateform(CHAR_DATA *ch, int success, char *arg)
         af.where     = TO_AFFECTS;
         af.type      = gsn_claws;
         af.level     = ch->level;
-        af.duration  = success * 10;
+        af.duration  = success * 15;
         af.location  = APPLY_NONE;
         af.modifier  = 0;
         af.bitvector = 0;
@@ -1600,7 +1600,7 @@ void rote_mutateform(CHAR_DATA *ch, int success, char *arg)
         af.where     = TO_AFFECTS;
         af.type      = gsn_claws;
         af.level     = ch->level;
-        af.duration  = success * 10;
+        af.duration  = success * 15;
         af.location  = APPLY_NONE;
         af.modifier  = 0;
         af.bitvector = 0;

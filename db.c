@@ -5056,6 +5056,7 @@ sh_int          gsn_timesense;
 sh_int          gsn_precognition;
 sh_int          gsn_timealteration;
 sh_int          gsn_sidesteptime;
+sh_int          gsn_camouflagediscernment;
 sh_int          gsn_negationfield;
 sh_int          gsn_touchofhelios;
 sh_int          gsn_quintessence;

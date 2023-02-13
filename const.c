@@ -3094,8 +3094,12 @@ Total (3) */
     &gsn_sidesteptime,          SLOT( 0),        0,     24, "",             "You step back into the normal stream of time.",        "" },
 
 /*    --Extra Combination Sphere Rotes--
-Total (1)
+Total (3)
 */
+    { "camouflage discernment",           { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
+    &gsn_camouflagediscernment,          SLOT( 0),        0,     24, "",             "Your extra senses of the hidden fade away.",       "" },
+
     { "negation field",           { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
     &gsn_negationfield,          SLOT( 0),        0,     24, "",             "You sense your ability to negate the magicks of others fading.",       "" },

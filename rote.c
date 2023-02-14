@@ -2630,6 +2630,27 @@ void rote_camouflagediscernment(CHAR_DATA *ch, int success, CHAR_DATA *victim, O
         return;
     }
 
+    if (success < 0)
+    {
+      af.where     = TO_VULN;
+      af.type      = gsn_camouflagediscernment;
+      af.level     = -1;
+      af.duration  = 2;
+      af.location  = APPLY_NONE;
+      af.modifier  = 0;
+      af.bitvector = VULN_MENTAL;
+      affect_to_char( victim, &af );
+      send_to_char("The Quintessence reverberates through you, jarring your brain.\n\r",ch);
+
+      return;
+    }
+
+    if (success == 0)
+    {
+      send_to_char("The flow of Quintessence leaves your body, but your senses seem to be unaffected.\n\r", ch);
+      return;
+    }
+
     af.where     = TO_AFFECTS;
     af.type      = gsn_camouflagediscernment;
     af.level     = success;

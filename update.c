@@ -940,6 +940,9 @@ void char_update( void )
             if (paf->type == gsn_vigor && get_affect_level(ch, gsn_vigor) == 0)
               act("A moment of inspiration causes you to remember your speed and stamina training!", ch, NULL, NULL, TO_CHAR);
 
+            else if (paf->type == gsn_camouflagediscernment && get_affect_level(ch, gsn_camouflagediscernment) == -1)
+              act("The mental weakness from errant Quintessential energies passes.", ch, NULL, NULL, TO_CHAR);
+
             else if ( paf->type > 0 && skill_table[paf->type].msg_off )
             {
               send_to_char( skill_table[paf->type].msg_off, ch );

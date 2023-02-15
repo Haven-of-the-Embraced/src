@@ -1710,33 +1710,99 @@ void rote_cellularmitosis(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DAT
     act("You examine $N's life pattern and form one of your own, overlaying it on top of $N a moment to ease it's birth into this Reality.",ch,NULL,clone,TO_CHAR);
     return;
 }
+
 void rote_matterperception(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
 {
-   AFFECT_DATA af;
+    AFFECT_DATA *paf;
+    char buf[MAX_STRING_LENGTH];
 
-    if(victim != ch)
+    if (IS_NPC(ch)) return;
+
+    WAIT_STATE(ch, 36);
+    act( "Channelling Quintessence, you try to read the Matter Pattern of $p to gain information.",  ch, obj, NULL, TO_CHAR );
+
+    if (success < 1)
     {
-        send_to_char("You can only use this effect on yourself.\n\r",ch);
+        send_to_char("You fail to discern any impressions left on this item.\n\r", ch);
         return;
     }
 
-    if(IS_AFFECTED(ch, AFF_DETECT_HIDDEN))
+    if (success == 0)
     {
-        send_to_char("You are already aware of everything around you.\n\r",ch);
+        send_to_char("You fail to discern any impressions left on this item.\n\r", ch);
         return;
     }
 
-    af.where     = TO_AFFECTS;
-    af.type      = gsn_detect_hidden;
-    af.level     = ch->level;
-    af.duration  = success*(ch->csabilities[CSABIL_ALERTNESS]+get_attribute(ch,PERCEPTION));
-    af.location  = APPLY_NONE;
-    af.modifier  = 0;
-    af.bitvector = AFF_DETECT_HIDDEN;
-    affect_to_char( victim, &af );
-    send_to_char("You start to pay attention to the patterns around you.\n\r",ch);
+    sprintf( buf,
+        "Object '%s' is type %s, extra flags %s.\n\rWeight is %d.%d, value is %d, level is %d.\n\r",
+        obj->name,
+        item_name(obj->item_type),
+        extra_bit_name( obj->extra_flags ),
+        obj->weight / 10, obj->weight % 10,
+        obj->cost,
+        obj->level
+        );
+    send_to_char( buf, ch );
+    if (success > 1)
+    {
+        switch ( obj->item_type )
+        {
+            case ITEM_DRINK_CON:
+                sprintf(buf,"It holds %s-colored %s.\n\r",
+                liq_table[obj->value[2]].liq_color,
+                liq_table[obj->value[2]].liq_name);
+                send_to_char(buf,ch);
+            break;
+
+            case ITEM_CONTAINER:
+                sprintf(buf,"Capacity: %d#  Maximum weight: %d#  flags: %s\n\r",
+                obj->value[0], obj->value[3], cont_bit_name(obj->value[1]));
+                send_to_char(buf,ch);
+                if (obj->value[4] != 100)
+                {
+                    sprintf(buf,"Weight multiplier: %d%%\n\r",
+                    obj->value[4]);
+                    send_to_char(buf,ch);
+                }
+            break;
+
+            case ITEM_WEAPON:
+                send_to_char("Weapon type is ",ch);
+                switch (obj->value[0])
+                {
+                    case(WEAPON_EXOTIC) : send_to_char("exotic.\n\r",ch);   break;
+                    case(WEAPON_SWORD)  : send_to_char("sword.\n\r",ch);    break;
+                    case(WEAPON_DAGGER) : send_to_char("dagger.\n\r",ch);   break;
+                    case(WEAPON_SPEAR)  : send_to_char("spear/staff.\n\r",ch);  break;
+                    case(WEAPON_MACE)   : send_to_char("mace/club.\n\r",ch);    break;
+                    case(WEAPON_AXE)    : send_to_char("axe.\n\r",ch);      break;
+                    case(WEAPON_FLAIL)  : send_to_char("flail.\n\r",ch);    break;
+                    case(WEAPON_WHIP)   : send_to_char("whip.\n\r",ch);     break;
+                    case(WEAPON_POLEARM): send_to_char("polearm.\n\r",ch);  break;
+                    case(WEAPON_LANCE): send_to_char("lance.\n\r",ch);  break;
+                default     : send_to_char("unknown.\n\r",ch);  break;
+                }
+                sprintf(buf, "D10 Damage Dice Bonus: {D({r+%d{D){x\n\r", obj->value[1] / 20);
+                send_to_char(buf, ch);
+                if (obj->value[4])  /* weapon flags */
+                {
+                    sprintf(buf,"Weapons flags: %s\n\r",weapon_bit_name(obj->value[4]));
+                    send_to_char(buf,ch);
+                }
+            break;
+            case ITEM_ARMOR:
+                sprintf( buf,
+                "Armor class is %d pierce, %d bash, %d slash, and %d vs. magic.\n\r",
+                obj->value[0], obj->value[1], obj->value[2], obj->value[3] );
+                send_to_char( buf, ch );
+            break;
+            default:
+            break;
+        }
+    }
     return;
 }
+
 void rote_goldenwish(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
 {
     ch->gold += success*2;

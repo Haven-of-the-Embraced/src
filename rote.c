@@ -1739,10 +1739,9 @@ void rote_matterperception(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DA
     send_to_char( "{y#{x\n\r", ch );
 
     sprintf( buf,
-        "{y#{x  Level:     %3d                Type:       %s\n\r{y#{x  Weight: %4d.%d lbs            Durability: %3d%%\n\r{y#{x  Flags: %s\n\r",
+        "{y#{x  Level:     %3d                Type:       %s\n\r{y#{x  Weight: %4d.%d lbs            Durability: %3d%%{x\n\r",
         obj->level, item_name(obj->item_type),
-        obj->weight / 10, obj->weight % 10,  obj->condition,
-        extra_bit_name( obj->extra_flags )
+        obj->weight / 10, obj->weight % 10,  obj->condition
         );
     send_to_char( buf, ch );
     if (success > 1)
@@ -1786,11 +1785,6 @@ void rote_matterperception(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DA
                 }
                 sprintf(buf, "{y#  {xD10 Damage Dice Bonus: {D({r+%d{D){x\n\r", obj->value[1] / 20);
                 send_to_char(buf, ch);
-                if (obj->value[4])  /* weapon flags */
-                {
-                    sprintf(buf,"{y#  {xWeapons flags: %s\n\r",weapon_bit_name(obj->value[4]));
-                    send_to_char(buf,ch);
-                }
             break;
             case ITEM_ARMOR:
                 sprintf( buf,
@@ -1802,10 +1796,28 @@ void rote_matterperception(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DA
                 sprintf( buf,
                 "{y#  {xNourishment:  %3d             Poisoned: %s",
                 obj->value[0], obj->value[3] != 0 ? "{RYes{x" : "{GNo{x\n\r");
-                send_to_char( buf, ch);
+                send_to_char( buf, ch );
+            break;
+            case ITEM_TOOL:
+                sprintf( buf,
+                "{y#  {xQuality:   %3d                Tool Type:  %s\n\r",
+                obj->value[0], tool_table[obj->value[1]].tool_name);
+                send_to_char( buf, ch );
             default:
             break;
         }
+    }
+
+    if (success > 2)
+    {
+      if ( IS_SET(obj->extra_flags, ITEM_NONMETAL) )
+        send_to_char("{y#  {xThis item does not have any metallic properties.\n\r", ch);
+      if ( IS_SET(obj->extra_flags, ITEM_BURN_PROOF) )
+        send_to_char("{y#  {xThis item's Pattern is protected from burning.\n\r", ch);
+      if ( IS_SET(obj->extra_flags, ITEM_IS_STAKE) )
+        send_to_char("{y#  {xThis can be used as a stake.\n\r", ch);
+      if ( IS_SET(obj->extra_flags, ITEM_IS_PRESERVE) )
+        send_to_char("{y#  {xThis item has preservative properties.\n\r", ch);
     }
 
     send_to_char( "{y#{x\n\r", ch );

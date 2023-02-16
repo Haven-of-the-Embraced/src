@@ -1723,13 +1723,14 @@ void rote_matterperception(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DA
 
     if (success < 1)
     {
-        send_to_char("You fail to discern any impressions left on this item.\n\r", ch);
+        send_to_char("You lose your focus while staring into the Pattern.\n\r", ch);
+        WAIT_STATE(ch, 36);
         return;
     }
 
     if (success == 0)
     {
-        send_to_char("You fail to discern any impressions left on this item.\n\r", ch);
+        send_to_char("You try to study the Pattern, but your concentration wanes.\n\r", ch);
         return;
     }
 

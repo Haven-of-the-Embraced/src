@@ -1719,11 +1719,11 @@ void rote_matterperception(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DA
     if (IS_NPC(ch)) return;
 
     WAIT_STATE(ch, 36);
-    act( "Channelling Quintessence, you try to read the Matter Pattern of $p to gain information.",  ch, obj, NULL, TO_CHAR );
+    act( "You open your sight to try and decipher $p's Pattern.\n\r",  ch, obj, NULL, TO_CHAR );
 
     if (success < 1)
     {
-        send_to_char("You lose your focus while staring into the Pattern.\n\r", ch);
+        send_to_char("While staring into the Pattern, you lose track of time and focus.\n\r", ch);
         WAIT_STATE(ch, 36);
         return;
     }
@@ -1734,14 +1734,15 @@ void rote_matterperception(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DA
         return;
     }
 
+    sprintf( buf, "{y[#-#-#-#-#-#      Matter Pattern: {W%s      {y#-#-#-#-#-#]\n\r{x", obj->short_descr);
+    send_to_char( buf, ch );
+    send_to_char( "{y#{x\n\r", ch );
+
     sprintf( buf,
-        "Object '%s' is type %s, extra flags %s.\n\rWeight is %d.%d, value is %d, level is %d.\n\r",
-        obj->name,
-        item_name(obj->item_type),
-        extra_bit_name( obj->extra_flags ),
-        obj->weight / 10, obj->weight % 10,
-        obj->cost,
-        obj->level
+        "{y#{x  Level:     %3d                Type:       %s\n\r{y#{x  Weight: %4d.%d lbs            Durability: %3d%%\n\r{y#{x  Flags: %s\n\r",
+        obj->level, item_name(obj->item_type),
+        obj->weight / 10, obj->weight % 10,  obj->condition,
+        extra_bit_name( obj->extra_flags )
         );
     send_to_char( buf, ch );
     if (success > 1)
@@ -1749,58 +1750,67 @@ void rote_matterperception(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DA
         switch ( obj->item_type )
         {
             case ITEM_DRINK_CON:
-                sprintf(buf,"It holds %s-colored %s.\n\r",
+                sprintf(buf,"{y#  {xIt holds %s-colored %s.\n\r",
                 liq_table[obj->value[2]].liq_color,
                 liq_table[obj->value[2]].liq_name);
                 send_to_char(buf,ch);
             break;
 
             case ITEM_CONTAINER:
-                sprintf(buf,"Capacity: %d#  Maximum weight: %d#  flags: %s\n\r",
+                sprintf(buf,"{y#  {xCapacity: %d#  Maximum weight: %d#  \n\r{y#  {xFlags: %s\n\r",
                 obj->value[0], obj->value[3], cont_bit_name(obj->value[1]));
                 send_to_char(buf,ch);
                 if (obj->value[4] != 100)
                 {
-                    sprintf(buf,"Weight multiplier: %d%%\n\r",
+                    sprintf(buf,"{y#  {xWeight multiplier: %d%%\n\r",
                     obj->value[4]);
                     send_to_char(buf,ch);
                 }
             break;
 
             case ITEM_WEAPON:
-                send_to_char("Weapon type is ",ch);
+                send_to_char("{y#  {xWeapon Type:  ",ch);
                 switch (obj->value[0])
                 {
-                    case(WEAPON_EXOTIC) : send_to_char("exotic.\n\r",ch);   break;
-                    case(WEAPON_SWORD)  : send_to_char("sword.\n\r",ch);    break;
-                    case(WEAPON_DAGGER) : send_to_char("dagger.\n\r",ch);   break;
-                    case(WEAPON_SPEAR)  : send_to_char("spear/staff.\n\r",ch);  break;
-                    case(WEAPON_MACE)   : send_to_char("mace/club.\n\r",ch);    break;
-                    case(WEAPON_AXE)    : send_to_char("axe.\n\r",ch);      break;
-                    case(WEAPON_FLAIL)  : send_to_char("flail.\n\r",ch);    break;
-                    case(WEAPON_WHIP)   : send_to_char("whip.\n\r",ch);     break;
-                    case(WEAPON_POLEARM): send_to_char("polearm.\n\r",ch);  break;
-                    case(WEAPON_LANCE): send_to_char("lance.\n\r",ch);  break;
-                default     : send_to_char("unknown.\n\r",ch);  break;
+                    case(WEAPON_EXOTIC) : send_to_char("Exotic\n\r",ch);   break;
+                    case(WEAPON_SWORD)  : send_to_char("Sword\n\r",ch);    break;
+                    case(WEAPON_DAGGER) : send_to_char("Dagger\n\r",ch);   break;
+                    case(WEAPON_SPEAR)  : send_to_char("Spear\n\r",ch);  break;
+                    case(WEAPON_MACE)   : send_to_char("Mace\n\r",ch);    break;
+                    case(WEAPON_AXE)    : send_to_char("Axe\n\r",ch);      break;
+                    case(WEAPON_FLAIL)  : send_to_char("Flail\n\r",ch);    break;
+                    case(WEAPON_WHIP)   : send_to_char("Whip\n\r",ch);     break;
+                    case(WEAPON_POLEARM): send_to_char("Polearm\n\r",ch);  break;
+                    case(WEAPON_LANCE): send_to_char("Lance\n\r",ch);  break;
+                default     : send_to_char("Unknown\n\r",ch);  break;
                 }
-                sprintf(buf, "D10 Damage Dice Bonus: {D({r+%d{D){x\n\r", obj->value[1] / 20);
+                sprintf(buf, "{y#  {xD10 Damage Dice Bonus: {D({r+%d{D){x\n\r", obj->value[1] / 20);
                 send_to_char(buf, ch);
                 if (obj->value[4])  /* weapon flags */
                 {
-                    sprintf(buf,"Weapons flags: %s\n\r",weapon_bit_name(obj->value[4]));
+                    sprintf(buf,"{y#  {xWeapons flags: %s\n\r",weapon_bit_name(obj->value[4]));
                     send_to_char(buf,ch);
                 }
             break;
             case ITEM_ARMOR:
                 sprintf( buf,
-                "Armor class is %d pierce, %d bash, %d slash, and %d vs. magic.\n\r",
+                "{y#  {xArmor Class: %4d Pierce       %4d Bash\n\r{y#              {x %4d Slash        %4d Magic\n\r",
                 obj->value[0], obj->value[1], obj->value[2], obj->value[3] );
                 send_to_char( buf, ch );
             break;
+            case ITEM_FOOD:
+                sprintf( buf,
+                "{y#  {xNourishment:  %3d             Poisoned: %s",
+                obj->value[0], obj->value[3] != 0 ? "{RYes{x" : "{GNo{x\n\r");
+                send_to_char( buf, ch);
             default:
             break;
         }
     }
+
+    send_to_char( "{y#{x\n\r", ch );
+    sprintf( buf, "{y[#-#-#-#-#-#      Matter Pattern: {W%s      {y#-#-#-#-#-#]\n\r{x", obj->short_descr);
+    send_to_char( buf, ch );
     return;
 }
 

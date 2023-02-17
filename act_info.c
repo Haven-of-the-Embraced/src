@@ -2003,6 +2003,7 @@ void do_affects(CHAR_DATA *ch, char *argument )
     MOB_INDEX_DATA *qMob;
     char buf[MAX_STRING_LENGTH], buf2 [MSL];
     bool specialaffect = FALSE;
+    bool awed = FALSE;
     int quarry = 0;
 
     if ( ch->affected != NULL )
@@ -2014,6 +2015,11 @@ void do_affects(CHAR_DATA *ch, char *argument )
     send_to_char( "----------------------------------------------------------------------------\n\r", ch );
     for ( paf = ch->affected; paf != NULL; paf = paf->next )
     {
+        if (paf->type == gsn_awe)
+        {
+          awed = TRUE;
+          continue;
+        }
         if (paf->type == gsn_gift_fatalflaw)
         {
           specialaffect = TRUE;
@@ -2043,6 +2049,26 @@ void do_affects(CHAR_DATA *ch, char *argument )
         send_to_char( "\n\r", ch );
         paf_last = paf;
     }
+
+    if (awed)
+    {
+      send_to_char( "|------------------+=======[     {RAWED BY YOU{x   ]=======+-------------------|\n\r", ch );
+      send_to_char( "|                        Target                        |   Time Remaining  |\n\r", ch );
+      for ( paf = ch->affected; paf != NULL; paf = paf->next )
+      {
+        if (paf->type == gsn_awe)
+        {
+          quarry = paf->modifier;
+          qMob = get_mob_index(quarry);
+          sprintf(buf2, "{Y%d hour%s{x", paf->duration, paf->duration != 1 ? "s" : "");
+          sprintf(buf, "| {g%s{x |", center(capitalize(qMob->short_descr), 52, " "));
+          send_to_char(buf, ch);
+          sprintf(buf, "%s|\n\r", center(buf2, 19, " "));
+          send_to_char(buf, ch);
+        }
+      }
+    }
+
     if (specialaffect)
     {
       send_to_char( "|------------------+=======[  {yGIFT: FATAL FLAW{x ]=======+-------------------|\n\r", ch );

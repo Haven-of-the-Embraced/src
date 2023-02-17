@@ -4449,6 +4449,9 @@ void do_shroudofnight(CHAR_DATA *ch, char *argument)
 
 void do_awe(CHAR_DATA *ch, char *argument)
 {
+    CHAR_DATA *victim;
+    CHAR_DATA *vict_next;
+    MOB_INDEX_DATA *vMob;
     AFFECT_DATA af;
     int dicesuccess = 0;
 
@@ -4548,7 +4551,7 @@ void do_awe(CHAR_DATA *ch, char *argument)
 
         return;
     }
-
+/*
     else if (dicesuccess > 0)
     {
         if (dicesuccess >= 5)
@@ -4570,7 +4573,40 @@ void do_awe(CHAR_DATA *ch, char *argument)
         affect_to_char( ch, &af );
 
         gain_exp(ch, dicesuccess * 6);
+    }*/
+
+    if (dicesuccess >= 5)
+        send_to_char("...and gain the nearly undivided attention of everyone nearby.\n\r", ch);
+    if (dicesuccess == 4 || dicesuccess == 3)
+        send_to_char("...and feel many eyes in the room turn to regard you with awe.\n\r", ch);
+    if (dicesuccess == 2 || dicesuccess == 1)
+        send_to_char("...and notice a few people regarding you with approval.\n\r", ch);
+    act("You turn and notice $n, whose very presence seems to fill you with awe.", ch, NULL, NULL, TO_NOTVICT);
+
+    af.where    = TO_AFFECTS;
+    af.type     = gsn_awe;
+    af.level    = ch->pcdata->discipline[PRESENCE];
+    af.duration = dicesuccess * 10 + 5;
+    af.location = APPLY_NONE;
+    af.bitvector    = 0;
+
+    for ( victim = char_list; victim != NULL; victim = vict_next )
+    {
+      vict_next = victim->next;
+      if(!IS_NPC(victim) || victim->in_room == NULL )
+        continue;
+
+      if ( victim->in_room == ch->in_room && SAME_UMBRA(ch, victim))
+      {
+        if ( victim != ch && !IS_SET(victim->imm_flags,IMM_CHARM))
+        {
+          af.modifier = victim->pIndexData->vnum;
+          affect_to_char( ch, &af );
+        }
+      }
+        continue;
     }
+
     return;
 }
 

@@ -4464,7 +4464,8 @@ void do_awe(CHAR_DATA *ch, char *argument)
     }
     if (is_affected(ch, gsn_awe))
     {
-        send_to_char("You have already affected your social magnetism.\n\r", ch);
+        send_to_char("You drop your enhanced social magnetism.\n\r", ch);
+        affect_strip(ch, gsn_awe);
         return;
     }
 
@@ -4498,13 +4499,13 @@ void do_awe(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if (ch->pblood < 15)
+    if (ch->pblood < 10)
     {
         send_to_char("You don't have enough blood to Awe those around you.\n\r", ch);
         return;
     }
 
-    ch->pblood -= 10;
+    ch->pblood -= 5;
 
     send_to_char("Flashing your most charming smile, you draw into your personal reserves and\n\rattempt to augment your supernatural attraction...\n\r", ch);
 
@@ -4598,7 +4599,7 @@ void do_awe(CHAR_DATA *ch, char *argument)
 
       if ( victim->in_room == ch->in_room && SAME_UMBRA(ch, victim))
       {
-        if ( victim != ch && !IS_SET(victim->imm_flags,IMM_CHARM))
+        if ( victim != ch && !IS_SET(victim->imm_flags,IMM_CHARM) && victim->pIndexData->vnum != get_affect_modifier(ch, gsn_awe))
         {
           af.modifier = victim->pIndexData->vnum;
           affect_to_char( ch, &af );

@@ -4586,8 +4586,8 @@ void do_awe(CHAR_DATA *ch, char *argument)
 
     af.where    = TO_AFFECTS;
     af.type     = gsn_awe;
-    af.level    = ch->pcdata->discipline[PRESENCE];
-    af.duration = dicesuccess * 10 + 5;
+    af.level    = dicesuccess;
+    af.duration = dicesuccess * 2 + 5;
     af.location = APPLY_NONE;
     af.bitvector    = 0;
 

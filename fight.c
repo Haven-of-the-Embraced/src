@@ -779,6 +779,9 @@ void one_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt )
     if (victim->position < POS_RESTING)
     victim_ac += 6;
 
+    if (has_affect_modifier(victim, gsn_awe, ch->pIndexData->vnum))
+      victim_ac -=10;
+
     /*
      * The moment of excitement!
      */
@@ -1787,11 +1790,13 @@ void d10_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt)
   if (is_affected(victim, gsn_gift_lambentfire))
     diff++;
 
+  if (IS_NPC(ch))
+    if (has_affect_modifier(victim, gsn_awe, ch->pIndexData->vnum))
+      diff++;
+
 if (DEBUG_MESSAGES || IS_DEBUGGING(ch)){
 	cprintf(ch, "hp{r%d{w df{c%d{x ", dice, diff);
 	if (IS_NPC(ch)) cprintf(victim, "hp{r%d{w df{c%d{x ", dice, diff);}
-
-
 
 		//Moment of excitement!
 		tohit = godice(dice, diff);

@@ -4597,16 +4597,15 @@ void do_awe(CHAR_DATA *ch, char *argument)
       if(!IS_NPC(victim) || victim->in_room == NULL )
         continue;
 
-      if ( victim->in_room == ch->in_room && SAME_UMBRA(ch, victim))
-      {
-        if ( victim != ch && !IS_SET(victim->imm_flags,IMM_CHARM) && victim->pIndexData->vnum != get_affect_modifier(ch, gsn_awe))
+      if ( victim->in_room == ch->in_room && SAME_UMBRA(ch, victim) && !IS_AFFECTED(victim, AFF_INVISIBLE) &&
+          victim != ch && !IS_SET(victim->imm_flags,IMM_CHARM) && !IS_SET(victim->act2, ACT2_ULTRA_MOB ) &&
+          !has_affect_modifier(ch, gsn_awe, victim->pIndexData->vnum))
         {
           af.modifier = victim->pIndexData->vnum;
           affect_to_char( ch, &af );
         }
-      }
         continue;
-    }
+      }
 
     return;
 }

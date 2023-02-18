@@ -1457,6 +1457,25 @@ int get_affect_modifier( CHAR_DATA *ch, int sn )
 }
 
 /*
+ * Check all affect modifiers for specific gsn_.
+ */
+bool has_affect_modifier( CHAR_DATA *ch, int sn , int mod)
+{
+    AFFECT_DATA *paf;
+
+    for ( paf = ch->affected; paf != NULL; paf = paf->next )
+    {
+      if ( paf->type == sn )
+      {
+        if (paf->modifier == mod)
+          return TRUE;
+      }
+    }
+
+    return FALSE;
+}
+
+/*
  * Return affect duration.
  */
 int get_affect_duration( CHAR_DATA *ch, int sn )

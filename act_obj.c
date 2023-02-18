@@ -3159,6 +3159,16 @@ void do_buy( CHAR_DATA *ch, char *argument )
         return;
     }
 
+    if (has_affect_modifier(ch, gsn_awe, keeper->pIndexData->vnum) && !IS_OBJ_STAT(obj,ITEM_SELL_EXTRACT))
+    {
+      success = godice(get_attribute(ch, APPEARANCE) + ch->csabilities[CSABIL_ETIQUETTE], 6);
+      if (success > 0)
+      {
+        act("$N seems to have taken a liking to you, and lowers $S price.", ch, NULL, keeper, TO_CHAR);
+        cost -= cost / (100 - (success * 2));
+      }
+    }
+
     /* haggle */
     if (!IS_NPC(ch) && !IS_OBJ_STAT(obj,ITEM_SELL_EXTRACT) && ch->csabilities[CSABIL_COMMERCE] > 0 )
     {
@@ -3440,6 +3450,17 @@ void do_sell( CHAR_DATA *ch, char *argument )
             break;
         }
         cost = get_cost(keeper,obj,FALSE);
+
+        if (has_affect_modifier(ch, gsn_awe, keeper->pIndexData->vnum) && !IS_OBJ_STAT(obj,ITEM_SELL_EXTRACT))
+        {
+          success = godice(get_attribute(ch, APPEARANCE) + ch->csabilities[CSABIL_ETIQUETTE], 6);
+          if (success > 0)
+          {
+            act("$N seems to have taken a liking to you, and raises $S offer.", ch, NULL, keeper, TO_CHAR);
+            cost += cost / (100 - (success * 2));
+          }
+        }
+
      /* haggle */
         if(haggle)
         {

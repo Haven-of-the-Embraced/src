@@ -2510,7 +2510,7 @@ void do_zap( CHAR_DATA *ch, char *argument )
     }
     }
 
-    if ( --wand->value[2] <= 0 && wand->pIndexData->vnum != OBJ_VNUM_FETISH)
+    if ( --wand->value[2] <= 0 )
     {
     act( "$n's $p explodes into fragments.", ch, wand, NULL, TO_ROOM );
     act( "Your $p explodes into fragments.", ch, wand, NULL, TO_CHAR );

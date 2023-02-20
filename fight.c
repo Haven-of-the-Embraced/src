@@ -2947,7 +2947,6 @@ void make_corpse( CHAR_DATA *ch )
     OBJ_DATA *corpse;
     OBJ_DATA *obj;
     OBJ_DATA *obj_next;
-    OBJ_DATA *fetish=NULL;
     OBJ_DATA *money;
     char *name;
     int blood = 0;
@@ -3097,9 +3096,6 @@ void make_corpse( CHAR_DATA *ch )
     }
     else
     {
-        if (obj->pIndexData->vnum == OBJ_VNUM_FETISH)
-            fetish = obj;
-        else
             if( ch->race == race_lookup("MIB") ||
                 ch->race == race_lookup("spirit") ||
                 ch->race == race_lookup("wraith") ||
@@ -3107,7 +3103,6 @@ void make_corpse( CHAR_DATA *ch )
             obj_to_room(obj, ch->in_room);
             else
             obj_to_obj( obj, corpse );
-    }
     }
 
         if( ch->race == race_lookup("MIB") )
@@ -3126,8 +3121,6 @@ void make_corpse( CHAR_DATA *ch )
           return;
         }
 
-    if(fetish != NULL)
-        obj_to_char(fetish,ch);
     if(str_cmp(mobname, "corpse"))
         obj_to_room( corpse, ch->in_room );
     else

@@ -349,19 +349,6 @@ void do_remort(CHAR_DATA *ch, char *argument)
             return;
         }
 
-            weapon = get_eq_char(ch,WEAR_WIELD);
-    if (weapon != NULL)
-    {
-        if ( IS_VAMP(ch) && weapon->pIndexData->vnum == OBJ_VNUM_CLAWS)
-        {
-            affect_strip(ch,gsn_claws);
-            if(weapon != NULL)
-            extract_obj(weapon);
-            send_to_char("Your claws slide back under your nails.\n\r", ch);
-            act("$n's claws slide back under their fingernails.",ch,NULL,NULL,TO_NOTVICT);
-        }
-    }
-
         for ( obj = ch->carrying; obj != NULL; obj = obj_next )
         {
             obj_next = obj->next_content;

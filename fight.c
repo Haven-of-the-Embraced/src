@@ -874,7 +874,7 @@ void one_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt )
         else
             dam += number_range(1, dam/8);
     }
-     if ( (get_eq_char( ch, WEAR_WIELD ) == NULL || wield->pIndexData->vnum == OBJ_VNUM_CLAWS) && !IS_NPC(ch))
+     if (get_eq_char( ch, WEAR_WIELD ) == NULL && !IS_NPC(ch))
             dam += number_range( 5, ch->level/2+get_skill(ch,gsn_hand_to_hand)/10 );
 
     if ( !IS_AWAKE(victim) )

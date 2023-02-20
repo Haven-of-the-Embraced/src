@@ -5157,21 +5157,6 @@ void do_claws(CHAR_DATA *ch, char *argument)
         return;
     }
 
-//Leave in for now to clear out chars with old claws.
-    weapon = get_eq_char(ch,WEAR_WIELD);
-    if (weapon != NULL)
-    {
-        if ( weapon->pIndexData->vnum == OBJ_VNUM_CLAWS)
-        {
-            affect_strip(ch,gsn_claws);
-            if(weapon == NULL) return;
-            extract_obj(weapon);
-            send_to_char("Your claws slide back under your nails.\n\r", ch);
-            act("$n's claws slide back under their fingernails.",ch,NULL,NULL,TO_NOTVICT);
-            return;
-        }
-    }
-
     if (is_affected(ch, gsn_claws))
     {
       affect_strip(ch,gsn_claws);

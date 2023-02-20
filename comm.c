@@ -2605,21 +2605,6 @@ if (d->character->totalqpoints < d->character->qpoints)
             ch->clan == clan_lookup("mage");
         }
 
-    /* remove heal fetishes - Ugha */
-        OBJ_DATA *obj_next;
-        OBJ_DATA *obj;
-    for ( obj = ch->carrying; obj != NULL; obj = obj_next )
-    {
-        obj_next = obj->next_content;
-        if(obj->pIndexData->vnum == OBJ_VNUM_FETISH && obj->value[3] == skill_lookup("heal"))
-        {
-                send_to_char("{GYou have a healing fetish. Healing fetishes are no longer allowed. Your fetish has been reset to Harm.\n\r{x",ch);
-                obj->value[3] = skill_lookup("harm");
-                obj->short_descr = str_dup("A short wooden rod decorated with blood red feathers");
-                obj->description = str_dup("A short wooden rod decorated with blood red feathers lies here.");
-                return;
-        }
-    }
 /* disabled til i debug everything else */
     if(!IS_NPC(ch) && ch->pcdata->rank > 0 && ch->pcdata->progress == 8)
     {

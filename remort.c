@@ -114,8 +114,6 @@ void do_remort(CHAR_DATA *ch, char *argument)
             obj_next = obj->next_content;
             if(obj->wear_loc != WEAR_NONE)
                 unequip_char( ch, obj );
-            if(obj->pIndexData->vnum == OBJ_VNUM_FETISH)
-                extract_obj( obj );
         }
         while ( ch->affected )
             affect_remove( ch, ch->affected );

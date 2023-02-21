@@ -2171,9 +2171,8 @@ void extract_char( CHAR_DATA *ch, bool fPull )
 
     for ( obj = ch->carrying; obj != NULL; obj = obj_next )
     {
-    obj_next = obj->next_content;
-    if (obj->pIndexData->vnum != OBJ_VNUM_FETISH)
-        extract_obj( obj );
+      obj_next = obj->next_content;
+      extract_obj( obj );
     }
 
     if (ch->in_room != NULL)

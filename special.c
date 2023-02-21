@@ -416,10 +416,8 @@ bool spec_patrolman(CHAR_DATA *ch)
     if (victim == NULL || (IS_NPC(victim) && victim->spec_fun == ch->spec_fun))
     return FALSE;
 
-    if (((obj = get_eq_char(ch,WEAR_NECK_1)) != NULL
-    &&   obj->pIndexData->vnum == OBJ_VNUM_WHISTLE)
-    ||  ((obj = get_eq_char(ch,WEAR_NECK_2)) != NULL
-    &&   obj->pIndexData->vnum == OBJ_VNUM_WHISTLE))
+    if (((obj = get_eq_char(ch,WEAR_NECK_1)) != NULL)
+    ||  (obj = get_eq_char(ch,WEAR_NECK_2)) != NULL)
     {
     act("You blow down hard on $p.",ch,obj,NULL,TO_CHAR);
     act("$n blows on $p, ***WHEEEEEEEEEEEET***",ch,obj,NULL,TO_ROOM);

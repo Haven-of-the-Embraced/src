@@ -3104,7 +3104,7 @@ void make_corpse( CHAR_DATA *ch )
             else
             obj_to_obj( obj, corpse );
     }
-
+    }
         if( ch->race == race_lookup("MIB") )
         {
           act("As it falls to the ground, $n's body melts away into nothingness.", ch, NULL, NULL, TO_ROOM);

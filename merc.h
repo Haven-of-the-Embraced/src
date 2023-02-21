@@ -1356,7 +1356,6 @@ struct  kill_data
 #define OBJ_VNUM_GIFT_TOKEN      24
 #define OBJ_VNUM_PORTAL          25
 #define OBJ_VNUM_ROSE            26
-#define OBJ_VNUM_FIRESTICK           28
 #define OBJ_VNUM_RIFT            50
 
 #define OBJ_VNUM_PIT           705
@@ -1377,8 +1376,6 @@ struct  kill_data
 #define OBJ_VNUM_SCHOOL_BANNER     812
 #define OBJ_VNUM_MAP           715
 #define OBJ_VNUM_GUIDE         3733
-
-#define OBJ_VNUM_WHISTLE       2116
 
 /* vamp stuff */
 #define OBJ_VNUM_EMPTY_VIAL    29

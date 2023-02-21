@@ -1147,6 +1147,9 @@ void do_bind(CHAR_DATA *ch, char *argument )
     argument = one_argument(argument,arg);
     argument = one_argument(argument,arg2);
 
+    send_to_char("Binding is disabled until recoded.\n\r", ch);
+    return;
+
     if(ch->race != race_lookup("garou"))
     {
         send_to_char("You are not Garou!\n\r",ch);
@@ -1155,11 +1158,6 @@ void do_bind(CHAR_DATA *ch, char *argument )
     if ( ( fetish = get_eq_char( ch, WEAR_HOLD ) ) == NULL )
     {
         send_to_char( "You hold nothing in your hand.\n\r", ch );
-        return;
-    }
-    if (fetish->pIndexData->vnum != OBJ_VNUM_FETISH)
-    {
-        send_to_char("That is not a fetish!\n\r",ch);
         return;
     }
 

@@ -5370,6 +5370,12 @@ void do_bite(CHAR_DATA *ch, char *argument)
         return;
     }
 
+    if (!IS_NPC(ch) && ch->move < ch->level / 4)
+    {
+      send_to_char("You are too tired to effectively bite someone.\n\r", ch);
+      return;
+    }
+
     if (!IS_NPC(ch))
         ch->move -= ch->level / 4;
 
@@ -5481,6 +5487,12 @@ void do_shred(CHAR_DATA *ch, char *argument)
         if (!IS_NPC(ch))
             send_to_char("You get the feeling that this might not be a good place to start a fight.\n\r", ch);
         return;
+    }
+
+    if (!IS_NPC(ch) && ch->move < ch->level / 5)
+    {
+      send_to_char("You are too tired to shred your opponent.\n\r", ch);
+      return;
     }
 
     if (!IS_NPC(ch))

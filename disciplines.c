@@ -2878,6 +2878,12 @@ void do_blight(CHAR_DATA *ch, char *argument)
         return;
     }
 
+    if (is_affected(victim, gsn_blight))
+    {
+      send_to_char("Your target is already being ravaged by death energy.\n\r", ch);
+      return;
+    }
+
     if (ch->cswillpower < 1)
     {
         send_to_char("You do not have any Willpower left to spend for this.\n\r", ch);
@@ -2908,7 +2914,7 @@ void do_blight(CHAR_DATA *ch, char *argument)
     act("$n grabs on to $N and seems to focus for a moment...", ch, NULL, victim, TO_NOTVICT);
 
     dicesuccess = godice(get_attribute(ch, MANIPULATION) + ch->csabilities[CSABIL_MEDICINE], 6);
-    ch->pblood -= 10;
+    ch->cswillpower--;
 
     if (dicesuccess < 0)
     {
@@ -2918,11 +2924,18 @@ void do_blight(CHAR_DATA *ch, char *argument)
         WAIT_STATE(ch,48);
         af.where     = TO_AFFECTS;
         af.type      = gsn_blight;
-        af.level     = ch->level;
-        af.duration  = 6 - ch->pcdata->discipline[MORTIS];
+        af.level     = dicesuccess;
+        af.duration  = -dicesuccess;
         af.location  = APPLY_CS_STR;
-        af.modifier  = -ch->pcdata->discipline[MORTIS];
+        af.modifier  = -1;
         af.bitvector = AFF_SLOW;
+        affect_to_char( ch, &af );
+
+        af.location  = APPLY_CS_DEX;
+        af.bitvector = 0;
+        affect_to_char( ch, &af );
+
+        af.location  = APPLY_CS_STA;
         affect_to_char( ch, &af );
         return;
     }
@@ -2942,7 +2955,7 @@ void do_blight(CHAR_DATA *ch, char *argument)
 
     WAIT_STATE(ch,24);
     af.where     = TO_AFFECTS;
-    af.type      = gsn_quietus_weakness;
+    af.type      = gsn_blight;
     af.level     = ch->level;
     af.duration  = (5+(ch->pcdata->discipline[MORTIS]*10))-ch->gen;
     af.location  = APPLY_CS_STR;

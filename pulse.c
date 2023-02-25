@@ -93,6 +93,17 @@ void affects_update (void) {
         }
     }
 
+    if (is_affected(ch, gsn_blight) && ch->fighting != NULL &&
+        (!IS_VAMP(ch) || ch->race == race_lookup("ghoul")))
+    {
+      if (godice(get_attribute(ch, STAMINA), 6) < 1)
+      {
+        act( "$n clutches $s chest and collapses!", ch, NULL, NULL, TO_ROOM );
+        send_to_char( "Your heart stops from the strain on your body!\n\r", ch );
+        kill_em(ch->fighting,ch);
+      }
+    }
+
     // Player-Only affects below this point.
     if (IS_NPC(ch))
         continue;

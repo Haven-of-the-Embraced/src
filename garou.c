@@ -335,25 +335,25 @@ void do_gogarou(CHAR_DATA *ch, char *argument)
             send_to_char("You must pick a Tribe. Valid Tribes are Black Furies, Bone Gnawers, Children of Gaia, Fenrir,\n\rFianna, Red Talons, Shadow Lords, Silent Striders, Silver Fangs and Warders of Men.\n\rSee the helpfile for each before deciding.\n\rType gogarou <tribe> to continue.\n\r",ch);
             return;
         }
-        if(!str_prefix( argument, "black furies"))
+        if(!str_prefix( argument, "black furies") || !str_prefix( argument, "black fury"))
         {
             send_to_char("Alright. You are now a Black Fury.\n\r",ch);
             ch->pcdata->tribe = BLACK_FURY;
             ch->clan = clan_lookup("blackfury");
         }
-        else if(!str_prefix( argument, "bone gnawers"))
+        else if(!str_prefix( argument, "bone gnawers") || !str_prefix( argument, "bone gnawer"))
         {
             send_to_char("Alright. You are now a Bone Gnawer.\n\r",ch);
             ch->pcdata->tribe = BONE_GNAWER;
             ch->clan = clan_lookup("bonegnawer");
         }
-        else if(!str_prefix( argument, "children of gaia"))
+        else if(!str_prefix( argument, "children of gaia") || !str_prefix( argument, "child of gaia"))
         {
             send_to_char("Alright. You are now a Child of Gaia.\n\r",ch);
             ch->pcdata->tribe = CHILDREN_OF_GAIA;
             ch->clan = clan_lookup("childrenofgaia");
         }
-        else if(!str_prefix( argument, "fenrir"))
+        else if(!str_prefix( argument, "fenrir") || !str_prefix( argument, "get of fenris") || !str_prefix( argument, "getoffenris"))
         {
             send_to_char("Alright. You are now a Fenrir.\n\r",ch);
             ch->pcdata->tribe = FENRIR;
@@ -365,31 +365,31 @@ void do_gogarou(CHAR_DATA *ch, char *argument)
             ch->pcdata->tribe = FIANNA;
             ch->clan = clan_lookup("fianna");
         }
-        else if(!str_prefix( argument, "red talons"))
+        else if(!str_prefix( argument, "red talons") || !str_prefix( argument, "red talon"))
         {
             send_to_char("Alright. You are now a Red Talon.\n\r",ch);
             ch->pcdata->tribe = RED_TALON;
             ch->clan = clan_lookup("redtalon");
         }
-        else if(!str_prefix( argument, "shadow lords"))
+        else if(!str_prefix( argument, "shadow lords") || !str_prefix( argument, "shadow lord"))
         {
             send_to_char("Alright. You are now a Shadow Lord.\n\r",ch);
             ch->pcdata->tribe = SHADOW_LORD;
             ch->clan = clan_lookup("shadowlord");
         }
-        else if(!str_prefix( argument, "silent striders"))
+        else if(!str_prefix( argument, "silent striders") || !str_prefix( argument, "silent strider"))
         {
             send_to_char("Alright. You are now a Silent Strider.\n\r",ch);
             ch->pcdata->tribe = SILENT_STRIDER;
             ch->clan = clan_lookup("silentstrider");
         }
-        else if(!str_prefix( argument, "silver fangs"))
+        else if(!str_prefix( argument, "silver fangs") || !str_prefix( argument, "silver fang"))
         {
             send_to_char("Alright. You are now a Silver Fang.\n\r",ch);
             ch->pcdata->tribe = SILVER_FANG;
             ch->clan = clan_lookup("silverfang");
         }
-        else if(!str_prefix( argument, "warders of men"))
+        else if(!str_prefix( argument, "warders of men") || !str_prefix( argument, "warder of men") || !str_prefix( argument, "wardersofmen"))
         {
             send_to_char("Alright. You are now a Warders of Men.\n\r",ch);
             ch->pcdata->tribe = WARDERSOFMEN;

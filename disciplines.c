@@ -2957,11 +2957,19 @@ void do_blight(CHAR_DATA *ch, char *argument)
     af.where     = TO_AFFECTS;
     af.type      = gsn_blight;
     af.level     = ch->level;
-    af.duration  = (5+(ch->pcdata->discipline[MORTIS]*10))-ch->gen;
+    af.duration  = 12;
     af.location  = APPLY_CS_STR;
-    af.modifier  = -ch->pcdata->discipline[MORTIS];
+    af.modifier  = -3;
     af.bitvector = AFF_SLOW;
     affect_to_char( victim, &af );
+
+    af.location  = APPLY_CS_DEX;
+    af.bitvector = 0;
+    affect_to_char( victim, &af );
+
+    af.location  = APPLY_CS_STA;
+    affect_to_char( victim, &af );
+
     multi_hit( victim, ch, TYPE_UNDEFINED );
     return;
 }

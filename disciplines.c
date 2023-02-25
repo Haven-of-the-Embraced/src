@@ -2940,6 +2940,12 @@ void do_blight(CHAR_DATA *ch, char *argument)
         return;
     }
 
+    if (!has_blood(victim))
+    {
+      send_to_char("Your victim does not seem to be affected in the slightest.\n\r", ch);
+      return;
+    }
+
     if (dicesuccess == 0)
     {
         act("... and nothing happens.", ch, NULL, victim, TO_CHAR);

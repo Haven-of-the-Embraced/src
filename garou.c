@@ -341,23 +341,29 @@ void do_gogarou(CHAR_DATA *ch, char *argument)
             ch->pcdata->tribe = BLACK_FURY;
             ch->clan = clan_lookup("blackfury");
         }
+        else if(!str_prefix( argument, "bone gnawers"))
+        {
+            send_to_char("Alright. You are now a Bone Gnawer.\n\r",ch);
+            ch->pcdata->tribe = BONE_GNAWER;
+            ch->clan = clan_lookup("bonegnawer");
+        }
         else if(!str_prefix( argument, "children of gaia"))
         {
             send_to_char("Alright. You are now a Child of Gaia.\n\r",ch);
             ch->pcdata->tribe = CHILDREN_OF_GAIA;
             ch->clan = clan_lookup("childrenofgaia");
         }
-        else if(!str_prefix( argument, "fianna"))
-        {
-            send_to_char("Alright. You are now a Fianna.\n\r",ch);
-            ch->pcdata->tribe = FIANNA;
-            ch->clan = clan_lookup("fianna");
-        }
         else if(!str_prefix( argument, "fenrir"))
         {
             send_to_char("Alright. You are now a Fenrir.\n\r",ch);
             ch->pcdata->tribe = FENRIR;
             ch->clan = clan_lookup("fenrir");
+        }
+        else if(!str_prefix( argument, "fianna"))
+        {
+            send_to_char("Alright. You are now a Fianna.\n\r",ch);
+            ch->pcdata->tribe = FIANNA;
+            ch->clan = clan_lookup("fianna");
         }
         else if(!str_prefix( argument, "red talons"))
         {
@@ -371,17 +377,11 @@ void do_gogarou(CHAR_DATA *ch, char *argument)
             ch->pcdata->tribe = SHADOW_LORD;
             ch->clan = clan_lookup("shadowlord");
         }
-        else if(!str_prefix( argument, "silent strider"))
+        else if(!str_prefix( argument, "silent striders"))
         {
             send_to_char("Alright. You are now a Silent Strider.\n\r",ch);
             ch->pcdata->tribe = SILENT_STRIDER;
             ch->clan = clan_lookup("silentstrider");
-        }
-        else if(!str_prefix( argument, "bone gnawer"))
-        {
-            send_to_char("Alright. You are now a Bone Gnawer.\n\r",ch);
-            ch->pcdata->tribe = BONE_GNAWER;
-            ch->clan = clan_lookup("bonegnawer");
         }
         else if(!str_prefix( argument, "silver fangs"))
         {

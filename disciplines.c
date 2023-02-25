@@ -2992,182 +2992,6 @@ void do_blight(CHAR_DATA *ch, char *argument)
     return;
 }
 
-void do_blackdeath(CHAR_DATA *ch, char *argument)
-{
-   CHAR_DATA *victim;
-   DESCRIPTOR_DATA *d;
-
-    if (IS_NPC(ch)) return;
-    if(!IS_VAMP(ch))
-    {
-        send_to_char("You are not a vampire!\n\r" ,ch);
-        return;
-    }
-    if ( ( victim = get_char_room( ch, NULL, argument ) ) == NULL )
-    {
-        send_to_char( "Who?\n\r", ch );
-        return;
-    }
-    if ( IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
-    {
-        send_to_char("Your blood curse prevents it!\n\r" ,ch);
-        return;
-    }
-    if(victim == ch)
-    {
-        send_to_char( "You cannot do this to yourself!\n\r", ch );
-        return;
-    }
-    if (ch->pcdata->discipline[MORTIS] < 5)
-    {
-        send_to_char( "You are not skilled enough in Mortis!.\n\r", ch );
-        return;
-    }
-    if (ch->pblood <= 110)
-    {
-        send_to_char( "You don't have enough blood!\n\r", ch );
-        return;
-    }
-
-    if(!IS_NPC(victim) && (!IS_SET(victim->act,PLR_ARENA) || !IS_SET(ch->act2, PLR2_PVP) || !IS_SET(victim->act2, PLR2_PVP)))
-    {
-        send_to_char("Your target and yourself must both be PVP enabled to do that.\n\r", ch);
-        return;
-    }
-
-    if(!IS_NPC(victim) && victim->race == race_lookup("vampire") && victim->gen < ch->gen)
-    {
-        send_to_char("That person is too close to Caine to kill outright.\n\r",ch);
-        return;
-    }
-    if(victim->race == race_lookup("methuselah") && ch->race != race_lookup("methuselah"))
-    {
-        send_to_char("That kindred is too ancient and powerful to fall victim to you.\n\r",ch);
-        return;
-    }
-    if(ch->clan == clan_lookup("cappadocian") && victim->level > (ch->level+10))
-    {
-        send_to_char("Even your powers over death cannot compete with the might of this soul.\n\r",ch);
-        return;
-    }
-    if(ch->clan != clan_lookup("cappadocian") && victim->level > ch->level)
-    {
-        send_to_char("That person is too powerful to cause death within.\n\r",ch);
-        return;
-    }
-    if(IS_IMMORTAL(victim) && !IS_IMMORTAL(ch))
-    {
-        send_to_char("You GOT to be kidding!\n\r",ch);
-        return;
-    }
-    if(is_affected(victim,gsn_shadowform) || IS_AFFECTED2(victim, AFF2_MIST) || is_affected(victim,gsn_earthmeld))
-    {
-        send_to_char("You cannot do this to someone in that form.\n\r",ch);
-        return;
-    }
-    if (IS_NPC(victim) && victim->pIndexData->pShop != NULL)
-    {
-        send_to_char("You fear that it may hinder your future purchases.\n\r",ch);
-        return;
-    }
-    WAIT_STATE( ch, 60 );
-    ch->pblood -= 60;
-
-    act("$n comfortingly lays a hand upon $N who suddenly screams in pain and falls over dead.",ch,NULL,victim,TO_NOTVICT);
-    act("$n comfortingly lays a hand upon you... OH THE AGONY!",ch,NULL,victim,TO_VICT);
-    act("You lay a hand upon $N to ease them into the next world.",ch,NULL,victim,TO_CHAR);
-    if(!IS_NPC(victim) && !IS_SET(victim->act,PLR_ARENA))
-    {
-        if(victim->race == race_lookup("vampire") || victim->race == race_lookup("methuselah"))
-        {
-            act("$N enters Torpor.",ch,NULL,victim,TO_NOTVICT);
-            act("$N enters Torpor.",ch,NULL,victim,TO_CHAR);
-            act("You enter Torpor.",ch,NULL,victim,TO_VICT);
-            stop_fighting( victim, TRUE );
-            victim->position = POS_TORPOR;
-            victim->hit = -20;
-            for ( d = descriptor_list; d != NULL; d = d->next )
-            {
-                if ( d->connected == CON_PLAYING &&
-                d->character != victim &&
-                is_same_clan(victim,d->character) &&
-                !IS_SET(d->character->comm,COMM_NOCLAN))
-                act_new("You sense that $n has entered Torpor!",victim,NULL,d->character,TO_VICT,POS_DEAD, FALSE);
-                return;
-            }
-        }
-        else
-        kill_em(ch,victim);
-
-    }
-    else
-    kill_em(ch,victim);
-    return;
-}
-
-void do_resurrection(CHAR_DATA *ch, char *argument)
-{
-    int dicesuccess = 0;
-
-    if (IS_NPC(ch)) return;
-
-    if(!IS_VAMP(ch))
-    {
-        send_to_char("You are not a vampire!\n\r" ,ch);
-        return;
-    }
-    if(ch->position != POS_TORPOR)
-    {
-        send_to_char( "You are not in Torpor!\n\r", ch );
-        return;
-    }
-    if ( IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
-    {
-        send_to_char("Your blood curse prevents it!\n\r" ,ch);
-        return;
-    }
-
-    if (ch->pcdata->discipline[MORTIS] < 3)
-    {
-        send_to_char( "You are not skilled enough in Mortis!\n\r", ch );
-        return;
-    }
-
-    if (ch->cswillpower < 2)
-    {
-        send_to_char("You do not have enough Willpower to force yourself out of {RT{ro{Drp{ro{Rr{x.\n\r", ch);
-        return;
-    }
-
-    dicesuccess = godice(ch->csmax_willpower, 13 - ch->pcdata->cshumanity);
-
-    if (dicesuccess < 0)
-    {
-        act_new("You try to force yourself out of Torpor early, but fail horribly.", ch, NULL, NULL, TO_CHAR, POS_TORPOR, FALSE);
-        return;
-    }
-
-    if (dicesuccess == 0)
-    {
-        act_new("You fail in your attempt to Resurrect yourself.", ch, NULL, NULL, TO_CHAR, POS_TORPOR, FALSE);
-        return;
-    }
-
-    ch->position=POS_RESTING;
-    ch->hit = ch->max_hit / 12;
-    ch->cswillpower -= 2;
-    affect_strip(ch,gsn_vamp_frenzy);
-    affect_strip(ch, gsn_torpor);
-    if (ch->pblood == 0)
-        ch->pblood = 10;
-
-    gain_exp( ch, dicesuccess * 5);
-
-    act("Using the power of your {rvitae{x and the determination of your own {ywill{x, you force yourself from {RT{ro{Drp{ro{Rr{x!", ch, NULL, NULL, TO_CHAR);
-    act( "$n forces $mself out of {RT{ro{Drp{ro{Rr{x!",  ch, NULL, NULL, TO_NOTVICT );
-    return;
-}
-
 void do_homunculusservant(CHAR_DATA *ch, char *argument)
 {
     MOB_INDEX_DATA *pMobIndex;
@@ -3269,6 +3093,69 @@ void do_homunculusservant(CHAR_DATA *ch, char *argument)
     af.bitvector = AFF_CHARM;
     affect_to_char( mob, &af );
 
+    return;
+}
+
+void do_resurrection(CHAR_DATA *ch, char *argument)
+{
+    int dicesuccess = 0;
+
+    if (IS_NPC(ch)) return;
+
+    if(!IS_VAMP(ch))
+    {
+        send_to_char("You are not a vampire!\n\r" ,ch);
+        return;
+    }
+    if(ch->position != POS_TORPOR)
+    {
+        send_to_char( "You are not in Torpor!\n\r", ch );
+        return;
+    }
+    if ( IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
+    {
+        send_to_char("Your blood curse prevents it!\n\r" ,ch);
+        return;
+    }
+
+    if (ch->pcdata->discipline[MORTIS] < 3)
+    {
+        send_to_char( "You are not skilled enough in Mortis!\n\r", ch );
+        return;
+    }
+
+    if (ch->cswillpower < 2)
+    {
+        send_to_char("You do not have enough Willpower to force yourself out of {RT{ro{Drp{ro{Rr{x.\n\r", ch);
+        return;
+    }
+
+    dicesuccess = godice(ch->csmax_willpower, 13 - ch->pcdata->cshumanity);
+
+    if (dicesuccess < 0)
+    {
+        act_new("You try to force yourself out of Torpor early, but fail horribly.", ch, NULL, NULL, TO_CHAR, POS_TORPOR, FALSE);
+        return;
+    }
+
+    if (dicesuccess == 0)
+    {
+        act_new("You fail in your attempt to Resurrect yourself.", ch, NULL, NULL, TO_CHAR, POS_TORPOR, FALSE);
+        return;
+    }
+
+    ch->position=POS_RESTING;
+    ch->hit = ch->max_hit / 12;
+    ch->cswillpower -= 2;
+    affect_strip(ch,gsn_vamp_frenzy);
+    affect_strip(ch, gsn_torpor);
+    if (ch->pblood == 0)
+        ch->pblood = 10;
+
+    gain_exp( ch, dicesuccess * 5);
+
+    act("Using the power of your {rvitae{x and the determination of your own {ywill{x, you force yourself from {RT{ro{Drp{ro{Rr{x!", ch, NULL, NULL, TO_CHAR);
+    act( "$n forces $mself out of {RT{ro{Drp{ro{Rr{x!",  ch, NULL, NULL, TO_NOTVICT );
     return;
 }
 
@@ -3393,7 +3280,6 @@ void do_animatedead(CHAR_DATA *ch, char *argument)
     return;
 }
 
-
 void do_callathanatos(CHAR_DATA *ch, char *argument)
 {
     MOB_INDEX_DATA *pMobIndex;
@@ -3481,6 +3367,119 @@ void do_callathanatos(CHAR_DATA *ch, char *argument)
     }
 
     extract_obj(obj);
+    return;
+}
+
+void do_blackdeath(CHAR_DATA *ch, char *argument)
+{
+   CHAR_DATA *victim;
+   DESCRIPTOR_DATA *d;
+
+    if (IS_NPC(ch)) return;
+    if(!IS_VAMP(ch))
+    {
+        send_to_char("You are not a vampire!\n\r" ,ch);
+        return;
+    }
+    if ( ( victim = get_char_room( ch, NULL, argument ) ) == NULL )
+    {
+        send_to_char( "Who?\n\r", ch );
+        return;
+    }
+    if ( IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
+    {
+        send_to_char("Your blood curse prevents it!\n\r" ,ch);
+        return;
+    }
+    if(victim == ch)
+    {
+        send_to_char( "You cannot do this to yourself!\n\r", ch );
+        return;
+    }
+    if (ch->pcdata->discipline[MORTIS] < 5)
+    {
+        send_to_char( "You are not skilled enough in Mortis!.\n\r", ch );
+        return;
+    }
+    if (ch->pblood <= 110)
+    {
+        send_to_char( "You don't have enough blood!\n\r", ch );
+        return;
+    }
+
+    if(!IS_NPC(victim) && (!IS_SET(victim->act,PLR_ARENA) || !IS_SET(ch->act2, PLR2_PVP) || !IS_SET(victim->act2, PLR2_PVP)))
+    {
+        send_to_char("Your target and yourself must both be PVP enabled to do that.\n\r", ch);
+        return;
+    }
+
+    if(!IS_NPC(victim) && victim->race == race_lookup("vampire") && victim->gen < ch->gen)
+    {
+        send_to_char("That person is too close to Caine to kill outright.\n\r",ch);
+        return;
+    }
+    if(victim->race == race_lookup("methuselah") && ch->race != race_lookup("methuselah"))
+    {
+        send_to_char("That kindred is too ancient and powerful to fall victim to you.\n\r",ch);
+        return;
+    }
+    if(ch->clan == clan_lookup("cappadocian") && victim->level > (ch->level+10))
+    {
+        send_to_char("Even your powers over death cannot compete with the might of this soul.\n\r",ch);
+        return;
+    }
+    if(ch->clan != clan_lookup("cappadocian") && victim->level > ch->level)
+    {
+        send_to_char("That person is too powerful to cause death within.\n\r",ch);
+        return;
+    }
+    if(IS_IMMORTAL(victim) && !IS_IMMORTAL(ch))
+    {
+        send_to_char("You GOT to be kidding!\n\r",ch);
+        return;
+    }
+    if(is_affected(victim,gsn_shadowform) || IS_AFFECTED2(victim, AFF2_MIST) || is_affected(victim,gsn_earthmeld))
+    {
+        send_to_char("You cannot do this to someone in that form.\n\r",ch);
+        return;
+    }
+    if (IS_NPC(victim) && victim->pIndexData->pShop != NULL)
+    {
+        send_to_char("You fear that it may hinder your future purchases.\n\r",ch);
+        return;
+    }
+    WAIT_STATE( ch, 60 );
+    ch->pblood -= 60;
+
+    act("$n comfortingly lays a hand upon $N who suddenly screams in pain and falls over dead.",ch,NULL,victim,TO_NOTVICT);
+    act("$n comfortingly lays a hand upon you... OH THE AGONY!",ch,NULL,victim,TO_VICT);
+    act("You lay a hand upon $N to ease them into the next world.",ch,NULL,victim,TO_CHAR);
+    if(!IS_NPC(victim) && !IS_SET(victim->act,PLR_ARENA))
+    {
+        if(victim->race == race_lookup("vampire") || victim->race == race_lookup("methuselah"))
+        {
+            act("$N enters Torpor.",ch,NULL,victim,TO_NOTVICT);
+            act("$N enters Torpor.",ch,NULL,victim,TO_CHAR);
+            act("You enter Torpor.",ch,NULL,victim,TO_VICT);
+            stop_fighting( victim, TRUE );
+            victim->position = POS_TORPOR;
+            victim->hit = -20;
+            for ( d = descriptor_list; d != NULL; d = d->next )
+            {
+                if ( d->connected == CON_PLAYING &&
+                d->character != victim &&
+                is_same_clan(victim,d->character) &&
+                !IS_SET(d->character->comm,COMM_NOCLAN))
+                act_new("You sense that $n has entered Torpor!",victim,NULL,d->character,TO_VICT,POS_DEAD, FALSE);
+                return;
+            }
+        }
+        else
+        kill_em(ch,victim);
+
+    }
+    else
+    kill_em(ch,victim);
     return;
 }
 

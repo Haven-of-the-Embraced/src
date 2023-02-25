@@ -2890,6 +2890,18 @@ void do_blight(CHAR_DATA *ch, char *argument)
         return;
     }
 
+    if(!IS_NPC(victim) && (!IS_SET(victim->act,PLR_ARENA) || !IS_SET(ch->act2, PLR2_PVP) || !IS_SET(victim->act2, PLR2_PVP)))
+    {
+        send_to_char("Your target and yourself must both be PVP enabled to do that.\n\r", ch);
+        return;
+    }
+
+    if(is_affected(victim,gsn_shadowform) || IS_AFFECTED2(victim, AFF2_MIST) || is_affected(victim,gsn_earthmeld))
+    {
+        send_to_char("You cannot do this to someone in that form.\n\r",ch);
+        return;
+    }
+
    dicesuccess = godice(get_attribute(ch, DEXTERITY) + ch->csabilities[CSABIL_BRAWL], 6);
 
     if (dicesuccess < 0)

@@ -2917,7 +2917,7 @@ void do_blight(CHAR_DATA *ch, char *argument)
         act("... and $n recoils in pain!", ch, NULL, victim, TO_NOTVICT);
         WAIT_STATE(ch,48);
         af.where     = TO_AFFECTS;
-        af.type      = gsn_quietus_weakness;
+        af.type      = gsn_blight;
         af.level     = ch->level;
         af.duration  = 6 - ch->pcdata->discipline[MORTIS];
         af.location  = APPLY_CS_STR;

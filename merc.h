@@ -2953,6 +2953,7 @@ extern sh_int  gsn_touch;
 extern sh_int  gsn_vamp_frenzy;
 extern sh_int  gsn_astralprojection;
 extern sh_int  gsn_astrallylost;
+extern sh_int  gsn_blight;
 extern sh_int  gsn_garou_frenzy;
 extern sh_int  gsn_thaumaturgy_frenzy;
 extern sh_int  gsn_bloodofpotency;

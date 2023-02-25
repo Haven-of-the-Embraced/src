@@ -2125,7 +2125,10 @@ Total (3) */
 // Total (0)
 
 //    --Mortis--
-// Total (0)
+// Total (1)
+    { "blight", { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+    &gsn_blight,          SLOT(0),     0, 12, "",         "Your body begins to slough off the ravages of accellerated age.", "" },
 
 //    --Obfuscate--
 // Total (4)

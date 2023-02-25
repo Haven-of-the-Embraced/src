@@ -4952,6 +4952,7 @@ sh_int          gsn_celbuff;
 sh_int          gsn_gleam;
 sh_int          gsn_astralprojection;
 sh_int          gsn_astrallylost;
+sh_int          gsn_blight;
 sh_int          gsn_botched_presence;
 sh_int          gsn_socialdisgrace;
 sh_int          gsn_cloakshadow;

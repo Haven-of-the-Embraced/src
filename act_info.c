@@ -1592,6 +1592,7 @@ void do_examine( CHAR_DATA *ch, char *argument )
     char arg[MAX_INPUT_LENGTH];
     char condition[3];
     OBJ_DATA *obj;
+    int door;
 
     one_argument( argument, arg );
 
@@ -1599,6 +1600,31 @@ void do_examine( CHAR_DATA *ch, char *argument )
     {
 	send_to_char( "Examine what?\n\r", ch );
 	return;
+    }
+
+    if ( ( door = find_door( ch, arg ) ) >= 0 )
+    {
+      EXIT_DATA *pexit;
+      pexit = ch->in_room->exit[door];
+
+      send_to_char("()-----------------------=======ooooOOOOOOOOoooo=======-----------------------()\n\r",ch);
+      send_to_char(" |-----------------------=====  Exit Information  =====-----------------------|  \n\r",ch);
+
+      if ( IS_SET(pexit->exit_info, EX_CLOSED))
+         send_to_char( " |   That exit appears to be closed.                                          |\n\r", ch );
+      if ( IS_SET(pexit->exit_info, EX_LOCKED))
+         send_to_char( " |   The exit has been locked.                                                |\n\r",  ch );
+      if ( IS_SET(pexit->exit_info, EX_PICKPROOF))
+         send_to_char( " |   The lock cannot be picked.                                               |\n\r", ch );
+      if ( IS_SET(pexit->exit_info, EX_EASY))
+         send_to_char( " |   The lock should be child's play to pick.                                 |\n\r", ch );
+      if ( IS_SET(pexit->exit_info, EX_HARD))
+         send_to_char( " |   This lock might be a little difficult to pick.                           |\n\r", ch );
+      if ( IS_SET(pexit->exit_info, EX_INFURIATING))
+         send_to_char( " |   This lock will take the highest skill to pick.                           |\n\r", ch );
+
+      send_to_char("()-----------------------=======ooooOOOOOOOOoooo=======-----------------------()\n\r",ch);
+      return;
     }
 
     if ( ( obj = get_obj_here( ch, NULL, arg ) ) != NULL )

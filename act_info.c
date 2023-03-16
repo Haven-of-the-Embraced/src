@@ -1602,6 +1602,20 @@ void do_examine( CHAR_DATA *ch, char *argument )
 	return;
     }
 
+    if (!str_prefix(arg, "room"))
+    {
+      ROOM_INDEX_DATA *room;
+      room = ch->in_room;
+
+      send_to_char("()-----------------------=======ooooOOOOOOOOoooo=======-----------------------()\n\r",ch);
+      send_to_char(" |-----------------------=====  Room Information  =====-----------------------|  \n\r",ch);
+      sprintf( buf," | --{x %s {x  \n\r", room->name);
+  	send_to_char( buf, ch );
+
+      send_to_char("()-----------------------=======ooooOOOOOOOOoooo=======-----------------------()\n\r",ch);
+      return;
+    }
+
     if ( ( door = find_door( ch, arg ) ) >= 0 )
     {
       EXIT_DATA *pexit;

@@ -1608,10 +1608,40 @@ void do_examine( CHAR_DATA *ch, char *argument )
       room = ch->in_room;
 
       send_to_char("()-----------------------=======ooooOOOOOOOOoooo=======-----------------------()\n\r",ch);
-      send_to_char(" |-----------------------=====  Room Information  =====-----------------------|  \n\r",ch);
-      sprintf( buf," | --{x %s {x  \n\r", room->name);
-  	send_to_char( buf, ch );
+      sprintf( buf," |-- %s --|\n\r", center(room->name, 70, " "));
+  	   send_to_char( buf, ch );
+       send_to_char("()-----------------------=======ooooOOOOOOOOoooo=======-----------------------()\n\r",ch);
 
+       switch (room->sector_type)
+       {
+         case SECT_INSIDE:
+              break;
+         case SECT_CITY:
+              break;
+         case SECT_FIELD:
+              break;
+         case SECT_FOREST:
+              break;
+         case SECT_HILLS:
+              break;
+         case SECT_WATER_SWIM:
+         case SECT_WATER_NOSWIM:
+         case SECT_WATER_DROWN:
+              break;
+         case SECT_AIR:
+              break;
+         case SECT_DESERT:
+              break;
+         case SECT_HOT:
+              break;
+         case SECT_COLD:
+              break;
+         default:
+              break;
+       }
+
+       sprintf( buf, " |  Room flags: %s\n\r", room_bit_name(room->room_flags));
+        send_to_char( buf, ch );
       send_to_char("()-----------------------=======ooooOOOOOOOOoooo=======-----------------------()\n\r",ch);
       return;
     }

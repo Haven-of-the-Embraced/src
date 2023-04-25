@@ -2574,7 +2574,15 @@ void spell_gift_distractthefool( int sn, int level, CHAR_DATA *ch, void *vo, int
     return;
 }
 
-void spell_gift_faerielight( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_faerielight( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  OBJ_DATA *light;
+
+  light = create_object( get_obj_index( OBJ_VNUM_LIGHT_BALL ), 0 );
+  obj_to_room( light, ch->in_room );
+  act( "$n twiddles $s thumbs and $p appears.",   ch, light, NULL, TO_ROOM );
+  act( "You twiddle your thumbs and $p appears.", ch, light, NULL, TO_CHAR );
+  return;
     return;
 }
 

@@ -1606,35 +1606,44 @@ void do_examine( CHAR_DATA *ch, char *argument )
     {
       ROOM_INDEX_DATA *room;
       room = ch->in_room;
-
       send_to_char("()-----------------------=======ooooOOOOOOOOoooo=======-----------------------()\n\r",ch);
       sprintf( buf," |-- %s --|\n\r", center(room->name, 70, " "));
-  	   send_to_char( buf, ch );
-       send_to_char("()-----------------------=======ooooOOOOOOOOoooo=======-----------------------()\n\r",ch);
-
+  	  send_to_char( buf, ch );
+      send_to_char("()-----------------------=======ooooOOOOOOOOoooo=======-----------------------()\n\r",ch);
+      send_to_char(" | The surrounding area is ", ch);
        switch (room->sector_type)
        {
          case SECT_INSIDE:
+              send_to_char("inside a structure.                                | \n\r", ch);
               break;
          case SECT_CITY:
+              send_to_char("within the city limits.                            | \n\r", ch);
               break;
          case SECT_FIELD:
+              send_to_char("an open field.                                     | \n\r", ch);
               break;
          case SECT_FOREST:
+              send_to_char("covered by trees.                                  | \n\r", ch);
               break;
          case SECT_HILLS:
+              send_to_char("full of rolling hillsides.                         | \n\r", ch);
               break;
          case SECT_WATER_SWIM:
          case SECT_WATER_NOSWIM:
          case SECT_WATER_DROWN:
+              send_to_char("covered by water.                                  | \n\r", ch);
               break;
          case SECT_AIR:
+              send_to_char("wide open sky.                                     | \n\r", ch);
               break;
          case SECT_DESERT:
+              send_to_char("dry, sandy and barren.                             | \n\r", ch);
               break;
          case SECT_HOT:
+              send_to_char("hot and sweltering.                                | \n\r", ch);
               break;
          case SECT_COLD:
+              send_to_char("cold and freezing.                                 | \n\r", ch);
               break;
          default:
               break;

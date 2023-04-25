@@ -2577,6 +2577,28 @@ void spell_gift_distractthefool( int sn, int level, CHAR_DATA *ch, void *vo, int
 void spell_gift_faerielight( int sn, int level, CHAR_DATA *ch, void *vo, int target)
 {
   OBJ_DATA *light;
+  int success;
+
+  if (ch->pcdata->gnosis[TEMP] < 1)
+  {
+    send_to_char("You do not possess the spiritual reserves to activate this gift.\n\r", ch);
+    return;
+  }
+
+  ch->pcdata->gnosis[TEMP]--;
+  success = godice(get_attribute(ch, WITS) + ch->pcdata->cssec_abil[CSABIL_ENIGMAS], 6);
+
+  if (success < 0)
+  {
+
+    return;
+  }
+
+  if (success == 0)
+  {
+
+    return;
+  }
 
   light = create_object( get_obj_index( OBJ_VNUM_LIGHT_BALL ), 0 );
   obj_to_room( light, ch->in_room );

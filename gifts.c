@@ -2590,13 +2590,16 @@ void spell_gift_faerielight( int sn, int level, CHAR_DATA *ch, void *vo, int tar
 
   if (success < 0)
   {
-
+    act("You twiddle your thumbs for an excessive amount of time, but nothing happens.", ch, NULL, NULL, TO_CHAR);
+    act("$n twiddles $s thumbs for a while, looking foolish.", ch, NULL, NULL, TO_ROOM);
+    WAIT_STATE(ch, 6);
     return;
   }
 
   if (success == 0)
   {
-
+    act("You twiddle your thumbs, but nothing seems to happen.", ch, NULL, NULL, TO_CHAR);
+    act("$n looks silly, twiddling $s thumbs.", ch, NULL, NULL, TO_ROOM);
     return;
   }
 

@@ -2600,12 +2600,14 @@ void spell_gift_faerielight( int sn, int level, CHAR_DATA *ch, void *vo, int tar
     return;
   }
 
-  light = create_object( get_obj_index( OBJ_VNUM_LIGHT_BALL ), 0 );
+  light = create_object( get_obj_index( OBJ_VNUM_LIGHT_BALL ), 1 );
+  light->value[2] += (success * 10) + (ch->level / 2);
+  light->value[3] += (success * 10) + (ch->level / 2);
+  light->timer += (success * 10) + (ch->level / 2);
   obj_to_room( light, ch->in_room );
   act( "$n twiddles $s thumbs and $p appears.",   ch, light, NULL, TO_ROOM );
   act( "You twiddle your thumbs and $p appears.", ch, light, NULL, TO_CHAR );
   return;
-    return;
 }
 
 //Resist Toxin - Duplicate gift, as Bone Gnawer gift

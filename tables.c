@@ -1246,7 +1246,7 @@ const struct    gift_type   gift_table  [MAX_GIFTS_CODED]  =
 {
 /*  {   name,       min level,  lag delt,   chance to fail,
         breed required,     auspice required,   tribe required,
-        renown required, rage required}, */
+        renown required, rage required }, */
 // Smell of Man excluded from table.
 //      name                      		level  lag fail   breed   auspice   tribe    rank   rage
     {   NULL,                       	0,     0,  0,     0,      0,          0,        0,   0},
@@ -1260,8 +1260,8 @@ const struct    gift_type   gift_table  [MAX_GIFTS_CODED]  =
     {   "Razor Claws",              	1,     24, 0,     0,      AHROUN,     FENRIR,        1,   0},
     {   "Silver Claws",             	1,     24, 0,     0,      AHROUN,     SILVER_FANG,   3,   0},
     {   "Sense Wyrm",         	     	1,     24, 0,     METIS,  THEURGE,    BLACK_FURY, 1,   0},//Silver Fang
-    {   "Inner Strength",    	     	1,     24, 0,     0,      0,          0,        5,   0},
-    {   "Bloody Feast",             	1,     24, 0,     0,      0,          0,        5,   0},
+    {   "Inner Strength",    	     	1,     24, 0,     0,      0,          0,        5,   0}, // ** STARGAZER
+    {   "Bloody Feast",             	1,     24, 0,     0,      0,          0,        5,   0}, // ** WENDIGO
     {   "Master of Fire",           	1,     24, 0,     HOMID,  0,          0,        1,   0},
     {   "persuasion", 					1,     24, 0,     HOMID,  0,          WARDERSOFMEN, 1,   0},
     {   "speech of the world", 			0,     24, 0,     HOMID,  0,          0,        2,   0},

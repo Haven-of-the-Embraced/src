@@ -1246,12 +1246,12 @@ void cskill_update(CHAR_DATA *ch, bool show)
 
 const   struct  skill_type  skill_table [MAX_SKILL] =
 {
-// TOTAL SKILLS AS OF 2/17/21 =  428
-// MAX_SKILL INCREASED TO 435
+// TOTAL SKILLS AS OF 4/24/23 =  433
+// MAX_SKILL INCREASED TO 440
 /*
- * Magic spells.
+ * Magic spells.  Total (108)
  */
-//Total 108
+
     { "reserved", { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, 0, TAR_IGNORE, POS_STANDING,
     NULL, SLOT( 0),    0,  0,    "",         "",     ""    },
@@ -1681,7 +1681,7 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
     NULL,           SLOT(0),     0, 12, "",         "!Blood!",  "" },
 
 /* combat and weapons skills
-Total (31) */
+Total (33) */
     { "axe",{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_FIGHTING,
     &gsn_axe,               SLOT( 0),       0,      0, "",                     "!Axe!",        "" },
@@ -2784,7 +2784,7 @@ Total (3) */
 &gsn_gift_thelivingwood,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
 //    --Get of Fenris--
-
+// Total (10)
 {   "hunters harmony", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_huntersharmony,  TAR_IGNORE, POS_STANDING,
 &gsn_gift_huntersharmony,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
@@ -2805,6 +2805,10 @@ Total (3) */
 { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_mightofthor,  TAR_IGNORE, POS_STANDING,
 &gsn_gift_mightofthor,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
+{   "redirect pain", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_redirectpain,  TAR_IGNORE, POS_STANDING,
+&gsn_gift_redirectpain,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+
 {   "berserkers song", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_berserkerssong,  TAR_IGNORE, POS_STANDING,
 &gsn_gift_berserkerssong,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
@@ -2822,20 +2826,103 @@ Total (3) */
 &gsn_gift_hordeofvalhalla,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
 //    --Fianna--
+//  Total (10)
+{   "distract the fool", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_distractthefool,  TAR_IGNORE, POS_STANDING,
+&gsn_gift_distractthefool,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+
+{   "faerie light", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_faerielight,  TAR_IGNORE, POS_STANDING,
+&gsn_gift_faerielight,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+
+{   "howl of the banshee", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_howlofthebanshee,  TAR_IGNORE, POS_STANDING,
+&gsn_gift_howlofthebanshee,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+
+{   "warriors draught", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_warriorsdraught,  TAR_IGNORE, POS_STANDING,
+&gsn_gift_warriorsdraught,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+
+{   "faerie aid", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_faerieaid,  TAR_IGNORE, POS_STANDING,
+&gsn_gift_faerieaid,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+
+{   "woadling", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_woadling,  TAR_IGNORE, POS_STANDING,
+&gsn_gift_woadling,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+
+{   "balors gaze", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_balorsgaze,  TAR_IGNORE, POS_STANDING,
+&gsn_gift_balorsgaze,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+
+{   "semblance", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_semblance,  TAR_IGNORE, POS_STANDING,
+&gsn_gift_semblance,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+
+{   "fog on the moor", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_fogonthemoor,  TAR_IGNORE, POS_STANDING,
+&gsn_gift_fogonthemoor,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+
+{   "gift of the spriggan", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_giftofthespriggan,  TAR_IGNORE, POS_STANDING,
+&gsn_gift_giftofthespriggan,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
 //    --Red Talons--
+//  Total (1)
 {   "wolf at the door", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_wolfatthedoor,  TAR_CHAR_DEFENSIVE, POS_STANDING,
 &gsn_gift_wolfatthedoor,          SLOT( 0),        0,     12, "",             "Your fear of the wilderness subsides.",        "" },
 
 //    --Shadow Lords--
+//  Total (10)
+{   "aura of confidence", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_auraofconfidence,  TAR_IGNORE, POS_STANDING,
+&gsn_gift_auraofconfidence,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+
+{   "fatal flaw", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_fatalflaw,  TAR_CHAR_DEFENSIVE, POS_STANDING,
+&gsn_gift_fatalflaw,          SLOT( 0),        0,     12, "",             "You decide that your Fatal Flaw opponent is no longer worth your time.",        "" },
+
+{   "seizing the edge", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_seizingtheedge,  TAR_IGNORE, POS_STANDING,
+&gsn_gift_seizingtheedge,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+
+{   "clap of thunder", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_clapofthunder,  TAR_IGNORE, POS_STANDING,
+&gsn_gift_clapofthunder,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+
+{   "ravens curse", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_ravenscurse,  TAR_IGNORE, POS_STANDING,
+&gsn_gift_ravenscurse,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+
+{   "shadow cutting", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_shadowcutting,  TAR_IGNORE, POS_STANDING,
+&gsn_gift_shadowcutting,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+
+{   "dolorous stroke", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_dolorousstroke,  TAR_IGNORE, POS_STANDING,
+&gsn_gift_dolorousstroke,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+
+{   "strength of the dominator", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_strengthofthedominator,  TAR_IGNORE, POS_STANDING,
+&gsn_gift_strengthofthedominator,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+
+{   "shadow pack", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_shadowpack,  TAR_IGNORE, POS_STANDING,
+&gsn_gift_shadowpack,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+
+{   "obedience", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_obedience,  TAR_IGNORE, POS_STANDING,
+&gsn_gift_obedience,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
 //    --Silent Striders--
+//  Total (1)
 {   "speed of thought", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_speedofthought,  TAR_IGNORE, POS_STANDING,
 &gsn_gift_speedofthought,          SLOT( 0),        0,     12, "",             "Your supernatural swiftness fades from your body.",        "" },
 
 //    --Silver Fangs--
+//  Total (9)
 {   "eye of the falcon", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_eyeofthefalcon,  TAR_IGNORE, POS_STANDING,
 &gsn_gift_eyeofthefalcon,          SLOT( 0),        0,     12, "",             "Your bird of prey sight fades away.",        "" },
@@ -2872,9 +2959,8 @@ Total (3) */
 { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_pawsofthenewborncub,  TAR_IGNORE, POS_STANDING,
 &gsn_gift_pawsofthenewborncub,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
-//    --Stargazers--
-
 //    --Warders of Men--
+//  Total (7)
 {   "artisans command", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_artisanscommand,  TAR_IGNORE, POS_STANDING,
 &gsn_gift_artisanscommand,          SLOT( 0),        0,     12, "",             "You no longer commune with spirits of technology.",        "" },
@@ -2903,98 +2989,16 @@ Total (3) */
 { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_commandtheblaze,  TAR_IGNORE, POS_STANDING,
 &gsn_gift_commandtheblaze,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
-// Total (49)
+//  --Uncoded Tribes--
+// Total (2)
+// --Stargazer--
     { "inner strength",               { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_innerstrength,             TAR_CHAR_SELF,             POS_STANDING,
     &gsn_gift_innerstrength,          SLOT( 0),        0,     48, "",             "Your resolve has strengthened to the point that you can summon your Inner Strength again.",        "" },
-
+// --Wendigo--
     { "bloody feast",             { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_bloodyfeast,             TAR_IGNORE,             POS_STANDING,
     &gsn_gift_bloodyfeast,          SLOT( 0),        0,     12, "",             "The flesh you consumed loses it's power over you.",        "" },
-
-    {   "distract the fool", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_distractthefool,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_distractthefool,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
-
-    {   "faerie light", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_faerielight,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_faerielight,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
-
-    {   "howl of the banshee", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_howlofthebanshee,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_howlofthebanshee,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
-
-    {   "warriors draught", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_warriorsdraught,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_warriorsdraught,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
-
-    {   "faerie aid", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_faerieaid,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_faerieaid,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
-
-    {   "woadling", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_woadling,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_woadling,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
-
-    {   "balors gaze", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_balorsgaze,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_balorsgaze,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
-
-    {   "semblance", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_semblance,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_semblance,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
-
-    {   "fog on the moor", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_fogonthemoor,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_fogonthemoor,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
-
-    {   "gift of the spriggan", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_giftofthespriggan,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_giftofthespriggan,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
-
-    {   "aura of confidence", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_auraofconfidence,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_auraofconfidence,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
-
-    {   "fatal flaw", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_fatalflaw,  TAR_CHAR_DEFENSIVE, POS_STANDING,
-    &gsn_gift_fatalflaw,          SLOT( 0),        0,     12, "",             "You decide that your Fatal Flaw opponent is no longer worth your time.",        "" },
-
-    {   "seizing the edge", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_seizingtheedge,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_seizingtheedge,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
-
-    {   "clap of thunder", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_clapofthunder,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_clapofthunder,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
-
-    {   "ravens curse", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_ravenscurse,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_ravenscurse,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
-
-    {   "shadow cutting", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_shadowcutting,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_shadowcutting,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
-
-    {   "dolorous stroke", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_dolorousstroke,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_dolorousstroke,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
-
-    {   "strength of the dominator", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_strengthofthedominator,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_strengthofthedominator,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
-
-    {   "shadow pack", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_shadowpack,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_shadowpack,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
-
-    {   "obedience", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_obedience,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_obedience,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
-
-    {   "redirect pain", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_redirectpain,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_redirectpain,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
 //  ***Caern Affects***
 // Total (2)

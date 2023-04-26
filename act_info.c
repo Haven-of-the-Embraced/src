@@ -1598,8 +1598,8 @@ void do_examine( CHAR_DATA *ch, char *argument )
 
     if ( arg[0] == '\0' )
     {
-	send_to_char( "Examine what?\n\r", ch );
-	return;
+	     send_to_char( "Examine what?\n\r", ch );
+	     return;
     }
 
     if (!str_prefix(arg, "room"))
@@ -1657,7 +1657,8 @@ void do_examine( CHAR_DATA *ch, char *argument )
         send_to_char(" |  Bank transactions are possible here.                                      |\n\r", ch);
       if (has_room_bit(room->room_flags, "underwater"))
         send_to_char(" |  The entire area is submerged.                                             |\n\r", ch);
-
+      if (has_room_bit(room->room_flags, "forge"))
+        send_to_char(" |  You can forge materials here.                                             |\n\r", ch);
       send_to_char("()-----------------------=======ooooOOOOOOOOoooo=======-----------------------()\n\r",ch);
       return;
     }

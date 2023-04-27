@@ -3118,7 +3118,7 @@ Total (3)
   ----Immortal Functions----
 Total (1)
 */
-    { "touch",    { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { "bad touch",    { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, spell_null, TAR_CHAR_SELF,      POS_STANDING,
     &gsn_touch,                     SLOT(0),     0, 12, "",      "The touch of the Gods fades from your body...",    "" },
 

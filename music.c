@@ -221,6 +221,7 @@ void do_play(CHAR_DATA *ch, char *argument)
     char *str,arg[MAX_INPUT_LENGTH];
     int song,i;
     bool global = FALSE;
+    int cost = 2500;
 
     str = one_argument(argument,arg);
 
@@ -333,6 +334,16 @@ void do_play(CHAR_DATA *ch, char *argument)
     return;
     }
 
+    if (global)
+      cost = cost * 10;
+
+    if ( (ch->silver + 100 * ch->gold) < cost )
+    {
+        send_to_char( "You can't afford to play a song.\n\r", ch );
+        return;
+    }
+
+    deduct_cost(ch,cost);
     send_to_char("Coming right up.\n\r",ch);
 
     if (global)

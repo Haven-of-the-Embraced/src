@@ -230,14 +230,17 @@ void do_play(CHAR_DATA *ch, char *argument)
 
     if (argument[0] == '\0')
     {
-    send_to_char("Play what?\n\r",ch);
-    return;
+      send_to_char("<<<<======        Commands for Songs        ======>>>>\n\r", ch);
+      send_to_char("  {Yplay list         {W: Provides listing of songs.\n\r  {Yplay list artist  {W: Lists songs by Artist.\n\r", ch);
+      send_to_char("  {Yplay <song>       {W: Plays selected song.\n\r  {Yplay loud <song>  {W: Plays selected song globally.{x\n\r",ch);
+      send_to_char("<<<<==============================================>>>>\n\r", ch);
+      return;
     }
 
     if (juke == NULL)
     {
-    send_to_char("You see nothing to play.\n\r",ch);
-    return;
+      send_to_char("There is nothing here to provide songs for your entertainment.\n\r",ch);
+      return;
     }
 
     if (!str_cmp(arg,"list"))

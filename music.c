@@ -260,10 +260,15 @@ void do_play(CHAR_DATA *ch, char *argument)
     if (argument[0] != '\0')
         match = TRUE;
 
-    sprintf(buf,"%s has the following songs available:\n\r",
-        juke->short_descr);
-    add_buf(buffer,capitalize(buf));
-
+    send_to_char("                {M____________________________________________{x\n\r", ch);
+    sprintf(buf,"{M_______________[ {W%s{x {M]_______________{x\n\r", center(capitalize(juke->short_descr), 42, " "));
+    send_to_char(buf, ch);
+    sprintf(buf,"{M|          {Y25 gold to play a song.  250 gold to play it globally.          {M|{x\n\r");
+    send_to_char(buf, ch);
+    sprintf(buf,"{M|          {WThe following songs are available:                              {M|{x\n\r");
+    add_buf(buffer,buf);
+    sprintf(buf,"{M----------------------------------------------------------------------------{x\n\r\n\r");
+    add_buf(buffer,buf);
     for (i = 0; i < MAX_SONGS; i++)
     {
         if (song_table[i].name == NULL)
@@ -271,11 +276,11 @@ void do_play(CHAR_DATA *ch, char *argument)
 
         if (artist && (!match
         ||         !str_prefix(argument,song_table[i].group)))
-        sprintf(buf,"%-39s %-39s\n\r",
+        sprintf(buf,"  %-39s %-39s\n\r",
             song_table[i].group,song_table[i].name);
         else if (!artist && (!match
         ||           !str_prefix(argument,song_table[i].name)))
-            sprintf(buf,"%-35s ",song_table[i].name);
+            sprintf(buf,"  %-35s ",song_table[i].name);
         else
         continue;
         add_buf(buffer,buf);
@@ -287,6 +292,8 @@ void do_play(CHAR_DATA *ch, char *argument)
 
     page_to_char(buf_string(buffer),ch);
     free_buf(buffer);
+    sprintf(buf,"\n\r{M----------------------------------------------------------------------------{x\n\r");
+    send_to_char(buf, ch);
     return;
     }
 

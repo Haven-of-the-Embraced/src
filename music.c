@@ -46,6 +46,7 @@ void song_update(void)
 {
     OBJ_DATA *obj;
     CHAR_DATA *victim;
+    CHAR_DATA *dancer;
     ROOM_INDEX_DATA *room;
     DESCRIPTOR_DATA *d;
     char buf[MAX_STRING_LENGTH];
@@ -72,9 +73,9 @@ void song_update(void)
     {
         if (channel_songs[0] < 0)
         {
-            sprintf(buf,"Music: %s, %s",
-            song_table[channel_songs[1]].group,
-            song_table[channel_songs[1]].name);
+            sprintf(buf,"Music:  '%s', by %s",
+            song_table[channel_songs[1]].name,
+            song_table[channel_songs[1]].group);
             channel_songs[0] = 0;
         }
         else
@@ -120,8 +121,8 @@ void song_update(void)
 
     if (obj->value[0] < 0)
     {
-        sprintf(buf,"$p starts playing %s, %s.",
-        song_table[obj->value[1]].group,song_table[obj->value[1]].name);
+        sprintf(buf,"$p starts playing '%s', by %s.",
+        song_table[obj->value[1]].name,song_table[obj->value[1]].group);
         if (room->people != NULL)
         act(buf,room->people,obj,NULL,TO_ALL);
         obj->value[0] = 0;
@@ -150,6 +151,12 @@ void song_update(void)
     sprintf(buf,"$p bops: '%s'",line);
     if (room->people != NULL)
         act(buf,room->people,obj,NULL,TO_ALL);
+/*  Placeholder for Performance checks
+      for (dancer = obj->in_room->people; dancer != NULL; dancer = dancer->next_in_room)
+      {
+        send_to_char("You dance along to the song.\n\r", dancer);
+      }
+*/
     }
 }
 

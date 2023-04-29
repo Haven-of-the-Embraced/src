@@ -3399,7 +3399,7 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                         found = TRUE;
                         count++;
                         sprintf( buf, "%s(%3d) [%5d] %s\n\r",
-                        get_obj_world(ch,pObjIndex->name, FALSE) ? "*" : " ",
+                        get_obj_world(ch,pObjIndex->name, TRUE) ? "*" : " ",
                         count,pObjIndex->vnum, pObjIndex->short_descr );
                         add_buf(buffer,buf);
                     }
@@ -3411,7 +3411,7 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                         found = TRUE;
                         count++;
                         sprintf( buf, "%s(%3d) [%5d] %s\n\r",
-                        get_obj_world(ch,pObjIndex->name, FALSE) ? "*" : " ",
+                        get_obj_world(ch,pObjIndex->name, TRUE) ? "*" : " ",
                         count,pObjIndex->vnum, pObjIndex->short_descr );
                         add_buf(buffer,buf);
                     }
@@ -3425,7 +3425,7 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                             found = TRUE;
                             count++;
                             sprintf( buf, "%s(%3d) [%5d] %s\n\r",
-                            get_obj_world(ch,pObjIndex->name, FALSE) ? "*" : " ",
+                            get_obj_world(ch,pObjIndex->name, TRUE) ? "*" : " ",
                             count,pObjIndex->vnum, pObjIndex->short_descr );
                             add_buf(buffer,buf);
                         }
@@ -3440,7 +3440,7 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                             found = TRUE;
                             count++;
                             sprintf( buf, "%s(%3d) [%5d] (%s: %3d) %s\n\r",
-                            get_obj_world(ch,pObjIndex->name, FALSE) ? "*" : " ",
+                            get_obj_world(ch,pObjIndex->name, TRUE) ? "*" : " ",
                             count,pObjIndex->vnum, flag_string( apply_flags, paf->location ), paf->modifier, pObjIndex->short_descr );
                             add_buf(buffer,buf);
                         }
@@ -3453,7 +3453,7 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                         found = TRUE;
                         count++;
                         sprintf( buf, "%s(%3d) [%5d] %s\n\r",
-                        get_obj_world(ch,pObjIndex->name, FALSE) ? "*" : " ",
+                        get_obj_world(ch,pObjIndex->name, TRUE) ? "*" : " ",
                         count,pObjIndex->vnum, pObjIndex->short_descr );
                         add_buf(buffer,buf);
                     }
@@ -3465,7 +3465,7 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                         found = TRUE;
                         count++;
                         sprintf( buf, "%s(%3d) [%5d] %s\n\r",
-                        get_obj_world(ch,pObjIndex->name, FALSE) ? "*" : " ",
+                        get_obj_world(ch,pObjIndex->name, TRUE) ? "*" : " ",
                         count,pObjIndex->vnum, pObjIndex->short_descr );
                         add_buf(buffer,buf);
                     }
@@ -3477,7 +3477,7 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                         found = TRUE;
                         count++;
                         sprintf( buf, "%s(%3d) [%5d] %s\n\r",
-                        get_obj_world(ch,pObjIndex->name, FALSE) ? "*" : " ",
+                        get_obj_world(ch,pObjIndex->name, TRUE) ? "*" : " ",
                         count,pObjIndex->vnum, pObjIndex->short_descr );
                         add_buf(buffer,buf);
                     }
@@ -3489,7 +3489,7 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                         found = TRUE;
                         count++;
                         sprintf( buf, "%s(%3d) [%5d] %s\n\r",
-                        get_obj_world(ch,pObjIndex->name, FALSE) ? "*" : " ",
+                        get_obj_world(ch,pObjIndex->name, TRUE) ? "*" : " ",
                         count,pObjIndex->vnum, pObjIndex->short_descr );
                         add_buf(buffer,buf);
                     }
@@ -3510,7 +3510,7 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                             found = TRUE;
                             count++;
                             sprintf( buf, "%s(%3d) [%5d] %s\n\r",
-                            get_obj_world(ch,pObjIndex->name, FALSE) ? "*" : " ",
+                            get_obj_world(ch,pObjIndex->name, TRUE) ? "*" : " ",
                             count,pObjIndex->vnum, pObjIndex->short_descr );
                             add_buf(buffer,buf);
                         }
@@ -3521,7 +3521,7 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                             found = TRUE;
                             count++;
                             sprintf( buf, "%s(%3d) [%5d] %s\n\r",
-                            get_obj_world(ch,pObjIndex->name, FALSE) ? "*" : " ",
+                            get_obj_world(ch,pObjIndex->name, TRUE) ? "*" : " ",
                             count,pObjIndex->vnum, pObjIndex->short_descr );
                             add_buf(buffer,buf);
                         }
@@ -3954,7 +3954,7 @@ void do_areaflagfind( CHAR_DATA *ch, char *argument )
                         found = TRUE;
                         count++;
                         sprintf( buf, "%s(%3d) [%5d] %s\n\r",
-                        get_obj_world(ch,pObjIndex->name, FALSE) ? "*" : " ",
+                        get_obj_world(ch,pObjIndex->name, TRUE) ? "*" : " ",
                         count,pObjIndex->vnum, pObjIndex->short_descr );
                         add_buf(buffer,buf);
                     }
@@ -3966,7 +3966,7 @@ void do_areaflagfind( CHAR_DATA *ch, char *argument )
                         found = TRUE;
                         count++;
                         sprintf( buf, "%s(%3d) [%5d] %s\n\r",
-                        get_obj_world(ch,pObjIndex->name, FALSE) ? "*" : " ",
+                        get_obj_world(ch,pObjIndex->name, TRUE) ? "*" : " ",
                         count,pObjIndex->vnum, pObjIndex->short_descr );
                         add_buf(buffer,buf);
                     }
@@ -3980,7 +3980,7 @@ void do_areaflagfind( CHAR_DATA *ch, char *argument )
                             found = TRUE;
                             count++;
                             sprintf( buf, "%s(%3d) [%5d] %s\n\r",
-                            get_obj_world(ch,pObjIndex->name, FALSE) ? "*" : " ",
+                            get_obj_world(ch,pObjIndex->name, TRUE) ? "*" : " ",
                             count,pObjIndex->vnum, pObjIndex->short_descr );
                             add_buf(buffer,buf);
                         }
@@ -3993,7 +3993,7 @@ void do_areaflagfind( CHAR_DATA *ch, char *argument )
                         found = TRUE;
                         count++;
                         sprintf( buf, "%s(%3d) [%5d] %s\n\r",
-                        get_obj_world(ch,pObjIndex->name, FALSE) ? "*" : " ",
+                        get_obj_world(ch,pObjIndex->name, TRUE) ? "*" : " ",
                         count,pObjIndex->vnum, pObjIndex->short_descr );
                         add_buf(buffer,buf);
                     }
@@ -4005,7 +4005,7 @@ void do_areaflagfind( CHAR_DATA *ch, char *argument )
                         found = TRUE;
                         count++;
                         sprintf( buf, "%s(%3d) [%5d] %s\n\r",
-                        get_obj_world(ch,pObjIndex->name, FALSE) ? "*" : " ",
+                        get_obj_world(ch,pObjIndex->name, TRUE) ? "*" : " ",
                         count,pObjIndex->vnum, pObjIndex->short_descr );
                         add_buf(buffer,buf);
                     }
@@ -4017,7 +4017,7 @@ void do_areaflagfind( CHAR_DATA *ch, char *argument )
                         found = TRUE;
                         count++;
                         sprintf( buf, "%s(%3d) [%5d] %s\n\r",
-                        get_obj_world(ch,pObjIndex->name, FALSE) ? "*" : " ",
+                        get_obj_world(ch,pObjIndex->name, TRUE) ? "*" : " ",
                         count,pObjIndex->vnum, pObjIndex->short_descr );
                         add_buf(buffer,buf);
                     }
@@ -4029,7 +4029,7 @@ void do_areaflagfind( CHAR_DATA *ch, char *argument )
                         found = TRUE;
                         count++;
                         sprintf( buf, "%s(%3d) [%5d] %s\n\r",
-                        get_obj_world(ch,pObjIndex->name, FALSE) ? "*" : " ",
+                        get_obj_world(ch,pObjIndex->name, TRUE) ? "*" : " ",
                         count,pObjIndex->vnum, pObjIndex->short_descr );
                         add_buf(buffer,buf);
                     }
@@ -4050,7 +4050,7 @@ void do_areaflagfind( CHAR_DATA *ch, char *argument )
                             found = TRUE;
                             count++;
                             sprintf( buf, "%s(%3d) [%5d] %s\n\r",
-                            get_obj_world(ch,pObjIndex->name, FALSE) ? "*" : " ",
+                            get_obj_world(ch,pObjIndex->name, TRUE) ? "*" : " ",
                             count,pObjIndex->vnum, pObjIndex->short_descr );
                             add_buf(buffer,buf);
                         }
@@ -4061,7 +4061,7 @@ void do_areaflagfind( CHAR_DATA *ch, char *argument )
                             found = TRUE;
                             count++;
                             sprintf( buf, "%s(%3d) [%5d] %s\n\r",
-                            get_obj_world(ch,pObjIndex->name, FALSE) ? "*" : " ",
+                            get_obj_world(ch,pObjIndex->name, TRUE) ? "*" : " ",
                             count,pObjIndex->vnum, pObjIndex->short_descr );
                             add_buf(buffer,buf);
                         }

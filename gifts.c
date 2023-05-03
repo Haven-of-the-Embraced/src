@@ -3652,6 +3652,11 @@ void do_gifts(CHAR_DATA *ch, char *argument)
         return;
     }
 
+    if(ch->pcdata->rank == 0)
+    {
+      send_to_char("You must finish setting your Garou stats with {Ggogarou{x before using gifts.\n\r", ch);
+      return;
+    }
 
     int i;
     int col = 1;

@@ -592,6 +592,12 @@ void do_vigor(CHAR_DATA *ch, char *argument)
     int vigorsuccess = 0;
     int vigordiff = 6;
 
+    if (get_ability(ch, CSABIL_ATHLETICS) < 2)
+    {
+      send_to_char("You are not athletic enough to have trained your body further.\n\r", ch);
+      return;
+    }
+
     if (is_affected(ch, gsn_vigor) && get_affect_level(ch, gsn_vigor) == 0)
     {
       send_to_char("Try as you might, you still cannot remember your training yet.\n\r", ch);
@@ -604,9 +610,9 @@ void do_vigor(CHAR_DATA *ch, char *argument)
       return;
     }
 
-    if(ch->mana < ch->level / 2)
+    if(ch->move < ch->level / 5)
     {
-        send_to_char("You do not have enough mana.\n\r", ch);
+        send_to_char("You do not have enough movement.\n\r", ch);
         return;
     }
 
@@ -622,7 +628,7 @@ void do_vigor(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    ch->mana -= ch->level / 2;
+    ch->move -= ch->level / 5;
     ch->cswillpower--;
 
     WAIT_STATE( ch, skill_table[gsn_vigor].beats );
@@ -663,7 +669,7 @@ void do_vigor(CHAR_DATA *ch, char *argument)
     af.where     = TO_AFFECTS;
     af.type      = gsn_vigor;
     af.level     = vigorsuccess;
-    af.duration  = 5 * vigorsuccess + 10;
+    af.duration  = 5 * vigorsuccess + 15;
     af.modifier  = (get_attribute(ch, STAMINA) * 100);
     af.location  = APPLY_MOVE;
     af.bitvector = AFF_HASTE;

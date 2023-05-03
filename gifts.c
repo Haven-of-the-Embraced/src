@@ -3225,17 +3225,40 @@ void spell_gift_maskthepredator( int sn, int level, CHAR_DATA *ch, void *vo, int
 
   success = godice(get_attribute(ch,CSATTRIB_CHARISMA) + ch->csabilities[CSABIL_ANIMAL_KEN], 6);
 
+  send_to_char("You call upon aid from the spirits of domesticated animals to help mask your inner Rage.\n\r", ch);
+
   if (success < 0)
   {
+    act("Unexpectadly, you feel your Rage begin to bristle slightly.", ch, NULL, NULL, TO_CHAR);
+    act("With a fierce look, $n seems to be just a little more primal than $e was before.", ch, NULL, NULL, TO_ROOM);
+    af.where        = TO_AFFECTS;
+    af.type         = gsn_gift_maskthepredator;
+    af.level        = 0;
+    af.duration     = 2;
+    af.modifier     = 0;
+    af.location     = 0;
+    af.bitvector    = 0;
+    affect_to_char(ch, &af);
     return;
   }
 
   if (success == 0)
   {
+    send_to_char("You fear that the spirits refused to answer your request.\n\r", ch);
     return;
   }
 
-    return;
+  act("You feel a slight soothing sensation as the spirits grant your request.", ch, NULL, NULL, TO_CHAR);
+  act("$n flashes a quick smile, and seems to be much more approachable.", ch, NULL, NULL, TO_ROOM);
+  af.where        = TO_AFFECTS;
+  af.type         = gsn_gift_maskthepredator;
+  af.level        = 0;
+  af.duration     = (success * 5) + 20;
+  af.modifier     = 0;
+  af.location     = 0;
+  af.bitvector    = 0;
+  affect_to_char(ch, &af);
+  return;
 }
 
 //Rank 3

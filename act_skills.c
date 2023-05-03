@@ -441,6 +441,8 @@ void do_soothe(CHAR_DATA *ch, char *argument)
     difficulty--;
   if (victim->level > ch->level + 10)
     difficulty++;
+  if (ch->race == race_lookup("garou") && !is_affected(ch, gsn_gift_maskthepredator))
+    difficulty++;
 
   success = godice(get_attribute(ch, CHARISMA) + ch->csabilities[CSABIL_ANIMAL_KEN], difficulty);
   WAIT_STATE(ch, 8);

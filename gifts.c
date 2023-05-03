@@ -3218,7 +3218,23 @@ void spell_gift_giftofsalt( int sn, int level, CHAR_DATA *ch, void *vo, int targ
 //Persuasion - duplicate gift, same as Homid
 
 //Rank 2
-void spell_gift_maskthepredator( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_maskthepredator( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  AFFECT_DATA af;
+  int success = 0;
+
+  success = godice(get_attribute(ch,CSATTRIB_CHARISMA) + ch->csabilities[CSABIL_ANIMAL_KEN], 6);
+
+  if (success < 0)
+  {
+    return;
+  }
+
+  if (success == 0)
+  {
+    return;
+  }
+
     return;
 }
 

@@ -109,13 +109,13 @@ char *format_obj_to_char( OBJ_DATA *obj, CHAR_DATA *ch, bool fShort )
     if ((is_affected(ch, gsn_spiritsight) || is_affected(ch, gsn_gift_pulseoftheinvisible))
         && (IS_OBJ_STAT(obj, ITEM_UMBRA) && !SAME_UMBRA_OBJ(ch, obj))) strcat(buf, "(Indistinct) ");
     if ( IS_OBJ_STAT(obj, ITEM_INVIS)     )   strcat( buf, "(Invis) "     );
-    if ( IS_OBJ_STAT(obj, ITEM_ILLUMINATE) )    strcat( buf, "(Illuminating) ");
-    if (IS_AFFECTED(ch, AFF_DETECT_GOOD)
-    &&  IS_OBJ_STAT(obj,ITEM_BLESS))          strcat(buf,"(Blue Aura) " );
     if ( IS_AFFECTED(ch, AFF_DETECT_MAGIC)
          && IS_OBJ_STAT(obj, ITEM_MAGIC)  )   strcat( buf, "(Magical) "   );
+    if ( IS_OBJ_STAT(obj, ITEM_ILLUMINATE) )    strcat( buf, "(Illuminating) ");
     if ( IS_OBJ_STAT(obj, ITEM_GLOW)      )   strcat( buf, "(Glowing) "   );
     if ( IS_OBJ_STAT(obj, ITEM_HUM)       )   strcat( buf, "(Humming) "   );
+    if ( is_affected(ch, gsn_gift_sensesilver) && IS_OBJ_STAT(obj, ITEM_SILVER))
+      strcat( buf, "(Silver) "    );
 
     if ( fShort )
     {

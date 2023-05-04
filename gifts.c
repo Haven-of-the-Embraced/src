@@ -610,8 +610,53 @@ void spell_gift_curseofhatred( int sn, int level, CHAR_DATA *ch, void *vo, int t
 //Roll: Perception + Primal Urge (diff 7)
 //For reasons known only to herself, Luna has been kind enough to the metis to allow them to sense a werewolf’s greatest weakness.. silver. (Allows the garou to tell when someone is carrying silver. short duration, like detect magic or evil, but if any of the objs on the char are made from silver, they’ll have an aura.)
 //Cost: None.
-void spell_gift_sensesilver( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_sensesilver( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  AFFECT_DATA af;
+  int silversuccess = 0;
+
+  if (is_affected(ch, gsn_gift_sensesilver))
+  {
+      sendch("You have already asked the spirits for a boon regarding silver.\n\r", ch);
+      return;
+  }
+
+  silversuccess = godice(get_attribute(ch, PERCEPTION)+ch->pcdata->primal_urge, 7);
+
+  if (silversuccess < 0)
+  {
+    act("Your request seems to have offended the Lunar spirits.", ch, NULL, NULL, TO_CHAR);
+
+    af.where        = TO_VULN;
+    af.type         = gsn_gift_sensesilver;
+    af.level        = -1;
+    af.duration     = 2;
+    af.modifier     = 0;
+    af.location     = APPLY_NONE;
+    af.bitvector    = VULN_SILVER;
+    affect_to_char(ch, &af);
     return;
+  }
+
+  if (silversuccess == 0)
+  {
+    act("Your plea to the lunar spirits seems to be unanswered.", ch, NULL, NULL, TO_CHAR);
+    return;
+  }
+
+  act("The Lunes bless you with the ability to sense the presence of silver.", ch, NULL, NULL, TO_CHAR);
+
+  af.where        = TO_AFFECTS;
+  af.type         = gsn_gift_sensesilver;
+  af.level        = silversuccess;
+  af.duration     = ( silversuccess * 10 ) + 10;
+  af.modifier     = 0;
+  af.location     = 0;
+  af.bitvector    = 0;
+  affect_to_char(ch, &af);
+
+  gain_exp(ch, silversuccess);
+  return;
 }
 
 //Rank 3

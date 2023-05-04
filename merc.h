@@ -4005,6 +4005,8 @@ bool    breathes	args( ( CHAR_DATA *ch ) );
 bool    is_natural  args( ( CHAR_DATA *ch) );
 bool    higher_beast args( ( CHAR_DATA *ch) );
 bool    human_variant args( ( CHAR_DATA *ch) );
+bool    has_silver args( ( CHAR_DATA *ch ) );
+bool    carries_silver_obj args( ( CHAR_DATA *ch) );
 void    affect_to_char  args( ( CHAR_DATA *ch, AFFECT_DATA *paf ) );
 void    affect_to_obj   args( ( OBJ_DATA *obj, AFFECT_DATA *paf ) );
 void    affect_remove   args( ( CHAR_DATA *ch, AFFECT_DATA *paf ) );

@@ -837,6 +837,34 @@ bool human_variant( CHAR_DATA *ch )
     return FALSE;
 }
 
+bool has_silver( CHAR_DATA *ch )
+{
+  if (
+        victim->silver > 0 ||
+        is_affected(victim, gsn_gift_silverclaws)
+      )
+      return TRUE;
+
+  else
+    return FALSE;
+}
+
+bool carries_silver_obj( CHAR_DATA *ch )
+{
+  OBJ_DATA *obj, *obj_next;
+  if (
+      for ( obj = ch->carrying; obj; obj = obj_next )
+      {
+        obj_next = obj->next_content;
+
+      }
+      )
+      return TRUE;
+
+  else
+    return FALSE;
+}
+
 /*
  * Retrieve a character's age.
  */

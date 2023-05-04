@@ -3205,6 +3205,7 @@ char *extra_bit_name( int extra_flags )
     if ( extra_flags & ITEM_ROT_DEATH    ) strcat( buf, " rot_death"    );
     if ( extra_flags & ITEM_NOLOCATE     ) strcat( buf, " no_locate"    );
     if ( extra_flags & ITEM_SELL_EXTRACT ) strcat( buf, " sell_extract" );
+    if ( extra_flags & ITEM_SILVER       ) strcat( buf, " silver"       );
     if ( extra_flags & ITEM_BURN_PROOF   ) strcat( buf, " burn_proof"   );
     if ( extra_flags & ITEM_NOUNCURSE    ) strcat( buf, " no_uncurse"   );
     if ( extra_flags & ITEM_IS_STAKE     ) strcat( buf, " is_stake" );

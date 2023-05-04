@@ -770,6 +770,7 @@ const struct flag_type extra_flags[] =
     {   "meltdrop",     	ITEM_MELT_DROP,     TRUE    },
     {   "hadtimer",     	ITEM_HAD_TIMER,     TRUE    },
     {   "sellextract",    ITEM_SELL_EXTRACT,  TRUE    },
+		{		"silver",					ITEM_SILVER,				TRUE		},
     {   "burnproof",      ITEM_BURN_PROOF,    TRUE    },
     {   "nouncurse",      ITEM_NOUNCURSE,     TRUE    },
     {   "isstake",      	ITEM_IS_STAKE,      TRUE    },

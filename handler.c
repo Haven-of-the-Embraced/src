@@ -840,8 +840,9 @@ bool human_variant( CHAR_DATA *ch )
 bool has_silver( CHAR_DATA *ch )
 {
   if (
-        victim->silver > 0 ||
-        is_affected(victim, gsn_gift_silverclaws)
+        ch->silver > 0 ||
+        is_affected(ch, gsn_gift_silverclaws) ||
+        carries_silver_obj(ch)
       )
       return TRUE;
 
@@ -852,16 +853,12 @@ bool has_silver( CHAR_DATA *ch )
 bool carries_silver_obj( CHAR_DATA *ch )
 {
   OBJ_DATA *obj, *obj_next;
-  if (
-      for ( obj = ch->carrying; obj; obj = obj_next )
-      {
-        obj_next = obj->next_content;
-
-      }
-      )
+  for ( obj = ch->carrying; obj; obj = obj_next )
+  {
+    obj_next = obj->next_content;
+    if (IS_OBJ_STAT(obj,ITEM_SILVER))
       return TRUE;
-
-  else
+  }
     return FALSE;
 }
 

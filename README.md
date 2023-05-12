@@ -20,7 +20,7 @@ Haven of The Embraced will not run without the associated /data and /area files,
 ```
 Port: Any port above 1024 is acceptable. If a port is not specified, it defaults to 4000
 
-Testrun: This option exists for CI/CD testing purposes. Invoking Haven with option testrun will cause the MUD to boot, complete one game_loop, and shutdown. 
+Testrun: This option exists for CI/CD testing purposes. Invoking Haven with option testrun will cause the MUD to boot, complete three game_loops, and shutdown. 
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change. Issues labeled "Low Hanging Fruit" are relatively simple projects, great for someone just getting into MUD coding.

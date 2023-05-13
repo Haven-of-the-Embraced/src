@@ -1292,9 +1292,11 @@ void do_freebie(CHAR_DATA *ch, char *argument)
         }
     }
 
-    int disc, num;
-    for(i = 0; i < MAX_DISC; i++)
+    if (IS_VAMP(ch))
     {
+      int disc, num;
+      for(i = 0; i < MAX_DISC; i++)
+      {
         if(!str_prefix(arg, disc_table[i].name))
         {
             if(ch->pcdata->discipline[i] == 0)
@@ -1397,6 +1399,7 @@ void do_freebie(CHAR_DATA *ch, char *argument)
         step = 12;
         break;
         }
+      }
     }
 
     if(step)

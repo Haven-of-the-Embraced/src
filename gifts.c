@@ -2217,7 +2217,53 @@ void spell_gift_resisttoxin( int sn, int level, CHAR_DATA *ch, void *vo, int tar
 //air elemental
 //wits + subterfuge diff 6
 //choose a target and a swarm of biting insects will cover them, bite them, annoy them
-void spell_gift_scentofthehoneycomb( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_scentofthehoneycomb( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  AFFECT_DATA *af;
+  int success;
+
+  if ( victim == NULL )
+  {
+      send_to_char( "Whom are you trying to assault?\n\r", ch );
+      return;
+  }
+
+  if(victim == ch)
+  {
+      send_to_char( "You shouldn't summon the insects to yourself.\n\r", ch );
+      return;
+  }
+
+  if (IS_NPC(victim) && victim->pIndexData->pShop != NULL)
+  {
+      send_to_char("You fear that it may hinder your future purchases.\n\r",ch);
+      return;
+  }
+
+  if(is_affected(victim,gsn_gift_scentofthehoneycomb))
+  {
+      send_to_char("Your target has already been assaulted by insects.\n\r",ch);
+      return;
+  }
+
+  if (ch->pcdata->gnosis[TEMP] < 1)
+  {
+    send_to_char("You do not have enough Gnosis to activate this Gift.\n\r",ch);
+    return;
+  }
+
+  success = godice(get_attribute(ch, WITS) + get_ability(ch, CSABIL_SUBTERFUGE), 6);
+
+  if (success < 0)
+  {
+    return;
+  }
+
+  if (success == 0)
+  {
+    return;
+  }
+
     return;
 }
 //

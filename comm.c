@@ -1795,10 +1795,10 @@ void bust_a_prompt( CHAR_DATA *ch )
     case '&' :
         sprintf(buf2,"{</");
         i = buf2; break;
-    case '<' :
+    case '(' :
         sprintf(buf2,"<");
         i = buf2; break;
-    case '>' :
+    case ')' :
         sprintf(buf2,">");
         i = buf2; break;
       }

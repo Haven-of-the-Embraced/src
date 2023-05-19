@@ -132,38 +132,38 @@ void do_channels(CHAR_DATA *ch, char *argument)
     char buf[MAX_STRING_LENGTH];
 
     /* lists all channels and their status */
-    printf_to_char(ch, "%-18s  %-4s\n\r", "{BChannel{x", "{BStatus{x");
-    printf_to_char(ch, "%-18s  %-4s\n\r", "{r-------{x", "{r------{x");
+    printf_to_char(ch, "%-18s  %-4s\n\r", "{CChannel{x", "{CStatus{x");
+    printf_to_char(ch, "%-18s  %-4s\n\r", "{w-------{x", "{w------{x");
 
-    printf_to_char(ch, "%-18s  %-4s\n\r", "{CIC{x", (!IS_SET(ch->comm, COMM_NOIC)) ? "{GON{x" : "{ROFF{x");
-    printf_to_char(ch, "%-18s  %-4s\n\r", "{CMusic{x", (!IS_SET(ch->comm, COMM_NOMUSIC)) ? "{GON{x" : "{ROFF{x");
-    printf_to_char(ch, "%-18s  %-4s\n\r", "{CGrats{x", (!IS_SET(ch->comm, COMM_NOGRATS)) ? "{GON{x" : "{ROFF{x");
-    printf_to_char(ch, "%-18s  %-4s\n\r", "{CAuction{x", (!IS_SET(ch->comm, COMM_NOAUCTION)) ? "{GON{x" : "{ROFF{x");
-    printf_to_char(ch, "%-18s  %-4s\n\r", "{CQ/A{x", (!IS_SET(ch->comm, COMM_NOQUESTION)) ? "{GON{x" : "{ROFF{x");
-    printf_to_char(ch, "%-18s  %-4s\n\r", "{COOC{x", (!IS_SET(ch->comm, COMM_NOOOC)) ? "{GON{x" : "{ROFF{x");
-    printf_to_char(ch, "%-18s  %-4s\n\r", "{CChat{x", (!IS_SET(ch->comm, COMM_NOCHAT)) ? "{GON{x" : "{ROFF{x");
-    printf_to_char(ch, "%-18s  %-4s\n\r", "{CAnnounce{x", (!IS_SET(ch->comm, COMM_NOANNOUNCE)) ? "{GON{x" : "{ROFF{x");
-    printf_to_char(ch, "%-18s  %-4s\n\r", "{CClan{x", (!IS_SET(ch->comm, COMM_NOCLAN)) ? "{GON{x" : "{ROFF{x");
-    printf_to_char(ch, "%-18s  %-4s\n\r", "{CSect{x", (!IS_SET(ch->comm, COMM_NOSECT)) ? "{GON{x" : "{ROFF{x");
+    printf_to_char(ch, "%-18s  %-4s\n\r", "{wIC{x", (!IS_SET(ch->comm, COMM_NOIC)) ? "{GON{x" : "{ROFF{x");
+    printf_to_char(ch, "%-18s  %-4s\n\r", "{wMusic{x", (!IS_SET(ch->comm, COMM_NOMUSIC)) ? "{GON{x" : "{ROFF{x");
+    printf_to_char(ch, "%-18s  %-4s\n\r", "{wGrats{x", (!IS_SET(ch->comm, COMM_NOGRATS)) ? "{GON{x" : "{ROFF{x");
+    printf_to_char(ch, "%-18s  %-4s\n\r", "{wAuction{x", (!IS_SET(ch->comm, COMM_NOAUCTION)) ? "{GON{x" : "{ROFF{x");
+    printf_to_char(ch, "%-18s  %-4s\n\r", "{wQ/A{x", (!IS_SET(ch->comm, COMM_NOQUESTION)) ? "{GON{x" : "{ROFF{x");
+    printf_to_char(ch, "%-18s  %-4s\n\r", "{wOOC{x", (!IS_SET(ch->comm, COMM_NOOOC)) ? "{GON{x" : "{ROFF{x");
+    printf_to_char(ch, "%-18s  %-4s\n\r", "{wChat{x", (!IS_SET(ch->comm, COMM_NOCHAT)) ? "{GON{x" : "{ROFF{x");
+    printf_to_char(ch, "%-18s  %-4s\n\r", "{wAnnounce{x", (!IS_SET(ch->comm, COMM_NOANNOUNCE)) ? "{GON{x" : "{ROFF{x");
+    printf_to_char(ch, "%-18s  %-4s\n\r", "{wClan{x", (!IS_SET(ch->comm, COMM_NOCLAN)) ? "{GON{x" : "{ROFF{x");
+    printf_to_char(ch, "%-18s  %-4s\n\r", "{wSect{x", (!IS_SET(ch->comm, COMM_NOSECT)) ? "{GON{x" : "{ROFF{x");
 
     if (IS_IMMORTAL(ch))
     {
-        printf_to_char(ch, "%-18s  %-4s\n\r", "{CGod Channel{x", (!IS_SET(ch->comm, COMM_NOWIZ)) ? "{GON{x" : "{ROFF{x");
+        printf_to_char(ch, "%-18s  %-4s\n\r", "{wGod Channel{x", (!IS_SET(ch->comm, COMM_NOWIZ)) ? "{GON{x" : "{ROFF{x");
     }
 
-    if (ch->level >= MAX_LEVEL)
+    if (IS_ADMIN(ch))
     {
-        printf_to_char(ch, "%-18s  %-4s\n\r", "{CImp Channel{x", (!IS_SET(ch->comm, COMM_NOWIZ)) ? "{GON{x" : "{ROFF{x");
+        printf_to_char(ch, "%-18s  %-4s\n\r", "{wImp Channel{x", (!IS_SET(ch->comm, COMM_NOWIZ)) ? "{GON{x" : "{ROFF{x");
     }
 
-    printf_to_char(ch, "%-18s  %-4s\n\r", "{CShouts{x", (!IS_SET(ch->comm, COMM_SHOUTSOFF)) ? "{GON{x" : "{ROFF{x");
-    printf_to_char(ch, "%-18s  %-4s\n\r", "{CTells{x", (!IS_SET(ch->comm, COMM_DEAF)) ? "{GON{x" : "{ROFF{x");
-    printf_to_char(ch, "%-18s  %-4s\n\r", "{CQuiet Mode{x", (IS_SET(ch->comm, COMM_QUIET)) ? "{GON{x" : "{ROFF{x");
-    printf_to_char(ch, "%-18s  %-4s\n\r", "{CTelnet GA{x", (!IS_SET(ch->comm, COMM_TELNET_GA)) ? "{GON{x" : "{ROFF{x");
+    printf_to_char(ch, "%-18s  %-4s\n\r", "{wShouts{x", (!IS_SET(ch->comm, COMM_SHOUTSOFF)) ? "{GON{x" : "{ROFF{x");
+    printf_to_char(ch, "%-18s  %-4s\n\r", "{wTells{x", (!IS_SET(ch->comm, COMM_DEAF)) ? "{GON{x" : "{ROFF{x");
+    printf_to_char(ch, "%-18s  %-4s\n\r", "{wQuiet Mode{x", (IS_SET(ch->comm, COMM_QUIET)) ? "{GON{x" : "{ROFF{x");
+    printf_to_char(ch, "%-18s  %-4s\n\r", "{wTelnet GA{x", (!IS_SET(ch->comm, COMM_TELNET_GA)) ? "{GON{x" : "{ROFF{x");
 
     if (IS_SET(ch->comm, COMM_AFK))
     {
-        send_to_char("{CYou are {RAFK{x.\n\r", ch);
+        send_to_char("{wYou are {RAFK{x.\n\r", ch);
     }
 
     if (IS_SET(ch->comm, COMM_SNOOP_PROOF))
@@ -171,22 +171,22 @@ void do_channels(CHAR_DATA *ch, char *argument)
         send_to_char("{GYou are immune to snooping.{x\n\r", ch);
     }
     if (IS_SET(ch->comm,COMM_AUTOOOC))
-    send_to_char("You automatically turn OOC on at login.\n\r", ch);
+    send_to_char("{wYou automatically turn OOC on at login.{x\n\r", ch);
 
     if (ch->lines != PAGELEN)
     {
     if (ch->lines)
     {
-        sprintf(buf,"{CYou display {c%d{C lines of scroll.{x\n\r",ch->lines+2);
+        sprintf(buf,"{wYou display {c%d{w lines of scroll.{x\n\r",ch->lines+2);
         send_to_char(buf,ch);
     }
     else
-        send_to_char("{CScroll buffering is {roff.{x\n\r",ch);
+        send_to_char("{wScroll buffering is {roff.{x\n\r",ch);
     }
 
     if (ch->prompt != NULL)
     {
-    sprintf(buf,"{CYour current prompt is: %s{x\n\r",ch->prompt);
+    sprintf(buf,"{wYour current prompt is: %s{x\n\r",ch->prompt);
     send_to_char(buf,ch);
     }
 

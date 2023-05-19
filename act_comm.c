@@ -127,108 +127,49 @@ void do_delete( CHAR_DATA *ch, char *argument)
 
 /* RT code to display channel status */
 
-void do_channels( CHAR_DATA *ch, char *argument)
+void do_channels(CHAR_DATA *ch, char *argument)
 {
     char buf[MAX_STRING_LENGTH];
 
     /* lists all channels and their status */
-    send_to_char("   channel     status\n\r",ch);
-    send_to_char("---------------------\n\r",ch);
+    printf_to_char(ch, "%-18s  %-4s\n\r", "{BChannel{x", "{BStatus{x");
+    printf_to_char(ch, "%-18s  %-4s\n\r", "{r-------{x", "{r------{x");
 
-    send_to_char("IC         ",ch);
-    if (!IS_SET(ch->comm,COMM_NOIC))
-      send_to_char("ON\n\r",ch);
-    else
-      send_to_char("OFF\n\r",ch);
-
-    send_to_char("music          ",ch);
-    if (!IS_SET(ch->comm,COMM_NOMUSIC))
-      send_to_char("ON\n\r",ch);
-    else
-      send_to_char("OFF\n\r",ch);
-
-    send_to_char("Q/A            ",ch);
-    if (!IS_SET(ch->comm,COMM_NOQUESTION))
-      send_to_char("ON\n\r",ch);
-    else
-      send_to_char("OFF\n\r",ch);
-
-    send_to_char("OOC            ",ch);
-    if (!IS_SET(ch->comm,COMM_NOOOC))
-    send_to_char("ON\n\r",ch);
-    else
-    send_to_char("OFF\n\r",ch);
-    send_to_char("Chat           ",ch);
-    if (!IS_SET(ch->comm,COMM_NOCHAT))
-    send_to_char("ON\n\r",ch);
-    else
-    send_to_char("OFF\n\r",ch);
-
-    send_to_char("announce       ",ch);
-    if (!IS_SET(ch->comm,COMM_NOANNOUNCE))
-      send_to_char("ON\n\r",ch);
-    else
-      send_to_char("OFF\n\r",ch);
-
-   send_to_char("clan            ",ch);
-    if (!IS_SET(ch->comm,COMM_NOCLAN))
-      send_to_char("ON\n\r",ch);
-    else
-      send_to_char("OFF\n\r",ch);
-
-   send_to_char("sect            ",ch);
-    if (!IS_SET(ch->comm,COMM_NOSECT))
-      send_to_char("ON\n\r",ch);
-    else
-      send_to_char("OFF\n\r",ch);
+    printf_to_char(ch, "%-18s  %-4s\n\r", "{CIC{x", (!IS_SET(ch->comm, COMM_NOIC)) ? "{GON{x" : "{ROFF{x");
+    printf_to_char(ch, "%-18s  %-4s\n\r", "{CMusic{x", (!IS_SET(ch->comm, COMM_NOMUSIC)) ? "{GON{x" : "{ROFF{x");
+    printf_to_char(ch, "%-18s  %-4s\n\r", "{CGrats{x", (!IS_SET(ch->comm, COMM_NOGRATS)) ? "{GON{x" : "{ROFF{x");
+    printf_to_char(ch, "%-18s  %-4s\n\r", "{CAuction{x", (!IS_SET(ch->comm, COMM_NOAUCTION)) ? "{GON{x" : "{ROFF{x");
+    printf_to_char(ch, "%-18s  %-4s\n\r", "{CQ/A{x", (!IS_SET(ch->comm, COMM_NOQUESTION)) ? "{GON{x" : "{ROFF{x");
+    printf_to_char(ch, "%-18s  %-4s\n\r", "{COOC{x", (!IS_SET(ch->comm, COMM_NOOOC)) ? "{GON{x" : "{ROFF{x");
+    printf_to_char(ch, "%-18s  %-4s\n\r", "{CChat{x", (!IS_SET(ch->comm, COMM_NOCHAT)) ? "{GON{x" : "{ROFF{x");
+    printf_to_char(ch, "%-18s  %-4s\n\r", "{CAnnounce{x", (!IS_SET(ch->comm, COMM_NOANNOUNCE)) ? "{GON{x" : "{ROFF{x");
+    printf_to_char(ch, "%-18s  %-4s\n\r", "{CClan{x", (!IS_SET(ch->comm, COMM_NOCLAN)) ? "{GON{x" : "{ROFF{x");
+    printf_to_char(ch, "%-18s  %-4s\n\r", "{CSect{x", (!IS_SET(ch->comm, COMM_NOSECT)) ? "{GON{x" : "{ROFF{x");
 
     if (IS_IMMORTAL(ch))
     {
-      send_to_char("god channel    ",ch);
-      if(!IS_SET(ch->comm,COMM_NOWIZ))
-        send_to_char("ON\n\r",ch);
-      else
-        send_to_char("OFF\n\r",ch);
+        printf_to_char(ch, "%-18s  %-4s\n\r", "{CGod Channel{x", (!IS_SET(ch->comm, COMM_NOWIZ)) ? "{GON{x" : "{ROFF{x");
     }
+
     if (ch->level >= MAX_LEVEL)
     {
-      send_to_char("imp channel    ",ch);
-      if(!IS_SET(ch->comm,COMM_NOWIZ))
-        send_to_char("ON\n\r",ch);
-      else
-        send_to_char("OFF\n\r",ch);
+        printf_to_char(ch, "%-18s  %-4s\n\r", "{CImp Channel{x", (!IS_SET(ch->comm, COMM_NOWIZ)) ? "{GON{x" : "{ROFF{x");
     }
 
+    printf_to_char(ch, "%-18s  %-4s\n\r", "{CShouts{x", (!IS_SET(ch->comm, COMM_SHOUTSOFF)) ? "{GON{x" : "{ROFF{x");
+    printf_to_char(ch, "%-18s  %-4s\n\r", "{CTells{x", (!IS_SET(ch->comm, COMM_DEAF)) ? "{GON{x" : "{ROFF{x");
+    printf_to_char(ch, "%-18s  %-4s\n\r", "{CQuiet Mode{x", (IS_SET(ch->comm, COMM_QUIET)) ? "{GON{x" : "{ROFF{x");
+    printf_to_char(ch, "%-18s  %-4s\n\r", "{CTelnet GA{x", (!IS_SET(ch->comm, COMM_TELNET_GA)) ? "{GON{x" : "{ROFF{x");
 
-    send_to_char("shouts         ",ch);
-    if (!IS_SET(ch->comm,COMM_SHOUTSOFF))
-      send_to_char("ON\n\r",ch);
-    else
-      send_to_char("OFF\n\r",ch);
+    if (IS_SET(ch->comm, COMM_AFK))
+    {
+        send_to_char("{CYou are {RAFK{x.\n\r", ch);
+    }
 
-    send_to_char("tells          ",ch);
-    if (!IS_SET(ch->comm,COMM_DEAF))
-    send_to_char("ON\n\r",ch);
-    else
-    send_to_char("OFF\n\r",ch);
-
-    send_to_char("quiet mode     ",ch);
-    if (IS_SET(ch->comm,COMM_QUIET))
-      send_to_char("ON\n\r",ch);
-    else
-      send_to_char("OFF\n\r",ch);
-
-    send_to_char("telnet Go Ahead",ch);
-    if (!IS_SET(ch->comm,COMM_TELNET_GA))
-    send_to_char("ON\n\r",ch);
-    else
-    send_to_char("OFF\n\r",ch);
-
-    if (IS_SET(ch->comm,COMM_AFK))
-    send_to_char("You are AFK.\n\r",ch);
-
-    if (IS_SET(ch->comm,COMM_SNOOP_PROOF))
-    send_to_char("You are immune to snooping.\n\r",ch);
+    if (IS_SET(ch->comm, COMM_SNOOP_PROOF))
+    {
+        send_to_char("{GYou are immune to snooping.{x\n\r", ch);
+    }
     if (IS_SET(ch->comm,COMM_AUTOOOC))
     send_to_char("You automatically turn OOC on at login.\n\r", ch);
 
@@ -236,30 +177,30 @@ void do_channels( CHAR_DATA *ch, char *argument)
     {
     if (ch->lines)
     {
-        sprintf(buf,"You display %d lines of scroll.\n\r",ch->lines+2);
+        sprintf(buf,"{CYou display {c%d{C lines of scroll.{x\n\r",ch->lines+2);
         send_to_char(buf,ch);
     }
     else
-        send_to_char("Scroll buffering is off.\n\r",ch);
+        send_to_char("{CScroll buffering is {roff.{x\n\r",ch);
     }
 
     if (ch->prompt != NULL)
     {
-    sprintf(buf,"Your current prompt is: %s\n\r",ch->prompt);
+    sprintf(buf,"{CYour current prompt is: %s{x\n\r",ch->prompt);
     send_to_char(buf,ch);
     }
 
     if (IS_SET(ch->comm,COMM_NOSHOUT))
-      send_to_char("You cannot shout.\n\r",ch);
+      send_to_char("{rYou cannot shout.{x\n\r",ch);
 
     if (IS_SET(ch->comm,COMM_NOTELL))
-      send_to_char("You cannot use tell.\n\r",ch);
+      send_to_char("{rYou cannot use tell.{x\n\r",ch);
 
     if (IS_SET(ch->comm,COMM_NOCHANNELS))
-     send_to_char("You cannot use channels.\n\r",ch);
+     send_to_char("{rYou cannot use channels.{x\n\r",ch);
 
     if (IS_SET(ch->comm,COMM_NOEMOTE))
-      send_to_char("You cannot show emotions.\n\r",ch);
+      send_to_char("{rYou cannot show emotions.{x\n\r",ch);
 
 }
 

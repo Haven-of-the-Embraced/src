@@ -4756,11 +4756,13 @@ void do_pnewpass( CHAR_DATA *ch, char *argument )
     send_to_char("Change whose password?\n\r", ch);
     return;
   }
+
     d.character->desc     = NULL;
     d.character->next     = char_list;
     char_list             = d.character;
     d.connected           = CON_PLAYING;
     reset_char(d.character);
+    char_to_room(d.character,get_room_index(ROOM_VNUM_ALTAR));
       /*
      * No tilde allowed because of player file format.
      */

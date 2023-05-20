@@ -2219,6 +2219,7 @@ void spell_gift_resisttoxin( int sn, int level, CHAR_DATA *ch, void *vo, int tar
 //choose a target and a swarm of biting insects will cover them, bite them, annoy them
 void spell_gift_scentofthehoneycomb( int sn, int level, CHAR_DATA *ch, void *vo, int target)
 {
+  CHAR_DATA *victim = (CHAR_DATA *) vo;
   AFFECT_DATA *af;
   int success;
 
@@ -2256,13 +2257,49 @@ void spell_gift_scentofthehoneycomb( int sn, int level, CHAR_DATA *ch, void *vo,
 
   if (success < 0)
   {
+    act("You begin to give off a sickly sweet odor, and are suddenly plagued by vermin!", ch, NULL, rch, TO_CHAR);
+    act("$n is suddenly beseiged by a horde of insects, rodents, and other vermin.", ch, NULL, rch, TO_NOTVICT);
+
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_gift_scentofthehoneycomb;
+    af.level     = -success;
+    af.duration  = 2;
+    af.modifier  = -1;
+    af.location  = APPLY_CS_DEX;
+    af.bitvector = 0;
+    affect_to_char( ch, &af );
+
+    af.location  = APPLY_CS_CHA;
+    affect_to_char( ch, &af );
+
+    af.location  = APPLY_CS_MAN;
+    affect_to_char( ch, &af );
+
+    af.location  = APPLY_CS_INT;
+    affect_to_char( ch, &af );
+
+    af.location  = APPLY_CS_PER;
+    affect_to_char( ch, &af );
+
+    af.location  = APPLY_CS_WIT;
+    affect_to_char( ch, &af );
     return;
   }
 
   if (success == 0)
   {
+    act("Your attempt to attract vermin towards $N appears to have failed.", ch, NULL, rch, TO_CHAR);
     return;
   }
+
+  af.where     = TO_AFFECTS;
+  af.type      = gsn_gift_breathofthewyld;
+  af.level     = ch->pcdata->rank;
+  af.duration  = (success * 5) + (ch->pcdata->rank * 2);
+  af.modifier  = 1;
+  af.location  = APPLY_CS_PER;
+  af.bitvector = 0;
+  affect_to_char( victim, &af );
 
     return;
 }

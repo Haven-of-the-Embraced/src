@@ -792,6 +792,7 @@ struct config_data
 #define NOTE_NEWS   3
 #define NOTE_CHANGES    4
 #define NOTE_RPNOTE    5
+#define NOTE_SYSTEM 6
 struct  note_data
 {
     NOTE_DATA * next;
@@ -2298,6 +2299,7 @@ struct  pc_data
     time_t      last_news;
     time_t      last_changes;
     time_t      last_rpnote;
+    time_t      last_sysnote;
     sh_int      perm_hit;
     sh_int      perm_mana;
     sh_int      perm_move;
@@ -3466,6 +3468,7 @@ char *  crypt       args( ( const char *key, const char *salt ) );
 #define CHANGES_FILE    "../data/chang.not"
 #define IMMNOTE_FILE    "../data/immnote.not"
 #define RPNOTE_FILE     "../data/rpnote.not"
+#define SYSNOTE_FILE   "../data/sysnote.not"
 #define SHUTDOWN_FILE   "../data/shutdown.txt"/* For 'shutdown'*/
 #define BAN_FILE        "../data/ban.txt"
 #define SYSTEM_LOG      "../log/current.log"
@@ -3677,7 +3680,7 @@ bool    IN_LEVEL        args( (CHAR_DATA *ch, CHAR_DATA *victim ) );
 int   get_modifier      args( (CHAR_DATA *ch, int type) );
 
 /* note.c */
-void auto_note          args ( (char *recipient, char *subject, char *body) );
+void sysnote          args ( (char *recipient, char *subject, char *body) );
 
 //Garou stuff.
 

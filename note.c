@@ -58,6 +58,7 @@ NOTE_DATA *penalty_list;
 NOTE_DATA *news_list;
 NOTE_DATA *rpnote_list;
 NOTE_DATA *changes_list;
+NOTE_DATA *sysnote_list;
 
 int count_spool(CHAR_DATA *ch, NOTE_DATA *spool)
 {
@@ -120,6 +121,13 @@ void do_unread(CHAR_DATA *ch)
     found = TRUE;
     sprintf(buf,"%d %s been added.\n\r",
         count, count > 1 ? "penalties have" : "penalty has");
+    send_to_char(buf,ch);
+    }
+    if (IS_IMMORTAL(ch) && (count = count_spool(ch,sysnote_list)) > 0)
+    {
+    found = TRUE;
+    sprintf(buf,"%d %s been added.\n\r",
+        count, count > 1 ? "system notes have" : "system note has");
     send_to_char(buf,ch);
     }
 
@@ -191,6 +199,10 @@ void save_notes(int type)
         name = RPNOTE_FILE;
         pnote = rpnote_list;
         break;
+    case NOTE_SYSTEM:
+        name = SYSNOTE_FILE;
+        pnote = sysnote_list;
+        break;
         }
 
     fclose( fpReserve );
@@ -223,6 +235,7 @@ void load_notes(void)
     load_thread(NEWS_FILE,&news_list, NOTE_NEWS, 24*SECONDS_PER_MONTH);// two years
     load_thread(CHANGES_FILE,&changes_list,NOTE_CHANGES, 24*SECONDS_PER_MONTH);//twoyears
     load_thread(RPNOTE_FILE,&rpnote_list, NOTE_RPNOTE, 6*SECONDS_PER_MONTH);//six months
+    load_thread(SYSNOTE_FILE,&sysnote_list, NOTE_SYSTEM, 24*SECONDS_PER_MONTH);//two years
 }
 
 void load_thread(char *name, NOTE_DATA **list, int type, time_t free_time)
@@ -334,6 +347,10 @@ void append_note(NOTE_DATA *pnote)
     case NOTE_RPNOTE:
         name = RPNOTE_FILE;
         list = &rpnote_list;
+        break;
+    case NOTE_SYSTEM:
+        name = SYSNOTE_FILE;
+        list = &sysnote_list;
         break;
     }
 
@@ -465,6 +482,9 @@ void note_remove( CHAR_DATA *ch, NOTE_DATA *pnote, bool delete)
     case NOTE_CHANGES:
         list = &changes_list;
         break;
+    case NOTE_SYSTEM:
+        list = &sysnote_list;
+        break;
     }
 
     /*
@@ -525,6 +545,9 @@ bool hide_note (CHAR_DATA *ch, NOTE_DATA *pnote)
     case NOTE_CHANGES:
         last_read = ch->pcdata->last_changes;
         break;
+    case NOTE_SYSTEM:
+        last_read = ch->pcdata->last_changes;
+        break;
     }
 
     if (pnote->date_stamp <= last_read)
@@ -570,6 +593,9 @@ void update_read(CHAR_DATA *ch, NOTE_DATA *pnote)
             break;
         case NOTE_CHANGES:
         ch->pcdata->last_changes = UMAX(ch->pcdata->last_changes,stamp);
+            break;
+        case NOTE_SYSTEM:
+        ch->pcdata->last_sysnote = UMAX(ch->pcdata->last_sysnote,stamp);
             break;
     }
 }
@@ -618,6 +644,10 @@ void parse_note( CHAR_DATA *ch, char *argument, int type )
         case NOTE_CHANGES:
             list = &changes_list;
         list_name = "changes";
+            break;
+        case NOTE_SYSTEM:
+            list = &sysnote_list;
+        list_name = "system notes";
             break;
     }
 
@@ -732,6 +762,9 @@ void parse_note( CHAR_DATA *ch, char *argument, int type )
         case NOTE_RPNOTE:
             sendch("There are no roleplay notes for you.\n\r", ch);
             break;
+        case NOTE_SYSTEM:
+            sendch("There are no system notes for you.\n\r", ch);
+            break;  
         }
     }
     return;
@@ -815,13 +848,17 @@ void parse_note( CHAR_DATA *ch, char *argument, int type )
         ch->pcdata->last_changes = current_time;
         send_to_char("All of your unread changes have now been caught up.\n\r", ch);
         break;
+        case NOTE_SYSTEM:
+        ch->pcdata->last_sysnote = current_time;
+        send_to_char("All of your unread system notes have now been caught up.\n\r", ch);
     }
     return;
     }
 
     /* below this point only certain people can edit notes */
     if ((type == NOTE_NEWS && !IS_TRUSTED(ch,ANGEL))
-    ||  (type == NOTE_CHANGES && !IS_TRUSTED(ch,SUPREME)))
+    ||  (type == NOTE_CHANGES && !IS_TRUSTED(ch,SUPREME))
+    ||  (type == NOTE_SYSTEM && !IS_ADMIN(ch)))
     {
     sprintf(buf,"You aren't high enough level to write %s.",list_name);
     send_to_char(buf,ch);
@@ -1038,7 +1075,7 @@ void parse_note( CHAR_DATA *ch, char *argument, int type )
     return;
 }
 
-void auto_note (char *recipient, char *subject, char *body)
+void sysnote (char *recipient, char *subject, char *body)
 {
     NOTE_DATA *pnote;
     char *strtime;
@@ -1052,7 +1089,7 @@ void auto_note (char *recipient, char *subject, char *body)
     pnote->to_list  = str_dup( recipient );
     pnote->subject  = str_dup( subject );
     pnote->text     = str_dup( body );
-    pnote->type     = NOTE_NOTE;
+    pnote->type     = NOTE_SYSTEM;
 
     // Post the note
     strtime             = (char *) ctime( &current_time );

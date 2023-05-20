@@ -153,7 +153,7 @@ void do_channels(CHAR_DATA *ch, char *argument)
 
     if (IS_ADMIN(ch))
     {
-        printf_to_char(ch, "%-18s  %-4s\n\r", "{wImp Channel{x", (!IS_SET(ch->comm, COMM_NOWIZ)) ? "{GON{x" : "{ROFF{x");
+        printf_to_char(ch, "%-18s  %-4s\n\r", "{wImp Channel{x", (!IS_SET(ch->comm, COMM_NOADMIN)) ? "{GON{x" : "{ROFF{x");
     }
 
     printf_to_char(ch, "%-18s  %-4s\n\r", "{wShouts{x", (!IS_SET(ch->comm, COMM_SHOUTSOFF)) ? "{GON{x" : "{ROFF{x");

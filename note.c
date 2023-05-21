@@ -551,7 +551,7 @@ bool hide_note (CHAR_DATA *ch, NOTE_DATA *pnote)
         last_read = ch->pcdata->last_changes;
         break;
     case NOTE_SYSTEM:
-        last_read = ch->pcdata->last_changes;
+        last_read = ch->pcdata->last_sysnote;
         break;
     }
 
@@ -860,11 +860,11 @@ void parse_note( CHAR_DATA *ch, char *argument, int type )
     return;
     }
     
-    if (type == NOTE_SYSTEM)
+    /*if (type == NOTE_SYSTEM)
     {
     send_to_char("System notes can only be read.\n\r", ch);
     return;
-    }
+    }*/
 
     /* below this point only certain people can edit notes */
     if ((type == NOTE_NEWS && !IS_TRUSTED(ch,ANGEL))

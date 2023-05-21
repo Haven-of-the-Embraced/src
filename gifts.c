@@ -2302,7 +2302,7 @@ void spell_gift_scentofthehoneycomb( int sn, int level, CHAR_DATA *ch, void *vo,
   af.type      = gsn_gift_scentofthehoneycomb;
   af.level     = success;
   af.duration  = (success * 5) + 5;
-  af.modifier  = success;
+  af.modifier  = -1;
   af.location  = APPLY_CS_DEX;
   af.bitvector = 0;
   affect_to_char( victim, &af );

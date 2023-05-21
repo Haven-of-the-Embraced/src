@@ -234,6 +234,7 @@ DECLARE_DO_FUN( do_opstat );
 DECLARE_DO_FUN( do_rpdump );
 DECLARE_DO_FUN( do_rpstat );
 DECLARE_DO_FUN( do_note     );
+DECLARE_DO_FUN( do_sysnote  );
 DECLARE_DO_FUN( do_notell   );
 DECLARE_DO_FUN( do_ofind    );
 DECLARE_DO_FUN( do_oload    );

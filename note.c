@@ -165,6 +165,11 @@ void do_changes(CHAR_DATA *ch,char *argument)
     parse_note(ch,argument,NOTE_CHANGES);
 }
 
+void do_sysnote(CHAR_DATA *ch,char *argument)
+{
+    parse_note(ch,argument,NOTE_SYSTEM);
+}
+
 void save_notes(int type)
 {
     FILE *fp;
@@ -854,11 +859,16 @@ void parse_note( CHAR_DATA *ch, char *argument, int type )
     }
     return;
     }
+    
+    if (type == NOTE_SYSTEM)
+    {
+    send_to_char("System notes can only be read.\n\r", ch);
+    return;
+    }
 
     /* below this point only certain people can edit notes */
     if ((type == NOTE_NEWS && !IS_TRUSTED(ch,ANGEL))
-    ||  (type == NOTE_CHANGES && !IS_TRUSTED(ch,SUPREME))
-    ||  (type == NOTE_SYSTEM && !IS_ADMIN(ch)))
+    ||  (type == NOTE_CHANGES && !IS_TRUSTED(ch,SUPREME)))
     {
     sprintf(buf,"You aren't high enough level to write %s.",list_name);
     send_to_char(buf,ch);

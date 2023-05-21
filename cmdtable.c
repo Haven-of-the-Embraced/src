@@ -65,6 +65,7 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "checklinks", do_checklinks },
     { "checkresets", do_checkresets },
     { "claim", do_claim },
+    { "sysnote", do_sysnote},
     { "systemlog", do_systemlog },
     { "at",             do_at },
     { "rat",            do_rat },

@@ -435,6 +435,7 @@ void fwrite_char( CHAR_DATA *ch, FILE *fp )
     fprintf( fp, "Not  %ld %ld %ld %ld %ld\n",
     ch->pcdata->last_note,ch->pcdata->last_idea,ch->pcdata->last_penalty,
     ch->pcdata->last_news,ch->pcdata->last_changes  );
+    fprintf( fp, "Sysnote %ld", ch->pcdata->last_sysnote);
     fprintf( fp, "Scro %d\n",   ch->lines       );
     fprintf( fp, "Sect %d\n",   ch->pcdata->sect        );
     fprintf( fp, "Room %d\n",
@@ -898,6 +899,7 @@ bool load_char_obj( DESCRIPTOR_DATA *d, char *name )
     ch->pcdata->immtitle        = str_dup( "" );
     ch->pcdata->pretitle        = str_dup( "" );
     ch->pcdata->last_rpnote            = current_time;
+    ch->pcdata->last_sysnote    = current_time;
     ch->pcdata->hometown 		= 0;
     for (stat =0; stat < MAX_STATS; stat++)
     ch->perm_stat[stat]     = 13;
@@ -1509,6 +1511,7 @@ void fread_char( CHAR_DATA *ch, FILE *fp )
         KEY( "Invi",    ch->invis_level,    fread_number( fp ) );
         KEYS( "Immtitle",   ch->pcdata->immtitle,    fread_string(fp) );
         KEY( "Immnote",    ch->pcdata->last_rpnote,  fread_number( fp ) );
+        KEY( "Sysnote",    ch->pcdata->last_sysnote, fread_number( fp ) );
         KEY( "Iclass", ch->pcdata->immclass, fread_number( fp) );
         KEY( "Immun",     ch->imm_flags,        fread_flag( fp ) );
         KEY( "Ip", ch->pcdata->ip,    fread_number( fp) );

@@ -2714,8 +2714,8 @@ Total (3) */
     &gsn_gift_resisttoxin,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     { "scent of the honeycomb", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_scentofthehoneycomb,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_scentofthehoneycomb,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_scentofthehoneycomb,  TAR_CHAR_OFFENSIVE, POS_FIGHTING,
+    &gsn_gift_scentofthehoneycomb,          SLOT( 0),        0,     12, "",             "The vermin scatter as your sickly sweet scent subsides.",        "" },
 
     { "cornered rat", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_corneredrat,  TAR_IGNORE, POS_STANDING,

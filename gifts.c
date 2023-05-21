@@ -2220,7 +2220,7 @@ void spell_gift_resisttoxin( int sn, int level, CHAR_DATA *ch, void *vo, int tar
 void spell_gift_scentofthehoneycomb( int sn, int level, CHAR_DATA *ch, void *vo, int target)
 {
   CHAR_DATA *victim = (CHAR_DATA *) vo;
-  AFFECT_DATA *af;
+  AFFECT_DATA af;
   int success;
 
   if ( victim == NULL )
@@ -2253,12 +2253,14 @@ void spell_gift_scentofthehoneycomb( int sn, int level, CHAR_DATA *ch, void *vo,
     return;
   }
 
+  ch->pcdata->gnosis[TEMP]--;
+
   success = godice(get_attribute(ch, WITS) + get_ability(ch, CSABIL_SUBTERFUGE), 6);
 
   if (success < 0)
   {
-    act("You begin to give off a sickly sweet odor, and are suddenly plagued by vermin!", ch, NULL, rch, TO_CHAR);
-    act("$n is suddenly beseiged by a horde of insects, rodents, and other vermin.", ch, NULL, rch, TO_NOTVICT);
+    act("You begin to give off a sickly sweet odor, and are suddenly plagued by vermin!", ch, NULL, victim, TO_CHAR);
+    act("$n is suddenly beseiged by a horde of insects, rodents, and other vermin.", ch, NULL, NULL, TO_NOTVICT);
 
     af.where     = TO_AFFECTS;
     af.type      = gsn_gift_scentofthehoneycomb;
@@ -2288,19 +2290,37 @@ void spell_gift_scentofthehoneycomb( int sn, int level, CHAR_DATA *ch, void *vo,
 
   if (success == 0)
   {
-    act("Your attempt to attract vermin towards $N appears to have failed.", ch, NULL, rch, TO_CHAR);
+    act("Your attempt to attract vermin towards $N appears to have failed.", ch, NULL, victim, TO_CHAR);
     return;
   }
 
+  act("You direct your attention towards $N, who is suddenly plagued by vermin!", ch, NULL, victim, TO_CHAR);
+  act("You begin to give off a sickly sweet odor, and are suddenly plagued by vermin!", ch, NULL, victim, TO_VICT);
+  act("$n is suddenly beseiged by a horde of insects, rodents, and other vermin.", ch, NULL, victim, TO_NOTVICT);
+
   af.where     = TO_AFFECTS;
-  af.type      = gsn_gift_breathofthewyld;
-  af.level     = ch->pcdata->rank;
-  af.duration  = (success * 5) + (ch->pcdata->rank * 2);
-  af.modifier  = 1;
-  af.location  = APPLY_CS_PER;
+  af.type      = gsn_gift_scentofthehoneycomb;
+  af.level     = success;
+  af.duration  = (success * 5) + 5;
+  af.modifier  = success;
+  af.location  = APPLY_CS_DEX;
   af.bitvector = 0;
   affect_to_char( victim, &af );
 
+  af.location  = APPLY_CS_CHA;
+  affect_to_char( victim, &af );
+
+  af.location  = APPLY_CS_MAN;
+  affect_to_char( victim, &af );
+
+  af.location  = APPLY_CS_INT;
+  affect_to_char( victim, &af );
+
+  af.location  = APPLY_CS_PER;
+  affect_to_char( victim, &af );
+
+  af.location  = APPLY_CS_WIT;
+  affect_to_char( victim, &af );
     return;
 }
 //

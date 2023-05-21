@@ -94,7 +94,8 @@ void affects_update (void) {
     }
 
     if (is_affected(ch, gsn_blight) && ch->fighting != NULL &&
-        (!IS_VAMP(ch) || ch->race == race_lookup("ghoul")))
+        (!IS_VAMP(ch) || ch->race == race_lookup("ghoul")) &&
+        !IS_SET(ch->act2, ACT2_ULTRA_MOB) && (ch->level <= get_affect_level(ch, gsn_blight) + 5))
     {
       if (godice(get_attribute(ch, STAMINA), 6) < 1)
       {

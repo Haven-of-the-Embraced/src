@@ -435,7 +435,7 @@ void fwrite_char( CHAR_DATA *ch, FILE *fp )
     fprintf( fp, "Not  %ld %ld %ld %ld %ld\n",
     ch->pcdata->last_note,ch->pcdata->last_idea,ch->pcdata->last_penalty,
     ch->pcdata->last_news,ch->pcdata->last_changes  );
-    fprintf( fp, "Sysnote %ld", ch->pcdata->last_sysnote);
+    fprintf( fp, "Sysnote %ld\n", ch->pcdata->last_sysnote);
     fprintf( fp, "Scro %d\n",   ch->lines       );
     fprintf( fp, "Sect %d\n",   ch->pcdata->sect        );
     fprintf( fp, "Room %d\n",

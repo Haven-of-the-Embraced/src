@@ -993,6 +993,22 @@ void parse_note( CHAR_DATA *ch, char *argument, int type )
     return;
     }
 
+    if ( !str_prefix( arg, "sender" ) && IS_IMMORTAL(ch) )
+    {
+    note_attach( ch,type );
+        if (ch->pnote->type != type)
+        {
+            send_to_char(
+                "You already have a different note in progress.\n\r",ch);
+            return;
+        }
+
+    free_string( ch->pnote->sender );
+    ch->pnote->sender = str_dup( argument );
+    send_to_char( "Ok.\n\r", ch );
+    return;
+    }
+
     if ( !str_prefix( arg, "clear" ) )
     {
     if ( ch->pnote != NULL )

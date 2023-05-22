@@ -1837,10 +1837,53 @@ void rote_goldenwish(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *ob
 
 void rote_watertowine(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
 {
+    OBJ_DATA *obj = (OBJ_DATA *) vo;
+    int success;
 
+    if ( obj->item_type != ITEM_DRINK_CON )
+    {
+      act("It appears that $p is unable to hold liquids.", ch, obj, NULL, TO_CHAR);
+      return;
+    }
 
-    act("$n holds out an empty hand, closes it, and then opens it to reveal golden coins..",ch,NULL,NULL,TO_NOTVICT);
-    act("You form a Matter pattern, feed Quintessence into it and create golden coins.",ch,NULL,NULL,TO_CHAR);
+    if ( obj->value[1] == 0 )
+    {
+      act("The drink container is empty.  You need water to transmute.", ch, obj, NULL, TO_CHAR);
+      return;
+    }
+
+    if ( obj->value[2] != LIQ_WATER )
+    {
+      act("The liquid in $p is not water.", ch, obj, NULL, TO_CHAR);
+      return;
+    }
+
+    if (success < 0)
+    {
+      return;
+    }
+
+    if (success == 0)
+    {
+      act("You feel the Quintessential energies rush through $p, and out into the Tellurian.", ch, obj, NULL, TO_CHAR);
+      return;
+    }
+
+/*    if ( water > 0 )
+    {
+    obj->value[2] = LIQ_WATER;
+    obj->value[1] += water;
+    if ( !is_name( "water", obj->name ) )
+    {
+        char buf[MAX_STRING_LENGTH];
+
+        sprintf( buf, "%s water", obj->name );
+        free_string( obj->name );
+        obj->name = str_dup( buf );
+    }
+    act( "$p is filled.", ch, obj, NULL, TO_CHAR );
+    }
+*/
     return;
 }
 

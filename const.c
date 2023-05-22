@@ -1246,7 +1246,7 @@ void cskill_update(CHAR_DATA *ch, bool show)
 
 const   struct  skill_type  skill_table [MAX_SKILL] =
 {
-// TOTAL SKILLS AS OF 4/24/23 =  433
+// TOTAL SKILLS AS OF 4/24/23 =  434
 // MAX_SKILL INCREASED TO 440
 /*
  * Magic spells.  Total (108)
@@ -3054,7 +3054,12 @@ Total (3) */
     &gsn_mutateform,          SLOT( 0),        0,     24, "",             "Your body's Pattern shifts back from its animal form.",       "" },
 
 //    --Matter--
-// Total (1)
+// Total (2)
+
+    { "water to wine",     { 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1,  1,  1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_null, TAR_OBJ_INV,        POS_STANDING,
+    &gsn_watertowine,           SLOT(13),    0, 12, "",         "!Water to Wine!",   "" },
+
     { "refine Matter",     { 102, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,     TAR_IGNORE,     POS_STANDING,
     &gsn_refinematter,          SLOT(0),     0, 12, "",         "The Quintessence dissipates from your equipment.", "" },\

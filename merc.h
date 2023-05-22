@@ -3058,6 +3058,7 @@ extern  sh_int  gsn_betterbody;
 extern  sh_int  gsn_mutateform;
 extern  sh_int  gsn_spiritsight;
 extern  sh_int  gsn_trappedingauntlet;
+extern  sh_int  gsn_watertowine;
 extern  sh_int  gsn_refinematter;
 extern  sh_int  gsn_empower;
 extern  sh_int  gsn_primesense;

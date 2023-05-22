@@ -55,6 +55,7 @@ DECLARE_ROTE_FUN( rote_mutateform           );
 DECLARE_ROTE_FUN(	rote_cellularmitosis			);
 DECLARE_ROTE_FUN(	rote_matterperception			);
 DECLARE_ROTE_FUN(	rote_goldenwish					);
+DECLARE_ROTE_FUN( rote_watertowine        );
 DECLARE_ROTE_FUN(	rote_opensesame					);
 DECLARE_ROTE_FUN(	rote_quiltedform				);
 DECLARE_ROTE_FUN(	rote_refinematter				);

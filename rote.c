@@ -1834,6 +1834,16 @@ void rote_goldenwish(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *ob
     act("You form a Matter pattern, feed Quintessence into it and create golden coins.",ch,NULL,NULL,TO_CHAR);
     return;
 }
+
+void rote_watertowine(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
+{
+
+
+    act("$n holds out an empty hand, closes it, and then opens it to reveal golden coins..",ch,NULL,NULL,TO_NOTVICT);
+    act("You form a Matter pattern, feed Quintessence into it and create golden coins.",ch,NULL,NULL,TO_CHAR);
+    return;
+}
+
 void rote_opensesame(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
 {
     ROOM_INDEX_DATA *to_room;

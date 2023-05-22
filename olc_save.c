@@ -1248,7 +1248,7 @@ void do_asave( CHAR_DATA *ch, char *argument )
         send_to_char( "  asave changed  - saves all changed zones\n\r", ch );
         send_to_char( "  asave world    - saves the world! (db dump)\n\r",  ch );
         send_to_char( "  asave helps    - saves the help files\n\r",    ch );
-        send_to_char( "  asave command  - saves the command table\n\r", ch);
+        send_to_char( "  asave commands - saves the command table\n\r", ch);
         send_to_char( "  asave config   - saves configuration file\n\r", ch);
         send_to_char( "  asave quests   - saves quest item table\n\r", ch);
         send_to_char( "\n\r", ch );

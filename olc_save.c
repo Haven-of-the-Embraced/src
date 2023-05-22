@@ -1390,7 +1390,7 @@ void do_asave( CHAR_DATA *ch, char *argument )
     return;
     }
 
-    if (!str_cmp( arg1, "commands") )
+    if (!str_prefix( arg1, "commands") )
     {
             save_cmd_table();
             if (ch)
@@ -1400,7 +1400,7 @@ void do_asave( CHAR_DATA *ch, char *argument )
             return;
         }
 
-    if (!str_cmp( arg1, "config") )
+    if (!str_prefix( arg1, "config") )
     {
         save_config( );
         if (ch)
@@ -1409,7 +1409,7 @@ void do_asave( CHAR_DATA *ch, char *argument )
         log_string("Autosave: Config");
         return;
     }
-    if (!str_cmp( arg1, "quests") )
+    if (!str_prefix( arg1, "quests") )
     {
         save_qitem_table();
         if (ch)
@@ -1470,7 +1470,7 @@ void do_asave( CHAR_DATA *ch, char *argument )
     return;
     }
      /* Save Help File */
-    if(!str_cmp(arg1, "helps"))
+    if(!str_prefix(arg1, "helps"))
     {
         save_helps();
         if (ch)

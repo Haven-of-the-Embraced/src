@@ -51,23 +51,4 @@ pipeline {
             }
         }
     }
-    post {
-        changed {
-            script {
-                def branch = BRANCH_NAME
-                def msg = "**Status:** " + currentBuild.currentResult.toLowerCase() + "\n"
-                msg += "**Branch:** ${branch}\n"
-                msg += "**Changes:** \n"
-                if (!currentBuild.changeSets.isEmpty()) {
-                    currentBuild.changeSets.first().getLogs().each {
-                        msg += "- `" + it.getCommitId().substring(0, 8) + "` *" + it.getComment().substring(0, it.getComment().length()-1) + "*\n"
-                    }
-                }
-
-                if (msg.length() > 1024) msg.take(msg.length() - 1024)
-
-                discordSend thumbnail: "https://havenmud.net/images/taskfailed.jpg", successful: currentBuild.resultIsBetterOrEqualTo('SUCCESS'), description: "${msg}", link: env.BUILD_URL, title: "HavenMUD:${branch} #${BUILD_NUMBER}", webhookURL: "${DISCORD_WEBHOOK}"
-            }
-        }
-    }
 }

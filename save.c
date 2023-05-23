@@ -1511,7 +1511,6 @@ void fread_char( CHAR_DATA *ch, FILE *fp )
         KEY( "Invi",    ch->invis_level,    fread_number( fp ) );
         KEYS( "Immtitle",   ch->pcdata->immtitle,    fread_string(fp) );
         KEY( "Immnote",    ch->pcdata->last_rpnote,  fread_number( fp ) );
-        KEY( "Sysnote",    ch->pcdata->last_sysnote, fread_number( fp ) );
         KEY( "Iclass", ch->pcdata->immclass, fread_number( fp) );
         KEY( "Immun",     ch->imm_flags,        fread_flag( fp ) );
         KEY( "Ip", ch->pcdata->ip,    fread_number( fp) );
@@ -1637,6 +1636,7 @@ void fread_char( CHAR_DATA *ch, FILE *fp )
         KEY( "secondary",         ch->pcdata->secondary,    fread_number( fp ) );
         KEY( "Silv",        ch->silver,             fread_number( fp ) );
         KEY( "Sire",    ch->sire,           fread_string( fp ) );
+        KEY( "Sysnote",    ch->pcdata->last_sysnote, fread_number( fp ) );
 
 
         if ( !str_cmp( word, "Skill" ) || !str_cmp(word,"Sk"))

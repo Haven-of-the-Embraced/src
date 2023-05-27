@@ -2434,7 +2434,7 @@ struct gen_data
  */
 #define LIQ_WATER        0
 #define LIQ_BENEDICTINE  22
-#define LIQ_MUSCUS       32
+#define LIQ_MUSCUS       36
 
 struct  liq_type
 {

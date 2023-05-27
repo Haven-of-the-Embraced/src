@@ -1837,9 +1837,6 @@ void rote_goldenwish(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *ob
 
 void rote_watertowine(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
 {
-    OBJ_DATA *obj = (OBJ_DATA *) vo;
-    int success;
-
     if ( obj->item_type != ITEM_DRINK_CON )
     {
       act("It appears that $p is unable to hold liquids.", ch, obj, NULL, TO_CHAR);

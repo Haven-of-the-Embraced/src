@@ -195,7 +195,7 @@ typedef void ROOM_FUN	args( ( ROOM_INDEX_DATA *room, char *argument ) );
 #define MAX_CLAN            33
 #define MAX_SECT            7
 #define MAX_TRADITION       6
-#define MAX_ROTE            47
+#define MAX_ROTE            48
 #define MAX_DAMAGE_MESSAGE  42
 #define MAX_TEST_LOOPS      3
 #define MAX_LEVEL          110
@@ -2433,6 +2433,8 @@ struct gen_data
  * Liquids.
  */
 #define LIQ_WATER        0
+#define LIQ_BENEDICTINE  22
+#define LIQ_MUSCUS       32
 
 struct  liq_type
 {

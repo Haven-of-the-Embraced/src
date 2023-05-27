@@ -1099,14 +1099,16 @@ void do_pick( CHAR_DATA *ch, char *argument )
     CHAR_DATA *gch;
     OBJ_DATA *obj;
     int door;
+    int pickdiff = 6;
+    int picksuccess;
 
     one_argument( argument, arg );
     if(IS_NPC(ch)) return;
 
     if ( arg[0] == '\0' )
     {
-    send_to_char( "Pick what?\n\r", ch );
-    return;
+      send_to_char( "Pick what?\n\r", ch );
+      return;
     }
 
     if (MOUNTED(ch))
@@ -1120,20 +1122,13 @@ void do_pick( CHAR_DATA *ch, char *argument )
     /* look for guards */
     for ( gch = ch->in_room->people; gch; gch = gch->next_in_room )
     {
-    if ( IS_NPC(gch) && IS_AWAKE(gch) && ch->level + 5 < gch->level )
-    {
-        act( "$N is standing too close to the lock.",
-        ch, NULL, gch, TO_CHAR );
+      if ( IS_NPC(gch) && IS_AWAKE(gch) && ch->level + 5 < gch->level )
+      {
+        act( "$N is standing too close to the lock.", ch, NULL, gch, TO_CHAR );
         return;
-    }
+      }
     }
 
-    if ( !IS_NPC(ch) && number_percent( ) > get_skill(ch,gsn_pick_lock))
-    {
-    send_to_char( "You failed.\n\r", ch);
-    check_improve(ch,gsn_pick_lock,FALSE,4);
-    return;
-    }
     if ( ( door = find_door( ch, arg ) ) >= 0 )
     {
     /* 'pick door' */
@@ -1150,6 +1145,20 @@ void do_pick( CHAR_DATA *ch, char *argument )
         { send_to_char( "It's already unlocked.\n\r",  ch ); return; }
     if ( IS_SET(pexit->exit_info, EX_PICKPROOF) && !IS_IMMORTAL(ch))
         { send_to_char( "It can't be picked.\n\r",             ch ); return; }
+
+    if ( picksuccess < 0 )
+    {
+      send_to_char( "Your fumbling causes the lock to be unpickable.\n\r", ch);
+      ADD_BIT(pexit->exit_info, EX_PICKPROOF);
+      return;
+    }
+
+    if ( picksuccess == 0 )
+    {
+      send_to_char( "You failed.\n\r", ch);
+      check_improve(ch,gsn_pick_lock,FALSE,4);
+      return;
+    }
 
     REMOVE_BIT(pexit->exit_info, EX_LOCKED);
     send_to_char( "*Click*\n\r", ch );

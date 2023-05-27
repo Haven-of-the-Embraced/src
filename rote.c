@@ -1860,6 +1860,8 @@ void rote_watertowine(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *o
 
     if (success < 0)
     {
+      act("The energies you try to command seem to twist and rot.", ch, obj, NULL, TO_CHAR);
+      obj->value[2] = LIQ_MUSCUS;
       return;
     }
 
@@ -1869,21 +1871,9 @@ void rote_watertowine(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *o
       return;
     }
 
-/*    if ( water > 0 )
-    {
-    obj->value[2] = LIQ_WATER;
-    obj->value[1] += water;
-    if ( !is_name( "water", obj->name ) )
-    {
-        char buf[MAX_STRING_LENGTH];
+    act("You focus on $p, and smile as the water inside changes to sweet wine.", ch, obj, NULL, TO_CHAR);
+    obj->value[2] = LIQ_BENEDICTINE;
 
-        sprintf( buf, "%s water", obj->name );
-        free_string( obj->name );
-        obj->name = str_dup( buf );
-    }
-    act( "$p is filled.", ch, obj, NULL, TO_CHAR );
-    }
-*/
     return;
 }
 

@@ -1746,6 +1746,7 @@ int apply_ac( OBJ_DATA *obj, int iWear, int type )
     case WEAR_EAR_R:    return     obj->value[type];
     case WEAR_FACE: return     obj->value[type];
     case WEAR_HOLD: return     obj->value[type];
+    case WEAR_BACK: return     obj->value[type];
     }
 
     return 0;
@@ -3430,6 +3431,7 @@ char *wear_bit_name(int wear_flags)
     if (wear_flags & ITEM_WEAR_FLOAT    ) strcat(buf, " float");
     if (wear_flags & ITEM_WEAR_EAR  ) strcat(buf, " ear");
     if (wear_flags & ITEM_WEAR_FACE ) strcat(buf, " face");
+    if (wear_flags & ITEM_WEAR_BACK ) strcat(buf, " back");
 
     return ( buf[0] != '\0' ) ? buf+1 : "none";
 }

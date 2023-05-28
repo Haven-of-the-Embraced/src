@@ -2258,6 +2258,7 @@ const struct wear_type wear_table[] =
     {   WEAR_EAR_L, ITEM_WEAR_EAR       },
     {   WEAR_EAR_R, ITEM_WEAR_EAR       },
     {   WEAR_FACE,  ITEM_WEAR_FACE      },
+    {   WEAR_BACK,  ITEM_WEAR_BACK      },
     {   NO_FLAG,    NO_FLAG         }
 };
 

@@ -1918,6 +1918,16 @@ void wear_obj( CHAR_DATA *ch, OBJ_DATA *obj, bool fReplace )
     return;
     }
 
+    if ( CAN_WEAR(obj,ITEM_WEAR_BACK) )
+    {
+    if (!remove_obj(ch,WEAR_BACK, fReplace) )
+        return;
+    act("$n wears $p on $s back.",ch,obj,NULL,TO_ROOM);
+    act("You wear $p on your back.",ch,obj,NULL,TO_CHAR);
+    equip_char(ch,obj,WEAR_BACK);
+    return;
+    }
+
     if ( fReplace )
     send_to_char( "You can't wear, wield, or hold that.\n\r", ch );
 

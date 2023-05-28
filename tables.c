@@ -803,6 +803,7 @@ const struct flag_type wear_flags[] =
     {   "ear",          ITEM_WEAR_EAR,  TRUE    },
     {   "nosac",        ITEM_NO_SAC,        TRUE    },
     {   "wearfloat",        ITEM_WEAR_FLOAT,    TRUE    },
+    {   "back",         ITEM_WEAR_BACK, TRUE    },
 /*    {   "twohands",            ITEM_TWO_HANDS,         TRUE    }, */
     {   NULL,           0,          0   }
 };
@@ -885,6 +886,7 @@ const struct flag_type wear_loc_strings[] =
     {   "wielded",      WEAR_WIELD, TRUE    },
     {   "held in the hands",    WEAR_HOLD,  TRUE    },
     {   "floating nearby",  WEAR_FLOAT, TRUE    },
+    {   "on back", WEAR_BACK, TRUE },
     {   NULL,           0         , 0   }
 };
 
@@ -914,6 +916,7 @@ const struct flag_type wear_loc_flags[] =
     {   "wielded",  WEAR_WIELD, TRUE    },
     {   "hold",     WEAR_HOLD,  TRUE    },
     {   "floating", WEAR_FLOAT, TRUE    },
+    {   "back", WEAR_BACK, TRUE },
     {   NULL,       0,      0   }
 };
 

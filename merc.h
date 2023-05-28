@@ -1519,6 +1519,7 @@ struct  kill_data
 #define ITEM_WEAR_FLOAT     (Q)
 #define ITEM_WEAR_EAR       (R)
 #define ITEM_WEAR_FACE      (S)
+#define ITEM_WEAR_BACK      (T)
 
 /* weapon class */
 #define WEAPON_EXOTIC       0
@@ -1768,8 +1769,8 @@ struct  kill_data
 #define WEAR_EAR_L           19
 #define WEAR_EAR_R           20
 #define WEAR_FACE            21
-#define MAX_WEAR             22
-
+#define WEAR_BACK            22
+#define MAX_WEAR             23
 
 
 /***************************************************************************

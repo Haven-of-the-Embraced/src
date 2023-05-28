@@ -350,7 +350,7 @@ void do_auction( CHAR_DATA *ch, char *argument )
          !IS_SET(victim->comm,COMM_QUIET) )
     {
         act_new("{y$n auctions '$t'{x",
-            ch,argument,d->character,TO_VICT,POS_DEAD, TRUE);
+            ch,argument,d->character,TO_VICT,POS_RESTING, TRUE);
     }
     }
 }
@@ -405,7 +405,7 @@ void do_ictalk( CHAR_DATA *ch, char *argument )
              !IS_SET(victim->comm,COMM_QUIET) )
         {
           act_new( "{x$n ICs '{C$t{x'",
-           ch,argument, d->character, TO_VICT,POS_SLEEPING, TRUE );
+           ch,argument, d->character, TO_VICT,POS_RESTING, TRUE );
         }
       }
     }
@@ -460,7 +460,7 @@ void do_grats( CHAR_DATA *ch, char *argument )
              !IS_SET(victim->comm,COMM_QUIET) )
         {
           act_new( "$n grats '$t'",
-                   ch,argument, d->character, TO_VICT,POS_SLEEPING, TRUE );
+                   ch,argument, d->character, TO_VICT,POS_DEAD, TRUE );
         }
       }
     }
@@ -491,12 +491,13 @@ void do_ooc( CHAR_DATA *ch, char *argument )
           send_to_char("You must turn off quiet mode first.\n\r",ch);
           return;
         }
+/*
     if(ch->move <= 0)
     {
         send_to_char("You are too tired to use the OOC channel.\n\r",ch);
         return;
     }
-
+*/
         if (IS_SET(ch->comm,COMM_NOCHANNELS))
         {
           send_to_char("The gods have revoked your channel priviliges.\n\r",ch);
@@ -522,7 +523,7 @@ void do_ooc( CHAR_DATA *ch, char *argument )
              !IS_SET(victim->comm,COMM_QUIET) )
         {
           act_new( "{x$n OOCs '{Y$t{x'",
-                   ch,argument, d->character, TO_VICT,POS_TORPOR, TRUE );
+                   ch,argument, d->character, TO_VICT,POS_DEAD, TRUE );
         }
       }
     }
@@ -577,7 +578,7 @@ void do_chat( CHAR_DATA *ch, char *argument )
              !IS_SET(victim->comm,COMM_NOCHAT) &&
              !IS_SET(victim->comm,COMM_QUIET) )
         {
-        act_new( "{x$n Chats '{c$t{x'", ch, argument, d->character, TO_VICT, POS_TORPOR, TRUE );
+        act_new( "{x$n Chats '{c$t{x'", ch, argument, d->character, TO_VICT, POS_RESTING, TRUE );
 
         }
       }
@@ -633,7 +634,7 @@ void do_question( CHAR_DATA *ch, char *argument )
              !IS_SET(victim->comm,COMM_QUIET) )
         {
       act_new("{x$n questions '{G$t{x'",
-          ch,argument,d->character,TO_VICT,POS_SLEEPING, TRUE);
+          ch,argument,d->character,TO_VICT,POS_RESTING, TRUE);
         }
       }
     }
@@ -688,7 +689,7 @@ void do_answer( CHAR_DATA *ch, char *argument )
              !IS_SET(victim->comm,COMM_QUIET) )
         {
       act_new("$n answers '{G$t{x'",
-          ch,argument,d->character,TO_VICT,POS_SLEEPING, TRUE);
+          ch,argument,d->character,TO_VICT,POS_RESTING, TRUE);
         }
       }
     }
@@ -744,7 +745,7 @@ void do_music( CHAR_DATA *ch, char *argument )
              !IS_SET(victim->comm,COMM_QUIET) )
         {
         act_new("{x$n musics: '{M$t{x'",
-            ch,argument,d->character,TO_VICT,POS_SLEEPING, TRUE);
+            ch,argument,d->character,TO_VICT,POS_RESTING, TRUE);
         }
       }
     }
@@ -796,7 +797,7 @@ void do_clantalk( CHAR_DATA *ch, char *argument )
              !IS_SET(d->character->comm,COMM_NOCLAN) &&
          !IS_SET(d->character->comm,COMM_QUIET) )
         {
-            act_new("$n tells the clan '{Y$t{x'",ch,argument,d->character,TO_VICT,POS_DEAD, TRUE);
+            act_new("$n tells the clan '{Y$t{x'",ch,argument,d->character,TO_VICT,POS_RESTING, TRUE);
         }
     }
 
@@ -849,7 +850,7 @@ void do_traditiontalk( CHAR_DATA *ch, char *argument )
          !IS_SET(d->character->comm,COMM_QUIET) )
         {
             sprintf(buf,"%s tells the Tradition '{Y$t{x'",ch->name);
-            act_new(buf,ch,argument,d->character,TO_VICT,POS_DEAD, TRUE);
+            act_new(buf,ch,argument,d->character,TO_VICT,POS_RESTING, TRUE);
         }
     }
 
@@ -901,7 +902,7 @@ void do_tribetalk( CHAR_DATA *ch, char *argument )
          !IS_SET(d->character->comm,COMM_QUIET) )
         {
             sprintf(buf,"%s tells the Tribe '{Y$t{x'",ch->name);
-            act_new(buf,ch,argument,d->character,TO_VICT,POS_DEAD, TRUE);
+            act_new(buf,ch,argument,d->character,TO_VICT,POS_RESTING, TRUE);
         }
     }
 
@@ -1090,8 +1091,8 @@ void do_osay( CHAR_DATA *ch, char *argument )
 
     check_unseen(ch, UNSEEN_TALK );
     RECORD_TO_REPLAYROOM = TRUE;
-    act_new( "{x$n says OOCly '{C$T{x'", ch, NULL, argument, TO_ROOM, POS_RESTING, FALSE );
-    act_new( "{xYou say OOCly '{C$T{x'", ch, NULL, argument, TO_CHAR, POS_RESTING, FALSE );
+    act_new( "{x$n says OOCly '{C$T{x'", ch, NULL, argument, TO_ROOM, POS_DEAD, FALSE );
+    act_new( "{xYou say OOCly '{C$T{x'", ch, NULL, argument, TO_CHAR, POS_DEAD, FALSE );
     RECORD_TO_REPLAYROOM = FALSE;
     return;
 }
@@ -1145,7 +1146,7 @@ void do_shout( CHAR_DATA *ch, char *argument )
          !IS_SET(victim->comm, COMM_SHOUTSOFF) &&
          !IS_SET(victim->comm, COMM_QUIET) )
     {
-        act_new ("{x$n shouts '{R$t{x'",ch,argument,d->character,TO_VICT, POS_SLEEPING, TRUE);
+        act_new ("{x$n shouts '{R$t{x'",ch,argument,d->character,TO_VICT, POS_RESTING, TRUE);
     }
     }
 
@@ -2194,7 +2195,7 @@ void do_group( CHAR_DATA *ch, char *argument )
 
     if ( victim->master != ch && ch != victim )
     {
-    act_new("$N isn't following you.",ch,NULL,victim,TO_CHAR,POS_SLEEPING, FALSE);
+    act_new("$N isn't following you.",ch,NULL,victim,TO_CHAR,POS_DEAD, FALSE);
     return;
     }
 
@@ -2207,7 +2208,7 @@ void do_group( CHAR_DATA *ch, char *argument )
     if (IS_AFFECTED(ch,AFF_CHARM))
     {
         act_new("You like your master too much to leave $m!",
-        ch,NULL,victim,TO_VICT,POS_SLEEPING, FALSE);
+        ch,NULL,victim,TO_VICT,POS_DEAD, FALSE);
         return;
     }
 
@@ -2215,14 +2216,14 @@ void do_group( CHAR_DATA *ch, char *argument )
     {
     victim->leader = NULL;
     act_new("$n removes $N from $s group.",
-        ch,NULL,victim,TO_NOTVICT,POS_RESTING, FALSE);
+        ch,NULL,victim,TO_NOTVICT,POS_DEAD, FALSE);
     act_new("$n removes you from $s group.",
-        ch,NULL,victim,TO_VICT,POS_SLEEPING, FALSE);
+        ch,NULL,victim,TO_VICT,POS_DEAD, FALSE);
     act_new("You remove $N from your group.",
-        ch,NULL,victim,TO_CHAR,POS_SLEEPING, FALSE);
+        ch,NULL,victim,TO_CHAR,POS_DEAD, FALSE);
     if (!str_cmp(arg2, "abandon"))
     {
-        act_new("You abandon $N entirely.", ch, NULL, victim, TO_CHAR, POS_SLEEPING, FALSE);
+        act_new("You abandon $N entirely.", ch, NULL, victim, TO_CHAR, POS_DEAD, FALSE);
         victim->master = NULL;
     }
     return;
@@ -2240,11 +2241,11 @@ void do_group( CHAR_DATA *ch, char *argument )
     if (!IN_LEVEL(ch,victim))
     {
       act_new("$n tries to group $N but $n fails.",
-        ch,NULL,victim,TO_NOTVICT,POS_RESTING, FALSE);
+        ch,NULL,victim,TO_NOTVICT,POS_DEAD, FALSE);
       act_new("$n is unable to add you to $s group.",
-        ch,NULL,victim,TO_VICT,POS_SLEEPING, FALSE);
+        ch,NULL,victim,TO_VICT,POS_DEAD, FALSE);
       act_new("You are unable to add $N to your group.",
-        ch,NULL,victim,TO_CHAR,POS_SLEEPING, FALSE);
+        ch,NULL,victim,TO_CHAR,POS_DEAD, FALSE);
       return;
     }
 
@@ -2268,9 +2269,9 @@ void do_group( CHAR_DATA *ch, char *argument )
     }
 
     victim->leader = ch;
-    act_new("$N joins $n's group.",ch,NULL,victim,TO_NOTVICT,POS_RESTING, FALSE);
-    act_new("You join $n's group.",ch,NULL,victim,TO_VICT,POS_SLEEPING, FALSE);
-    act_new("$N joins your group.",ch,NULL,victim,TO_CHAR,POS_SLEEPING, FALSE);
+    act_new("$N joins $n's group.",ch,NULL,victim,TO_NOTVICT,POS_DEAD, FALSE);
+    act_new("You join $n's group.",ch,NULL,victim,TO_VICT,POS_DEAD, FALSE);
+    act_new("$N joins your group.",ch,NULL,victim,TO_CHAR,POS_DEAD, FALSE);
     return;
 
 }
@@ -2416,13 +2417,13 @@ void do_gtell( CHAR_DATA *ch, char *argument )
     }
 
     act_new("$n tells the group '{Y$t{x'",
-    ch,argument,NULL,TO_CHAR,POS_SLEEPING, TRUE);
+    ch,argument,NULL,TO_CHAR,POS_DEAD, TRUE);
 
     for ( gch = char_list; gch != NULL; gch = gch->next )
     {
     if ( is_same_group( gch, ch ) )
         act_new("$n tells the group '{Y$t{x'",
-        ch,argument,gch,TO_VICT,POS_SLEEPING, TRUE);
+        ch,argument,gch,TO_VICT,POS_DEAD, TRUE);
     }
 
     return;
@@ -2827,9 +2828,9 @@ void do_promote_leader( CHAR_DATA *ch, char *argument )
         ch->master = victim;
         victim->leader = NULL;
         victim->master = NULL;
-    act_new("$n transfers leadership of their group to $N.",ch,NULL,victim,TO_NOTVICT,POS_RESTING, FALSE);
-    act_new("You are now the leader of $n's group.",ch,NULL,victim,TO_VICT,POS_SLEEPING, FALSE);
-    act_new("$N now leads your group.",ch,NULL,victim,TO_CHAR,POS_SLEEPING, FALSE);
+    act_new("$n transfers leadership of their group to $N.",ch,NULL,victim,TO_NOTVICT,POS_DEAD, FALSE);
+    act_new("You are now the leader of $n's group.",ch,NULL,victim,TO_VICT,POS_DEAD, FALSE);
+    act_new("$N now leads your group.",ch,NULL,victim,TO_CHAR,POS_DEAD, FALSE);
     return;
 
 }

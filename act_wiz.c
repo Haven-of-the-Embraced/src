@@ -84,6 +84,124 @@ argument = one_argument( argument, arg1);
       }
 }
 
+void do_tlookup(CHAR_DATA *ch, char *argument)
+{
+    char arg[MAX_INPUT_LENGTH];
+    char arg1[MAX_INPUT_LENGTH];
+    char buf [MAX_STRING_LENGTH];
+    int i;
+
+    argument = one_argument(argument, arg); // Get the input value from the argument
+    argument = one_argument(argument, arg1);
+
+    if (arg[0] == '\0' || arg1[0] == '\0')
+    {
+        send_to_char("Usage: Lookup <table> <name>\r\n", ch);
+        return;
+    }
+
+
+/* Begin Liquid table lookup */
+    if ( !str_prefix( arg, "liquid" ) )
+    {
+        for (i = 0; liq_table[i].liq_name != NULL; i++)
+        {
+            if (str_prefix(arg1, liq_table[i].liq_name) == 0)
+            {
+                // Match found, display the information
+
+                    sprintf(buf,"Name: %s\r\nColor: %s\r\nProof: %d\r\nFullness: %d\r\nThirst: %d\r\nSize: %d\r\n",
+                    liq_table[i].liq_name,
+                    liq_table[i].liq_color,
+                    liq_table[i].liq_affect[0],
+                    liq_table[i].liq_affect[1],
+                    liq_table[i].liq_affect[2],
+                    liq_table[i].liq_affect[3],
+                    liq_table[i].liq_affect[4]);
+
+                    send_to_char(buf,ch);
+
+                    return;
+            }
+        }
+
+    // No match found
+    send_to_char("No such drink exists.\r\n", ch);
+    return;
+    }
+/* End Liquid table lookup */
+
+/* Brew table */
+    if ( !str_prefix( arg, "brew" ) )
+    {
+        for (i = 0; brew_table[i].name != NULL; i++)
+        {
+            if (str_prefix(arg1, brew_table[i].name) == 0)
+            {
+                // Match found, display the information
+
+                    sprintf(buf,"Name: %s\r\nSpell Number:%d\r\nMin Level: %d\r\nPotion Level: %d\r\nDiff: %d\r\nComponents: %d %d %d %d %d\r\nMage Only: %s\r\nImm Only: %s\r\nColor: %s\r\n",
+                    brew_table[i].name,
+                    brew_table[i].sn,
+                    brew_table[i].level,
+                    brew_table[i].plevel,
+                    brew_table[i].diff,
+                    brew_table[i].component[0],brew_table[i].component[1],brew_table[i].component[2],brew_table[i].component[3],brew_table[i].component[4],
+                    brew_table[i].mage ? "TRUE" : "FALSE",
+                    brew_table[i].immonly ? "TRUE" : "FALSE",
+                    brew_table[i].color);
+
+                    send_to_char(buf,ch);
+
+                    return;
+            }
+
+        }
+
+    // No match found
+    send_to_char("No such brew recipe exists.\r\n", ch);
+    return;
+    }
+
+/* Craft table */
+    if ( !str_prefix( arg, "craft" ) )
+    {
+        for (i = 0; crafted_item_table[i].name != NULL; i++)
+        {
+            if (str_prefix(arg1, crafted_item_table[i].name) == 0)
+            {
+                // Match found, display the information
+
+                    sprintf(buf,"Name: %s\r\nType: %s\r\n\VNUM: %d\r\nSkill: %d\r\nLevel: %d\r\nResource Type: %d\r\nComponents: %d %d %d %d %d\r\nSocket Types: %d %d %d %d %d\r\nBest Resource: %d %d %d %d %d %d %d %d %d %d\r\n",
+                    crafted_item_table[i].name,
+                    crafted_item_table[i].type,
+                    crafted_item_table[i].vnum,
+                    crafted_item_table[i].skill,
+                    crafted_item_table[i].lvl,
+                    crafted_item_table[i].resource_type,
+                    crafted_item_table[i].comp[0],crafted_item_table[i].comp[1],crafted_item_table[i].comp[2],crafted_item_table[i].comp[3],crafted_item_table[i].comp[4],
+                    crafted_item_table[i].socket[0],crafted_item_table[i].socket[1],crafted_item_table[i].socket[2],crafted_item_table[i].socket[3],crafted_item_table[i].socket[4],
+                    crafted_item_table[i].best[0],crafted_item_table[i].best[1],crafted_item_table[i].best[2],crafted_item_table[i].best[3],crafted_item_table[i].best[4],crafted_item_table[i].best[5],crafted_item_table[i].best[6],crafted_item_table[i].best[7],crafted_item_table[i].best[8],crafted_item_table[i].best[9]);
+
+                    send_to_char(buf,ch);
+
+                    return;
+            }
+
+        }
+
+    // No match found
+    send_to_char("No such craft recipe exists.\r\n", ch);
+    return;
+    }
+
+    else
+        {
+            send_to_char("No such table. Available options: liquid, brew, craft\r\n",ch);
+            return;
+        }
+}
+
 void do_qpmult(CHAR_DATA *ch,char *argument)
 {
 char arg1[MAX_INPUT_LENGTH];

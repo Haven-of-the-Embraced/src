@@ -549,7 +549,7 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "qitemlist",      do_qitemlist},
     { "placeqitems",    do_placeqitems},
     { "bslap",          do_bslap},
-
+    { "tlookup",    do_tlookup},
     /* Language stuff*/
         /*
      * Languages.

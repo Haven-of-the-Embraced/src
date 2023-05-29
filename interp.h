@@ -650,7 +650,7 @@ DECLARE_DO_FUN( do_lset         );      /* Language set */
 DECLARE_DO_FUN( do_learn        );      /* learn a language */
 DECLARE_DO_FUN( do_speak        );      /* Select a language to speak */
 DECLARE_DO_FUN( do_donate       );
-
+DECLARE_DO_FUN( do_tlookup      );
 /* language.c */
 void    do_language     args( ( CHAR_DATA *ch, char *argument, int language) );
 int     lang_lookup     args( ( const char *name ) );

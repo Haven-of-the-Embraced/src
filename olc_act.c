@@ -3232,7 +3232,7 @@ bool set_obj_values( CHAR_DATA *ch, OBJ_INDEX_DATA *pObj, int value_num, char *a
           break;
         }
         send_to_char( "LOCKPICK DIFFICULTY SET.\n\r\n\r", ch );
-        pObj->value[0] = atoi( argument );
+        pObj->value[1] = atoi( argument );
         break;
       }
       break;
@@ -3255,7 +3255,7 @@ bool set_obj_values( CHAR_DATA *ch, OBJ_INDEX_DATA *pObj, int value_num, char *a
         case 1:
           if (set_value < 3 || set_value > 10)
           {
-           send_to_char("Blast Powder Damage is between 1 and 5.\n\r", ch);
+           send_to_char("Blast Powder Damage is between 3 and 10.\n\r", ch);
            break;
           }
           send_to_char( "BLASTPOWDER DAMAGE SET.\n\r\n\r", ch );

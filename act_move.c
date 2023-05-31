@@ -1145,6 +1145,12 @@ void do_pick( CHAR_DATA *ch, char *argument )
         { send_to_char( "It's already unlocked.\n\r",  ch ); return; }
     if ( IS_SET(pexit->exit_info, EX_PICKPROOF) && !IS_IMMORTAL(ch))
         { send_to_char( "It can't be picked.\n\r",             ch ); return; }
+    if ( IS_SET(pexit->exit_info, EX_EASY) )
+      pickdiff--;
+    if ( IS_SET(pexit->exit_info, EX_HARD) )
+      pickdiff++;
+    if ( IS_SET(pexit->exit_info, EX_INFURIATING) )
+      pickdiff = pickdiff + 2;
 
     if ( picksuccess < 0 )
     {
@@ -1203,6 +1209,16 @@ void do_pick( CHAR_DATA *ch, char *argument )
             {
             send_to_char("You failed.\n\r",ch);
             return;
+            }
+
+            if (picksuccess < 0)
+            {
+              return;
+            }
+
+            if (picksuccess == 0)
+            {
+              return;
             }
 
             REMOVE_BIT(obj->value[1],EX_LOCKED);

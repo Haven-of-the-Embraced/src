@@ -90,34 +90,61 @@ void do_tlookup(CHAR_DATA *ch, char *argument)
     char arg1[MAX_INPUT_LENGTH];
     char buf [MAX_STRING_LENGTH];
     int i;
+    OBJ_INDEX_DATA *pObjIndex;
+    OBJ_INDEX_DATA *pObjIndex2;
 
     argument = one_argument(argument, arg); // Get the input value from the argument
     argument = one_argument(argument, arg1);
 
-    if (arg[0] == '\0' || arg1[0] == '\0')
+    if (arg[0] == '\0' && arg1[0] == '\0')
     {
-        send_to_char("Usage: Lookup <table> <name>\r\n", ch);
+        send_to_char("Usage: tlookup <table> <name>\r\nAvailable tables: brew, craft, liquid\r\n", ch);
         return;
     }
 
 
 /* Begin Liquid table lookup */
-    if ( !str_prefix( arg, "liquid" ) )
-    {
+    if (!str_prefix(arg, "liquid")) {
+        if (arg1[0] == '\0') {
+            sprintf(buf, "All liquids:\r\n          ");
+            int counter = 0;
+            for (i = 0; liq_table[i].liq_name != NULL; i++) {
+                sprintf(buf + strlen(buf), "%-20s", liq_table[i].liq_name);
+                counter++;
+                if (counter == 3) {
+                    strcat(buf, "\r\n");
+                    send_to_char(buf, ch);
+                    sprintf(buf, "          "); // Indentation for subsequent lines
+                    counter = 0;
+                }
+            }
+            if (counter != 0) {
+                strcat(buf, "\r\n");
+                send_to_char(buf, ch);
+            }
+            return;
+        }
+
         for (i = 0; liq_table[i].liq_name != NULL; i++)
         {
             if (str_prefix(arg1, liq_table[i].liq_name) == 0)
             {
                 // Match found, display the information
 
-                    sprintf(buf,"Name: %s\r\nColor: %s\r\nProof: %d\r\nFullness: %d\r\nThirst: %d\r\nSize: %d\r\n",
-                    liq_table[i].liq_name,
-                    liq_table[i].liq_color,
-                    liq_table[i].liq_affect[0],
-                    liq_table[i].liq_affect[1],
-                    liq_table[i].liq_affect[2],
-                    liq_table[i].liq_affect[3],
-                    liq_table[i].liq_affect[4]);
+                    sprintf(buf,"%-10s : %-20s\r\n"
+                                "%-10s : %-20s\r\n"
+                                "%-10s : %-20d\r\n"
+                                "%-10s : %-20d\r\n"
+                                "%-10s : %-20d\r\n"
+                                "%-10s : %-20d\r\n"
+                                "%-10s : %-20d\r\n",
+                                "Name", liq_table[i].liq_name,
+                                "Color", liq_table[i].liq_color,
+                                "Proof", liq_table[i].liq_affect[0],
+                                "Fullness", liq_table[i].liq_affect[1],
+                                "Thirst", liq_table[i].liq_affect[2],
+                                "Food", liq_table[i].liq_affect[3],
+                                "Size", liq_table[i].liq_affect[4]);
 
                     send_to_char(buf,ch);
 
@@ -134,22 +161,51 @@ void do_tlookup(CHAR_DATA *ch, char *argument)
 /* Brew table */
     if ( !str_prefix( arg, "brew" ) )
     {
+        if (arg1[0] == '\0') {
+            sprintf(buf, "All potions:\r\n          ");
+            int counter = 0;
+            for (i = 0; brew_table[i].name != NULL; i++) {
+                sprintf(buf + strlen(buf), "%-20s", brew_table[i].name);
+                counter++;
+                if (counter == 3) {
+                    strcat(buf, "\r\n");
+                    send_to_char(buf, ch);
+                    sprintf(buf, "          "); // Indentation for subsequent lines
+                    counter = 0;
+                }
+            }
+            if (counter != 0) {
+                strcat(buf, "\r\n");
+                send_to_char(buf, ch);
+            }
+            return;
+        }
+
         for (i = 0; brew_table[i].name != NULL; i++)
         {
             if (str_prefix(arg1, brew_table[i].name) == 0)
             {
                 // Match found, display the information
 
-                    sprintf(buf,"Name: %s\r\nSpell Number:%d\r\nMin Level: %d\r\nPotion Level: %d\r\nDiff: %d\r\nComponents: %d %d %d %d %d\r\nMage Only: %s\r\nImm Only: %s\r\nColor: %s\r\n",
-                    brew_table[i].name,
-                    brew_table[i].sn,
-                    brew_table[i].level,
-                    brew_table[i].plevel,
-                    brew_table[i].diff,
-                    brew_table[i].component[0],brew_table[i].component[1],brew_table[i].component[2],brew_table[i].component[3],brew_table[i].component[4],
-                    brew_table[i].mage ? "TRUE" : "FALSE",
-                    brew_table[i].immonly ? "TRUE" : "FALSE",
-                    brew_table[i].color);
+            sprintf(buf, "%-15s : %-20s\r\n"
+                         "%-15s : %-20s\r\n"
+                         "%-15s : %-10d\r\n"
+                         "%-15s : %-10d\r\n"
+                         "%-15s : %-10d\r\n"
+                         "%-15s : %-6d %-6d %-6d %-6d %-6d\r\n"
+                         "%-15s : %-10s\r\n"
+                         "%-15s : %-10s\r\n"
+                         "%-15s : %-10s\r\n",
+                         "Name", brew_table[i].name,
+                         "Spell Number", skill_table[slot_lookup(brew_table[i].sn)].name,
+                         "Min Level", brew_table[i].level,
+                         "Potion Level", brew_table[i].plevel,
+                         "Diff", brew_table[i].diff,
+                         "Components", brew_table[i].component[0], brew_table[i].component[1], brew_table[i].component[2], brew_table[i].component[3], brew_table[i].component[4],
+                         "Mage Only", brew_table[i].mage ? "TRUE" : "FALSE",
+                         "Imm Only", brew_table[i].immonly ? "TRUE" : "FALSE",
+                         "Color", brew_table[i].color);
+
 
                     send_to_char(buf,ch);
 
@@ -166,22 +222,52 @@ void do_tlookup(CHAR_DATA *ch, char *argument)
 /* Craft table */
     if ( !str_prefix( arg, "craft" ) )
     {
+        if (arg1[0] == '\0') {
+            sprintf(buf, "All craftable items:\r\n          ");
+            int counter = 0;
+            for (i = 0; crafted_item_table[i].name != NULL; i++) {
+                sprintf(buf + strlen(buf), "%-20s", crafted_item_table[i].name);
+                counter++;
+                if (counter == 3) {
+                    strcat(buf, "\r\n");
+                    send_to_char(buf, ch);
+                    sprintf(buf, "          "); // Indentation for subsequent lines
+                    counter = 0;
+                }
+            }
+            if (counter != 0) {
+                strcat(buf, "\r\n");
+                send_to_char(buf, ch);
+            }
+            return;
+        }
+
         for (i = 0; crafted_item_table[i].name != NULL; i++)
         {
             if (str_prefix(arg1, crafted_item_table[i].name) == 0)
             {
                 // Match found, display the information
-
-                    sprintf(buf,"Name: %s\r\nType: %s\r\n\VNUM: %d\r\nSkill: %d\r\nLevel: %d\r\nResource Type: %d\r\nComponents: %d %d %d %d %d\r\nSocket Types: %d %d %d %d %d\r\nBest Resource: %d %d %d %d %d %d %d %d %d %d\r\n",
-                    crafted_item_table[i].name,
-                    crafted_item_table[i].type,
-                    crafted_item_table[i].vnum,
-                    crafted_item_table[i].skill,
-                    crafted_item_table[i].lvl,
-                    crafted_item_table[i].resource_type,
-                    crafted_item_table[i].comp[0],crafted_item_table[i].comp[1],crafted_item_table[i].comp[2],crafted_item_table[i].comp[3],crafted_item_table[i].comp[4],
-                    crafted_item_table[i].socket[0],crafted_item_table[i].socket[1],crafted_item_table[i].socket[2],crafted_item_table[i].socket[3],crafted_item_table[i].socket[4],
-                    crafted_item_table[i].best[0],crafted_item_table[i].best[1],crafted_item_table[i].best[2],crafted_item_table[i].best[3],crafted_item_table[i].best[4],crafted_item_table[i].best[5],crafted_item_table[i].best[6],crafted_item_table[i].best[7],crafted_item_table[i].best[8],crafted_item_table[i].best[9]);
+                    pObjIndex = get_obj_index( crafted_item_table[i].vnum );
+                    pObjIndex2 = get_obj_index( crafted_item_table[i].resource_type );
+                    sprintf(buf,"%-20s : %s\r\n"
+                                "%-20s : %s\r\n"
+                                "%-20s : [%5d] %s\r\n"
+                                "%-20s : %s\r\n"
+                                "%-20s : %d\r\n"
+                                "%-20s : [%5d] %s\r\n"
+                                "%-20s : %d %d %d %d %d\r\n"
+                                "%-20s : %d %d %d %d %d\r\n"
+                                "%-20s : %d %d %d %d %d %d %d %d %d %d\r\n",
+                    
+                    "Name", crafted_item_table[i].name,
+                    "Type", crafted_item_table[i].type,
+                    "VNUM", crafted_item_table[i].vnum, pObjIndex->short_descr,
+                    "Skill", sec_abil_table[crafted_item_table[i].skill].name,
+                    "Level", crafted_item_table[i].lvl,
+                    "Resource Type", crafted_item_table[i].resource_type, pObjIndex2->short_descr,
+                    "Components", crafted_item_table[i].comp[0],crafted_item_table[i].comp[1],crafted_item_table[i].comp[2],crafted_item_table[i].comp[3],crafted_item_table[i].comp[4],
+                    "Socket Types", crafted_item_table[i].socket[0],crafted_item_table[i].socket[1],crafted_item_table[i].socket[2],crafted_item_table[i].socket[3],crafted_item_table[i].socket[4],
+                    "Best Resource", crafted_item_table[i].best[0],crafted_item_table[i].best[1],crafted_item_table[i].best[2],crafted_item_table[i].best[3],crafted_item_table[i].best[4],crafted_item_table[i].best[5],crafted_item_table[i].best[6],crafted_item_table[i].best[7],crafted_item_table[i].best[8],crafted_item_table[i].best[9]);
 
                     send_to_char(buf,ch);
 
@@ -197,7 +283,7 @@ void do_tlookup(CHAR_DATA *ch, char *argument)
 
     else
         {
-            send_to_char("No such table. Available options: liquid, brew, craft\r\n",ch);
+            send_to_char("No such table. Available options: brew, craft, liquid\r\n",ch);
             return;
         }
 }

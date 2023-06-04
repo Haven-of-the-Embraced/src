@@ -5542,7 +5542,7 @@ void do_shred(CHAR_DATA *ch, char *argument)
         damagesuccess = 0;
 
     d10_damage(ch, victim, damagesuccess, ch->level * 2 / 3, gsn_shred, DAM_SLASH, DEFENSE_FULL, TRUE, TRUE);
-    if (dicesuccess > 4)
+    if (ch->fighting && dicesuccess > 4)
     {
         act("With quick thinking, you turn and shred a second time at $N!", ch, NULL, victim, TO_CHAR);
         if (!IS_NPC(victim))

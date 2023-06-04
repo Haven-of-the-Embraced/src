@@ -7018,7 +7018,7 @@ void do_fleshcraft(CHAR_DATA *ch, char *argument)
         if(!str_prefix(argument,"male"))
         {
             send_to_char("You alter your sex to be male.\n\r",ch);
-            act( "$n slowly alters its sex to male.", ch, NULL, NULL, TO_NOTVICT );
+            act( "$n slowly alters their sex to male.", ch, NULL, NULL, TO_NOTVICT );
             ch->sex = 1;
             ch->pcdata->true_sex = 1;
             ch->pblood -= 50;
@@ -7027,22 +7027,22 @@ void do_fleshcraft(CHAR_DATA *ch, char *argument)
         if(!str_prefix(argument,"female"))
         {
             send_to_char("You alter your sex to be female.\n\r",ch);
-            act( "$n slowly alters its sex to female.", ch, NULL, NULL, TO_NOTVICT );
+            act( "$n slowly alters their sex to female.", ch, NULL, NULL, TO_NOTVICT );
             ch->sex = 2;
             ch->pcdata->true_sex = 2;
             ch->pblood -= 50;
             return;
         }
-        if(!str_prefix(argument,"it"))
+        if(!str_prefix(argument,"none"))
         {
-            send_to_char("You alter your sex to be an it.\n\r",ch);
-            act( "$n slowly alters its sex to it.", ch, NULL, NULL, TO_NOTVICT );
+            send_to_char("You rid your form of the simplistic concept of 'sex'.\n\r",ch);
+            act( "$n slowly alters their self to be asexual.", ch, NULL, NULL, TO_NOTVICT );
             ch->sex = 0;
             ch->pcdata->true_sex = 0;
             ch->pblood -= 50;
             return;
         }
-        send_to_char("That is not a proper sex! Choose male, female or it.\n\r",ch);
+        send_to_char("That is not a proper sex! Choose male, female or none.\n\r",ch);
         return;
     }
     if(ch->pet != NULL)

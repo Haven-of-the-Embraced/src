@@ -3261,9 +3261,9 @@ void fix_sex(CHAR_DATA *ch)
 void act_new( const char *format, CHAR_DATA *ch, const void *arg1,
               const void *arg2, int type, int min_pos, bool channel )
 {
-    static char * const he_she  [] = { "it",  "he",  "she" };
-    static char * const him_her [] = { "it",  "him", "her" };
-    static char * const his_her [] = { "its", "his", "her" };
+    static char * const he_she  [] = { "they",  "he",  "she" };
+    static char * const him_her [] = { "them",  "him", "her" };
+    static char * const his_her [] = { "their", "his", "her" };
 
     CHAR_DATA           *to;
     CHAR_DATA           *vch = ( CHAR_DATA * ) arg2;
@@ -3481,9 +3481,9 @@ void act_new( const char *format, CHAR_DATA *ch, const void *arg1,
 void act_new2( const char *format, CHAR_DATA *ch, const void *arg1,
               const void *arg2, int type, int min_pos )
 {
-    static char * const he_she  [] = { "it",  "he",  "she" };
-    static char * const him_her [] = { "it",  "him", "her" };
-    static char * const his_her [] = { "its", "his", "her" };
+    static char * const he_she  [] = { "they",  "he",  "she" };
+    static char * const him_her [] = { "them",  "him", "her" };
+    static char * const his_her [] = { "their", "his", "her" };
 
     CHAR_DATA           *to;
     CHAR_DATA           *vch = ( CHAR_DATA * ) arg2;

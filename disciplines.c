@@ -6244,7 +6244,7 @@ void do_taste( CHAR_DATA *ch, char *argument )
     if (tasteroll >= 2)
     {
       sprintf(buf, "Based upon the blood, %s state of health indicates roughly %d hit points remain.\n\r",
-      victim->sex == 0 ? "its" : victim->sex == 1 ? "his" : "her", victim->hit);
+      victim->sex == 0 ? "their" : victim->sex == 1 ? "his" : "her", victim->hit);
       send_to_char(buf,ch);
       if (is_affected(victim, gsn_poison))
         act("$N's blood has the slight taste of poison coursing through it.", ch, NULL, victim, TO_CHAR);
@@ -6253,12 +6253,12 @@ void do_taste( CHAR_DATA *ch, char *argument )
     if (tasteroll >= 2 && !IS_NPC(victim) && IS_VAMP(victim))
     {
       sprintf(buf, "Approximately %d Blood Points remain in %s system, and ",
-      victim->pblood / 10, victim->sex == 0 ? "its" : victim->sex == 1 ? "his" : "her");
+      victim->pblood / 10, victim->sex == 0 ? "their" : victim->sex == 1 ? "his" : "her");
       send_to_char(buf,ch);
       if (victim->race == race_lookup("vampire") || victim->race == race_lookup("methuselah"))
       {
-        sprintf(buf, "%s is a member of the %s Generation.\n\r",
-          victim->sex == 0 ? "it" : victim->sex == 1 ? "he" : "she",
+        sprintf(buf, "%s a member of the %s Generation.\n\r",
+          victim->sex == 0 ? "they are" : victim->sex == 1 ? "he is" : "she is",
           victim->pcdata->csgeneration == 1 ? "First" : victim->pcdata->csgeneration == 2 ? "Second" : victim->pcdata->csgeneration == 3 ? "Third" :
           victim->pcdata->csgeneration == 4 ? "Fourth" : victim->pcdata->csgeneration == 5 ? "Fifth" : victim->pcdata->csgeneration == 6 ? "Sixth" : victim->pcdata->csgeneration == 7 ? "Seventh" :
           victim->pcdata->csgeneration == 8 ? "Eighth" : victim->pcdata->csgeneration == 9 ? "Ninth" : victim->pcdata->csgeneration == 10 ? "Tenth" : victim->pcdata->csgeneration == 11 ? "Eleventh" :
@@ -6267,8 +6267,8 @@ void do_taste( CHAR_DATA *ch, char *argument )
       }
       if (victim->race == race_lookup("ghoul"))
       {
-        sprintf(buf, "%s is under a %s Blood Bond.\n\r",
-          victim->sex == 0 ? "it" : victim->sex == 1 ? "he" : "she",
+        sprintf(buf, "%s under a %s Blood Bond.\n\r",
+          victim->sex == 0 ? "they are" : victim->sex == 1 ? "he is" : "she is",
           victim->bonded == 0 ? "Nonexistant" : victim->bonded == 1 ? "Minor" : victim->bonded == 2 ? "Moderate" : victim->bonded == 3 ? "Complete" : "Complete");
         send_to_char(buf, ch);
       }
@@ -6277,8 +6277,8 @@ void do_taste( CHAR_DATA *ch, char *argument )
 
     if (tasteroll >= 3 && !IS_NPC(victim) && IS_VAMP(victim))
     {
-      sprintf(buf, "%s is %s Clan %s.\n\r",
-      victim->sex == 0 ? "It" : victim->sex == 1 ? "He" : "She",
+      sprintf(buf, "%s %s Clan %s.\n\r",
+      victim->sex == 0 ? "They are" : victim->sex == 1 ? "He is" : "She is",
       victim->race == race_lookup("ghoul") ? "in service to" : "a member of",
       capitalize(clan_table[victim->clan].name));
       send_to_char(buf,ch);
@@ -6286,7 +6286,7 @@ void do_taste( CHAR_DATA *ch, char *argument )
       {
         sprintf(buf, "%s's blood seems to have a mystical potency as it flows through %s body.\n\r",
         IS_NPC(victim) ? victim->short_descr : victim->name,
-        victim->sex == 0 ? "its" : victim->sex == 1 ? "his" : "her", victim->gen);
+        victim->sex == 0 ? "their" : victim->sex == 1 ? "his" : "her", victim->gen);
         send_to_char(buf,ch);
       }
     }
@@ -6294,7 +6294,7 @@ void do_taste( CHAR_DATA *ch, char *argument )
     if (tasteroll >= 4 && !IS_NPC(victim) && IS_VAMP(victim))
     {
       sprintf(buf, "Tracing back the blood lineage, %s %s is %s.\n\r",
-      victim->sex == 0 ? "its" : victim->sex == 1 ? "his" : "her",
+      victim->sex == 0 ? "their" : victim->sex == 1 ? "his" : "her",
       victim->race == race_lookup("ghoul") ? "domitor" : "sire",
       victim->race == race_lookup("ghoul") ? victim->vamp_master : victim->sire);
       send_to_char(buf,ch);
@@ -6302,7 +6302,7 @@ void do_taste( CHAR_DATA *ch, char *argument )
       {
         sprintf(buf, "%s's blood seems to have a mystical potency as it flows through %s body.\n\r",
         IS_NPC(victim) ? capitalize(victim->short_descr) : victim->name,
-        victim->sex == 0 ? "its" : victim->sex == 1 ? "his" : "her", victim->gen);
+        victim->sex == 0 ? "their" : victim->sex == 1 ? "his" : "her", victim->gen);
         send_to_char(buf,ch);
       }
     }

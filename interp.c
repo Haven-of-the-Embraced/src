@@ -52,8 +52,8 @@ extern CMD_DATA * cmd_last;
 #define LOG_FILE        3
 
 extern const struct cmdfun_type cmdfun_table[];
-extern const struct size_type cat_table[];
-extern const struct size_type log_table[];
+extern const struct name_type cat_table[];
+extern const struct name_type log_table[];
 char *dofuname args ((CMD_DATA *cmd ) );
 CMD_DATA *new_cmd args( (void) );
 void free_cmd args( (CMD_DATA *cmd) );
@@ -1380,7 +1380,7 @@ void do_cmdlist(CHAR_DATA *ch, char *argument )
     return;
 }
 
-const struct size_type cat_table[] =
+const struct name_type cat_table[] =
 {
     { "None" },
     { "Config" },
@@ -1393,7 +1393,7 @@ const struct size_type cat_table[] =
     { NULL }
 };
 
-const struct size_type log_table[] =
+const struct name_type log_table[] =
 {
     { "Normal" },
     { "Always" },

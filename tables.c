@@ -179,7 +179,7 @@ const struct position_type position_table[] =
 };
 
 /* for sex */
-const struct sex_type sex_table[] =
+const struct name_type sex_table[] =
 {
    {    "none"      },
    {    "male"      },
@@ -189,7 +189,7 @@ const struct sex_type sex_table[] =
 };
 
 /* for sizes */
-const struct size_type size_table[] =
+const struct name_type size_table[] =
 {
     {   "tiny"      },
     {   "small"     },
@@ -1422,7 +1422,7 @@ const struct    gift_type   gift_table  [MAX_GIFTS_CODED]  =
     {   NULL,                        	0,       0,  0,     0,      0,          0,      0,   0}
     };
 
-const struct    cs_type ability_table[30] =
+const struct    name_type ability_table[30] =
 {
     {   "expression"        },
     {   "alertness"     },
@@ -1491,7 +1491,7 @@ const struct    cs_type2 sec_abil_table[30] =
     {   "none",         0, 0, 0, 0, 0,  1}
 };
 
-const struct    cs_type attribute_table[9] =
+const struct    name_type attribute_table[9] =
 {
     {   "strength"      },
     {   "dexterity"     },
@@ -1504,7 +1504,7 @@ const struct    cs_type attribute_table[9] =
     {   "wits"          }
 };
 
-const struct    disc_type   sphere_table [MAX_SPHERE+1] =
+const struct    name_type   sphere_table [MAX_SPHERE+1] =
 {
     {  "NULL"       },
     {"correspondence"},
@@ -1519,7 +1519,7 @@ const struct    disc_type   sphere_table [MAX_SPHERE+1] =
 };
 
 
-const struct    disc_type   disc_table  [MAX_DISC]  =
+const struct    name_type   disc_table  [MAX_DISC]  =
 {
     {   "NULL"      },
     {   "Animalism" },
@@ -1691,7 +1691,7 @@ const struct flag_type clan_flags[] = {
 #define DIR_WEST              3
 #define DIR_UP                4
 #define DIR_DOWN              5*/
-const struct dir_type dir_table[] = {
+const struct name_type dir_table[] = {
 	{"north"},
 	{"east"},
 	{"south"},

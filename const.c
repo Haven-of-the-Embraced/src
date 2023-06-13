@@ -1991,7 +1991,7 @@ Total (48) */
 
     { "vigor",       { 10, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,     TAR_CHAR_SELF,      POS_STANDING,
-    &gsn_vigor,         SLOT(0),     0, 12, "",         "You feel yourself slowing down.", "" },
+    &gsn_vigor,         SLOT(0),     0, 12, "",         "Your enhanced speed and agility fades, leaving you feeling clumsy and slow.", "" },
 
     { "waylay",     { 55, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,     TAR_CHAR_SELF,      POS_STANDING,

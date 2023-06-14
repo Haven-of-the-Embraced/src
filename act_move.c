@@ -1097,7 +1097,7 @@ void do_pick( CHAR_DATA *ch, char *argument )
 {
     char arg[MAX_INPUT_LENGTH];
     CHAR_DATA *gch;
-    OBJ_DATA *obj;
+    OBJ_DATA *obj, *lockpick;
     int door;
     int pickdiff = 6;
     int picksuccess;
@@ -1127,6 +1127,12 @@ void do_pick( CHAR_DATA *ch, char *argument )
         act( "$N is standing too close to the lock.", ch, NULL, gch, TO_CHAR );
         return;
       }
+    }
+
+    if ((obj = get_consumable(ch, ITEM_LOCKPICK)) == NULL)
+    {
+        send_to_char("You do not have any lockpicks readily available.\n\r", ch);
+        return;
     }
 
     if ( ( door = find_door( ch, arg ) ) >= 0 )

@@ -1129,7 +1129,7 @@ void do_pick( CHAR_DATA *ch, char *argument )
       }
     }
 
-    if ((obj = get_consumable(ch, ITEM_LOCKPICK)) == NULL)
+    if ((lockpick = get_consumable(ch, ITEM_LOCKPICK)) == NULL)
     {
         send_to_char("You do not have any lockpicks readily available.\n\r", ch);
         return;
@@ -1158,10 +1158,13 @@ void do_pick( CHAR_DATA *ch, char *argument )
     if ( IS_SET(pexit->exit_info, EX_INFURIATING) )
       pickdiff = pickdiff + 2;
 
+    picksuccess = godice(get_attribute(ch,DEXTERITY)+ch->csabilities[CSABIL_LEGERDEMAIN],pickdiff);
+
     if ( picksuccess < 0 )
     {
-      send_to_char( "Your fumbling causes the lock to be unpickable.\n\r", ch);
+      send_to_char( "You break your lockpick, causing the lock to be unpickable.\n\r", ch);
       ADD_BIT(pexit->exit_info, EX_PICKPROOF);
+      extract_obj(lockpick);
       return;
     }
 
@@ -1178,15 +1181,14 @@ void do_pick( CHAR_DATA *ch, char *argument )
     check_improve(ch,gsn_pick_lock,TRUE,4);
 
     /* pick the other side */
-    if ( ( to_room   = pexit->u1.to_room            ) != NULL
-    &&   ( pexit_rev = to_room->exit[rev_dir[door]] ) != NULL
-    &&   pexit_rev->u1.to_room == ch->in_room )
-    {
+      if ( ( to_room   = pexit->u1.to_room            ) != NULL
+      &&   ( pexit_rev = to_room->exit[rev_dir[door]] ) != NULL
+      &&   pexit_rev->u1.to_room == ch->in_room )
+      {
         REMOVE_BIT( pexit_rev->exit_info, EX_LOCKED );
         return;
+      }
     }
-    }
-
 
         if ( ( obj = get_obj_here( ch, NULL, arg ) ) != NULL )
         {
@@ -1195,35 +1197,40 @@ void do_pick( CHAR_DATA *ch, char *argument )
         {
             if (!IS_SET(obj->value[1],EX_ISDOOR))
             {
-            send_to_char("You can't do that.\n\r",ch);
-            return;
+              send_to_char("You can't do that.\n\r",ch);
+              return;
             }
 
             if (!IS_SET(obj->value[1],EX_CLOSED))
             {
-            send_to_char("It's not closed.\n\r",ch);
-            return;
+              send_to_char("It's not closed.\n\r",ch);
+              return;
             }
 
             if (obj->value[4] < 0)
             {
-            send_to_char("It can't be unlocked.\n\r",ch);
-            return;
+              send_to_char("It can't be unlocked.\n\r",ch);
+              return;
             }
 
             if (IS_SET(obj->value[1],EX_PICKPROOF))
             {
-            send_to_char("You failed.\n\r",ch);
-            return;
+              send_to_char("You failed.\n\r",ch);
+              return;
             }
+
+            picksuccess = godice(get_attribute(ch,DEXTERITY)+ch->csabilities[CSABIL_LEGERDEMAIN],pickdiff);
 
             if (picksuccess < 0)
             {
+              act("Your fumbling causes you to break your lockpick.",ch,obj,NULL,TO_CHAR);
+              extract_obj(lockpick);
               return;
             }
 
             if (picksuccess == 0)
             {
+              act("You fail to pick the lock on $p.", ch, obj, NULL, TO_CHAR);
               return;
             }
 
@@ -1233,10 +1240,6 @@ void do_pick( CHAR_DATA *ch, char *argument )
             check_improve(ch,gsn_pick_lock,TRUE,4);
             return;
         }
-
-
-
-
 
         /* 'pick object' */
         if ( obj->item_type != ITEM_CONTAINER )
@@ -1249,6 +1252,21 @@ void do_pick( CHAR_DATA *ch, char *argument )
             { send_to_char( "It's already unlocked.\n\r",  ch ); return; }
         if ( IS_SET(obj->value[1], CONT_PICKPROOF) )
             { send_to_char( "You failed.\n\r",             ch ); return; }
+
+        picksuccess = godice(get_attribute(ch,DEXTERITY)+ch->csabilities[CSABIL_LEGERDEMAIN],pickdiff);
+
+        if (picksuccess < 0)
+        {
+          act("Your fumbling causes you to break your lockpick.",ch,obj,NULL,TO_CHAR);
+          extract_obj(lockpick);
+          return;
+        }
+
+        if (picksuccess == 0)
+        {
+          act("You fail to pick the lock on $p.", ch, obj, NULL, TO_CHAR);
+          return;
+        }
 
         REMOVE_BIT(obj->value[1], CONT_LOCKED);
             act("You pick the lock on $p.",ch,obj,NULL,TO_CHAR);

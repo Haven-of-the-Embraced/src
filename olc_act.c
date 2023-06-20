@@ -3217,18 +3217,18 @@ bool set_obj_values( CHAR_DATA *ch, OBJ_INDEX_DATA *pObj, int value_num, char *a
          do_help( ch, "ITEM_LOCKPICK" );
          return FALSE;
        case 0:
-        if (set_value < 0 || set_value > 100)
+        if (set_value < 0 || set_value > 10)
         {
-          send_to_char("Lockpick Durability is between 0 and 100.\n\r", ch);
+          send_to_char("Lockpick Durability is between 0 and 10.\n\r", ch);
           break;
         }
          send_to_char( "LOCKPICK DURABILITY SET.\n\r\n\r", ch );
          pObj->value[0] = atoi( argument );
          break;
        case 1:
-        if (set_value < -2 || set_value > 2)
+        if (set_value < -1 || set_value > 1)
         {
-          send_to_char("Lockpick Difficulty is between -2 and 2.\n\r", ch);
+          send_to_char("Lockpick Difficulty is between -1 and 1.\n\r", ch);
           break;
         }
         send_to_char( "LOCKPICK DIFFICULTY SET.\n\r\n\r", ch );

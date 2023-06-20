@@ -1135,6 +1135,8 @@ void do_pick( CHAR_DATA *ch, char *argument )
         return;
     }
 
+    pickdiff = pickdiff + lockpick->value[1];
+
     if ( ( door = find_door( ch, arg ) ) >= 0 )
     {
     /* 'pick door' */
@@ -1163,7 +1165,7 @@ void do_pick( CHAR_DATA *ch, char *argument )
     if ( picksuccess < 0 )
     {
       send_to_char( "You break your lockpick, causing the lock to be unpickable.\n\r", ch);
-      ADD_BIT(pexit->exit_info, EX_PICKPROOF);
+      SET_BIT(pexit->exit_info, EX_PICKPROOF);
       extract_obj(lockpick);
       return;
     }
@@ -1172,6 +1174,7 @@ void do_pick( CHAR_DATA *ch, char *argument )
     {
       send_to_char( "You failed.\n\r", ch);
       check_improve(ch,gsn_pick_lock,FALSE,4);
+      use_consumable(ch, lockpick, -2);
       return;
     }
 
@@ -1179,6 +1182,7 @@ void do_pick( CHAR_DATA *ch, char *argument )
     send_to_char( "*Click*\n\r", ch );
     act( "$n picks the $d.", ch, NULL, pexit->keyword, TO_ROOM );
     check_improve(ch,gsn_pick_lock,TRUE,4);
+    use_consumable(ch, lockpick, -1);
 
     /* pick the other side */
       if ( ( to_room   = pexit->u1.to_room            ) != NULL
@@ -1231,6 +1235,7 @@ void do_pick( CHAR_DATA *ch, char *argument )
             if (picksuccess == 0)
             {
               act("You fail to pick the lock on $p.", ch, obj, NULL, TO_CHAR);
+              use_consumable(ch, lockpick, -2);
               return;
             }
 
@@ -1238,6 +1243,7 @@ void do_pick( CHAR_DATA *ch, char *argument )
             act("You pick the lock on $p.",ch,obj,NULL,TO_CHAR);
             act("$n picks the lock on $p.",ch,obj,NULL,TO_ROOM);
             check_improve(ch,gsn_pick_lock,TRUE,4);
+            use_consumable(ch, lockpick, -1);
             return;
         }
 
@@ -1265,6 +1271,7 @@ void do_pick( CHAR_DATA *ch, char *argument )
         if (picksuccess == 0)
         {
           act("You fail to pick the lock on $p.", ch, obj, NULL, TO_CHAR);
+          use_consumable(ch, lockpick, -2);
           return;
         }
 
@@ -1272,13 +1279,10 @@ void do_pick( CHAR_DATA *ch, char *argument )
             act("You pick the lock on $p.",ch,obj,NULL,TO_CHAR);
             act("$n picks the lock on $p.",ch,obj,NULL,TO_ROOM);
         check_improve(ch,gsn_pick_lock,TRUE,4);
+        use_consumable(ch, lockpick, -1);
         return;
         }
-
-
 }
-
-
 
 
 void do_stand( CHAR_DATA *ch, char *argument )

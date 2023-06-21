@@ -2419,7 +2419,6 @@ void rote_paradoxward(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *o
 
 void rote_channelquintessence(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
 {
-
   if (success < 0)
   {
     act("A surge of {Ywild Quintessence{x rips through $p's Pattern, destroying it.", ch, obj, NULL, TO_CHAR);
@@ -2439,6 +2438,14 @@ void rote_channelquintessence(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ
     act("There doesn't seem to be any mystical energy to pull from $p.", ch, obj, NULL, TO_CHAR);
     return;
   }
+
+  act("Weaving and tugging at the raw energy stored in $p, you absorb it into yourself.", ch, obj, NULL, TO_CHAR);
+  act("With a bright flash, $p explodes in a ball of {Yenergy{x.", ch, obj, NULL, TO_ROOM);
+
+  ch->quintessence += UMIN(success * 5, obj->level / 2);
+  if (ch->quintessence > ch->max_quintessence)
+    ch->quintessence = ch->max_quintessence;
+  extract_obj(obj);
 
   return;
 }

@@ -2251,6 +2251,11 @@ void rote_quintessencebolt(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DA
     return;
 }
 
+void rote_channelquintessence(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
+{
+  return;
+}
+
 void rote_spiritsight(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
 {
     AFFECT_DATA af;

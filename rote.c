@@ -2282,7 +2282,6 @@ void rote_quintessencebolt(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DA
     return;
 }
 
-
 void rote_imbueobject(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
 {
   AFFECT_DATA af;
@@ -2415,6 +2414,11 @@ void rote_paradoxward(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *o
   af.bitvector = 0;
   affect_to_char( ch, &af );
 
+  return;
+}
+
+void rote_channelquintessence(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
+{
   return;
 }
 

@@ -2419,6 +2419,27 @@ void rote_paradoxward(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *o
 
 void rote_channelquintessence(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
 {
+
+  if (success < 0)
+  {
+    act("A surge of {Ywild Quintessence{x rips through $p's Pattern, destroying it.", ch, obj, NULL, TO_CHAR);
+    act("With a bright flash, $p explodes in a ball of {Yenergy{x.", ch, obj, NULL, TO_NOTVICT);
+    extract_obj(obj);
+    return;
+  }
+
+  if (success == 0)
+  {
+    act("You try to draw raw Quintessence from $p, but the energy remains in place.", ch, obj, NULL, TO_CHAR);
+    return;
+  }
+
+  if(!IS_OBJ_STAT(obj,ITEM_MAGIC))
+  {
+    act("There doesn't seem to be any mystical energy to pull from $p.", ch, obj, NULL, TO_CHAR);
+    return;
+  }
+
   return;
 }
 

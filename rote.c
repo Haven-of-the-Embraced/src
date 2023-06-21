@@ -2440,7 +2440,7 @@ void rote_channelquintessence(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ
   }
 
   act("Weaving and tugging at the raw energy stored in $p, you absorb it into yourself.", ch, obj, NULL, TO_CHAR);
-  act("With a bright flash, $p explodes in a ball of {Yenergy{x.", ch, obj, NULL, TO_ROOM);
+  act("In a flash of color, $p dissipates into {Yenergy{x and leaves nothing but motes of light behind.", ch, obj, NULL, TO_ROOM);
 
   ch->quintessence += UMIN(success * 5, obj->level / 2);
   if (ch->quintessence > ch->max_quintessence)

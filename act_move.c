@@ -1117,7 +1117,17 @@ void do_pick( CHAR_DATA *ch, char *argument )
         return;
     }
 
-    WAIT_STATE( ch, skill_table[gsn_pick_lock].beats );
+    if (IS_AFFECTED(ch, AFF_SHIFT))
+    {
+      send_to_char("You cannot properly hold a lockpick in an altered form.\n\r", ch);
+      return;
+    }
+
+    if ((lockpick = get_consumable(ch, ITEM_LOCKPICK)) == NULL)
+    {
+        send_to_char("You do not have any lockpicks readily available.\n\r", ch);
+        return;
+    }
 
     /* look for guards */
     for ( gch = ch->in_room->people; gch; gch = gch->next_in_room )
@@ -1129,12 +1139,7 @@ void do_pick( CHAR_DATA *ch, char *argument )
       }
     }
 
-    if ((lockpick = get_consumable(ch, ITEM_LOCKPICK)) == NULL)
-    {
-        send_to_char("You do not have any lockpicks readily available.\n\r", ch);
-        return;
-    }
-
+    WAIT_STATE( ch, skill_table[gsn_pick_lock].beats );
     pickdiff = pickdiff + lockpick->value[1];
 
     if ( ( door = find_door( ch, arg ) ) >= 0 )
@@ -1183,6 +1188,7 @@ void do_pick( CHAR_DATA *ch, char *argument )
     act( "$n picks the $d.", ch, NULL, pexit->keyword, TO_ROOM );
     check_improve(ch,gsn_pick_lock,TRUE,4);
     use_consumable(ch, lockpick, -1);
+    gain_exp(ch, picksuccess);
 
     /* pick the other side */
       if ( ( to_room   = pexit->u1.to_room            ) != NULL
@@ -1244,6 +1250,7 @@ void do_pick( CHAR_DATA *ch, char *argument )
             act("$n picks the lock on $p.",ch,obj,NULL,TO_ROOM);
             check_improve(ch,gsn_pick_lock,TRUE,4);
             use_consumable(ch, lockpick, -1);
+            gain_exp(ch, picksuccess);
             return;
         }
 
@@ -1280,6 +1287,7 @@ void do_pick( CHAR_DATA *ch, char *argument )
             act("$n picks the lock on $p.",ch,obj,NULL,TO_ROOM);
         check_improve(ch,gsn_pick_lock,TRUE,4);
         use_consumable(ch, lockpick, -1);
+        gain_exp(ch, picksuccess);
         return;
         }
 }

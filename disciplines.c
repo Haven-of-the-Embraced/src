@@ -6973,13 +6973,11 @@ return;
 
 void do_fleshcraft(CHAR_DATA *ch, char *argument)
 {
-    char arg [MAX_INPUT_LENGTH];
+    char arg1[MAX_INPUT_LENGTH] arg2[MAX_INPUT_LENGTH];
     char buf[MAX_STRING_LENGTH];
     CHAR_DATA *mob;
     AFFECT_DATA af;
 
-
-    argument = one_argument( argument, arg );
 
     if(IS_NPC(ch)) return;
 
@@ -6989,22 +6987,27 @@ void do_fleshcraft(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if(ch->pcdata->discipline[VICISSITUDE] < 2)
-    {
-        send_to_char( "You are not skilled enough in Vicissitude to perform fleshcraft.\n\r", ch );
-        return;
-    }
-
-
+    argument = one_argument( argument, arg1 );
+    argument = one_argument( argument, arg2 );
 
     if ( IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
     {
         send_to_char("Your blood curse prevents it!\n\r" ,ch);
         return;
     }
+
+    if (IS_NULLSTR(arg1) || IS_NULLSTR(arg2))
+    {
+		sendch("Syntax:\n\r", ch);
+		sendch("fleshcraft sex <male/female/none>                 -Alter your own sex\n\r", ch);
+		sendch("fleshcraft hellhound <victim>                     -Turn a canine MOB into a hellhound\n\r", ch);
+		sendch("fleshcraft szlachta <victim>                      -Turn a human MOB into a Szlactha Warghoul\n\r", ch);
+		sendch("fleshcraft vozhd <victim>                         -Turn a human MOB into a Vohzd Warghoul\n\r", ch);
+		return;
+    }
     if(!str_prefix(arg,"sex"))
     {
-        if(ch->pcdata->discipline[VICISSITUDE] < 5)
+        if(ch->pcdata->discipline[VICISSITUDE] < 2)
         {
             send_to_char("You are not skilled enough in fleshcrafting to alter yourself to that extent.\n\r",ch);
             return;
@@ -7057,7 +7060,7 @@ void do_fleshcraft(CHAR_DATA *ch, char *argument)
     }
     if(!IS_NPC(mob))
     {
-        send_to_char("You can't alter that!\n\r",ch);
+        send_to_char("You can only mold the flesh of living creatures.\n\r",ch);
         return;
     }
 
@@ -7074,12 +7077,12 @@ void do_fleshcraft(CHAR_DATA *ch, char *argument)
         if(mob->race != race_lookup("wolf") &&
                 mob->race != race_lookup("dog"))
         {
-            send_to_char("This must be preformed upon a Canine.\n\r",ch);
+            send_to_char("This must be performed upon a Canine.\n\r",ch);
             return;
         }
         if(ch->pblood-50 < 10)
         {
-            send_to_char("You do not have enough blood to alter this person's form.\n\r",ch);
+            send_to_char("You do not have enough blood to alter this canine's form.\n\r",ch);
             return;
         }
         ch->pblood -= 50;
@@ -7120,7 +7123,7 @@ void do_fleshcraft(CHAR_DATA *ch, char *argument)
     {
         if(ch->pcdata->discipline[VICISSITUDE] < 3)
         {
-            send_to_char( "You are not skilled enough in Vicissitude to perform this fleshcrafting.\n\r", ch );
+            send_to_char( "You are not skilled enough in Vicissitude to craft a Szlachta.\n\r", ch );
             return;
         }
         if (mob->race != race_lookup("human") && mob->race != race_lookup("ghoul"))
@@ -7172,7 +7175,7 @@ void do_fleshcraft(CHAR_DATA *ch, char *argument)
     {
         if(ch->pcdata->discipline[VICISSITUDE] < 4)
         {
-            send_to_char( "You are not skilled enough in Vicissitude to perform this fleshcrafting.\n\r", ch );
+            send_to_char( "You are not skilled enough in Vicissitude to construct a monstrous Vozhd!\n\r", ch );
             return;
         }
 
@@ -7229,7 +7232,7 @@ void do_fleshcraft(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    send_to_char( "You may only fleshcraft someone into a ghoul.\n\r", ch );
+    send_to_char( "That manner of fleshcrafting is beyond your level of artistry.\n\r", ch );
     return;
 }
 

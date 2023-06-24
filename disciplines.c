@@ -6973,7 +6973,7 @@ return;
 
 void do_fleshcraft(CHAR_DATA *ch, char *argument)
 {
-    char arg1[MAX_INPUT_LENGTH] arg2[MAX_INPUT_LENGTH];
+    char arg1[MAX_INPUT_LENGTH], arg2[MAX_INPUT_LENGTH];
     char buf[MAX_STRING_LENGTH];
     CHAR_DATA *mob;
     AFFECT_DATA af;

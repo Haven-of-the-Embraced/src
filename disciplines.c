@@ -7005,7 +7005,7 @@ void do_fleshcraft(CHAR_DATA *ch, char *argument)
 		sendch("fleshcraft vozhd <victim>                         -Turn a human MOB into a Vohzd Warghoul\n\r", ch);
 		return;
     }
-    if(!str_prefix(arg,"sex"))
+    if(!str_prefix(arg1,"sex"))
     {
         if(ch->pcdata->discipline[VICISSITUDE] < 2)
         {
@@ -7018,7 +7018,7 @@ void do_fleshcraft(CHAR_DATA *ch, char *argument)
             return;
         }
         WAIT_STATE( ch, 100 );
-        if(!str_prefix(argument,"male"))
+        if(!str_prefix(arg2,"male"))
         {
             send_to_char("You alter your sex to be male.\n\r",ch);
             act( "$n slowly alters their sex to male.", ch, NULL, NULL, TO_NOTVICT );
@@ -7027,7 +7027,7 @@ void do_fleshcraft(CHAR_DATA *ch, char *argument)
             ch->pblood -= 50;
             return;
         }
-        if(!str_prefix(argument,"female"))
+        if(!str_prefix(arg2,"female"))
         {
             send_to_char("You alter your sex to be female.\n\r",ch);
             act( "$n slowly alters their sex to female.", ch, NULL, NULL, TO_NOTVICT );
@@ -7036,7 +7036,7 @@ void do_fleshcraft(CHAR_DATA *ch, char *argument)
             ch->pblood -= 50;
             return;
         }
-        if(!str_prefix(argument,"none"))
+        if(!str_prefix(arg2,"none"))
         {
             send_to_char("You rid your form of the simplistic concept of 'sex'.\n\r",ch);
             act( "$n slowly alters their self to be asexual.", ch, NULL, NULL, TO_NOTVICT );
@@ -7053,7 +7053,7 @@ void do_fleshcraft(CHAR_DATA *ch, char *argument)
         send_to_char( "You cannot control two creatures at once!\n\r",ch );
         return;
     }
-    if((mob = get_char_room( ch, NULL, argument )) == NULL)
+    if((mob = get_char_room( ch, NULL, arg2 )) == NULL)
     {
         send_to_char( "Fleshcraft whom?.\n\r", ch );
         return;
@@ -7072,7 +7072,7 @@ void do_fleshcraft(CHAR_DATA *ch, char *argument)
         send_to_char( "That creature is too strong for your fleshcraft.\n\r", ch );
         return;
     }
-    if ( !str_prefix(arg,"hellhound"))
+    if ( !str_prefix(arg1,"hellhound"))
     {
         if(mob->race != race_lookup("wolf") &&
                 mob->race != race_lookup("dog"))
@@ -7119,7 +7119,7 @@ void do_fleshcraft(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if ( !str_prefix( arg, "szlachta" ) )
+    if ( !str_prefix( arg1, "szlachta" ) )
     {
         if(ch->pcdata->discipline[VICISSITUDE] < 3)
         {
@@ -7171,7 +7171,7 @@ void do_fleshcraft(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if ( !str_prefix( arg, "vozhd" ) )
+    if ( !str_prefix( arg1, "vozhd" ) )
     {
         if(ch->pcdata->discipline[VICISSITUDE] < 4)
         {

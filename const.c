@@ -1246,8 +1246,8 @@ void cskill_update(CHAR_DATA *ch, bool show)
 
 const   struct  skill_type  skill_table [MAX_SKILL] =
 {
-// TOTAL SKILLS AS OF 6/25/23 =  435
-// MAX_SKILL INCREASED TO 440
+// TOTAL SKILLS AS OF 6/25/23 =  440
+// MAX_SKILL INCREASED TO 445
 /*
  * Magic spells.  Total (108)
  */
@@ -3071,7 +3071,7 @@ Total (3) */
     &gsn_empower,          SLOT( 0),        0,     24, "",  "Your mind seems to dim as the forces of reality wash away your clarity of thought.",   "" },
 
 //    --Prime--
-// Total (2)
+// Total (5)
     { "prime sense",		{ 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,	TAR_IGNORE,	POS_STANDING,
     &gsn_primesense,	SLOT( 0),	0,	24, "",	"The flow of Quintessence through reality fades from your vision.", ""},
@@ -3079,6 +3079,14 @@ Total (3) */
     { "imbue object",		{ 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,	TAR_OBJ_INV,	POS_STANDING,
     &gsn_imbueobject,	SLOT( 0),	0,	24, "",	"The Quintessence infused in your item flows back into the Tellurian.", ""},
+
+    { "wellspring", 		{ 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,	TAR_IGNORE,	POS_STANDING,
+    &gsn_wellspring,	SLOT( 0),	0,	24, "",	"Your body is ready to absorb large amounts of Quintessence again.", ""},
+
+    { "paradox ward", 		{ 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,	TAR_IGNORE,	POS_STANDING,
+    &gsn_paradoxward,	SLOT( 0),	0,	24, "",	"You are no longer countering the influx of Paradox.", ""},
 
 //    --Spirit--
 // Total (2)

@@ -2292,6 +2292,19 @@ void rote_imbueobject(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *o
   return;
 }
 
+void rote_wellspring(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
+{
+  AFFECT_DATA af;
+  return;
+}
+
+void rote_paradoxward(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
+{
+  AFFECT_DATA af;
+
+  return;
+}
+
 void rote_spiritsight(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
 {
     AFFECT_DATA af;

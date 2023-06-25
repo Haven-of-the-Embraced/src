@@ -1625,6 +1625,8 @@ const struct    rote_type   rote_table  [MAX_ROTE]  =
 		{		"Prime Sense",					rote_primesense,						0, 0, 0, 0, 0, 0, 1, 0, 0, TARGET_NONE, 1, 1, FALSE, FALSE},
     {   "Quintessence Bolt",    rote_quintessencebolt,      0, 0, 0, 0, 0, 0, 2, 0, 0, TARGET_CHAR, 2, 2, TRUE, TRUE},
     {   "Imbue Object",    			rote_imbueobject,			      0, 0, 0, 0, 0, 0, 3, 0, 0, TARGET_OBJ, 3, 3, TRUE, TRUE},
+		{   "Wellspring",	    			rote_wellspring,			      0, 0, 0, 0, 0, 0, 4, 0, 0, TARGET_NONE, 4, 4, TRUE, TRUE},
+		{   "Paradox Ward",    			rote_paradoxward,			      0, 0, 0, 0, 0, 0, 5, 0, 0, TARGET_NONE, 5, 5, TRUE, TRUE},
     {   "Spirit Sight",         rote_spiritsight,           0, 0, 0, 0, 0, 0, 0, 1, 0, TARGET_NONE, 1, 1, FALSE, FALSE},
     {   "Call Spirit",          rote_callspirit,            0, 0, 0, 0, 0, 0, 0, 2, 0, TARGET_NONE, 10, 2, TRUE, TRUE},
     {   "Step Sideways",        rote_stepsideways,          0, 0, 0, 0, 0, 0, 0, 3, 0, TARGET_NONE, 3, 3, TRUE, TRUE},

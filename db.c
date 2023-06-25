@@ -5054,6 +5054,7 @@ sh_int          gsn_refinematter;
 sh_int          gsn_watertowine;
 sh_int          gsn_empower;
 sh_int          gsn_primesense;
+sh_int          gsn_imbueobject;
 sh_int          gsn_timesense;
 sh_int          gsn_precognition;
 sh_int          gsn_timealteration;

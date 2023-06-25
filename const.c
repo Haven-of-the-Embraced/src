@@ -1246,7 +1246,7 @@ void cskill_update(CHAR_DATA *ch, bool show)
 
 const   struct  skill_type  skill_table [MAX_SKILL] =
 {
-// TOTAL SKILLS AS OF 4/24/23 =  434
+// TOTAL SKILLS AS OF 6/25/23 =  435
 // MAX_SKILL INCREASED TO 440
 /*
  * Magic spells.  Total (108)
@@ -3071,11 +3071,14 @@ Total (3) */
     &gsn_empower,          SLOT( 0),        0,     24, "",  "Your mind seems to dim as the forces of reality wash away your clarity of thought.",   "" },
 
 //    --Prime--
-// Total (1)
+// Total (2)
     { "prime sense",		{ 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,	TAR_IGNORE,	POS_STANDING,
     &gsn_primesense,	SLOT( 0),	0,	24, "",	"The flow of Quintessence through reality fades from your vision.", ""},
 
+    { "imbue object",		{ 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,	TAR_OBJ_INV,	POS_STANDING,
+    &gsn_imbueobject,	SLOT( 0),	0,	24, "",	"The Quintessence infused in your item flows back into the Tellurian.", ""},
 
 //    --Spirit--
 // Total (2)

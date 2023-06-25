@@ -2351,6 +2351,32 @@ void rote_paradoxward(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *o
 {
   AFFECT_DATA af;
 
+  if (success < 0)
+  {
+    send_to_char("Reality lashes back upon you, as a wave of Paradox fills your Pattern!"\n\r, ch);
+    ch->paradox += 5;
+    if (ch->quintessence + ch->paradox > ch->max_quintessence)
+      ch->quintessence = ch->max_quintessence - ch->paradox;
+    paradox_check(ch, TRUE);
+    return;
+  }
+
+  if (success == 0)
+  {
+    send_to_char("You strive to resist the effects of Paradox, but it is not so easily staved off.\n\r", ch);
+    return;
+  }
+
+  if (is_affected(ch, gsn_paradoxward))
+  {
+    send_to_char("You have already bulwarked yourself against Paradox.  Don't push your luck.\n\r", ch);
+    return;
+  }
+
+  send_to_char("You feel a layer of Primal energy covering your Pattern, resisting the inevitability of Paradox.\n\r", ch);
+
+  
+
   return;
 }
 

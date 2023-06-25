@@ -2295,6 +2295,26 @@ void rote_imbueobject(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *o
 void rote_wellspring(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
 {
   AFFECT_DATA af;
+
+  if (success < 0)
+  {
+    send_to_char("Depleted your own reserves, the Quintessence from your body wildly streams into the universe!\n\r", ch);
+    ch->quintessence = 0;
+    return;
+  }
+
+  if (success == 0)
+  {
+    send_to_char("You cannot seem to still your mind long enough to try and absorb any ambient Quintessence.\n\r", ch);
+    return;
+  }
+
+  if (ch->in_room->sector_type != SECT_NODE)
+  {
+    send_to_char("You must be in a place of Quintessential power to draw in ambient energy!\n\r", ch);
+    return;
+  }
+
   return;
 }
 

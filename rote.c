@@ -2256,6 +2256,28 @@ void rote_imbueobject(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *o
 {
   AFFECT_DATA af;
 
+  if (success < 0)
+  {
+    act("An excess amount of Quintessence rips through $p's Pattern.", ch, obj, NULL, TO_CHAR);
+    act("With a ripple of {Yenergy{x, $p explodes suddenly!", ch, obj, NULL, TO_ROOM);
+    extract_obj(obj);
+    return;
+  }
+
+  if (success == 0)
+  {
+    act("The Quintessence you try to imbue into $p goes wild, and dissipates into the world.", ch, obj, NULL, TO_CHAR);
+    return;
+  }
+
+  if (IS_OBJ_STAT(obj, ITEM_MAGIC))
+  {
+    act("You funnel more Quintessence into $p than it can hold.", ch, obj, NULL, TO_CHAR);
+    act("With a blast of energy, $p explodes violently!", ch, obj, NULL, TO_ROOM);
+    extract_obj(obj);
+    return;
+  }
+
   return;
 }
 

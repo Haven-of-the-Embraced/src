@@ -1611,6 +1611,8 @@ void do_examine( CHAR_DATA *ch, char *argument )
       send_to_char("()-----------------------=======ooooOOOOOOOOoooo=======-----------------------()\n\r",ch);
       sprintf( buf," |-- %s --|\n\r", center(room->name, 70, " "));
   	  send_to_char( buf, ch );
+      if ((ch->in_room->sector_type == SECT_NODE) && IS_AFFECTED(ch, AFF_DETECT_MAGIC))
+        send_to_char(" |         {Y*****  Mystical Energy  *****{x ebbs and flows freely here.          |\n\r", ch);
       send_to_char("()-----------------------=======ooooOOOOOOOOoooo=======-----------------------()\n\r",ch);
       send_to_char(" |  The surrounding area is ", ch);
        switch (room->sector_type)
@@ -1648,6 +1650,7 @@ void do_examine( CHAR_DATA *ch, char *argument )
               send_to_char("cold and freezing.                                | \n\r", ch);
               break;
          default:
+              send_to_char("indescribable.                                    | \n\r", ch);
               break;
        }
 
@@ -1699,7 +1702,12 @@ void do_examine( CHAR_DATA *ch, char *argument )
 	send_to_char("()-----------------------=======ooooOOOOOOOOoooo=======-----------------------()\n\r",ch);
    	sprintf( buf,"%s | --{x Level %3d  %s::{x  %s\n\r", condition, obj->level, condition, obj->short_descr);
 	send_to_char( buf, ch );
-    send_to_char( condition, ch );
+  if (IS_OBJ_STAT(obj, ITEM_MAGIC) && IS_AFFECTED(ch, AFF_DETECT_MAGIC))
+  {
+    sprintf(buf, "%s | --{x Mystical {YEnergy{x permeates %s.\n\r", condition, obj->short_descr);
+    send_to_char( buf, ch );
+  }
+  send_to_char( condition, ch );
 	send_to_char(" |-----------------------==============================-----------------------|{x\n\r",ch);
 	sprintf( buf,"%s | --{x Keywords: %s\n\r", condition, obj->name );
 	send_to_char( buf, ch );

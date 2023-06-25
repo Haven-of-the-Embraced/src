@@ -2252,13 +2252,13 @@ void rote_quintessencebolt(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DA
 }
 
 
-void rote_imbueobject(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj);
+void rote_imbueobject(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
 {
   AFFECT_DATA af;
 
   if (success < 0)
   {
-    act("An excess amount of Quintessence rips through $p's Pattern.", ch, obj, NULL, TO_CHAR);
+    act("An excess amount of Quintessence rips through $p's Pattern, as it explodes!", ch, obj, NULL, TO_CHAR);
     act("With a ripple of {Yenergy{x, $p explodes suddenly!", ch, obj, NULL, TO_ROOM);
     extract_obj(obj);
     return;
@@ -2272,11 +2272,22 @@ void rote_imbueobject(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *o
 
   if (IS_OBJ_STAT(obj, ITEM_MAGIC))
   {
-    act("You funnel more Quintessence into $p than it can hold.", ch, obj, NULL, TO_CHAR);
+    act("You funnel more Quintessence into $p than it can hold, causing it to explode!", ch, obj, NULL, TO_CHAR);
     act("With a blast of energy, $p explodes violently!", ch, obj, NULL, TO_ROOM);
     extract_obj(obj);
     return;
   }
+
+  act("You funnel Quintessence into $p, charging it with Primal {Yenergy{x.", ch, obj, NULL, TO_CHAR);
+
+  af.where     = TO_OBJECT;
+  af.type      = gsn_imbueobject;
+  af.level     = success;
+  af.duration  = 50 + (success * 15);
+  af.location  = APPLY_NONE;
+  af.modifier  = 0;
+  af.bitvector = ITEM_MAGIC;
+  affect_to_obj(obj,&af);
 
   return;
 }

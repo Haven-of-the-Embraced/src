@@ -2298,8 +2298,17 @@ void rote_wellspring(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *ob
 
   if (success < 0)
   {
-    send_to_char("Depleted your own reserves, the Quintessence from your body wildly streams into the universe!\n\r", ch);
+    send_to_char("Depleting your own reserves, the Quintessence from your body wildly streams into the universe!\n\r", ch);
     ch->quintessence = 0;
+
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_wellspring;
+    af.level     = -success;
+    af.duration  = 10;
+    af.location  = APPLY_NONE;
+    af.modifier  = 0;
+    af.bitvector = 0;
+    affect_to_char( victim, &af );
     return;
   }
 
@@ -2314,6 +2323,26 @@ void rote_wellspring(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *ob
     send_to_char("You must be in a place of Quintessential power to draw in ambient energy!\n\r", ch);
     return;
   }
+
+  if (is_affected(ch, gsn_wellspring))
+  {
+    send_to_char("You cannot shunt such a large amount of Quintessence back into your body so soon.\n\r", ch);
+    return;
+  }
+
+  act("Closing your eyes, you command the energies of the area to flow into yourself, replenishing your Quintessence.", ch, NULL, NULL, TO_CHAR);
+  act("$n closes $s eyes, seemingly at peace for a moment.", ch, NULL, NULL, TO_NOTVICT);
+
+  ch->quintessence = ch->max_quintessence - ch->paradox;
+
+  af.where     = TO_AFFECTS;
+  af.type      = gsn_wellspring;
+  af.level     = success;
+  af.duration  = 100 - (success * 5);
+  af.location  = APPLY_NONE;
+  af.modifier  = 0;
+  af.bitvector = 0;
+  affect_to_char( victim, &af );
 
   return;
 }

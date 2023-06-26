@@ -41,8 +41,39 @@
 
 bool paradox_check(CHAR_DATA *ch, bool vulgar)
 {
-    if(vulgar) ch->paradox += 5;
-    else ch->paradox++;
+    AFFECT_DATA af;
+    int dox = 1;
+    if(vulgar) dox += 4;
+    int ward = get_affect_modifier(ch, gsn_paradoxward);
+
+    if (is_affected(ch, gsn_paradoxward))
+    {
+
+      af.where     = TO_AFFECTS;
+      af.type      = gsn_paradoxward;
+      af.level     = 0;
+      af.duration  = 0;
+      af.location  = APPLY_NONE;
+      af.modifier  = -dox;
+      af.bitvector = 0;
+      affect_join(ch, &af);
+
+      send_to_char("Your masterful ward nullifies some of the Paradox that was targeting your Pattern.\n\r", ch);
+
+      if (( get_affect_modifier(ch, gsn_paradoxward)) <= 0)
+      {
+        affect_strip(ch, gsn_paradoxward);
+        send_to_char("Your ward is depleted, Paradox can accumulate again.\n\r", ch);
+      }
+    }
+
+      dox -= ward;
+
+    if (dox > 0)
+      ch->paradox += dox;
+    else
+      return;
+
     if(number_range(1,(50 - ch->paradox)) <= 1)
     {
             damage( ch, ch, vulgar ? ch->paradox*100 : ch->paradox*50, gsn_brew, DAM_NEGATIVE, TRUE);
@@ -2308,7 +2339,7 @@ void rote_wellspring(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *ob
     af.location  = APPLY_NONE;
     af.modifier  = 0;
     af.bitvector = 0;
-    affect_to_char( victim, &af );
+    affect_to_char( ch, &af );
     return;
   }
 
@@ -2342,7 +2373,7 @@ void rote_wellspring(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *ob
   af.location  = APPLY_NONE;
   af.modifier  = 0;
   af.bitvector = 0;
-  affect_to_char( victim, &af );
+  affect_to_char( ch, &af );
 
   return;
 }
@@ -2353,7 +2384,7 @@ void rote_paradoxward(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *o
 
   if (success < 0)
   {
-    send_to_char("Reality lashes back upon you, as a wave of Paradox fills your Pattern!"\n\r, ch);
+    send_to_char("Reality lashes back upon you, as a wave of Paradox fills your Pattern!\n\r", ch);
     ch->paradox += 5;
     if (ch->quintessence + ch->paradox > ch->max_quintessence)
       ch->quintessence = ch->max_quintessence - ch->paradox;
@@ -2375,7 +2406,14 @@ void rote_paradoxward(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *o
 
   send_to_char("You feel a layer of Primal energy covering your Pattern, resisting the inevitability of Paradox.\n\r", ch);
 
-  
+  af.where     = TO_AFFECTS;
+  af.type      = gsn_paradoxward;
+  af.level     = success;
+  af.duration  = 15 + (success *3);
+  af.location  = APPLY_NONE;
+  af.modifier  = success * 2;
+  af.bitvector = 0;
+  affect_to_char( ch, &af );
 
   return;
 }

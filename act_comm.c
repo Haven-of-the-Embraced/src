@@ -1737,7 +1737,7 @@ void do_quit( CHAR_DATA *ch, char *argument )
     REMOVE_BIT(ch->comm, COMM_DEAF);
     REMOVE_BIT(ch->comm, COMM_QUIET);
     REMOVE_BIT(ch->act, PLR_IC);
-    quote = number_range(1,9);
+    quote = number_range(1,26);
     if(quote == 1)
         send_to_char("Sex is a good cure for headaches, repeat as needed\n\r - Hatchet, Creator of MERC\n\r",ch);
     if(quote == 2)
@@ -1756,9 +1756,40 @@ void do_quit( CHAR_DATA *ch, char *argument )
         send_to_char("My childe, you dreamt of immortality?  Come, let me show you what nightmares forever holds.\n\r - Lasombra Elder\n\r",ch);
     if(quote == 9)
         send_to_char("Soaring through the skies on tattered wings I look down upon\n\ryou and wonder. Wonder if you would call me a monster, or\n\rwelcome me into your heart. Wonder if my face would bring\n\rforth fear or sorrow. I wonder if my deeds would sicken you,\n\ror cause pity.\n\r\n\rI look down and wonder if I could be near you without becoming\n\rthat monster you fear. Becoming that face of horror, commiting\n\rthose sickening deeds..\n\r\n\rI wonder if.. No. I suppose not.\n\r",ch);
-
-
-
+	if(quote == 10)
+        send_to_char("There is something at work in my soul, which I do not understand.\n\r - Mary Shelley, Frankenstein\n\r",ch);
+	if(quote == 11)
+        send_to_char("Some ghosts are so quiet you would hardly know they were there.\n\r - Bernie Mcgill, The Butterfly Cabinet\n\r",ch);
+	if(quote == 12)
+        send_to_char("I have lost the faculty of enjoying their destruction, and I am too idle to destroy for nothing.\n\r - Emily Bronte, Wuthering Heights\n\r",ch);
+	if(quote == 13)
+        send_to_char("I run blindly through the madhouse ... And I cannot even pray ... For I have no God.\n\r - Batman: Arkham Asylum - A Serious House on Serious Earth\n\r",ch);
+	if(quote == 14)
+        send_to_char("Our very existence refuses your laws and your science, your religions and your philosophies.\n\r - B.E. Scully\n\r",ch);
+	if(quote == 15)
+        send_to_char("From even the greatest of horrors irony is seldom absent.\n\r - H.P. Lovecraft, Tales of H.P. Lovecraft\n\r",ch);
+	if(quote == 16)
+        send_to_char("That is not dead which can eternal lie, And with strange aeons even death may die.\n\r - Howard Phillips Lovecraft, The Nameless City\n\r",ch);
+	if(quote == 17)
+        send_to_char("People should be smart with their consumptions no matter what it is.\n\r - Riley Reid\n\r",ch);
+	if(quote == 18)
+        send_to_char("A starving child is a frightful sight. A starving vampire, even worse.\n\r - Anne Rice\n\r",ch);
+	if(quote == 19)
+        send_to_char("None of us really changes over time; we only become more fully what we are.\n\r - Anne Rice, Queen of the Damned\n\r",ch);
+	if(quote == 20)
+        send_to_char("How do we seem to you? Do you find us beautiful and magical? Our white skin, our fierce eyes? ‘Drink,’ you ask me. Do you have any idea of the things you will become.\n\r - Anne Rice, Interview with The Vampire\n\r",ch);
+	if(quote == 21)
+        send_to_char("The blood is the life!\n\r - Bram Stoker, Dracula\n\r",ch);
+	if(quote == 22)
+        send_to_char("I am the monster that breathing men would kill. I am Dracula.\n\r - Bram Stoker, Dracula\n\r",ch);
+	if(quote == 23)
+        send_to_char("Listen to them, the children of the night. What music they make!\n\r - Bram Stoker, Dracula\n\r",ch);
+	if(quote == 24)
+        send_to_char("I have never met a vampire personally, but I don’t know what might happen tomorrow.\n\r - Bela Lugosi\n\r",ch);
+	if(quote == 25)
+        send_to_char("The oldest and strongest emotion of mankind is fear, and the oldest and strongest kind of fear is fear of the unknown.\n\r - H. P. Lovecraft\n\r",ch);
+	if(quote == 26)
+        send_to_char("Monsters are real, and ghosts are real too. They live inside us, and sometimes, they win.\n\r - Stephen King\n\r",ch);
 
     act( "$n has left the game.", ch, NULL, NULL, TO_ROOM );
     sprintf( log_buf, "%s has quit.", ch->name );

@@ -910,7 +910,7 @@ void do_freebie(CHAR_DATA *ch, char *argument)
                     return;
                 }
                 count = CSBACK_GENERATION;
-                cost = gencost;
+                cost = gencost = (ch->pcdata->csbackgrounds[CSBACK_GENERATION] == 0) ? 10 : (ch->pcdata->csbackgrounds[CSBACK_GENERATION] * 30);
     }
 
     if(!str_prefix( arg, "conscience"))
@@ -3108,13 +3108,13 @@ void do_charsheet2 (CHAR_DATA * ch, char *argument)
         send_to_char(buf, sch);
         sprintf(buf, " |  %s    %s       Wounded     -2 %s |\n\r",dots2(ch->arete, TRUE),dots3(ch->cswillpower, TRUE), cshealth < 4 ? "{RX{x" : "_");
         send_to_char(buf, sch);
-        sprintf(buf, " | Avatar:       %s                               Mauled      -2 %s |\n\r", dots(ch->avatar, FALSE), cshealth < 3 ? "{RX{x" : "_");
+        sprintf(buf, " | Avatar:       %s    <---Quintessence---->      Mauled      -2 %s |\n\r", dots(ch->avatar, FALSE), cshealth < 3 ? "{RX{x" : "_");
         send_to_char(buf, sch);
         sprintf(buf2,"%d",ch->quintessence);
-        sprintf(buf, " | Quintessence: %s                                 Crippled    -5 %s |\n\r", center(buf2,3," "), cshealth < 2 ? "{RX{x" : "_");
+        sprintf(buf, " | Quintessence: %s      %s      Crippled    -5 %s |\n\r", center(buf2,3," "), quintessencedot(ch->quintessence/5, TRUE), cshealth < 2 ? "{RX{x" : "_");
         send_to_char(buf, sch);
         sprintf(buf2,"%d",ch->paradox);
-        sprintf(buf, " | Paradox:      %s                                 Incapacitated  %s |\n\r", center(buf2,3," "), cshealth < 1 ? "{RX{x" : "_");
+        sprintf(buf, " | Paradox:      %s      %s      Incapacitated  %s |\n\r", center(buf2,3," "), quintessencedot2((ch->quintessence-50)/5, TRUE), cshealth < 1 ? "{RX{x" : "_");
         send_to_char(buf, sch);
         send_to_char("<======================================================================>\n\r",sch);
     }

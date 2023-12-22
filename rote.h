@@ -81,3 +81,4 @@ DECLARE_ROTE_FUN(	rote_stoptheclock				);
 DECLARE_ROTE_FUN(	rote_sidesteptime				);
 DECLARE_ROTE_FUN( rote_camouflagediscernment  );
 DECLARE_ROTE_FUN(	rote_negationfield				);
+DECLARE_ROTE_FUN( rote_sluggishspeed      );

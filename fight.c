@@ -253,7 +253,9 @@ void check_assist(CHAR_DATA *ch,CHAR_DATA *victim)
  */
 void multi_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt )
 {
-    int     chance, i, c, genbonus;
+    int   chance, i, c, genbonus;
+    int   stopclock;
+    AFFECT_DATA af;
 
     /* decrement the wait */
     if (ch->desc == NULL)
@@ -263,12 +265,34 @@ void multi_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt )
     if (ch->desc == NULL)
     ch->daze = UMAX(0,ch->daze - PULSE_VIOLENCE);
 
+    if( is_affected(ch, gsn_sidesteptime))
+      affect_strip(ch, gsn_sidesteptime);
     if(is_affected(ch, gsn_unseen) && ch->pcdata->discipline[OBFUSCATE] < 2)
-    affect_strip( ch, gsn_unseen );
+      affect_strip( ch, gsn_unseen );
     if(IS_NPC(ch) || (!IS_NPC(ch) && ch->pcdata->discipline[OBFUSCATE] != 6))
     {
         REMOVE_BIT   ( ch->affected2_by, AFF2_VEIL       );
         affect_strip(ch, gsn_veil);
+    }
+
+//  Time 4 'Stop the Clock' -- If charges left, Decrement the affect before checking stunned.
+    if (is_affected(ch, gsn_stoptheclock))
+    {
+      stopclock = get_affect_modifier(ch, gsn_stoptheclock);
+      if (stopclock > 0)
+      {
+        af.where     = TO_AFFECTS;
+        af.type      = gsn_stoptheclock;
+        af.level     = get_affect_level(ch, gsn_stoptheclock);
+        af.duration  = 0;
+        af.location  = APPLY_NONE;
+        af.modifier  = -1;
+        af.bitvector = 0;
+        affect_join(ch, &af);
+        act("Your body seems to be frozen in time.", ch, NULL, victim, TO_CHAR);
+
+        return;
+      }
     }
 
     /* no attacks for stunnies -- just a check */
@@ -403,7 +427,13 @@ void mob_hit (CHAR_DATA *ch, CHAR_DATA *victim, int dt)
     OBJ_DATA *obj;
     AFFECT_DATA af;
 
-    one_hit(ch,victim,dt);
+    if (IS_AFFECTED(ch, AFF_SLOW))
+    {
+      if (number_percent() < 75)
+        one_hit(ch,victim,dt);
+    }
+    else
+      one_hit(ch,victim,dt);
 
     if (ch->fighting != victim)
     return;
@@ -1786,6 +1816,9 @@ void d10_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt)
             dice *= 2;
             diff = 4;
         }
+
+  if (IS_AFFECTED(ch, AFF_SLOW))
+    diff++;
 
   if (is_affected(victim, gsn_gift_lambentfire))
     diff++;
@@ -3293,6 +3326,7 @@ void group_gain( CHAR_DATA *ch, CHAR_DATA *victim )
     char buf[MAX_STRING_LENGTH];
     CHAR_DATA *gch;
     CHAR_DATA *lch;
+    AFFECT_DATA af;
     int xp;
     int qp;
     int fakexp;
@@ -3300,6 +3334,7 @@ void group_gain( CHAR_DATA *ch, CHAR_DATA *victim )
     int members;
     extern bool doubleexp;
     extern bool manualxp;
+    extern bool spookums;
     int group_levels;
 
     /*
@@ -3385,15 +3420,47 @@ void group_gain( CHAR_DATA *ch, CHAR_DATA *victim )
     if (gch->qpoints > MAX_QPOINTS)
         gch->qpoints = MAX_QPOINTS;
 
-            if (IS_SET(ch->act2, PLR2_QUESTOR)&&IS_NPC(victim))
+    if (IS_SET(ch->act2, PLR2_QUESTOR)&&IS_NPC(victim))
+    {
+        if (ch->questmob == victim->pIndexData->vnum)
         {
-            if (ch->questmob == victim->pIndexData->vnum)
+            send_to_char("You have almost completed your QUEST!\n\r",ch);
+            send_to_char("Return to the questmaster before your time runs out!\n\r",ch);
+            ch->questmob = -1;
+        }
+    }
+
+    if (spookums && number_percent() <= 20)
+    {
+        send_to_char("{D[       *****      {YTrick or Treat!      {D*****       ]{x\n\r", ch);
+        if (number_percent() <= 15)
+            send_to_char("{MTRICK!: {mWith a bright {Wflash{m of light, a shower of {Ysparks{m explode around you!{x\n\r", gch);
+        else
+        {
+            if (number_percent() <= 20 && !IS_AFFECTED(ch, AFF_XP_BOOST))
             {
-        send_to_char("You have almost completed your QUEST!\n\r",ch);
-                send_to_char("Return to the questmaster before your time runs out!\n\r",ch);
-                ch->questmob = -1;
+                af.where     = TO_AFFECTS;
+                af.type  = gsn_xp_boost;
+                af.level     = 1;
+                af.duration  = 5;
+                af.modifier  =  0;
+                af.location  = APPLY_NONE;
+                af.bitvector = AFF_XP_BOOST;
+                affect_to_char( gch, &af );
+                send_to_char("{MTREAT!: {GYou feel a rush of mystic energy filling your bones!{x\n\r", ch);
+            }
+            else
+            {
+                qp = number_range(1,5);
+                gch->qpoints += qp;
+                gch->totalqpoints += qp;
+                if (gch->qpoints > MAX_QPOINTS)
+                    gch->qpoints = MAX_QPOINTS;
+                sprintf(buf, "{MTREAT!:  {GMystic energy fills you, as you gain %d quest points.{x\n\r", qp);
+                send_to_char(buf, gch);
             }
         }
+    } 
     }
 
     return;

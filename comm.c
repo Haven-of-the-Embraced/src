@@ -178,7 +178,7 @@ int listen      args( ( int s, int backlog ) );
 */
 
 int close       args( ( int fd ) );
-int gettimeofday    args( ( struct timeval *tp, void *tzp ) );
+//int gettimeofday    args( ( struct timeval *tp, void *tzp ) );
 /* int  read        args( ( int fd, char *buf, int nbyte ) ); */
 int select      args( ( int width, fd_set *readfds, fd_set *writefds,
                 fd_set *exceptfds, struct timeval *timeout ) );
@@ -332,6 +332,7 @@ bool            doubleexp=FALSE;    /* Double exp and cap   */
 bool            manualxp=FALSE; /*manually set doublexp */
 bool            slaughter=FALSE;        /* Removes damcap and quad damage */
 bool            doubledam=FALSE;    /* double damage for players */
+bool            spookums=FALSE;     /* Halloween Bonus */
 bool            resolver=TRUE;
 bool            DEBUG_MESSAGES=FALSE;
 CMD_DATA * cmd_first;
@@ -2668,6 +2669,7 @@ if (d->character->totalqpoints < d->character->qpoints)
     extern bool slaughter;
     extern bool doubleexp;
     extern bool manualxp;
+    extern bool spookums;
     if (slaughter)
         send_to_char("Time to get killing, {RSlaughterfest{x is running!\n\r", ch);
     if (doubleexp || manualxp)
@@ -2677,6 +2679,8 @@ if (d->character->totalqpoints < d->character->qpoints)
         if (xpawardmult == 3)
             send_to_char("{CTripleexp{x is turned on!{x\n\r", ch);
     }
+    if (spookums)
+        send_to_char("A mystic spookiness lies across the land!\n\r", ch);
     /*if (IS_VAMP(ch) && ch->gen < 10)
     {
         switch (ch->gen)
@@ -3936,6 +3940,7 @@ void save_config( void )
     fprintf( fp, "Doubledam %d\n",      doubledam);
     fprintf( fp, "Doubleexp %d\n",      doubleexp);
     fprintf( fp, "Nosun %d\n",          nosun);
+    fprintf( fp, "Spookums %d\n",       spookums);
     fprintf( fp, "Arena %d\n",          arena);
     fprintf( fp, "Resolver %d\n",       resolver);
     fprintf (fp, "Wizlock %d\n",        wizlock);
@@ -4024,6 +4029,7 @@ void load_config( void )
                break;
            case 'S':
                KEY( "Slaughter", slaughter, fread_number(fp) );
+               KEY( "Spookums", spookums, fread_number(fp) );
                break;
 
            case 'E':

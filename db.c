@@ -4919,7 +4919,9 @@ sh_int          gsn_lore;
 sh_int          gsn_study;
 sh_int          gsn_classify;
 sh_int          gsn_soothe;
+sh_int          gsn_rhythm;
 sh_int          gsn_meditation;
+sh_int          gsn_notoriety;
 
 sh_int          gsn_scrolls;
 sh_int          gsn_staves;
@@ -5060,10 +5062,12 @@ sh_int          gsn_paradoxward;
 sh_int          gsn_timesense;
 sh_int          gsn_precognition;
 sh_int          gsn_timealteration;
+sh_int          gsn_stoptheclock;
 sh_int          gsn_sidesteptime;
 sh_int          gsn_camouflagediscernment;
 sh_int          gsn_negationfield;
 sh_int          gsn_touchofhelios;
+sh_int          gsn_sluggishspeed;
 sh_int          gsn_quintessence;
 /*sh_int            gsn_quintessentialbond;*/
 sh_int          gsn_botched_allies;

@@ -3428,6 +3428,8 @@ void do_mpquest( CHAR_DATA *ch, char *argument )
 			bug("MpQuest: unable to assign quest from vnum %d", IS_NPC(ch) ? ch->pIndexData->vnum : 0 );
 			return;
 		}
+
+        send_to_char("    {C[[--          {GYou have been assigned a new Quest.           {C--]]{x\n\r", victim);
 		return;
 	}
 	if(!str_cmp(arg[0],"step"))
@@ -3441,6 +3443,10 @@ void do_mpquest( CHAR_DATA *ch, char *argument )
 			if(victim->pcdata->quest_id[i] == ch->quest)
 			{
 				victim->pcdata->quest_step[i] = atoi(arg[2]);
+                if (atoi(arg[2]) == 100)
+                    send_to_char("    {C[[--              {GYou have completed a Quest!               {C--]]{x\n\r", victim);
+                else
+                    send_to_char("    {C[[--      {GYour Quest Log has been updated.  Type {yqlog{G.      {C--]]{x\n\r", victim);
 				return;
 			}
 		}

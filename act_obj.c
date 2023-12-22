@@ -3074,6 +3074,12 @@ void do_buy( CHAR_DATA *ch, char *argument )
     if ( ( keeper = find_keeper( ch ) ) == NULL )
         return;
 
+    if (is_affected(ch, gsn_sidesteptime))
+    {
+      send_to_char("You must return to the normal flow of Time to purchase items.\n\r", ch);
+      return;
+    }
+
     if(is_affected(ch, gsn_change) || is_affected(ch, gsn_shift) || is_affected(ch, gsn_shadowform) || is_affected(ch, gsn_vicissitude_horrid) || is_affected(ch, gsn_vicissitude_bonecraft))
     {
         send_to_char("The shopkeeper is too terrified of you to sell anything.\n\r", ch);
@@ -3321,6 +3327,12 @@ void do_list( CHAR_DATA *ch, char *argument )
 
     found = FALSE;
 
+    if (is_affected(ch, gsn_sidesteptime))
+    {
+      send_to_char("You are not existing in the normal stream of time at this moment.\n\r", ch);
+      return;
+    }
+
     if (is_affected(ch, gsn_vicissitude_horrid) || is_affected(ch, gsn_change) || is_affected(ch, gsn_shift) || is_affected(ch, gsn_shadowform) || is_affected(ch, gsn_vicissitude_bonecraft))
     {
         send_to_char("The shopkeeper is terrified of you in this form!\n\r", ch);
@@ -3394,6 +3406,12 @@ void do_sell( CHAR_DATA *ch, char *argument )
     }
     if ( ( keeper = find_keeper( ch ) ) == NULL )
      return;
+
+     if (is_affected(ch, gsn_sidesteptime))
+     {
+       send_to_char("You must return to the normal flow of Time to sell your items.\n\r", ch);
+       return;
+     }
 
     if (is_affected(ch, gsn_change) || is_affected(ch, gsn_shift) || is_affected(ch, gsn_shadowform) || is_affected(ch, gsn_vicissitude_horrid) || is_affected(ch, gsn_vicissitude_bonecraft))
     {

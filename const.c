@@ -1024,6 +1024,9 @@ const struct cs_skill_type csskill_table [] =
     {"meditation", &gsn_meditation, 5,
     {CSABIL_MEDITATION, 1, SECA}, {CSABIL_NONE, 0, ABIL} },
 
+    {"notoriety", &gsn_notoriety, 1,
+    {CSABIL_POLITICS, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
+
     {"parry", &gsn_parry, 15,
     {CSABIL_MELEE, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
 
@@ -1038,6 +1041,9 @@ const struct cs_skill_type csskill_table [] =
 
     {"rescue", &gsn_rescue, 25,
     {CSABIL_BRAWL, 2, ABIL}, {CSABIL_LEADERSHIP, 1, ABIL} },
+
+    {"rhythm", &gsn_rhythm, 5,
+    {CSABIL_PERFORMANCE, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
 
     {"riding", &gsn_riding, 30,
     {CSABIL_RIDING, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
@@ -1246,8 +1252,8 @@ void cskill_update(CHAR_DATA *ch, bool show)
 
 const   struct  skill_type  skill_table [MAX_SKILL] =
 {
-// TOTAL SKILLS AS OF 6/25/23 =  440
-// MAX_SKILL INCREASED TO 445
+// TOTAL SKILLS AS OF 7/17/23 =  441
+// MAX_SKILL INCREASED TO 446 9/2/23
 /*
  * Magic spells.  Total (108)
  */
@@ -1849,6 +1855,10 @@ Total (48) */
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,     TAR_IGNORE,     POS_SLEEPING,
     &gsn_meditation,    SLOT( 0),   0,  0, "",         "Meditation",       "" },
 
+    { "notoriety",       { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+  { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,     TAR_IGNORE,     POS_SLEEPING,
+    &gsn_notoriety,    SLOT( 0),   0,  0, "",         "You are no longer paying attention to the movers and shakers of the world.",       "" },
+
     { "peek",         { 10, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,     TAR_IGNORE,     POS_STANDING,
     &gsn_peek,      SLOT( 0),    0,  0, "",         "!Peek!",       "" },
@@ -1856,6 +1866,10 @@ Total (48) */
     { "pick lock",        { 5, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,     TAR_IGNORE,     POS_STANDING,
     &gsn_pick_lock,     SLOT( 0),    0, 12, "",         "!Pick!",       "" },
+
+    { "rhythm",       { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+  { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,     TAR_IGNORE,     POS_SLEEPING,
+    &gsn_rhythm,    SLOT( 0),   0,  0, "",         "You stop dancing as the rhythm leaves your body.",       "" },
 
     { "sneak",       { 10, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,     TAR_IGNORE,     POS_STANDING,
@@ -2367,7 +2381,7 @@ Total (3) */
 
     { "eyes of the cat", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_eyesofthecat,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_eyesofthecat,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+    &gsn_gift_eyesofthecat,          SLOT( 0),        0,     12, "",             "The green glow of your eyes fades away.",        "" },
 
     { "mental speech", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_mentalspeech,  TAR_IGNORE, POS_STANDING,
@@ -2409,7 +2423,7 @@ Total (3) */
 
     { "sense the unnatural", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_sensetheunnatural,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_sensetheunnatural,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+    &gsn_gift_sensetheunnatural,          SLOT( 0),        0,     12, "",             "You no longer feel supernatural beings nearby.",        "" },
 
     { "devils child", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_devilschild,  TAR_IGNORE, POS_STANDING,
@@ -2420,8 +2434,8 @@ Total (3) */
     &gsn_gift_catfeet,          SLOT( 0),        0,     12, "",             "You feel your attunement to the feline spirits fade away.",         "" },
 
     { "name the spirit", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_namethespirit,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_namethespirit,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_namethespirit,  TAR_CHAR_SELF, POS_STANDING,
+    &gsn_gift_namethespirit,          SLOT( 0),        0,     12, "",             "You no longer feel your strong rapport with the denizens of the Umbra.",        "" },
 
     { "beast life", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_beastlife,  TAR_IGNORE, POS_STANDING,
@@ -3112,12 +3126,16 @@ Total (3) */
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
     &gsn_timealteration,          SLOT( 0),        0,     24, "",             "Your pattern can no longer take the stress of such time dilation.",        "" },
 
+    { "stop the clock",            { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
+    &gsn_stoptheclock,          SLOT( 0),        0,     24, "",             "You feel your body catch back up to the time stream.",        "" },
+
     { "sidestep time",            { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
     &gsn_sidesteptime,          SLOT( 0),        0,     24, "",             "You step back into the normal stream of time.",        "" },
 
 /*    --Extra Combination Sphere Rotes--
-Total (3)
+Total (4)
 */
     { "camouflage discernment",           { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
@@ -3130,6 +3148,11 @@ Total (3)
     { "touch of helios",          { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
     &gsn_touchofhelios,          SLOT( 0),        0,     24, "",             "You manage to blink away the blindness of the sunlight.",       "" },
+
+    { "sluggish speed",          { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
+    &gsn_sluggishspeed,          SLOT( 0),        0,     24, "",             "Your body begins to move quicker as the temporal energies dissipate.",       "" },
+
 /*
   ----Immortal Functions----
 Total (1)

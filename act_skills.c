@@ -588,6 +588,152 @@ void do_glower(CHAR_DATA *ch, char *argument)
   return;
 }
 
+void do_notoriety(CHAR_DATA *ch, char *argument)
+{
+    AFFECT_DATA af;
+    int notorietysuccess = 0;
+    int diff = 0;
+
+    if (get_ability(ch, CSABIL_POLITICS) < 1)
+    {
+      send_to_char("You don't understand the intricacies of politics.\n\r", ch);
+      return;
+    }
+
+    if (is_affected(ch, gsn_notoriety))
+    {
+      send_to_char("You are already paying attention to the political movements of the world.\n\r", ch);
+      return;
+    }
+
+    if(ch->move < ch->level / 5)
+    {
+        send_to_char("You are too tired to pay attention to politics.\n\r", ch);
+        return;
+    }
+
+    ch->move -= ch->level / 5;
+    WAIT_STATE( ch, skill_table[gsn_notoriety].beats );
+
+    notorietysuccess = godice(get_attribute(ch, INTELLIGENCE) + ch->csabilities[CSABIL_POLITICS], 6);
+
+    if (notorietysuccess < 0)
+    {
+      act("The intricacies of politics gives you a headache as you try to keep track of whom is doing what.", ch, NULL, NULL, TO_CHAR);
+      WAIT_STATE(ch, 9);
+      return;
+    }
+
+    if (notorietysuccess == 0)
+    {
+      act("Political intrigue seems to escape you at the moment.", ch, NULL, NULL, TO_CHAR);
+      check_improve(ch,gsn_rhythm,FALSE,6);
+      WAIT_STATE(ch, 3);
+      return;
+    }
+
+    act("You begin to take notice of whom holds political influence in the world.", ch, NULL, NULL, TO_CHAR);
+
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_notoriety;
+    af.level     = notorietysuccess;
+    af.duration  = 3 * notorietysuccess + 10;
+    af.modifier  = 0;
+    af.location  = 0;
+    af.bitvector = 0;
+    affect_to_char( ch, &af );
+    check_improve(ch,gsn_notoriety,TRUE,6);
+
+    gain_exp(ch, notorietysuccess * 2);
+    return;
+}
+
+void do_rhythm(CHAR_DATA *ch, char *argument)
+{
+    AFFECT_DATA af;
+    int rhythmsuccess = 0;
+    int rhythmdiff = 7;
+
+    if (get_ability(ch, CSABIL_PERFORMANCE) < 1)
+    {
+      send_to_char("You do not have any natural sense of rhythm.\n\r", ch);
+      return;
+    }
+
+    if (is_affected(ch, gsn_rhythm))
+    {
+      if (get_affect_level(ch, gsn_rhythm) == 0)
+      {
+        send_to_char("You continue to dance awkwardly as you can't seem to find the rhythm.\n\r", ch);
+        return;
+      }
+      else
+      {
+        send_to_char("You let the beat leave your body, feeling the rhythm flow away.\n\r", ch);
+        affect_strip(ch, gsn_rhythm);
+        return;
+      }
+    }
+
+    if (is_affected(ch, gsn_forget))
+    {
+      send_to_char("Your brain is a bit foggy, and you can't quite find the right rhythm.\n\r", ch);
+      return;
+    }
+
+    if(ch->move < ch->level / 5)
+    {
+        send_to_char("You are too tired to match the beat.\n\r", ch);
+        return;
+    }
+
+    ch->move -= ch->level / 5;
+    WAIT_STATE( ch, skill_table[gsn_rhythm].beats );
+
+    rhythmsuccess = godice(get_attribute(ch, CHARISMA) + ch->csabilities[CSABIL_PERFORMANCE], rhythmdiff);
+
+    if (rhythmsuccess < 0)
+    {
+      act("You begin dancing, albeit awkwardly, as you attempt to feel the rhythm.", ch, NULL, NULL, TO_CHAR);
+      af.where     = TO_AFFECTS;
+      af.type      = gsn_rhythm;
+      af.level     = 0;
+      af.duration  = 1;
+      af.modifier  = 0;
+      af.location  = 0;
+      af.bitvector = 0;
+      affect_to_char( ch, &af );
+      return;
+    }
+
+    if (rhythmsuccess == 0)
+    {
+      act("Try as you might, matching the rhythm seems to escape you.", ch, NULL, NULL, TO_CHAR);
+      check_improve(ch,gsn_rhythm,FALSE,6);
+      WAIT_STATE(ch, 6);
+      return;
+    }
+
+    if (rhythmsuccess > 3)
+      act("You feel the rhythm of the universe flow, matching the beat of everything around you.", ch, NULL, NULL, TO_CHAR);
+    else
+      act("Feeling the beat, you let your sense of rhythm flow through your entire body.",ch,NULL,ch,TO_CHAR);
+    act("$n begins dancing, swaying and moving rhythmically.",ch,NULL,ch,TO_NOTVICT);
+
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_rhythm;
+    af.level     = rhythmsuccess;
+    af.duration  = 2 * rhythmsuccess + 2;
+    af.modifier  = 0;
+    af.location  = 0;
+    af.bitvector = 0;
+    affect_to_char( ch, &af );
+    check_improve(ch,gsn_rhythm,TRUE,6);
+
+    gain_exp(ch, rhythmsuccess * 2);
+    return;
+}
+
 void do_vigor(CHAR_DATA *ch, char *argument)
 {
     AFFECT_DATA af;

@@ -176,6 +176,8 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "lore",       do_lore},
     { "classify",   do_classify},
     { "soothe",     do_soothe},
+    { "rhythm",     do_rhythm},
+    { "notoriety",  do_notoriety},
     { "dip",        do_dip },
     { "invoke",     do_invoke},
 /*    { "activate",     do_activate}, */
@@ -429,9 +431,9 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "contact",    do_contact },
     /* Condition placed here so consider parses first */
 
-    { "flaw",     do_flaw},
+ //   { "flaw",     do_flaw},
     { "conditioning",      do_conditioning},
-    { "convert",        do_convert},
+ //   { "convert",        do_convert},
     /* changeling here so change parses first */
     { "changeling",     do_changeling},
 

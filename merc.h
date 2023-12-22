@@ -183,7 +183,7 @@ typedef void ROOM_FUN	args( ( ROOM_INDEX_DATA *room, char *argument ) );
  */
 #define MAX_HELP        5
 #define MAX_SOCIALS       256
-#define MAX_SKILL         445
+#define MAX_SKILL         446
 #define MAX_GIFT          90
 #define MAX_GIFTS_CODED   166
 #define MAX_BREW        24
@@ -195,7 +195,7 @@ typedef void ROOM_FUN	args( ( ROOM_INDEX_DATA *room, char *argument ) );
 #define MAX_CLAN            33
 #define MAX_SECT            7
 #define MAX_TRADITION       6
-#define MAX_ROTE            49
+#define MAX_ROTE            53
 #define MAX_DAMAGE_MESSAGE  42
 #define MAX_TEST_LOOPS      3
 #define MAX_LEVEL          110
@@ -2937,7 +2937,9 @@ extern sh_int  gsn_lore;
 extern sh_int  gsn_study;
 extern sh_int  gsn_classify;
 extern sh_int  gsn_soothe;
+extern sh_int  gsn_rhythm;
 extern sh_int  gsn_meditation;
+extern sh_int  gsn_notoriety;
 
 extern sh_int  gsn_scrolls;
 extern sh_int  gsn_mass_healing;
@@ -3071,10 +3073,12 @@ extern  sh_int  gsn_paradoxward;
 extern  sh_int  gsn_timesense;
 extern  sh_int  gsn_precognition;
 extern  sh_int  gsn_timealteration;
+extern  sh_int  gsn_stoptheclock;
 extern  sh_int  gsn_sidesteptime;
 extern  sh_int  gsn_camouflagediscernment;
 extern  sh_int  gsn_negationfield;
 extern  sh_int  gsn_touchofhelios;
+extern  sh_int  gsn_sluggishspeed;
 /*extern  sh_int  gsn_quintessentialbond;*/
 // Matthew's random GSNs.
 extern  sh_int  gsn_botched_allies;
@@ -4015,6 +4019,9 @@ bool    breathes	args( ( CHAR_DATA *ch ) );
 bool    is_natural  args( ( CHAR_DATA *ch) );
 bool    higher_beast args( ( CHAR_DATA *ch) );
 bool    human_variant args( ( CHAR_DATA *ch) );
+bool    is_supernatural args( ( CHAR_DATA *ch));
+bool    is_umbral_denizen args( ( CHAR_DATA *ch) );
+char    *name_the_spirit args( (CHAR_DATA *ch) );
 bool    has_silver args( ( CHAR_DATA *ch ) );
 bool    carries_silver_obj args( ( CHAR_DATA *ch) );
 void    affect_to_char  args( ( CHAR_DATA *ch, AFFECT_DATA *paf ) );
@@ -4106,6 +4113,8 @@ char *  dots2       args( ( int num, bool space) );
 char *  dots3       args( ( int num, bool space ) );
 char *  bloodpooldot    args( ( int num, bool space ) );
 char *  bloodpooldot2   args( ( int num, bool space ) );
+char *  quintessencedot    args( ( int num, bool space ) );
+char *  quintessencedot2   args( ( int num, bool space ) );
 bool    is_clan_disc    args( (CHAR_DATA *ch, int disc));
 bool    update_csstats  args( (CHAR_DATA *ch));
 char *  strip_color     args( (const char *string) );

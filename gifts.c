@@ -666,8 +666,49 @@ void spell_gift_sensesilver( int sn, int level, CHAR_DATA *ch, void *vo, int tar
 //Roll:None.
 //The werewolf can see clearly in pitch darkness. Her eyes glow a lambent green while this power is in effect. (Pretty obvious, night vision for Garou. But since this is a free gift with no roll, the garou is blinded by sources of light.)
 //Cost: None
-void spell_gift_eyesofthecat( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_eyesofthecat( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  AFFECT_DATA af;
+  int dicesuccess;
+
+  if (is_affected(ch, gsn_gift_eyesofthecat))
+  {
+    sendch("Your feline sight fades, along with the green glow of your eyes.\n\r", ch);
+    affect_strip(ch, gsn_gift_eyesofthecat);
     return;
+  }
+
+  if (ch->pcdata->gnosis[TEMP] < 1)
+  {
+    sendch("You do not have the spiritual reserves to activate this gift.\n\r", ch);
+    return;
+  }
+
+  if (ch->move <= ch->level / 3)
+  {
+    send_to_char("You are too tired to ask for your feline blessing.\n\r", ch);
+    return;
+  }
+
+  ch->move -= ch->move / 3;
+
+  sendch("Your eyes take on a green glow, as you can now see clearly in the darkness.\n\r",ch);
+  act("$n's eyes begin to softly glow green.", ch, NULL, NULL, TO_NOTVICT);
+
+  af.where     = TO_AFFECTS;
+  af.type      = sn;
+  af.level     = level;
+  af.duration  = 8;
+  af.modifier  = 0;
+  af.location  = 0;
+  af.bitvector = AFF_DARK_VISION;
+  affect_to_char( ch, &af );
+
+  af.where      = TO_VULN;
+  af.bitvector  = VULN_LIGHT;
+  affect_to_char(ch, &af);
+
+  return;
 }
 //
 //“Mental Speech”
@@ -880,6 +921,54 @@ void spell_gift_leylines( int sn, int level, CHAR_DATA *ch, void *vo, int target
 }
 //
 //Rank 2
+//
+//“Name the Spirit”
+//cat spirits
+//Roll: perception + occult (diff 8)
+//A werewolf with this gift becomes familiar with the denizens of the Umbra. She can sense the type and approximate trait level of spirits. (The garou can get detailed information about a spirit type mob. More successes = more information.)
+//Cost: 1 Willpower
+void spell_gift_namethespirit( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  AFFECT_DATA af;
+  int dicesuccess;
+
+  if (is_affected(ch, gsn_gift_namethespirit))
+  {
+    send_to_char("You already feel attuned to beings of the Umbra.\n\r", ch);
+    return;
+  }
+
+  if (ch->cswillpower < 1)
+  {
+    sendch("You do not have the strength of will to activate this gift.\n\r", ch);
+    return;
+  }
+
+  dicesuccess = godice(get_attribute(ch, PERCEPTION) + get_ability(ch, CSABIL_OCCULT), 8);
+
+  ch->cswillpower--;
+
+    if (dicesuccess <= 0)
+  {
+    send_to_char("You try to attune yourself to the spirits in the Umbra, but you cannot seem to grasp it.\n\r", ch);
+    WAIT_STATE(ch, 8);
+    return;
+  }
+
+   sendch("You reach out with your senses and become attuned to the denizens of the Umbra.\n\r",ch);
+
+  af.where     = TO_AFFECTS;
+  af.type      = sn;
+  af.level     = level;
+  af.duration  = (dicesuccess * 10) + 50;
+  af.modifier  = 0;
+  af.location  = 0;
+  af.bitvector = 0;
+  affect_to_char( ch, &af );
+  gain_exp(ch, dicesuccess * 5);
+
+  return;
+}
 //“Scent of Sight”
 //wolf spirit
 //Roll: Perception + Primal Urge (Difficulty based on sector.)
@@ -941,14 +1030,6 @@ void spell_gift_scentofsight( int sn, int level, CHAR_DATA *ch, void *vo, int ta
   return;
 }
 //
-//“Sense the Unnatural”
-//Servant of Gaia (any spirit not a bane, wyldling or weaver construct)
-//Roll: Perception + Enigmas (diff 7)
-//The werewolf can sense any unnatural presence and determine it’s approximate strength and type. (Allows the garou to get a sense of any supernatural creatures in the room. More successes = more information. 1 success “You sense there is certainly something amiss around you.” 4 successess “You sense that Dracula is a very ancient and powerful vampire. You feel the crackle of magical energy emanating from Merlin!”
-void spell_gift_sensetheunnatural( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
-}
-//
 //Rank 3
 //“Devil’s Child”
 //wolf spirit
@@ -986,15 +1067,54 @@ void spell_gift_catfeet( int sn, int level, CHAR_DATA *ch, void *vo, int target 
     act("$n howls a soft dirge to the skies, and begins to move with a feline grace.",ch,NULL,NULL,TO_ROOM);
     return;
 }
-
 //
-//“Name the Spirit”
-//cat spirits
-//Roll: perception + occult (diff 8)
-//A werewolf with this gift becomes familiar with the denizens of the Umbra. She can sense the type and approximate trait level of spirits. (The garou can get detailed information about a spirit type mob. More successes = more information.)
-//Cost: 1 Willpower
-void spell_gift_namethespirit( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+//“Sense the Unnatural”
+//Servant of Gaia (any spirit not a bane, wyldling or weaver construct)
+//Roll: Perception + Enigmas (diff 7)
+//The werewolf can sense any unnatural presence and determine it’s approximate strength and type. (Allows the garou to get a sense of any supernatural creatures in the room. More successes = more information. 1 success “You sense there is certainly something amiss around you.” 4 successess “You sense that Dracula is a very ancient and powerful vampire. You feel the crackle of magical energy emanating from Merlin!”
+void spell_gift_sensetheunnatural( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  AFFECT_DATA af;
+  int dicesuccess;
+
+  if (ch->move < ch->level / 5)
+  {
+    sendch("You are too tired to try and determine supernatural presence nearby.\n\r", ch);
     return;
+  }
+
+  dicesuccess = godice(get_attribute(ch, PERCEPTION) + get_ability2(ch, CSABIL_ENIGMAS), 6);
+
+  ch->move -= ch->level / 5;
+
+  if (dicesuccess < 0)
+  {
+    send_to_char("Your senses are overloaded by the presence of supernatural beings, they appear to be everywhere!\n\r", ch);
+    WAIT_STATE(ch, 14);
+    return;
+  }
+
+  if (dicesuccess == 0)
+  {
+    send_to_char("Your request for assistance seems to go unanswered.\n\r", ch);
+    WAIT_STATE(ch, 2);
+    return;
+  }
+
+  sendch("Beseeching the spirit servants of Gaia, you take notice of supernatural beings nearby.\n\r",ch);
+
+  af.where     = TO_AFFECTS;
+  af.type      = sn;
+  af.level     = dicesuccess;
+  af.duration  = (dicesuccess * 10) + 20;
+  af.modifier  = 0;
+  af.location  = 0;
+  af.bitvector = 0;
+  affect_to_char( ch, &af );
+
+  gain_exp(ch, dicesuccess * 3);
+
+  return;
 }
 //
 //Rank 4
@@ -1181,7 +1301,51 @@ void spell_gift_blissfulignorance( int sn, int level, CHAR_DATA *ch, void *vo, i
 //wolf
 //perception + enigmas (wits+stealth / gnosis / 6)
 //If the garou knows something about her intended prey, even part of a name or a description, , she can find it anywhere in the world. (scry/telepathy affect.)
-void spell_gift_senseofprey( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_senseofprey( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+    char buf[MAX_STRING_LENGTH];
+    BUFFER *buffer;
+    CHAR_DATA *victim;
+    CHAR_DATA *prey = (CHAR_DATA *) vo;
+    bool found;
+    int count = 0;
+    char arg1[MIL];
+    gift_target_name = one_argument(gift_target_name, arg1);
+
+    if (ch->move <= ch->level)
+    {
+      send_to_char("You are too tired to track prey at this time.\n\r", ch);
+      return;
+    }
+
+    ch->move -= ch->level;
+
+    found = FALSE;
+    buffer = new_buf();
+    for ( victim = char_list; victim != NULL; victim = victim->next )
+    {
+      if (victim != NULL && victim->in_room != NULL
+      &&  is_name( arg1, victim->name ) && can_see(ch,victim)
+      &&  can_see_room(ch,victim->in_room) && (!IS_SET(victim->act, ACT_QUESTMOB)))
+      {
+        found = TRUE;
+        count++;
+        sprintf( buf, "%3d) %-28s %s\n\r", count,
+        IS_NPC(victim) ? victim->short_descr : victim->name,
+        victim->in_room->name );
+        add_buf(buffer,buf);
+      }
+    }
+
+    if ( !found )
+    {
+      sprintf(buf, "You cannot seem to locate %s.\n\r", arg1);
+      send_to_char(buf, ch);
+    }
+    else
+        page_to_char(buf_string(buffer),ch);
+
+    free_buf(buffer);
     return;
 }
 //

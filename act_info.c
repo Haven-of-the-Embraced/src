@@ -258,14 +258,19 @@ void show_char_to_char_0( CHAR_DATA *victim, CHAR_DATA *ch )
 
     buf[0] = '\0';
 
+    if (IS_SET(victim->comm,COMM_AFK )) strcat( buf, "{x[{RAFK{x]{y ");
+    if ( victim->invis_level >= LEVEL_HERO ) strcat( buf, "{x(Wizi){y ");
     if (IS_NPC(victim) && IS_SET(victim->act, ACT_QUESTMOB) && IS_IMMORTAL(ch))
       strcat( buf, "{W*{D!{GQ{gu{ce{Cst{cM{go{Gb{D!{W*{y "        );
 
     if (IS_NPC(victim) && IS_SET(victim->act2, ACT2_INFLUENCE) &&
-        !IS_NPC(ch) && IS_SET(ch->act2, PLR2_PVP))
+        !IS_NPC(ch) && is_affected(ch, gsn_notoriety))
     {
         strcat(buf, "{R({rInfluence{R){y ");
     }
+    if ( IS_IMMORTAL(ch) && IS_AFFECTED2(victim, AFF2_UMBRA) ) strcat( buf, "{x({mUmbra{x){y ");
+    if ( (is_affected(ch, gsn_spiritsight) || is_affected(ch, gsn_gift_pulseoftheinvisible))
+        && !IS_AFFECTED2(ch, AFF2_UMBRA) && IS_AFFECTED2(victim, AFF2_UMBRA)) strcat(buf, "{x({mIndistinct{x){y ");
     if ( RIDDEN(victim) )
     {
         if ( ch != RIDDEN(victim) )
@@ -273,6 +278,7 @@ void show_char_to_char_0( CHAR_DATA *victim, CHAR_DATA *ch )
         else
         strcat( buf, "(Your mount) " );
     }
+    if(is_affected(ch, gsn_gift_sensetheunnatural) && is_supernatural(victim)) strcat( buf, "{G({MS{G){y ");
     if(is_affected(ch,gsn_gift_sensewyrm))
     {
         if(IS_EVIL(victim) || victim->race == race_lookup("methuselah") || victim->race == race_lookup("vampire"))
@@ -280,14 +286,14 @@ void show_char_to_char_0( CHAR_DATA *victim, CHAR_DATA *ch )
         else if(victim->race == race_lookup("ghoul") || victim->race == race_lookup("dhampire"))
             strcat( buf, "{x*{MTaint{x*{y " );
     }
-    if ( IS_IMMORTAL(ch) && IS_AFFECTED2(victim, AFF2_UMBRA)       ) strcat( buf, "{x({mUmbra{x){y "    );
-    if ( (is_affected(ch, gsn_spiritsight) || is_affected(ch, gsn_gift_pulseoftheinvisible))
-        && !IS_AFFECTED2(ch, AFF2_UMBRA) && IS_AFFECTED2(victim, AFF2_UMBRA)) strcat(buf, "{x({mIndistinct{x){y ");
-    if ( IS_SET(victim->comm,COMM_AFK     )   ) strcat( buf, "{x[{RAFK{x]{y "        );
     if ( IS_AFFECTED(victim, AFF_INVISIBLE)   ) strcat( buf, "{x({CInvis{x){y "      );
-    if ( victim->invis_level >= LEVEL_HERO    ) strcat( buf, "{x(Wizi){y "       );
     if ( IS_AFFECTED(victim, AFF_HIDE)        ) strcat( buf, "{x({yHide{x){y "       );
     if ( IS_AFFECTED(victim, AFF_CHARM)       ) strcat( buf, "{x({BCharmed{x){y "    );
+    if ( IS_AFFECTED2(victim, AFF2_MAJESTY)   ) strcat( buf, "{x({RM{Da{rj{Res{rt{Di{Rc{x){y " );
+    if ( is_affected(ch, gsn_timesense) && is_affected(victim, gsn_sidesteptime))
+      strcat( buf, "{x{D[{YTemporal{D]{y "   );
+    if ( is_affected(ch, gsn_timesense) && is_affected(victim, gsn_stoptheclock))
+      strcat( buf, "{x{Y[{DStopped{Y]{y "   );
     if ( is_affected(ch, gsn_timesense) &&
       (IS_AFFECTED(victim, AFF_HASTE) || IS_SET(victim->off_flags, OFF_FAST) ||
         is_affected(victim, gsn_celbuff) || is_affected(victim, gsn_rage) ||
@@ -296,15 +302,12 @@ void show_char_to_char_0( CHAR_DATA *victim, CHAR_DATA *ch )
         (is_affected(victim, gsn_slow) || IS_AFFECTED(victim, AFF_SLOW)  ))
         strcat( buf, "{x{Y({DDecelerated{Y){y "   );
     if ( IS_AFFECTED(victim, AFF_PASS_DOOR)   ) strcat( buf, "{x({cTranslucent{x){y ");
-    if ( IS_AFFECTED2(victim, AFF2_MAJESTY)   ) strcat( buf, "{x({RM{Da{rj{Res{rt{Di{Rc{x){y " );
     if ( IS_AFFECTED(victim, AFF_FAERIE_FIRE) ) strcat( buf, "{x({MPink Aura{x){y "  );
-    if ( IS_EVIL(victim)
-    &&   IS_AFFECTED(ch, AFF_DETECT_EVIL)     ) strcat( buf, "{x({RRed Aura{x){y "   );
-    if ( IS_GOOD(victim)
-    &&   IS_AFFECTED(ch, AFF_DETECT_GOOD)     ) strcat( buf, "{x({YGolden Aura{x){y ");
     if ( IS_AFFECTED(victim, AFF_SANCTUARY)   ) strcat( buf, "{x({wWhite Aura{x){y " );
     if ( is_affected(victim, gsn_unseen))      strcat( buf, "{x({DUnseen{x){y ");
     if(IS_AFFECTED(victim, AFF_FANGS)       )   strcat( buf, "{x({rFangs{x){y "  );
+    if ( is_affected(victim, gsn_gift_eyesofthecat))    strcat( buf, "{x@{GEyes{x@{y ");
+    if ( is_affected(victim, gsn_gleam))    strcat( buf, "{x@{REyes{x@{y ");
 /*Players able to see those hovering above the ground - Sengir*/
     if (IS_AFFECTED(victim, AFF_FLYING))    strcat( buf, "{x({GAloft{x){y " );
     if(IS_SET(victim->imm_flags,IMM_SUNLIGHT) && (victim->race == race_lookup("vampire") || victim->race == race_lookup("methuselah")))    strcat( buf, "{x({DShadowy{x){y "  );
@@ -1753,6 +1756,14 @@ void do_examine( CHAR_DATA *ch, char *argument )
       obj->value[0] < 2 ? "a single charge left" :
       obj->value[0] < 5 ? "very few charges left" :
       "quite a few charges left");
+  if (obj->item_type == ITEM_WEAPON)
+    sprintf( buf, "%s | --{x This would make a useful %s.\n\r", condition,
+      obj->value[0] == WEAPON_EXOTIC ? "improvised weapon" : obj->value[0] == WEAPON_SWORD ? "sword" :
+      obj->value[0] == WEAPON_DAGGER ? "dagger" : obj->value[0] == WEAPON_SPEAR ? "spear/staff" :
+      obj->value[0] == WEAPON_MACE ? "mace/club" : obj->value[0] == WEAPON_AXE ? "axe" :
+      obj->value[0] == WEAPON_FLAIL ? "flail" : obj->value[0] == WEAPON_WHIP ? "whip" :
+      obj->value[0] == WEAPON_POLEARM ? "polearm" : obj->value[0] == WEAPON_LANCE ? "lance" :
+      "unknown");
   send_to_char( buf, ch );
   send_to_char( condition, ch );
 	send_to_char("()-----------------------=======ooooOOOOOOOOoooo=======-----------------------(){x\n\r",ch);
@@ -2522,6 +2533,7 @@ void do_who( CHAR_DATA *ch, char *argument )
     extern bool slaughter;
     extern bool doubledam;
     extern bool nosun;
+    extern bool spookums;
     int iRace;
     int iClan;
     int iLevelLower;
@@ -2731,7 +2743,12 @@ void do_who( CHAR_DATA *ch, char *argument )
       sprintf( buf2, " =====                   {DDark clouds blout out the sun.{x                   ===== \n");
       add_buf(output,buf2);
     }
-    if (slaughter || doubledam || nosun || doubleexp || manualxp)
+    if (spookums)
+    {
+      sprintf( buf2, " =====             {GThe land is covered by an eerie {Dspookiness{G.{x            ===== \n");
+      add_buf(output,buf2);
+    }
+    if (slaughter || doubledam || nosun || doubleexp || manualxp || spookums)
     {
       add_buf(output, "{w<==============================================================================>{x\n\r");
     }
@@ -3125,8 +3142,7 @@ void do_consider( CHAR_DATA *ch, char *argument )
     send_to_char(buf, ch);
     sprintf(buf, "  %s \n\r",  center(capitalize(victim->short_descr),70," "));
     send_to_char(buf, ch);
-
-         if ( diff <=  -5 ) msg = "  It is probably not worth your time to kill $N.";
+        if ( diff <=  -5 ) msg = "  It is probably not worth your time to kill $N.";
     else if ( diff <=   5 ) msg = "  $N would be a good match for you.";
     else if ( diff <=  15 ) msg = "  $N might provide a bit of a challenge.";
     else                    msg = "  Only those sure of themselves should pick this fight.";
@@ -3139,6 +3155,15 @@ void do_consider( CHAR_DATA *ch, char *argument )
     if (parmor > varmor + 200)
       msg = "  $N is wearing much better armor than you are.";
     act(msg, ch, NULL, victim, TO_CHAR);
+
+    if (is_affected(ch, gsn_gift_namethespirit) && is_umbral_denizen(victim))
+    {
+        send_to_char("{M|-------------------------( ( {mUmbral Denizen{M ) )-------------------------|{x \n\r", ch);
+        msg = name_the_spirit(victim);
+        send_to_char(msg, ch);
+        sprintf( buf, "{m--> {x%s\n\r", victim->name);
+        send_to_char( buf, ch );
+    }
 
     send_to_char("--------------------------( ( ( ---------- ) ) )-------------------------- \n\r", ch);
 

@@ -52,6 +52,7 @@ void song_update(void)
     char buf[MAX_STRING_LENGTH];
     char *line;
     int i;
+    int performance;
 
     /* do the global song, if any */
     if (channel_songs[1] >= MAX_SONGS)
@@ -151,12 +152,32 @@ void song_update(void)
     sprintf(buf,"$p bops: '%s'",line);
     if (room->people != NULL)
         act(buf,room->people,obj,NULL,TO_ALL);
-/*  Placeholder for Performance checks
+//  Placeholder for Performance checks
       for (dancer = obj->in_room->people; dancer != NULL; dancer = dancer->next_in_room)
       {
-        send_to_char("You dance along to the song.\n\r", dancer);
+        if (is_affected(dancer, gsn_rhythm) && get_affect_level(dancer, gsn_rhythm) > 0)
+        {
+            performance = godice(get_attribute(dancer, CHARISMA) + dancer->csabilities[CSABIL_PERFORMANCE], 7);
+            if (performance > 0)
+            {
+                if (performance > 3)
+                {
+                    sprintf(buf,"$n sings along with $p, '%s'",line);
+                    act(buf, dancer, obj, NULL, TO_CHAR);
+                    act(buf, dancer, obj, NULL, TO_NOTVICT);
+                }
+                else
+                {
+                    send_to_char("You pull out your best dance moves.\n\r", dancer);
+                    act("$n gets $s groove on, dancing in rythm to the song.", dancer, NULL, NULL, TO_NOTVICT);
+                }
+                gain_exp(dancer, performance * get_affect_level(dancer, gsn_rhythm));
+                sprintf(buf, "Your sick dance moves gain you %d xp!\n\r", performance * get_affect_level(dancer, gsn_rhythm));
+                send_to_char(buf, dancer);
+            }
+        }
       }
-*/
+
     }
 }
 

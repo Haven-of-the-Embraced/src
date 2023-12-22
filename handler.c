@@ -779,8 +779,7 @@ bool is_natural( CHAR_DATA *ch )
   	ch->race == race_lookup("faerie") ||
   	ch->race == race_lookup("fera") ||
     ch->race == race_lookup("kinfolk") ||
-    ch->race == race_lookup("vampire") ||
-  	ch->race == race_lookup("kuei-jin") ||
+   	ch->race == race_lookup("kuei-jin") ||
     ch->race == race_lookup("mage") ||
   	ch->race == race_lookup("ooze") ||
   	ch->race == race_lookup("romani") ||
@@ -837,6 +836,78 @@ bool human_variant( CHAR_DATA *ch )
     return FALSE;
 }
 
+bool is_supernatural( CHAR_DATA *ch )
+{
+  if (
+    ch->race == race_lookup("dhampire") ||
+    ch->race == race_lookup("garou") ||
+    ch->race == race_lookup("ghoul") ||
+    ch->race == race_lookup("methuselah") ||
+    ch->race == race_lookup("vampire") ||
+    ch->race == race_lookup("abomination") ||
+    ch->race == race_lookup("bane") ||
+    ch->race == race_lookup("bygone") ||
+    ch->race == race_lookup("construct") ||
+    ch->race == race_lookup("demon") ||
+    ch->race == race_lookup("dragon") ||
+    ch->race == race_lookup("elemental") ||
+    ch->race == race_lookup("faerie") ||
+    ch->race == race_lookup("fera") ||
+    ch->race == race_lookup("fomor") ||
+    ch->race == race_lookup("kinfolk") ||
+    ch->race == race_lookup("kuei-jin") ||
+    ch->race == race_lookup("mage") ||
+    ch->race == race_lookup("ooze") ||
+    ch->race == race_lookup("romani") ||
+    ch->race == race_lookup("shadow") ||
+    ch->race == race_lookup("spirit") ||
+    ch->race == race_lookup("undead") ||
+    ch->race == race_lookup("vegetation") ||
+    ch->race == race_lookup("wraith") ||
+    ch->race == race_lookup("placeholder") ||
+    ch->race == race_lookup("unique")
+    )
+    return TRUE;
+
+  else
+    return FALSE;
+}
+
+bool is_umbral_denizen( CHAR_DATA *ch )
+{
+  if (
+    ch->race == race_lookup("bygone") ||
+    ch->race == race_lookup("demon") ||
+    ch->race == race_lookup("dragon") ||
+    ch->race == race_lookup("elemental") ||
+    ch->race == race_lookup("faerie") ||
+    ch->race == race_lookup("spirit") ||
+    ch->race == race_lookup("wraith")
+    )
+    return TRUE;
+
+  else
+    return FALSE;
+}
+
+char *name_the_spirit( CHAR_DATA *ch )
+{
+    if (ch->race == race_lookup("bygone"))
+        return "  This is a mythical creature, not seen in ages.\n\r";
+    if (ch->race == race_lookup("demon"))
+        return "  This being seems to have come from the depths of Hell itself.\n\r";
+    if (ch->race == race_lookup("dragon"))
+        return "  Before you is a creature of legend.\n\r";
+    if (ch->race == race_lookup("elemental"))
+        return "  This oddity has sprung from the very elements themselves.\n\r";
+    if (ch->race == race_lookup("faerie"))
+        return "  This entity has come through from the realm of Glamour.\n\r";
+    if (ch->race == race_lookup("spirit"))
+        return "  A spiritual entity has formed in front of you.\n\r";
+    if (ch->race == race_lookup("wraith"))
+        return "  Energies of Oblivion radiate from this being.\n\r";
+    return "  This being is beyond your understanding of the Umbra.\n\r";
+}
 bool has_silver( CHAR_DATA *ch )
 {
   if (
@@ -4292,6 +4363,88 @@ char *bloodpooldot2( int num, bool space)
     }
 
     bug( "Invalid bloodpool dot rating: %d.", num );
+    return "(unknown)";
+}
+
+char *quintessencedot( int num, bool space)
+{
+
+    if(space)
+    {
+        switch ( num )
+        {
+            case 0:     return "[ | | | | | | | | | ]";
+            case 1:     return "[{MQ{x| | | | | | | | | ]";
+            case 2:     return "[{MQ{x|{MQ{x| | | | | | | | ]";
+            case 3:     return "[{MQ{x|{MQ{x|{MQ{x| | | | | | | ]";
+            case 4:     return "[{MQ{x|{MQ{x|{MQ{x|{MQ{x| | | | | | ]";
+            case 5:     return "[{MQ{x|{MQ{x|{MQ{x|{MQ{x|{MQ{x| | | | | ]";
+            case 6:     return "[{MQ{x|{MQ{x|{MQ{x|{MQ{x|{MQ{x|{MQ{x| | | | ]";
+            case 7:     return "[{MQ{x|{MQ{x|{MQ{x|{MQ{x|{MQ{x|{MQ{x|{MQ{x| | | ]";
+            case 8:     return "[{MQ{x|{MQ{x|{MQ{x|{MQ{x|{MQ{x|{MQ{x|{MQ{x|{MQ{x| | ]";
+            case 9:     return "[{MQ{x|{MQ{x|{MQ{x|{MQ{x|{MQ{x|{MQ{x|{MQ{x|{MQ{x|{MQ{x| ]";
+            case 10:    return "[{MQ{x|{MQ{x|{MQ{x|{MQ{x|{MQ{x|{MQ{x|{MQ{x|{MQ{x|{MQ{x|{MQ{x]";
+            default:    return "[{MQ{x|{MQ{x|{MQ{x|{MQ{x|{MQ{x|{MQ{x|{MQ{x|{MQ{x|{MQ{x|{MQ{x]";
+        }
+    }
+    switch ( num )
+    {
+        case 0:     return "__________";
+        case 1:     return "{MQ{x_________";
+        case 2:     return "{MQQ{x________";
+        case 3:     return "{MQQQ{x_______";
+        case 4:     return "{MQQQQ{x______";
+        case 5:     return "{MQQQQQ{x_____";
+        case 6:     return "{MQQQQQQ{x____";
+        case 7:     return "{MQQQQQQQ{x___";
+        case 8:     return "{MQQQQQQQQ{x__";
+        case 9:     return "{MQQQQQQQQQ{x_";
+        case 10:    return "{MQQQQQQQQQQ{x";
+        default:    return "{MQQQQQQQQQQ{x";
+    }
+
+    bug( "Invalid quintessence dot rating: %d.", num );
+    return "(unknown)";
+}
+
+char *quintessencedot2( int num, bool space)
+{
+
+    if(space)
+    {
+        switch ( num )
+        {
+            case 0:     return "[ | | | | | | | | | ]";
+            case 1:     return "[{MQ{x| | | | | | | | | ]";
+            case 2:     return "[{MQ{x|{MQ{x| | | | | | | | ]";
+            case 3:     return "[{MQ{x|{MQ{x|{MQ{x| | | | | | | ]";
+            case 4:     return "[{MQ{x|{MQ{x|{MQ{x|{MQ{x| | | | | | ]";
+            case 5:     return "[{MQ{x|{MQ{x|{MQ{x|{MQ{x|{MQ{x| | | | | ]";
+            case 6:     return "[{MQ{x|{MQ{x|{MQ{x|{MQ{x|{MQ{x|{MQ{x| | | | ]";
+            case 7:     return "[{MQ{x|{MQ{x|{MQ{x|{MQ{x|{MQ{x|{MQ{x|{MQ{x| | | ]";
+            case 8:     return "[{MQ{x|{MQ{x|{MQ{x|{MQ{x|{MQ{x|{MQ{x|{MQ{x|{MQ{x| | ]";
+            case 9:     return "[{MQ{x|{MQ{x|{MQ{x|{MQ{x|{MQ{x|{MQ{x|{MQ{x|{MQ{x|{MQ{x| ]";
+            case 10:    return "[{MQ{x|{MQ{x|{MQ{x|{MQ{x|{MQ{x|{MQ{x|{MQ{x|{MQ{x|{MQ{x|{MQ{x]";
+            default:    return "[ | | | | | | | | | ]";
+        }
+    }
+    switch ( num )
+    {
+        case 0:     return "__________";
+        case 1:     return "{MQ{x_________";
+        case 2:     return "{MQQ{x________";
+        case 3:     return "{MQQQ{x_______";
+        case 4:     return "{MQQQQ{x______";
+        case 5:     return "{MQQQQQ{x_____";
+        case 6:     return "{MQQQQQQ{x____";
+        case 7:     return "{MQQQQQQQ{x___";
+        case 8:     return "{MQQQQQQQQ{x__";
+        case 9:     return "{MQQQQQQQQQ{x_";
+        case 10:    return "{MQQQQQQQQQQ{x";
+        default:    return "__________";
+    }
+
+    bug( "Invalid quintessence dot rating: %d.", num );
     return "(unknown)";
 }
 

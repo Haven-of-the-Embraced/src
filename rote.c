@@ -327,6 +327,7 @@ void do_rote(CHAR_DATA *ch, char *argument)
     return;
 }
 
+/*
 void do_convert(CHAR_DATA *ch, char *argument)
 {
     char arg[MAX_INPUT_LENGTH];
@@ -380,6 +381,7 @@ void do_convert(CHAR_DATA *ch, char *argument)
     send_to_char("You channel Quintessence into yourself from the static existance of your life pattern.\n\r",ch);
 return;
 }
+*/
 
 void do_mage(CHAR_DATA *ch, char *argument)
 {
@@ -481,6 +483,7 @@ void do_sphere(CHAR_DATA *ch, char *argument)
 
 }
 
+/*
 void do_flaw(CHAR_DATA *ch, char *argument)
 {
     char arg[MAX_INPUT_LENGTH];
@@ -517,7 +520,7 @@ void do_flaw(CHAR_DATA *ch, char *argument)
     send_to_char("You you channel a small amount of Paradox into your physical body.. and endure the loss of health.\n\r",ch);
 return;
 }
-
+*/
 
 // ACTUAL ROTES CODE FOLLOW HERE.
 // bm_rote -- bookmark for rotes.
@@ -595,7 +598,7 @@ void rote_controlrandomness(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_D
     af.where     = TO_AFFECTS;
     af.type      = gsn_controlrandomness;
     af.level     = success;
-    af.duration  = 5*success;
+    af.duration  = 15 + 5*success;
     af.location  = APPLY_NONE;
     af.modifier  = 0;
     af.bitvector = 0;
@@ -1859,7 +1862,20 @@ void rote_matterperception(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DA
 
 void rote_goldenwish(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
 {
-    ch->gold += success*2;
+    if (success <= 0)
+    {
+        send_to_char("You attempt to transform raw energy into solid matter, but the energy runs wild.\n\r", ch);
+        d10_damage( ch, ch, -success, ch->level, gsn_magick, DAM_ENERGY, DEFENSE_NONE, TRUE, TRUE);
+        return;
+    }
+
+    if (success == 0)
+    {
+        send_to_char("The Quintessence slips from your grasp, and dissipates back to the Tellurian.\n\r", ch);
+        return;
+    }
+
+    ch->gold += 5 + success*10;
 
     act("$n holds out an empty hand, closes it, and then opens it to reveal golden coins..",ch,NULL,NULL,TO_NOTVICT);
     act("You form a Matter pattern, feed Quintessence into it and create golden coins.",ch,NULL,NULL,TO_CHAR);
@@ -1992,10 +2008,15 @@ void rote_refinematter(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *
       af.level     = 0;
       af.duration  = 1;
       if (CAN_WEAR( obj, ITEM_WIELD))
+      {
         af.location  = APPLY_DAMROLL;
+        af.modifier = -50;
+      }
       else
+      {  
         af.location  = APPLY_AC;
-      af.modifier  = 150;
+        af.modifier  = 150;
+      }  
       af.bitvector = ITEM_IS_ENHANCED;
       affect_to_obj(obj,&af);
 
@@ -2067,20 +2088,29 @@ void rote_empowerself(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *o
 
     af.where     = TO_AFFECTS;
     af.type      = gsn_empower;
-    af.level     = ch->level;
+    af.level     = success;
     af.duration  = ch->avatar*success*5;
     af.location  = APPLY_CS_INT;
     af.modifier  = ch->sphere[SPHERE_MIND];
     af.bitvector = 0;
     affect_to_char( ch, &af );
 
-    af.where     = TO_AFFECTS;
-    af.type      = gsn_empower;
-    af.level     = ch->level;
-    af.duration  = ch->avatar*success*5;
     af.location  = APPLY_CS_WIT;
-    af.modifier  = ch->sphere[SPHERE_MIND];
-    af.bitvector = 0;
+    affect_to_char( ch, &af );
+
+    af.type      = gsn_mental_resilience;
+    af.location  = APPLY_NONE;
+    af.modifier  = 0;
+    if (success > 4)
+    {
+        af.where     = TO_IMMUNE;
+        af.bitvector = IMM_MENTAL;
+    }
+    else
+    {
+        af.where     = TO_RESIST;
+        af.bitvector = RES_MENTAL;
+    }
     affect_to_char( ch, &af );
     return;
 }
@@ -2119,25 +2149,34 @@ void rote_mentallink(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *ob
     {
         if ( !is_same_group( gch, ch ) || is_affected(gch,gsn_empower) || IS_NPC(gch) )
             continue;
-        send_to_char( "Your mind reaches a clarity it has never before achieved..\n\r", gch );
+        send_to_char( "Your mind reaches a clarity it has never before achieved.\n\r", gch );
 
         af.where     = TO_AFFECTS;
         af.type      = gsn_empower;
-        af.level     = ch->level;
+        af.level     = success;
         af.duration  = ch->avatar*success*5;
         af.location  = APPLY_CS_INT;
         af.modifier  = ch->sphere[SPHERE_MIND];
         af.bitvector = 0;
         affect_to_char( gch, &af );
 
-        af.where     = TO_AFFECTS;
-        af.type      = gsn_empower;
-        af.level     = ch->level;
-        af.duration  = ch->avatar*success*5;
         af.location  = APPLY_CS_WIT;
-        af.modifier  = ch->sphere[SPHERE_MIND];
-        af.bitvector = 0;
         affect_to_char( gch, &af );
+
+    af.type      = gsn_mental_resilience;
+    af.location  = APPLY_NONE;
+    af.modifier  = 0;
+    if (success > 4)
+    {
+        af.where     = TO_IMMUNE;
+        af.bitvector = IMM_MENTAL;
+    }
+    else
+    {
+        af.where     = TO_RESIST;
+        af.bitvector = RES_MENTAL;
+    }
+        affect_to_char( ch, &af );
     }
     send_to_char("Reaching out with your mind, you bestow the gifts of clarity and thought amongst your allies.\n\r" ,ch);
     return;
@@ -2423,6 +2462,20 @@ void rote_channelquintessence(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ
   {
     act("A surge of {Ywild Quintessence{x rips through $p's Pattern, destroying it.", ch, obj, NULL, TO_CHAR);
     act("With a bright flash, $p explodes in a ball of {Yenergy{x.", ch, obj, NULL, TO_NOTVICT);
+    if (obj->contains != NULL)
+    {
+      OBJ_DATA *in, *in_next;
+
+      act("The contents that were contained within $p spill to the ground.",ch,obj,NULL,TO_ROOM);
+      act("You watch as the contents formerly contained within $p spill to the ground.",ch,obj,NULL,TO_CHAR);
+      for (in = obj->contains; in != NULL; in = in_next)
+      {
+        in_next = in->next_content;
+        obj_from_obj(in);
+        obj_to_room(in,victim->in_room);
+      }
+    }
+
     extract_obj(obj);
     return;
   }
@@ -2445,6 +2498,21 @@ void rote_channelquintessence(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ
   ch->quintessence += UMIN(success * 5, obj->level / 2);
   if (ch->quintessence > ch->max_quintessence)
     ch->quintessence = ch->max_quintessence;
+
+  if (obj->contains != NULL)
+  {
+    OBJ_DATA *in, *in_next;
+
+    act("The contents that were contained within $p spill to the ground.",ch,obj,NULL,TO_ROOM);
+    act("You watch as the contents formerly contained within $p spill to the ground.",ch,obj,NULL,TO_CHAR);
+    for (in = obj->contains; in != NULL; in = in_next)
+    {
+      in_next = in->next_content;
+      obj_from_obj(in);
+      obj_to_room(in,victim->in_room);
+    }
+  }
+
   extract_obj(obj);
 
   return;
@@ -2892,19 +2960,53 @@ void rote_timealteration(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA
 
 void rote_stoptheclock(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
 {
+    AFFECT_DATA af;
+
     if (IS_NPC(ch)) return;
 
-    if(victim->stopped > 0)
+    if (success < 0)
     {
-        send_to_char("You have already frozen time around this being.\n\r",ch);
-        return;
+      act( "With a flash of realization, your body freezes in place as the temporal energies surround you.",  ch, NULL, victim, TO_CHAR );
+      act( "$n begins to gesture, but suddenly freezes in place!",  ch, NULL, victim, TO_NOTVICT );
+
+      if (!is_affected(ch, gsn_stoptheclock))
+      {
+        af.where     = TO_AFFECTS;
+        af.type      = gsn_stoptheclock;
+        af.level     = -1;
+        af.duration  = 1;
+        af.location  = APPLY_NONE;
+        af.modifier  = 2;
+        af.bitvector = 0;
+        affect_to_char( ch, &af );
+      }
+      return;
+    }
+
+    if (success < 0)
+    {
+      send_to_char("The temporal energies you try to nudge refuse to stop at your command.\n\r", ch);
+      return;
+    }
+
+    if(is_affected(victim, gsn_stoptheclock))
+    {
+      act( "You direct temporal energies towards $N, but $E seems to have already been frozen in the time stream.",  ch, NULL, victim, TO_CHAR );
+      return;
     }
 
     act( "$n waves a hand at $N who suddenly seems frozen!",  ch, NULL, victim, TO_NOTVICT    );
     act( "You suddenly find time rushing by too fast to perceive.",  ch, NULL, victim, TO_VICT );
     act( "You feel the strain of the world bending to your whim as you stop the flow of time itself around $N.", ch, NULL, victim, TO_CHAR );
-    victim->stopped = success*PULSE_VIOLENCE;
-    damage( ch, victim, 0, gsn_magick, DAM_MENTAL, FALSE);
+
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_stoptheclock;
+    af.level     = success;
+    af.duration  = 1;
+    af.location  = APPLY_NONE;
+    af.modifier  = success + 2;
+    af.bitvector = 0;
+    affect_to_char( victim, &af );
     return;
 }
 
@@ -2921,22 +3023,46 @@ void rote_sidesteptime(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *
 
     if(is_affected(ch,gsn_sidesteptime))
     {
-        send_to_char("You are already outside of time.\n\r",ch);
+        send_to_char("You carefully reinsert your Pattern back into the flow of Time.\n\r",ch);
+        act("$n suddenly appears, as if from nowhere.", ch, NULL, NULL, TO_ROOM);
+        affect_strip(ch, gsn_sidesteptime);
         return;
     }
 
-    stop_fighting( ch, TRUE );
+    if (success < 0)
+    {
+      send_to_char("You feel an intense backlash as Time moves forward, leaving you frozen in place.\n\r", ch);
+      ch->paradox += 10;
+      WAIT_STATE(ch, 20);
+      return;
+    }
+
+    if (success == 0)
+    {
+      send_to_char("The Pattern of Time refuses to budge, leaving you in the current Time Stream.\n\r", ch);
+      WAIT_STATE(ch, 5);
+      return;
+    }
+
+    if (ch->position == POS_FIGHTING)
+    {
+      stop_fighting( ch, TRUE );
+      act("With a tug on the Pattern of Time, you remove yourself from its flow, and combat as well.", ch, NULL, NULL, TO_CHAR);
+    }
+    else
+      send_to_char("You impose your Will onto the timeline, and step completely out of its natural flow.\n\r",ch);
+
+    act("$n suddenly disappears from existence.", ch, NULL, NULL, TO_ROOM);
 
     af.where     = TO_AFFECTS;
     af.type      = gsn_sidesteptime;
-    af.level     = ch->level;
-    af.duration  = success;
+    af.level     = success;
+    af.duration  = success * 2;
     af.location  = APPLY_NONE;
     af.modifier  = 0;
     af.bitvector = 0;
     affect_to_char( victim, &af );
 
-    send_to_char("You impose your Will onto the timeline and step outside of time.\n\r",ch);
     return;
 }
 
@@ -3029,6 +3155,67 @@ void rote_negationfield(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA 
     send_to_char("You summon about yourself a field of negative energy to protect yourself from the magicks of others.\n\r",ch);
     return;
 }
+
+void rote_sluggishspeed(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
+{
+    AFFECT_DATA af;
+
+    if (IS_NPC(ch)) return;
+
+    if (success < 0)
+    {
+      act( "The temporal energies go awry, instead causing your own body to slow horribly!",  ch, NULL, victim, TO_CHAR );
+      act( "$n's movements seem to slow down greatly.",  ch, NULL, victim, TO_NOTVICT );
+
+      if (!is_affected(ch, gsn_sluggishspeed))
+      {
+        af.where     = TO_AFFECTS;
+        af.type      = gsn_sluggishspeed;
+        af.level     = -1;
+        af.duration  = 1;
+        af.location  = APPLY_NONE;
+        af.modifier  = 0;
+        af.bitvector = AFF_SLOW;
+        affect_to_char( ch, &af );
+      }
+      return;
+    }
+
+    if (success < 0)
+    {
+      send_to_char("You begin to nudge the Patterns of Time, but they refuse to slow.\n\r", ch);
+      return;
+    }
+
+    if(is_affected(victim, gsn_sluggishspeed) || IS_AFFECTED(victim, AFF_SLOW))
+    {
+      act( "You direct temporal energies towards $N, but $E is already moving slowly.",  ch, NULL, victim, TO_CHAR );
+      return;
+    }
+
+    act( "$n waves a hand at $N, who seems to slow down drastically.",  ch, NULL, victim, TO_NOTVICT    );
+    act( "Your body slows down, refusing to move as you normally expect.",  ch, NULL, victim, TO_VICT );
+    act( "Gesturing to $N, you command the flow of Time to slow down around $m.", ch, NULL, victim, TO_CHAR );
+
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_sluggishspeed;
+    af.level     = success;
+    af.duration  = success + 2;
+    af.location  = APPLY_NONE;
+    af.modifier  = 0;
+    af.bitvector = AFF_SLOW;
+    affect_to_char( victim, &af );
+
+    if (success > 4)
+    {
+      af.location  = APPLY_CS_DEX;
+      af.modifier  = -1;
+      af.bitvector = 0;
+      affect_to_char( victim, &af );
+    }
+    return;
+}
+
 /*
 void rote_quintessentialbond(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
 {

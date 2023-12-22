@@ -4466,7 +4466,7 @@ void spell_slow( int sn, int level, CHAR_DATA *ch, void *vo,int target )
     af.level     = level;
     af.duration  = level/2;
     af.location  = APPLY_CS_DEX;
-    af.modifier  = -1 - (level >= 18) - (level >= 25) - (level >= 32);
+    af.modifier  = -1;
     af.bitvector = AFF_SLOW;
     affect_to_char( victim, &af );
     send_to_char( "You feel yourself slowing d o w n...\n\r", victim );

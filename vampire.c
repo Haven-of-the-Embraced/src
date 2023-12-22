@@ -402,7 +402,7 @@ void do_feed(CHAR_DATA *ch, char *argument)
             sprintf(buf,"You commit your life and soul to the immortal service of %s!\n\r",victim->name);
             send_to_char(buf,ch);
                 ch->race = race_lookup("ghoul");
-                ch->gen = victim->pcdata->csgeneration;
+                ch->gen = 8;
                 ch->pcdata->csgeneration = victim->pcdata->csgeneration;
                 ch->clan = victim->clan;
                 ch->dpoints = 0;

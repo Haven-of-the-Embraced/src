@@ -739,9 +739,10 @@ const struct flag_type type_flags[] =
     {   "trap",     ITEM_TRAP,      TRUE    },
     {   "tool",     ITEM_TOOL,      TRUE    },
     {   "crafted",      ITEM_CRAFTED,       TRUE    },
-		{		"plasm",				ITEM_PLASM, 				TRUE 		},
-		{		"lockpick",			ITEM_LOCKPICK,			TRUE		},
-		{		"blastpowder",	ITEM_BLASTPOWDER,		TRUE		},
+    {   "notepaper",    ITEM_NOTEPAPER,         TRUE        },
+	{   "plasm",		ITEM_PLASM, 			TRUE 		},
+	{	"lockpick",		ITEM_LOCKPICK,			TRUE		},
+	{	"blastpowder",	ITEM_BLASTPOWDER,		TRUE		},
     {   NULL,           0,          0   }
 };
 
@@ -1279,7 +1280,7 @@ const struct    gift_type   gift_table  [MAX_GIFTS_CODED]  =
     {   "shed", 						1,     24, 0,     METIS,  0,          0,        1,   0},
     {   "curse of hatred", 				0,     24, 0,     METIS,  0,          0,        2,   0},
     {   "sense silver", 				1,     24, 0,     METIS,  0,          0,        2,   0},
-    {   "eyes of the cat", 				0,     24, 0,     METIS,  0,          0,        3,   0},
+    {   "eyes of the cat", 				1,     24, 0,     METIS,  0,          0,        3,   0},
     {   "mental speech", 				0,     24, 0,     METIS,  0,          0,        3,   0},
     {   "wither limb", 					0,     24, 0,     METIS,  0,          0,        4,   0},
     {   "madness", 						0,     24, 0,     METIS,  0,          0,        5,   0},
@@ -1288,9 +1289,9 @@ const struct    gift_type   gift_table  [MAX_GIFTS_CODED]  =
     {   "heightened senses", 			1,     24, 0,     LUPUS,  0,          0,        1,   0},
     {   "ley lines", 					1,     24, 0,     LUPUS,  0,          0,        1,   0},
     {   "scent of sight", 				1,     24, 0,     LUPUS,  0,          0,        2,   0},
-    {   "sense the unnatural", 			0,     24, 0,     LUPUS,  0,          0,        2,   0},
+    {   "sense the unnatural", 			1,     24, 0,     LUPUS,  0,          0,        3,   0},
     {   "devils child", 				0,     24, 0,     LUPUS,  0,          0,        3,   0},
-    {   "name the spirit", 				0,     24, 0,     LUPUS,  0,          0,        3,   0},
+    {   "name the spirit", 				1,     24, 0,     LUPUS,  THEURGE,    0,        2,   0},
     {   "beast life", 					0,     24, 0,     LUPUS,  0,          CHILDREN_OF_GAIA, 4,   0},
     {   "gnaw", 						0,     24, 0,     LUPUS,  0,          0,        4,   0},
     {   "elemental gift", 				0,     24, 0,     LUPUS,  0,          0,        5,   0},
@@ -1298,7 +1299,7 @@ const struct    gift_type   gift_table  [MAX_GIFTS_CODED]  =
     {   "blur of the milky eye", 		1,     24, 0,     0,      RAGABASH,   0,        1,   0},
     {   "scent of running water", 		1,     24, 0,     0,      RAGABASH,   0,        1,   0},
     {   "snow running", 				1,     24, 0,     0,      RAGABASH,   0,        1,   0},
-    {   "sense of prey", 				0,     24, 0,     0,      RAGABASH,   BLACK_FURY, 2,   0},
+    {   "sense of prey", 				1,     24, 0,     0,      RAGABASH,   BLACK_FURY, 2,   0},
     {   "open moon bridge", 			0,     24, 0,     0,      RAGABASH,   0,        3,   0},
     {   "reynards lie", 				0,     24, 0,     0,      RAGABASH,   0,        3,   0},
     {   "lepers curse", 				0,     24, 0,     0,      RAGABASH,   0,        4,   0},
@@ -1636,10 +1637,11 @@ const struct    rote_type   rote_table  [MAX_ROTE]  =
 		{		"Time Sense",						rote_timesense,							0, 0, 0, 0, 0, 0, 0, 0, 1, TARGET_NONE, 1, 1, FALSE, FALSE},
     {   "Precognition",         rote_precognition,          0, 0, 0, 0, 0, 0, 0, 0, 2, TARGET_NONE, 2, 2, FALSE, FALSE},
     {   "Time Alteration",      rote_timealteration,        0, 0, 0, 0, 0, 0, 0, 0, 3, TARGET_NONE, 10, 3, TRUE, FALSE},
-    {   "Stop the Clock",       rote_stoptheclock,          0, 0, 0, 0, 0, 0, 0, 0, 4, TARGET_CHAR, 10, 4, TRUE, FALSE},
-    {   "Sidestep Time",        rote_sidesteptime,          0, 0, 0, 0, 0, 0, 0, 0, 5, TARGET_NONE, 15, 5, TRUE, FALSE},
+    {   "Stop the Clock",       rote_stoptheclock,          0, 0, 0, 0, 0, 0, 0, 0, 4, TARGET_CHAR, 4, 4, TRUE, TRUE},
+    {   "Sidestep Time",        rote_sidesteptime,          0, 0, 0, 0, 0, 0, 0, 0, 5, TARGET_NONE, 15, 5, TRUE, TRUE},
 		{		"Camouflage Discernment",rote_camouflagediscernment, 1, 0, 0, 1, 0, 1, 0, 0, 0, TARGET_NONE, 1, 1, FALSE, TRUE},
-    {   "Negation Field",       rote_negationfield,         0, 0, 3, 0, 2, 0, 5, 0, 0, TARGET_NONE, 15, 5, TRUE, FALSE}
+    {   "Negation Field",       rote_negationfield,         0, 0, 3, 0, 2, 0, 5, 0, 0, TARGET_NONE, 15, 5, TRUE, FALSE},
+		{   "Sluggish Speed",       rote_sluggishspeed,         0, 0, 0, 3, 0, 0, 0, 0, 3, TARGET_CHAR, 4, 5, TRUE, TRUE}
 };
 
 /* Garou forms */

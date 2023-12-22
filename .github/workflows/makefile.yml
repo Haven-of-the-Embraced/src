@@ -12,9 +12,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
 
+    - name: Retreive Support Files
+      uses: actions/checkout@v3
+      with:
+        repository: Haven-of-the-Embraced/haven-support
+        path: ./haven
+
+    - name: Check out Repo
+      uses: actions/checkout@v3
 
     - name: Build MUD
-      run: make
+      run:
+          mv src haven
+          cd haven/src
+          make
 

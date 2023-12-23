@@ -2,18 +2,25 @@
 
 Haven of The Embraced (Haven) is a text-based Multi-User Dungeon (MUD) style game, based on the ROM code-base. Haven was created by 'Ugha' and is actively maintained by the HavenMUD team.
 
+![Login Screen](https://github.com/Haven-of-the-Embraced/src/assets/6600917/43a5e93e-8e33-4b8a-baf9-47a326d8e94f)
+![MOTD](https://github.com/Haven-of-the-Embraced/src/assets/6600917/24f99fe9-db57-4f0c-a494-6208841932cd)
+
+
+
 ## Compiling
 
 Haven is written in C and requires gcc or an equivalent C compiler. Compilation is as simple as cloning the repository and invoking:
 
 ```bash
-make
+make new
 ```
+Running `make new` will clean up the old obj files first.
 
 ## Run Haven
 
 Haven of The Embraced will not run without the associated /data and /area files, which were intentionally not provided in this repository. Those files can be recreated using the provided code as a guide for their contents.
 
+![Normal](https://github.com/Haven-of-the-Embraced/src/assets/6600917/2157a104-6963-4d9e-ba96-018d59505763)
 
 ```bash
 ./rom [port] [testrun]

@@ -4617,6 +4617,12 @@ void do_bank (CHAR_DATA *ch, char *argument )
     return;
     }
 
+    if (str_cmp(command, "balance") && str_cmp(command, "deposit") && str_cmp(command, "withdraw"))
+    {
+        send_to_char("That is not a valid bank command.\n\r", ch);
+        return;
+    }
+
     if (!str_cmp(command, "balance"))
     {
     char buf[MAX_STRING_LENGTH];

@@ -4621,6 +4621,7 @@ void do_chop( CHAR_DATA *ch, char *argument )
                 act("$n dives out of the way, but is still pummelled by a few branches.", ch, NULL, NULL, TO_NOTVICT);
                 damage( ch, ch, 200, gsn_bash, DAM_BASH, FALSE);
                 gain_exp(ch, success * 15);
+                gain_qp(ch, number_range(0, 2*success));
             }
 
             act("You dive quickly out of the way, the remainder of $p splintering as it crashes to the ground.", ch, obj, NULL, TO_CHAR);
@@ -4649,7 +4650,10 @@ void do_chop( CHAR_DATA *ch, char *argument )
     log = create_object(get_obj_index(obj->pIndexData->vnum+5),0);
     obj_to_room(log,ch->in_room);
     WAIT_STATE( ch, (6- ch->pcdata->cssec_abil[CSABIL_LOGGING]) * PULSE_VIOLENCE );
-    gain_exp( ch, 75*success );
+    
+    gain_exp( ch, 60*success );
+    gain_qp(ch, number_range( 1, 5*success));
+
     if(obj->level <= 0)
         extract_obj( obj );
     return;
@@ -4925,7 +4929,8 @@ void do_plane( CHAR_DATA *ch, char *argument )
     act( "and manage to plane the log into $p!", ch, obj,NULL, TO_CHAR );
     act( "and manages to plane the log into $p!", ch, obj,NULL, TO_ROOM );
 
-    gain_exp( ch, 45*success );
+    gain_exp( ch, 35*success );
+    gain_qp(ch, number_range( 1, 5*success));
     obj_to_room(obj,ch->in_room);
     WAIT_STATE( ch, (6- ch->pcdata->cssec_abil[CSABIL_CARVING]) * PULSE_VIOLENCE );
     extract_obj( log );
@@ -5104,6 +5109,7 @@ void do_carve( CHAR_DATA *ch, char *argument )
     act( "and manages to create $p!", ch, obj,NULL, TO_ROOM );
 
     gain_exp( ch, 40*success );
+    gain_qp(ch, number_range( 2, 5*success));
     obj_to_room(obj,ch->in_room);
     WAIT_STATE( ch, (6- ch->pcdata->cssec_abil[CSABIL_CARVING]) * PULSE_VIOLENCE );
     extract_obj( resource );

@@ -144,6 +144,29 @@ void gain_exp( CHAR_DATA *ch, int gain )
     return;
 }
 
+void gain_qp( CHAR_DATA *ch, int gain )
+{
+
+    char buf[MSL];
+
+    if (IS_NPC(ch))
+        return;
+
+    ch->qpoints += gain;
+    ch->totalqpoints += gain;
+    
+    if (ch->qpoints > MAX_QPOINTS)
+    {
+        send_to_char("Your Quest Points are maxxed!\n\rYou cannot gain any more and further gains will be lost.\n\r", ch);
+        sprintf(buf, "You just missed %d quest points due to having too many!\n\r", ch->qpoints - 30000);
+        send_to_char(buf, ch);
+
+        ch->qpoints = MAX_QPOINTS;
+    }
+
+    return;
+}
+
 
 
 /*

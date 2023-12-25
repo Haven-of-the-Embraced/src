@@ -4204,6 +4204,7 @@ RID *   room_by_name    args( ( char *target, int level, bool error) );
 /* update.c */
 void    advance_level   args( ( CHAR_DATA *ch, bool hide ) );
 void    gain_exp    args( ( CHAR_DATA *ch, int gain ) );
+void    gain_qp     args( (CHAR_DATA *ch, int gain));
 void    gain_condition  args( ( CHAR_DATA *ch, int iCond, int value ) );
 void    update_handler  args( ( void ) );
 void    quest_update    args( ( void ) ); /* Vassago - quest.c */

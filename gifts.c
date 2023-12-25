@@ -4015,7 +4015,9 @@ void do_gifts(CHAR_DATA *ch, char *argument)
     buffer = new_buf();
     if (str_cmp(argument, "all"))
 	{
-		send_to_char("Your Gifts from Gaia:\n\r",ch);
+		send_to_char("Your Gifts from Gaia:\n\r\n\r",ch);
+
+    cprintf(ch, "%-37s%s{x\n\r", "[Rank] Gift", "[Rank] Gift");
 
 		for (i = 0; i < MAX_GIFT; i++)
 		{
@@ -4023,65 +4025,67 @@ void do_gifts(CHAR_DATA *ch, char *argument)
 				continue;
 			else {
 				if (col < 2)
-                    if (gift_table[ch->pcdata->gift[i]].level == 0)
-                    sprintf(buf, "{r%-30s{x", capitalize(gift_table[ch->pcdata->gift[i]].name));
-                    else
-					sprintf(buf, "%-30s", capitalize(gift_table[ch->pcdata->gift[i]].name));
-				else if (col == 2)
-				{
-                    if (gift_table[ch->pcdata->gift[i]].level == 0)
-                    sprintf(buf, "{r%-30s{x\n\r", capitalize(gift_table[ch->pcdata->gift[i]].name));
-                    else
-					sprintf(buf, "%s\n\r", capitalize(gift_table[ch->pcdata->gift[i]].name));
-					col = 0;
-					}
+          {
+              if (gift_table[ch->pcdata->gift[i]].level == 0)
+              sprintf(buf, "  %3d  {r%-30s{x", gift_table[ch->pcdata->gift[i]].rank, capitalize(gift_table[ch->pcdata->gift[i]].name));
+            else
+             sprintf(buf, "  %3d  %-30s", gift_table[ch->pcdata->gift[i]].rank, capitalize(gift_table[ch->pcdata->gift[i]].name));
+        }
+         else
+        {
+          if (gift_table[ch->pcdata->gift[i]].level == 0)
+            sprintf(buf, "  %3d  {r%-30s{x\n\r", gift_table[ch->pcdata->gift[i]].rank, capitalize(gift_table[ch->pcdata->gift[i]].name));
+          else
+           sprintf(buf, "  %3d  %s\n\r", gift_table[ch->pcdata->gift[i]].rank, capitalize(gift_table[ch->pcdata->gift[i]].name));
+          col = 0;
+          }
 
 				add_buf(buffer, buf);
 				col++;
 			}
 		}
 	} else {
-	    send_to_char("Gifts you may learn:\n\r",ch);
+	    send_to_char("Gifts you may learn:\n\r\n\r",ch);
 
-		for (i = 1; i < MAX_GIFTS_CODED; i++)
+    cprintf(ch, "%-37s%s{x\n\r", "[Rank] Gift", "[Rank] Gift");
+
+    for (i = 1; i < MAX_GIFTS_CODED; i++)
 		{
-			if (ch->pcdata->rank < gift_table[i].rank ||
-					(gift_table[i].breed != ch->pcdata->breed &&
-					gift_table[i].auspice != ch->pcdata->auspice &&
-					gift_table[i].tribe != ch->pcdata->tribe))
+			int gn;
+      bool learned = FALSE;
+
+      if (ch->pcdata->rank < gift_table[i].rank || (gift_table[i].breed != ch->pcdata->breed &&
+					gift_table[i].auspice != ch->pcdata->auspice && gift_table[i].tribe != ch->pcdata->tribe))
 				continue;
-				int gn;
-				bool learned = FALSE;
+
 				for (gn = 0; gn < MAX_GIFT; gn++)
 					if (ch->pcdata->gift[gn] == i) learned = TRUE;
 
 				if (learned)
 					continue;
 
-			else {
 				if (col < 2)
-                {
-                    if (gift_table[i].level == 0)
-                    sprintf(buf, "{r%-30s{x", capitalize(gift_table[i].name));
-                    else
-					sprintf(buf, "%-30s", capitalize(gift_table[i].name));
+        {
+            if (gift_table[i].level == 0)
+              sprintf(buf, "  %3d  {r%-30s{x", gift_table[i].rank, capitalize(gift_table[i].name));
+            else
+					   sprintf(buf, "  %3d  %-30s", gift_table[i].rank, capitalize(gift_table[i].name));
 				}
-                    else
+         else
 				{
-                    if (gift_table[i].level == 0)
-                    sprintf(buf, "{r%-30s{x\n\r", capitalize(gift_table[i].name));
-                    else
-					sprintf(buf, "%s\n\r", capitalize(gift_table[i].name));
+          if (gift_table[i].level == 0)
+            sprintf(buf, "  %3d  {r%-30s{x\n\r", gift_table[i].rank, capitalize(gift_table[i].name));
+          else
+           sprintf(buf, "  %3d  %s\n\r", gift_table[i].rank, capitalize(gift_table[i].name));
 					col = 0;
 					}
 
 				add_buf(buffer, buf);
 				col++;
-			}
 		}
-	}
+}
 
     page_to_char(buf_string(buffer), ch);
-    send_to_char("\n\rNote: Gifts marked in {rred{x are not currently coded.\n\r", ch);
+    send_to_char("\n\rNote: Gifts marked in {rred{x are not currently coded.\n\r      Gifts above your rank are not shown.\n\r", ch);
     return;
 }

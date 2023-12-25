@@ -4717,7 +4717,9 @@ void do_prospect( CHAR_DATA *ch, char *argument )
     act( "EUREKA! You uncover $p!", ch, obj,NULL, TO_CHAR );
     act( "and uncovers $p!", ch, obj,NULL, TO_ROOM );
     REMOVE_BIT(obj->extra_flags,ITEM_HIDDEN);
-    gain_exp( ch, 300 );
+    
+    gain_exp( ch, 60 * success );
+    gain_qp(ch, number_range(1, 5 * success));
     return;
 }
 
@@ -4811,7 +4813,8 @@ void do_mine( CHAR_DATA *ch, char *argument )
         return;
     }
     obj->level -= 1;
-    gain_exp( ch, 200 );
+    gain_exp( ch, 60 * success);
+    gain_qp(ch, number_range(1,5 * success));
 
     if(obj->level <= 0)
     {

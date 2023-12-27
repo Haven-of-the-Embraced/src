@@ -2097,7 +2097,6 @@ void spell_gift_heartoffury( int sn, int level, CHAR_DATA *ch, void *vo, int tar
 void spell_gift_silverclaws( int sn, int level, CHAR_DATA *ch, void *vo, int target )
 {
     AFFECT_DATA af;
-    OBJ_DATA *obj;
 
     if ( ch->pcdata->shiftform == HOMID)
     {
@@ -2110,15 +2109,6 @@ void spell_gift_silverclaws( int sn, int level, CHAR_DATA *ch, void *vo, int tar
         send_to_char("You can't seem to turn your claws to silver.\n\r",ch);
         return;
     }
-
-    af.where        = TO_OBJECT;
-    af.type         = gsn_gift_silverclaws;
-    af.level        = ch->level;
-    af.duration     = ch->level/2;
-    af.location     = APPLY_NONE;
-    af.modifier     = 0;
-    af.bitvector    = ITEM_SILVER;
-    affect_to_obj(obj,&af);
 
     af.where        = TO_AFFECTS;
     af.type         = gsn_gift_silverclaws;

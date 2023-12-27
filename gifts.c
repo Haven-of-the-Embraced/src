@@ -2100,13 +2100,13 @@ void spell_gift_silverclaws( int sn, int level, CHAR_DATA *ch, void *vo, int tar
 
     if ( ch->pcdata->shiftform == HOMID)
     {
-        send_to_char( "Turn what to silver?\n\r", ch );
+        send_to_char( "You do not have claws to turn to silver in your Homid form.\n\r", ch );
         return;
     }
 
     if (is_affected(ch,gsn_gift_razorclaws) || is_affected(ch,gsn_gift_silverclaws))
     {
-        send_to_char("You can't seem to turn your claws to silver.\n\r",ch);
+        send_to_char("You cannot turn your claws to silver when they're aleady enhanced.\n\r",ch);
         return;
     }
 

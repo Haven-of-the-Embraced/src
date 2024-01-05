@@ -3432,12 +3432,12 @@ void group_gain( CHAR_DATA *ch, CHAR_DATA *victim )
 
     if (spookums && number_percent() <= 20)
     {
-        send_to_char("{D[       *****      {YTrick or Treat!      {D*****       ]{x\n\r", ch);
+        send_to_char("{D[       *****      {YTrick or Treat!      {D*****       ]{x\n\r", gch);
         if (number_percent() <= 15)
             send_to_char("{MTRICK!: {mWith a bright {Wflash{m of light, a shower of {Ysparks{m explode around you!{x\n\r", gch);
         else
         {
-            if (number_percent() <= 20 && !IS_AFFECTED(ch, AFF_XP_BOOST))
+            if (number_percent() <= 20 && !IS_AFFECTED(gch, AFF_XP_BOOST))
             {
                 af.where     = TO_AFFECTS;
                 af.type  = gsn_xp_boost;
@@ -3447,7 +3447,7 @@ void group_gain( CHAR_DATA *ch, CHAR_DATA *victim )
                 af.location  = APPLY_NONE;
                 af.bitvector = AFF_XP_BOOST;
                 affect_to_char( gch, &af );
-                send_to_char("{MTREAT!: {GYou feel a rush of mystic energy filling your bones!{x\n\r", ch);
+                send_to_char("{MTREAT!: {GYou feel a rush of mystic energy filling your bones!{x\n\r", gch);
             }
             else
             {

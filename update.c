@@ -1170,10 +1170,6 @@ if (ch->qpoints > MAX_QPOINTS)
         if(ch->pblood <= 5 && ch->position != POS_TORPOR && !IS_IMMORTAL(ch) && !IS_NPC(ch))
         {
             vamp_frenzy( gsn_vamp_frenzy, ch->level, ch, ch,TARGET_CHAR);
-/* disabled to reduce lag... maybe - Ugha
-            if(!IS_NPC(ch) && IS_SET(ch->act,PLR_PUEBLO))
-                send_html("<img xch_sound=play href=http://haven.wolfpaw.net/pueblo/sounds/frenzy.wav>",ch,TO_ROOM);
-*/
         }
 
         if(ch->pblood != 0 && !IS_IMMORTAL(ch) && !is_affected(ch,gsn_earthmeld) && !IS_SET(ch->act,PLR_IC) && (!is_safe))
@@ -1217,10 +1213,6 @@ if (ch->qpoints > MAX_QPOINTS)
                 if(is_affected(ch,gsn_shadowform))
                     damage( ch, ch, ch->max_hit/(8+(ch->pcdata->discipline[FORTITUDE]*2)), 0, DAM_SUNLIGHT, FALSE);
                 }
-/* disabled to reduce lag... maybe - Ugha
-                if(!IS_NPC(ch) && IS_SET(ch->act,PLR_PUEBLO))
-                    send_html("<img xch_sound=play href=http://haven.wolfpaw.net/pueblo/sounds/sunlight.wav>",ch,TO_ROOM);
-*/
             }
         }
     }

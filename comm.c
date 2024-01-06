@@ -3003,10 +3003,6 @@ void send_to_char( const char *txt, CHAR_DATA *ch )
             *++point2 = '\0';
         }
         *point2 = '\0';
-/*      if(!IS_SET( ch->act, PLR_PUEBLO ))
-            write_to_buffer( ch->desc, squash_html(buf,FALSE), point2 - buf );
-        else
-*/
             write_to_buffer( ch->desc, buf, point2 - buf );
         }
     }
@@ -3051,13 +3047,9 @@ void page_to_char( const char *txt, CHAR_DATA *ch )
     buf[0] = '\0';
     point2 = buf;
 
-/*    if (!IS_SET(ch->act, PLR_PUEBLO))
-         strcpy(text,squash_html(txt, FALSE));
-    else
-*/
+
          strcpy(text, txt);
 
-//old pueblo code    if( text && ch->desc )
     if(ch->desc)
     {
      if( IS_SET( ch->act, PLR_COLOUR ) )
@@ -3468,17 +3460,6 @@ void act_new( const char *format, CHAR_DATA *ch, const void *arg1,
 
         }
     return;
-/*        if(!IS_SET(to->act, PLR_PUEBLO))
-        colourconv( pbuff, squash_html(buf,FALSE), to );
-      else
-
-        colourconv( pbuff, buf, to );
-        if ( to->desc != NULL )
-        write_to_buffer( to->desc, buffer, 0 );
-        else
-                if ( MOBtrigger )
-                    p_act_trigger( buf, to, NULL, NULL, ch, arg1, arg2, TRIG_ACT );
-                */
 }
 
 
@@ -3626,10 +3607,6 @@ void act_new2( const char *format, CHAR_DATA *ch, const void *arg1,
         buf[0]   = UPPER(buf[0]);
         pbuff    = buffer;
 
-/*        if(!IS_SET(to->act, PLR_PUEBLO))
-        colourconv( pbuff, squash_html(buf,FALSE), to );
-      else
-*/
         colourconv( pbuff, buf, to );
         if ( to->desc != NULL )
         write_to_buffer( to->desc, buffer, 0 );

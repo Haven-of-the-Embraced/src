@@ -1936,17 +1936,6 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
         close_socket( d );
         return;
     }
-    if ( !strncmp (argument, "PUEBLOCLIENT", 12 ) )
-    {
-        d->pueblo = TRUE;
-        write_to_buffer( d, "</xch_mudtext><xch_page clear=text>", 0 );
-        write_to_buffer( d, "<p><body text=white>", 0 );
-        write_to_buffer( d, "<center><h1>Haven of the Embraced</h1>", 0 );
-/*      write_to_buffer( d, "<img xch_sound=play href=http://haven.wolfpaw.net/pueblo/sounds/howl.wav>", 0 ); */
-        write_to_buffer( d, "</center><p><hr>By what name do you wish to be known? <xch_mudtext>", 0 );
-        d->connected = CON_GET_NAME;
-        return;
-    }
 
     argument[0] = UPPER(argument[0]);
     if ( !check_parse_name( argument ) )
@@ -2040,15 +2029,6 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
 #if defined(unix)
     write_to_buffer( d, "\n\r", 2 );
 #endif
-    if(d->pueblo == TRUE)
-    {
-        SET_BIT( ch->act, PLR_PUEBLO );
-        SET_BIT( ch->act, PLR_COLOUR );
-    }
-    else
-    {
-        REMOVE_BIT(ch->act,PLR_PUEBLO);
-    }
     update_csstats(ch);
 
     if (strcmp( argument, ch->pcdata->pwd)) {
@@ -2237,19 +2217,11 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
     switch ( argument[0] )
     {
     case 'y': case 'Y': SET_BIT( ch->act, PLR_COLOUR );
-                    REMOVE_BIT( ch->act, PLR_PUEBLO );
                     send_to_char( "\n\r{bC{ro{yl{co{mu{gr{x is now {rON{x, Way Cool!\n\r\n\r", ch );
                     break;
-    case 'n': case 'N': REMOVE_BIT( ch->act, PLR_PUEBLO);
+    case 'n': case 'N':
                     break;
     default:
-            if(d->pueblo == TRUE)
-            {
-                SET_BIT( ch->act, PLR_PUEBLO );
-                SET_BIT( ch->act, PLR_COLOUR );
-                break;
-            }
-            else
             write_to_buffer( d, "\n\rThat is not a valid choice.\n\rPlease choose [Y]es or [N]o: ", 0 );
         return;
     }

@@ -545,7 +545,6 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "write",      do_write},
     { "seal",       do_seal},
     { "unseal",     do_unseal},
-    { "sendhtml",       do_sendhtml}, //DNM
     { "playtest",      do_playtest},
     { "announce",       do_announce},
     { "qitemlist",      do_qitemlist},

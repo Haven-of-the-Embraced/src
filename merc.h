@@ -3652,7 +3652,6 @@ void    log_string  args( ( const char *str ) );
 void    tail_chain  args( ( void ) );
 void    ansi_to_html    args( ( char *str, CHAR_DATA *ch, bool safe ) );
 char    *squash_html    args( ( const char *txt, bool safe ) );
-void    send_html   args( ( char *argument, CHAR_DATA *ch, int sendto ) );
 char * format_str_len(char * string, int length, int align);
 
 

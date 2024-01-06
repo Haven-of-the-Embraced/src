@@ -3366,7 +3366,6 @@ char *act_bit_name( int act_flags )
     if (act_flags & PLR_THIEF   ) strcat(buf, " thief");
     if (act_flags & PLR_KILLER  ) strcat(buf, " killer");
     if (act_flags & PLR_IC      ) strcat(buf, " is_IC");
-    if (act_flags & PLR_PUEBLO  ) strcat(buf, " pueblo");
     if (act_flags & PLR_NEWBIEHELP  ) strcat(buf, " newbiehelper");
     if (act_flags & PLR_PLAYTEST)  strcat(buf, " playtest");
     }

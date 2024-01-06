@@ -1359,9 +1359,6 @@ void do_look( CHAR_DATA *ch, char *argument )
         if(IS_AFFECTED2(ch, AFF2_UMBRA) && (pdesc = get_extra_descr("umbra_desc",ch->in_room->extra_descr)) != NULL)
             send_to_char(pdesc,ch);
         else
-        if(IS_SET(ch->act,PLR_PUEBLO) && (pdesc = get_extra_descr("pueblo_desc",ch->in_room->extra_descr)) != NULL)
-            send_to_char(pdesc,ch);
-        else
             send_to_char( ch->in_room->description, ch );
 /*Extra descriptions seen by players with Auspex 1 active - Sengir*/
         if(!IS_AFFECTED2(ch, AFF2_UMBRA) &&
@@ -1818,18 +1815,10 @@ void do_exits( CHAR_DATA *ch, char *argument )
         else
             if ( IS_SET(pexit->exit_info, EX_CLOSED))
                 strcat( buf, "<" );
-        if(IS_SET(ch->act,PLR_PUEBLO))
-        {
-            if(IS_SET(pexit->exit_info,EX_CLOSED))
-                sprintf(buf2, "</xch_mudtext><a xch_cmd='open %s'>%s</a><xch_mudtext>",dir_name[door], dir_name[door]);
-            else
-                sprintf(buf2, "</xch_mudtext><a xch_cmd=%s>%s</a><xch_mudtext>",dir_name[door], dir_name[door]);
-        }
+        if (IS_SET(pexit->u1.to_room->room_flags, ROOM_UMBRA))
+            sprintf(buf2, "{m%s{x",dir_name[door]);
         else
-            if (IS_SET(pexit->u1.to_room->room_flags, ROOM_UMBRA))
-                sprintf(buf2, "{m%s{x",dir_name[door]);
-            else
-                sprintf(buf2, "{C%s{x",dir_name[door]);
+            sprintf(buf2, "{C%s{x",dir_name[door]);
 
         strcat( buf, buf2);
         if ( IS_SET(pexit->exit_info, EX_HIDDEN))

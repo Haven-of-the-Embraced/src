@@ -590,7 +590,6 @@ struct  descriptor_data
     void *      pEdit;      /* OLC */
     char **     pString;    /* OLC */
     int         editor;     /* OLC */
-    bool        pueblo;         /* Pueblo enabled client? */
 };
 
 

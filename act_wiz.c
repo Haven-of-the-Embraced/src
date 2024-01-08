@@ -1143,50 +1143,6 @@ void do_pecho( CHAR_DATA *ch, char *argument )
     send_to_char("\n\r",ch);
 }
 
-void do_sendhtml( CHAR_DATA *ch, char *argument )
-{
-    char arg[MAX_INPUT_LENGTH];
-    char arg2[MAX_INPUT_LENGTH];
-    CHAR_DATA *victim;
-
-    argument = one_argument(argument, arg);
-
-    if  (argument[0] == '\0' || arg[0] == '\0')
-    {
-        send_to_char("Syntax: <world|room|char> <html>\n\r",ch);
-        return;
-    }
-
-    if(!strcmp(arg,"world"))
-    {
-        send_html(argument,ch,TO_ALL);
-        return;
-    }
-    if(!strcmp(arg,"room"))
-    {
-        send_html(argument,ch,TO_ROOM);
-        return;
-    }
-    if(!strcmp(arg,"char"))
-    {
-        argument = one_argument(argument, arg2);
-        if((victim = get_char_world(ch, arg2) ) == NULL )
-        {
-            send_to_char("Syntax: <world|room|char> <html>\n\r",ch);
-            return;
-        }
-        send_html(argument,victim,TO_CHAR);
-        return;
-    }
-    else
-    {
-        send_to_char("Syntax: <world|room|char> <html>\n\r",ch);
-        return;
-    }
-    return;
-}
-
-
 ROOM_INDEX_DATA *find_location( CHAR_DATA *ch, char *arg )
 {
     CHAR_DATA *victim;

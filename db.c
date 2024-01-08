@@ -4498,46 +4498,6 @@ char *squash_html(const char *txt, bool safe )
  return code;
 }
 
-void send_html(char *argument,CHAR_DATA *ch, int sendto )
-{
-    DESCRIPTOR_DATA *d;
-
-    if(sendto == TO_ALL)
-    {
-        for ( d = descriptor_list; d; d = d->next )
-        {
-            if ( d->connected == CON_PLAYING && IS_SET(d->character->act,PLR_PUEBLO))
-            {
-                send_to_char( "</xch_mudtext>",d->character);
-                send_to_char( argument, d->character );
-                send_to_char( "<xch_mudtext>",   d->character );
-            }
-        }
-    }
-    if(sendto == TO_ROOM)
-    {
-        for ( d = descriptor_list; d; d = d->next )
-        {
-            if ( d->connected == CON_PLAYING && d->character->in_room == ch->in_room && IS_SET(d->character->act,PLR_PUEBLO))
-            {
-                send_to_char( "</xch_mudtext>",d->character);
-                send_to_char( argument, d->character );
-                send_to_char( "<xch_mudtext>",   d->character );
-            }
-        }
-    }
-    if(sendto == TO_CHAR)
-    {
-        if(!IS_SET(ch->act,PLR_PUEBLO))
-            return;
-        send_to_char("</xch_mudtext>",ch);
-        send_to_char(argument,ch);
-        send_to_char("<xch_mudtext>",ch);
-    }
-
-    return;
-}
-
 
 /*
  * Append a string to a file.

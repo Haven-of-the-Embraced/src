@@ -1936,17 +1936,6 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
         close_socket( d );
         return;
     }
-    if ( !strncmp (argument, "PUEBLOCLIENT", 12 ) )
-    {
-        d->pueblo = TRUE;
-        write_to_buffer( d, "</xch_mudtext><xch_page clear=text>", 0 );
-        write_to_buffer( d, "<p><body text=white>", 0 );
-        write_to_buffer( d, "<center><h1>Haven of the Embraced</h1>", 0 );
-/*      write_to_buffer( d, "<img xch_sound=play href=http://haven.wolfpaw.net/pueblo/sounds/howl.wav>", 0 ); */
-        write_to_buffer( d, "</center><p><hr>By what name do you wish to be known? <xch_mudtext>", 0 );
-        d->connected = CON_GET_NAME;
-        return;
-    }
 
     argument[0] = UPPER(argument[0]);
     if ( !check_parse_name( argument ) )
@@ -2040,15 +2029,6 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
 #if defined(unix)
     write_to_buffer( d, "\n\r", 2 );
 #endif
-    if(d->pueblo == TRUE)
-    {
-        SET_BIT( ch->act, PLR_PUEBLO );
-        SET_BIT( ch->act, PLR_COLOUR );
-    }
-    else
-    {
-        REMOVE_BIT(ch->act,PLR_PUEBLO);
-    }
     update_csstats(ch);
 
     if (strcmp( argument, ch->pcdata->pwd)) {
@@ -2237,19 +2217,11 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
     switch ( argument[0] )
     {
     case 'y': case 'Y': SET_BIT( ch->act, PLR_COLOUR );
-                    REMOVE_BIT( ch->act, PLR_PUEBLO );
                     send_to_char( "\n\r{bC{ro{yl{co{mu{gr{x is now {rON{x, Way Cool!\n\r\n\r", ch );
                     break;
-    case 'n': case 'N': REMOVE_BIT( ch->act, PLR_PUEBLO);
+    case 'n': case 'N':
                     break;
     default:
-            if(d->pueblo == TRUE)
-            {
-                SET_BIT( ch->act, PLR_PUEBLO );
-                SET_BIT( ch->act, PLR_COLOUR );
-                break;
-            }
-            else
             write_to_buffer( d, "\n\rThat is not a valid choice.\n\rPlease choose [Y]es or [N]o: ", 0 );
         return;
     }
@@ -3003,10 +2975,6 @@ void send_to_char( const char *txt, CHAR_DATA *ch )
             *++point2 = '\0';
         }
         *point2 = '\0';
-/*      if(!IS_SET( ch->act, PLR_PUEBLO ))
-            write_to_buffer( ch->desc, squash_html(buf,FALSE), point2 - buf );
-        else
-*/
             write_to_buffer( ch->desc, buf, point2 - buf );
         }
     }
@@ -3051,13 +3019,9 @@ void page_to_char( const char *txt, CHAR_DATA *ch )
     buf[0] = '\0';
     point2 = buf;
 
-/*    if (!IS_SET(ch->act, PLR_PUEBLO))
-         strcpy(text,squash_html(txt, FALSE));
-    else
-*/
+
          strcpy(text, txt);
 
-//old pueblo code    if( text && ch->desc )
     if(ch->desc)
     {
      if( IS_SET( ch->act, PLR_COLOUR ) )
@@ -3468,17 +3432,6 @@ void act_new( const char *format, CHAR_DATA *ch, const void *arg1,
 
         }
     return;
-/*        if(!IS_SET(to->act, PLR_PUEBLO))
-        colourconv( pbuff, squash_html(buf,FALSE), to );
-      else
-
-        colourconv( pbuff, buf, to );
-        if ( to->desc != NULL )
-        write_to_buffer( to->desc, buffer, 0 );
-        else
-                if ( MOBtrigger )
-                    p_act_trigger( buf, to, NULL, NULL, ch, arg1, arg2, TRIG_ACT );
-                */
 }
 
 
@@ -3626,10 +3579,6 @@ void act_new2( const char *format, CHAR_DATA *ch, const void *arg1,
         buf[0]   = UPPER(buf[0]);
         pbuff    = buffer;
 
-/*        if(!IS_SET(to->act, PLR_PUEBLO))
-        colourconv( pbuff, squash_html(buf,FALSE), to );
-      else
-*/
         colourconv( pbuff, buf, to );
         if ( to->desc != NULL )
         write_to_buffer( to->desc, buffer, 0 );

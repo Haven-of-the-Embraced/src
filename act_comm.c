@@ -2489,12 +2489,7 @@ void do_colour( CHAR_DATA *ch, char *argument )
     if(IS_NPC(ch)) return;
     if( !*arg )
     {
-/*  if( IS_SET( ch->act, PLR_PUEBLO ) )
-    {
-        send_to_char("Pueblo disabled.\n\r",ch);
-        REMOVE_BIT( ch->act, PLR_PUEBLO );
-    }
-*/
+
     if( !IS_SET( ch->act, PLR_COLOUR ) )
     {
         SET_BIT( ch->act, PLR_COLOUR );

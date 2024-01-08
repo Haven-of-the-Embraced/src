@@ -249,7 +249,6 @@ DECLARE_DO_FUN( do_pardon   );
 DECLARE_DO_FUN( do_password );
 DECLARE_DO_FUN( do_peace    );
 DECLARE_DO_FUN( do_pecho    );
-DECLARE_DO_FUN( do_sendhtml    );
 DECLARE_DO_FUN( do_penalty  );
 DECLARE_DO_FUN( do_rpnote  );
 DECLARE_DO_FUN( do_permban  );

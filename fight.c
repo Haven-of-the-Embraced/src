@@ -2278,6 +2278,14 @@ if (DEBUG_MESSAGES || IS_DEBUGGING(ch))	{
     if (show)
         dam_message( ch, victim, dam, dt, immune );
 
+    if (silver)
+    {
+        act("$N screams in pain as the silver sears $S flesh!", ch, NULL, victim, TO_NOTVICT);
+        act("You scream in pain as the silver sears your flesh!", ch, NULL, victim, TO_VICT);
+        act("$N screams in pain as the silver sears $S flesh!", ch, NULL, victim, TO_CHAR);
+        victim->agg_dam += dam / 10;
+    }
+
 		if (dam < 1)
 			return FALSE;
     /*

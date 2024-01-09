@@ -1190,32 +1190,79 @@ void rote_senselife(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj
 
     if (IS_NPC(ch)) return;
 
-    sprintf(buf, "You sense that this being is a %d year old %s.\n\r",get_age(victim), race_table[victim->race].name);
+    if (!living_being(victim))
+    {
+        send_to_char("[ You detect no trace of any {gLife{x Pattern. ]\n\r", ch);
+        return;
+    }
+
+    {
+    char buf[MAX_STRING_LENGTH];
+
+    if (IS_NPC(ch)) return;
+    send_to_char("{g+========================   SENSE LIFE PATTERN    =======================+{x\n\r", ch);
+    send_to_char("{g|           {xYou scrutinize the Pattern of Life of your target.           {g|{x\n\r", ch);
+    if (IS_NPC(victim))
+      sprintf(buf, "{g+====================[{x %s {g]====================+{x\n\r", center(victim->short_descr, 28, " "));
+    else
+      sprintf(buf, "{g+====================[{x %s {g]====================+{x\n\r", center(victim->name, 28, " "));
+    send_to_char(buf, ch);
+    sprintf(buf, "{g|                   {x Race: %-16s Sex: %s{g               |{x\n\r",
+        race_table[victim->race].name,
+        victim->sex == 0 ? "{Wsexless  " : victim->sex == 1 ? "{Bmale     " : "{Mfemale   ");
+    send_to_char(buf, ch);
+    sprintf(buf, "{g|{x                    Blood: {r%3d{x   Age: %5d year%s old                   {g|{x\n\r",
+      victim->pblood, get_age(victim), get_age(victim) == 1 ? " " : "s");
+    send_to_char(buf,ch);
+    sprintf(buf, "{g|{x %6d/%6d Health     %6d/%6d Mana     %6d/%6d Movement {g|{x\n\r",
+        victim->hit,  victim->max_hit, victim->mana, victim->max_mana, victim->move, victim->max_move);
     send_to_char(buf,ch);
 
-    if(success > 1)
+    if (success > 1)
     {
-        sprintf(buf, "They have %d/%d HP, %d/%d Mana and %d/%d movement.\n\r",
-        victim->hit,  victim->max_hit,
-        victim->mana, victim->max_mana,
-        victim->move, victim->max_move);
+        send_to_char("{g+----------------------------      Body      ----------------------------+{x\n\r", ch);
+        sprintf(buf, "{g|{x Names: %s\n\r", victim->name);
         send_to_char(buf,ch);
-    }
-    if(success > 2)
+        sprintf(buf, "{g|{x Forms: %s\n\r", form_bit_name(victim->form));
+        send_to_char(buf,ch);
+        sprintf(buf, "{g|{x Parts: %s\n\r", part_bit_name(victim->parts));
+        send_to_char(buf,ch);
+    if ( !IS_NPC(victim) )
     {
-        for ( paf = victim->affected; paf != NULL; paf = paf->next )
-        {
-            sprintf( buf,
-                "They are affected by %s which modifies %s by %d for %d hours and adds %s.\n\r",
-                skill_table[(int) paf->type].name,
-                affect_loc_name( paf->location ),
-                paf->modifier,
-                paf->duration,
-                affect_bit_name( paf->bitvector ));
-            send_to_char( buf, ch );
-        }
+        sprintf( buf,
+        "{g|{x   Thirst: %2d    Hunger: %2d    Full: %3d    Drunk: %2d                   {g|{x\n\r",
+        victim->pcdata->condition[COND_THIRST], victim->pcdata->condition[COND_HUNGER],
+        victim->pcdata->condition[COND_FULL], victim->pcdata->condition[COND_DRUNK]);
+    send_to_char( buf, ch );
     }
+    }
+
+    if (success > 2)
+    {
+        send_to_char("{g+----------------------------  Alterations   ----------------------------+{x\n\r", ch);
+        if (IS_AFFECTED(victim, AFF_SHIFT))
+            send_to_char("{g|  {RYour target's base Life Pattern has been changed from original form.{g  |{x\n\r", ch);
+        if (is_affected(victim, gsn_poison))
+            send_to_char("{g|               {GPoison courses through your target's body.{g               |{x\n\r", ch);
+        if (is_affected(victim, gsn_change_sex))
+            send_to_char("{g|{W                  Your target's sex has been altered.                   {g|{x\n\r", ch);
+        if (is_affected(victim, gsn_berserk))
+            send_to_char("{g|{W             Pulse races spectacularly through your target.             {g|{x\n\r", ch);
+        if (is_affected(victim, gsn_bleeding))
+            send_to_char("{g|r                 Blood flows profusely from many wounds.                 {g|{x\n\r", ch);
+        if (is_affected(victim, gsn_deafened))
+            send_to_char("{g|{W                        Your target cannot hear.                        {g|{x\n\r", ch);
+        if (is_affected(victim, gsn_laryngitis))
+            send_to_char("{g|{W                        Your target cannot speak.                       {g|{x\n\r", ch);
+        if (is_affected(victim, gsn_blight))
+            send_to_char("{g|{W         The strains of advanced age ravage your target's body.         {g|{x\n\r", ch);
+        if (is_affected(victim, gsn_betterbody))
+            send_to_char("{g|{W            Your target's body surges with increased muscle.            {g|{x\n\r", ch);
+    }
+
+    send_to_char("{g+------------------------------------------------------------------------+{x\n\r", ch);
     return;
+}
 }
 
 void rote_littlegooddeath(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)

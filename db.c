@@ -4839,6 +4839,7 @@ sh_int          gsn_teleport;
 sh_int          gsn_retreat;
 sh_int          gsn_call_lightning;
 sh_int          gsn_cause_light;
+sh_int          gsn_change_sex;
 sh_int          gsn_create_food;
 sh_int          gsn_create_water;
 sh_int          gsn_create_spring;

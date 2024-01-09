@@ -1312,7 +1312,7 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
 
     { "change sex",       { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_change_sex,   TAR_CHAR_DEFENSIVE, POS_FIGHTING,
-    NULL,           SLOT(82),   15, 12, "",         "Your body feels familiar again.",  "" },
+    &gsn_change_sex,           SLOT(82),   15, 12, "",         "Your body feels familiar again.",  "" },
 
     { "change alignment",     { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_change_alignment, TAR_CHAR_DEFENSIVE, POS_FIGHTING,

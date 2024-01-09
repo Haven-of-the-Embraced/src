@@ -2073,6 +2073,7 @@ bool d10_damage(CHAR_DATA *ch, CHAR_DATA *victim, int damsuccess, int modifier, 
 	int dam;
     char  buf[MSL];
 	soakdice = soak = armordice = dam = 0;
+    bool silver;
 
     if (victim->position == POS_TORPOR)
     {
@@ -2249,6 +2250,20 @@ bool d10_damage(CHAR_DATA *ch, CHAR_DATA *victim, int damsuccess, int modifier, 
                 dam *= 2;
                 break;
         }
+
+    if(IS_SET(victim->vuln_flags, VULN_SILVER))
+    {
+        OBJ_DATA *silver_weapon;
+        if (((silver_weapon = get_eq_char(ch, WEAR_WIELD)) != NULL && (IS_OBJ_STAT(silver_weapon,ITEM_SILVER)) || 
+            (is_affected(ch, gsn_gift_silverclaws) && get_eq_char(ch, WEAR_WIELD) == NULL)) 
+//            && (victim->pcdata->shiftform != ch->pcdata->breed || victim->pcdata->breed == METIS) 
+            )
+            {
+                silver = TRUE;
+                dam = dam*3/2;
+            }
+    }
+
 if (DEBUG_MESSAGES || IS_DEBUGGING(ch))	{
         cprintf(ch, "M{D%d{x Ar{c%d{x sd{c%d{x s{c%d{x ", modifier, armordice, soakdice, soak, dam);
         if (IS_NPC(ch))
@@ -2262,6 +2277,14 @@ if (DEBUG_MESSAGES || IS_DEBUGGING(ch))	{
 
     if (show)
         dam_message( ch, victim, dam, dt, immune );
+
+    if (silver)
+    {
+        act("$N screams in pain as the silver sears $S flesh!", ch, NULL, victim, TO_NOTVICT);
+        act("You scream in pain as the silver sears your flesh!", ch, NULL, victim, TO_VICT);
+        act("$N screams in pain as the silver sears $S flesh!", ch, NULL, victim, TO_CHAR);
+        victim->agg_dam += dam / 10;
+    }
 
 		if (dam < 1)
 			return FALSE;

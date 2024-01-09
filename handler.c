@@ -797,6 +797,52 @@ bool is_natural( CHAR_DATA *ch )
     return TRUE;
 }
 
+bool living_being( CHAR_DATA *ch )
+{
+  if(
+        ch->race == race_lookup("dhampire") ||
+        ch->race == race_lookup("garou") ||
+        ch->race == race_lookup("ghoul") ||
+        ch->race == race_lookup("human") || 
+        ch->race == race_lookup("amphibian") ||               
+        ch->race == race_lookup("ape") ||
+        ch->race == race_lookup("bat") ||
+        ch->race == race_lookup("bear") ||
+        ch->race == race_lookup("bygone") ||
+        ch->race == race_lookup("cat") ||
+        ch->race == race_lookup("centipede") ||
+        ch->race == race_lookup("dog") ||
+        ch->race == race_lookup("dragon") ||
+        ch->race == race_lookup("faerie") ||
+        ch->race == race_lookup("fera") ||
+        ch->race == race_lookup("fish") ||
+        ch->race == race_lookup("fomor") ||
+        ch->race == race_lookup("fox") ||
+        ch->race == race_lookup("horse") ||
+        ch->race == race_lookup("insect") ||
+        ch->race == race_lookup("kinfolk") ||
+        ch->race == race_lookup("kuei-jin") ||
+        ch->race == race_lookup("lizard") ||
+        ch->race == race_lookup("mage") ||
+        ch->race == race_lookup("marine mammal") ||
+        ch->race == race_lookup("monkey") ||
+        ch->race == race_lookup("pig") ||
+        ch->race == race_lookup("rabbit") ||
+        ch->race == race_lookup("rodent") ||
+        ch->race == race_lookup("romani") ||
+        ch->race == race_lookup("snake") ||
+        ch->race == race_lookup("song bird") ||
+        ch->race == race_lookup("spider") ||
+        ch->race == race_lookup("water fowl") ||
+        ch->race == race_lookup("wolf") ||
+        ch->race == race_lookup("vegetation")
+    )
+    return TRUE;
+
+  else
+    return FALSE;
+}
+
 bool higher_beast( CHAR_DATA *ch )
 {
   if(

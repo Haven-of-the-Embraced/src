@@ -2113,7 +2113,7 @@ void spell_gift_silverclaws( int sn, int level, CHAR_DATA *ch, void *vo, int tar
     af.where        = TO_AFFECTS;
     af.type         = gsn_gift_silverclaws;
     af.level        = ch->level;
-    af.duration     = ch->level/2;
+    af.duration     = 24;
     af.location     = APPLY_NONE;
     af.modifier     = level;
     af.bitvector    = 0;

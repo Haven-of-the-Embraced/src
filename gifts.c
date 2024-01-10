@@ -2872,8 +2872,19 @@ void spell_gift_hordeofvalhalla( int sn, int level, CHAR_DATA *ch, void *vo, int
 
 //Fianna
 //Rank 1
-void spell_gift_distractthefool( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
+void spell_gift_distractthefool( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  CHAR_DATA *rch;
+
+  for ( rch = ch->in_room->people; rch != NULL; rch = rch->next_in_room )
+  {
+    if ( rch->fighting != NULL )
+      stop_fighting( rch, TRUE );
+    if (IS_NPC(rch) && IS_SET(rch->act,ACT_AGGRESSIVE))
+      REMOVE_BIT(rch->act,ACT_AGGRESSIVE);
+  }
+
+  return;
 }
 
 void spell_gift_faerielight( int sn, int level, CHAR_DATA *ch, void *vo, int target)

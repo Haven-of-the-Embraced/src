@@ -2287,7 +2287,7 @@ void spell_gift_mansskin( int sn, int level, CHAR_DATA *ch, void *vo, int target
   if ( is_affected(ch, gsn_gift_mansskin))
   {
     send_to_char("You shift your visage back to your feminine form.\n\r",ch);
-    act("$N's visage flows back to that of a woman.",ch,NULL,victim,TO_ROOM);
+    act("$N's visage flows back to that of a woman.",ch,NULL,NULL,TO_ROOM);
     affect_strip(ch, gsn_gift_mansskin);
     return;
   }
@@ -2301,9 +2301,9 @@ void spell_gift_mansskin( int sn, int level, CHAR_DATA *ch, void *vo, int target
   af.location  = APPLY_SEX;
   af.modifier  = -1;
   af.bitvector = 0;
-  affect_to_char( victim, &af );
+  affect_to_char( ch, &af );
 
-  send_to_char( "You mask your feminine form with a masculine illusion.\n\r", c);
+  send_to_char( "You mask your feminine form with a masculine illusion.\n\r", ch);
   act("$n's form flows into a very masculine visage.",ch,NULL,NULL,TO_ROOM);
   return;
 }

@@ -2267,8 +2267,45 @@ void spell_gift_breathofthewyld( int sn, int level, CHAR_DATA *ch, void *vo, int
 //char + subterfuge diff 7
 //illusion to make your female self look like a man for a scene or until you shift forms
 //
-void spell_gift_mansskin( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_mansskin( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  AFFECT_DATA af;
+  int success;
+
+  if (ch->sex == 1 || ch->sex == 0)
+  {
+    send_to_char("You are not a female, and cannot use this Gift.\n\r", ch);
     return;
+  }
+
+  if ( is_affected(ch, gsn_change_sex))
+  {
+    send_to_char("Your sex has already been changed by another ability.\n\r", ch);
+    return;
+  }
+
+  if ( is_affected(ch, gsn_gift_mansskin))
+  {
+    send_to_char("You shift your visage back to your feminine form.\n\r",ch);
+    act("$N's visage flows back to that of a woman.",ch,NULL,victim,TO_ROOM);
+    affect_strip(ch, gsn_gift_mansskin);
+    return;
+  }
+
+  success = godice(get_attribute(ch, CHARISMA) + get_ability(ch, CSABIL_SUBTERFUGE), 7);
+
+  af.where     = TO_AFFECTS;
+  af.type      = gsn_gift_mansskin;
+  af.level     = level;
+  af.duration  = 20 + (2 * success);
+  af.location  = APPLY_SEX;
+  af.modifier  = -1;
+  af.bitvector = 0;
+  affect_to_char( victim, &af );
+
+  send_to_char( "You mask your feminine form with a masculine illusion.\n\r", c);
+  act("$n's form flows into a very masculine visage.",ch,NULL,NULL,TO_ROOM);
+  return;
 }
 
 //“Sense Wyrm” duplicate gift

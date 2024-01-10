@@ -102,6 +102,12 @@ bool shiftform(CHAR_DATA *ch, int desired, bool rage)
         return FALSE;
     }
 
+    if (is_affected(ch, gsn_gift_mansskin))
+    {
+        affect_strip(ch, gsn_gift_mansskin);
+        send_to_char("Shifting forms causes your male guise to drop.\n\r", ch);
+    }
+
     switch(tobe)
     {
         case HOMID:

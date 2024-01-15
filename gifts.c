@@ -2883,7 +2883,8 @@ void spell_gift_distractthefool( int sn, int level, CHAR_DATA *ch, void *vo, int
     return;
   }
 
-  act("With a remarkable claim, you point excitedly behind $N.", ch, NULL, rch, TO_CHAR);
+  ch->move -= ch->level *2;
+  act("With a remarkable claim, you point excitedly behind your enemy.", ch, NULL, NULL, TO_CHAR);
 
   success = godice(get_attribute(ch, MANIPULATION) + ch->pcdata->cssec_abil[CSABIL_EXPRESSION], 7);
 
@@ -2902,6 +2903,9 @@ void spell_gift_distractthefool( int sn, int level, CHAR_DATA *ch, void *vo, int
     return;
   }
 
+  act("Many in the room turn to gawk where you are pointing.", ch, NULL, NULL, TO_CHAR);
+  act("Many in the room turn to gawk where $n is pointing.", ch, NULL, NULL, TO_ROOM);
+
   for ( rch = ch->in_room->people; rch != NULL; rch = rch->next_in_room )
   {
     if (!IS_IMMORTAL(rch) && !IS_SET(rch->act2, ACT2_ULTRA_MOB) && !IS_SET(rch->imm_flags,IMM_CHARM) &&
@@ -2911,6 +2915,7 @@ void spell_gift_distractthefool( int sn, int level, CHAR_DATA *ch, void *vo, int
         stop_fighting( rch, TRUE );
       if (IS_NPC(rch) && IS_SET(rch->act,ACT_AGGRESSIVE))
         REMOVE_BIT(rch->act,ACT_AGGRESSIVE);
+      act("$n's wild claim distracts you!", ch, NULL, victim, TO_VICT);
     }
   }
 

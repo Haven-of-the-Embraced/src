@@ -2875,6 +2875,32 @@ void spell_gift_hordeofvalhalla( int sn, int level, CHAR_DATA *ch, void *vo, int
 void spell_gift_distractthefool( int sn, int level, CHAR_DATA *ch, void *vo, int target)
 {
   CHAR_DATA *rch;
+  int success;
+
+  if (ch->move < ch->level *2)
+  {
+    send_to_char("You are too tired to activate this Gift.\n\r", ch);
+    return;
+  }
+
+  act("With a remarkable claim, you point excitedly behind $N.", ch, NULL, rch, TO_CHAR);
+
+  success = godice(get_attribute(ch, MANIPULATION) + ch->pcdata->cssec_abil[CSABIL_EXPRESSION], 7);
+
+  if (success < 0)
+  {
+    act("Your bold claim seems to be ignored.", ch, NULL, NULL, TO_CHAR);
+    act("$N makes an unbelievable claim, which you recognize as only a ruse.", ch, NULL, NULL, TO_ROOM);
+    WAIT_STATE(ch, 6);
+    return;
+  }
+
+  if (success == 0)
+  {
+    act("Nobody takes any special notice of your bold statement.", ch, NULL, NULL, TO_CHAR);
+    act("You ignore the ridiculous claim that $n is making.", ch, NULL, NULL, TO_ROOM);
+    return;
+  }
 
   for ( rch = ch->in_room->people; rch != NULL; rch = rch->next_in_room )
   {

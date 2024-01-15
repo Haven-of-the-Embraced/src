@@ -2842,7 +2842,7 @@ Total (3) */
 //    --Fianna--
 //  Total (10)
 {   "distract the fool", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_distractthefool,  TAR_IGNORE, POS_STANDING,
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_distractthefool,  TAR_IGNORE, POS_FIGHTING,
 &gsn_gift_distractthefool,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
 {   "faerie light", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },

@@ -2915,10 +2915,14 @@ void spell_gift_distractthefool( int sn, int level, CHAR_DATA *ch, void *vo, int
 
   for ( rch = ch->in_room->people; rch != NULL; rch = rch->next_in_room )
   {
-    if ( rch->fighting != NULL )
-      stop_fighting( rch, TRUE );
-    if (IS_NPC(rch) && IS_SET(rch->act,ACT_AGGRESSIVE))
-      REMOVE_BIT(rch->act,ACT_AGGRESSIVE);
+    if (!IS_IMMORTAL(rch) && !IS_SET(rch->act2, ACT2_ULTRA_MOB) && !IS_SET(rch->imm_flags,IMM_CHARM) &&
+      can_see(rch, ch))
+    {
+      if ( rch->fighting != NULL )
+        stop_fighting( rch, TRUE );
+      if (IS_NPC(rch) && IS_SET(rch->act,ACT_AGGRESSIVE))
+        REMOVE_BIT(rch->act,ACT_AGGRESSIVE);
+    }
   }
 
   return;

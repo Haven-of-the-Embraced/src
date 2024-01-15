@@ -2952,7 +2952,7 @@ void spell_gift_distractthefool( int sn, int level, CHAR_DATA *ch, void *vo, int
         stop_fighting( rch, TRUE );
       if (IS_NPC(rch) && IS_SET(rch->act,ACT_AGGRESSIVE))
         REMOVE_BIT(rch->act,ACT_AGGRESSIVE);
-      act("$n's wild claim distracts you!", ch, NULL, victim, TO_VICT);
+      act("$n's wild claim distracts you!", ch, NULL, rch, TO_VICT);
     }
   }
 

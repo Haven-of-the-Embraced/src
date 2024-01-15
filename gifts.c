@@ -2877,13 +2877,13 @@ void spell_gift_distractthefool( int sn, int level, CHAR_DATA *ch, void *vo, int
   CHAR_DATA *rch;
   int success;
 
-  if (ch->move < ch->level *2)
+  if (ch->move < ch->level *3)
   {
     send_to_char("You are too tired to activate this Gift.\n\r", ch);
     return;
   }
 
-  ch->move -= ch->level *2;
+  ch->move -= ch->level *3;
   act("With a remarkable claim, you point excitedly behind your enemy.", ch, NULL, NULL, TO_CHAR);
 
   success = godice(get_attribute(ch, MANIPULATION) + ch->pcdata->cssec_abil[CSABIL_EXPRESSION], 7);
@@ -2909,7 +2909,7 @@ void spell_gift_distractthefool( int sn, int level, CHAR_DATA *ch, void *vo, int
   for ( rch = ch->in_room->people; rch != NULL; rch = rch->next_in_room )
   {
     if (!IS_IMMORTAL(rch) && !IS_SET(rch->act2, ACT2_ULTRA_MOB) && !IS_SET(rch->imm_flags,IMM_CHARM) &&
-      can_see(rch, ch))
+      can_see(rch, ch) && ch->level < rch->level - 10)
     {
       if ( rch->fighting != NULL )
         stop_fighting( rch, TRUE );

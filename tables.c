@@ -1381,7 +1381,7 @@ const struct    gift_type   gift_table  [MAX_GIFTS_CODED]  =
     {   "iron cannot pierce", 			0,     24, 0,     0,      0,          FENRIR,   4,   0},
     {   "blaze of glory", 				0,     24, 0,     0,      0,          FENRIR,   5,   0},
     {   "horde of valhalla", 			0,     24, 0,     0,      0,          FENRIR,   5,   0},
-    {   "distract the fool", 			0,     24, 0,     0,      0,          FIANNA,   1,   0},
+    {   "distract the fool", 			1,     24, 0,     0,      0,          FIANNA,   1,   0},
     {   "faerie light", 				1,     24, 0,     0,      0,          FIANNA,   1,   0},
     {   "howl of the banshee", 			0,     24, 0,     0,      0,          FIANNA,   2,   0},
     {   "warriors draught", 			0,     24, 0,     0,      0,          FIANNA,   2,   0},

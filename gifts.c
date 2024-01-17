@@ -2337,6 +2337,7 @@ void spell_gift_curseoftheaeolus( int sn, int level, CHAR_DATA *ch, void *vo, in
   }
 
   act("You silently call out to the spirits for aid in masking your group's presence.", ch, NULL, NULL, TO_CHAR);
+  act("A thick fog rolls in, seemingly out of nowhere.", ch, NULL, NULL, TO_CHAR);
   act("A thick fog rolls in, seemingly out of nowhere.", ch, NULL, NULL, TO_ROOM);
 
   for ( gch = ch->in_room->people; gch != NULL; gch = gch->next_in_room )
@@ -2346,10 +2347,10 @@ void spell_gift_curseoftheaeolus( int sn, int level, CHAR_DATA *ch, void *vo, in
       af.where     = TO_AFFECTS;
       af.type      = gsn_gift_curseoftheaeolus;
       af.level     = ch->pcdata->rank;
-      af.duration  = (success * 3) + 10;
+      af.duration  = (success * 2) + 10;
       af.modifier  = 0;
-      af.location  = AFF_HIDE;
-      af.bitvector = 0;
+      af.location  = APPLY_NONE;
+      af.bitvector = AFF_HIDE;
       affect_to_char( gch, &af );
     }
     else if (!is_same_group( gch, ch ) && !is_affected(gch, spell_gift_curseoftheaeolus))
@@ -2357,7 +2358,7 @@ void spell_gift_curseoftheaeolus( int sn, int level, CHAR_DATA *ch, void *vo, in
       af.where     = TO_AFFECTS;
       af.type      = gsn_gift_curseoftheaeolus;
       af.level     = -1;
-      af.duration  = (success * 3) + 10;
+      af.duration  = (success * 2) + 10;
       af.modifier  = -2;
       af.location  = APPLY_CS_PER;
       af.bitvector = 0;

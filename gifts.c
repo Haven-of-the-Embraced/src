@@ -2322,7 +2322,34 @@ void spell_gift_curseoftheaeolus( int sn, int level, CHAR_DATA *ch, void *vo, in
 {
   AFFECT_DATA af;
   CHAR_DATA *gch;
-  int success, diff = 6;
+  int success, diff;
+  ROOM_INDEX_DATA *room;
+  room = ch->in_room;
+
+  switch (room->sector_type)
+  {
+    case SECT_INSIDE:
+     send_to_char("You need to be outside to activate this Gift.\n\r", ch);
+     return;
+    case SECT_WATER_DROWN:
+      send_to_char("You cannot use this Gift underwater!\n\r", ch);
+      return;
+    case SECT_UNUSED:
+    case SECT_HOT:
+    case SECT_COLD:
+      send_to_char("There isn't enough moisture in the air.\n\r", ch);
+      return;
+    case SECT_WATER_SWIM:
+    case SECT_WATER_NOSWIM:
+      diff = 4;
+      break;
+    case SECT_DESERT:
+      diff = 9;
+      break;
+    default:
+      diff = 6;
+      break;
+  }
 
   if (ch->move < ch->level * 2)
   {

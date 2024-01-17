@@ -2318,8 +2318,20 @@ void spell_gift_mansskin( int sn, int level, CHAR_DATA *ch, void *vo, int target
 //gnosis roll diff (4 water, 6 temperate climate, 9 in desert)
 //covers you and pack with fog (exactly like obfusc 5)
 //
-void spell_gift_curseoftheaeolus( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
+void spell_gift_curseoftheaeolus( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  int success, diff;
+
+  af.where     = TO_AFFECTS;
+  af.type      = gsn_gift_curseoftheaeolus;
+  af.level     = ch->pcdata->rank;
+  af.duration  = (success * 5) + (ch->pcdata->rank * 2);
+  af.modifier  = 0;
+  af.location  = AFF_HIDE;
+  af.bitvector = 0;
+  affect_to_char( ch, &af );
+
+  return;
 }
 //“Sense of the Prey” duplicate gift
 //same as ragabash gift

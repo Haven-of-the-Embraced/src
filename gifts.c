@@ -2320,12 +2320,34 @@ void spell_gift_mansskin( int sn, int level, CHAR_DATA *ch, void *vo, int target
 //
 void spell_gift_curseoftheaeolus( int sn, int level, CHAR_DATA *ch, void *vo, int target)
 {
-  int success, diff;
+  int success, diff = 6;
+
+  if (ch->move < ch->level * 2)
+  {
+    send_to_char("You are too tired to ask for spiritual aid.\n\r", ch);
+    return;
+  }
+
+  ch->move -= ch->level * 2;
+  success = godice(ch->pcdata->gnosis[PERM], diff);
+
+  if (success < 0)
+  {
+    act("You silently call out to the spirits of fog and mist, and feel nothing in response.", ch, NULL, NULL, TO_CHAR);
+    WAIT_STATE(ch, 10);
+    return;
+  }
+
+  if (success == 0)
+  {
+    act("Your silent request to the spirits goes unanswered.", ch, NULL, NULL, TO_CHAR);
+    return;
+  }
 
   af.where     = TO_AFFECTS;
   af.type      = gsn_gift_curseoftheaeolus;
   af.level     = ch->pcdata->rank;
-  af.duration  = (success * 5) + (ch->pcdata->rank * 2);
+  af.duration  = (success * 3) + 10;
   af.modifier  = 0;
   af.location  = AFF_HIDE;
   af.bitvector = 0;

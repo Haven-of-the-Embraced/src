@@ -337,6 +337,11 @@ void do_gogarou(CHAR_DATA *ch, char *argument)
         }
         if(!str_prefix( argument, "black furies") || !str_prefix( argument, "black fury"))
         {
+            if (ch->pcdata->true_sex != 2)
+            {
+                send_to_char("You must be a true female to join the Black Furies.\n\r", ch);
+                return;
+            }
             send_to_char("Alright. You are now a Black Fury.\n\r",ch);
             ch->pcdata->tribe = BLACK_FURY;
             ch->clan = clan_lookup("blackfury");

@@ -372,6 +372,11 @@ void do_gogarou(CHAR_DATA *ch, char *argument)
         }
         else if(!str_prefix( argument, "red talons") || !str_prefix( argument, "red talon"))
         {
+            if (ch->pcdata->breed != LUPUS)
+            {
+                send_to_char("You must be born from a wolf to join the Red Talons.\n\r", ch);
+                return;
+            }
             send_to_char("Alright. You are now a Red Talon.\n\r",ch);
             ch->pcdata->tribe = RED_TALON;
             ch->clan = clan_lookup("redtalon");

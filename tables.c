@@ -1346,7 +1346,7 @@ const struct    gift_type   gift_table  [MAX_GIFTS_CODED]  =
     {   "strength of will", 			0,     24, 0,     0,      AHROUN,     0,        5,   0},
     {   "breath of the wyld", 			1,     24, 0,     0,      0,          BLACK_FURY, 1,   0},
     {   "mans skin", 			        1,     24, 0,     0,      0,          BLACK_FURY, 1,   0},
-    {   "curse of the aeolus", 			0,     24, 0,     0,      0,          BLACK_FURY, 2,   0},
+    {   "curse of the aeolus", 			1,     24, 0,     0,      0,          BLACK_FURY, 2,   0},
     {   "coup de grace", 				0,     24, 0,     0,      0,          BLACK_FURY, 3,   0},
     {   "flames of hestia", 			0,     24, 0,     0,      0,          BLACK_FURY, 3,   0},
     {   "body wrack", 					0,     24, 0,     0,      0,          BLACK_FURY, 4,   0},

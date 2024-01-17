@@ -2320,6 +2320,8 @@ void spell_gift_mansskin( int sn, int level, CHAR_DATA *ch, void *vo, int target
 //
 void spell_gift_curseoftheaeolus( int sn, int level, CHAR_DATA *ch, void *vo, int target)
 {
+  AFFECT_DATA af;
+  CHAR_DATA *gch;
   int success, diff = 6;
 
   if (ch->move < ch->level * 2)
@@ -2344,14 +2346,34 @@ void spell_gift_curseoftheaeolus( int sn, int level, CHAR_DATA *ch, void *vo, in
     return;
   }
 
-  af.where     = TO_AFFECTS;
-  af.type      = gsn_gift_curseoftheaeolus;
-  af.level     = ch->pcdata->rank;
-  af.duration  = (success * 3) + 10;
-  af.modifier  = 0;
-  af.location  = AFF_HIDE;
-  af.bitvector = 0;
-  affect_to_char( ch, &af );
+  act("You silently call out to the spirits for aid in masking your group's presence.", ch, NULL, NULL, TO_CHAR);
+  act("A thick fog rolls in, seemingly out of nowhere.", ch, NULL, NULL, TO_ROOM);
+
+  for ( gch = ch->in_room->people; gch != NULL; gch = gch->next_in_room )
+  {
+    if ( is_same_group( gch, ch ) && !is_affected(gch, spell_gift_curseoftheaeolus))
+    {
+      af.where     = TO_AFFECTS;
+      af.type      = gsn_gift_curseoftheaeolus;
+      af.level     = ch->pcdata->rank;
+      af.duration  = (success * 3) + 10;
+      af.modifier  = 0;
+      af.location  = AFF_HIDE;
+      af.bitvector = 0;
+      affect_to_char( gch, &af );
+    }
+    else if (!is_same_group( gch, ch ) && !is_affected(gch, spell_gift_curseoftheaeolus))
+    {
+      af.where     = TO_AFFECTS;
+      af.type      = gsn_gift_curseoftheaeolus;
+      af.level     = -1;
+      af.duration  = (success * 3) + 10;
+      af.modifier  = -2;
+      af.location  = APPLY_CS_PER;
+      af.bitvector = 0;
+      affect_to_char( gch, &af );
+    }
+  }
 
   return;
 }

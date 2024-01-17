@@ -2691,7 +2691,7 @@ Total (3) */
 
     { "curse of the aeolus", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_curseoftheaeolus,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_curseoftheaeolus,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+    &gsn_gift_curseoftheaeolus,          SLOT( 0),        0,     12, "",             "The dense fog dissipates as quickly as it appeared.",        "" },
 
     { "coup de grace", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_coupdegrace,  TAR_IGNORE, POS_STANDING,

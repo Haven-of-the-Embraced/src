@@ -1823,6 +1823,9 @@ void d10_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt)
   if (is_affected(victim, gsn_gift_lambentfire))
     diff++;
 
+  if (is_affected(victim, gsn_gift_curseoftheaeolus) && get_affect_level(victim, gsn_gift_curseoftheaeolus) >= 0)
+    dice--;
+
   if (IS_NPC(ch))
     if (has_affect_modifier(victim, gsn_awe, ch->pIndexData->vnum))
       diff++;

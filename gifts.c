@@ -144,6 +144,14 @@ void spell_gift_speechoftheworld( int sn, int level, CHAR_DATA *ch, void *vo, in
     sendch("You are already mimicking dialects.\n\r", ch);
     return;
   }
+
+  if (ch->move <= ch->level)
+  {
+    sendch("You are too tired to call the spirits.\n\r", ch);
+    return;
+  }
+
+  ch->move -= ch->level;
   success = godice(get_attribute(ch, INTELLIGENCE) + get_ability(ch, CSABIL_LINGUISTICS), 7);
 
   if (success < 0)

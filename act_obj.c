@@ -3070,6 +3070,7 @@ void do_buy( CHAR_DATA *ch, char *argument )
     char arg[MAX_INPUT_LENGTH];
     int number, count = 1;
     int tax;
+    int hagglediff = 7;
 
     if ( ( keeper = find_keeper( ch ) ) == NULL )
         return;
@@ -3188,22 +3189,30 @@ void do_buy( CHAR_DATA *ch, char *argument )
     /* haggle */
     if (!IS_NPC(ch) && !IS_OBJ_STAT(obj,ITEM_SELL_EXTRACT) && ch->csabilities[CSABIL_COMMERCE] > 0 )
     {
-        success = godice(get_attribute(ch, MANIPULATION) + ch->csabilities[CSABIL_COMMERCE], 6);
-    if (success < 0)
-    {
-        act("$N seems insulted by your attempt to haggle down the price and ups the price!", ch, NULL, keeper, TO_CHAR);
-        cost += cost/10;
-    } else if (success > 0)
-    {
-        if (success > 10)
-            success = 10;
-        act("You haggle with $N.", ch, NULL, keeper, TO_CHAR);
-        act("$n haggles with $N.", ch, NULL, keeper, TO_ROOM);
-        //Haggle math! Gives rougghly maximum 20% discount for 10 successes.
-        cost = (100-(success*2))*cost/100;
-        check_improve(ch,gsn_haggle,TRUE,4);
+        if is_affected(ch, gsn_gift_speechoftheworld)
+        {
+            send_to_char("You attempt to haggle in the shopkeeper's native language.\n\r", ch);
+            hagglediff--;
+            if (get_affect_level(ch, gsn_gift_speechoftheworld) > 4)
+                hagglediff--;
+        }
+        success = godice(get_attribute(ch, MANIPULATION) + ch->csabilities[CSABIL_COMMERCE], hagglediff);
+        if (success < 0)
+        {
+            act("$N seems insulted by your attempt to haggle down the price and ups the price!", ch, NULL, keeper, TO_CHAR);
+            cost += cost/10;
+        }
+        else if (success > 0)
+        {
+            if (success > 10)
+                success = 10;
+            act("You haggle with $N.", ch, NULL, keeper, TO_CHAR);
+            act("$n haggles with $N.", ch, NULL, keeper, TO_ROOM);
+            //Haggle math! Gives rougghly maximum 20% discount for 10 successes.
+            cost = (100-(success*2))*cost/100;
+            check_improve(ch,gsn_haggle,TRUE,4);
+        }
     }
-}
 
     if (number > 1)
     {

@@ -1466,12 +1466,12 @@ bool process_output( DESCRIPTOR_DATA *d, bool fPrompt )
             if (ch->fighting && target && target != ch && IS_SET(ch->act2, PLR2_BATTLEPROMPT))
             {
                 if (!IS_SET(ch->comm, COMM_COMPACT))
-                    send_to_char("{D ______________{x\n\r", ch);
-                cprintf(ch, "{D[{m*{cTanking{m*{D] {x%s Hp:%s%d% {xMv:%s%d%\n\r", IS_NPC(target) ? target->short_descr : target->name,
+                    send_to_char("{D _______________________________________________________{x\n\r", ch);
+                cprintf(ch, "{D[{m*{cTanking{m*{D] {W%s {xHp:%s%d% {xMv:%s%d%\n\r", IS_NPC(target) ? target->short_descr : target->name,
                         tarhit >= 75 ? "{G" : tarhit >= 33 ? "{Y" : "{R", tarhit, 
                         tarmove >= 75 ? "{G" : tarmove >= 33 ? "{Y" : "{R", tarmove);
                 if (!IS_SET(ch->comm, COMM_COMPACT))
-                    send_to_char("{D ``````````````{x\n\r", ch);
+                    send_to_char("{D ```````````````````````````````````````````````````````{x\n\r", ch);
             }
         if ( IS_SET(ch->comm, COMM_PROMPT) )
             bust_a_prompt( d->character );

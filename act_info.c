@@ -265,9 +265,7 @@ void show_char_to_char_0( CHAR_DATA *victim, CHAR_DATA *ch )
 
     if (IS_NPC(victim) && IS_SET(victim->act2, ACT2_INFLUENCE) &&
         !IS_NPC(ch) && is_affected(ch, gsn_notoriety))
-    {
-        strcat(buf, "{R({rInfluence{R){y ");
-    }
+            strcat(buf, "{R({rInfluence{R){y ");
     if ( IS_IMMORTAL(ch) && IS_AFFECTED2(victim, AFF2_UMBRA) ) strcat( buf, "{x({mUmbra{x){y ");
     if ( (is_affected(ch, gsn_spiritsight) || is_affected(ch, gsn_gift_pulseoftheinvisible))
         && !IS_AFFECTED2(ch, AFF2_UMBRA) && IS_AFFECTED2(victim, AFF2_UMBRA)) strcat(buf, "{x({mIndistinct{x){y ");
@@ -554,6 +552,11 @@ void show_char_to_char_1( CHAR_DATA *victim, CHAR_DATA *ch )
 
     if (IS_AFFECTED2(victim, AFF2_MAJESTY))
     act( "$N exudes an air of {Brespect{x, {Yfear{x, and {Mdevotion{x from all who gaze upon $M.", ch, NULL, victim, TO_CHAR);
+
+    if (is_affected(ch, gsn_gift_scentofthetrueform))
+      sprintf(buf,"You detect the unmistakable scent of a %s coming from %s.\n\r",
+            race_table[victim->race].name, victim->short_descr);
+      send_to_char(buf,ch);
 
     if ( victim->max_hit > 0 )
     percent = ( 100 * victim->hit ) / victim->max_hit;

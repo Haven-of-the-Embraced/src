@@ -1315,7 +1315,7 @@ const struct    gift_type   gift_table  [MAX_GIFTS_CODED]  =
     {   "spirit wassail", 				0,     24, 0,     0,      THEURGE,    0,        4,   0},
     {   "nightmare possession", 		0,     24, 0,     0,      THEURGE,    0,        5,   0},
     {   "malleable spirit", 			0,     24, 0,     0,      THEURGE,    0,        5,   0},
-    {   "scent of the true form", 		0,     24, 0,     0,      PHILODOX,   0,        1,   0},
+    {   "scent of the true form", 		1,     24, 0,     0,      PHILODOX,   0,        1,   0},
     {   "truth of gaia", 				0,     24, 0,     0,      PHILODOX,   0,        1,   0},
     {   "call of duty", 				0,     24, 0,     0,      PHILODOX,   0,        2,   0},
     {   "strength of purpose", 			0,     24, 0,     0,      PHILODOX,   0,        2,   0},

@@ -1609,8 +1609,48 @@ void spell_gift_resistpain( int sn, int level, CHAR_DATA *ch, void *vo, int targ
 //vulture
 //can smell kinfolk or fellow werewolf immediatly, others roll per + primal-urge diff 6
 //1 success = humans, 2 successes = vampire, faerie, other shapeshifter, 4 = mage / fomor
-void spell_gift_scentofthetrueform( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_scentofthetrueform( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  AFFECT_DATA af;
+  int successes;
+
+  if(is_affected(ch, gsn_gift_scentofthetrueform))
+  {
+    send_to_char("Your olfactary senses already sniff out beings' true forms.\n\r",ch);
     return;
+  }
+
+  if(ch->move <= ch->level * 2)
+  {
+    send_to_char("You are too tired to sniff out beings' true forms.\n\r",ch);
+    return;
+  }
+
+  ch->move -= ch->level * 2;
+  successes = godice(get_attribute(ch, PERCEPTION) + ch->pcdata->primal_urge, 6);
+
+  if(successes < 0)
+  {
+    send_to_char("Your nose becomes overloaded with scents, briefly disorienting you.\n\r",ch);
+    WAIT_STATE(ch, 9);
+    return;
+  }
+
+  if(successes == 0)
+  {
+    send_to_char("The spirits do not seem to have answered your request.\n\r",ch);
+    return;
+  }
+
+  af.where        = TO_AFFECTS;
+  af.type         = gsn_gift_scentofthetrueform;
+  af.level        = successes;
+  af.duration     = successes * 3 + 5;
+  af.modifier     = 0;
+  af.location     = APPLY_NONE;
+  af.bitvector    = 0;
+  affect_to_char(ch, &af);
+  return;
 }
 //
 //“Truth of Gaia”

@@ -134,8 +134,50 @@ void spell_gift_persuasion( int sn, int level, CHAR_DATA *ch, void *vo, int targ
 //Roll: Intelligence + Linguinstics (diff 7)
 //Those who wander can find a new dialect just over the next ridge, and it seems every hamlet has it’s own variations of the local tongue. This gift allows the garou to speak any human language that she encounters. (Would involve a language code. May need to find another gift for this one,)
 //Cost: None.
-void spell_gift_speechoftheworld( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_speechoftheworld( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  AFFECT_DATA af;
+  int success;
+
+  if (is_affected(ch, gsn_gift_speechoftheworld))
+  {
+    sendch("You are already mimicking dialects.\n\r", ch);
     return;
+  }
+
+  if (ch->move <= ch->level)
+  {
+    sendch("You are too tired to call the spirits.\n\r", ch);
+    return;
+  }
+
+  ch->move -= ch->level;
+  success = godice(get_attribute(ch, INTELLIGENCE) + get_ability(ch, CSABIL_LINGUISTICS), 7);
+
+  if (success < 0)
+  {
+    sendch("The spirits of dialects and speech shun your request.\n\r", ch);
+    WAIT_STATE(ch, 9);
+    return;
+  }
+
+  if (success == 0)
+  {
+    sendch("The spirits of dialects and speech fail to respond.\n\r", ch);
+    return;
+  }
+
+sendch("The spirits of dialects and speech lend you extra comprehension of spoken languages.\n\r", ch);
+
+  af.where = TO_AFFECTS;
+  af.type  = gsn_gift_speechoftheworld;
+  af.level = success;
+  af.duration = success * 2 + 5;
+  af.bitvector = 0;
+  af.modifier = 0;
+  af.location = 0;
+  affect_to_char(ch, &af);
+  return;
 }
 
 //

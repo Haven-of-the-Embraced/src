@@ -1642,6 +1642,8 @@ void spell_gift_scentofthetrueform( int sn, int level, CHAR_DATA *ch, void *vo, 
     return;
   }
 
+  send_to_char("The spirits allow you to sniff out enemies' true selves.\n\r",ch);
+
   af.where        = TO_AFFECTS;
   af.type         = gsn_gift_scentofthetrueform;
   af.level        = successes;

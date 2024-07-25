@@ -3189,7 +3189,7 @@ void do_buy( CHAR_DATA *ch, char *argument )
     /* haggle */
     if (!IS_NPC(ch) && !IS_OBJ_STAT(obj,ITEM_SELL_EXTRACT) && ch->csabilities[CSABIL_COMMERCE] > 0 )
     {
-        if is_affected(ch, gsn_gift_speechoftheworld)
+        if (is_affected(ch, gsn_gift_speechoftheworld))
         {
             send_to_char("You attempt to haggle in the shopkeeper's native language.\n\r", ch);
             hagglediff--;

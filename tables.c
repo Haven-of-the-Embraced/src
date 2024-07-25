@@ -1269,7 +1269,7 @@ const struct    gift_type   gift_table  [MAX_GIFTS_CODED]  =
     {   "Bloody Feast",             	1,     24, 0,     0,      0,          0,        5,   0}, // ** WENDIGO
     {   "Master of Fire",           	1,     24, 0,     HOMID,  0,          0,        1,   0},
     {   "persuasion", 					1,     24, 0,     HOMID,  0,          WARDERSOFMEN, 1,   0},
-    {   "speech of the world", 			0,     24, 0,     HOMID,  0,          0,        2,   0},
+    {   "speech of the world", 			1,     24, 0,     HOMID,  0,          0,        2,   0},
     {   "calm the savage beast", 		0,     24, 0,     HOMID,  0,          0,        3,   0},
     {   "reshape object", 				0,     24, 0,     HOMID,  0,          WARDERSOFMEN, 3,   0},
     {   "bury the wolf", 				0,     24, 0,     HOMID,  0,          0,        4,   0},

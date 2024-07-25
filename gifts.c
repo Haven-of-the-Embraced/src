@@ -167,6 +167,8 @@ void spell_gift_speechoftheworld( int sn, int level, CHAR_DATA *ch, void *vo, in
     return;
   }
 
+sendch("The spirits of dialects and speech lend you extra comprehension of spoken languages.\n\r", ch);
+
   af.where = TO_AFFECTS;
   af.type  = gsn_gift_speechoftheworld;
   af.level = success;

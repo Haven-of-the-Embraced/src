@@ -6151,7 +6151,7 @@ void do_bloodagony(CHAR_DATA *ch, char *argument)
 
     af = new_affect();
     af->where     = TO_WEAPON;
-    af->type      = gsn_poison;
+    af->type      = gsn_blood_agony;
     af->level     = ch->level;
     af->duration  = ch->level / 4 + 25;
     af->location  = 0;

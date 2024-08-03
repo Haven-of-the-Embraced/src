@@ -2185,16 +2185,6 @@ bool d10_damage(CHAR_DATA *ch, CHAR_DATA *victim, int damsuccess, int modifier, 
     //Soak dice, subtracts successes from damage.
     soakdice = get_attribute(victim, STAMINA);
 
-    if (!IS_NPC(victim))
-    {
-        if (IS_VAMP(victim)) //vamps add fortitude.
-            soakdice += victim->pcdata->discipline[FORTITUDE];
-
-    } else {// IS NPC
-     if (IS_VAMP(victim) || victim->race == race_lookup("garou"))
-        soakdice++;
-    }
-
     if (dam_type > DAM_BASH && (victim->race == race_lookup("human") ||
             victim->race == race_lookup("ghoul")) )
         soakdice = 0;//humans can't soak lethal.
@@ -2205,8 +2195,16 @@ bool d10_damage(CHAR_DATA *ch, CHAR_DATA *victim, int damsuccess, int modifier, 
         (victim->pcdata->shiftform == HOMID || victim->pcdata->shiftform == LUPUS) )
         soakdice = 0;// Garou can't soak agg in homid or lupus.
     if (IS_NPC(victim) && (IS_WEAPON_STAT(wield,WEAPON_AGG_DAMAGE) || (affect_find(wield->affected,gsn_blood_agony) != NULL)))
+        soakdice = 0;// No Stamina soak for Agg weapon
+
+    if (!IS_NPC(victim))
     {
-        send_to_char("**Agg weapon!**\n\r",ch);
+        if (IS_VAMP(victim)) //vamps add fortitude.
+            soakdice += victim->pcdata->discipline[FORTITUDE];
+
+    } else {// IS NPC
+     if (IS_VAMP(victim) || victim->race == race_lookup("garou"))
+        soakdice++;
     }
 
     // Armor, applied to physical damage and garou claws.

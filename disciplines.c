@@ -5639,8 +5639,61 @@ if (ch->pcdata->discipline[PROTEAN] >= 5)
 return;
 }
 
+void do_silenceofdeath(CHAR_DATA *ch, char *argument)
+{
+    AFFECT_DATA af;
 
-/*Sengir made weakness more TT-ish */
+    if (IS_NPC(ch)) return;
+
+    if(!IS_VAMP(ch))
+    {
+        send_to_char("You are not a Vampire!\n\r",ch);
+        return;
+    }
+
+    if ( IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
+    {
+        send_to_char("Your blood curse prevents it!\n\r" ,ch);
+        return;
+    }
+
+    if (ch->pblood < 15)
+    {
+        send_to_char( "You do not have enough blood.\n\r", ch );
+        return;
+    }
+
+    if (ch->pcdata->discipline[QUIETUS] < 1)
+    {
+        send_to_char( "You are not skilled in the arts of Quietus.\n\r", ch );
+        return;
+    }
+
+    if ( IS_AFFECTED(ch, AFF_SNEAK) )
+    {
+        affect_strip( ch, gsn_sneak );
+        send_to_char( "You drop your aura of silence.\n\r", ch );
+        return;
+    }
+    ch->pblood -= 15;
+    send_to_char( "You create a field of Silence around yourself.\n\r", ch );
+
+    affect_strip( ch, gsn_sneak );
+
+    if (IS_AFFECTED(ch,AFF_SNEAK))
+        return;
+
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_sneak;
+    af.level     = ch->level;
+    af.duration  = ch->level*ch->pcdata->discipline[QUIETUS];
+    af.location  = APPLY_NONE;
+    af.modifier  = 0;
+    af.bitvector = AFF_SNEAK;
+    affect_to_char( ch, &af );
+    return;
+}
+
 void do_weakness(CHAR_DATA *ch, char *argument)
 {
    char arg[MAX_INPUT_LENGTH];
@@ -5733,7 +5786,6 @@ void do_weakness(CHAR_DATA *ch, char *argument)
     if(IS_NPC(victim))
     {
         wpdiff = 4;
-
     }
 
     else
@@ -5797,151 +5849,6 @@ void do_weakness(CHAR_DATA *ch, char *argument)
     af.bitvector    = 0;
     affect_to_char( victim, &af );
 
-
-    return;
-}
-
-void do_acidblood(CHAR_DATA *ch, char *argument)
-{
-    CHAR_DATA *victim;
-    AFFECT_DATA af;
-//  char buf[MAX_STRING_LENGTH];
-    char arg[MAX_INPUT_LENGTH];
-//  int dam;            /*To be passed into the damage code*/
-    int dicesuccess = 0;        /*For determining if hit succeeds*/
-    int damagesuccess = 0;      /*For determining damage success*/
-    int transmutedblood;        /*For determining damage dice*/
-
-    if(ch->gen >= 15) transmutedblood = 1;
-    else transmutedblood = UMIN(5,(14 - ch->gen));
-
-
-
-    if (IS_NPC(ch))
-        return;
-
-    argument = one_argument(argument, arg);
-
-    if (!IS_VAMP(ch))
-    {
-        send_to_char("You don't have any vampiric vitae to transmute!\n\r", ch);
-        return;
-    }
-
-    if ((victim = get_char_room(ch, NULL, arg)) == NULL)
-    {
-        send_to_char("Spit caustic blood at whom?\n\r", ch);
-        return;
-    }
-
-    if (victim == ch)
-    {
-        send_to_char("You are immune to your own blood acid.\n\r", ch);
-        return;
-    }
-
-    if (ch->stopped > 0)
-    {
-/*      if IS_AFFECTED(ch, gsn_stoptheclock)
-            send_to_char("Your body is frozen in time!\n\r", ch);
-        else
-            send_to_char("Your throat still hasn't completely cleared of acid.\n\r", ch);
-*/
-        send_to_char("You are unable to spit blood right now.\n\r",ch);
-        return;
-    }
-
-    if (IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
-    {
-        send_to_char("The curse upon your blood prevents you from transmuting your own vitae into acid.\n\r", ch);
-        return;
-    }
-
-    if (ch->pcdata->discipline[QUIETUS] < 5)
-    {
-        send_to_char("Haqim has not deemed you worthy enough for this potent gift.\n\r", ch);
-        return;
-    }
-
-    if (IS_NPC(victim) && victim->pIndexData->pShop != NULL)
-    {
-        send_to_char("You fear that corroding the shopkeeper might prevent you from purchasing goods in the future.\n\r", ch);
-        return;
-    }
-
-    if (ch->pblood <= (3 * transmutedblood) + 10)
-    {
-        send_to_char("Transmuting blood now will leave you dangerously low on precious vitae.\n\r", ch);
-        return;
-    }
-
-    if (!IS_AFFECTED(ch, AFF_FANGS) && ch->race != race_lookup("ghoul"))
-    {
-        send_to_char("You must extend your fangs first before spitting at your enemies.\n\r", ch);
-        return;
-    }
-
-
-    WAIT_STATE(ch, 20);
-
-    ch->pblood -= (3 * transmutedblood);
-
-    send_to_char("Focusing upon the birthright of Haqim, you transmute precious vitae into a virulent acid and project it towards your enemy!\n\r", ch);
-
-    dicesuccess = godice(get_attribute(ch,STAMINA)+ch->csabilities[CSABIL_ATHLETICS], 6);
-
-        damagesuccess = godice(2 * transmutedblood, 6);
-
-    if (damagesuccess <0)    /*can't -botch- a damage roll*/
-        damagesuccess = 0;
-
-
-    if (dicesuccess < 0)
-    {
-        act("Choking violently, you begin coughing up globules of acid that have begun welling up in your throat.", ch, NULL, victim, TO_CHAR);
-        act("$n bends over and coughs violently, expelling globs of acid onto the ground.", ch, NULL, victim, TO_NOTVICT);
-        ch->stopped =  2;
-        WAIT_STATE(ch, 4);
-        return;
-    }
-
-    else if (dicesuccess == 0)
-    {
-        act("Misjudging the trajectory of your projectile, the acid harmlessly misses $N.", ch, NULL, victim, TO_CHAR);
-        if(!IS_NPC(victim))
-            act("You watch in horror and fascination as a stream of corrosive acid barely misses striking you.", ch, NULL, victim, TO_VICT);
-        act("$n spits a stream of acid at $N, but narrowly misses.", ch, NULL, victim, TO_NOTVICT);
-        return;
-    }
-
-    else if (dicesuccess > 0)
-    {
-        act("Haqim smiles upon thee, as your acidic blood strikes true upon $N; the acrid smell of corroding flesh wafts into your nostrils.", ch, NULL, victim, TO_CHAR);
-        if(!IS_NPC(victim))
-            act("Intense pain burns its way through your body as $n's acidic blood collides with your body, washing over your skin.", ch, NULL, victim, TO_VICT);
-        act("$n spits a stream of acid and hits $N with full force.", ch, NULL, victim, TO_NOTVICT);
-        gain_exp(ch, dicesuccess);
-    }
-
-    damage(ch, victim, (damagesuccess*get_modifier(ch, MODTYPE_GODLY)), gsn_acidblood, DAM_ACID, TRUE);
-
-    if (dicesuccess > 4)        /*Many successes, great aim.  Blind baby!*/
-    {
-        af.where    = TO_AFFECTS;
-        af.type     = gsn_acidblood;
-        af.level    = ch->pcdata->discipline[QUIETUS];
-        af.location = APPLY_HITROLL;
-        af.modifier = -(dicesuccess*3);
-        af.duration = 1;
-        af.bitvector    = AFF_BLIND;
-        affect_to_char(victim, &af);
-
-        act("With precision aiming, your projectile has splashed into $N's face, momentarily blinding $S.  You are truly the favored of Haqim.", ch, NULL, victim, TO_CHAR);
-        if(!IS_NPC(victim))
-            act("Your eyes burn as the acid splashes across your face.  Flailing wildly, you begin to hurriedly wipe it off.", ch, NULL, victim, TO_VICT);
-        act("$N flails wildly and begins clawing at $S face.", ch, NULL, victim, TO_NOTVICT);
-        gain_exp(ch, 2);
-    }
     return;
 }
 
@@ -6049,65 +5956,6 @@ void do_bloodcurse(CHAR_DATA *ch, char *argument)
     return;
 }
 
-
-void do_silenceofdeath(CHAR_DATA *ch, char *argument)
-{
-    AFFECT_DATA af;
-
-    if (IS_NPC(ch)) return;
-
-    if(!IS_VAMP(ch))
-    {
-        send_to_char("You are not a Vampire!\n\r",ch);
-        return;
-    }
-
-    if ( IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
-    {
-        send_to_char("Your blood curse prevents it!\n\r" ,ch);
-        return;
-    }
-    if (ch->pblood < 15)
-    {
-        send_to_char( "You do not have enough blood.\n\r", ch );
-        return;
-    }
-    if (ch->pcdata->discipline[QUIETUS] < 1)
-    {
-        send_to_char( "You are not skilled in the arts of Quietus.\n\r", ch );
-        return;
-    }
-
-    if ( IS_AFFECTED(ch, AFF_SNEAK) )
-    {
-        affect_strip( ch, gsn_sneak );
-
-/*      act( "$n starts emitting sounds again.", ch, 0, 0, TO_NOTVICT ); */
-        send_to_char( "You drop your aura of silence.\n\r", ch );
-        return;
-    }
-    ch->pblood -= 15;
-/*  act( "$n suddenly stops emitting sounds.", ch, 0, 0, TO_NOTVICT ); */
-    send_to_char( "You create a field of Silence around yourself.\n\r", ch );
-
-
-    affect_strip( ch, gsn_sneak );
-
-
-
-    if (IS_AFFECTED(ch,AFF_SNEAK))
-        return;
-
-    af.where     = TO_AFFECTS;
-    af.type      = gsn_sneak;
-    af.level     = ch->level;
-    af.duration  = ch->level*ch->pcdata->discipline[QUIETUS];
-    af.location  = APPLY_NONE;
-    af.modifier  = 0;
-    af.bitvector = AFF_SNEAK;
-    affect_to_char( ch, &af );
-    return;
-}
 void do_bloodagony(CHAR_DATA *ch, char *argument)
 {
     OBJ_DATA *obj;
@@ -6160,6 +6008,138 @@ void do_bloodagony(CHAR_DATA *ch, char *argument)
     obj->affected   = af;
     act("You convert vitae into a potent acid, coating $p in the name of Haqim.",ch,obj,NULL,TO_CHAR);
     act("$n coats $p in $s blood.",ch,obj,NULL,TO_NOTVICT);
+    return;
+}
+
+void do_acidblood(CHAR_DATA *ch, char *argument)
+{
+    CHAR_DATA *victim;
+    AFFECT_DATA af;
+    char arg[MAX_INPUT_LENGTH];
+    int dicesuccess = 0;        /*For determining if hit succeeds*/
+    int damagesuccess = 0;      /*For determining damage success*/
+    int transmutedblood;        /*For determining damage dice*/
+
+    if(ch->gen >= 15) transmutedblood = 1;
+    else transmutedblood = UMIN(5,(14 - ch->gen));
+
+    if (IS_NPC(ch))
+        return;
+
+    argument = one_argument(argument, arg);
+
+    if (!IS_VAMP(ch))
+    {
+        send_to_char("You don't have any vampiric vitae to transmute!\n\r", ch);
+        return;
+    }
+
+    if ((victim = get_char_room(ch, NULL, arg)) == NULL)
+    {
+        send_to_char("Spit caustic blood at whom?\n\r", ch);
+        return;
+    }
+
+    if (victim == ch)
+    {
+        send_to_char("You are immune to your own blood acid.\n\r", ch);
+        return;
+    }
+
+    if (ch->stopped > 0)
+    {
+        send_to_char("You are unable to spit blood right now.\n\r",ch);
+        return;
+    }
+
+    if (IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
+    {
+        send_to_char("The curse upon your blood prevents you from transmuting your own vitae into acid.\n\r", ch);
+        return;
+    }
+
+    if (ch->pcdata->discipline[QUIETUS] < 5)
+    {
+        send_to_char("Haqim has not deemed you worthy enough for this potent gift.\n\r", ch);
+        return;
+    }
+
+    if (IS_NPC(victim) && victim->pIndexData->pShop != NULL)
+    {
+        send_to_char("You fear that corroding the shopkeeper might prevent you from purchasing goods in the future.\n\r", ch);
+        return;
+    }
+
+    if (ch->pblood <= (3 * transmutedblood) + 10)
+    {
+        send_to_char("Transmuting blood now will leave you dangerously low on precious vitae.\n\r", ch);
+        return;
+    }
+
+    if (!IS_AFFECTED(ch, AFF_FANGS) && ch->race != race_lookup("ghoul"))
+    {
+        send_to_char("You must extend your fangs first before spitting at your enemies.\n\r", ch);
+        return;
+    }
+
+    WAIT_STATE(ch, 20);
+
+    ch->pblood -= (3 * transmutedblood);
+
+    send_to_char("Focusing upon the birthright of Haqim, you transmute precious vitae into a virulent acid and project it towards your enemy!\n\r", ch);
+
+    dicesuccess = godice(get_attribute(ch,STAMINA)+ch->csabilities[CSABIL_ATHLETICS], 6);
+    damagesuccess = godice(2 * transmutedblood, 6);
+
+    if (damagesuccess <0)    /*can't -botch- a damage roll*/
+        damagesuccess = 0;
+
+    if (dicesuccess < 0)
+    {
+        act("Choking violently, you begin coughing up globules of acid that have begun welling up in your throat.", ch, NULL, victim, TO_CHAR);
+        act("$n bends over and coughs violently, expelling globs of acid onto the ground.", ch, NULL, victim, TO_NOTVICT);
+        ch->stopped =  2;
+        WAIT_STATE(ch, 4);
+        return;
+    }
+
+    else if (dicesuccess == 0)
+    {
+        act("Misjudging the trajectory of your projectile, the acid harmlessly misses $N.", ch, NULL, victim, TO_CHAR);
+        if(!IS_NPC(victim))
+            act("You watch in horror and fascination as a stream of corrosive acid barely misses striking you.", ch, NULL, victim, TO_VICT);
+        act("$n spits a stream of acid at $N, but narrowly misses.", ch, NULL, victim, TO_NOTVICT);
+        return;
+    }
+
+    else if (dicesuccess > 0)
+    {
+        act("Haqim smiles upon thee, as your acidic blood strikes true upon $N; the acrid smell of corroding flesh wafts into your nostrils.", ch, NULL, victim, TO_CHAR);
+        if(!IS_NPC(victim))
+            act("Intense pain burns its way through your body as $n's acidic blood collides with your body, washing over your skin.", ch, NULL, victim, TO_VICT);
+        act("$n spits a stream of acid and hits $N with full force.", ch, NULL, victim, TO_NOTVICT);
+        gain_exp(ch, dicesuccess);
+    }
+
+    damage(ch, victim, (damagesuccess*get_modifier(ch, MODTYPE_GODLY)), gsn_acidblood, DAM_ACID, TRUE);
+
+    if (dicesuccess > 4)        /*Many successes, great aim.  Blind baby!*/
+    {
+        af.where    = TO_AFFECTS;
+        af.type     = gsn_acidblood;
+        af.level    = ch->pcdata->discipline[QUIETUS];
+        af.location = APPLY_HITROLL;
+        af.modifier = -(dicesuccess*3);
+        af.duration = 1;
+        af.bitvector    = AFF_BLIND;
+        affect_to_char(victim, &af);
+
+        act("With precision aiming, your projectile has splashed into $N's face, momentarily blinding $S.  You are truly the favored of Haqim.", ch, NULL, victim, TO_CHAR);
+        if(!IS_NPC(victim))
+            act("Your eyes burn as the acid splashes across your face.  Flailing wildly, you begin to hurriedly wipe it off.", ch, NULL, victim, TO_VICT);
+        act("$N flails wildly and begins clawing at $S face.", ch, NULL, victim, TO_NOTVICT);
+        gain_exp(ch, 2);
+    }
     return;
 }
 

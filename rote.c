@@ -691,11 +691,10 @@ void rote_perceiveforces(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA
         return;
     }
 
-
     af.where     = TO_AFFECTS;
     af.type      = gsn_magick;
     af.level     = ch->level;
-    af.duration  = UMAX(success*(ch->csabilities[CSABIL_ALERTNESS]+get_attribute(ch,PERCEPTION)),10);
+    af.duration  = (success * 5) + 25;
     af.location  = APPLY_NONE;
     af.modifier  = 0;
     af.bitvector = AFF_INFRARED;
@@ -761,7 +760,6 @@ void rote_kineticshield(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA 
         send_to_char("You already reflect the kinetic energy of weapons directed towards you.\n\r",ch);
         return;
     }
-
 
     af.where     = TO_AFFECTS;
     af.type      = gsn_kineticshield;
@@ -844,11 +842,10 @@ void rote_spatialperceptions(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_
         return;
     }
 
-
     af.where     = TO_AFFECTS;
     af.type      = gsn_magick;
     af.level     = ch->level;
-    af.duration  = UMAX(success*(ch->csabilities[CSABIL_ALERTNESS]+get_attribute(ch,PERCEPTION)),10);
+    af.duration  = (success * 5) + 25;
     af.location  = APPLY_NONE;
     af.modifier  = 0;
     af.bitvector = AFF_DARK_VISION;
@@ -1222,6 +1219,7 @@ void rote_littlegooddeath(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DAT
 
     return;
 }
+
 void rote_healself(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
 {
     if(victim != ch)
@@ -1254,6 +1252,7 @@ void rote_healself(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
     send_to_char( "You feel your wounds mend as you restore your Life pattern..\n\r", victim );
     return;
 }
+
 void rote_healother(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
 {
     int gain;
@@ -1933,6 +1932,7 @@ void rote_quiltedform(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *o
     act("You examine the patterns of $p and replicate them, then feed Quintessence into it to bring it into this reality.",ch,obj,NULL,TO_CHAR);
     return;
 }
+
 void rote_refinematter(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
 {
     AFFECT_DATA af;
@@ -2066,6 +2066,7 @@ void rote_empowerself(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *o
     affect_to_char( ch, &af );
     return;
 }
+
 void rote_subconsciousturmoil(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
 {
     if (IS_NPC(ch)) return;
@@ -2079,6 +2080,7 @@ void rote_subconsciousturmoil(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ
 
     return;
 }
+
 void rote_mentallink(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
 {
     AFFECT_DATA af;
@@ -2223,7 +2225,7 @@ void rote_primesense(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *ob
   af.where     = TO_AFFECTS;
   af.type      = gsn_primesense;
   af.level     = ch->sphere[SPHERE_PRIME];
-  af.duration  = (success * 5) + 15;
+  af.duration  = (success * 5) + 25;
   af.location  = APPLY_NONE;
   af.modifier  = 0;
   af.bitvector = AFF_DETECT_MAGIC;
@@ -2493,14 +2495,13 @@ void rote_spiritsight(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *o
     af.where     = TO_AFFECTS;
     af.type      = gsn_spiritsight;
     af.level     = ch->level;
-    af.duration  = UMAX(success*(ch->csabilities[CSABIL_ALERTNESS]+get_attribute(ch,PERCEPTION)),10);
+    af.duration  = (success * 5) + 25;
     af.location  = APPLY_NONE;
     af.modifier  = 0;
     af.bitvector = 0;
     affect_to_char( ch, &af );
     return;
 }
-
 
 void rote_callspirit(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
 {
@@ -2840,7 +2841,7 @@ void rote_timesense(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj
   af.where     = TO_AFFECTS;
   af.type      = gsn_timesense;
   af.level     = ch->sphere[SPHERE_TIME];
-  af.duration  = UMAX(success*(ch->csabilities[CSABIL_ALERTNESS]+get_attribute(ch,PERCEPTION)),10);
+  af.duration  = (success * 5) + 25;
   af.location  = APPLY_NONE;
   af.modifier  = 0;
   af.bitvector = 0;
@@ -2895,7 +2896,6 @@ void rote_timealteration(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA
         send_to_char("You are already altering the flow of time around your body, to do much more is to risk the Quintessence leaking from your Pattern.\n\r",ch);
         return;
     }
-
 
     af.where     = TO_AFFECTS;
     af.type      = gsn_timealteration;
@@ -2961,7 +2961,6 @@ void rote_stoptheclock(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *
     affect_to_char( victim, &af );
     return;
 }
-
 
 void rote_sidesteptime(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
 {
@@ -3060,7 +3059,7 @@ void rote_camouflagediscernment(CHAR_DATA *ch, int success, CHAR_DATA *victim, O
     af.where     = TO_AFFECTS;
     af.type      = gsn_camouflagediscernment;
     af.level     = success;
-    af.duration  = UMAX(success*(ch->csabilities[CSABIL_ALERTNESS]+get_attribute(ch,PERCEPTION)),10);
+    af.duration  = (success * 5) + 25;
     af.location  = APPLY_NONE;
     af.modifier  = 0;
     af.bitvector = AFF_DETECT_HIDDEN;

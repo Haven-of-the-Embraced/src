@@ -427,45 +427,6 @@ void do_sphere(CHAR_DATA *ch, char *argument)
 
 }
 
-/*
-void do_flaw(CHAR_DATA *ch, char *argument)
-{
-    char arg[MAX_INPUT_LENGTH];
-
-    argument = one_argument(argument,arg);
-
-    if(ch->avatar == 0)
-    {
-        send_to_char("Your Avatar is not Awakened.\n\r" ,ch);
-        return;
-    }
-
-    if(ch->sphere[SPHERE_PRIME] < 1)
-    {
-        send_to_char("Your knowledge of the primal energies of the universe is too weak to permit you to do this.\n\r",ch);
-        return;
-    }
-
-    if(ch->hit < 50 || ch->max_hit < 50 || ch->pcdata->perm_hit < 50)
-    {
-        send_to_char("You are too weak to gain any more Paradox flaws.\n\r",ch);
-        return;
-    }
-    if(ch->paradox == 0)
-    {
-        send_to_char("You are already free of Paradox!\n\r",ch);
-        return;
-    }
-    ch->hit -= 50;
-    ch->max_hit -= 50;
-    ch->pcdata->perm_hit -= 50;
-
-    ch->paradox--;
-    send_to_char("You you channel a small amount of Paradox into your physical body.. and endure the loss of health.\n\r",ch);
-return;
-}
-*/
-
 // ACTUAL ROTES CODE FOLLOW HERE.
 // bm_rote -- bookmark for rotes.
 void rote_perceiveentropy(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)

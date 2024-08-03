@@ -6126,25 +6126,25 @@ void do_bloodagony(CHAR_DATA *ch, char *argument)
         send_to_char("Your blood curse prevents it!\n\r" ,ch);
         return;
     }
-    if (ch->pblood < 40)
+    if (ch->pblood < 25)
     {
         send_to_char( "You do not have enough blood.\n\r", ch );
         return;
     }
     if (ch->pcdata->discipline[QUIETUS] < 4)
     {
-        send_to_char( "You are not skilled in the arts of Quietus.\n\r", ch );
+        send_to_char( "You are not skilled enough in the arts of Quietus to use Baal's Caress.\n\r", ch );
         return;
     }
 
     if ( ( obj = get_obj_carry( ch, argument, ch ) ) == NULL )
     {
-        send_to_char( "Coat what?\n\r", ch );
+        send_to_char( "Coat what with acid vitae?\n\r", ch );
         return;
     }
     if (!CAN_WEAR( obj, ITEM_WIELD))
     {
-        send_to_char( "That is not a weapon!\n\r", ch );
+        send_to_char( "You may only coat weapons with your acidic blood.\n\r", ch );
         return;
     }
     ch->pblood -= 20;
@@ -6158,8 +6158,8 @@ void do_bloodagony(CHAR_DATA *ch, char *argument)
     af->modifier  = 0;
     af->bitvector = WEAPON_AGG_DAMAGE;
     obj->affected   = af;
-    act("You coat $p in your acidic blood.",ch,obj,NULL,TO_CHAR);
-    act("$n coats $p in acidic blood.",ch,obj,NULL,TO_NOTVICT);
+    act("You convert vitae into a potent acid, coating $p in the name of Haqim.",ch,obj,NULL,TO_CHAR);
+    act("$n coats $p in $s blood.",ch,obj,NULL,TO_NOTVICT);
     return;
 }
 

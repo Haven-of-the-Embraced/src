@@ -327,62 +327,6 @@ void do_rote(CHAR_DATA *ch, char *argument)
     return;
 }
 
-/*
-void do_convert(CHAR_DATA *ch, char *argument)
-{
-    char arg[MAX_INPUT_LENGTH];
-
-    argument = one_argument(argument,arg);
-
-    if(ch->avatar == 0)
-    {
-        send_to_char("Your Avatar is not Awakened.\n\r" ,ch);
-        return;
-    }
-
-    if(ch->sphere[SPHERE_PRIME] < 1)
-    {
-        send_to_char("Your knowledge of the primal energies of the universe is too weak to permit you to do this.\n\r",ch);
-        return;
-    }
-
-    if(arg[0] != '\0' && !str_prefix(arg,"paradox"))
-    {
-        if(ch->quintessence < 25-(ch->sphere[SPHERE_PRIME]*2))
-        {
-            send_to_char("Your body does not contain enough Quintessence to purge yourself of Paradox.\n\r",ch);
-            return;
-        }
-        if(ch->paradox == 0)
-        {
-            send_to_char("You are already free of Paradox!\n\r",ch);
-            return;
-        }
-        ch->quintessence -= (25-(ch->sphere[SPHERE_PRIME]*2));
-        ch->paradox--;
-        if(ch->paradox == 0) send_to_char("You free yourself from the binding reality of Paradox!\n\r",ch);
-        else
-        send_to_char("You pour your inner essence into the endless void of Paradox within you...\n\r It trickles into the void soundlessly. You feel the hold of Reality weaken slightly.\n\r",ch);
-        return;
-    }
-
-    if(ch->mana < 250)
-    {
-        send_to_char( "You do not have enough mana.\n\r", ch );
-        return;
-    }
-    if(ch->quintessence+ch->sphere[SPHERE_PRIME]+ch->paradox >= ch->max_quintessence)
-    {
-        send_to_char("Your Avatar cannot support any more Quintessence.\n\r",ch);
-        return;
-    }
-    ch->mana -= 250;
-    ch->quintessence += ch->sphere[SPHERE_PRIME];
-    send_to_char("You channel Quintessence into yourself from the static existance of your life pattern.\n\r",ch);
-return;
-}
-*/
-
 void do_mage(CHAR_DATA *ch, char *argument)
 {
     char buf[MAX_STRING_LENGTH];

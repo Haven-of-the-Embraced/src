@@ -2978,6 +2978,7 @@ extern sh_int  gsn_sparkofrage;
 extern sh_int  gsn_quietus_weakness;
 extern sh_int  gsn_acidblood;
 extern sh_int  gsn_quietus_bloodcurse;
+extern sh_int  gsn_blood_agony;
 extern sh_int  gsn_reveal;
 extern sh_int  gsn_tongueoftheasp;
 extern sh_int  gsn_skinoftheadder;

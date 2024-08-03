@@ -2237,6 +2237,10 @@ Total (3) */
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
     &gsn_acidblood,         SLOT(0),     0, 12, "acidic blood",         "!acid blood!", "" },
 
+    { "blood agony",  { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 3, 3, 3}, spell_null, TAR_OBJ_CHAR_OFF,   POS_STANDING,
+    &gsn_blood_agony,       SLOT(33),    0, 12, "blood agony",       "", "The acidic vitae on $p dries up." },
+
 //    --Serpentis--
 // Total (2)
     { "tongue of the asp",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },

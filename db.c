@@ -4924,6 +4924,7 @@ sh_int          gsn_sparkofrage;
 sh_int          gsn_quietus_weakness;
 sh_int          gsn_acidblood;
 sh_int          gsn_quietus_bloodcurse;
+sh_int          gsn_blood_agony;
 sh_int          gsn_reveal;
 sh_int          gsn_tongueoftheasp;
 sh_int          gsn_skinoftheadder;

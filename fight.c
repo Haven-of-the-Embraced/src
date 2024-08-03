@@ -2077,6 +2077,7 @@ bool d10_damage(CHAR_DATA *ch, CHAR_DATA *victim, int damsuccess, int modifier, 
     char  buf[MSL];
 	soakdice = soak = armordice = dam = 0;
     bool silver;
+    OBJ_DATA *wield = get_eq_char( ch, WEAR_WIELD );
 
     if (victim->position == POS_TORPOR)
     {
@@ -2203,6 +2204,10 @@ bool d10_damage(CHAR_DATA *ch, CHAR_DATA *victim, int damsuccess, int modifier, 
         victim->race != race_lookup("garou") &&
         (victim->pcdata->shiftform == HOMID || victim->pcdata->shiftform == LUPUS) )
         soakdice = 0;// Garou can't soak agg in homid or lupus.
+    if (IS_NPC(victim) && (IS_WEAPON_STAT(wield,WEAPON_AGG_DAMAGE) || (affect_find(wield->affected,gsn_blood_agony) != NULL)))
+    {
+        send_to_char("**Agg weapon!**\n\r",ch);
+    }
 
     // Armor, applied to physical damage and garou claws.
     if (dam_type <= DAM_SLASH || dt == attack_lookup("claws") )

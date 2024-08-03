@@ -6147,13 +6147,13 @@ void do_bloodagony(CHAR_DATA *ch, char *argument)
         send_to_char( "That is not a weapon!\n\r", ch );
         return;
     }
-    ch->pblood -= 30;
+    ch->pblood -= 20;
 
     af = new_affect();
     af->where     = TO_WEAPON;
     af->type      = gsn_poison;
     af->level     = ch->level;
-    af->duration  = ch->level*ch->pcdata->discipline[QUIETUS];
+    af->duration  = ch->level / 4 + 25;
     af->location  = 0;
     af->modifier  = 0;
     af->bitvector = WEAPON_AGG_DAMAGE;

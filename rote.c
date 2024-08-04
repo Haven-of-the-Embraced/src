@@ -327,62 +327,6 @@ void do_rote(CHAR_DATA *ch, char *argument)
     return;
 }
 
-/*
-void do_convert(CHAR_DATA *ch, char *argument)
-{
-    char arg[MAX_INPUT_LENGTH];
-
-    argument = one_argument(argument,arg);
-
-    if(ch->avatar == 0)
-    {
-        send_to_char("Your Avatar is not Awakened.\n\r" ,ch);
-        return;
-    }
-
-    if(ch->sphere[SPHERE_PRIME] < 1)
-    {
-        send_to_char("Your knowledge of the primal energies of the universe is too weak to permit you to do this.\n\r",ch);
-        return;
-    }
-
-    if(arg[0] != '\0' && !str_prefix(arg,"paradox"))
-    {
-        if(ch->quintessence < 25-(ch->sphere[SPHERE_PRIME]*2))
-        {
-            send_to_char("Your body does not contain enough Quintessence to purge yourself of Paradox.\n\r",ch);
-            return;
-        }
-        if(ch->paradox == 0)
-        {
-            send_to_char("You are already free of Paradox!\n\r",ch);
-            return;
-        }
-        ch->quintessence -= (25-(ch->sphere[SPHERE_PRIME]*2));
-        ch->paradox--;
-        if(ch->paradox == 0) send_to_char("You free yourself from the binding reality of Paradox!\n\r",ch);
-        else
-        send_to_char("You pour your inner essence into the endless void of Paradox within you...\n\r It trickles into the void soundlessly. You feel the hold of Reality weaken slightly.\n\r",ch);
-        return;
-    }
-
-    if(ch->mana < 250)
-    {
-        send_to_char( "You do not have enough mana.\n\r", ch );
-        return;
-    }
-    if(ch->quintessence+ch->sphere[SPHERE_PRIME]+ch->paradox >= ch->max_quintessence)
-    {
-        send_to_char("Your Avatar cannot support any more Quintessence.\n\r",ch);
-        return;
-    }
-    ch->mana -= 250;
-    ch->quintessence += ch->sphere[SPHERE_PRIME];
-    send_to_char("You channel Quintessence into yourself from the static existance of your life pattern.\n\r",ch);
-return;
-}
-*/
-
 void do_mage(CHAR_DATA *ch, char *argument)
 {
     char buf[MAX_STRING_LENGTH];
@@ -482,45 +426,6 @@ void do_sphere(CHAR_DATA *ch, char *argument)
         return;
 
 }
-
-/*
-void do_flaw(CHAR_DATA *ch, char *argument)
-{
-    char arg[MAX_INPUT_LENGTH];
-
-    argument = one_argument(argument,arg);
-
-    if(ch->avatar == 0)
-    {
-        send_to_char("Your Avatar is not Awakened.\n\r" ,ch);
-        return;
-    }
-
-    if(ch->sphere[SPHERE_PRIME] < 1)
-    {
-        send_to_char("Your knowledge of the primal energies of the universe is too weak to permit you to do this.\n\r",ch);
-        return;
-    }
-
-    if(ch->hit < 50 || ch->max_hit < 50 || ch->pcdata->perm_hit < 50)
-    {
-        send_to_char("You are too weak to gain any more Paradox flaws.\n\r",ch);
-        return;
-    }
-    if(ch->paradox == 0)
-    {
-        send_to_char("You are already free of Paradox!\n\r",ch);
-        return;
-    }
-    ch->hit -= 50;
-    ch->max_hit -= 50;
-    ch->pcdata->perm_hit -= 50;
-
-    ch->paradox--;
-    send_to_char("You you channel a small amount of Paradox into your physical body.. and endure the loss of health.\n\r",ch);
-return;
-}
-*/
 
 // ACTUAL ROTES CODE FOLLOW HERE.
 // bm_rote -- bookmark for rotes.
@@ -786,11 +691,10 @@ void rote_perceiveforces(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA
         return;
     }
 
-
     af.where     = TO_AFFECTS;
     af.type      = gsn_magick;
     af.level     = ch->level;
-    af.duration  = UMAX(success*(ch->csabilities[CSABIL_ALERTNESS]+get_attribute(ch,PERCEPTION)),10);
+    af.duration  = (success * 5) + 25;
     af.location  = APPLY_NONE;
     af.modifier  = 0;
     af.bitvector = AFF_INFRARED;
@@ -856,7 +760,6 @@ void rote_kineticshield(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA 
         send_to_char("You already reflect the kinetic energy of weapons directed towards you.\n\r",ch);
         return;
     }
-
 
     af.where     = TO_AFFECTS;
     af.type      = gsn_kineticshield;
@@ -939,11 +842,10 @@ void rote_spatialperceptions(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_
         return;
     }
 
-
     af.where     = TO_AFFECTS;
     af.type      = gsn_magick;
     af.level     = ch->level;
-    af.duration  = UMAX(success*(ch->csabilities[CSABIL_ALERTNESS]+get_attribute(ch,PERCEPTION)),10);
+    af.duration  = (success * 5) + 25;
     af.location  = APPLY_NONE;
     af.modifier  = 0;
     af.bitvector = AFF_DARK_VISION;
@@ -1317,6 +1219,7 @@ void rote_littlegooddeath(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DAT
 
     return;
 }
+
 void rote_healself(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
 {
     if(victim != ch)
@@ -1349,6 +1252,7 @@ void rote_healself(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
     send_to_char( "You feel your wounds mend as you restore your Life pattern..\n\r", victim );
     return;
 }
+
 void rote_healother(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
 {
     int gain;
@@ -2028,6 +1932,7 @@ void rote_quiltedform(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *o
     act("You examine the patterns of $p and replicate them, then feed Quintessence into it to bring it into this reality.",ch,obj,NULL,TO_CHAR);
     return;
 }
+
 void rote_refinematter(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
 {
     AFFECT_DATA af;
@@ -2161,6 +2066,7 @@ void rote_empowerself(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *o
     affect_to_char( ch, &af );
     return;
 }
+
 void rote_subconsciousturmoil(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
 {
     if (IS_NPC(ch)) return;
@@ -2174,6 +2080,7 @@ void rote_subconsciousturmoil(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ
 
     return;
 }
+
 void rote_mentallink(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
 {
     AFFECT_DATA af;
@@ -2318,7 +2225,7 @@ void rote_primesense(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *ob
   af.where     = TO_AFFECTS;
   af.type      = gsn_primesense;
   af.level     = ch->sphere[SPHERE_PRIME];
-  af.duration  = (success * 5) + 15;
+  af.duration  = (success * 5) + 25;
   af.location  = APPLY_NONE;
   af.modifier  = 0;
   af.bitvector = AFF_DETECT_MAGIC;
@@ -2588,14 +2495,13 @@ void rote_spiritsight(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *o
     af.where     = TO_AFFECTS;
     af.type      = gsn_spiritsight;
     af.level     = ch->level;
-    af.duration  = UMAX(success*(ch->csabilities[CSABIL_ALERTNESS]+get_attribute(ch,PERCEPTION)),10);
+    af.duration  = (success * 5) + 25;
     af.location  = APPLY_NONE;
     af.modifier  = 0;
     af.bitvector = 0;
     affect_to_char( ch, &af );
     return;
 }
-
 
 void rote_callspirit(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
 {
@@ -2935,7 +2841,7 @@ void rote_timesense(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj
   af.where     = TO_AFFECTS;
   af.type      = gsn_timesense;
   af.level     = ch->sphere[SPHERE_TIME];
-  af.duration  = UMAX(success*(ch->csabilities[CSABIL_ALERTNESS]+get_attribute(ch,PERCEPTION)),10);
+  af.duration  = (success * 5) + 25;
   af.location  = APPLY_NONE;
   af.modifier  = 0;
   af.bitvector = 0;
@@ -2990,7 +2896,6 @@ void rote_timealteration(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA
         send_to_char("You are already altering the flow of time around your body, to do much more is to risk the Quintessence leaking from your Pattern.\n\r",ch);
         return;
     }
-
 
     af.where     = TO_AFFECTS;
     af.type      = gsn_timealteration;
@@ -3056,7 +2961,6 @@ void rote_stoptheclock(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *
     affect_to_char( victim, &af );
     return;
 }
-
 
 void rote_sidesteptime(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
 {
@@ -3155,7 +3059,7 @@ void rote_camouflagediscernment(CHAR_DATA *ch, int success, CHAR_DATA *victim, O
     af.where     = TO_AFFECTS;
     af.type      = gsn_camouflagediscernment;
     af.level     = success;
-    af.duration  = UMAX(success*(ch->csabilities[CSABIL_ALERTNESS]+get_attribute(ch,PERCEPTION)),10);
+    af.duration  = (success * 5) + 25;
     af.location  = APPLY_NONE;
     af.modifier  = 0;
     af.bitvector = AFF_DETECT_HIDDEN;
@@ -3262,43 +3166,3 @@ void rote_sluggishspeed(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA 
     }
     return;
 }
-
-/*
-void rote_quintessentialbond(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
-{
-    OBJ_DATA *faeriemushroom;
-    OBJ_DATA *mushroom;
-
-    if ( ( faeriemushroom = get_carry_vnum( ch, OBJ_VNUM_TASS_MUSHROOM, WEAR_NONE, TRUE)) != NULL)
-    {
-        send_to_char("You already have Tass in the form of a Faerie Mushroom.\n\r", ch);
-        return;
-    }
-
-    if ( ( mushroom = get_obj_carry( ch, "mushroom", ch )) == NULL)
-    {
-        send_to_char("You do not have a mushroom to impart Quintessence unto!\n\r", ch);
-        return;
-    }
-
-    if (!can_see_obj(ch, mushroom))
-    {
-        send_to_char("You can't see the mushroom.\n\r", ch);
-        return;
-    }
-
-
-    if(( faeriemushroom = create_object( get_obj_index( OBJ_VNUM_TASS_MUSHROOM ), 0)) != NULL)
-    {
-    act("You infuse {MQuintessence{x into the mushroom, creating Tass.", ch, NULL, NULL, TO_CHAR);
-    extract_obj(mushroom);
-
-    faeriemushroom->value[0] = success * 3;
-    obj_to_room( faeriemushroom, ch->in_room );
-    }
-    else
-        send_to_char("{RError!  {YMissing Tass Mushroom!  {CInform the Coders at once!{x\n\r", ch);
-
-    return;
-}
-*/

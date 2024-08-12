@@ -3011,7 +3011,7 @@ void spell_giant_strength(int sn,int level,CHAR_DATA *ch,void *vo,int target)
     af.where     = TO_AFFECTS;
     af.type      = sn;
     af.level     = level;
-    af.duration  = 1 + (level / 33);
+    af.duration  = 10 + (level / 33);
     af.location  = APPLY_CS_STR;
     af.modifier  = 1;
     af.bitvector = 0;

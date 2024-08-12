@@ -1418,7 +1418,8 @@ const struct    gift_type   gift_table  [MAX_GIFTS_CODED]  =
     {   "doppelganger", 				0,     24, 0,     0,      0,          WARDERSOFMEN, 4,   0},
     {   "command the blaze",			0,     24, 0,     0,      0,          WARDERSOFMEN, 5,   0},
     {   "redirect pain",                0,     24, 0,     0,      0,          FENRIR,   3,   0},
-		{		"speed of thought",			1,		24,		0,		0, 		0,		SILENT_STRIDER,	1,	0},
+	{		"speed of thought",			1,		24,		0,		0, 		0,		SILENT_STRIDER,	1,	0},
+    {       "silence",                  0,      24,     0,      0,      0,      SILENT_STRIDER, 1,  0},
     {   "wolf at the door",        	1,     24,  0,     0,      0,      RED_TALON,    1,   0},
     {   NULL,                        	0,       0,  0,     0,      0,          0,      0,   0}
     };

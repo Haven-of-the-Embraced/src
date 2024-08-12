@@ -2934,10 +2934,14 @@ Total (3) */
 &gsn_gift_obedience,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
 //    --Silent Striders--
-//  Total (1)
+//  Total (2)
 {   "speed of thought", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_speedofthought,  TAR_IGNORE, POS_STANDING,
 &gsn_gift_speedofthought,          SLOT( 0),        0,     12, "",             "Your supernatural swiftness fades from your body.",        "" },
+
+{   "silence", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_silence,  TAR_IGNORE, POS_STANDING,
+&gsn_gift_silence,          SLOT( 0),        0,     12, "",             "You are no longer muffling sounds.",        "" },
 
 //    --Silver Fangs--
 //  Total (9)

@@ -3517,6 +3517,28 @@ void spell_gift_speedofthought( int sn, int level, CHAR_DATA *ch, void *vo, int 
   affect_to_char( ch, &af );
   return;
 }
+
+void spell_gift_silence( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  AFFECT_DATA af;
+
+  if (is_affected(ch, gsn_gift_silence))
+  {
+    sendch(".\n\r", ch);
+    affect_strip(ch, gsn_gift_silence);
+    return;
+  }
+
+  af.where     = TO_AFFECTS;
+  af.type      = sn;
+  af.level     = level;
+  af.duration  = 50;
+  af.modifier  = (ch->level * 3) + 50;
+  af.location  = APPLY_MOVE;
+  af.bitvector = 0;
+  affect_to_char( ch, &af );
+  return;
+}
 //Rank 2
 //Rank 3
 //Rank 4

@@ -19,7 +19,7 @@ CC = gcc
 RM = rm
 EXE = rom
 
-PROF = -O0 -g -w -Wall -lcrypt
+PROF = -O0 -g -fpermissive -w -Wall -lcrypt
 # add -Wall back if you want warnings. I do not.
 C_FLAGS = $(PROF)
 # -Wno-char-subscripts

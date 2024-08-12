@@ -3524,10 +3524,18 @@ void spell_gift_silence( int sn, int level, CHAR_DATA *ch, void *vo, int target)
 
   if (is_affected(ch, gsn_gift_silence))
   {
-    sendch(".\n\r", ch);
+    sendch("You drop the ability to muffle sounds.\n\r", ch);
     affect_strip(ch, gsn_gift_silence);
     return;
   }
+
+  if (ch->move < 2 * ch->level)
+  {
+    sendch("You are too tired to activate this Gift.\n\r", ch);
+    return;
+  }
+  ch->move -= 2 * ch->level;
+  sendch("You call upon the owl spirits, and muffle any sound you make.\n\r",ch);
 
   af.where     = TO_AFFECTS;
   af.type      = sn;

@@ -5190,6 +5190,7 @@ sh_int  gsn_gift_strengthofthedominator;
 sh_int  gsn_gift_shadowpack;
 sh_int  gsn_gift_obedience;
 sh_int  gsn_gift_speedofthought;
+sh_int  gsn_gift_silence;
 sh_int  gsn_gift_eyeofthefalcon;
 sh_int  gsn_gift_lambentfire;
 sh_int  gsn_gift_empathy;

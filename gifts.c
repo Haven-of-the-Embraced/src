@@ -3540,9 +3540,9 @@ void spell_gift_silence( int sn, int level, CHAR_DATA *ch, void *vo, int target)
   af.where     = TO_AFFECTS;
   af.type      = sn;
   af.level     = level;
-  af.duration  = 50;
-  af.modifier  = (ch->level * 3) + 50;
-  af.location  = APPLY_MOVE;
+  af.duration  = 25;
+  af.modifier  = 0;
+  af.location  = 0;
   af.bitvector = 0;
   affect_to_char( ch, &af );
   return;

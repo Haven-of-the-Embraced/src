@@ -2194,7 +2194,7 @@ bool d10_damage(CHAR_DATA *ch, CHAR_DATA *victim, int damsuccess, int modifier, 
         victim->race != race_lookup("garou") &&
         (victim->pcdata->shiftform == HOMID || victim->pcdata->shiftform == LUPUS) )
         soakdice = 0;// Garou can't soak agg in homid or lupus.
-    if (IS_NPC(victim) && (IS_WEAPON_STAT(wield,WEAPON_AGG_DAMAGE) || (affect_find(wield->affected,gsn_blood_agony) != NULL)))
+    if (IS_NPC(victim) && (wield) && (IS_WEAPON_STAT(wield,WEAPON_AGG_DAMAGE) || (affect_find(wield->affected,gsn_blood_agony) != NULL)))
         soakdice = 0;// No Stamina soak for Agg weapon
 
     if (!IS_NPC(victim))

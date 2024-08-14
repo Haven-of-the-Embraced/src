@@ -554,9 +554,11 @@ void show_char_to_char_1( CHAR_DATA *victim, CHAR_DATA *ch )
     act( "$N exudes an air of {Brespect{x, {Yfear{x, and {Mdevotion{x from all who gaze upon $M.", ch, NULL, victim, TO_CHAR);
 
     if (is_affected(ch, gsn_gift_scentofthetrueform))
+    {
       sprintf(buf,"You detect the unmistakable scent of a %s coming from %s.\n\r",
             race_table[victim->race].name, victim->short_descr);
       send_to_char(buf,ch);
+    }
 
     if ( victim->max_hit > 0 )
     percent = ( 100 * victim->hit ) / victim->max_hit;

@@ -6020,8 +6020,9 @@ void do_acidblood(CHAR_DATA *ch, char *argument)
     int damagesuccess = 0;      /*For determining damage success*/
     int transmutedblood;        /*For determining damage dice*/
 
-    if(ch->gen >= 15) transmutedblood = 1;
-    else transmutedblood = UMIN(5,(14 - ch->gen));
+    transmutedblood = (11-ch->gen);
+    if (transmutedblood > 5)
+        transmutedblood = 5;
 
     if (IS_NPC(ch))
         return;

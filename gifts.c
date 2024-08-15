@@ -1250,8 +1250,7 @@ void spell_gift_scentofrunningwater( int sn, int level, CHAR_DATA *ch, void *vo,
 
   if (is_affected(ch, gsn_gift_scentofrunningwater))
   {
-    sendch("You allow yourself to be tracked once again.\n\r", ch);
-    affect_strip(ch,gsn_gift_scentofrunningwater);
+    sendch("The fox spirit has already blessed you by masking your scent.\n\r", ch);
     return;
   }
 
@@ -1265,14 +1264,14 @@ void spell_gift_scentofrunningwater( int sn, int level, CHAR_DATA *ch, void *vo,
 
   success = godice(ch->pcdata->gnosis[PERM], 5);
 
-  sendch("You focus briefly and mask your scent from anyone attempting to track you.\n\r", ch);
+  sendch("The spirit of the fox grants your request, masking your scent from those tracking you.\n\r", ch);
   af.where     = TO_AFFECTS;
   af.type      = sn;
   af.level     = level;
   af.duration  = 25 + (success * 5);
   af.modifier  = 0;
   af.location  = APPLY_NONE;
-  af.bitvector = AFF_SNEAK;
+  af.bitvector = 0;
   affect_to_char( ch, &af );
 
   gain_exp(ch, success);

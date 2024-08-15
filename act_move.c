@@ -1815,6 +1815,10 @@ void do_sneak( CHAR_DATA *ch, char *argument )
 {
     AFFECT_DATA af;
     int success;
+    int diff = 6;
+
+    if (is_affected(ch, gsn_gift_scentofrunningwater))
+        diff--;
 
     if (MOUNTED(ch))
     {
@@ -1839,7 +1843,7 @@ void do_sneak( CHAR_DATA *ch, char *argument )
 
     if(!IS_NPC(ch))
     {
-      success = godice(get_attribute(ch,DEXTERITY)+ch->csabilities[CSABIL_STEALTH],6);
+      success = godice(get_attribute(ch,DEXTERITY)+ch->csabilities[CSABIL_STEALTH],diff);
       success += stealth_int_shadowplay(ch,6);
         if(success == 0)
         {

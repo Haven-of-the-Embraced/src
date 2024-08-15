@@ -4242,6 +4242,7 @@ void do_dirt( CHAR_DATA *ch, char *argument )
     char arg[MAX_INPUT_LENGTH];
     CHAR_DATA *victim;
     int success, dice, diff, skill;
+    int precog = 0;
 
     one_argument(argument,arg);
 
@@ -4347,15 +4348,20 @@ void do_dirt( CHAR_DATA *ch, char *argument )
     if (diff > 10)
         diff = 10;
 
-    if(is_affected(victim,gsn_precognition) && number_percent() > 50)
+ /*   if(is_affected(victim,gsn_precognition) && number_percent() > 50)
     {
     	act("Your kicked dirt targeting is on point, but $N manages to dodge to the side!", ch, NULL, victim, TO_CHAR);
     	act("$n kicks some dirt directly at your face, but your foresight allowed you to dodge to the side with ease.", ch, NULL, victim, TO_VICT);
     	act("$N dodges quickly to the side, avoiding $n's kicked dirt.", ch, NULL, victim, TO_NOTVICT);
     	return;
     }
+*/
 
     success = godice(dice, diff);
+    if(is_affected(victim,gsn_precognition))
+        precog = get_affect_level(victim,gsn_precognition);
+    success -= precog;
+
     if (IS_DEBUGGING(ch)) {
         char buf[MSL];
         sprintf(buf, "Dice: %d(%d) Diff %d Success %d",
@@ -4419,6 +4425,7 @@ void do_trip( CHAR_DATA *ch, char *argument )
 	int skill;
   int cost = 0;
 	int tripdiff, tripsuccess, tripdamage, knockdown;
+    int precog = 0;
 
 	one_argument(argument,arg);
 
@@ -4512,14 +4519,14 @@ void do_trip( CHAR_DATA *ch, char *argument )
 
 	WAIT_STATE(ch, PULSE_VIOLENCE);
 
-	if(is_affected(victim,gsn_precognition) && number_percent() > 50)
+/*	if(is_affected(victim,gsn_precognition) && number_percent() > 50)
 	{
 		act("You sweep your legs quickly, but $N nimbly hops over the attack.", ch, NULL, victim, TO_CHAR);
 		act("$n tries to sweep your legs out from under you, but you have a moment's warning before hopping over the attack.", ch, NULL, victim, TO_VICT);
 		act("$N effortlessly hops over $n's attempted tripping maneuver.", ch, NULL, victim, TO_NOTVICT);
 		return;
 	}
-
+*/
 	if(is_affected(victim, gsn_gift_catfeet) && number_percent() > 45)
 	{
 		act("You sweep your legs quickly, but $N gracefully leaps to the side.", ch, NULL, victim, TO_CHAR);
@@ -4529,6 +4536,9 @@ void do_trip( CHAR_DATA *ch, char *argument )
 	}
 
 	tripsuccess = godice(get_attribute(ch, DEXTERITY) + get_ability(ch, CSABIL_BRAWL), tripdiff);
+    if(is_affected(victim,gsn_precognition))
+        precog = get_affect_level(victim,gsn_precognition);
+    tripsuccess -= precog;
 
 	if (tripsuccess < 0)
 	{
@@ -5107,14 +5117,14 @@ void do_kick(CHAR_DATA *ch, char *argument)
     if (!IS_NPC(ch))
         ch->move -= 1;
 
-    if (is_affected(victim, gsn_precognition) && number_percent() > 50)
+ /*   if (is_affected(victim, gsn_precognition) && number_percent() > 50)
     {
         act("With uncanny judgement, $N deftly avoids your kick!", ch, NULL, victim, TO_CHAR);
         act("With a brief flash of insight, you swiftly react and dodge $n's incoming kick.", ch, NULL, victim, TO_VICT);
         act("Moving almost as if choreographed, $N twists to the side and dodges $n's kick.", ch, NULL, victim, TO_NOTVICT);
         return;
     }
-
+*/
     if (IS_NPC(ch))
     {
         if (!IS_SET(ch->off_flags, OFF_KICK))
@@ -5134,6 +5144,10 @@ void do_kick(CHAR_DATA *ch, char *argument)
             mobdice++;      /*Vampire blooded get +1*/
             if (number_range(1, 3) != 1)    /*66% chance of Potence, +1*/               mobdice++;
         }
+
+        if(is_affected(victim,gsn_precognition))
+            precog = get_affect_level(victim,gsn_precognition);
+        mobdice -= precog;
 
         dicesuccess = godice(mobdice, 6);
 
@@ -5302,6 +5316,7 @@ void do_disarm( CHAR_DATA *ch, char *argument )
     CHAR_DATA *victim;
     OBJ_DATA *obj;
     OBJ_DATA *wielded;
+    int precog = 0;
 
     if (IS_SET(ch->act,PLR_ARENA))
     {
@@ -5349,6 +5364,11 @@ void do_disarm( CHAR_DATA *ch, char *argument )
 	   // Disarm is rolled as a regular attack, but if the successes are greater than
 	   // victim/s strength, they take no damage and the weapon goes flying.
 	   dice = get_attribute(ch, DEXTERITY) + get_ability(ch, CSABIL_MELEE);
+
+    if(is_affected(victim,gsn_precognition))
+        precog = get_affect_level(victim,gsn_precognition);
+    dice -= precog;
+    
      if (wielded == NULL && !IS_NPC(ch))
       success = godice(dice,8);
      else

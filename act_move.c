@@ -1843,7 +1843,10 @@ void do_sneak( CHAR_DATA *ch, char *argument )
 
     if(!IS_NPC(ch))
     {
-      success = godice(get_attribute(ch,DEXTERITY)+ch->csabilities[CSABIL_STEALTH],diff);
+      int silence = 0;
+      if (is_affected(ch,gsn_gift_silence))
+        silence += 2;
+      success = godice(get_attribute(ch,DEXTERITY)+ch->csabilities[CSABIL_STEALTH]+silence,6);
       success += stealth_int_shadowplay(ch,6);
         if(success == 0)
         {

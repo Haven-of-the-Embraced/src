@@ -4843,6 +4843,8 @@ void do_backstab( CHAR_DATA *ch, char *argument )
         diff--;
 
     dice = get_attribute(ch, DEXTERITY) + get_ability(ch, CSABIL_STEALTH);
+    if (is_affected(ch,gsn_gift_silence))
+        dice += 2;
     successes = godice(dice, diff);
     successes += stealth_int_shadowplay(ch,diff);
     damdice = d10_damdice(ch, victim) + successes;
@@ -6021,6 +6023,8 @@ void do_assassinate( CHAR_DATA *ch, char *argument )
     }
     // Roll to sneak up behind victim, resisted
     dice = get_attribute(ch, DEXTERITY) + get_ability(ch, CSABIL_STEALTH);
+    if (is_affected(ch,gsn_gift_silence))
+        dice += 2;
     resistdice = get_attribute(victim, PERCEPTION) + get_ability(victim, CSABIL_ALERTNESS);
     diff = resistdiff = 6;
 

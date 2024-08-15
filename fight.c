@@ -4050,6 +4050,7 @@ void do_bash( CHAR_DATA *ch, char *argument )
     int dicesuccess = 0, damagesuccess = 0;
     int mobdice = 2;
     int extradamage = 0;
+    int precog = 0;
     one_argument(argument,arg);
 
 
@@ -4119,14 +4120,14 @@ void do_bash( CHAR_DATA *ch, char *argument )
 
     ch->move -= (ch->level / 30);
 
-    if(is_affected(victim,gsn_precognition) && number_percent() > 50)
+ /*   if(is_affected(victim,gsn_precognition) && number_percent() > 50)
     {
     	act("Deftly moving out of the way, $N ducks from your shield bash attempt!", ch, NULL, victim, TO_CHAR);
     	act("Sensing the movement of $n's shield an instant before it actually happens, you deftly duck out of the way.", ch, NULL, victim, TO_VICT);
         act("$N ducks swiftly, avoiding $n's attempt to strike with their shield.", ch, NULL, victim, TO_NOTVICT);
     	return;
     }
-
+*/
 
     if (IS_NPC(ch) )
     {
@@ -4148,6 +4149,11 @@ void do_bash( CHAR_DATA *ch, char *argument )
             extradamage = 1;
             if (number_range(1, 3) != 1)    /*66% chance of Potence, +1*/               mobdice++;
         }
+
+        if(is_affected(victim,gsn_precognition))
+            mobdice -= get_affect_level(victim,gsn_precognition);
+        if (mobdice < 0)
+            mobdice = 0;
 
         dicesuccess = godice(mobdice, 6);
 
@@ -4182,7 +4188,10 @@ void do_bash( CHAR_DATA *ch, char *argument )
         }
     }
 
-    dicesuccess = godice(get_attribute(ch, DEXTERITY) + ch->csabilities[CSABIL_MELEE], 6);
+    if(is_affected(victim,gsn_precognition))
+        precog = get_affect_level(victim,gsn_precognition);
+
+    dicesuccess = godice(get_attribute(ch, DEXTERITY) + ch->csabilities[CSABIL_MELEE], 6) - precog;
 
     if(dicesuccess < 0)
     {

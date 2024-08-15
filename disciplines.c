@@ -6122,7 +6122,7 @@ void do_acidblood(CHAR_DATA *ch, char *argument)
         gain_exp(ch, dicesuccess);
     }
 
-    damage(ch, victim, (damagesuccess*get_modifier(ch, MODTYPE_GODLY)), gsn_acidblood, DAM_ACID, TRUE);
+    d10_damage( ch, victim, damagesuccess, ch->level * 2, gsn_acidblood, DAM_ACID, DEFENSE_NONE, TRUE, TRUE);
 
     if (dicesuccess > 4)        /*Many successes, great aim.  Blind baby!*/
     {
@@ -6130,7 +6130,7 @@ void do_acidblood(CHAR_DATA *ch, char *argument)
         af.type     = gsn_acidblood;
         af.level    = ch->pcdata->discipline[QUIETUS];
         af.location = APPLY_HITROLL;
-        af.modifier = -(dicesuccess*3);
+        af.modifier = -(dicesuccess*50);
         af.duration = 1;
         af.bitvector    = AFF_BLIND;
         affect_to_char(victim, &af);

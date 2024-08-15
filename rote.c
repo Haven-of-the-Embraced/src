@@ -2867,11 +2867,10 @@ void rote_precognition(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *
         return;
     }
 
-
     af.where     = TO_AFFECTS;
     af.type      = gsn_precognition;
-    af.level     = ch->level;
-    af.duration  = (ch->avatar * success) + 5;
+    af.level     = success;
+    af.duration  = (5 * success) + 15;
     af.location  = APPLY_NONE;
     af.modifier  = 0;
     af.bitvector = 0;

@@ -5374,7 +5374,7 @@ void do_disarm( CHAR_DATA *ch, char *argument )
     if(is_affected(victim,gsn_precognition))
         precog = get_affect_level(victim,gsn_precognition);
     dice -= precog;
-    
+
      if (wielded == NULL && !IS_NPC(ch))
       success = godice(dice,8);
      else
@@ -5449,6 +5449,7 @@ void do_bite(CHAR_DATA *ch, char *argument)
     int dicesuccess = 0;
     int damagesuccess = 0;
     int critical = 1;
+    precog = 0;
 
     if (IS_NPC(ch))
       return;
@@ -5510,15 +5511,20 @@ void do_bite(CHAR_DATA *ch, char *argument)
     if (!IS_NPC(ch))
         ch->move -= ch->level / 4;
 
-    if (is_affected(victim, gsn_precognition) && number_percent() > 50)
+ /*   if (is_affected(victim, gsn_precognition) && number_percent() > 50)
     {
         act("Almost as if $E sees it coming, $N avoids your bite!", ch, NULL, victim, TO_CHAR);
         act("With a brief flash of insight, you swiftly react and dodge $n's ferocious bite.", ch, NULL, victim, TO_VICT);
         act("Without missing a beat, $N moves aside and dodges $n's bite.", ch, NULL, victim, TO_NOTVICT);
         return;
     }
+*/
+
+    if(is_affected(victim,gsn_precognition))
+        precog = get_affect_level(victim,gsn_precognition);
 
     dicesuccess = godice(get_attribute(ch, DEXTERITY) + ch->csabilities[CSABIL_BRAWL], 5);
+    dicesuccess -= precog;
 
     WAIT_STATE(ch, 12);
 

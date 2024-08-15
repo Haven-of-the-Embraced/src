@@ -5081,6 +5081,7 @@ void do_kick(CHAR_DATA *ch, char *argument)
     int soakdice = 0;
     int damagesuccess = 0;
     int extradamage = 0;    /*Extra successes past 1st on attack added to damage*/
+    int precog = 0;
 
     if (argument[0] == '\0')
     {
@@ -5449,7 +5450,7 @@ void do_bite(CHAR_DATA *ch, char *argument)
     int dicesuccess = 0;
     int damagesuccess = 0;
     int critical = 1;
-    precog = 0;
+    int precog = 0;
 
     if (IS_NPC(ch))
       return;

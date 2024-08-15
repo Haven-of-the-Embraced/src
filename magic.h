@@ -302,6 +302,7 @@ DECLARE_SPELL_FUN(spell_gift_strengthofthedominator);
 DECLARE_SPELL_FUN(spell_gift_shadowpack);
 DECLARE_SPELL_FUN(spell_gift_obedience);
 DECLARE_SPELL_FUN(spell_gift_speedofthought);
+DECLARE_SPELL_FUN(spell_gift_silence);
 DECLARE_SPELL_FUN(spell_gift_eyeofthefalcon);
 DECLARE_SPELL_FUN(spell_gift_lambentfire);
 DECLARE_SPELL_FUN(spell_gift_empathy);

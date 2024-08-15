@@ -4838,6 +4838,10 @@ void do_backstab( CHAR_DATA *ch, char *argument )
         if (diff < 7)
             diff = 7;
     }
+
+    if (is_affected(ch,gsn_gift_scentofrunningwater))
+        diff--;
+
     dice = get_attribute(ch, DEXTERITY) + get_ability(ch, CSABIL_STEALTH);
     successes = godice(dice, diff);
     successes += stealth_int_shadowplay(ch,diff);
@@ -6026,6 +6030,9 @@ void do_assassinate( CHAR_DATA *ch, char *argument )
       resistdiff += 1;
     }
 
+    if (is_affected(ch,gsn_gift_scentofrunningwater))
+        diff--;
+
     if (!IS_AWAKE(victim))
       resistdice = 0;
 
@@ -6634,6 +6641,9 @@ void do_slip( CHAR_DATA *ch, char *argument )
             diff--;
             resistdiff += 2;
         }
+
+        if (is_affected(ch,gsn_gift_scentofrunningwater))
+            diff--;
 
         success = godice(dice, diff);
         success += stealth_int_shadowplay(ch, diff);

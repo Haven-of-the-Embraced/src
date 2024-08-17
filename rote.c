@@ -1685,14 +1685,30 @@ void rote_cellularmitosis(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DAT
     af.where     = TO_AFFECTS;
     af.type      = gsn_charm_person;
     af.level     = ch->level;
-    af.duration  = -1;
+    af.duration  = (success * 10) + 50;
     af.location  = 0;
     af.modifier  = 0;
     af.bitvector = AFF_CHARM;
     affect_to_char( clone, &af );
 
-    act("$n stares intently at $N, who shivers and shakes as if ill, then a split appears, and $N devides into two!",ch,NULL,clone,TO_NOTVICT);
+    act("$n stares intently at $N, who shivers and shakes as if ill; a split appears as $N divides into two!",ch,NULL,clone,TO_NOTVICT);
     act("You examine $N's life pattern and form one of your own, overlaying it on top of $N a moment to ease it's birth into this Reality.",ch,NULL,clone,TO_CHAR);
+
+    if (success > 3)
+    {
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_betterbody;
+    af.level     = ch->level;
+    af.duration  = (success * 10) + 50;
+    af.location  = APPLY_CS_STR;
+    af.modifier  = 1;
+    af.bitvector = 0;
+    affect_to_char( clone, &af );
+    af.location  = APPLY_CS_DEX;
+    affect_to_char( clone, &af );
+    af.location  = APPLY_CS_STA;
+    affect_to_char( clone, &af );
+    }
     return;
 }
 

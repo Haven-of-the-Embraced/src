@@ -1682,6 +1682,7 @@ void rote_cellularmitosis(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DAT
     clone->leader = ch;
     ch->pet = clone;
     SET_BIT(clone->act, ACT_PET);
+    SET_BIT(clone->imm_flags,IMM_MENTAL);
     af.where     = TO_AFFECTS;
     af.type      = gsn_charm_person;
     af.level     = ch->level;
@@ -1696,6 +1697,7 @@ void rote_cellularmitosis(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DAT
 
     if (success > 3)
     {
+        act("You subtly alter $N's body with physical enhancements.",ch,NULL,clone,TO_CHAR);
     af.where     = TO_AFFECTS;
     af.type      = gsn_betterbody;
     af.level     = ch->level;

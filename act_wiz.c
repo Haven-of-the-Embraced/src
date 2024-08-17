@@ -2067,7 +2067,7 @@ void do_ostat( CHAR_DATA *ch, char *argument )
           send_to_char("{c-----------------------------------------------------{x\n\r", ch);
           break;
 
-        case ITEM_LOCKPICK:
+        case ITEM_LOCKPICK: 
           send_to_char("{c-----------------------{YVALUES{c------------------------{x\n\r", ch);
           sprintf(buf, "Charges             : %d  \n\rDifficulty Mod      : %d  \n\r{R**Currently Unused**{x: %d  \n\r{R**Currently Unused**{x: %d  \n\r{R**Currently Unused**{x: %d\n\r",
             obj->value[0],

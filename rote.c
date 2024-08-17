@@ -1642,13 +1642,13 @@ void rote_cellularmitosis(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DAT
         return;
     }
 
-    if(!IS_NPC(victim) || victim->level > ch->level)
+    if(!IS_NPC(victim) || victim->level > ch->level || IS_SET(victim->act2, ACT2_ULTRA_MOB))
     {
         send_to_char("That being is too powerful to divide.\n\r",ch);
         return;
     }
 
-    if (victim->race == race_lookup("wraith") || victim->race == race_lookup("spirit") || victim->race == race_lookup("bane") || victim->race == race_lookup("construct"))
+    if (!living_being(victim))
     {
         send_to_char("That being has no living tissue to divide and replicate.\n\r", ch);
         return;

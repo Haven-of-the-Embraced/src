@@ -6782,7 +6782,6 @@ void do_cauldron(CHAR_DATA *ch, char *argument)
 
     ch->pblood -= 10;
     dicesuccess = godice(ch->csmax_willpower, 7);
-    dicesuccess=4;
 
     if (dicesuccess < 0)
     {
@@ -6792,7 +6791,7 @@ void do_cauldron(CHAR_DATA *ch, char *argument)
         ch->pblood -= 10 * dicesuccess;
         if (ch->pblood < 0)
             ch->pblood = 0;
-        damage(ch, ch, ch->level*2, gsn_cauldron, DAM_FIRE, TRUE);
+        d10_damage( ch, victim, dicesuccess, ch->level / 2, gsn_cauldron, DAM_HARM, DEFENSE_NONE, TRUE, TRUE);
         return;
     }
 
@@ -6803,13 +6802,10 @@ void do_cauldron(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    dam = number_range(525, 575);
-    dam += ((2*dicesuccess) * ch->level * (15-ch->gen));
-
     act("willing the blood in $S body to react to your whim.\n\r$E screams in agony as $S blood boils.", ch, NULL, victim, TO_CHAR);
     act("and you scream in agony as your body feels as if it is burning from the inside out!", ch, NULL, victim, TO_VICT);
     act("$E lets out a blood curdling scream of anguish.", ch, NULL, victim, TO_NOTVICT);
-    damage(ch, victim,dam, gsn_cauldron, DAM_FIRE, TRUE);
+    d10_damage( ch, victim, dicesuccess, ch->level * 3, gsn_cauldron, DAM_HARM, DEFENSE_NONE, TRUE, TRUE);
 
     if (!IS_NPC(victim))
     {

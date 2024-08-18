@@ -6461,9 +6461,6 @@ void do_bloodofpotency(CHAR_DATA *ch, char *argument)
 
     if (IS_NPC(ch)) return;
 
-//  send_to_char("Disabled due to massive bugginess.\n\r", ch);
-//  return;
-
     if(!IS_VAMP(ch))
     {
         send_to_char("You are not a Vampire!\n\r",ch);
@@ -6745,15 +6742,13 @@ void do_cauldron(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if (ch->pblood <= 25)
+    if (ch->pblood <= 15)
     {
         send_to_char( "You don't have enough blood!\n\r", ch );
         return;
     }
 
-
-
-    if (victim->race == race_lookup("spirit") || victim->race == race_lookup("bane") || victim->race == race_lookup("wraith") || victim->race == race_lookup("construct"))
+    if (!has_blood(victim))
     {
         send_to_char("Your opponent does not have blood to boil!\n\r", ch);
         return;
@@ -6785,8 +6780,9 @@ void do_cauldron(CHAR_DATA *ch, char *argument)
 
     gain_exp(ch, touchsuccess);
 
-    ch->pblood -= 20;
+    ch->pblood -= 10;
     dicesuccess = godice(ch->csmax_willpower, 7);
+    dicesuccess=4;
 
     if (dicesuccess < 0)
     {
@@ -6835,29 +6831,7 @@ void do_cauldron(CHAR_DATA *ch, char *argument)
         }
     }
 
-/*  if((number_range(1,100)) > 25)
-    {
-        act( "You touch $N and grin as they scream in agony!",  ch, NULL, victim, TO_CHAR );
-        act( "$n touches $N and $N screams in agony as their blood boils!",  ch, NULL, victim, TO_NOTVICT );
-        act( "You scream in agony as $n boils your blood!",  ch, NULL, victim, TO_VICT );
-        if(!IS_NPC(victim) && IS_VAMP(victim))
-        {
-            victim->pblood -= 50;
-            if(victim->pblood < 0) victim->pblood = 0;
-        }
-
-        damage(ch,victim, 8500, gsn_cauldron, DAM_FIRE, TRUE);
-        ch->pblood -= 60;
-    }
-    else
-    {
-        act( "You are unable to touch $N!",  ch, NULL, victim, TO_CHAR );
-        act( "$n leaps out to touch $N but misses!",  ch, NULL, victim, TO_NOTVICT );
-        act( "$n leaps out to touch you but misses!",  ch, NULL, victim, TO_VICT );
-        damage(ch,victim, 1, gsn_cauldron, DAM_NEGATIVE, FALSE);
-        ch->pblood -= 20;
-    }
-*/  return;
+return;
 }
 
 

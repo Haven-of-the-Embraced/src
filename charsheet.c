@@ -2353,7 +2353,7 @@ void do_create( CHAR_DATA *ch, char *argument )
         if(ch->pcdata->progress == 4) do_function(ch, &do_create, "showabil" );
         if(ch->pcdata->progress == 6) do_function(ch, &do_create, "showvirtue");
         if(ch->pcdata->primary == 0 && ch->pcdata->secondary == 0 && ch->pcdata->tertiary == 0)
-            send_to_char("If you've finished setting your traits, please type 'create done' to finalize your choices.\n\r",ch);
+            send_to_char("If you've finished setting your traits, please type '{ccreate done{x' to finalize your choices.\n\r",ch);
         return;
     }
 
@@ -2786,30 +2786,32 @@ void do_create( CHAR_DATA *ch, char *argument )
                 ch->pcdata->cshumanity = ch->pcdata->csvirtues[CSVIRT_CONSCIENCE]+ch->pcdata->csvirtues[CSVIRT_SELF_CONTROL];
                 ch->cswillpower = ch->pcdata->csvirtues[CSVIRT_COURAGE];
                 ch->csmax_willpower = ch->cswillpower;
-                sprintf(buf,"Calculating your Humanity (Conscience + Self-Control)...%d\n\r",ch->pcdata->cshumanity);
+                sprintf(buf,"Calculating your Humanity (Conscience + Self-Control):  [{W%d{x]\n\r",ch->pcdata->cshumanity);
                 send_to_char(buf,ch);
-                sprintf(buf,"Calculating your Willpower (Courage)... %d\n\r\n\r",ch->cswillpower);
+                sprintf(buf,"Calculating your Willpower (Courage):                   [{W%d{x]\n\r\n\r",ch->cswillpower);
                 send_to_char(buf,ch);
-                send_to_char("Advantage traits are all set.\n\r",ch);
-                send_to_char("You can now use the 'backgrounds' command to set your background traits. You have been\n\r",ch);
-                send_to_char("given 5 'background freebie' points to be spent on backgrounds using that command.\n\r", ch);
+                send_to_char("Advantage traits are all set.\n\r\n\r",ch);
 
                 int i;
               for (i = 0;i < MAX_CSBACK;i++)
-    {
-                    if (ch->pcdata->csbackgrounds[i] > 0)
-                    {
-                        backgrounds = FALSE;
-                    }
-                }
-                if (backgrounds) ch->dpoints = 5;
-
-                send_to_char("When you've finished setting your backgrounds, you use the freebie command to spend freebies\n\r", ch);
-                send_to_char(" to further increase your traits!\n\r",ch);
-                sendch("{RYou may wish to save some background points if you are intending to be embraced by a player.{x\n\r", ch);
+               {
+                 if (ch->pcdata->csbackgrounds[i] > 0)
+                 {
+                     backgrounds = FALSE;
+                 }
+               }
+               if (backgrounds) ch->dpoints = 5;
+               send_to_char("{R[{x  You can now use the '{cbackgrounds{x' command to set your background traits.  {R]{x\n\r",ch);
+               send_to_char("{R|{x         Background Points awarded: [{W5{x]         {chelp do_backgrounds{x         {R|{x\n\r", ch);
+               send_to_char("{R[{xSave some background points if you are intending to be embraced by a player.{R]{x\n\r\n\r", ch);
+               send_to_char("When you've finished setting your backgrounds, you use the {cfreebie{x command to spend\n\r", ch);
+               send_to_char("{yfreebies{x ({chelp freebie{x) to further increase your traits!\n\r",ch);
+               send_to_char("{RRecommended:{x {chelp weapon_skills{x, choose a proficiency and invest in 2-3 points\n\r", ch);
+               send_to_char("in one, via the freebie command.\n\r\n\r", ch);
+   
                 ch->pcdata->progress = 8;
                 cskill_update(ch, FALSE);
-                sendch("You've learned some skills! Type 'skills all' to view what you know.\n\r", ch);
+                sendch("** You've learned some skills! Type '{cskills all{x' to view what you know. **\n\r", ch);
                 if (ch->race == race_lookup("garou") && ch->remorts > 1)
                     send_to_char("Please log out and log back in to be awarded renown for your remorts.\n\r", ch);
             }

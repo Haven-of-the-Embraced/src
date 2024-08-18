@@ -1555,21 +1555,20 @@ void do_create( CHAR_DATA *ch, char *argument )
     {
         if(ch->pcdata->progress <= 1)
         {
-            send_to_char("Because of the fact that Haven is created using a ROM codebase it uses standard\n\r",ch);
-            send_to_char("ROM stats for such things as combat and skills. This is fine for the basics.. but\n\r",ch);
-            send_to_char("it discourages roleplay and prevents us from adding some World of Darkness abilities.\n\r",ch);
-            send_to_char("The solution to this is to have another set of stats or attributes based on the\n\r",ch);
-            send_to_char("WoD stat system. That is the purpose of this command.\n\r\n\r",ch);
+            send_to_char("Haven of the Embraced uses a character sheet ({ccs{x) based on the\n\r",ch);
+            send_to_char("World of Darkness D10 system.  This creation process will take you\n\r",ch);
+            send_to_char("through setting up your character.  Please reference {chelp skillmap{x\n\r",ch);
+            send_to_char("and the {cskillmap{x command for prequisites to CS-learned skills.\n\r",ch);
 
             send_to_char("The first field of stats to be created will be your attributes.\n\r",ch);
-            send_to_char("The attributes are divided into three sections, physical, social and mental. You choose\n\r",ch);
-            send_to_char("which of these sections is more important during the following steps, and are given\n\r",ch);
-            send_to_char("points to distribute among these stats.\n\r\n\r",ch);
+            send_to_char("The attributes are divided into three sections: Physical, Social, Mental.\n\r",ch);
+            send_to_char("You choose which of these sections is more important during the following\n\r",ch);
+            send_to_char("steps, and are given points to distribute among these stats.\n\r\n\r",ch);
 
-            send_to_char("Please choose which is most important to your character, which is your primary stat\n\r",ch);
-            send_to_char("section. Do this by typing 'create primary <section>' to choose your primary then do \n\r",ch);
-            send_to_char("same for secondary and tertiary.\n\r",ch);
-            send_to_char("Type one of the following:\n\r create primary physical\n\r create primary social\n\r create primary mental\n\r",ch);
+            send_to_char("Please choose which is most important to your character, your primary stat\n\r",ch);
+            send_to_char("section. Do this by typing '{ccreate primary <section>{x' to choose your\n\r",ch);
+            send_to_char("{Mprimary{x, then do the same for {Msecondary{x and {Mtertiary{x.\n\r",ch);
+            send_to_char("{WType one of the following:{x\n\r {ccreate primary physical{x\n\r {ccreate primary social{x\n\r {ccreate primary mental{x\n\r",ch);
             if(ch->pcdata->progress == 0) ch->pcdata->progress++;
         } else if (ch->pcdata->progress == 2)
         {
@@ -1578,17 +1577,17 @@ void do_create( CHAR_DATA *ch, char *argument )
         }
         else if(ch->pcdata->progress == 3)
         {
-            send_to_char("The next step is setting up your abilities. Abilities are numeric values for what your\n\r",ch);
-            send_to_char("character knows and can learn.\n\r\n\r",ch);
+            send_to_char("The next step is setting up your abilities.  Abilities are numeric values\n\r",ch);
+            send_to_char("for what your character knows and can learn.\n\r\n\r",ch);
 
             send_to_char("Abilities are divided into three sections:\n\r",ch);
-            send_to_char("Talents, which are what you intuitively know naturally without instruction,\n\r",ch);
-            send_to_char("Skills, which are abilities learned through training, apprenticeship or other instruction.\n\r",ch);
-            send_to_char("Knowledges are the traits that you have gained through schooling or book-learning.\n\r\n\r",ch);
+            send_to_char("Talents: what you intuitively know naturally without instruction\n\r",ch);
+            send_to_char("Skills: abilities learned through training, apprenticeship or other instruction\n\r",ch);
+            send_to_char("Knowledges: traits that you have gained through schooling or book-learning\n\r\n\r",ch);
             send_to_char("You must choose your Primary, Secondary and Tertiary abilities to continue.\n\r",ch);
-            send_to_char("Please assign your Primary by typing 'create primary <section>' then do the same for\n\r",ch);
-            send_to_char("Secondary and Tertiary.\n\r",ch);
-            send_to_char("Type one of the following:\n\r create primary talents\n\r create primary skills\n\r create primary knowledges\n\r",ch);
+            send_to_char("Please assign your Primary by typing 'create primary <section>' then do the\n\r",ch);
+            send_to_char("same for Secondary and Tertiary.\n\r",ch);
+            send_to_char("Type one of the following:\n\r {ccreate primary talents{x\n\r {ccreate primary skills{x\n\r {ccreate primary knowledges{x\n\r",ch);
         } else if (ch->pcdata->progress == 4)
         {
             do_function(ch, &do_create, "showabil" );
@@ -1597,16 +1596,16 @@ void do_create( CHAR_DATA *ch, char *argument )
         else if(ch->pcdata->progress == 5)
         {
             send_to_char("You are almost finished with this process. Next is setting your Virtues.\n\r\n\r",ch);
-            send_to_char("Virtues are the moral guidelines for your character, what your character feels about\n\r",ch);
-            send_to_char("him/herself and the world around them.\n\r\n\r",ch);
+            send_to_char("Virtues are the moral guidelines for your character, what your character\n\r",ch);
+            send_to_char("feels about him/herself and the world around them.\n\r\n\r",ch);
             send_to_char("There are three Virtues:\n\r",ch);
-            send_to_char("Conscience is your ability to tell what's 'right' from what's 'wrong'.\n\r",ch);
-            send_to_char("Self_Control defines your character's discipline over their inner Beast and urges.\n\r",ch);
-            send_to_char("Courage allows your character to stand before a threat without cowering.\n\r\n\r",ch);
-            send_to_char("Like Attributes, you receive one free point in each Virtue. In addition you may spend\n\r",ch);
-            send_to_char("seven points on them in any way you choose. Note that once you finish spending your\n\r",ch);
-            send_to_char("points you must type 'create done' to finalize them.\n\r",ch);
-            send_to_char("You may distribute your points now by typing 'create <virtue> +/-. Example: create self_control +\n\r",ch);
+            send_to_char("Conscience: your ability to tell what's 'right' from what's 'wrong'\n\r",ch);
+            send_to_char("Self_Control: your character's discipline over their inner Beast and urges\n\r",ch);
+            send_to_char("Courage: allows your character to stand before a threat without cowering\n\r\n\r",ch);
+            send_to_char("Like Attributes, you receive one free point in each Virtue. In addition you\n\r",ch);
+            send_to_char("may spend seven points on them in any way you choose. Note that once you finish\n\r",ch);
+            send_to_char("spending your points you must type 'create done' to finalize them.\n\r",ch);
+            send_to_char("You may distribute your points now by typing '{ccreate <virtue> +/-{c.\n\r    {R*{xExample: {ccreate self_control +{x\n\r",ch);
             if(ch->pcdata->progress == 5)
             {
                 ch->pcdata->progress++;
@@ -1639,12 +1638,12 @@ void do_create( CHAR_DATA *ch, char *argument )
     {
         if(arg2[0] == '\0' && ch->pcdata->progress == 1)
         {
-            send_to_char("The syntax is create <primary/secondary/tertiary> <physical/social/mental>\n\r",ch);
+            send_to_char("The syntax is: {ccreate <primary/secondary/tertiary> <physical/social/mental>{x\n\r",ch);
             return;
         }
         if(arg2[0] == '\0' && ch->pcdata->progress == 3)
         {
-            send_to_char("The syntax is create <primary/secondary/tertiary> <skills/talents/knowledges>\n\r",ch);
+            send_to_char("The syntax is: {ccreate <primary/secondary/tertiary> <skills/talents/knowledges>{x\n\r",ch);
             return;
         }
         if(ch->pcdata->progress == 1 && ch->pcdata->stat[PHYSICAL] > 0 && ch->pcdata->stat[SOCIAL] > 0 && ch->pcdata->stat[MENTAL] > 0)
@@ -1708,14 +1707,14 @@ void do_create( CHAR_DATA *ch, char *argument )
             send_to_char("you may start over.",ch);
             if(ch->pcdata->progress == 1)
             {
-                send_to_char("Please type create <primary/secondary/tertiary> <physical/social/mental>\n\r",ch);
+                send_to_char("Please type: {ccreate <primary/secondary/tertiary> <physical/social/mental>{x\n\r",ch);
                 ch->pcdata->stat[PHYSICAL] = 0;
                 ch->pcdata->stat[SOCIAL] = 0;
                 ch->pcdata->stat[MENTAL] = 0;
             }
             else if(ch->pcdata->progress == 3)
             {
-                send_to_char("Please type create <primary/secondary/tertiary> <skills/talents/knowledges>\n\r",ch);
+                send_to_char("Please type: {ccreate <primary/secondary/tertiary> <skills/talents/knowledges>{x\n\r",ch);
                 ch->pcdata->stat[SKILLS] = 0;
                 ch->pcdata->stat[TALENTS] = 0;
                 ch->pcdata->stat[KNOWLEDGES] = 0;
@@ -1741,13 +1740,13 @@ void do_create( CHAR_DATA *ch, char *argument )
 
         if(ch->pcdata->progress == 1 && ch->pcdata->stat[PHYSICAL] > 0 && ch->pcdata->stat[SOCIAL] > 0 && ch->pcdata->stat[MENTAL] > 0)
         {
-            send_to_char("You have finished assigning priorities. Your next step is to assign points to these attributes.\n\r\n\r",ch);
-            send_to_char("You may do this by typing create <attribute> +/-. Example: create strength +\n\r",ch);
-            send_to_char("For more information on each of the attributes please type help <attribute>. Example: help strength\n\r\n\r",ch);
-            send_to_char("You receive one 'free' point in each attribute. You can then use points to increase these attributes\n\r",ch);
-            send_to_char("up to the 4th 'dot'. Note that once you finish this process you must type: create done.\n\r",ch);
-            send_to_char("You have 7 Primary points, 5 Secondary points and 3 Tertiary points. You must use them all before\n\r",ch);
-            send_to_char("finishing this process.\n\r",ch);
+            send_to_char("You have finished assigning priorities. Your next step is to assign points to\n\rthese attributes.\n\r\n\r",ch);
+            send_to_char("You may do this by typing: {ccreate <attribute> +/-{x.\n\r  Example: create strength +\n\r",ch);
+            send_to_char("For more information on each of the attributes please type {chelp <attribute>{x.\n\r  Example: help strength\n\r\n\r",ch);
+            send_to_char("You receive one 'free' point in each attribute. You can then use points to increase\n\r",ch);
+            send_to_char("these attributes up to the 4th 'dot'. Note that once you finish this process you\n\r",ch);
+            send_to_char("must type: {ccreate done{x.  You have 7 Primary points, 5 Secondary points and 3\n\r",ch);
+            send_to_char("Tertiary points.  You must use them all before finishing this process.\n\r",ch);
             send_to_char("You have the following remaining points: Primary: 7, Secondary: 5, Tertiary: 3\n\r\n\r",ch);
             ch->pcdata->primary = 7;
             ch->pcdata->secondary = 5;
@@ -1757,10 +1756,10 @@ void do_create( CHAR_DATA *ch, char *argument )
         }
         if(ch->pcdata->progress == 3 && ch->pcdata->stat[SKILLS] > 0 && ch->pcdata->stat[TALENTS] > 0 && ch->pcdata->stat[KNOWLEDGES] > 0)
         {
-            send_to_char("You have finished assigning priorities. Your next step is to assign points to these abilities.\n\r\n\r",ch);
-            send_to_char("You may do this by typing create <ability> +/-. For example: create brawl +\n\r",ch);
-            send_to_char("For more information on each of these abilities please type help <ability>. Example: help brawl\n\r\n\r",ch);
-            send_to_char("Please note that all abilities 'cap' at 4th dot. To finish this process you must type: create done.\n\r",ch);
+            send_to_char("You have finished assigning priorities. Your next step is to assign points to\n\rthese abilities.\n\r\n\r",ch);
+            send_to_char("You may do this by typing: {ccreate <ability> +/-{x. For example: create brawl +\n\r",ch);
+            send_to_char("For more information on each of these abilities please type: {chelp <ability>{x.\n\r  Example: help brawl\n\r\n\r",ch);
+            send_to_char("Please note that all abilities 'cap' at 4th dot. To finish this process you \n\rmust type: {ccreate done{x.\n\r",ch);
             send_to_char("You have the following remaining points: Primary: 13, Secondary: 9, Tertiary: 5\n\r\n\r",ch);
             ch->pcdata->primary = 13;
             ch->pcdata->secondary = 9;

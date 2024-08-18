@@ -1650,7 +1650,7 @@ void rote_cellularmitosis(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DAT
 
     if (!living_being(victim))
     {
-        send_to_char("That being has no living tissue to divide and replicate.\n\r", ch);
+        send_to_char("[ After trying diligently, you find no {gLife{x Pattern to divide and replicate. ]\n\r", ch);
         return;
     }
 
@@ -1686,18 +1686,18 @@ void rote_cellularmitosis(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DAT
     af.where     = TO_AFFECTS;
     af.type      = gsn_charm_person;
     af.level     = ch->level;
-    af.duration  = (success * 10) + 50;
+    af.duration  = (success * 20) + 50;
     af.location  = 0;
     af.modifier  = 0;
     af.bitvector = AFF_CHARM;
     affect_to_char( clone, &af );
 
-    act("$n stares intently at $N, who shivers and shakes as if ill; a split appears as $N divides into two!",ch,NULL,clone,TO_NOTVICT);
-    act("You examine $N's life pattern and form one of your own, overlaying it on top of $N a moment to ease it's birth into this Reality.",ch,NULL,clone,TO_CHAR);
+    act("$n stares intently at $N, who shivers and shakes as if ill; a split appears as $e divides into two!",ch,NULL,clone,TO_NOTVICT);
+    act("You examine $N's {gLife{x pattern; Forming one of your own, you overlay it on top of $m to ease the clone into this Reality.",ch,NULL,clone,TO_CHAR);
 
     if (success > 3)
     {
-        act("You subtly alter $N's body with physical enhancements.",ch,NULL,clone,TO_CHAR);
+        act("Your Mastery of {gLife{x allows you to subtly alter $N's body with physical enhancements.",ch,NULL,clone,TO_CHAR);
     af.where     = TO_AFFECTS;
     af.type      = gsn_betterbody;
     af.level     = ch->level;

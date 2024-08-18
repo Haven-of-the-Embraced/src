@@ -1778,6 +1778,11 @@ void do_create( CHAR_DATA *ch, char *argument )
 
     if(!str_cmp(arg1,"showabil"))
     {
+         if (ch->csabilities[CSABIL_MELEE] == 0)
+         {
+            send_to_char(" ^ {RRecommendation:  {xPut at least 1 point into Melee for access to     ^\n\r",ch);
+            send_to_char(" | weapons on a predominately hack and slash MUD.                     |\n\r",ch);
+         }
         send_to_char(" |<=--------------------------=Abilities=---------------------------=>|\n\r",ch);
         send_to_char(" |                                                                    |\n\r",ch);
         send_to_char(" |",ch);

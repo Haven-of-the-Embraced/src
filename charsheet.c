@@ -3287,6 +3287,16 @@ void do_charsheet3 (CHAR_DATA * ch, char *argument)
         row++;
     }
 
+   {
+      sprintf(name[row], "   Hedge Magic    ");
+      sprintf(sec1[row], "Brewing      %s", dots(ch->pcdata->cssec_abil[CSABIL_BREWING], FALSE));
+      sprintf(sec2[row], "                  ");
+      sprintf(sec3[row], "                  ");
+      sprintf(sec4[row], "                  ");
+      sprintf(sec5[row], "                  ");
+      row++;
+   }
+
     if(row-1 == 0)
         send_to_char(" |                  You have no secondary abilities.                  |\n\r",sch);
 

@@ -483,7 +483,7 @@ struct buf_type
 #define CSABIL_BLUNT            16
 #define CSABIL_HEAVY            17
 #define CSABIL_POLEARM          18
-#define CSABIL_BREW             19
+#define CSABIL_BREWING          19
 
 /*
  * Time and weather stuff.

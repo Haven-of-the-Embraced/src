@@ -729,8 +729,14 @@ void do_brew(CHAR_DATA *ch, char *argument)
     bool allfound, vfound, pfound, boost;
     allfound = vfound = pfound = boost = FALSE;
     obj = vial = pot = ch->carrying;
-
     argument = one_argument(argument,arg);
+
+    if (ch->csabilities[CSABIL_HEARTHWISDOM] < 2)
+    {
+        send_to_char("You have not learned enough Hearth Wisdom to brew properly.\n\r",ch);
+        return;
+    }
+
     for ( obj = ch->carrying; obj != NULL; obj = obj_next )
     {
         obj_next = obj->next_content;
@@ -771,16 +777,17 @@ void do_brew(CHAR_DATA *ch, char *argument)
         send_to_char( "Error! Contact the imms about this missing potion!\n\r", ch );
         return;
     }
-    if(brew_table[brew_lookup(arg)].level > ch->level)
+    if(brew_table[brew_lookup(arg)].level > ch->pcdata->cssec_abil[CSABIL_BREWING])
     {
-        send_to_char( "You are not yet powerful enough to brew this potion!\n\r", ch );
+        send_to_char( "You have not learned how to brew this potion!\n\r", ch );
         return;
     }
-    if(brew_table[brew_lookup(arg)].mage && ch->clan != clan_lookup("mage"))
+/*    if(brew_table[brew_lookup(arg)].mage && ch->clan != clan_lookup("mage"))
     {
         send_to_char( "Only a mage may brew this potion.\n\r", ch );
         return;
     }
+*/
     for ( obj = pot->contains; obj != NULL; obj = obj_next )
     {
         obj_next = obj->next_content;

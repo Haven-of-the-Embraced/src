@@ -1487,7 +1487,7 @@ const struct    cs_type2 sec_abil_table[30] =
     {   "blunt weaponry",         CSABIL_MELEE, 0, 0, 0, 0,  1},
     {   "heavy weaponry",         CSABIL_MELEE, 0, 0, 0, 0,  1},
     {   "polearms",         CSABIL_MELEE, 0, 0, 0, 0,  1},
-    {   "none",         0, 0, 0, 0, 0,  1},
+    {   "brewing",      0, CSABIL_HEARTHWISDOM, 0, 0, 0,  2},
     {   "none",         0, 0, 0, 0, 0,  1},
     {   "none",         0, 0, 0, 0, 0,  1},
     {   "none",         0, 0, 0, 0, 0,  1},

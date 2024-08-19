@@ -479,10 +479,11 @@ struct buf_type
 #define CSABIL_RITUALS          12
 #define CSABIL_MEDITATION       13
 #define CSABIL_BODYCRAFTS       14
-#define CSABIL_LIGHT                   15
-#define CSABIL_BLUNT                   16
-#define        CSABIL_HEAVY                    17
-#define CSABIL_POLEARM                 18
+#define CSABIL_LIGHT            15
+#define CSABIL_BLUNT            16
+#define CSABIL_HEAVY            17
+#define CSABIL_POLEARM          18
+#define CSABIL_BREW             19
 
 /*
  * Time and weather stuff.

@@ -2281,13 +2281,15 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
     else {
         if (!str_cmp(argument, "custom"))
             {
-                write_to_buffer(d,"\n\rHaven of the Embraced is focused on Vampires but you may choose to start the game as a human\n\r",0);
-                write_to_buffer(d,"if you wish. You may later be Embraced as a vampire if you choose, or your character may\n\r",0);
-                write_to_buffer(d,"continue life as a human. Vampires are far more powerful and have more customization than\n\r",0);
-                write_to_buffer(d,"a human, but humans have several gameplay options that Vampires do not. Starting as a human\n\r",0);
-                write_to_buffer(d,"is also a great way to learn the game if this is your first time playing a ROM-based MUD.\n\r\n\r",0);
+                write_to_buffer(d,"\n\rHaven of the Embraced is focused on Vampires, but you may choose to start the\n\r",0);
+                write_to_buffer(d,"\n\rgame as a human, if you wish.  You may become embraced later, or convert to a\n\r",0);
+                write_to_buffer(d,"\n\rGarou or Mage upon reaching level 100.  Vampires are far more powerful at creation\n\r",0);
+                write_to_buffer(d,"\n\rover humans, and are highly recommended as your starting race if you are new to\n\r",0);
+                write_to_buffer(d,"\n\rHaven of the Embraced.  The added survivability allows you to explore more easily,\n\r",0);
+                write_to_buffer(d,"\n\rlearning the MUD at a better pace.\n\r",0);
 
-                write_to_buffer(d,"Do you wish to start the game as a Vampire [Y/N]? ",0);
+                write_to_buffer(d,"Do you wish to start the game as a Vampire (Recommended): [Y/N]? ",0);
+
                 d->connected = CON_CHOICE_VAMP;
                 ch->pcdata->progress = 0;
                 break;
@@ -2353,13 +2355,14 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
     ch->cswillpower = ch->csmax_willpower;
     ch->dpoints = 5;
 
-    write_to_buffer(d,"\n\rHaven of the Embraced is focused on Vampires but you may choose to start the game as a human\n\r",0);
-    write_to_buffer(d,"if you wish. You may later be Embraced as a vampire if you choose, or your character may\n\r",0);
-    write_to_buffer(d,"continue life as a human. Vampires are far more powerful and have more customization than\n\r",0);
-    write_to_buffer(d,"a human, but humans have several gameplay options that Vampires do not. Starting as a human\n\r",0);
-    write_to_buffer(d,"is also a great way to learn the game if this is your first time playing a ROM-based MUD.\n\r\n\r",0);
+    write_to_buffer(d,"\n\rHaven of the Embraced is focused on Vampires, but you may choose to start the\n\r",0);
+    write_to_buffer(d,"\n\rgame as a human, if you wish.  You may become embraced later, or convert to a\n\r",0);
+    write_to_buffer(d,"\n\rGarou or Mage upon reaching level 100.  Vampires are far more powerful at creation\n\r",0);
+    write_to_buffer(d,"\n\rover humans, and are highly recommended as your starting race if you are new to\n\r",0);
+    write_to_buffer(d,"\n\rHaven of the Embraced.  The added survivability allows you to explore more easily,\n\r",0);
+    write_to_buffer(d,"\n\rlearning the MUD at a better pace.\n\r",0);
 
-    write_to_buffer(d,"Do you wish to start the game as a Vampire [Y/N]? ",0);
+    write_to_buffer(d,"Do you wish to start the game as a Vampire (Recommended): [Y/N]? ",0);
     d->connected = CON_CHOICE_VAMP;
     break;
 
@@ -2368,18 +2371,20 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
 
     if(argument[0] == 'Y' || argument[0] == 'y')
     {
-        write_to_buffer(d,"Vampires are divided into Clans. A clan is like a family line, a tie in blood passed from Sire\n\r",0);
-        write_to_buffer(d,"to Childer. Each clan is has a unique set of traits and different abilities. Please select a\n\r",0);
-        write_to_buffer(d,"clan for your character. Please note that you may never change your clan. Some clans are not\n\r",0);
-        write_to_buffer(d,"available at creation and you must be 'embraced' or made into a vampire in-game by another player.\n\r",0);
-        write_to_buffer(d,"You may type help <clan> to gain more information about each clan. IE: help Nosfertatu\n\r",0);
-        write_to_buffer(d,"The available clan choices are:\n\r\n\r",0);
+        write_to_buffer(d,"Vampires are divided into Clans. A clan is like a family line, a tie in blood\n\r",0);
+        write_to_buffer(d,"passed from Sire to Childer. Each clan is has a unique set of traits and different\n\r",0);
+        write_to_buffer(d,"abilities. Please select a clan for your character. Please note that you may never \n\r",0);
+        write_to_buffer(d,"change your clan. Some clans are not available at creation and you must be 'embraced'\n\r",0);
+        write_to_buffer(d,"or made into a vampire in-game by another player.  You may type help <clan> to gain\n\r",0);
+        write_to_buffer(d,"more information about each clan. IE: help Nosfertatu\n\rThe available clan choices are:\n\r\n\r",0);
 
-        write_to_buffer(d,"Assamite                      Nosferatu\n\r",0);
-        write_to_buffer(d,"Tremere                       Gangrel\n\r",0);
-        write_to_buffer(d,"Malkavian                     Brujah\n\r",0);
-        write_to_buffer(d,"Toreador                      Ventrue\n\r",0);
-        write_to_buffer(d,"Ravnos\n\r",0);
+        write_to_buffer(d,"Assamite                      Brujah\n\r",0);
+        write_to_buffer(d,"Gangrel                       Malkavian\n\r",0);
+        write_to_buffer(d,"Nosferatu                     Ravnos\n\r",0);
+        write_to_buffer(d,"Toreador                      Tremere\n\r",0);
+        write_to_buffer(d,"Ventrue\n\r",0);
+
+        write_to_buffer(d,"\n\r(Newbie Recommended) clans, in order:  1) Brujah 2) Nosferatu 3) Gangrel",0);
         write_to_buffer(d,"\n\rPlease choose a clan: ",0);
 
         d->connected = CON_PICK_CLAN;
@@ -2409,33 +2414,31 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
         do_function(ch,&do_help,argument);
 
 
-        write_to_buffer(d,"Please choose a Clan (Assamite, Gangrel, Malkavian, Nosferatu, Tremere,\n\r", 0);
-	write_to_buffer(d,"Ravnos, Brujah, Toreador, Ventrue or help <clan>) ",0);
+        write_to_buffer(d,"Please choose a Clan (Assamite, Brujah, Gangrel, Malkavian, Nosferatu, Ravnos,\n\r", 0);
+	   write_to_buffer(d,"Toreador, Tremere, Ventrue or help <clan>) ",0);
         d->connected = CON_PICK_CLAN;
         break;
     }
-/* Dirty hack til we better organize the clan code */
+
     if(str_prefix(buf,"assamite") &&
+    str_prefix(buf, "brujah" ) &&
+    str_prefix(buf, "gangrel") &&
+    str_prefix(buf, "malkavian") &&
+    str_prefix(buf, "nosferatu") &&
+    str_prefix(buf, "ravnos") &&
+    str_prefix(buf, "toreador" ) &&
 	str_prefix(buf, "tremere") &&
-	str_prefix(buf, "malkavian") &&
-	str_prefix(buf, "nosferatu") &&
-  str_prefix(buf, "gangrel") &&
-	str_prefix(buf, "ventrue") &&
-	str_prefix(buf, "brujah" ) &&
-	str_prefix(buf, "toreador" ) &&
-	str_prefix(buf, "ravnos"))
+	str_prefix(buf, "ventrue") )
+
     {
-        write_to_buffer(d,"Invalid clan choice.\n\r",0);
-        write_to_buffer(d,"Please choose a Clan (Assamite, Gangrel, Malkavian, Nosferatu, Tremere,\n\r", 0);
-        write_to_buffer(d,"Ravnos, Brujah, Toreador, Ventrue or help <clan>) ",0);
+        write_to_buffer(d,"[  Invalid clan choice.  ]\n\r",0);
+        write_to_buffer(d,"Please choose a Clan (Assamite, Brujah, Gangrel, Malkavian, Nosferatu, Ravnos,\n\r", 0);
+        write_to_buffer(d,"Toreador, Tremere, Ventrue or help <clan>) ",0);
         d->connected = CON_PICK_CLAN;
         break;
     }
     if(!make_vamp(ch,buf))
         write_to_buffer(d,"ERROR! make_vamp() returning FALSE\n\r",0);
-
-
-
 
     ch->freebie = 15;
     ch->class = 0;
@@ -2448,7 +2451,6 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
     if(d->character->max_pblood < 100) d->character->max_pblood = 100;
     d->connected = CON_READ_MOTD;
     break;
-
 
     case CON_READ_IMOTD:
     write_to_buffer(d,"\n\r",2);

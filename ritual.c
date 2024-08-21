@@ -870,16 +870,12 @@ void do_brew(CHAR_DATA *ch, char *argument)
     }
 
     check_improve(ch,gsn_brew,TRUE,1);
-    if(boost)
-    {
-        brew->value[0] = (ch->level*brew_table[brew_lookup(arg)].plevel)*5;
-        brew->value[3] = skill_lookup(arg);
-    }
+    if(brewsuccess > 4)
+        brew->value[0] = (ch->level + (brewsuccess * 2));
     else
-        brew->value[0] = (ch->level*brew_table[brew_lookup(arg)].plevel);
+        brew->value[0] = (ch->level - (2 * brew_table[brew_lookup(arg)].plevel) + (brewsuccess));
     brew->value[1] = skill_lookup(arg);
-    brew->value[2] = skill_lookup(arg);
-    brew->level = ch->level/2;
+    brew->level = ch->level;
     sprintf(buf, "a %s potion",brew_table[brew_lookup(arg)].color);
     brew->short_descr = str_dup(buf);
     sprintf(buf, "brew potion %s %s", brew_table[brew_lookup(arg)].name,brew_table[brew_lookup(arg)].color);

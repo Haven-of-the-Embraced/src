@@ -827,14 +827,14 @@ void do_brew(CHAR_DATA *ch, char *argument)
 
     if(!IS_IMMORTAL(ch)) WAIT_STATE( ch, skill_table[gsn_brew].beats );
     brewdiff += brew_table[brew_lookup(arg)].diff;
-    brewsuccess = godice(get_attribute(ch, INTELLIGENCE), brewdiff);
+    brewsuccess = godice(get_attribute(ch, INTELLIGENCE + ch->csabilities[CSABIL_HEARTHWISDOM]), brewdiff);
 
     if(brewsuccess < 0)
     {
-        brew->value[0] = ch->level/2;
+        brew->value[0] = ch->level/5 + 1;
         switch (number_range(1, 3))
         {
-            default: brew->value[1] = skill_lookup("change align");
+            default: brew->value[1] = skill_lookup("cause light");
             case 1:
                 brew->value[1] = skill_lookup("poison");
                 break;
@@ -846,7 +846,7 @@ void do_brew(CHAR_DATA *ch, char *argument)
                 brew->value[1] = skill_lookup("blind");
                 break;
         }
-        brew->level = 1;
+        brew->level = ch->level;
         sprintf(buf, "a %s potion",brew_table[brew_lookup(arg)].color);
         brew->short_descr = str_dup(buf);
         sprintf(buf, "brew potion %s %s", brew_table[brew_lookup(arg)].name,brew_table[brew_lookup(arg)].color);

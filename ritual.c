@@ -730,6 +730,8 @@ void do_brew(CHAR_DATA *ch, char *argument)
     allfound = vfound = pfound = boost = FALSE;
     obj = vial = pot = ch->carrying;
     argument = one_argument(argument,arg);
+    int brewsuccess = 0;
+    int brewdiff = 3;
 
     if (ch->csabilities[CSABIL_HEARTHWISDOM] < 2)
     {
@@ -782,12 +784,7 @@ void do_brew(CHAR_DATA *ch, char *argument)
         send_to_char( "You have not learned how to brew this potion!\n\r", ch );
         return;
     }
-/*    if(brew_table[brew_lookup(arg)].mage && ch->clan != clan_lookup("mage"))
-    {
-        send_to_char( "Only a mage may brew this potion.\n\r", ch );
-        return;
-    }
-*/
+
     for ( obj = pot->contains; obj != NULL; obj = obj_next )
     {
         obj_next = obj->next_content;
@@ -829,6 +826,9 @@ void do_brew(CHAR_DATA *ch, char *argument)
     }
 
     if(!IS_IMMORTAL(ch)) WAIT_STATE( ch, skill_table[gsn_brew].beats );
+    brewdiff += brew_table[brew_lookup(arg)].diff;
+    brewsuccess = godice(get_attribute(ch, INTELLIGENCE), brewdiff)
+
     if(get_skill(ch,gsn_brew) < number_percent()*brew_table[brew_lookup(arg)].diff)
     {
         if(number_range(1,100) < 50)

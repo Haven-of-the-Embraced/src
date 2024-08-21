@@ -827,54 +827,44 @@ void do_brew(CHAR_DATA *ch, char *argument)
 
     if(!IS_IMMORTAL(ch)) WAIT_STATE( ch, skill_table[gsn_brew].beats );
     brewdiff += brew_table[brew_lookup(arg)].diff;
-    brewsuccess = godice(get_attribute(ch, INTELLIGENCE), brewdiff)
+    brewsuccess = godice(get_attribute(ch, INTELLIGENCE), brewdiff);
 
-    if(get_skill(ch,gsn_brew) < number_percent()*brew_table[brew_lookup(arg)].diff)
+    if(brewsuccess < 0)
     {
-        if(number_range(1,100) < 50)
+        brew->value[0] = ch->level/2;
+        switch (number_range(1, 3))
         {
-            brew->value[0] = ch->level/2;
-            switch (number_range(1, 5))
-            {
-                default: brew->value[1] = skill_lookup("change align");
-                case 1:
-                    brew->value[1] = skill_lookup("poison");
-                    brew->value[2] = skill_lookup("poison");
-                    break;
-                case 2:
-                    brew->value[1] = skill_lookup("curse");
-                    brew->value[2] = skill_lookup("curse");
-                    break;
-                case 3:
-                    brew->value[1] = skill_lookup("blind");
-                    brew->value[2] = skill_lookup("blind");
-                    break;
-                case 4:
-                    brew->value[1] = skill_lookup("change sex");
-                    brew->value[2] = skill_lookup("change sex");
-                    break;
-                case 5:
-                    brew->value[1] = skill_lookup("teleport");
-                    brew->value[2] = skill_lookup("teleport");
-                    break;
-            }
-            brew->level = 1;
-            sprintf(buf, "a %s potion",brew_table[brew_lookup(arg)].color);
-            brew->short_descr = str_dup(buf);
-            sprintf(buf, "brew potion %s %s", brew_table[brew_lookup(arg)].name,brew_table[brew_lookup(arg)].color);
-            brew->name = str_dup(buf);
-            obj_to_char(brew,ch);
-            sprintf(buf, "You carefully mix each component into your brew and then pour the result into an empty vial.\n\rYou now have a %s potion.\n\r",brew_table[brew_lookup(arg)].color);
-            send_to_char(buf,ch);
-            sprintf(buf, "%s mixes together many components and brews a %s potion.\n\r",ch->name, brew_table[brew_lookup(arg)].color);
-            act( buf, ch, NULL, ch, TO_NOTVICT );
-            return;
+            default: brew->value[1] = skill_lookup("change align");
+            case 1:
+                brew->value[1] = skill_lookup("poison");
+                break;
+            case 2:
+                brew->value[1] = skill_lookup("poison");
+                brew->value[2] = skill_lookup("blind");
+                break;
+            case 3:
+                brew->value[1] = skill_lookup("blind");
+                break;
         }
-        send_to_char("You carefully mix each component into your brew until...\n\r{R***   **   **  *   *  * * *\n\r*  * *  * *  * ** **  * * *\n\r***  *  * *  * * * *  * * *\n\r*  * *  * *  * *   *\n\r***   **   **  *   *  * * *\n\r{x\n\rYour brew explodes in your face!",ch);
-        sprintf(buf,"$n gasps in pain as a %s potion suddenly explodes in $s face!\n\r",brew_table[brew_lookup(arg)].color);
+        brew->level = 1;
+        sprintf(buf, "a %s potion",brew_table[brew_lookup(arg)].color);
+        brew->short_descr = str_dup(buf);
+        sprintf(buf, "brew potion %s %s", brew_table[brew_lookup(arg)].name,brew_table[brew_lookup(arg)].color);
+        brew->name = str_dup(buf);
+        obj_to_char(brew,ch);
+        sprintf(buf, "You carefully mix each component into your brew and then pour the result into an empty vial.\n\rYou now have a %s potion.\n\r",brew_table[brew_lookup(arg)].color);
+        send_to_char(buf,ch);
+        sprintf(buf, "%s mixes together many components and brews a %s potion.\n\r",ch->name, brew_table[brew_lookup(arg)].color);
         act( buf, ch, NULL, ch, TO_NOTVICT );
+        return;
+    }
+
+    if(brewsuccess == 0)
+    {
+        send_to_char("You carefully mix each component into your brew, which promptly fizzes erratically!\n\r",ch);
+        sprintf(buf,"A %s potion erodes its new container, wasting the concoction in the process.\n\r",brew_table[brew_lookup(arg)].color);
+        act( buf, ch, NULL, ch, TO_ALL );
         extract_obj(brew);
-        damage( ch, ch, 50, gsn_brew, DAM_ACID, FALSE);
         check_improve(ch,gsn_brew,FALSE,1);
         return;
     }

@@ -1653,7 +1653,7 @@ void spell_cure_light( int sn, int level, CHAR_DATA *ch, void *vo,int target)
     CHAR_DATA *victim = (CHAR_DATA *) vo;
     int heal;
 
-    heal = (level + 5) * 2;
+    heal = (level + 10) * 2;
     victim->hit = UMIN( victim->hit + heal, victim->max_hit );
     update_pos( victim );
     send_to_char( "You feel a small rush through your body!\n\r", victim );

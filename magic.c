@@ -1683,7 +1683,7 @@ void spell_cure_poison( int sn, int level, CHAR_DATA *ch, void *vo,int target )
         act("$n looks much better.",victim,NULL,NULL,TO_ROOM);
     }
     else
-        send_to_char("Spell failed.\n\r",ch);
+        send_to_char("The poison is too potent.\n\r",ch);
 }
 
 void spell_cure_serious( int sn, int level, CHAR_DATA *ch, void *vo,int target )

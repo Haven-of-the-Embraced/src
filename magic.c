@@ -3027,12 +3027,6 @@ void spell_harm( int sn, int level, CHAR_DATA *ch, void *vo,int target)
 {
     CHAR_DATA *victim = (CHAR_DATA *) vo;
     int dam = ch->level * 10;
-/*
-    dam = UMAX(  20, victim->hit - dice(1,4) );
-    if ( saves_spell( level, victim,DAM_HARM) )
-    dam = UMIN( 50, dam / 2 );
-    dam = UMIN( 100, dam );
-*/
 /*   spell enhancement code*/
     dam += number_range(1, ch->level);
 
@@ -3044,7 +3038,6 @@ void spell_harm( int sn, int level, CHAR_DATA *ch, void *vo,int target)
 }
 
 /* RT haste spell */
-
 void spell_haste( int sn, int level, CHAR_DATA *ch, void *vo,int target )
 {
     CHAR_DATA *victim = (CHAR_DATA *) vo;

@@ -724,6 +724,7 @@ void do_brew(CHAR_DATA *ch, char *argument)
     OBJ_DATA *obj_next;
     OBJ_DATA *vial;
     OBJ_DATA *pot;
+    OBJ_INDEX_DATA *ingredient1,*ingredient2,*ingredient3,*ingredient4,*ingredient5;
     char buf[MAX_STRING_LENGTH],arg[MAX_INPUT_LENGTH];
     int count=0;
     bool allfound, vfound, pfound, boost;
@@ -755,7 +756,29 @@ void do_brew(CHAR_DATA *ch, char *argument)
     }
     if (arg[0] == '\0')
     {
-        send_to_char("Brew what?\n\r",ch);
+        send_to_char("{---------------------------[{YPotions Learned{x]----------------------------}\n\r",ch);
+        send_to_char("|  {gName              {x: {gIngredients                                       {x|\n\r",ch);
+        send_to_char("{------------------------------------------------------------------------}\n\r",ch);
+        for ( count + 1; count != MAX_BREW; count++ )
+        {
+            if (ch->pcdata->cssec_abil[CSABIL_BREWING] >= brew_table[count].level)
+            {
+                ingredient1 = get_obj_index( brew_table[count].component[0] );
+                ingredient2 = get_obj_index( brew_table[count].component[1] );
+                ingredient3 = get_obj_index( brew_table[count].component[2] );
+                ingredient4 = get_obj_index( brew_table[count].component[3] );
+                ingredient5 = get_obj_index( brew_table[count].component[4] );
+                sprintf(buf, "%20s : %s%s%s%s%s%s%s%s%s\n\r",brew_table[count].name, 
+                    ingredient1 == 0 ? "" : ingredient1->short_descr, 
+                    ingredient2 != 0 ? "," : "", ingredient2 == 0 ? "" : ingredient2->short_descr, 
+                    ingredient3 != 0 ? "," : "", ingredient3 == 0 ? "" : ingredient3->short_descr, 
+                    ingredient4 != 0 ? "," : "", ingredient4 == 0 ? "" : ingredient4->short_descr, 
+                    ingredient5 != 0 ? "," : "", ingredient5 == 0 ? "" : ingredient5->short_descr);
+                act( buf, ch, NULL, ch, TO_CHAR );
+            }
+        }
+        send_to_char("Which potion would you like to brew?\n\r",ch);
+        send_to_char("Syntax:  {cbrew 'potion name'{x\n\r", ch);
         return;
     }
 

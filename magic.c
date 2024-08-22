@@ -3070,12 +3070,9 @@ void spell_haste( int sn, int level, CHAR_DATA *ch, void *vo,int target )
     af.where     = TO_AFFECTS;
     af.type      = sn;
     af.level     = level;
-    if (victim == ch)
-      af.duration  = level/2;
-    else
-      af.duration  = level/4;
+    af.duration  = level/2;
     af.location  = APPLY_CS_DEX;
-    af.modifier  = 1 + (level >= 18) + (level >= 25) + (level >= 32);
+    af.modifier  = 1;
     af.bitvector = AFF_HASTE;
     affect_to_char( victim, &af );
     send_to_char( "You feel yourself moving more quickly.\n\r", victim );

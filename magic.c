@@ -3092,45 +3092,6 @@ void spell_haste( int sn, int level, CHAR_DATA *ch, void *vo,int target )
     return;
 }
 
-//Zelan's new spell for XP boosting
-
-void spell_xp_boost( int sn, int level, CHAR_DATA *ch, void *vo,int target )
-{
-    CHAR_DATA *victim = (CHAR_DATA *) vo;
-    AFFECT_DATA af;
-
-    if ( is_affected( victim, sn ) || IS_AFFECTED(victim,AFF_XP_BOOST)
-    ||   IS_SET(victim->off_flags,OFF_FAST))
-    {
-    if (victim == ch)
-      send_to_char("You already have the boost!\n\r",ch);
-    else
-      act("$N is already receiving a boost!.",
-          ch,NULL,victim,TO_CHAR);
-        return;
-    }
-
-
-    af.where     = TO_AFFECTS;
-    af.type      = sn;
-    af.level     = 110;
-    if (victim == ch)
-      af.duration  = 60;
-    else
-      af.duration  = 60;
-    af.location  = APPLY_NONE;
-    af.modifier  = 0;
-    af.bitvector = AFF_XP_BOOST;
-    affect_to_char( victim, &af );
-    send_to_char( "You've received an XP boost!.\n\r", victim );
-    act("$n received an XP boost!",victim,NULL,NULL,TO_ROOM);
-    if ( ch != victim )
-        send_to_char( "Ok.\n\r", ch );
-    return;
-}
-
-
-
 void spell_heal( int sn, int level, CHAR_DATA *ch, void *vo,int target )
 {
     CHAR_DATA *victim = (CHAR_DATA *) vo;
@@ -4679,6 +4640,37 @@ void spell_word_of_recall( int sn, int level, CHAR_DATA *ch,void *vo,int target)
     char_to_room(victim,location);
     act("$n appears in the room.",victim,NULL,NULL,TO_ROOM);
     do_function(victim, &do_look, "auto");
+}
+
+//Zelan's new spell for XP boosting
+void spell_xp_boost( int sn, int level, CHAR_DATA *ch, void *vo,int target )
+{
+    CHAR_DATA *victim = (CHAR_DATA *) vo;
+    AFFECT_DATA af;
+
+    if ( is_affected( victim, sn ) || IS_AFFECTED(victim,AFF_XP_BOOST))
+    {
+    if (victim == ch)
+      send_to_char("You already have the boost!\n\r",ch);
+    else
+      act("$N is already receiving a boost!.",
+          ch,NULL,victim,TO_CHAR);
+        return;
+    }
+
+    af.where     = TO_AFFECTS;
+    af.type      = sn;
+    af.level     = 110;
+    af.duration  = 60;
+    af.location  = APPLY_NONE;
+    af.modifier  = 0;
+    af.bitvector = AFF_XP_BOOST;
+    affect_to_char( victim, &af );
+    send_to_char( "You've received an XP boost!.\n\r", victim );
+    act("$n received an XP boost!",victim,NULL,NULL,TO_ROOM);
+    if ( ch != victim )
+        send_to_char( "Ok.\n\r", ch );
+    return;
 }
 
 /*

@@ -642,7 +642,19 @@ void spell_gift_shed( int sn, int level, CHAR_DATA *ch, void *vo, int target)
 //Roll: Manipulation + Expression (diff: target’s willpower)
 //Metis suffer constant abuse throughout their lives, yet they know they are the fortunate ones. Most Metis aren’t even allowed to live. The Garou can verbalize the hatred in her heart, disheartening opponents. (“-2 rage, -2 willpower” is what the book says. If mobs won’t have rage and willpower, lower strength, hitroll and damroll. Another short duration, long recovery. 2-3 ticks active, 10-12 recovery.)
 //Cost: 1 gnosis
-void spell_gift_curseofhatred( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_curseofhatred( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  AFFECT_DATA af;
+  int cursesuccess = 0;
+  int diff = 6;
+
+  if (is_affected(victim, gsn_gift_curseofhatred) || IS_AFFECTED(victim, AFF_CURSE))
+  {
+      sendch("Your target has already been afflicted with a curse.\n\r", ch);
+      return;
+  }
+
+  cursesuccess = godice(get_attribute(ch, MANIPULATION)+get_ability(ch, CSABIL_EXPRESSION), diff);
     return;
 }
 

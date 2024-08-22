@@ -2682,7 +2682,6 @@ void spell_energy_drain( int sn, int level, CHAR_DATA *ch, void *vo,int target )
     return;
     }
 
-
     if ( victim->level <= 2 )
     {
     dam      = ch->hit + 1;
@@ -2705,8 +2704,6 @@ void spell_energy_drain( int sn, int level, CHAR_DATA *ch, void *vo,int target )
 
     return;
 }
-
-
 
 void spell_fireball( int sn, int level, CHAR_DATA *ch, void *vo,int target )
 {
@@ -2734,7 +2731,6 @@ void spell_fireball( int sn, int level, CHAR_DATA *ch, void *vo,int target )
     return;
 }
 
-
 void spell_fireproof(int sn, int level, CHAR_DATA *ch, void *vo,int target)
 {
     OBJ_DATA *obj = (OBJ_DATA *) vo;
@@ -2760,8 +2756,6 @@ void spell_fireproof(int sn, int level, CHAR_DATA *ch, void *vo,int target)
     act("$p is surrounded by a protective aura.",ch,obj,NULL,TO_ROOM);
 }
 
-
-
 void spell_flamestrike( int sn, int level, CHAR_DATA *ch, void *vo,int target )
 {
     CHAR_DATA *victim = (CHAR_DATA *) vo;
@@ -2773,8 +2767,6 @@ void spell_flamestrike( int sn, int level, CHAR_DATA *ch, void *vo,int target )
     damage( ch, victim, dam, sn, DAM_FIRE ,TRUE);
     return;
 }
-
-
 
 void spell_faerie_fire( int sn, int level, CHAR_DATA *ch, void *vo,int target )
 {
@@ -2795,8 +2787,6 @@ void spell_faerie_fire( int sn, int level, CHAR_DATA *ch, void *vo,int target )
     act( "$n is surrounded by a pink outline.", victim, NULL, NULL, TO_ROOM );
     return;
 }
-
-
 
 void spell_faerie_fog( int sn, int level, CHAR_DATA *ch, void *vo,int target )
 {
@@ -2901,16 +2891,6 @@ void spell_frenzy(int sn, int level, CHAR_DATA *ch, void *vo,int target)
           ch,NULL,victim,TO_CHAR);
     return;
     }
-/*  Sengir removing alignment check
-    if ((IS_GOOD(ch) && !IS_GOOD(victim)) ||
-    (IS_NEUTRAL(ch) && !IS_NEUTRAL(victim)) ||
-    (IS_EVIL(ch) && !IS_EVIL(victim))
-       )
-    {
-    act("Your god doesn't seem to like $N",ch,NULL,victim,TO_CHAR);
-    return;
-    }
-*/
 
     af.where     = TO_AFFECTS;
     af.type      = sn;
@@ -2992,8 +2972,6 @@ void spell_gate( int sn, int level, CHAR_DATA *ch, void *vo,int target )
     }
 }
 
-
-
 void spell_giant_strength(int sn,int level,CHAR_DATA *ch,void *vo,int target)
 {
     CHAR_DATA *victim = (CHAR_DATA *) vo;
@@ -3020,8 +2998,6 @@ void spell_giant_strength(int sn,int level,CHAR_DATA *ch,void *vo,int target)
     act("$n flexes as $s muscles surge with heightened power.",victim,NULL,NULL,TO_ROOM);
     return;
 }
-
-
 
 void spell_harm( int sn, int level, CHAR_DATA *ch, void *vo,int target)
 {

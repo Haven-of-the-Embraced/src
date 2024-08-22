@@ -1193,36 +1193,36 @@ const   struct  bit_type    bitvector_type  []  =
 
 const struct    brew_type   brew_table  [MAX_BREW]  =
 {
-/*  {   name,       spell number,   min level,  potion level,
+/*  {   name,       spell number,   min Brewing level,  potion level = 1,
         diff,       {component1,    component2, component3,
         component4, component5},    mage only,  imm only}, */
 
-    {   "reserved",     0,  0,  0,  0,  {0, 0,
+    {   "reserved",     0,  9,  1,  0,  {0, 0,
         0,      0,  0}, FALSE,  FALSE,  "none"},
 //Brew 0
-    {   "refresh",      81, 0,  1,  0,  {0, 0,
-        0,      0,  0}, FALSE,  FALSE,  "glowing blue"},
+    {   "refresh",      81, 0,  1,  0,  {771, 27225,
+        30854,      0,  0}, FALSE,  FALSE,  "glowing blue"},
 //Brew 1
-    {   "cure light",   16, 1,  1,  1,  {0, 0,
+    {   "cure light",   16, 1,  1,  1,  {771, 30856,
         0,      0,  0}, FALSE,  FALSE,  "light blue"},
 //Brew 2
-    {   "cure serious", 61, 2,  1,  2,  {0, 0,
+    {   "cure serious", 61, 2,  1,  2,  {771, 9507,
         0,      0,  0}, FALSE,  FALSE,  "blue"},
-    {   "cure poison",  43, 2, 1,  2,  {0,   0,
+    {   "cure poison",  43, 2, 1,  2,  {771,   302,
         0,      0,  0}, FALSE,  FALSE,  "bluish-red"},
 //Brew 3
-    {   "cure critical",    15, 3, 1,  3,  {0,   0,
+    {   "cure critical",    15, 3, 1,  3,  {771,   9658,
         0, 0,  0}, FALSE,  FALSE,  "dark blue"},
 //Brew 4
-    {   "heal",     28, 4, 1,  4,  {0,  0,
-        0,       0, 0}, FALSE,  FALSE,  "purple"},
-    {   "remove curse", 35, 4, 1,  4,  {0,  0,
+    {   "heal",     28, 4, 1,  4,  {771,  30836,
+        17701,       17705, 0}, FALSE,  FALSE,  "purple"},
+    {   "remove curse", 35, 4, 1,  4,  {771,  17701,
         0,      0,  0}, FALSE,  FALSE,  "bright blue"},
 //Brew 5
-    {   "giant strength",   39, 5, 1,  5,  {0,  0,
+    {   "giant strength",   39, 5, 1,  5,  {771,  9659,
         0,      0,  0}, FALSE,       FALSE,  "light green"},
-    {   "fly",      56, 5, 1,  5,  {0,  0,
-        0,  0,  0}, FALSE,       FALSE,  "yellow"},
+    {   "fly",      56, 5, 1,  5,  {771,  11105,
+        30814,  0,  0}, FALSE,       FALSE,  "yellow"},
 //Unused
     {   "mana",     0,  9, 1,  9,  {0,  0,
         0,        0,   0},   FALSE,       FALSE,  "gold"},

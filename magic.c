@@ -1636,7 +1636,7 @@ void spell_cure_critical( int sn, int level, CHAR_DATA *ch, void *vo,int target)
     int heal;
     int aggheal;
 
-    heal = (level + 5) * 4;
+    heal = (level + 10) * 4;
     aggheal = heal/100;
     victim->hit = UMIN( victim->hit + heal, victim->max_hit );
     victim->agg_dam = UMAX(victim->agg - aggheal, 0);

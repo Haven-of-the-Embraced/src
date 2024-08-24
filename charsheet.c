@@ -1300,22 +1300,35 @@ void do_freebie(CHAR_DATA *ch, char *argument)
         if(!str_prefix(arg, disc_table[i].name))
         {
             if(ch->pcdata->discipline[i] == 0)
-
             {
-                disc = i;
+               disc = i;
 
-                if (disc == SERPENTIS || disc == PROTEAN || disc == OBTENEBRATION ||
-                disc == MORTIS || disc == QUIETUS || disc == THAUMATURGY ||
-                disc == VICISSITUDE || disc == CHIMERSTRY || disc == DEMENTATION)
-                 {
+               if (disc == SERPENTIS || disc == PROTEAN || disc == OBTENEBRATION ||
+               disc == MORTIS || disc == QUIETUS || disc == THAUMATURGY ||
+               disc == VICISSITUDE || disc == CHIMERSTRY || disc == DEMENTATION)
+               {
+                  if (ch->race == race_lookup("ghoul"))
+                  {
+                     for (num = 0; num < 3; num ++)
+                     {
+                        if (i == clandisc_table[ch->clan].clan_disc[num])
+                           break;
+                     }
+
                     send_to_char("This discipline cannot be purchased OOCly, you must roleplay for it.\n\r", ch);
                     return;
-                }
+                  }
+                  else
+                  {
+                     send_to_char("This discipline cannot be purchased OOCly, you must roleplay for it.\n\r", ch);
+                     return;
+                  }
+               }
 
-            if (ch->race != race_lookup("ghoul"))
-            cost = 10;
-            else
-            {
+               if (ch->race != race_lookup("ghoul"))
+               cost = 10;
+               else
+               {
                 cost = 15;
 
                 for (num = 0; num < 3; num ++)
@@ -1328,11 +1341,11 @@ void do_freebie(CHAR_DATA *ch, char *argument)
                 }
                 if (disc == CELERITY || disc == FORTITUDE || disc == POTENCE)
                     cost = 8;
-            } // if race == ghoul
+               } // if race == ghoul
 
-            count = i;
-            step = 12;
-            break;
+               count = i;
+               step = 12;
+               break;
             }
 
         if (ch->race == race_lookup("vampire") || ch->race == race_lookup("methuselah"))

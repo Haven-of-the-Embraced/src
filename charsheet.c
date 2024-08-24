@@ -1295,6 +1295,7 @@ void do_freebie(CHAR_DATA *ch, char *argument)
     if (IS_VAMP(ch))
     {
       int disc, num;
+      bool clandisc = FALSE;
       for(i = 0; i < MAX_DISC; i++)
       {
         if(!str_prefix(arg, disc_table[i].name))
@@ -1307,22 +1308,28 @@ void do_freebie(CHAR_DATA *ch, char *argument)
                disc == MORTIS || disc == QUIETUS || disc == THAUMATURGY ||
                disc == VICISSITUDE || disc == CHIMERSTRY || disc == DEMENTATION)
                {
-                  if (ch->race == race_lookup("ghoul"))
-                  {
-                     for (num = 0; num < 3; num ++)
-                     {
-                        if (i == clandisc_table[ch->clan].clan_disc[num])
-                           break;
-                     }
-
-                    send_to_char("This discipline cannot be purchased OOCly, you must roleplay for it.\n\r", ch);
-                    return;
-                  }
-                  else
+                  if (ch->race == !race_lookup("ghoul"))
                   {
                      send_to_char("This discipline cannot be purchased OOCly, you must roleplay for it.\n\r", ch);
                      return;
                   }
+                  else
+                  {
+                     for (num = 0; num < 3; num ++)
+                     {
+                        if (i == clandisc_table[ch->clan].clan_disc[num])
+                        {
+                           clandisc = TRUE;
+                           break;
+                        }
+                     }
+                     if (clandisc == FALSE)
+                     {
+                        send_to_char("Ghouls cannot purchase this OOCly, you must roleplay for it.\n\r", ch);
+                        return;
+                     }
+                  }
+
                }
 
                if (ch->race != race_lookup("ghoul"))

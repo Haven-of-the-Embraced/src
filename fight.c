@@ -1920,21 +1920,19 @@ if (DEBUG_MESSAGES || IS_DEBUGGING(ch)){
         else
         level = poison->level;
 
-        if (!IS_AFFECTED(victim, AFF_POISON) && !saves_spell(level / 2,victim,DAM_POISON))
+        if (!IS_AFFECTED(victim, AFF_POISON) && !saves_spell(level / 2,victim,DAM_POISON) && !is_affected(victim, gsn_poison))
         {
-        send_to_char("You feel poison coursing through your veins.",
-            victim);
-        act("$n is poisoned by the venom on $p.",
-            victim,wield,ch,TO_ROOM);
+            send_to_char("You feel poison coursing through your veins.", victim);
+            act("$n is poisoned by the venom on $p.",victim,wield,ch,TO_ROOM);
 
             af.where     = TO_AFFECTS;
             af.type      = gsn_poison;
             af.level     = level;
-            af.duration  = level / 10 + 1;
+            af.duration  = level / 20 + 3;
             af.location  = APPLY_CS_STR;
             af.modifier  = -1;
             af.bitvector = AFF_POISON;
-            affect_join( victim, &af );
+            affect_to_char( victim, &af );
         }
 
         /* weaken the poison if it's temporary */

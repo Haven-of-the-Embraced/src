@@ -83,12 +83,6 @@ bool paradox_check(CHAR_DATA *ch, bool vulgar)
     return FALSE;
 }
 
-void do_rotelist(CHAR_DATA *ch, char *argument)
-{
-
-    return;
-}
-
 void do_rote(CHAR_DATA *ch, char *argument)
 {
     CHAR_DATA *victim = ch;

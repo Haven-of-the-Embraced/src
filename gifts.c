@@ -645,6 +645,7 @@ void spell_gift_shed( int sn, int level, CHAR_DATA *ch, void *vo, int target)
 void spell_gift_curseofhatred( int sn, int level, CHAR_DATA *ch, void *vo, int target)
 {
   AFFECT_DATA af;
+  CHAR_DATA *victim = (CHAR_DATA *) vo;
   int cursesuccess = 0;
   int diff = 6;
 
@@ -693,12 +694,12 @@ void spell_gift_curseofhatred( int sn, int level, CHAR_DATA *ch, void *vo, int t
     af.type         = gsn_gift_curseofhatred;
     af.level        = cursesuccess;
     af.duration     = 1 + (cursesuccess*3);
-    af.modifier     = cursesuccess * 50;
+    af.modifier     = -(cursesuccess * 50);
     af.location     = APPLY_HITROLL;
     af.bitvector    = AFF_CURSE;
     affect_to_char(victim, &af);
 
-    af.modifier     = cursesuccess * 25;
+    af.modifier     = -(cursesuccess * 25);
     af.location     = APPLY_DAMROLL;
     af.bitvector    = 0;
     affect_to_char(victim, &af);

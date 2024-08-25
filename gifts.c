@@ -642,7 +642,68 @@ void spell_gift_shed( int sn, int level, CHAR_DATA *ch, void *vo, int target)
 //Roll: Manipulation + Expression (diff: target’s willpower)
 //Metis suffer constant abuse throughout their lives, yet they know they are the fortunate ones. Most Metis aren’t even allowed to live. The Garou can verbalize the hatred in her heart, disheartening opponents. (“-2 rage, -2 willpower” is what the book says. If mobs won’t have rage and willpower, lower strength, hitroll and damroll. Another short duration, long recovery. 2-3 ticks active, 10-12 recovery.)
 //Cost: 1 gnosis
-void spell_gift_curseofhatred( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_curseofhatred( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  AFFECT_DATA af;
+  CHAR_DATA *victim = (CHAR_DATA *) vo;
+  int cursesuccess = 0;
+  int diff = 6;
+
+  if (is_affected(victim, gsn_gift_curseofhatred) || IS_AFFECTED(victim, AFF_CURSE))
+  {
+      sendch("Your target has already been afflicted with a curse.\n\r", ch);
+      return;
+  }
+
+  if (ch->move <= ch->level * 2)
+  {
+      sendch("You are too tired to call to the spirits\n\r", ch);
+      return;
+  }
+
+  if (IS_AFFECTED(ch,AFF_CURSE))
+    diff++;
+
+  ch->move -= ch->level * 2;
+  cursesuccess = godice(get_attribute(ch, MANIPULATION)+get_ability(ch, CSABIL_EXPRESSION), diff);
+
+  if (cursesuccess < 0)
+  {
+    send_to_char("The spirits of hate are offended, turning their ire upon you!\n\r", ch);
+    af.where        = TO_AFFECTS;
+    af.type         = gsn_gift_curseofhatred;
+    af.level        = cursesuccess;
+    af.duration     = 3;
+    af.modifier     = 0;
+    af.location     = 0;
+    af.bitvector    = AFF_CURSE;
+    affect_to_char(ch, &af);
+    return;
+  }
+
+  if (cursesuccess == 0)
+  {
+    send_to_char("Your call of hatred carries no weight, seeming to go unanswered.\n\r", ch);
+    return;
+  }
+
+    send_to_char("With spirits of hatred lending strength, you focus a curse at you opponent.\n\r", ch);
+    act("$N shirks back, as $n glares menacingly.", ch, NULL, victim, TO_NOTVICT);
+    act("You shirk momentarily, as $n glares at you.", ch, NULL, victim, TO_VICT);
+    af.where        = TO_AFFECTS;
+    af.type         = gsn_gift_curseofhatred;
+    af.level        = cursesuccess;
+    af.duration     = 1 + (cursesuccess*3);
+    af.modifier     = -(cursesuccess * 50);
+    af.location     = APPLY_HITROLL;
+    af.bitvector    = AFF_CURSE;
+    affect_to_char(victim, &af);
+
+    af.modifier     = -(cursesuccess * 25);
+    af.location     = APPLY_DAMROLL;
+    af.bitvector    = 0;
+    affect_to_char(victim, &af);
+    gain_exp(ch, cursesuccess);
     return;
 }
 

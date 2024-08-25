@@ -655,6 +655,38 @@ void spell_gift_curseofhatred( int sn, int level, CHAR_DATA *ch, void *vo, int t
   }
 
   cursesuccess = godice(get_attribute(ch, MANIPULATION)+get_ability(ch, CSABIL_EXPRESSION), diff);
+
+  if (cursesuccess < 0)
+  {
+    send_to_char("The spirits of hate are offended, turning their ire upon you!\n\r", ch);
+    af.where        = TO_AFFECTS;
+    af.type         = gsn_gift_curseofhatred;
+    af.level        = cursesuccess;
+    af.duration     = 3;
+    af.modifier     = 0;
+    af.location     = 0;
+    af.bitvector    = AFF_CURSE;
+    affect_to_char(ch, &af);
+    return;
+  }
+
+  if (cursesuccess == 0)
+  {
+    send_to_char("Your call of hatred carries no weight, seeming to go unanswered.\n\r", ch);
+    return;
+  }
+
+  send_to_char("\n\r", ch);
+    af.where        = TO_AFFECTS;
+    af.type         = gsn_gift_curseofhatred;
+    af.level        = cursesuccess;
+    af.duration     = 1 + (cursesuccess*3);
+    af.modifier     = 0;
+    af.location     = 0;
+    af.bitvector    = AFF_CURSE;
+    affect_to_char(victim, &af);
+
+    gain_exp(ch, cursesuccess);
     return;
 }
 

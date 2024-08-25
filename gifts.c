@@ -654,6 +654,16 @@ void spell_gift_curseofhatred( int sn, int level, CHAR_DATA *ch, void *vo, int t
       return;
   }
 
+  if (ch->move <= ch->level * 2)
+  {
+      sendch("You are too tired to call to the spirits\n\r", ch);
+      return;
+  }
+
+  if (IS_AFFECTED(ch,AFF_CURSE))
+    diff++;
+
+  ch->move -= ch->level * 2;
   cursesuccess = godice(get_attribute(ch, MANIPULATION)+get_ability(ch, CSABIL_EXPRESSION), diff);
 
   if (cursesuccess < 0)

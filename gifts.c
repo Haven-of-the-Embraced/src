@@ -686,16 +686,22 @@ void spell_gift_curseofhatred( int sn, int level, CHAR_DATA *ch, void *vo, int t
     return;
   }
 
-  send_to_char("\n\r", ch);
+    send_to_char("With spirits of hatred lending strength, you focus a curse at you opponent.\n\r", ch);
+    act("$N shirks back, as $n glares menacingly.", ch, NULL, victim, TO_NOTVICT);
+    act("You shirk momentarily, as $n glares at you.", ch, NULL, victim, TO_VICT);
     af.where        = TO_AFFECTS;
     af.type         = gsn_gift_curseofhatred;
     af.level        = cursesuccess;
     af.duration     = 1 + (cursesuccess*3);
-    af.modifier     = 0;
-    af.location     = 0;
+    af.modifier     = cursesuccess * 50;
+    af.location     = APPLY_HITROLL;
     af.bitvector    = AFF_CURSE;
     affect_to_char(victim, &af);
 
+    af.modifier     = cursesuccess * 25;
+    af.location     = APPLY_DAMROLL;
+    af.bitvector    = 0;
+    affect_to_char(victim, &af);
     gain_exp(ch, cursesuccess);
     return;
 }

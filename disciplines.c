@@ -19,12 +19,6 @@
 /* Local prototype for can_use_disc(). If we need it in other files, move it to merc.h */
 bool can_use_disc(CHAR_DATA *ch, int disc, int dot, int blood, bool message);
 
-void do_disclist(CHAR_DATA *ch, char *argument)
-{
-
-    return;
-}
-
 void do_feralspeech(CHAR_DATA *ch, char *argument)
 {
    char arg[MAX_INPUT_LENGTH];

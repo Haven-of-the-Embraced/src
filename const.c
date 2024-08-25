@@ -2376,7 +2376,7 @@ Total (3) */
     &gsn_gift_shed,          SLOT( 0),        0,     12, "",             "Your fur will no longer slough off in combat.",        "" },
 
     { "curse of hatred", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_curseofhatred,  TAR_IGNORE, POS_STANDING,
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_curseofhatred,  TAR_CHAR_DEFENSIVE, POS_STANDING,
     &gsn_gift_curseofhatred,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     { "sense silver", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },

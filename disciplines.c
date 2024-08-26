@@ -21,7 +21,304 @@ bool can_use_disc(CHAR_DATA *ch, int disc, int dot, int blood, bool message);
 
 void do_disclist(CHAR_DATA *ch, char *argument)
 {
+    char buf[MAX_STRING_LENGTH];
+    int i;
 
+    if(IS_NPC(ch)) return;
+
+    if(!IS_VAMP(ch))
+    {
+        send_to_char("Kindred Vitae does not flow through your arteries and veins!\n\r",ch);
+        return;
+    }
+
+    if (ch->pcdata->discipline[] > 0)
+    {
+        send_to_char(":\n\r",ch);
+        send_to_char("\n\r",ch);
+    }
+    if (ch->pcdata->discipline[] > 1)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 2)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 3)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 4)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 5)
+        send_to_char("{R*{DUncoded{R*{x\n\r",ch);
+
+    if (ch->pcdata->discipline[ANIMALISM] > 0)
+    {
+        send_to_char("Animalism:\n\r",ch);
+        send_to_char("Sweet Whispers\n\r",ch);
+    }
+    if (ch->pcdata->discipline[ANIMALISM] > 1)
+        send_to_char("Beckoning\n\r",ch);
+    if (ch->pcdata->discipline[ANIMALISM] > 2)
+        send_to_char("Song of Serenity\n\r",ch);
+    if (ch->pcdata->discipline[ANIMALISM] > 3)
+        send_to_char("Sharing of Spirits\n\r",ch);
+    if (ch->pcdata->discipline[ANIMALISM] > 4)
+        send_to_char("Drawing Out the Beast\n\r",ch);
+    if (ch->pcdata->discipline[ANIMALISM] > 5)
+        send_to_char("{R*{DUncoded{R*{x\n\r",ch);
+
+    if (ch->pcdata->discipline[AUSPEX] > 0)
+    {
+        send_to_char(":\n\r",ch);
+        send_to_char("\n\r",ch);
+    }
+    if (ch->pcdata->discipline[AUSPEX] > 1)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[AUSPEX] > 2)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[AUSPEX] > 3)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[AUSPEX] > 4)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[AUSPEX] > 5)
+        send_to_char("{R*{DUncoded{R*{x\n\r",ch);
+
+    if (ch->pcdata->discipline[CELERITY] > 0)
+    {
+        send_to_char(":\n\r",ch);
+        send_to_char("\n\r",ch);
+    }
+    if (ch->pcdata->discipline[] > 1)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 2)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 3)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 4)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 5)
+        send_to_char("{R*{DUncoded{R*{x\n\r",ch);
+
+    if (ch->pcdata->discipline[CHIMERSTRY] > 0)
+    {
+        send_to_char(":\n\r",ch);
+        send_to_char("\n\r",ch);
+    }
+    if (ch->pcdata->discipline[] > 1)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 2)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 3)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 4)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 5)
+        send_to_char("{R*{DUncoded{R*{x\n\r",ch);
+
+    if (ch->pcdata->discipline[DEMENTATION] > 0)
+    {
+        send_to_char(":\n\r",ch);
+        send_to_char("\n\r",ch);
+    }
+    if (ch->pcdata->discipline[] > 1)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 2)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 3)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 4)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 5)
+        send_to_char("{R*{DUncoded{R*{x\n\r",ch);
+
+    if (ch->pcdata->discipline[DOMINATE] > 0)
+    {
+        send_to_char(":\n\r",ch);
+        send_to_char("\n\r",ch);
+    }
+    if (ch->pcdata->discipline[] > 1)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 2)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 3)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 4)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 5)
+        send_to_char("{R*{DUncoded{R*{x\n\r",ch);
+
+    if (ch->pcdata->discipline[FORTITUDE] > 0)
+    {
+        send_to_char(":\n\r",ch);
+        send_to_char("\n\r",ch);
+    }
+    if (ch->pcdata->discipline[] > 1)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 2)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 3)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 4)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 5)
+        send_to_char("{R*{DUncoded{R*{x\n\r",ch);
+
+    if (ch->pcdata->discipline[MORTIS] > 0)
+    {
+        send_to_char(":\n\r",ch);
+        send_to_char("\n\r",ch);
+    }
+    if (ch->pcdata->discipline[] > 1)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 2)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 3)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 4)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 5)
+        send_to_char("{R*{DUncoded{R*{x\n\r",ch);
+
+    if (ch->pcdata->discipline[OBFUSCATE] > 0)
+    {
+        send_to_char(":\n\r",ch);
+        send_to_char("\n\r",ch);
+    }
+    if (ch->pcdata->discipline[] > 1)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 2)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 3)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 4)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 5)
+        send_to_char("{R*{DUncoded{R*{x\n\r",ch);
+
+    if (ch->pcdata->discipline[OBTENEBRATION] > 0)
+    {
+        send_to_char(":\n\r",ch);
+        send_to_char("\n\r",ch);
+    }
+    if (ch->pcdata->discipline[] > 1)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 2)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 3)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 4)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 5)
+        send_to_char("{R*{DUncoded{R*{x\n\r",ch);
+
+    if (ch->pcdata->discipline[POTENCE] > 0)
+    {
+        send_to_char(":\n\r",ch);
+        send_to_char("\n\r",ch);
+    }
+    if (ch->pcdata->discipline[] > 1)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 2)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 3)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 4)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 5)
+        send_to_char("{R*{DUncoded{R*{x\n\r",ch);
+
+    if (ch->pcdata->discipline[PRESENCE] > 0)
+    {
+        send_to_char(":\n\r",ch);
+        send_to_char("\n\r",ch);
+    }
+    if (ch->pcdata->discipline[] > 1)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 2)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 3)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 4)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 5)
+        send_to_char("{R*{DUncoded{R*{x\n\r",ch);
+
+    if (ch->pcdata->discipline[PROTEAN] > 0)
+    {
+        send_to_char(":\n\r",ch);
+        send_to_char("\n\r",ch);
+    }
+    if (ch->pcdata->discipline[] > 1)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 2)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 3)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 4)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 5)
+        send_to_char("{R*{DUncoded{R*{x\n\r",ch);
+
+    if (ch->pcdata->discipline[QUIETUS] > 0)
+    {
+        send_to_char(":\n\r",ch);
+        send_to_char("\n\r",ch);
+    }
+    if (ch->pcdata->discipline[] > 1)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 2)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 3)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 4)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 5)
+        send_to_char("{R*{DUncoded{R*{x\n\r",ch);
+
+    if (ch->pcdata->discipline[SERPENTIS] > 0)
+    {
+        send_to_char(":\n\r",ch);
+        send_to_char("\n\r",ch);
+    }
+    if (ch->pcdata->discipline[] > 1)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 2)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 3)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 4)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 5)
+        send_to_char("{R*{DUncoded{R*{x\n\r",ch);
+
+    if (ch->pcdata->discipline[THAUMATURGY] > 0)
+    {
+        send_to_char(":\n\r",ch);
+        send_to_char("\n\r",ch);
+    }
+    if (ch->pcdata->discipline[] > 1)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 2)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 3)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 4)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 5)
+        send_to_char("{R*{DUncoded{R*{x\n\r",ch);
+
+    if (ch->pcdata->discipline[VICISSITUDE] > 0)
+    {
+        send_to_char(":\n\r",ch);
+        send_to_char("\n\r",ch);
+    }
+    if (ch->pcdata->discipline[] > 1)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 2)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 3)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 4)
+        send_to_char("\n\r",ch);
+    if (ch->pcdata->discipline[] > 5)
+        send_to_char("{R*{DUncoded{R*{x\n\r",ch);
     return;
 }
 

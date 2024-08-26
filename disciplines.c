@@ -178,41 +178,41 @@ void do_disclist(CHAR_DATA *ch, char *argument)
 
     if (ch->pcdata->discipline[OBFUSCATE] > 0)
     {
-        send_to_char(":\n\r",ch);
-        send_to_char("\n\r",ch);
+        send_to_char("Obfuscate:\n\r",ch);
+        send_to_char("Veil of Shadows\n\r",ch);
     }
-    if (ch->pcdata->discipline[] > 1)
-        send_to_char("\n\r",ch);
-    if (ch->pcdata->discipline[] > 2)
-        send_to_char("\n\r",ch);
-    if (ch->pcdata->discipline[] > 3)
-        send_to_char("\n\r",ch);
-    if (ch->pcdata->discipline[] > 4)
-        send_to_char("\n\r",ch);
-    if (ch->pcdata->discipline[] > 5)
+    if (ch->pcdata->discipline[OBFUSCATE] > 1)
+        send_to_char("Unseen Presence\n\r",ch);
+    if (ch->pcdata->discipline[OBFUSCATE] > 2)
+        send_to_char("Mask of a Thousand Faces\n\r",ch);
+    if (ch->pcdata->discipline[OBFUSCATE] > 3)
+        send_to_char("Vanish from the Mind's Eye\n\r",ch);
+    if (ch->pcdata->discipline[OBFUSCATE] > 4)
+        send_to_char("Cloak the Gathering\n\r",ch);
+    if (ch->pcdata->discipline[OBFUSCATE] > 5)
         send_to_char("{R*{DUncoded{R*{x\n\r",ch);
 
     if (ch->pcdata->discipline[OBTENEBRATION] > 0)
     {
-        send_to_char(":\n\r",ch);
-        send_to_char("\n\r",ch);
+        send_to_char("Obtenebration:\n\r",ch);
+        send_to_char("Shadow Play\n\r",ch);
     }
-    if (ch->pcdata->discipline[] > 1)
-        send_to_char("\n\r",ch);
-    if (ch->pcdata->discipline[] > 2)
-        send_to_char("\n\r",ch);
-    if (ch->pcdata->discipline[] > 3)
-        send_to_char("\n\r",ch);
-    if (ch->pcdata->discipline[] > 4)
-        send_to_char("\n\r",ch);
-    if (ch->pcdata->discipline[] > 5)
-        send_to_char("{R*{DUncoded{R*{x\n\r",ch);
+    if (ch->pcdata->discipline[OBTENEBRATION] > 1)
+        send_to_char("Shroud of Night\n\r",ch);
+    if (ch->pcdata->discipline[OBTENEBRATION] > 2)
+        send_to_char("Arms of the Abyss\n\r",ch);
+    if (ch->pcdata->discipline[OBTENEBRATION] > 3)
+        send_to_char("Nightshades\n\r",ch);
+    if (ch->pcdata->discipline[OBTENEBRATION] > 4)
+        send_to_char("Shadow Form\n\r",ch);
+    if (ch->pcdata->discipline[OBTENEBRATION] > 5)
+        send_to_char("Shadow Walk\n\r",ch);
 
     if (ch->pcdata->discipline[POTENCE] > 0)
     {
-        send_to_char(":\n\r",ch);
-        send_to_char("\n\r",ch);
-    }
+        send_to_char("Potence:\n\r",ch);
+        send_to_char("Potence\n\r",ch);
+    }/*
     if (ch->pcdata->discipline[] > 1)
         send_to_char("\n\r",ch);
     if (ch->pcdata->discipline[] > 2)
@@ -223,7 +223,7 @@ void do_disclist(CHAR_DATA *ch, char *argument)
         send_to_char("\n\r",ch);
     if (ch->pcdata->discipline[] > 5)
         send_to_char("{R*{DUncoded{R*{x\n\r",ch);
-
+*/
     if (ch->pcdata->discipline[PRESENCE] > 0)
     {
         send_to_char(":\n\r",ch);

@@ -114,41 +114,41 @@ void do_disclist(CHAR_DATA *ch, char *argument)
 
     if (ch->pcdata->discipline[DEMENTATION] > 0)
     {
-        send_to_char(":\n\r",ch);
+        send_to_char("Dementation:\n\r",ch);
         send_to_char("\n\r",ch);
     }
-    if (ch->pcdata->discipline[] > 1)
+    if (ch->pcdata->discipline[DEMENTATION] > 1)
+        send_to_char("{R*{DUncoded{R*{x\n\r",ch);/*
+    if (ch->pcdata->discipline[DEMENTATION] > 2)
         send_to_char("\n\r",ch);
-    if (ch->pcdata->discipline[] > 2)
+    if (ch->pcdata->discipline[DEMENTATION] > 3)
         send_to_char("\n\r",ch);
-    if (ch->pcdata->discipline[] > 3)
+    if (ch->pcdata->discipline[DEMENTATION] > 4)
         send_to_char("\n\r",ch);
-    if (ch->pcdata->discipline[] > 4)
-        send_to_char("\n\r",ch);
-    if (ch->pcdata->discipline[] > 5)
+    if (ch->pcdata->discipline[DEMENTATION] > 5)
         send_to_char("{R*{DUncoded{R*{x\n\r",ch);
-
+*/
     if (ch->pcdata->discipline[DOMINATE] > 0)
     {
-        send_to_char(":\n\r",ch);
-        send_to_char("\n\r",ch);
+        send_to_char("Dominate:\n\r",ch);
+        send_to_char("Command the Weary Mind\n\r",ch);
     }
     if (ch->pcdata->discipline[] > 1)
-        send_to_char("\n\r",ch);
+        send_to_char("Mesmerize\n\r",ch);
     if (ch->pcdata->discipline[] > 2)
-        send_to_char("\n\r",ch);
+        send_to_char("The Forgetful Mind\n\r",ch);
     if (ch->pcdata->discipline[] > 3)
-        send_to_char("\n\r",ch);
+        send_to_char("Conditioning\n\r",ch);
     if (ch->pcdata->discipline[] > 4)
-        send_to_char("\n\r",ch);
+        send_to_char("Possession\n\r",ch);
     if (ch->pcdata->discipline[] > 5)
         send_to_char("{R*{DUncoded{R*{x\n\r",ch);
 
     if (ch->pcdata->discipline[FORTITUDE] > 0)
     {
-        send_to_char(":\n\r",ch);
-        send_to_char("\n\r",ch);
-    }
+        send_to_char("Fortitude:\n\r",ch);
+        send_to_char("Fortitude\n\r",ch);
+    }/*
     if (ch->pcdata->discipline[] > 1)
         send_to_char("\n\r",ch);
     if (ch->pcdata->discipline[] > 2)
@@ -159,21 +159,21 @@ void do_disclist(CHAR_DATA *ch, char *argument)
         send_to_char("\n\r",ch);
     if (ch->pcdata->discipline[] > 5)
         send_to_char("{R*{DUncoded{R*{x\n\r",ch);
-
+*/
     if (ch->pcdata->discipline[MORTIS] > 0)
     {
-        send_to_char(":\n\r",ch);
-        send_to_char("\n\r",ch);
+        send_to_char("Mortis:\n\r",ch);
+        send_to_char("Blight\n\r",ch);
     }
-    if (ch->pcdata->discipline[] > 1)
-        send_to_char("\n\r",ch);
-    if (ch->pcdata->discipline[] > 2)
-        send_to_char("\n\r",ch);
-    if (ch->pcdata->discipline[] > 3)
-        send_to_char("\n\r",ch);
-    if (ch->pcdata->discipline[] > 4)
-        send_to_char("\n\r",ch);
-    if (ch->pcdata->discipline[] > 5)
+    if (ch->pcdata->discipline[MORTIS] > 1)
+        send_to_char("Homunculus Servant\n\r",ch);
+    if (ch->pcdata->discipline[MORTIS] > 2)
+        send_to_char("Awaken\n\r",ch);
+    if (ch->pcdata->discipline[MORTIS] > 3)
+        send_to_char("Animate Dead\n\r",ch);
+    if (ch->pcdata->discipline[MORTIS] > 4)
+        send_to_char("Black Death\n\r",ch);
+    if (ch->pcdata->discipline[MORTIS] > 5)
         send_to_char("{R*{DUncoded{R*{x\n\r",ch);
 
     if (ch->pcdata->discipline[OBFUSCATE] > 0)

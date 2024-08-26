@@ -34,7 +34,7 @@ void do_disclist(CHAR_DATA *ch, char *argument)
 
     if (ch->pcdata->discipline[ANIMALISM] > 0)
     {
-        send_to_char("{D[{R         Animalism         {D]{x\n\r",ch);
+        send_to_char("{D        [{R         Animalism         {D]{x\n\r",ch);
         send_to_char("Sweet Whispers\n\r",ch);
     }
     if (ch->pcdata->discipline[ANIMALISM] > 1)
@@ -50,7 +50,7 @@ void do_disclist(CHAR_DATA *ch, char *argument)
 
     if (ch->pcdata->discipline[AUSPEX] > 0)
     {
-        send_to_char("Auspex:\n\r",ch);
+        send_to_char("{D        [{R          Auspex           {D]{x\n\r",ch);
         send_to_char("Reveal\n\r",ch);
     }
     if (ch->pcdata->discipline[AUSPEX] > 1)
@@ -66,7 +66,7 @@ void do_disclist(CHAR_DATA *ch, char *argument)
 
     if (ch->pcdata->discipline[CELERITY] > 0)
     {
-        send_to_char("Celerity:\n\r",ch);
+        send_to_char("{D        [{R         Celerity          {D]{x\n\r",ch);
         send_to_char("Celerity\n\r",ch);
     }
 /*    if (ch->pcdata->discipline[] > 1)
@@ -82,7 +82,7 @@ void do_disclist(CHAR_DATA *ch, char *argument)
 
     if (ch->pcdata->discipline[CHIMERSTRY] > 0)
     {
-        send_to_char("Chimerstry:\n\r",ch);
+        send_to_char("{D[        {R        Chimerstry         {D]{x\n\r",ch);
         send_to_char("Ignis Fatuus\n\r",ch);
     }
     if (ch->pcdata->discipline[CHIMERSTRY] > 1)
@@ -98,7 +98,7 @@ void do_disclist(CHAR_DATA *ch, char *argument)
 
     if (ch->pcdata->discipline[DEMENTATION] > 0)
     {
-        send_to_char("Dementation:\n\r",ch);
+        send_to_char("{D        [{R        Dementation        {D]{x\n\r",ch);
         send_to_char("\n\r",ch);
     }
     if (ch->pcdata->discipline[DEMENTATION] > 1)
@@ -114,7 +114,7 @@ void do_disclist(CHAR_DATA *ch, char *argument)
 */
     if (ch->pcdata->discipline[DOMINATE] > 0)
     {
-        send_to_char("Dominate:\n\r",ch);
+        send_to_char("{D        [{R         Dominate          {D]{x\n\r",ch);
         send_to_char("Command the Weary Mind\n\r",ch);
     }
     if (ch->pcdata->discipline[DOMINATE] > 1)
@@ -130,7 +130,7 @@ void do_disclist(CHAR_DATA *ch, char *argument)
 
     if (ch->pcdata->discipline[FORTITUDE] > 0)
     {
-        send_to_char("Fortitude:\n\r",ch);
+        send_to_char("{D        [{R         Fortitude         {D]{x\n\r",ch);
         send_to_char("Fortitude\n\r",ch);
     }/*
     if (ch->pcdata->discipline[] > 1)
@@ -146,7 +146,7 @@ void do_disclist(CHAR_DATA *ch, char *argument)
 */
     if (ch->pcdata->discipline[MORTIS] > 0)
     {
-        send_to_char("Mortis:\n\r",ch);
+        send_to_char("{D        [{R          Mortis           {D]{x\n\r",ch);
         send_to_char("Blight\n\r",ch);
     }
     if (ch->pcdata->discipline[MORTIS] > 1)
@@ -162,7 +162,7 @@ void do_disclist(CHAR_DATA *ch, char *argument)
 
     if (ch->pcdata->discipline[OBFUSCATE] > 0)
     {
-        send_to_char("Obfuscate:\n\r",ch);
+        send_to_char("{D        [{R         Obfuscate         {D]{x\n\r",ch);
         send_to_char("Veil of Shadows\n\r",ch);
     }
     if (ch->pcdata->discipline[OBFUSCATE] > 1)
@@ -178,7 +178,7 @@ void do_disclist(CHAR_DATA *ch, char *argument)
 
     if (ch->pcdata->discipline[OBTENEBRATION] > 0)
     {
-        send_to_char("Obtenebration:\n\r",ch);
+        send_to_char("{D        [{R       Obtenebration       {D]{x\n\r",ch);
         send_to_char("Shadow Play\n\r",ch);
     }
     if (ch->pcdata->discipline[OBTENEBRATION] > 1)
@@ -194,7 +194,7 @@ void do_disclist(CHAR_DATA *ch, char *argument)
 
     if (ch->pcdata->discipline[POTENCE] > 0)
     {
-        send_to_char("Potence:\n\r",ch);
+        send_to_char("{D        [{R          Potence          {D]{x\n\r",ch);
         send_to_char("Potence\n\r",ch);
     }/*
     if (ch->pcdata->discipline[] > 1)
@@ -210,7 +210,7 @@ void do_disclist(CHAR_DATA *ch, char *argument)
 */
     if (ch->pcdata->discipline[PRESENCE] > 0)
     {
-        send_to_char("Presence:\n\r",ch);
+        send_to_char("{D        [{R         Presence          {D]{x\n\r",ch);
         send_to_char("Awe\n\r",ch);
     }
     if (ch->pcdata->discipline[PRESENCE] > 1)
@@ -226,7 +226,7 @@ void do_disclist(CHAR_DATA *ch, char *argument)
 
     if (ch->pcdata->discipline[PROTEAN] > 0)
     {
-        send_to_char("PROTEAN:\n\r",ch);
+        send_to_char("{D        [{R          Protean          {D]{x\n\r",ch);
         send_to_char("Gleam of the Red Eye\n\r",ch);
     }
     if (ch->pcdata->discipline[PROTEAN] > 1)
@@ -242,7 +242,7 @@ void do_disclist(CHAR_DATA *ch, char *argument)
 
     if (ch->pcdata->discipline[QUIETUS] > 0)
     {
-        send_to_char("Quietus:\n\r",ch);
+        send_to_char("{D        [{R          Quietus          {D]{x\n\r",ch);
         send_to_char("Aura of Silence\n\r",ch);
     }
     if (ch->pcdata->discipline[QUIETUS] > 1)
@@ -258,7 +258,7 @@ void do_disclist(CHAR_DATA *ch, char *argument)
 
     if (ch->pcdata->discipline[SERPENTIS] > 0)
     {
-        send_to_char("Serpentis:\n\r",ch);
+        send_to_char("{D        [{R         Serpentis         {D]{x\n\r",ch);
         send_to_char("{R*{DUncoded{R*{x\n\r",ch);
     }/*
     if (ch->pcdata->discipline[] > 1)
@@ -274,7 +274,7 @@ void do_disclist(CHAR_DATA *ch, char *argument)
 */
     if (ch->pcdata->discipline[THAUMATURGY] > 0)
     {
-        send_to_char("Thaumaturgy 'Path of Blood':\n\r",ch);
+        send_to_char("{D        [{RThaumaturgy 'Path of Blood'{D]{x\n\r",ch);
         send_to_char("Taste of Vitae\n\r",ch);
     }
     if (ch->pcdata->discipline[THAUMATURGY] > 1)
@@ -290,7 +290,7 @@ void do_disclist(CHAR_DATA *ch, char *argument)
 
     if (ch->pcdata->discipline[VICISSITUDE] > 0)
     {
-        send_to_char("Vicissitude:\n\r",ch);
+        send_to_char("{D        [{R        Vicissitude        {D]{x\n\r",ch);
         send_to_char("Malleable Visage\n\r",ch);
     }
     if (ch->pcdata->discipline[VICISSITUDE] > 1)

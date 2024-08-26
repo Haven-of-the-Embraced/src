@@ -85,7 +85,15 @@ bool paradox_check(CHAR_DATA *ch, bool vulgar)
 
 void do_rotelist(CHAR_DATA *ch, char *argument)
 {
+    char buf[MAX_STRING_LENGTH];
 
+    if(IS_NPC(ch)) return;
+
+    if(ch->avatar == 0)
+    {
+        send_to_char("You are not one of the Enlightened!\n\r",ch);
+        return;
+    }
     return;
 }
 

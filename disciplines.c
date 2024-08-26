@@ -226,57 +226,57 @@ void do_disclist(CHAR_DATA *ch, char *argument)
 */
     if (ch->pcdata->discipline[PRESENCE] > 0)
     {
-        send_to_char(":\n\r",ch);
-        send_to_char("\n\r",ch);
+        send_to_char("Presence:\n\r",ch);
+        send_to_char("Awe\n\r",ch);
     }
-    if (ch->pcdata->discipline[] > 1)
-        send_to_char("\n\r",ch);
-    if (ch->pcdata->discipline[] > 2)
-        send_to_char("\n\r",ch);
-    if (ch->pcdata->discipline[] > 3)
-        send_to_char("\n\r",ch);
-    if (ch->pcdata->discipline[] > 4)
-        send_to_char("\n\r",ch);
-    if (ch->pcdata->discipline[] > 5)
-        send_to_char("{R*{DUncoded{R*{x\n\r",ch);
+    if (ch->pcdata->discipline[PRESENCE] > 1)
+        send_to_char("Dread Gaze\n\r",ch);
+    if (ch->pcdata->discipline[PRESENCE] > 2)
+        send_to_char("Entrancement\n\r",ch);
+    if (ch->pcdata->discipline[PRESENCE] > 3)
+        send_to_char("Summon\n\r",ch);
+    if (ch->pcdata->discipline[PRESENCE] > 4)
+        send_to_char("Majesty\n\r",ch);
+    if (ch->pcdata->discipline[PRESENCE] > 5)
+        send_to_char("Spark of Rage\n\r",ch);
 
     if (ch->pcdata->discipline[PROTEAN] > 0)
     {
-        send_to_char(":\n\r",ch);
-        send_to_char("\n\r",ch);
+        send_to_char("PROTEAN:\n\r",ch);
+        send_to_char("Gleam of the Red Eye\n\r",ch);
     }
-    if (ch->pcdata->discipline[] > 1)
-        send_to_char("\n\r",ch);
-    if (ch->pcdata->discipline[] > 2)
-        send_to_char("\n\r",ch);
-    if (ch->pcdata->discipline[] > 3)
-        send_to_char("\n\r",ch);
-    if (ch->pcdata->discipline[] > 4)
-        send_to_char("\n\r",ch);
-    if (ch->pcdata->discipline[] > 5)
+    if (ch->pcdata->discipline[PROTEAN] > 1)
+        send_to_char("Feral Claws\n\r",ch);
+    if (ch->pcdata->discipline[PROTEAN] > 2)
+        send_to_char("Earthmeld\n\r",ch);
+    if (ch->pcdata->discipline[PROTEAN] > 3)
+        send_to_char("Shift Form\n\r",ch);
+    if (ch->pcdata->discipline[PROTEAN] > 4)
+        send_to_char("Mistform\n\r",ch);
+    if (ch->pcdata->discipline[PROTEAN] > 5)
         send_to_char("{R*{DUncoded{R*{x\n\r",ch);
 
     if (ch->pcdata->discipline[QUIETUS] > 0)
     {
-        send_to_char(":\n\r",ch);
-        send_to_char("\n\r",ch);
+        send_to_char("Quietus:\n\r",ch);
+        send_to_char("Aura of Silence\n\r",ch);
     }
-    if (ch->pcdata->discipline[] > 1)
-        send_to_char("\n\r",ch);
-    if (ch->pcdata->discipline[] > 2)
-        send_to_char("\n\r",ch);
-    if (ch->pcdata->discipline[] > 3)
-        send_to_char("\n\r",ch);
-    if (ch->pcdata->discipline[] > 4)
-        send_to_char("\n\r",ch);
-    if (ch->pcdata->discipline[] > 5)
+    if (ch->pcdata->discipline[QUIETUS] > 1)
+        send_to_char("Scorpion's Touch\n\r",ch);
+    if (ch->pcdata->discipline[QUIETUS] > 2)
+        send_to_char("Dadgon's Call\n\r",ch);
+    if (ch->pcdata->discipline[QUIETUS] > 3)
+        send_to_char("Baal's Caress\n\r",ch);
+    if (ch->pcdata->discipline[QUIETUS] > 4)
+        send_to_char("Taste of Death\n\r",ch);
+    if (ch->pcdata->discipline[QUIETUS] > 5)
         send_to_char("{R*{DUncoded{R*{x\n\r",ch);
 
     if (ch->pcdata->discipline[SERPENTIS] > 0)
     {
-        send_to_char(":\n\r",ch);
-        send_to_char("\n\r",ch);
-    }
+        send_to_char("Serpentis:\n\r",ch);
+        send_to_char("{R*{DUncoded{R*{x\n\r",ch);
+    }/*
     if (ch->pcdata->discipline[] > 1)
         send_to_char("\n\r",ch);
     if (ch->pcdata->discipline[] > 2)
@@ -287,7 +287,7 @@ void do_disclist(CHAR_DATA *ch, char *argument)
         send_to_char("\n\r",ch);
     if (ch->pcdata->discipline[] > 5)
         send_to_char("{R*{DUncoded{R*{x\n\r",ch);
-
+*/
     if (ch->pcdata->discipline[THAUMATURGY] > 0)
     {
         send_to_char(":\n\r",ch);

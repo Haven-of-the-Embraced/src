@@ -290,35 +290,35 @@ void do_disclist(CHAR_DATA *ch, char *argument)
 */
     if (ch->pcdata->discipline[THAUMATURGY] > 0)
     {
-        send_to_char(":\n\r",ch);
-        send_to_char("\n\r",ch);
+        send_to_char("Thaumaturgy 'Path of Blood':\n\r",ch);
+        send_to_char("Taste of Vitae\n\r",ch);
     }
-    if (ch->pcdata->discipline[] > 1)
-        send_to_char("\n\r",ch);
-    if (ch->pcdata->discipline[] > 2)
-        send_to_char("\n\r",ch);
-    if (ch->pcdata->discipline[] > 3)
-        send_to_char("\n\r",ch);
-    if (ch->pcdata->discipline[] > 4)
-        send_to_char("\n\r",ch);
-    if (ch->pcdata->discipline[] > 5)
+    if (ch->pcdata->discipline[THAUMATURGY] > 1)
+        send_to_char("Blood Rage\n\r",ch);
+    if (ch->pcdata->discipline[THAUMATURGY] > 2)
+        send_to_char("Blood of Potency\n\r",ch);
+    if (ch->pcdata->discipline[THAUMATURGY] > 3)
+        send_to_char("Theft of Vitae\n\r",ch);
+    if (ch->pcdata->discipline[THAUMATURGY] > 4)
+        send_to_char("Cauldron of Blood\n\r",ch);
+    if (ch->pcdata->discipline[THAUMATURGY] > 5)
         send_to_char("{R*{DUncoded{R*{x\n\r",ch);
 
     if (ch->pcdata->discipline[VICISSITUDE] > 0)
     {
-        send_to_char(":\n\r",ch);
-        send_to_char("\n\r",ch);
+        send_to_char("Vicissitude:\n\r",ch);
+        send_to_char("Malleable Visage\n\r",ch);
     }
-    if (ch->pcdata->discipline[] > 1)
-        send_to_char("\n\r",ch);
-    if (ch->pcdata->discipline[] > 2)
-        send_to_char("\n\r",ch);
-    if (ch->pcdata->discipline[] > 3)
-        send_to_char("\n\r",ch);
-    if (ch->pcdata->discipline[] > 4)
-        send_to_char("\n\r",ch);
-    if (ch->pcdata->discipline[] > 5)
-        send_to_char("{R*{DUncoded{R*{x\n\r",ch);
+    if (ch->pcdata->discipline[VICISSITUDE] > 1)
+        send_to_char("Transmogrify the Mortal Clay\n\r",ch);
+    if (ch->pcdata->discipline[VICISSITUDE] > 2)
+        send_to_char("Rend the Osseous Frame\n\r",ch);
+    if (ch->pcdata->discipline[VICISSITUDE] > 3)
+        send_to_char("Awaken the Zulo\n\r",ch);
+    if (ch->pcdata->discipline[VICISSITUDE] > 4)
+        send_to_char("Ascendancy of the Sanguine Humor\n\r",ch);
+    if (ch->pcdata->discipline[VICISSITUDE] > 5)
+        send_to_char("Chiropteran Marauder\n\r",ch);
     return;
 }
 

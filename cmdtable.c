@@ -110,6 +110,7 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "gogarou",        do_gogarou }, // DOES NOT MATCH.
     { "mage",       do_mage },
     { "embrace",        do_embrace },
+    { "disclist",        do_disclist },
     { "claws",      do_claws },
     { "gleam",      do_gleam },
     { "sense",      do_sense },

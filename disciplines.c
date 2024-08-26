@@ -32,25 +32,9 @@ void do_disclist(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if (ch->pcdata->discipline[] > 0)
-    {
-        send_to_char(":\n\r",ch);
-        send_to_char("\n\r",ch);
-    }
-    if (ch->pcdata->discipline[] > 1)
-        send_to_char("\n\r",ch);
-    if (ch->pcdata->discipline[] > 2)
-        send_to_char("\n\r",ch);
-    if (ch->pcdata->discipline[] > 3)
-        send_to_char("\n\r",ch);
-    if (ch->pcdata->discipline[] > 4)
-        send_to_char("\n\r",ch);
-    if (ch->pcdata->discipline[] > 5)
-        send_to_char("{R*{DUncoded{R*{x\n\r",ch);
-
     if (ch->pcdata->discipline[ANIMALISM] > 0)
     {
-        send_to_char("Animalism:\n\r",ch);
+        send_to_char("{D[{R         Animalism         {D]{x\n\r",ch);
         send_to_char("Sweet Whispers\n\r",ch);
     }
     if (ch->pcdata->discipline[ANIMALISM] > 1)
@@ -93,7 +77,7 @@ void do_disclist(CHAR_DATA *ch, char *argument)
         send_to_char("\n\r",ch);
     if (ch->pcdata->discipline[] > 4)
         send_to_char("\n\r",ch);*/
-    if (ch->pcdata->discipline[] > 5)
+    if (ch->pcdata->discipline[CELERITY] > 5)
         send_to_char("Dash{x\n\r",ch);
 
     if (ch->pcdata->discipline[CHIMERSTRY] > 0)
@@ -133,15 +117,15 @@ void do_disclist(CHAR_DATA *ch, char *argument)
         send_to_char("Dominate:\n\r",ch);
         send_to_char("Command the Weary Mind\n\r",ch);
     }
-    if (ch->pcdata->discipline[] > 1)
+    if (ch->pcdata->discipline[DOMINATE] > 1)
         send_to_char("Mesmerize\n\r",ch);
-    if (ch->pcdata->discipline[] > 2)
+    if (ch->pcdata->discipline[DOMINATE] > 2)
         send_to_char("The Forgetful Mind\n\r",ch);
-    if (ch->pcdata->discipline[] > 3)
+    if (ch->pcdata->discipline[DOMINATE] > 3)
         send_to_char("Conditioning\n\r",ch);
-    if (ch->pcdata->discipline[] > 4)
+    if (ch->pcdata->discipline[DOMINATE] > 4)
         send_to_char("Possession\n\r",ch);
-    if (ch->pcdata->discipline[] > 5)
+    if (ch->pcdata->discipline[DOMINATE] > 5)
         send_to_char("{R*{DUncoded{R*{x\n\r",ch);
 
     if (ch->pcdata->discipline[FORTITUDE] > 0)

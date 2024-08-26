@@ -66,50 +66,50 @@ void do_disclist(CHAR_DATA *ch, char *argument)
 
     if (ch->pcdata->discipline[AUSPEX] > 0)
     {
-        send_to_char(":\n\r",ch);
-        send_to_char("\n\r",ch);
+        send_to_char("Auspex:\n\r",ch);
+        send_to_char("Reveal\n\r",ch);
     }
     if (ch->pcdata->discipline[AUSPEX] > 1)
-        send_to_char("\n\r",ch);
+        send_to_char("Aura Perception\n\r",ch);
     if (ch->pcdata->discipline[AUSPEX] > 2)
-        send_to_char("\n\r",ch);
+        send_to_char("Spirit's Touch\n\r",ch);
     if (ch->pcdata->discipline[AUSPEX] > 3)
-        send_to_char("\n\r",ch);
+        send_to_char("Telepathy\n\r",ch);
     if (ch->pcdata->discipline[AUSPEX] > 4)
-        send_to_char("\n\r",ch);
+       send_to_char("Psychic Projection\n\r",ch);
     if (ch->pcdata->discipline[AUSPEX] > 5)
         send_to_char("{R*{DUncoded{R*{x\n\r",ch);
 
     if (ch->pcdata->discipline[CELERITY] > 0)
     {
-        send_to_char(":\n\r",ch);
-        send_to_char("\n\r",ch);
+        send_to_char("Celerity:\n\r",ch);
+        send_to_char("Celerity\n\r",ch);
     }
-    if (ch->pcdata->discipline[] > 1)
+/*    if (ch->pcdata->discipline[] > 1)
         send_to_char("\n\r",ch);
     if (ch->pcdata->discipline[] > 2)
         send_to_char("\n\r",ch);
     if (ch->pcdata->discipline[] > 3)
         send_to_char("\n\r",ch);
     if (ch->pcdata->discipline[] > 4)
-        send_to_char("\n\r",ch);
+        send_to_char("\n\r",ch);*/
     if (ch->pcdata->discipline[] > 5)
-        send_to_char("{R*{DUncoded{R*{x\n\r",ch);
+        send_to_char("Dash{x\n\r",ch);
 
     if (ch->pcdata->discipline[CHIMERSTRY] > 0)
     {
-        send_to_char(":\n\r",ch);
-        send_to_char("\n\r",ch);
+        send_to_char("Chimerstry:\n\r",ch);
+        send_to_char("Ignis Fatuus\n\r",ch);
     }
-    if (ch->pcdata->discipline[] > 1)
-        send_to_char("\n\r",ch);
-    if (ch->pcdata->discipline[] > 2)
-        send_to_char("\n\r",ch);
-    if (ch->pcdata->discipline[] > 3)
-        send_to_char("\n\r",ch);
-    if (ch->pcdata->discipline[] > 4)
-        send_to_char("\n\r",ch);
-    if (ch->pcdata->discipline[] > 5)
+    if (ch->pcdata->discipline[CHIMERSTRY] > 1)
+        send_to_char("Fata Morgana\n\r",ch);
+    if (ch->pcdata->discipline[CHIMERSTRY] > 2)
+        send_to_char("Apparition\n\r",ch);
+    if (ch->pcdata->discipline[CHIMERSTRY] > 3)
+        send_to_char("Permanency\n\r",ch);
+    if (ch->pcdata->discipline[CHIMERSTRY] > 4)
+        send_to_char("Horrid Reality\n\r",ch);
+    if (ch->pcdata->discipline[CHIMERSTRY] > 5)
         send_to_char("{R*{DUncoded{R*{x\n\r",ch);
 
     if (ch->pcdata->discipline[DEMENTATION] > 0)

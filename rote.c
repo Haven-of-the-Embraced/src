@@ -86,6 +86,7 @@ bool paradox_check(CHAR_DATA *ch, bool vulgar)
 void do_rotelist(CHAR_DATA *ch, char *argument)
 {
     char buf[MAX_STRING_LENGTH];
+    int rote;
 
     if(IS_NPC(ch)) return;
 
@@ -94,6 +95,26 @@ void do_rotelist(CHAR_DATA *ch, char *argument)
         send_to_char("You are not one of the Enlightened!\n\r",ch);
         return;
     }
+
+    for(rote = 1; rote < MAX_ROTE; rote++)
+    {
+        if(
+            rote_table[rote].correspondence <= ch->sphere[SPHERE_CORRESPONDENCE] &&
+            rote_table[rote].entropy <= ch->sphere[SPHERE_ENTROPY] &&
+            rote_table[rote].forces <= ch->sphere[SPHERE_FORCES] &&
+            rote_table[rote].life <= ch->sphere[SPHERE_LIFE] &&
+            rote_table[rote].matter <= ch->sphere[SPHERE_MATTER] &&
+            rote_table[rote].mind <= ch->sphere[SPHERE_MIND] &&
+            rote_table[rote].prime <= ch->sphere[SPHERE_PRIME] &&
+            rote_table[rote].spirit <= ch->sphere[SPHERE_SPIRIT] &&
+            rote_table[rote].time <= ch->sphere[SPHERE_TIME]
+        )
+        {
+            sprintf(buf, "%s\n\r", rote_table[rote].name);
+            send_to_char(buf,ch);
+        }
+    }
+
     return;
 }
 

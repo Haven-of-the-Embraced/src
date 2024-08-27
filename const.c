@@ -970,6 +970,9 @@ const struct cs_skill_type csskill_table [] =
     {"critical strike", &gsn_critical_strike, 70,
     {CSABIL_MEDICINE, 3, ABIL}, {CSABIL_MELEE, 2, ABIL} },
 
+    {"cue", &gsn_cue, 30,
+    {CSABIL_ANIMAL_KEN, 3, ABIL}, {CSABIL_NONE, 0, ABIL}},
+
     {"dirt kick", &gsn_dirt, 5,
     {CSABIL_BRAWL, 1, ABIL}, {CSABIL_NONE, 0, ABIL} },
 
@@ -1826,6 +1829,10 @@ Total (48) */
     { "classify", { 15, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_IGNORE, POS_STANDING,
     &gsn_classify, SLOT( 0),    0,  0,    "",         "",     ""    },
+
+    { "cue", { 30, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_IGNORE, POS_STANDING,
+    &gsn_cue, SLOT( 0),    0,  0,    "",         "",     ""    },
 
     { "fast healing",     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,     TAR_IGNORE,     POS_SLEEPING,

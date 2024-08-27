@@ -501,6 +501,133 @@ void do_soothe(CHAR_DATA *ch, char *argument)
   return;
 }
 
+void do_cue(CHAR_DATA *ch, char *argument)
+{  
+    char arg1[MAX_INPUT_LENGTH],arg2[MAX_INPUT_LENGTH];
+    char buf[MAX_STRING_LENGTH];
+    char *argument2 = argument;
+    CHAR_DATA *victim;
+    int success, diff;
+    AFFECT_DATA af;
+    success = diff = 0;
+
+    argument = one_argument( argument, arg1 );
+    argument2 = one_argument( argument, arg2 );
+
+    if (get_ability(ch, CSABIL_ANIMAL_KEN) < 3)
+    {
+      send_to_char("You have not studied the animal kingdom enough to try and cue this animal.\n\r", ch);
+      return;
+    }
+    if (ch->move < ch->level + 10)
+    {
+      send_to_char("You don't have the energy to cue this animal.\n\r", ch);
+      return;    
+    }
+    if (arg1[0] == '\0')
+    {
+        send_to_char("Cue whom?\n\r", ch);
+        return;
+    }
+    if (argument == '\0')
+    {
+        send_to_char("What do you wish to cue $N into doing?\n\r", ch);
+        return;
+    }
+    if (is_affected(ch, gsn_laryngitis))
+    {
+      send_to_char("You cannot speak clearly enough with a sore throat to cue this animal.\n\r", ch);
+      return;
+    }
+    if ( ( victim = get_char_room( ch, NULL, arg1 ) ) == NULL )
+    {
+        send_to_char( "No animal here by that name.\n\r", ch );
+        return;
+    }
+    if(!higher_beast(victim))
+    {
+        send_to_char("Only useable on intelligent natural beasts.\n\r",ch);
+        return;
+    }
+    if (!can_see(victim, ch))
+    {
+      send_to_char("Your target must be able to see you to be cued.\n\r", ch);
+      return;
+    }
+    if (!str_prefix(arg2,"delete"))
+    {
+        send_to_char("That will NOT be done.\n\r",ch);
+        return;
+    }
+    if (!str_prefix(arg2,"ic") || !str_prefix(arg2,"ooc") || !str_prefix(arg2,"say") || 
+        !str_prefix(arg2,"tell") || !str_prefix(arg2,"gtell") || !str_prefix(arg2,"clan") || 
+        !str_prefix(arg2,"music") || !str_prefix(arg2,"shout"))
+        {
+                send_to_char("Nope!\n\r",ch);
+                return;
+        }
+
+    diff = 6;
+    if (victim->level > ch->level + 5)
+        diff++;
+    if (victim->position == POS_FIGHTING || ch->position == POS_FIGHTING)
+        diff++;
+    if (IS_SET(victim->vuln_flags, VULN_MENTAL) || IS_SET(victim->vuln_flags, VULN_CHARM))
+        diff-= 2;
+    if (IS_SET(victim->res_flags, RES_MENTAL) || IS_SET(victim->vuln_flags, RES_CHARM))
+      diff++;
+    success = godice(get_attribute(ch, MANIPULATION) + ch->csabilities[CSABIL_ANIMAL_KEN], diff);
+    WAIT_STATE(ch, 6);
+
+    sprintf( buf, "%s faces you and says with a commanding gesture, '{W%s{x'.\n\r", ch->name, argument );
+    send_to_char(buf,victim);
+    sprintf( buf, "You face %s, and gesture commandingly as you say, '{W%s{x'.\n\r", victim->short_descr, argument );
+    send_to_char(buf,ch);
+    act( "$n faces $N's and with a commanding gesture cues them to %M.",  ch, NULL, victim, TO_NOTVICT );
+
+    if (is_affected(victim, gsn_deafened))
+    {
+      act("$N does not seem to have heard your cue at all.", ch, NULL, victim, TO_CHAR);
+      return;
+    }
+
+    if (success < 0)
+    {
+        act("$N ignores your cue completely.", ch, NULL, victim, TO_CHAR);
+        af.where     = TO_IMMUNE;
+        af.type      = gsn_mental_resilience;
+        af.level     = -1;
+        af.duration  = 3;
+        af.location  = APPLY_NONE;
+        af.modifier  = 0;
+        af.bitvector = IMM_MENTAL;
+        affect_to_char(victim, &af);
+
+        af.bitvector = IMM_CHARM;
+        affect_to_char(victim, &af)
+        return;
+    }
+
+    if (success == 0 || IS_SET(victim->act2, ACT2_ULTRA_MOB)
+    || IS_SET(victim->imm_flags, IMM_MENTAL) || IS_SET(victim->imm_flags, IMM_CHARM)
+    || (victim->level > ch->level + 10))
+    {
+        sprintf( buf, "%s ignores your cue willfully!\n\r", victim->short_descr );
+        send_to_char(buf,ch);
+        sprintf( buf, "Someone gestures at you irritatingly.\n\r", arg2 );
+        send_to_char(buf,victim);
+        return;
+    }
+
+    sprintf( buf, "You hear and see the cue '{c%s{x', and comply immediately.\n\r", argument );
+    send_to_char(buf,victim);
+    interpret( victim, argument );
+    ch->move -= ch->level + 10
+    gain_exp(ch,success * 2);
+
+    return;
+}
+
 void do_glower(CHAR_DATA *ch, char *argument)
 {
   AFFECT_DATA af;

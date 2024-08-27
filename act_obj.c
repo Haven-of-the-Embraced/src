@@ -2948,325 +2948,315 @@ void do_buy( CHAR_DATA *ch, char *argument )
 
     if ( argument[0] == '\0' )
     {
-    send_to_char( "Buy what?\n\r", ch );
-    return;
+        send_to_char( "Buy what?\n\r", ch );
+        return;
     }
 
     if ( IS_SET(ch->in_room->room_flags, ROOM_MOUNT_SHOP) )
     {
-    do_function(ch, &do_buy_mount, argument);
-    return;
+        do_function(ch, &do_buy_mount, argument);
+        return;
     }
 
     if ( IS_SET(ch->in_room->room_flags, ROOM_PET_SHOP) )
     {
-    char arg[MAX_INPUT_LENGTH];
-    char buf[MAX_STRING_LENGTH];
-    CHAR_DATA *pet;
-    ROOM_INDEX_DATA *pRoomIndexNext;
-    ROOM_INDEX_DATA *in_room;
+        char arg[MAX_INPUT_LENGTH];
+        char buf[MAX_STRING_LENGTH];
+        CHAR_DATA *pet;
+        ROOM_INDEX_DATA *pRoomIndexNext;
+        ROOM_INDEX_DATA *in_room;
 
-    smash_tilde(argument);
+        smash_tilde(argument);
 
-    if ( IS_NPC(ch) )
-        return;
+        if ( IS_NPC(ch) )
+            return;
 
-    argument = one_argument(argument,arg);
+        argument = one_argument(argument,arg);
 
-    /* hack to make new thalos pets work */
-    if (ch->in_room->vnum == 9621)
-        pRoomIndexNext = get_room_index(9706);
-    else
-        pRoomIndexNext = get_room_index( ch->in_room->vnum + 1 );
-    if ( pRoomIndexNext == NULL )
-    {
-        bug( "Do_buy: bad pet shop at vnum %d.", ch->in_room->vnum );
-        send_to_char( "Sorry, you can't buy that here.\n\r", ch );
-        return;
-    }
-
-    in_room     = ch->in_room;
-    ch->in_room = pRoomIndexNext;
-    pet         = get_char_room( ch, NULL, arg );
-    ch->in_room = in_room;
-
-    if ( pet == NULL || !IS_SET(pet->act, ACT_PET) )
-    {
-        send_to_char( "Sorry, you can't buy that here.\n\r", ch );
-        return;
-    }
-
-    if ( ch->pet != NULL )
-    {
-        send_to_char("You already own a pet.\n\r",ch);
-        return;
-    }
-
-    cost = pet->pIndexData->wealth;
-
-
-    if ( ch->level < pet->level )
-    {
-        send_to_char(
-        "You're not powerful enough to master this pet.\n\r", ch );
-        return;
-    }
-
-    if ( (ch->silver + 100 * ch->gold) < cost )
-    {
-        send_to_char( "You can't afford it.\n\r", ch );
-        return;
-    }
-
-    /* haggle */
-        success = godice(get_attribute(ch, MANIPULATION) + ch->csabilities[CSABIL_COMMERCE], 6);
-    if (success < 0)
-    {
-        send_to_char("The Shopkeeper seems insulted by your attempt to haggle down the price and ups the price!\n\r", ch);
-        cost += cost/10;
-    } else if (success > 0)
-    {
-        if (success > 10)
-            success = 10;
-        send_to_char("You haggle down the price.\n\r", ch);
-        //Haggle math! Gives rougghly maximum 20% discount for 10 successes.
-        cost = (100-(success*2))*cost/100;
-        check_improve(ch,gsn_haggle,TRUE,4);
-}
-
-    deduct_cost(ch,cost);
-    pet         = create_mobile( pet->pIndexData );
-    SET_BIT(pet->act, ACT_PET);
-    SET_BIT(pet->affected_by, AFF_CHARM);
-    pet->gold = 0;
-    pet->silver = 0;
-    pet->comm = COMM_NOTELL|COMM_NOSHOUT|COMM_NOCHANNELS;
-
-    argument = one_argument( argument, arg );
-    if ( arg[0] != '\0' )
-    {
-        sprintf( buf, "%s %s", pet->name, arg );
-        free_string( pet->name );
-        pet->name = str_dup( buf );
-    }
-
-    sprintf( buf, "%sA neck tag says 'I belong to %s'.\n\r",
-        pet->description, ch->name );
-    free_string( pet->description );
-    pet->description = str_dup( buf );
-
-    char_to_room( pet, ch->in_room );
-    add_follower( pet, ch );
-    pet->leader = ch;
-    ch->pet = pet;
-    send_to_char( "Enjoy your pet.\n\r", ch );
-    act( "$n bought $N as a pet.", ch, NULL, pet, TO_ROOM );
-    return;
-    }
-    else
-    {
-    CHAR_DATA *keeper;
-    OBJ_DATA *obj,*t_obj;
-    char arg[MAX_INPUT_LENGTH];
-    int number, count = 1;
-    int tax;
-    int hagglediff = 7;
-
-    if ( ( keeper = find_keeper( ch ) ) == NULL )
-        return;
-
-    if (is_affected(ch, gsn_sidesteptime))
-    {
-      send_to_char("You must return to the normal flow of Time to purchase items.\n\r", ch);
-      return;
-    }
-
-    if(is_affected(ch, gsn_change) || is_affected(ch, gsn_shift) || is_affected(ch, gsn_shadowform) || is_affected(ch, gsn_vicissitude_horrid) || is_affected(ch, gsn_vicissitude_bonecraft))
-    {
-        send_to_char("The shopkeeper is too terrified of you to sell anything.\n\r", ch);
-        return;
-    }
-
-    number = mult_argument(argument,arg);
-    obj  = get_obj_keeper( ch,keeper, arg );
-    cost = get_cost( keeper, obj, TRUE );
-
-    if (number < 1 || number > 99)
-    {
-        act("$n tells you 'Get real!",keeper,NULL,ch,TO_VICT);
-        return;
-    }
-
-    if ( cost <= 0 || !can_see_obj( ch, obj ) )
-    {
-        act( "$n tells you 'I don't sell that -- try 'list''.",
-        keeper, NULL, ch, TO_VICT );
-        ch->reply = keeper;
-        return;
-    }
-
-    if (!IS_OBJ_STAT(obj,ITEM_INVENTORY))
-    {
-        for (t_obj = obj->next_content;
-             count < number && t_obj != NULL;
-             t_obj = t_obj->next_content)
+        /* hack to make new thalos pets work */
+        if (ch->in_room->vnum == 9621)
+            pRoomIndexNext = get_room_index(9706);
+        else
+            pRoomIndexNext = get_room_index( ch->in_room->vnum + 1 );
+        if ( pRoomIndexNext == NULL )
         {
-            if (t_obj->pIndexData == obj->pIndexData
-            &&  !str_cmp(t_obj->short_descr,obj->short_descr))
-            count++;
-            else
-            break;
-        }
-
-        if (count < number)
-        {
-            act("$n tells you 'I don't have that many in stock.",
-            keeper,NULL,ch,TO_VICT);
-            ch->reply = keeper;
+            bug( "Do_buy: bad pet shop at vnum %d.", ch->in_room->vnum );
+            send_to_char( "Sorry, you can't buy that here.\n\r", ch );
             return;
         }
-    }
 
+        in_room     = ch->in_room;
+        ch->in_room = pRoomIndexNext;
+        pet         = get_char_room( ch, NULL, arg );
+        ch->in_room = in_room;
 
-    if ( obj->level > ch->level )
-    {
-        act( "$n tells you 'You can't use $p yet'.",
-        keeper, obj, ch, TO_VICT );
-        ch->reply = keeper;
-        return;
-    }
-
-    if (ch->carry_number +  number * get_obj_number(obj) > can_carry_n(ch))
-    {
-        send_to_char( "You can't carry that many items.\n\r", ch );
-        return;
-    }
-
-    if ( ch->carry_weight + number * get_obj_weight(obj) > can_carry_w(ch))
-    {
-        send_to_char( "You can't carry that much weight.\n\r", ch );
-        return;
-    }
-
-    if (IS_OBJ_STAT(obj,ITEM_BLESS) && (ch->race == race_lookup("vampire") || ch->race == race_lookup("methuselah")))
-    {
-        send_to_char( "You are repelled by that object!\n\r", ch );
-        return;
-    }
-
- /*Influence, another 1% off per dot of influence.*/
- if (!IS_NPC(ch) && !IS_OBJ_STAT(obj, ITEM_SELL_EXTRACT) && ch->pcdata->csbackgrounds[CSBACK_INFLUENCE] > 0)
-        cost = (100-ch->pcdata->csbackgrounds[CSBACK_INFLUENCE])*cost/100;
-
-
-     if (keeper->pIndexData->area->domain != NULL) {
-         tax = cost * keeper->pIndexData->area->domain->tax /100;
-         cost += tax;
-     }
-
-    if ( (ch->silver + ch->gold * 100) < cost * number )
-    {
-        if (number > 1)
-        act("$n tells you 'You can't afford to buy that many.",
-            keeper,obj,ch,TO_VICT);
-        else
-            act( "$n tells you 'You can't afford to buy $p'.",
-            keeper, obj, ch, TO_VICT );
-        ch->reply = keeper;
-        return;
-    }
-
-    if (has_affect_modifier(ch, gsn_awe, keeper->pIndexData->vnum) && !IS_OBJ_STAT(obj,ITEM_SELL_EXTRACT))
-    {
-      success = godice(get_attribute(ch, APPEARANCE) + ch->csabilities[CSABIL_ETIQUETTE], 6);
-      if (success > 0)
-      {
-        act("$N seems to have taken a liking to you, and lowers $S price.", ch, NULL, keeper, TO_CHAR);
-        cost -= cost / (100 - (success * 2));
-      }
-    }
-
-    /* tongues(gift) or haggle */
-    if (!IS_NPC(ch) && !IS_OBJ_STAT(obj,ITEM_SELL_EXTRACT) && is_affected(ch, gsn_gift_tongues))
-    {
-        success = godice(get_attribute(ch, MANIPULATION) + ch->csabilities[CSABIL_COMMERCE], 5);
-        if (success <= 0)
-            success = 1;
-        if (success > 10)
-            success = 10;
-        act("You hold a perfect conversation with $N, who gives you $S best deal.", ch, NULL, keeper, TO_CHAR);
-        act("$n haggles with $N.", ch, NULL, keeper, TO_ROOM);
-        //Gives best deal, maximum 40% discount for 10 successes.
-        cost = (100-(success*4))*cost/100;
-    }
-    }
-    else if (!IS_NPC(ch) && !IS_OBJ_STAT(obj,ITEM_SELL_EXTRACT) && ch->csabilities[CSABIL_COMMERCE] > 0 )
-    {
-        if (is_affected(ch, gsn_gift_speechoftheworld))
+        if ( pet == NULL || !IS_SET(pet->act, ACT_PET) )
         {
-            send_to_char("You attempt to haggle in the shopkeeper's native language.\n\r", ch);
-            hagglediff--;
-            if (get_affect_level(ch, gsn_gift_speechoftheworld) > 4)
-                hagglediff--;
+            send_to_char( "Sorry, you can't buy that here.\n\r", ch );
+            return;
         }
-        success = godice(get_attribute(ch, MANIPULATION) + ch->csabilities[CSABIL_COMMERCE], hagglediff);
+
+        if ( ch->pet != NULL )
+        {
+            send_to_char("You already own a pet.\n\r",ch);
+            return;
+        }
+
+        cost = pet->pIndexData->wealth;
+
+        if ( ch->level < pet->level )
+        {
+            send_to_char("You're not powerful enough to master this pet.\n\r", ch );
+            return;
+        }
+
+        if ( (ch->silver + 100 * ch->gold) < cost )
+        {
+            send_to_char( "You can't afford it.\n\r", ch );
+            return;
+        }
+
+        /* haggle */
+        success = godice(get_attribute(ch, MANIPULATION) + ch->csabilities[CSABIL_COMMERCE], 6);
         if (success < 0)
         {
-            act("$N seems insulted by your attempt to haggle down the price and ups the price!", ch, NULL, keeper, TO_CHAR);
+            send_to_char("The Shopkeeper seems insulted by your attempt to haggle down the price and ups the price!\n\r", ch);
             cost += cost/10;
-        }
+        } 
         else if (success > 0)
         {
             if (success > 10)
                 success = 10;
-            act("You haggle with $N.", ch, NULL, keeper, TO_CHAR);
-            act("$n haggles with $N.", ch, NULL, keeper, TO_ROOM);
+            send_to_char("You haggle down the price.\n\r", ch);
             //Haggle math! Gives rougghly maximum 20% discount for 10 successes.
             cost = (100-(success*2))*cost/100;
             check_improve(ch,gsn_haggle,TRUE,4);
         }
-    }
 
-    if (number > 1)
-    {
-        sprintf(buf,"$n buys $p[%d].",number);
-        act(buf,ch,obj,NULL,TO_ROOM);
-        sprintf(buf,"You buy $p[%d] for %d silver.",number,cost * number);
-        act(buf,ch,obj,NULL,TO_CHAR);
+        deduct_cost(ch,cost);
+        pet         = create_mobile( pet->pIndexData );
+        SET_BIT(pet->act, ACT_PET);
+        SET_BIT(pet->affected_by, AFF_CHARM);
+        pet->gold = 0;
+        pet->silver = 0;
+        pet->comm = COMM_NOTELL|COMM_NOSHOUT|COMM_NOCHANNELS;
+
+        argument = one_argument( argument, arg );
+        if ( arg[0] != '\0' )
+        {
+            sprintf( buf, "%s %s", pet->name, arg );
+            free_string( pet->name );
+            pet->name = str_dup( buf );
+        }
+
+        sprintf( buf, "%sA neck tag says 'I belong to %s'.\n\r",
+        pet->description, ch->name );
+        free_string( pet->description );
+        pet->description = str_dup( buf );
+
+        char_to_room( pet, ch->in_room );
+        add_follower( pet, ch );
+        pet->leader = ch;
+        ch->pet = pet;
+        send_to_char( "Enjoy your pet.\n\r", ch );
+        act( "$n bought $N as a pet.", ch, NULL, pet, TO_ROOM );
+        return;
     }
     else
     {
-        act( "$n buys $p.", ch, obj, NULL, TO_ROOM );
-        sprintf(buf,"You buy $p for %d silver.",cost);
-        act( buf, ch, obj, NULL, TO_CHAR );
-    }
-    deduct_cost(ch,cost * number);
-    keeper->gold += cost * number/100;
-    keeper->silver += cost * number - (cost * number/100) * 100;
-    if (keeper->pIndexData->area->domain != NULL && keeper->pIndexData->area->domain->clan != 0)
-    {
-        clan_table[keeper->pIndexData->area->domain->clan].bank += tax * number/100;
-        save_clans(ch, "");
-    }
+        CHAR_DATA *keeper;
+        OBJ_DATA *obj,*t_obj;
+        char arg[MAX_INPUT_LENGTH];
+        int number, count = 1;
+        int tax;
+        int hagglediff = 7;
 
-    for (count = 0; count < number; count++)
-    {
-        if ( IS_SET( obj->extra_flags, ITEM_INVENTORY ) )
-            t_obj = create_object( obj->pIndexData, obj->level );
-        else
+        if ( ( keeper = find_keeper( ch ) ) == NULL )
+            return;
+
+        if (is_affected(ch, gsn_sidesteptime))
         {
-        t_obj = obj;
-        obj = obj->next_content;
-            obj_from_char( t_obj );
+            send_to_char("You must return to the normal flow of Time to purchase items.\n\r", ch);
+            return;
         }
 
-        if (t_obj->timer > 0 && !IS_OBJ_STAT(t_obj,ITEM_HAD_TIMER))
-            t_obj->timer = 0;
-        REMOVE_BIT(t_obj->extra_flags,ITEM_HAD_TIMER);
-        obj_to_char( t_obj, ch );
-        if (cost < t_obj->cost)
-            t_obj->cost = cost;
-    }
+        if(is_affected(ch, gsn_change) || is_affected(ch, gsn_shift) || is_affected(ch, gsn_shadowform) || is_affected(ch, gsn_vicissitude_horrid) || is_affected(ch, gsn_vicissitude_bonecraft))
+        {
+            send_to_char("The shopkeeper is too terrified of you to sell anything.\n\r", ch);
+            return;
+        }
+
+        number = mult_argument(argument,arg);
+        obj  = get_obj_keeper( ch,keeper, arg );
+        cost = get_cost( keeper, obj, TRUE );
+
+        if (number < 1 || number > 99)
+        {
+            act("$n tells you 'Get real!",keeper,NULL,ch,TO_VICT);
+            return;
+        }
+
+        if ( cost <= 0 || !can_see_obj( ch, obj ) )
+        {
+            act( "$n tells you 'I don't sell that -- try 'list''.", keeper, NULL, ch, TO_VICT );
+            ch->reply = keeper;
+            return;
+        }
+
+        if (!IS_OBJ_STAT(obj,ITEM_INVENTORY))
+        {
+            for (t_obj = obj->next_content; count < number && t_obj != NULL; t_obj = t_obj->next_content)
+            {
+                if (t_obj->pIndexData == obj->pIndexData && !str_cmp(t_obj->short_descr,obj->short_descr))
+                    count++;
+                else
+                    break;
+            }
+
+            if (count < number)
+            {
+                act("$n tells you 'I don't have that many in stock.", keeper,NULL,ch,TO_VICT);
+                ch->reply = keeper;
+                return;
+            }
+        }
+
+        if ( obj->level > ch->level )
+        {
+            act( "$n tells you 'You can't use $p yet'.", keeper, obj, ch, TO_VICT );
+            ch->reply = keeper;
+            return;
+        }
+
+        if (ch->carry_number +  number * get_obj_number(obj) > can_carry_n(ch))
+        {
+            send_to_char( "You can't carry that many items.\n\r", ch );
+            return;
+        }
+
+        if ( ch->carry_weight + number * get_obj_weight(obj) > can_carry_w(ch))
+        {
+            send_to_char( "You can't carry that much weight.\n\r", ch );
+            return;
+        }
+
+        if (IS_OBJ_STAT(obj,ITEM_BLESS) && (ch->race == race_lookup("vampire") || ch->race == race_lookup("methuselah")))
+        {
+            send_to_char( "You are repelled by that object!\n\r", ch );
+            return;
+        }
+
+        /*Influence, another 1% off per dot of influence.*/
+        if (!IS_NPC(ch) && !IS_OBJ_STAT(obj, ITEM_SELL_EXTRACT) && ch->pcdata->csbackgrounds[CSBACK_INFLUENCE] > 0)
+            cost = (100-ch->pcdata->csbackgrounds[CSBACK_INFLUENCE])*cost/100;
+
+
+        if (keeper->pIndexData->area->domain != NULL) 
+        {
+            tax = cost * keeper->pIndexData->area->domain->tax /100;
+            cost += tax;
+        }
+
+        if ( (ch->silver + ch->gold * 100) < cost * number )
+        {
+            if (number > 1)
+                act("$n tells you 'You can't afford to buy that many.", keeper,obj,ch,TO_VICT);
+            else
+                act( "$n tells you 'You can't afford to buy $p'.", keeper, obj, ch, TO_VICT );
+            ch->reply = keeper;
+            return;
+        }
+
+        if (has_affect_modifier(ch, gsn_awe, keeper->pIndexData->vnum) && !IS_OBJ_STAT(obj,ITEM_SELL_EXTRACT))
+        {
+            success = godice(get_attribute(ch, APPEARANCE) + ch->csabilities[CSABIL_ETIQUETTE], 6);
+            if (success > 0)
+            {
+                act("$N seems to have taken a liking to you, and lowers $S price.", ch, NULL, keeper, TO_CHAR);
+                cost -= cost / (100 - (success * 2));
+            }
+        }
+
+        /* tongues(gift) or haggle */
+        if (!IS_NPC(ch) && !IS_OBJ_STAT(obj,ITEM_SELL_EXTRACT) && is_affected(ch, gsn_gift_tongues))
+        {
+            success = godice(get_attribute(ch, MANIPULATION) + ch->csabilities[CSABIL_COMMERCE], 5);
+            if (success <= 0)
+                success = 1;
+            if (success > 10)
+                success = 10;
+            act("You hold a perfect conversation with $N, who gives you $S best deal.", ch, NULL, keeper, TO_CHAR);
+            act("$n haggles with $N.", ch, NULL, keeper, TO_ROOM);
+            //Gives best deal, maximum 40% discount for 10 successes.
+            cost = (100-(success*4))*cost/100;
+        }
+        else if (!IS_NPC(ch) && !IS_OBJ_STAT(obj,ITEM_SELL_EXTRACT) && ch->csabilities[CSABIL_COMMERCE] > 0 )
+        {
+            if (is_affected(ch, gsn_gift_speechoftheworld))
+            {
+                send_to_char("You attempt to haggle in the shopkeeper's native language.\n\r", ch);
+                    hagglediff--;
+                if (get_affect_level(ch, gsn_gift_speechoftheworld) > 4)
+                    hagglediff--;
+            }
+            success = godice(get_attribute(ch, MANIPULATION) + ch->csabilities[CSABIL_COMMERCE], hagglediff);
+            if (success < 0)
+            {
+                act("$N seems insulted by your attempt to haggle down the price and ups the price!", ch, NULL, keeper, TO_CHAR);
+                cost += cost/10;
+            }
+            else if (success > 0)
+            {
+                if (success > 10)
+                    success = 10;
+                act("You haggle with $N.", ch, NULL, keeper, TO_CHAR);
+                act("$n haggles with $N.", ch, NULL, keeper, TO_ROOM);
+                //Haggle math! Gives rougghly maximum 20% discount for 10 successes.
+                cost = (100-(success*2))*cost/100;
+                check_improve(ch,gsn_haggle,TRUE,4);
+            }
+        }
+
+        if (number > 1)
+        {
+            sprintf(buf,"$n buys $p[%d].",number);
+            act(buf,ch,obj,NULL,TO_ROOM);
+            sprintf(buf,"You buy $p[%d] for %d silver.",number,cost * number);
+            act(buf,ch,obj,NULL,TO_CHAR);
+        }
+        else
+        {
+            act( "$n buys $p.", ch, obj, NULL, TO_ROOM );
+            sprintf(buf,"You buy $p for %d silver.",cost);
+            act( buf, ch, obj, NULL, TO_CHAR );
+        }
+        deduct_cost(ch,cost * number);
+        keeper->gold += cost * number/100;
+        keeper->silver += cost * number - (cost * number/100) * 100;
+        if (keeper->pIndexData->area->domain != NULL && keeper->pIndexData->area->domain->clan != 0)
+        {
+            clan_table[keeper->pIndexData->area->domain->clan].bank += tax * number/100;
+            save_clans(ch, "");
+        }
+
+        for (count = 0; count < number; count++)
+        {
+            if ( IS_SET( obj->extra_flags, ITEM_INVENTORY ) )
+                t_obj = create_object( obj->pIndexData, obj->level );
+            else
+            {
+                t_obj = obj;
+                obj = obj->next_content;
+                obj_from_char( t_obj );
+            }
+
+            if (t_obj->timer > 0 && !IS_OBJ_STAT(t_obj,ITEM_HAD_TIMER))
+                t_obj->timer = 0;
+            REMOVE_BIT(t_obj->extra_flags,ITEM_HAD_TIMER);
+            obj_to_char( t_obj, ch );
+            if (cost < t_obj->cost)
+                t_obj->cost = cost;
+        }
     }
 }
 

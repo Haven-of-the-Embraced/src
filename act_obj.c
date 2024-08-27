@@ -3412,17 +3412,17 @@ void do_sell( CHAR_DATA *ch, char *argument )
 
     if ( arg[0] == '\0' )
     {
-     send_to_char( "Sell what?\n\r", ch );
-     return;
+        send_to_char( "Sell what?\n\r", ch );
+        return;
     }
     if ( ( keeper = find_keeper( ch ) ) == NULL )
-     return;
+        return;
 
-     if (is_affected(ch, gsn_sidesteptime))
-     {
-       send_to_char("You must return to the normal flow of Time to sell your items.\n\r", ch);
-       return;
-     }
+    if (is_affected(ch, gsn_sidesteptime))
+    {
+        send_to_char("You must return to the normal flow of Time to sell your items.\n\r", ch);
+        return;
+    }
 
     if (is_affected(ch, gsn_change) || is_affected(ch, gsn_shift) || is_affected(ch, gsn_shadowform) || is_affected(ch, gsn_vicissitude_horrid) || is_affected(ch, gsn_vicissitude_bonecraft))
     {
@@ -3431,48 +3431,45 @@ void do_sell( CHAR_DATA *ch, char *argument )
     }
 
     if ( ( obj = get_obj_carry( ch, arg, ch ) ) == NULL )
-     {
-              act( "$n tells you 'You don't have that item'.",
-                   keeper, NULL, ch, TO_VICT );
-              return;
-     }
+    {
+      act( "$n tells you 'You don't have that item'.", keeper, NULL, ch, TO_VICT );
+      return;
+    }
 
     if (number < 1 || number > 99)
     {
-       act("$n tells you 'Get real!",keeper,NULL,ch,TO_VICT);
-         return;
+        act("$n tells you 'Get real!",keeper,NULL,ch,TO_VICT);
+        return;
     }
 
     if ( ( obj = get_obj_carry( ch, arg, ch ) ) == NULL )
     {
-         act( "$n tells you 'You don't have that item'.",
-              keeper, NULL, ch, TO_VICT );
-         ch->reply = keeper;
-         return;
+        act( "$n tells you 'You don't have that item'.", keeper, NULL, ch, TO_VICT );
+        ch->reply = keeper;
+        return;
     }
 
     if ( !can_drop_obj( ch, obj ) )
     {
-         send_to_char( "You can't let go of it.\n\r", ch );
-         return;
+        send_to_char( "You can't let go of it.\n\r", ch );
+        return;
     }
 
     if (!can_see_obj(keeper,obj))
     {
-       act("$n doesn't see what you are offering.",keeper,NULL,ch,TO_VICT);
-       return;
+        act("$n doesn't see what you are offering.",keeper,NULL,ch,TO_VICT);
+        return;
     }
 
     if ( ( cost = get_cost( keeper, obj, FALSE ) ) <= 0 )
     {
-       act( "$n looks uninterested in $p.", keeper, obj, ch, TO_VICT );
-       return;
+        act( "$n looks uninterested in $p.", keeper, obj, ch, TO_VICT );
+        return;
     }
     if ( cost*number > (keeper->silver + 100 * keeper->gold) )
     {
-      act("$n tells you 'I'm afraid I don't have enough wealth to buy $p.",
-         keeper,obj,ch,TO_VICT);
-      return;
+        act("$n tells you 'I'm afraid I don't have enough wealth to buy $p.", keeper,obj,ch,TO_VICT);
+        return;
     }
     cost = 0;
     roll = number_percent();
@@ -3492,16 +3489,24 @@ void do_sell( CHAR_DATA *ch, char *argument )
 
         if (has_affect_modifier(ch, gsn_awe, keeper->pIndexData->vnum) && !IS_OBJ_STAT(obj,ITEM_SELL_EXTRACT))
         {
-          success = godice(get_attribute(ch, APPEARANCE) + ch->csabilities[CSABIL_ETIQUETTE], 6);
-          if (success > 0)
-          {
-            act("$N seems to have taken a liking to you, and raises $S offer.", ch, NULL, keeper, TO_CHAR);
-            cost += cost / (100 - (success * 2));
-          }
+            success = godice(get_attribute(ch, APPEARANCE) + ch->csabilities[CSABIL_ETIQUETTE], 6);
+            if (success > 0)
+            {
+                act("$N seems to have taken a liking to you, and raises $S offer.", ch, NULL, keeper, TO_CHAR);
+                cost += cost / (100 - (success * 2));
+            }
         }
 
-     /* haggle */
-        if(haggle)
+        /* Tongues or haggle */
+        if(is_affected(ch, gsn_gift_tongues))
+        {
+            success = godice(get_attribute(ch,MANIPULATION)+ch->csabilities[CSABIL_COMMERCE],4);
+            if(success <= 0)
+                success = 1;
+            cost += cost/5 * success;
+            send_to_char("Your Gifted tongue serves you well, and you get more coin than initially expected.\n\r",ch);
+        }
+        else if(haggle)
         {
             success = godice(get_attribute(ch,MANIPULATION)+ch->csabilities[CSABIL_COMMERCE],4);
             if(success <= 0)
@@ -3509,17 +3514,7 @@ void do_sell( CHAR_DATA *ch, char *argument )
             else
                 cost += cost/5 * success;
         }
-/*
-     roll = number_percent();
-     if (!IS_OBJ_STAT(obj,ITEM_SELL_EXTRACT) && roll < get_skill(ch,gsn_haggle))
-     {
-          send_to_char("You haggle with the shopkeeper.\n\r",ch);
-          cost += obj->cost / 2 * roll / 100;
-          cost = UMIN(cost,95 * get_cost(keeper,obj,TRUE) / 100);
-          cost = UMIN(cost,(keeper->silver + 100 * keeper->gold));
-          check_improve(ch,gsn_haggle,TRUE,4);
-     }
-*/
+
         total_cost += cost;
 
         deduct_cost(keeper,cost);

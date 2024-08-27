@@ -622,7 +622,7 @@ void do_cue(CHAR_DATA *ch, char *argument)
     sprintf( buf, "You hear and see the cue '{c%s{x', and comply immediately.\n\r", argument );
     send_to_char(buf,victim);
     interpret( victim, argument );
-    ch->move -= ch->level + 10
+    ch->move -= ch->level + 10;
     gain_exp(ch,success * 2);
 
     return;

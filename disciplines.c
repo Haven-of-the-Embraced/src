@@ -35,39 +35,39 @@ void do_disclist(CHAR_DATA *ch, char *argument)
     if (ch->pcdata->discipline[ANIMALISM] > 0)
     {
         send_to_char("{D        [{R         Animalism         {D]{x\n\r",ch);
-        send_to_char("Sweet Whispers\n\r",ch);
+        send_to_char("{D  <{r1{D>  {xSweet Whispers\n\r",ch);
     }
     if (ch->pcdata->discipline[ANIMALISM] > 1)
-        send_to_char("Beckoning\n\r",ch);
+        send_to_char("{D  <{r2{D>  {xBeckoning\n\r",ch);
     if (ch->pcdata->discipline[ANIMALISM] > 2)
-        send_to_char("Song of Serenity\n\r",ch);
+        send_to_char("{D  <{r3{D>  {xSong of Serenity\n\r",ch);
     if (ch->pcdata->discipline[ANIMALISM] > 3)
-        send_to_char("Sharing of Spirits\n\r",ch);
+        send_to_char("{D  <{r4{D>  {xSharing of Spirits\n\r",ch);
     if (ch->pcdata->discipline[ANIMALISM] > 4)
-        send_to_char("Drawing Out the Beast\n\r",ch);
+        send_to_char("{D  <{r5{D>  {xDrawing Out the Beast\n\r",ch);
     if (ch->pcdata->discipline[ANIMALISM] > 5)
-        send_to_char("{R*{DUncoded{R*{x\n\r",ch);
+        send_to_char("{D  <{r6{D>  {x{R*{DUncoded{R*{x\n\r",ch);
 
     if (ch->pcdata->discipline[AUSPEX] > 0)
     {
         send_to_char("{D        [{R          Auspex           {D]{x\n\r",ch);
-        send_to_char("Reveal\n\r",ch);
+        send_to_char("{D  <{r1{D>  {xReveal\n\r",ch);
     }
     if (ch->pcdata->discipline[AUSPEX] > 1)
-        send_to_char("Aura Perception\n\r",ch);
+        send_to_char("{D  <{r2{D>  {xAura Perception\n\r",ch);
     if (ch->pcdata->discipline[AUSPEX] > 2)
-        send_to_char("Spirit's Touch\n\r",ch);
+        send_to_char("{D  <{r3{D>  {xSpirit's Touch\n\r",ch);
     if (ch->pcdata->discipline[AUSPEX] > 3)
-        send_to_char("Telepathy\n\r",ch);
+        send_to_char("{D  <{r4{D>  {xTelepathy\n\r",ch);
     if (ch->pcdata->discipline[AUSPEX] > 4)
-       send_to_char("Psychic Projection\n\r",ch);
+       send_to_char("{D  <{r5{D>  {xPsychic Projection\n\r",ch);
     if (ch->pcdata->discipline[AUSPEX] > 5)
-        send_to_char("{R*{DUncoded{R*{x\n\r",ch);
+        send_to_char("{D  <{r6{D>  {x{R*{DUncoded{R*{x\n\r",ch);
 
     if (ch->pcdata->discipline[CELERITY] > 0)
     {
         send_to_char("{D        [{R         Celerity          {D]{x\n\r",ch);
-        send_to_char("Celerity\n\r",ch);
+        send_to_char("{D  <{r#{D>  {xCelerity\n\r",ch);
     }
 /*    if (ch->pcdata->discipline[] > 1)
         send_to_char("\n\r",ch);
@@ -78,23 +78,23 @@ void do_disclist(CHAR_DATA *ch, char *argument)
     if (ch->pcdata->discipline[] > 4)
         send_to_char("\n\r",ch);*/
     if (ch->pcdata->discipline[CELERITY] > 5)
-        send_to_char("Dash{x\n\r",ch);
+        send_to_char("{D  <{r6{D>  {xDash{x\n\r",ch);
 
     if (ch->pcdata->discipline[CHIMERSTRY] > 0)
     {
         send_to_char("{D[        {R        Chimerstry         {D]{x\n\r",ch);
-        send_to_char("Ignis Fatuus\n\r",ch);
+        send_to_char("{D  <{r1{D>  {xIgnis Fatuus\n\r",ch);
     }
     if (ch->pcdata->discipline[CHIMERSTRY] > 1)
-        send_to_char("Fata Morgana\n\r",ch);
+        send_to_char("{D  <{r2{D>  {xFata Morgana\n\r",ch);
     if (ch->pcdata->discipline[CHIMERSTRY] > 2)
-        send_to_char("Apparition\n\r",ch);
+        send_to_char("{D  <{r3{D>  {xApparition\n\r",ch);
     if (ch->pcdata->discipline[CHIMERSTRY] > 3)
-        send_to_char("Permanency\n\r",ch);
+        send_to_char("{D  <{r4{D>  {xPermanency\n\r",ch);
     if (ch->pcdata->discipline[CHIMERSTRY] > 4)
-        send_to_char("Horrid Reality\n\r",ch);
+        send_to_char("{D  <{r5{D>  {xHorrid Reality\n\r",ch);
     if (ch->pcdata->discipline[CHIMERSTRY] > 5)
-        send_to_char("{R*{DUncoded{R*{x\n\r",ch);
+        send_to_char("{D  <{r6{D>  {x{R*{DUncoded{R*{x\n\r",ch);
 
     if (ch->pcdata->discipline[DEMENTATION] > 0)
     {
@@ -115,23 +115,23 @@ void do_disclist(CHAR_DATA *ch, char *argument)
     if (ch->pcdata->discipline[DOMINATE] > 0)
     {
         send_to_char("{D        [{R         Dominate          {D]{x\n\r",ch);
-        send_to_char("Command the Weary Mind\n\r",ch);
+        send_to_char("{D  <{r1{D>  {xCommand the Weary Mind\n\r",ch);
     }
     if (ch->pcdata->discipline[DOMINATE] > 1)
-        send_to_char("Mesmerize\n\r",ch);
+        send_to_char("{D  <{r2{D>  {xMesmerize\n\r",ch);
     if (ch->pcdata->discipline[DOMINATE] > 2)
-        send_to_char("The Forgetful Mind\n\r",ch);
+        send_to_char("{D  <{r3{D>  {xThe Forgetful Mind\n\r",ch);
     if (ch->pcdata->discipline[DOMINATE] > 3)
-        send_to_char("Conditioning\n\r",ch);
+        send_to_char("{D  <{r4{D>  {xConditioning\n\r",ch);
     if (ch->pcdata->discipline[DOMINATE] > 4)
-        send_to_char("Possession\n\r",ch);
+        send_to_char("{D  <{r5{D>  {xPossession\n\r",ch);
     if (ch->pcdata->discipline[DOMINATE] > 5)
-        send_to_char("{R*{DUncoded{R*{x\n\r",ch);
+        send_to_char("{D  <{r6{D>  {x{R*{DUncoded{R*{x\n\r",ch);
 
     if (ch->pcdata->discipline[FORTITUDE] > 0)
     {
         send_to_char("{D        [{R         Fortitude         {D]{x\n\r",ch);
-        send_to_char("Fortitude\n\r",ch);
+        send_to_char("{D  <{r#{D>  {xFortitude\n\r",ch);
     }/*
     if (ch->pcdata->discipline[] > 1)
         send_to_char("\n\r",ch);
@@ -147,55 +147,55 @@ void do_disclist(CHAR_DATA *ch, char *argument)
     if (ch->pcdata->discipline[MORTIS] > 0)
     {
         send_to_char("{D        [{R          Mortis           {D]{x\n\r",ch);
-        send_to_char("Blight\n\r",ch);
+        send_to_char("{D  <{r1{D>  {xBlight\n\r",ch);
     }
     if (ch->pcdata->discipline[MORTIS] > 1)
-        send_to_char("Homunculus Servant\n\r",ch);
+        send_to_char("{D  <{r2{D>  {xHomunculus Servant\n\r",ch);
     if (ch->pcdata->discipline[MORTIS] > 2)
-        send_to_char("Awaken\n\r",ch);
+        send_to_char("{D  <{r3{D>  {xAwaken\n\r",ch);
     if (ch->pcdata->discipline[MORTIS] > 3)
-        send_to_char("Animate Dead\n\r",ch);
+        send_to_char("{D  <{r4{D>  {xAnimate Dead\n\r",ch);
     if (ch->pcdata->discipline[MORTIS] > 4)
-        send_to_char("Black Death\n\r",ch);
+        send_to_char("{D  <{r5{D>  {xBlack Death\n\r",ch);
     if (ch->pcdata->discipline[MORTIS] > 5)
-        send_to_char("{R*{DUncoded{R*{x\n\r",ch);
+        send_to_char("{D  <{r6{D>  {x{R*{DUncoded{R*{x\n\r",ch);
 
     if (ch->pcdata->discipline[OBFUSCATE] > 0)
     {
         send_to_char("{D        [{R         Obfuscate         {D]{x\n\r",ch);
-        send_to_char("Veil of Shadows\n\r",ch);
+        send_to_char("{D  <{r1{D>  {xVeil of Shadows\n\r",ch);
     }
     if (ch->pcdata->discipline[OBFUSCATE] > 1)
-        send_to_char("Unseen Presence\n\r",ch);
+        send_to_char("{D  <{r2{D>  {xUnseen Presence\n\r",ch);
     if (ch->pcdata->discipline[OBFUSCATE] > 2)
-        send_to_char("Mask of a Thousand Faces\n\r",ch);
+        send_to_char("{D  <{r3{D>  {xMask of a Thousand Faces\n\r",ch);
     if (ch->pcdata->discipline[OBFUSCATE] > 3)
-        send_to_char("Vanish from the Mind's Eye\n\r",ch);
+        send_to_char("{D  <{r4{D>  {xVanish from the Mind's Eye\n\r",ch);
     if (ch->pcdata->discipline[OBFUSCATE] > 4)
-        send_to_char("Cloak the Gathering\n\r",ch);
+        send_to_char("{D  <{r5{D>  {xCloak the Gathering\n\r",ch);
     if (ch->pcdata->discipline[OBFUSCATE] > 5)
-        send_to_char("{R*{DUncoded{R*{x\n\r",ch);
+        send_to_char("{D  <{r6{D>  {x{R*{DUncoded{R*{x\n\r",ch);
 
     if (ch->pcdata->discipline[OBTENEBRATION] > 0)
     {
         send_to_char("{D        [{R       Obtenebration       {D]{x\n\r",ch);
-        send_to_char("Shadow Play\n\r",ch);
+        send_to_char("{D  <{r1{D>  {xShadow Play\n\r",ch);
     }
     if (ch->pcdata->discipline[OBTENEBRATION] > 1)
-        send_to_char("Shroud of Night\n\r",ch);
+        send_to_char("{D  <{r2{D>  {xShroud of Night\n\r",ch);
     if (ch->pcdata->discipline[OBTENEBRATION] > 2)
-        send_to_char("Arms of the Abyss\n\r",ch);
+        send_to_char("{D  <{r3{D>  {xArms of the Abyss\n\r",ch);
     if (ch->pcdata->discipline[OBTENEBRATION] > 3)
-        send_to_char("Nightshades\n\r",ch);
+        send_to_char("{D  <{r4{D>  {xNightshades\n\r",ch);
     if (ch->pcdata->discipline[OBTENEBRATION] > 4)
-        send_to_char("Shadow Form\n\r",ch);
+        send_to_char("{D  <{r5{D>  {xShadow Form\n\r",ch);
     if (ch->pcdata->discipline[OBTENEBRATION] > 5)
-        send_to_char("Shadow Walk\n\r",ch);
+        send_to_char("{D  <{r6{D>  {xShadow Walk\n\r",ch);
 
     if (ch->pcdata->discipline[POTENCE] > 0)
     {
         send_to_char("{D        [{R          Potence          {D]{x\n\r",ch);
-        send_to_char("Potence\n\r",ch);
+        send_to_char("{D  <{r#{D>  {xPotence\n\r",ch);
     }/*
     if (ch->pcdata->discipline[] > 1)
         send_to_char("\n\r",ch);
@@ -211,50 +211,50 @@ void do_disclist(CHAR_DATA *ch, char *argument)
     if (ch->pcdata->discipline[PRESENCE] > 0)
     {
         send_to_char("{D        [{R         Presence          {D]{x\n\r",ch);
-        send_to_char("Awe\n\r",ch);
+        send_to_char("{D  <{r1{D>  {xAwe\n\r",ch);
     }
     if (ch->pcdata->discipline[PRESENCE] > 1)
-        send_to_char("Dread Gaze\n\r",ch);
+        send_to_char("{D  <{r2{D>  {xDread Gaze\n\r",ch);
     if (ch->pcdata->discipline[PRESENCE] > 2)
-        send_to_char("Entrancement\n\r",ch);
+        send_to_char("{D  <{r3{D>  {xEntrancement\n\r",ch);
     if (ch->pcdata->discipline[PRESENCE] > 3)
-        send_to_char("Summon\n\r",ch);
+        send_to_char("{D  <{r4{D>  {xSummon\n\r",ch);
     if (ch->pcdata->discipline[PRESENCE] > 4)
-        send_to_char("Majesty\n\r",ch);
+        send_to_char("{D  <{r5{D>  {xMajesty\n\r",ch);
     if (ch->pcdata->discipline[PRESENCE] > 5)
-        send_to_char("Spark of Rage\n\r",ch);
+        send_to_char("{D  <{r6{D>  {xSpark of Rage\n\r",ch);
 
     if (ch->pcdata->discipline[PROTEAN] > 0)
     {
         send_to_char("{D        [{R          Protean          {D]{x\n\r",ch);
-        send_to_char("Gleam of the Red Eye\n\r",ch);
+        send_to_char("{D  <{r1{D>  {xGleam of the Red Eye\n\r",ch);
     }
     if (ch->pcdata->discipline[PROTEAN] > 1)
-        send_to_char("Feral Claws\n\r",ch);
+        send_to_char("{D  <{r2{D>  {xFeral Claws\n\r",ch);
     if (ch->pcdata->discipline[PROTEAN] > 2)
-        send_to_char("Earthmeld\n\r",ch);
+        send_to_char("{D  <{r3{D>  {xEarthmeld\n\r",ch);
     if (ch->pcdata->discipline[PROTEAN] > 3)
-        send_to_char("Shift Form\n\r",ch);
+        send_to_char("{D  <{r4{D>  {xShift Form\n\r",ch);
     if (ch->pcdata->discipline[PROTEAN] > 4)
-        send_to_char("Mistform\n\r",ch);
+        send_to_char("{D  <{r5{D>  {xMistform\n\r",ch);
     if (ch->pcdata->discipline[PROTEAN] > 5)
-        send_to_char("{R*{DUncoded{R*{x\n\r",ch);
+        send_to_char("{D  <{r6{D>  {x{R*{DUncoded{R*{x\n\r",ch);
 
     if (ch->pcdata->discipline[QUIETUS] > 0)
     {
         send_to_char("{D        [{R          Quietus          {D]{x\n\r",ch);
-        send_to_char("Aura of Silence\n\r",ch);
+        send_to_char("{D  <{r1{D>  {xAura of Silence\n\r",ch);
     }
     if (ch->pcdata->discipline[QUIETUS] > 1)
-        send_to_char("Scorpion's Touch\n\r",ch);
+        send_to_char("{D  <{r2{D>  {xScorpion's Touch\n\r",ch);
     if (ch->pcdata->discipline[QUIETUS] > 2)
-        send_to_char("Dadgon's Call\n\r",ch);
+        send_to_char("{D  <{r3{D>  {xDagon's Call\n\r",ch);
     if (ch->pcdata->discipline[QUIETUS] > 3)
-        send_to_char("Baal's Caress\n\r",ch);
+        send_to_char("{D  <{r4{D>  {xBaal's Caress\n\r",ch);
     if (ch->pcdata->discipline[QUIETUS] > 4)
-        send_to_char("Taste of Death\n\r",ch);
+        send_to_char("{D  <{r5{D>  {xTaste of Death\n\r",ch);
     if (ch->pcdata->discipline[QUIETUS] > 5)
-        send_to_char("{R*{DUncoded{R*{x\n\r",ch);
+        send_to_char("{D  <{r6{D>  {x{R*{DUncoded{R*{x\n\r",ch);
 
     if (ch->pcdata->discipline[SERPENTIS] > 0)
     {
@@ -275,34 +275,34 @@ void do_disclist(CHAR_DATA *ch, char *argument)
     if (ch->pcdata->discipline[THAUMATURGY] > 0)
     {
         send_to_char("{D        [{RThaumaturgy 'Path of Blood'{D]{x\n\r",ch);
-        send_to_char("Taste of Vitae\n\r",ch);
+        send_to_char("{D  <{r1{D>  {xTaste of Vitae\n\r",ch);
     }
     if (ch->pcdata->discipline[THAUMATURGY] > 1)
-        send_to_char("Blood Rage\n\r",ch);
+        send_to_char("{D  <{r2{D>  {xBlood Rage\n\r",ch);
     if (ch->pcdata->discipline[THAUMATURGY] > 2)
-        send_to_char("Blood of Potency\n\r",ch);
+        send_to_char("{D  <{r3{D>  {xBlood of Potency\n\r",ch);
     if (ch->pcdata->discipline[THAUMATURGY] > 3)
-        send_to_char("Theft of Vitae\n\r",ch);
+        send_to_char("{D  <{r4{D>  {xTheft of Vitae\n\r",ch);
     if (ch->pcdata->discipline[THAUMATURGY] > 4)
-        send_to_char("Cauldron of Blood\n\r",ch);
+        send_to_char("{D  <{r5{D>  {xCauldron of Blood\n\r",ch);
     if (ch->pcdata->discipline[THAUMATURGY] > 5)
-        send_to_char("{R*{DUncoded{R*{x\n\r",ch);
+        send_to_char("{D  <{r6{D>  {x{R*{DUncoded{R*{x\n\r",ch);
 
     if (ch->pcdata->discipline[VICISSITUDE] > 0)
     {
         send_to_char("{D        [{R        Vicissitude        {D]{x\n\r",ch);
-        send_to_char("Malleable Visage\n\r",ch);
+        send_to_char("{D  <{r1{D>  {xMalleable Visage\n\r",ch);
     }
     if (ch->pcdata->discipline[VICISSITUDE] > 1)
-        send_to_char("Transmogrify the Mortal Clay\n\r",ch);
+        send_to_char("{D  <{r2{D>  {xTransmogrify the Mortal Clay\n\r",ch);
     if (ch->pcdata->discipline[VICISSITUDE] > 2)
-        send_to_char("Rend the Osseous Frame\n\r",ch);
+        send_to_char("{D  <{r3{D>  {xRend the Osseous Frame\n\r",ch);
     if (ch->pcdata->discipline[VICISSITUDE] > 3)
-        send_to_char("Awaken the Zulo\n\r",ch);
+        send_to_char("{D  <{r4{D>  {xAwaken the Zulo\n\r",ch);
     if (ch->pcdata->discipline[VICISSITUDE] > 4)
-        send_to_char("Ascendancy of the Sanguine Humor\n\r",ch);
+        send_to_char("{D  <{r5{D>  {xAscendancy of the Sanguine Humor\n\r",ch);
     if (ch->pcdata->discipline[VICISSITUDE] > 5)
-        send_to_char("Chiropteran Marauder\n\r",ch);
+        send_to_char("{D  <{r6{D>  {xChiropteran Marauder\n\r",ch);
     return;
 }
 

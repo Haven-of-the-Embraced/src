@@ -604,7 +604,7 @@ void do_cue(CHAR_DATA *ch, char *argument)
         affect_to_char(victim, &af);
 
         af.bitvector = IMM_CHARM;
-        affect_to_char(victim, &af)
+        affect_to_char(victim, &af);
         return;
     }
 

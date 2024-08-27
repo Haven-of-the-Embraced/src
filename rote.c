@@ -97,12 +97,11 @@ void do_rotelist(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    send_to_char("=============================================================\n\r",ch);
+    send_to_char("=====================[Sphere Color Key]======================\n\r",ch);
     send_to_char("|       {BCorrespondence  {DEntropy  {RForces  {GLife  {yMatter{x       |\n\r",ch);
-    send_to_char("|          {CMind  {YPrime  {MSpirit  {cTime  {WCombination{x           |\n\r",ch);
+    send_to_char("|         {CMind  {YPrime  {MSpirit  {cTime  {W~Combination~{x          |\n\r",ch);
     send_to_char("=============================================================\n\r",ch);
-    send_to_char(" Sphere Level       Rote\n\r",ch);
-
+    send_to_char("{BCo{DEn{RFo{GLi{yMa{CMi{YPr{MSp{cTi{x   Known Rote\n\r", ch);
     for(rote = 1; rote < MAX_ROTE; rote++)
     {
         if(
@@ -182,7 +181,11 @@ void do_rotelist(CHAR_DATA *ch, char *argument)
             }
             if (multi > 1)
                 sprintf(color,"{W");
-            sprintf(buf, "{x    <{g%d{x>         %s%s{x\n\r", sph, color, rote_table[rote].name);
+            sprintf(buf, "{x{B%2d{D%2d{R%2d{G%2d{y%2d{C%2d{Y%2d{M%2d{c%2d{x   %s%s%s%s{x\n\r", 
+                    rote_table[rote].correspondence, rote_table[rote].entropy, rote_table[rote].forces,
+                    rote_table[rote].life, rote_table[rote].matter, rote_table[rote].mind,
+                    rote_table[rote].prime, rote_table[rote].spirit, rote_table[rote].time,
+                    color, multi > 1 ? "~" : "", rote_table[rote].name, multi > 1 ? "~" : "");
             send_to_char(buf,ch);
             sph = 0;
             multi = 0;

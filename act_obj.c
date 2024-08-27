@@ -3186,8 +3186,21 @@ void do_buy( CHAR_DATA *ch, char *argument )
       }
     }
 
-    /* haggle */
-    if (!IS_NPC(ch) && !IS_OBJ_STAT(obj,ITEM_SELL_EXTRACT) && ch->csabilities[CSABIL_COMMERCE] > 0 )
+    /* tongues(gift) or haggle */
+    if (!IS_NPC(ch) && !IS_OBJ_STAT(obj,ITEM_SELL_EXTRACT) && is_affected(ch, gsn_gift_tongues))
+    {
+        success = godice(get_attribute(ch, MANIPULATION) + ch->csabilities[CSABIL_COMMERCE], 5);
+        if (success <= 0)
+            success = 1;
+        if (success > 10)
+            success = 10;
+        act("You hold a perfect conversation with $N, who gives you $S best deal.", ch, NULL, keeper, TO_CHAR);
+        act("$n haggles with $N.", ch, NULL, keeper, TO_ROOM);
+        //Gives best deal, maximum 40% discount for 10 successes.
+        cost = (100-(success*4))*cost/100;
+    }
+    }
+    else if (!IS_NPC(ch) && !IS_OBJ_STAT(obj,ITEM_SELL_EXTRACT) && ch->csabilities[CSABIL_COMMERCE] > 0 )
     {
         if (is_affected(ch, gsn_gift_speechoftheworld))
         {

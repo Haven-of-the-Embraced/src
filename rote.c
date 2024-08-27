@@ -86,7 +86,7 @@ bool paradox_check(CHAR_DATA *ch, bool vulgar)
 void do_rotelist(CHAR_DATA *ch, char *argument)
 {
     char buf[MAX_STRING_LENGTH], color[3];
-    int rote, sph = 0;
+    int rote, sph = 0, multi = 0;
     sprintf(color,"{x");
 
     if(IS_NPC(ch)) return;
@@ -97,11 +97,11 @@ void do_rotelist(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    send_to_char("=========================================\n\r",ch);
-    send_to_char("| {BCorrespondence  {DEntropy  {RForces  {GLife{x |\n\r",ch);
-    send_to_char("|   {yMatter  {CMind  {YPrime  {MSpirit  {cTime{x   |\n\r",ch);
-    send_to_char("|{W              Combination{x              |\n\r",ch);
-    send_to_char("=========================================\n\r",ch);
+    send_to_char("=============================================================\n\r",ch);
+    send_to_char("|       {BCorrespondence  {DEntropy  {RForces  {GLife  {yMatter{x       |\n\r",ch);
+    send_to_char("|          {CMind  {YPrime  {MSpirit  {cTime  {WCombination{x           |\n\r",ch);
+    send_to_char("=============================================================\n\r",ch);
+    send_to_char(" Sphere Level       Rote\n\r",ch);
 
     for(rote = 1; rote < MAX_ROTE; rote++)
     {
@@ -117,54 +117,75 @@ void do_rotelist(CHAR_DATA *ch, char *argument)
             rote_table[rote].time <= ch->sphere[SPHERE_TIME]
         )
         {
+            if (rote_table[rote].correspondence > 0)
+                multi++;
             if (rote_table[rote].correspondence > sph)
             {
                 sph = rote_table[rote].correspondence;
                 sprintf(color,"{B");
             }
+            if (rote_table[rote].entropy > 0)
+                multi++;
             if (rote_table[rote].entropy > sph)
             {
                 sph = rote_table[rote].entropy;
                 sprintf(color,"{D");
             }
+            if (rote_table[rote].forces > 0)
+                multi++;
             if (rote_table[rote].forces > sph)
             {
                 sph = rote_table[rote].forces;
                 sprintf(color,"{R");
             }
+            if (rote_table[rote].life > 0)
+                multi++;
             if (rote_table[rote].life > sph)
             {
                 sph = rote_table[rote].life;
                 sprintf(color,"{G");
             }
+            if (rote_table[rote].matter > 0)
+                multi++;
             if (rote_table[rote].matter > sph)
             {
                 sph = rote_table[rote].matter;
                 sprintf(color,"{y");
             }
+            if (rote_table[rote].mind > 0)
+                multi++;
             if (rote_table[rote].mind > sph)
             {
                 sph = rote_table[rote].mind;
                 sprintf(color,"{C");
             }
+            if (rote_table[rote].prime > 0 && rote_table[rote].prime != 2)
+                multi++;
             if (rote_table[rote].prime > sph)
             {
                 sph = rote_table[rote].prime;
                 sprintf(color,"{Y");
             }
+            if (rote_table[rote].spirit > 0)
+                multi++;
             if (rote_table[rote].spirit > sph)
             {
                 sph = rote_table[rote].spirit;
                 sprintf(color,"{M");
             }
+            if (rote_table[rote].time > 0)
+                multi++;
             if (rote_table[rote].time > sph)
             {
                 sph = rote_table[rote].time;
                 sprintf(color,"{c");
             }
-            sprintf(buf, "%s%s{x\n\r", color, rote_table[rote].name);
+            if (multi > 1)
+                sprintf(color,"{W");
+            sprintf(buf, "{x    <{g%d{x>         %s%s{x\n\r", sph, color, rote_table[rote].name);
             send_to_char(buf,ch);
             sph = 0;
+            multi = 0;
         }
     }
 

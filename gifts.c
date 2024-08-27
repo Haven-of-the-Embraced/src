@@ -3907,8 +3907,50 @@ void spell_gift_maskthepredator( int sn, int level, CHAR_DATA *ch, void *vo, int
 //Rank 3
 //Reshape Object - duplicate gift, as HOMID
 
-void spell_gift_tongues( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_tongues( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  AFFECT_DATA af;
+  int success;
+
+  if (is_affected(ch, gsn_gift_tongues))
+  {
+    sendch("Raven-spirits have already granted you perfect understanding of any language.\n\r", ch);
     return;
+  }
+
+  if (ch->cswillpower < 1)
+  {
+    sendch("You do not have the strength of will to call the spirits.\n\r", ch);
+    return;
+  }
+
+  ch->cswillpower -= 1;
+  success = godice(get_attribute(ch, INTELLIGENCE) + get_ability(ch, CSABIL_LINGUISTICS), 6);
+
+  if (success < 0)
+  {
+    sendch("The raven-spirits mock your paltry attempt to garner a favor.\n\r", ch);
+    WAIT_STATE(ch, 12);
+    return;
+  }
+
+  if (success == 0)
+  {
+    sendch("The spirits of ravens watch from afar, but do not answer.\n\r", ch);
+    return;
+  }
+
+  sendch("An unkindness of raven-spirits opens your mind to perfect understanding of all languages.\n\r", ch);
+
+  af.where = TO_AFFECTS;
+  af.type  = gsn_gift_tongues;
+  af.level = success;
+  af.duration = success * 5 + 75;
+  af.bitvector = 0;
+  af.modifier = success;
+  af.location = APPLY_CS_CHA;
+  affect_to_char(ch, &af);
+  return;
 }
 
 //Rank 4

@@ -71,6 +71,7 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "rat",            do_rat },
     { "pray",       do_cast }, // DOES NOT MATCH. Move to top or bottom of list for review.
     { "rote",       do_rote },
+    { "rotelist",       do_rotelist },
     { "banker",     do_banker},
     { "beseech",        do_beseech },
     { "buy",        do_buy },

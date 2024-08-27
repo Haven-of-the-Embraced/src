@@ -3359,37 +3359,36 @@ void do_list( CHAR_DATA *ch, char *argument )
         &&   ( arg[0] == '\0'
            ||  is_name(arg,obj->name) ))
         {
-        if ( !found )
-        {
-            found = TRUE;
-            send_to_char( "[Lv Price Qty] Item\n\r", ch );
-        }
-        if (keeper->pIndexData->area->domain != NULL && keeper->pIndexData->area->domain->clan != 0)
-        {
-            int tax;
-            tax = cost * keeper->pIndexData->area->domain->tax / 100;
-            cost += tax;
-        }
-
-        if (IS_OBJ_STAT(obj,ITEM_INVENTORY))
-            sprintf(buf,"[%2d %5d -- ] %s\n\r",
-            obj->level,cost,obj->short_descr);
-        else
-        {
-            count = 1;
-
-            while (obj->next_content != NULL
-            && obj->pIndexData == obj->next_content->pIndexData
-            && !str_cmp(obj->short_descr,
-                    obj->next_content->short_descr))
+            if ( !found )
             {
-            obj = obj->next_content;
-            count++;
+                found = TRUE;
+                send_to_char( "{Y$--------------------$------------------${x\n\r", ch );
+                send_to_char( "[{GLvl {WPrice{x({Wsilv{x) {BQty{x]  {yItems For Sale{x\n\r", ch );
+                send_to_char( "{Y$====================$==================${x\n\r", ch );
             }
-            sprintf(buf,"[%2d %5d %2d ] %s\n\r",
-            obj->level,cost,count,obj->short_descr);
-        }
-        send_to_char( buf, ch );
+            if (keeper->pIndexData->area->domain != NULL && keeper->pIndexData->area->domain->clan != 0)
+            {
+                int tax;
+                tax = cost * keeper->pIndexData->area->domain->tax / 100;
+                cost += tax;
+            }
+
+            if (IS_OBJ_STAT(obj,ITEM_INVENTORY))
+                sprintf(buf,"[%3d %11d -- ] %s\n\r", obj->level,cost,obj->short_descr);
+            else
+            {
+                count = 1;
+
+                while (obj->next_content != NULL
+                && obj->pIndexData == obj->next_content->pIndexData
+                && !str_cmp(obj->short_descr, obj->next_content->short_descr))
+                {
+                    obj = obj->next_content;
+                    count++;
+                }
+                sprintf(buf,"[%3d %11d %2d ] %s\n\r", obj->level,cost,count,obj->short_descr);
+            }
+            send_to_char( buf, ch );
         }
     }
 

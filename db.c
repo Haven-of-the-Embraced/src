@@ -4906,6 +4906,9 @@ sh_int      gsn_chant;
 sh_int          gsn_vamp_frenzy;
 sh_int          gsn_garou_frenzy;
 sh_int          gsn_thaumaturgy_frenzy;
+
+sh_int          gsn_reveal;
+sh_int          gsn_telepathy;
 sh_int          gsn_bloodofpotency;
 sh_int          gsn_theft;
 sh_int          gsn_cauldron;
@@ -4927,7 +4930,6 @@ sh_int          gsn_quietus_weakness;
 sh_int          gsn_acidblood;
 sh_int          gsn_quietus_bloodcurse;
 sh_int          gsn_blood_agony;
-sh_int          gsn_reveal;
 sh_int          gsn_tongueoftheasp;
 sh_int          gsn_skinoftheadder;
 sh_int          gsn_forget;

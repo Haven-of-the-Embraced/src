@@ -1691,53 +1691,31 @@ void do_telepathy( CHAR_DATA *ch, char *argument )
         return;
     }
 
-    if (ch->pblood < 20)
+    if (ch->pblood < 15)
     {
-        send_to_char( "You do not have enough blood.\n\r", ch );
+        send_to_char( "You do not have enough blood to power your Telepathy.\n\r", ch );
         return;
     }
 
-    if ( argument[0] == '\0')
-    {
-        send_to_char( "View whom?\n\r", ch );
-        return;
-    }
-    if ( ( victim = get_char_world( ch, argument ) ) == NULL)
-    {
-        send_to_char( "View whom?\n\r", ch );
-        return;
-    }
-
-    if (IS_SET(victim->act, ACT_QUESTMOB))
-    {
-      send_to_char("Quit trying to cheat the system!  You should be ashamed of yourself.\n\r", ch);
-      sprintf(buf,"FLAG:: %s thought they were sneaky and tried to use Telepathy on %s.\n\r    Don't worry, I stopped them.",ch->name, victim->name);
-      wiznet(buf,ch,NULL,WIZ_FLAGS,0,0);
-      return;
-    }
-
-    if (!can_see_room(ch, victim->in_room))
-    {
-        send_to_char("Their presence seems to be clouded by something...\n\r", ch);
-        return;
-    }
-
-    if (IS_NPC(victim))
-        diff = 6;
-    else
-        diff = victim->csmax_willpower;
-
-    if (ch->level*2 < victim->level)
-        diff += 2;
-    if (!can_see(ch, victim))
-        diff += 1;
+    diff = 6;
 
     success = godice(get_attribute(ch, INTELLIGENCE) + ch->csabilities[CSABIL_SUBTERFUGE], diff);
     ch->pblood -= 10;
     WAIT_STATE(ch, 5);
-    if (success < 1)
+    if (success < 0)
     {
-        send_to_char("You fail to locate their presence in the realm.\n\r", ch);
+        act("A cacaphony of thoughts bombard you, straining your mind!",ch,NULL,victim,TO_CHAR);
+        act("$n winces in anguish, holding $s temples.",ch,NULL,victim,TO_ROOM);
+        d10_damage( ch, ch, -success, ch->level / 2, gsn_magick, DAM_MENTAL, DEFENSE_NONE, TRUE, TRUE);
+
+        WAIT_STATE(ch, 15);
+        return;
+    }
+
+    if (success == 0)
+    {
+        act("A cacaphony of thoughts bombard you; you steel yourself against the onslaught.",ch,NULL,victim,TO_CHAR);
+        act("$n winces momentarily, rubbing $s temples.",ch,NULL,victim,TO_ROOM);
         WAIT_STATE(ch, 15);
         return;
     }

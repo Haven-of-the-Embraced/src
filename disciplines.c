@@ -1203,198 +1203,6 @@ void do_auraperception( CHAR_DATA *ch, char *argument )
     return;
 }
 
-// New Auspex 5 by Gilean
-void do_project(CHAR_DATA *ch, char *argument)
-{
-    char buf[MAX_STRING_LENGTH];
-	ROOM_INDEX_DATA *location;
-    OBJ_DATA *vamp_corpse;
-    OBJ_DATA *obj;
-    OBJ_DATA *obj_next;
-    OBJ_DATA *bag;
-    OBJ_DATA *bag_next;
-    AFFECT_DATA af;
-    char name[MSL];
-    int success;
-
-	if(!can_use_disc(ch,AUSPEX,5,0,TRUE))
-	{
-		send_to_char("Your mastery of Auspex is not high enough yet.\n\r", ch);
-		return;
-	}
-
-	sprintf(name, "%sastralcorpse", ch->name);
-	vamp_corpse = get_obj_world( ch, name, TRUE);
-
-	if (is_affected(ch, gsn_astralprojection) && vamp_corpse == NULL ) // You already got the corpse. Use it.
-	{
-		send_to_char("Your anchored body is missing, contact an immortal immediately!\n\r", ch);
-		return;
-	}
-
-
-	if (is_affected(ch, gsn_astrallylost))
-	{
-		send_to_char("You are still hopelessly lost and cannot find your ephemeral cord to link back to your body.\n\r", ch);
-		return;
-	}
-
-	if (IS_AFFECTED2(ch, AFF2_UMBRA))
-	{
-		if (!is_affected(ch, gsn_astralprojection))
-		{
-			send_to_char("You did not enter the Umbra through Psychic Projection, and have no body anchoring for your return.  You must find another way back.\n\r", ch);
-			return;
-		}
-
-		act("$N grabs a shining silver cord attached to $s body, and zips away following it into the distance.", ch, NULL, NULL, TO_NOTVICT);
-        location = vamp_corpse->in_room;
-        char_from_room( ch );
-		char_to_room( ch, location );
-		extract_obj(vamp_corpse);
-        REMOVE_BIT(ch->affected2_by, AFF2_UMBRA);
-        affect_strip(ch, gsn_astralprojection);
-
-		act( "You follow your ephemeral cord back to the physical realm and reenter your torpid shell of a body.",  ch, NULL, NULL, TO_CHAR);
-		act( "$n stirs slowly and opens $s eyes.",  ch, NULL, NULL, TO_NOTVICT );
-
-		for ( obj = ch->carrying; obj != NULL; obj = obj_next )
-		{
-			obj_next = obj->next_content;
-			REMOVE_BIT(obj->extra_flags,ITEM_UMBRA);
-			if (obj->item_type == ITEM_CONTAINER || obj->item_type == ITEM_CORPSE_NPC || obj->item_type == ITEM_CORPSE_PC)
-			{
-				for ( bag = obj->contains; bag != NULL; bag = bag_next )
-				{
-					bag_next = bag->next_content;
-					REMOVE_BIT(bag->extra_flags, ITEM_UMBRA);
-				}
-			}
-		}
-
-		do_function(ch, &do_look, "auto" );
-		return;
-    }
-
-    if (ch->position > POS_SITTING)
-	{
-		send_to_char("You can't concentrate enough. You must be relaxed to do this! \n\r", ch);
-		return;
-	}
-
-	if (ch->cswillpower < 1)
-	{
-		send_to_char("You do not have the strength of will it requires to force your spirit into the astral plane.\n\r", ch);
-		return;
-	}
-
-	ch->cswillpower--;
-
-	location = ch->in_room;
-	vamp_corpse  = create_object(get_obj_index(OBJ_VNUM_CORPSE_PC), 0);
-	vamp_corpse->timer   = 0;
-	REMOVE_BIT(vamp_corpse->wear_flags, ITEM_TAKE);
-	vamp_corpse->cost = 0;
-	vamp_corpse->level = ch->level;
-
-	sprintf( buf, vamp_corpse->short_descr, ch->name );
-	free_string( vamp_corpse->short_descr );
-	vamp_corpse->short_descr = str_dup( buf );
-
-	sprintf( buf, vamp_corpse->description, ch->name );
-	free_string( vamp_corpse->description );
-	vamp_corpse->description = str_dup( buf );
-
-	free_string( vamp_corpse->name );
-	vamp_corpse->name = str_dup( name );
-
-	obj_to_room(vamp_corpse, location);
-
-	success = godice(get_attribute(ch, PERCEPTION) + ch->csabilities[CSABIL_OCCULT], get_gauntlet(ch));
-
-	if (success < 0)
-	{
-		act("You force your way into the Astral Realm, but in the process snap your psychic cord link to your body and are flung through the astral plane!", ch, NULL, NULL, TO_CHAR);
-		act("$n jerks violently backward, and drops to the ground in a torpid state, unmoving and unaware of the world around $s.", ch, NULL, NULL, TO_NOTVICT);
-		location = get_random_room(ch);
-		char_from_room( ch );
-		char_to_room( ch, location );
-		SET_BIT(ch->affected2_by, AFF2_UMBRA);
-		for ( obj = ch->carrying; obj != NULL; obj = obj_next )
-		{
-			obj_next = obj->next_content;
-			SET_BIT(obj->extra_flags,ITEM_UMBRA);
-			if (obj->item_type == ITEM_CONTAINER || obj->item_type == ITEM_CORPSE_NPC || obj->item_type == ITEM_CORPSE_PC)
-			{
-				for ( bag = obj->contains; bag != NULL; bag = bag_next )
-				{
-					bag_next = bag->next_content;
-					SET_BIT(bag->extra_flags, ITEM_UMBRA);
-				}
-			}
-		}
-
-		af.where	= TO_AFFECTS;
-		af.type		= gsn_astrallylost;
-		af.level	= ch->level;
-		af.duration	= 20 - ch->cswillpower;
-		af.modifier	= 0;
-		af.location	= 0;
-		af.bitvector	= 0;
-		affect_to_char( ch, &af );
-
-		af.where	= TO_AFFECTS;
-		af.type		= gsn_astralprojection;
-		af.level	= ch->level;
-		af.duration	= -1;
-		af.modifier	= 0;
-		af.location	= 0;
-		af.bitvector	= 0;
-		affect_to_char( ch, &af );
-
-		do_function(ch, &do_look, "auto" );
-		return;
-	}
-
-	if (success == 0)
-	{
-		act("You struggle for a moment, but cannot muster enough force to eject your psyche from your body.  After a brief moment, you realize the effort is wasted.", ch, NULL, NULL, TO_CHAR);
-		extract_obj(vamp_corpse);
-		WAIT_STATE(ch, 24);
-		return;
-	}
-
-	act("Your astral form slides easily out of your body, leaving only an empty vessel on the ground as you cross the Gauntlet into the Astral Plane.", ch, NULL, NULL, TO_CHAR);
-	act("$n's body slowly slumps to the ground, eyes closed and lying in a torpid, yet peaceful state.", ch, NULL, NULL, TO_NOTVICT);
-	SET_BIT(ch->affected2_by, AFF2_UMBRA);
-	for ( obj = ch->carrying; obj != NULL; obj = obj_next )
-	{
-		obj_next = obj->next_content;
-		SET_BIT(obj->extra_flags,ITEM_UMBRA);
-		if (obj->item_type == ITEM_CONTAINER || obj->item_type == ITEM_CORPSE_NPC || obj->item_type == ITEM_CORPSE_PC)
-		{
-			for ( bag = obj->contains; bag != NULL; bag = bag_next )
-			{
-				bag_next = bag->next_content;
-				SET_BIT(bag->extra_flags, ITEM_UMBRA);
-			}
-		}
-	}
-
-	af.where	= TO_AFFECTS;
-	af.type		= gsn_astralprojection;
-	af.level	= ch->level;
-	af.duration	= -1;
-	af.modifier	= 0;
-	af.location	= 0;
-	af.bitvector	= 0;
-	affect_to_char( ch, &af );
-
-	gain_exp(ch, success * 10);
-	do_function(ch, &do_look, "auto" );
-	return;
-}
-
 void do_touch( CHAR_DATA *ch, char *argument )
 {
 
@@ -1665,7 +1473,6 @@ void do_touch( CHAR_DATA *ch, char *argument )
 return;
 }
 
-
 void do_telepathy( CHAR_DATA *ch, char *argument )
 {
     char buf[MAX_STRING_LENGTH];
@@ -1714,47 +1521,218 @@ void do_telepathy( CHAR_DATA *ch, char *argument )
 
     if (success == 0)
     {
-        act("A cacaphony of thoughts bombard you; you steel yourself against the onslaught.",ch,NULL,victim,TO_CHAR);
-        act("$n winces momentarily, rubbing $s temples.",ch,NULL,victim,TO_ROOM);
+        act("You fail to open your mind to hear thoughts around you.",ch,NULL,victim,TO_CHAR);
         WAIT_STATE(ch, 15);
         return;
     }
+
     if (success > 0)
     {
-    sprintf( buf, "You sense the presence of %s in %s.\n\r", IS_NPC(victim) ? victim->short_descr : victim->name, victim->in_room->name);
-    send_to_char( buf, ch );
-    switch ( victim->position )
-        {
-        case POS_TORPOR:send_to_char( "They are in Torpor.\n\r",ch );break;
-        case POS_DEAD:send_to_char( "They are DEAD!!\n\r",ch ); break;
-        case POS_MORTAL:send_to_char( "They are mortally wounded.\n\r", ch );break;
-        case POS_INCAP: send_to_char( "They are incapacitated.\n\r",ch );break;
-        case POS_STUNNED:send_to_char( "They are stunned.\n\r", ch );break;
-        case POS_SLEEPING:send_to_char( "They are sleeping.\n\r",ch );break;
-        case POS_RESTING:send_to_char( "They are resting.\n\r",ch );break;
-        case POS_SITTING:send_to_char( "They are sitting.\n\r", ch );break;
-        case POS_STANDING:send_to_char( "They are standing.\n\r",ch );break;
-        case POS_FIGHTING:
-        sprintf(buf, "They are engaged in battle with %s.\n\r", IS_NPC(victim->fighting) ? victim->fighting->short_descr : victim->fighting->name);
-        send_to_char(buf,ch );break;
-        }
-    }
-    if (success > 2) {
-        WAIT_STATE(ch, 2);
-    sprintf( buf,"They have %d/%d hit, %d/%d mana and %d/%d movement.\n\r",
-        victim->hit,  victim->max_hit, victim->mana, victim->max_mana,
-        victim->move, victim->max_move);
-    send_to_char( buf, ch );
-    sprintf( buf, "%s is %d years old.\n\r", IS_NPC(victim) ? victim->short_descr : victim->name, get_age(victim));
-    send_to_char( buf, ch );
-    sprintf(buf, "They are a %s %s.\n\r", victim->sex == 0 ? "sexless" : victim->sex == 1 ? "male" : "female",
-        race_table[victim->race].name);
-    send_to_char(buf,ch);
-
+        act("Through the power of Auspex, you focus to catch any surface thoughts from intelligent beings nearby.",ch,NULL,victim,TO_CHAR);
+        WAIT_STATE(ch, 5);
     }
 
+    if (success > 4) 
+    {
+    {
+        act(".",ch,NULL,victim,TO_CHAR);
+        WAIT_STATE(ch, 5);
+    }
+    }
+    return;
 }
 
+// New Auspex 5 by Gilean
+void do_project(CHAR_DATA *ch, char *argument)
+{
+    char buf[MAX_STRING_LENGTH];
+    ROOM_INDEX_DATA *location;
+    OBJ_DATA *vamp_corpse;
+    OBJ_DATA *obj;
+    OBJ_DATA *obj_next;
+    OBJ_DATA *bag;
+    OBJ_DATA *bag_next;
+    AFFECT_DATA af;
+    char name[MSL];
+    int success;
+
+    if(!can_use_disc(ch,AUSPEX,5,0,TRUE))
+    {
+        send_to_char("Your mastery of Auspex is not high enough yet.\n\r", ch);
+        return;
+    }
+
+    sprintf(name, "%sastralcorpse", ch->name);
+    vamp_corpse = get_obj_world( ch, name, TRUE);
+
+    if (is_affected(ch, gsn_astralprojection) && vamp_corpse == NULL ) // You already got the corpse. Use it.
+    {
+        send_to_char("Your anchored body is missing, contact an immortal immediately!\n\r", ch);
+        return;
+    }
+
+
+    if (is_affected(ch, gsn_astrallylost))
+    {
+        send_to_char("You are still hopelessly lost and cannot find your ephemeral cord to link back to your body.\n\r", ch);
+        return;
+    }
+
+    if (IS_AFFECTED2(ch, AFF2_UMBRA))
+    {
+        if (!is_affected(ch, gsn_astralprojection))
+        {
+            send_to_char("You did not enter the Umbra through Psychic Projection, and have no body anchoring for your return.  You must find another way back.\n\r", ch);
+            return;
+        }
+
+        act("$N grabs a shining silver cord attached to $s body, and zips away following it into the distance.", ch, NULL, NULL, TO_NOTVICT);
+        location = vamp_corpse->in_room;
+        char_from_room( ch );
+        char_to_room( ch, location );
+        extract_obj(vamp_corpse);
+        REMOVE_BIT(ch->affected2_by, AFF2_UMBRA);
+        affect_strip(ch, gsn_astralprojection);
+
+        act( "You follow your ephemeral cord back to the physical realm and reenter your torpid shell of a body.",  ch, NULL, NULL, TO_CHAR);
+        act( "$n stirs slowly and opens $s eyes.",  ch, NULL, NULL, TO_NOTVICT );
+
+        for ( obj = ch->carrying; obj != NULL; obj = obj_next )
+        {
+            obj_next = obj->next_content;
+            REMOVE_BIT(obj->extra_flags,ITEM_UMBRA);
+            if (obj->item_type == ITEM_CONTAINER || obj->item_type == ITEM_CORPSE_NPC || obj->item_type == ITEM_CORPSE_PC)
+            {
+                for ( bag = obj->contains; bag != NULL; bag = bag_next )
+                {
+                    bag_next = bag->next_content;
+                    REMOVE_BIT(bag->extra_flags, ITEM_UMBRA);
+                }
+            }
+        }
+
+        do_function(ch, &do_look, "auto" );
+        return;
+    }
+
+    if (ch->position > POS_SITTING)
+    {
+        send_to_char("You can't concentrate enough. You must be relaxed to do this! \n\r", ch);
+        return;
+    }
+
+    if (ch->cswillpower < 1)
+    {
+        send_to_char("You do not have the strength of will it requires to force your spirit into the astral plane.\n\r", ch);
+        return;
+    }
+
+    ch->cswillpower--;
+
+    location = ch->in_room;
+    vamp_corpse  = create_object(get_obj_index(OBJ_VNUM_CORPSE_PC), 0);
+    vamp_corpse->timer   = 0;
+    REMOVE_BIT(vamp_corpse->wear_flags, ITEM_TAKE);
+    vamp_corpse->cost = 0;
+    vamp_corpse->level = ch->level;
+
+    sprintf( buf, vamp_corpse->short_descr, ch->name );
+    free_string( vamp_corpse->short_descr );
+    vamp_corpse->short_descr = str_dup( buf );
+
+    sprintf( buf, vamp_corpse->description, ch->name );
+    free_string( vamp_corpse->description );
+    vamp_corpse->description = str_dup( buf );
+
+    free_string( vamp_corpse->name );
+    vamp_corpse->name = str_dup( name );
+
+    obj_to_room(vamp_corpse, location);
+
+    success = godice(get_attribute(ch, PERCEPTION) + ch->csabilities[CSABIL_OCCULT], get_gauntlet(ch));
+
+    if (success < 0)
+    {
+        act("You force your way into the Astral Realm, but in the process snap your psychic cord link to your body and are flung through the astral plane!", ch, NULL, NULL, TO_CHAR);
+        act("$n jerks violently backward, and drops to the ground in a torpid state, unmoving and unaware of the world around $s.", ch, NULL, NULL, TO_NOTVICT);
+        location = get_random_room(ch);
+        char_from_room( ch );
+        char_to_room( ch, location );
+        SET_BIT(ch->affected2_by, AFF2_UMBRA);
+        for ( obj = ch->carrying; obj != NULL; obj = obj_next )
+        {
+            obj_next = obj->next_content;
+            SET_BIT(obj->extra_flags,ITEM_UMBRA);
+            if (obj->item_type == ITEM_CONTAINER || obj->item_type == ITEM_CORPSE_NPC || obj->item_type == ITEM_CORPSE_PC)
+            {
+                for ( bag = obj->contains; bag != NULL; bag = bag_next )
+                {
+                    bag_next = bag->next_content;
+                    SET_BIT(bag->extra_flags, ITEM_UMBRA);
+                }
+            }
+        }
+
+        af.where    = TO_AFFECTS;
+        af.type     = gsn_astrallylost;
+        af.level    = ch->level;
+        af.duration = 20 - ch->cswillpower;
+        af.modifier = 0;
+        af.location = 0;
+        af.bitvector    = 0;
+        affect_to_char( ch, &af );
+
+        af.where    = TO_AFFECTS;
+        af.type     = gsn_astralprojection;
+        af.level    = ch->level;
+        af.duration = -1;
+        af.modifier = 0;
+        af.location = 0;
+        af.bitvector    = 0;
+        affect_to_char( ch, &af );
+
+        do_function(ch, &do_look, "auto" );
+        return;
+    }
+
+    if (success == 0)
+    {
+        act("You struggle for a moment, but cannot muster enough force to eject your psyche from your body.  After a brief moment, you realize the effort is wasted.", ch, NULL, NULL, TO_CHAR);
+        extract_obj(vamp_corpse);
+        WAIT_STATE(ch, 24);
+        return;
+    }
+
+    act("Your astral form slides easily out of your body, leaving only an empty vessel on the ground as you cross the Gauntlet into the Astral Plane.", ch, NULL, NULL, TO_CHAR);
+    act("$n's body slowly slumps to the ground, eyes closed and lying in a torpid, yet peaceful state.", ch, NULL, NULL, TO_NOTVICT);
+    SET_BIT(ch->affected2_by, AFF2_UMBRA);
+    for ( obj = ch->carrying; obj != NULL; obj = obj_next )
+    {
+        obj_next = obj->next_content;
+        SET_BIT(obj->extra_flags,ITEM_UMBRA);
+        if (obj->item_type == ITEM_CONTAINER || obj->item_type == ITEM_CORPSE_NPC || obj->item_type == ITEM_CORPSE_PC)
+        {
+            for ( bag = obj->contains; bag != NULL; bag = bag_next )
+            {
+                bag_next = bag->next_content;
+                SET_BIT(bag->extra_flags, ITEM_UMBRA);
+            }
+        }
+    }
+
+    af.where    = TO_AFFECTS;
+    af.type     = gsn_astralprojection;
+    af.level    = ch->level;
+    af.duration = -1;
+    af.modifier = 0;
+    af.location = 0;
+    af.bitvector    = 0;
+    affect_to_char( ch, &af );
+
+    gain_exp(ch, success * 10);
+    do_function(ch, &do_look, "auto" );
+    return;
+}
 
 void do_dash(CHAR_DATA *ch, char *argument)
 {

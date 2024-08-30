@@ -1477,6 +1477,7 @@ void do_telepathy( CHAR_DATA *ch, char *argument )
 {
     char buf[MAX_STRING_LENGTH];
     CHAR_DATA *victim;
+    AFFECT_DATA af;
     int success, diff;
     success = diff = 0;
 
@@ -1529,15 +1530,21 @@ void do_telepathy( CHAR_DATA *ch, char *argument )
     if (success > 0)
     {
         act("Through the power of Auspex, you focus to catch any surface thoughts from intelligent beings nearby.",ch,NULL,victim,TO_CHAR);
+        af.where    = TO_AFFECTS;
+        af.type     = gsn_telepathy;
+        af.level    = success;
+        af.duration = (5 * success) + 15;
+        af.modifier = 0;
+        af.location = 0;
+        af.bitvector    = 0;
+        affect_to_char( ch, &af );
         WAIT_STATE(ch, 5);
     }
 
     if (success > 4) 
     {
-    {
         act(".",ch,NULL,victim,TO_CHAR);
         WAIT_STATE(ch, 5);
-    }
     }
     return;
 }

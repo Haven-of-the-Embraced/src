@@ -1201,7 +1201,7 @@ const struct    brew_type   brew_table  [MAX_BREW]  =
         0,      0,  0}, FALSE,  FALSE,  "none"},
 //Brew 0
     {   "refresh",      81, 0,  1,  0,  {771, 27225,
-        30854,      0,  0}, FALSE,  FALSE,  "glowing blue"},
+        30834,      0,  0}, FALSE,  FALSE,  "glowing blue"},
 //Brew 1
     {   "cure light",   16, 1,  1,  1,  {771, 30856,
         0,      0,  0}, FALSE,  FALSE,  "light blue"},

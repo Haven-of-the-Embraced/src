@@ -3150,6 +3150,36 @@ void do_consider( CHAR_DATA *ch, char *argument )
       msg = "  $N is wearing much better armor than you are.";
     act(msg, ch, NULL, victim, TO_CHAR);
 
+    if (is_affected(ch, gsn_telepathy) && IS_SET(victim->form, FORM_SENTIENT) && IS_NPC(victim))
+    {
+        send_to_char("{c|-------------------------( (   {CTelepathy{c    ) )-------------------------|{x \n\r", ch);
+        sprintf( buf, "{c| {xTrace thoughts coming from %s's mind:\n\r", victim->short_descr);
+        send_to_char( buf, ch );
+        if (IS_SET(victim->act,ACT_SENTINEL))
+            send_to_char(" Immobility", ch);
+        if (IS_SET(victim->act,ACT_SCAVENGER))
+            send_to_char(" Hoarding", ch);
+        if (IS_SET(victim->act,ACT_AGGRESSIVE))
+            send_to_char(" Anger", ch);
+        if (IS_SET(victim->act,ACT_WIMPY))
+            send_to_char(" Cowardice", ch);
+        if (IS_SET(victim->act,ACT_CLERIC))
+            send_to_char(" Devotion", ch);
+        if (IS_SET(victim->act,ACT_MAGE))
+            send_to_char(" Enlightenment", ch);
+        if (IS_SET(victim->act,ACT_THIEF))
+            send_to_char(" Duplicity", ch);
+        if (IS_SET(victim->act,ACT_WARRIOR))
+            send_to_char(" Valor", ch);
+        send_to_char("\n\r", ch);
+        if (IS_SET(victim->act,ACT_IS_HEALER))
+            send_to_char(" Assistance", ch);
+        if (IS_SET(victim->act,ACT_IS_CHANGER))
+            send_to_char(" Avarice", ch);
+        send_to_char("{x\n\r", ch);
+
+    }
+
     if (is_affected(ch, gsn_gift_namethespirit) && is_umbral_denizen(victim))
     {
         send_to_char("{M|-------------------------( ( {mUmbral Denizen{M ) )-------------------------|{x \n\r", ch);

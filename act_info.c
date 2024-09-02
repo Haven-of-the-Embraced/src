@@ -299,6 +299,7 @@ void show_char_to_char_0( CHAR_DATA *victim, CHAR_DATA *ch )
     if ( is_affected(ch, gsn_timesense) &&
         (is_affected(victim, gsn_slow) || IS_AFFECTED(victim, AFF_SLOW)  ))
         strcat( buf, "{x{Y({DDecelerated{Y){y "   );
+    if(is_affected(ch, gsn_telepathy) && IS_SET(victim->form,FORM_SENTIENT)) strcat( buf, "{x{w[{G::{w]{y " );
     if ( IS_AFFECTED(victim, AFF_PASS_DOOR)   ) strcat( buf, "{x({cTranslucent{x){y ");
     if ( IS_AFFECTED(victim, AFF_FAERIE_FIRE) ) strcat( buf, "{x({MPink Aura{x){y "  );
     if ( IS_AFFECTED(victim, AFF_SANCTUARY)   ) strcat( buf, "{x({wWhite Aura{x){y " );
@@ -3153,7 +3154,7 @@ void do_consider( CHAR_DATA *ch, char *argument )
     if (is_affected(ch, gsn_telepathy) && IS_SET(victim->form, FORM_SENTIENT) && IS_NPC(victim))
     {
         send_to_char("{c|-------------------------( (   {CTelepathy{c    ) )-------------------------|{x \n\r", ch);
-        sprintf( buf, "{c| {xTrace thoughts coming from %s's mind:\n\r", victim->short_descr);
+        sprintf( buf, "{c| {xTrace thoughts coming from %s's mind:\n\r{c| {x", victim->short_descr);
         send_to_char( buf, ch );
         if (IS_SET(victim->act,ACT_SENTINEL))
             send_to_char(" Immobility", ch);
@@ -3171,7 +3172,7 @@ void do_consider( CHAR_DATA *ch, char *argument )
             send_to_char(" Duplicity", ch);
         if (IS_SET(victim->act,ACT_WARRIOR))
             send_to_char(" Valor", ch);
-        send_to_char("\n\r", ch);
+        send_to_char("\n\r{c|{x", ch);
         if (IS_SET(victim->act,ACT_IS_HEALER))
             send_to_char(" Assistance", ch);
         if (IS_SET(victim->act,ACT_IS_CHANGER))

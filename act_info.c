@@ -3172,15 +3172,23 @@ void do_consider( CHAR_DATA *ch, char *argument )
             send_to_char(" Enlightenment", ch);
         if (IS_SET(victim->act,ACT_THIEF))
             send_to_char(" Duplicity", ch);
+        send_to_char("\n\r{c| {x", ch);
         if (IS_SET(victim->act,ACT_WARRIOR))
             send_to_char(" Valor", ch);
-        send_to_char("\n\r{c|{x", ch);
         if (IS_SET(victim->act,ACT_IS_HEALER))
             send_to_char(" Assistance", ch);
         if (IS_SET(victim->act,ACT_IS_CHANGER))
             send_to_char(" Avarice", ch);
+        send_to_char("\n\r{c| {x", ch);
+        if (IS_SET(victim->act2,ACT2_INFLUENCE))
+            send_to_char(" Persuasion", ch);
+        if (IS_SET(victim->act2,ACT2_BLOOD_DOLL))
+            send_to_char(" Desire", ch);
+        if (IS_SET(victim->act2,ACT2_RETAINER))
+            send_to_char(" Employment", ch);
+        if (IS_SET(victim->act2,ACT2_SOCIALITE))
+            send_to_char(" Aristocracy", ch);
         send_to_char("{x\n\r", ch);
-
     }
 
     if (is_affected(ch, gsn_gift_namethespirit) && is_umbral_denizen(victim))

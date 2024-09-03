@@ -3008,6 +3008,7 @@ void make_corpse( CHAR_DATA *ch )
     OBJ_DATA *obj;
     OBJ_DATA *obj_next;
     OBJ_DATA *money;
+    OBJ_DATA *plasm;
     char *name;
     int blood = 0;
 
@@ -3178,6 +3179,11 @@ void make_corpse( CHAR_DATA *ch )
         if (ch->race == race_lookup("wraith"))
         {
           act("An unholy shriek bellows from $n, as $e is sucked into a briefly appearing void.", ch, NULL, NULL, TO_ROOM);
+          plasm = create_object(get_obj_index(OBJ_VNUM_PLASM), 1);
+          if(IS_AFFECTED2(ch, AFF2_UMBRA))
+            SET_BIT(plasm->extra_flags,ITEM_UMBRA);
+          plasm->value[0] = plasm->level / 4 + 1;
+          obj_to_room(plasm, ch->in_room);
           return;
         }
 

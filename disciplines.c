@@ -1514,8 +1514,21 @@ void do_telepathy( CHAR_DATA *ch, char *argument )
     {
         act("A cacaphony of thoughts bombard you, straining your mind!",ch,NULL,victim,TO_CHAR);
         act("$n winces in anguish, holding $s temples.",ch,NULL,victim,TO_ROOM);
-        d10_damage( ch, ch, -success, ch->level / 2, gsn_magick, DAM_MENTAL, DEFENSE_NONE, TRUE, TRUE);
 
+        af.where    = TO_AFFECTS;
+        af.type     = gsn_telepathy;
+        af.level    = -1;
+        af.duration = -success + 1;
+        af.modifier = 0;
+        af.location = 0;
+        af.bitvector    = 0;
+        affect_to_char( ch, &af );
+
+        af.where     = TO_VULN;
+        af.bitvector = VULN_MENTAL;
+        affect_to_char( ch, &af );
+
+        d10_damage( ch, ch, -success, ch->level / 2, gsn_magick, DAM_MENTAL, DEFENSE_NONE, TRUE, TRUE);
         WAIT_STATE(ch, 15);
         return;
     }
@@ -1530,6 +1543,7 @@ void do_telepathy( CHAR_DATA *ch, char *argument )
     if (success > 0)
     {
         act("Through the power of Auspex, you focus to catch any surface thoughts from intelligent beings nearby.",ch,NULL,victim,TO_CHAR);
+
         af.where    = TO_AFFECTS;
         af.type     = gsn_telepathy;
         af.level    = success;
@@ -1538,12 +1552,14 @@ void do_telepathy( CHAR_DATA *ch, char *argument )
         af.location = 0;
         af.bitvector    = 0;
         affect_to_char( ch, &af );
-        WAIT_STATE(ch, 5);
-    }
 
-    if (success > 4) 
-    {
-        act(".",ch,NULL,victim,TO_CHAR);
+        if (success > 3)
+        {
+            act("You mentally focus your mind, and filter out errant thoughts.",ch,NULL,victim,TO_CHAR);
+            af.where     = TO_RESIST;
+            af.bitvector = RES_MENTAL;
+            affect_to_char( ch, &af );
+        }
         WAIT_STATE(ch, 5);
     }
     return;

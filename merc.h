@@ -1348,7 +1348,7 @@ struct  kill_data
 #define OBJ_VNUM_SLICED_LEG      15
 #define OBJ_VNUM_GUTS            16
 #define OBJ_VNUM_BRAINS          17
-
+#define OBJ_VNUM_PLASM           18
 #define OBJ_VNUM_TROPHY          19
 #define OBJ_VNUM_MUSHROOM        20
 #define OBJ_VNUM_LIGHT_BALL      21

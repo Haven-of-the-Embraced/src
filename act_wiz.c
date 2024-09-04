@@ -8362,8 +8362,8 @@ void do_smite( CHAR_DATA *ch, char *argument )
     {
         obj_from_char( obj );
         send_to_char("{WYou are blown out of your shoes and they land smouldering on the ground before you!{x\n\r",victim );
-        act("{W$N is struck by $n's lightning so hard their shoes flys off their feet and land before you!{x", ch, NULL, victim, TO_NOTVICT );
-        act("{W$N is struck by your lightning so hard their shoes flys off their feet!{x", ch, NULL, victim, TO_CHAR );
+        act("{W$N is struck by $n's lightning so hard their shoes fly off their feet and land before you!{x", ch, NULL, victim, TO_NOTVICT );
+        act("{W$N is struck by your lightning so hard their shoes fly off their feet!{x", ch, NULL, victim, TO_CHAR );
         obj_to_room( obj, victim->in_room );
     }
     return;

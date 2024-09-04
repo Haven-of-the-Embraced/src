@@ -1836,7 +1836,7 @@ void rote_matterperception(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DA
     WAIT_STATE(ch, 36);
     act( "You open your sight to try and decipher $p's Pattern.\n\r",  ch, obj, NULL, TO_CHAR );
 
-    if (success < 1)
+    if (success < 0)
     {
         send_to_char("While staring into the Pattern, you lose track of time and focus.\n\r", ch);
         WAIT_STATE(ch, 36);
@@ -1943,7 +1943,7 @@ void rote_matterperception(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DA
 
 void rote_goldenwish(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
 {
-    if (success <= 0)
+    if (success < 0)
     {
         send_to_char("You attempt to transform raw energy into solid matter, but the energy runs wild.\n\r", ch);
         d10_damage( ch, ch, -success, ch->level, gsn_magick, DAM_ENERGY, DEFENSE_NONE, TRUE, TRUE);

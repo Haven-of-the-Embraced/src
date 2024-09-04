@@ -1766,6 +1766,8 @@ void do_examine( CHAR_DATA *ch, char *argument )
       obj->value[0] == WEAPON_FLAIL ? "flail" : obj->value[0] == WEAPON_WHIP ? "whip" :
       obj->value[0] == WEAPON_POLEARM ? "polearm" : obj->value[0] == WEAPON_LANCE ? "lance" :
       "unknown");
+  if (obj->item_type == ITEM_PLASM)
+    sprintf( buf, "%s | --{x There appear to be %2d unit%s usable.\n\r", condition, obj->value[0], obj->value[0] > 1 ? "s" : "");
   send_to_char( buf, ch );
   send_to_char( condition, ch );
 	send_to_char("()-----------------------=======ooooOOOOOOOOoooo=======-----------------------(){x\n\r",ch);

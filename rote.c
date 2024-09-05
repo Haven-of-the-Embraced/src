@@ -2219,6 +2219,68 @@ void rote_subconsciousturmoil(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ
     return;
 }
 
+void rote_telepathy(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
+{
+    char buf[MAX_STRING_LENGTH];
+    CHAR_DATA *victim;
+    AFFECT_DATA af;
+
+    if (IS_NPC(ch)) return;
+
+    if (success < 0)
+    {
+        act("A cacaphony of thoughts bombard you, straining your mind!",ch,NULL,victim,TO_CHAR);
+        act("$n winces in anguish, holding $s temples.",ch,NULL,victim,TO_ROOM);
+
+        af.where    = TO_AFFECTS;
+        af.type     = gsn_telepathy;
+        af.level    = -1;
+        af.duration = -success + 1;
+        af.modifier = 0;
+        af.location = 0;
+        af.bitvector    = 0;
+        affect_to_char( ch, &af );
+
+        af.where     = TO_VULN;
+        af.bitvector = VULN_MENTAL;
+        affect_to_char( ch, &af );
+
+        d10_damage( ch, ch, -success, ch->level / 2, gsn_magick, DAM_MENTAL, DEFENSE_NONE, TRUE, TRUE);
+        WAIT_STATE(ch, 15);
+        return;
+    }
+
+    if (success == 0)
+    {
+        act("You fail to utilize your understanding of the powers of Mind.",ch,NULL,victim,TO_CHAR);
+        WAIT_STATE(ch, 15);
+        return;
+    }
+
+    if (success > 0)
+    {
+        act("Your moderate understanding of the Mind Sphere allows you to catch any surface thoughts from intelligent beings nearby.",ch,NULL,victim,TO_CHAR);
+
+        af.where    = TO_AFFECTS;
+        af.type     = gsn_telepathy;
+        af.level    = success;
+        if (success > 3)
+        {
+            act("You mentally focus your mind, and filter out errant thoughts.",ch,NULL,victim,TO_CHAR);
+            af.duration = (6 * success) + 25;
+        }
+        else
+            af.duration = (5 * success) + 15;
+        af.modifier = 0;
+        af.location = 0;
+        af.bitvector    = 0;
+        affect_to_char( ch, &af );
+
+        WAIT_STATE(ch, 5);
+    }
+    return;
+}
+
 void rote_mentallink(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
 {
     AFFECT_DATA af;

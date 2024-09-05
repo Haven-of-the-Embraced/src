@@ -1851,10 +1851,18 @@ void rote_matterperception(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DA
 
     sprintf( buf, "{y[#-#-#-#-#-#      Matter Pattern: {W%s      {y#-#-#-#-#-#]\n\r{x", obj->short_descr);
     send_to_char( buf, ch );
-    send_to_char( "{y#{x\n\r", ch );
 
+    if (obj->item_type == ITEM_PLASM)
+    {
+        send_to_char( "{y#     {MThis item is too foreign to understand through {yMatter{M.     {y#{x\n\r", ch );
+        sprintf( buf, "{y[#-#-#-#-#-#      Matter Pattern: {W%s      {y#-#-#-#-#-#]\n\r{x", obj->short_descr);
+        send_to_char( buf, ch );
+        return;
+    }
+
+    send_to_char( "{y#{x\n\r", ch );
     sprintf( buf,
-        "{y#{x  Level:     %3d                Type:       %s\n\r{y#{x  Weight: %4d.%d lbs            Durability: %3d%%{x\n\r",
+        "{y#{x  Level:     %3d                Type:   %-18s     {x\n\r{y#{x  Weight: %4d.%d lbs            Durability: %3d%%{x\n\r",
         obj->level, item_name(obj->item_type),
         obj->weight / 10, obj->weight % 10,  obj->condition
         );

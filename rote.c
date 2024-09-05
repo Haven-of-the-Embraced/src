@@ -2222,7 +2222,6 @@ void rote_subconsciousturmoil(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ
 void rote_telepathy(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
 {
     char buf[MAX_STRING_LENGTH];
-    CHAR_DATA *victim;
     AFFECT_DATA af;
 
     if (IS_NPC(ch)) return;
@@ -2278,61 +2277,6 @@ void rote_telepathy(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj
 
         WAIT_STATE(ch, 5);
     }
-    return;
-}
-
-void rote_mentallink(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
-{
-    AFFECT_DATA af;
-    CHAR_DATA *gch;
-
-    if (IS_NPC(ch)) return;
-
-    if(victim != ch)
-    {
-        send_to_char("You enact this effect by will, not by choice. Use it without a target.\n\r",ch);
-        return;
-    }
-
-    if(is_affected(ch,gsn_empower))
-    {
-        send_to_char("You are already empowering your mind to supernatural levels.\n\r",ch);
-        return;
-    }
-    for ( gch = ch->in_room->people; gch != NULL; gch = gch->next_in_room )
-    {
-        if ( !is_same_group( gch, ch ) || is_affected(gch,gsn_empower) || IS_NPC(gch) )
-            continue;
-        send_to_char( "Your mind reaches a clarity it has never before achieved.\n\r", gch );
-
-        af.where     = TO_AFFECTS;
-        af.type      = gsn_empower;
-        af.level     = success;
-        af.duration  = ch->avatar*success*5;
-        af.location  = APPLY_CS_INT;
-        af.modifier  = ch->sphere[SPHERE_MIND];
-        af.bitvector = 0;
-        affect_to_char( gch, &af );
-
-        af.location  = APPLY_CS_WIT;
-        affect_to_char( gch, &af );
-
-    af.type      = gsn_mental_resilience;
-    af.location  = APPLY_NONE;
-    af.modifier  = 0;
-    if (success > 4)
-    {
-        af.where     = TO_IMMUNE;
-        af.bitvector = IMM_MENTAL;
-    }
-    else
-    {
-        af.where     = TO_RESIST;
-        af.bitvector = RES_MENTAL;
-    }
-        affect_to_char( ch, &af );
-    }
-    send_to_char("Reaching out with your mind, you bestow the gifts of clarity and thought amongst your allies.\n\r" ,ch);
     return;
 }
 
@@ -3264,6 +3208,61 @@ void rote_camouflagediscernment(CHAR_DATA *ch, int success, CHAR_DATA *victim, O
     af.bitvector = AFF_DETECT_HIDDEN;
     affect_to_char( victim, &af );
     send_to_char("Focusing on thoughts nearby, you pinpoint life forms hiding in the room.\n\r",ch);
+    return;
+}
+
+void rote_mentallink(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
+{
+    AFFECT_DATA af;
+    CHAR_DATA *gch;
+
+    if (IS_NPC(ch)) return;
+
+    if(victim != ch)
+    {
+        send_to_char("You enact this effect by will, not by choice. Use it without a target.\n\r",ch);
+        return;
+    }
+
+    if(is_affected(ch,gsn_empower))
+    {
+        send_to_char("You are already empowering your mind to supernatural levels.\n\r",ch);
+        return;
+    }
+    for ( gch = ch->in_room->people; gch != NULL; gch = gch->next_in_room )
+    {
+        if ( !is_same_group( gch, ch ) || is_affected(gch,gsn_empower) || IS_NPC(gch) )
+            continue;
+        send_to_char( "Your mind reaches a clarity it has never before achieved.\n\r", gch );
+
+        af.where     = TO_AFFECTS;
+        af.type      = gsn_empower;
+        af.level     = success;
+        af.duration  = ch->avatar*success*5;
+        af.location  = APPLY_CS_INT;
+        af.modifier  = ch->sphere[SPHERE_MIND];
+        af.bitvector = 0;
+        affect_to_char( gch, &af );
+
+        af.location  = APPLY_CS_WIT;
+        affect_to_char( gch, &af );
+
+    af.type      = gsn_mental_resilience;
+    af.location  = APPLY_NONE;
+    af.modifier  = 0;
+    if (success > 4)
+    {
+        af.where     = TO_IMMUNE;
+        af.bitvector = IMM_MENTAL;
+    }
+    else
+    {
+        af.where     = TO_RESIST;
+        af.bitvector = RES_MENTAL;
+    }
+        affect_to_char( ch, &af );
+    }
+    send_to_char("Reaching out with your mind, you bestow the gifts of clarity and thought amongst your allies.\n\r" ,ch);
     return;
 }
 

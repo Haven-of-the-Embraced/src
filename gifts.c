@@ -874,9 +874,14 @@ void spell_gift_porcupine( int sn, int level, CHAR_DATA *ch, void *vo, int targe
 //Cost: 1 Gnosis
 void spell_gift_witherlimb( int sn, int level, CHAR_DATA *ch, void *vo, int target)
 {
-      AFFECT_DATA af;
+  AFFECT_DATA af;
+  CHAR_DATA *victim = (CHAR_DATA *) vo;
+  int grab, wither;
 
-    if (IS_NPC(ch)) return;
+  if (IS_NPC(ch)) return;
+
+  grab = godice(get_attribute(ch, DEXTERITY) + get_ability(ch, CSABIL_BRAWL), 6);
+  wither = godice(victim->csmax_willpower, 6);
 
     if (success < 0)
     {

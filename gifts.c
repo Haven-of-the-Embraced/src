@@ -872,7 +872,56 @@ void spell_gift_porcupine( int sn, int level, CHAR_DATA *ch, void *vo, int targe
 //Roll: (To wither) Willpower (diff target stamina + 4)
 //The garou can cause their victims limbs to twist and wither with a touch. (“wither (leg/arm)” Roll dex+bra to grapple, if successful roll for gift activation. Withering leg makes them easier to hit (Harder to move around, harder to defend) Withering arm makes them do less damage (with weapons. What about kick/bite/etc?)
 //Cost: 1 Gnosis
-void spell_gift_witherlimb( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_witherlimb( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+      AFFECT_DATA af;
+
+    if (IS_NPC(ch)) return;
+
+    if (success < 0)
+    {
+      act("Entropic energies rush back into you as you feel weaker.", ch, NULL, victim, TO_CHAR);
+
+      af.where     = TO_AFFECTS;
+      af.type      = gsn_quietus_weakness;
+      af.level     = 1;
+      af.duration  = -success;
+      af.location  = APPLY_CS_STR;
+      af.modifier  = -1;
+      af.bitvector = 0;
+      affect_to_char( ch, &af );
+      return;
+    }
+
+    if (success == 0)
+    {
+      act("You focus your entropic energies at $N, but they dissipate before reaching the target.", ch, NULL, victim, TO_CHAR);
+      return;
+    }
+
+    act( "You reach out and touch $N who screams in anguish and agony!",  ch, NULL, victim, TO_CHAR    );
+    act( "$n reaches out and touches $N who suddenly screams in agony!",  ch, NULL, victim, TO_NOTVICT );
+    d10_damage( ch, victim, success, ch->level * 3, gsn_magick, DAM_DISEASE, DEFENSE_NONE, TRUE, TRUE);
+
+    if (success >= 4)
+    {
+      act("You watch closely as the entropic energies wrack $N's body, weakening $M.", ch, NULL, victim, TO_CHAR);
+      act("Your body flares in excrutiating pain as entropic energies ravage you!", ch, NULL, victim, TO_VICT);
+      act("$N writhes in agony as $S body is weakened!", ch, NULL, victim, TO_NOTVICT);
+
+      af.where     = TO_AFFECTS;
+      af.type      = gsn_quietus_weakness;
+      af.level     = success;
+      af.duration  = success*5;
+      af.location  = APPLY_CS_STR;
+      af.modifier  = -1;
+      af.bitvector = 0;
+      affect_to_char( victim, &af );
+
+      af.location  = APPLY_CS_STA;
+      affect_to_char( victim, &af );
+    }
+
     return;
 }
 //

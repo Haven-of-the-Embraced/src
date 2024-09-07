@@ -880,6 +880,14 @@ void spell_gift_witherlimb( int sn, int level, CHAR_DATA *ch, void *vo, int targ
 
   if (IS_NPC(ch)) return;
 
+  if (ch->move <= ch->level)
+  {
+    send_to_char("You are too tired to grab your opponent./n/r", ch);
+    return;
+  }
+
+  ch->move -= ch->level;
+
   grab = godice(get_attribute(ch, DEXTERITY) + get_ability(ch, CSABIL_BRAWL), 6);
   wither = godice(ch->csmax_willpower, 6);
 
@@ -899,6 +907,14 @@ void spell_gift_witherlimb( int sn, int level, CHAR_DATA *ch, void *vo, int targ
     act("You can't seem to get a good hold on one of $N's limbs.", ch, NULL, victim, TO_CHAR);
     return;
   }
+
+  if (ch->pcdata->gnosis[TEMP] < 1)
+  {
+    sendch("You do not have the spiritual reserves to activate this gift.\n\r", ch);
+    return;
+  }
+
+  ch->pcdata->gnosis[TEMP] -= 1;
 
   if (wither < 0)
   {

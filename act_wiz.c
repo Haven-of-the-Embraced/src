@@ -3249,7 +3249,7 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
         send_to_char( "{y| {RSyntax Note {W: {xSee '{chelp flagfind{x' for special syntax.                   {y|\n\r", ch);
         send_to_char( "{y+=========================================================================+{x\n\r", ch);
         send_to_char( "{y| {WObj types   : {xextra, wear, affect, apply, damage, type,                 {y|\n\r",ch);
-        send_to_char( "{y| {W            : {xweapon, special, spell                                    {y|\n\r",ch);
+        send_to_char( "{y| {W            : {xweapon, special, spell, size, level, cost                 {y|\n\r",ch);
         send_to_char( "{y+-------------------------------------------------------------------------+{x\n\r", ch);
         send_to_char( "{y| {WMob types   : {xlevel, race, special, shop, aff, aff2, act, act2,         {y|\n\r",ch);
         send_to_char( "{y| {W            : {xoff, res, vuln, imm, attr, abil, form, parts, size        {y|\n\r",ch);

@@ -3657,6 +3657,8 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
             table = &weapon_class;
         else if (!str_prefix(arg2, "special"))
             table = &weapon_type2;
+        else if (!str_prefix(arg2, "affect"))
+            table = &affect_flags;
         else if (!str_prefix(arg2, "damage"))
             dmgflag = TRUE;
         else

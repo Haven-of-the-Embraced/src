@@ -3733,6 +3733,14 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                             add_buf(buffer,buf);
                         }
                 }
+                else if (!str_prefix(arg2, "size") && (pObjIndex->size == flag_value( size_flags, arg3)))
+                {
+                    found = TRUE;
+                    count++;
+                    sprintf( buf, "%s(%3d) [%5d] %s\n\r",
+                    pObjIndex->count ? "*" : " ",count, pObjIndex->vnum, pObjIndex->short_descr);
+                    add_buf(buffer,buf);
+                }
                 else if (!str_prefix(arg2, "level"))
                 {
                     foundlevel = FALSE;

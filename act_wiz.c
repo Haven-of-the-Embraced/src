@@ -3547,6 +3547,53 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
     }
     if(!str_prefix(arg1,"obj"))
     {
+        if (!str_prefix(arg2, "level"))
+        {
+            if (is_number(arg3))
+            {
+                tlevel = LEVEL_IS;
+                llevel = atoi(arg3);
+            } else if (!str_prefix(arg3, "above"))
+            {
+                tlevel = LEVEL_ABOVE;
+                if (!is_number(arg4))
+                {
+                    sendch("Search for mobs above which level?\n\r", ch);
+                    return;
+                } else
+                    llevel = atoi(arg4);
+            } else if (!str_prefix(arg3, "below"))
+            {
+                tlevel = LEVEL_BELOW;
+                if (!is_number(arg4))
+                {
+                    sendch("Search for mobs below which level?\n\r", ch);
+                    return;
+                } else
+                    ulevel = atoi(arg4);
+            } else if (!str_prefix(arg3, "between"))
+            {
+                tlevel = LEVEL_BETWEEN;
+                if (!is_number(arg4) || !is_number(arg5))
+                {
+                    sendch("Search for objects between which levels?\n\r", ch);
+                    return;
+                } else {
+                    if (atoi(arg4) > atoi(arg5))
+                    {
+                        ulevel = atoi(arg4);
+                        llevel = atoi(arg5);
+                    } else {
+                        ulevel = atoi(arg5);
+                        llevel = atoi(arg4);
+                    }
+                }
+            } else {
+                sendch("Search for objects of what level?\n\r", ch);
+                return;
+            }
+        }
+
         for ( vnum = 0; nMatch < top_obj_index; vnum++ )
         {
             if ( ( pObjIndex = get_obj_index( vnum ) ) != NULL )

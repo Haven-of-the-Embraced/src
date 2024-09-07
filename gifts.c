@@ -945,12 +945,12 @@ void spell_gift_witherlimb( int sn, int level, CHAR_DATA *ch, void *vo, int targ
 
   af.where     = TO_AFFECTS;
   af.type      = gsn_gift_witherlimb;
-  af.level     = success;
-  af.duration  = success + 1;
+  af.level     = wither;
+  af.duration  = wither + 1;
   af.location  = APPLY_CS_STR;
-  if (success >= 4)
+  if (wither >= 4)
   {
-    d10_damage( ch, victim, success, ch->level * 3, gsn_magick, DAM_DISEASE, DEFENSE_NONE, TRUE, TRUE);
+    d10_damage( ch, victim, wither, ch->level * 3, gsn_magick, DAM_DISEASE, DEFENSE_NONE, TRUE, TRUE);
     af.modifier = -3;
   }
   else

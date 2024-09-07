@@ -3419,8 +3419,8 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                     {
                         found = TRUE;
                         count++;
-                        sprintf( buf, "%s(%3d) [%5d] %s\n\r",
-                        pMobIndex->count ? "*" : " ",count,pMobIndex->vnum, pMobIndex->short_descr );
+                        sprintf( buf, "%s(%3d) [%5d] <Lvl %3d> %s\n\r",
+                        pMobIndex->count ? "*" : " ", count, pMobIndex->vnum, pMobIndex->level, pMobIndex->short_descr );
                         add_buf(buffer,buf);
                         foundlevel = FALSE;
                     }
@@ -3760,8 +3760,8 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                     {
                         found = TRUE;
                         count++;
-                        sprintf( buf, "%s(%3d) [%5d] %s\n\r",
-                        pObjIndex->count ? "*" : " ",count,pObjIndex->vnum, pObjIndex->short_descr );
+                        sprintf( buf, "%s(%3d) [%5d] <Lvl %3d> %s\n\r",
+                        pObjIndex->count ? "*" : " ", count, pObjIndex->vnum, pObjIndex->level, pObjIndex->short_descr );
                         add_buf(buffer,buf);
                         foundlevel = FALSE;
                     }

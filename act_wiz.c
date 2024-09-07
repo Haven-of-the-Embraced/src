@@ -3231,6 +3231,7 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
     int tlevel, ulevel, llevel;
     const struct flag_type *table;
     bool foundlevel;
+    bool dmgflag = FALSE;
 
     found   = FALSE;
     nMatch  = 0;
@@ -3656,31 +3657,47 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
             table = &weapon_class;
         else if (!str_prefix(arg2, "special"))
             table = &weapon_type2;
+        else if (!str_prefix(arg2, "damage"))
+            dmgflag = TRUE;
         else
             findflag = FALSE;
 
         if (findflag)
         {
             bool bitfound = FALSE;
-            for (i = 0; table[i].name != NULL; i++)
-            {
-                if (!str_prefix(arg3, table[i].name))
+            if (dmgflag)
+                for (i = 0; attack_table[i].name != NULL; i++)
                 {
-                    affflag = table[i].bit;
-                    bitfound = TRUE;
+                    if (!str_prefix(arg3, attack_table[i].name))
+                        bitfound = TRUE;
                 }
-            }
+            else
+                for (i = 0; table[i].name != NULL; i++)
+                {
+                    if (!str_prefix(arg3, table[i].name))
+                    {
+                        affflag = table[i].bit;
+                        bitfound = TRUE;
+                    }
+                }
             if (!bitfound)
             {
                 sprintf(buf, "{R**  {xBit name '{B%s{x' not found for [{g%s{x].  {R**{x\n\r", arg3, arg2);
                 sendch(buf, ch);
                 sprintf(buf, " ------------------\n\r|       Bits       |\n\r ------------------\n\r");
                 sendch(buf, ch);
-                for (i = 0; table[i].name != NULL; i++)
-                {
-                    sprintf(buf, "(%2d) {B%s{x\n\r", i, table[i].name);
-                    sendch(buf, ch);
-                }
+                if (dmgflag)
+                    for (i = 0; attack_table[i].name != NULL; i++)
+                    {
+                        sprintf(buf, "(%2d) {B%s{x\n\r", i, attack_table[i].name);
+                        sendch(buf, ch);
+                    }
+                else
+                    for (i = 0; table[i].name != NULL; i++)
+                    {
+                        sprintf(buf, "(%2d) {B%s{x\n\r", i, table[i].name);
+                        sendch(buf, ch);
+                    }
                 return;
             }
         }

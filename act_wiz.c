@@ -3594,6 +3594,53 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
             }
         }
 
+        if (!str_prefix(arg2, "cost"))
+        {
+            if (is_number(arg3))
+            {
+                tlevel = LEVEL_IS;
+                llevel = atoi(arg3);
+            } else if (!str_prefix(arg3, "above"))
+            {
+                tlevel = LEVEL_ABOVE;
+                if (!is_number(arg4))
+                {
+                    sendch("Search for objects with a cost higher than what value? ({R*{xin silver)\n\r", ch);
+                    return;
+                } else
+                    llevel = atoi(arg4);
+            } else if (!str_prefix(arg3, "below"))
+            {
+                tlevel = LEVEL_BELOW;
+                if (!is_number(arg4))
+                {
+                    sendch("Search for objects with a cost lower than what value? ({R*{xin silver)\n\r", ch);
+                    return;
+                } else
+                    ulevel = atoi(arg4);
+            } else if (!str_prefix(arg3, "between"))
+            {
+                tlevel = LEVEL_BETWEEN;
+                if (!is_number(arg4) || !is_number(arg5))
+                {
+                    sendch("Search for objects with a cost between what values? ({R*{xin silver)\n\r", ch);
+                    return;
+                } else {
+                    if (atoi(arg4) > atoi(arg5))
+                    {
+                        ulevel = atoi(arg4);
+                        llevel = atoi(arg5);
+                    } else {
+                        ulevel = atoi(arg5);
+                        llevel = atoi(arg4);
+                    }
+                }
+            } else {
+                sendch("Search for objects of what value? ({R*{xin silver)\n\r", ch);
+                return;
+            }
+        }
+
         for ( vnum = 0; nMatch < top_obj_index; vnum++ )
         {
             if ( ( pObjIndex = get_obj_index( vnum ) ) != NULL )
@@ -3770,6 +3817,39 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                         count++;
                         sprintf( buf, "%s(%3d) [%5d] <Lvl %3d> %s\n\r",
                         pObjIndex->count ? "*" : " ", count, pObjIndex->vnum, pObjIndex->level, pObjIndex->short_descr );
+                        add_buf(buffer,buf);
+                        foundlevel = FALSE;
+                    }
+                }
+                else if (!str_prefix(arg2, "cost"))
+                {
+                    foundlevel = FALSE;
+                    switch (tlevel)
+                    {
+                        case LEVEL_IS:
+                            if (pObjIndex->cost == llevel)
+                                foundlevel = TRUE;
+                            break;
+                        case LEVEL_ABOVE:
+                            if (pObjIndex->cost > llevel)
+                                foundlevel = TRUE;
+                            break;
+                        case LEVEL_BELOW:
+                            if (pObjIndex->cost < ulevel)
+                                foundlevel = TRUE;
+                            break;
+                        case LEVEL_BETWEEN:
+                            if (pObjIndex->cost > llevel && pObjIndex->cost < ulevel)
+                                foundlevel = TRUE;
+                            break;
+                        default: break;
+                    }
+                    if (foundlevel)
+                    {
+                        found = TRUE;
+                        count++;
+                        sprintf( buf, "%s(%3d) [%5d] $%10.10d : %s\n\r",
+                        pObjIndex->count ? "*" : " ", count, pObjIndex->vnum, pObjIndex->cost, pObjIndex->short_descr );
                         add_buf(buffer,buf);
                         foundlevel = FALSE;
                     }

@@ -900,53 +900,51 @@ void spell_gift_witherlimb( int sn, int level, CHAR_DATA *ch, void *vo, int targ
     return;
   }
 
-    if (wither < 0)
-    {
-      act("The disease spirits are offended at your request.", ch, NULL, victim, TO_CHAR);
+  if (wither < 0)
+  {
+    act("The disease spirits are offended at your request.", ch, NULL, victim, TO_CHAR);
 
-      af.where     = TO_AFFECTS;
-      af.type      = gsn_gift_witherlimb;
-      af.level     = -1;
-      af.duration  = -success;
-      af.location  = APPLY_CS_STR;
-      af.modifier  = -1;
-      af.bitvector = 0;
-      affect_to_char( ch, &af );
-      return;
-    }
-
-    if (wither == 0)
-    {
-      act("Grabbing $N, you ask the spirit's for aid, but receive nothing.", ch, NULL, victim, TO_CHAR);
-      act("$n grabs your limb, but lets go quickly.", ch, NULL, victim, TO_VICT);
-      act("$n grabs $N's limb, but lets go quickly.", ch, NULL, victim, TO_NOTVICT);
-      return;
-    }
-
-    act( "You reach out and touch $N who screams in anguish and agony!",  ch, NULL, victim, TO_CHAR    );
-    act( "$n reaches out and touches $N who suddenly screams in agony!",  ch, NULL, victim, TO_NOTVICT );
-    d10_damage( ch, victim, success, ch->level * 3, gsn_magick, DAM_DISEASE, DEFENSE_NONE, TRUE, TRUE);
-
-    if (success >= 4)
-    {
-      act("You watch closely as the entropic energies wrack $N's body, weakening $M.", ch, NULL, victim, TO_CHAR);
-      act("Your body flares in excrutiating pain as entropic energies ravage you!", ch, NULL, victim, TO_VICT);
-      act("$N writhes in agony as $S body is weakened!", ch, NULL, victim, TO_NOTVICT);
-
-      af.where     = TO_AFFECTS;
-      af.type      = gsn_quietus_weakness;
-      af.level     = success;
-      af.duration  = success*5;
-      af.location  = APPLY_CS_STR;
-      af.modifier  = -1;
-      af.bitvector = 0;
-      affect_to_char( victim, &af );
-
-      af.location  = APPLY_CS_STA;
-      affect_to_char( victim, &af );
-    }
-
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_gift_witherlimb;
+    af.level     = -1;
+    af.duration  = -success;
+    af.location  = APPLY_CS_STR;
+    af.modifier  = -1;
+    af.bitvector = 0;
+    affect_to_char( ch, &af );
     return;
+  }
+
+  if (wither == 0)
+  {
+    act("Grabbing $N, you ask the spirit's for aid, but receive nothing.", ch, NULL, victim, TO_CHAR);
+    act("$n grabs your limb, but lets go quickly.", ch, NULL, victim, TO_VICT);
+    act("$n grabs $N's limb, but lets go quickly.", ch, NULL, victim, TO_NOTVICT);
+    return;
+  }
+
+  act( "Grabbing $N, $E screams in anguish and agony as spirits ravage $S body!", ch, NULL, victim, TO_CHAR );
+  act( "$n reaches out and grabs $N, who suddenly screams in agony!", ch, NULL, victim, TO_NOTVICT );
+  act("Your body flares in excrutiating pain as you feel crippled by $n's grab!", ch, NULL, victim, TO_VICT);
+
+  af.where     = TO_AFFECTS;
+  af.type      = gsn_gift_witherlimb;
+  af.level     = success;
+  af.duration  = success + 1;
+  af.location  = APPLY_CS_STR;
+  if (success >= 4)
+  {
+    d10_damage( ch, victim, success, ch->level * 3, gsn_magick, DAM_DISEASE, DEFENSE_NONE, TRUE, TRUE);
+    af.modifier = -3;
+  }
+  else
+    af.modifier  = -2;
+  af.bitvector = 0;
+  affect_to_char( victim, &af );
+
+  af.location  = APPLY_CS_STA;
+  affect_to_char( victim, &af );
+  return;
 }
 //
 //Rank 5

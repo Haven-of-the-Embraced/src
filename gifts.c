@@ -883,6 +883,23 @@ void spell_gift_witherlimb( int sn, int level, CHAR_DATA *ch, void *vo, int targ
   grab = godice(get_attribute(ch, DEXTERITY) + get_ability(ch, CSABIL_BRAWL), 6);
   wither = godice(victim->csmax_willpower, 6);
 
+  WAIT_STATE(ch, 3);
+
+  if (grab < 0)
+  {
+    act("You stumble while trying to grab $N's limb.", ch, NULL, victim, TO_CHAR);
+    act("$n stumbles briefly.", ch, NULL, victim, TO_NOTVICT);
+    act("$n stumbles briefly.", ch, NULL, victim, TO_VICT);
+    ch->stopped++;
+    return;
+  }
+
+  if (grab == 0)
+  {
+    act("You can't seem to get a good hold on one of $N's limbs.", ch, NULL, victim, TO_CHAR);
+    return;
+  }
+
     if (success < 0)
     {
       act("Entropic energies rush back into you as you feel weaker.", ch, NULL, victim, TO_CHAR);

@@ -914,6 +914,12 @@ void spell_gift_witherlimb( int sn, int level, CHAR_DATA *ch, void *vo, int targ
     return;
   }
 
+  if (is_affected(victim, gsn_gift_witherlimb))
+  {
+    sendch("You sense the touch of disease already upon your target.\n\r", ch);
+    return;
+  }
+
   ch->pcdata->gnosis[TEMP] -= 1;
 
   if (wither < 0)
@@ -946,7 +952,7 @@ void spell_gift_witherlimb( int sn, int level, CHAR_DATA *ch, void *vo, int targ
   af.where     = TO_AFFECTS;
   af.type      = gsn_gift_witherlimb;
   af.level     = wither;
-  af.duration  = wither + 1;
+  af.duration  = (wither * 2) + 1;
   af.location  = APPLY_CS_STR;
   if (wither >= 4)
   {

@@ -2407,7 +2407,7 @@ Total (3) */
     &gsn_gift_porcupine,          SLOT( 0),        0,     24, "quills",             "Your skin prickles as your fur returns to normal.",      "" },
 
     { "wither limb", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_witherlimb,  TAR_IGNORE, POS_STANDING,
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_witherlimb,  TAR_CHAR_OFFENSIVE, POS_FIGHTING,
     &gsn_gift_witherlimb,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     { "madness", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },

@@ -3641,6 +3641,50 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
             }
         }
 
+        findflag = TRUE;
+        if(!str_cmp(arg2, "extra"))
+            table = &extra_flags;
+        else if (!str_prefix(arg2, "size"))
+            table = &size_flags;
+        else if (!str_prefix(arg2, "wear"))
+            table = &wear_flags;
+        else if (!str_prefix(arg2, "type"))
+            table = &type_flags;
+        else if (!str_prefix(arg2, "apply"))
+            table = &apply_flags;
+        else if (!str_prefix(arg2, "weapon"))
+            table = &weapon_class;
+        else if (!str_prefix(arg2, "special"))
+            table = &weapon_type2;
+        else
+            findflag = FALSE;
+
+        if (findflag)
+        {
+            bool bitfound = FALSE;
+            for (i = 0; table[i].name != NULL; i++)
+            {
+                if (!str_prefix(arg3, table[i].name))
+                {
+                    affflag = table[i].bit;
+                    bitfound = TRUE;
+                }
+            }
+            if (!bitfound)
+            {
+                sprintf(buf, "{R**  {xBit name '{B%s{x' not found for [{g%s{x].  {R**{x\n\r", arg3, arg2);
+                sendch(buf, ch);
+                sprintf(buf, " ------------------\n\r|       Bits       |\n\r ------------------\n\r");
+                sendch(buf, ch);
+                for (i = 0; table[i].name != NULL; i++)
+                {
+                    sprintf(buf, "(%2d) {B%s{x\n\r", i, table[i].name);
+                    sendch(buf, ch);
+                }
+                return;
+            }
+        }
+
         for ( vnum = 0; nMatch < top_obj_index; vnum++ )
         {
             if ( ( pObjIndex = get_obj_index( vnum ) ) != NULL )

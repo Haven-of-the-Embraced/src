@@ -923,7 +923,7 @@ void spell_gift_witherlimb( int sn, int level, CHAR_DATA *ch, void *vo, int targ
     af.where     = TO_AFFECTS;
     af.type      = gsn_gift_witherlimb;
     af.level     = -1;
-    af.duration  = -success;
+    af.duration  = -wither;
     af.location  = APPLY_CS_STR;
     af.modifier  = -1;
     af.bitvector = 0;
@@ -958,7 +958,7 @@ void spell_gift_witherlimb( int sn, int level, CHAR_DATA *ch, void *vo, int targ
   af.bitvector = 0;
   affect_to_char( victim, &af );
 
-  af.location  = APPLY_CS_STA;
+  af.location  = APPLY_CS_DEX;
   affect_to_char( victim, &af );
   return;
 }

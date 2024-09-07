@@ -3733,6 +3733,39 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                             add_buf(buffer,buf);
                         }
                 }
+                else if (!str_prefix(arg2, "level"))
+                {
+                    foundlevel = FALSE;
+                    switch (tlevel)
+                    {
+                        case LEVEL_IS:
+                            if (pObjIndex->level == llevel)
+                                foundlevel = TRUE;
+                            break;
+                        case LEVEL_ABOVE:
+                            if (pObjIndex->level > llevel)
+                                foundlevel = TRUE;
+                            break;
+                        case LEVEL_BELOW:
+                            if (pObjIndex->level < ulevel)
+                                foundlevel = TRUE;
+                            break;
+                        case LEVEL_BETWEEN:
+                            if (pObjIndex->level > llevel && pObjIndex->level < ulevel)
+                                foundlevel = TRUE;
+                            break;
+                        default: break;
+                    }
+                    if (foundlevel)
+                    {
+                        found = TRUE;
+                        count++;
+                        sprintf( buf, "%s(%3d) [%5d] %s\n\r",
+                        pObjIndex->count ? "*" : " ",count,pObjIndex->vnum, pObjIndex->short_descr );
+                        add_buf(buffer,buf);
+                        foundlevel = FALSE;
+                    }
+                }
             }
         }
     }

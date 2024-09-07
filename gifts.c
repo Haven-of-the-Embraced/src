@@ -881,7 +881,7 @@ void spell_gift_witherlimb( int sn, int level, CHAR_DATA *ch, void *vo, int targ
   if (IS_NPC(ch)) return;
 
   grab = godice(get_attribute(ch, DEXTERITY) + get_ability(ch, CSABIL_BRAWL), 6);
-  wither = godice(victim->csmax_willpower, 6);
+  wither = godice(ch->csmax_willpower, 6);
 
   WAIT_STATE(ch, 3);
 
@@ -900,13 +900,13 @@ void spell_gift_witherlimb( int sn, int level, CHAR_DATA *ch, void *vo, int targ
     return;
   }
 
-    if (success < 0)
+    if (wither < 0)
     {
-      act("Entropic energies rush back into you as you feel weaker.", ch, NULL, victim, TO_CHAR);
+      act("The disease spirits are offended at your request.", ch, NULL, victim, TO_CHAR);
 
       af.where     = TO_AFFECTS;
-      af.type      = gsn_quietus_weakness;
-      af.level     = 1;
+      af.type      = gsn_gift_witherlimb;
+      af.level     = -1;
       af.duration  = -success;
       af.location  = APPLY_CS_STR;
       af.modifier  = -1;
@@ -915,9 +915,11 @@ void spell_gift_witherlimb( int sn, int level, CHAR_DATA *ch, void *vo, int targ
       return;
     }
 
-    if (success == 0)
+    if (wither == 0)
     {
-      act("You focus your entropic energies at $N, but they dissipate before reaching the target.", ch, NULL, victim, TO_CHAR);
+      act("Grabbing $N, you ask the spirit's for aid, but receive nothing.", ch, NULL, victim, TO_CHAR);
+      act("$n grabs your limb, but lets go quickly.", ch, NULL, victim, TO_VICT);
+      act("$n grabs $N's limb, but lets go quickly.", ch, NULL, victim, TO_NOTVICT);
       return;
     }
 

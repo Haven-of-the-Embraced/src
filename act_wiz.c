@@ -3670,13 +3670,13 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
             if (dmgflag)
                 for (i = 0; attack_table[i].name != NULL; i++)
                 {
-                    if (!str_prefix(arg3, attack_table[i].name))
+                    if (is_exact_name(arg3, attack_table[i].name))
                         bitfound = TRUE;
                 }
             else
                 for (i = 0; table[i].name != NULL; i++)
                 {
-                    if (!str_prefix(arg3, table[i].name))
+                    if (is_exact_name(arg3, table[i].name))
                     {
                         affflag = table[i].bit;
                         bitfound = TRUE;
@@ -3704,6 +3704,9 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
             }
         }
 
+
+        send_to_char("      <{YLvl{x> [ {gVnum{x] {Bx  #{x : Short Description\n\r", ch);
+        send_to_char("      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\r", ch);
         for ( vnum = 0; nMatch < top_obj_index; vnum++ )
         {
             if ( ( pObjIndex = get_obj_index( vnum ) ) != NULL )
@@ -3715,9 +3718,8 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                     {
                         found = TRUE;
                         count++;
-                        sprintf( buf, "%s(%3d) [%5d] %s\n\r",
-                        pObjIndex->count ? "*" : " ",
-                        count,pObjIndex->vnum, pObjIndex->short_descr );
+                        sprintf( buf, "(%3d) <{Y%3d{x> [{g%5d{x] {Bx %2d{x : %s\n\r",
+                        count, pObjIndex->level, pObjIndex->vnum, pObjIndex->count, pObjIndex->short_descr );
                         add_buf(buffer,buf);
                     }
                 }

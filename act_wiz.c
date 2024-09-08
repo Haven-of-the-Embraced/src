@@ -3411,16 +3411,16 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                 {
                     found = TRUE;
                     count++;
-                    sprintf( buf, "%s(%3d) [%5d] %s\n\r",
-                    pMobIndex->count ? "*" : " ",count,pMobIndex->vnum, pMobIndex->short_descr );
+                    sprintf( buf, "(%3d) <{Y%3d{x> [{g%5d{x] {Bx %2d{x : %s\n\r",
+                    count, pMobIndex->level, pMobIndex->vnum, pMobIndex->count, pMobIndex->short_descr );
                     add_buf(buffer,buf);
                 }
                 if(!str_prefix(arg2, "shop") && pMobIndex->pShop != NULL)
                 {
                     found = TRUE;
                     count++;
-                    sprintf( buf, "%s(%3d) [%5d] %s\n\r",
-                    pMobIndex->count ? "*" : " ",count,pMobIndex->vnum, pMobIndex->short_descr );
+                    sprintf( buf, "(%3d) <{Y%3d{x> [{g%5d{x] {Bx %2d{x : %s\n\r",
+                    count, pMobIndex->level, pMobIndex->vnum, pMobIndex->count, pMobIndex->short_descr );
                     add_buf(buffer,buf);
                 }
 
@@ -3429,8 +3429,8 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                 {
                     found = TRUE;
                     count++;
-                    sprintf( buf, "%s(%3d) [%5d] %s\n\r",
-                    pMobIndex->count ? "*" : " ",count,pMobIndex->vnum, pMobIndex->short_descr );
+                    sprintf( buf, "(%3d) <{Y%3d{x> [{g%5d{x] {Bx %2d{x : %s\n\r",
+                    count, pMobIndex->level, pMobIndex->vnum, pMobIndex->count, pMobIndex->short_descr );
                     add_buf(buffer,buf);
                 }
 
@@ -3461,8 +3461,8 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                     {
                         found = TRUE;
                         count++;
-                        sprintf( buf, "%s(%3d) [%5d] <Lvl %3d> %s\n\r",
-                        pMobIndex->count ? "*" : " ", count, pMobIndex->vnum, pMobIndex->level, pMobIndex->short_descr );
+                        sprintf( buf, "(%3d) <{Y%3d{x> [{g%5d{x] {Bx %2d{x : %s\n\r",
+                        count, pMobIndex->level, pMobIndex->vnum, pMobIndex->count, pMobIndex->short_descr );
                         add_buf(buffer,buf);
                         foundlevel = FALSE;
                     }
@@ -3472,8 +3472,8 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                 {
                     found = TRUE;
                     count++;
-                    sprintf( buf, "%s(%3d) [%5d] %s\n\r",
-                    pMobIndex->count ? "*" : " ",count, pMobIndex->vnum, pMobIndex->short_descr);
+                    sprintf( buf, "(%3d) <{Y%3d{x> [{g%5d{x] {Bx %2d{x : %s\n\r",
+                    count, pMobIndex->level, pMobIndex->vnum, pMobIndex->count, pMobIndex->short_descr );
                     add_buf(buffer,buf);
                 }
 
@@ -3481,8 +3481,8 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                 {
                     found = TRUE;
                     count++;
-                    sprintf( buf, "%s(%3d) [%5d] %s\n\r",
-                    pMobIndex->count ? "*" : " ",count, pMobIndex->vnum, pMobIndex->short_descr);
+                    sprintf( buf, "(%3d) <{Y%3d{x> [{g%5d{x] {Bx %2d{x : %s\n\r",
+                    count, pMobIndex->level, pMobIndex->vnum, pMobIndex->count, pMobIndex->short_descr );
                     add_buf(buffer,buf);
                 }
 
@@ -3490,8 +3490,8 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                 {
                     found = TRUE;
                     count++;
-                    sprintf( buf, "%s(%3d) [%5d] %s\n\r",
-                    pMobIndex->count ? "*" : " ",count, pMobIndex->vnum, pMobIndex->short_descr);
+                    sprintf( buf, "(%3d) <{Y%3d{x> [{g%5d{x] {Bx %2d{x : %s\n\r",
+                    count, pMobIndex->level, pMobIndex->vnum, pMobIndex->count, pMobIndex->short_descr );
                     add_buf(buffer,buf);
                 }
 
@@ -3499,8 +3499,8 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                 {
                     found = TRUE;
                     count++;
-                    sprintf( buf, "%s(%3d) [%5d] %s\n\r",
-                    pMobIndex->count ? "*" : " ",count, pMobIndex->vnum, pMobIndex->short_descr);
+                    sprintf( buf, "(%3d) <{Y%3d{x> [{g%5d{x] {Bx %2d{x : %s\n\r",
+                    count, pMobIndex->level, pMobIndex->vnum, pMobIndex->count, pMobIndex->short_descr );
                     add_buf(buffer,buf);
                 }
 
@@ -3508,16 +3508,16 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                 {
                     found = TRUE;
                     count++;
-                    sprintf( buf, "%s(%3d) [%5d] %s\n\r",
-                    pMobIndex->count ? "*" : " ",count, pMobIndex->vnum, pMobIndex->short_descr);
+                    sprintf( buf, "(%3d) <{Y%3d{x> [{g%5d{x] {Bx %2d{x : %s\n\r",
+                    count, pMobIndex->level, pMobIndex->vnum, pMobIndex->count, pMobIndex->short_descr );
                     add_buf(buffer,buf);
                 }
                 if((!str_cmp(arg2, "affect2") || !str_cmp(arg2, "aff2")) && IS_AFFECTED2(pMobIndex, affflag))
                 {
                     found = TRUE;
                     count++;
-                    sprintf( buf, "%s(%3d) [%5d] %s\n\r",
-                    pMobIndex->count ? "*" : " ",count, pMobIndex->vnum, pMobIndex->short_descr);
+                    sprintf( buf, "(%3d) <{Y%3d{x> [{g%5d{x] {Bx %2d{x : %s\n\r",
+                    count, pMobIndex->level, pMobIndex->vnum, pMobIndex->count, pMobIndex->short_descr );
                     add_buf(buffer,buf);
                 }
 
@@ -3525,8 +3525,8 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                 {
                     found = TRUE;
                     count++;
-                    sprintf( buf, "%s(%3d) [%5d] %s\n\r",
-                    pMobIndex->count ? "*" : " ",count, pMobIndex->vnum, pMobIndex->short_descr);
+                    sprintf( buf, "(%3d) <{Y%3d{x> [{g%5d{x] {Bx %2d{x : %s\n\r",
+                    count, pMobIndex->level, pMobIndex->vnum, pMobIndex->count, pMobIndex->short_descr );
                     add_buf(buffer,buf);
                 }
 
@@ -3534,8 +3534,8 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                 {
                     found = TRUE;
                     count++;
-                    sprintf( buf, "%s(%3d) [%5d] %s\n\r",
-                    pMobIndex->count ? "*" : " ",count, pMobIndex->vnum, pMobIndex->short_descr);
+                    sprintf( buf, "(%3d) <{Y%3d{x> [{g%5d{x] {Bx %2d{x : %s\n\r",
+                    count, pMobIndex->level, pMobIndex->vnum, pMobIndex->count, pMobIndex->short_descr );
                     add_buf(buffer,buf);
                 }
 
@@ -3543,8 +3543,8 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                 {
                     found = TRUE;
                     count++;
-                    sprintf( buf, "%s(%3d) [%5d] %s\n\r",
-                    pMobIndex->count ? "*" : " ",count, pMobIndex->vnum, pMobIndex->short_descr);
+                    sprintf( buf, "(%3d) <{Y%3d{x> [{g%5d{x] {Bx %2d{x : %s\n\r",
+                    count, pMobIndex->level, pMobIndex->vnum, pMobIndex->count, pMobIndex->short_descr );
                     add_buf(buffer,buf);
                 }
 
@@ -3552,8 +3552,8 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                 {
                     found = TRUE;
                     count++;
-                    sprintf( buf, "%s(%3d) [%5d] %s\n\r",
-                    pMobIndex->count ? "*" : " ",count, pMobIndex->vnum, pMobIndex->short_descr);
+                    sprintf( buf, "(%3d) <{Y%3d{x> [{g%5d{x] {Bx %2d{x : %s\n\r",
+                    count, pMobIndex->level, pMobIndex->vnum, pMobIndex->count, pMobIndex->short_descr );
                     add_buf(buffer,buf);
                 }
 
@@ -3561,8 +3561,8 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                 {
                     found = TRUE;
                     count++;
-                    sprintf( buf, "%s(%3d) [%5d] %s\n\r",
-                    pMobIndex->count ? "*" : " ",count, pMobIndex->vnum, pMobIndex->short_descr);
+                    sprintf( buf, "(%3d) <{Y%3d{x> [{g%5d{x] {Bx %2d{x : %s\n\r",
+                    count, pMobIndex->level, pMobIndex->vnum, pMobIndex->count, pMobIndex->short_descr );
                     add_buf(buffer,buf);
                 }
 
@@ -3570,16 +3570,16 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                 {
                     found = TRUE;
                     count++;
-                    sprintf( buf, "%s(%3d) [%5d] %s\n\r",
-                    pMobIndex->count ? "*" : " ",count, pMobIndex->vnum, pMobIndex->short_descr);
+                    sprintf( buf, "(%3d) <{Y%3d{x> [{g%5d{x] {Bx %2d{x : %s\n\r",
+                    count, pMobIndex->level, pMobIndex->vnum, pMobIndex->count, pMobIndex->short_descr );
                     add_buf(buffer,buf);
                 }
                 if (!str_prefix(arg2, "size") && (pMobIndex->size == flag_value( size_flags, arg3)))
                 {
                     found = TRUE;
                     count++;
-                    sprintf( buf, "%s(%3d) [%5d] %s\n\r",
-                    pMobIndex->count ? "*" : " ",count, pMobIndex->vnum, pMobIndex->short_descr);
+                    sprintf( buf, "(%3d) <{Y%3d{x> [{g%5d{x] {Bx %2d{x : %s\n\r",
+                    count, pMobIndex->level, pMobIndex->vnum, pMobIndex->count, pMobIndex->short_descr );
                     add_buf(buffer,buf);
                 }
 

@@ -3232,6 +3232,8 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
     const struct flag_type *table;
     bool foundlevel;
     bool dmgflag = FALSE;
+    bool racetable = FALSE;
+    bool specprog = FALSE;
 
     found   = FALSE;
     nMatch  = 0;
@@ -3339,31 +3341,61 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
             table = &part_flags;
         else if (!str_prefix(arg2, "size"))
             table = &size_flags;
+        else if (!str_prefix(arg2, "race"))
+            racetable = TRUE;
+        else if (!str_prefix(arg2, "special"))
+            specprog = TRUE;
         else
             findflag = FALSE;
 
         if (findflag)
         {
             bool bitfound = FALSE;
-            for (i = 0; table[i].name != NULL; i++)
+            if (racetable)
+                for (i = 0; race_table[i].name != NULL; i++)
+                {
+                    if (is_exact_name(arg3, race_table[i].name))
+                        bitfound = TRUE;
+                }
+            else if (specprog)
+                for (i = 0; spec_table[i].name != NULL; i++)
+                {
+                    if (is_exact_name(arg3, spec_table[i].name))
+                        bitfound = TRUE;
+                }
+            else
+                for (i = 0; table[i].name != NULL; i++)
                 {
                     if (is_exact_name(arg3, table[i].name))
                     {
                         affflag = table[i].bit;
                         bitfound = TRUE;
+                    }
                 }
-            }
             if (!bitfound)
             {
                 sprintf(buf, "{R**  {xBit name '{B%s{x' not found for [{g%s{x].  {R**{x\n\r", arg3, arg2);
                 sendch(buf, ch);
                 sprintf(buf, " ------------------\n\r|       Bits       |\n\r ------------------\n\r");
                 sendch(buf, ch);
-                for (i = 0; table[i].name != NULL; i++)
-                {
-                    sprintf(buf, "(%2d) {B%s{x\n\r", i, table[i].name);
-                    sendch(buf, ch);
-                }
+                if (racetable)
+                    for (i = 0; race_table[i].name != NULL; i++)
+                    {
+                        sprintf(buf, "(%2d) {B%s{x\n\r", i, race_table[i].name);
+                        sendch(buf, ch);
+                    }
+                else if (specprog)
+                    for (i = 0; spec_table[i].name != NULL; i++)
+                    {
+                        sprintf(buf, "(%2d) {B%s{x\n\r", i, spec_table[i].name);
+                        sendch(buf, ch);
+                    }
+                else
+                    for (i = 0; table[i].name != NULL; i++)
+                    {
+                        sprintf(buf, "(%2d) {B%s{x\n\r", i, table[i].name);
+                        sendch(buf, ch);
+                    }
                 return;
             }
         }

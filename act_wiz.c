@@ -3347,20 +3347,29 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
             bool bitfound = FALSE;
             for (i = 0; table[i].name != NULL; i++)
                 {
-                    if (!str_prefix(arg3, table[i].name))
+                    if (is_exact_name(arg3, table[i].name))
                     {
                         affflag = table[i].bit;
                         bitfound = TRUE;
                 }
             }
             if (!bitfound)
-                {sprintf(buf, "Bit '%s' not found.\n\r", arg3);
+            {
+                sprintf(buf, "{R**  {xBit name '{B%s{x' not found for [{g%s{x].  {R**{x\n\r", arg3, arg2);
                 sendch(buf, ch);
+                sprintf(buf, " ------------------\n\r|       Bits       |\n\r ------------------\n\r");
+                sendch(buf, ch);
+                for (i = 0; table[i].name != NULL; i++)
+                {
+                    sprintf(buf, "(%2d) {B%s{x\n\r", i, table[i].name);
+                    sendch(buf, ch);
+                }
                 return;
             }
         }
 
-
+        send_to_char("      <{YLvl{x> [ {gVnum{x] {BLoad{x : Short Description\n\r", ch);
+        send_to_char("      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\r", ch);
         for ( vnum = 0; nMatch < top_mob_index; vnum++ )
         {
             if ( ( pMobIndex = get_mob_index( vnum ) ) != NULL )

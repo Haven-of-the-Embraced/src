@@ -3704,9 +3704,11 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
             }
         }
 
-
-        send_to_char("      <{YLvl{x> [ {gVnum{x] {Bx  #{x : Short Description\n\r", ch);
-        send_to_char("      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\r", ch);
+        if (!str_prefix(arg2, "cost"))
+            send_to_char("      <{YLvl{x> [ {gVnum{x] {BLoad{x {y${w    Silver {x: Short Description\n\r", ch);
+        else
+            send_to_char("      <{YLvl{x> [ {gVnum{x] {BLoad{x : Short Description\n\r", ch);
+        send_to_char("      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\r", ch);
         for ( vnum = 0; nMatch < top_obj_index; vnum++ )
         {
             if ( ( pObjIndex = get_obj_index( vnum ) ) != NULL )
@@ -3905,8 +3907,8 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                     {
                         found = TRUE;
                         count++;
-                        sprintf( buf, "%s(%3d) [%5d] $%10.10d : %s\n\r",
-                        pObjIndex->count ? "*" : " ", count, pObjIndex->vnum, pObjIndex->cost, pObjIndex->short_descr );
+                        sprintf( buf, "(%3d) <{Y%3d{x> [{g%5d{x] {Bx %2d{x {y${w%10.10d {x: %s\n\r",
+                            count, pObjIndex->level, pObjIndex->vnum, pObjIndex->count, pObjIndex->cost, pObjIndex->short_descr );
                         add_buf(buffer,buf);
                         foundlevel = FALSE;
                     }

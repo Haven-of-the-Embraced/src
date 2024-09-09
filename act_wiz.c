@@ -3342,6 +3342,8 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
             table = &part_flags;
         else if (!str_prefix(arg2, "size"))
             table = &size_flags;
+        else if (!str_prefix(arg2, "shop"))
+            table = &type_flags;
         else if (!str_prefix(arg2, "race"))
             racetable = TRUE;
         else if (!str_prefix(arg2, "special"))
@@ -3454,13 +3456,20 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                     count, pMobIndex->level, pMobIndex->vnum, pMobIndex->count, pMobIndex->short_descr );
                     add_buf(buffer,buf);
                 }
+
                 if(!str_prefix(arg2, "shop") && pMobIndex->pShop != NULL)
                 {
-                    found = TRUE;
-                    count++;
-                    sprintf( buf, "(%3d) <{Y%3d{x> [{g%5d{x] {Bx %2d{x : %s\n\r",
-                    count, pMobIndex->level, pMobIndex->vnum, pMobIndex->count, pMobIndex->short_descr );
-                    add_buf(buffer,buf);
+                    for ( i = 0; i < MAX_TRADE; i++ )
+                    {
+                        if (!str_prefix(flag_string( type_flags, pMobIndex->pShop->buy_type[i] ), arg3))
+                        {
+                            found = TRUE;
+                            count++;
+                            sprintf( buf, "(%3d) <{Y%3d{x> [{g%5d{x] {Bx %2d{x : %s\n\r",
+                            count, pMobIndex->level, pMobIndex->vnum, pMobIndex->count, pMobIndex->short_descr );
+                            add_buf(buffer,buf);
+                        }
+                    }
                 }
 
                 if(!str_prefix(arg2, "special") && pMobIndex->spec_fun != NULL &&

@@ -3234,6 +3234,8 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
     bool dmgflag = FALSE;
     bool racetable = FALSE;
     bool specprog = FALSE;
+    bool clan = FALSE;
+    bool owner = FALSE;
     int col = 0;
 
     found   = FALSE;
@@ -4008,6 +4010,59 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
 /*Sengir added sector types for rooms to flagfind*/
     if (!str_prefix(arg1, "room"))
     {
+        findflag = TRUE;
+        if(!str_cmp(arg2, "sector"))
+            table = &sector_flags;
+        else if (!str_prefix(arg2, "room"))
+            table = &room_flags;
+        else if (!str_prefix(arg2, "clan"))
+            clan = TRUE;
+        else if (!str_prefix(arg2, "owner"))
+            owner = TRUE;
+        else
+            findflag = FALSE;
+
+        if (findflag)
+        {
+            bool bitfound = FALSE;
+            if (clan)
+                for (i = 0; clan_table[i].name != NULL; i++)
+                {
+                    if (is_exact_name(arg3, clan_table[i].name))
+                        bitfound = TRUE;
+                }
+            else
+                for (i = 0; table[i].name != NULL; i++)
+                {
+                    if (is_exact_name(arg3, table[i].name))
+                    {
+                        affflag = table[i].bit;
+                        bitfound = TRUE;
+                    }
+                }
+            if (!bitfound)
+            {
+                sprintf(buf, "{R**  {xBit name '{B%s{x' not found for [{g%s{x].  {R**{x\n\r", arg3, arg2);
+                sendch(buf, ch);
+                sprintf(buf, " ------------------\n\r|       Bits       |\n\r ------------------\n\r");
+                sendch(buf, ch);
+                if (dmgflag)
+                    for (i = 0; attack_table[i].name != NULL; i++)
+                    {
+                        sprintf(buf, "(%2d) {B%s{x\n\r", i, attack_table[i].name);
+                        sendch(buf, ch);
+                    }
+                else
+                    for (i = 0; table[i].name != NULL; i++)
+                    {
+                        sprintf(buf, "(%2d) {B%s{x\n\r", i, table[i].name);
+                        sendch(buf, ch);
+                    }
+                return;
+            }
+        }
+        send_to_char("      <{YLvl{x> [ {gVnum{x] {BLoad{x : Short Description\n\r", ch);
+        send_to_char("      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\r", ch);
         for (vnum = 0; nMatch < top_room; vnum++)
         {
             if ((pRoomIndex = get_room_index(vnum)) != NULL)

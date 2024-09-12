@@ -3775,22 +3775,48 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                 }
             if (!bitfound)
             {
-                sprintf(buf, "{R**  {xBit name '{B%s{x' not found for [{g%s{x].  {R**{x\n\r", arg3, arg2);
+                sendch(" ------------------------------------------------------------------------\n\r", ch);
+                sprintf(buf, "|    {R******  {xBit name '{B%s{x' is invalid. {R******{x    |\n\r", center(arg3, 26, " "));
                 sendch(buf, ch);
-                sprintf(buf, " ------------------\n\r|       Bits       |\n\r ------------------\n\r");
+                sprintf(buf, "|    Valid [{g%8s{x] Bits are:                                          |\n\r", center(capitalize(arg2), 8, " "));
                 sendch(buf, ch);
+                sendch(" ------------------------------------------------------------------------\n\r", ch);
                 if (dmgflag)
+                {
                     for (i = 0; attack_table[i].name != NULL; i++)
                     {
-                        sprintf(buf, "(%2d) {B%s{x\n\r", i, attack_table[i].name);
-                        sendch(buf, ch);
+                        if (col < 1)
+                        {
+                            sprintf(buf, "(%2d) {B%-26s{x  ", i, attack_table[i].name);
+                            col++;
+                        }
+                        else if (col == 1)
+                        {
+                            sprintf(buf, "(%2d) {B%-26s{x   \n\r", i, attack_table[i].name);
+                            col = 0;
+                        }
+                        add_buf(buffer, buf);
                     }
+                    page_to_char(buf_string(buffer), ch);
+                }
                 else
+                {
                     for (i = 0; table[i].name != NULL; i++)
                     {
-                        sprintf(buf, "(%2d) {B%s{x\n\r", i, table[i].name);
-                        sendch(buf, ch);
+                        if (col < 1)
+                        {
+                            sprintf(buf, "(%2d) {B%-26s{x  ", i, table[i].name);
+                            col++;
+                        }
+                        else if (col == 1)
+                        {
+                            sprintf(buf, "(%2d) {B%-26s{x   \n\r", i, table[i].name);
+                            col = 0;
+                        }
+                        add_buf(buffer, buf);
                     }
+                    page_to_char(buf_string(buffer), ch);
+                }
                 return;
             }
         }
@@ -4026,11 +4052,22 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
         {
             bool bitfound = FALSE;
             if (clan)
-                for (i = 0; clan_table[i].name != NULL; i++)
+            {
+                sprintf(buf, "   [{rclan{x] options are currently disabled.\n\r", i, clan_table[i].name);
+                send_to_char(buf,ch);
+                bitfound = TRUE;
+            }
+/*                for (i = 0; clan_table[i].name != NULL; i++)
                 {
-                    if (is_exact_name(arg3, clan_table[i].name))
+                    if (is_exact_name(clan_lookup(arg3), clan_table[i].name))
+                    sprintf(buf, "(%2d) {B%-26s{x   \n\r", i, clan_table[i].name);
+                    send_to_char(buf,ch);
+                    if (clan_lookup(arg3) == clan_table[i].name)
+                    {
+                        send_to_char("Clan found!\n\r",ch);
                         bitfound = TRUE;
-                }
+                    }
+                }*/
             else
                 for (i = 0; table[i].name != NULL; i++)
                 {
@@ -4042,22 +4079,54 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                 }
             if (!bitfound)
             {
-                sprintf(buf, "{R**  {xBit name '{B%s{x' not found for [{g%s{x].  {R**{x\n\r", arg3, arg2);
+                sendch(" ------------------------------------------------------------------------\n\r", ch);
+                sprintf(buf, "|    {R******  {xBit name '{B%s{x' is invalid. {R******{x    |\n\r", center(arg3, 26, " "));
                 sendch(buf, ch);
-                sprintf(buf, " ------------------\n\r|       Bits       |\n\r ------------------\n\r");
+                sprintf(buf, "|    Valid [{g%8s{x] Bits are:                                          |\n\r", center(capitalize(arg2), 8, " "));
                 sendch(buf, ch);
-                if (dmgflag)
-                    for (i = 0; attack_table[i].name != NULL; i++)
+                sendch(" ------------------------------------------------------------------------\n\r", ch);
+                if (clan)
+                {
+                    send_to_char("   [{rclan{x] options are currently disabled.\n\r",ch);
+                   /* for (i = 0; clan_table[i].name != NULL; i++)
                     {
-                        sprintf(buf, "(%2d) {B%s{x\n\r", i, attack_table[i].name);
-                        sendch(buf, ch);
+                        if (col < 1)
+                        {
+                            sprintf(buf, "(%2d) {B%-26s{x  ", i, clan_table[i].name);
+                            col++;
+                        }
+                        else if (col == 1)
+                        {
+                            sprintf(buf, "(%2d) {B%-26s{x   \n\r", i, clan_table[i].name);
+                            col = 0;
+                        }
+                        add_buf(buffer, buf);
                     }
+                    page_to_char(buf_string(buffer), ch);
+                    for (i = 0; clan_table[i].name != NULL; i++)
+                    {
+                            sprintf(buf, "(%2d) {B%-26s{x   \n\r", i, clan_table[i].name);
+                            send_to_char(buf,ch);
+                    }*/
+                }
                 else
+                {
                     for (i = 0; table[i].name != NULL; i++)
                     {
-                        sprintf(buf, "(%2d) {B%s{x\n\r", i, table[i].name);
-                        sendch(buf, ch);
+                        if (col < 1)
+                        {
+                            sprintf(buf, "(%2d) {B%-26s{x  ", i, table[i].name);
+                            col++;
+                        }
+                        else if (col == 1)
+                        {
+                            sprintf(buf, "(%2d) {B%-26s{x   \n\r", i, table[i].name);
+                            col = 0;
+                        }
+                        add_buf(buffer, buf);
                     }
+                    page_to_char(buf_string(buffer), ch);
+                }
                 return;
             }
         }

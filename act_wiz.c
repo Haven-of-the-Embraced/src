@@ -4068,6 +4068,12 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                         bitfound = TRUE;
                     }
                 }*/
+            else if (owner)
+            {
+                sprintf(buf, "   [{Bowner{x] specified: {B%s{x.\n\r", arg3);
+                send_to_char(buf,ch);
+                bitfound = TRUE;
+            }
             else
                 for (i = 0; table[i].name != NULL; i++)
                 {
@@ -4108,6 +4114,10 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                             sprintf(buf, "(%2d) {B%-26s{x   \n\r", i, clan_table[i].name);
                             send_to_char(buf,ch);
                     }*/
+                }
+                else if (owner)
+                {
+                    send_to_char("   [{Bowner{x] must be specified.\n\r",ch);
                 }
                 else
                 {

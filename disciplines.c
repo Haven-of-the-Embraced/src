@@ -1091,11 +1091,11 @@ void do_auraperception( CHAR_DATA *ch, char *argument )
     }
     if(ch->pcdata->discipline[AUSPEX] < 2)
     {
-    send_to_char( "You are not trained enough in Auspex!\n\r", ch );
-    return;
+        send_to_char( "You are not trained enough in Auspex!\n\r", ch );
+        return;
     }
 
-    if (ch->pblood < 20)
+    if (ch->pblood < 15)
     {
         send_to_char( "You do not have enough blood.\n\r", ch );
         return;
@@ -1106,9 +1106,10 @@ void do_auraperception( CHAR_DATA *ch, char *argument )
         send_to_char( "View whom?\n\r", ch );
         return;
     }
+
     if ( ( victim = get_char_room( ch, NULL, arg1 ) ) == NULL )
     {
-        send_to_char( "View whom?\n\r", ch );
+        send_to_char( "View whose aura?\n\r", ch );
         return;
     }
 
@@ -1116,9 +1117,10 @@ void do_auraperception( CHAR_DATA *ch, char *argument )
 
     ch->pblood -= 10;
 
-    if (success < 0)
-    { send_to_char("You are unable to read their aura.\n\r", ch);
-    return;
+    if (success <= 0)
+    {
+        send_to_char("You are unable to read their aura.\n\r", ch);
+        return;
     }
 
     sprintf( buf, "%s is %d years old.\n\r", victim->name, get_age(victim));

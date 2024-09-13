@@ -4023,6 +4023,7 @@ bool    breathes	args( ( CHAR_DATA *ch ) );
 bool    is_natural  args( ( CHAR_DATA *ch) );
 bool    higher_beast args( ( CHAR_DATA *ch) );
 bool    human_variant args( ( CHAR_DATA *ch) );
+bool    is_humanoid args( ( CHAR_DATA *ch));
 bool    is_supernatural args( ( CHAR_DATA *ch));
 bool    is_umbral_denizen args( ( CHAR_DATA *ch) );
 char    *name_the_spirit args( (CHAR_DATA *ch) );

@@ -882,6 +882,29 @@ bool human_variant( CHAR_DATA *ch )
     return FALSE;
 }
 
+bool is_humanoid( CHAR_DATA *ch )
+{
+  if (
+        ch->race == race_lookup("human") ||
+        ch->race == race_lookup("kinfolk") ||
+        ch->race == race_lookup("mage") ||
+        ch->race == race_lookup("romani") ||
+        ch->race == race_lookup("dhampire") ||
+        ch->race == race_lookup("garou") ||
+        ch->race == race_lookup("ghoul") ||
+        ch->race == race_lookup("methuselah") ||
+        ch->race == race_lookup("vampire") ||
+        ch->race == race_lookup("wraith") ||
+        ch->race == race_lookup("faerie") ||
+        ch->race == race_lookup("fera") ||
+        ch->race == race_lookup("kuei-jin")
+      )
+      return TRUE;
+
+  else
+    return FALSE;
+}
+
 bool is_supernatural( CHAR_DATA *ch )
 {
   if (

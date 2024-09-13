@@ -4070,7 +4070,7 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                 }*/
             else if (owner)
             {
-                sprintf(buf, "   [{Bowner{x] specified: {B%s{x.\n\r", arg3);
+                sprintf(buf, "    {R** {x[{Yowner{x] specified '{Y%s{x'  {R**{x\n\r", arg3);
                 send_to_char(buf,ch);
                 bitfound = TRUE;
             }
@@ -4156,7 +4156,7 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                     {
                         found = TRUE;
                         count++;
-                        sprintf( buf, " (%3d) [%5d] %s\n\r", count, pRoomIndex->vnum, pRoomIndex->name);
+                        sprintf( buf, " (%3d) [{g%5d{x] : %s\n\r", count, pRoomIndex->vnum, pRoomIndex->name);
                         add_buf(buffer,buf);
                     }
                 }
@@ -4167,7 +4167,7 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                     {
                         found = TRUE;
                         count++;
-                        sprintf( buf, " (%3d) [%5d] %s\n\r", count, pRoomIndex->vnum, pRoomIndex->name);
+                        sprintf( buf, " (%3d) [{g%5d{x] : %s\n\r", count, pRoomIndex->vnum, pRoomIndex->name);
                         add_buf(buffer,buf);
                     }
                 }
@@ -4178,7 +4178,7 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                     {
                         found = TRUE;
                         count++;
-                        sprintf( buf, " (%3d) [%5d] %s\n\r", count, pRoomIndex->vnum, pRoomIndex->name);
+                        sprintf( buf, " (%3d) [{g%5d{x] : %s\n\r", count, pRoomIndex->vnum, pRoomIndex->name);
                         add_buf(buffer,buf);
                     }
                 }
@@ -4193,7 +4193,6 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                     add_buf(buffer,buf);
                   }
                 }
-
             }
         }
     }

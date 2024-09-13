@@ -4140,7 +4140,10 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                 return;
             }
         }
-        send_to_char("      <{YLvl{x> [ {gVnum{x] {BLoad{x : Short Description\n\r", ch);
+        if (!str_prefix(arg2, "owner"))
+            send_to_char("       [ {gVnum{x] { {YRoom Owner {x} : Room Name\n\r", ch);
+        else
+            send_to_char("       [ {gVnum{x] {x: Room Name\n\r", ch);
         send_to_char("      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\r", ch);
         for (vnum = 0; nMatch < top_room; vnum++)
         {
@@ -4182,11 +4185,11 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
 
                 if(!str_prefix(arg2, "owner"))
                 {
-                  if (!str_cmp(pRoomIndex->owner, arg3))
+                  if (!str_cmp(pRoomIndex->owner, arg3) || (!str_cmp("all", arg3) && !IS_NULLSTR(pRoomIndex->owner)))
                   {
                     found = TRUE;
                     count++;
-                    sprintf( buf, " (%3d) [%5d] %s\n\r", count, pRoomIndex->vnum, pRoomIndex->name);
+                    sprintf( buf, " (%3d) [{g%5d{x] { {Y%10s{x } : %s\n\r", count, pRoomIndex->vnum, pRoomIndex->owner, pRoomIndex->name);
                     add_buf(buffer,buf);
                   }
                 }

@@ -1072,8 +1072,10 @@ void do_auraperception( CHAR_DATA *ch, char *argument )
 {
     char arg1 [MAX_INPUT_LENGTH];
     char buf[MAX_STRING_LENGTH];
-    char aur[MAX_STRING_LENGTH];
-    sprintf(aur, "{x");
+    char auracol[MAX_STRING_LENGTH];
+    char raceaura[MAX_STRING_LENGTH];
+    sprintf(auracol, "{W");
+    sprintf(raceaura, "{W(Moderate){x");
     BUFFER *buffer;
     buffer = new_buf();
     CHAR_DATA *victim;
@@ -1127,21 +1129,51 @@ void do_auraperception( CHAR_DATA *ch, char *argument )
         return;
     }
 
-    if ( IS_SET(victim->form, FORM_SENTIENT))
+    if (victim->race == race_lookup("vampire") || victim->race == race_lookup("methuselah"))
+    {
+        sprintf(raceaura, "({wPale{x)");
+    }
+    else if (victim->race == race_lookup("garou") || victim->race == race_lookup("fera"))
+    {
+        sprintf(raceaura, "({GVibrant{x)");
+    }
+    else if (victim->race == race_lookup("mage"))
+    {
+        sprintf(raceaura, "({CS{Wp{Ca{Wr{Ck{Wl{Ci{Wn{Cg{x)");
+    }
+    else if (victim->race == race_lookup("wraith"))
+    {
+        sprintf(raceaura, "({DI{wn{Dt{we{Dr{wm{Di{wt{Dt{we{Dn{wt{x)");
+    }
+    else if (victim->race == race_lookup("faerie"))
+    {
+        sprintf(raceaura, "({RC{Yo{Gl{Bo{Mr{x)");
+    }
+    else if (victim->race == race_lookup("kuei-jin"))
+    {
+        sprintf(raceaura, "({DI{wn{Dt{we{Dr{wm{Di{wt{Dt{we{Dn{wt{x)");
+    }
+
+    if (!is_humanoid(victim))
+    {
+        send_to_char("You do not see any particular aura surrounding your target.\n\r", ch);
+        return;
+    }
+    else
     {
         send_to_char("{m|-------------------------( (     {MAuras{m      ) )-------------------------|{x \n\r", ch);
         sprintf( buf, "{m| {xAuras swirling around %s's form:\n\r", victim->short_descr);
         send_to_char( buf, ch );
         send_to_char("{m|-------------------------( ( ( ( ( -- ) ) ) ) )-------------------------|{x \n\r", ch);
-        sprintf( buf, "              %s({x   O   %s){x\n\r", aur, aur);
+        sprintf( buf, "              %s({x   O   %s){x          [Main Aura]\n\r", auracol, auracol);
         add_buf(buffer, buf);
-        sprintf( buf, "              %s({x --+-- %s){x\n\r", aur, aur);
+        sprintf( buf, "              %s({x --+-- %s){x          %s\n\r", auracol, auracol, raceaura);
         add_buf(buffer, buf);
-        sprintf( buf, "              %s({x   M   %s){x\n\r", aur, aur);
+        sprintf( buf, "              %s({x   M   %s){x          \n\r", auracol, auracol);
         add_buf(buffer, buf);
-        sprintf( buf, "              %s({x  / \\  %s){x\n\r", aur, aur);
+        sprintf( buf, "              %s({x  / \\  %s){x          \n\r", auracol, auracol);
         add_buf(buffer, buf);
-        sprintf( buf, "              %s({x /   \\ %s){x\n\r", aur, aur);
+        sprintf( buf, "              %s({x /   \\ %s){x          \n\r", auracol, auracol);
         add_buf(buffer, buf);
         sprintf( buf, " Body Aura\n\r" );
         add_buf(buffer, buf);

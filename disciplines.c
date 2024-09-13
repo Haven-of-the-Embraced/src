@@ -1072,6 +1072,10 @@ void do_auraperception( CHAR_DATA *ch, char *argument )
 {
     char arg1 [MAX_INPUT_LENGTH];
     char buf[MAX_STRING_LENGTH];
+    char aur[MAX_STRING_LENGTH];
+    sprintf(aur, "{x");
+    BUFFER *buffer;
+    buffer = new_buf();
     CHAR_DATA *victim;
     int success;
     argument = one_argument( argument, arg1 );
@@ -1126,8 +1130,22 @@ void do_auraperception( CHAR_DATA *ch, char *argument )
     if ( IS_SET(victim->form, FORM_SENTIENT))
     {
         send_to_char("{m|-------------------------( (     {MAuras{m      ) )-------------------------|{x \n\r", ch);
-        sprintf( buf, "{m| {xAuras swirling around %s's form:\n\r{m| {x", victim->short_descr);
+        sprintf( buf, "{m| {xAuras swirling around %s's form:\n\r", victim->short_descr);
         send_to_char( buf, ch );
+        send_to_char("{m|-------------------------( ( ( ( ( -- ) ) ) ) )-------------------------|{x \n\r", ch);
+        sprintf( buf, "              %s({x   O   %s){x\n\r", aur, aur);
+        add_buf(buffer, buf);
+        sprintf( buf, "              %s({x --+-- %s){x\n\r", aur, aur);
+        add_buf(buffer, buf);
+        sprintf( buf, "              %s({x   M   %s){x\n\r", aur, aur);
+        add_buf(buffer, buf);
+        sprintf( buf, "              %s({x  / \\  %s){x\n\r", aur, aur);
+        add_buf(buffer, buf);
+        sprintf( buf, "              %s({x /   \\ %s){x\n\r", aur, aur);
+        add_buf(buffer, buf);
+        sprintf( buf, " Body Aura\n\r" );
+        add_buf(buffer, buf);
+        page_to_char(buf_string(buffer),ch);
         if (IS_SET(victim->act,ACT_SENTINEL))
             send_to_char(" [ Immobility  ]", ch);
         else

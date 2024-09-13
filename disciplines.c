@@ -1123,6 +1123,73 @@ void do_auraperception( CHAR_DATA *ch, char *argument )
         return;
     }
 
+    if ( IS_SET(victim->form, FORM_SENTIENT))
+    {
+        send_to_char("{m|-------------------------( (     {MAuras{m      ) )-------------------------|{x \n\r", ch);
+        sprintf( buf, "{m| {xAuras swirling around %s's form:\n\r{m| {x", victim->short_descr);
+        send_to_char( buf, ch );
+        if (IS_SET(victim->act,ACT_SENTINEL))
+            send_to_char(" [ Immobility  ]", ch);
+        else
+            send_to_char("                ", ch);
+        if (IS_SET(victim->act,ACT_SCAVENGER))
+            send_to_char("   [  Hoarding   ]", ch);
+        else
+            send_to_char("                  ", ch);
+        if (IS_SET(victim->act,ACT_AGGRESSIVE))
+            send_to_char("  [    Anger    ]", ch);
+        else
+            send_to_char("                 ", ch);
+        if (IS_SET(victim->act,ACT_WIMPY))
+            send_to_char("   [  Cowardice  ]", ch);
+        else
+            send_to_char("                  ", ch);
+        send_to_char("\n\r{c| {x", ch);
+        if (IS_SET(victim->act,ACT_CLERIC))
+            send_to_char(" [  Devotion   ]", ch);
+        else
+            send_to_char("                ", ch);
+        if (IS_SET(victim->act,ACT_MAGE))
+            send_to_char("   [Enlightenment]", ch);
+        else
+            send_to_char("                  ", ch);
+        if (IS_SET(victim->act,ACT_THIEF))
+            send_to_char("  [  Duplicity  ]", ch);
+        else
+            send_to_char("                 ", ch);
+        if (IS_SET(victim->act,ACT_WARRIOR))
+            send_to_char("   [    Valor    ]", ch);
+        else
+            send_to_char("                  ", ch);
+        send_to_char("\n\r{c| {x", ch);
+        if (IS_SET(victim->act,ACT_IS_HEALER))
+            send_to_char(" [ Assistance  ]", ch);
+        else
+            send_to_char("                ", ch);
+        if (IS_SET(victim->act,ACT_IS_CHANGER))
+            send_to_char("   [   Avarice   ]", ch);
+        else
+            send_to_char("                  ", ch);
+        send_to_char("\n\r{c| {x", ch);
+        if (IS_SET(victim->act2,ACT2_INFLUENCE))
+            send_to_char(" [ Persuasion  ]", ch);
+        else
+            send_to_char("                ", ch);
+        if (IS_SET(victim->act2,ACT2_BLOOD_DOLL))
+            send_to_char("   [   Desire    ]", ch);
+        else
+            send_to_char("                  ", ch);
+        if (IS_SET(victim->act2,ACT2_RETAINER))
+            send_to_char("  [ Employment  ]", ch);
+        else
+            send_to_char("                 ", ch);
+        if (IS_SET(victim->act2,ACT2_SOCIALITE))
+            send_to_char(" [ Aristocracy ]", ch);
+        else
+            send_to_char("                ", ch);
+        send_to_char("{x\n\r", ch);
+    }
+
     sprintf( buf, "%s is %d years old.\n\r", victim->name, get_age(victim));
     send_to_char( buf, ch );
 

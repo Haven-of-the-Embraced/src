@@ -1080,6 +1080,7 @@ void do_auraperception( CHAR_DATA *ch, char *argument )
     buffer = new_buf();
     CHAR_DATA *victim;
     int success;
+    bool crit == FALSE;
     argument = one_argument( argument, arg1 );
 
     if (IS_NPC(ch)) return;
@@ -1101,12 +1102,6 @@ void do_auraperception( CHAR_DATA *ch, char *argument )
         return;
     }
 
-    if (ch->move < ch->level)
-    {
-        send_to_char( "You are too tired to focus on reading auras.\n\r", ch );
-        return;
-    }
-
     if ( arg1[0] == '\0')
     {
         send_to_char( "View whom?\n\r", ch );
@@ -1119,8 +1114,14 @@ void do_auraperception( CHAR_DATA *ch, char *argument )
         return;
     }
 
-    success = godice(get_attribute(ch, PERCEPTION) + ch->csabilities[CSABIL_EMPATHY], 8);
+    if (ch->move < ch->level)
+    {
+        send_to_char( "You are too tired to focus on reading auras.\n\r", ch );
+        return;
+    }
 
+    success = godice(get_attribute(ch, PERCEPTION) + ch->csabilities[CSABIL_EMPATHY], 8);
+    WAIT_STATE(ch, 12);
     ch->move -= ch->level;
 
     if (success <= 0)
@@ -1129,29 +1130,50 @@ void do_auraperception( CHAR_DATA *ch, char *argument )
         return;
     }
 
+    if (success >= 4)
+        crit = TRUE;
+
     if (victim->race == race_lookup("vampire") || victim->race == race_lookup("methuselah"))
     {
-        sprintf(raceaura, "({wPale{x)");
+        if (crit)
+            sprintf(raceaura, "({wKindred{x)");
+        else
+            sprintf(raceaura, "({wPale{x)");
     }
     else if (victim->race == race_lookup("garou") || victim->race == race_lookup("fera"))
     {
-        sprintf(raceaura, "({GVibrant{x)");
+        if (crit)
+            sprintf(raceaura, "({GWerebeast{x)");
+        else
+            sprintf(raceaura, "({GVibrant{x)");
     }
     else if (victim->race == race_lookup("mage"))
     {
-        sprintf(raceaura, "({CS{Wp{Ca{Wr{Ck{Wl{Ci{Wn{Cg{x)");
+        if (crit)
+            sprintf(raceaura, "({CM{Wy{Cs{Wt{Ci{Wc{x)");
+        else
+            sprintf(raceaura, "({CS{Wp{Ca{Wr{Ck{Wl{Ci{Wn{Cg{x)");
     }
     else if (victim->race == race_lookup("wraith"))
     {
-        sprintf(raceaura, "({DI{wn{Dt{we{Dr{wm{Di{wt{Dt{we{Dn{wt{x)");
+        if (crit)
+            sprintf(raceaura, "({DG{wh{Do{ws{Dt{x)");
+        else
+            sprintf(raceaura, "({DI{wn{Dt{we{Dr{wm{Di{wt{Dt{we{Dn{wt{x)");
     }
     else if (victim->race == race_lookup("faerie"))
     {
-        sprintf(raceaura, "({RC{Yo{Gl{Bo{Mr{x)");
+        if (crit)
+            sprintf(raceaura, "{R({YF{Ga{Be{M){x");
+        else
+            sprintf(raceaura, "({RC{Yo{Gl{Bo{Mr{x)");
     }
     else if (victim->race == race_lookup("kuei-jin"))
     {
-        sprintf(raceaura, "({DStained{x)");
+        if (crit)
+            sprintf(raceaura, "({DDemonic Touched{x)");
+        else
+            sprintf(raceaura, "({DStained{x)");
     }
 
     if (IS_SET(victim->act,ACT_AGGRESSIVE))
@@ -1175,7 +1197,7 @@ void do_auraperception( CHAR_DATA *ch, char *argument )
     else
     {
         send_to_char("{m|-------------------------( (     {MAuras{m      ) )-------------------------|{x \n\r", ch);
-        sprintf( buf, "{m| {xAuras swirling around %s's form:\n\r", victim->short_descr);
+        sprintf( buf, "{m| {xYou carefully examine the Auras swirling around %s:\n\r", victim->short_descr);
         send_to_char( buf, ch );
         send_to_char("{m|-------------------------( ( ( ( ( -- ) ) ) ) )-------------------------|{x \n\r", ch);
         sprintf( buf, "              %s({x   O   %s){x          [Main Aura]\n\r", auracol, auracol);
@@ -1187,8 +1209,6 @@ void do_auraperception( CHAR_DATA *ch, char *argument )
         sprintf( buf, "              %s({x  / \\  %s){x\n\r", auracol, auracol);
         add_buf(buffer, buf);
         sprintf( buf, "              %s({x /   \\ %s){x\n\r", auracol, auracol);
-        add_buf(buffer, buf);
-        sprintf( buf, " Body Aura Colors\n\r" );
         add_buf(buffer, buf);
         page_to_char(buf_string(buffer),ch);
     }

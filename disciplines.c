@@ -1151,7 +1151,20 @@ void do_auraperception( CHAR_DATA *ch, char *argument )
     }
     else if (victim->race == race_lookup("kuei-jin"))
     {
-        sprintf(raceaura, "({DI{wn{Dt{we{Dr{wm{Di{wt{Dt{we{Dn{wt{x)");
+        sprintf(raceaura, "({DStained{x)");
+    }
+
+    if (IS_SET(victim->act,ACT_AGGRESSIVE))
+    {
+        sprintf(auracol, "{R");
+    }
+    else if (IS_SET(victim->act,ACT_WIMPY))
+    {
+        sprintf(auracol, "{B");
+    }
+    else if (IS_SET(victim->act,ACT_IS_CHANGER))
+    {
+        sprintf(auracol, "{G");
     }
 
     if (!is_humanoid(victim))

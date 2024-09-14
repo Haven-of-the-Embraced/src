@@ -1080,7 +1080,7 @@ void do_auraperception( CHAR_DATA *ch, char *argument )
     buffer = new_buf();
     CHAR_DATA *victim;
     int success;
-    bool crit == FALSE;
+    bool crit = FALSE;
     argument = one_argument( argument, arg1 );
 
     if (IS_NPC(ch)) return;

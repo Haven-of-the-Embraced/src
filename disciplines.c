@@ -1101,9 +1101,9 @@ void do_auraperception( CHAR_DATA *ch, char *argument )
         return;
     }
 
-    if (ch->pblood < 15)
+    if (ch->move < ch->level)
     {
-        send_to_char( "You do not have enough blood.\n\r", ch );
+        send_to_char( "You are too tired to focus on reading auras.\n\r", ch );
         return;
     }
 
@@ -1121,7 +1121,7 @@ void do_auraperception( CHAR_DATA *ch, char *argument )
 
     success = godice(get_attribute(ch, PERCEPTION) + ch->csabilities[CSABIL_EMPATHY], 8);
 
-    ch->pblood -= 10;
+    ch->move -= ch->level;
 
     if (success <= 0)
     {
@@ -1169,85 +1169,16 @@ void do_auraperception( CHAR_DATA *ch, char *argument )
         add_buf(buffer, buf);
         sprintf( buf, "              %s({x --+-- %s){x          %s\n\r", auracol, auracol, raceaura);
         add_buf(buffer, buf);
-        sprintf( buf, "              %s({x   M   %s){x          \n\r", auracol, auracol);
+        sprintf( buf, "              %s({x   M   %s){x\n\r", auracol, auracol);
         add_buf(buffer, buf);
-        sprintf( buf, "              %s({x  / \\  %s){x          \n\r", auracol, auracol);
+        sprintf( buf, "              %s({x  / \\  %s){x\n\r", auracol, auracol);
         add_buf(buffer, buf);
-        sprintf( buf, "              %s({x /   \\ %s){x          \n\r", auracol, auracol);
+        sprintf( buf, "              %s({x /   \\ %s){x\n\r", auracol, auracol);
         add_buf(buffer, buf);
-        sprintf( buf, " Body Aura\n\r" );
+        sprintf( buf, " Body Aura Colors\n\r" );
         add_buf(buffer, buf);
         page_to_char(buf_string(buffer),ch);
-        if (IS_SET(victim->act,ACT_SENTINEL))
-            send_to_char(" [ Immobility  ]", ch);
-        else
-            send_to_char("                ", ch);
-        if (IS_SET(victim->act,ACT_SCAVENGER))
-            send_to_char("   [  Hoarding   ]", ch);
-        else
-            send_to_char("                  ", ch);
-        if (IS_SET(victim->act,ACT_AGGRESSIVE))
-            send_to_char("  [    Anger    ]", ch);
-        else
-            send_to_char("                 ", ch);
-        if (IS_SET(victim->act,ACT_WIMPY))
-            send_to_char("   [  Cowardice  ]", ch);
-        else
-            send_to_char("                  ", ch);
-        send_to_char("\n\r{c| {x", ch);
-        if (IS_SET(victim->act,ACT_CLERIC))
-            send_to_char(" [  Devotion   ]", ch);
-        else
-            send_to_char("                ", ch);
-        if (IS_SET(victim->act,ACT_MAGE))
-            send_to_char("   [Enlightenment]", ch);
-        else
-            send_to_char("                  ", ch);
-        if (IS_SET(victim->act,ACT_THIEF))
-            send_to_char("  [  Duplicity  ]", ch);
-        else
-            send_to_char("                 ", ch);
-        if (IS_SET(victim->act,ACT_WARRIOR))
-            send_to_char("   [    Valor    ]", ch);
-        else
-            send_to_char("                  ", ch);
-        send_to_char("\n\r{c| {x", ch);
-        if (IS_SET(victim->act,ACT_IS_HEALER))
-            send_to_char(" [ Assistance  ]", ch);
-        else
-            send_to_char("                ", ch);
-        if (IS_SET(victim->act,ACT_IS_CHANGER))
-            send_to_char("   [   Avarice   ]", ch);
-        else
-            send_to_char("                  ", ch);
-        send_to_char("\n\r{c| {x", ch);
-        if (IS_SET(victim->act2,ACT2_INFLUENCE))
-            send_to_char(" [ Persuasion  ]", ch);
-        else
-            send_to_char("                ", ch);
-        if (IS_SET(victim->act2,ACT2_BLOOD_DOLL))
-            send_to_char("   [   Desire    ]", ch);
-        else
-            send_to_char("                  ", ch);
-        if (IS_SET(victim->act2,ACT2_RETAINER))
-            send_to_char("  [ Employment  ]", ch);
-        else
-            send_to_char("                 ", ch);
-        if (IS_SET(victim->act2,ACT2_SOCIALITE))
-            send_to_char(" [ Aristocracy ]", ch);
-        else
-            send_to_char("                ", ch);
-        send_to_char("{x\n\r", ch);
     }
-
-    sprintf( buf, "%s is %d years old.\n\r", victim->name, get_age(victim));
-    send_to_char( buf, ch );
-
-    sprintf(buf, "%s is a %s %s.\n\r",
-    victim->name,
-    victim->sex == 0 ? "sexless" : victim->sex == 1 ? "male" : "female",
-    race_table[victim->race].name);
-    send_to_char(buf,ch);
 
     if(success > 1)
     {

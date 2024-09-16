@@ -1216,85 +1216,34 @@ void do_auraperception( CHAR_DATA *ch, char *argument )
         add_buf(buffer, buf);
         sprintf( buf, "              %s({x --+-- %s){x          %s\n\r", auracol, auracol, raceaura);
         add_buf(buffer, buf);
-        sprintf( buf, "              %s({x   M   %s){x\n\r", auracol, auracol);
+        sprintf( buf, "              %s({x   M   %s){x          %s\n\r", auracol, auracol, crit ? "[Aura Colors]" : "");
         add_buf(buffer, buf);
-        sprintf( buf, "              %s({x  / \\  %s){x\n\r", auracol, auracol);
+        sprintf( buf, "              %s({x  / \\  %s){x          ", auracol, auracol);
         add_buf(buffer, buf);
-        sprintf( buf, "              %s({x /   \\ %s){x\n\r", auracol, auracol);
+        if (crit)
+        {
+            sprintf( buf, "%s%s%s",
+                IS_SET(victim->act,ACT_AGGRESSIVE) ? "{m(Aggressive){x " : "", 
+                IS_SET(victim->act,ACT_WIMPY) ? "{Y(Afraid){x " : "",
+                IS_SET(victim->act,ACT_IS_CHANGER) ? "{G(Greedy){x " : "");
+            add_buf(buffer, buf);
+        }
+        add_buf(buffer, "\n\r");
+        sprintf( buf, "              %s({x /   \\ %s){x          ", auracol, auracol);
         add_buf(buffer, buf);
+        if (crit)
+        {
+            sprintf( buf, "%s%s%s",
+                IS_SET(victim->affected_by,AFF_BERSERK) ? "{r(Angry){x " : "", 
+                IS_SET(victim->affected_by,AFF_CALM) ? "{C(Relaxed){x " : "",
+                IS_SET(victim->affected_by,AFF_CHARM) ? "{B(Lustful){x " : "");
+            add_buf(buffer, buf);
+        }
+        add_buf(buffer, "\n\r");
         page_to_char(buf_string(buffer),ch);
+        send_to_char("{m|-------------------------( ( ( ( ( -- ) ) ) ) )-------------------------|{x \n\r", ch);
     }
 
-    if(success > 1)
-    {
-        sprintf( buf,
-        "They have %d/%d hit, %d/%d mana and %d/%d movement.\n\r",
-        victim->hit,  victim->max_hit,
-        victim->mana, victim->max_mana,
-        victim->move, victim->max_move);
-        send_to_char( buf, ch );
-
-    }
-    if(success > 2)
-    {
-        switch ( victim->position )
-        {
-        case POS_TORPOR:
-        send_to_char( "They are in Torpor.\n\r",        ch );
-        break;
-        case POS_DEAD:
-        send_to_char( "They are DEAD!!\n\r",        ch );
-        break;
-        case POS_MORTAL:
-        send_to_char( "They are mortally wounded.\n\r", ch );
-        break;
-        case POS_INCAP:
-        send_to_char( "They are incapacitated.\n\r",    ch );
-        break;
-        case POS_STUNNED:
-        send_to_char( "They are stunned.\n\r",      ch );
-        break;
-        case POS_SLEEPING:
-        send_to_char( "They are sleeping.\n\r",     ch );
-        break;
-        case POS_RESTING:
-        send_to_char( "They are resting.\n\r",      ch );
-        break;
-        case POS_SITTING:
-        send_to_char( "They are sitting.\n\r",      ch );
-        break;
-        case POS_STANDING:
-        send_to_char( "They are standing.\n\r",     ch );
-        break;
-        case POS_FIGHTING:
-        send_to_char( "They are fighting.\n\r",     ch );
-        break;
-        }
-
-        sprintf( buf,"Armor: pierce: %d  bash: %d  slash: %d  magic: %d\n\r",
-            GET_AC(victim,AC_PIERCE),
-            GET_AC(victim,AC_BASH),
-            GET_AC(victim,AC_SLASH),
-            GET_AC(victim,AC_EXOTIC));
-            send_to_char(buf,ch);
-
-        sprintf( buf, "They have: Hitroll: %d  Damroll: %d.\n\r",
-            GET_HITROLL(victim), GET_DAMROLL(victim) );
-        send_to_char( buf, ch );
-
-    }
-    if(success > 3)
-    {
-        if(IS_VAMP(victim))
-        {
-        sprintf(buf, "Their Generation is %d.\n\r", victim->gen);
-        send_to_char(buf,ch);
-        sprintf(buf, "Their Sire is %s.\n\r", victim->sire);
-        send_to_char(buf,ch);
-        sprintf(buf, "They have %d Blood Points.\n\r", victim->pblood);
-        send_to_char(buf,ch);
-        }
-    }
     return;
 }
 

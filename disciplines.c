@@ -1121,7 +1121,7 @@ void do_auraperception( CHAR_DATA *ch, char *argument )
     }
 
     success = godice(get_attribute(ch, PERCEPTION) + ch->csabilities[CSABIL_EMPATHY], 8);
-    WAIT_STATE(ch, 12);
+    WAIT_STATE(ch, 24);
     ch->move -= ch->level;
 
     if (success <= 0)
@@ -1130,7 +1130,7 @@ void do_auraperception( CHAR_DATA *ch, char *argument )
         return;
     }
 
-    if (success >= 4)
+    if (success >= 3)
         crit = TRUE;
 
     if (victim->race == race_lookup("vampire") || victim->race == race_lookup("methuselah"))
@@ -1178,15 +1178,27 @@ void do_auraperception( CHAR_DATA *ch, char *argument )
 
     if (IS_SET(victim->act,ACT_AGGRESSIVE))
     {
-        sprintf(auracol, "{R");
+        sprintf(auracol, "{m");
     }
     else if (IS_SET(victim->act,ACT_WIMPY))
     {
-        sprintf(auracol, "{B");
+        sprintf(auracol, "{Y");
     }
     else if (IS_SET(victim->act,ACT_IS_CHANGER))
     {
         sprintf(auracol, "{G");
+    }
+    else if (IS_SET(victim->affected_by,AFF_BERSERK))
+    {
+        sprintf(auracol, "{r");
+    }
+    else if (IS_SET(victim->affected_by,AFF_CALM))
+    {
+        sprintf(auracol, "{C");
+    }
+    else if (IS_SET(victim->affected_by,AFF_CHARM))
+    {
+        sprintf(auracol, "{B");
     }
 
     if (!is_humanoid(victim))

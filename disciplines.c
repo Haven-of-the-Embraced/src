@@ -1211,14 +1211,14 @@ void do_auraperception( CHAR_DATA *ch, char *argument )
         send_to_char("{m|-------------------------( (     {MAuras{m      ) )-------------------------|{x \n\r", ch);
         sprintf( buf, "{m| {xYou carefully examine the Auras swirling around %s:\n\r", victim->short_descr);
         send_to_char( buf, ch );
-        send_to_char("{m|-------------------------( ( ( ( ( -- ) ) ) ) )-------------------------|{x \n\r", ch);
-        sprintf( buf, "              %s({x   O   %s){x          [Main Aura]\n\r", auracol, auracol);
+        send_to_char("{m|-------------------------( ( ( ( ( -- ) ) ) ) )-------------------------|{x \n\r\n\r", ch);
+        sprintf( buf, "              %s({x   O   %s){x             [Main Aura]\n\r", auracol, auracol);
         add_buf(buffer, buf);
-        sprintf( buf, "              %s({x --+-- %s){x          %s\n\r", auracol, auracol, raceaura);
+        sprintf( buf, "              %s({x --+-- %s){x             %s\n\r", auracol, auracol, raceaura);
         add_buf(buffer, buf);
-        sprintf( buf, "              %s({x   M   %s){x          %s\n\r", auracol, auracol, crit ? "[Aura Colors]" : "");
+        sprintf( buf, "              %s({x   M   %s){x             %s\n\r", auracol, auracol, crit ? "[Aura Colors]" : "");
         add_buf(buffer, buf);
-        sprintf( buf, "              %s({x  / \\  %s){x          ", auracol, auracol);
+        sprintf( buf, "              %s({x  / \\  %s){x             ", auracol, auracol);
         add_buf(buffer, buf);
         if (crit)
         {
@@ -1229,7 +1229,7 @@ void do_auraperception( CHAR_DATA *ch, char *argument )
             add_buf(buffer, buf);
         }
         add_buf(buffer, "\n\r");
-        sprintf( buf, "              %s({x /   \\ %s){x          ", auracol, auracol);
+        sprintf( buf, "              %s({x /   \\ %s){x             ", auracol, auracol);
         add_buf(buffer, buf);
         if (crit)
         {
@@ -1241,7 +1241,7 @@ void do_auraperception( CHAR_DATA *ch, char *argument )
         }
         add_buf(buffer, "\n\r");
         page_to_char(buf_string(buffer),ch);
-        send_to_char("{m|-------------------------( ( ( ( ( -- ) ) ) ) )-------------------------|{x \n\r", ch);
+        send_to_char("\n\r{m|-------------------------( ( ( ( ( -- ) ) ) ) )-------------------------|{x \n\r", ch);
     }
 
     return;

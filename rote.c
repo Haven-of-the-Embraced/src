@@ -3207,6 +3207,9 @@ void rote_camouflagediscernment(CHAR_DATA *ch, int success, CHAR_DATA *victim, O
     af.modifier  = 0;
     af.bitvector = AFF_DETECT_HIDDEN;
     affect_to_char( victim, &af );
+    af.where     = TO_AFFECTS2;
+    af.bitvector = AFF2_DETECT_UNSEEN;
+    affect_to_char( victim, &af );
     send_to_char("Focusing on thoughts nearby, you pinpoint life forms hiding in the room.\n\r",ch);
     return;
 }

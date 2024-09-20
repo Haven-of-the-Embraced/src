@@ -2512,6 +2512,12 @@ void do_whois (CHAR_DATA *ch, char *argument)
 {
     CHAR_DATA *victim;
     char arg[MAX_INPUT_LENGTH];
+    char buf[MAX_STRING_LENGTH];
+    DESCRIPTOR_DATA *d;
+    BUFFER *buffer;
+    buffer = new_buf();
+
+    one_argument( argument, arg );
 
     if ( arg[0] == '\0' )
     {
@@ -2525,6 +2531,20 @@ void do_whois (CHAR_DATA *ch, char *argument)
         return;
     }
 
+    if(IS_NPC(victim))
+    {
+        send_to_char( "That isn't a player.\n\r",ch);
+        return;
+    }
+
+    if (victim->level > ch->level)
+    {
+        send_to_char( "That won't work on those higher level than you.\n\r",ch);
+        return;
+    }
+
+    sprintf(buf, "%s", victim->name);
+    add_buf(buffer, buf);
     return; 
 }
 

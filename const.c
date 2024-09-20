@@ -2095,7 +2095,7 @@ Total (3) */
 
     { "telepathy",       {  102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
-    &gsn_telepathy,         SLOT(0),     0, 12, "",         "Your attunement to the sentient minds around you fades.",    "" },
+    &gsn_telepathy,         SLOT(0),     0, 12, "mental anguish",         "Your attunement to the sentient minds around you fades.",    "" },
 
     { "astrally lost",   { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_IGNORE,         POS_STANDING,

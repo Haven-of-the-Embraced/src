@@ -1397,9 +1397,12 @@ void do_touch( CHAR_DATA *ch, char *argument )
             }
             break;
         case ITEM_ARMOR:
+            sprintf( buf, "{m()  {MA staunch defender wears this armor upon her.    {D({W%19s{D)    {m(){x\n\r", 
+                center(wear_bit_name(obj->wear_flags),19," "));
+            send_to_char( buf, ch );
             sprintf( buf,
-                "Armor class is %d pierce, %d bash, %d slash, and %d vs. magic.\n\r",
-                obj->value[0], obj->value[1], obj->value[2], obj->value[3] );
+                "{m()  {MArmor:   {W[{D%2d{W] Piercing     {W[{D%2d{W] Bashing     {W[{D%2d{W] Slashing     {W[{D%2d{W] Magic  {m(){x\n\r",
+                obj->value[0]/100, obj->value[1]/100, obj->value[2]/100, obj->value[3]/100 );
             send_to_char( buf, ch );
             break;
     }

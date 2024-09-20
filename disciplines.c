@@ -1422,14 +1422,17 @@ void do_touch( CHAR_DATA *ch, char *argument )
     if ( IS_SET(obj->extra_flags, ITEM_BREW_POT) )
         send_to_char("{m()              {MA {G[strange concoction]{M bubbles errantly nearby.               {m(){x\n\r", ch);
 
-    if (success > 2)
+    if (success > 3)
     {
+        send_to_char("{m()-----------------------------({MIntense Visions{m)------------------------------(){x\n\r",ch);
+        send_to_char("{m()  {MA hazy, billowing smoke surrounds the creation of this powerful object.   {m(){x\n\r",ch);
         if (!obj->enchanted)
+        {
             for ( paf = obj->pIndexData->affected; paf != NULL; paf = paf->next )
             {
                 if ( paf->location != APPLY_NONE && paf->modifier != 0 )
                 {
-                    sprintf( buf, "Affects %s by %d.\n\r",
+                    sprintf( buf, "{m()  {W[{G%20s{W] {M-> {W%4d{x",
                     affect_loc_name( paf->location ), paf->modifier );
                     send_to_char(buf,ch);
                     if (paf->bitvector)
@@ -1437,82 +1440,85 @@ void do_touch( CHAR_DATA *ch, char *argument )
                         switch(paf->where)
                         {
                             case TO_AFFECTS:
-                                sprintf(buf,"Adds %s affect.\n",
+                                sprintf(buf,"                 Affect-|%16s|  {m(){x",
                                 affect_bit_name(paf->bitvector));
                             break;
                             case TO_OBJECT:
-                                sprintf(buf,"Adds %s object flag.\n",
+                                sprintf(buf,"                 Object-|%16s|  {m(){x",
                                 extra_bit_name(paf->bitvector));
                             break;
                             case TO_IMMUNE:
-                                sprintf(buf,"Adds immunity to %s.\n",
+                                sprintf(buf,"               Immunity-|%16s|  {m(){x",
                                 imm_bit_name(paf->bitvector));
                             break;
                             case TO_RESIST:
-                                sprintf(buf,"Adds resistance to %s.\n\r",
+                                sprintf(buf,"             Resistance-|%16s|  {m(){x",
                                 imm_bit_name(paf->bitvector));
                             break;
                             case TO_VULN:
-                                sprintf(buf,"Adds vulnerability to %s.\n\r",
+                                sprintf(buf,"          Vulnerability-|%16s|  {m(){x",
                                 imm_bit_name(paf->bitvector));
                             break;
                             default:
-                                sprintf(buf,"Unknown bit %d: %d\n\r",
+                                sprintf(buf,"                Unknown-|%16s|%5d{m(){x",
                                 paf->where,paf->bitvector);
                             break;
                         }
                         send_to_char( buf, ch );
                     }
+                    else
+                        send_to_char("                                            {m(){x",ch);
+                    send_to_char("\n\r",ch);
                 }
             }
+        }
 
             for ( paf = obj->affected; paf != NULL; paf = paf->next )
             {
                 if ( paf->location != APPLY_NONE && paf->modifier != 0 )
                 {
-                    sprintf( buf, "Affects %s by %d",
+                    sprintf( buf, "{m()  {W[{G%20s{W] {M-> {W%4d{x",
                     affect_loc_name( paf->location ), paf->modifier );
                     send_to_char( buf, ch );
                     if ( paf->duration > -1)
-                        sprintf(buf,", %d hours.\n\r",paf->duration);
+                        sprintf(buf," <{Y%3d{xh>",paf->duration);
                     else
-                        sprintf(buf,".\n\r");
+                        sprintf(buf,"      ");
                         send_to_char(buf,ch);
                     if (paf->bitvector)
                     {
                         switch(paf->where)
                         {
                             case TO_AFFECTS:
-                                sprintf(buf,"Adds %s affect.\n",
+                                sprintf(buf,"          Affect-|%16s|  {m(){x",
                                 affect_bit_name(paf->bitvector));
                             break;
                             case TO_OBJECT:
-                                sprintf(buf,"Adds %s object flag.\n",
+                                sprintf(buf,"          Object-|%16s|  {m(){x",
                                 extra_bit_name(paf->bitvector));
                             break;
-                            case TO_WEAPON:
-                                sprintf(buf,"Adds %s weapon flags.\n",
-                                weapon_bit_name(paf->bitvector));
-                            break;
                             case TO_IMMUNE:
-                                sprintf(buf,"Adds immunity to %s.\n",
+                                sprintf(buf,"        Immunity-|%16s|  {m(){x",
                                 imm_bit_name(paf->bitvector));
                             break;
                             case TO_RESIST:
-                                sprintf(buf,"Adds resistance to %s.\n\r",
+                                sprintf(buf,"      Resistance-|%16s|  {m(){x",
                                 imm_bit_name(paf->bitvector));
                             break;
                             case TO_VULN:
-                                sprintf(buf,"Adds vulnerability to %s.\n\r",
+                                sprintf(buf,"      Vulnerable-|%16s|  {m(){x",
                                 imm_bit_name(paf->bitvector));
                             break;
                             default:
-                                sprintf(buf,"Unknown bit %d: %d\n\r",
+                                sprintf(buf,"         Unknown-|%16s|%5d {m(){x",
                                 paf->where,paf->bitvector);
                             break;
                         }
                     send_to_char(buf,ch);
                     }
+                    else
+                        send_to_char("                                      {m(){x",ch);
+                    send_to_char("\n\r",ch);
                 }
             }
     }

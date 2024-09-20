@@ -1359,27 +1359,41 @@ void do_touch( CHAR_DATA *ch, char *argument )
             break;
 
         case ITEM_WEAPON:
-            send_to_char("Weapon type is ",ch);
+            send_to_char("{m()  {MA fierce warrior takes a stance, wielding this ",ch);
             switch (obj->value[0])
             {
-                case(WEAPON_EXOTIC) : send_to_char("exotic.\n\r",ch);   break;
-                case(WEAPON_SWORD)  : send_to_char("sword.\n\r",ch);    break;
-                case(WEAPON_DAGGER) : send_to_char("dagger.\n\r",ch);   break;
-                case(WEAPON_SPEAR)  : send_to_char("spear/staff.\n\r",ch);  break;
-                case(WEAPON_MACE)   : send_to_char("mace/club.\n\r",ch);    break;
-                case(WEAPON_AXE)    : send_to_char("axe.\n\r",ch);      break;
-                case(WEAPON_FLAIL)  : send_to_char("flail.\n\r",ch);    break;
-                case(WEAPON_WHIP)   : send_to_char("whip.\n\r",ch);     break;
-                case(WEAPON_POLEARM): send_to_char("polearm.\n\r",ch);  break;
-                case(WEAPON_LANCE): send_to_char("lance.\n\r",ch);  break;
-                default     : send_to_char("unknown.\n\r",ch);  break;
+                case(WEAPON_EXOTIC) : send_to_char("exotic weapon.    ",ch);   break;
+                case(WEAPON_SWORD)  : send_to_char("sword.            ",ch);    break;
+                case(WEAPON_DAGGER) : send_to_char("dagger.           ",ch);   break;
+                case(WEAPON_SPEAR)  : send_to_char("spear/staff.      ",ch);  break;
+                case(WEAPON_MACE)   : send_to_char("mace/club.        ",ch);    break;
+                case(WEAPON_AXE)    : send_to_char("axe.              ",ch);      break;
+                case(WEAPON_FLAIL)  : send_to_char("flail.            ",ch);    break;
+                case(WEAPON_WHIP)   : send_to_char("whip.             ",ch);     break;
+                case(WEAPON_POLEARM): send_to_char("polearm.          ",ch);  break;
+                case(WEAPON_LANCE):   send_to_char("lance.            ",ch);  break;
+                default     :         send_to_char("improvised weapon.",ch);  break;
             }
-            sprintf(buf, "D10 Damage Dice Bonus: {D({r+%d{D){x\n\r", obj->value[1] / 20);
+            sprintf(buf, "   {D({r+%d{D)  {m(){x\n\r", obj->value[1] / 20);
             send_to_char(buf, ch);
             if (obj->value[4])  /* weapon flags */
             {
-                sprintf(buf,"Weapons flags: %s\n\r",weapon_bit_name(obj->value[4]));
-                send_to_char(buf,ch);
+                if (IS_WEAPON_STAT(obj,WEAPON_FLAMING))
+                    send_to_char("{m()    {MIt ignites suddenly, wreathed in {R[f{Yl{Wam{Ye{Rs]{M.                              {m(){x\n\r", ch);
+                if (IS_WEAPON_STAT(obj,WEAPON_FROST))
+                    send_to_char("{m()    {MIt freezes over, encased in {W[{Ci{Bc{Ce{W]{M.                                      {m(){x\n\r", ch);
+                if (IS_WEAPON_STAT(obj,WEAPON_VAMPIRIC))
+                    send_to_char("{m()    {MIt hungers for blood, {R[{rabsorbing{R]{M the red liquid.                       {m(){x\n\r", ch);
+                if (IS_WEAPON_STAT(obj,WEAPON_SHARP))
+                    send_to_char("{m()    {MIt slices {W[cleanly]{M through flesh, effortlessly.                        {m(){x\n\r", ch);
+                if (IS_WEAPON_STAT(obj,WEAPON_VORPAL))
+                    send_to_char("{m()    {MIt {C[sings]{M merrily, oblivious to the world.                             {m(){x\n\r", ch);
+                if (IS_WEAPON_STAT(obj,WEAPON_SHOCKING))
+                    send_to_char("{m()    {MIt surges with power, crackling with {Y[electricity]{M.                     {m(){x\n\r", ch);
+                if (IS_WEAPON_STAT(obj,WEAPON_POISON))
+                    send_to_char("{m()    {MIt taints flesh, dripping with {g[ichor]{M.                                 {m(){x\n\r", ch);
+                if (IS_WEAPON_STAT(obj,WEAPON_SLOW))
+                    send_to_char("{m()    {MIt swings in a {y[lazy]{M arc, rushing for none.                            {m(){x\n\r", ch);
             }
             break;
         case ITEM_ARMOR:

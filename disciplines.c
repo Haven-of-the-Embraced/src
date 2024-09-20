@@ -1288,16 +1288,19 @@ void do_touch( CHAR_DATA *ch, char *argument )
 
     WAIT_STATE(ch, 36);
     act( "$n gently touches $p.",  ch, obj, NULL, TO_ROOM );
-    act( "You gently touch $p and gain insight on the object.",  ch, obj, NULL, TO_CHAR );
-
+    act( "You gently touch $p.",  ch, obj, NULL, TO_CHAR );
+    send_to_char("\n\r", ch);
     success = godice(get_attribute(ch,PERCEPTION)+ch->csabilities[CSABIL_EMPATHY],7);
 
+    send_to_char("{m()--------------------===ooOO {MPsychic  Impressions{m OOoo===--------------------(){x\n\r",ch);
     if (success < 1)
     {
-        send_to_char("You fail to discern any impressions left on this item.\n\r", ch);
+        send_to_char("{m()           {wYou fail to discern any impressions left on this item.{m           (){x\n\r", ch);
+        send_to_char("{m()--------------------=======ooooooOOOOOOOOOOoooooo=======--------------------(){x\n\r",ch);
         return;
     }
 
+    send_to_char("{m()-----------------------=======ooooOOOOOOOOoooo=======-----------------------(){x\n\r",ch);
     sprintf( buf,
         "Object '%s' is type %s, extra flags %s.\n\rlevel is %d.\n\r",
         obj->name,
@@ -1502,7 +1505,8 @@ void do_touch( CHAR_DATA *ch, char *argument )
                 }
             }
     }
-return;
+    send_to_char("{m()-----------------------=======ooooOOOOOOOOoooo=======-----------------------(){x\n\r",ch);
+    return;
 }
 
 void do_telepathy( CHAR_DATA *ch, char *argument )

@@ -1299,16 +1299,30 @@ void do_touch( CHAR_DATA *ch, char *argument )
         send_to_char("{m()--------------------=======ooooooOOOOOOOOOOoooooo=======--------------------(){x\n\r",ch);
         return;
     }
+    if ( IS_SET(obj->extra_flags, ITEM_MAGIC) )
+        send_to_char("{m()           {xA strong sense of mysticism radiates from this object.           {m(){x\n\r", ch);
+    send_to_char("{m()             {wFleeting visions flash rapidly through your mind!{m              (){x\n\r", ch);
+    send_to_char("{m()----------------------------------------------------------------------------(){x\n\r",ch);
 
-    send_to_char("{m()-----------------------=======ooooOOOOOOOOoooo=======-----------------------(){x\n\r",ch);
-    sprintf( buf,
-        "Object '%s' is type %s, extra flags %s.\n\rlevel is %d.\n\r",
-        obj->name,
-        item_name(obj->item_type),
-        extra_bit_name( obj->extra_flags ),
-        obj->level
-        );
+    sprintf( buf, "{m(){x     An individual recently used this as a: (Level %3d) %-14s      {m(){x\n\r",
+        obj->level, item_name(obj->item_type) );
     send_to_char( buf, ch );
+
+    if ( IS_SET(obj->extra_flags, ITEM_BLESS) )
+        send_to_char("{m()                    {xA {W(holy){x individual prays intently.                     {m(){x\n\r", ch);
+    if ( IS_SET(obj->extra_flags, ITEM_REFLECTIVE) )
+        send_to_char("{m()           {xMany people gaze intently, adjusting their appearances.          {m(){x\n\r", ch);
+    if ( IS_SET(obj->extra_flags, ITEM_RARE) )
+        send_to_char("{m()     {xTwo individuals fight viciously, each trying to lay claim to this.     {m(){x\n\r", ch);
+    if ( IS_SET(obj->extra_flags, ITEM_BURN_PROOF) )
+        send_to_char("{m()    {xFlames erupt, licking across the surface, but the item is unscathed.    {m(){x\n\r", ch);
+    if ( IS_SET(obj->extra_flags, ITEM_IS_STAKE) )
+        send_to_char("{m()          {xA dark figure slams this object through someone's chest!          {m(){x\n\r", ch);
+    if ( IS_SET(obj->extra_flags, ITEM_IS_PRESERVE) )
+        send_to_char("{m()                   {xFood is being dipped into this object.                   {m(){x\n\r", ch);
+    if ( IS_SET(obj->extra_flags, ITEM_BREW_POT) )
+        send_to_char("{m()               {xA strange concoction bubbles errantly nearby.                {m(){x\n\r", ch);
+
     switch ( obj->item_type )
     {
         case ITEM_SCROLL:

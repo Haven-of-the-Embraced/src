@@ -1340,16 +1340,16 @@ void do_touch( CHAR_DATA *ch, char *argument )
 
         case ITEM_WAND:
         case ITEM_STAFF:
-            sprintf( buf, "Has %d charges of level %d",
+            sprintf( buf, "{m()  {MA mysterious figure imbues [{w%3d{M] charges: {C[{wLevel %3d{C]                     {m(){x\n\r",
                 obj->value[2], obj->value[0] );
             send_to_char( buf, ch );
+            send_to_char("{m()  {CV~~~V               V~~~~~~~~~~V       V~~~~~~~~~~V                V~~~V  {m(){x\n\r",ch);
             if ( obj->value[3] >= 0 && obj->value[3] < MAX_SKILL )
             {
-                send_to_char( " '", ch );
-                send_to_char( skill_table[obj->value[3]].name, ch );
-                send_to_char( "'", ch );
+                sprintf( buf, "{m()   {C%-32s                                         {m(){x\n\r", skill_table[obj->value[3]].name );
+                send_to_char( buf, ch );
             }
-            send_to_char( ".\n\r", ch );
+            send_to_char("{m(){C~~^   ^~~~~~~~~~~~~~~~^          ^~~~~~~~^          ^~~~~~~~~~~~~~~~~^   ^~~{m(){x\n\r",ch);
             break;
         case ITEM_DRINK_CON:
             sprintf(buf,"It holds %s-colored %s.\n\r",

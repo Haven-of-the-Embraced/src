@@ -2509,7 +2509,25 @@ void do_helplist( CHAR_DATA *ch, char *argument )
 
 /* whois command */
 void do_whois (CHAR_DATA *ch, char *argument)
-{ return; }
+{
+    CHAR_DATA *victim;
+    char arg[MAX_INPUT_LENGTH];
+
+    if ( arg[0] == '\0' )
+    {
+        send_to_char( "Whom do you want information on?\n\r", ch );
+        return;
+    }
+
+    if ( ( victim = get_char_world( ch, argument ) ) == NULL )
+    {
+        send_to_char( "They aren't here.\n\r", ch );
+        return;
+    }
+
+    return; 
+}
+
 /*
  * New 'who' command originally by Alander of Rivers of Mud.
  */

@@ -1293,7 +1293,14 @@ void do_touch( CHAR_DATA *ch, char *argument )
     success = godice(get_attribute(ch,PERCEPTION)+ch->csabilities[CSABIL_EMPATHY],7);
 
     send_to_char("{m()--------------------===ooOO {MPsychic  Impressions{m OOoo===--------------------(){x\n\r",ch);
-    if (success < 1)
+    if (success < 0)
+    {
+        send_to_char("{m()               {wA wash of psychic imprints assaults your mind!{m               (){x\n\r", ch);
+        send_to_char("{m()--------------------=======ooooooOOOOOOOOOOoooooo=======--------------------(){x\n\r",ch);
+        d10_damage( ch, ch, -success, ch->level / 2, gsn_telepathy, DAM_MENTAL, DEFENSE_NONE, TRUE, TRUE);
+        return;
+    }
+    if (success == 0)
     {
         send_to_char("{m()           {wYou fail to discern any impressions left on this item.{m           (){x\n\r", ch);
         send_to_char("{m()--------------------=======ooooooOOOOOOOOOOoooooo=======--------------------(){x\n\r",ch);

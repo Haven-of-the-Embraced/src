@@ -1310,7 +1310,7 @@ void do_touch( CHAR_DATA *ch, char *argument )
         send_to_char("{m()           {xA strong sense of mysticism radiates from this object.           {m(){x\n\r", ch);
     send_to_char("{m()             {wFleeting visions flash rapidly through your mind!{m              (){x\n\r", ch);
     send_to_char("{m()---------------------------------({MVisions{m)----------------------------------(){x\n\r",ch);
-    sprintf( buf, "{m(){M     An individual recently used this as a: {Y[{wLevel %3d{Y] %-14s      {m(){x\n\r",
+    sprintf( buf, "{m(){M  An individual recently used this as a: {Y[{wLevel %3d{Y] %-14s         {m(){x\n\r",
         obj->level, item_name(obj->item_type) );
     send_to_char( buf, ch );
 
@@ -1319,9 +1319,9 @@ void do_touch( CHAR_DATA *ch, char *argument )
         case ITEM_SCROLL:
         case ITEM_POTION:
         case ITEM_PILL:
-            sprintf( buf, "{m()         {MMystical abilities were imbued at: {C[{wLevel %3d{C]                     {m(){x\n\r", obj->value[0] );
+            sprintf( buf, "{m()      {MMystical abilities were imbued at: {C[{wLevel %3d{C]                        {m(){x\n\r", obj->value[0] );
             send_to_char( buf, ch );
-            send_to_char("{m()  {CV~~~V               V~~~~~~~~~~V       V~~~~~~~~~~V                V~~~V  {m(){x\n\r",ch);
+            send_to_char("{m()~~{CV~~~V~~~~~~~~~~~~~~~V~~~~~~~~~~V~~~~~~~V~~~~~~~~~~V~~~~~~~~~~~~~~~~V~~~V~~{m(){x\n\r",ch);
             if ( obj->value[1] >= 0 && obj->value[1] < MAX_SKILL )
             {
                 sprintf( buf, "{m()   {C%-32s   {x", skill_table[obj->value[1]].name );
@@ -1342,7 +1342,7 @@ void do_touch( CHAR_DATA *ch, char *argument )
                 sprintf( buf, "   {C%-32s   {m(){x\n\r", skill_table[obj->value[4]].name );
                 send_to_char( buf, ch );
             }
-            send_to_char("{m(){C~~^   ^~~~~~~~~~~~~~~~^          ^~~~~~~~^          ^~~~~~~~~~~~~~~~~^   ^~~{m(){x\n\r",ch);
+            send_to_char("{m(){C~~^~~~^~~~~~~~~~~~~~~~^~~~~~~~~~~^~~~~~~~^~~~~~~~~~~^~~~~~~~~~~~~~~~~^~~~^~~{m(){x\n\r",ch);
             break;
 
         case ITEM_WAND:
@@ -1350,23 +1350,24 @@ void do_touch( CHAR_DATA *ch, char *argument )
             sprintf( buf, "{m()  {MA mysterious figure imbues [{w%3d{M] charges: {C[{wLevel %3d{C]                     {m(){x\n\r",
                 obj->value[2], obj->value[0] );
             send_to_char( buf, ch );
-            send_to_char("{m()  {CV~~~V               V~~~~~~~~~~V       V~~~~~~~~~~V                V~~~V  {m(){x\n\r",ch);
+            send_to_char("{m()~~{CV~~~V~~~~~~~~~~~~~~~V~~~~~~~~~~V~~~~~~~V~~~~~~~~~~V~~~~~~~~~~~~~~~~V~~~V~~{m(){x\n\r",ch);
             if ( obj->value[3] >= 0 && obj->value[3] < MAX_SKILL )
             {
                 sprintf( buf, "{m()   {C%-32s                                         {m(){x\n\r", skill_table[obj->value[3]].name );
                 send_to_char( buf, ch );
             }
-            send_to_char("{m(){C~~^   ^~~~~~~~~~~~~~~~^          ^~~~~~~~^          ^~~~~~~~~~~~~~~~~^   ^~~{m(){x\n\r",ch);
+            send_to_char("{m(){C~~^~~~^~~~~~~~~~~~~~~~^~~~~~~~~~~^~~~~~~~^~~~~~~~~~~^~~~~~~~~~~~~~~~~^~~~^~~{m(){x\n\r",ch);
             break;
         case ITEM_DRINK_CON:
-            send_to_char("{m()          {MAn indistinct figure fills this container with a liquid.          {m(){x\n\r", ch);
+            send_to_char("{m()  {MAn indistinct figure fills this container with a liquid.                  {m(){x\n\r", ch);
             sprintf(buf, "{m()      {MLiquid:  {W%14s-colored %-18s   |{G%3d{W Proof|      {m(){x\n\r", 
                 liq_table[obj->value[2]].liq_color, liq_table[obj->value[2]].liq_name, liq_table[obj->value[2]].liq_affect[0]);
             send_to_char( buf, ch );
             break;
 
         case ITEM_WEAPON:
-            send_to_char("{m()  {MA fierce warrior takes a stance, wielding this ",ch);
+            sprintf(buf, "{m()  {MA fierce warrior takes a stance, wielding this {D({r+%d{D){M ", obj->value[1] / 20);
+            send_to_char(buf, ch);
             switch (obj->value[0])
             {
                 case(WEAPON_EXOTIC) : send_to_char("exotic weapon.    ",ch);   break;
@@ -1381,8 +1382,7 @@ void do_touch( CHAR_DATA *ch, char *argument )
                 case(WEAPON_LANCE):   send_to_char("lance.            ",ch);  break;
                 default     :         send_to_char("improvised weapon.",ch);  break;
             }
-            sprintf(buf, "   {D({r+%d{D)  {m(){x\n\r", obj->value[1] / 20);
-            send_to_char(buf, ch);
+            send_to_char("    {m(){x\n\r", ch);
             if (obj->value[4])  /* weapon flags */
             {
                 if (IS_WEAPON_STAT(obj,WEAPON_FLAMING))
@@ -1415,19 +1415,19 @@ void do_touch( CHAR_DATA *ch, char *argument )
     }
 
     if ( IS_SET(obj->extra_flags, ITEM_BLESS) )
-        send_to_char("{m()                    {MA {W[holy individual]{M prays intently.                     {m(){x\n\r", ch);
+        send_to_char("{m()  {MA {W[holy individual]{M prays intently, heartfelt and pure.                   {m(){x\n\r", ch);
     if ( IS_SET(obj->extra_flags, ITEM_REFLECTIVE) )
-        send_to_char("{m()          {MMany people {C[gaze intently]{M, adjusting their appearances.         {m(){x\n\r", ch);
+        send_to_char("{m()  {MMany people {C[gaze intently]{M, adjusting their appearances.                 {m(){x\n\r", ch);
     if ( IS_SET(obj->extra_flags, ITEM_RARE) )
-        send_to_char("{m()    {MTwo individuals fight viciously, each trying to {B[lay claim]{M to this.    {m(){x\n\r", ch);
+        send_to_char("{m()  {MTwo individuals fight viciously, each trying to {B[lay claim]{M to this.      {m(){x\n\r", ch);
     if ( IS_SET(obj->extra_flags, ITEM_BURN_PROOF) )
-        send_to_char("{m()   {R[F{Yl{Wa{Ym{Res e{Yr{Wu{Yp{Rt]{M, licking across the surface, but the item is unscathed.   {m(){x\n\r", ch);
+        send_to_char("{m()  {R[F{Yl{Wa{Ym{Res e{Yr{Wu{Yp{Rt]{M, licking across the surface, but the item is unscathed.    {m(){x\n\r", ch);
     if ( IS_SET(obj->extra_flags, ITEM_IS_STAKE) )
-        send_to_char("{m()         {MA dark figure slams this object through {g[someone's chest]{M!         {m(){x\n\r", ch);
+        send_to_char("{m()  {MA dark figure slams this object through {g[someone's chest]{M!                {m(){x\n\r", ch);
     if ( IS_SET(obj->extra_flags, ITEM_IS_PRESERVE) )
-        send_to_char("{m()                  {MFood is being {y[dipped]{M into this object.                  {m(){x\n\r", ch);
+        send_to_char("{m()  {MA variety of food is being {y[dipped]{M into this object.                     {m(){x\n\r", ch);
     if ( IS_SET(obj->extra_flags, ITEM_BREW_POT) )
-        send_to_char("{m()              {MA {G[strange concoction]{M bubbles errantly nearby.               {m(){x\n\r", ch);
+        send_to_char("{m()  {MA {G[strange concoction]{M bubbles errantly nearby.                           {m(){x\n\r", ch);
 
     if (success > 3)
     {

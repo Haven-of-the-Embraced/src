@@ -1302,26 +1302,26 @@ void do_touch( CHAR_DATA *ch, char *argument )
     if ( IS_SET(obj->extra_flags, ITEM_MAGIC) )
         send_to_char("{m()           {xA strong sense of mysticism radiates from this object.           {m(){x\n\r", ch);
     send_to_char("{m()             {wFleeting visions flash rapidly through your mind!{m              (){x\n\r", ch);
-    send_to_char("{m()----------------------------------------------------------------------------(){x\n\r",ch);
+    send_to_char("{m()---------------------------------({MVisions{m)----------------------------------(){x\n\r",ch);
 
-    sprintf( buf, "{m(){x     An individual recently used this as a: (Level %3d) %-14s      {m(){x\n\r",
+    sprintf( buf, "{m(){M     An individual recently used this as a: {Y[{wLevel %3d{Y] %-14s      {m(){x\n\r",
         obj->level, item_name(obj->item_type) );
     send_to_char( buf, ch );
 
     if ( IS_SET(obj->extra_flags, ITEM_BLESS) )
-        send_to_char("{m()                    {xA {W(holy){x individual prays intently.                     {m(){x\n\r", ch);
+        send_to_char("{m()                    {MA {W[holy individual]{M prays intently.                     {m(){x\n\r", ch);
     if ( IS_SET(obj->extra_flags, ITEM_REFLECTIVE) )
-        send_to_char("{m()           {xMany people gaze intently, adjusting their appearances.          {m(){x\n\r", ch);
+        send_to_char("{m()          {MMany people {C[gaze intently]{M, adjusting their appearances.         {m(){x\n\r", ch);
     if ( IS_SET(obj->extra_flags, ITEM_RARE) )
-        send_to_char("{m()     {xTwo individuals fight viciously, each trying to lay claim to this.     {m(){x\n\r", ch);
+        send_to_char("{m()    {MTwo individuals fight viciously, each trying to {B[lay claim]{M to this.    {m(){x\n\r", ch);
     if ( IS_SET(obj->extra_flags, ITEM_BURN_PROOF) )
-        send_to_char("{m()    {xFlames erupt, licking across the surface, but the item is unscathed.    {m(){x\n\r", ch);
+        send_to_char("{m()   {R[F{Yl{Wa{Ym{Res e{Yr{Wu{Yp{Rt]{M, licking across the surface, but the item is unscathed.   {m(){x\n\r", ch);
     if ( IS_SET(obj->extra_flags, ITEM_IS_STAKE) )
-        send_to_char("{m()          {xA dark figure slams this object through someone's chest!          {m(){x\n\r", ch);
+        send_to_char("{m()         {MA dark figure slams this object through {g[someone's chest]{M!         {m(){x\n\r", ch);
     if ( IS_SET(obj->extra_flags, ITEM_IS_PRESERVE) )
-        send_to_char("{m()                   {xFood is being dipped into this object.                   {m(){x\n\r", ch);
+        send_to_char("{m()                  {MFood is being {y[dipped]{M into this object.                  {m(){x\n\r", ch);
     if ( IS_SET(obj->extra_flags, ITEM_BREW_POT) )
-        send_to_char("{m()               {xA strange concoction bubbles errantly nearby.                {m(){x\n\r", ch);
+        send_to_char("{m()              {MA {G[strange concoction]{M bubbles errantly nearby.               {m(){x\n\r", ch);
 
     switch ( obj->item_type )
     {

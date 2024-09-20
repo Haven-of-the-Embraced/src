@@ -1352,10 +1352,10 @@ void do_touch( CHAR_DATA *ch, char *argument )
             send_to_char("{m(){C~~^   ^~~~~~~~~~~~~~~~^          ^~~~~~~~^          ^~~~~~~~~~~~~~~~~^   ^~~{m(){x\n\r",ch);
             break;
         case ITEM_DRINK_CON:
-            sprintf(buf,"It holds %s-colored %s.\n\r",
-                liq_table[obj->value[2]].liq_color,
-                liq_table[obj->value[2]].liq_name);
-            send_to_char(buf,ch);
+            send_to_char("{m()          {MAn indistinct figure fills this container with a liquid.          {m(){x\n\r", ch);
+            sprintf(buf, "{m()      {MLiquid:  {W%14s-colored %-18s   |{G%3d{W Proof|      {m(){x\n\r", 
+                liq_table[obj->value[2]].liq_color, liq_table[obj->value[2]].liq_name, liq_table[obj->value[2]].liq_affect[0]);
+            send_to_char( buf, ch );
             break;
 
         case ITEM_CONTAINER:

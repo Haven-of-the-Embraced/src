@@ -1358,18 +1358,6 @@ void do_touch( CHAR_DATA *ch, char *argument )
             send_to_char( buf, ch );
             break;
 
-        case ITEM_CONTAINER:
-            sprintf(buf," flags: %s\n\r",
-                cont_bit_name(obj->value[1]));
-                send_to_char(buf,ch);
-            if (obj->value[4] != 100)
-            {
-                sprintf(buf,"Weight multiplier: %d%%\n\r",
-                obj->value[4]);
-                send_to_char(buf,ch);
-            }
-            break;
-
         case ITEM_WEAPON:
             send_to_char("Weapon type is ",ch);
             switch (obj->value[0])

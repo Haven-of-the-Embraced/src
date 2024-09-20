@@ -1303,62 +1303,39 @@ void do_touch( CHAR_DATA *ch, char *argument )
         send_to_char("{m()           {xA strong sense of mysticism radiates from this object.           {m(){x\n\r", ch);
     send_to_char("{m()             {wFleeting visions flash rapidly through your mind!{m              (){x\n\r", ch);
     send_to_char("{m()---------------------------------({MVisions{m)----------------------------------(){x\n\r",ch);
-
     sprintf( buf, "{m(){M     An individual recently used this as a: {Y[{wLevel %3d{Y] %-14s      {m(){x\n\r",
         obj->level, item_name(obj->item_type) );
     send_to_char( buf, ch );
-
-    if ( IS_SET(obj->extra_flags, ITEM_BLESS) )
-        send_to_char("{m()                    {MA {W[holy individual]{M prays intently.                     {m(){x\n\r", ch);
-    if ( IS_SET(obj->extra_flags, ITEM_REFLECTIVE) )
-        send_to_char("{m()          {MMany people {C[gaze intently]{M, adjusting their appearances.         {m(){x\n\r", ch);
-    if ( IS_SET(obj->extra_flags, ITEM_RARE) )
-        send_to_char("{m()    {MTwo individuals fight viciously, each trying to {B[lay claim]{M to this.    {m(){x\n\r", ch);
-    if ( IS_SET(obj->extra_flags, ITEM_BURN_PROOF) )
-        send_to_char("{m()   {R[F{Yl{Wa{Ym{Res e{Yr{Wu{Yp{Rt]{M, licking across the surface, but the item is unscathed.   {m(){x\n\r", ch);
-    if ( IS_SET(obj->extra_flags, ITEM_IS_STAKE) )
-        send_to_char("{m()         {MA dark figure slams this object through {g[someone's chest]{M!         {m(){x\n\r", ch);
-    if ( IS_SET(obj->extra_flags, ITEM_IS_PRESERVE) )
-        send_to_char("{m()                  {MFood is being {y[dipped]{M into this object.                  {m(){x\n\r", ch);
-    if ( IS_SET(obj->extra_flags, ITEM_BREW_POT) )
-        send_to_char("{m()              {MA {G[strange concoction]{M bubbles errantly nearby.               {m(){x\n\r", ch);
 
     switch ( obj->item_type )
     {
         case ITEM_SCROLL:
         case ITEM_POTION:
         case ITEM_PILL:
-            sprintf( buf, "Level %d spells of:", obj->value[0] );
+            sprintf( buf, "{m()         {MMystical abilities were imbued at: {C[{wLevel %3d{C]                     {m(){x\n\r", obj->value[0] );
             send_to_char( buf, ch );
+            send_to_char("{m()  {CV~~~V               V~~~~~~~~~~V       V~~~~~~~~~~V                V~~~V  {m(){x\n\r",ch);
             if ( obj->value[1] >= 0 && obj->value[1] < MAX_SKILL )
             {
-                send_to_char( " '", ch );
-                send_to_char( skill_table[obj->value[1]].name, ch );
-                send_to_char( "'", ch );
+                sprintf( buf, "{m()   {C%-32s   {x", skill_table[obj->value[1]].name );
+                send_to_char( buf, ch );
             }
-
             if ( obj->value[2] >= 0 && obj->value[2] < MAX_SKILL )
             {
-                send_to_char( " '", ch );
-                send_to_char( skill_table[obj->value[2]].name, ch );
-                send_to_char( "'", ch );
+                sprintf( buf, "   {C%-32s   {m(){x\n\r", skill_table[obj->value[2]].name );
+                send_to_char( buf, ch );
             }
-
             if ( obj->value[3] >= 0 && obj->value[3] < MAX_SKILL )
             {
-                send_to_char( " '", ch );
-                send_to_char( skill_table[obj->value[3]].name, ch );
-                send_to_char( "'", ch );
+                sprintf( buf, "{m()   {C%-32s   {x", skill_table[obj->value[3]].name );
+                send_to_char( buf, ch );
             }
-
-            if (obj->value[4] >= 0 && obj->value[4] < MAX_SKILL)
+            if ( obj->value[4] >= 0 && obj->value[4] < MAX_SKILL )
             {
-                send_to_char(" '",ch);
-                send_to_char(skill_table[obj->value[4]].name,ch);
-                send_to_char("'",ch);
+                sprintf( buf, "   {C%-32s   {m(){x\n\r", skill_table[obj->value[4]].name );
+                send_to_char( buf, ch );
             }
-
-            send_to_char( ".\n\r", ch );
+            send_to_char("{m(){C~~^   ^~~~~~~~~~~~~~~~^          ^~~~~~~~^          ^~~~~~~~~~~~~~~~~^   ^~~{m(){x\n\r",ch);
             break;
 
         case ITEM_WAND:
@@ -1424,6 +1401,21 @@ void do_touch( CHAR_DATA *ch, char *argument )
             send_to_char( buf, ch );
             break;
     }
+
+    if ( IS_SET(obj->extra_flags, ITEM_BLESS) )
+        send_to_char("{m()                    {MA {W[holy individual]{M prays intently.                     {m(){x\n\r", ch);
+    if ( IS_SET(obj->extra_flags, ITEM_REFLECTIVE) )
+        send_to_char("{m()          {MMany people {C[gaze intently]{M, adjusting their appearances.         {m(){x\n\r", ch);
+    if ( IS_SET(obj->extra_flags, ITEM_RARE) )
+        send_to_char("{m()    {MTwo individuals fight viciously, each trying to {B[lay claim]{M to this.    {m(){x\n\r", ch);
+    if ( IS_SET(obj->extra_flags, ITEM_BURN_PROOF) )
+        send_to_char("{m()   {R[F{Yl{Wa{Ym{Res e{Yr{Wu{Yp{Rt]{M, licking across the surface, but the item is unscathed.   {m(){x\n\r", ch);
+    if ( IS_SET(obj->extra_flags, ITEM_IS_STAKE) )
+        send_to_char("{m()         {MA dark figure slams this object through {g[someone's chest]{M!         {m(){x\n\r", ch);
+    if ( IS_SET(obj->extra_flags, ITEM_IS_PRESERVE) )
+        send_to_char("{m()                  {MFood is being {y[dipped]{M into this object.                  {m(){x\n\r", ch);
+    if ( IS_SET(obj->extra_flags, ITEM_BREW_POT) )
+        send_to_char("{m()              {MA {G[strange concoction]{M bubbles errantly nearby.               {m(){x\n\r", ch);
 
     if (success > 2)
     {

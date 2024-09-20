@@ -1249,7 +1249,6 @@ void do_auraperception( CHAR_DATA *ch, char *argument )
 
 void do_touch( CHAR_DATA *ch, char *argument )
 {
-
     OBJ_DATA *obj;
     char buf[MAX_STRING_LENGTH];
     char arg[MAX_INPUT_LENGTH];
@@ -1260,7 +1259,6 @@ void do_touch( CHAR_DATA *ch, char *argument )
 
     one_argument( argument, arg );
 
-
     if(!IS_VAMP(ch))
     {
         send_to_char("You are not a vampire!\n\r" ,ch);
@@ -1268,12 +1266,7 @@ void do_touch( CHAR_DATA *ch, char *argument )
     }
     if(!can_use_disc(ch,AUSPEX,3,15,TRUE))
                 return;
-/*  if (ch->pcdata->discipline[AUSPEX] < 3)
-    {
-        send_to_char( "You are not skilled enough in your powers of Auspex!.\n\r", ch );
-        return;
-    }
-*/
+
     if ( IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
     {
         send_to_char("Your blood curse prevents it!\n\r" ,ch);
@@ -1284,7 +1277,6 @@ void do_touch( CHAR_DATA *ch, char *argument )
         send_to_char( "You don't have enough blood.\n\r", ch );
         return;
     }
-
 
     if ( ( obj = get_obj_carry( ch, arg, ch ) ) == NULL)
     {
@@ -1307,119 +1299,115 @@ void do_touch( CHAR_DATA *ch, char *argument )
     }
 
     sprintf( buf,
-        "Object '%s' is type %s, extra flags %s.\n\rWeight is %d.%d, value is %d, level is %d.\n\r",
+        "Object '%s' is type %s, extra flags %s.\n\rlevel is %d.\n\r",
         obj->name,
         item_name(obj->item_type),
         extra_bit_name( obj->extra_flags ),
-        obj->weight / 10, obj->weight % 10,
-        obj->cost,
         obj->level
         );
     send_to_char( buf, ch );
-    if (success > 1)
+    switch ( obj->item_type )
     {
-        switch ( obj->item_type )
-        {
-            case ITEM_SCROLL:
-            case ITEM_POTION:
-            case ITEM_PILL:
-                sprintf( buf, "Level %d spells of:", obj->value[0] );
-                send_to_char( buf, ch );
-                if ( obj->value[1] >= 0 && obj->value[1] < MAX_SKILL )
-                {
-                    send_to_char( " '", ch );
-                    send_to_char( skill_table[obj->value[1]].name, ch );
-                    send_to_char( "'", ch );
-                }
+        case ITEM_SCROLL:
+        case ITEM_POTION:
+        case ITEM_PILL:
+            sprintf( buf, "Level %d spells of:", obj->value[0] );
+            send_to_char( buf, ch );
+            if ( obj->value[1] >= 0 && obj->value[1] < MAX_SKILL )
+            {
+                send_to_char( " '", ch );
+                send_to_char( skill_table[obj->value[1]].name, ch );
+                send_to_char( "'", ch );
+            }
 
-                if ( obj->value[2] >= 0 && obj->value[2] < MAX_SKILL )
-                {
-                    send_to_char( " '", ch );
-                    send_to_char( skill_table[obj->value[2]].name, ch );
-                    send_to_char( "'", ch );
-                }
+            if ( obj->value[2] >= 0 && obj->value[2] < MAX_SKILL )
+            {
+                send_to_char( " '", ch );
+                send_to_char( skill_table[obj->value[2]].name, ch );
+                send_to_char( "'", ch );
+            }
 
-                if ( obj->value[3] >= 0 && obj->value[3] < MAX_SKILL )
-                {
-                    send_to_char( " '", ch );
-                    send_to_char( skill_table[obj->value[3]].name, ch );
-                    send_to_char( "'", ch );
-                }
+            if ( obj->value[3] >= 0 && obj->value[3] < MAX_SKILL )
+            {
+                send_to_char( " '", ch );
+                send_to_char( skill_table[obj->value[3]].name, ch );
+                send_to_char( "'", ch );
+            }
 
-                if (obj->value[4] >= 0 && obj->value[4] < MAX_SKILL)
-                {
-                    send_to_char(" '",ch);
-                    send_to_char(skill_table[obj->value[4]].name,ch);
-                    send_to_char("'",ch);
-                }
+            if (obj->value[4] >= 0 && obj->value[4] < MAX_SKILL)
+            {
+                send_to_char(" '",ch);
+                send_to_char(skill_table[obj->value[4]].name,ch);
+                send_to_char("'",ch);
+            }
 
-                send_to_char( ".\n\r", ch );
+            send_to_char( ".\n\r", ch );
             break;
 
-            case ITEM_WAND:
-            case ITEM_STAFF:
-                sprintf( buf, "Has %d charges of level %d",
+        case ITEM_WAND:
+        case ITEM_STAFF:
+            sprintf( buf, "Has %d charges of level %d",
                 obj->value[2], obj->value[0] );
-                send_to_char( buf, ch );
-                if ( obj->value[3] >= 0 && obj->value[3] < MAX_SKILL )
-                {
-                    send_to_char( " '", ch );
-                    send_to_char( skill_table[obj->value[3]].name, ch );
-                    send_to_char( "'", ch );
-                }
-                send_to_char( ".\n\r", ch );
+            send_to_char( buf, ch );
+            if ( obj->value[3] >= 0 && obj->value[3] < MAX_SKILL )
+            {
+                send_to_char( " '", ch );
+                send_to_char( skill_table[obj->value[3]].name, ch );
+                send_to_char( "'", ch );
+            }
+            send_to_char( ".\n\r", ch );
             break;
-            case ITEM_DRINK_CON:
-                sprintf(buf,"It holds %s-colored %s.\n\r",
+        case ITEM_DRINK_CON:
+            sprintf(buf,"It holds %s-colored %s.\n\r",
                 liq_table[obj->value[2]].liq_color,
                 liq_table[obj->value[2]].liq_name);
-                send_to_char(buf,ch);
+            send_to_char(buf,ch);
             break;
 
-            case ITEM_CONTAINER:
-                sprintf(buf,"Capacity: %d#  Maximum weight: %d#  flags: %s\n\r",
-                obj->value[0], obj->value[3], cont_bit_name(obj->value[1]));
+        case ITEM_CONTAINER:
+            sprintf(buf," flags: %s\n\r",
+                cont_bit_name(obj->value[1]));
                 send_to_char(buf,ch);
-                if (obj->value[4] != 100)
-                {
-                    sprintf(buf,"Weight multiplier: %d%%\n\r",
-                    obj->value[4]);
-                    send_to_char(buf,ch);
-                }
+            if (obj->value[4] != 100)
+            {
+                sprintf(buf,"Weight multiplier: %d%%\n\r",
+                obj->value[4]);
+                send_to_char(buf,ch);
+            }
             break;
 
-            case ITEM_WEAPON:
-                send_to_char("Weapon type is ",ch);
-                switch (obj->value[0])
-                {
-                    case(WEAPON_EXOTIC) : send_to_char("exotic.\n\r",ch);   break;
-                    case(WEAPON_SWORD)  : send_to_char("sword.\n\r",ch);    break;
-                    case(WEAPON_DAGGER) : send_to_char("dagger.\n\r",ch);   break;
-                    case(WEAPON_SPEAR)  : send_to_char("spear/staff.\n\r",ch);  break;
-                    case(WEAPON_MACE)   : send_to_char("mace/club.\n\r",ch);    break;
-                    case(WEAPON_AXE)    : send_to_char("axe.\n\r",ch);      break;
-                    case(WEAPON_FLAIL)  : send_to_char("flail.\n\r",ch);    break;
-                    case(WEAPON_WHIP)   : send_to_char("whip.\n\r",ch);     break;
-                    case(WEAPON_POLEARM): send_to_char("polearm.\n\r",ch);  break;
-                    case(WEAPON_LANCE): send_to_char("lance.\n\r",ch);  break;
+        case ITEM_WEAPON:
+            send_to_char("Weapon type is ",ch);
+            switch (obj->value[0])
+            {
+                case(WEAPON_EXOTIC) : send_to_char("exotic.\n\r",ch);   break;
+                case(WEAPON_SWORD)  : send_to_char("sword.\n\r",ch);    break;
+                case(WEAPON_DAGGER) : send_to_char("dagger.\n\r",ch);   break;
+                case(WEAPON_SPEAR)  : send_to_char("spear/staff.\n\r",ch);  break;
+                case(WEAPON_MACE)   : send_to_char("mace/club.\n\r",ch);    break;
+                case(WEAPON_AXE)    : send_to_char("axe.\n\r",ch);      break;
+                case(WEAPON_FLAIL)  : send_to_char("flail.\n\r",ch);    break;
+                case(WEAPON_WHIP)   : send_to_char("whip.\n\r",ch);     break;
+                case(WEAPON_POLEARM): send_to_char("polearm.\n\r",ch);  break;
+                case(WEAPON_LANCE): send_to_char("lance.\n\r",ch);  break;
                 default     : send_to_char("unknown.\n\r",ch);  break;
-                }
-                sprintf(buf, "D10 Damage Dice Bonus: {D({r+%d{D){x\n\r", obj->value[1] / 20);
-                send_to_char(buf, ch);
-                if (obj->value[4])  /* weapon flags */
-                {
-                    sprintf(buf,"Weapons flags: %s\n\r",weapon_bit_name(obj->value[4]));
-                    send_to_char(buf,ch);
-                }
+            }
+            sprintf(buf, "D10 Damage Dice Bonus: {D({r+%d{D){x\n\r", obj->value[1] / 20);
+            send_to_char(buf, ch);
+            if (obj->value[4])  /* weapon flags */
+            {
+                sprintf(buf,"Weapons flags: %s\n\r",weapon_bit_name(obj->value[4]));
+                send_to_char(buf,ch);
+            }
             break;
-            case ITEM_ARMOR:
-                sprintf( buf,
+        case ITEM_ARMOR:
+            sprintf( buf,
                 "Armor class is %d pierce, %d bash, %d slash, and %d vs. magic.\n\r",
                 obj->value[0], obj->value[1], obj->value[2], obj->value[3] );
-                send_to_char( buf, ch );
+            send_to_char( buf, ch );
             break;
-        }
     }
+
     if (success > 2)
     {
         if (!obj->enchanted)

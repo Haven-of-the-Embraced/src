@@ -4004,7 +4004,7 @@ void spell_gift_steelfur( int sn, int level, CHAR_DATA *ch, void *vo, int target
 
   if (is_affected(ch, gsn_gift_steelfur))
   {
-    sendch("Your fur is already metallic and resistant.\n\r", ch);
+    sendch("Your fur is already turned metallic.\n\r", ch);
     return;
   }
 
@@ -4019,13 +4019,37 @@ void spell_gift_steelfur( int sn, int level, CHAR_DATA *ch, void *vo, int target
 
   if (success < 0)
   {
+    send_to_char("The metal spirits are offended, turning your fur metallic, but soft and malleable.\n\r", ch);
+    af.where        = TO_VULN;
+    af.type         = gsn_gift_steelfur;
+    af.level        = -1;
+    af.duration     = 2;
+    af.modifier     = 0;
+    af.location     = 0;
+    af.bitvector    = VULN_WEAPON;
+    affect_to_char(ch, &af);
     return;
   }
 
   if (success == 0)
   {
+    send_to_char("Metal elemental spirits ignore your plea for assistance.\n\r", ch);
     return;
   }
+
+  act("Your plea is granted, as your fur hardens and takes on a metallic sheen.", ch, NULL, NULL, TO_CHAR);
+  act("$n's fur becomes hard and metallic.", ch, NULL, NULL, TO_ROOM);
+  af.where        = TO_RESIST;
+  af.type         = gsn_gift_steelfur;
+  af.level        = success;
+  af.duration     = (success * 10) + 30;
+  af.modifier     = 0;
+  af.location     = 0;
+  af.bitvector    = RES_SLASH;
+  affect_to_char(ch, &af);
+  af.bitvector    = RES_PIERCE;
+  affect_to_char(ch, &af);
+  return;
 
   return;
 }

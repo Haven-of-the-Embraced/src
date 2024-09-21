@@ -2525,7 +2525,7 @@ void do_whois (CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if ( ( victim = get_char_world( ch, argument ) ) == NULL )
+    if ( ( victim = get_char_world( ch, arg ) ) == NULL )
     {
         send_to_char( "They aren't here.\n\r", ch );
         return;
@@ -2543,8 +2543,19 @@ void do_whois (CHAR_DATA *ch, char *argument)
         return;
     }
 
-    sprintf(buf, "%s", victim->name);
+    sprintf(buf, "===============================================================\n\r");
     add_buf(buffer, buf);
+    sprintf(buf, "    Name       :  %s\n\r", victim->name);
+    add_buf(buffer, buf);
+    sprintf(buf, "    Race       :  %s\n\r", race_table[victim->race].name);
+    add_buf(buffer, buf);
+    sprintf(buf, "    Affiliation:  %s\n\r", capitalize(clan_table[victim->clan].name));
+    add_buf(buffer, buf);
+    sprintf(buf, "    Remorts    :  %d\n\r", victim->remorts);
+    add_buf(buffer, buf);
+    sprintf(buf, "===============================================================\n\r");
+    add_buf(buffer, buf);
+    page_to_char(buf_string(buffer), ch);
     return; 
 }
 

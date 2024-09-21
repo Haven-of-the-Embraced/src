@@ -2553,6 +2553,21 @@ void do_whois (CHAR_DATA *ch, char *argument)
     add_buf(buffer, buf);
     sprintf(buf, "    Remorts    :  %d\n\r", victim->remorts);
     add_buf(buffer, buf);
+
+    for ( d = descriptor_list; d != NULL; d = d->next )
+    {
+        if ( d->character != NULL && can_see( ch, d->character )
+        && is_name(arg,d->character->name) || (d->original && is_name(arg,d->original->name)))
+        {
+            sprintf( buf + strlen(buf), "    Socket     :  [%3d %2d] %s@%s\n\r",
+            d->descriptor, d->connected,
+            d->original  ? d->original->name  :
+            d->character ? d->character->name : "(none)",
+            d->host
+            );
+        }
+    }
+    add_buf(buffer, buf);
     sprintf(buf, "===============================================================\n\r");
     add_buf(buffer, buf);
     page_to_char(buf_string(buffer), ch);

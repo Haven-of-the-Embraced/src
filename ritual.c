@@ -34,10 +34,11 @@ void do_drain(CHAR_DATA *ch, char *argument)
         obj_next = obj->next_content;
         if(obj->pIndexData->vnum == OBJ_VNUM_EMPTY_VIAL && !vfound)
         {
-            if(!str_cmp(obj->name, "empty vial")) {
-            vial = obj;
-            vfound = TRUE;
-        }
+            if(!str_cmp(obj->name, "empty vial")) 
+            {
+                vial = obj;
+                vfound = TRUE;
+            }
             break;
         }
     }
@@ -53,141 +54,146 @@ void do_drain(CHAR_DATA *ch, char *argument)
     }
     if (arg[0] == '\0' || !str_cmp(arg, "vial"))
     {
+        if(ch->race == race_lookup("dhampire") || ch->race == race_lookup("garou"))
+        {
+            send_to_char( "Your blood would be useless, so there's no reason to drain it into a vial.\n\r",ch);
+            return;
+        }
 
-    if(ch->race == race_lookup("dhampire") || ch->race == race_lookup("garou"))
-    {
-        send_to_char( "Your blood would be useless, so there's no reason to drain it into a vial.\n\r",ch);
-        return;
-    }
+        bpotion->level = 1;
+        if (ch->race == race_lookup("human") || ch->race == race_lookup("ghoul"))
+        {
+            bpotion->value[0] = 15;
+            sprintf(buf, "a vial of %s's blood",ch->name);
+            bpotion->short_descr = str_dup(buf);
+            sprintf(buf, "vial blood potion human %s", ch->name);
+            bpotion->name = str_dup(buf);
+            bpotion->value[1] = skill_lookup("human blood");
+            if (ch->level > 50)
+                bpotion->value[2] = skill_lookup("human blood");
+        }
+        else if (ch->race == race_lookup("vampire") || ch->race == race_lookup("methuselah"))
+        {
+            bpotion->value[0] = 10;
+            bpotion->value[1] = skill_lookup("kindred vitae");
+            if (ch->gen <= 6)
+                bpotion->value[3] = skill_lookup("kindred vitae");
+            sprintf(buf, "a vial of %s of %s's blood", ch->name, capitalize(clan_table[ch->clan].name));
+            bpotion->short_descr = str_dup(buf);
+            sprintf(buf, "vial blood potion kindred vitae %s", ch->name);
+            bpotion->name = str_dup(buf);
+        }
+        if (ch->csmax_willpower == 0)
+        {
+            send_to_char("You do not have the willpower to drain your blood into a vial.\n\r", ch);
+            return;
+        }
+        success = godice(ch->csmax_willpower, 5);
 
-    bpotion->level = 1;
-    if (ch->race == race_lookup("human") || ch->race == race_lookup("ghoul"))
-    {
-    bpotion->value[0] = 15;
-    sprintf(buf, "a vial of %s's blood",ch->name);
-    bpotion->short_descr = str_dup(buf);
-    sprintf(buf, "vial blood potion human %s", ch->name);
-    bpotion->name = str_dup(buf);
-    bpotion->value[1] = skill_lookup("human blood");
-    if (ch->level > 50)
-        bpotion->value[2] = skill_lookup("human blood");
-    }
-    else if (ch->race == race_lookup("vampire") || ch->race == race_lookup("methuselah"))
-    {
-    bpotion->value[0] = 10;
-    bpotion->value[1] = skill_lookup("kindred vitae");
-    if (ch->gen <= 6)
-        bpotion->value[3] = skill_lookup("kindred vitae");
-    sprintf(buf, "a vial of %s of %s's blood", ch->name, capitalize(clan_table[ch->clan].name));
-    bpotion->short_descr = str_dup(buf);
-    sprintf(buf, "vial blood potion kindred vitae %s", ch->name);
-    bpotion->name = str_dup(buf);
-    }
-    if (ch->csmax_willpower == 0) {
-        send_to_char("You do not have the willpower to drain your blood into a vial.\n\r", ch);
-        return;
-    }
-    success = godice(ch->csmax_willpower, 5);
-
-    if (success < 0)
-    {
-        act("$n drops a vial and it shatters into a million pieces!", ch,NULL,NULL,TO_ROOM);
-        act("You drop the vial and it shatters into a million pieces!", ch,NULL,NULL,TO_CHAR);
-        WAIT_STATE(ch, 12);
-        extract_obj( vial );
-        return;
-    }
-    else if (success == 0)
-    {
-        act("You struggle to overcome your self preserving instincts...\n\rand cannot bring yourself to drain any blood.\n\r", ch, NULL, NULL, TO_CHAR);
-        WAIT_STATE(ch, 12);
-        return;
-    }
-    else
-    {
-        if (IS_VAMP(ch)) {
-            if (ch->pblood < 15) {
-                send_to_char("You do not have enough blood!\n\r", ch);
-                return;
-            } else {
-                ch->pblood -= 10;
-            }
-        } else {
-            if (ch->hit <= (ch->max_hit/10)+5)
+        if (success < 0)
+        {
+            act("$n drops a vial and it shatters into a million pieces!", ch,NULL,NULL,TO_ROOM);
+            act("You drop the vial and it shatters into a million pieces!", ch,NULL,NULL,TO_CHAR);
+            WAIT_STATE(ch, 12);
+            extract_obj( vial );
+            return;
+        }
+        else if (success == 0)
+        {
+            act("You struggle to overcome your self preserving instincts...\n\rand cannot bring yourself to drain any blood.\n\r", ch, NULL, NULL, TO_CHAR);
+            WAIT_STATE(ch, 12);
+            return;
+        }
+        else
+        {
+            if (IS_VAMP(ch))
             {
-                send_to_char("You cannot afford to lose any more blood!\n\r", ch);
-                return;
-            } else {
-                ch->hit -= ch->max_hit/10;
+                if (ch->pblood < 15)
+                {
+                    send_to_char("You do not have enough blood!\n\r", ch);
+                    return;
+                }
+                else
+                    ch->pblood -= 10;
             }
-        }
+            else
+            {
+                if (ch->hit <= (ch->max_hit/10)+5)
+                {
+                    send_to_char("You cannot afford to lose any more blood!\n\r", ch);
+                    return;
+                }
+                else
+                    ch->hit -= ch->max_hit/10;
+            }
 
-        send_to_char("You pierce your wrist and drain blood into an empty vial.\n\r",ch);
-        act("$n pierces $s wrist, draining $s blood into an empty vial.", ch, NULL, ch, TO_NOTVICT );
-        WAIT_STATE(ch, 12);
-        extract_obj(vial);
-        obj_to_char(bpotion,ch);
-        return;
+            send_to_char("You pierce your wrist and drain blood into an empty vial.\n\r",ch);
+            act("$n pierces $s wrist, draining $s blood into an empty vial.", ch, NULL, ch, TO_NOTVICT );
+            WAIT_STATE(ch, 12);
+            extract_obj(vial);
+            obj_to_char(bpotion,ch);
+            return;
         }
-    } else {
-        CHAR_DATA *victim;
-    if ( ( victim = get_char_room( ch, NULL, arg ) ) == NULL )
-    {
-        send_to_char( "They aren't here.\n\r", ch );
-        return;
-    }
-    if (!IS_NPC(victim)) {
-        send_to_char("Not on players.\n\r", ch);
-        return;
-    }
-    if(!IS_VAMP(victim))
-    {
-        send_to_char("That is not a vampire, their blood will not keep in a vial.\n\r",ch);
-        return;
-    }
-    if (victim->position != POS_TORPOR)
-    {
-        send_to_char("They must be in Torpor before you can steal their vampiric vitae!\n\r", ch);
-        return;
-    }
-
-    act( "You attempt to pierce one of $N's veins to steal their vitae...",  ch, NULL, victim, TO_CHAR );
-    success = godice(get_attribute(ch, DEXTERITY) + ch->csabilities[CSABIL_MEDICINE], 6);
-    if (success < 0)
-    {
-        send_to_char("..and fail horribly, pushing their torpid body into Final death.\n\r", ch);
-        act("$n tries to drain blood from $N... and only succeeds in killing $M.", ch, NULL, victim, TO_NOTVICT);
-        kill_em(ch, victim);
-        WAIT_STATE(ch, 24);
-        return;
-    }
-    else if (success == 0)
-    {
-        send_to_char("... and miss the vein completely.\n\r", ch);
-        act("$n tries to drain blood from $N... but misses the vein!", ch, NULL, victim, TO_NOTVICT);
-        WAIT_STATE(ch, 24);
-        return;
     }
     else
     {
-        send_to_char("... and succeed in draining their blood into a vial.\n\r", ch);
-        act("$n tries to drain blood from $N... and fills a vial with the crimson liquid.", ch, NULL, victim, TO_NOTVICT);
-        bpotion->value[0] = 10 + success;
-        bpotion->value[1] = skill_lookup("kindred vitae");
-        sprintf(buf, "a vial of %s's blood", victim->short_descr);
-        bpotion->short_descr = str_dup(buf);
-        sprintf(buf, "%s vial blood potion kindred vitae", victim->name);
-        bpotion->name = str_dup(buf);
-        extract_obj(vial);
-        obj_to_char(bpotion,ch);
-        raw_kill(victim);
-        gain_exp(ch,success*10);
-        WAIT_STATE(ch, 24);
-        return;
+        CHAR_DATA *victim;
+        if ( ( victim = get_char_room( ch, NULL, arg ) ) == NULL )
+        {
+            send_to_char( "They aren't here.\n\r", ch );
+            return;
+        }
+        if (!IS_NPC(victim))
+        {
+            send_to_char("Not on players.\n\r", ch);
+            return;
+        }
+        if(!IS_VAMP(victim))
+        {
+            send_to_char("That is not a vampire, their blood will not keep in a vial.\n\r",ch);
+            return;
+        }
+        if (victim->position != POS_TORPOR)
+        {
+            send_to_char("They must be in Torpor before you can steal their vampiric vitae!\n\r", ch);
+            return;
+        }
+
+        act( "You attempt to pierce one of $N's veins to steal their vitae...",  ch, NULL, victim, TO_CHAR );
+        success = godice(get_attribute(ch, DEXTERITY) + ch->csabilities[CSABIL_MEDICINE], 6);
+        if (success < 0)
+        {
+            send_to_char("..and fail horribly, pushing their torpid body into Final death.\n\r", ch);
+            act("$n tries to drain blood from $N... and only succeeds in killing $M.", ch, NULL, victim, TO_NOTVICT);
+            kill_em(ch, victim);
+            WAIT_STATE(ch, 24);
+            return;
+        }
+        else if (success == 0)
+        {
+            send_to_char("... and miss the vein completely.\n\r", ch);
+            act("$n tries to drain blood from $N... but misses the vein!", ch, NULL, victim, TO_NOTVICT);
+            WAIT_STATE(ch, 24);
+            return;
+        }
+        else
+        {
+            send_to_char("... and succeed in draining their blood into a vial.\n\r", ch);
+            act("$n tries to drain blood from $N... and fills a vial with the crimson liquid.", ch, NULL, victim, TO_NOTVICT);
+            bpotion->value[0] = 15 + (success * 2);
+            bpotion->value[1] = skill_lookup("kindred vitae");
+            sprintf(buf, "a vial of %s's blood", victim->short_descr);
+            bpotion->short_descr = str_dup(buf);
+            sprintf(buf, "%s vial blood potion kindred vitae", victim->name);
+            bpotion->name = str_dup(buf);
+            extract_obj(vial);
+            obj_to_char(bpotion,ch);
+            raw_kill(victim);
+            gain_exp(ch,success*10);
+            WAIT_STATE(ch, 24);
+            return;
+        }
     }
-
-  }
-
 }
 
 void do_invoke(CHAR_DATA *ch, char *argument)

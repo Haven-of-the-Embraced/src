@@ -4002,6 +4002,21 @@ void spell_gift_steelfur( int sn, int level, CHAR_DATA *ch, void *vo, int target
   AFFECT_DATA af;
   int success = 0;
 
+  if (is_affected(ch, gsn_gift_steelfur))
+  {
+    sendch("Your fur is already metallic and resistant.\n\r", ch);
+    return;
+  }
+
+  if (ch->cswillpower < 1)
+  {
+    send_to_char("You do not have the Willpower to commune with spirits right now.\n\r", ch);
+    return;
+  }
+
+  ch->cswillpower--;
+  success = godice(get_attribute(ch,CSATTRIB_STAMINA) + ch->csabilities[CSABIL_ACADEMICS], 7);
+
   if (success < 0)
   {
     return;

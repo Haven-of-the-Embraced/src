@@ -3006,6 +3006,10 @@ Total (3) */
 { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_maskthepredator,  TAR_IGNORE, POS_STANDING,
 &gsn_gift_maskthepredator,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
+{   "steel fur", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_steelfur,  TAR_IGNORE, POS_STANDING,
+&gsn_gift_steelfur,          SLOT( 0),        0,     12, "",             "Your fur loses its metal sheen and resilience.", "" },
+
 {   "tongues", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_tongues,  TAR_IGNORE, POS_STANDING,
 &gsn_gift_tongues,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },

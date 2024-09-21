@@ -3997,6 +3997,24 @@ void spell_gift_maskthepredator( int sn, int level, CHAR_DATA *ch, void *vo, int
   return;
 }
 
+void spell_gift_steelfur( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  AFFECT_DATA af;
+  int success = 0;
+
+  if (success < 0)
+  {
+    return;
+  }
+
+  if (success == 0)
+  {
+    return;
+  }
+
+  return;
+}
+
 //Rank 3
 //Reshape Object - duplicate gift, as HOMID
 

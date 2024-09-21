@@ -188,8 +188,8 @@ void do_drain(CHAR_DATA *ch, char *argument)
             bpotion->name = str_dup(buf);
             extract_obj(vial);
             obj_to_char(bpotion,ch);
-            raw_kill(victim);
-            gain_exp(ch,success*10);
+            kill_em(ch, victim);
+            gain_exp(ch,success*5);
             WAIT_STATE(ch, 24);
             return;
         }

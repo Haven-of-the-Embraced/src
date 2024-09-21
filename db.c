@@ -5206,6 +5206,7 @@ sh_int  gsn_gift_pawsofthenewborncub;
 sh_int  gsn_gift_artisanscommand;
 sh_int  gsn_gift_giftofsalt;
 sh_int  gsn_gift_maskthepredator;
+sh_int  gsn_gift_steelfur;
 sh_int  gsn_gift_tongues;
 sh_int  gsn_gift_attunement;
 sh_int  gsn_gift_doppelganger;

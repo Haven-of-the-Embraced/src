@@ -315,6 +315,7 @@ DECLARE_SPELL_FUN(spell_gift_pawsofthenewborncub);
 DECLARE_SPELL_FUN(spell_gift_artisanscommand);
 DECLARE_SPELL_FUN(spell_gift_giftofsalt);
 DECLARE_SPELL_FUN(spell_gift_maskthepredator);
+DECLARE_SPELL_FUN(spell_gift_steelfur);
 DECLARE_SPELL_FUN(spell_gift_tongues);
 DECLARE_SPELL_FUN(spell_gift_attunement);
 DECLARE_SPELL_FUN(spell_gift_doppelganger);

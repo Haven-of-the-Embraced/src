@@ -3956,6 +3956,7 @@ extern sh_int  gsn_gift_artisanscommand;
 extern sh_int  gsn_gift_giftofsalt;
 extern sh_int  gsn_gift_maskthepredator;
 extern sh_int  gsn_gift_tongues;
+extern sh_int  gsn_gift_steelfur;
 extern sh_int  gsn_gift_attunement;
 extern sh_int  gsn_gift_doppelganger;
 extern sh_int  gsn_gift_commandtheblaze;

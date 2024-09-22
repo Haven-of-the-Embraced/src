@@ -2559,7 +2559,7 @@ void do_whois (CHAR_DATA *ch, char *argument)
         if ( d->character != NULL && can_see( ch, d->character )
         && is_name(arg,d->character->name) || (d->original && is_name(arg,d->original->name)))
         {
-            sprintf( buf + strlen(buf), "    Socket     :  [%3d %2d] %s@%s\n\r",
+            sprintf( buf, "    Socket     :  [%3d %2d] %s@%s\n\r",
             d->descriptor, d->connected,
             d->original  ? d->original->name  :
             d->character ? d->character->name : "(none)",

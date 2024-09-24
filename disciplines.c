@@ -1817,6 +1817,64 @@ void do_project(CHAR_DATA *ch, char *argument)
     return;
 }
 
+void do_farsight( CHAR_DATA *ch, char *argument )
+{
+    CHAR_DATA *victim;
+    ROOM_INDEX_DATA *was_room;
+    int success;
+
+    if (IS_NPC(ch)) return;
+
+    if(!IS_VAMP(ch))
+    {
+        send_to_char("You are not a vampire!\n\r" ,ch);
+        return;
+    }
+
+    if (ch->pcdata->discipline[AUSPEX] < 6)
+    {
+        send_to_char( "You have not progressed enough in your powers of Auspex.\n\r", ch );
+        return;
+    }
+
+    if ( argument[0] == '\0' )
+    {
+        send_to_char( "Whom are you trying to view?\n\r", ch );
+        return;
+    }
+
+    if ( (victim = get_char_world(ch, argument)) == NULL)
+    {
+        send_to_char( "They aren't here.\n\r", ch );
+        return;
+    }
+
+    if (!can_see(ch, victim))
+    {
+        send_to_char( "They aren't here.\n\r", ch );
+        return;
+    }
+
+    if (IS_SET(victim->act, ACT_QUESTMOB))
+    {
+      send_to_char("Quit trying to cheat the system!  You should be ashamed of yourself.\n\r", ch);
+      sprintf(buf,"FLAG:: %s thought they were sneaky and tried to use Farsight on %s.\n\r  Don't worry, I stopped them.",ch->name, victim->name);
+      wiznet(buf,ch,NULL,WIZ_FLAGS,0,0);
+      return;
+    }
+
+    if (ch->move < ch->level)
+    {
+        send_to_char( "You are too tired to focus on viewing someone.\n\r", ch );
+        return;
+    }
+
+    ch->move -= ch->level;
+    success = godice(get_attribute(ch, PERCEPTION) + ch->csabilities[CSABIL_EMPATHY], 6);
+
+    return;
+}
+
 void do_dash(CHAR_DATA *ch, char *argument)
 {
     CHAR_DATA *victim;

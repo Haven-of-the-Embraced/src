@@ -1822,6 +1822,7 @@ void do_farsight( CHAR_DATA *ch, char *argument )
     CHAR_DATA *victim;
     ROOM_INDEX_DATA *was_room;
     int success;
+    char buf[MAX_STRING_LENGTH];
 
     if (IS_NPC(ch)) return;
 
@@ -1849,9 +1850,17 @@ void do_farsight( CHAR_DATA *ch, char *argument )
         return;
     }
 
-    if (!can_see(ch, victim))
+    if ((victim = get_char_world(ch, argument)) == NULL || !can_see(ch, victim) || victim->obfuscate >= ch->auspex)
     {
-        send_to_char( "They aren't here.\n\r", ch );
+        send_to_char( "You don't sense that being.\n\r", ch );
+        return;
+    }
+
+    if (IS_IMMORTAL(victim))
+    {
+        send_to_char( "Spying on the Administration is frowned upon.  Stop being naughty.\n\r", ch );
+        sprintf(buf,"FLAG:: %s is naughty and tried to use Farsight on %s.\n\r  Not on my watch!",ch->name, victim->name);
+        wiznet(buf,ch,NULL,WIZ_FLAGS,0,0);
         return;
     }
 
@@ -1871,6 +1880,16 @@ void do_farsight( CHAR_DATA *ch, char *argument )
 
     ch->move -= ch->level;
     success = godice(get_attribute(ch, PERCEPTION) + ch->csabilities[CSABIL_EMPATHY], 6);
+
+    was_room = ch->in_room;
+    char_from_room( ch );
+    if (victim == ch)
+        char_to_room(ch, was_room);
+    else
+        char_to_room( ch, victim->in_room );
+    do_function(ch, &do_look, "auto" );
+    char_from_room( ch );
+    char_to_room( ch, was_room );
 
     return;
 }

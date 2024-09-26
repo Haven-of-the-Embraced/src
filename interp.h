@@ -523,6 +523,7 @@ DECLARE_DO_FUN( do_auraperception   );
 DECLARE_DO_FUN( do_touch    );
 DECLARE_DO_FUN( do_telepathy    );
 DECLARE_DO_FUN( do_project  );
+DECLARE_DO_FUN( do_farsight );
 DECLARE_DO_FUN( do_renown   );
 DECLARE_DO_FUN( do_garou    );
 DECLARE_DO_FUN( do_gifts    );

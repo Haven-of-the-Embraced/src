@@ -1850,7 +1850,8 @@ void do_farsight( CHAR_DATA *ch, char *argument )
         return;
     }
 
-    if ((victim = get_char_world(ch, argument)) == NULL || !can_see(ch, victim) || victim->obfuscate >= ch->auspex)
+    if ((victim = get_char_world(ch, argument)) == NULL || !can_see(ch, victim) ||
+        IS_SET(victim->in_room->sector_type, SECT_UNUSED) || IS_SET(victim->in_room->room_flags, ROOM_NOWHERE))
     {
         send_to_char( "You don't sense that being.\n\r", ch );
         return;

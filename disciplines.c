@@ -1823,7 +1823,7 @@ void do_farsight( CHAR_DATA *ch, char *argument )
     ROOM_INDEX_DATA *was_room;
     int success;
     char buf[MAX_STRING_LENGTH];
-
+    
     if (IS_NPC(ch)) return;
 
     if(!IS_VAMP(ch))
@@ -1841,12 +1841,6 @@ void do_farsight( CHAR_DATA *ch, char *argument )
     if ( argument[0] == '\0' )
     {
         send_to_char( "Whom are you trying to view?\n\r", ch );
-        return;
-    }
-
-    if ( (victim = get_char_world(ch, argument)) == NULL)
-    {
-        send_to_char( "They aren't here.\n\r", ch );
         return;
     }
 
@@ -1881,6 +1875,23 @@ void do_farsight( CHAR_DATA *ch, char *argument )
 
     ch->move -= ch->level;
     success = godice(get_attribute(ch, PERCEPTION) + ch->csabilities[CSABIL_EMPATHY], 6);
+
+    if(success < 0)
+    {
+        send_to_char( "Closing your eyes, you try to sense your target.  After a bit, you lose concentration.\n\r", ch );
+        do_function(ch, &do_look, "auto" );
+        WAIT_STATE(ch,9);
+        return;
+    }
+
+    if(success == 0)
+    {
+        send_to_char( "You seem to have trouble focusing on your target.\n\r", ch );
+        WAIT_STATE(ch,3);
+        return;
+    }
+
+    send_to_char( "Focusing intently, your mind views your target through a haze as a scene unfolds.\n\r", ch );
 
     was_room = ch->in_room;
     char_from_room( ch );

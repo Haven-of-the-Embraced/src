@@ -1823,7 +1823,8 @@ void do_farsight( CHAR_DATA *ch, char *argument )
     ROOM_INDEX_DATA *was_room;
     int success;
     char buf[MAX_STRING_LENGTH];
-    
+    char aura[MAX_STRING_LENGTH];
+
     if (IS_NPC(ch)) return;
 
     if(!IS_VAMP(ch))
@@ -1891,7 +1892,9 @@ void do_farsight( CHAR_DATA *ch, char *argument )
         return;
     }
 
-    send_to_char( "Focusing intently, your mind views your target through a haze as a scene unfolds.\n\r", ch );
+    send_to_char("{m+==============================================================================+{x\n\r", ch);
+    send_to_char("{m|      {WA scene unfolds in your mind, as you focus on viewing your target.      {m|{x\n\r", ch );
+    send_to_char("{m+==============================================================================+{x\n\r", ch);
 
     was_room = ch->in_room;
     char_from_room( ch );
@@ -1900,6 +1903,17 @@ void do_farsight( CHAR_DATA *ch, char *argument )
     else
         char_to_room( ch, victim->in_room );
     do_function(ch, &do_look, "auto" );
+    send_to_char("\n\r", ch);
+    sprintf(buf,"consider %s", victim->name);
+    interpret( ch, buf );
+    if (success >= 4)
+    {
+        send_to_char("\n\r{m+==============================================================================+{x\n\r", ch);
+        send_to_char("{m|    {WWith a little extra effort, you attempt to glimpse your target's aura.    {m|{x\n\r", ch );
+        send_to_char("{m+==============================================================================+{x\n\r", ch);
+        sprintf(buf,"aura %s", victim->name);
+        interpret( ch, buf );
+    }
     char_from_room( ch );
     char_to_room( ch, was_room );
 

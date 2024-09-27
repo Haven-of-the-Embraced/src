@@ -1124,7 +1124,7 @@ void do_auraperception( CHAR_DATA *ch, char *argument )
     WAIT_STATE(ch, 24);
     ch->move -= ch->level;
 
-    if (success <= 0)
+    if (success == 0)
     {
         send_to_char("You are unable to read their aura.\n\r", ch);
         return;
@@ -1201,6 +1201,30 @@ void do_auraperception( CHAR_DATA *ch, char *argument )
         sprintf(auracol, "{B");
     }
 
+    if (success < 0)
+    {
+        switch (number_range(1, 7))
+        {
+            case 1: sprintf(auracol, "{m");break;
+            case 2: sprintf(auracol, "{Y");break;
+            case 3: sprintf(auracol, "{G");break;
+            case 4: sprintf(auracol, "{r");break;
+            case 5: sprintf(auracol, "{C");break;
+            case 6: sprintf(auracol, "{B");break;
+            default: sprintf(auracol, "{W");break;
+        }
+        switch (number_range(1, 7))
+        {
+            case 1: sprintf(raceaura, "({wPale{x)");break;
+            case 2: sprintf(raceaura, "({GVibrant{x)");break;
+            case 3: sprintf(raceaura, "({CS{Wp{Ca{Wr{Ck{Wl{Ci{Wn{Cg{x)");break;
+            case 4: sprintf(raceaura, "({DI{wn{Dt{we{Dr{wm{Di{wt{Dt{we{Dn{wt{x)");break;
+            case 5: sprintf(raceaura, "({RC{Yo{Gl{Bo{Mr{x)");break;
+            case 6: sprintf(raceaura, "({DStained{x)");break;
+            default: sprintf(raceaura, "{W(Moderate){x");break;
+        }
+    }
+
     if (!is_humanoid(victim))
     {
         send_to_char("You do not see any particular aura surrounding your target.\n\r", ch);
@@ -1208,10 +1232,10 @@ void do_auraperception( CHAR_DATA *ch, char *argument )
     }
     else
     {
-        send_to_char("{m|-------------------------( (     {MAuras{m      ) )-------------------------|{x \n\r", ch);
+        send_to_char("{m|----------------------------( (     {MAuras{m      ) )----------------------------|{x \n\r", ch);
         sprintf( buf, "{m| {xYou carefully examine the Auras swirling around %s:\n\r", victim->short_descr);
         send_to_char( buf, ch );
-        send_to_char("{m|-------------------------( ( ( ( ( -- ) ) ) ) )-------------------------|{x \n\r\n\r", ch);
+        send_to_char("{m|----------------------------( ( ( ( ( -- ) ) ) ) )----------------------------|{x \n\r\n\r", ch);
         sprintf( buf, "              %s({x   O   %s){x             [Main Aura]\n\r", auracol, auracol);
         add_buf(buffer, buf);
         sprintf( buf, "              %s({x --+-- %s){x             %s\n\r", auracol, auracol, raceaura);
@@ -1241,7 +1265,7 @@ void do_auraperception( CHAR_DATA *ch, char *argument )
         }
         add_buf(buffer, "\n\r");
         page_to_char(buf_string(buffer),ch);
-        send_to_char("\n\r{m|-------------------------( ( ( ( ( -- ) ) ) ) )-------------------------|{x \n\r", ch);
+        send_to_char("\n\r{m|----------------------------( ( ( ( ( -- ) ) ) ) )----------------------------|{x \n\r", ch);
     }
 
     return;

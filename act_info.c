@@ -2516,6 +2516,7 @@ void do_whois (CHAR_DATA *ch, char *argument)
     DESCRIPTOR_DATA *d;
     BUFFER *buffer;
     buffer = new_buf();
+    (char *) ctime( &current_time );
 
     one_argument( argument, arg );
 
@@ -2543,15 +2544,25 @@ void do_whois (CHAR_DATA *ch, char *argument)
         return;
     }
 
-    sprintf(buf, "===============================================================\n\r");
+    sprintf(buf, "{g /========================[    {GWhois{g     ]========================\\{x\n\r");
     add_buf(buffer, buf);
-    sprintf(buf, "    Name       :  %s\n\r", victim->name);
+    sprintf(buf, "{g/==================================================================\\{x\n\r");
     add_buf(buffer, buf);
-    sprintf(buf, "    Race       :  %s\n\r", race_table[victim->race].name);
+    sprintf(buf, "{g||{x    Name           :  %s\n\r", victim->name);
     add_buf(buffer, buf);
-    sprintf(buf, "    Affiliation:  %s\n\r", capitalize(clan_table[victim->clan].name));
+    sprintf(buf, "{g||{x    Race           :  %s\n\r", race_table[victim->race].name);
     add_buf(buffer, buf);
-    sprintf(buf, "    Remorts    :  %d\n\r", victim->remorts);
+    sprintf(buf, "{g||{x    Affiliation    :  %s\n\r", capitalize(clan_table[victim->clan].name));
+    add_buf(buffer, buf);
+    sprintf(buf, "{g||{x    Remorts        :  %d\n\r", victim->remorts);
+    add_buf(buffer, buf);
+    sprintf(buf, "{g||{x    Creation ID    :  %d\n\r", victim->id);
+    add_buf(buffer, buf);
+    sprintf(buf, "{g||{x    Create Date    :  %s", ctime(&victim->id));
+    add_buf(buffer, buf);
+    sprintf(buf, "{g||{x    Total Logged In:  %d hours\n\r", (int) (victim->played + current_time - victim->logon) / 3600);
+    add_buf(buffer, buf);
+    sprintf(buf, "{g||{x    This Session   :  %d hours\n\r", (int) (current_time - victim->logon) / 3600);
     add_buf(buffer, buf);
 
     for ( d = descriptor_list; d != NULL; d = d->next )
@@ -2559,7 +2570,7 @@ void do_whois (CHAR_DATA *ch, char *argument)
         if ( d->character != NULL && can_see( ch, d->character )
         && is_name(arg,d->character->name) || (d->original && is_name(arg,d->original->name)))
         {
-            sprintf( buf, "    Socket     :  [%3d %2d] %s@%s\n\r",
+            sprintf( buf, "{g||{x    Socket         :  [%3d %2d] %s@%s\n\r",
             d->descriptor, d->connected,
             d->original  ? d->original->name  :
             d->character ? d->character->name : "(none)",
@@ -2568,7 +2579,9 @@ void do_whois (CHAR_DATA *ch, char *argument)
         }
     }
     add_buf(buffer, buf);
-    sprintf(buf, "===============================================================\n\r");
+    sprintf(buf, "{g\\==================================================================/{x\n\r");
+    add_buf(buffer, buf);
+    sprintf(buf, "{g \\================================================================/{x\n\r");
     add_buf(buffer, buf);
     page_to_char(buf_string(buffer), ch);
     return; 

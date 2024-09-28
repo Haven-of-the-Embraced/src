@@ -3796,7 +3796,7 @@ void do_lore( CHAR_DATA *ch, char *argument )
                 sprintf(buf, "  Only a few stories about '%s' are known to the public.\n\r", victim->short_descr);
             }
             add_buf(buffer, buf);
-            if (IS_SET(victim, ACT2_INFLUENCE))
+            if (IS_SET(victim->act2, ACT2_INFLUENCE))
             {
                 sprintf(buf, "  %s is a very influential figure in these parts.\n\r", 
                     victim->sex == 0 ? "It" : victim->sex == 1 ? "He" : "She");
@@ -3804,58 +3804,56 @@ void do_lore( CHAR_DATA *ch, char *argument )
             }
         }
         page_to_char(buf_string(buffer), ch);
-        send_to_char("{W[---------------------------=======OOOOOOOOOO=======---------------------------]{x\n\r",ch);
     }
     else
     {
-        sprintf( buf,
-            "Object '%s' is type %s, extra flags %s.\n\rWeight is %d.%d, value is %d, level is %d.\n\r",
-            obj->name,
-            item_name(obj->item_type),
-            extra_bit_name( obj->extra_flags ),
-            obj->weight / 10, obj->weight % 10,
-            obj->cost,
-            obj->level
-            );
-        send_to_char( buf, ch );
+        send_to_char("{W                                  /==========\\{x\n\r",ch);
+        send_to_char("{W[---------------------------=======   Lore   =======---------------------------]{x\n\r",ch);
+        if (IS_OBJ_STAT(obj, ITEM_RARE))
+        {
+            sprintf(buf, "  {y({x%s{y){x is an item that is seldom seen, let alone owned.\n\r", capitalize(obj->short_descr));
+            add_buf(buffer, buf);
+        }
+        else
+        {
+            sprintf( buf, "  {y({x%s{y){x is a fairly common item to be found.\n\r", capitalize(obj->short_descr));
+            add_buf(buffer, buf);
+        }
 
         switch ( obj->item_type )
         {
             case ITEM_SCROLL:
             case ITEM_POTION:
             case ITEM_PILL:
-                sprintf( buf, "Level %d spells of:", obj->value[0] );
-                send_to_char( buf, ch );
+//                sprintf( buf, "Level %d spells of:", obj->value[0] );
+                sprintf( buf, "  Tales vary, but common spells that are found on this one-use item are:\n\r");
+                add_buf(buffer, buf);
 
                 if ( obj->value[1] >= 0 && obj->value[1] < MAX_SKILL )
                 {
-                    send_to_char( " '", ch );
-                    send_to_char( skill_table[obj->value[1]].name, ch );
-                    send_to_char( "'", ch );
+                    sprintf( buf, "    1) '%s'\n\r", skill_table[obj->value[1]].name);
+                    add_buf(buffer, buf);
                 }
 
                 if ( obj->value[2] >= 0 && obj->value[2] < MAX_SKILL )
                 {
-                    send_to_char( " '", ch );
-                    send_to_char( skill_table[obj->value[2]].name, ch );
-                    send_to_char( "'", ch );
+                    sprintf( buf, "    2) '%s'\n\r", skill_table[obj->value[2]].name);
+                    add_buf(buffer, buf);
                 }
 
                 if ( obj->value[3] >= 0 && obj->value[3] < MAX_SKILL )
                 {
-                    send_to_char( " '", ch );
-                    send_to_char( skill_table[obj->value[3]].name, ch );
-                    send_to_char( "'", ch );
+                    sprintf( buf, "    3) '%s'\n\r", skill_table[obj->value[3]].name);
+                    add_buf(buffer, buf);
                 }
 
                 if (obj->value[4] >= 0 && obj->value[4] < MAX_SKILL)
                 {
-                    send_to_char(" '",ch);
-                    send_to_char(skill_table[obj->value[4]].name,ch);
-                    send_to_char("'",ch);
+                    sprintf( buf, "    4) '%s'\n\r", skill_table[obj->value[4]].name);
+                    add_buf(buffer, buf);
                 }
 
-                    send_to_char( ".\n\r", ch );
+                page_to_char(buf_string(buffer), ch);
                 break;
 
             case ITEM_WAND:
@@ -4018,7 +4016,8 @@ void do_lore( CHAR_DATA *ch, char *argument )
             }
         }
     }
-return;
+    send_to_char("{W[---------------------------=======OOOOOOOOOO=======---------------------------]{x\n\r",ch);
+    return;
 }
 
 void do_dip(CHAR_DATA *ch, char *argument)

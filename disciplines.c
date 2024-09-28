@@ -4299,6 +4299,7 @@ void do_armsoftheabyss(CHAR_DATA *ch, char *argument)
 {
    CHAR_DATA *victim;
    AFFECT_DATA af;
+   int success;
 
     if (IS_NPC(ch)) return;
 
@@ -4309,7 +4310,7 @@ void do_armsoftheabyss(CHAR_DATA *ch, char *argument)
     }
     if ( ( victim = get_char_room( ch, NULL, argument ) ) == NULL )
     {
-        send_to_char( "Who?\n\r", ch );
+        send_to_char( "Whom is deserving of the wrath of the {DAbyss{x?\n\r", ch );
         return;
     }
     if ( IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
@@ -4324,30 +4325,50 @@ void do_armsoftheabyss(CHAR_DATA *ch, char *argument)
     }
     if (ch->pcdata->discipline[OBTENEBRATION] < 3)
     {
-        send_to_char( "You are not skilled enough in the arts of Obtenebration.\n\r", ch );
+        send_to_char( "You are not skilled enough in the arts of Obtenebration.\n\rTry again after you gaze more longingly into the {DAbyss{x.\n\r", ch );
         return;
     }
 
     if (IS_NPC(victim) && victim->pIndexData->pShop != NULL)
     {
-        send_to_char("You fear that it may hinder your future purchases.\n\r",ch);
+        send_to_char("The shopkeep cannot procure goods while being strangled.\n\r",ch);
         return;
     }
 
     if(is_affected(victim,gsn_armsoftheabyss))
     {
-        send_to_char("They are already entangled.\n\r",ch);
+        send_to_char("Your target is already ensnared by shadowy tentacles.\n\r",ch);
         return;
     }
-    if ( ch->pblood < 25 && !is_affected(ch,gsn_shadowform))
+    if ( ch->pblood < 15 && !is_affected(ch,gsn_shadowform))
     {
         send_to_char( "You don't have enough blood.\n\r", ch );
         return;
     }
-    if(!is_affected(ch,gsn_shadowform)) ch->pblood -= 15;
-    if(number_range(1,100) < 30)
+    if(!is_affected(ch,gsn_shadowform))
+        ch->pblood -= 10;
+
+    success = godice(get_attribute(ch, MANIPULATION) + ch->csabilities[CSABIL_MELEE], 6);
+
+    if(success < 0)
     {
-        send_to_char("You fail to summon forth tendrils of darkness!\n\r",ch);
+        act( "When you touch the {DAbyss{x, sometimes it touches back.", ch, NULL, victim, TO_CHAR );
+        act( "Tendrils coil from your shadow and constrict you!", ch, NULL, victim, TO_CHAR );
+        af.where     = TO_AFFECTS;
+        af.type      = gsn_armsoftheabyss;
+        af.level     = -success;
+        af.duration  = 2;
+        af.location  = 0;
+        af.modifier  = ch->pcdata->discipline[OBTENEBRATION];
+        af.bitvector = 0;
+        affect_to_char( ch, &af );
+        return;
+    }
+
+    if(success == 0)
+    {
+        send_to_char("You call into the Darkness of the {DAbyss{x, but there is no answer.\n\r",ch);
+        WAIT_STATE(ch, 9);
         return;
     }
 

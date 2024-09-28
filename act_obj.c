@@ -3712,6 +3712,7 @@ void do_value( CHAR_DATA *ch, char *argument )
 void do_lore( CHAR_DATA *ch, char *argument )
 {
     OBJ_DATA *obj;
+    OBJ_INDEX_DATA *pObjIndex;
     char buf[MAX_STRING_LENGTH];
     char arg[MAX_INPUT_LENGTH];
     BUFFER *buffer;
@@ -3736,6 +3737,7 @@ void do_lore( CHAR_DATA *ch, char *argument )
 
     victim = get_char_room( ch, NULL, arg );
     success = godice(get_attribute(ch, INTELLIGENCE) + get_ability(ch, CSABIL_HEARTHWISDOM), 6);
+    pObjIndex = get_obj_index( obj->pIndexData->vnum );
 
     WAIT_STATE(ch, 36);
     ch->move -= ch->level + 10;
@@ -3819,7 +3821,9 @@ void do_lore( CHAR_DATA *ch, char *argument )
             sprintf( buf, "  {y({x%s{y){x is a fairly common item to be found.\n\r", capitalize(obj->short_descr));
             add_buf(buffer, buf);
         }
-
+        sprintf(buf, "  Word of mouth puts about {B({C%d{B){x of these in circulation.{x\n\r", pObjIndex->count);
+        add_buf(buffer, buf);
+        
         switch ( obj->item_type )
         {
             case ITEM_SCROLL:
@@ -3868,29 +3872,29 @@ void do_lore( CHAR_DATA *ch, char *argument )
             break;
 
             case ITEM_WEAPON:
-                send_to_char("Weapon type is ",ch);
+                sprintf(buf, "  Warriors in combat swear by this {D({r+%d{D){x ", obj->value[1] / 20);
+                add_buf(buffer, buf);
                 switch (obj->value[0])
                 {
-                    case(WEAPON_EXOTIC) : send_to_char("exotic.\n\r",ch);   break;
-                    case(WEAPON_SWORD)  : send_to_char("sword.\n\r",ch);    break;
-                    case(WEAPON_DAGGER) : send_to_char("dagger.\n\r",ch);   break;
-                    case(WEAPON_SPEAR)  : send_to_char("spear/staff.\n\r",ch);  break;
-                    case(WEAPON_MACE)   : send_to_char("mace/club.\n\r",ch);    break;
-                    case(WEAPON_AXE)    : send_to_char("axe.\n\r",ch);      break;
-                    case(WEAPON_FLAIL)  : send_to_char("flail.\n\r",ch);    break;
-                    case(WEAPON_WHIP)   : send_to_char("whip.\n\r",ch);     break;
-                    case(WEAPON_POLEARM): send_to_char("polearm.\n\r",ch);  break;
-                    case(WEAPON_LANCE): send_to_char("lance.\n\r",ch);  break;
-                    default     : send_to_char("unknown.\n\r",ch);  break;
+                    case(WEAPON_EXOTIC) : add_buf(buffer,"exotic weapon.\n\r");   break;
+                    case(WEAPON_SWORD)  : add_buf(buffer,"sword.\n\r");    break;
+                    case(WEAPON_DAGGER) : add_buf(buffer,"dagger.\n\r");   break;
+                    case(WEAPON_SPEAR)  : add_buf(buffer,"spear/staff.\n\r");  break;
+                    case(WEAPON_MACE)   : add_buf(buffer,"mace/club.\n\r");    break;
+                    case(WEAPON_AXE)    : add_buf(buffer,"axe.\n\r");      break;
+                    case(WEAPON_FLAIL)  : add_buf(buffer,"flail.\n\r");    break;
+                    case(WEAPON_WHIP)   : add_buf(buffer,"whip.\n\r");     break;
+                    case(WEAPON_POLEARM): add_buf(buffer,"polearm.\n\r");  break;
+                    case(WEAPON_LANCE)  : add_buf(buffer,"lance.\n\r");  break;
+                    default             : add_buf(buffer,"unknown weapon.\n\r");  break;
                 }
-                sprintf(buf, "D10 Damage Dice Bonus: {D({r+%d{D){x\n\r", obj->value[1] / 20);
-                send_to_char(buf, ch);
-                if (obj->value[4])  /* weapon flags */
+
+                if ((obj->value[4]) && success >= 4)  /* weapon flags */
                 {
-                    sprintf(buf,"Weapons flags: %s\n\r",weapon_bit_name(obj->value[4]));
-                    send_to_char(buf,ch);
+                    sprintf(buf,"  Battlefield tales speak of this weapon having the properties below:\n\r    {g<{x %s {g>{x\n\r",weapon_bit_name(obj->value[4]));
+                    add_buf(buffer, buf);
                 }
-            break;
+                break;
 
             default:
                 sprintf( buf, "  There are no interesting accounts told of this object.\n\r");

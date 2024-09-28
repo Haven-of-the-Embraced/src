@@ -3720,7 +3720,7 @@ void do_lore( CHAR_DATA *ch, char *argument )
 
     one_argument( argument, arg );
 
-    if ( ( obj = get_obj_carry( ch, arg, ch ) ) == NULL && get_char_room( ch, NULL, arg ) == NULL)
+    if ( ( obj = get_obj_carry( ch, arg, ch ) ) == NULL && (get_char_room( ch, NULL, arg ) == NULL))
     {
         send_to_char( "Lore what?\n\r", ch );
         return;
@@ -3732,20 +3732,7 @@ void do_lore( CHAR_DATA *ch, char *argument )
         return;
     }
 
-    if (get_skill(ch,gsn_lore) <= 1)
-    {
-        send_to_char("You fail to gain any useful information.\n\r",ch);
-        return;
-    }
-
-    if (number_percent() >= 20 + get_skill(ch,gsn_lore) * 4/5)
-    {
-        send_to_char("You fail to gain any useful information.\n\r",ch);
-        check_improve(ch,gsn_lore,FALSE,2);
-        WAIT_STATE(ch, 36);
-        return;
-    }
-
+    victim = get_char_room( ch, NULL, arg );
     success = godice(get_attribute(ch, INTELLIGENCE) + get_ability(ch, CSABIL_HEARTHWISDOM), 6);
 
     WAIT_STATE(ch, 36);
@@ -3761,18 +3748,32 @@ void do_lore( CHAR_DATA *ch, char *argument )
     if (success == 0)
     {
         sprintf( buf, "You cannot seem to recall any useful stories relating to %s.\n\r", 
-            if (victim) ? victim->short_descr : obj->short_descr);
+            victim != NULL ? victim->short_descr : obj->short_descr);
         send_to_char( buf, ch );
         WAIT_STATE(ch, 9);
         return;
     }
 
     check_improve(ch,gsn_lore,TRUE,2);
-    if((victim = get_char_room( ch, NULL, arg )) != NULL)
+    if(victim)
     {
         if(!IS_NPC(victim))
         {
-            send_to_char("Not on players!", ch);
+            sprintf(buf, "Tales travel far and wide of %s%s%s.\n\r", victim->name, 
+                !IS_NULLSTR(victim->pcdata->pretitle) ? ", often referred to as " : "",
+                !IS_NULLSTR(victim->pcdata->pretitle) ? victim->pcdata->pretitle : ""
+                );
+            send_to_char(buf, ch);
+            sprintf(buf, "Hailing from the lands of %s, %s feats are the stuff of legends.\n\r",
+                (victim->pcdata->hometown) != NULL ? hometown_table[victim->pcdata->hometown].name : "parts unknown",
+                victim->sex == 0 ? "its" : victim->sex == 1 ? "his" : "her");
+            send_to_char(buf, ch);
+            if (success >= 4)
+            {
+                sprintf(buf, "Rumor has it that %s has slain %d foes, and once even dealing %d points of damage!\n\r",
+                    victim->sex == 0 ? "it" : victim->sex == 1 ? "he" : "she", victim->currentkills, victim->maxdamage);
+                send_to_char(buf, ch);
+            }
             return;
         }
         sprintf(buf, "%s is a %s %s.\n\r",
@@ -3780,10 +3781,6 @@ void do_lore( CHAR_DATA *ch, char *argument )
             victim->sex == 0 ? "sexless" : victim->sex == 1 ? "male" : "female",
             race_table[victim->race].name);
         send_to_char(buf,ch);
-        sprintf( buf,
-            "They have %d around hit points.\n\r",
-            UMAX( 1, number_range(victim->hit-victim->level, victim->hit+victim->level)));
-        send_to_char( buf, ch );
     }
     else
     {

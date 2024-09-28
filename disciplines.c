@@ -4300,6 +4300,7 @@ void do_armsoftheabyss(CHAR_DATA *ch, char *argument)
    CHAR_DATA *victim;
    AFFECT_DATA af;
    int success;
+   int diff = 7;
 
     if (IS_NPC(ch)) return;
 
@@ -4348,7 +4349,14 @@ void do_armsoftheabyss(CHAR_DATA *ch, char *argument)
     if(!is_affected(ch,gsn_shadowform))
         ch->pblood -= 10;
 
-    success = godice(get_attribute(ch, MANIPULATION) + ch->csabilities[CSABIL_MELEE], 6);
+    if (ch->level >= victim->level + 10)
+        diff--;
+    if (ch->level <= victim->level - 10)
+        diff++;
+    if (IS_SET(victim->act2, ACT2_ULTRA_MOB))
+        diff++;
+
+    success = godice(get_attribute(ch, MANIPULATION) + ch->csabilities[CSABIL_MELEE], diff);
 
     if(success < 0)
     {
@@ -4356,9 +4364,9 @@ void do_armsoftheabyss(CHAR_DATA *ch, char *argument)
         act( "Tendrils coil from your shadow and constrict you!", ch, NULL, victim, TO_CHAR );
         af.where     = TO_AFFECTS;
         af.type      = gsn_armsoftheabyss;
-        af.level     = -success;
+        af.level     = ch->level;
         af.duration  = 2;
-        af.location  = 0;
+        af.location  = APPLY_NONE;
         af.modifier  = ch->pcdata->discipline[OBTENEBRATION];
         af.bitvector = 0;
         affect_to_char( ch, &af );
@@ -4375,9 +4383,9 @@ void do_armsoftheabyss(CHAR_DATA *ch, char *argument)
     af.where     = TO_AFFECTS;
     af.type      = gsn_armsoftheabyss;
     af.level     = ch->level;
-    af.duration  = ch->pcdata->discipline[OBTENEBRATION];
-    af.location  = APPLY_CS_STR;
-    af.modifier  = -2;
+    af.duration  = success + 2;
+    af.location  = APPLY_NONE;
+    af.modifier  = ch->pcdata->discipline[OBTENEBRATION];
     af.bitvector = 0;
     affect_to_char( victim, &af );
     multi_hit( victim, ch, TYPE_UNDEFINED );

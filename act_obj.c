@@ -3867,25 +3867,6 @@ void do_lore( CHAR_DATA *ch, char *argument )
 
             break;
 
-            case ITEM_DRINK_CON:
-                sprintf(buf,"It holds %s-colored %s.\n\r",
-                liq_table[obj->value[2]].liq_color,
-                liq_table[obj->value[2]].liq_name);
-                send_to_char(buf,ch);
-            break;
-
-            case ITEM_CONTAINER:
-                sprintf(buf,"Capacity: %d#  Maximum weight: %d.%d#  flags: %s\n\r",
-                obj->value[3], obj->value[0] / 10, obj->value[0] % 10, cont_bit_name(obj->value[1]));
-                send_to_char(buf,ch);
-                if (obj->value[4] != 100)
-                {
-                    sprintf(buf,"Weight multiplier: %d%%\n\r",
-                    obj->value[4]);
-                    send_to_char(buf,ch);
-                }
-            break;
-
             case ITEM_WEAPON:
                 send_to_char("Weapon type is ",ch);
                 switch (obj->value[0])
@@ -3911,11 +3892,9 @@ void do_lore( CHAR_DATA *ch, char *argument )
                 }
             break;
 
-            case ITEM_ARMOR:
-                sprintf( buf,
-                "Armor class is %d pierce, %d bash, %d slash, and %d vs. magic.\n\r",
-                obj->value[0], obj->value[1], obj->value[2], obj->value[3] );
-                send_to_char( buf, ch );
+            default:
+                sprintf( buf, "  There are no interesting accounts told of this object.\n\r");
+                add_buf(buffer, buf);
                 break;
         }
         page_to_char(buf_string(buffer), ch);

@@ -425,8 +425,6 @@ void move_char( CHAR_DATA *ch, int door, bool follow )
     return;
 }
 
-
-
 void do_north( CHAR_DATA *ch, char *argument )
 {
    if ( IS_AFFECTED2 (ch, AFF2_IGNIS_FATUUS))
@@ -434,46 +432,79 @@ void do_north( CHAR_DATA *ch, char *argument )
        move_char( ch, DIR_SOUTH, FALSE);
    return;
    }
+
+    if (is_affected(ch, gsn_armsoftheabyss))
+    {
+        act("Shadowy tendrils keep you rooted in place.", ch, NULL, ch, TO_CHAR);
+        act("$n struggles in vain against the shadow tendrils.", ch, NULL, ch, TO_ROOM);
+        return;
+    }
+
     move_char( ch, DIR_NORTH, FALSE );
     return;
 }
 
-
-
 void do_east( CHAR_DATA *ch, char *argument )
 {
+    if (is_affected(ch, gsn_armsoftheabyss))
+    {
+        act("Shadowy tendrils keep you rooted in place.", ch, NULL, ch, TO_CHAR);
+        act("$n struggles in vain against the shadow tendrils.", ch, NULL, ch, TO_ROOM);
+        return;
+    }
+
     move_char( ch, DIR_EAST, FALSE );
     return;
 }
 
-
-
 void do_south( CHAR_DATA *ch, char *argument )
 {
+    if (is_affected(ch, gsn_armsoftheabyss))
+    {
+        act("Shadowy tendrils keep you rooted in place.", ch, NULL, ch, TO_CHAR);
+        act("$n struggles in vain against the shadow tendrils.", ch, NULL, ch, TO_ROOM);
+        return;
+    }
+
     move_char( ch, DIR_SOUTH, FALSE );
     return;
 }
 
-
-
 void do_west( CHAR_DATA *ch, char *argument )
 {
+    if (is_affected(ch, gsn_armsoftheabyss))
+    {
+        act("Shadowy tendrils keep you rooted in place.", ch, NULL, ch, TO_CHAR);
+        act("$n struggles in vain against the shadow tendrils.", ch, NULL, ch, TO_ROOM);
+        return;
+    }
+
     move_char( ch, DIR_WEST, FALSE );
     return;
 }
 
-
-
 void do_up( CHAR_DATA *ch, char *argument )
 {
+    if (is_affected(ch, gsn_armsoftheabyss))
+    {
+        act("Shadowy tendrils keep you rooted in place.", ch, NULL, ch, TO_CHAR);
+        act("$n struggles in vain against the shadow tendrils.", ch, NULL, ch, TO_ROOM);
+        return;
+    }
+
     move_char( ch, DIR_UP, FALSE );
     return;
 }
 
-
-
 void do_down( CHAR_DATA *ch, char *argument )
 {
+    if (is_affected(ch, gsn_armsoftheabyss))
+    {
+        act("Shadowy tendrils keep you rooted in place.", ch, NULL, ch, TO_CHAR);
+        act("$n struggles in vain against the shadow tendrils.", ch, NULL, ch, TO_ROOM);
+        return;
+    }
+
     move_char( ch, DIR_DOWN, FALSE );
     return;
 }

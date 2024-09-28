@@ -15,6 +15,8 @@ void affects_update (void) {
     CHAR_DATA *rch_next;
     AFFECT_DATA af;
     int level;
+    int mod;
+    int success;
 
     /* Examine all mobs. */
     for ( ch = char_list; ch != NULL; ch = ch_next )
@@ -57,6 +59,20 @@ void affects_update (void) {
             send_to_char( "You gag and struggle to breathe through the shadows in your throat.\n\r", ch );
             if(ch->position != POS_TORPOR)
                 damage(ch,ch,ch->max_hit/(10*(15-level)),gsn_shadowplay,DAM_BASH,FALSE);
+        }
+    }
+
+    if (is_affected(ch, gsn_armsoftheabyss) && ch->position != POS_TORPOR)
+    {
+        level = get_affect_level(ch, gsn_armsoftheabyss);
+        mod = get_affect_modifier(ch, gsn_armsoftheabyss) * 2;
+        success = godice(mod, 6);
+        if ( success > 0 )
+        {
+            act( "$n gets pummelled by multiple shadowy tendrils assaulting $m.", ch, NULL, NULL, TO_ROOM );
+            send_to_char( "You take a beating from the shadow tendrils surrounding you.\n\r", ch );
+            d10_damage( ch, ch, success, level * 2, gsn_armsoftheabyss, DAM_BASH, DEFENSE_FULL, TRUE, FALSE);
+ //           damage(ch,ch,ch->max_hit/(10*(15-level)),gsn_shadowplay,DAM_BASH,FALSE);
         }
     }
 

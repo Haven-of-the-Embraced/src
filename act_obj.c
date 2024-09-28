@@ -3714,6 +3714,7 @@ void do_lore( CHAR_DATA *ch, char *argument )
     OBJ_DATA *obj;
     char buf[MAX_STRING_LENGTH];
     char arg[MAX_INPUT_LENGTH];
+    int success;
     AFFECT_DATA *paf;
     CHAR_DATA *victim;
 
@@ -3721,18 +3722,13 @@ void do_lore( CHAR_DATA *ch, char *argument )
 
     if ( ( obj = get_obj_carry( ch, arg, ch ) ) == NULL && get_char_room( ch, NULL, arg ) == NULL)
     {
-        send_to_char( "Lore what?.\n\r", ch );
-        return;
-    }
-    if (ch->mana < 50)
-    {
-        send_to_char("You have too little magical energy.\n\r",ch);
+        send_to_char( "Lore what?\n\r", ch );
         return;
     }
 
-    if (ch->move < 100)
+    if (ch->move < ch->level + 10)
     {
-        send_to_char("You are too tired to put the effort into loring.\n\r",ch);
+        send_to_char("You are too tired to put the effort into remembering details.\n\r",ch);
         return;
     }
 
@@ -3741,6 +3737,7 @@ void do_lore( CHAR_DATA *ch, char *argument )
         send_to_char("You fail to gain any useful information.\n\r",ch);
         return;
     }
+
     if (number_percent() >= 20 + get_skill(ch,gsn_lore) * 4/5)
     {
         send_to_char("You fail to gain any useful information.\n\r",ch);
@@ -3749,10 +3746,28 @@ void do_lore( CHAR_DATA *ch, char *argument )
         return;
     }
 
-    check_improve(ch,gsn_lore,TRUE,2);
+    success = godice(get_attribute(ch, INTELLIGENCE) + get_ability(ch, CSABIL_HEARTHWISDOM), 6);
+
     WAIT_STATE(ch, 36);
-    ch->mana -= 50;
-    ch->move -= 100;
+    ch->move -= ch->level + 10;
+
+    if (success < 0)
+    {
+        send_to_char("You strain your mind but fail to remember any relevant details.\n\r",ch);
+        WAIT_STATE(ch, 36);
+        return;
+    }
+
+    if (success == 0)
+    {
+        sprintf( buf, "You cannot seem to recall any useful stories relating to %s.\n\r", 
+            if (victim) ? victim->short_descr : obj->short_descr);
+        send_to_char( buf, ch );
+        WAIT_STATE(ch, 9);
+        return;
+    }
+
+    check_improve(ch,gsn_lore,TRUE,2);
     if((victim = get_char_room( ch, NULL, arg )) != NULL)
     {
         if(!IS_NPC(victim))
@@ -3769,55 +3784,6 @@ void do_lore( CHAR_DATA *ch, char *argument )
             "They have %d around hit points.\n\r",
             UMAX( 1, number_range(victim->hit-victim->level, victim->hit+victim->level)));
         send_to_char( buf, ch );
-        switch ( victim->position )
-        {
-            case POS_TORPOR:
-                send_to_char( "They are in Torpor.\n\r",        ch );
-            break;
-            case POS_DEAD:
-                send_to_char( "They are DEAD!!\n\r",        ch );
-            break;
-            case POS_MORTAL:
-                send_to_char( "They are mortally wounded.\n\r", ch );
-            break;
-            case POS_INCAP:
-                send_to_char( "They are incapacitated.\n\r",    ch );
-            break;
-            case POS_STUNNED:
-                send_to_char( "They are stunned.\n\r",      ch );
-            break;
-            case POS_SLEEPING:
-                send_to_char( "They are sleeping.\n\r",     ch );
-            break;
-            case POS_RESTING:
-                send_to_char( "They are resting.\n\r",      ch );
-            break;
-            case POS_SITTING:
-                send_to_char( "They are sitting.\n\r",      ch );
-            break;
-            case POS_STANDING:
-                send_to_char( "They are standing.\n\r",     ch );
-            break;
-            case POS_FIGHTING:
-                send_to_char( "They are fighting.\n\r",     ch );
-            break;
-        }
-        if (victim->affected_by)
-        {
-            sprintf(buf, "%s is affected by %s\n\r",
-            victim->short_descr,
-            affect_bit_name(victim->affected_by));
-            send_to_char(buf,ch);
-        }
-
-        if (victim->affected2_by)
-        {
-            sprintf(buf, "%s is also affected by %s\n\r",
-            victim->short_descr,
-            affect2_bit_name(victim->affected2_by) );
-            send_to_char(buf,ch);
-        }
-
     }
     else
     {

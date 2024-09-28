@@ -4365,9 +4365,9 @@ void do_armsoftheabyss(CHAR_DATA *ch, char *argument)
         af.where     = TO_AFFECTS;
         af.type      = gsn_armsoftheabyss;
         af.level     = ch->level;
-        af.duration  = 2;
+        af.duration  = 0;
         af.location  = APPLY_NONE;
-        af.modifier  = ch->pcdata->discipline[OBTENEBRATION];
+        af.modifier  = 1;
         af.bitvector = 0;
         affect_to_char( ch, &af );
         return;
@@ -4382,7 +4382,7 @@ void do_armsoftheabyss(CHAR_DATA *ch, char *argument)
 
     af.where     = TO_AFFECTS;
     af.type      = gsn_armsoftheabyss;
-    af.level     = ch->level;
+    af.level     = ch->level + success;
     af.duration  = success + 2;
     af.location  = APPLY_NONE;
     af.modifier  = ch->pcdata->discipline[OBTENEBRATION];
@@ -4390,9 +4390,9 @@ void do_armsoftheabyss(CHAR_DATA *ch, char *argument)
     affect_to_char( victim, &af );
     multi_hit( victim, ch, TYPE_UNDEFINED );
 
-    act( "$n entangles you in tendrils of darkness!",  ch, NULL, victim, TO_VICT );
-    act( "$n entangles $N in tendrils of shadow!",  ch, NULL, victim, TO_NOTVICT );
-    act( "You entangle $N in tendrils of darkness!",  ch, NULL, victim, TO_CHAR );
+    act( "You find yourself restrained as shadowy tendrils writhe around your body!",  ch, NULL, victim, TO_VICT );
+    act( "$N struggles to move as shadowy tendrils erupt from $S shadow to cover $S body.",  ch, NULL, victim, TO_NOTVICT );
+    act( "The {DAbyss{x answers your summons, as shadowy tendrils snake out from $N's shadow to constrict $M!",  ch, NULL, victim, TO_CHAR );
     return;
 }
 

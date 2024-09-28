@@ -3723,13 +3723,19 @@ void do_lore( CHAR_DATA *ch, char *argument )
 
     one_argument( argument, arg );
 
+    if (get_ability(ch, CSABIL_HEARTHWISDOM) < 2 || get_ability(ch, CSABIL_ACADEMICS) < 1)
+    {
+        send_to_char( "You have not learned enough lore to be effective.\n\r", ch );
+        return;
+    }
+
     if ( ( obj = get_obj_carry( ch, arg, ch ) ) == NULL && (get_char_room( ch, NULL, arg ) == NULL))
     {
         send_to_char( "Lore what?\n\r", ch );
         return;
     }
 
-    if (ch->move < ch->level + 10)
+    if (ch->move < ch->level + 50)
     {
         send_to_char("You are too tired to put the effort into remembering details.\n\r",ch);
         return;
@@ -3737,10 +3743,12 @@ void do_lore( CHAR_DATA *ch, char *argument )
 
     victim = get_char_room( ch, NULL, arg );
     success = godice(get_attribute(ch, INTELLIGENCE) + get_ability(ch, CSABIL_HEARTHWISDOM), 6);
-    pObjIndex = get_obj_index( obj->pIndexData->vnum );
+    gain_exp(ch, success * 2);
+    if (obj)
+        pObjIndex = get_obj_index( obj->pIndexData->vnum );
 
     WAIT_STATE(ch, 36);
-    ch->move -= ch->level + 10;
+    ch->move -= ch->level + 50;
 
     if (success < 0)
     {
@@ -3802,6 +3810,12 @@ void do_lore( CHAR_DATA *ch, char *argument )
             {
                 sprintf(buf, "  %s is a very influential figure in these parts.\n\r", 
                     victim->sex == 0 ? "It" : victim->sex == 1 ? "He" : "She");
+                add_buf(buffer, buf);
+            }
+            if (IS_SET(victim->act, ACT_PET))
+            {
+                sprintf(buf, "  %s appears to be protecting %s.\n\r", 
+                    victim->sex == 0 ? "It" : victim->sex == 1 ? "He" : "She", victim->master);
                 add_buf(buffer, buf);
             }
         }

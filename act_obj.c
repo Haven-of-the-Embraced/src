@@ -3825,51 +3825,46 @@ void do_lore( CHAR_DATA *ch, char *argument )
             case ITEM_SCROLL:
             case ITEM_POTION:
             case ITEM_PILL:
-//                sprintf( buf, "Level %d spells of:", obj->value[0] );
-                sprintf( buf, "  Tales vary, but common spells that are found on this one-use item are:\n\r");
+                sprintf( buf, "  Tales vary, but common spells that are found on this %s are:\n\r", item_name(obj->item_type));
                 add_buf(buffer, buf);
 
                 if ( obj->value[1] >= 0 && obj->value[1] < MAX_SKILL )
                 {
-                    sprintf( buf, "    1) '%s'\n\r", skill_table[obj->value[1]].name);
+                    sprintf( buf, "     '%s'\n\r", skill_table[obj->value[1]].name);
                     add_buf(buffer, buf);
                 }
 
-                if ( obj->value[2] >= 0 && obj->value[2] < MAX_SKILL )
+                if ( obj->value[2] >= 0 && obj->value[2] < MAX_SKILL && success >= 2)
                 {
-                    sprintf( buf, "    2) '%s'\n\r", skill_table[obj->value[2]].name);
+                    sprintf( buf, "     '%s'\n\r", skill_table[obj->value[2]].name);
                     add_buf(buffer, buf);
                 }
 
-                if ( obj->value[3] >= 0 && obj->value[3] < MAX_SKILL )
+                if ( obj->value[3] >= 0 && obj->value[3] < MAX_SKILL && success >= 4)
                 {
-                    sprintf( buf, "    3) '%s'\n\r", skill_table[obj->value[3]].name);
+                    sprintf( buf, "     '%s'\n\r", skill_table[obj->value[3]].name);
                     add_buf(buffer, buf);
                 }
 
-                if (obj->value[4] >= 0 && obj->value[4] < MAX_SKILL)
+                if (obj->value[4] >= 0 && obj->value[4] < MAX_SKILL && success >= 6)
                 {
-                    sprintf( buf, "    4) '%s'\n\r", skill_table[obj->value[4]].name);
+                    sprintf( buf, "     '%s'\n\r", skill_table[obj->value[4]].name);
                     add_buf(buffer, buf);
                 }
 
-                page_to_char(buf_string(buffer), ch);
                 break;
 
             case ITEM_WAND:
             case ITEM_STAFF:
-                sprintf( buf, "Has %d charges of level %d",
-                obj->value[2], obj->value[0] );
-                send_to_char( buf, ch );
+                sprintf( buf, "  By all accounts, this %s should be powered with", item_name(obj->item_type));
+                add_buf(buffer, buf);
 
                 if ( obj->value[3] >= 0 && obj->value[3] < MAX_SKILL )
                 {
-                    send_to_char( " '", ch );
-                    send_to_char( skill_table[obj->value[3]].name, ch );
-                    send_to_char( "'", ch );
+                    sprintf( buf, " '%s'.\n\r", skill_table[obj->value[3]].name);
+                    add_buf(buffer, buf);
                 }
 
-                send_to_char( ".\n\r", ch );
             break;
 
             case ITEM_DRINK_CON:
@@ -3923,6 +3918,7 @@ void do_lore( CHAR_DATA *ch, char *argument )
                 send_to_char( buf, ch );
                 break;
         }
+        page_to_char(buf_string(buffer), ch);
 
         if (!obj->enchanted)
         for ( paf = obj->pIndexData->affected; paf != NULL; paf = paf->next )

@@ -3955,56 +3955,53 @@ void do_lore( CHAR_DATA *ch, char *argument )
             }
         }
 
-        for ( paf = obj->affected; paf != NULL; paf = paf->next )
+        if (success >= 4)
         {
-            if ( paf->location != APPLY_NONE && paf->modifier != 0 )
+            for ( paf = obj->affected; paf != NULL; paf = paf->next )
             {
-                sprintf( buf, "Affects %s by %d",
-                affect_loc_name( paf->location ), paf->modifier );
-                send_to_char( buf, ch );
-                if ( paf->duration > -1)
-                    sprintf(buf,", %d hours.\n\r",paf->duration);
-                else
-                    sprintf(buf,".\n\r");
-                    send_to_char(buf,ch);
-                if (paf->bitvector)
+                if ( paf->location != APPLY_NONE && paf->modifier != 0 )
                 {
-                    switch(paf->where)
+                    sprintf( buf, "    {Y[{W%s{Y]{x", affect_loc_name( paf->location ));
+                    add_buf(buffer, buf);
+                    if (paf->bitvector)
                     {
-                        case TO_AFFECTS:
-                            sprintf(buf,"Adds %s affect.\n",
-                            affect_bit_name(paf->bitvector));
-                        break;
-                        case TO_OBJECT:
-                            sprintf(buf,"Adds %s object flag.\n",
-                            extra_bit_name(paf->bitvector));
-                        break;
-                        case TO_WEAPON:
-                            sprintf(buf,"Adds %s weapon flags.\n",
-                            weapon_bit_name(paf->bitvector));
-                        break;
-                        case TO_IMMUNE:
-                            sprintf(buf,"Adds immunity to %s.\n",
-                            imm_bit_name(paf->bitvector));
-                        break;
-                        case TO_RESIST:
-                            sprintf(buf,"Adds resistance to %s.\n\r",
-                            imm_bit_name(paf->bitvector));
-                        break;
-                        case TO_VULN:
-                            sprintf(buf,"Adds vulnerability to %s.\n\r",
-                            imm_bit_name(paf->bitvector));
-                        break;
-                        default:
-                            sprintf(buf,"Unknown bit %d: %d\n\r",
-                            paf->where,paf->bitvector);
-                        break;
+                        switch(paf->where)
+                        {
+                            case TO_AFFECTS:
+                                sprintf(buf,"    Adds %s affect.\n",
+                                affect_bit_name(paf->bitvector));
+                            break;
+                            case TO_OBJECT:
+                                sprintf(buf,"    Adds %s object flag.\n",
+                                extra_bit_name(paf->bitvector));
+                            break;
+                            case TO_WEAPON:
+                                sprintf(buf,"    Adds %s weapon flags.\n",
+                                weapon_bit_name(paf->bitvector));
+                            break;
+                            case TO_IMMUNE:
+                                sprintf(buf,"    Adds immunity to %s.\n",
+                                imm_bit_name(paf->bitvector));
+                            break;
+                            case TO_RESIST:
+                                sprintf(buf,"    Adds resistance to %s.\n\r",
+                                imm_bit_name(paf->bitvector));
+                            break;
+                            case TO_VULN:
+                                sprintf(buf,"    Adds vulnerability to %s.\n\r",
+                                imm_bit_name(paf->bitvector));
+                            break;
+                            default:
+                                sprintf(buf,"    Unknown bit %d: %d\n\r",
+                                paf->where,paf->bitvector);
+                            break;
+                        }
+                    add_buf(buffer, buf);
                     }
-                send_to_char(buf,ch);
                 }
             }
         }
-page_to_char(buf_string(buffer), ch);
+        page_to_char(buf_string(buffer), ch);
     }
     send_to_char("{W[---------------------------=======OOOOOOOOOO=======---------------------------]{x\n\r",ch);
     return;

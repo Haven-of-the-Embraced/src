@@ -3823,7 +3823,7 @@ void do_lore( CHAR_DATA *ch, char *argument )
         }
         sprintf(buf, "  Word of mouth puts about {B({C%d{B){x of these in circulation.{x\n\r", pObjIndex->count);
         add_buf(buffer, buf);
-        
+
         switch ( obj->item_type )
         {
             case ITEM_SCROLL:
@@ -3872,7 +3872,8 @@ void do_lore( CHAR_DATA *ch, char *argument )
             break;
 
             case ITEM_WEAPON:
-                sprintf(buf, "  Warriors in combat swear by this {D({r+%d{D){x ", obj->value[1] / 20);
+                sprintf(buf, "  Warriors in combat swear by this {D({r+%d{D){x {r|{D%s{r|{x ", obj->value[1] / 20,
+                    obj->value[3] > 0 && obj->value[3] < MAX_DAMAGE_MESSAGE ? attack_table[obj->value[3]].noun : "undefined");
                 add_buf(buffer, buf);
                 switch (obj->value[0])
                 {
@@ -3901,46 +3902,55 @@ void do_lore( CHAR_DATA *ch, char *argument )
                 add_buf(buffer, buf);
                 break;
         }
-        page_to_char(buf_string(buffer), ch);
 
-        if (!obj->enchanted)
-        for ( paf = obj->pIndexData->affected; paf != NULL; paf = paf->next )
+        if (!obj->enchanted && success >= 4)
         {
-            if ( paf->location != APPLY_NONE && paf->modifier != 0 )
+            paf = obj->pIndexData->affected;
+            if (paf != NULL)
             {
-                sprintf( buf, "Affects %s by %d.\n\r",
-                affect_loc_name( paf->location ), paf->modifier );
-                send_to_char(buf,ch);
-                if (paf->bitvector)
+                sprintf( buf, "  Firsthand experiences with this weapon report boosts to:\n\r");
+                add_buf(buffer, buf);
+            }
+            for ( paf = obj->pIndexData->affected; paf != NULL; paf = paf->next )
+            {
+                if ( paf->location != APPLY_NONE && paf->modifier != 0 )
                 {
-                    switch(paf->where)
+                    sprintf( buf, "    {Y[{W%s{Y]{x", affect_loc_name( paf->location ));
+//                    affect_loc_name( paf->location ), paf->modifier );
+                    add_buf(buffer, buf);
+                    if (paf->bitvector)
                     {
-                        case TO_AFFECTS:
-                            sprintf(buf,"Adds %s affect.\n",
-                            affect_bit_name(paf->bitvector));
-                        break;
-                        case TO_OBJECT:
-                            sprintf(buf,"Adds %s object flag.\n",
-                            extra_bit_name(paf->bitvector));
-                        break;
-                        case TO_IMMUNE:
-                            sprintf(buf,"Adds immunity to %s.\n",
-                            imm_bit_name(paf->bitvector));
-                        break;
-                        case TO_RESIST:
-                            sprintf(buf,"Adds resistance to %s.\n\r",
-                            imm_bit_name(paf->bitvector));
-                        break;
-                        case TO_VULN:
-                            sprintf(buf,"Adds vulnerability to %s.\n\r",
-                            imm_bit_name(paf->bitvector));
-                        break;
-                        default:
-                            sprintf(buf,"Unknown bit %d: %d\n\r",
-                            paf->where,paf->bitvector);
-                        break;
+                        switch(paf->where)
+                        {
+                            case TO_AFFECTS:
+                                sprintf(buf,"    Adds %s affect.\n",
+                                affect_bit_name(paf->bitvector));
+                            break;
+                            case TO_OBJECT:
+                                sprintf(buf,"    Adds %s object flag.\n",
+                                extra_bit_name(paf->bitvector));
+                            break;
+                            case TO_IMMUNE:
+                                sprintf(buf,"    Adds immunity to %s.\n",
+                                imm_bit_name(paf->bitvector));
+                            break;
+                            case TO_RESIST:
+                                sprintf(buf,"    Adds resistance to %s.\n\r",
+                                imm_bit_name(paf->bitvector));
+                            break;
+                            case TO_VULN:
+                                sprintf(buf,"    Adds vulnerability to %s.\n\r",
+                                imm_bit_name(paf->bitvector));
+                            break;
+                            default:
+                                sprintf(buf,"    Unknown bit %d: %d\n\r",
+                                paf->where,paf->bitvector);
+                            break;
+                        }
+                        add_buf(buffer, buf);
                     }
-                    send_to_char( buf, ch );
+                    else
+                        add_buf(buffer, "\n\r");
                 }
             }
         }
@@ -3994,6 +4004,7 @@ void do_lore( CHAR_DATA *ch, char *argument )
                 }
             }
         }
+page_to_char(buf_string(buffer), ch);
     }
     send_to_char("{W[---------------------------=======OOOOOOOOOO=======---------------------------]{x\n\r",ch);
     return;

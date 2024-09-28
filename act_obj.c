@@ -3714,6 +3714,8 @@ void do_lore( CHAR_DATA *ch, char *argument )
     OBJ_DATA *obj;
     char buf[MAX_STRING_LENGTH];
     char arg[MAX_INPUT_LENGTH];
+    BUFFER *buffer;
+    buffer = new_buf();
     int success;
     AFFECT_DATA *paf;
     CHAR_DATA *victim;
@@ -3757,30 +3759,52 @@ void do_lore( CHAR_DATA *ch, char *argument )
     check_improve(ch,gsn_lore,TRUE,2);
     if(victim)
     {
+        send_to_char("{W                                  /==========\\{x\n\r",ch);
+        send_to_char("{W[---------------------------=======  Rumors  =======---------------------------]{x\n\r",ch);
         if(!IS_NPC(victim))
         {
-            sprintf(buf, "Tales travel far and wide of %s%s%s.\n\r", victim->name, 
-                !IS_NULLSTR(victim->pcdata->pretitle) ? ", often referred to as " : "",
-                !IS_NULLSTR(victim->pcdata->pretitle) ? victim->pcdata->pretitle : ""
-                );
-            send_to_char(buf, ch);
-            sprintf(buf, "Hailing from the lands of %s, %s feats are the stuff of legends.\n\r",
+            sprintf(buf, "  Exotic tales travel both far and wide, detailing exploits of [{W%s{x].\n\r", victim->name);
+            add_buf(buffer, buf);
+            sprintf(buf, "  %s%s%s.\n\r", victim->sex == 0 ? "It" : victim->sex == 1 ? "He" : "She",
+                !IS_NULLSTR(victim->pcdata->pretitle) ? " is often referred to as " : " has no aliases that you know of",
+                !IS_NULLSTR(victim->pcdata->pretitle) ? victim->pcdata->pretitle : "");
+            add_buf(buffer, buf);
+            sprintf(buf, "  Hailing from the lands of %s, %s feats are the stuff of legends.\n\r",
                 (victim->pcdata->hometown) != NULL ? hometown_table[victim->pcdata->hometown].name : "parts unknown",
                 victim->sex == 0 ? "its" : victim->sex == 1 ? "his" : "her");
-            send_to_char(buf, ch);
+            add_buf(buffer, buf);
             if (success >= 4)
             {
-                sprintf(buf, "Rumor has it that %s has slain %d foes, and once even dealing %d points of damage!\n\r",
-                    victim->sex == 0 ? "it" : victim->sex == 1 ? "he" : "she", victim->currentkills, victim->maxdamage);
-                send_to_char(buf, ch);
+                sprintf(buf, "  If rumors are to be believed, %s has slain nearly %d foes.\n\r",
+                    victim->sex == 0 ? "it" : victim->sex == 1 ? "he" : "she", victim->currentkills);
+                add_buf(buffer, buf);
+                sprintf(buf, "  %s reputation states %s once dealt %d points of damage in a single blow!\n\r",
+                    victim->sex == 0 ? "Its" : victim->sex == 1 ? "His" : "Her", 
+                    victim->sex == 0 ? "it" : victim->sex == 1 ? "he" : "she", victim->maxdamage);
+                add_buf(buffer, buf);
             }
-            return;
         }
-        sprintf(buf, "%s is a %s %s.\n\r",
-            victim->short_descr,
-            victim->sex == 0 ? "sexless" : victim->sex == 1 ? "male" : "female",
-            race_table[victim->race].name);
-        send_to_char(buf,ch);
+        else
+        {
+            if(IS_SET(victim->act2, ACT2_ULTRA_MOB))
+            {
+                sprintf(buf, "  Legends abound surrounding %s, %s power is well known.\n\r", victim->short_descr,
+                victim->sex == 0 ? "its" : victim->sex == 1 ? "his" : "her");
+            }
+            else
+            {
+                sprintf(buf, "  Only a few stories about '%s' are known to the public.\n\r", victim->short_descr);
+            }
+            add_buf(buffer, buf);
+            if (IS_SET(victim, ACT2_INFLUENCE))
+            {
+                sprintf(buf, "  %s is a very influential figure in these parts.\n\r", 
+                    victim->sex == 0 ? "It" : victim->sex == 1 ? "He" : "She");
+                add_buf(buffer, buf);
+            }
+        }
+        page_to_char(buf_string(buffer), ch);
+        send_to_char("{W[---------------------------=======OOOOOOOOOO=======---------------------------]{x\n\r",ch);
     }
     else
     {

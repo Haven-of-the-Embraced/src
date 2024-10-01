@@ -2235,7 +2235,11 @@ Total (3) */
     &gsn_earthmeld,         SLOT(0),     0, 12, "",         "You emerge from the earth in a shower of dirt.", "" },
 
 //    --Quietus--
-// Total (3)
+// Total (5)
+    { "silence of death", { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+    &gsn_silenceofdeath,          SLOT(0),     0, 12, "",         "Sounds can be heard once again, as your zone of silence fades.", "" },
+
     { "weakness", { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
     &gsn_quietus_weakness,          SLOT(0),     0, 12, "",         "Your strength returns as the weakness fades.", "" },

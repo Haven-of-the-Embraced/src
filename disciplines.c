@@ -6133,6 +6133,20 @@ void do_silenceofdeath(CHAR_DATA *ch, char *argument)
         return;
     }
 
+    if(is_affected(ch, gsn_silenceofdeath))
+    {
+        send_to_char( "You drop the zone of silence surrounding you.\n\r", ch );
+        affect_strip(ch, gsn_silenceofdeath);
+        act("Ambient sounds can be heard in the surroundings.", ch, NULL, NULL, TO_ROOM);
+        return;
+    }
+
+    if (ch->pcdata->discipline[QUIETUS] < 1)
+    {
+        send_to_char( "You are not skilled in the arts of Quietus.\n\r", ch );
+        return;
+    }
+
     if ( IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
     {
         send_to_char("Your blood curse prevents it!\n\r" ,ch);
@@ -6145,28 +6159,11 @@ void do_silenceofdeath(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if (ch->pcdata->discipline[QUIETUS] < 1)
-    {
-        send_to_char( "You are not skilled in the arts of Quietus.\n\r", ch );
-        return;
-    }
-
-    if ( IS_AFFECTED(ch, AFF_SNEAK) )
-    {
-        affect_strip( ch, gsn_sneak );
-        send_to_char( "You drop your aura of silence.\n\r", ch );
-        return;
-    }
-    ch->pblood -= 15;
+    ch->pblood -= 10;
     send_to_char( "You create a field of Silence around yourself.\n\r", ch );
 
-    affect_strip( ch, gsn_sneak );
-
-    if (IS_AFFECTED(ch,AFF_SNEAK))
-        return;
-
     af.where     = TO_AFFECTS;
-    af.type      = gsn_sneak;
+    af.type      = gsn_silenceofdeath;
     af.level     = ch->level;
     af.duration  = ch->level*ch->pcdata->discipline[QUIETUS];
     af.location  = APPLY_NONE;

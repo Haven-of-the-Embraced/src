@@ -183,7 +183,7 @@ typedef void ROOM_FUN	args( ( ROOM_INDEX_DATA *room, char *argument ) );
  */
 #define MAX_HELP        5
 #define MAX_SOCIALS       256
-#define MAX_SKILL         446
+#define MAX_SKILL         447
 #define MAX_GIFT          90
 #define MAX_GIFTS_CODED   168
 #define MAX_BREW        24
@@ -2980,9 +2980,10 @@ extern sh_int  gsn_cloakshadow;
 extern sh_int  gsn_nocturne;
 extern sh_int  gsn_majesty;
 extern sh_int  gsn_sparkofrage;
+extern sh_int  gsn_silenceofdeath;
 extern sh_int  gsn_quietus_weakness;
-extern sh_int  gsn_acidblood;
 extern sh_int  gsn_quietus_bloodcurse;
+extern sh_int  gsn_acidblood;
 extern sh_int  gsn_blood_agony;
 extern sh_int  gsn_tongueoftheasp;
 extern sh_int  gsn_skinoftheadder;

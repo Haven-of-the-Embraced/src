@@ -421,6 +421,12 @@ void do_feralspeech(CHAR_DATA *ch, char *argument)
         return;
     }
 
+    if (room_is_silent( ch, ch->in_room ))
+    {
+        send_to_char("You try to mimic animalistic sounds, but no sound emerges from your lips.\n\r",ch);
+        return;
+    }
+
     if ( IS_AFFECTED(victim, AFF_CHARM)
     ||   IS_AFFECTED(ch, AFF_CHARM)
     ||   IS_SET(victim->imm_flags,IMM_CHARM))
@@ -498,6 +504,12 @@ void do_beckoning(CHAR_DATA *ch, char *argument)
     {
       send_to_char("Your throat is too sore to call out for animal aid.\n\r", ch);
       return;
+    }
+
+    if (room_is_silent( ch, ch->in_room ))
+    {
+        send_to_char("You try to call out with an animal cry, but no sound emerges from your lips.\n\r",ch);
+        return;
     }
 
     dicesuccess = godice(get_attribute(ch, CHARISMA) + ch->csabilities[CSABIL_SURVIVAL], 6);
@@ -699,6 +711,13 @@ void do_songofserenity(CHAR_DATA *ch, char *argument)
         send_to_char( "You don't have enough blood.\n\r", ch );
         return;
     }
+
+    if (room_is_silent( ch, ch->in_room ))
+    {
+        send_to_char("You try to sing a song, but no sound emerges from your lips.\n\r",ch);
+        return;
+    }
+
     ch->pblood -= 10;
     send_to_char("You lift your voice in a sweet song of peace and serenity.\n\r",ch);
     if ( IS_AFFECTED(victim, AFF_CHARM)
@@ -854,6 +873,13 @@ void do_quelltheherd(CHAR_DATA *ch, char *argument)
         send_to_char( "You don't have enough blood.\n\r", ch );
         return;
     }
+
+    if (room_is_silent( ch, ch->in_room ))
+    {
+        send_to_char("You try to sing a song, but no sound emerges from your lips.\n\r",ch);
+        return;
+    }
+
     ch->pblood -= 30;
     send_to_char("You lift your voice in a sweet song of peace and serenity.\n\r",ch);
 
@@ -2518,6 +2544,13 @@ void do_command(CHAR_DATA *ch, char *argument)
          send_to_char("Your powers of Dominate only work on sentient, humanoid beings.\n\r", ch);
          return;
      }
+
+    if (room_is_silent( ch, ch->in_room ))
+    {
+        send_to_char("Try as you might, no sound emerges from your lips.\n\r",ch);
+        return;
+    }
+
     ch->pblood -= 5;
     diff = 5;
     if (victim->race != race_lookup("human"))
@@ -2723,6 +2756,13 @@ void do_mesmerize(CHAR_DATA *ch, char *argument)
          send_to_char("Your powers of Dominate only work on sentient, humanoid beings.\n\r", ch);
          return;
      }
+
+    if (room_is_silent( ch, ch->in_room ))
+    {
+        send_to_char("Try as you might, no sound emerges from your lips.\n\r",ch);
+        return;
+    }
+
     ch->pblood -= 10;
     diff = 5;
     if (victim->race != race_lookup("human"))
@@ -2881,6 +2921,12 @@ void do_forgetful (CHAR_DATA *ch, char *argument)
     if ( ch->pblood < 10 )
     {
         send_to_char( "You don't have enough blood to alter your target's memories.\n\r", ch );
+        return;
+    }
+
+    if (room_is_silent( ch, ch->in_room ))
+    {
+        send_to_char("Try as you might, no sound emerges from your lips.\n\r",ch);
         return;
     }
 
@@ -3098,6 +3144,12 @@ void do_conditioning(CHAR_DATA *ch, char *argument)
          send_to_char("Your powers of Dominate only work on sentient, humanoid beings.\n\r", ch);
          return;
      }
+
+    if (room_is_silent( ch, ch->in_room ))
+    {
+        send_to_char("Try as you might, no sound emerges from your lips.\n\r",ch);
+        return;
+    }
 
     for (gch = char_list; gch != NULL; gch = gch->next)
     {
@@ -5398,6 +5450,13 @@ void do_entrancement(CHAR_DATA *ch, char *argument)
         send_to_char( "You don't have enough blood.\n\r", ch );
         return;
     }
+
+    if (room_is_silent( ch, ch->in_room ))
+    {
+        send_to_char("Try as you might, no sound emerges from your lips.\n\r",ch);
+        return;
+    }
+
     ch->pblood -= 30;
     if(victim->race == race_lookup("vampire") && ch->gen > victim->gen)
     {

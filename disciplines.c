@@ -6165,7 +6165,7 @@ void do_silenceofdeath(CHAR_DATA *ch, char *argument)
     af.where     = TO_AFFECTS;
     af.type      = gsn_silenceofdeath;
     af.level     = ch->level;
-    af.duration  = ch->level*ch->pcdata->discipline[QUIETUS];
+    af.duration  = 25 + (2*ch->pcdata->discipline[QUIETUS]);
     af.location  = APPLY_NONE;
     af.modifier  = 0;
     af.bitvector = AFF_SNEAK;

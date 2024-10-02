@@ -1034,9 +1034,16 @@ void do_say( CHAR_DATA *ch, char *argument )
 {
     if ( argument[0] == '\0' )
     {
-    send_to_char( "Say what?\n\r", ch );
-    return;
+        send_to_char( "Say what?\n\r", ch );
+        return;
     }
+
+    if (room_is_silent( ch, ch->in_room ))
+    {
+        send_to_char("You try to speak, but no sounds issue from your lips.\n\r", ch);
+        return;
+    }
+
     if(is_affected(ch, gsn_unseen) && ch->pcdata->discipline[OBFUSCATE] < 2)
     affect_strip( ch, gsn_unseen );
 

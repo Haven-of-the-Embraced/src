@@ -635,6 +635,9 @@ bool spec_cast_adept( CHAR_DATA *ch )
 
     if(ch->stopped > 0) return FALSE;
 
+    if (room_is_silent( ch, ch->in_room ))
+        return FALSE;
+
     for ( victim = ch->in_room->people; victim != NULL; victim = v_next )
     {
     v_next = victim->next_in_room;
@@ -706,6 +709,9 @@ bool spec_cast_cleric( CHAR_DATA *ch )
 
     if(is_affected( ch, gsn_forget ))
     return FALSE;
+
+    if (room_is_silent( ch, ch->in_room ))
+        return FALSE;
 
     for ( victim = ch->in_room->people; victim != NULL; victim = v_next )
     {
@@ -794,6 +800,8 @@ bool spec_cast_mage( CHAR_DATA *ch )
     return FALSE;
     if(is_affected( ch, gsn_forget ))
     return FALSE;
+    if (room_is_silent( ch, ch->in_room ))
+        return FALSE;
 
     for ( victim = ch->in_room->people; victim != NULL; victim = v_next )
     {
@@ -851,6 +859,9 @@ bool spec_cast_undead( CHAR_DATA *ch )
 
     if(is_affected( ch, gsn_forget ))
     return FALSE;
+
+    if (room_is_silent( ch, ch->in_room ))
+        return FALSE;
 
     for ( victim = ch->in_room->people; victim != NULL; victim = v_next )
     {
@@ -1310,6 +1321,8 @@ bool spec_cast_lightning( CHAR_DATA *ch )
         return FALSE;
     if(is_affected( ch, gsn_forget ))
     return FALSE;
+    if (room_is_silent( ch, ch->in_room ))
+        return FALSE;
 
     for ( victim = ch->in_room->people; victim != NULL; victim = v_next )
     {
@@ -1891,6 +1904,8 @@ bool spec_command( CHAR_DATA *ch )
 
     if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected(ch, gsn_forget))
         return FALSE;
+    if (room_is_silent( ch, ch->in_room ))
+        return FALSE;
 
     for ( victim = ch->in_room->people; victim != NULL; victim = v_next )
     {
@@ -1949,6 +1964,8 @@ bool spec_mesmerize( CHAR_DATA *ch )
 
     if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
     return FALSE;
+    if (room_is_silent( ch, ch->in_room ))
+        return FALSE;
 
     for ( victim = ch->in_room->people; victim != NULL; victim = v_next )
     {
@@ -2510,6 +2527,8 @@ bool spec_evil_eye( CHAR_DATA *ch )
 
   if (ch->stopped > 0 || !IS_AWAKE(ch) || ch->position != POS_FIGHTING )
     return FALSE;
+    if (room_is_silent( ch, ch->in_room ))
+        return FALSE;
 
   evileyesuccess = godice(get_attribute(ch, MANIPULATION) + evileye, 5);
   if (evileyesuccess <= 0)

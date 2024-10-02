@@ -343,6 +343,12 @@ void do_cast( CHAR_DATA *ch, char *argument )
       return;
     }
 
+    if (room_is_silent( ch, ch->in_room ))
+    {
+        send_to_char("You try to recite the words to your prayer, but no sounds come from your mouth.\n\r", ch);
+        return;
+    }
+
     if (ch->level + 2 == csskill_table[csn].level)
     mana = 50;
     else

@@ -4084,6 +4084,7 @@ int get_obj_number  args( ( OBJ_DATA *obj ) );
 int get_obj_weight  args( ( OBJ_DATA *obj ) );
 int get_true_weight args( ( OBJ_DATA *obj ) );
 bool    room_is_dark    args( ( ROOM_INDEX_DATA *pRoomIndex ) );
+bool    room_is_silent  args( ( CHAR_DATA *ch, ROOM_INDEX_DATA *pRoomIndex ) );
 bool    is_room_owner   args( ( CHAR_DATA *ch, ROOM_INDEX_DATA *room) );
 bool    room_is_private args( ( ROOM_INDEX_DATA *pRoomIndex ) );
 bool    can_see     args( ( CHAR_DATA *ch, CHAR_DATA *victim ) );

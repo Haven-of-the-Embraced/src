@@ -2914,6 +2914,24 @@ bool room_is_dark( ROOM_INDEX_DATA *pRoomIndex )
     return FALSE;
 }
 
+/*
+ * True if 'silence of death' in room.
+ */
+bool room_is_silent( CHAR_DATA *ch, ROOM_INDEX_DATA *room )
+{
+    CHAR_DATA *victim;
+    for ( victim = char_list; victim != NULL; victim = vict_next )
+    {
+        vict_next = victim->next;
+        if(victim->in_room == NULL )
+            continue;
+
+        if ( victim->in_room == ch->in_room && SAME_UMBRA(ch, victim) && is_affected(victim, gsn_silenceofdeath))
+            return TRUE;
+        continue;
+    }
+    return FALSE;
+}
 
 bool is_room_owner(CHAR_DATA *ch, ROOM_INDEX_DATA *room)
 {

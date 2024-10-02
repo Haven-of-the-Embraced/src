@@ -2920,6 +2920,7 @@ bool room_is_dark( ROOM_INDEX_DATA *pRoomIndex )
 bool room_is_silent( CHAR_DATA *ch, ROOM_INDEX_DATA *room )
 {
     CHAR_DATA *victim;
+    CHAR_DATA *vict_next;
     for ( victim = char_list; victim != NULL; victim = vict_next )
     {
         vict_next = victim->next;

@@ -1186,7 +1186,7 @@ void do_bind(CHAR_DATA *ch, char *argument )
         return;
     }
 
-    if(mob->race != race_lookup("spirit"))
+    if(spirit->race != race_lookup("spirit"))
     {
         send_to_char("Only spirits may be convinced to be bound in an object.\n\r",ch);
         return;
@@ -1198,11 +1198,19 @@ void do_bind(CHAR_DATA *ch, char *argument )
         return;
     }
 
+    if(ch->pcdata->gnosis[TEMP] < 1)
+    {
+        send_to_char("You do not have the spiritual energy to bind a spirit.\n\r",ch);
+        return;
+    }
+
+    ch->pcdata->gnosis[TEMP]--;
     act( "$n sits down and closes $s eyes, and begins to chant in a soft, soothing voice.", ch, NULL, spirit, TO_NOTVICT );
     act( "You begin the binding ritual by sitting down, and directing your chanting towards $N.", ch, NULL, spirit, TO_CHAR );
     act( "You feel a soft chanting tugging at your essence.", ch, NULL, spirit, TO_VICT );
     do_function(ch, &do_sit, "");
     WAIT_STATE(ch, 72);
+    success = godice(get_attribute(ch, WITS) + ch->csabilities[CSABIL_ETIQUETTE], 7);
 
     if (success < 0)
     {

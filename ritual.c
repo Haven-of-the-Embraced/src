@@ -1160,52 +1160,40 @@ void do_craft(CHAR_DATA *ch, char *argument )
     argument = one_argument(argument,arg);
 
 */
-
+//bind spirit obj option (off/def)
 void do_bind(CHAR_DATA *ch, char *argument )
 {
-    CHAR_DATA *mob;
+    CHAR_DATA *spirit;
     OBJ_DATA *fetish;
-    OBJ_DATA *corpse;
-    char buf[MAX_STRING_LENGTH], arg[MAX_INPUT_LENGTH], arg2[MAX_INPUT_LENGTH], color[MAX_STRING_LENGTH];
+    char buf[MAX_STRING_LENGTH], arg[MAX_INPUT_LENGTH], arg2[MAX_INPUT_LENGTH];
 
     argument = one_argument(argument,arg);
     argument = one_argument(argument,arg2);
 
     send_to_char("Binding is disabled until recoded.\n\r", ch);
-    return;
+//    return;
 
     if(ch->race != race_lookup("garou"))
     {
         send_to_char("You are not Garou!\n\r",ch);
         return;
     }
-    if ( ( fetish = get_eq_char( ch, WEAR_HOLD ) ) == NULL )
+
+    if ((spirit = get_char_room( ch, NULL, arg ))== NULL)
     {
-        send_to_char( "You hold nothing in your hand.\n\r", ch );
+        send_to_char( "Which spirit are you trying to bind?\n\r", ch );
         return;
     }
 
-    if((corpse = get_obj_here( ch, NULL, arg )) == NULL)
+    if(mob->race != race_lookup("spirit"))
     {
-        send_to_char( "Bind the spirit of what?\n\r", ch );
+        send_to_char("Only spirits may be convinced to be bound in an object.\n\r",ch);
         return;
     }
 
-    if(corpse->item_type != ITEM_CORPSE_NPC)
+    if ( ( fetish = get_obj_carry( ch, arg2, ch ) ) == NULL)
     {
-        send_to_char( "You cannot draw a spirit from that!\n\r", ch );
-        return;
-    }
-
-    if(corpse->level == 0)
-    {
-        send_to_char("The spirit of this corpse has left for a better place.\n\r",ch);
-        return;
-    }
-    mob = create_mobile(get_mob_index(corpse->value[0]));
-    if(mob->race != race_lookup("undead"))
-    {
-        send_to_char("This is not a spirit's corpse!\n\r",ch);
+        send_to_char( "Touch what?.\n\r", ch );
         return;
     }
 
@@ -1226,25 +1214,6 @@ void do_bind(CHAR_DATA *ch, char *argument )
         }
         act( "$n's chanting increases until the spirit is bound within $p!", ch, fetish, ch, TO_NOTVICT );
         act("You bind the spirit of $N within $p!",ch, fetish, mob, TO_CHAR);
-
-        switch (number_range(1,15))
-        {
-            case 1: fetish->value[3] = skill_lookup("frenzy"); sprintf(color,"red and white spotted"); break;
-            case 2: fetish->value[3] = skill_lookup("bless"); sprintf(color,"light blue"); break;
-            case 3: fetish->value[3] = skill_lookup("mana"); sprintf(color,"brilliant white"); break;
-            case 4: fetish->value[3] = skill_lookup("cancellation"); sprintf(color,"snow white"); break;
-            case 5: fetish->value[3] = skill_lookup("harm"); sprintf(color,"blood red"); break;
-            case 6: fetish->value[3] = skill_lookup("earthquake"); sprintf(color,"brown"); break;
-            case 7: fetish->value[3] = skill_lookup("energy drain"); sprintf(color,"black"); break;
-            case 8: fetish->value[3] = skill_lookup("blind"); sprintf(color,"brown and grey spotted"); break;
-            case 9: fetish->value[3] = skill_lookup("remove curse"); sprintf(color,"dark blue"); break;
-            case 10: fetish->value[3] = skill_lookup("detect invis"); sprintf(color,"white streaked with blue"); break;
-            case 11: fetish->value[3] = skill_lookup("detect hidden"); sprintf(color,"blue streaked with white"); break;
-            case 12: fetish->value[3] = skill_lookup("curse"); sprintf(color,"sickly green"); break;
-            case 13: fetish->value[3] = skill_lookup("pass door"); sprintf(color,"bright yellow"); break;
-            case 14: fetish->value[3] = skill_lookup("fireball"); sprintf(color,"bright red"); break;
-            case 15: fetish->value[3] = skill_lookup("fly"); sprintf(color,"sky blue"); break;
-        }
 
         sprintf(buf,"A short wooden rod decorated with %s feathers",color);
         fetish->short_descr = str_dup(buf);

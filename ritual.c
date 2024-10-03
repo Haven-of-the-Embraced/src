@@ -1229,26 +1229,43 @@ void do_bind(CHAR_DATA *ch, char *argument )
         extract_char( spirit, TRUE );
         return;
     }
-        act( "$n's chanting increases until the spirit is bound within $p!", ch, fetish, ch, TO_NOTVICT );
-        act("You bind the spirit of $N within $p!",ch, fetish, mob, TO_CHAR);
 
-        sprintf(buf,"A short wooden rod decorated with %s feathers",color);
-        fetish->short_descr = str_dup(buf);
-        sprintf(buf,"%s lies here.",buf);
-        fetish->description = str_dup(buf);
-        if(fetish->value[0] < mob->level/2) fetish->value[0] = mob->level/2;
-        if(fetish->value[1] < mob->level/2) fetish->value[1] = mob->level/2;
-        if(fetish->value[2] < mob->level/2) fetish->value[2] = mob->level/2;
-//      fetish->value[0] = fetish->value[1] = fetish->value[2] = mob->level/2;
-        extract_obj(corpse);
-        extract_char( mob, TRUE );
-        return;
+    act( "$n's chanting increases until the spirit is bound within $p!", ch, fetish, spirit, TO_NOTVICT );
+    act( "You bind the spirit of $N within $p!",ch, fetish, spirit, TO_CHAR);
+    act( "Giving in to the pull of the chant, you agree to empower $p.", ch, NULL, spirit, TO_VICT );
+    extract_char( spirit, TRUE );
 
-    act( "$n's chanting increases until the spirit of the corpse is forced to imbue $p with it's power!", ch, fetish, ch, TO_NOTVICT );
-    act("You force the spirit of $N to imbue $p with power!",ch, fetish, mob, TO_CHAR);
-    fetish->value[2] += mob->level/5;
-    if(fetish->value[2] > fetish->value[1]) fetish->value[2] = fetish->value[1];
-    extract_obj(corpse);
-    extract_char( mob, TRUE );
+    if (CAN_WEAR(obj, ITEM_WIELD))
+    {
+      af.where     = TO_OBJECT;
+      af.type      = gsn_refinematter;
+      af.level     = success;
+      af.duration  = 50 + (success*10);
+      af.location  = APPLY_DAMROLL;
+      af.modifier  = 20 * success;
+      af.bitvector = ITEM_IS_ENHANCED;
+      affect_to_obj(obj,&af);
+
+      af.location = APPLY_NONE;
+      af.modifier = 0;
+      af.bitvector  = ITEM_MAGIC;
+      affect_to_obj(obj,&af);
+    }
+    else
+    {
+      af.where     = TO_OBJECT;
+      af.type      = gsn_refinematter;
+      af.level     = success;
+      af.duration  = 50 + (success*10);
+      af.location  = APPLY_AC;
+      af.modifier  = -30 * success;
+      af.bitvector = ITEM_IS_ENHANCED;
+      affect_to_obj(obj,&af);
+
+      af.location = APPLY_NONE;
+      af.modifier = 0;
+      af.bitvector  = ITEM_MAGIC;
+      affect_to_obj(obj,&af);
+    }
     return;
 }

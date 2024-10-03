@@ -1165,6 +1165,7 @@ void do_bind(CHAR_DATA *ch, char *argument )
 {
     CHAR_DATA *spirit;
     OBJ_DATA *fetish;
+    AFFECT_DATA af;
     char buf[MAX_STRING_LENGTH], arg[MAX_INPUT_LENGTH], arg2[MAX_INPUT_LENGTH];
     int success;
 
@@ -1235,37 +1236,37 @@ void do_bind(CHAR_DATA *ch, char *argument )
     act( "Giving in to the pull of the chant, you agree to empower $p.", ch, NULL, spirit, TO_VICT );
     extract_char( spirit, TRUE );
 
-    if (CAN_WEAR(obj, ITEM_WIELD))
+    if (CAN_WEAR(fetish, ITEM_WIELD))
     {
       af.where     = TO_OBJECT;
-      af.type      = gsn_refinematter;
+      af.type      = gsn_fetish;
       af.level     = success;
       af.duration  = 50 + (success*10);
       af.location  = APPLY_DAMROLL;
       af.modifier  = 20 * success;
       af.bitvector = ITEM_IS_ENHANCED;
-      affect_to_obj(obj,&af);
+      affect_to_obj(fetish,&af);
 
       af.location = APPLY_NONE;
       af.modifier = 0;
       af.bitvector  = ITEM_MAGIC;
-      affect_to_obj(obj,&af);
+      affect_to_obj(fetish,&af);
     }
     else
     {
       af.where     = TO_OBJECT;
-      af.type      = gsn_refinematter;
+      af.type      = gsn_fetish;
       af.level     = success;
       af.duration  = 50 + (success*10);
       af.location  = APPLY_AC;
       af.modifier  = -30 * success;
       af.bitvector = ITEM_IS_ENHANCED;
-      affect_to_obj(obj,&af);
+      affect_to_obj(fetish,&af);
 
       af.location = APPLY_NONE;
       af.modifier = 0;
       af.bitvector  = ITEM_MAGIC;
-      affect_to_obj(obj,&af);
+      affect_to_obj(fetish,&af);
     }
     return;
 }

@@ -2315,7 +2315,7 @@ Total (3) */
 
     { "fetish",             { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 	  { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
-    &gsn_fetish,          SLOT( 0),        0,     24, "",             "!Fetish!",     "" },
+    &gsn_fetish,          SLOT( 0),        0,     24, "",             "!Fetish!",     "The spirit in your Fetish departs, having fulfilled its contract." },
 
     { "spirit totem",     { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, spell_null, TAR_IGNORE,     POS_RESTING,

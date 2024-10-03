@@ -1166,6 +1166,7 @@ void do_bind(CHAR_DATA *ch, char *argument )
     CHAR_DATA *spirit;
     OBJ_DATA *fetish;
     char buf[MAX_STRING_LENGTH], arg[MAX_INPUT_LENGTH], arg2[MAX_INPUT_LENGTH];
+    int success;
 
     argument = one_argument(argument,arg);
     argument = one_argument(argument,arg2);
@@ -1193,25 +1194,33 @@ void do_bind(CHAR_DATA *ch, char *argument )
 
     if ( ( fetish = get_obj_carry( ch, arg2, ch ) ) == NULL)
     {
-        send_to_char( "Touch what?.\n\r", ch );
+        send_to_char( "Which carried item are you trying to convince a spirit to be bound to?\n\r", ch );
         return;
     }
 
-    act( "$n sits down and closes $s eyes and begins to chant in a soft, soothing voice.", ch, corpse, ch, TO_NOTVICT );
-    act( "You begin the binding ritual by sitting down and chanting...", ch, corpse, ch, TO_CHAR );
+    act( "$n sits down and closes $s eyes, and begins to chant in a soft, soothing voice.", ch, NULL, spirit, TO_NOTVICT );
+    act( "You begin the binding ritual by sitting down, and directing your chanting towards $N.", ch, NULL, spirit, TO_CHAR );
+    act( "You feel a soft chanting tugging at your essence.", ch, NULL, spirit, TO_VICT );
     do_function(ch, &do_sit, "");
     WAIT_STATE(ch, 72);
-    if(!str_cmp(arg2, "spell"))
+
+    if (success < 0)
     {
-        if (number_percent() < 50)
-        {
-            send_to_char("You fail to summon the spirit of the corpse, sending it to eternal damnation.\n\r",ch);
-            act( "$n sighs and lowers $s head in mourning for lost spirit of the corpse as $s fails to summon it from beyond the grave.", ch, corpse, ch, TO_NOTVICT );
-            corpse->level = 0;
-            extract_obj(corpse);
-            extract_char( mob, TRUE );
-            return;
-        }
+        act( "$N attacks $n in an enraged fury!", ch, NULL, spirit, TO_NOTVICT );
+        act( "$N charges you in a fury, attacking viciously!", ch, NULL, spirit, TO_CHAR );
+        act( "$n's chanting offends and enrages you, causing you to attack!", ch, NULL, spirit, TO_VICT );
+        multi_hit( spirit, ch, TYPE_UNDEFINED );
+        return;
+    }
+
+    if (success == 0)
+    {
+        act( "$N flees the area quickly.", ch, NULL, spirit, TO_NOTVICT );
+        act( "$N ignores your chant, and flees swiftly.", ch, NULL, spirit, TO_CHAR );
+        act( "Ignoring the chant, you swiftly leave the area.", ch, NULL, spirit, TO_VICT );
+        extract_char( spirit, TRUE );
+        return;
+    }
         act( "$n's chanting increases until the spirit is bound within $p!", ch, fetish, ch, TO_NOTVICT );
         act("You bind the spirit of $N within $p!",ch, fetish, mob, TO_CHAR);
 
@@ -1226,17 +1235,7 @@ void do_bind(CHAR_DATA *ch, char *argument )
         extract_obj(corpse);
         extract_char( mob, TRUE );
         return;
-    }
 
-    if(number_percent() < 25)
-    {
-        send_to_char("You fail to summon the spirit of the corpse, sending it to eternal damnation.\n\r",ch);
-        act( "$n sighs and lowers $s head in mourning for lost spirit of the corpse as $e fails to summon it from beyond the grave.", ch, corpse, ch, TO_NOTVICT );
-        corpse->level = 0;
-        extract_obj(corpse);
-        extract_char( mob, TRUE );
-        return;
-    }
     act( "$n's chanting increases until the spirit of the corpse is forced to imbue $p with it's power!", ch, fetish, ch, TO_NOTVICT );
     act("You force the spirit of $N to imbue $p with power!",ch, fetish, mob, TO_CHAR);
     fetish->value[2] += mob->level/5;

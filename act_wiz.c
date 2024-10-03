@@ -164,7 +164,7 @@ void do_tlookup(CHAR_DATA *ch, char *argument)
         if (arg1[0] == '\0') {
             sprintf(buf, "All potions:\r\n          ");
             int counter = 0;
-            for (i = 0; brew_table[i].name != NULL; i++) {
+            for (i = 0; i < MAX_BREW; i++) {
                 sprintf(buf + strlen(buf), "%-20s", brew_table[i].name);
                 counter++;
                 if (counter == 3) {

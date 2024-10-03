@@ -1172,18 +1172,16 @@ void do_bind(CHAR_DATA *ch, char *argument )
     argument = one_argument(argument,arg);
     argument = one_argument(argument,arg2);
 
-    send_to_char("Binding is disabled until recoded.\n\r", ch);
-//    return;
-
     if(ch->race != race_lookup("garou"))
     {
-        send_to_char("You are not Garou!\n\r",ch);
+        send_to_char("Only Garou can bind spirits into items.\n\r",ch);
         return;
     }
 
     if ((spirit = get_char_room( ch, NULL, arg ))== NULL)
     {
         send_to_char( "Which spirit are you trying to bind?\n\r", ch );
+        send_to_char("Syntax:  {cbind <spirit> <object>{x\n\r", ch);
         return;
     }
 
@@ -1196,6 +1194,25 @@ void do_bind(CHAR_DATA *ch, char *argument )
     if ( ( fetish = get_obj_carry( ch, arg2, ch ) ) == NULL)
     {
         send_to_char( "Which carried item are you trying to convince a spirit to be bound to?\n\r", ch );
+        send_to_char("Syntax:  {cbind <spirit> <object>{x\n\r", ch);
+        return;
+    }
+
+    if (spirit->level >= ch->level  || spirit->level >= fetish->level)
+    {
+        send_to_char("The spirit is too powerful for that object.\n\r",ch);
+        return;
+    }
+
+    if(IS_SET(fetish->extra_flags, ITEM_IS_ENHANCED))
+    {
+        send_to_char("The spirit refuses to be bound to the item.\n\r",ch);
+        return;
+    }
+
+    if (!CAN_WEAR( fetish, ITEM_WEAR_TORSO) && !CAN_WEAR( fetish, ITEM_WIELD))
+    {
+        send_to_char( "Spirits can only be bound to weapons or body armor at this time.\n\r", ch );
         return;
     }
 
@@ -1205,11 +1222,10 @@ void do_bind(CHAR_DATA *ch, char *argument )
         return;
     }
 
-    ch->pcdata->gnosis[TEMP]--;
+    do_function(ch, &do_sit, "");
     act( "$n sits down and closes $s eyes, and begins to chant in a soft, soothing voice.", ch, NULL, spirit, TO_NOTVICT );
     act( "You begin the binding ritual by sitting down, and directing your chanting towards $N.", ch, NULL, spirit, TO_CHAR );
     act( "You feel a soft chanting tugging at your essence.", ch, NULL, spirit, TO_VICT );
-    do_function(ch, &do_sit, "");
     WAIT_STATE(ch, 72);
     success = godice(get_attribute(ch, WITS) + ch->csabilities[CSABIL_ETIQUETTE], 7);
 
@@ -1231,6 +1247,7 @@ void do_bind(CHAR_DATA *ch, char *argument )
         return;
     }
 
+    ch->pcdata->gnosis[TEMP]--;
     act( "$n's chanting increases until the spirit is bound within $p!", ch, fetish, spirit, TO_NOTVICT );
     act( "You bind the spirit of $N within $p!",ch, fetish, spirit, TO_CHAR);
     act( "Giving in to the pull of the chant, you agree to empower $p.", ch, NULL, spirit, TO_VICT );
@@ -1241,15 +1258,17 @@ void do_bind(CHAR_DATA *ch, char *argument )
       af.where     = TO_OBJECT;
       af.type      = gsn_fetish;
       af.level     = success;
-      af.duration  = 50 + (success*10);
+      af.duration  = 60 + (success*10);
       af.location  = APPLY_DAMROLL;
       af.modifier  = 20 * success;
       af.bitvector = ITEM_IS_ENHANCED;
       affect_to_obj(fetish,&af);
 
-      af.location = APPLY_NONE;
-      af.modifier = 0;
       af.bitvector  = ITEM_MAGIC;
+      af.modifier = 0;
+      affect_to_obj(fetish,&af);
+
+      af.bitvector  = ITEM_NODROP;
       affect_to_obj(fetish,&af);
     }
     else
@@ -1257,7 +1276,7 @@ void do_bind(CHAR_DATA *ch, char *argument )
       af.where     = TO_OBJECT;
       af.type      = gsn_fetish;
       af.level     = success;
-      af.duration  = 50 + (success*10);
+      af.duration  = 60 + (success*10);
       af.location  = APPLY_AC;
       af.modifier  = -30 * success;
       af.bitvector = ITEM_IS_ENHANCED;
@@ -1266,6 +1285,9 @@ void do_bind(CHAR_DATA *ch, char *argument )
       af.location = APPLY_NONE;
       af.modifier = 0;
       af.bitvector  = ITEM_MAGIC;
+      affect_to_obj(fetish,&af);
+
+      af.bitvector  = ITEM_NODROP;
       affect_to_obj(fetish,&af);
     }
     return;

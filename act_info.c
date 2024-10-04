@@ -1786,19 +1786,22 @@ void do_examine( CHAR_DATA *ch, char *argument )
         {
             if (paf->type == gsn_fetish)
             {
-                sprintf( buf, "%s | -- {x'%s (%d)' -> %3d hours\n\r", condition,
+                sprintf( buf, "%s |    {x'%s (%d)' -> %3d hours\n\r", condition,
                 affect_loc_name( paf->location ), paf->modifier, paf->duration );
-                send_to_char( buf, ch );
+                if (str_cmp(affect_loc_name( paf->location ), "none") && paf->modifier == 0)
+                    send_to_char("",ch);
+                else
+                    send_to_char( buf, ch );
                 if (paf->bitvector)
                 {
                     switch(paf->where)
                     {
                         case TO_AFFECTS:
-                            sprintf(buf,"Adds %s affect.\n",
+                            sprintf(buf,"%s |{x    +[{M%s{x]\n", condition,
                             affect_bit_name(paf->bitvector));
                             break;
                         case TO_WEAPON:
-                            sprintf(buf,"Adds %s weapon flags.\n",
+                            sprintf(buf,"%s |{x    +[{M%s{x]\n", condition,
                             weapon_bit_name(paf->bitvector));
                             break;
                         case TO_OBJECT:
@@ -1806,19 +1809,19 @@ void do_examine( CHAR_DATA *ch, char *argument )
                             extra_bit_name(paf->bitvector));
                             break;
                         case TO_IMMUNE:
-                            sprintf(buf,"Adds immunity to %s.\n",
+                            sprintf(buf,"%s |{x    Immunity to [{M%s{x]\n", condition,
                             imm_bit_name(paf->bitvector));
                             break;
                         case TO_RESIST:
-                            sprintf(buf,"Adds resistance to %s.\n\r",
+                            sprintf(buf,"%s |{x    Resistance to [{M%s{x]\n\r", condition,
                             imm_bit_name(paf->bitvector));
                             break;
                         case TO_VULN:
-                            sprintf(buf,"Adds vulnerability to %s.\n\r",
+                            sprintf(buf,"%s |{x    Vulnerability to [{M%s{x]\n\r", condition,
                             imm_bit_name(paf->bitvector));
                         break;
                         default:
-                            sprintf(buf,"Unknown bit %d: %d\n\r",
+                            sprintf(buf,"%s |{x    Unknown bit [{M%d: %d{x]\n\r", condition,
                             paf->where,paf->bitvector);
                         break;
                     }

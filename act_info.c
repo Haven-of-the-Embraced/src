@@ -111,6 +111,9 @@ char *format_obj_to_char( OBJ_DATA *obj, CHAR_DATA *ch, bool fShort )
     if ( IS_OBJ_STAT(obj, ITEM_INVIS)     )   strcat( buf, "(Invis) "     );
     if ( IS_AFFECTED(ch, AFF_DETECT_MAGIC)
          && IS_OBJ_STAT(obj, ITEM_MAGIC)  )   strcat( buf, "(Magical) "   );
+    if ((ch->race == race_lookup("garou") || is_affected(ch, gsn_spiritsight)) && 
+        affect_find(obj->affected,skill_lookup("fetish")) != NULL)
+        strcat( buf, "(Spiritual) ");
     if ( IS_OBJ_STAT(obj, ITEM_ILLUMINATE) )    strcat( buf, "(Illuminating) ");
     if ( IS_OBJ_STAT(obj, ITEM_GLOW)      )   strcat( buf, "(Glowing) "   );
     if ( IS_OBJ_STAT(obj, ITEM_HUM)       )   strcat( buf, "(Humming) "   );
@@ -1600,6 +1603,7 @@ void do_examine( CHAR_DATA *ch, char *argument )
     char arg[MAX_INPUT_LENGTH];
     char condition[3];
     OBJ_DATA *obj;
+    AFFECT_DATA *paf;
     int door;
 
     one_argument( argument, arg );
@@ -1708,12 +1712,12 @@ void do_examine( CHAR_DATA *ch, char *argument )
 	send_to_char("()-----------------------=======ooooOOOOOOOOoooo=======-----------------------()\n\r",ch);
    	sprintf( buf,"%s | --{x Level %3d  %s::{x  %s\n\r", condition, obj->level, condition, obj->short_descr);
 	send_to_char( buf, ch );
-  if (IS_OBJ_STAT(obj, ITEM_MAGIC) && IS_AFFECTED(ch, AFF_DETECT_MAGIC))
-  {
-    sprintf(buf, "%s | --{x Mystical {YEnergy{x permeates %s.\n\r", condition, obj->short_descr);
-    send_to_char( buf, ch );
-  }
-  send_to_char( condition, ch );
+    if (IS_OBJ_STAT(obj, ITEM_MAGIC) && IS_AFFECTED(ch, AFF_DETECT_MAGIC))
+    {
+        sprintf(buf, "%s | --{x Mystical {YEnergy{x permeates %s.\n\r", condition, obj->short_descr);
+        send_to_char( buf, ch );
+    }
+    send_to_char( condition, ch );
 	send_to_char(" |-----------------------==============================-----------------------|{x\n\r",ch);
 	sprintf( buf,"%s | --{x Keywords: %s\n\r", condition, obj->name );
 	send_to_char( buf, ch );
@@ -1726,51 +1730,104 @@ void do_examine( CHAR_DATA *ch, char *argument )
 
 	send_to_char( condition, ch );
 	send_to_char(" |-----------------------==============================-----------------------|\n\r",ch);
-  sprintf( buf, "");
-  if (obj->item_type == ITEM_CONTAINER)
+    sprintf( buf, "");
+    if (obj->item_type == ITEM_CONTAINER)
     sprintf( buf, "%s | --{x Contains: {Y%d/%d {xmax items, combined weight of {y%d.%d/%d.%d{x lbs\n\r", condition,
             get_obj_number(obj), obj->value[3], get_obj_weight(obj) / 10, get_obj_weight(obj) % 10,
             obj->value[0] / 10, obj->value[0] % 10);
-  if (obj->item_type == ITEM_LIGHT)
+    if (obj->item_type == ITEM_LIGHT)
     sprintf( buf,"%s | --{x This light will remain lit for %s\n\r", condition, obj->value[2] > 75 ? "an extremely long time." :
             obj->value[2] > 50 ? "quite a while." : obj->value[2] > 25 ? "a bit longer." :
             obj->value[2] > 10 ? "just a little longer." : "only a short time longer.");
-  if (obj->item_type == ITEM_FOOD)
+    if (obj->item_type == ITEM_FOOD)
     if (obj->timer <= 0)
       sprintf( buf, "%s | --{x This food appears to have been preserved.\n\r", condition);
     else
       sprintf( buf, "%s | --{x This food %s\n\r", condition, obj->timer >= 10 ? "is fresh." : "will spoil soon.");
-  if (obj->item_type == ITEM_CORPSE_NPC || obj->item_type == ITEM_CORPSE_PC)
-    sprintf( buf,"%s | --{x Factoring in any contents inside, the total weight is approximately %5d pounds.\n\r", condition, get_obj_weight(obj) / 10);
-  if (obj->item_type == ITEM_DRINK_CON)
-    if ( obj->value[1] <= 0 )
-      sprintf( buf, "%s | --{x It is empty.\n\r", condition);
-    else
-      sprintf( buf, "%s | --{x It's %sfilled with  a %s liquid.\n\r", condition,
-        obj->value[1] < obj->value[0] / 4 ? "less than half-" :
-        obj->value[1] < 3 * obj->value[0] / 4 ? "about half-" : "more than half-",
-        liq_table[obj->value[2]].liq_color);
-  if (obj->item_type == ITEM_TOOL)
-    sprintf( buf, "%s | --{x This can be used as a %s.\n\r", condition, tool_table[obj->value[1]].tool_name);
-  if (obj->item_type == ITEM_BLASTPOWDER)
-    sprintf( buf, "%s | --{x This %s powder has %s.\n\r", condition,
-      obj->value[1] < 3 ? "weak" : obj->value[1] < 5 ? "average" :
-      obj->value[1] < 8 ? "potent" : "devastating",
-      obj->value[0] < 2 ? "a single charge left" :
-      obj->value[0] < 5 ? "very few charges left" :
-      "quite a few charges left");
-  if (obj->item_type == ITEM_WEAPON)
-    sprintf( buf, "%s | --{x This would make a useful %s.\n\r", condition,
-      obj->value[0] == WEAPON_EXOTIC ? "improvised weapon" : obj->value[0] == WEAPON_SWORD ? "sword" :
-      obj->value[0] == WEAPON_DAGGER ? "dagger" : obj->value[0] == WEAPON_SPEAR ? "spear/staff" :
-      obj->value[0] == WEAPON_MACE ? "mace/club" : obj->value[0] == WEAPON_AXE ? "axe" :
-      obj->value[0] == WEAPON_FLAIL ? "flail" : obj->value[0] == WEAPON_WHIP ? "whip" :
-      obj->value[0] == WEAPON_POLEARM ? "polearm" : obj->value[0] == WEAPON_LANCE ? "lance" :
-      "unknown");
-  if (obj->item_type == ITEM_PLASM)
-    sprintf( buf, "%s | --{x There appear to be %2d unit%s usable.\n\r", condition, obj->value[0], obj->value[0] > 1 ? "s" : "");
-  send_to_char( buf, ch );
-  send_to_char( condition, ch );
+    if (obj->item_type == ITEM_CORPSE_NPC || obj->item_type == ITEM_CORPSE_PC)
+        sprintf( buf,"%s | --{x Factoring in any contents inside, the total weight is approximately %5d pounds.\n\r", condition, get_obj_weight(obj) / 10);
+    if (obj->item_type == ITEM_DRINK_CON)
+        if ( obj->value[1] <= 0 )
+            sprintf( buf, "%s | --{x It is empty.\n\r", condition);
+        else
+            sprintf( buf, "%s | --{x It's %sfilled with  a %s liquid.\n\r", condition,
+                obj->value[1] < obj->value[0] / 4 ? "less than half-" :
+                obj->value[1] < 3 * obj->value[0] / 4 ? "about half-" : "more than half-",
+                liq_table[obj->value[2]].liq_color);
+    if (obj->item_type == ITEM_TOOL)
+        sprintf( buf, "%s | --{x This can be used as a %s.\n\r", condition, tool_table[obj->value[1]].tool_name);
+    if (obj->item_type == ITEM_BLASTPOWDER)
+        sprintf( buf, "%s | --{x This %s powder has %s.\n\r", condition,
+            obj->value[1] < 3 ? "weak" : obj->value[1] < 5 ? "average" :
+            obj->value[1] < 8 ? "potent" : "devastating",
+            obj->value[0] < 2 ? "a single charge left" :
+            obj->value[0] < 5 ? "very few charges left" :
+            "quite a few charges left");
+    if (obj->item_type == ITEM_WEAPON)
+        sprintf( buf, "%s | --{x This would make a useful %s.\n\r", condition,
+        obj->value[0] == WEAPON_EXOTIC ? "improvised weapon" : obj->value[0] == WEAPON_SWORD ? "sword" :
+        obj->value[0] == WEAPON_DAGGER ? "dagger" : obj->value[0] == WEAPON_SPEAR ? "spear/staff" :
+        obj->value[0] == WEAPON_MACE ? "mace/club" : obj->value[0] == WEAPON_AXE ? "axe" :
+        obj->value[0] == WEAPON_FLAIL ? "flail" : obj->value[0] == WEAPON_WHIP ? "whip" :
+        obj->value[0] == WEAPON_POLEARM ? "polearm" : obj->value[0] == WEAPON_LANCE ? "lance" :
+        "unknown");
+    if (obj->item_type == ITEM_PLASM)
+        sprintf( buf, "%s | --{x There appear to be %2d unit%s usable.\n\r", condition, obj->value[0], obj->value[0] > 1 ? "s" : "");
+    send_to_char( buf, ch );
+    if ((ch->race == race_lookup("garou") || is_affected(ch, gsn_spiritsight)) && 
+        affect_find(obj->affected,skill_lookup("fetish")) != NULL)
+    {
+        sprintf( buf, "%s |-----------------------======{mSpiritual  Essence%s======-----------------------|\n\r", 
+            condition, condition);
+        send_to_char( buf, ch );
+        sprintf(buf, "%s | --{x The {mSpirit{x within this Fetish adds the following:\n\r", condition);
+        send_to_char( buf, ch );
+        for ( paf = obj->affected; paf != NULL; paf = paf->next )
+        {
+            if (paf->type == gsn_fetish)
+            {
+                sprintf( buf, "%s | -- {x'%s (%d)' -> %3d hours\n\r", condition,
+                affect_loc_name( paf->location ), paf->modifier, paf->duration );
+                send_to_char( buf, ch );
+                if (paf->bitvector)
+                {
+                    switch(paf->where)
+                    {
+                        case TO_AFFECTS:
+                            sprintf(buf,"Adds %s affect.\n",
+                            affect_bit_name(paf->bitvector));
+                            break;
+                        case TO_WEAPON:
+                            sprintf(buf,"Adds %s weapon flags.\n",
+                            weapon_bit_name(paf->bitvector));
+                            break;
+                        case TO_OBJECT:
+                            sprintf(buf,"%s |{x    +[{M%s{x]\n", condition,
+                            extra_bit_name(paf->bitvector));
+                            break;
+                        case TO_IMMUNE:
+                            sprintf(buf,"Adds immunity to %s.\n",
+                            imm_bit_name(paf->bitvector));
+                            break;
+                        case TO_RESIST:
+                            sprintf(buf,"Adds resistance to %s.\n\r",
+                            imm_bit_name(paf->bitvector));
+                            break;
+                        case TO_VULN:
+                            sprintf(buf,"Adds vulnerability to %s.\n\r",
+                            imm_bit_name(paf->bitvector));
+                        break;
+                        default:
+                            sprintf(buf,"Unknown bit %d: %d\n\r",
+                            paf->where,paf->bitvector);
+                        break;
+                    }
+                    send_to_char(buf,ch);
+                }
+            }
+        }
+    }
+    send_to_char( condition, ch );
 	send_to_char("()-----------------------=======ooooOOOOOOOOoooo=======-----------------------(){x\n\r",ch);
     }
 

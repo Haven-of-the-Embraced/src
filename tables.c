@@ -1254,12 +1254,12 @@ const struct    brew_type   brew_table  [MAX_BREW]  =
         0,        0,   0},  FALSE,       FALSE,  "brownish-yellow"}
 };
 
-const struct mob_group_type mob_group_table[] =
+const struct mob_group_type mob_group_table[MAX_MOBGROUP] =
 {
 /*  {   name,               groupnumber,                  raceonly, 
         race1,      race2,          race3        },
 */
-    {   NULL,               MOB_GROUP_NONE,               FALSE,
+    {   "none",             MOB_GROUP_NONE,               FALSE,
     "placeholder",  NULL,           NULL        },
     {   "assamite",         MOB_GROUP_ASSAMITE,           TRUE,
     "vampire",      "methuselah",   "ghoul"     },

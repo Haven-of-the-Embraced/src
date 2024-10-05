@@ -4236,11 +4236,8 @@ MEDIT( medit_show )
     pMob->hitroll,  attack_table[pMob->dam_type].name );
     send_to_char( buf, ch );
 
-    if ( pMob->group )
-    {
-    sprintf( buf, "Group:       [%5d]\n\r", pMob->group );
+    sprintf( buf, "Group:       [%3d -> %s]\n\r", mob_group_table[pMob->group].groupnumber, mob_group_table[pMob->group].name);
     send_to_char( buf, ch );
-    }
 
     sprintf( buf, "Hit dice:    [%2dd%-3d+%4d] ",
          pMob->hit[DICE_NUMBER],
@@ -5761,16 +5758,37 @@ MEDIT( medit_group )
 
     if ( argument[0] == '\0' )
     {
-        send_to_char( "Syntax: group [number]\n\r", ch);
-        send_to_char( "        group show [number]\n\r", ch);
+        send_to_char( "Syntax: group [#]\n\r", ch);
+        send_to_char( "        group show [#]\n\r", ch);
+        send_to_char( "        group list\n\r", ch);
         return FALSE;
     }
 
     if (is_number(argument))
     {
-    pMob->group = atoi(argument);
+        if (atoi(argument) > MAX_MOBGROUP)
+        {
+            sprintf(buf, "Group # must be between [ {Y0 {D- {Y%d {x].\n\r", MAX_MOBGROUP);
+            send_to_char(buf, ch);
+            return FALSE;
+        }
+        pMob->group = atoi(argument);
         send_to_char( "Group set.\n\r", ch );
-    return TRUE;
+        return TRUE;
+    }
+
+    if ( !strcmp( argument, "show" ))
+    {
+        send_to_char("[ {Y # {x ] ->           Group Name        [ {Y # {x ] ->           Group Name        \n\r", ch);
+        send_to_char("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n\r", ch);
+        for (temp = 0; temp <= MAX_MOBGROUP; temp++)
+        {
+            sprintf(buf, "[ {Y%3d{x ] -> %20s        %s", mob_group_table[temp].groupnumber, mob_group_table[temp].name,
+                temp % 2 != 0 ? "\n\r" : "");
+            send_to_char(buf, ch);
+        }
+        send_to_char("\n\r", ch);
+        return FALSE;
     }
 
     argument = one_argument( argument, arg );

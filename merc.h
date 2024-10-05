@@ -921,6 +921,7 @@ struct  kill_data
 #define MOB_GROUP_ICESPIRIT             40
 #define MOB_GROUP_SILVERSPIRIT          41
 
+#define MAX_MOBGROUP                    41
 
 
 /* RT ASCII conversions -- used so we can have letters in this file */

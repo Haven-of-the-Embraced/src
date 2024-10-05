@@ -5753,31 +5753,46 @@ MEDIT( medit_group )
     int temp;
     BUFFER *buffer;
     bool found = FALSE;
-
+    int gt;
     EDIT_MOB(ch, pMob);
 
     if ( argument[0] == '\0' )
     {
-        send_to_char( "Syntax: group [#]\n\r", ch);
-        send_to_char( "        group show [#]\n\r", ch);
+        send_to_char( "Syntax: group <#>\n\r", ch);
+        send_to_char( "        group show <#>\n\r", ch);
         send_to_char( "        group list\n\r", ch);
         return FALSE;
     }
 
     if (is_number(argument))
     {
-        if (atoi(argument) > MAX_MOBGROUP)
+        gt = atoi(argument);
+        if (gt >= MAX_MOBGROUP)
         {
-            sprintf(buf, "Group # must be between [ {Y0 {D- {Y%d {x].\n\r", MAX_MOBGROUP);
+            sprintf(buf, "Group # must be between [ {Y0 {D- {Y%d {x].\n\r", MAX_MOBGROUP - 1);
             send_to_char(buf, ch);
             return FALSE;
         }
+
+        if (mob_group_table[gt].raceonly)
+            if (pMob->race != race_lookup(mob_group_table[gt].race1)
+                && pMob->race != race_lookup(mob_group_table[gt].race2)
+                && pMob->race != race_lookup(mob_group_table[gt].race3))
+            {
+                sprintf(buf, "Group [{y%s{x] can only be assigned to these races:\n\r     '%s' '%s' '%s'\n\r", 
+                    mob_group_table[gt].name, mob_group_table[gt].race1, mob_group_table[gt].race2, mob_group_table[gt].race3);
+                send_to_char(buf, ch);
+                return FALSE;
+            }
+        
         pMob->group = atoi(argument);
-        send_to_char( "Group set.\n\r", ch );
+        sprintf(buf, "Group Set:  [ {Y%3d{x ] -> %20s \n\r", mob_group_table[pMob->group].groupnumber,
+            mob_group_table[pMob->group].name);
+        send_to_char(buf, ch);
         return TRUE;
     }
 
-    if ( !strcmp( argument, "show" ))
+    if ( !strcmp( argument, "list" ))
     {
         send_to_char("[ {Y # {x ] ->           Group Name        [ {Y # {x ] ->           Group Name        \n\r", ch);
         send_to_char("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n\r", ch);
@@ -5787,7 +5802,7 @@ MEDIT( medit_group )
                 temp % 2 != 0 ? "\n\r" : "");
             send_to_char(buf, ch);
         }
-        send_to_char("\n\r", ch);
+        send_to_char( "\n\r\n\r{WTo set group: {cgroup #{x\n\r", ch);
         return FALSE;
     }
 
@@ -5795,13 +5810,13 @@ MEDIT( medit_group )
 
     if ( !strcmp( arg, "show" ) && is_number( argument ) )
     {
-    if (atoi(argument) == 0)
-    {
-        send_to_char( "Are you crazy?\n\r", ch);
-        return FALSE;
-    }
+        if (atoi(argument) == 0)
+        {
+            send_to_char( "Are you crazy?\n\r", ch);
+            return FALSE;
+        }
 
-    buffer = new_buf ();
+        buffer = new_buf ();
 
         for (temp = 0; temp < 65536; temp++)
         {
@@ -5809,17 +5824,17 @@ MEDIT( medit_group )
             if ( pMTemp && ( pMTemp->group == atoi(argument) ) )
             {
             found = TRUE;
-                sprintf( buf, "[%5d] %s\n\r", pMTemp->vnum, pMTemp->player_name );
+            sprintf( buf, "[%5d] %s\n\r", pMTemp->vnum, pMTemp->player_name );
             add_buf( buffer, buf );
             }
         }
 
-    if (found)
-        page_to_char( buf_string(buffer), ch );
-    else
-        send_to_char( "No mobs in that group.\n\r", ch );
+        if (found)
+            page_to_char( buf_string(buffer), ch );
+        else
+            send_to_char( "No mobs in that group.\n\r", ch );
 
-    free_buf( buffer );
+        free_buf( buffer );
         return FALSE;
     }
 

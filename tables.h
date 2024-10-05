@@ -199,7 +199,9 @@ struct mob_group_type
     char *name;
     int groupnumber;
     bool raceonly;
-    char *race;
+    char *race1;
+    char *race2;
+    char *race3;
 };
 
 /* game tables */
@@ -226,6 +228,7 @@ extern  const   struct  cr_attribute_type   cr_attribute_table  [3];
 extern  const   struct  template_type   template_table[];
 extern 	const 	struct 	hometown_type 		hometown_table  [MAX_HOMETOWN];
 extern  const   struct  name_type    dir_table[];
+extern  const   struct  mob_group_type  mob_group_table[];
 /* flag tables */
 extern  const   struct  flag_type   act_flags[];
 extern  const   struct  flag_type   act2_flags[];

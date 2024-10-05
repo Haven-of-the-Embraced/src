@@ -6660,7 +6660,7 @@ void do_acidblood(CHAR_DATA *ch, char *argument)
         gain_exp(ch, dicesuccess);
     }
 
-    d10_damage( ch, victim, damagesuccess, ch->level * 2, gsn_acidblood, DAM_ACID, DEFENSE_NONE, TRUE, TRUE);
+    d10_damage( ch, victim, damagesuccess, ch->level * 5 / 2, gsn_acidblood, DAM_ACID, DEFENSE_NONE, TRUE, TRUE);
 
     if (dicesuccess > 4)        /*Many successes, great aim.  Blind baby!*/
     {

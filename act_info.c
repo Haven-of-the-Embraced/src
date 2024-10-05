@@ -1774,6 +1774,22 @@ void do_examine( CHAR_DATA *ch, char *argument )
     if (obj->item_type == ITEM_PLASM)
         sprintf( buf, "%s | --{x There appear to be %2d unit%s usable.\n\r", condition, obj->value[0], obj->value[0] > 1 ? "s" : "");
     send_to_char( buf, ch );
+    if (IS_VAMP(ch) && ch->pcdata->discipline[QUIETUS] >= 4 &&
+        affect_find(obj->affected,gsn_blood_agony) != NULL)
+    {
+        for ( paf = obj->affected; paf != NULL; paf = paf->next )
+        {
+            if (paf->type == gsn_blood_agony)
+            {
+                sprintf( buf, "%s | --{x Remnants of {Da{gc{Di{gd{Di{gc {rblood{x drip dangerously from this weapon.\n\r", condition,
+                    paf->duration);
+                send_to_char(buf, ch);
+                sprintf( buf, "%s | --{x   | {g%15s {x({y%3d{x) | + [{R%15s{x] --> %3d hours\n\r", condition, 
+                    affect_loc_name( paf->location ), paf->modifier, weapon_bit_name(paf->bitvector), paf->duration);
+                send_to_char(buf, ch);
+            }
+        }
+    }
     if ((ch->race == race_lookup("garou") || is_affected(ch, gsn_spiritsight)) && 
         affect_find(obj->affected,skill_lookup("fetish")) != NULL)
     {

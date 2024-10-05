@@ -1191,16 +1191,31 @@ void do_bind(CHAR_DATA *ch, char *argument )
         return;
     }
 
+    switch(spirit->group)
+    {
+        case MOB_GROUP_EARTHSPIRIT:
+        case MOB_GROUP_FIRESPIRIT:
+        case MOB_GROUP_WINDSPIRIT:
+        case MOB_GROUP_WATERSPIRIT:
+        case MOB_GROUP_ELECTRICSPIRIT:
+        case MOB_GROUP_ICESPIRIT:
+        case MOB_GROUP_SILVERSPIRIT:
+        case MOB_GROUP_GENERALSPIRIT:
+            break;
+
+        default:
+            sprintf(buf, "Spirit Mob (%d - %s) not set with a 'Spirit' Group type.", spirit->pIndexData->vnum, spirit->short_descr);
+            bug(buf, 0);
+            append_file( ch, BUG_FILE, buf, TRUE );
+            sprintf(buf, "{R**{x Spirit Mob (%s) not set with a 'Spirit' Group type.  Inform the Admin.", spirit->short_descr);
+            send_to_char(buf, ch);
+            return;
+    }
+
     if ( ( fetish = get_obj_carry( ch, arg2, ch ) ) == NULL)
     {
         send_to_char( "Which carried item are you trying to convince a spirit to be bound to?\n\r", ch );
         send_to_char("Syntax:  {cbind <spirit> <object>{x\n\r", ch);
-        return;
-    }
-
-    if (spirit->level >= ch->level  || spirit->level >= fetish->level)
-    {
-        send_to_char("The spirit is too powerful for that object.\n\r",ch);
         return;
     }
 

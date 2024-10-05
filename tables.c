@@ -1342,7 +1342,9 @@ const struct mob_group_type mob_group_table[MAX_MOBGROUP] =
     {   "ice spirit",           MOB_GROUP_ICESPIRIT,          TRUE,
     "spirit",    "",           ""     },
     {   "silver spirit",        MOB_GROUP_SILVERSPIRIT,       TRUE,
-    "spirit",    "",           ""     }
+    "spirit",    "",           ""     },
+    {   "general spirit",       MOB_GROUP_GENERALSPIRIT,        TRUE,
+    "spirit",    "",           ""     },
 };
 
 const struct    gift_type   gift_table  [MAX_GIFTS_CODED]  =

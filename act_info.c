@@ -1784,7 +1784,7 @@ void do_examine( CHAR_DATA *ch, char *argument )
                 sprintf( buf, "%s | --{x Remnants of {Da{gc{Di{gd{Di{gc {rblood{x drip dangerously from this weapon.\n\r", condition,
                     paf->duration);
                 send_to_char(buf, ch);
-                sprintf( buf, "%s | --{x   | {g%15s {x({y%3d{x) | + [{R%15s{x] --> %3d hours\n\r", condition, 
+                sprintf( buf, "%s | {x     | {g%15s {x({y%3d{x) | + [{R%15s{x] --> %3d hours\n\r", condition, 
                     affect_loc_name( paf->location ), paf->modifier, weapon_bit_name(paf->bitvector), paf->duration);
                 send_to_char(buf, ch);
             }

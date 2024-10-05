@@ -875,6 +875,50 @@ struct  kill_data
 #define GROUP_VNUM_OGRES                2101
 
 
+/*
+ * Groups for mob->group
+ */
+#define MOB_GROUP_NONE                  0
+#define MOB_GROUP_ASSAMITE              1
+#define MOB_GROUP_BRUJAH                2
+#define MOB_GROUP_CAPPADOCIAN           3
+#define MOB_GROUP_FOLLOWEROFSET         4
+#define MOB_GROUP_GANGREL               5
+#define MOB_GROUP_LASOMBRA              6
+#define MOB_GROUP_MALKAVIAN             7
+#define MOB_GROUP_NOSFERATU             8
+#define MOB_GROUP_RAVNOS                9
+#define MOB_GROUP_TOREADOR              10
+#define MOB_GROUP_TREMERE               11
+#define MOB_GROUP_TZIMISCE              12
+#define MOB_GROUP_VENTRUE               13
+#define MOB_GROUP_BAALI                 14
+#define MOB_GROUP_GARGOYLES             15
+#define MOB_GROUP_SALUBRI               16
+#define MOB_GROUP_BLACKFURIES           17
+#define MOB_GROUP_BONEGNAWERS           18
+#define MOB_GROUP_CHILDRENOFGAIA        19
+#define MOB_GROUP_FIANNA                20
+#define MOB_GROUP_GETOFFENRIS           21
+#define MOB_GROUP_REDTALONS             22
+#define MOB_GROUP_SHADOWLORDS           23
+#define MOB_GROUP_SILENTSTRIDERS        24
+#define MOB_GROUP_SILVERFANGS           25
+#define MOB_GROUP_WARDERSOFMEN          26
+#define MOB_GROUP_BLACKSPIRALDANCERS    27
+#define MOB_GROUP_AHLIBATIN             28
+#define MOB_GROUP_MESSIANICVOICES       29
+#define MOB_GROUP_OLDFAITH              30
+#define MOB_GROUP_ORDEROFHERMES         31
+#define MOB_GROUP_SPIRITTALKER          32
+#define MOB_GROUP_VALDAERMEN            33
+#define MOB_GROUP_CRAFTMASONS           34
+#define MOB_GROUP_ASSAMITE              0
+#define MOB_GROUP_ASSAMITE              0
+#define MOB_GROUP_ASSAMITE              0
+#define MOB_GROUP_ASSAMITE              0
+
+
 /* RT ASCII conversions -- used so we can have letters in this file */
 
 #define A           1

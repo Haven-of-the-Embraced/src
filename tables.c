@@ -1254,6 +1254,47 @@ const struct    brew_type   brew_table  [MAX_BREW]  =
         0,        0,   0},  FALSE,       FALSE,  "brownish-yellow"}
 };
 
+const struct mob_group_type mob_group_table[] =
+{
+/*  {   name,               groupnumber,                  raceonly, 
+        race1,      race2,          race3        },
+*/
+    {   NULL,               MOB_GROUP_NONE,               FALSE,
+    "placeholder",  NULL,           NULL        },
+    {   "assamite",         MOB_GROUP_ASSAMITE,           TRUE,
+    "vampire",      "methuselah",   "ghoul"     },
+    {   "brujah",           MOB_GROUP_BRUJAH,             TRUE,
+    "vampire",      "methuselah",   "ghoul"     },    
+    {   "cappacocian",      MOB_GROUP_CAPPADOCIAN,        TRUE,
+    "vampire",      "methuselah",   "ghoul"     },
+    {   "followerofset",    MOB_GROUP_FOLLOWEROFSET,      TRUE,
+    "vampire",      "methuselah",   "ghoul"     },
+    {   "gangrel",          MOB_GROUP_GANGREL,            TRUE,
+    "vampire",      "methuselah",   "ghoul"     },
+    {   "lasombra",         MOB_GROUP_LASOMBRA,           TRUE,
+    "vampire",      "methuselah",   "ghoul"     },
+    {   "malkavian",        MOB_GROUP_MALKAVIAN,          TRUE,
+    "vampire",      "methuselah",   "ghoul"     },
+    {   "nosferatu",        MOB_GROUP_NOSFERATU,          TRUE,
+    "vampire",      "methuselah",   "ghoul"     },
+    {   "ravnos",           MOB_GROUP_RAVNOS,             TRUE,
+    "vampire",      "methuselah",   "ghoul"     },
+    {   "toreador",         MOB_GROUP_TOREADOR,           TRUE,
+    "vampire",      "methuselah",   "ghoul"     },
+    {   "tremere",          MOB_GROUP_TREMERE,            TRUE,
+    "vampire",      "methuselah",   "ghoul"     },
+    {   "tzimisce",         MOB_GROUP_TZIMISCE,           TRUE,
+    "vampire",      "methuselah",   "ghoul"     },
+    {   "ventrue",          MOB_GROUP_VENTRUE,            TRUE,
+    "vampire",      "methuselah",   "ghoul"     },
+    {   "baali",            MOB_GROUP_BAALI,              TRUE,
+    "vampire",      "methuselah",   "ghoul"     },
+    {   "gargoyles",        MOB_GROUP_GARGOYLES,          TRUE,
+    "vampire",      "methuselah",   "ghoul"     },
+    {   "salubri",          MOB_GROUP_SALUBRI,            TRUE,
+    "vampire",      "methuselah",   "ghoul"     }
+};
+
 const struct    gift_type   gift_table  [MAX_GIFTS_CODED]  =
 {
 /*  {   name,       min level,  lag delt,   chance to fail,

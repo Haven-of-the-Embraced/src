@@ -5810,6 +5810,7 @@ MEDIT( medit_group )
 
     if ( !strcmp( arg, "show" ) && is_number( argument ) )
     {
+
         if (atoi(argument) == 0)
         {
             send_to_char( "Are you crazy?\n\r", ch);
@@ -5824,15 +5825,18 @@ MEDIT( medit_group )
             if ( pMTemp && ( pMTemp->group == atoi(argument) ) )
             {
             found = TRUE;
-            sprintf( buf, "[%5d] %s\n\r", pMTemp->vnum, pMTemp->player_name );
+            sprintf( buf, "[%5d]:  %s\n\r", pMTemp->vnum, pMTemp->short_descr );
             add_buf( buffer, buf );
             }
         }
 
         if (found)
+        {
+            send_to_char("[ Vnum]:  Mob\n\r-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n\r", ch);
             page_to_char( buf_string(buffer), ch );
+        }
         else
-            send_to_char( "No mobs in that group.\n\r", ch );
+            send_to_char( "There are no mobs in that group.\n\r", ch );
 
         free_buf( buffer );
         return FALSE;

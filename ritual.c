@@ -1270,21 +1270,49 @@ void do_bind(CHAR_DATA *ch, char *argument )
 
     if (CAN_WEAR(fetish, ITEM_WIELD))
     {
-      af.where     = TO_OBJECT;
-      af.type      = gsn_fetish;
-      af.level     = success;
-      af.duration  = 60 + (success*10);
-      af.location  = APPLY_DAMROLL;
-      af.modifier  = 20 * success;
-      af.bitvector = ITEM_IS_ENHANCED;
-      affect_to_obj(fetish,&af);
+        af.where     = TO_OBJECT;
+        af.type      = gsn_fetish;
+        af.level     = success;
+        af.duration  = 60 + (success*10);
+        af.location  = 0;
+        af.modifier  = 0;
+        switch(spirit->group)
+        {
+            case MOB_GROUP_EARTHSPIRIT:
+            case MOB_GROUP_WINDSPIRIT:
+            case MOB_GROUP_WATERSPIRIT:
+            case MOB_GROUP_GENERALSPIRIT:
+                af.location  = APPLY_DAMROLL;
+                af.modifier  = 20 * success;
+                break;
+            case MOB_GROUP_FIRESPIRIT:
+                af.where        =   TO_WEAPON;
+                af.bitvector    =   WEAPON_FLAMING;
+                break;
+            case MOB_GROUP_ELECTRICSPIRIT:
+                af.where        =   TO_WEAPON;
+                af.bitvector    =   WEAPON_SHOCKING;
+                break;
+            case MOB_GROUP_ICESPIRIT:
+                af.where        =   TO_WEAPON;
+                af.bitvector    =   WEAPON_FROST;
+                break;
+            case MOB_GROUP_SILVERSPIRIT:
+                af.bitvector    =   ITEM_SILVER;
+                break;
+        }
+        affect_to_obj(fetish,&af);
 
-      af.bitvector  = ITEM_MAGIC;
-      af.modifier = 0;
-      affect_to_obj(fetish,&af);
+        af.bitvector = ITEM_IS_ENHANCED;
+        af.modifier = 0;
+        af.location = 0;
+        affect_to_obj(fetish,&af);
 
-      af.bitvector  = ITEM_NODROP;
-      affect_to_obj(fetish,&af);
+        af.bitvector  = ITEM_MAGIC;
+        affect_to_obj(fetish,&af);
+
+        af.bitvector  = ITEM_NODROP;
+        affect_to_obj(fetish,&af);
     }
     else
     {

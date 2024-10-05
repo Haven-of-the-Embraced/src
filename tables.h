@@ -194,6 +194,14 @@ struct  crafted_item_type
     int best[10];
 };
 
+struct mob_group_type
+{
+    char *name;
+    int groupnumber;
+    bool raceonly;
+    char *race;
+};
+
 /* game tables */
 extern  const   struct cdisc_type clandisc_table[MAX_CLAN];
 extern  const   struct  sect_type   sect_table[MAX_SECT];

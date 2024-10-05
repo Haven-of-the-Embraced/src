@@ -913,10 +913,14 @@ struct  kill_data
 #define MOB_GROUP_SPIRITTALKER          32
 #define MOB_GROUP_VALDAERMEN            33
 #define MOB_GROUP_CRAFTMASONS           34
-#define MOB_GROUP_ASSAMITE              0
-#define MOB_GROUP_ASSAMITE              0
-#define MOB_GROUP_ASSAMITE              0
-#define MOB_GROUP_ASSAMITE              0
+#define MOB_GROUP_EARTHSPIRIT           35
+#define MOB_GROUP_FIRESPIRIT            36
+#define MOB_GROUP_WINDSPIRIT            37
+#define MOB_GROUP_WATERSPIRIT           38
+#define MOB_GROUP_ELECTRICSPIRIT        39
+#define MOB_GROUP_ICESPIRIT             40
+#define MOB_GROUP_SILVERSPIRIT          41
+
 
 
 /* RT ASCII conversions -- used so we can have letters in this file */

@@ -5781,7 +5781,7 @@ MEDIT( medit_group )
     {
         send_to_char("[ {Y # {x ] ->           Group Name        [ {Y # {x ] ->           Group Name        \n\r", ch);
         send_to_char("=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n\r", ch);
-        for (temp = 0; temp <= MAX_MOBGROUP; temp++)
+        for (temp = 0; temp < MAX_MOBGROUP; temp++)
         {
             sprintf(buf, "[ {Y%3d{x ] -> %20s        %s", mob_group_table[temp].groupnumber, mob_group_table[temp].name,
                 temp % 2 != 0 ? "\n\r" : "");

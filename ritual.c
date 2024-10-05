@@ -1316,22 +1316,58 @@ void do_bind(CHAR_DATA *ch, char *argument )
     }
     else
     {
-      af.where     = TO_OBJECT;
-      af.type      = gsn_fetish;
-      af.level     = success;
-      af.duration  = 60 + (success*10);
-      af.location  = APPLY_AC;
-      af.modifier  = -30 * success;
-      af.bitvector = ITEM_IS_ENHANCED;
-      affect_to_obj(fetish,&af);
+        af.where     = TO_OBJECT;
+        af.type      = gsn_fetish;
+        af.level     = success;
+        af.duration  = 60 + (success*10);
+        af.location  = 0;
+        af.modifier  = 0;
+        af.bitvector = ITEM_IS_ENHANCED;
+        affect_to_obj(fetish,&af);
 
-      af.location = APPLY_NONE;
-      af.modifier = 0;
-      af.bitvector  = ITEM_MAGIC;
-      affect_to_obj(fetish,&af);
+        af.bitvector  = ITEM_MAGIC;
+        affect_to_obj(fetish,&af);
 
-      af.bitvector  = ITEM_NODROP;
-      affect_to_obj(fetish,&af);
+        af.bitvector  = ITEM_NODROP;
+        affect_to_obj(fetish,&af);
+        af.bitvector = 0;
+
+        switch(spirit->group)
+        {
+            case MOB_GROUP_GENERALSPIRIT:
+                af.location  = APPLY_AC;
+                af.modifier  = -30 * success;
+                break;
+            case MOB_GROUP_FIRESPIRIT:
+                af.where        =   TO_RESIST;
+                af.bitvector    =   IMM_FIRE;
+                break;
+            case MOB_GROUP_ELECTRICSPIRIT:
+                af.where        =   TO_RESIST;
+                af.bitvector    =   IMM_LIGHTNING;
+                break;
+            case MOB_GROUP_ICESPIRIT:
+                af.where        =   TO_RESIST;
+                af.bitvector    =   IMM_COLD;
+                break;
+            case MOB_GROUP_SILVERSPIRIT:
+                af.where        =   TO_RESIST;
+                af.bitvector    =   IMM_SILVER;
+                break;
+            case MOB_GROUP_EARTHSPIRIT:
+                af.where        =   TO_RESIST;
+                af.bitvector    =   IMM_BASH;
+                break;
+            case MOB_GROUP_WINDSPIRIT:
+                af.where        =   TO_RESIST;
+                af.bitvector    =   IMM_PIERCE;
+                break;
+            case MOB_GROUP_WATERSPIRIT:
+                af.where        =   TO_RESIST;
+                af.bitvector    =   IMM_SLASH;
+                break;
+        }
+        affect_to_obj(fetish,&af);
     }
     return;
 }

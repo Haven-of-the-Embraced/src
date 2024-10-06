@@ -1340,31 +1340,31 @@ void do_bind(CHAR_DATA *ch, char *argument )
                 break;
             case MOB_GROUP_FIRESPIRIT:
                 af.where        =   TO_RESIST;
-                af.bitvector    =   IMM_FIRE;
+                af.bitvector    =   RES_FIRE;
                 break;
             case MOB_GROUP_ELECTRICSPIRIT:
                 af.where        =   TO_RESIST;
-                af.bitvector    =   IMM_LIGHTNING;
+                af.bitvector    =   RES_LIGHTNING;
                 break;
             case MOB_GROUP_ICESPIRIT:
                 af.where        =   TO_RESIST;
-                af.bitvector    =   IMM_COLD;
+                af.bitvector    =   RES_COLD;
                 break;
             case MOB_GROUP_SILVERSPIRIT:
                 af.where        =   TO_RESIST;
-                af.bitvector    =   IMM_SILVER;
+                af.bitvector    =   RES_SILVER;
                 break;
             case MOB_GROUP_EARTHSPIRIT:
                 af.where        =   TO_RESIST;
-                af.bitvector    =   IMM_BASH;
+                af.bitvector    =   RES_BASH;
                 break;
             case MOB_GROUP_WINDSPIRIT:
                 af.where        =   TO_RESIST;
-                af.bitvector    =   IMM_PIERCE;
+                af.bitvector    =   RES_PIERCE;
                 break;
             case MOB_GROUP_WATERSPIRIT:
                 af.where        =   TO_RESIST;
-                af.bitvector    =   IMM_SLASH;
+                af.bitvector    =   RES_SLASH;
                 break;
         }
         affect_to_obj(fetish,&af);

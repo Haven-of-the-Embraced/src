@@ -244,14 +244,14 @@ void boot_db()
     long lhour, lday, lmonth;
 
     // 896255250 corresponds to approximately 800 years ago, to the hour.
-    lhour       = (current_time - 896255250)
+    lhour       = (current_time)
             / (PULSE_TICK / PULSE_PER_SECOND);
     time_info.hour  = lhour  % 24;
     lday        = lhour  / 24;
     time_info.day   = lday   % 31;
     lmonth      = lday   / 31;
     time_info.month = lmonth % 12;
-    time_info.year  = lmonth / 12;
+    time_info.year  = number_range(1210, 1250);
     time_info.phase = number_range(0,7);
     time_info.moon_count = number_range(0,2);
 

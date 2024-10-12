@@ -916,6 +916,11 @@ void do_regenerate(CHAR_DATA *ch, char *argument )
         send_to_char( "You are not a vampire!\n\r", ch );
         return;
     }
+    if(ch->blood <= 0)
+    {
+        send_to_char( "You do not have any blood to regenerate your health.\n\r", ch );
+        return;
+    }
     if ( IS_AFFECTED2( ch, AFF2_VAMPIRE_REGEN ))
     {
         send_to_char( "You stop regenerating your wounds.\n\r", ch );
@@ -928,8 +933,14 @@ void do_regenerate(CHAR_DATA *ch, char *argument )
         return;
     }
 
-    act( "$n begins to regenerate their body.",  ch, NULL, NULL, TO_ROOM );
-    send_to_char( "You begin to regenerate your body.\n\r", ch );
+    act( "$n's wounds begin healing quickly.",  ch, NULL, NULL, TO_ROOM );
+    act( "You draw upon the power inherent in your Vitae, beginning to heal your wounds.",  ch, NULL, NULL, TO_CHAR );
+    if (is_affected(ch, gsn_bleeding))
+    {
+        act( "Sealing your wounds stops the bleeding.",  ch, NULL, NULL, TO_CHAR );
+        affect_strip(ch, gsn_bleeding);
+        ch->blood--;
+    }
 
     af.where    = TO_AFFECTS2;
     af.type     = gsn_vampire_regen;

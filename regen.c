@@ -58,6 +58,12 @@ void regen_update( void )
                 ch->move += pulse_move_gain(ch);
             else
                 ch->move = ch->max_move;
+            if (is_affected(ch, gsn_bleeding) && ch->position != POS_FIGHTING &&
+                number_range(1, 10) > 7)
+            {
+                act( "Your wounds heal quickly and the bleeding stops.",  ch, NULL, NULL, TO_CHAR );
+                affect_strip(ch, gsn_bleeding);
+            }
         } // if (ch->race == race_lookup("garou"))
 
     // Vampire regen, almost made redundant by pulse regen

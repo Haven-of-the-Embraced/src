@@ -1964,7 +1964,7 @@ Total (48) */
 
     { "bleeding",       { 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 	{ 1,  1,  1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_null,       TAR_OBJ_CHAR_OFF,   POS_FIGHTING,
-    &gsn_bleeding,        SLOT(33),   10, 12, "bleeding",       "Your bleeding trickles and stops, your wounds finally scab over.", "" },
+    &gsn_bleeding,        SLOT(33),   10, 12, "bleeding",       "Your bleeding slows to a trickle, finally stopping.", "" },
 
     { "divine strength",             { 150, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 50, 102 },
 	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,

@@ -916,7 +916,7 @@ void do_regenerate(CHAR_DATA *ch, char *argument )
         send_to_char( "You are not a vampire!\n\r", ch );
         return;
     }
-    if(ch->blood <= 0)
+    if(ch->pblood <= 0)
     {
         send_to_char( "You do not have any blood to regenerate your health.\n\r", ch );
         return;
@@ -939,7 +939,7 @@ void do_regenerate(CHAR_DATA *ch, char *argument )
     {
         act( "Sealing your wounds stops the bleeding.",  ch, NULL, NULL, TO_CHAR );
         affect_strip(ch, gsn_bleeding);
-        ch->blood--;
+        ch->pblood--;
     }
 
     af.where    = TO_AFFECTS2;

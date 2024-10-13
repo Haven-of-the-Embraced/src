@@ -34,8 +34,11 @@ void affects_update (void) {
       level = get_affect_level(ch, gsn_bleeding);
       if (godice(get_attribute(ch, STAMINA), 8) < 1)
       {
-        act("Your wounds continue to bleed out.", ch, NULL, NULL, TO_CHAR);
-        act("$n continues to bleed from $s open wounds.", ch, NULL, NULL, TO_NOTVICT);
+        if (number_range(1, 10) > 7)
+        {
+            act("Your wounds continue to bleed out.", ch, NULL, NULL, TO_CHAR);
+            act("$n continues to bleed from $s open wounds.", ch, NULL, NULL, TO_NOTVICT);
+        }
         damage(ch, ch, (level * ch->level / 50), gsn_bleeding, DAM_AGGREVATED, TRUE);
         if (!IS_NPC(ch) && number_percent() > 85)
         {

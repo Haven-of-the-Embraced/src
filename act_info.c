@@ -1327,9 +1327,13 @@ void do_look( CHAR_DATA *ch, char *argument )
     {
     /* 'look' or 'look auto' */
     if(IS_AFFECTED2(ch,AFF2_UMBRA))
-      send_to_char("{W+============================={m[      Umbra      ]{x==============================+{x\n\r", ch);
+        if (!IS_SET(ch->comm,COMM_COMPACT))
+            send_to_char("{W+============================={m[      Umbra      ]{x==============================+{x\n\r", ch);
+        else
+            send_to_char("{m[Umbra]{x", ch);
     else
-      send_to_char("{W+==============================================================================+{x\n\r", ch);
+        if (!IS_SET(ch->comm,COMM_COMPACT))
+            send_to_char("{W+==============================================================================+{x\n\r", ch);
     if ( (IS_IMMORTAL(ch) && (IS_NPC(ch) || IS_SET(ch->act,PLR_HOLYLIGHT)))
     ||   IS_BUILDER(ch, ch->in_room->area) )
         sprintf(buf,"{W|Room %6d| ",ch->in_room->vnum);
@@ -1358,7 +1362,8 @@ void do_look( CHAR_DATA *ch, char *argument )
 
     if((ch->avatar > 0) && (ch->in_room->sector_type == SECT_NODE) && is_affected(ch, gsn_primesense))
       send_to_char("{W| {MYou feel the pull and tug of raw Quintessential energy gathering in the room.{x\n\r", ch);
-    send_to_char("{W+==============================================================================+{x\n\r", ch);
+    if (!IS_SET(ch->comm,COMM_COMPACT))
+        send_to_char("{W+==============================================================================+{x\n\r", ch);
 
     if ( arg1[0] == '\0'
     || ( !IS_NPC(ch) && !IS_SET(ch->comm, COMM_BRIEF) ) )
@@ -1381,8 +1386,9 @@ void do_look( CHAR_DATA *ch, char *argument )
 
         if ( !IS_NPC(ch) && IS_SET(ch->act, PLR_AUTOEXIT) )
     {
-        send_to_char("\n\r",ch);
-            do_function(ch, &do_exits, "auto" );
+        if (!IS_SET(ch->comm,COMM_COMPACT))
+            send_to_char("\n\r",ch);
+        do_function(ch, &do_exits, "auto" );
     }
     if(!IS_NPC(ch) && ch->pcdata->cssec_abil[CSABIL_PROSPECTING] == 5 && get_obj_hidden( ch, "vein" ) && number_range(1,5) == 5)
     {

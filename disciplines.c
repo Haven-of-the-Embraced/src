@@ -3879,6 +3879,7 @@ void do_blackdeath(CHAR_DATA *ch, char *argument)
 {
    CHAR_DATA *victim;
    DESCRIPTOR_DATA *d;
+   int touch;
 
     if (IS_NPC(ch)) return;
     if(!IS_VAMP(ch))
@@ -3903,10 +3904,10 @@ void do_blackdeath(CHAR_DATA *ch, char *argument)
     }
     if (ch->pcdata->discipline[MORTIS] < 5)
     {
-        send_to_char( "You are not skilled enough in Mortis!.\n\r", ch );
+        send_to_char( "You are not skilled enough in Mortis!\n\r", ch );
         return;
     }
-    if (ch->pblood <= 110)
+    if (ch->pblood <= 70)
     {
         send_to_char( "You don't have enough blood!\n\r", ch );
         return;
@@ -3953,9 +3954,25 @@ void do_blackdeath(CHAR_DATA *ch, char *argument)
         send_to_char("You fear that it may hinder your future purchases.\n\r",ch);
         return;
     }
+
+    touch = godice(get_attribute(ch, DEXTERITY) + ch->csabilities[CSABIL_BRAWL], 6);
+
+    if (touch < 0)
+    {
+        send_to_char("Your target is too spry, avoiding your touch.\n\r",ch);
+        WAIT_STATE( ch, 60 );
+        return;
+    }
+
+    if (touch == 0)
+    {
+        send_to_char("You cannot seem to get a chance to lay your hand on your target.\n\r",ch);
+        WAIT_STATE( ch, 15 );
+        return;
+    }
+
     WAIT_STATE( ch, 60 );
     ch->pblood -= 60;
-
     act("$n comfortingly lays a hand upon $N who suddenly screams in pain and falls over dead.",ch,NULL,victim,TO_NOTVICT);
     act("$n comfortingly lays a hand upon you... OH THE AGONY!",ch,NULL,victim,TO_VICT);
     act("You lay a hand upon $N to ease them into the next world.",ch,NULL,victim,TO_CHAR);

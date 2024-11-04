@@ -3952,6 +3952,7 @@ void do_blackdeath(CHAR_DATA *ch, char *argument)
     }
 
     touch = godice(get_attribute(ch, DEXTERITY) + ch->csabilities[CSABIL_BRAWL], 6);
+    willpower = godice(ch->csmax_willpower, 7);
 
     if (touch < 0)
     {
@@ -3968,11 +3969,11 @@ void do_blackdeath(CHAR_DATA *ch, char *argument)
     }
 
     WAIT_STATE( ch, 60 );
-    ch->pblood -= 60;
+    ch->pblood -= 50;
     act("$n comfortingly lays a hand upon $N who suddenly screams in pain and falls over dead.",ch,NULL,victim,TO_NOTVICT);
     act("$n comfortingly lays a hand upon you... OH THE AGONY!",ch,NULL,victim,TO_VICT);
     act("You lay a hand upon $N to ease them into the next world.",ch,NULL,victim,TO_CHAR);
-    if(!IS_NPC(victim) && !IS_SET(victim->act,PLR_ARENA))
+    if(victim->level <= (ch->level+5))
     {
         if(victim->race == race_lookup("vampire") || victim->race == race_lookup("methuselah"))
         {
@@ -3993,11 +3994,11 @@ void do_blackdeath(CHAR_DATA *ch, char *argument)
             }
         }
         else
-        kill_em(ch,victim);
+            kill_em(ch,victim);
 
     }
     else
-    kill_em(ch,victim);
+        d10_damage( ch, victim, willpower, ch->level * 4, gsn_magick, DAM_DISEASE, DEFENSE_NONE, TRUE, TRUE);
     return;
 }
 

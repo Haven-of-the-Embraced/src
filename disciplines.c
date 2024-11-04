@@ -3879,7 +3879,7 @@ void do_blackdeath(CHAR_DATA *ch, char *argument)
 {
    CHAR_DATA *victim;
    DESCRIPTOR_DATA *d;
-   int touch;
+   int touch, willpower;
 
     if (IS_NPC(ch)) return;
     if(!IS_VAMP(ch))
@@ -3907,7 +3907,7 @@ void do_blackdeath(CHAR_DATA *ch, char *argument)
         send_to_char( "You are not skilled enough in Mortis!\n\r", ch );
         return;
     }
-    if (ch->pblood <= 70)
+    if (ch->pblood <= 60)
     {
         send_to_char( "You don't have enough blood!\n\r", ch );
         return;
@@ -3934,11 +3934,7 @@ void do_blackdeath(CHAR_DATA *ch, char *argument)
         send_to_char("Even your powers over death cannot compete with the might of this soul.\n\r",ch);
         return;
     }
-    if(ch->clan != clan_lookup("cappadocian") && victim->level > ch->level)
-    {
-        send_to_char("That person is too powerful to cause death within.\n\r",ch);
-        return;
-    }
+
     if(IS_IMMORTAL(victim) && !IS_IMMORTAL(ch))
     {
         send_to_char("You GOT to be kidding!\n\r",ch);

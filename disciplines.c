@@ -3907,9 +3907,9 @@ void do_blackdeath(CHAR_DATA *ch, char *argument)
         send_to_char( "You are not skilled enough in Mortis!\n\r", ch );
         return;
     }
-    if (ch->pblood <= 60)
+    if (ch->willpower < 1)
     {
-        send_to_char( "You don't have enough blood!\n\r", ch );
+        send_to_char( "You don't have enough Willpower to cause such rapid decay.\n\r", ch );
         return;
     }
 
@@ -3968,12 +3968,12 @@ void do_blackdeath(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    WAIT_STATE( ch, 60 );
-    ch->pblood -= 50;
+    WAIT_STATE( ch, 30 );
+    ch->willpower -= 1;
     act("$n comfortingly lays a hand upon $N who suddenly screams in pain and falls over dead.",ch,NULL,victim,TO_NOTVICT);
     act("$n comfortingly lays a hand upon you... OH THE AGONY!",ch,NULL,victim,TO_VICT);
     act("You lay a hand upon $N to ease them into the next world.",ch,NULL,victim,TO_CHAR);
-    if(victim->level <= (ch->level+5))
+    if(victim->level <= (ch->level+10))
     {
         if(victim->race == race_lookup("vampire") || victim->race == race_lookup("methuselah"))
         {

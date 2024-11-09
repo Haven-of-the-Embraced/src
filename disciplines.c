@@ -3969,6 +3969,20 @@ void do_blackdeath(CHAR_DATA *ch, char *argument)
     }
 
     WAIT_STATE( ch, 30 );
+    if (death < 0)
+    {
+        send_to_char("The death energies of your blood ravage your own body.\n\r",ch);
+        d10_damage( ch, ch, -death, ch->level / 2, gsn_magick, DAM_DISEASE, DEFENSE_NONE, TRUE, TRUE);
+        ch->willpower -= 1;
+        return;
+    }
+
+    if (death == 0)
+    {
+        send_to_char("The death energies of your blood seem to have no effect.\n\r",ch);
+        return;
+    }
+
     ch->willpower -= 1;
     act("$n comfortingly lays a hand upon $N who suddenly screams in pain and falls over dead.",ch,NULL,victim,TO_NOTVICT);
     act("$n comfortingly lays a hand upon you... OH THE AGONY!",ch,NULL,victim,TO_VICT);
@@ -3995,7 +4009,6 @@ void do_blackdeath(CHAR_DATA *ch, char *argument)
         }
         else
             kill_em(ch,victim);
-
     }
     else
         d10_damage( ch, victim, death, ch->level * 4, gsn_magick, DAM_DISEASE, DEFENSE_NONE, TRUE, TRUE);

@@ -3879,7 +3879,7 @@ void do_blackdeath(CHAR_DATA *ch, char *argument)
 {
    CHAR_DATA *victim;
    DESCRIPTOR_DATA *d;
-   int touch, willpower;
+   int touch, death;
 
     if (IS_NPC(ch)) return;
     if(!IS_VAMP(ch))
@@ -3951,13 +3951,13 @@ void do_blackdeath(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    touch = godice(get_attribute(ch, DEXTERITY) + ch->csabilities[CSABIL_BRAWL], 6);
-    willpower = godice(ch->csmax_willpower, 7);
+    touch = godice(get_attribute(ch, DEXTERITY) + ch->csabilities[CSABIL_BRAWL], 5);
+    death = godice(get_attribute(ch, STAMINA) + ch->csabilities[CSABIL_OCCULT], 6);
 
     if (touch < 0)
     {
         send_to_char("Your target is too spry, avoiding your touch.\n\r",ch);
-        WAIT_STATE( ch, 60 );
+        WAIT_STATE( ch, 45 );
         return;
     }
 
@@ -3998,7 +3998,7 @@ void do_blackdeath(CHAR_DATA *ch, char *argument)
 
     }
     else
-        d10_damage( ch, victim, willpower, ch->level * 4, gsn_magick, DAM_DISEASE, DEFENSE_NONE, TRUE, TRUE);
+        d10_damage( ch, victim, death, ch->level * 4, gsn_magick, DAM_DISEASE, DEFENSE_NONE, TRUE, TRUE);
     return;
 }
 

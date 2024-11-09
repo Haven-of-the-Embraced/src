@@ -3907,7 +3907,7 @@ void do_blackdeath(CHAR_DATA *ch, char *argument)
         send_to_char( "You are not skilled enough in Mortis!\n\r", ch );
         return;
     }
-    if (ch->willpower < 1)
+    if (ch->cswillpower < 1)
     {
         send_to_char( "You don't have enough Willpower to cause such rapid decay.\n\r", ch );
         return;
@@ -3964,7 +3964,7 @@ void do_blackdeath(CHAR_DATA *ch, char *argument)
     {
         send_to_char("The death energies of your blood ravage your own body.\n\r",ch);
         d10_damage( ch, ch, -death, ch->level / 2, gsn_magick, DAM_DISEASE, DEFENSE_NONE, TRUE, TRUE);
-        ch->willpower -= 1;
+        ch->cswillpower -= 1;
         return;
     }
 
@@ -3974,7 +3974,7 @@ void do_blackdeath(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    ch->willpower -= 1;
+    ch->cswillpower -= 1;
     act("$n comfortingly lays a hand upon $N who suddenly screams in pain and falls over dead.",ch,NULL,victim,TO_NOTVICT);
     act("$n comfortingly lays a hand upon you... OH THE AGONY!",ch,NULL,victim,TO_VICT);
     act("You lay a hand upon $N to ease them into the next world.",ch,NULL,victim,TO_CHAR);

@@ -3919,19 +3919,10 @@ void do_blackdeath(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if(!IS_NPC(victim) && victim->race == race_lookup("vampire") && victim->gen < ch->gen)
+    if(!IS_NPC(victim) && victim->gen < ch->gen &&
+        (victim->race == race_lookup("vampire") || victim->race == race_lookup("methuselah")))
     {
         send_to_char("That person is too close to Caine to kill outright.\n\r",ch);
-        return;
-    }
-    if(victim->race == race_lookup("methuselah") && ch->race != race_lookup("methuselah"))
-    {
-        send_to_char("That kindred is too ancient and powerful to fall victim to you.\n\r",ch);
-        return;
-    }
-    if(ch->clan == clan_lookup("cappadocian") && victim->level > (ch->level+10))
-    {
-        send_to_char("Even your powers over death cannot compete with the might of this soul.\n\r",ch);
         return;
     }
 
@@ -3987,7 +3978,7 @@ void do_blackdeath(CHAR_DATA *ch, char *argument)
     act("$n comfortingly lays a hand upon $N who suddenly screams in pain and falls over dead.",ch,NULL,victim,TO_NOTVICT);
     act("$n comfortingly lays a hand upon you... OH THE AGONY!",ch,NULL,victim,TO_VICT);
     act("You lay a hand upon $N to ease them into the next world.",ch,NULL,victim,TO_CHAR);
-    if(victim->level <= (ch->level+10))
+    if(victim->level <= (ch->level+10) && !IS_SET(victim->act2, ACT2_ULTRA_MOB ))
     {
         if(victim->race == race_lookup("vampire") || victim->race == race_lookup("methuselah"))
         {

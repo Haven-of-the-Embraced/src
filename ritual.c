@@ -1303,6 +1303,7 @@ void do_bind(CHAR_DATA *ch, char *argument )
         }
         affect_to_obj(fetish,&af);
 
+        af.where     = TO_OBJECT;
         af.bitvector = ITEM_IS_ENHANCED;
         af.modifier = 0;
         af.location = 0;

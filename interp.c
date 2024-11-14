@@ -108,19 +108,20 @@ bool                Debug       = FALSE;
 bool can_do_cmd(CHAR_DATA *ch, CMD_DATA *pCmd)
 {
     //While trapped in Gauntlet, only certain commands allowed
-    if (is_affected(ch, gsn_trappedingauntlet) &&    	str_cmp(pCmd->name, "ooc") &&
-    	str_cmp(pCmd->name, "inventory") && str_cmp(pCmd->name, "who") &&
-    	str_cmp(pCmd->name, "score") &&    	str_cmp(pCmd->name, "affects") &&
-    	str_cmp(pCmd->name, "look") &&    	str_cmp(pCmd->name, "where") &&
-    	str_cmp(pCmd->name, "time") &&    	str_cmp(pCmd->name, "charsheet") &&
-    	str_cmp(pCmd->name, "cs1") &&    	str_cmp(pCmd->name, "cs2") &&
-    	str_cmp(pCmd->name, "cs3") &&    	str_cmp(pCmd->name, "plead") &&
-    	str_cmp(pCmd->name, "freebie") &&   str_cmp(pCmd->name, "prompt") &&
-    	str_cmp(pCmd->name, "group") &&    	str_cmp(pCmd->name, "traditiontalk") &&
-    	str_cmp(pCmd->name, "tell") &&    	str_cmp(pCmd->name, "wizlist") &&
-    	str_cmp(pCmd->name, "afk") &&    	str_cmp(pCmd->name, "gtell") &&
-    	str_cmp(pCmd->name, "reply") &&    	str_cmp(pCmd->name, "quit") &&
-        str_cmp(pCmd->name, "help"))
+    if (is_affected(ch, gsn_trappedingauntlet) && str_cmp(pCmd->name, "ooc") &&
+    	str_cmp(pCmd->name, "inventory")       && str_cmp(pCmd->name, "who") &&
+    	str_cmp(pCmd->name, "score")           && str_cmp(pCmd->name, "affects") &&
+    	str_cmp(pCmd->name, "look")            && str_cmp(pCmd->name, "where") &&
+    	str_cmp(pCmd->name, "time")            && str_cmp(pCmd->name, "charsheet") &&
+    	str_cmp(pCmd->name, "cs1")             && str_cmp(pCmd->name, "cs2") &&
+    	str_cmp(pCmd->name, "cs3")             && str_cmp(pCmd->name, "plead") &&
+    	str_cmp(pCmd->name, "freebie")         && str_cmp(pCmd->name, "prompt") &&
+    	str_cmp(pCmd->name, "group")           && str_cmp(pCmd->name, "traditiontalk") &&
+    	str_cmp(pCmd->name, "tell")            && str_cmp(pCmd->name, "wizlist") &&
+    	str_cmp(pCmd->name, "afk")             && str_cmp(pCmd->name, "gtell") &&
+    	str_cmp(pCmd->name, "reply")           && str_cmp(pCmd->name, "quit") &&
+        str_cmp(pCmd->name, "help")            && str_cmp(pCmd->name, "gift") && 
+        str_cmp(pCmd->name, "rotelist")        && str_cmp(pCmd->name, "disclist"))
     {
     	send_to_char("What is left of your body refuses to do anything while still entangled in the Gauntlet.\n\r", ch);
     	return FALSE;
@@ -137,19 +138,29 @@ bool can_do_cmd(CHAR_DATA *ch, CMD_DATA *pCmd)
         str_cmp(pCmd->name, "look")         && str_cmp(pCmd->name, "glance") &&
         str_cmp(pCmd->name, "where")        && str_cmp(pCmd->name, "scan") &&
         str_cmp(pCmd->name, "eat")          && str_cmp(pCmd->name, "drink") &&
-        str_cmp(pCmd->name, "time")         && str_cmp(pCmd->name, "help"))
+        str_cmp(pCmd->name, "time")         && str_cmp(pCmd->name, "help") &&
+        str_cmp(pCmd->name, "gift")         && str_cmp(pCmd->name, "rotelist") &&
+        str_cmp(pCmd->name, "disclist")     && str_cmp(pCmd->name, "charsheet") &&
+        str_cmp(pCmd->name, "cs1")          && str_cmp(pCmd->name, "cs2") &&
+        str_cmp(pCmd->name, "cs3")          && str_cmp(pCmd->name, "plead") &&
+        str_cmp(pCmd->name, "freebie")      && str_cmp(pCmd->name, "prompt") &&
+        str_cmp(pCmd->name, "group")        && str_cmp(pCmd->name, "traditiontalk") &&
+        str_cmp(pCmd->name, "tell")         && str_cmp(pCmd->name, "wizlist") &&
+        str_cmp(pCmd->name, "afk")          && str_cmp(pCmd->name, "gtell") &&
+        str_cmp(pCmd->name, "reply")        && str_cmp(pCmd->name, "quit") &&)
     {
         send_to_char( "You are unable to do that while in spectate mode.\n\r", ch );
         return FALSE;
     }
 
-        if(is_affected(ch,gsn_earthmeld) && str_cmp( pCmd->name, "regenerate" )   &&
-                    str_cmp(pCmd->name, "ooc")          && str_cmp(pCmd->name, "inventory") &&
-                    str_cmp(pCmd->name, "who")          && str_cmp(pCmd->name, "score") &&
-                    str_cmp(pCmd->name, "affects")       && str_cmp(pCmd->name, "time") &&
-                    str_cmp(pCmd->name, "charsheet")    && str_cmp(pCmd->name, "cs1") &&
-                    str_cmp(pCmd->name, "cs2")          && str_cmp(pCmd->name, "cs3") &&
-                    str_cmp(pCmd->name, "help"))
+    if(is_affected(ch,gsn_earthmeld)        && str_cmp( pCmd->name, "regenerate" ) &&
+        str_cmp(pCmd->name, "ooc")          && str_cmp(pCmd->name, "inventory") &&
+        str_cmp(pCmd->name, "who")          && str_cmp(pCmd->name, "score") &&
+        str_cmp(pCmd->name, "affects")      && str_cmp(pCmd->name, "time") &&
+        str_cmp(pCmd->name, "charsheet")    && str_cmp(pCmd->name, "cs1") &&
+        str_cmp(pCmd->name, "cs2")          && str_cmp(pCmd->name, "cs3") &&
+        str_cmp(pCmd->name, "time")         && str_cmp(pCmd->name, "help") &&
+        str_cmp(pCmd->name, "disclist")     && str_cmp(pCmd->name, "afk"))
         {
             act("$n emerges from the earth in a shower of dirt.",ch,NULL,NULL,TO_NOTVICT);
             act("You emerge from from the earth in a shower of dirt.",ch,NULL,NULL,TO_CHAR);

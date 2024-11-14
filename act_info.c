@@ -105,30 +105,35 @@ char *format_obj_to_char( OBJ_DATA *obj, CHAR_DATA *ch, bool fShort )
     ||  (obj->description == NULL || obj->description[0] == '\0'))
     return buf;
 
-    if ( IS_IMMORTAL(ch) && IS_OBJ_STAT(obj, ITEM_UMBRA) && !IS_AFFECTED2(ch, AFF2_UMBRA)      )   strcat( buf, "(Umbra) "   );
+    if ( IS_IMMORTAL(ch) && IS_OBJ_STAT(obj, ITEM_UMBRA) && !IS_AFFECTED2(ch, AFF2_UMBRA) )
+        strcat( buf, "{x({mUmbra{x) " );
     if ((is_affected(ch, gsn_spiritsight) || is_affected(ch, gsn_gift_pulseoftheinvisible))
-        && (IS_OBJ_STAT(obj, ITEM_UMBRA) && !SAME_UMBRA_OBJ(ch, obj))) strcat(buf, "(Indistinct) ");
-    if ( IS_OBJ_STAT(obj, ITEM_INVIS)     )   strcat( buf, "(Invis) "     );
-    if ( IS_AFFECTED(ch, AFF_DETECT_MAGIC)
-         && IS_OBJ_STAT(obj, ITEM_MAGIC)  )   strcat( buf, "(Magical) "   );
+        && (IS_OBJ_STAT(obj, ITEM_UMBRA) && !SAME_UMBRA_OBJ(ch, obj))) 
+        strcat(buf, "{x({mIndistinct{x) ");
+    if ( IS_OBJ_STAT(obj, ITEM_INVIS)     )   strcat( buf, "{x({CInvis{x) "     );
+    if ( IS_AFFECTED(ch, AFF_DETECT_MAGIC) && IS_OBJ_STAT(obj, ITEM_MAGIC)  )
+        strcat( buf, "{x({GMystical{x) "   );
     if ((ch->race == race_lookup("garou") || is_affected(ch, gsn_spiritsight)) && 
         affect_find(obj->affected,skill_lookup("fetish")) != NULL)
-        strcat( buf, "(Spiritual) ");
-    if ( IS_OBJ_STAT(obj, ITEM_ILLUMINATE) )    strcat( buf, "(Illuminating) ");
-    if ( IS_OBJ_STAT(obj, ITEM_GLOW)      )   strcat( buf, "(Glowing) "   );
-    if ( IS_OBJ_STAT(obj, ITEM_HUM)       )   strcat( buf, "(Humming) "   );
+        strcat( buf, "{x({MSpiritual{x) ");
+    if ( IS_OBJ_STAT(obj, ITEM_ILLUMINATE) )    strcat( buf, "{x({YIlluminating{x) ");
+    if ( IS_OBJ_STAT(obj, ITEM_GLOW)      )   strcat( buf, "{x({yGlowing{x) "   );
+    if ( IS_OBJ_STAT(obj, ITEM_HUM)       )   strcat( buf, "{x({BHumming{x) "   );
     if ( is_affected(ch, gsn_gift_sensesilver) && IS_OBJ_STAT(obj, ITEM_SILVER))
-      strcat( buf, "(Silver) "    );
+      strcat( buf, "{W[{wSilver{W>{x "    );
 
     if ( fShort )
     {
-    if ( obj->short_descr != NULL )
-        strcat( buf, obj->short_descr );
+        if ( obj->short_descr != NULL )
+            strcat( buf, obj->short_descr );
     }
     else
     {
-    if ( obj->description != NULL)
-        strcat( buf, obj->description );
+        if ( obj->description != NULL)
+        {
+            strcat( buf, "{y" );
+            strcat( buf, obj->description );
+        }
     }
 
     return buf;

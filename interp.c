@@ -147,7 +147,7 @@ bool can_do_cmd(CHAR_DATA *ch, CMD_DATA *pCmd)
         str_cmp(pCmd->name, "group")        && str_cmp(pCmd->name, "traditiontalk") &&
         str_cmp(pCmd->name, "tell")         && str_cmp(pCmd->name, "wizlist") &&
         str_cmp(pCmd->name, "afk")          && str_cmp(pCmd->name, "gtell") &&
-        str_cmp(pCmd->name, "reply")        && str_cmp(pCmd->name, "quit") &&)
+        str_cmp(pCmd->name, "reply")        && str_cmp(pCmd->name, "quit") )
     {
         send_to_char( "You are unable to do that while in spectate mode.\n\r", ch );
         return FALSE;

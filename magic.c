@@ -835,16 +835,13 @@ void spell_bless( int sn, int level, CHAR_DATA *ch, void *vo, int target)
     af.where    = TO_OBJECT;
     af.type     = sn;
     af.level    = level;
-    af.duration = 6 + level;
-    af.location = APPLY_SAVES;
-    af.modifier = -1;
+    af.duration = level;
+    af.location = APPLY_HITROLL;
+    af.modifier = level/5;
     af.bitvector    = ITEM_BLESS;
     affect_to_obj(obj,&af);
 
     act("$p glows with a holy aura.",ch,obj,NULL,TO_ALL);
-
-    if (obj->wear_loc != WEAR_NONE)
-        ch->saving_throw -= 1;
     return;
     }
 
@@ -864,15 +861,12 @@ void spell_bless( int sn, int level, CHAR_DATA *ch, void *vo, int target)
     af.where     = TO_AFFECTS;
     af.type      = sn;
     af.level     = level;
-    af.duration  = 6+level;
+    af.duration  = 10+level;
     af.location  = APPLY_HITROLL;
-    af.modifier  = level / 8;
+    af.modifier  = level;
     af.bitvector = 0;
     affect_to_char( victim, &af );
 
-    af.location  = APPLY_SAVING_SPELL;
-    af.modifier  = 0 - level / 8;
-    affect_to_char( victim, &af );
     send_to_char( "You feel righteous.\n\r", victim );
     if ( ch != victim )
     act("You grant $N the favor of your god.",ch,NULL,victim,TO_CHAR);

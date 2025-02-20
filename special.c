@@ -2211,12 +2211,11 @@ bool spec_awe( CHAR_DATA *ch )
   CHAR_DATA *victim;
   CHAR_DATA *v_next;
   AFFECT_DATA af;
-  int presence, awesuccess;
+  int awesuccess;
 
   if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected(ch, gsn_forget))
       return FALSE;
 
-  presence = (ch->level / 20) + 1;
   awesuccess = godice(get_attribute(ch, CHARISMA) + get_ability(ch, CSABIL_PERFORMANCE), 7);
 
   if (awesuccess <= 0)
@@ -2229,7 +2228,7 @@ bool spec_awe( CHAR_DATA *ch )
       continue;
     af.where     = TO_AFFECTS;
     af.type      = gsn_awe;
-    af.level     = presence;
+    af.level     = -1;
     af.duration  = awesuccess;
     af.location  = APPLY_HITROLL;
     af.modifier  = -3 * ch->level;

@@ -1869,12 +1869,12 @@ void spell_detect_hidden(int sn,int level,CHAR_DATA *ch,void *vo,int target)
     af.where     = TO_AFFECTS;
     af.type      = sn;
     af.level     = level;
-    af.duration  = level;
+    af.duration  = level + 10;
     af.location  = APPLY_NONE;
     af.modifier  = 0;
     af.bitvector = AFF_DETECT_HIDDEN;
     affect_to_char( victim, &af );
-    send_to_char( "Your awareness improves.\n\r", victim );
+    send_to_char( "Your sense of awareness seems to improve.\n\r", victim );
     if ( ch != victim )
     send_to_char( "Ok.\n\r", ch );
     return;

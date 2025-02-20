@@ -2949,6 +2949,7 @@ extern  sh_int  gsn_teleport;
 extern  sh_int          gsn_call_lightning;
 extern  sh_int          gsn_cause_light;
 extern  sh_int  gsn_change_sex;
+extern  sh_int          gsn_colour_spray;
 extern  sh_int          gsn_create_food;
 extern  sh_int          gsn_create_water;
 extern  sh_int          gsn_create_spring;

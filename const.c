@@ -1331,7 +1331,7 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
 
     { "colour spray",     { 16, 102, 22, 20, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_colour_spray, TAR_CHAR_OFFENSIVE, POS_FIGHTING,
-    NULL,           SLOT(10),   15, 12, "colour spray",     "!Colour Spray!",   "" },
+    &gsn_colour_spray,           SLOT(10),   15, 12, "colour spray",     "!Colour Spray!",   "" },
 
     { "continual light",  {  6,  4, 6, 9, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 1, 1, 1}, spell_continual_light,  TAR_IGNORE,     POS_STANDING,

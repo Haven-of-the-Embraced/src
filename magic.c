@@ -1451,27 +1451,15 @@ void spell_chill_touch( int sn, int level, CHAR_DATA *ch, void *vo,int target )
 void spell_colour_spray( int sn, int level, CHAR_DATA *ch, void *vo,int target )
 {
     CHAR_DATA *victim = (CHAR_DATA *) vo;
-    static const sh_int dam_each[] =
-    {
-     0,
-     0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-    30, 35, 40, 45, 50, 55, 55, 55, 56, 57,
-    58, 58, 59, 60, 61, 61, 62, 63, 64, 64,
-    65, 66, 67, 67, 68, 69, 70, 70, 71, 72,
-    73, 73, 74, 75, 76, 76, 77, 78, 79, 79
-    };
     int dam;
 
-    level   = UMIN(level, sizeof(dam_each)/sizeof(dam_each[0]) - 1);
-    level   = UMAX(0, level);
-    dam     = number_range( dam_each[level] / 2,  dam_each[level] * 2 );
-    if ( saves_spell( level, victim,DAM_LIGHT) )
-    dam /= 2;
-    else
-    spell_blindness(skill_lookup("blindness"),
-        level/2,ch,(void *) victim,TARGET_CHAR);
-
+    dam = number_range(1, level);
+    act("You dazzle $N with psychodelic colors.",ch,NULL,victim,TO_CHAR);
+    act("Psychodelic colors assault your eyes!",ch,NULL,victim,TO_VICT);
+    act("A myriad of colors assaults $N.",ch,NULL,victim,TO_ROOM);
     damage( ch, victim, dam, sn, DAM_LIGHT,TRUE );
+    spell_blindness(skill_lookup("blindness"), level,ch,(void *) victim,TARGET_CHAR);
+
     return;
 }
 

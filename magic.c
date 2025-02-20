@@ -3591,35 +3591,19 @@ void spell_know_alignment(int sn,int level,CHAR_DATA *ch,void *vo,int target )
     return;
 }
 
-
-
 void spell_lightning_bolt(int sn,int level,CHAR_DATA *ch,void *vo,int target)
 {
     CHAR_DATA *victim = (CHAR_DATA *) vo;
-    static const sh_int dam_each[] =
-    {
-     0,
-     0,  0,  0,  0,  0,  0,  0,  0, 25, 28,
-    31, 34, 37, 40, 40, 41, 42, 42, 43, 44,
-    44, 45, 46, 46, 47, 48, 48, 49, 50, 50,
-    51, 52, 52, 53, 54, 54, 55, 56, 56, 57,
-    58, 58, 59, 60, 60, 61, 62, 62, 63, 64
-    };
     int dam;
 
-    level   = UMIN(level, sizeof(dam_each)/sizeof(dam_each[0]) - 1);
-    level   = UMAX(0, level);
-    dam     = number_range( dam_each[level] / 2, dam_each[level] * 2 );
-    if ( saves_spell( level, victim,DAM_LIGHTNING) )
-    dam /= 2;
-    /* spell enhancing code */
-    dam += 20+level;
+    if (!IS_NPC(ch))
+        dam = godice(ch->csmax_willpower, 7);
+    else
+        dam = ch->level / 25;
 
-    damage( ch, victim, dam, sn, DAM_LIGHTNING ,TRUE);
+    d10_damage( ch, victim, dam, ch->level / 3, gsn_lightning_bolt, DAM_LIGHTNING, DEFENSE_NONE, TRUE, TRUE);
     return;
 }
-
-
 
 void spell_locate_object( int sn, int level, CHAR_DATA *ch, void *vo,int target)
 {

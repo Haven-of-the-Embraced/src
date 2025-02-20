@@ -1457,8 +1457,9 @@ void spell_colour_spray( int sn, int level, CHAR_DATA *ch, void *vo,int target )
     act("You dazzle $N with psychodelic colors.",ch,NULL,victim,TO_CHAR);
     act("Psychodelic colors assault your eyes!",ch,NULL,victim,TO_VICT);
     act("A myriad of colors assaults $N.",ch,NULL,victim,TO_ROOM);
-    damage( ch, victim, dam, sn, DAM_LIGHT,TRUE );
-    spell_blindness(skill_lookup("blindness"), level,ch,(void *) victim,TARGET_CHAR);
+    d10_damage( ch, victim, 2, dam, gsn_colour_spray, DAM_LIGHT, DEFENSE_NONE, TRUE, FALSE);
+    if (number_range(1,3) == 3)
+        spell_blindness(skill_lookup("blindness"), level,ch,(void *) victim,TARGET_CHAR);
 
     return;
 }

@@ -5054,8 +5054,13 @@ void do_awe(CHAR_DATA *ch, char *argument)
     }
     if (is_affected(ch, gsn_awe))
     {
-        send_to_char("You drop your enhanced social magnetism.\n\r", ch);
-        affect_strip(ch, gsn_awe);
+        if (get_affect_level(ch, gsn_awe) == -1)
+            send_to_char("Your emotions are too comprimised to affect others.\n\r", ch);
+        else
+        {
+            send_to_char("You drop your enhanced social magnetism.\n\r", ch);
+            affect_strip(ch, gsn_awe);
+        }
         return;
     }
 

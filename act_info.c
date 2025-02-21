@@ -2207,7 +2207,7 @@ void do_affects(CHAR_DATA *ch, char *argument )
     send_to_char( "----------------------------------------------------------------------------\n\r", ch );
     for ( paf = ch->affected; paf != NULL; paf = paf->next )
     {
-        if (paf->type == gsn_awe)
+        if (paf->type == gsn_awe && paf->level != -1)
         {
           awed = TRUE;
           continue;

@@ -3987,37 +3987,28 @@ void spell_ray_of_truth (int sn, int level, CHAR_DATA *ch, void *vo,int target)
     CHAR_DATA *victim = (CHAR_DATA *) vo;
     int dam;
 
-/* Sengir letting all priests use ray of truth, took out this ifcheck
-    if (IS_EVIL(ch) || ch->race == race_lookup("vampire") || ch->race == race_lookup("methuselah") )
-    {
-        victim = ch;
-        send_to_char("The energy explodes inside you!\n\r",ch);
-    }
-*/
     if (victim != ch)
     {
         act("$n raises $s hand, and a blinding ray of light shoots forth!",
             ch,NULL,NULL,TO_ROOM);
-        send_to_char(
-       "You raise your hand and a blinding ray of light shoots forth!\n\r",
-       ch);
+        send_to_char("You raise your hand and a blinding ray of light shoots forth!\n\r", ch);
     }
 
-    dam = dice( level, 10 );
-    if ( saves_spell( level, victim,DAM_HOLY) )
-        dam /= 2;
-
+    if (!IS_NPC(ch))
+        dam = godice( ch->csmax_willpower, 7 );
+    else
+        dam = godice( ch->level / 20, 7 );
 
     damage( ch, victim, dam*2, sn, DAM_HOLY ,TRUE);
-    spell_blindness(gsn_blindness,
-    3 * level / 4, ch, (void *) victim,TARGET_CHAR);
+    d10_damage( ch, victim, dam, ch->level, gsn_ray_of_truth, DAM_HOLY, DEFENSE_NONE, TRUE, TRUE);
+    spell_blindness(gsn_blindness, 3 * level / 4, ch, (void *) victim,TARGET_CHAR);
 
 /*Sengir added dmg to 'tainted' priests, until true faith at least :P */
     if(ch->race == race_lookup("vampire") || ch->race == race_lookup("methuselah") || ch->race == race_lookup("ghoul") || ch->race == race_lookup("dhampire"))
     {
         act("The purity of your attack sends repercussions throughout your tainted body.", ch, NULL, victim, TO_CHAR);
         act("$n lets out a brief shriek of ecstasy mixed with pain.", ch, victim, NULL, TO_ROOM);
-        damage( ch, ch, dam/5, sn, DAM_HOLY, TRUE);
+        damage( ch, ch, ch->level/5, sn, DAM_HOLY, TRUE);
     }
 
 }

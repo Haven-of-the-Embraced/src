@@ -4210,7 +4210,7 @@ void spell_shield( int sn, int level, CHAR_DATA *ch, void *vo,int target)
     af.level     = level;
     af.duration  = 8 + level;
     af.location  = APPLY_AC;
-    af.modifier  = -20;
+    af.modifier  = -2 * level + 10;
     af.bitvector = 0;
     affect_to_char( victim, &af );
     act( "$n is surrounded by a force shield.", victim, NULL, NULL, TO_ROOM );

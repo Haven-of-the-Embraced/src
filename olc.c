@@ -1819,8 +1819,8 @@ void do_alist( CHAR_DATA *ch, char *argument )
     if ( IS_NPC(ch) )
         return;
 
-    sprintf( result, "\n\r[%3s] <%4s-%4s> [%-27s] (%-5s-%5s) [%-10s] %3s [%-10s]\n\r",
-       "Num","Llvl", "Hlvl", "Area Name", "lvnum", "uvnum", "Filename", "Sec", "Builders" );
+    sprintf( result, "\n\r[%3s] <%9s> [%-27s] (%-5s-%5s) [%-10s] %3s [%-10s]\n\r",
+       "Num","Lvl Range", "Area Name", "lvnum", "uvnum", "Filename", "Sec", "Builders" );
 
     for ( pArea = area_first; pArea; pArea = pArea->next )
     {

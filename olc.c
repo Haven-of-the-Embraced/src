@@ -1813,6 +1813,7 @@ void do_alist( CHAR_DATA *ch, char *argument )
 {
     char buf    [ MAX_STRING_LENGTH ];
     char result [ MAX_STRING_LENGTH*5 ];    /* May need tweaking. */
+    bool in_area = FALSE;
     AREA_DATA *pArea;
 
     if ( IS_NPC(ch) )
@@ -1823,17 +1824,23 @@ void do_alist( CHAR_DATA *ch, char *argument )
 
     for ( pArea = area_first; pArea; pArea = pArea->next )
     {
-    sprintf( buf, "[%3d] <%3d-%3d> %-29.29s (%-5d-%5d) %-12.12s [%d] [%-10.10s]\n\r",
-         pArea->vnum,
-         pArea->low_range,
-         pArea->high_range,
-         pArea->name,
-         pArea->min_vnum,
-         pArea->max_vnum,
-         pArea->file_name,
-         pArea->security,
-         pArea->builders );
-         strcat( result, buf );
+        if ((ch->in_room->vnum >= pArea->min_vnum) && (ch->in_room ->vnum <= pArea->max_vnum))
+            in_area = TRUE;
+        else
+            in_area = FALSE;
+
+        sprintf( buf, "%s[%3d] <%4d-%4d> %-29.29s (%-5d-%5d) %-12.12s [%d] [%-10.10s]{x\n\r",
+            in_area == TRUE ? "{Y" : "{x",
+            pArea->vnum,
+            pArea->low_range,
+            pArea->high_range,
+            pArea->name,
+            pArea->min_vnum,
+            pArea->max_vnum,
+            pArea->file_name,
+            pArea->security,
+            pArea->builders );
+            strcat( result, buf );
     }
 
     page_to_char( result, ch );

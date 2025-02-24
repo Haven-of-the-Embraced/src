@@ -6256,7 +6256,7 @@ void do_weakness(CHAR_DATA *ch, char *argument)
    CHAR_DATA *victim;
    AFFECT_DATA af;
     int dicesuccess = 0;
-    int wpdiff;
+    int wpdiff = 4;
 
     if (IS_NPC(ch)) return;
 
@@ -6339,12 +6339,7 @@ void do_weakness(CHAR_DATA *ch, char *argument)
 
     WAIT_STATE(ch, 12);
 
-    if(IS_NPC(victim))
-    {
-        wpdiff = 4;
-    }
-
-    else
+    if(!IS_NPC(victim))
         wpdiff = get_attribute(ch, STAMINA) + ch->pcdata->discipline[FORTITUDE];
 
     dicesuccess = godice(ch->cswillpower, wpdiff);

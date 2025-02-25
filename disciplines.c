@@ -6257,11 +6257,12 @@ void do_silenceofdeath(CHAR_DATA *ch, char *argument)
 
 void do_weakness(CHAR_DATA *ch, char *argument)
 {
-   char arg[MAX_INPUT_LENGTH];
-   CHAR_DATA *victim;
-   AFFECT_DATA af;
+    char arg[MAX_INPUT_LENGTH];
+    CHAR_DATA *victim;
+    AFFECT_DATA af;
     int dicesuccess = 0;
     int wpdiff = 4;
+    bool zerostam = FALSE;
 
     if (IS_NPC(ch)) return;
 
@@ -6371,7 +6372,6 @@ void do_weakness(CHAR_DATA *ch, char *argument)
         act("$n lets go of $N, but $E looks a little under the weather.", ch, NULL, victim, TO_NOTVICT);
 
         gain_exp(ch, dicesuccess);
-
         multi_hit( victim, ch, TYPE_UNDEFINED);
 
     af.where    = TO_AFFECTS;
@@ -6381,8 +6381,11 @@ void do_weakness(CHAR_DATA *ch, char *argument)
     af.location = APPLY_CS_STA;
     af.modifier = -2;
     af.bitvector    = 0;
-    if (get_attribute(victim, STAMINA) < 2)
+    if (get_attribute(victim, STAMINA) <= 2)
+    {
         af.modifier = get_attribute(victim, STAMINA);
+        zerostam = TRUE;
+    }
     affect_to_char( victim, &af );
 
     af.where    = TO_AFFECTS;
@@ -6404,6 +6407,27 @@ void do_weakness(CHAR_DATA *ch, char *argument)
     af.modifier = -ch->level * 2;
     af.bitvector    = 0;
     affect_to_char( victim, &af );
+
+    if (zerostam)
+    {
+        if((victim->race == race_lookup("vampire") || victim->race == race_lookup("methuselah"))
+            && victim->level <= ch->level + 10)
+        {
+            act("$N slumps to the ground, catatonic.",ch,NULL,victim,TO_NOTVICT);
+            act("$N slumps to the ground, entering Torpor.",ch,NULL,victim,TO_CHAR);
+            act("You enter Torpor as toxins strip away your resilience.",ch,NULL,victim,TO_VICT);
+            stop_fighting( victim, TRUE );
+            victim->position = POS_TORPOR;
+        }
+
+        af.where     = TO_VULN;
+        af.duration = dicesuccess * (15 - ch->gen);
+        af.location  = APPLY_NONE;
+        af.modifier  = 0;
+        af.bitvector = VULN_DISEASE;
+        affect_to_char( victim, &af );
+        act("Toxins strip away your resistance to disease.",ch,NULL,victim,TO_VICT);
+    }
 
     return;
 }

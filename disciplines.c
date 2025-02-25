@@ -6336,7 +6336,7 @@ void do_weakness(CHAR_DATA *ch, char *argument)
     act("$n reaches out and clutches you firmly.", ch, NULL, victim, TO_VICT);
     act("$n reaches over and grabs $N forcefully.", ch, NULL, victim, TO_NOTVICT);
 
-    gain_exp(ch, dicesuccess);
+    gain_exp(ch, 2 * dicesuccess);
 
     WAIT_STATE(ch, 12);
 
@@ -6366,7 +6366,7 @@ void do_weakness(CHAR_DATA *ch, char *argument)
         act("$n lets go of you, but you feel a little worn down and ill.", ch, NULL, victim, TO_VICT);
         act("$n lets go of $N, but $E looks a little under the weather.", ch, NULL, victim, TO_NOTVICT);
 
-        gain_exp(ch, dicesuccess);
+        gain_exp(ch, 3 * dicesuccess);
         multi_hit( victim, ch, TYPE_UNDEFINED);
 
     af.where    = TO_AFFECTS;

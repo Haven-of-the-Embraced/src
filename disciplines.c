@@ -6374,9 +6374,9 @@ void do_weakness(CHAR_DATA *ch, char *argument)
     af.level    = ch->pcdata->discipline[QUIETUS];
     af.duration = dicesuccess * (15 - ch->gen);
     af.location = APPLY_CS_STA;
-    af.modifier = -ch->pcdata->discipline[QUIETUS];
+    af.modifier = -2;
     af.bitvector    = 0;
-    if (get_attribute(victim, STAMINA) < af.modifier)
+    if (get_attribute(victim, STAMINA) < 2)
         af.modifier = get_attribute(victim, STAMINA);
     affect_to_char( victim, &af );
 
@@ -6385,10 +6385,10 @@ void do_weakness(CHAR_DATA *ch, char *argument)
     af.level    = ch->pcdata->discipline[QUIETUS];
     af.duration = dicesuccess * (15 - ch->gen);
     af.location = APPLY_HIT;
-    af.modifier = -(ch->level * ch->pcdata->discipline[QUIETUS]) * 5;
+    af.modifier = -((ch->level * 5)+10);
     af.bitvector    = 0;
-    if (victim->max_hit < af.modifier)
-        af.modifier = victim->max_hit - 10;
+    if (victim->max_hit < -(af.modifier))
+        af.modifier = -(victim->max_hit - 10);
     affect_to_char( victim, &af );
 
     af.where    = TO_AFFECTS;
@@ -6396,7 +6396,7 @@ void do_weakness(CHAR_DATA *ch, char *argument)
     af.level    = ch->pcdata->discipline[QUIETUS];
     af.duration = dicesuccess * (15 - ch->gen);
     af.location = APPLY_HITROLL;
-    af.modifier = -ch->level * ch->pcdata->discipline[QUIETUS];
+    af.modifier = -ch->level * 2;
     af.bitvector    = 0;
     affect_to_char( victim, &af );
 

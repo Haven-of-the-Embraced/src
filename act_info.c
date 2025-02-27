@@ -2695,6 +2695,7 @@ void do_who( CHAR_DATA *ch, char *argument )
     extern bool doubledam;
     extern bool nosun;
     extern bool spookums;
+    extern bool carnival;
     int iRace;
     int iClan;
     int iLevelLower;
@@ -2909,7 +2910,12 @@ void do_who( CHAR_DATA *ch, char *argument )
       sprintf( buf2, " =====             {GThe land is covered by an eerie {Dspookiness{G.{x            ===== \n");
       add_buf(output,buf2);
     }
-    if (slaughter || doubledam || nosun || doubleexp || manualxp || spookums)
+    if (carnival)
+    {
+      sprintf( buf2, " =====                        It's {MC{Ga{Yr{Mn{Gi{Yv{Ma{Gl {xTime{M!{G!{Y!{x                       ===== \n");
+      add_buf(output,buf2);
+    }
+    if (slaughter || doubledam || nosun || doubleexp || manualxp || spookums || carnival)
     {
       add_buf(output, "{w<==============================================================================>{x\n\r");
     }

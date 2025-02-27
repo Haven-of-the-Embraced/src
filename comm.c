@@ -333,6 +333,7 @@ bool            manualxp=FALSE; /*manually set doublexp */
 bool            slaughter=FALSE;        /* Removes damcap and quad damage */
 bool            doubledam=FALSE;    /* double damage for players */
 bool            spookums=FALSE;     /* Halloween Bonus */
+bool            carnival=FALSE;     /* Mardi Gras Bonus */
 bool            resolver=TRUE;
 bool            DEBUG_MESSAGES=FALSE;
 CMD_DATA * cmd_first;
@@ -2649,6 +2650,7 @@ if (d->character->totalqpoints < d->character->qpoints)
     extern bool doubleexp;
     extern bool manualxp;
     extern bool spookums;
+    extern bool carnival;
     if (slaughter)
         send_to_char("Time to get killing, {RSlaughterfest{x is running!\n\r", ch);
     if (doubleexp || manualxp)
@@ -2660,6 +2662,8 @@ if (d->character->totalqpoints < d->character->qpoints)
     }
     if (spookums)
         send_to_char("A mystic spookiness lies across the land!\n\r", ch);
+    if (carnival)
+        send_to_char("Laissez les bons temp rouler!\n\r", ch);
     /*if (IS_VAMP(ch) && ch->gen < 10)
     {
         switch (ch->gen)
@@ -3987,6 +3991,8 @@ void load_config( void )
                KEY( "Slaughter", slaughter, fread_number(fp) );
                KEY( "Spookums", spookums, fread_number(fp) );
                break;
+           case 'C':
+               KEY("Carnival", carnival, fread_number(fp));
 
            case 'E':
                 if ( !str_cmp( word, "End" ) )

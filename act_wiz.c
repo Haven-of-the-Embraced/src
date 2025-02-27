@@ -8547,6 +8547,7 @@ void copyover_recover ()
     extern bool doubleexp;
     extern bool manualxp;
     extern bool spookums;
+    extern bool carnival;
     if (slaughter)
         send_to_char("Time to get killing, {RSlaughterfest{x is running!\n\r", d->character);
     if (doubleexp || manualxp)
@@ -8558,7 +8559,8 @@ void copyover_recover ()
     }
     if (spookums)
         send_to_char("Spooky Time!\n\r", d->character);
-
+    if (carnival)
+        send_to_char("It's Carnival Time!\n\r", d->character);
     }
    fclose (fp);
 
@@ -9719,6 +9721,7 @@ void do_globalpower( CHAR_DATA *ch, char *argument )
     extern bool manualxp;
     extern bool doubledam;
     extern bool spookums;
+    extern bool carnival;
     extern bool resolver;
     extern bool newlock;
     extern bool wizlock;
@@ -9917,6 +9920,35 @@ void do_globalpower( CHAR_DATA *ch, char *argument )
         }
         return;
     }
+    if(!str_cmp(arg,"carnival"))
+    {
+
+        if(carnival)
+        {
+
+            for ( d = descriptor_list; d; d = d->next )
+            {
+                if ( d->connected == CON_PLAYING )
+                {
+                    send_to_char( "The pageantry of {MCar{Gni{Yval{x fades into history.\n\r", d->character );
+                }
+            }
+            carnival = FALSE;
+        }
+        else
+        {
+
+            for ( d = descriptor_list; d; d = d->next )
+            {
+                if ( d->connected == CON_PLAYING )
+                {
+                    send_to_char( "The spectacle of {MCar{Gni{Yval{x season is upon the land!\n\r", d->character );
+                }
+            }
+            carnival = TRUE;
+        }
+        return;
+    }
 if(!str_cmp(arg,"resolver"))
     {
 
@@ -9974,6 +10006,8 @@ if(!str_cmp(arg,"resolver"))
         nosun ? sendch("{GON{x\n\r", ch) : sendch("{ROFF{x\n\r", ch);
         sendch("Spookums is ", ch);
         spookums ? sendch("{GON{x\n\r", ch) : sendch("{ROFF{x\n\r", ch);
+        sendch("Carnival is ", ch);
+        carnival ? sendch("{GON{x\n\r", ch) : sendch("{ROFF{x\n\r", ch);
         sendch("Resolver is ", ch);
         resolver ? sendch("{GON{x\n\r", ch) : sendch("{ROFF{x\n\r", ch);
         sendch("Wizlock is ", ch);
@@ -9991,12 +10025,12 @@ if(!str_cmp(arg,"resolver"))
         sprintf(buf, "XP Multiplier: %d\n\r", xpawardmult);
         send_to_char(buf, ch);
         send_to_char("\n\r{wValid options are: {Darena{w, {Ddoubleexp{w, {Dtripleexp{w, {Ddoubledam{w, {Dnosun{w,\n\r", ch);
-        send_to_char("{Dslaughterfest{w, {Dspookums{w, {Dresolver{w, {Ddebug{w, {Dstatus{x\n\r",ch);
+        send_to_char("{Dslaughterfest{w, {Dspookums{w, {Dcarnival{w, {Dresolver{w, {Ddebug{w, {Dstatus{x\n\r",ch);
 
         return;
     }
             send_to_char("\n\r{wValid options are: {Darena{w, {Ddoubleexp{w, {Ddoubledam{w, {Dnosun{w,\n\r", ch);
-        send_to_char("{Dslaughterfest{w, {Dspookums{w, {Dresolver{w, {Ddebug{w, {Dstatus{x\n\r",ch);
+        send_to_char("{Dslaughterfest{w, {Dspookums{w, {Dcarnival{x, {Dresolver{w, {Ddebug{w, {Dstatus{x\n\r",ch);
     return;
 }
 void do_portal( CHAR_DATA *ch, char *argument )

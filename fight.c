@@ -3364,6 +3364,8 @@ void group_gain( CHAR_DATA *ch, CHAR_DATA *victim )
     CHAR_DATA *gch;
     CHAR_DATA *lch;
     AFFECT_DATA af;
+    OBJ_DATA *doubloon;
+    OBJ_DATA *bead;
     int xp;
     int qp;
     int fakexp;
@@ -3372,6 +3374,7 @@ void group_gain( CHAR_DATA *ch, CHAR_DATA *victim )
     extern bool doubleexp;
     extern bool manualxp;
     extern bool spookums;
+    extern bool carnival;
     int group_levels;
 
     /*
@@ -3388,40 +3391,40 @@ void group_gain( CHAR_DATA *ch, CHAR_DATA *victim )
     {
         if(gch == NULL) break;
         if (gch == ch->pet) continue;
-    if ( is_same_group( gch, ch ) )
-    {
-        members++;
-        group_levels += IS_NPC(gch) ? gch->level / 2 : gch->level;
-    }
+        if ( is_same_group( gch, ch ) )
+        {
+            members++;
+            group_levels += IS_NPC(gch) ? gch->level / 2 : gch->level;
+        }
     }
 
     if ( members == 0 )
     {
-    bug( "Group_gain: members.", members );
-    members = 1;
-    group_levels = ch->level ;
+        bug( "Group_gain: members.", members );
+        members = 1;
+        group_levels = ch->level ;
     }
 
     lch = (ch->leader != NULL) ? ch->leader : ch;
 
     for ( gch = ch->in_room->people; gch != NULL; gch = gch->next_in_room )
     {
-    OBJ_DATA *obj;
-    OBJ_DATA *obj_next;
+        OBJ_DATA *obj;
+        OBJ_DATA *obj_next;
 
-    if ( !is_same_group( gch, ch ) || IS_NPC(gch))
-        continue;
+        if ( !is_same_group( gch, ch ) || IS_NPC(gch))
+            continue;
 
-    xp = xp_compute( gch, victim, group_levels );
-    qp = number_range(1, xp/200);
-    if (gch == lch && members > 1)
-    qp *= 2;
-    if (victim->level < gch->level || ch->leader != NULL)
-    qp /= 2;
-    if (victim->level + 20 < gch->level)
-    qp = 0;
+        xp = xp_compute( gch, victim, group_levels );
+        qp = number_range(1, xp/200);
+        if (gch == lch && members > 1)
+        qp *= 2;
+        if (victim->level < gch->level || ch->leader != NULL)
+        qp /= 2;
+        if (victim->level + 20 < gch->level)
+        qp = 0;
 
-    if (!IS_NPC(gch) && gch->cswillpower < gch->csmax_willpower &&
+        if (!IS_NPC(gch) && gch->cswillpower < gch->csmax_willpower &&
         victim->level > gch->level &&
         ((gch == ch && number_percent() < (3 * (10-gch->cswillpower))) ||
         (gch != ch && number_percent() < (3 * (10-gch->cswillpower) / 2 ))) &&
@@ -3431,75 +3434,101 @@ void group_gain( CHAR_DATA *ch, CHAR_DATA *victim )
             sendch("Your resolve strengthens as yet another of your enemies is slain.\n\r", gch);
         }
 
-    if(xp <= 0)
-        xp = 1;
+        if(xp <= 0)
+            xp = 1;
 
-    gch->totalkills ++;
-    gch->currentkills ++;
-    // Adds QP to global QP from fights
-    if (!manualxp && !doubleexp)
-        global_qp += qp*qpmult;
-    //Added line for people caught cheating.
-    if (gch->cheater == 0)
-    sprintf( buf, "You receive {g%d{x experience and {c%d{x quest points.\n\r", xp, qp );
-    if (gch->cheater == 1)
-    {
-    fakexp = xp;
-    fakeqp = qp;
-    xp = 0;
-    qp = 0;
-    sprintf( buf, "You receive {g%d{x experience and {c%d{x quest points.\n\r", fakexp, fakeqp );
-    }
-    send_to_char( buf, gch );
-    gain_exp( gch, xp );
-    gch->qpoints += qp;
-    gch->totalqpoints += qp;
-    if (gch->qpoints > MAX_QPOINTS)
-        gch->qpoints = MAX_QPOINTS;
-
-    if (IS_SET(ch->act2, PLR2_QUESTOR)&&IS_NPC(victim))
-    {
-        if (ch->questmob == victim->pIndexData->vnum)
+        gch->totalkills ++;
+        gch->currentkills ++;
+        // Adds QP to global QP from fights
+        if (!manualxp && !doubleexp)
+            global_qp += qp*qpmult;
+        //Added line for people caught cheating.
+        if (gch->cheater == 0)
+            sprintf( buf, "You receive {g%d{x experience and {c%d{x quest points.\n\r", xp, qp );
+        if (gch->cheater == 1)
         {
-            send_to_char("You have almost completed your QUEST!\n\r",ch);
-            send_to_char("Return to the questmaster before your time runs out!\n\r",ch);
-            ch->questmob = -1;
+            fakexp = xp;
+            fakeqp = qp;
+            xp = 0;
+            qp = 0;
+            sprintf( buf, "You receive {g%d{x experience and {c%d{x quest points.\n\r", fakexp, fakeqp );
         }
-    }
+        send_to_char( buf, gch );
+        gain_exp( gch, xp );
+        gch->qpoints += qp;
+        gch->totalqpoints += qp;
+        if (gch->qpoints > MAX_QPOINTS)
+            gch->qpoints = MAX_QPOINTS;
 
-    if (spookums && number_percent() <= 20)
-    {
-        send_to_char("{D[       *****      {YTrick or Treat!      {D*****       ]{x\n\r", gch);
-        if (number_percent() <= 15)
-            send_to_char("{MTRICK!: {mWith a bright {Wflash{m of light, a shower of {Ysparks{m explode around you!{x\n\r", gch);
-        else
+        if (IS_SET(ch->act2, PLR2_QUESTOR)&&IS_NPC(victim))
         {
-            if (number_percent() <= 20 && !IS_AFFECTED(gch, AFF_XP_BOOST))
+            if (ch->questmob == victim->pIndexData->vnum)
             {
-                af.where     = TO_AFFECTS;
-                af.type  = gsn_xp_boost;
-                af.level     = 1;
-                af.duration  = 5;
-                af.modifier  =  0;
-                af.location  = APPLY_NONE;
-                af.bitvector = AFF_XP_BOOST;
-                affect_to_char( gch, &af );
-                send_to_char("{MTREAT!: {GYou feel a rush of mystic energy filling your bones!{x\n\r", gch);
+                send_to_char("You have almost completed your QUEST!\n\r",ch);
+                send_to_char("Return to the questmaster before your time runs out!\n\r",ch);
+                ch->questmob = -1;
+            }
+        }
+
+        if (spookums && number_percent() <= 20)
+        {
+            send_to_char("{D[       *****      {YTrick or Treat!      {D*****       ]{x\n\r", gch);
+            if (number_percent() <= 15)
+                send_to_char("{MTRICK!: {mWith a bright {Wflash{m of light, a shower of {Ysparks{m explode around you!{x\n\r", gch);
+            else
+            {
+                if (number_percent() <= 20 && !IS_AFFECTED(gch, AFF_XP_BOOST))
+                {
+                    af.where     = TO_AFFECTS;
+                    af.type  = gsn_xp_boost;
+                    af.level     = 1;
+                    af.duration  = 5;
+                    af.modifier  =  0;
+                    af.location  = APPLY_NONE;
+                    af.bitvector = AFF_XP_BOOST;
+                    affect_to_char( gch, &af );
+                    send_to_char("{MTREAT!: {GYou feel a rush of mystic energy filling your bones!{x\n\r", gch);
+                }
+                else
+                {
+                    qp = number_range(1,5);
+                    gch->qpoints += qp;
+                    gch->totalqpoints += qp;
+                    if (gch->qpoints > MAX_QPOINTS)
+                        gch->qpoints = MAX_QPOINTS;
+                    sprintf(buf, "{MTREAT!:  {GMystic energy fills you, as you gain %d quest points.{x\n\r", qp);
+                    send_to_char(buf, gch);
+                }
+            }
+        }
+
+        if (carnival && number_percent() <= 20)
+        {
+            send_to_char("{D[    {M*{G*{Y*{M*{G*{Y*{M*{G*{Y*{M*{G*{Y*{M*{G*{Y*{M*{G*{Y*      {WThrow me something!      {M*{G*{Y*{M*{G*{Y*{M*{G*{Y*{M*{G*{Y*{M*{G*{Y*{M*{G*{Y*    {D]{x\n\r", gch);
+            if (number_percent() <= 15)
+            {
+                send_to_char("{YA shiny doubloon lands by your feet, and you pick it up.  The jailer in Chester may be interested.{x\n\r", gch);
+                if((doubloon = create_object(get_obj_index(31833),0)) == NULL)
+                {
+                    send_to_char("Error! Contact an imm at once to fix this missing item!\n\r",ch);
+                    bug( "group_gain: Mardi Gras Doubloon [%d] = NULL", 31833);
+                    return;
+                }
+                obj_to_char( doubloon, ch);
             }
             else
             {
-                qp = number_range(1,5);
-                gch->qpoints += qp;
-                gch->totalqpoints += qp;
-                if (gch->qpoints > MAX_QPOINTS)
-                    gch->qpoints = MAX_QPOINTS;
-                sprintf(buf, "{MTREAT!:  {GMystic energy fills you, as you gain %d quest points.{x\n\r", qp);
-                send_to_char(buf, gch);
+                send_to_char("A multicolored bead flies past, and you snatch it out of the air!{x\n\r", gch);
+                if((bead = create_object(get_obj_index(31832),0)) == NULL)
+                {
+                    send_to_char("Error! Contact an imm at once to fix this missing item!\n\r",ch);
+                    bug( "group_gain: Mardi Gras Bead [%d] = NULL", 31832);
+                    return;
+                }
+                obj_to_char( bead, ch);
             }
         }
-    } 
     }
-
     return;
 }
 

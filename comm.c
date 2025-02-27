@@ -2663,7 +2663,7 @@ if (d->character->totalqpoints < d->character->qpoints)
     if (spookums)
         send_to_char("A mystic spookiness lies across the land!\n\r", ch);
     if (carnival)
-        send_to_char("Laissez les bons temp rouler!\n\r", ch);
+        send_to_char("{M*{G*{Y* {xLaissez les bons temp rouler!\n\r", ch);
     /*if (IS_VAMP(ch) && ch->gen < 10)
     {
         switch (ch->gen)

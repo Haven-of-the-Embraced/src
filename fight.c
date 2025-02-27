@@ -3504,7 +3504,7 @@ void group_gain( CHAR_DATA *ch, CHAR_DATA *victim )
 
         if (carnival && number_percent() <= 20)
         {
-            send_to_char("{D[    {M*{G*{Y*{M*{G*{Y*{M*{G*{Y*{M*{G*{Y*{M*{G*{Y*{M*{G*{Y*      {WThrow me something!      {M*{G*{Y*{M*{G*{Y*{M*{G*{Y*{M*{G*{Y*{M*{G*{Y*{M*{G*{Y*    {D]{x\n\r", gch);
+            send_to_char("{D[    {M*{G*{Y*{M*{G*{Y*{M*{G*{Y*{M*{G*{Y*{M*{G*{Y*{M*{G*{Y*      {WThrow me something!     {M*{G*{Y*{M*{G*{Y*{M*{G*{Y*{M*{G*{Y*{M*{G*{Y*{M*{G*{Y*    {D]{x\n\r", gch);
             if (number_percent() <= 15)
             {
                 send_to_char("{YA shiny doubloon lands by your feet, and you pick it up.  The jailer in Chester may be interested.{x\n\r", gch);
@@ -3518,7 +3518,7 @@ void group_gain( CHAR_DATA *ch, CHAR_DATA *victim )
             }
             else
             {
-                send_to_char("A multicolored bead flies past, and you snatch it out of the air!{x\n\r", gch);
+                send_to_char("{YA multicolored bead flies past, and you snatch it out of the air!{x\n\r", gch);
                 if((bead = create_object(get_obj_index(31832),0)) == NULL)
                 {
                     send_to_char("Error! Contact an imm at once to fix this missing item!\n\r",ch);
@@ -3527,6 +3527,7 @@ void group_gain( CHAR_DATA *ch, CHAR_DATA *victim )
                 }
                 obj_to_char( bead, ch);
             }
+            send_to_char("{D[    {M*{G*{Y*{M*{G*{Y*{M*{G*{Y*{M*{G*{Y*{M*{G*{Y*{M*{G*{Y*      {M*{G*{Y*{M*{G*{Y*{M*{G*{Y*{M*{G*{Y*{M*{G*{Y*{M*{G*{Y*      {M*{G*{Y*{M*{G*{Y*{M*{G*{Y*{M*{G*{Y*{M*{G*{Y*{M*{G*{Y*    {D]{x\n\r", gch);
         }
     }
     return;

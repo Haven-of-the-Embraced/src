@@ -3502,10 +3502,10 @@ void group_gain( CHAR_DATA *ch, CHAR_DATA *victim )
             }
         }
 
-        if (carnival && number_percent() <= 20)
+        if (carnival && number_percent() <= 15)
         {
             send_to_char("{D[    {M*{G*{Y*{M*{G*{Y*{M*{G*{Y*{M*{G*{Y*{M*{G*{Y*{M*{G*{Y*      {WThrow me something!     {M*{G*{Y*{M*{G*{Y*{M*{G*{Y*{M*{G*{Y*{M*{G*{Y*{M*{G*{Y*    {D]{x\n\r", gch);
-            if (number_percent() <= 15)
+            if (number_percent() <= 8)
             {
                 send_to_char("{YA shiny doubloon lands by your feet, and you pick it up.  The jailer in Chester may be interested.{x\n\r", gch);
                 if((doubloon = create_object(get_obj_index(31833),0)) == NULL)

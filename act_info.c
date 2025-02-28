@@ -1824,23 +1824,23 @@ void do_examine( CHAR_DATA *ch, char *argument )
                     switch(paf->where)
                     {
                         case TO_AFFECTS:
-                            sprintf(buf,"%s |{x    Affect  +[{M%15s{x] -> %3d hours\n", condition,
+                            sprintf(buf,"%s |{x           Affect  + [{M%15s{x] -> %3d hours\n", condition,
                             affect_bit_name(paf->bitvector), paf->duration);
                             break;
                         case TO_WEAPON:
-                            sprintf(buf,"%s |{x    Weapon +[{M%15s{x] -> %3d hours\n", condition,
+                            sprintf(buf,"%s |{x            Weapon + [{M%15s{x] -> %3d hours\n", condition,
                             weapon_bit_name(paf->bitvector), paf->duration);
                             break;
                         case TO_OBJECT:
-                            sprintf(buf,"%s |{x    Object +[{M%15s{x] -> %3d hours\n", condition,
+                            sprintf(buf,"%s |{x            Object + [{M%15s{x] -> %3d hours\n", condition,
                             extra_bit_name(paf->bitvector), paf->duration);
                             break;
                         case TO_IMMUNE:
-                            sprintf(buf,"%s |{x    Immunity to [{M%15s{x] -> %3d hours\n", condition,
+                            sprintf(buf,"%s |{x         Immunity to [{M%15s{x] -> %3d hours\n", condition,
                             imm_bit_name(paf->bitvector), paf->duration);
                             break;
                         case TO_RESIST:
-                            sprintf(buf,"%s |{x    Resistance to [{M%15s{x] -> %3d hours\n\r", condition,
+                            sprintf(buf,"%s |{x       Resistance to [{M%15s{x] -> %3d hours\n\r", condition,
                             imm_bit_name(paf->bitvector), paf->duration);
                             break;
                         case TO_VULN:

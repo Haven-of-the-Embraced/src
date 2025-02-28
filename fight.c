@@ -3505,27 +3505,27 @@ void group_gain( CHAR_DATA *ch, CHAR_DATA *victim )
         if (carnival && number_percent() <= 15)
         {
             send_to_char("{D[    {M*{G*{Y*{M*{G*{Y*{M*{G*{Y*{M*{G*{Y*{M*{G*{Y*{M*{G*{Y*      {WThrow me something!     {M*{G*{Y*{M*{G*{Y*{M*{G*{Y*{M*{G*{Y*{M*{G*{Y*{M*{G*{Y*    {D]{x\n\r", gch);
-            if (number_percent() <= 8)
+            if (number_percent() <= 10)
             {
                 send_to_char("{YA shiny doubloon lands by your feet, and you pick it up.  The jailer in Chester may be interested.{x\n\r", gch);
                 if((doubloon = create_object(get_obj_index(31833),0)) == NULL)
                 {
-                    send_to_char("Error! Contact an imm at once to fix this missing item!\n\r",ch);
+                    send_to_char("Error! Contact an imm at once to fix this missing item!\n\r",gch);
                     bug( "group_gain: Mardi Gras Doubloon [%d] = NULL", 31833);
                     return;
                 }
-                obj_to_char( doubloon, ch);
+                obj_to_char( doubloon, gch);
             }
             else
             {
                 send_to_char("{YA multicolored bead flies past, and you snatch it out of the air!{x\n\r", gch);
                 if((bead = create_object(get_obj_index(31832),0)) == NULL)
                 {
-                    send_to_char("Error! Contact an imm at once to fix this missing item!\n\r",ch);
+                    send_to_char("Error! Contact an imm at once to fix this missing item!\n\r",gch);
                     bug( "group_gain: Mardi Gras Bead [%d] = NULL", 31832);
                     return;
                 }
-                obj_to_char( bead, ch);
+                obj_to_char( bead, gch);
             }
             send_to_char("{D[    {M*{G*{Y*{M*{G*{Y*{M*{G*{Y*{M*{G*{Y*{M*{G*{Y*{M*{G*{Y*      {M*{G*{Y*{M*{G*{Y*{M*{G*{Y*{M*{G*{Y*{M*{G*{Y*{M*{G*{Y*      {M*{G*{Y*{M*{G*{Y*{M*{G*{Y*{M*{G*{Y*{M*{G*{Y*{M*{G*{Y*    {D]{x\n\r", gch);
         }

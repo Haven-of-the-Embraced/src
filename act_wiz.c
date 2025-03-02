@@ -3251,7 +3251,8 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
     {
         send_to_char( "\n\r", ch);
         send_to_char( "{y+=========================================================================+{x\n\r", ch);
-        send_to_char( "{y| {WSyntax is   : {xflagfind <obj/mob/room> <type> <flag>                     {y|\n\r", ch );
+        send_to_char( "{y| {WSyntax is   : {xflagfind <option> <type> <flag>                           {y|\n\r", ch );
+        send_to_char( "{y| {WOptions     : {xobj, mob, room, light                                     {y|\n\r",ch);
         send_to_char( "{y| {RSyntax Note {W: {xSee '{chelp flagfind{x' for special syntax.                   {y|\n\r", ch);
         send_to_char( "{y+=========================================================================+{x\n\r", ch);
         send_to_char( "{y| {WObj types   : {xextra, wear, affect, apply, damage, type,                 {y|\n\r",ch);
@@ -4225,14 +4226,44 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                 sprintf(buf, "|    Valid [{g%8s{x] Bits are:                                          |\n\r", center(capitalize(arg2), 8, " "));
                 sendch(buf, ch);
                 sendch(" ------------------------------------------------------------------------\n\r", ch);
+
+                for (i = 0; table[i].name != NULL; i++)
+                {
+                    if (col < 1)
+                    {
+                        sprintf(buf, "(%2d) {B%-26s{x  ", i, table[i].name);
+                        col++;
+                    }
+                    else if (col == 1)
+                    {
+                        sprintf(buf, "(%2d) {B%-26s{x   \n\r", i, table[i].name);
+                        col = 0;
+                    }
+                    add_buf(buffer, buf);
+                }
+                page_to_char(buf_string(buffer), ch);
+                return;
             }
         }
-
         send_to_char("      <{YLvl{x> [ {gVnum{x] {BLoad{x : Short Description\n\r", ch);
         send_to_char("      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\r", ch);
         for ( vnum = 0; nMatch < top_obj_index; vnum++ )
         {
-
+            if ( ( pObjIndex = get_obj_index( vnum ) ) != NULL )
+            {
+                nMatch++;
+                if(!str_prefix(arg2,"light"))
+                {
+                    if(pObjIndex->item_type == ITEM_LIGHT && has_light_bit(pObjIndex->value[4], arg3))
+                    {
+                        found = TRUE;
+                        count++;
+                        sprintf( buf, "(%3d) <{Y%3d{x> [{g%5d{x] {Bx %2d{x : %s\n\r",
+                            count, pObjIndex->level, pObjIndex->vnum, pObjIndex->count, pObjIndex->short_descr );
+                        add_buf(buffer,buf);
+                    }
+                }
+            }
         }
     }
 

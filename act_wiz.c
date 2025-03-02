@@ -3261,6 +3261,8 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
         send_to_char( "{y| {W            : {xoff, res, vuln, imm, attr, abil, form, parts, size        {y|\n\r",ch);
         send_to_char( "{y+-------------------------------------------------------------------------+{x\n\r", ch);
         send_to_char( "{y| {WRoom types  : {xsector, room, clan, owner                                 {y|\n\r",ch);
+        send_to_char( "{y+-------------------------------------------------------------------------+{x\n\r", ch);
+        send_to_char( "{y| {WLight types : {xlight                                                     {y|\n\r",ch);
         send_to_char( "{y+=========================================================================+{x\n\r", ch);
         send_to_char( "\n\r", ch);
 
@@ -4194,6 +4196,43 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                   }
                 }
             }
+        }
+    }
+
+    if (!str_prefix(arg1, "light"))
+    {
+        findflag = TRUE;
+        if(!str_cmp(arg2, "light"))
+            table = &light_flags;
+        else findflag = FALSE;
+
+        if (findflag)
+        {
+            bool bitfound = FALSE;
+            for (i = 0; table[i].name != NULL; i++)
+            {
+                if (is_exact_name(arg3, table[i].name))
+                {
+                    affflag = table[i].bit;
+                    bitfound = TRUE;
+                }
+            }
+            if (!bitfound)
+            {
+                sendch(" ------------------------------------------------------------------------\n\r", ch);
+                sprintf(buf, "|    {R******  {xBit name '{B%s{x' is invalid. {R******{x    |\n\r", center(arg3, 26, " "));
+                sendch(buf, ch);
+                sprintf(buf, "|    Valid [{g%8s{x] Bits are:                                          |\n\r", center(capitalize(arg2), 8, " "));
+                sendch(buf, ch);
+                sendch(" ------------------------------------------------------------------------\n\r", ch);
+            }
+        }
+
+        send_to_char("      <{YLvl{x> [ {gVnum{x] {BLoad{x : Short Description\n\r", ch);
+        send_to_char("      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\r", ch);
+        for ( vnum = 0; nMatch < top_obj_index; vnum++ )
+        {
+
         }
     }
 

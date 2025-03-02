@@ -3836,6 +3836,19 @@ bool *has_weapon_bit(int weapon_flags, char *weapon_bit)
     return FALSE;
 }
 
+bool *has_light_bit(int light_flags, char *light_bit)
+{
+    if (light_flags & LIGHT_FLAMES          && (!str_cmp(light_bit, "flames"))      ) return TRUE;
+    if (light_flags & LIGHT_MYSTICAL        && (!str_cmp(light_bit, "mystical"))    ) return TRUE;
+    if (light_flags & LIGHT_INTENSE         && (!str_cmp(light_bit, "intense"))     ) return TRUE;
+    if (light_flags & LIGHT_WEAK            && (!str_cmp(light_bit, "weak"))        ) return TRUE;
+    if (light_flags & LIGHT_INTERMITTENT    && (!str_cmp(light_bit, "intermittent"))) return TRUE;
+    if (light_flags & LIGHT_PULSING         && (!str_cmp(light_bit, "pulsing"))     ) return TRUE;
+    if (light_flags & LIGHT_RECHARGE        && (!str_cmp(light_bit, "recharge"))    ) return TRUE;
+
+    return FALSE;
+}
+
 char *room_bit_name(int room_flags)
 {
     static char buf[512];

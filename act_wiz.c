@@ -6459,7 +6459,7 @@ void do_mset( CHAR_DATA *ch, char *argument )
         send_to_char( "  {yField Options- {W(Universal){Y(Immortal){R(Vampire){G(Werewolf){C(Mage){x:{x\n\r", ch );
         send_to_char( "    {Wsex level race hp agg mana move thirst hunger drunk full{x\n\r", ch );
         send_to_char( "    {Wcsstr csdex cssta cscha csman csapp csper csint cswit  {x\n\r", ch );
-        send_to_char( "    {Whome freebie background remorts group gold silver{x\n\r", ch );
+        send_to_char( "    {Whome hometown freebie background remorts group gold silver{x\n\r", ch );
         send_to_char( "    {Ysecurity{x\n\r", ch );
         send_to_char( "    {Rmax_blood blood gen discipline sire drains embraced childer{x\n\r", ch );
         send_to_char( "    {Grage renown gnosis primal-urge prenown trenown fur rank{x\n\r", ch );
@@ -6529,9 +6529,15 @@ void do_mset( CHAR_DATA *ch, char *argument )
 
     if ( !str_prefix( arg2, "gold" ) )
     {
-    victim->gold = value;
-    return;
+        victim->gold = value;
+        return;
     }
+    if ( !str_prefix(arg2, "silver" ) )
+    {
+        victim->silver = value;
+        return;
+    }
+
     if ( !str_prefix( arg2, "influence" ) )
     {
         if (!victim->in_room->area->domain)
@@ -6552,80 +6558,74 @@ void do_mset( CHAR_DATA *ch, char *argument )
             return;
         }
     }
-    if ( !str_prefix(arg2, "silver" ) )
-    {
-    victim->silver = value;
-    return;
-    }
 
     if ( !str_prefix( arg2, "max_hp" ) )
     {
-    if ( value < -10 || value > 30000 )
-    {
-        send_to_char( "Hp range is -10 to 30,000 hit points.\n\r", ch );
+        if ( value < -10 || value > 30000 )
+        {
+            send_to_char( "Hp range is -10 to 30,000 hit points.\n\r", ch );
+            return;
+        }
+        victim->max_hit = value;
+            if (!IS_NPC(victim))
+                victim->pcdata->perm_hit = value;
         return;
-    }
-    victim->max_hit = value;
-        if (!IS_NPC(victim))
-            victim->pcdata->perm_hit = value;
-    return;
     }
 
     if ( !str_prefix( arg2, "hp" ) )
     {
-    if ( value < -10 || value > 30000 )
-    {
-        send_to_char( "Hp range is -10 to 30,000 hit points.\n\r", ch );
+        if ( value < -10 || value > 30000 )
+        {
+            send_to_char( "Hp range is -10 to 30,000 hit points.\n\r", ch );
+            return;
+        }
+        victim->hit = value;
+        update_pos(victim);
         return;
     }
-    victim->hit = value;
-    update_pos(victim);
-    return;
-    }
-
 
     if ( !str_prefix( arg2, "mana" ) )
     {
-    if ( value < 0 || value > 30000 )
-    {
-        send_to_char( "Mana range is 0 to 30,000 mana points.\n\r", ch );
-        return;
-    }
-    victim->max_mana = value;
+        if ( value < 0 || value > 30000 )
+        {
+            send_to_char( "Mana range is 0 to 30,000 mana points.\n\r", ch );
+            return;
+        }
+        victim->max_mana = value;
         if (!IS_NPC(victim))
             victim->pcdata->perm_mana = value;
-    return;
+        return;
     }
 
     if ( !str_prefix( arg2, "move" ) )
     {
-    if ( value < 0 || value > 30000 )
-    {
-        send_to_char( "Move range is 0 to 30,000 move points.\n\r", ch );
-        return;
-    }
-    victim->max_move = value;
+        if ( value < 0 || value > 30000 )
+        {
+            send_to_char( "Move range is 0 to 30,000 move points.\n\r", ch );
+            return;
+        }
+        victim->max_move = value;
         if (!IS_NPC(victim))
             victim->pcdata->perm_move = value;
-    return;
+        return;
     }
 
     if ( !str_prefix( arg2, "thirst" ) )
     {
-    if ( IS_NPC(victim) )
-    {
-        send_to_char( "Not on NPC's.\n\r", ch );
-        return;
-    }
+        if ( IS_NPC(victim) )
+        {
+            send_to_char( "Not on NPC's.\n\r", ch );
+            return;
+        }
 
-    if ( value < -1 || value > 100 )
-    {
-        send_to_char( "Thirst range is -1 to 100.\n\r", ch );
-        return;
-    }
+        if ( value < -1 || value > 100 )
+        {
+            send_to_char( "Thirst range is -1 to 100.\n\r", ch );
+            return;
+        }
 
-    victim->pcdata->condition[COND_THIRST] = value;
-    return;
+        victim->pcdata->condition[COND_THIRST] = value;
+        return;
     }
 
     if ( !str_prefix( arg2, "drunk" ) )

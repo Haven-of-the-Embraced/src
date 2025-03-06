@@ -6684,22 +6684,22 @@ void do_mset( CHAR_DATA *ch, char *argument )
 
     if (!str_prefix( arg2, "hometown"))
     {
-    int hometown;
-    hometown = get_hometown_num(arg3);
+        int hometown;
+        hometown = get_hometown_num(arg3);
 
-    if (IS_NPC(victim))
-    {
-    sendch("Not on NPCs!\n\r", ch);
-    return;
-    }
+        if (IS_NPC(victim))
+        {
+            sendch("Not on NPCs!\n\r", ch);
+            return;
+        }
 
-    if (hometown < 0)
-    {
-    sendch("Invalid hometown.\n\r", ch);
-    return;
-    }
-    victim->pcdata->hometown = hometown;
-    return;
+        if (hometown < 0)
+        {
+            sendch("Invalid hometown.\n\r", ch);
+            return;
+        }
+        victim->pcdata->hometown = hometown;
+        return;
     }
 
     if (!str_prefix( arg2, "race" ) )
@@ -7247,31 +7247,84 @@ void do_mset( CHAR_DATA *ch, char *argument )
     return;
     }
 
-
+/*  Vampire  */
     if ( !str_prefix( arg2, "gen" ) )
     {
-    if ( IS_NPC(victim) )
-    {
-        send_to_char( "Not on NPC's.\n\r", ch );
+        if ( IS_NPC(victim) )
+        {
+            send_to_char( "Not on NPC's.\n\r", ch );
+            return;
+        }
+
+        if ( !IS_IMMORTAL(victim) && (value < 5 || value > 10) )
+        {
+            send_to_char("Generation range is 5 to 10.\n\r", ch);
+            return;
+        }
+        int newgen;
+        victim->gen = value;
+        victim->pcdata->csgeneration = value;
+        newgen = 10-value;
+        if (newgen > 5) newgen = 5;
+        if (newgen < 0) newgen = 0;
+        victim->pcdata->csbackgrounds[CSBACK_GENERATION] = newgen;
+        victim->max_pblood = 100+(newgen * 10);
+
         return;
     }
 
-    if ( !IS_IMMORTAL(victim) && (value < 5 || value > 10) )
+    if ( !str_prefix( arg2, "drains" ) )
     {
-        send_to_char("Generation range is 5 to 10.\n\r", ch);
+        if ( IS_NPC(victim) )
+        {
+            send_to_char( "Not on NPC's.\n\r", ch );
+            return;
+        }
+
+        if ( value < 0 || value > 100 )
+        {
+            send_to_char("Drains range is 0 to 100.\n\r", ch);
+            return;
+        }
+        victim->drains = value;
         return;
     }
-    int newgen;
-    victim->gen = value;
-    victim->pcdata->csgeneration = value;
-    newgen = 10-value;
-    if (newgen > 5) newgen = 5;
-    if (newgen < 0) newgen = 0;
-    victim->pcdata->csbackgrounds[CSBACK_GENERATION] = newgen;
-    victim->max_pblood = 100+(newgen * 10);
 
-    return;
+    if ( !str_prefix( arg2, "embraced" ) )
+    {
+        if ( IS_NPC(victim) )
+        {
+            send_to_char( "Not on NPC's.\n\r", ch );
+            return;
+        }
+
+        if ( value < 0 || value > 100 )
+        {
+            send_to_char("Embraced range is 0 to 100.\n\r", ch);
+            return;
+        }
+
+        victim->embraced = value;
+        return;
     }
+
+    if ( !str_prefix( arg2, "childer" ) )
+    {
+        if ( IS_NPC(victim) )
+        {
+            send_to_char( "Not on NPC's.\n\r", ch );
+            return;
+        }
+
+        if ( value < 0 || value > 100 )
+        {
+            send_to_char("childer range is 0 to 100.\n\r", ch);
+            return;
+        }
+        victim->childer = value;
+        return;
+    }
+
     if ( !str_prefix( arg2, "rank" ) )
     {
     if ( IS_NPC(victim) )
@@ -7302,55 +7355,6 @@ void do_mset( CHAR_DATA *ch, char *argument )
         return;
     }
     victim->pcdata->rank = value;
-    return;
-    }
-    if ( !str_prefix( arg2, "drains" ) )
-    {
-    if ( IS_NPC(victim) )
-    {
-        send_to_char( "Not on NPC's.\n\r", ch );
-        return;
-    }
-
-    if ( value < 0 || value > 100 )
-    {
-        send_to_char("Drains range is 0 to 100.\n\r", ch);
-        return;
-    }
-    victim->drains = value;
-    return;
-    }
-
-    if ( !str_prefix( arg2, "embraced" ) )
-    {
-    if ( IS_NPC(victim) )
-    {
-        send_to_char( "Not on NPC's.\n\r", ch );
-        return;
-    }
-
-    if ( value < 0 || value > 100 )
-    {
-        send_to_char("Embraced range is 0 to 100.\n\r", ch);
-        return; }
-    victim->embraced = value;
-    return;
-    }
-
-    if ( !str_prefix( arg2, "childer" ) )
-    {
-    if ( IS_NPC(victim) )
-    {
-        send_to_char( "Not on NPC's.\n\r", ch );
-        return;
-    }
-
-    if ( value < 0 || value > 100 )
-    {
-        send_to_char("childer range is 0 to 100.\n\r", ch);
-        return;
-    }
-    victim->childer = value;
     return;
     }
 

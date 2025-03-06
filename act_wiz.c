@@ -6455,16 +6455,15 @@ void do_mset( CHAR_DATA *ch, char *argument )
 
     if ( arg1[0] == '\0' || arg2[0] == '\0' || arg3[0] == '\0' )
     {
-    send_to_char("Syntax:\n\r",ch);
-    send_to_char("  set char <name> <field> <value>\n\r",ch);
-    send_to_char( "  Field being one of:\n\r",          ch );
-    send_to_char( "    sex level race group gold silver hp mana move\n\r",    ch );
-    send_to_char( "    thirst hunger drunk full home max_blood blood\n\r",  ch );
-    send_to_char( "    security gen rank discipline drains embraced \n\r",    ch );
-    send_to_char( "    childer rage remorts renown paradox quintessence\n\r",    ch );
-    send_to_char( "    avatar arete freebie csstr csdex cssta cscha csman\n\r",    ch );
-    send_to_char( "    csapp csper csint cswit agg gnosis primal-urge\n\r", ch );
-    send_to_char( "    sphere background prenown trenown fur\n\r", ch);
+        send_to_char( "  {cSyntax:  set char <name> <field> <value>\n\r",ch);
+        send_to_char( "  {yField Options- {W(Universal){Y(Immortal){R(Vampire){G(Werewolf){C(Mage){x:{x\n\r", ch );
+        send_to_char( "    {Wsex level race hp agg mana move thirst hunger drunk full{x\n\r", ch );
+        send_to_char( "    {Wcsstr csdex cssta cscha csman csapp csper csint cswit  {x\n\r", ch );
+        send_to_char( "    {Whome freebie background remorts group gold silver{x\n\r", ch );
+        send_to_char( "    {Ysecurity{x\n\r", ch );
+        send_to_char( "    {Rmax_blood blood gen discipline sire drains embraced childer{x\n\r", ch );
+        send_to_char( "    {Grage renown gnosis primal-urge prenown trenown fur rank{x\n\r", ch );
+        send_to_char( "    {Cavatar arete paradox quintessence sphere mentor{x\n\r", ch );
     }
 
     if ( ( victim = get_char_world( ch, arg1 ) ) == NULL )

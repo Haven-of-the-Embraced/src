@@ -6830,6 +6830,159 @@ void do_mset( CHAR_DATA *ch, char *argument )
         return;
     }
 
+    if ( !str_prefix( arg2, "csstr" ) )
+    {
+    if ( IS_NPC(victim) )
+    {
+        send_to_char( "Not on NPC's.\n\r", ch );
+        return;
+    }
+
+    if ( value < 0 || value > 5 )
+    {
+        send_to_char("CS Strength range is 0 to 5.\n\r", ch);
+        return;
+    }
+    victim->csattributes[CSATTRIB_STRENGTH] = value;
+    return;
+    }
+
+    if ( !str_prefix( arg2, "csdex" ) )
+    {
+    if ( IS_NPC(victim) )
+    {
+        send_to_char( "Not on NPC's.\n\r", ch );
+        return;
+    }
+
+    if ( value < 0 || value > 5 )
+    {
+        send_to_char("CS Dexterity range is 0 to 5.\n\r", ch);
+        return;
+    }
+    victim->csattributes[CSATTRIB_DEXTERITY] = value;
+    return;
+    }
+
+    if ( !str_prefix( arg2, "cssta" ) )
+    {
+    if ( IS_NPC(victim) )
+    {
+        send_to_char( "Not on NPC's.\n\r", ch );
+        return;
+    }
+
+    if ( value < 0 || value > 5 )
+    {
+        send_to_char("CS Stamina range is 0 to 5.\n\r", ch);
+        return;
+    }
+    victim->csattributes[CSATTRIB_STAMINA] = value;
+    return;
+    }
+
+    if ( !str_prefix( arg2, "cscha" ) )
+    {
+    if ( IS_NPC(victim) )
+    {
+        send_to_char( "Not on NPC's.\n\r", ch );
+        return;
+    }
+
+    if ( value < 0 || value > 5 )
+    {
+        send_to_char("CS Charisma range is 0 to 5.\n\r", ch);
+        return;
+    }
+    victim->csattributes[CSATTRIB_CHARISMA] = value;
+    return;
+    }
+
+    if ( !str_prefix( arg2, "csman" ) )
+    {
+    if ( IS_NPC(victim) )
+    {
+        send_to_char( "Not on NPC's.\n\r", ch );
+        return;
+    }
+
+    if ( value < 0 || value > 5 )
+    {
+        send_to_char("CS Manipulation range is 0 to 5.\n\r", ch);
+        return;
+    }
+    victim->csattributes[CSATTRIB_MANIPULATION] = value;
+    return;
+    }
+
+    if ( !str_prefix( arg2, "csapp" ) )
+    {
+    if ( IS_NPC(victim) )
+    {
+        send_to_char( "Not on NPC's.\n\r", ch );
+        return;
+    }
+
+    if ( value < 0 || value > 5 )
+    {
+        send_to_char("CS Appearance range is 0 to 5.\n\r", ch);
+        return;
+    }
+    victim->csattributes[CSATTRIB_APPEARANCE] = value;
+    return;
+    }
+
+    if ( !str_prefix( arg2, "csper" ) )
+    {
+    if ( IS_NPC(victim) )
+    {
+        send_to_char( "Not on NPC's.\n\r", ch );
+        return;
+    }
+
+    if ( value < 0 || value > 5 )
+    {
+        send_to_char("CS Perception range is 0 to 5.\n\r", ch);
+        return;
+    }
+    victim->csattributes[CSATTRIB_PERCEPTION] = value;
+    return;
+    }
+
+    if ( !str_prefix( arg2, "csint" ) )
+    {
+    if ( IS_NPC(victim) )
+    {
+        send_to_char( "Not on NPC's.\n\r", ch );
+        return;
+    }
+
+    if ( value < 0 || value > 5 )
+    {
+        send_to_char("CS Intelligence range is 0 to 5.\n\r", ch);
+        return;
+    }
+    victim->csattributes[CSATTRIB_INTELLIGENCE] = value;
+    return;
+    }
+
+    if ( !str_prefix( arg2, "cswit" ) )
+    {
+    if ( IS_NPC(victim) )
+    {
+        send_to_char( "Not on NPC's.\n\r", ch );
+        return;
+    }
+
+    if ( value < 0 || value > 5 )
+    {
+        send_to_char("CS Wits range is 0 to 5.\n\r", ch);
+        return;
+    }
+    victim->csattributes[CSATTRIB_WITS] = value;
+    return;
+    }
+
 /*  Vampire  */
     if ( !str_prefix( arg2, "gen" ) )
     {
@@ -7072,6 +7225,168 @@ void do_mset( CHAR_DATA *ch, char *argument )
         return;
     }
 
+    if ( !str_prefix( arg2, "renown" ) )
+    {
+        if ( IS_NPC(victim) )
+        {
+            send_to_char( "Not on NPC's.\n\r", ch );
+            return;
+        }
+
+        if ( value < 0 || value > 1000 )
+        {
+            send_to_char("Renown range is 0 to 1000.\n\r", ch);
+            return;
+        }
+        victim->renown = value;
+        return;
+    }
+
+    if ( !str_prefix( arg2, "rank" ) )
+    {
+    if ( IS_NPC(victim) )
+    {
+        send_to_char( "Not on NPC's.\n\r", ch );
+        return;
+    }
+
+    if ( value < 1 || value > 10 )
+    {
+        send_to_char("Rank range is 1 to 10.\n\r", ch);
+        return;
+    }
+    victim->rank = value;
+    return;
+    }
+    if ( !str_prefix( arg2, "grank" ) )
+    {
+    if ( IS_NPC(victim) )
+    {
+        send_to_char( "Not on NPC's.\n\r", ch );
+        return;
+    }
+
+    if ( value < 1 || value > 5 )
+    {
+        send_to_char("Rank range is 1 to 5.\n\r", ch);
+        return;
+    }
+    victim->pcdata->rank = value;
+    return;
+    }
+
+    if ( !str_prefix( arg2, "rage" ) )
+    {
+    if ( IS_NPC(victim) )
+    {
+        send_to_char( "Not on NPC's.\n\r", ch );
+        return;
+    }
+
+/* Sengir hax to set current garou rage
+    if ( value < 0 || value > victim->pcdata->rage[TEMP] )
+    {
+        send_to_char("rage range is 0 to max rage.\n\r", ch);
+        return;
+    }
+    victim->pcdata->rage[TEMP] = value;
+    return;
+*/
+
+    if ( value < 0 || value > 100 )
+    {
+        send_to_char("{RRage{x range is 0 to 100.\n\r", ch);
+        return;
+    }
+    victim->rage = value;
+    return;
+    }
+
+    if ( !str_prefix( arg2, "gnosis" ) )
+    {
+        if ( value < 0)
+        {
+            send_to_char("You cannot set gnosis below 0.\n\r",ch);
+            return;
+        }
+        if ( value > 10)
+        {
+            send_to_char("You cannot set gnosis greater than 10.\n\r",ch);
+            return;
+        }
+        victim->pcdata->gnosis[PERM] = value;
+        return;
+    }
+    if (!str_prefix(arg2, "prenown") )
+    {
+        argument = one_argument( argument, arg3 );
+        argument = one_argument( argument, arg4 );
+
+        if (IS_NULLSTR(arg3) || IS_NULLSTR(arg4))
+        {
+            sendch("Syntax:\n\r\n\r", ch);
+            sendch("set char <char> prenown <glory/honor/wisdom> <1-5>    -- Sets Permenant Renown on char.\n\r", ch);
+            return;
+        }
+
+        if(!is_number(arg4) || (value = atoi(arg4)) < 0 || value > 10)
+        {
+            send_to_char("Invalid Renown range. Valid range is 0 - 5\n\r",ch);
+            return;
+        }
+        if ( !str_prefix(arg3, "glory"))
+            victim->pcdata->renown[GLORY] = value;
+        else if ( !str_prefix(arg3, "honor"))
+            victim->pcdata->renown[HONOR] = value;
+        else if ( !str_prefix(arg3, "wisdom"))
+            victim->pcdata->renown[WISDOM] = value;
+        else
+            sendch("Unknown renown type.\n\r", ch);
+        return;
+    }
+    if (!str_prefix(arg2, "trenown") )
+    {
+        argument = one_argument( argument, arg3 );
+        argument = one_argument( argument, arg4 );
+
+        if (IS_NULLSTR(arg3) || IS_NULLSTR(arg4))
+        {
+            sendch("Syntax:\n\r\n\r", ch);
+            sendch("set char <char> prenown <glory/honor/wisdom> <1-5>    -- Sets Temporary Renown on char.\n\r", ch);
+            return;
+        }
+
+        if(!is_number(arg4) || (value = atoi(arg4)) < 0 || value > 10)
+        {
+            send_to_char("Invalid Renown range. Valid range is 0 - 10\n\r",ch);
+            return;
+        }
+        if ( !str_prefix(arg3, "glory"))
+            victim->pcdata->renown[TEMP_GLORY] = value;
+        else if ( !str_prefix(arg3, "honor"))
+            victim->pcdata->renown[TEMP_HONOR] = value;
+        else if ( !str_prefix(arg3, "wisdom"))
+            victim->pcdata->renown[TEMP_WISDOM] = value;
+        else
+            sendch("Unknown renown type.\n\r", ch);
+        return;
+    }
+    if ( !str_prefix( arg2, "primal-urge" ) )
+    {
+        if ( value < 0)
+        {
+            send_to_char("You cannot set primal-urge below 0.\n\r",ch);
+            return;
+        }
+        if ( value > 5)
+        {
+            send_to_char("You cannot set primal-urge greater than 5.\n\r",ch);
+            return;
+        }
+        victim->pcdata->primal_urge = value;
+        return;
+    }
+
 /*  Mage  */
     if ( !str_prefix ( arg2, "sphere" ) )
     {
@@ -7180,237 +7495,6 @@ void do_mset( CHAR_DATA *ch, char *argument )
     return;
     }
 
-
-    if ( !str_prefix( arg2, "renown" ) )
-    {
-    if ( IS_NPC(victim) )
-    {
-        send_to_char( "Not on NPC's.\n\r", ch );
-        return;
-    }
-
-    if ( value < 0 || value > 1000 )
-    {
-        send_to_char("Renown range is 0 to 1000.\n\r", ch);
-        return;
-    }
-    victim->renown = value;
-    return;
-    }
-
-    if ( !str_prefix( arg2, "csstr" ) )
-    {
-    if ( IS_NPC(victim) )
-    {
-        send_to_char( "Not on NPC's.\n\r", ch );
-        return;
-    }
-
-    if ( value < 0 || value > 5 )
-    {
-        send_to_char("CS Strength range is 0 to 5.\n\r", ch);
-        return;
-    }
-    victim->csattributes[CSATTRIB_STRENGTH] = value;
-    return;
-    }
-
-    if ( !str_prefix( arg2, "csdex" ) )
-    {
-    if ( IS_NPC(victim) )
-    {
-        send_to_char( "Not on NPC's.\n\r", ch );
-        return;
-    }
-
-    if ( value < 0 || value > 5 )
-    {
-        send_to_char("CS Dexterity range is 0 to 5.\n\r", ch);
-        return;
-    }
-    victim->csattributes[CSATTRIB_DEXTERITY] = value;
-    return;
-    }
-
-    if ( !str_prefix( arg2, "cssta" ) )
-    {
-    if ( IS_NPC(victim) )
-    {
-        send_to_char( "Not on NPC's.\n\r", ch );
-        return;
-    }
-
-    if ( value < 0 || value > 5 )
-    {
-        send_to_char("CS Stamina range is 0 to 5.\n\r", ch);
-        return;
-    }
-    victim->csattributes[CSATTRIB_STAMINA] = value;
-    return;
-    }
-
-    if ( !str_prefix( arg2, "cscha" ) )
-    {
-    if ( IS_NPC(victim) )
-    {
-        send_to_char( "Not on NPC's.\n\r", ch );
-        return;
-    }
-
-    if ( value < 0 || value > 5 )
-    {
-        send_to_char("CS Charisma range is 0 to 5.\n\r", ch);
-        return;
-    }
-    victim->csattributes[CSATTRIB_CHARISMA] = value;
-    return;
-    }
-
-    if ( !str_prefix( arg2, "csman" ) )
-    {
-    if ( IS_NPC(victim) )
-    {
-        send_to_char( "Not on NPC's.\n\r", ch );
-        return;
-    }
-
-    if ( value < 0 || value > 5 )
-    {
-        send_to_char("CS Manipulation range is 0 to 5.\n\r", ch);
-        return;
-    }
-    victim->csattributes[CSATTRIB_MANIPULATION] = value;
-    return;
-    }
-
-    if ( !str_prefix( arg2, "csapp" ) )
-    {
-    if ( IS_NPC(victim) )
-    {
-        send_to_char( "Not on NPC's.\n\r", ch );
-        return;
-    }
-
-    if ( value < 0 || value > 5 )
-    {
-        send_to_char("CS Appearance range is 0 to 5.\n\r", ch);
-        return;
-    }
-    victim->csattributes[CSATTRIB_APPEARANCE] = value;
-    return;
-    }
-
-    if ( !str_prefix( arg2, "csper" ) )
-    {
-    if ( IS_NPC(victim) )
-    {
-        send_to_char( "Not on NPC's.\n\r", ch );
-        return;
-    }
-
-    if ( value < 0 || value > 5 )
-    {
-        send_to_char("CS Perception range is 0 to 5.\n\r", ch);
-        return;
-    }
-    victim->csattributes[CSATTRIB_PERCEPTION] = value;
-    return;
-    }
-
-    if ( !str_prefix( arg2, "csint" ) )
-    {
-    if ( IS_NPC(victim) )
-    {
-        send_to_char( "Not on NPC's.\n\r", ch );
-        return;
-    }
-
-    if ( value < 0 || value > 5 )
-    {
-        send_to_char("CS Intelligence range is 0 to 5.\n\r", ch);
-        return;
-    }
-    victim->csattributes[CSATTRIB_INTELLIGENCE] = value;
-    return;
-    }
-
-    if ( !str_prefix( arg2, "cswit" ) )
-    {
-    if ( IS_NPC(victim) )
-    {
-        send_to_char( "Not on NPC's.\n\r", ch );
-        return;
-    }
-
-    if ( value < 0 || value > 5 )
-    {
-        send_to_char("CS Wits range is 0 to 5.\n\r", ch);
-        return;
-    }
-    victim->csattributes[CSATTRIB_WITS] = value;
-    return;
-    }
-
-    if ( !str_prefix( arg2, "rank" ) )
-    {
-    if ( IS_NPC(victim) )
-    {
-        send_to_char( "Not on NPC's.\n\r", ch );
-        return;
-    }
-
-    if ( value < 1 || value > 10 )
-    {
-        send_to_char("Rank range is 1 to 10.\n\r", ch);
-        return;
-    }
-    victim->rank = value;
-    return;
-    }
-    if ( !str_prefix( arg2, "grank" ) )
-    {
-    if ( IS_NPC(victim) )
-    {
-        send_to_char( "Not on NPC's.\n\r", ch );
-        return;
-    }
-
-    if ( value < 1 || value > 5 )
-    {
-        send_to_char("Rank range is 1 to 5.\n\r", ch);
-        return;
-    }
-    victim->pcdata->rank = value;
-    return;
-    }
-
-    if ( !str_prefix( arg2, "rage" ) )
-    {
-    if ( IS_NPC(victim) )
-    {
-        send_to_char( "Not on NPC's.\n\r", ch );
-        return;
-    }
-
-/* Sengir hax to set current garou rage
-    if ( value < 0 || value > victim->pcdata->rage[TEMP] )
-    {
-        send_to_char("rage range is 0 to max rage.\n\r", ch);
-        return;
-    }
-    victim->pcdata->rage[TEMP] = value;
-    return;
-*/
-
-    if ( value < 0 || value > 100 )
-    {
-        send_to_char("{RRage{x range is 0 to 100.\n\r", ch);
-        return;
-    }
-    victim->rage = value;
-    return;
-    }
-
     if ( !str_prefix( arg2, "immclass" ))
     {
         if (IS_NPC(victim))
@@ -7483,90 +7567,6 @@ void do_mset( CHAR_DATA *ch, char *argument )
             return;
         }
         victim->agg_dam = value;
-        return;
-    }
-    if ( !str_prefix( arg2, "gnosis" ) )
-    {
-        if ( value < 0)
-        {
-            send_to_char("You cannot set gnosis below 0.\n\r",ch);
-            return;
-        }
-        if ( value > 10)
-        {
-            send_to_char("You cannot set gnosis greater than 10.\n\r",ch);
-            return;
-        }
-        victim->pcdata->gnosis[PERM] = value;
-        return;
-    }
-    if (!str_prefix(arg2, "prenown") )
-    {
-        argument = one_argument( argument, arg3 );
-        argument = one_argument( argument, arg4 );
-
-        if (IS_NULLSTR(arg3) || IS_NULLSTR(arg4))
-        {
-            sendch("Syntax:\n\r\n\r", ch);
-            sendch("set char <char> prenown <glory/honor/wisdom> <1-5>    -- Sets Permenant Renown on char.\n\r", ch);
-            return;
-        }
-
-        if(!is_number(arg4) || (value = atoi(arg4)) < 0 || value > 10)
-        {
-            send_to_char("Invalid Renown range. Valid range is 0 - 5\n\r",ch);
-            return;
-        }
-        if ( !str_prefix(arg3, "glory"))
-            victim->pcdata->renown[GLORY] = value;
-        else if ( !str_prefix(arg3, "honor"))
-            victim->pcdata->renown[HONOR] = value;
-        else if ( !str_prefix(arg3, "wisdom"))
-            victim->pcdata->renown[WISDOM] = value;
-        else
-            sendch("Unknown renown type.\n\r", ch);
-		return;
-    }
-    if (!str_prefix(arg2, "trenown") )
-    {
-        argument = one_argument( argument, arg3 );
-        argument = one_argument( argument, arg4 );
-
-        if (IS_NULLSTR(arg3) || IS_NULLSTR(arg4))
-        {
-            sendch("Syntax:\n\r\n\r", ch);
-            sendch("set char <char> prenown <glory/honor/wisdom> <1-5>    -- Sets Temporary Renown on char.\n\r", ch);
-            return;
-        }
-
-        if(!is_number(arg4) || (value = atoi(arg4)) < 0 || value > 10)
-        {
-            send_to_char("Invalid Renown range. Valid range is 0 - 10\n\r",ch);
-            return;
-        }
-        if ( !str_prefix(arg3, "glory"))
-            victim->pcdata->renown[TEMP_GLORY] = value;
-        else if ( !str_prefix(arg3, "honor"))
-            victim->pcdata->renown[TEMP_HONOR] = value;
-        else if ( !str_prefix(arg3, "wisdom"))
-            victim->pcdata->renown[TEMP_WISDOM] = value;
-        else
-			sendch("Unknown renown type.\n\r", ch);
-        return;
-    }
-    if ( !str_prefix( arg2, "primal-urge" ) )
-    {
-        if ( value < 0)
-        {
-            send_to_char("You cannot set primal-urge below 0.\n\r",ch);
-            return;
-        }
-        if ( value > 5)
-        {
-            send_to_char("You cannot set primal-urge greater than 5.\n\r",ch);
-            return;
-        }
-        victim->pcdata->primal_urge = value;
         return;
     }
 

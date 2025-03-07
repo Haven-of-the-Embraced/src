@@ -2430,7 +2430,6 @@ void do_horridreality(CHAR_DATA *ch, char *argument)
     }
 }
 
-// Dementation
 void do_incubuspassion(CHAR_DATA *ch, char *argument)
 {
     if (IS_NPC(ch)) return;
@@ -2440,6 +2439,7 @@ void do_incubuspassion(CHAR_DATA *ch, char *argument)
         send_to_char("You are not a vampire!\n\r" ,ch);
         return;
     }
+    send_to_char("UNCODED\n\r", ch);
     return;
 }
 
@@ -2452,6 +2452,7 @@ void do_hauntthesoul(CHAR_DATA *ch, char *argument)
         send_to_char("You are not a vampire!\n\r" ,ch);
         return;
     }
+    send_to_char("UNCODED\n\r", ch);
     return;
 }
 
@@ -2464,6 +2465,7 @@ void do_eyesofchaos(CHAR_DATA *ch, char *argument)
         send_to_char("You are not a vampire!\n\r" ,ch);
         return;
     }
+    send_to_char("UNCODED\n\r", ch);
     return;
 }
 
@@ -2476,6 +2478,7 @@ void do_silencethesanemind(CHAR_DATA *ch, char *argument)
         send_to_char("You are not a vampire!\n\r" ,ch);
         return;
     }
+    send_to_char("UNCODED\n\r", ch);
     return;
 }
 
@@ -2488,6 +2491,7 @@ void do_howlinglunacy(CHAR_DATA *ch, char *argument)
         send_to_char("You are not a vampire!\n\r" ,ch);
         return;
     }
+    send_to_char("UNCODED\n\r", ch);
     return;
 }
 

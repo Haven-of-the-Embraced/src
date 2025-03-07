@@ -2439,6 +2439,13 @@ void do_incubuspassion(CHAR_DATA *ch, char *argument)
         send_to_char("You are not a vampire!\n\r" ,ch);
         return;
     }
+
+    if (ch->pcdata->discipline[DEMENTATION] < 1)
+    {
+        send_to_char( "You have not yet begun to revel in the madness.\n\r", ch );
+        return;
+    }
+
     send_to_char("UNCODED\n\r", ch);
     return;
 }
@@ -2450,6 +2457,12 @@ void do_hauntthesoul(CHAR_DATA *ch, char *argument)
     if(!IS_VAMP(ch))
     {
         send_to_char("You are not a vampire!\n\r" ,ch);
+        return;
+    }
+
+    if (ch->pcdata->discipline[DEMENTATION] < 2)
+    {
+        send_to_char( "The madness has only just begun your enlightenment.\n\r", ch );
         return;
     }
     send_to_char("UNCODED\n\r", ch);
@@ -2465,6 +2478,12 @@ void do_eyesofchaos(CHAR_DATA *ch, char *argument)
         send_to_char("You are not a vampire!\n\r" ,ch);
         return;
     }
+
+    if (ch->pcdata->discipline[DEMENTATION] < 3)
+    {
+        send_to_char( "The world is an example of unparallelled excitement.\n\r", ch );
+        return;
+    }
     send_to_char("UNCODED\n\r", ch);
     return;
 }
@@ -2478,6 +2497,12 @@ void do_silencethesanemind(CHAR_DATA *ch, char *argument)
         send_to_char("You are not a vampire!\n\r" ,ch);
         return;
     }
+
+    if (ch->pcdata->discipline[DEMENTATION] < 4)
+    {
+        send_to_char( "You must first understand your own mind.\n\r", ch );
+        return;
+    }
     send_to_char("UNCODED\n\r", ch);
     return;
 }
@@ -2488,7 +2513,13 @@ void do_howlinglunacy(CHAR_DATA *ch, char *argument)
 
     if(!IS_VAMP(ch))
     {
-        send_to_char("You are not a vampire!\n\r" ,ch);
+        send_to_char("You have not fully mastered the intricacies of Dementation.\n\r" ,ch);
+        return;
+    }
+
+    if (ch->pcdata->discipline[DEMENTATION] < 5)
+    {
+        send_to_char( "Hey, you.  You are not trained in Dominate!\n\r", ch );
         return;
     }
     send_to_char("UNCODED\n\r", ch);

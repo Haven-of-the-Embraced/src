@@ -6751,6 +6751,85 @@ void do_mset( CHAR_DATA *ch, char *argument )
         return;
     }
 
+    if ( !str_prefix ( arg2, "backgrounds" ) )
+    {
+        int i, disc = 99;
+
+        if(IS_NPC(victim))
+        {
+            send_to_char("Not on NPCs.\n\r",ch);
+            return;
+        }
+
+        argument = one_argument( argument, arg3 );
+        argument = one_argument( argument, arg4 );
+
+        for(i = 0;i < MAX_CSBACK;i++)
+        {
+            if(!str_prefix ( arg3, csback_table[i].name ))
+                disc = i;
+        }
+
+        if(disc == 99)
+        {
+            send_to_char("No such Background.\n\r",ch);
+            return;
+        }
+
+        if(!is_number(arg4) || (value = atoi(arg4)) < 0 || value > 5)
+        {
+            send_to_char("Invalid background range. Valid range is 0 - 5\n\r",ch);
+            return;
+        }
+
+        if (disc == CSBACK_GENERATION)
+        {
+            victim->gen = 10-value;
+            victim->pcdata->csgeneration = 10-value;
+            victim->max_pblood = 100+(value * 10);
+        }
+
+        if (disc == CSBACK_FOUNT)
+            victim->max_quintessence = 100+(value*10);
+
+        victim->pcdata->csbackgrounds[disc] = value;
+        return;
+    }
+
+    if ( !str_prefix( arg2, "ichours" ) )
+    {
+        if ( IS_NPC(victim) )
+        {
+            send_to_char( "Not on NPC's.\n\r", ch );
+            return;
+        }
+
+        if ( value < 0 || value > 30000 )
+        {
+            send_to_char("IC Hour range is 0 to 30000.\n\r", ch);
+            return;
+        }
+        victim->pcdata->IC_total = value*60;
+        return;
+    }
+
+    if ( !str_prefix( arg2, "remorts" ) )
+    {
+        if ( IS_NPC(victim) )
+        {
+            send_to_char( "Not on NPC's.\n\r", ch );
+            return;
+        }
+
+        if ( value < 0 || value > 1000 )
+        {
+            send_to_char("Remort range is 0 to 1000.\n\r", ch);
+            return;
+        }
+        victim->remorts = value;
+        return;
+    }
+
 /*  Vampire  */
     if ( !str_prefix( arg2, "gen" ) )
     {
@@ -6863,114 +6942,6 @@ void do_mset( CHAR_DATA *ch, char *argument )
         return;
     }
 
-    if ( !str_prefix( arg2, "dpoints" ) )
-    {
-        if ( IS_NPC(victim) )
-        {
-            send_to_char( "Not on NPC's.\n\r", ch );
-            return;
-        }
-
-        if ( value < 0 || value > 100 )
-        {
-            send_to_char("Dpoint range is 0 to 100.\n\r", ch);
-            return;
-        }
-        victim->dpoints = value;
-        return;
-    }
-
-/*  Werewolf  */
-	if ( !str_prefix (arg2, "breed" ) )
-	{
-	if (IS_NPC(victim))
-	{
-	sendch("Not on npcs unless you wanna crash us.\n\r", ch);
-	return;
-	}
-
-	int desired;
-	if (!str_prefix(arg3, "homid")) desired = HOMID;
-    else if(!str_prefix(arg3, "metis")) desired = METIS;
-    else if(!str_prefix(arg3, "lupus")) desired = LUPUS;
-    else
-    {
-        send_to_char("That is not a breed.\n\r",ch);
-        return;
-    }
-	victim->pcdata->breed = desired;
-	return;
-	}
-
-	if ( !str_prefix (arg2, "auspice" ) )
-	{
-	if (IS_NPC(victim))
-	{
-	sendch("Not on npcs unless you wanna crash us.\n\r", ch);
-	return;
-	}
-
-	int desired;
-	if (!str_prefix(arg3, "ragabash")) desired = RAGABASH;
-    else if(!str_prefix(arg3, "theurge")) desired = THEURGE;
-    else if(!str_prefix(arg3, "philodox")) desired = PHILODOX;
-	else if(!str_prefix(arg3, "galliard")) desired = GALLIARD;
-	else if(!str_prefix(arg3, "ahroun")) desired = AHROUN;
-    else
-    {
-        send_to_char("That is not an auspice.\n\r",ch);
-        return;
-    }
-	victim->pcdata->auspice = desired;
-	return;
-	}
-    if (!str_prefix (arg2, "fur"))
-    {
-        if (IS_NPC(victim))
-        {
-            send_to_char("Not on NPCs.\n\r", ch);
-            return;
-        }
-            smash_tilde( argument );
-            free_string( victim->pcdata->garou_fur );
-            victim->pcdata->garou_fur = str_dup( argument );
-            send_to_char("Fur color set.\n\r", ch);
-            send_to_char("Your fur color has been changed.\n\r", victim);
-            send_to_char("Will take effect on your next shift.\n\r", victim);
-            return;
-    }
-
-        if ( !str_prefix ( arg2, "sphere" ) )
-    {
-        int i, disc = 99;
-
-        if(IS_NPC(victim))
-        {
-            send_to_char("Not on NPCs.\n\r",ch);
-            return;
-        }
-
-        argument = one_argument( argument, arg3 );
-        argument = one_argument( argument, arg4 );
-
-        for(i = 0;i <= MAX_SPHERE;i++)
-        {
-            if(!str_prefix ( arg3, sphere_table[i].name ))
-                disc = i;
-        }
-        if(disc == 99)
-        {
-            send_to_char("No such Sphere.\n\r",ch);
-            return;
-        }
-        if(!is_number(arg4) || (value = atoi(arg4)) < 0 || value > 5)
-        {
-            send_to_char("Invalid Sphere range. Valid range is 0 - 5\n\r",ch);
-            return;
-        }
-        victim->sphere[disc] = value;
-        return;
-    }
     if ( !str_prefix ( arg2, "discipline" ) )
     {
         int i, disc = 99;
@@ -7008,7 +6979,87 @@ void do_mset( CHAR_DATA *ch, char *argument )
         victim->pcdata->discipline[disc] = value;
         return;
     }
-        if ( !str_prefix ( arg2, "backgrounds" ) )
+
+    if ( !str_prefix( arg2, "dpoints" ) )
+    {
+        if ( IS_NPC(victim) )
+        {
+            send_to_char( "Not on NPC's.\n\r", ch );
+            return;
+        }
+
+        if ( value < 0 || value > 100 )
+        {
+            send_to_char("Dpoint range is 0 to 100.\n\r", ch);
+            return;
+        }
+        victim->dpoints = value;
+        return;
+    }
+
+/*  Werewolf  */
+	if ( !str_prefix (arg2, "breed" ) )
+	{
+        if (IS_NPC(victim))
+        {
+            sendch("Not on npcs unless you wanna crash us.\n\r", ch);
+            return;
+        }
+
+    	int desired;
+        if (!str_prefix(arg3, "homid")) desired = HOMID;
+        else if(!str_prefix(arg3, "metis")) desired = METIS;
+        else if(!str_prefix(arg3, "lupus")) desired = LUPUS;
+        else
+        {
+            send_to_char("That is not a breed.\n\r",ch);
+            return;
+        }
+        victim->pcdata->breed = desired;
+        return;
+	}
+
+	if ( !str_prefix (arg2, "auspice" ) )
+	{
+        if (IS_NPC(victim))
+        {
+    	   sendch("Not on npcs unless you wanna crash us.\n\r", ch);
+            return;
+    	}
+
+    	int desired;
+        if (!str_prefix(arg3, "ragabash")) desired = RAGABASH;
+        else if(!str_prefix(arg3, "theurge")) desired = THEURGE;
+        else if(!str_prefix(arg3, "philodox")) desired = PHILODOX;
+        else if(!str_prefix(arg3, "galliard")) desired = GALLIARD;
+        else if(!str_prefix(arg3, "ahroun")) desired = AHROUN;
+        else
+        {
+            send_to_char("That is not an auspice.\n\r",ch);
+            return;
+        }
+    	victim->pcdata->auspice = desired;
+	   return;
+	}
+
+    if (!str_prefix (arg2, "fur"))
+    {
+        if (IS_NPC(victim))
+        {
+            send_to_char("Not on NPCs.\n\r", ch);
+            return;
+        }
+        smash_tilde( argument );
+        free_string( victim->pcdata->garou_fur );
+        victim->pcdata->garou_fur = str_dup( argument );
+        send_to_char("Fur color set.\n\r", ch);
+        send_to_char("Your fur color has been changed.\n\r", victim);
+        send_to_char("Will take effect on your next shift.\n\r", victim);
+        return;
+    }
+
+/*  Mage  */
+    if ( !str_prefix ( arg2, "sphere" ) )
     {
         int i, disc = 99;
 
@@ -7021,66 +7072,23 @@ void do_mset( CHAR_DATA *ch, char *argument )
         argument = one_argument( argument, arg3 );
         argument = one_argument( argument, arg4 );
 
-        for(i = 0;i < MAX_CSBACK;i++)
+        for(i = 0;i <= MAX_SPHERE;i++)
         {
-            if(!str_prefix ( arg3, csback_table[i].name ))
+            if(!str_prefix ( arg3, sphere_table[i].name ))
                 disc = i;
         }
         if(disc == 99)
         {
-            send_to_char("No such Background.\n\r",ch);
+            send_to_char("No such Sphere.\n\r",ch);
             return;
         }
         if(!is_number(arg4) || (value = atoi(arg4)) < 0 || value > 5)
         {
-            send_to_char("Invalid background range. Valid range is 0 - 5\n\r",ch);
+            send_to_char("Invalid Sphere range. Valid range is 0 - 5\n\r",ch);
             return;
         }
-        if (disc == CSBACK_GENERATION)
-        {
-            victim->gen = 10-value;
-            victim->pcdata->csgeneration = 10-value;
-            victim->max_pblood = 100+(value * 10);
-        }
-        if (disc == CSBACK_FOUNT)
-            victim->max_quintessence = 100+(value*10);
-
-        victim->pcdata->csbackgrounds[disc] = value;
+        victim->sphere[disc] = value;
         return;
-    }
-
-    if ( !str_prefix( arg2, "ichours" ) )
-    {
-    if ( IS_NPC(victim) )
-    {
-        send_to_char( "Not on NPC's.\n\r", ch );
-        return;
-    }
-
-    if ( value < 0 || value > 30000 )
-    {
-        send_to_char("IC Hour range is 0 to 30000.\n\r", ch);
-        return;
-    }
-    victim->pcdata->IC_total = value*60;
-    return;
-    }
-
-   if ( !str_prefix( arg2, "remorts" ) )
-    {
-    if ( IS_NPC(victim) )
-    {
-        send_to_char( "Not on NPC's.\n\r", ch );
-        return;
-    }
-
-    if ( value < 0 || value > 1000 )
-    {
-        send_to_char("Remort range is 0 to 1000.\n\r", ch);
-        return;
-    }
-    victim->remorts = value;
-    return;
     }
 
     if ( !str_prefix( arg2, "paradox" ) )

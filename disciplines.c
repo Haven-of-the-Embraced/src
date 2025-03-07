@@ -2446,6 +2446,19 @@ void do_incubuspassion(CHAR_DATA *ch, char *argument)
         return;
     }
 
+    if (victim == ch)
+    {
+        send_to_char("Your mind is already elevated to the magnificence of truth.\n\r",ch);
+        return;
+    }
+
+    if (ch->pblood < 10)
+    {
+        send_to_char( "You don't have enough blood.\n\r", ch );
+        return;
+    }
+
+    ch->pblood -= 8;
     send_to_char("UNCODED\n\r", ch);
     return;
 }
@@ -2465,6 +2478,20 @@ void do_hauntthesoul(CHAR_DATA *ch, char *argument)
         send_to_char( "The madness has only just begun your enlightenment.\n\r", ch );
         return;
     }
+
+    if (victim == ch)
+    {
+        send_to_char("Your mind is already elevated to the magnificence of truth.\n\r",ch);
+        return;
+    }
+
+    if (ch->pblood < 13)
+    {
+        send_to_char( "You don't have enough blood.\n\r", ch );
+        return;
+    }
+
+    ch->pblood -= 11;
     send_to_char("UNCODED\n\r", ch);
     return;
 }
@@ -2484,6 +2511,20 @@ void do_eyesofchaos(CHAR_DATA *ch, char *argument)
         send_to_char( "The world is an example of unparallelled excitement.\n\r", ch );
         return;
     }
+
+    if (victim == ch)
+    {
+        send_to_char("Your mind is already elevated to the magnificence of truth.\n\r",ch);
+        return;
+    }
+
+    if (ch->pblood < 16)
+    {
+        send_to_char( "You don't have enough blood.\n\r", ch );
+        return;
+    }
+
+    ch->pblood -= 14;
     send_to_char("UNCODED\n\r", ch);
     return;
 }
@@ -2503,6 +2544,20 @@ void do_silencethesanemind(CHAR_DATA *ch, char *argument)
         send_to_char( "You must first understand your own mind.\n\r", ch );
         return;
     }
+
+    if (victim == ch)
+    {
+        send_to_char("Your mind is already elevated to the magnificence of truth.\n\r",ch);
+        return;
+    }
+
+    if (ch->pblood < 19)
+    {
+        send_to_char( "You don't have enough blood.\n\r", ch );
+        return;
+    }
+
+    ch->pblood -= 17;
     send_to_char("UNCODED\n\r", ch);
     return;
 }
@@ -2522,6 +2577,20 @@ void do_howlinglunacy(CHAR_DATA *ch, char *argument)
         send_to_char( "Hey, you.  You are not trained in Dominate!\n\r", ch );
         return;
     }
+
+    if (victim == ch)
+    {
+        send_to_char("Your mind is already elevated to the magnificence of truth.\n\r",ch);
+        return;
+    }
+
+    if (ch->pblood < 22)
+    {
+        send_to_char( "You don't have enough blood.\n\r", ch );
+        return;
+    }
+
+    ch->pblood -= 20;
     send_to_char("UNCODED\n\r", ch);
     return;
 }

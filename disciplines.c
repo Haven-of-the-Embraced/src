@@ -2430,6 +2430,67 @@ void do_horridreality(CHAR_DATA *ch, char *argument)
     }
 }
 
+// Dementation
+void do_incubuspassion(CHAR_DATA *ch, char *argument)
+{
+    if (IS_NPC(ch)) return;
+
+    if(!IS_VAMP(ch))
+    {
+        send_to_char("You are not a vampire!\n\r" ,ch);
+        return;
+    }
+    return;
+}
+
+void do_hauntthesoul(CHAR_DATA *ch, char *argument)
+{
+    if (IS_NPC(ch)) return;
+
+    if(!IS_VAMP(ch))
+    {
+        send_to_char("You are not a vampire!\n\r" ,ch);
+        return;
+    }
+    return;
+}
+
+void do_eyesofchaos(CHAR_DATA *ch, char *argument)
+{
+    if (IS_NPC(ch)) return;
+
+    if(!IS_VAMP(ch))
+    {
+        send_to_char("You are not a vampire!\n\r" ,ch);
+        return;
+    }
+    return;
+}
+
+void do_silencethesanemind(CHAR_DATA *ch, char *argument)
+{
+    if (IS_NPC(ch)) return;
+
+    if(!IS_VAMP(ch))
+    {
+        send_to_char("You are not a vampire!\n\r" ,ch);
+        return;
+    }
+    return;
+}
+
+void do_howlinglunacy(CHAR_DATA *ch, char *argument)
+{
+    if (IS_NPC(ch)) return;
+
+    if(!IS_VAMP(ch))
+    {
+        send_to_char("You are not a vampire!\n\r" ,ch);
+        return;
+    }
+    return;
+}
+
 void do_command(CHAR_DATA *ch, char *argument)
 {
    char arg1[MAX_INPUT_LENGTH],arg2[MAX_INPUT_LENGTH];

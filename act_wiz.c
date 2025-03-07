@@ -6856,6 +6856,20 @@ void do_mset( CHAR_DATA *ch, char *argument )
         return;
     }
 
+    if ( !str_prefix( arg2, "sire" ) || !str_prefix( arg2, "mentor" ))
+    {
+        if ( IS_NPC(victim) )
+        {
+            send_to_char( "Not on NPC's.\n\r", ch );
+            return;
+        }
+
+        victim->sire = str_dup(arg3);
+        sprintf(buf,"{R*** {Y%s{x is now set to {Y%s{x's %s{x.", arg3, victim->name, capitalize(arg2));
+        send_to_char(buf, ch);
+        return;
+    }
+
     if ( !str_prefix( arg2, "drains" ) )
     {
         if ( IS_NPC(victim) )

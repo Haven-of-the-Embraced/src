@@ -2433,7 +2433,7 @@ void do_horridreality(CHAR_DATA *ch, char *argument)
 void do_incubuspassion(CHAR_DATA *ch, char *argument)
 {
     CHAR_DATA *victim;
-    int dice, diff, success;
+    int dice, diff = 6, success;
     AFFECT_DATA af;
     char arg1[MSL];
     char arg2[MSL];
@@ -2455,7 +2455,7 @@ void do_incubuspassion(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if ( ( victim = get_char_room( ch, NULL, arg2 ) ) == NULL &&
+    if ( ( victim = get_char_room( ch, NULL, arg1 ) ) == NULL &&
         (victim = ch->fighting) == NULL )
     {
         send_to_char("On whom do you wish to alter passions of the world?\n\r",ch);
@@ -2468,6 +2468,13 @@ void do_incubuspassion(CHAR_DATA *ch, char *argument)
         return;
     }
 
+    if (!str_prefix(arg2,"heighten") || !str_prefix(arg2,"dull"))
+    {
+        send_to_char("Do you wish to '{yheighten{x' or '{ydull{x' your target's emotions?\n\r",ch);
+        send_to_char("Syntax: {cincubuspassion <target> <heighten/dull>{x\n\r", ch);
+        return;
+    }
+
     if (ch->pblood < 10)
     {
         send_to_char( "You don't have enough blood.\n\r", ch );
@@ -2475,6 +2482,13 @@ void do_incubuspassion(CHAR_DATA *ch, char *argument)
     }
 
     ch->pblood -= 8;
+
+    if (victim->level < ch->level)
+        diff--;
+    if (victim->level > ch->level+10)
+        diff++;
+
+    success = godice(get_attribute(ch, CHARISMA) + get_ability(ch, CSABIL_EMPATHY), diff);
     send_to_char("UNCODED\n\r", ch);
     return;
 }
@@ -2504,7 +2518,7 @@ void do_hauntthesoul(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if ( ( victim = get_char_room( ch, NULL, arg2 ) ) == NULL &&
+    if ( ( victim = get_char_room( ch, NULL, arg1 ) ) == NULL &&
         (victim = ch->fighting) == NULL )
     {
         send_to_char("Who requires the nudge towards enlightenment?\n\r",ch);
@@ -2553,7 +2567,7 @@ void do_eyesofchaos(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if ( ( victim = get_char_room( ch, NULL, arg2 ) ) == NULL &&
+    if ( ( victim = get_char_room( ch, NULL, arg1 ) ) == NULL &&
         (victim = ch->fighting) == NULL )
     {
         send_to_char("Whom is deserving of your scrutiny?\n\r",ch);
@@ -2602,7 +2616,7 @@ void do_silencethesanemind(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if ( ( victim = get_char_room( ch, NULL, arg2 ) ) == NULL &&
+    if ( ( victim = get_char_room( ch, NULL, arg1 ) ) == NULL &&
         (victim = ch->fighting) == NULL )
     {
         send_to_char("Whose mind requires clarity?\n\r",ch);
@@ -2636,7 +2650,7 @@ void do_howlinglunacy(CHAR_DATA *ch, char *argument)
 
     argument = one_argument(argument, arg1);
     argument = one_argument(argument, arg2);
-    
+
     if (IS_NPC(ch)) return;
 
     if(!IS_VAMP(ch))
@@ -2651,7 +2665,7 @@ void do_howlinglunacy(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if ( ( victim = get_char_room( ch, NULL, arg2 ) ) == NULL &&
+    if ( ( victim = get_char_room( ch, NULL, arg1 ) ) == NULL &&
         (victim = ch->fighting) == NULL )
     {
         send_to_char("Upon whom do wish to impart this extraordinary gift of truth?\n\r",ch);

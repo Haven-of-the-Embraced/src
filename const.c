@@ -2135,6 +2135,21 @@ Total (3) */
 
 //    --Dementation--
 // Total (0)
+    { "incubus passion",       {  102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+    &gsn_incubuspassion,         SLOT(0),     0, 12, "",         "Your altered passions feel like your own again.", "" },
+
+    { "haunt the soul",       {  102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+    &gsn_hauntthesoul,            SLOT(0),     0, 12, "",         "The barrage of visions finally subside.", "" },
+
+    { "silence the sane mind",       {  102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+    &gsn_silencethesanemind,     SLOT(0),     0, 12, "",         "Your mind settles back from exertion.", "" },
+
+    { "howling lunacy",       {  102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+    &gsn_howlinglunacy,            SLOT(0),     0, 12, "",         "Your thoughts return to their normal clarity.", "" },
 
 //    --Dominate--
 // Total (2)

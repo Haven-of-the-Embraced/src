@@ -2432,6 +2432,15 @@ void do_horridreality(CHAR_DATA *ch, char *argument)
 
 void do_incubuspassion(CHAR_DATA *ch, char *argument)
 {
+    CHAR_DATA *victim;
+    int dice, diff, success;
+    AFFECT_DATA af;
+    char arg1[MSL];
+    char arg2[MSL];
+
+    argument = one_argument(argument, arg1);
+    argument = one_argument(argument, arg2);
+
     if (IS_NPC(ch)) return;
 
     if(!IS_VAMP(ch))
@@ -2443,6 +2452,13 @@ void do_incubuspassion(CHAR_DATA *ch, char *argument)
     if (ch->pcdata->discipline[DEMENTATION] < 1)
     {
         send_to_char( "You have not yet begun to revel in the madness.\n\r", ch );
+        return;
+    }
+
+    if ( ( victim = get_char_room( ch, NULL, arg2 ) ) == NULL &&
+        (victim = ch->fighting) == NULL )
+    {
+        send_to_char("On whom do you wish to alter passions of the world?\n\r",ch);
         return;
     }
 
@@ -2465,6 +2481,15 @@ void do_incubuspassion(CHAR_DATA *ch, char *argument)
 
 void do_hauntthesoul(CHAR_DATA *ch, char *argument)
 {
+    CHAR_DATA *victim;
+    int dice, diff, success;
+    AFFECT_DATA af;
+    char arg1[MSL];
+    char arg2[MSL];
+
+    argument = one_argument(argument, arg1);
+    argument = one_argument(argument, arg2);
+
     if (IS_NPC(ch)) return;
 
     if(!IS_VAMP(ch))
@@ -2476,6 +2501,13 @@ void do_hauntthesoul(CHAR_DATA *ch, char *argument)
     if (ch->pcdata->discipline[DEMENTATION] < 2)
     {
         send_to_char( "The madness has only just begun your enlightenment.\n\r", ch );
+        return;
+    }
+
+    if ( ( victim = get_char_room( ch, NULL, arg2 ) ) == NULL &&
+        (victim = ch->fighting) == NULL )
+    {
+        send_to_char("Who requires the nudge towards enlightenment?\n\r",ch);
         return;
     }
 
@@ -2498,6 +2530,15 @@ void do_hauntthesoul(CHAR_DATA *ch, char *argument)
 
 void do_eyesofchaos(CHAR_DATA *ch, char *argument)
 {
+    CHAR_DATA *victim;
+    int dice, diff, success;
+    AFFECT_DATA af;
+    char arg1[MSL];
+    char arg2[MSL];
+
+    argument = one_argument(argument, arg1);
+    argument = one_argument(argument, arg2);
+
     if (IS_NPC(ch)) return;
 
     if(!IS_VAMP(ch))
@@ -2509,6 +2550,13 @@ void do_eyesofchaos(CHAR_DATA *ch, char *argument)
     if (ch->pcdata->discipline[DEMENTATION] < 3)
     {
         send_to_char( "The world is an example of unparallelled excitement.\n\r", ch );
+        return;
+    }
+
+    if ( ( victim = get_char_room( ch, NULL, arg2 ) ) == NULL &&
+        (victim = ch->fighting) == NULL )
+    {
+        send_to_char("Whom is deserving of your scrutiny?\n\r",ch);
         return;
     }
 
@@ -2531,6 +2579,15 @@ void do_eyesofchaos(CHAR_DATA *ch, char *argument)
 
 void do_silencethesanemind(CHAR_DATA *ch, char *argument)
 {
+    CHAR_DATA *victim;
+    int dice, diff, success;
+    AFFECT_DATA af;
+    char arg1[MSL];
+    char arg2[MSL];
+
+    argument = one_argument(argument, arg1);
+    argument = one_argument(argument, arg2);
+
     if (IS_NPC(ch)) return;
 
     if(!IS_VAMP(ch))
@@ -2542,6 +2599,13 @@ void do_silencethesanemind(CHAR_DATA *ch, char *argument)
     if (ch->pcdata->discipline[DEMENTATION] < 4)
     {
         send_to_char( "You must first understand your own mind.\n\r", ch );
+        return;
+    }
+
+    if ( ( victim = get_char_room( ch, NULL, arg2 ) ) == NULL &&
+        (victim = ch->fighting) == NULL )
+    {
+        send_to_char("Whose mind requires clarity?\n\r",ch);
         return;
     }
 
@@ -2564,6 +2628,15 @@ void do_silencethesanemind(CHAR_DATA *ch, char *argument)
 
 void do_howlinglunacy(CHAR_DATA *ch, char *argument)
 {
+    CHAR_DATA *victim;
+    int dice, diff, success;
+    AFFECT_DATA af;
+    char arg1[MSL];
+    char arg2[MSL];
+
+    argument = one_argument(argument, arg1);
+    argument = one_argument(argument, arg2);
+    
     if (IS_NPC(ch)) return;
 
     if(!IS_VAMP(ch))
@@ -2575,6 +2648,13 @@ void do_howlinglunacy(CHAR_DATA *ch, char *argument)
     if (ch->pcdata->discipline[DEMENTATION] < 5)
     {
         send_to_char( "Hey, you.  You are not trained in Dominate!\n\r", ch );
+        return;
+    }
+
+    if ( ( victim = get_char_room( ch, NULL, arg2 ) ) == NULL &&
+        (victim = ch->fighting) == NULL )
+    {
+        send_to_char("Upon whom do wish to impart this extraordinary gift of truth?\n\r",ch);
         return;
     }
 

@@ -2468,7 +2468,7 @@ void do_incubuspassion(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if (!str_prefix(arg2,"heighten") || !str_prefix(arg2,"dull"))
+    if (!str_prefix(arg2,"heighten") && !str_prefix(arg2,"dull"))
     {
         send_to_char("Do you wish to '{yheighten{x' or '{ydull{x' your target's emotions?\n\r",ch);
         send_to_char("Syntax: {cincubuspassion <target> <heighten/dull>{x\n\r", ch);
@@ -2499,11 +2499,11 @@ void do_incubuspassion(CHAR_DATA *ch, char *argument)
         af.level     = -1;
         af.duration  = 2;
         af.location  = APPLY_HITROLL;
-        af.modifier  = -level * 2;
+        af.modifier  = -ch->level * 2;
         af.bitvector = 0;
         affect_to_char( ch, &af );
         af.location  = APPLY_DAMROLL;
-        af.modifier  = -level;
+        af.modifier  = -ch->level;
         affect_to_char( ch, &af );
         return;
     }
@@ -2516,16 +2516,43 @@ void do_incubuspassion(CHAR_DATA *ch, char *argument)
 
     if (!str_prefix(arg2,"heighten"))
     {
-        act("", ch, NULL, victim, TO_CHAR);
-        act("", ch, NULL, victim, TO_NOTVICT);
-        act("", ch, NULL, victim, TO_VICT);
+        act("You heighten the passion of $N to fervent levels.", ch, NULL, victim, TO_CHAR);
+        act("$N exudes excitement and irrationality.", ch, NULL, victim, TO_NOTVICT);
+        act("You feel a sense of excitement rush through your body.", ch, NULL, victim, TO_VICT);
+        af.where     = TO_AFFECTS;
+        af.type      = gsn_incubuspassion;
+        af.level     = ch->level;
+        af.duration  = success;
+        af.location  = APPLY_HITROLL;
+        af.modifier  = -(ch->level * success) - 10;
+        af.bitvector = 0;
+        affect_to_char( victim, &af );
+        af.location  = APPLY_DAMROLL;
+        af.modifier  = -(ch->level * success) - 10;
+        affect_to_char( victim, &af );
         return;
     }
     else
     {
-        act("", ch, NULL, victim, TO_CHAR);
-        act("", ch, NULL, victim, TO_NOTVICT);
-        act("", ch, NULL, victim, TO_VICT);
+        act("Imparting the benefits of calming your mind to $N is the right thing to do.", ch, NULL, victim, TO_CHAR);
+        act("$N relaxes for a moment, seeming content.", ch, NULL, victim, TO_NOTVICT);
+        act("You realize the futility of aggression, and stop to consider your actions.", ch, NULL, victim, TO_VICT);
+        if (!IS_SET(victim->act2, ACT2_ULTRA_MOB))
+        {
+            if ( victim->fighting != NULL )
+                stop_fighting( victim, TRUE );
+            if (IS_NPC(victim) && IS_SET(victim->act,ACT_AGGRESSIVE))
+                REMOVE_BIT(victim->act,ACT_AGGRESSIVE);
+        }
+
+        af.where     = TO_AFFECTS;
+        af.type      = gsn_incubuspassion;
+        af.level     = ch->level;
+        af.duration  = success;
+        af.location  = APPLY_NONE;
+        af.modifier  = 0;
+        af.bitvector = AFF_CALM;
+        affect_to_char( victim, &af );
         return;
     }
 

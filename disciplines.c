@@ -2667,7 +2667,16 @@ void do_hauntthesoul(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    send_to_char("UNCODED\n\r", ch);
+    act("Sharing your visions, $N is now the happy recipient.", ch, NULL, victim, TO_CHAR);
+    act("Your mind is assaulted by powerful visions.", ch, NULL, victim, TO_VICT);
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_hauntthesoul;
+    af.level     = ch->level;
+    af.duration  = success;
+    af.location  = 0;
+    af.modifier  = 0;
+    af.bitvector = 0;
+    affect_to_char( victim, &af );
     return;
 }
 

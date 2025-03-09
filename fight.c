@@ -1798,6 +1798,7 @@ void d10_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt)
 		diff--;
 	if ( victim->position < POS_RESTING)
 		diff--;
+
     if (diff < 3)
         diff = 3;
 
@@ -1829,6 +1830,12 @@ void d10_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt)
   if (IS_NPC(ch))
     if (has_affect_modifier(victim, gsn_awe, ch->pIndexData->vnum))
       diff++;
+
+    if (is_affected(ch, gsn_hauntthesoul))
+        diff++;
+
+    if (diff > 10)
+        diff = 10;
 
 if (DEBUG_MESSAGES || IS_DEBUGGING(ch)){
 	cprintf(ch, "hp{r%d{w df{c%d{x ", dice, diff);

@@ -2499,6 +2499,12 @@ void do_incubuspassion(CHAR_DATA *ch, char *argument)
         return;
     }
 
+    if (!IS_SET(victim->form, FORM_SENTIENT))
+    {
+        send_to_char("You can only alter passions of those who can realize it.\n\r", ch);
+        return;
+    }
+
     ch->pblood -= 8;
 
     if (victim->level < ch->level)
@@ -2638,6 +2644,12 @@ void do_hauntthesoul(CHAR_DATA *ch, char *argument)
         return;
     }
 
+    if (!IS_SET(victim->form, FORM_SENTIENT))
+    {
+        send_to_char("Your target must have self realization to see the visions.\n\r", ch);
+        return;
+    }
+
     ch->pblood -= 11;
 
     if (victim->level < ch->level)
@@ -2773,6 +2785,12 @@ void do_silencethesanemind(CHAR_DATA *ch, char *argument)
         return;
     }
 
+    if (!IS_SET(victim->form, FORM_SENTIENT))
+    {
+        send_to_char("Clarity of the mind will not help your target.\n\r", ch);
+        return;
+    }
+
     ch->pblood -= 17;
     send_to_char("UNCODED\n\r", ch);
     return;
@@ -2823,6 +2841,13 @@ void do_howlinglunacy(CHAR_DATA *ch, char *argument)
     }
 
     ch->pblood -= 20;
+
+    if (!IS_SET(victim->form, FORM_SENTIENT))
+    {
+        send_to_char("Your target can't handle the truth!\n\r", ch);
+        return;
+    }
+
     send_to_char("UNCODED\n\r", ch);
     return;
 }

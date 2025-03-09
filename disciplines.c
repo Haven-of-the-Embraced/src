@@ -2468,6 +2468,12 @@ void do_incubuspassion(CHAR_DATA *ch, char *argument)
         return;
     }
 
+    if (IS_NPC(victim) && victim->pIndexData->pShop != NULL)
+    {
+        send_to_char("You fear that it may hinder your future purchases.\n\r",ch);
+        return;
+    }
+
     if (!str_prefix(arg2,"heighten") && !str_prefix(arg2,"dull"))
     {
         send_to_char("Do you wish to '{yheighten{x' or '{ydull{x' your target's emotions?\n\r",ch);
@@ -2478,6 +2484,18 @@ void do_incubuspassion(CHAR_DATA *ch, char *argument)
     if (ch->pblood < 10)
     {
         send_to_char( "You don't have enough blood.\n\r", ch );
+        return;
+    }
+
+    if (is_affected(ch, gsn_incubuspassion))
+    {
+        send_to_char("Your mind is too preoccupied.\n\r", ch);
+        return;
+    }
+
+    if (is_affected(victim, gsn_incubuspassion))
+    {
+        send_to_char("Further altering of emotions will be a waste.\n\r", ch);
         return;
     }
 

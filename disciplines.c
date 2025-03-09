@@ -2573,15 +2573,13 @@ void do_incubuspassion(CHAR_DATA *ch, char *argument)
         affect_to_char( victim, &af );
         return;
     }
-
-    send_to_char("UNCODED\n\r", ch);
     return;
 }
 
 void do_hauntthesoul(CHAR_DATA *ch, char *argument)
 {
     CHAR_DATA *victim;
-    int dice, diff, success;
+    int dice, diff = 6, success;
     AFFECT_DATA af;
     char arg1[MSL];
     char arg2[MSL];
@@ -2641,6 +2639,14 @@ void do_hauntthesoul(CHAR_DATA *ch, char *argument)
     }
 
     ch->pblood -= 11;
+
+    if (victim->level < ch->level)
+        diff--;
+    if (victim->level > ch->level+10)
+        diff++;
+
+    success = godice(get_attribute(ch, CHARISMA) + get_ability(ch, CSABIL_EMPATHY), diff);
+
     send_to_char("UNCODED\n\r", ch);
     return;
 }

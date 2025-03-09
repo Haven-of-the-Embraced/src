@@ -2695,10 +2695,11 @@ void do_hauntthesoul(CHAR_DATA *ch, char *argument)
 void do_eyesofchaos(CHAR_DATA *ch, char *argument)
 {
     CHAR_DATA *victim;
-    int dice, diff, success;
-    AFFECT_DATA af;
+    int dice, diff = 6, success;
+    AFFECT_DATA *paf;
     char arg1[MSL];
     char arg2[MSL];
+    char buf[MSL];
 
     argument = one_argument(argument, arg1);
     argument = one_argument(argument, arg2);
@@ -2737,7 +2738,53 @@ void do_eyesofchaos(CHAR_DATA *ch, char *argument)
     }
 
     ch->pblood -= 14;
-    send_to_char("UNCODED\n\r", ch);
+
+    if (victim->level < ch->level)
+        diff--;
+    if (victim->level > ch->level+10)
+        diff++;
+
+    success = godice(get_attribute(ch, PERCEPTION) + get_ability(ch, CSABIL_OCCULT), diff);
+
+    if (success < 0)
+    {
+        act("You lose yourself trying to make sense of the random patterns of the world.", ch, NULL, victim, TO_CHAR);
+        WAIT_STATE(ch, 12);
+        return;
+    }
+
+    if (success == 0)
+    {
+        act("This individual isn't worth your time, in your expert opinion.", ch, NULL, victim, TO_CHAR);
+        WAIT_STATE(ch, 3);
+        return;
+    }
+
+    if (victim->affected_by)
+    {
+        sprintf(buf, "Affected by %s\n\r", affect_bit_name(victim->affected_by));
+        send_to_char(buf,ch);
+    }
+
+    if (victim->affected2_by)
+    {
+         sprintf(buf, "Also affected by %s\n\r", affect2_bit_name(victim->affected2_by));
+        send_to_char(buf,ch);
+    }
+
+    for ( paf = victim->affected; paf != NULL; paf = paf->next )
+    {
+        sprintf( buf,
+        "Spell: '%s' modifies for %d hours with bits %s%s.\n\r",
+        capitalize(skill_table[(int) paf->type].name),
+        paf->duration,
+        paf->where == TO_RESIST ? "res_" : paf->where == TO_IMMUNE ? "imm_" : paf->where == TO_VULN ? "vuln_" : "",
+        paf->where == TO_RESIST ? imm_bit_name(paf->bitvector) : paf->where == TO_VULN ? imm_bit_name(paf->bitvector) :
+        paf->where == TO_IMMUNE ? imm_bit_name(paf->bitvector) :
+        paf->where == TO_AFFECTS2 ? affect2_bit_name(paf->bitvector) : affect_bit_name( paf->bitvector ));
+        send_to_char( buf, ch );
+    }
+
     return;
 }
 

@@ -1255,8 +1255,8 @@ void cskill_update(CHAR_DATA *ch, bool show)
 
 const   struct  skill_type  skill_table [MAX_SKILL] =
 {
-// TOTAL SKILLS AS OF 7/17/23 =  441
-// MAX_SKILL INCREASED TO 446 9/2/23
+// TOTAL SKILLS AS OF 3/9/25 =  452
+// MAX_SKILL INCREASED TO 452 3/9/25
 /*
  * Magic spells.  Total (108)
  */
@@ -1825,7 +1825,7 @@ Total (33) */
 
 
 /* non-combat skills
-Total (48) */
+Total (51) */
     { "classify", { 15, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_IGNORE, POS_STANDING,
     &gsn_classify, SLOT( 0),    0,  0,    "",         "",     ""    },
@@ -2088,7 +2088,7 @@ Total (3) */
 // Total (0)
 
 //    --Auspex--
-// Total (3)
+// Total (4)
     { "reveal",       {  102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
     &gsn_reveal,            SLOT(0),     0, 12, "",         "Your heightened senses fade away, leaving you aware of only the mundane world once again.",    "" },
@@ -2134,7 +2134,7 @@ Total (3) */
     &gsn_chimerstry,            SLOT(0),   0, 12, "chimerstry",           "You once again feel strong enough to twist reality to your whim.", "" },
 
 //    --Dementation--
-// Total (0)
+// Total (4)
     { "incubus passion",       {  102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
     &gsn_incubuspassion,         SLOT(0),     0, 12, "",         "Your altered passions feel like your own again.", "" },
@@ -3012,7 +3012,7 @@ Total (3) */
 &gsn_gift_pawsofthenewborncub,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
 //    --Warders of Men--
-//  Total (7)
+//  Total (8)
 {   "artisans command", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_artisanscommand,  TAR_IGNORE, POS_STANDING,
 &gsn_gift_artisanscommand,          SLOT( 0),        0,     12, "",             "You no longer commune with spirits of technology.",        "" },
@@ -3127,7 +3127,7 @@ Total (3) */
     &gsn_empower,          SLOT( 0),        0,     24, "",  "Your mind seems to dim as the forces of reality wash away your clarity of thought.",   "" },
 
 //    --Prime--
-// Total (5)
+// Total (4)
     { "prime sense",		{ 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,	TAR_IGNORE,	POS_STANDING,
     &gsn_primesense,	SLOT( 0),	0,	24, "",	"The flow of Quintessence through reality fades from your vision.", ""},
@@ -3155,7 +3155,7 @@ Total (3) */
     &gsn_trappedingauntlet,        SLOT( 0),     0,    24, "",  "Your very Essence finally untangles itself from the Gauntlet!",  "" },
 
 //    --Time--
-// Total (4)
+// Total (5)
     { "time sense",             { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
     &gsn_timesense,          SLOT( 0),        0,     24, "",             "Your sensing of the flow of time ebbs away.",     "" },

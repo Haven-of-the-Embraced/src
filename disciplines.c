@@ -2622,6 +2622,24 @@ void do_hauntthesoul(CHAR_DATA *ch, char *argument)
         return;
     }
 
+    if (is_affected(ch, gsn_hauntthesoul))
+    {
+        send_to_char("Fleeting visions distract you.\n\r", ch);
+        return;
+    }
+
+    if (is_affected(victim, gsn_hauntthesoul))
+    {
+        send_to_char("Your intended target is already battling internal demons.\n\r", ch);
+        return;
+    }
+
+    if (IS_NPC(victim) && victim->pIndexData->pShop != NULL)
+    {
+        send_to_char("You fear that it may hinder your future purchases.\n\r",ch);
+        return;
+    }
+
     ch->pblood -= 11;
     send_to_char("UNCODED\n\r", ch);
     return;

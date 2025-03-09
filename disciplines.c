@@ -2489,6 +2489,46 @@ void do_incubuspassion(CHAR_DATA *ch, char *argument)
         diff++;
 
     success = godice(get_attribute(ch, CHARISMA) + get_ability(ch, CSABIL_EMPATHY), diff);
+
+    if (success < 0)
+    {
+        act("It all makes sense now!  The unworthy shall be shown the way!", ch, NULL, victim, TO_CHAR);
+
+        af.where     = TO_AFFECTS;
+        af.type      = gsn_incubuspassion;
+        af.level     = -1;
+        af.duration  = 2;
+        af.location  = APPLY_HITROLL;
+        af.modifier  = -level * 2;
+        af.bitvector = 0;
+        affect_to_char( ch, &af );
+        af.location  = APPLY_DAMROLL;
+        af.modifier  = -level;
+        affect_to_char( ch, &af );
+        return;
+    }
+
+    if (success == 0)
+    {
+        act("Peasants.  The minds of simpletons are not worthy of enlightenment.", ch, NULL, victim, TO_CHAR);
+        return;
+    }
+
+    if (!str_prefix(arg2,"heighten"))
+    {
+        act("", ch, NULL, victim, TO_CHAR);
+        act("", ch, NULL, victim, TO_NOTVICT);
+        act("", ch, NULL, victim, TO_VICT);
+        return;
+    }
+    else
+    {
+        act("", ch, NULL, victim, TO_CHAR);
+        act("", ch, NULL, victim, TO_NOTVICT);
+        act("", ch, NULL, victim, TO_VICT);
+        return;
+    }
+
     send_to_char("UNCODED\n\r", ch);
     return;
 }

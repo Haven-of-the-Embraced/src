@@ -2647,6 +2647,26 @@ void do_hauntthesoul(CHAR_DATA *ch, char *argument)
 
     success = godice(get_attribute(ch, CHARISMA) + get_ability(ch, CSABIL_EMPATHY), diff);
 
+    if (success < 0)
+    {
+        act("Visions lie at the edge of your peripheral, taunting you.  Mocking you.", ch, NULL, victim, TO_CHAR);
+        af.where     = TO_AFFECTS;
+        af.type      = gsn_hauntthesoul;
+        af.level     = -1;
+        af.duration  = 2;
+        af.location  = 0;
+        af.modifier  = 0;
+        af.bitvector = 0;
+        affect_to_char( ch, &af );
+        return;
+    }
+
+    if (success == 0)
+    {
+        act("The mind is a terrible thing to waste.", ch, NULL, victim, TO_CHAR);
+        return;
+    }
+
     send_to_char("UNCODED\n\r", ch);
     return;
 }

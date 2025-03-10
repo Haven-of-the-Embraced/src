@@ -2872,8 +2872,6 @@ void do_silencethesanemind(CHAR_DATA *ch, char *argument)
         af.duration  = ch->level;
         af.location  = APPLY_NONE;
         af.modifier  = 0;
-        af.bitvector = IMM_CHARM;
-        affect_to_char( victim, &af );
         af.bitvector = IMM_MENTAL;
         affect_to_char( victim, &af );
         return;
@@ -2952,13 +2950,38 @@ void do_howlinglunacy(CHAR_DATA *ch, char *argument)
 
     ch->pblood -= 20;
 
-    if (IS_SET(victim->vuln_flags, VULN_MENTAL) || IS_SET(victim->vuln_flags, VULN_CHARM))
+    if (IS_SET(victim->vuln_flags, VULN_MENTAL))
         diff-= 2;
-    if (IS_SET(victim->res_flags, RES_MENTAL) || IS_SET(victim->res_flags, RES_CHARM))
+    if (IS_SET(victim->res_flags, RES_MENTAL))
         diff++;
 
-    if (success == 0 || IS_SET(victim->res_flags, IMM_MENTAL) || IS_SET(victim->res_flags, IMM_CHARM))
+    if (success < 0)
+    {
+        act("Madness?  I'll show you madness!", ch, NULL, victim, TO_CHAR);
+        af.where     = TO_AFFECTS;
+        af.type      = gsn_howlinglunacy;
+        af.level     = -1;
+        af.duration  = 2;
+        af.location  = APPLY_NONE;
+        af.modifier  = 0;
+        af.bitvector = 0;
+        affect_to_char( ch, &af );
+        return;
+    }
 
+    if (success == 0 || IS_SET(victim->imm_flags, IMM_MENTAL))
+    {
+        act("The lunacy seems content to stay where it is.", ch, NULL, victim, TO_CHAR);
+        af.where     = TO_IMMUNE;
+        af.type      = gsn_howlinglunacy;
+        af.level     = 0;
+        af.duration  = ch->level;
+        af.location  = APPLY_NONE;
+        af.modifier  = 0;
+        af.bitvector = IMM_MENTAL;
+        affect_to_char( victim, &af );
+        return;
+    }
     send_to_char("UNCODED\n\r", ch);
     return;
 }

@@ -2852,6 +2852,18 @@ void do_silencethesanemind(CHAR_DATA *ch, char *argument)
         return;
     }
 
+    if (IS_NPC(victim) && victim->pIndexData->pShop != NULL)
+    {
+        send_to_char("You fear that it may hinder your future purchases.\n\r",ch);
+        return;
+    }
+
+    if(is_affected(ch, gsn_silencethesanemind))
+    {
+        send_to_char("You cannot impart any further knowlege on your target.\n\r", ch);
+        return;
+    }
+
     if (victim->level < ch->level)
         diff--;
     if (victim->level > ch->level+10)
@@ -2887,6 +2899,7 @@ void do_silencethesanemind(CHAR_DATA *ch, char *argument)
     ch->pblood -= 17;
 
     act("Enlightenment comes in many forms, $N will soon find out.", ch, NULL, victim, TO_CHAR);
+    act("Your mind is opened to many possibilities, too many to comprehend.", ch, NULL, victim, TO_VICT);
     af.where     = TO_AFFECTS;
     af.type      = gsn_silencethesanemind;
     af.level     = ch->level;
@@ -2942,6 +2955,18 @@ void do_howlinglunacy(CHAR_DATA *ch, char *argument)
         return;
     }
 
+    if (is_affected(ch, gsn_howlinglunacy))
+    {
+        send_to_char("Your quarry is already quite a lunatic.", ch);
+        return;
+    }
+
+    if (IS_NPC(victim) && victim->pIndexData->pShop != NULL)
+    {
+        send_to_char("You fear that it may hinder your future purchases.\n\r",ch);
+        return;
+    }
+
     if (!IS_SET(victim->form, FORM_SENTIENT))
     {
         send_to_char("Your target can't handle the truth!\n\r", ch);
@@ -2982,7 +3007,19 @@ void do_howlinglunacy(CHAR_DATA *ch, char *argument)
         affect_to_char( victim, &af );
         return;
     }
-    send_to_char("UNCODED\n\r", ch);
+
+        act("Bringing this level of clarity to all is the work you were meant to do.", ch, NULL, victim, TO_CHAR);
+        act("The sheer weight of knowledge descending upon you drives you catatonic.", ch, NULL, victim, TO_VICT);
+        act("$N suddenly drops to the ground, catatonic.", ch, NULL, victim, TO_NOTVICT);
+        af.where     = TO_AFFECTS;
+        af.type      = gsn_howlinglunacy;
+        af.level     = ch->level;
+        af.duration  = success;
+        af.location  = APPLY_NONE;
+        af.modifier  = 0;
+        af.bitvector = 0;
+        affect_to_char( victim, &af );
+        victim->stopped += success * 3;
     return;
 }
 

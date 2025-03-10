@@ -2511,9 +2511,9 @@ void do_incubuspassion(CHAR_DATA *ch, char *argument)
         diff--;
     if (victim->level > ch->level+10)
         diff++;
-    if (IS_SET(victim->vuln_flags, VULN_MENTAL) || IS_SET(victim->vuln_flags, VULN_CHARM))
+    if (IS_SET(victim->vuln_flags, VULN_MENTAL))
         diff-= 2;
-    if (IS_SET(victim->res_flags, RES_MENTAL) || IS_SET(victim->res_flags, RES_CHARM))
+    if (IS_SET(victim->res_flags, RES_MENTAL))
         diff++;
 
     success = godice(get_attribute(ch, CHARISMA) + get_ability(ch, CSABIL_EMPATHY), diff);
@@ -2536,7 +2536,7 @@ void do_incubuspassion(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if (success == 0 || IS_SET(victim->res_flags, IMM_MENTAL) || IS_SET(victim->res_flags, IMM_CHARM))
+    if (success == 0 || IS_SET(victim->imm_flags, IMM_MENTAL))
     {
         act("Peasants.  The minds of simpletons are not worthy of enlightenment.", ch, NULL, victim, TO_CHAR);
         return;
@@ -2660,9 +2660,9 @@ void do_hauntthesoul(CHAR_DATA *ch, char *argument)
         diff--;
     if (victim->level > ch->level+10)
         diff++;
-    if (IS_SET(victim->vuln_flags, VULN_MENTAL) || IS_SET(victim->vuln_flags, VULN_CHARM))
+    if (IS_SET(victim->vuln_flags, VULN_MENTAL))
         diff-= 2;
-    if (IS_SET(victim->res_flags, RES_MENTAL) || IS_SET(victim->res_flags, RES_CHARM))
+    if (IS_SET(victim->res_flags, RES_MENTAL))
         diff++;
 
     success = godice(get_attribute(ch, CHARISMA) + get_ability(ch, CSABIL_EMPATHY), diff);
@@ -2681,7 +2681,7 @@ void do_hauntthesoul(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if (success == 0 || IS_SET(victim->res_flags, IMM_MENTAL) || IS_SET(victim->res_flags, IMM_CHARM))
+    if (success == 0 || IS_SET(victim->imm_flags, IMM_MENTAL))
     {
         act("The mind is a terrible thing to waste.", ch, NULL, victim, TO_CHAR);
         return;
@@ -2750,10 +2750,6 @@ void do_eyesofchaos(CHAR_DATA *ch, char *argument)
     if (victim->level < ch->level)
         diff--;
     if (victim->level > ch->level+10)
-        diff++;
-    if (IS_SET(victim->vuln_flags, VULN_MENTAL) || IS_SET(victim->vuln_flags, VULN_CHARM))
-        diff-= 2;
-    if (IS_SET(victim->res_flags, RES_MENTAL) || IS_SET(victim->res_flags, RES_CHARM))
         diff++;
 
     success = godice(get_attribute(ch, PERCEPTION) + get_ability(ch, CSABIL_OCCULT), diff);
@@ -2860,9 +2856,9 @@ void do_silencethesanemind(CHAR_DATA *ch, char *argument)
         diff--;
     if (victim->level > ch->level+10)
         diff++;
-    if (IS_SET(victim->vuln_flags, VULN_MENTAL) || IS_SET(victim->vuln_flags, VULN_CHARM))
+    if (IS_SET(victim->vuln_flags, VULN_MENTAL))
         diff-= 2;
-    if (IS_SET(victim->res_flags, RES_MENTAL) || IS_SET(victim->res_flags, RES_CHARM))
+    if (IS_SET(victim->res_flags, RES_MENTAL))
         diff++;
 
     success = godice(get_attribute(ch, MANIPULATION) + get_ability(ch, CSABIL_INTIMIDATION), diff);
@@ -2872,7 +2868,7 @@ void do_silencethesanemind(CHAR_DATA *ch, char *argument)
         act("$N seems blissfully unbothered by your attempt at enlightenment.", ch, NULL, victim, TO_CHAR);
         af.where     = TO_IMMUNE;
         af.type      = gsn_silencethesanemind;
-        af.level     = ch->level;
+        af.level     = -1;
         af.duration  = ch->level;
         af.location  = APPLY_NONE;
         af.modifier  = 0;
@@ -2883,7 +2879,7 @@ void do_silencethesanemind(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if (success == 0 || IS_SET(victim->res_flags, IMM_MENTAL) || IS_SET(victim->res_flags, IMM_CHARM))
+    if (success == 0 || IS_SET(victim->imm_flags, IMM_MENTAL))
     {
         act("The sanity of the mind is quite relative.", ch, NULL, victim, TO_CHAR);
         WAIT_STATE(ch, 6);
@@ -2891,7 +2887,16 @@ void do_silencethesanemind(CHAR_DATA *ch, char *argument)
     }
 
     ch->pblood -= 17;
-    send_to_char("UNCODED\n\r", ch);
+
+    act("Enlightenment comes in many forms, $N will soon find out.", ch, NULL, victim, TO_CHAR);
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_silencethesanemind;
+    af.level     = ch->level;
+    af.duration  = ch->level;
+    af.location  = APPLY_NONE;
+    af.modifier  = 0;
+    af.bitvector = 0;
+    affect_to_char( victim, &af );
     return;
 }
 

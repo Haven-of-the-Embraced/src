@@ -2955,7 +2955,7 @@ void do_howlinglunacy(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if (is_affected(ch, gsn_howlinglunacy))
+    if (is_affected(victim, gsn_howlinglunacy))
     {
         send_to_char("Your quarry is already quite a lunatic.", ch);
         return;
@@ -3020,9 +3020,13 @@ void do_howlinglunacy(CHAR_DATA *ch, char *argument)
         af.duration  = success;
         af.location  = APPLY_NONE;
         af.modifier  = 0;
-        af.bitvector = 0;
+        af.bitvector = AFF_CALM;
         affect_to_char( victim, &af );
-        victim->stopped += success * 3;
+        if ( victim->fighting != NULL )
+            stop_fighting( victim, TRUE );
+        if (IS_NPC(victim) && IS_SET(victim->act,ACT_AGGRESSIVE))
+            REMOVE_BIT(victim->act,ACT_AGGRESSIVE);
+        victim->stopped += (success * 3) + 2;
     return;
 }
 

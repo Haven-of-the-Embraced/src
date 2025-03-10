@@ -91,6 +91,12 @@ void move_char( CHAR_DATA *ch, int door, bool follow )
     char buf[MAX_STRING_LENGTH];
     int stealth = 0, perception = 0;
 
+    if (is_affected(ch, gsn_howlinglunacy))
+    {
+        send_to_char("Your mind is too addled to move.\n\r", ch);
+        return;
+    }
+
     if ( door < 0 || door > 5 )
     {
     bug( "Do_move: bad door %d.", door );

@@ -2856,6 +2856,40 @@ void do_silencethesanemind(CHAR_DATA *ch, char *argument)
         return;
     }
 
+    if (victim->level < ch->level)
+        diff--;
+    if (victim->level > ch->level+10)
+        diff++;
+    if (IS_SET(victim->vuln_flags, VULN_MENTAL) || IS_SET(victim->vuln_flags, VULN_CHARM))
+        diff-= 2;
+    if (IS_SET(victim->res_flags, RES_MENTAL) || IS_SET(victim->res_flags, RES_CHARM))
+        diff++;
+
+    success = godice(get_attribute(ch, MANIPULATION) + get_ability(ch, CSABIL_INTIMIDATION), diff);
+
+    if (success < 0)
+    {
+        act("$N seems blissfully unbothered by your attempt at enlightenment.", ch, NULL, victim, TO_CHAR);
+        af.where     = TO_IMMUNE;
+        af.type      = gsn_silencethesanemind;
+        af.level     = ch->level;
+        af.duration  = ch->level;
+        af.location  = APPLY_NONE;
+        af.modifier  = 0;
+        af.bitvector = IMM_CHARM;
+        affect_to_char( victim, &af );
+        af.bitvector = IMM_MENTAL;
+        affect_to_char( victim, &af );
+        return;
+    }
+
+    if (success == 0 || IS_SET(victim->res_flags, IMM_MENTAL) || IS_SET(victim->res_flags, IMM_CHARM))
+    {
+        act("The sanity of the mind is quite relative.", ch, NULL, victim, TO_CHAR);
+        WAIT_STATE(ch, 6);
+        return;
+    }
+
     ch->pblood -= 17;
     send_to_char("UNCODED\n\r", ch);
     return;

@@ -2511,6 +2511,10 @@ void do_incubuspassion(CHAR_DATA *ch, char *argument)
         diff--;
     if (victim->level > ch->level+10)
         diff++;
+    if (IS_SET(victim->vuln_flags, VULN_MENTAL) || IS_SET(victim->vuln_flags, VULN_CHARM))
+        diff-= 2;
+    if (IS_SET(victim->res_flags, RES_MENTAL) || IS_SET(victim->res_flags, RES_CHARM))
+        diff++;
 
     success = godice(get_attribute(ch, CHARISMA) + get_ability(ch, CSABIL_EMPATHY), diff);
 
@@ -2656,6 +2660,10 @@ void do_hauntthesoul(CHAR_DATA *ch, char *argument)
         diff--;
     if (victim->level > ch->level+10)
         diff++;
+    if (IS_SET(victim->vuln_flags, VULN_MENTAL) || IS_SET(victim->vuln_flags, VULN_CHARM))
+        diff-= 2;
+    if (IS_SET(victim->res_flags, RES_MENTAL) || IS_SET(victim->res_flags, RES_CHARM))
+        diff++;
 
     success = godice(get_attribute(ch, CHARISMA) + get_ability(ch, CSABIL_EMPATHY), diff);
 
@@ -2742,6 +2750,10 @@ void do_eyesofchaos(CHAR_DATA *ch, char *argument)
     if (victim->level < ch->level)
         diff--;
     if (victim->level > ch->level+10)
+        diff++;
+    if (IS_SET(victim->vuln_flags, VULN_MENTAL) || IS_SET(victim->vuln_flags, VULN_CHARM))
+        diff-= 2;
+    if (IS_SET(victim->res_flags, RES_MENTAL) || IS_SET(victim->res_flags, RES_CHARM))
         diff++;
 
     success = godice(get_attribute(ch, PERCEPTION) + get_ability(ch, CSABIL_OCCULT), diff);
@@ -2893,13 +2905,18 @@ void do_howlinglunacy(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    ch->pblood -= 20;
-
     if (!IS_SET(victim->form, FORM_SENTIENT))
     {
         send_to_char("Your target can't handle the truth!\n\r", ch);
         return;
     }
+
+    ch->pblood -= 20;
+
+    if (IS_SET(victim->vuln_flags, VULN_MENTAL) || IS_SET(victim->vuln_flags, VULN_CHARM))
+        diff-= 2;
+    if (IS_SET(victim->res_flags, RES_MENTAL) || IS_SET(victim->res_flags, RES_CHARM))
+        diff++;
 
     send_to_char("UNCODED\n\r", ch);
     return;

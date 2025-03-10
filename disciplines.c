@@ -2932,7 +2932,7 @@ void do_howlinglunacy(CHAR_DATA *ch, char *argument)
 
     if (ch->pcdata->discipline[DEMENTATION] < 5)
     {
-        send_to_char( "Hey, you.  You are not trained in Dominate!\n\r", ch );
+        send_to_char( "To impart the mastery unto others, you must first master yourself!\n\r", ch );
         return;
     }
 
@@ -2997,14 +2997,17 @@ void do_howlinglunacy(CHAR_DATA *ch, char *argument)
     if (success == 0 || IS_SET(victim->imm_flags, IMM_MENTAL))
     {
         act("The lunacy seems content to stay where it is.", ch, NULL, victim, TO_CHAR);
-        af.where     = TO_IMMUNE;
-        af.type      = gsn_howlinglunacy;
-        af.level     = 0;
-        af.duration  = ch->level;
-        af.location  = APPLY_NONE;
-        af.modifier  = 0;
-        af.bitvector = IMM_MENTAL;
-        affect_to_char( victim, &af );
+        if (!IS_SET(victim->imm_flags, IMM_MENTAL))
+        {
+            af.where     = TO_IMMUNE;
+            af.type      = gsn_howlinglunacy;
+            af.level     = 0;
+            af.duration  = ch->level;
+            af.location  = APPLY_NONE;
+            af.modifier  = 0;
+            af.bitvector = IMM_MENTAL;
+            affect_to_char( victim, &af );
+        }
         return;
     }
 

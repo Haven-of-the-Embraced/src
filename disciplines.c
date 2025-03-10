@@ -2536,7 +2536,7 @@ void do_incubuspassion(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if (success == 0)
+    if (success == 0 || IS_SET(victim->res_flags, IMM_MENTAL) || IS_SET(victim->res_flags, IMM_CHARM))
     {
         act("Peasants.  The minds of simpletons are not worthy of enlightenment.", ch, NULL, victim, TO_CHAR);
         return;
@@ -2681,7 +2681,7 @@ void do_hauntthesoul(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if (success == 0)
+    if (success == 0 || IS_SET(victim->res_flags, IMM_MENTAL) || IS_SET(victim->res_flags, IMM_CHARM))
     {
         act("The mind is a terrible thing to waste.", ch, NULL, victim, TO_CHAR);
         return;
@@ -2951,6 +2951,8 @@ void do_howlinglunacy(CHAR_DATA *ch, char *argument)
         diff-= 2;
     if (IS_SET(victim->res_flags, RES_MENTAL) || IS_SET(victim->res_flags, RES_CHARM))
         diff++;
+
+    if (success == 0 || IS_SET(victim->res_flags, IMM_MENTAL) || IS_SET(victim->res_flags, IMM_CHARM))
 
     send_to_char("UNCODED\n\r", ch);
     return;

@@ -2760,30 +2760,36 @@ void do_eyesofchaos(CHAR_DATA *ch, char *argument)
         return;
     }
 
+    sprintf(buf, "There is wisdom and knowledge in the randomness of the world, if you know\n\r");
+    send_to_char(buf,ch);
+    sprintf(buf, "where to listen.  Whispers on the wind, and patterns of the leaves, tell\n\r");
+    send_to_char(buf,ch);
+    sprintf(buf, "the following hinted secrets about %s (if any are given):\n\r", IS_NPC(victim) ? victim->short_descr : victim->name);
+    send_to_char(buf,ch);
+
     if (victim->affected_by)
     {
-        sprintf(buf, "Affected by %s\n\r", affect_bit_name(victim->affected_by));
+        sprintf(buf, "[%s]\n\r", affect_bit_name(victim->affected_by));
         send_to_char(buf,ch);
     }
 
     if (victim->affected2_by)
     {
-         sprintf(buf, "Also affected by %s\n\r", affect2_bit_name(victim->affected2_by));
+        sprintf(buf, "[%s]\n\r", affect2_bit_name(victim->affected2_by));
         send_to_char(buf,ch);
     }
 
-    for ( paf = victim->affected; paf != NULL; paf = paf->next )
-    {
-        sprintf( buf,
-        "Spell: '%s' modifies for %d hours with bits %s%s.\n\r",
-        capitalize(skill_table[(int) paf->type].name),
-        paf->duration,
-        paf->where == TO_RESIST ? "res_" : paf->where == TO_IMMUNE ? "imm_" : paf->where == TO_VULN ? "vuln_" : "",
-        paf->where == TO_RESIST ? imm_bit_name(paf->bitvector) : paf->where == TO_VULN ? imm_bit_name(paf->bitvector) :
-        paf->where == TO_IMMUNE ? imm_bit_name(paf->bitvector) :
-        paf->where == TO_AFFECTS2 ? affect2_bit_name(paf->bitvector) : affect_bit_name( paf->bitvector ));
-        send_to_char( buf, ch );
-    }
+    if (success > 3)
+        for ( paf = victim->affected; paf != NULL; paf = paf->next )
+        {
+            sprintf( buf, "'%s' [%s%s]\n\r",
+            capitalize(skill_table[(int) paf->type].name),
+            paf->where == TO_RESIST ? "res_" : paf->where == TO_IMMUNE ? "imm_" : paf->where == TO_VULN ? "vuln_" : "",
+            paf->where == TO_RESIST ? imm_bit_name(paf->bitvector) : paf->where == TO_VULN ? imm_bit_name(paf->bitvector) :
+            paf->where == TO_IMMUNE ? imm_bit_name(paf->bitvector) :
+            paf->where == TO_AFFECTS2 ? affect2_bit_name(paf->bitvector) : affect_bit_name( paf->bitvector ));
+            send_to_char( buf, ch );
+        }
 
     return;
 }

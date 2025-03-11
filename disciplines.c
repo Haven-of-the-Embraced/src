@@ -99,19 +99,19 @@ void do_disclist(CHAR_DATA *ch, char *argument)
     if (ch->pcdata->discipline[DEMENTATION] > 0)
     {
         send_to_char("{D        [{R        Dementation        {D]{x\n\r",ch);
-        send_to_char("\n\r",ch);
+        send_to_char("{D  <{r1{D>  {xIncubus Passion\n\r",ch);
     }
     if (ch->pcdata->discipline[DEMENTATION] > 1)
-        send_to_char("{R*{DUncoded{R*{x\n\r",ch);/*
+        send_to_char("{D  <{r2{D>  {xHaunt the Soul\n\r",ch);
     if (ch->pcdata->discipline[DEMENTATION] > 2)
-        send_to_char("\n\r",ch);
+        send_to_char("{D  <{r3{D>  {xEyes of Chaos\n\r",ch);
     if (ch->pcdata->discipline[DEMENTATION] > 3)
-        send_to_char("\n\r",ch);
+        send_to_char("{D  <{r4{D>  {xSilence the Sane Mind\n\r",ch);
     if (ch->pcdata->discipline[DEMENTATION] > 4)
-        send_to_char("\n\r",ch);
+        send_to_char("{D  <{r5{D>  {xHowling Lunacy\n\r",ch);
     if (ch->pcdata->discipline[DEMENTATION] > 5)
-        send_to_char("{R*{DUncoded{R*{x\n\r",ch);
-*/
+        send_to_char("{D  <{r6{D>  {x{R*{DUncoded{R*{x\n\r",ch);
+
     if (ch->pcdata->discipline[DOMINATE] > 0)
     {
         send_to_char("{D        [{R         Dominate          {D]{x\n\r",ch);
@@ -2428,6 +2428,606 @@ void do_horridreality(CHAR_DATA *ch, char *argument)
         d10_damage(ch, victim, success, victim->max_hit/7, gsn_horridreality, DAM_SLASH, DEFENSE_NONE, TRUE, FALSE);
 
     }
+}
+
+void do_incubuspassion(CHAR_DATA *ch, char *argument)
+{
+    CHAR_DATA *victim;
+    int dice, diff = 6, success;
+    AFFECT_DATA af;
+    char arg1[MSL];
+    char arg2[MSL];
+
+    argument = one_argument(argument, arg1);
+    argument = one_argument(argument, arg2);
+
+    if (IS_NPC(ch)) return;
+
+    if(!IS_VAMP(ch))
+    {
+        send_to_char("You are not a vampire!\n\r" ,ch);
+        return;
+    }
+
+    if (ch->pcdata->discipline[DEMENTATION] < 1)
+    {
+        send_to_char( "You have not yet begun to revel in the madness.\n\r", ch );
+        return;
+    }
+
+    if ( ( victim = get_char_room( ch, NULL, arg1 ) ) == NULL &&
+        (victim = ch->fighting) == NULL )
+    {
+        send_to_char("On whom do you wish to alter passions of the world?\n\r",ch);
+        return;
+    }
+
+    if (victim == ch)
+    {
+        send_to_char("Your mind is already elevated to the magnificence of truth.\n\r",ch);
+        return;
+    }
+
+    if (IS_NPC(victim) && victim->pIndexData->pShop != NULL)
+    {
+        send_to_char("You fear that it may hinder your future purchases.\n\r",ch);
+        return;
+    }
+
+    if (!str_prefix(arg2,"heighten") && !str_prefix(arg2,"dull"))
+    {
+        send_to_char("Do you wish to '{yheighten{x' or '{ydull{x' your target's emotions?\n\r",ch);
+        send_to_char("Syntax: {cincubuspassion <target> <heighten/dull>{x\n\r", ch);
+        return;
+    }
+
+    if (ch->pblood < 10)
+    {
+        send_to_char( "You don't have enough blood.\n\r", ch );
+        return;
+    }
+
+    if (is_affected(ch, gsn_incubuspassion))
+    {
+        send_to_char("Your mind is too preoccupied.\n\r", ch);
+        return;
+    }
+
+    if (is_affected(victim, gsn_incubuspassion))
+    {
+        send_to_char("Further altering of emotions will be a waste.\n\r", ch);
+        return;
+    }
+
+    if (!IS_SET(victim->form, FORM_SENTIENT))
+    {
+        send_to_char("You can only alter passions of those who can realize it.\n\r", ch);
+        return;
+    }
+
+    ch->pblood -= 8;
+
+    if (victim->level < ch->level)
+        diff--;
+    if (victim->level > ch->level+10)
+        diff++;
+    if (IS_SET(victim->vuln_flags, VULN_MENTAL))
+        diff-= 2;
+    if (IS_SET(victim->res_flags, RES_MENTAL))
+        diff++;
+
+    success = godice(get_attribute(ch, CHARISMA) + get_ability(ch, CSABIL_EMPATHY), diff);
+
+    if (success < 0)
+    {
+        act("It all makes sense now!  The unworthy shall be shown the way!", ch, NULL, victim, TO_CHAR);
+
+        af.where     = TO_AFFECTS;
+        af.type      = gsn_incubuspassion;
+        af.level     = -1;
+        af.duration  = 2;
+        af.location  = APPLY_HITROLL;
+        af.modifier  = -ch->level * 2;
+        af.bitvector = 0;
+        affect_to_char( ch, &af );
+        af.location  = APPLY_DAMROLL;
+        af.modifier  = -ch->level;
+        affect_to_char( ch, &af );
+        return;
+    }
+
+    if (success == 0 || IS_SET(victim->imm_flags, IMM_MENTAL))
+    {
+        act("Peasants.  The minds of simpletons are not worthy of enlightenment.", ch, NULL, victim, TO_CHAR);
+        return;
+    }
+
+    if (!str_prefix(arg2,"heighten"))
+    {
+        act("You heighten the passion of $N to fervent levels.", ch, NULL, victim, TO_CHAR);
+        act("$N exudes excitement and irrationality.", ch, NULL, victim, TO_NOTVICT);
+        act("You feel a sense of excitement rush through your body.", ch, NULL, victim, TO_VICT);
+        af.where     = TO_AFFECTS;
+        af.type      = gsn_incubuspassion;
+        af.level     = ch->level;
+        af.duration  = success;
+        af.location  = APPLY_HITROLL;
+        af.modifier  = -(ch->level * success) - 10;
+        af.bitvector = 0;
+        affect_to_char( victim, &af );
+        af.location  = APPLY_DAMROLL;
+        af.modifier  = -(ch->level * success) - 10;
+        affect_to_char( victim, &af );
+        return;
+    }
+    else
+    {
+        act("Imparting the benefits of calming your mind to $N is the right thing to do.", ch, NULL, victim, TO_CHAR);
+        act("$N relaxes for a moment, seeming content.", ch, NULL, victim, TO_NOTVICT);
+        act("You realize the futility of aggression, and stop to consider your actions.", ch, NULL, victim, TO_VICT);
+        if (!IS_SET(victim->act2, ACT2_ULTRA_MOB))
+        {
+            if ( victim->fighting != NULL )
+                stop_fighting( victim, TRUE );
+            if (IS_NPC(victim) && IS_SET(victim->act,ACT_AGGRESSIVE))
+                REMOVE_BIT(victim->act,ACT_AGGRESSIVE);
+        }
+
+        af.where     = TO_AFFECTS;
+        af.type      = gsn_incubuspassion;
+        af.level     = ch->level;
+        af.duration  = success;
+        af.location  = APPLY_NONE;
+        af.modifier  = 0;
+        af.bitvector = AFF_CALM;
+        affect_to_char( victim, &af );
+        return;
+    }
+    return;
+}
+
+void do_hauntthesoul(CHAR_DATA *ch, char *argument)
+{
+    CHAR_DATA *victim;
+    int dice, diff = 6, success;
+    AFFECT_DATA af;
+    char arg1[MSL];
+    char arg2[MSL];
+
+    argument = one_argument(argument, arg1);
+    argument = one_argument(argument, arg2);
+
+    if (IS_NPC(ch)) return;
+
+    if(!IS_VAMP(ch))
+    {
+        send_to_char("You are not a vampire!\n\r" ,ch);
+        return;
+    }
+
+    if (ch->pcdata->discipline[DEMENTATION] < 2)
+    {
+        send_to_char( "The madness has only just begun your enlightenment.\n\r", ch );
+        return;
+    }
+
+    if ( ( victim = get_char_room( ch, NULL, arg1 ) ) == NULL &&
+        (victim = ch->fighting) == NULL )
+    {
+        send_to_char("Who requires the nudge towards enlightenment?\n\r",ch);
+        return;
+    }
+
+    if (victim == ch)
+    {
+        send_to_char("Your mind is already elevated to the magnificence of truth.\n\r",ch);
+        return;
+    }
+
+    if (ch->pblood < 13)
+    {
+        send_to_char( "You don't have enough blood.\n\r", ch );
+        return;
+    }
+
+    if (is_affected(ch, gsn_hauntthesoul))
+    {
+        send_to_char("Fleeting visions distract you.\n\r", ch);
+        return;
+    }
+
+    if (is_affected(victim, gsn_hauntthesoul))
+    {
+        send_to_char("Your intended target is already battling internal demons.\n\r", ch);
+        return;
+    }
+
+    if (IS_NPC(victim) && victim->pIndexData->pShop != NULL)
+    {
+        send_to_char("You fear that it may hinder your future purchases.\n\r",ch);
+        return;
+    }
+
+    if (!IS_SET(victim->form, FORM_SENTIENT))
+    {
+        send_to_char("Your target must have self realization to see the visions.\n\r", ch);
+        return;
+    }
+
+    ch->pblood -= 11;
+
+    if (victim->level < ch->level)
+        diff--;
+    if (victim->level > ch->level+10)
+        diff++;
+    if (IS_SET(victim->vuln_flags, VULN_MENTAL))
+        diff-= 2;
+    if (IS_SET(victim->res_flags, RES_MENTAL))
+        diff++;
+
+    success = godice(get_attribute(ch, CHARISMA) + get_ability(ch, CSABIL_EMPATHY), diff);
+
+    if (success < 0)
+    {
+        act("Visions lie at the edge of your peripheral, taunting you.  Mocking you.", ch, NULL, victim, TO_CHAR);
+        af.where     = TO_AFFECTS;
+        af.type      = gsn_hauntthesoul;
+        af.level     = -1;
+        af.duration  = 2;
+        af.location  = 0;
+        af.modifier  = 0;
+        af.bitvector = 0;
+        affect_to_char( ch, &af );
+        return;
+    }
+
+    if (success == 0 || IS_SET(victim->imm_flags, IMM_MENTAL))
+    {
+        act("The mind is a terrible thing to waste.", ch, NULL, victim, TO_CHAR);
+        return;
+    }
+
+    act("Sharing your visions, $N is now the happy recipient.", ch, NULL, victim, TO_CHAR);
+    act("Your mind is assaulted by powerful visions.", ch, NULL, victim, TO_VICT);
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_hauntthesoul;
+    af.level     = ch->level;
+    af.duration  = success;
+    af.location  = 0;
+    af.modifier  = 0;
+    af.bitvector = 0;
+    affect_to_char( victim, &af );
+    return;
+}
+
+void do_eyesofchaos(CHAR_DATA *ch, char *argument)
+{
+    CHAR_DATA *victim;
+    int dice, diff = 6, success;
+    AFFECT_DATA *paf;
+    char arg1[MSL];
+    char arg2[MSL];
+    char buf[MSL];
+
+    argument = one_argument(argument, arg1);
+    argument = one_argument(argument, arg2);
+
+    if (IS_NPC(ch)) return;
+
+    if(!IS_VAMP(ch))
+    {
+        send_to_char("You are not a vampire!\n\r" ,ch);
+        return;
+    }
+
+    if (ch->pcdata->discipline[DEMENTATION] < 3)
+    {
+        send_to_char( "The world is an example of unparallelled excitement.\n\r", ch );
+        return;
+    }
+
+    if ( ( victim = get_char_room( ch, NULL, arg1 ) ) == NULL &&
+        (victim = ch->fighting) == NULL )
+    {
+        send_to_char("Whom is deserving of your scrutiny?\n\r",ch);
+        return;
+    }
+
+    if (victim == ch)
+    {
+        send_to_char("Your mind is already elevated to the magnificence of truth.\n\r",ch);
+        return;
+    }
+
+    if (ch->pblood < 16)
+    {
+        send_to_char( "You don't have enough blood.\n\r", ch );
+        return;
+    }
+
+    ch->pblood -= 14;
+
+    if (victim->level < ch->level)
+        diff--;
+    if (victim->level > ch->level+10)
+        diff++;
+
+    success = godice(get_attribute(ch, PERCEPTION) + get_ability(ch, CSABIL_OCCULT), diff);
+
+    if (success < 0)
+    {
+        act("You lose yourself trying to make sense of the random patterns of the world.", ch, NULL, victim, TO_CHAR);
+        WAIT_STATE(ch, 12);
+        return;
+    }
+
+    if (success == 0)
+    {
+        act("This individual isn't worth your time, in your expert opinion.", ch, NULL, victim, TO_CHAR);
+        WAIT_STATE(ch, 3);
+        return;
+    }
+
+    sprintf(buf, "There is wisdom and knowledge in the randomness of the world, if you know\n\r");
+    send_to_char(buf,ch);
+    sprintf(buf, "where to listen.  Whispers on the wind, and patterns of the leaves, tell\n\r");
+    send_to_char(buf,ch);
+    sprintf(buf, "the following hinted secrets about %s (if any are given):\n\r", IS_NPC(victim) ? victim->short_descr : victim->name);
+    send_to_char(buf,ch);
+
+    if (victim->affected_by)
+    {
+        sprintf(buf, "[%s]\n\r", affect_bit_name(victim->affected_by));
+        send_to_char(buf,ch);
+    }
+
+    if (victim->affected2_by)
+    {
+        sprintf(buf, "[%s]\n\r", affect2_bit_name(victim->affected2_by));
+        send_to_char(buf,ch);
+    }
+
+    if (success > 3)
+        for ( paf = victim->affected; paf != NULL; paf = paf->next )
+        {
+            sprintf( buf, "'%s' [%s%s]\n\r",
+            capitalize(skill_table[(int) paf->type].name),
+            paf->where == TO_RESIST ? "res_" : paf->where == TO_IMMUNE ? "imm_" : paf->where == TO_VULN ? "vuln_" : "",
+            paf->where == TO_RESIST ? imm_bit_name(paf->bitvector) : paf->where == TO_VULN ? imm_bit_name(paf->bitvector) :
+            paf->where == TO_IMMUNE ? imm_bit_name(paf->bitvector) :
+            paf->where == TO_AFFECTS2 ? affect2_bit_name(paf->bitvector) : affect_bit_name( paf->bitvector ));
+            send_to_char( buf, ch );
+        }
+
+    return;
+}
+
+void do_silencethesanemind(CHAR_DATA *ch, char *argument)
+{
+    CHAR_DATA *victim;
+    int dice, diff, success;
+    AFFECT_DATA af;
+    char arg1[MSL];
+    char arg2[MSL];
+
+    argument = one_argument(argument, arg1);
+    argument = one_argument(argument, arg2);
+
+    if (IS_NPC(ch)) return;
+
+    if(!IS_VAMP(ch))
+    {
+        send_to_char("You are not a vampire!\n\r" ,ch);
+        return;
+    }
+
+    if (ch->pcdata->discipline[DEMENTATION] < 4)
+    {
+        send_to_char( "You must first understand your own mind.\n\r", ch );
+        return;
+    }
+
+    if ( ( victim = get_char_room( ch, NULL, arg1 ) ) == NULL &&
+        (victim = ch->fighting) == NULL )
+    {
+        send_to_char("Whose mind requires clarity?\n\r",ch);
+        return;
+    }
+
+    if (victim == ch)
+    {
+        send_to_char("Your mind is already elevated to the magnificence of truth.\n\r",ch);
+        return;
+    }
+
+    if (ch->pblood < 19)
+    {
+        send_to_char( "You don't have enough blood.\n\r", ch );
+        return;
+    }
+
+    if (!IS_SET(victim->form, FORM_SENTIENT))
+    {
+        send_to_char("Clarity of the mind will not help your target.\n\r", ch);
+        return;
+    }
+
+    if (IS_NPC(victim) && victim->pIndexData->pShop != NULL)
+    {
+        send_to_char("You fear that it may hinder your future purchases.\n\r",ch);
+        return;
+    }
+
+    if(is_affected(ch, gsn_silencethesanemind))
+    {
+        send_to_char("You cannot impart any further knowlege on your target.\n\r", ch);
+        return;
+    }
+
+    if (victim->level < ch->level)
+        diff--;
+    if (victim->level > ch->level+10)
+        diff++;
+    if (IS_SET(victim->vuln_flags, VULN_MENTAL))
+        diff-= 2;
+    if (IS_SET(victim->res_flags, RES_MENTAL))
+        diff++;
+
+    success = godice(get_attribute(ch, MANIPULATION) + get_ability(ch, CSABIL_INTIMIDATION), diff);
+
+    if (success < 0)
+    {
+        act("$N seems blissfully unbothered by your attempt at enlightenment.", ch, NULL, victim, TO_CHAR);
+        af.where     = TO_IMMUNE;
+        af.type      = gsn_silencethesanemind;
+        af.level     = -1;
+        af.duration  = ch->level;
+        af.location  = APPLY_NONE;
+        af.modifier  = 0;
+        af.bitvector = IMM_MENTAL;
+        affect_to_char( victim, &af );
+        return;
+    }
+
+    if (success == 0 || IS_SET(victim->imm_flags, IMM_MENTAL))
+    {
+        act("The sanity of the mind is quite relative.", ch, NULL, victim, TO_CHAR);
+        WAIT_STATE(ch, 6);
+        return;
+    }
+
+    ch->pblood -= 17;
+
+    act("Enlightenment comes in many forms, $N will soon find out.", ch, NULL, victim, TO_CHAR);
+    act("Your mind is opened to many possibilities, too many to comprehend.", ch, NULL, victim, TO_VICT);
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_silencethesanemind;
+    af.level     = ch->level;
+    af.duration  = ch->level;
+    af.location  = APPLY_NONE;
+    af.modifier  = 0;
+    af.bitvector = 0;
+    affect_to_char( victim, &af );
+    return;
+}
+
+void do_howlinglunacy(CHAR_DATA *ch, char *argument)
+{
+    CHAR_DATA *victim;
+    int dice, diff, success;
+    AFFECT_DATA af;
+    char arg1[MSL];
+    char arg2[MSL];
+
+    argument = one_argument(argument, arg1);
+    argument = one_argument(argument, arg2);
+
+    if (IS_NPC(ch)) return;
+
+    if(!IS_VAMP(ch))
+    {
+        send_to_char("You have not fully mastered the intricacies of Dementation.\n\r" ,ch);
+        return;
+    }
+
+    if (ch->pcdata->discipline[DEMENTATION] < 5)
+    {
+        send_to_char( "To impart the mastery unto others, you must first master yourself!\n\r", ch );
+        return;
+    }
+
+    if ( ( victim = get_char_room( ch, NULL, arg1 ) ) == NULL &&
+        (victim = ch->fighting) == NULL )
+    {
+        send_to_char("Upon whom do wish to impart this extraordinary gift of truth?\n\r",ch);
+        return;
+    }
+
+    if (victim == ch)
+    {
+        send_to_char("Your mind is already elevated to the magnificence of truth.\n\r",ch);
+        return;
+    }
+
+    if (ch->pblood < 22)
+    {
+        send_to_char( "You don't have enough blood.\n\r", ch );
+        return;
+    }
+
+    if (is_affected(victim, gsn_howlinglunacy))
+    {
+        send_to_char("Your quarry is already quite a lunatic.", ch);
+        return;
+    }
+
+    if (IS_NPC(victim) && victim->pIndexData->pShop != NULL)
+    {
+        send_to_char("You fear that it may hinder your future purchases.\n\r",ch);
+        return;
+    }
+
+    if (!IS_SET(victim->form, FORM_SENTIENT))
+    {
+        send_to_char("Your target can't handle the truth!\n\r", ch);
+        return;
+    }
+
+    ch->pblood -= 20;
+
+    if (IS_SET(victim->vuln_flags, VULN_MENTAL))
+        diff-= 2;
+    if (IS_SET(victim->res_flags, RES_MENTAL))
+        diff++;
+
+    if (success < 0)
+    {
+        act("Madness?  I'll show you madness!", ch, NULL, victim, TO_CHAR);
+        af.where     = TO_AFFECTS;
+        af.type      = gsn_howlinglunacy;
+        af.level     = -1;
+        af.duration  = 2;
+        af.location  = APPLY_NONE;
+        af.modifier  = 0;
+        af.bitvector = 0;
+        affect_to_char( ch, &af );
+        return;
+    }
+
+    if (success == 0 || IS_SET(victim->imm_flags, IMM_MENTAL))
+    {
+        act("The lunacy seems content to stay where it is.", ch, NULL, victim, TO_CHAR);
+        if (!IS_SET(victim->imm_flags, IMM_MENTAL))
+        {
+            af.where     = TO_IMMUNE;
+            af.type      = gsn_howlinglunacy;
+            af.level     = 0;
+            af.duration  = ch->level;
+            af.location  = APPLY_NONE;
+            af.modifier  = 0;
+            af.bitvector = IMM_MENTAL;
+            affect_to_char( victim, &af );
+        }
+        return;
+    }
+
+        act("Bringing this level of clarity to all is the work you were meant to do.", ch, NULL, victim, TO_CHAR);
+        act("The sheer weight of knowledge descending upon you drives you catatonic.", ch, NULL, victim, TO_VICT);
+        act("$N suddenly drops to the ground, catatonic.", ch, NULL, victim, TO_NOTVICT);
+        af.where     = TO_AFFECTS;
+        af.type      = gsn_howlinglunacy;
+        af.level     = ch->level;
+        af.duration  = success;
+        af.location  = APPLY_NONE;
+        af.modifier  = 0;
+        af.bitvector = AFF_CALM;
+        affect_to_char( victim, &af );
+        if ( victim->fighting != NULL )
+            stop_fighting( victim, TRUE );
+        if (IS_NPC(victim) && IS_SET(victim->act,ACT_AGGRESSIVE))
+            REMOVE_BIT(victim->act,ACT_AGGRESSIVE);
+        victim->stopped += (success * 3) + 2;
+    return;
 }
 
 void do_command(CHAR_DATA *ch, char *argument)

@@ -556,7 +556,7 @@ bool spec_breath_any( CHAR_DATA *ch )
     if ( ch->position != POS_FIGHTING || ch->stopped > 0)
     return FALSE;
 
-    if(is_affected( ch, gsn_forget ))
+    if(is_affected( ch, gsn_forget ) || is_affected(ch, gsn_silencethesanemind))
     return FALSE;
 
     switch ( number_bits( 3 ) )
@@ -707,7 +707,7 @@ bool spec_cast_cleric( CHAR_DATA *ch )
     if ( ch->position != POS_FIGHTING )
     return FALSE;
 
-    if(is_affected( ch, gsn_forget ))
+    if(is_affected( ch, gsn_forget ) || is_affected(ch, gsn_silencethesanemind))
     return FALSE;
 
     if (room_is_silent( ch, ch->in_room ))
@@ -767,7 +767,7 @@ bool spec_cast_judge( CHAR_DATA *ch )
     if ( ch->position != POS_FIGHTING )
         return FALSE;
 
-    if(is_affected( ch, gsn_forget ))
+    if(is_affected( ch, gsn_forget ) || is_affected(ch, gsn_silencethesanemind))
     return FALSE;
 
     for ( victim = ch->in_room->people; victim != NULL; victim = v_next )
@@ -798,7 +798,7 @@ bool spec_cast_mage( CHAR_DATA *ch )
 
     if ( ch->position != POS_FIGHTING )
     return FALSE;
-    if(is_affected( ch, gsn_forget ))
+    if(is_affected( ch, gsn_forget ) || is_affected(ch, gsn_silencethesanemind))
     return FALSE;
     if (room_is_silent( ch, ch->in_room ))
         return FALSE;
@@ -857,7 +857,7 @@ bool spec_cast_undead( CHAR_DATA *ch )
     if ( ch->position != POS_FIGHTING )
     return FALSE;
 
-    if(is_affected( ch, gsn_forget ))
+    if(is_affected( ch, gsn_forget ) || is_affected(ch, gsn_silencethesanemind))
     return FALSE;
 
     if (room_is_silent( ch, ch->in_room ))
@@ -1200,7 +1200,7 @@ bool spec_poison( CHAR_DATA *ch )
     ||   number_percent( ) > 2 * ch->level )
     return FALSE;
 
-    if(is_affected( ch, gsn_forget ))
+    if(is_affected( ch, gsn_forget ) || is_affected(ch, gsn_silencethesanemind))
     return FALSE;
 
     act( "You bite $N!",  ch, NULL, victim, TO_CHAR    );
@@ -1319,7 +1319,7 @@ bool spec_cast_lightning( CHAR_DATA *ch )
 
     if ( ch->position != POS_FIGHTING )
         return FALSE;
-    if(is_affected( ch, gsn_forget ))
+    if(is_affected( ch, gsn_forget ) || is_affected(ch, gsn_silencethesanemind))
     return FALSE;
     if (room_is_silent( ch, ch->in_room ))
         return FALSE;
@@ -1363,7 +1363,7 @@ bool spec_stake( CHAR_DATA *ch )
 
     if ( ch->position == POS_FIGHTING )
         return FALSE;
-    if(is_affected( ch, gsn_forget ))
+    if(is_affected( ch, gsn_forget ) || is_affected(ch, gsn_silencethesanemind))
     return FALSE;
 
     for ( victim = ch->in_room->people; victim != NULL; victim = v_next )
@@ -1465,7 +1465,8 @@ bool spec_lag( CHAR_DATA *ch )
     CHAR_DATA *victim;
     CHAR_DATA *v_next;
 
-	if (!IS_AWAKE(ch) || ch->stopped > 0 || is_affected( ch, gsn_forget ))
+	if (!IS_AWAKE(ch) || ch->stopped > 0 
+        || is_affected( ch, gsn_forget ) || is_affected(ch, gsn_silencethesanemind))
       return FALSE;
 
     for ( victim = ch->in_room->people; victim != NULL; victim = v_next )
@@ -1490,7 +1491,8 @@ bool spec_lag( CHAR_DATA *ch )
 /* Clan Specs */
 bool spec_assamite( CHAR_DATA *ch )
 {
-    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget )
+        || is_affected(ch, gsn_silencethesanemind))
       return FALSE;
 /*
       switch ( number_range( 0,2 ) )
@@ -1505,7 +1507,8 @@ bool spec_assamite( CHAR_DATA *ch )
 
 bool spec_baali( CHAR_DATA *ch )
 {
-    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget )
+        || is_affected(ch, gsn_silencethesanemind))
       return FALSE;
     /*
           switch ( number_range( 0,2 ) )
@@ -1520,7 +1523,8 @@ bool spec_baali( CHAR_DATA *ch )
 
 bool spec_brujah( CHAR_DATA *ch )
 {
-    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget )
+        || is_affected(ch, gsn_silencethesanemind))
       return FALSE;
 
     switch ( number_range( 0,2 ) )
@@ -1535,7 +1539,8 @@ bool spec_brujah( CHAR_DATA *ch )
 
 bool spec_cappadocian( CHAR_DATA *ch )
 {
-    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget )
+        || is_affected(ch, gsn_silencethesanemind))
     return FALSE;
     /*
           switch ( number_range( 0,2 ) )
@@ -1550,7 +1555,8 @@ bool spec_cappadocian( CHAR_DATA *ch )
 
 bool spec_followersofset( CHAR_DATA *ch )
 {
-    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget )
+        || is_affected(ch, gsn_silencethesanemind))
       return FALSE;
 
     switch ( number_range( 0,2 ) )
@@ -1566,7 +1572,8 @@ bool spec_followersofset( CHAR_DATA *ch )
 
 bool spec_gangrel( CHAR_DATA *ch )
 {
-    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget )
+        || is_affected(ch, gsn_silencethesanemind))
     return FALSE;
     /*
           switch ( number_range( 0,2 ) )
@@ -1581,7 +1588,8 @@ bool spec_gangrel( CHAR_DATA *ch )
 
 bool spec_gargoyle( CHAR_DATA *ch )
 {
-    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget )
+        || is_affected(ch, gsn_silencethesanemind))
     return FALSE;
     /*
           switch ( number_range( 0,2 ) )
@@ -1596,7 +1604,8 @@ bool spec_gargoyle( CHAR_DATA *ch )
 
 bool spec_lasombra( CHAR_DATA *ch )
 {
-    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget )
+        || is_affected(ch, gsn_silencethesanemind))
     return FALSE;
 
     switch ( number_range( 0,2 ) )
@@ -1611,7 +1620,8 @@ bool spec_lasombra( CHAR_DATA *ch )
 
 bool spec_malkavian( CHAR_DATA *ch )
 {
-    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget )
+        || is_affected(ch, gsn_silencethesanemind))
     return FALSE;
     /*
           switch ( number_range( 0,2 ) )
@@ -1626,7 +1636,8 @@ bool spec_malkavian( CHAR_DATA *ch )
 
 bool spec_nosferatu( CHAR_DATA *ch )
 {
-    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget )
+        || is_affected(ch, gsn_silencethesanemind))
     return FALSE;
     /*
           switch ( number_range( 0,2 ) )
@@ -1641,7 +1652,8 @@ bool spec_nosferatu( CHAR_DATA *ch )
 
 bool spec_ravnos( CHAR_DATA *ch )
 {
-    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget )
+        || is_affected(ch, gsn_silencethesanemind))
     return FALSE;
     /*
           switch ( number_range( 0,2 ) )
@@ -1656,7 +1668,8 @@ bool spec_ravnos( CHAR_DATA *ch )
 
 bool spec_salubri( CHAR_DATA *ch )
 {
-    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget )
+        || is_affected(ch, gsn_silencethesanemind))
     return FALSE;
     /*
           switch ( number_range( 0,3 ) )
@@ -1672,7 +1685,8 @@ bool spec_salubri( CHAR_DATA *ch )
 
 bool spec_toreador( CHAR_DATA *ch )
 {
-    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget )
+        || is_affected(ch, gsn_silencethesanemind))
     return FALSE;
     /*
           switch ( number_range( 0,2 ) )
@@ -1687,7 +1701,8 @@ bool spec_toreador( CHAR_DATA *ch )
 
 bool spec_tremere( CHAR_DATA *ch )
 {
-    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget )
+        || is_affected(ch, gsn_silencethesanemind))
     return FALSE;
     /*
           switch ( number_range( 0,2 ) )
@@ -1702,7 +1717,8 @@ bool spec_tremere( CHAR_DATA *ch )
 
 bool spec_tzimisce( CHAR_DATA *ch )
 {
-    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget )
+        || is_affected(ch, gsn_silencethesanemind))
     return FALSE;
     /*
           switch ( number_range( 0,2 ) )
@@ -1717,7 +1733,8 @@ bool spec_tzimisce( CHAR_DATA *ch )
 
 bool spec_ventrue( CHAR_DATA *ch )
 {
-    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget )
+        || is_affected(ch, gsn_silencethesanemind))
     return FALSE;
     /*
           switch ( number_range( 0,2 ) )
@@ -1768,7 +1785,8 @@ bool spec_celerity( CHAR_DATA *ch )
 
 bool spec_dominate( CHAR_DATA *ch )
 {
-    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget )
+        || is_affected(ch, gsn_silencethesanemind))
     return FALSE;
 
     switch ( number_range( 0,2 ) )
@@ -1786,7 +1804,7 @@ bool spec_obtenebration( CHAR_DATA *ch )
     if ( ch->position != POS_FIGHTING || ch->stopped > 0)
     return FALSE;
 
-    if(is_affected( ch, gsn_forget ))
+    if(is_affected( ch, gsn_forget ) || is_affected(ch, gsn_silencethesanemind))
     return FALSE;
 
     switch ( number_range( 0,2 ) )
@@ -1807,7 +1825,8 @@ bool spec_potence( CHAR_DATA *ch )
     int sn, num;
     int potence, successes, damagesuccess, damagemod;
 
-    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected(ch, gsn_forget))
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected(ch, gsn_forget)
+        || is_affected(ch, gsn_silencethesanemind))
         return FALSE;
 
     for ( victim = ch->in_room->people; victim != NULL; victim = v_next )
@@ -1849,7 +1868,8 @@ bool spec_potence( CHAR_DATA *ch )
 
 bool spec_presence( CHAR_DATA *ch )
 {
-    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget )
+        || is_affected(ch, gsn_silencethesanemind))
     return FALSE;
 
     switch ( number_range( 0,2 ) )
@@ -1869,7 +1889,8 @@ bool spec_presence( CHAR_DATA *ch )
 bool spec_serpentis( CHAR_DATA *ch )
 {
   int serpentis = 2;
-    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget )
+        || is_affected(ch, gsn_silencethesanemind))
     return FALSE;
 
     if (ch->level >= 100)
@@ -1902,7 +1923,8 @@ bool spec_command( CHAR_DATA *ch )
     CHAR_DATA *v_next;
     AFFECT_DATA af;
 
-    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected(ch, gsn_forget))
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected(ch, gsn_forget)
+        || is_affected(ch, gsn_silencethesanemind))
         return FALSE;
     if (room_is_silent( ch, ch->in_room ))
         return FALSE;
@@ -1962,7 +1984,8 @@ bool spec_mesmerize( CHAR_DATA *ch )
   char buf[MSL], weapon[MSL], mob[MSL];
   int success;
 
-    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget )
+        || is_affected(ch, gsn_silencethesanemind))
     return FALSE;
     if (room_is_silent( ch, ch->in_room ))
         return FALSE;
@@ -2024,7 +2047,8 @@ bool spec_forgetfulmind( CHAR_DATA *ch )
   int dominate;
   AFFECT_DATA af;
 
-    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget )
+        || is_affected(ch, gsn_silencethesanemind))
     return FALSE;
 
     dominate = (ch->level / 25) + 1;
@@ -2068,7 +2092,8 @@ bool spec_shadowplay( CHAR_DATA *ch )
   AFFECT_DATA af;
 
   if ( ch->position != POS_FIGHTING || ch->stopped > 0
-    || is_affected(ch, gsn_forget) || IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
+    || is_affected(ch, gsn_forget) || IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE)
+    || is_affected(ch, gsn_silencethesanemind))
       return FALSE;
 
   for ( victim = ch->in_room->people; victim != NULL; victim = v_next )
@@ -2132,7 +2157,8 @@ bool spec_nocturne( CHAR_DATA *ch )
     return FALSE;
 
   if ( ch->position != POS_FIGHTING || ch->stopped > 0
-    || is_affected(ch, gsn_forget) || obtensuccess <= 0)
+    || is_affected(ch, gsn_forget) || obtensuccess <= 0
+    || is_affected(ch, gsn_silencethesanemind))
     return FALSE;
 
   for ( victim = ch->in_room->people; victim != NULL; victim = v_next )
@@ -2167,7 +2193,8 @@ bool spec_armsoftheabyss( CHAR_DATA *ch )
     obtensuccess = godice(get_attribute(ch, MANIPULATION) + get_ability(ch, CSABIL_OCCULT), 7);
 
     if ( ch->position != POS_FIGHTING || ch->stopped > 0
-      || is_affected( ch, gsn_forget ) || IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
+      || is_affected( ch, gsn_forget ) || IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE)
+      || is_affected(ch, gsn_silencethesanemind))
     return FALSE;
 
     for ( victim = ch->in_room->people; victim != NULL; victim = v_next )
@@ -2213,7 +2240,8 @@ bool spec_awe( CHAR_DATA *ch )
   AFFECT_DATA af;
   int awesuccess;
 
-  if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected(ch, gsn_forget))
+  if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected(ch, gsn_forget)
+    || is_affected(ch, gsn_silencethesanemind))
       return FALSE;
 
   awesuccess = godice(get_attribute(ch, CHARISMA) + get_ability(ch, CSABIL_PERFORMANCE), 7);
@@ -2247,7 +2275,8 @@ bool spec_dreadgaze( CHAR_DATA *ch)
   CHAR_DATA *v_next;
   int dreadsuccess, dreaddiff;
 
-  if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected(ch, gsn_forget))
+  if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected(ch, gsn_forget)
+    || is_affected(ch, gsn_silencethesanemind))
       return FALSE;
 
   for ( victim = ch->in_room->people; victim != NULL; victim = v_next )
@@ -2296,7 +2325,8 @@ bool spec_eyesoftheserpent( CHAR_DATA *ch )
   serpentis = (ch->level / 20) + 1;
   eyessuccess = godice(get_attribute(ch, WITS) + get_ability(ch, CSABIL_ALERTNESS), 7);
 
-    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget )
+        || is_affected(ch, gsn_silencethesanemind))
     return FALSE;
 
     for ( victim = ch->in_room->people; victim != NULL; victim = v_next )
@@ -2329,7 +2359,8 @@ bool spec_tongueoftheasp( CHAR_DATA *ch )
   serpentis = (ch->level / 20) + 1;
   tonguesuccess = godice(get_attribute(ch, DEXTERITY) + get_ability(ch, CSABIL_BRAWL), 7);
 
-    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget ))
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget )
+        || is_affected(ch, gsn_silencethesanemind))
     return FALSE;
 
     for ( victim = ch->in_room->people; victim != NULL; victim = v_next )
@@ -2376,7 +2407,7 @@ bool spec_skinoftheadder( CHAR_DATA *ch )
 
     if ( ch->position != POS_FIGHTING || ch->stopped > 0 ||
       is_affected( ch, gsn_forget ) || is_affected(ch, gsn_quietus_bloodcurse) ||
-      is_affected(ch, gsn_skinoftheadder))
+      is_affected(ch, gsn_skinoftheadder) || is_affected(ch, gsn_silencethesanemind))
       return FALSE;
 
       act("You convert vitae from your system and your skin takes on a scaly, reptilian quality.", ch, NULL, NULL, TO_CHAR);
@@ -2412,7 +2443,7 @@ bool spec_cast_acid( CHAR_DATA *ch )
 
     if ( ch->position != POS_FIGHTING )
         return FALSE;
-    if(is_affected( ch, gsn_forget ))
+    if(is_affected( ch, gsn_forget ) || is_affected(ch, gsn_silencethesanemind))
     return FALSE;
 
     for ( victim = ch->in_room->people; victim != NULL; victim = v_next )
@@ -2449,7 +2480,7 @@ bool spec_cast_cold( CHAR_DATA *ch )
 
     if ( ch->position != POS_FIGHTING )
         return FALSE;
-    if(is_affected( ch, gsn_forget ))
+    if(is_affected( ch, gsn_forget ) || is_affected(ch, gsn_silencethesanemind))
     return FALSE;
 
     for ( victim = ch->in_room->people; victim != NULL; victim = v_next )
@@ -2486,7 +2517,7 @@ bool spec_cast_fire( CHAR_DATA *ch )
 
     if ( ch->position != POS_FIGHTING )
         return FALSE;
-    if(is_affected( ch, gsn_forget ))
+    if(is_affected( ch, gsn_forget ) || is_affected(ch, gsn_silencethesanemind))
     return FALSE;
 
     for ( victim = ch->in_room->people; victim != NULL; victim = v_next )
@@ -2524,7 +2555,8 @@ bool spec_evil_eye( CHAR_DATA *ch )
   int evileyesuccess = 0;
   int evileyeaffect = 0;
 
-  if (ch->stopped > 0 || !IS_AWAKE(ch) || ch->position != POS_FIGHTING )
+  if (ch->stopped > 0 || !IS_AWAKE(ch) || ch->position != POS_FIGHTING 
+    || is_affected(ch, gsn_silencethesanemind))
     return FALSE;
     if (room_is_silent( ch, ch->in_room ))
         return FALSE;

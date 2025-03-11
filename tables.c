@@ -117,7 +117,7 @@ const struct cdisc_type clandisc_table[MAX_CLAN] =
 {
     {0, 0, 0}, //0
     {0, 0, 0}, //1
-    { DISC_AUSPEX, DISC_DOMINATE, DISC_OBFUSCATE },// Malkavian (2)
+    { DISC_AUSPEX, DISC_DEMENTATION, DISC_OBFUSCATE },// Malkavian (2)
     { DISC_CELERITY, DISC_OBFUSCATE, DISC_QUIETUS},//Assamite (3)
     { DISC_MORTIS, DISC_AUSPEX, DISC_FORTITUDE  },// Cappadocian (4)
     { DISC_FORTITUDE, DISC_PROTEAN, DISC_ANIMALISM  },//Gangrel (5)

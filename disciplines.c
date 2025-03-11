@@ -99,19 +99,19 @@ void do_disclist(CHAR_DATA *ch, char *argument)
     if (ch->pcdata->discipline[DEMENTATION] > 0)
     {
         send_to_char("{D        [{R        Dementation        {D]{x\n\r",ch);
-        send_to_char("\n\r",ch);
+        send_to_char("{D  <{r1{D>  {xIncubus Passion\n\r",ch);
     }
     if (ch->pcdata->discipline[DEMENTATION] > 1)
-        send_to_char("{R*{DUncoded{R*{x\n\r",ch);/*
+        send_to_char("{D  <{r2{D>  {xHaunt the Soul\n\r",ch);
     if (ch->pcdata->discipline[DEMENTATION] > 2)
-        send_to_char("\n\r",ch);
+        send_to_char("{D  <{r3{D>  {xEyes of Chaos\n\r",ch);
     if (ch->pcdata->discipline[DEMENTATION] > 3)
-        send_to_char("\n\r",ch);
+        send_to_char("{D  <{r4{D>  {xSilence the Sane Mind\n\r",ch);
     if (ch->pcdata->discipline[DEMENTATION] > 4)
-        send_to_char("\n\r",ch);
+        send_to_char("{D  <{r5{D>  {xHowling Lunacy\n\r",ch);
     if (ch->pcdata->discipline[DEMENTATION] > 5)
-        send_to_char("{R*{DUncoded{R*{x\n\r",ch);
-*/
+        send_to_char("{D  <{r6{D>  {x{R*{DUncoded{R*{x\n\r",ch);
+
     if (ch->pcdata->discipline[DOMINATE] > 0)
     {
         send_to_char("{D        [{R         Dominate          {D]{x\n\r",ch);

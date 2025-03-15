@@ -4112,6 +4112,10 @@ void spell_gift_attunement( int sn, int level, CHAR_DATA *ch, void *vo, int targ
 
   pArea = ch->in_room->area;
 
+  sprintf(buf, "The spirits relay information about the inhabitants of {Y%s{x:\n\r", pArea->name);
+  send_to_char(buf, ch);
+  sprintf(buf, "{M Level {CPop   {RRace{W           Name{x\n\r");
+  send_to_char(buf, ch);
   for ( vnum = pArea->min_vnum; vnum <= pArea->max_vnum; vnum++ )
   {
     if ( ( pMobIndex = get_mob_index( vnum ) ) != NULL )
@@ -4119,8 +4123,8 @@ void spell_gift_attunement( int sn, int level, CHAR_DATA *ch, void *vo, int targ
       if(pMobIndex->count > 0)
       {
         found = TRUE;
-        sprintf( buf, "{W<{Blvl {M%3d{W> {W: {YPopulation {C%2d{W : {x%s%s\n\r", 
-          pMobIndex->level, pMobIndex->count, crit ? pMobIndex->race : "", pMobIndex->short_descr );
+        sprintf( buf, "{W< {M%3d{W> {C%2d{W  ({R%14s{W) %s\n\r", 
+          pMobIndex->level, pMobIndex->count, race_table[pMobIndex->race].name , pMobIndex->short_descr );
         send_to_char( buf, ch );
       }
     }

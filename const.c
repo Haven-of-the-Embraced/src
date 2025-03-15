@@ -3035,7 +3035,7 @@ Total (3) */
 
 {   "attunement", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_attunement,  TAR_IGNORE, POS_STANDING,
-&gsn_gift_attunement,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+&gsn_gift_attunement,          SLOT( 0),        0,     12, "",             "You can once again ask the Spirits for information.",        "" },
 
 {   "doppelganger", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_doppelganger,  TAR_IGNORE, POS_STANDING,

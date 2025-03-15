@@ -4119,11 +4119,25 @@ void spell_gift_attunement( int sn, int level, CHAR_DATA *ch, void *vo, int targ
     return;
   }
 
+  if (isaffected(ch, gsn_gift_attunement))
+  {
+    send_to_char("It is too soon to request information from cockroach-spirits again.\n\r", ch);
+    return;
+  }
+
   if (success < 0)
   {
     sendch("The cockroach-spirits converse at length, finally revealing that they know nothing.\n\r", ch);
     sendch("Adding insult to injury, you feel your spiritual reserves partially drained.\n\r", ch);
     ch->pcdata->gnosis[TEMP]--;
+    af.where = TO_AFFECTS;
+    af.type  = gsn_gift_attunement;
+    af.level = -1;
+    af.duration = -success + 1;
+    af.bitvector = 0;
+    af.modifier = 0;
+    af.location = 0;
+    affect_to_char(ch, &af);
     WAIT_STATE(ch, 12);
     return;
   }
@@ -4131,8 +4145,16 @@ void spell_gift_attunement( int sn, int level, CHAR_DATA *ch, void *vo, int targ
   if (success == 0)
   {
     sendch("The spirits of the area are scattered, refusing your call for information.\n\r", ch);
+    af.where = TO_AFFECTS;
+    af.type  = gsn_gift_attunement;
+    af.level = 0;
+    af.duration = 1;
+    af.bitvector = 0;
+    af.modifier = 0;
+    af.location = 0;
+    affect_to_char(ch, &af);
     return;
-  }  
+  }
 
   if (success > 1)
     lvl = TRUE;
@@ -4162,6 +4184,15 @@ void spell_gift_attunement( int sn, int level, CHAR_DATA *ch, void *vo, int targ
   }
   if(!found)
     send_to_char( "{RNo {Cmobs {Rfound in that range.\n\r", ch );
+
+    af.where = TO_AFFECTS;
+    af.type  = gsn_gift_attunement;
+    af.level = success;
+    af.duration = 3;
+    af.bitvector = 0;
+    af.modifier = 0;
+    af.location = 0;
+    affect_to_char(ch, &af);
 
   return;
 }

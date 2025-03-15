@@ -4103,13 +4103,16 @@ void spell_gift_tongues( int sn, int level, CHAR_DATA *ch, void *vo, int target)
 //Rank 4
 void spell_gift_attunement( int sn, int level, CHAR_DATA *ch, void *vo, int target)
 {
-    char buf[MAX_STRING_LENGTH];
-    MOB_INDEX_DATA *pMobIndex;
-    int tvnum, bvnum, vnum;
-    int i;
-    bool found = FALSE, crit = FALSE;
+  char buf[MAX_STRING_LENGTH];
+  MOB_INDEX_DATA *pMobIndex;
+  AREA_DATA *pArea;
+  int tvnum, bvnum, vnum;
+  int i;
+  bool found = FALSE, crit = FALSE;
 
-  for ( vnum = bvnum; vnum <= tvnum; vnum++ )
+  pArea = ch->in_room->area;
+
+  for ( vnum = pArea->min_vnum; vnum <= pArea->max_vnum; vnum++ )
   {
     if ( ( pMobIndex = get_mob_index( vnum ) ) != NULL )
     {

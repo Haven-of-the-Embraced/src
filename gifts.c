@@ -4107,10 +4107,24 @@ void spell_gift_attunement( int sn, int level, CHAR_DATA *ch, void *vo, int targ
   MOB_INDEX_DATA *pMobIndex;
   AREA_DATA *pArea;
   int tvnum, bvnum, vnum;
-  int i;
+  int i, success = 0;
   bool found = FALSE, lvl = FALSE, pop = FALSE, race = FALSE;
 
   pArea = ch->in_room->area;
+  success = godice(get_attribute(ch, PERCEPTION) + get_ability(ch, CSABIL_ENIGMAS), 6);
+
+  if (success < 0)
+  {
+    sendch("The cockroach-spirits converse at length, finally revealing that they know nothing.\n\r", ch);
+    WAIT_STATE(ch, 12);
+    return;
+  }
+
+  if (success == 0)
+  {
+    sendch("The spirits of the area are scattered, refusing your call for information.\n\r", ch);
+    return;
+  }  
 
   sprintf(buf, "The spirits relay information about the inhabitants of {Y%s{x:\n\r", pArea->name);
   send_to_char(buf, ch);

@@ -4113,9 +4113,17 @@ void spell_gift_attunement( int sn, int level, CHAR_DATA *ch, void *vo, int targ
   pArea = ch->in_room->area;
   success = godice(get_attribute(ch, PERCEPTION) + get_ability(ch, CSABIL_ENIGMAS), 6);
 
+  if (ch->pcdata->gnosis[TEMP] < 1)
+  {
+    send_to_char("You don't have the spiritual energy to attempt to activate this gift.\n\r", ch);
+    return;
+  }
+
   if (success < 0)
   {
     sendch("The cockroach-spirits converse at length, finally revealing that they know nothing.\n\r", ch);
+    sendch("Adding insult to injury, you feel your spiritual reserves partially drained.\n\r", ch);
+    ch->pcdata->gnosis[TEMP]--;
     WAIT_STATE(ch, 12);
     return;
   }
@@ -4125,6 +4133,13 @@ void spell_gift_attunement( int sn, int level, CHAR_DATA *ch, void *vo, int targ
     sendch("The spirits of the area are scattered, refusing your call for information.\n\r", ch);
     return;
   }  
+
+  if (success > 1)
+    lvl = TRUE;
+  if (success > 2)
+    pop = TRUE;
+  if (success > 3)
+    race = TRUE;
 
   sprintf(buf, "The spirits relay information about the inhabitants of {Y%s{x:\n\r", pArea->name);
   send_to_char(buf, ch);

@@ -4101,8 +4101,27 @@ void spell_gift_tongues( int sn, int level, CHAR_DATA *ch, void *vo, int target)
 }
 
 //Rank 4
-void spell_gift_attunement( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
+void spell_gift_attunement( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+
+    MOB_INDEX_DATA *pMobIndex;
+    int tvnum, bvnum, vnum;
+    int i;
+    bool found;
+
+  for ( vnum = bvnum; vnum <= tvnum; vnum++ )
+  {
+    if ( ( pMobIndex = get_mob_index( vnum ) ) != NULL )
+    {
+      found = TRUE;
+      sprintf( buf, "{W[{G%5d{W] <{Blvl {M%3d{W> {W: {Ycnt{C%2d{W : {x%s\n\r", pMobIndex->vnum, pMobIndex->level, pMobIndex->count, pMobIndex->short_descr );
+      send_to_char( buf, ch );
+    }
+  }
+  if(!found)
+    send_to_char( "{RNo {Cmobs {Rfound in that range.\n\r", ch );
+
+  return;
 }
 
 void spell_gift_doppelganger( int sn, int level, CHAR_DATA *ch, void *vo, int target){

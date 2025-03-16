@@ -1032,6 +1032,7 @@ void spell_gift_haresleap( int sn, int level, CHAR_DATA *ch, void *vo, int targe
   ch->move -= (ch->level * 5) / 4;
   success = godice(get_attribute(ch, STRENGTH) + get_ability(ch, CSABIL_ATHLETICS), 7);
 
+  sendch("You pay homage to the Hare spirits and you feel your legs surging with strength!\n\r", ch);
   af.where        = TO_AFFECTS;
   af.type         = gsn_gift_haresleap;
   af.level        = ch->pcdata->rank;
@@ -1040,7 +1041,7 @@ void spell_gift_haresleap( int sn, int level, CHAR_DATA *ch, void *vo, int targe
   af.location     = APPLY_NONE;
   af.bitvector    = 0;
   affect_to_char(ch, &af);
-  sendch("You pay homage to the Hare spirits and you feel your legs surging with strength!\n\r", ch);
+
   return;
 }
 //

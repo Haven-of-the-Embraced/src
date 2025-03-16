@@ -4234,24 +4234,25 @@ void spell_gift_doppelganger( int sn, int level, CHAR_DATA *ch, void *vo, int ta
   char buf[MAX_STRING_LENGTH];
   CHAR_DATA *victim = (CHAR_DATA *) vo;
   AFFECT_DATA af;
+  int success;
 
   if (IS_NPC(ch)) return;
 
-  if ( argument[0] == '\0')
+  if (victim == NULL)
   {
-    if (is_affected( ch, gsn_gift_doppelganger ))
-    {
-      send_to_char( "You drop your Doppelganger guise.\n\r", ch );
-      affect_strip(ch,gsn_gift_doppelganger);
-    }
-    else
-      send_to_char("Assume whose identity?\n\r",ch);
+    send_to_char( "Whom are you trying to copy?\n\r", ch );
     return;
   }
 
-  if ((victim = get_char_room( ch, NULL, argument ))== NULL)
+  if (is_affected( ch, gsn_gift_doppelganger ))
   {
-    send_to_char( "Assume a mask of whom?\n\r", ch );
+    if (get_affect_level(ch, gsn_gift_doppelganger) == -1)
+    {
+      send_to_char("You can't seem to undo the spirit's guise cast upon you.\n\r", ch);
+      return;
+    }
+    send_to_char( "You drop your Doppelganger guise.\n\r", ch );
+    affect_strip(ch,gsn_gift_doppelganger);
     return;
   }
 
@@ -4259,20 +4260,66 @@ void spell_gift_doppelganger( int sn, int level, CHAR_DATA *ch, void *vo, int ta
   {
     if (is_affected(ch, gsn_gift_doppelganger))
     {
-      send_to_char( "You drop your Mask of a Thousand Faces.\n\r", ch );
+      if (get_affect_level(ch, gsn_gift_doppelganger) == -1)
+      {
+        send_to_char("You can't seem to undo the spirit's guise cast upon you.\n\r", ch);
+        return;
+      }
+      send_to_char( "You drop your Doppelganger guise.\n\r", ch );
       affect_strip(ch,gsn_gift_doppelganger);
       return;
     }
     else
     {
-      sendch("What would be the point of masking yourself?\n\r", ch);
+      sendch("What would be the point of becoming a Doppelganger of yourself?\n\r", ch);
       return;
     }
   }
 
+  if (!doppelganger_copy(victim))
+  {
+    send_to_char("This Gift only allows you to mimic a humanoid, wolf, or another Garou.\n\r", ch);
+    return;
+  }
+
+  if (ch->pcdata->gnosis[TEMP] < 1)
+  {
+    send_to_char("You don't have the spiritual energy to attempt to activate this gift.\n\r", ch);
+    return;
+  }
+
+  ch->pcdata->gnosis[TEMP]--;
+  success = godice(get_attribute(ch, CHARISMA) + get_ability(ch, CSABIL_PERFORMANCE), 8);
+
+  if (success < 0)
+  {
+    sendch("The illusion spirit is offended at your request; the guise you assume is less than pleasing.\n\r", ch);
+    sprintf(buf, "'Ugly' %s",ch->name,ch->name);
+    ch->short_descr = str_dup( buf );
+    sprintf(buf, "'Ugly' %s",ch->name);
+    ch->shift = str_dup( buf );
+    af.where = TO_AFFECTS;
+    af.type  = gsn_gift_doppelganger;
+    af.level = -1;
+    af.duration = 2;
+    af.bitvector = 0;
+    af.modifier = -1;
+    af.location = APPLY_CS_APP;
+    affect_to_char(ch, &af);
+    WAIT_STATE(ch, 12);
+    return;
+  }
+
+  if (success == 0)
+  {
+    sendch("Spirits of illusion seem to be in short supply at the moment.\n\r", ch);
+    WAIT_STATE(ch, 12);
+    return;
+  }
+
   if(!IS_NPC(victim))
   {
-    act( "Your features alter and shift until you assume the mask of $N", ch, NULL, victim, TO_CHAR );
+    act( "Your features alter and shift, turning yourself into a copy of $N.", ch, NULL, victim, TO_CHAR );
     act( "$n's features alter and shift until they assume the form of $N.", ch, NULL, victim, TO_ROOM );
     sprintf(buf, "%s",victim->name,ch->name);
     ch->short_descr = str_dup( buf );

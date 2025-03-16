@@ -4282,7 +4282,7 @@ void spell_gift_doppelganger( int sn, int level, CHAR_DATA *ch, void *vo, int ta
     af.where     = TO_AFFECTS;
     af.type      = gsn_gift_doppelganger;
     af.level     = ch->level;
-    af.duration  = -1;
+    af.duration  = (success * 4) + 48;
     af.location  = APPLY_NONE;
     af.modifier  = 0;
     af.bitvector = 0;
@@ -4290,17 +4290,17 @@ void spell_gift_doppelganger( int sn, int level, CHAR_DATA *ch, void *vo, int ta
     return;
   }
 
-  act( "Your features alter and shift until you assume the mask of $N", ch, NULL, victim, TO_CHAR );
+  act( "Your features alter and shift, turning yourself into a copy of $N.", ch, NULL, victim, TO_CHAR );
   act( "$n's features alter and shift until they assume the form of $N.", ch, NULL, victim, TO_ROOM );
-  sprintf(buf, "%s",victim->short_descr,victim->long_descr);
+  sprintf(buf, "%s",capitalize(victim->short_descr),victim->long_descr);
   ch->short_descr = str_dup( buf );
-  sprintf(buf, "%s",victim->short_descr);
+  sprintf(buf, "%s",capitalize(victim->short_descr));
   ch->shift = str_dup( buf );
 
   af.where     = TO_AFFECTS;
   af.type      = gsn_gift_doppelganger;
   af.level     = ch->level;
-  af.duration  = -1;
+  af.duration  = (success * 4) + 48;
   af.location  = APPLY_NONE;
   af.modifier  = 0;
   af.bitvector = 0;

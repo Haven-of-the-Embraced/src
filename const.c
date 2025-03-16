@@ -3038,7 +3038,7 @@ Total (3) */
 &gsn_gift_attunement,          SLOT( 0),        0,     12, "",             "You can once again ask the Spirits for information.",        "" },
 
 {   "doppelganger", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_doppelganger,  TAR_IGNORE, POS_STANDING,
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_doppelganger,  TAR_CHAR_DEFENSIVE, POS_STANDING,
 &gsn_gift_doppelganger,          SLOT( 0),        0,     12, "",             "Your spirit-bestowed disguise wears off.",        "" },
 
 {   "command the blaze", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },

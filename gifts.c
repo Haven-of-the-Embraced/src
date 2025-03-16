@@ -4106,9 +4106,10 @@ void spell_gift_attunement( int sn, int level, CHAR_DATA *ch, void *vo, int targ
   char buf[MAX_STRING_LENGTH];
   MOB_INDEX_DATA *pMobIndex;
   AREA_DATA *pArea;
-  int tvnum, bvnum, vnum;
+  AFFECT_DATA af;
+  int vnum;
   int i, success = 0;
-  bool found = FALSE, lvl = FALSE, pop = FALSE, race = FALSE;
+  bool found = FALSE, lvl = TRUE, pop = FALSE, race = FALSE, shop = FALSE, heal = FALSE;
 
   pArea = ch->in_room->area;
   success = godice(get_attribute(ch, PERCEPTION) + get_ability(ch, CSABIL_ENIGMAS), 6);
@@ -4119,7 +4120,7 @@ void spell_gift_attunement( int sn, int level, CHAR_DATA *ch, void *vo, int targ
     return;
   }
 
-  if (isaffected(ch, gsn_gift_attunement))
+  if (is_affected(ch, gsn_gift_attunement))
   {
     send_to_char("It is too soon to request information from cockroach-spirits again.\n\r", ch);
     return;
@@ -4157,16 +4158,19 @@ void spell_gift_attunement( int sn, int level, CHAR_DATA *ch, void *vo, int targ
   }
 
   if (success > 1)
-    lvl = TRUE;
-  if (success > 2)
     pop = TRUE;
+  if (success > 2)
+  {
+    shop = TRUE;
+    heal = TRUE;
+  }
   if (success > 3)
     race = TRUE;
 
   sprintf(buf, "The spirits relay information about the inhabitants of {Y%s{x:\n\r", pArea->name);
   send_to_char(buf, ch);
-  sprintf(buf, "{M %s {C%s     {R%s{W   Name{x\n\r", lvl ? "Level" : "?????", 
-    pop ? "Pop" : "???", race ? "      Race" : "??????????");
+  sprintf(buf, "{R     %s  {G%s {C%s {M%s{W  Name{x\n\r", race ? "      Race" : "??????????",
+    shop || heal ? "  Special  " : "  ???????  ", pop ? "x #" : "???", lvl ? "Level" : "?????");
   send_to_char(buf, ch);
   for ( vnum = pArea->min_vnum; vnum <= pArea->max_vnum; vnum++ )
   {
@@ -4175,15 +4179,17 @@ void spell_gift_attunement( int sn, int level, CHAR_DATA *ch, void *vo, int targ
       if(pMobIndex->count > 0)
       {
         found = TRUE;
-        sprintf( buf, "{W< {M%3d{W> {C%2d{W  ({R%14s{W) %s\n\r", 
-          lvl ? pMobIndex->level : 00, pop ? pMobIndex->count : 00, 
-          race ? race_table[pMobIndex->race].name : "       unknown", pMobIndex->short_descr );
+        sprintf( buf, "({R%14s{W) [{G%s %s{W] {Cx%2d{W <{M%3d{W>  %s\n\r", 
+          race ? race_table[pMobIndex->race].name : "       unknown", 
+          shop && pMobIndex->pShop ? "Shop" : "    ", 
+          heal && IS_SET(pMobIndex->act, ACT_IS_HEALER) ? "Heal" : "    ",
+          pop ? pMobIndex->count : 00, lvl ? pMobIndex->level : 00, pMobIndex->short_descr );
         send_to_char( buf, ch );
       }
     }
   }
   if(!found)
-    send_to_char( "{RNo {Cmobs {Rfound in that range.\n\r", ch );
+    send_to_char( "{YNot even the cockroach-spirits could find any signs of other inhabitants.\n\r", ch );
 
     af.where = TO_AFFECTS;
     af.type  = gsn_gift_attunement;

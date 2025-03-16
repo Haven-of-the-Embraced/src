@@ -4203,8 +4203,83 @@ void spell_gift_attunement( int sn, int level, CHAR_DATA *ch, void *vo, int targ
   return;
 }
 
-void spell_gift_doppelganger( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_doppelganger( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  char buf[MAX_STRING_LENGTH];
+  CHAR_DATA *victim = (CHAR_DATA *) vo;
+  AFFECT_DATA af;
+
+  if (IS_NPC(ch)) return;
+
+  if ( argument[0] == '\0')
+  {
+    if (is_affected( ch, gsn_gift_doppelganger ))
+    {
+      send_to_char( "You drop your Doppelganger guise.\n\r", ch );
+      affect_strip(ch,gsn_gift_doppelganger);
+    }
+    else
+      send_to_char("Assume whose identity?\n\r",ch);
     return;
+  }
+
+  if ((victim = get_char_room( ch, NULL, argument ))== NULL)
+  {
+    send_to_char( "Assume a mask of whom?\n\r", ch );
+    return;
+  }
+
+  if (victim == ch)
+  {
+    if (is_affected(ch, gsn_gift_doppelganger))
+    {
+      send_to_char( "You drop your Mask of a Thousand Faces.\n\r", ch );
+      affect_strip(ch,gsn_gift_doppelganger);
+      return;
+    }
+    else
+    {
+      sendch("What would be the point of masking yourself?\n\r", ch);
+      return;
+    }
+  }
+
+  if(!IS_NPC(victim))
+  {
+    act( "Your features alter and shift until you assume the mask of $N", ch, NULL, victim, TO_CHAR );
+    act( "$n's features alter and shift until they assume the form of $N.", ch, NULL, victim, TO_ROOM );
+    sprintf(buf, "%s",victim->name,ch->name);
+    ch->short_descr = str_dup( buf );
+    sprintf(buf, "%s",victim->name);
+    ch->shift = str_dup( buf );
+
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_gift_doppelganger;
+    af.level     = ch->level;
+    af.duration  = -1;
+    af.location  = APPLY_NONE;
+    af.modifier  = 0;
+    af.bitvector = 0;
+    affect_to_char( ch, &af );
+    return;
+  }
+
+  act( "Your features alter and shift until you assume the mask of $N", ch, NULL, victim, TO_CHAR );
+  act( "$n's features alter and shift until they assume the form of $N.", ch, NULL, victim, TO_ROOM );
+  sprintf(buf, "%s",victim->short_descr,victim->long_descr);
+  ch->short_descr = str_dup( buf );
+  sprintf(buf, "%s",victim->short_descr);
+  ch->shift = str_dup( buf );
+
+  af.where     = TO_AFFECTS;
+  af.type      = gsn_gift_doppelganger;
+  af.level     = ch->level;
+  af.duration  = -1;
+  af.location  = APPLY_NONE;
+  af.modifier  = 0;
+  af.bitvector = 0;
+  affect_to_char( ch, &af );
+  return;
 }
 
 //Rank 5

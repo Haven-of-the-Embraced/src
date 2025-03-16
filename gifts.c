@@ -1014,13 +1014,28 @@ void spell_gift_haresleap( int sn, int level, CHAR_DATA *ch, void *vo, int targe
     return;
   }
 
+  if (success < 0)
+  {
+    send_to_char("A herd of hare spirits bound past your legs, slamming into you.\n\r", ch);
+    d10_damage( ch, ch, 5, ch->level, gsn_bash, DAM_BASH, DEFENSE_NONE, TRUE, TRUE);
+    WAIT_STATE(ch, 6);
+    return;
+  }
+
+  if (success == 0)
+  {
+    send_to_char("Hare spirits bound away, ignoring your request.\n\r", ch);
+    WAIT_STATE(ch, 6);
+    return;
+  }
+
   ch->move -= (ch->level * 5) / 4;
   success = godice(get_attribute(ch, STRENGTH) + get_ability(ch, CSABIL_ATHLETICS), 7);
 
   af.where        = TO_AFFECTS;
   af.type         = gsn_gift_haresleap;
   af.level        = ch->pcdata->rank;
-  af.duration     = ch->pcdata->gnosis[PERM]*2;
+  af.duration     = success * 5 + 20;
   af.modifier     = 0;
   af.location     = APPLY_NONE;
   af.bitvector    = 0;

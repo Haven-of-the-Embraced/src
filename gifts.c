@@ -997,26 +997,36 @@ void spell_gift_totemgift( int sn, int level, CHAR_DATA *ch, void *vo, int targe
 //Allows the garou to leap incredible distances. (Not sure what we would do with this one.)
 // Michial suggested an evade-like skill. short-duration. garou is able to 'jump' out of range
 // of attacks and back in for quick spurts of damage.
-void spell_gift_haresleap( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    AFFECT_DATA af;
+void spell_gift_haresleap( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  AFFECT_DATA af;
+  int success;
 
-
-     if (is_affected(ch, gsn_gift_haresleap))
-     {
-        sendch("Your leaps are already enhanced by the Hare spirits.\n\r", ch);
-        return;
-        }
-
-    af.where        = TO_AFFECTS;
-    af.type         = gsn_gift_haresleap;
-    af.level        = ch->pcdata->rank;
-    af.duration     = ch->pcdata->gnosis[PERM]*2;
-    af.modifier     = 0;
-    af.location     = APPLY_NONE;
-    af.bitvector    = 0;
-    affect_to_char(ch, &af);
-    sendch("You pay homage to the Hare spirits and you feel your legs surging with strength!\n\r", ch);
+  if (is_affected(ch, gsn_gift_haresleap))
+  {
+    sendch("Your leaps are already enhanced by the Hare spirits.\n\r", ch);
     return;
+  }
+
+  if (ch->move < (ch->level * 5) / 4)
+  {
+    send_to_char("You are too exhausted to activate this Gift.\n\r", ch);
+    return;
+  }
+
+  ch->move -= (ch->level * 5) / 4;
+  success = godice(get_attribute(ch, STRENGTH) + get_ability(ch, CSABIL_ATHLETICS), 7);
+
+  af.where        = TO_AFFECTS;
+  af.type         = gsn_gift_haresleap;
+  af.level        = ch->pcdata->rank;
+  af.duration     = ch->pcdata->gnosis[PERM]*2;
+  af.modifier     = 0;
+  af.location     = APPLY_NONE;
+  af.bitvector    = 0;
+  affect_to_char(ch, &af);
+  sendch("You pay homage to the Hare spirits and you feel your legs surging with strength!\n\r", ch);
+  return;
 }
 //
 //“Heightened Senses”

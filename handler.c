@@ -959,6 +959,27 @@ bool is_umbral_denizen( CHAR_DATA *ch )
     return FALSE;
 }
 
+bool doppelganger_copy( CHAR_DATA *ch )
+{
+  if(
+        ch->race == race_lookup("garou") ||
+        ch->race == race_lookup("human") ||
+        ch->race == race_lookup("wolf") ||
+        ch->race == race_lookup("ghoul") ||
+        ch->race == race_lookup("methuselah") ||
+        ch->race == race_lookup("vampire") ||
+        ch->race == race_lookup("kinfolk") ||
+        ch->race == race_lookup("kuei-jin") ||
+        ch->race == race_lookup("mage") ||
+        ch->race == race_lookup("ooze") ||
+        ch->race == race_lookup("romani")
+    )
+    return TRUE;
+
+  else
+    return FALSE;
+}
+
 char *name_the_spirit( CHAR_DATA *ch )
 {
     if (ch->race == race_lookup("bygone"))

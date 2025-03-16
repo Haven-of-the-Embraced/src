@@ -3166,7 +3166,7 @@ char *PERS(CHAR_DATA *ch, CHAR_DATA *looker, bool channel)
         if (
                 ((ch->changed > 0 ||
                 IS_AFFECTED(ch, AFF_SHIFT) ||
-                is_affected(ch, gsn_mask) ||
+                is_affected(ch, gsn_mask) || is_affected(ch, gsn_gift_doppelganger) ||
                 is_affected(ch, gsn_shadowform) ||
                 is_affected(ch, gsn_vicissitude_horrid) ||
                 (!IS_NPC(ch) && ch->pcdata->shiftform >= CRINOS)) &&

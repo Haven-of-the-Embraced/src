@@ -3933,8 +3933,27 @@ void spell_gift_empathy( int sn, int level, CHAR_DATA *ch, void *vo, int target)
 //Luna's Armor - duplicate gift, as ChildrenofGaia
 
 //Rank 3
-void spell_gift_exceptionalswordplay( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_exceptionalswordplay( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  AFFECT_DATA af;
+  int success;
+
+  if (is_affected(ch, gsn_gift_exceptionalswordplay))
+  {
+    send_to_char("You've already asked the spirits for aid in your melee prowess.\n\r", ch);
     return;
+  }
+
+  if (ch->cswillpower < 1)
+  {
+    sendch("You do not have the Willpower to commune with spirits right now.\n\r", ch);
+    return;
+  }
+
+  ch->cswillpower--;
+
+  success = godice(get_attribute(ch,CSATTRIB_INTELLIGENCE) + ch->csabilities[CSABIL_MELEE], 8);
+  return;
 }
 
 void spell_gift_wrathofgaia( int sn, int level, CHAR_DATA *ch, void *vo, int target){

@@ -3856,6 +3856,7 @@ void spell_gift_empathy( int sn, int level, CHAR_DATA *ch, void *vo, int target)
   AFFECT_DATA af;
   CHAR_DATA *vch;
   CHAR_DATA *vch_next;
+  int success, followers = 0;
 
   if (is_affected(ch, gsn_gift_empathy))
   {
@@ -3866,6 +3867,18 @@ void spell_gift_empathy( int sn, int level, CHAR_DATA *ch, void *vo, int target)
       act("You've decided that you no longer need to understand your group's expectations.", ch, NULL, NULL, TO_CHAR);
       affect_strip(ch, gsn_gift_empathy);
     }
+    return;
+  }
+
+  for ( vch = char_list; vch != NULL; vch = vch->next )
+  {
+    if ( is_same_group( vch, ch ) && vch != ch )
+    followers++;
+  }
+
+  if (followers == 0)
+  {
+    send_to_char("You do not currently have a group in need of a leader.\n\r", ch);
     return;
   }
 
@@ -3883,13 +3896,13 @@ void spell_gift_empathy( int sn, int level, CHAR_DATA *ch, void *vo, int target)
     sendch("You misinterpret the information given, haughtily believing that you already know better.\n\r",ch);
     af.where        = TO_AFFECTS;
     af.type         = gsn_gift_empathy;
-    af.level        = level;
+    af.level        = -1;
     af.duration     = 2;
-    af.modifier     = -200;
+    af.modifier     = -100;
     af.location     = APPLY_HITROLL;
     af.bitvector    = 0;
     affect_to_char(ch, &af);
-    af.modifier     = -50;
+    af.modifier     = -25;
     af.location     = APPLY_DAMROLL;
     affect_to_char(ch, &af);
     return;
@@ -3903,6 +3916,17 @@ void spell_gift_empathy( int sn, int level, CHAR_DATA *ch, void *vo, int target)
   }
 
   sendch("Falcon-spirits relay the feelings and expectations of your group, for you to act upon.\n\r",ch);
+  af.where        = TO_AFFECTS;
+  af.type         = gsn_gift_empathy;
+  af.level        = level;
+  af.duration     = (success * 5) + 50;
+  af.modifier     = (followers * 75) + (success * 10);
+  af.location     = APPLY_HITROLL;
+  af.bitvector    = 0;
+  affect_to_char(ch, &af);
+  af.modifier     = (followers * 20) + (success * 3);
+  af.location     = APPLY_DAMROLL;
+  affect_to_char(ch, &af);
   return;
 }
 

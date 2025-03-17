@@ -3859,8 +3859,13 @@ void spell_gift_empathy( int sn, int level, CHAR_DATA *ch, void *vo, int target)
 
   if (is_affected(ch, gsn_gift_empathy))
   {
-    act("You've decided that you no longer need to understand your group's expectations.", ch, NULL, NULL, TO_CHAR);
-    affect_strip(ch, gsn_gift_empathy);
+    if (get_affect_level(ch, gsn_gift_empathy) == -1)
+      send_to_char("You don't need additional information, you've led this group many times.\n\r", ch);
+    else
+    {  
+      act("You've decided that you no longer need to understand your group's expectations.", ch, NULL, NULL, TO_CHAR);
+      affect_strip(ch, gsn_gift_empathy);
+    }
     return;
   }
 
@@ -3871,7 +3876,33 @@ void spell_gift_empathy( int sn, int level, CHAR_DATA *ch, void *vo, int target)
   }
   ch->pcdata->gnosis[TEMP]--;
 
-  sendch("Falcon-spirits relay the feelins and expectations of your group, for you to act upon.\n\r",ch);
+  success = godice(get_attribute(ch,CSATTRIB_INTELLIGENCE) + ch->csabilities[CSABIL_EMPATHY], 7);
+
+  if (success < 0)
+  {
+    sendch("You misinterpret the information given, haughtily believing that you already know better.\n\r",ch);
+    af.where        = TO_AFFECTS;
+    af.type         = gsn_gift_empathy;
+    af.level        = level;
+    af.duration     = 2;
+    af.modifier     = -200;
+    af.location     = APPLY_HITROLL;
+    af.bitvector    = 0;
+    affect_to_char(ch, &af);
+    af.modifier     = -50;
+    af.location     = APPLY_DAMROLL;
+    affect_to_char(ch, &af);
+    return;
+  }
+
+  if (success == 0)
+  {
+    sendch("The Falcon-spirits do not approve of your request, soaring away swiftly.\n\r",ch);
+    WAIT_STATE(ch, 9);
+    return;
+  }
+
+  sendch("Falcon-spirits relay the feelings and expectations of your group, for you to act upon.\n\r",ch);
   return;
 }
 

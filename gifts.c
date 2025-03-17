@@ -3851,8 +3851,28 @@ void spell_gift_lambentfire( int sn, int level, CHAR_DATA *ch, void *vo, int tar
 //Sense Wyrm - Duplicate gift, as METIS
 
 //Rank 2
-void spell_gift_empathy( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_empathy( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  AFFECT_DATA af;
+  CHAR_DATA *vch;
+  CHAR_DATA *vch_next;
+
+  if (is_affected(ch, gsn_gift_empathy))
+  {
+    act("You've decided that you no longer need to understand your group's expectations.", ch, NULL, NULL, TO_CHAR);
+    affect_strip(ch, gsn_gift_empathy);
     return;
+  }
+
+  if (ch->pcdata->gnosis[TEMP] < 1)
+  {
+    sendch("You do not have the spiritual reserves to activate this gift.\n\r", ch);
+    return;
+  }
+  ch->pcdata->gnosis[TEMP]--;
+
+  sendch("Falcon-spirits relay the feelins and expectations of your group, for you to act upon.\n\r",ch);
+  return;
 }
 
 //Luna's Armor - duplicate gift, as ChildrenofGaia

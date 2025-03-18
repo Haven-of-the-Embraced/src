@@ -4898,7 +4898,7 @@ void do_gifts(CHAR_DATA *ch, char *argument)
 
     if (!str_cmp(argument, "all"))
     {
-      send_to_char("Haven's Gifts from Gaia:\n\r\n\r",ch);
+      send_to_char("All of Haven's Garou Gifts from Gaia:\n\r\n\r",ch);
       send_to_char("{R*{xGift is currently Uncoded.\n\r", ch);
       cprintf(ch, "%s{x\n\r", " [Rank] (Breed) {Auspice } <     Tribe      > :: Gift");
       for (i = 1; i < MAX_GIFTS_CODED; i++)
@@ -4926,9 +4926,12 @@ void do_gifts(CHAR_DATA *ch, char *argument)
 
     if (!str_cmp(argument, "breed") || !str_cmp(argument, "tribe") || !str_cmp(argument, "auspice"))
     {
-      send_to_char("Haven's Gifts from Gaia:\n\r\n\r",ch);
+      cprintf(ch, "Haven's Garou %s Gifts from Gaia:\n\r\n\r", capitalize(argument));
       send_to_char("{R*{xGift is currently Uncoded.\n\r", ch);
-      cprintf(ch, "%s{x\n\r", " [Rank] (Breed) {Auspice } <     Tribe      > :: Gift");
+      sprintf(buf, " [Rank] (%sBreed{x) {%sAuspice{x } <     %sTribe{x      > :: Gift\n\r",
+        !str_cmp(argument, "breed") ? "{Y" : "", !str_cmp(argument, "auspice") ? "{{Y" : "",
+        !str_cmp(argument, "tribe") ? "{Y" : "");
+      send_to_char(buf, ch);
       for (i = 1; i < MAX_GIFTS_CODED; i++)
       {
         gbreed = gift_table[i].breed;

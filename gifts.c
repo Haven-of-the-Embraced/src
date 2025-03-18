@@ -4883,9 +4883,25 @@ void do_beseech(CHAR_DATA *ch, char *argument)
 void do_gifts(CHAR_DATA *ch, char *argument)
 {
     char buf[MAX_STRING_LENGTH];
-
+    int i;
+    int col = 1;
+    BUFFER *buffer;
+    buffer = new_buf();
 
     if(IS_NPC(ch)) return;
+
+    if (!str_cmp(argument, "\0"))
+    {
+      send_to_char("{WSyntax: {cgifts (all/list/learn){x", ch);
+      return;
+    }
+
+    if (!str_cmp(argument, "all"))
+    {
+      send_to_char("Haven's Gifts from Gaia:\n\r\n\r",ch);
+      cprintf(ch, "%s{x\n\r", "[Rank] (Breed) {Auspice} <Tribe> : Gift");
+      return;
+    }
 
     if(ch->race != race_lookup("garou"))
     {
@@ -4899,11 +4915,7 @@ void do_gifts(CHAR_DATA *ch, char *argument)
       return;
     }
 
-    int i;
-    int col = 1;
-    BUFFER *buffer;
-    buffer = new_buf();
-    if (str_cmp(argument, "all"))
+    if (!str_cmp(argument, "list"))
 	{
 		send_to_char("Your Gifts from Gaia:\n\r\n\r",ch);
 

@@ -1504,7 +1504,7 @@ const struct    gift_type   gift_table  [MAX_GIFTS_CODED]  =
     {   "eye of the falcon", 			1,     24, 0,     0,      0,          SILVER_FANG, 1,   0},
     {   "lambent fire", 				1,     24, 0,     0,      0,          SILVER_FANG, 1,   0},
     {   "empathy", 						1,     24, 0,     0,      0,          SILVER_FANG, 2,   0},
-    {   "exceptional wordplay", 		0,     24, 0,     0,      0,          SILVER_FANG, 3,   0},
+    {   "exceptional swordplay", 		1,     24, 0,     0,      0,          SILVER_FANG, 3,   0},
     {   "wrath of gaia", 				0,     24, 0,     0,      0,          SILVER_FANG, 3,   0},
     {   "lordly will", 					0,     24, 0,     0,      0,          SILVER_FANG, 4,   0},
     {   "sidestep death", 				0,     24, 0,     0,      0,          SILVER_FANG, 4,   0},

@@ -3974,12 +3974,12 @@ void spell_gift_exceptionalswordplay( int sn, int level, CHAR_DATA *ch, void *vo
     return;
   }
 
-  sendch("The spirits of war buffet about you, distracting instead of helping.\n\r",ch);
+  sendch("Your call to rouse the spirits of war is successful, and they aid you with gusto.\n\r",ch);
   af.where        = TO_AFFECTS;
   af.type         = gsn_gift_exceptionalswordplay;
   af.level        = ch->level;
   af.duration     = (success * 5) + 40;
-  af.modifier     = 0;
+  af.modifier     = success * 3 + 1;
   af.location     = 0;
   af.bitvector    = 0;
   affect_to_char(ch, &af);

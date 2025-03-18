@@ -2987,7 +2987,7 @@ Total (3) */
 { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_empathy,  TAR_IGNORE, POS_STANDING,
 &gsn_gift_empathy,          SLOT( 0),        0,     12, "",             "You no longer feel the need to act within your group's expectations.",        "" },
 
-{   "exceptional wordplay", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+{   "exceptional swordplay", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_exceptionalswordplay,  TAR_IGNORE, POS_STANDING,
 &gsn_gift_exceptionalswordplay,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 

@@ -3951,8 +3951,30 @@ void spell_gift_exceptionalswordplay( int sn, int level, CHAR_DATA *ch, void *vo
   }
 
   ch->cswillpower--;
-
   success = godice(get_attribute(ch,CSATTRIB_INTELLIGENCE) + ch->csabilities[CSABIL_MELEE], 8);
+
+  if (success < 0)
+  {
+    sendch("The spirits of war buffet about you, distracting instead of helping.\n\r",ch);
+    af.where        = TO_AFFECTS;
+    af.type         = gsn_gift_exceptionalswordplay;
+    af.level        = -1;
+    af.duration     = 2;
+    af.modifier     = -2;
+    af.location     = APPLY_CS_DEX;
+    af.bitvector    = 0;
+    affect_to_char(ch, &af);
+    return;
+  }
+
+  if (success == 0)
+  {
+    sendch("The spirits of war seem to be off in battle somewhere.\n\r",ch);
+    WAIT_STATE(ch, 9);
+    return;
+  }
+
+
   return;
 }
 

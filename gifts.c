@@ -997,26 +997,52 @@ void spell_gift_totemgift( int sn, int level, CHAR_DATA *ch, void *vo, int targe
 //Allows the garou to leap incredible distances. (Not sure what we would do with this one.)
 // Michial suggested an evade-like skill. short-duration. garou is able to 'jump' out of range
 // of attacks and back in for quick spurts of damage.
-void spell_gift_haresleap( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    AFFECT_DATA af;
+void spell_gift_haresleap( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  AFFECT_DATA af;
+  int success;
 
-
-     if (is_affected(ch, gsn_gift_haresleap))
-     {
-        sendch("Your leaps are already enhanced by the Hare spirits.\n\r", ch);
-        return;
-        }
-
-    af.where        = TO_AFFECTS;
-    af.type         = gsn_gift_haresleap;
-    af.level        = ch->pcdata->rank;
-    af.duration     = ch->pcdata->gnosis[PERM]*2;
-    af.modifier     = 0;
-    af.location     = APPLY_NONE;
-    af.bitvector    = 0;
-    affect_to_char(ch, &af);
-    sendch("You pay homage to the Hare spirits and you feel your legs surging with strength!\n\r", ch);
+  if (is_affected(ch, gsn_gift_haresleap))
+  {
+    sendch("Your leaps are already enhanced by the Hare spirits.\n\r", ch);
     return;
+  }
+
+  if (ch->move < (ch->level * 5) / 4)
+  {
+    send_to_char("You are too exhausted to activate this Gift.\n\r", ch);
+    return;
+  }
+
+  if (success < 0)
+  {
+    send_to_char("A herd of hare spirits bound past your legs, slamming into you.\n\r", ch);
+    d10_damage( ch, ch, 5, ch->level, gsn_bash, DAM_BASH, DEFENSE_NONE, TRUE, TRUE);
+    WAIT_STATE(ch, 6);
+    return;
+  }
+
+  if (success == 0)
+  {
+    send_to_char("Hare spirits bound away, ignoring your request.\n\r", ch);
+    WAIT_STATE(ch, 6);
+    return;
+  }
+
+  ch->move -= (ch->level * 5) / 4;
+  success = godice(get_attribute(ch, STRENGTH) + get_ability(ch, CSABIL_ATHLETICS), 7);
+
+  sendch("You pay homage to the Hare spirits and you feel your legs surging with strength!\n\r", ch);
+  af.where        = TO_AFFECTS;
+  af.type         = gsn_gift_haresleap;
+  af.level        = ch->pcdata->rank;
+  af.duration     = success * 5 + 20;
+  af.modifier     = 0;
+  af.location     = APPLY_NONE;
+  af.bitvector    = 0;
+  affect_to_char(ch, &af);
+
+  return;
 }
 //
 //“Heightened Senses”
@@ -3825,15 +3851,139 @@ void spell_gift_lambentfire( int sn, int level, CHAR_DATA *ch, void *vo, int tar
 //Sense Wyrm - Duplicate gift, as METIS
 
 //Rank 2
-void spell_gift_empathy( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_empathy( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  AFFECT_DATA af;
+  CHAR_DATA *vch;
+  CHAR_DATA *vch_next;
+  int success, followers = 0;
+
+  if (is_affected(ch, gsn_gift_empathy))
+  {
+    if (get_affect_level(ch, gsn_gift_empathy) == -1)
+      send_to_char("You don't need additional information, you've led this group many times.\n\r", ch);
+    else
+    {  
+      act("You've decided that you no longer need to understand your group's expectations.", ch, NULL, NULL, TO_CHAR);
+      affect_strip(ch, gsn_gift_empathy);
+    }
     return;
+  }
+
+  for ( vch = char_list; vch != NULL; vch = vch->next )
+  {
+    if ( is_same_group( vch, ch ) && vch != ch )
+    followers++;
+  }
+
+  if (followers == 0)
+  {
+    send_to_char("You do not currently have a group in need of a leader.\n\r", ch);
+    return;
+  }
+
+  if (ch->pcdata->gnosis[TEMP] < 1)
+  {
+    sendch("You do not have the spiritual reserves to activate this gift.\n\r", ch);
+    return;
+  }
+  ch->pcdata->gnosis[TEMP]--;
+
+  success = godice(get_attribute(ch,CSATTRIB_INTELLIGENCE) + ch->csabilities[CSABIL_EMPATHY], 7);
+
+  if (success < 0)
+  {
+    sendch("You misinterpret the information given, haughtily believing that you already know better.\n\r",ch);
+    af.where        = TO_AFFECTS;
+    af.type         = gsn_gift_empathy;
+    af.level        = -1;
+    af.duration     = 2;
+    af.modifier     = -100;
+    af.location     = APPLY_HITROLL;
+    af.bitvector    = 0;
+    affect_to_char(ch, &af);
+    af.modifier     = -25;
+    af.location     = APPLY_DAMROLL;
+    affect_to_char(ch, &af);
+    return;
+  }
+
+  if (success == 0)
+  {
+    sendch("The Falcon-spirits do not approve of your request, soaring away swiftly.\n\r",ch);
+    WAIT_STATE(ch, 9);
+    return;
+  }
+
+  sendch("Falcon-spirits relay the feelings and expectations of your group, for you to act upon.\n\r",ch);
+  af.where        = TO_AFFECTS;
+  af.type         = gsn_gift_empathy;
+  af.level        = level;
+  af.duration     = (success * 5) + 50;
+  af.modifier     = (followers * 75) + (success * 10);
+  af.location     = APPLY_HITROLL;
+  af.bitvector    = 0;
+  affect_to_char(ch, &af);
+  af.modifier     = (followers * 20) + (success * 3);
+  af.location     = APPLY_DAMROLL;
+  affect_to_char(ch, &af);
+  return;
 }
 
 //Luna's Armor - duplicate gift, as ChildrenofGaia
 
 //Rank 3
-void spell_gift_exceptionalswordplay( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_exceptionalswordplay( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  AFFECT_DATA af;
+  int success;
+
+  if (is_affected(ch, gsn_gift_exceptionalswordplay))
+  {
+    send_to_char("You've already asked the spirits for aid in your melee prowess.\n\r", ch);
     return;
+  }
+
+  if (ch->cswillpower < 1)
+  {
+    sendch("You do not have the Willpower to commune with spirits right now.\n\r", ch);
+    return;
+  }
+
+  ch->cswillpower--;
+  success = godice(get_attribute(ch,CSATTRIB_INTELLIGENCE) + ch->csabilities[CSABIL_MELEE], 8);
+
+  if (success < 0)
+  {
+    sendch("The spirits of war buffet about you, distracting instead of helping.\n\r",ch);
+    af.where        = TO_AFFECTS;
+    af.type         = gsn_gift_exceptionalswordplay;
+    af.level        = -1;
+    af.duration     = 2;
+    af.modifier     = -2;
+    af.location     = APPLY_CS_DEX;
+    af.bitvector    = 0;
+    affect_to_char(ch, &af);
+    return;
+  }
+
+  if (success == 0)
+  {
+    sendch("The spirits of war seem to be off in battle somewhere.\n\r",ch);
+    WAIT_STATE(ch, 9);
+    return;
+  }
+
+  sendch("Your call to rouse the spirits of war is successful, and they aid you with gusto.\n\r",ch);
+  af.where        = TO_AFFECTS;
+  af.type         = gsn_gift_exceptionalswordplay;
+  af.level        = ch->level;
+  af.duration     = (success * 5) + 40;
+  af.modifier     = success * 3 + 1;
+  af.location     = 0;
+  af.bitvector    = 0;
+  affect_to_char(ch, &af);
+  return;
 }
 
 void spell_gift_wrathofgaia( int sn, int level, CHAR_DATA *ch, void *vo, int target){
@@ -4101,12 +4251,232 @@ void spell_gift_tongues( int sn, int level, CHAR_DATA *ch, void *vo, int target)
 }
 
 //Rank 4
-void spell_gift_attunement( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_attunement( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  char buf[MAX_STRING_LENGTH];
+  MOB_INDEX_DATA *pMobIndex;
+  AREA_DATA *pArea;
+  AFFECT_DATA af;
+  int vnum;
+  int i, success = 0;
+  bool found = FALSE, lvl = TRUE, pop = FALSE, race = FALSE, shop = FALSE, heal = FALSE;
+
+  pArea = ch->in_room->area;
+  success = godice(get_attribute(ch, PERCEPTION) + get_ability(ch, CSABIL_ENIGMAS), 6);
+
+  if (ch->pcdata->gnosis[TEMP] < 1)
+  {
+    send_to_char("You don't have the spiritual energy to attempt to activate this gift.\n\r", ch);
     return;
+  }
+
+  if (is_affected(ch, gsn_gift_attunement))
+  {
+    send_to_char("It is too soon to request information from cockroach-spirits again.\n\r", ch);
+    return;
+  }
+
+  if (success < 0)
+  {
+    sendch("The cockroach-spirits converse at length, finally revealing that they know nothing.\n\r", ch);
+    sendch("Adding insult to injury, you feel your spiritual reserves partially drained.\n\r", ch);
+    ch->pcdata->gnosis[TEMP]--;
+    af.where = TO_AFFECTS;
+    af.type  = gsn_gift_attunement;
+    af.level = -1;
+    af.duration = -success + 1;
+    af.bitvector = 0;
+    af.modifier = 0;
+    af.location = 0;
+    affect_to_char(ch, &af);
+    WAIT_STATE(ch, 12);
+    return;
+  }
+
+  if (success == 0)
+  {
+    sendch("The spirits of the area are scattered, refusing your call for information.\n\r", ch);
+    af.where = TO_AFFECTS;
+    af.type  = gsn_gift_attunement;
+    af.level = 0;
+    af.duration = 1;
+    af.bitvector = 0;
+    af.modifier = 0;
+    af.location = 0;
+    affect_to_char(ch, &af);
+    return;
+  }
+
+  if (success > 1)
+    pop = TRUE;
+  if (success > 2)
+  {
+    shop = TRUE;
+    heal = TRUE;
+  }
+  if (success > 3)
+    race = TRUE;
+
+  sprintf(buf, "The spirits relay information about the inhabitants of {Y%s{x:\n\r", pArea->name);
+  send_to_char(buf, ch);
+  sprintf(buf, "{R     %s  {G%s {C%s {M%s{W  Name{x\n\r", race ? "      Race" : "??????????",
+    shop || heal ? "  Special  " : "  ???????  ", pop ? "x #" : "???", lvl ? "Level" : "?????");
+  send_to_char(buf, ch);
+  for ( vnum = pArea->min_vnum; vnum <= pArea->max_vnum; vnum++ )
+  {
+    if ( ( pMobIndex = get_mob_index( vnum ) ) != NULL )
+    {
+      if(pMobIndex->count > 0)
+      {
+        found = TRUE;
+        sprintf( buf, "({R%14s{W) [{G%s %s{W] {Cx%2d{W <{M%3d{W>  %s\n\r", 
+          race ? race_table[pMobIndex->race].name : "       unknown", 
+          shop && pMobIndex->pShop ? "Shop" : "    ", 
+          heal && IS_SET(pMobIndex->act, ACT_IS_HEALER) ? "Heal" : "    ",
+          pop ? pMobIndex->count : 00, lvl ? pMobIndex->level : 00, pMobIndex->short_descr );
+        send_to_char( buf, ch );
+      }
+    }
+  }
+  if(!found)
+    send_to_char( "{YNot even the cockroach-spirits could find any signs of other inhabitants.\n\r", ch );
+
+    af.where = TO_AFFECTS;
+    af.type  = gsn_gift_attunement;
+    af.level = success;
+    af.duration = 3;
+    af.bitvector = 0;
+    af.modifier = 0;
+    af.location = 0;
+    affect_to_char(ch, &af);
+
+  return;
 }
 
-void spell_gift_doppelganger( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_doppelganger( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  char buf[MAX_STRING_LENGTH];
+  CHAR_DATA *victim = (CHAR_DATA *) vo;
+  AFFECT_DATA af;
+  int success;
+
+  if (IS_NPC(ch)) return;
+
+  if (victim == NULL)
+  {
+    send_to_char( "Whom are you trying to copy?\n\r", ch );
     return;
+  }
+
+  if (is_affected( ch, gsn_gift_doppelganger ))
+  {
+    if (get_affect_level(ch, gsn_gift_doppelganger) == -1)
+    {
+      send_to_char("You can't seem to undo the spirit's guise cast upon you.\n\r", ch);
+      return;
+    }
+    send_to_char( "You drop your Doppelganger guise.\n\r", ch );
+    affect_strip(ch,gsn_gift_doppelganger);
+    return;
+  }
+
+  if (victim == ch)
+  {
+    if (is_affected(ch, gsn_gift_doppelganger))
+    {
+      if (get_affect_level(ch, gsn_gift_doppelganger) == -1)
+      {
+        send_to_char("You can't seem to undo the spirit's guise cast upon you.\n\r", ch);
+        return;
+      }
+      send_to_char( "You drop your Doppelganger guise.\n\r", ch );
+      affect_strip(ch,gsn_gift_doppelganger);
+      return;
+    }
+    else
+    {
+      sendch("What would be the point of becoming a Doppelganger of yourself?\n\r", ch);
+      return;
+    }
+  }
+
+  if (!doppelganger_copy(victim))
+  {
+    send_to_char("This Gift only allows you to mimic a humanoid, wolf, or another Garou.\n\r", ch);
+    return;
+  }
+
+  if (ch->pcdata->gnosis[TEMP] < 1)
+  {
+    send_to_char("You don't have the spiritual energy to attempt to activate this gift.\n\r", ch);
+    return;
+  }
+
+  ch->pcdata->gnosis[TEMP]--;
+  success = godice(get_attribute(ch, CHARISMA) + get_ability(ch, CSABIL_PERFORMANCE), 8);
+
+  if (success < 0)
+  {
+    sendch("The illusion spirit is offended at your request; the guise you assume is less than pleasing.\n\r", ch);
+    sprintf(buf, "'Ugly' %s",ch->name,ch->name);
+    ch->short_descr = str_dup( buf );
+    sprintf(buf, "'Ugly' %s",ch->name);
+    ch->shift = str_dup( buf );
+    af.where = TO_AFFECTS;
+    af.type  = gsn_gift_doppelganger;
+    af.level = -1;
+    af.duration = 2;
+    af.bitvector = 0;
+    af.modifier = -1;
+    af.location = APPLY_CS_APP;
+    affect_to_char(ch, &af);
+    WAIT_STATE(ch, 12);
+    return;
+  }
+
+  if (success == 0)
+  {
+    sendch("Spirits of illusion seem to be in short supply at the moment.\n\r", ch);
+    WAIT_STATE(ch, 12);
+    return;
+  }
+
+  if(!IS_NPC(victim))
+  {
+    act( "Your features alter and shift, turning yourself into a copy of $N.", ch, NULL, victim, TO_CHAR );
+    act( "$n's features alter and shift until they assume the form of $N.", ch, NULL, victim, TO_ROOM );
+    sprintf(buf, "%s",victim->name,ch->name);
+    ch->short_descr = str_dup( buf );
+    sprintf(buf, "%s",victim->name);
+    ch->shift = str_dup( buf );
+
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_gift_doppelganger;
+    af.level     = ch->level;
+    af.duration  = (success * 4) + 48;
+    af.location  = APPLY_NONE;
+    af.modifier  = 0;
+    af.bitvector = 0;
+    affect_to_char( ch, &af );
+    return;
+  }
+
+  act( "Your features alter and shift, turning yourself into a copy of $N.", ch, NULL, victim, TO_CHAR );
+  act( "$n's features alter and shift until they assume the form of $N.", ch, NULL, victim, TO_ROOM );
+  sprintf(buf, "%s",capitalize(victim->short_descr),victim->long_descr);
+  ch->short_descr = str_dup( buf );
+  sprintf(buf, "%s",capitalize(victim->short_descr));
+  ch->shift = str_dup( buf );
+
+  af.where     = TO_AFFECTS;
+  af.type      = gsn_gift_doppelganger;
+  af.level     = ch->level;
+  af.duration  = (success * 4) + 48;
+  af.location  = APPLY_NONE;
+  af.modifier  = 0;
+  af.bitvector = 0;
+  affect_to_char( ch, &af );
+  return;
 }
 
 //Rank 5
@@ -4513,9 +4883,92 @@ void do_beseech(CHAR_DATA *ch, char *argument)
 void do_gifts(CHAR_DATA *ch, char *argument)
 {
     char buf[MAX_STRING_LENGTH];
-
+    int i, gbreed, gauspice, gtribe;
+    int col = 1;
+    BUFFER *buffer;
+    buffer = new_buf();
 
     if(IS_NPC(ch)) return;
+
+    if (!str_cmp(argument, "\0"))
+    {
+      send_to_char("{WSyntax: {cgifts (all/list/learn){x", ch);
+      return;
+    }
+
+    if (!str_cmp(argument, "all"))
+    {
+      send_to_char("All of Haven's Garou Gifts from Gaia:\n\r\n\r",ch);
+      send_to_char("{R*{xGift is currently Uncoded.\n\r", ch);
+      cprintf(ch, "%s{x\n\r", " [{BRank{x] ({RBreed{x) {{{MAuspice{x } <     {GTribe{x      > {D:: {CGift Name");
+      send_to_char("/===============================================================================\\\n\r", ch);
+      for (i = 1; i < MAX_GIFTS_CODED; i++)
+      {
+        gbreed = gift_table[i].breed;
+        gauspice = gift_table[i].auspice;
+        gtribe = gift_table[i].tribe;
+        sprintf(buf, "{R%s{x[  {B%d{x ] %s %s %s {D:: {C%-30s{x\n\r",
+          gift_table[i].level == 0 ? "*" : " ",
+          gift_table[i].rank,
+          gbreed == HOMID ? "({RHomid{x)" : gbreed == LUPUS ? "({RLupus{x)" : gbreed == METIS ? "({RMetis{x)" : "       ",
+          gauspice == RAGABASH ? "{{{MRagabash{x}" : gauspice == THEURGE ? "{{{MTheurge{x }" : gauspice == PHILODOX ? "{{{MPhilodox{x}" : 
+          gauspice == GALLIARD ? "{{{MGalliard{x}" : gauspice == AHROUN ? "{ {MAhroun{x }" : "          ",
+          gtribe == BLACK_FURY ? "<   {GBlack Fury{x   >" : gtribe == CHILDREN_OF_GAIA ? "<{GChildren of Gaia{x>" : 
+          gtribe == FIANNA ? "<     {GFianna{x     >" : gtribe == FENRIR ? "< {GGet of Fenris{x  >" : 
+          gtribe == SHADOW_LORD ? "<  {GShadow Lord{x   >" : gtribe == BONE_GNAWER ? "<  {GBone Gnawer{x   >" : 
+          gtribe == SILVER_FANG ? "<  {GSilver Fang{x   >" : gtribe == WARDERSOFMEN ? "< {GWarders of Men{x >" : 
+          gtribe == RED_TALON ? "<   {GRed Talon{x    >" : gtribe == SILENT_STRIDER ? "< {GSilent Strider{x >" : 
+          "                  ",
+          capitalize(gift_table[i].name));
+        send_to_char(buf, ch);
+      }
+      send_to_char("\\===============================================================================/\n\r", ch);
+      return;
+    }
+
+    if (!str_cmp(argument, "breed") || !str_cmp(argument, "tribe") || !str_cmp(argument, "auspice"))
+    {
+      sprintf(buf, "Haven's Garou %s%s{x Gifts from Gaia:\n\r\n\r", 
+        !str_cmp(argument, "breed") ? "{R" : !str_cmp(argument, "tribe") ? "{G" :
+        !str_cmp(argument, "auspice") ? "{M" : "", capitalize(argument));
+      send_to_char(buf, ch);
+      send_to_char("{R*{xGift is currently Uncoded.\n\r", ch);
+      sprintf(buf, " [Rank] %s(Breed){x %s{Auspice }{x %s<     Tribe      >{x :: Gift\n\r",
+        !str_cmp(argument, "breed") ? "{R" : "", !str_cmp(argument, "auspice") ? "{M" : "",
+        !str_cmp(argument, "tribe") ? "{G" : "");
+      send_to_char(buf, ch);
+      send_to_char("/===============================================================================\\\n\r", ch);
+      for (i = 1; i < MAX_GIFTS_CODED; i++)
+      {
+        gbreed = gift_table[i].breed;
+        gauspice = gift_table[i].auspice;
+        gtribe = gift_table[i].tribe;
+        sprintf(buf, "{R%s{x[  %d ] %s%s{x %s%s{x %s%s{x :: %-30s{x\n\r",
+          gift_table[i].level == 0 ? "*" : " ",
+          gift_table[i].rank,
+          !str_cmp(argument, "breed") ? "{R" : "",
+          gbreed == HOMID ? "(Homid)" : gbreed == LUPUS ? "(Lupus)" : gbreed == METIS ? "(Metis)" : "       ",
+          !str_cmp(argument, "auspice") ? "{M" : "",
+          gauspice == RAGABASH ? "{{Ragabash}" : gauspice == THEURGE ? "{Theurge }" : gauspice == PHILODOX ? "{Philodox}" : 
+          gauspice == GALLIARD ? "{{Galliard}" : gauspice == AHROUN ? "{ Ahroun }" : "          ",
+          !str_cmp(argument, "tribe") ? "{G" : "",
+          gtribe == BLACK_FURY ? "<   Black Fury   >" : gtribe == CHILDREN_OF_GAIA ? "<Children of Gaia>" : 
+          gtribe == FIANNA ? "<     Fianna     >" : gtribe == FENRIR ? "< Get of Fenris  >" : 
+          gtribe == SHADOW_LORD ? "<  Shadow Lord   >" : gtribe == BONE_GNAWER ? "<  Bone Gnawer   >" : 
+          gtribe == SILVER_FANG ? "<  Silver Fang   >" : gtribe == WARDERSOFMEN ? "< Warders of Men >" : 
+          gtribe == RED_TALON ? "<   Red Talon    >" : gtribe == SILENT_STRIDER ? "< Silent Strider >" : 
+          "                  ",
+          capitalize(gift_table[i].name));
+        if ((!str_cmp(argument, "breed") && gbreed != 0))
+          send_to_char(buf, ch);
+        if ((!str_cmp(argument, "auspice") && gauspice != 0))
+          send_to_char(buf, ch);
+        if ((!str_cmp(argument, "tribe") && gtribe != 0))
+          send_to_char(buf, ch);
+      }
+      send_to_char("\\===============================================================================/\n\r", ch);
+      return;
+    }
 
     if(ch->race != race_lookup("garou"))
     {
@@ -4529,11 +4982,7 @@ void do_gifts(CHAR_DATA *ch, char *argument)
       return;
     }
 
-    int i;
-    int col = 1;
-    BUFFER *buffer;
-    buffer = new_buf();
-    if (str_cmp(argument, "all"))
+    if (!str_cmp(argument, "list"))
 	{
 		send_to_char("Your Gifts from Gaia:\n\r\n\r",ch);
 

@@ -1720,6 +1720,7 @@ void d10_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt)
     char buf[MAX_STRING_LENGTH];
     DESCRIPTOR_DATA *d;
     OBJ_DATA *wield;
+    AFFECT_DATA af;
     bool immune = FALSE;
     extern bool slaughter;
     extern bool doubledam;
@@ -1844,6 +1845,24 @@ if (DEBUG_MESSAGES || IS_DEBUGGING(ch)){
 		//Moment of excitement!
 		tohit = godice(dice, diff);
 		dice = 0; // clear dice so we can use them later.
+
+    if (is_affected(ch, gsn_gift_exceptionalswordplay) 
+        && get_affect_level(ch, gsn_gift_exceptionalswordplay) > 0
+        && wield)
+    {
+        af.where     = TO_AFFECTS;
+        af.type      = gsn_gift_exceptionalswordplay;
+        af.level     = get_affect_level(ch, gsn_gift_exceptionalswordplay);
+        af.duration  = 0;
+        af.location  = APPLY_NONE;
+        af.modifier  = -1;
+        af.bitvector = 0;
+        affect_join( ch, &af );
+        tohit++;
+
+        if (get_affect_modifier(ch, gsn_gift_exceptionalswordplay) <= 0)
+            affect_strip(ch, gsn_gift_exceptionalswordplay);
+    }
 
 	if (check_dodge(ch, victim) ||
       check_parry(ch, victim) ||
@@ -2081,7 +2100,7 @@ bool d10_damage(CHAR_DATA *ch, CHAR_DATA *victim, int damsuccess, int modifier, 
 	int dam;
     char  buf[MSL];
 	soakdice = soak = armordice = dam = 0;
-    bool silver;
+    bool silver = FALSE;
     OBJ_DATA *wield = get_eq_char( ch, WEAR_WIELD );
 
     if (victim->position == POS_TORPOR)

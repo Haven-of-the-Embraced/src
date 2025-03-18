@@ -2985,9 +2985,9 @@ Total (3) */
 
 {   "empathy", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_empathy,  TAR_IGNORE, POS_STANDING,
-&gsn_gift_empathy,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+&gsn_gift_empathy,          SLOT( 0),        0,     12, "",             "You no longer feel the need to act within your group's expectations.",        "" },
 
-{   "exceptional wordplay", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+{   "exceptional swordplay", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_exceptionalswordplay,  TAR_IGNORE, POS_STANDING,
 &gsn_gift_exceptionalswordplay,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
@@ -3035,11 +3035,11 @@ Total (3) */
 
 {   "attunement", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_attunement,  TAR_IGNORE, POS_STANDING,
-&gsn_gift_attunement,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+&gsn_gift_attunement,          SLOT( 0),        0,     12, "",             "You can once again ask the Spirits for information.",        "" },
 
 {   "doppelganger", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_doppelganger,  TAR_IGNORE, POS_STANDING,
-&gsn_gift_doppelganger,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_doppelganger,  TAR_CHAR_DEFENSIVE, POS_STANDING,
+&gsn_gift_doppelganger,          SLOT( 0),        0,     12, "",             "Your spirit-bestowed disguise wears off.",        "" },
 
 {   "command the blaze", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_commandtheblaze,  TAR_IGNORE, POS_STANDING,

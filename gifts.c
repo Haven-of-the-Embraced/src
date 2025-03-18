@@ -4883,7 +4883,7 @@ void do_beseech(CHAR_DATA *ch, char *argument)
 void do_gifts(CHAR_DATA *ch, char *argument)
 {
     char buf[MAX_STRING_LENGTH];
-    int i;
+    int i, gbreed, gauspice, gtribe;
     int col = 1;
     BUFFER *buffer;
     buffer = new_buf();
@@ -4899,7 +4899,61 @@ void do_gifts(CHAR_DATA *ch, char *argument)
     if (!str_cmp(argument, "all"))
     {
       send_to_char("Haven's Gifts from Gaia:\n\r\n\r",ch);
-      cprintf(ch, "%s{x\n\r", "[Rank] (Breed) {Auspice} <Tribe> : Gift");
+      send_to_char("{R*{xGift is currently Uncoded.\n\r", ch);
+      cprintf(ch, "%s{x\n\r", " [Rank] (Breed) {Auspice } <     Tribe      > :: Gift");
+      for (i = 1; i < MAX_GIFTS_CODED; i++)
+      {
+        gbreed = gift_table[i].breed;
+        gauspice = gift_table[i].auspice;
+        gtribe = gift_table[i].tribe;
+        sprintf(buf, "{R%s{x[  %d ] %s %s %s :: %-30s{x\n\r",
+          gift_table[i].level == 0 ? "*" : " ",
+          gift_table[i].rank,
+          gbreed == HOMID ? "(Homid)" : gbreed == LUPUS ? "(Lupus)" : gbreed == METIS ? "(Metis)" : "       ",
+          gauspice == RAGABASH ? "{{Ragabash}" : gauspice == THEURGE ? "{Theurge }" : gauspice == PHILODOX ? "{Philodox}" : 
+          gauspice == GALLIARD ? "{{Galliard}" : gauspice == AHROUN ? "{ Ahroun }" : "          ",
+          gtribe == BLACK_FURY ? "<   Black Fury   >" : gtribe == CHILDREN_OF_GAIA ? "<Children of Gaia>" : 
+          gtribe == FIANNA ? "<     Fianna     >" : gtribe == FENRIR ? "< Get of Fenris  >" : 
+          gtribe == SHADOW_LORD ? "<  Shadow Lord   >" : gtribe == BONE_GNAWER ? "<  Bone Gnawer   >" : 
+          gtribe == SILVER_FANG ? "<  Silver Fang   >" : gtribe == WARDERSOFMEN ? "< Warders of Men >" : 
+          gtribe == RED_TALON ? "<   Red Talon    >" : gtribe == SILENT_STRIDER ? "< Silent Strider >" : 
+          "                  ",
+          capitalize(gift_table[i].name));
+        send_to_char(buf, ch);
+      }
+      return;
+    }
+
+    if (!str_cmp(argument, "breed") || !str_cmp(argument, "tribe") || !str_cmp(argument, "auspice"))
+    {
+      send_to_char("Haven's Gifts from Gaia:\n\r\n\r",ch);
+      send_to_char("{R*{xGift is currently Uncoded.\n\r", ch);
+      cprintf(ch, "%s{x\n\r", " [Rank] (Breed) {Auspice } <     Tribe      > :: Gift");
+      for (i = 1; i < MAX_GIFTS_CODED; i++)
+      {
+        gbreed = gift_table[i].breed;
+        gauspice = gift_table[i].auspice;
+        gtribe = gift_table[i].tribe;
+        sprintf(buf, "{R%s{x[  %d ] %s %s %s :: %-30s{x\n\r",
+          gift_table[i].level == 0 ? "*" : " ",
+          gift_table[i].rank,
+          gbreed == HOMID ? "(Homid)" : gbreed == LUPUS ? "(Lupus)" : gbreed == METIS ? "(Metis)" : "       ",
+          gauspice == RAGABASH ? "{{Ragabash}" : gauspice == THEURGE ? "{Theurge }" : gauspice == PHILODOX ? "{Philodox}" : 
+          gauspice == GALLIARD ? "{{Galliard}" : gauspice == AHROUN ? "{ Ahroun }" : "          ",
+          gtribe == BLACK_FURY ? "<   Black Fury   >" : gtribe == CHILDREN_OF_GAIA ? "<Children of Gaia>" : 
+          gtribe == FIANNA ? "<     Fianna     >" : gtribe == FENRIR ? "< Get of Fenris  >" : 
+          gtribe == SHADOW_LORD ? "<  Shadow Lord   >" : gtribe == BONE_GNAWER ? "<  Bone Gnawer   >" : 
+          gtribe == SILVER_FANG ? "<  Silver Fang   >" : gtribe == WARDERSOFMEN ? "< Warders of Men >" : 
+          gtribe == RED_TALON ? "<   Red Talon    >" : gtribe == SILENT_STRIDER ? "< Silent Strider >" : 
+          "                  ",
+          capitalize(gift_table[i].name));
+        if ((!str_cmp(argument, "breed") && gbreed != 0))
+          send_to_char(buf, ch);
+        if ((!str_cmp(argument, "auspice") && gauspice != 0))
+          send_to_char(buf, ch);
+        if ((!str_cmp(argument, "tribe") && gtribe != 0))
+          send_to_char(buf, ch);
+      }
       return;
     }
 

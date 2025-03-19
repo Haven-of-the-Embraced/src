@@ -7368,6 +7368,12 @@ void do_eyesoftheserpent(CHAR_DATA *ch, char *argument)
         return;
     }
 
+    if (!IS_SET(victim->act2, ACT2_ULTRA_MOB))
+    {
+        send_to_char("Your target is too powerful to hypnotize.\n\r", ch);
+        return;
+    }
+
     if (victim->stopped > 0)
     {
         send_to_char("Your target is already immobile.\n\r", ch);
@@ -7379,7 +7385,22 @@ void do_eyesoftheserpent(CHAR_DATA *ch, char *argument)
         return;
     }
 
+    success = godice(get_attribute(ch, WITS) + get_ability(ch, CSABIL_ALERTNESS), 6);
+    ch->pblood -= 10;
 
+    if (success < 0)
+    {
+        send_to_char("You are so intent on looking at $N's eyes, that you leave yourself open for attack.\n\r", ch);
+        multi_hit(victim, ch);
+        return;
+    }
+
+    if (success == 0)
+    {
+        act( "You can't quite meet $N's gaze to lock eyes.", ch, NULL, victim, TO_CHAR );
+        WAIT_STATE(ch, 3);
+        return;
+    }
 
     return;
 }

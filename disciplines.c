@@ -7328,6 +7328,62 @@ void do_acidblood(CHAR_DATA *ch, char *argument)
     return;
 }
 
+void do_eyesoftheserpent(CHAR_DATA *ch, char *argument)
+{
+    CHAR_DATA *victim;
+    int success;
+
+    if (IS_NPC(ch))
+        return;
+
+    argument = one_argument(argument, arg);
+
+    if (!IS_VAMP(ch))
+    {
+        send_to_char("You cannot learn the hypnotic stare of the serpents.\n\r", ch);
+        return;
+    }
+
+    if(ch->pcdata->discipline[SERPENTIS] < 1)
+    {
+        send_to_char( "Set himself has not deemed you worthy to start the arts of the Serpent.\n\r", ch );
+        return;
+    }
+
+    if ((victim = get_char_room(ch, NULL, arg)) == NULL)
+    {
+        send_to_char("Whom are you trying to lock eyes with?\n\r", ch);
+        return;
+    }
+
+    if (victim == ch)
+    {
+        send_to_char("You cannot stare at yourself.\n\r", ch);
+        return;
+    }
+
+    if (IS_NPC(victim) && victim->pIndexData->pShop != NULL)
+    {
+        send_to_char("Hypnotizing the shopkeeper would be bad for future business.\n\r", ch);
+        return;
+    }
+
+    if (victim->stopped > 0)
+    {
+        send_to_char("Your target is already immobile.\n\r", ch);
+    }
+
+    if (ch->pblood <= 10)
+    {
+        send_to_char("You do not have enough Vitae to enact this.\n\r", ch);
+        return;
+    }
+
+
+
+    return;
+}
+
 void do_taste( CHAR_DATA *ch, char *argument )
 {
     char buf[MAX_STRING_LENGTH];

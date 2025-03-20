@@ -7331,6 +7331,7 @@ void do_acidblood(CHAR_DATA *ch, char *argument)
 void do_eyesoftheserpent(CHAR_DATA *ch, char *argument)
 {
     CHAR_DATA *victim;
+    char arg[MAX_INPUT_LENGTH];
     int success;
 
     if (IS_NPC(ch))
@@ -7391,7 +7392,7 @@ void do_eyesoftheserpent(CHAR_DATA *ch, char *argument)
     if (success < 0)
     {
         send_to_char("You are so intent on looking at $N's eyes, that you leave yourself open for attack.\n\r", ch);
-        multi_hit(victim, ch);
+        multi_hit(victim, ch, TYPE_UNDEFINED);
         return;
     }
 
@@ -7401,6 +7402,11 @@ void do_eyesoftheserpent(CHAR_DATA *ch, char *argument)
         WAIT_STATE(ch, 3);
         return;
     }
+
+    act("You turn and catch $N's eyes with your hypnotic gaze.", ch, NULL, victim, TO_CHAR);
+    act("You watch as $n's eyes turn {ygolden{x, and you become transfixed in $s gaze!", ch, NULL, victim, TO_VICT);
+    act("$n's eyes turn {ygolden{x as $e locks gaze with $N.", ch, NULL, victim, TO_NOTVICT);
+    victim->stopped+= success*2 + 1;
 
     return;
 }

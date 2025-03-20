@@ -7369,7 +7369,7 @@ void do_eyesoftheserpent(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if (!IS_SET(victim->act2, ACT2_ULTRA_MOB))
+    if (IS_SET(victim->act2, ACT2_ULTRA_MOB))
     {
         send_to_char("Your target is too powerful to hypnotize.\n\r", ch);
         return;
@@ -7378,6 +7378,7 @@ void do_eyesoftheserpent(CHAR_DATA *ch, char *argument)
     if (victim->stopped > 0)
     {
         send_to_char("Your target is already immobile.\n\r", ch);
+        return;
     }
 
     if (ch->pblood <= 10)
@@ -7406,7 +7407,7 @@ void do_eyesoftheserpent(CHAR_DATA *ch, char *argument)
     act("You turn and catch $N's eyes with your hypnotic gaze.", ch, NULL, victim, TO_CHAR);
     act("You watch as $n's eyes turn {ygolden{x, and you become transfixed in $s gaze!", ch, NULL, victim, TO_VICT);
     act("$n's eyes turn {ygolden{x as $e locks gaze with $N.", ch, NULL, victim, TO_NOTVICT);
-    victim->stopped+= success*2 + 1;
+    victim->stopped+= success*3 + 1;
 
     return;
 }

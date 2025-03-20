@@ -398,6 +398,7 @@ DECLARE_DO_FUN( do_smell    );
 DECLARE_DO_FUN( do_nourish  );
 DECLARE_DO_FUN( do_claws    );
 DECLARE_DO_FUN( do_gleam    );
+DECLARE_DO_FUN( do_eyesoftheserpent);
 DECLARE_DO_FUN( do_taste    );
 DECLARE_DO_FUN( do_bloodrage   );
 DECLARE_DO_FUN( do_bloodofpotency   );

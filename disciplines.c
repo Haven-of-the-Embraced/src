@@ -7381,6 +7381,18 @@ void do_eyesoftheserpent(CHAR_DATA *ch, char *argument)
         return;
     }
 
+    if (is_affected(victim, gsn_eyesoftheserpent))
+    {
+        send_to_char("Your target is already dazed.\n\r", ch);
+        return;
+    }
+
+    if (!can_see(victim,ch))
+    {
+        send_to_char("Your target does not seem to see you.\n\r", ch);
+        return;
+    }
+
     if (ch->pblood <= 10)
     {
         send_to_char("You do not have enough Vitae to enact this.\n\r", ch);
@@ -7409,6 +7421,14 @@ void do_eyesoftheserpent(CHAR_DATA *ch, char *argument)
     act("$n's eyes turn {ygolden{x as $e locks gaze with $N.", ch, NULL, victim, TO_NOTVICT);
     victim->stopped+= success*3 + 1;
 
+    af.where        = TO_AFFECTS;
+    af.type         = gsn_eyesoftheserpent;
+    af.level        = ch->level;
+    af.location     = 0;
+    af.modifier     = 0;
+    af.duration     = 1;
+    af.bitvector    = 0;
+    affect_to_char(victim, &af);
     return;
 }
 

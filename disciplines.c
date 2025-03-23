@@ -7464,6 +7464,15 @@ void do_tongueoftheasp(CHAR_DATA *ch, char *argument)
         send_to_char("You do not have enough Vitae to enact this.\n\r", ch);
         return;
     }
+
+    af.where        = TO_AFFECTS;
+    af.type         = gsn_tongueoftheasp;
+    af.level        = ch->level;
+    af.location     = 0;
+    af.modifier     = 0;
+    af.duration     = 2;
+    af.bitvector    = 0;
+    affect_to_char(victim, &af);
     return;
 }
 

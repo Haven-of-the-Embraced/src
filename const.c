@@ -2273,6 +2273,10 @@ Total (3) */
 
 //    --Serpentis--
 // Total (2)
+    { "eyes of the serpent",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_SLEEPING,
+    &gsn_eyesoftheserpent,            SLOT(0),   0, 12, "golden eyes",  "", "You no longer feel hypnotized and dazed." },
+
     { "tongue of the asp",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_SLEEPING,
     &gsn_tongueoftheasp,            SLOT(0),   0, 12, "forked tongue",  "", "" },

@@ -4937,6 +4937,7 @@ sh_int          gsn_acidblood;
 sh_int          gsn_blood_agony;
 sh_int          gsn_eyesoftheserpent;
 sh_int          gsn_tongueoftheasp;
+sh_int          gsn_tonguelash;
 sh_int          gsn_skinoftheadder;
 sh_int          gsn_forget;
 sh_int          gsn_mental_resilience;

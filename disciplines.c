@@ -7476,6 +7476,11 @@ void do_tongueoftheasp(CHAR_DATA *ch, char *argument)
     return;
 }
 
+void do_tonguelash( CHAR_DATA *ch, char *argument )
+{
+    return;
+}
+
 void do_taste( CHAR_DATA *ch, char *argument )
 {
     char buf[MAX_STRING_LENGTH];

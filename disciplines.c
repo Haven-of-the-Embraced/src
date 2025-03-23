@@ -7481,7 +7481,7 @@ void do_tongueoftheasp(CHAR_DATA *ch, char *argument)
 void do_tonguelash( CHAR_DATA *ch, char *argument )
 {
     CHAR_DATA *victim;
-//  char arg[MAX_INPUT_LENGTH];
+    AFFECT_DATA af;
     int dicesuccess = 0;
     int damagesuccess = 0;
     int critical = 1;

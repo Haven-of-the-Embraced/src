@@ -3042,6 +3042,7 @@ extern sh_int  gsn_acidblood;
 extern sh_int  gsn_blood_agony;
 extern sh_int  gsn_eyesoftheserpent;
 extern sh_int  gsn_tongueoftheasp;
+extern sh_int  gsn_tonguelash;
 extern sh_int  gsn_skinoftheadder;
 extern sh_int  gsn_sanctus;
 extern sh_int  gsn_bandage;

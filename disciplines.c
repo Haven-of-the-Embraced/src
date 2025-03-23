@@ -7331,6 +7331,7 @@ void do_acidblood(CHAR_DATA *ch, char *argument)
 void do_eyesoftheserpent(CHAR_DATA *ch, char *argument)
 {
     CHAR_DATA *victim;
+    AFFECT_DATA af;
     char arg[MAX_INPUT_LENGTH];
     int success;
 

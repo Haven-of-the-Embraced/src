@@ -7433,6 +7433,40 @@ void do_eyesoftheserpent(CHAR_DATA *ch, char *argument)
     return;
 }
 
+void do_tongueoftheasp(CHAR_DATA *ch, char *argument)
+{
+    AFFECT_DATA af;
+
+    if (IS_NPC(ch))
+        return;
+
+    if (!IS_VAMP(ch))
+    {
+        send_to_char("You cannot learn the tongue of the serpents.\n\r", ch);
+        return;
+    }
+
+    if(ch->pcdata->discipline[SERPENTIS] < 2)
+    {
+        send_to_char( "You have not yet proven yourself worthy of this ability.\n\r", ch );
+        return;
+    }
+
+    if(is_affected(ch, gsn_tongueoftheasp))
+    {
+        affect_strip(ch, gsn_tongueoftheasp);
+        send_to_char("Your tongue molds back to its original shape.\n\r", ch);
+        return;
+    }
+
+    if (ch->pblood <= 10)
+    {
+        send_to_char("You do not have enough Vitae to enact this.\n\r", ch);
+        return;
+    }
+    return;
+}
+
 void do_taste( CHAR_DATA *ch, char *argument )
 {
     char buf[MAX_STRING_LENGTH];

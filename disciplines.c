@@ -7478,6 +7478,128 @@ void do_tongueoftheasp(CHAR_DATA *ch, char *argument)
 
 void do_tonguelash( CHAR_DATA *ch, char *argument )
 {
+    CHAR_DATA *victim;
+//  char arg[MAX_INPUT_LENGTH];
+    int dicesuccess = 0;
+    int damagesuccess = 0;
+    int critical = 1;
+    int precog = 0;
+
+    if (IS_NPC(ch))
+      return;
+
+    if (argument[0] == '\0')
+    {
+        victim = ch->fighting;
+        if (victim == NULL)
+        {
+            if (!IS_NPC(ch))
+                send_to_char("Whom are you trying to lash with your tongue?\n\r", ch);
+            return;
+        }
+    }
+
+    else if ((victim = get_char_room(ch, NULL, argument)) == NULL)
+    {
+        if (!IS_NPC(ch))
+            send_to_char("Your target seems to be conspicuously absent.\n\r", ch);
+        return;
+    }
+
+    if (victim == ch)
+    {
+        send_to_char("Your tongue gently caresses your arm.\n\r", ch);
+        return;
+    }
+
+    if (!is_affected(ch, gsn_tongueoftheasp))
+    {
+        send_to_char("Your tongue isn't properly lenghtened.\n\r", ch);
+        return;
+    }
+
+    if (IS_NPC(victim) && victim->pIndexData->pShop != NULL)
+    {
+        if (!IS_NPC(ch))
+            send_to_char("Professional courtesy dictates that you avoid lashing out at the shopkeeper.\n\r", ch);
+        return;
+    }
+
+    if (is_safe(ch, victim))
+    {
+        if (!IS_NPC(ch))
+            send_to_char("You get the feeling that this might not be a good place to start a fight.\n\r", ch);
+        return;
+    }
+
+    if (!IS_NPC(ch) && ch->move < ch->level / 4)
+    {
+      send_to_char("You are too tired to tongue lash at anyone.\n\r", ch);
+      return;
+    }
+
+    if (!IS_NPC(ch))
+        ch->move -= ch->level / 4;
+
+ /*   if (is_affected(victim, gsn_precognition) && number_percent() > 50)
+    {
+        act("Almost as if $E sees it coming, $N avoids your bite!", ch, NULL, victim, TO_CHAR);
+        act("With a brief flash of insight, you swiftly react and dodge $n's ferocious bite.", ch, NULL, victim, TO_VICT);
+        act("Without missing a beat, $N moves aside and dodges $n's bite.", ch, NULL, victim, TO_NOTVICT);
+        return;
+    }
+*/
+
+    if(is_affected(victim,gsn_precognition))
+        precog = get_affect_level(victim,gsn_precognition);
+
+    dicesuccess = godice(get_attribute(ch, DEXTERITY) + ch->csabilities[CSABIL_BRAWL], 5);
+    dicesuccess -= precog;
+
+    WAIT_STATE(ch, 12);
+
+    if (dicesuccess < 0)
+    {
+        act("Your tongue slashes the roof of your mouth.", ch, NULL, victim, TO_CHAR);
+        act("$n winces momentarily.", ch, NULL, victim, TO_VICT);
+        act("$n winces momentarily.", ch, NULL, victim, TO_NOTVICT);
+        d10_damage(ch, victim, -dicesuccess, ch->level, gsn_tongueoftheasp, DAM_SLASH, DEFENSE_NONE, TRUE, TRUE);
+
+        return;
+    }
+
+    if (dicesuccess == 0)
+    {
+        act("You lash out at $N with your tongue, but miss your target.", ch, NULL, victim, TO_CHAR);
+        act("$n's tongue lashes out at you, missing by inches.", ch, NULL, victim, TO_VICT);
+        act("$n's tongue lash misses $N.", ch, NULL, victim, TO_NOTVICT);
+        return;
+    }
+
+    if (dicesuccess > 0)
+    {
+        act("Baring your teeth, you gnash violently upon $N with a powerful bite.", ch, NULL, victim, TO_CHAR);
+        if (!IS_NPC(victim))
+            act("$N bites down upon you, ripping into your body!", ch, NULL, victim, TO_VICT);
+        act("$n lunges at $N, biting $M violently.", ch, NULL, victim, TO_NOTVICT);
+        if (dicesuccess > 4)
+        {
+            act("With precision targeting, you bite down on a sensitive area!", ch, NULL, victim, TO_CHAR);
+            if (!IS_NPC(victim))
+                act("You flinch in pain as $n bites down hard!", ch, NULL, victim, TO_VICT);
+            WAIT_STATE(victim, PULSE_VIOLENCE);
+            critical = 1.5;
+        }
+
+        gain_exp(ch, dicesuccess*2);
+    }
+
+    damagesuccess = godice(get_attribute(ch, STRENGTH) + 1 + ch->pcdata->discipline[POTENCE], 6);
+
+    if (damagesuccess < 0)
+        damagesuccess = 0;
+
+    d10_damage(ch, victim, damagesuccess, ch->level * 2 / 3 * critical, gsn_bite, DAM_PIERCE, DEFENSE_FULL, TRUE, TRUE);
     return;
 }
 

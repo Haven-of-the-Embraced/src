@@ -7589,7 +7589,18 @@ void do_tonguelash( CHAR_DATA *ch, char *argument )
             damagesuccess = 0;
 
         d10_damage(ch, victim, damagesuccess, ch->level * 2 / 3, gsn_tongueoftheasp, DAM_AGGREVATED, DEFENSE_ARMOR, TRUE, TRUE);
-        if (is_affected(victim, gsn_bleeding) && ch->pblood < ch->max_pblood)
+        if (!is_affected(victim, gsn_bleeding))
+        {
+            af.where     = TO_AFFECTS;
+            af.type      = gsn_bleeding;
+            af.level     = ch->level / 40;
+            af.duration  = 1;
+            af.location  = APPLY_NONE;
+            af.modifier  = 0;
+            af.bitvector = 0;
+            affect_to_char(victim, &af);
+        }
+        else if (is_affected(victim, gsn_bleeding) && ch->pblood < ch->max_pblood)
         {
             act("Your serpentine tongue laps up a little blood.", ch, NULL, victim, TO_CHAR);
             act("$n's tongue hungrily licks blood off of you!", ch, NULL, victim, TO_VICT);

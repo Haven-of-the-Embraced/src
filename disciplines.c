@@ -7436,6 +7436,7 @@ void do_eyesoftheserpent(CHAR_DATA *ch, char *argument)
 void do_tongueoftheasp(CHAR_DATA *ch, char *argument)
 {
     AFFECT_DATA af;
+    CHAR_DATA *victim;
 
     if (IS_NPC(ch))
         return;
@@ -7465,6 +7466,7 @@ void do_tongueoftheasp(CHAR_DATA *ch, char *argument)
         return;
     }
 
+    send_to_char("Your tongue extends to a foot long, and forked like a snake's.\n\r", ch);
     af.where        = TO_AFFECTS;
     af.type         = gsn_tongueoftheasp;
     af.level        = ch->level;

@@ -7580,28 +7580,27 @@ void do_tonguelash( CHAR_DATA *ch, char *argument )
 
     if (dicesuccess > 0)
     {
-        act("Baring your teeth, you gnash violently upon $N with a powerful bite.", ch, NULL, victim, TO_CHAR);
-        if (!IS_NPC(victim))
-            act("$N bites down upon you, ripping into your body!", ch, NULL, victim, TO_VICT);
-        act("$n lunges at $N, biting $M violently.", ch, NULL, victim, TO_NOTVICT);
-        if (dicesuccess > 4)
+        act("Lashing out with your tongue, you feel it slice into $N.", ch, NULL, victim, TO_CHAR);
+        act("$n's tongue slices into you!", ch, NULL, victim, TO_VICT);
+        act("$n's tongue slashes at $N.", ch, NULL, victim, TO_NOTVICT);
+        damagesuccess = godice(get_attribute(ch, STRENGTH), 6);
+
+        if (damagesuccess < 0)
+            damagesuccess = 0;
+
+        d10_damage(ch, victim, damagesuccess, ch->level * 2 / 3, gsn_tongueoftheasp, DAM_AGGREVATED, DEFENSE_ARMOR, TRUE, TRUE);
+        if (is_affected(victim, gsn_bleeding) && ch->pblood < ch->max_pblood)
         {
-            act("With precision targeting, you bite down on a sensitive area!", ch, NULL, victim, TO_CHAR);
-            if (!IS_NPC(victim))
-                act("You flinch in pain as $n bites down hard!", ch, NULL, victim, TO_VICT);
+            act("Your serpentine tongue laps up a little blood.", ch, NULL, victim, TO_CHAR);
+            act("$n's tongue hungrily licks blood off of you!", ch, NULL, victim, TO_VICT);
+            act("$n's tongue licks bits of blood off of $N.", ch, NULL, victim, TO_NOTVICT);
             WAIT_STATE(victim, PULSE_VIOLENCE);
-            critical = 1.5;
+            ch->pblood++;
         }
 
         gain_exp(ch, dicesuccess*2);
     }
 
-    damagesuccess = godice(get_attribute(ch, STRENGTH) + 1 + ch->pcdata->discipline[POTENCE], 6);
-
-    if (damagesuccess < 0)
-        damagesuccess = 0;
-
-    d10_damage(ch, victim, damagesuccess, ch->level * 2 / 3 * critical, gsn_bite, DAM_PIERCE, DEFENSE_FULL, TRUE, TRUE);
     return;
 }
 

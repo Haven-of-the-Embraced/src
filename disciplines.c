@@ -7664,6 +7664,55 @@ void do_skinoftheadder( CHAR_DATA *ch, char *argument )
 
 void do_formofthecobra( CHAR_DATA *ch, char *argument )
 {
+    char buf[MAX_STRING_LENGTH];
+    OBJ_DATA *obj;
+    OBJ_DATA *obj_next;
+    AFFECT_DATA af;
+
+    if (IS_NPC(ch)) return;
+
+    if(!IS_VAMP(ch))
+    {
+        send_to_char("You are not a Vampire!\n\r",ch);
+        return;
+    }
+
+    if (is_affected(ch, gsn_formofthecobra))
+    {
+        affect_strip(ch, gsn_formofthecobra);
+        act( "$n's serpentine form grows limbs, shifting back to a humanoid form.", ch, NULL, NULL, TO_NOTVICT );
+        act( "You revert your perfect serpent body back to your original vampire self.", ch, NULL, NULL, TO_CHAR );
+        return;
+    }
+
+    if (is_affected(ch, gsn_vicissitude_horrid) || is_affected(ch, gsn_vicissitude_chiropteran)
+        || IS_AFFECTED(ch, AFF_SHIFT))
+    {
+        sendch("Your form is already altered, return to vampire form first.\n\r", ch);
+        return;
+    }
+
+    if ( IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
+    {
+        send_to_char("Your cursed blood prevents you from reaching the glorious perfect form!\n\r" ,ch);
+        return;
+    }
+
+    if(ch->pcdata->discipline[SERPENTIS] < 4)
+    {
+        send_to_char( "You have not progressed enough in Set's legacy to do this.\n\r", ch );
+        return;
+    }
+
+    if (ch->pblood < 25)
+    {
+        send_to_char( "You don't have enough blood!\n\r", ch );
+        return;
+    }
+
+    if ( is_affected( ch, gsn_claws ) )
+        do_function(ch, &do_claws, " ");
+
     return;
 }
 

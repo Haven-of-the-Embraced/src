@@ -2279,11 +2279,15 @@ Total (3) */
 
     { "tongue of the asp",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_SLEEPING,
-    &gsn_tongueoftheasp,            SLOT(0),   0, 12, "forked tongue",  "", "" },
+    &gsn_tongueoftheasp,            SLOT(0),   0, 12, "forked tongue",  "", "Your forked tongue reforms, back to its original shape." },
 
     { "skin of the adder",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_SLEEPING,
-    &gsn_skinoftheadder,            SLOT(0),   0, 12, "serpentine skin",  "", "" },
+    &gsn_skinoftheadder,            SLOT(0),   0, 12, "serpentine skin",  "", "Your scales fade away, leaving clear skin again." },
+
+    { "form of the cobra",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_SLEEPING,
+    &gsn_formofthecobra,            SLOT(0),   0, 12, "serpent form",  "", "Your body shifts back from its serpentine form." },
 
 //    --Thaumaturgy: Path of Blood--
 // Total (4)

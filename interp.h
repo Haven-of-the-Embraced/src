@@ -402,6 +402,7 @@ DECLARE_DO_FUN( do_eyesoftheserpent);
 DECLARE_DO_FUN( do_tongueoftheasp);
 DECLARE_DO_FUN( do_tonguelash);
 DECLARE_DO_FUN( do_skinoftheadder);
+DECLARE_DO_FUN( do_formofthecobra);
 DECLARE_DO_FUN( do_taste    );
 DECLARE_DO_FUN( do_bloodrage   );
 DECLARE_DO_FUN( do_bloodofpotency   );

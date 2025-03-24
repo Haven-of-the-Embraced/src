@@ -7662,6 +7662,11 @@ void do_skinoftheadder( CHAR_DATA *ch, char *argument )
     return;
 }
 
+void do_formofthecobra( CHAR_DATA *ch, char *argument )
+{
+    return;
+}
+
 void do_taste( CHAR_DATA *ch, char *argument )
 {
     char buf[MAX_STRING_LENGTH];

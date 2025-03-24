@@ -7656,7 +7656,7 @@ void do_skinoftheadder( CHAR_DATA *ch, char *argument )
     af.level        = ch->level;
     af.location     = 0;
     af.modifier     = 0;
-    af.duration     = 48;
+    af.duration     = 24;
     af.bitvector    = 0;
     affect_to_char(ch, &af);
     return;

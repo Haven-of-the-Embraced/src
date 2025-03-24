@@ -2096,10 +2096,10 @@ bool d10_damage(CHAR_DATA *ch, CHAR_DATA *victim, int damsuccess, int modifier, 
     extern bool doubledam;
     bool immune = FALSE;
     DESCRIPTOR_DATA *d;
-	int soakdice, soak, armordice;
+	int soakdice, soakdiff, soak, armordice;
 	int dam;
     char  buf[MSL];
-	soakdice = soak = armordice = dam = 0;
+	soakdice = soakdiff = soak = armordice = dam = 0;
     bool silver = FALSE;
     OBJ_DATA *wield = get_eq_char( ch, WEAR_WIELD );
 
@@ -2235,12 +2235,17 @@ bool d10_damage(CHAR_DATA *ch, CHAR_DATA *victim, int damsuccess, int modifier, 
     if (dam_type <= DAM_SLASH || dt == attack_lookup("claws") )
         armordice += get_armor_diff(ch, victim, dam_type);
 
+    if (is_affected(victim, gsn_skinoftheadder))
+        soakdiff = 5;
+    else
+        soakdiff = 6;
+
     switch (defense) {
         case DEFENSE_NONE: soak = 0; break;
-        case DEFENSE_SOAK: soak = godice(soakdice, 6); break;
-        case DEFENSE_ARMOR: soak = godice(armordice, 6); break;
-        case DEFENSE_FULL:  soak = godice(armordice+soakdice, 6); break;
-        default: soak = godice(armordice+soakdice, 6); break;
+        case DEFENSE_SOAK: soak = godice(soakdice, soakdiff); break;
+        case DEFENSE_ARMOR: soak = godice(armordice, soakdiff); break;
+        case DEFENSE_FULL:  soak = godice(armordice+soakdice, soakdiff); break;
+        default: soak = godice(armordice+soakdice, soakdiff); break;
     }
 
     if (soak < 0)

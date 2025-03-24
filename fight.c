@@ -5518,6 +5518,7 @@ void do_bite(CHAR_DATA *ch, char *argument)
 //  char arg[MAX_INPUT_LENGTH];
     int dicesuccess = 0;
     int damagesuccess = 0;
+    int poisondice = 0;
     int critical = 1;
     int precog = 0;
 
@@ -5552,7 +5553,8 @@ void do_bite(CHAR_DATA *ch, char *argument)
       get_affect_level(ch, gsn_mutateform) != MUTATE_PANTHER &&
       get_affect_level(ch, gsn_mutateform) != MUTATE_BEAR &&
       get_affect_level(ch, gsn_shift) != SHIFT_WOLF &&
-      get_affect_level(ch, gsn_shift) != SHIFT_BEAR)
+      get_affect_level(ch, gsn_shift) != SHIFT_BEAR &&
+      !is_affected(ch, gsn_formofthecobra))
     {
       send_to_char("You don't have sharp enough teeth to bite effectively.\n\r", ch);
       return;
@@ -5639,6 +5641,12 @@ void do_bite(CHAR_DATA *ch, char *argument)
         damagesuccess = 0;
 
     d10_damage(ch, victim, damagesuccess, ch->level * 2 / 3 * critical, gsn_bite, DAM_PIERCE, DEFENSE_FULL, TRUE, TRUE);
+
+    if (is_affected(ch, gsn_formofthecobra) && dicesuccess > 3)
+    {
+        poisondice = godice(7, 6);
+        d10_damage(ch, victim, poisondice, ch->level/2, gsn_poison, DAM_POISON, DEFENSE_NONE, TRUE, TRUE);
+    }
     return;
 }
 

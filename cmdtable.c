@@ -211,6 +211,7 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "tongueoftheasp",    do_tongueoftheasp},
     { "tonguelash",     do_tonguelash},
     { "skinoftheadder", do_skinoftheadder},
+    { "formofthecobra", do_formofthecobra},
     { "taste",  do_taste },
     { "bloodrage",  do_bloodrage },
     { "potency",    do_bloodofpotency },

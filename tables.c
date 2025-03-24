@@ -115,8 +115,8 @@ const struct template_type template_table[] =
 
 const struct cdisc_type clandisc_table[MAX_CLAN] =
 {
-    {0, 0, 0}, //0
-    {0, 0, 0}, //1
+    {0, 0, 0}, //0 Dummy
+    {0, 0, 0}, //1 None
     { DISC_AUSPEX, DISC_DEMENTATION, DISC_OBFUSCATE },// Malkavian (2)
     { DISC_CELERITY, DISC_OBFUSCATE, DISC_QUIETUS},//Assamite (3)
     { DISC_MORTIS, DISC_AUSPEX, DISC_FORTITUDE  },// Cappadocian (4)
@@ -128,24 +128,24 @@ const struct cdisc_type clandisc_table[MAX_CLAN] =
     {DISC_THAUMATURGY, DISC_DOMINATE, DISC_AUSPEX   },//Tremere (10)
     {DISC_DOMINATE, DISC_OBTENEBRATION, DISC_POTENCE    },//Lasombra (11)
      {DISC_ANIMALISM, DISC_AUSPEX, DISC_VICISSITUDE  },//Tzimisce (12)
-    {0, 0, 0   }, //13
-    {0, 0, 0    },//14
-    {0, 0, 0   },//15
-    {0, 0, 0   },//16
-    {0, 0, 0   },//17
-    {0, 0, 0   },//18
-    {0, 0, 0   },//19
-    {0, 0, 0   },//20
-    {0, 0, 0   },//21
-    {0, 0, 0   }, //22
-    {0, 0, 0    }, //23
-    {0, 0, 0   }, //24
-    {0, 0, 0   },//25
-    {0, 0, 0   },//26
-    {DISC_CHIMERSTRY, DISC_FORTITUDE, DISC_ANIMALISM }, // Ravnos (27) (MAX)
-    {0, 0, 0   },//28
-    {0, 0, 0   },//29
-    {0, 0, 0   }//30
+    {0, 0, 0   }, //Mage (13)
+    {0, 0, 0    },//Black Fury (14)
+    {0, 0, 0   },//Shadow Lord (15)
+    {0, 0, 0   },//Fenrir (16)
+    {0, 0, 0   },//Silver Fang (17)
+    {0, 0, 0   },//Warders of Men (18)
+    {0, 0, 0   },//Child of Gaia (19)
+    {0, 0, 0   },//Fianna (20)
+    {0, 0, 0   },//Bone Gawers (21)
+    {0, 0, 0   }, //Akashic Brotherhood (22)
+    {0, 0, 0    }, //Dreamspeakers (23)
+    {0, 0, 0   }, //Euthanatos (24)
+    {0, 0, 0   },//Verbena (25)
+    {0, 0, 0   },//Order of Hermes (26)
+    {DISC_CHIMERSTRY, DISC_FORTITUDE, DISC_ANIMALISM }, // Ravnos (27)
+    {0, 0, 0   },//Red Talon (28)
+    {0, 0, 0   },//Silent Strider (29)
+    {DISC_OBFUSCATE, DISC_PRESENCE, DISC_SERPENTIS   }//Follower of Set (30) (Max)
 
 
     };

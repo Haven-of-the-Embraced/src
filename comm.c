@@ -2283,11 +2283,11 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
         if (!str_cmp(argument, "custom"))
             {
                 write_to_buffer(d,"\n\rHaven of the Embraced is focused on Vampires, but you may choose to start the\n\r",0);
-                write_to_buffer(d,"\n\rgame as a human, if you wish.  You may become embraced later, or convert to a\n\r",0);
-                write_to_buffer(d,"\n\rGarou or Mage upon reaching level 100.  Vampires are far more powerful at creation\n\r",0);
-                write_to_buffer(d,"\n\rover humans, and are highly recommended as your starting race if you are new to\n\r",0);
-                write_to_buffer(d,"\n\rHaven of the Embraced.  The added survivability allows you to explore more easily,\n\r",0);
-                write_to_buffer(d,"\n\rlearning the MUD at a better pace.\n\r",0);
+                write_to_buffer(d,"game as a human, if you wish.  You may become embraced later, or convert to a\n\r",0);
+                write_to_buffer(d,"Garou or Mage upon reaching level 100.  Vampires are far more powerful at creation\n\r",0);
+                write_to_buffer(d,"over humans, and are highly recommended as your starting race if you are new to\n\r",0);
+                write_to_buffer(d,"Haven of the Embraced.  The added survivability allows you to explore more easily,\n\r",0);
+                write_to_buffer(d,"learning the MUD at a better pace.\n\r",0);
 
                 write_to_buffer(d,"Do you wish to start the game as a Vampire (Recommended): [Y/N]? ",0);
 
@@ -2357,11 +2357,11 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
     ch->dpoints = 5;
 
     write_to_buffer(d,"\n\rHaven of the Embraced is focused on Vampires, but you may choose to start the\n\r",0);
-    write_to_buffer(d,"\n\rgame as a human, if you wish.  You may become embraced later, or convert to a\n\r",0);
-    write_to_buffer(d,"\n\rGarou or Mage upon reaching level 100.  Vampires are far more powerful at creation\n\r",0);
-    write_to_buffer(d,"\n\rover humans, and are highly recommended as your starting race if you are new to\n\r",0);
-    write_to_buffer(d,"\n\rHaven of the Embraced.  The added survivability allows you to explore more easily,\n\r",0);
-    write_to_buffer(d,"\n\rlearning the MUD at a better pace.\n\r",0);
+    write_to_buffer(d,"game as a human, if you wish.  You may become embraced later, or convert to a\n\r",0);
+    write_to_buffer(d,"Garou or Mage upon reaching level 100.  Vampires are far more powerful at creation\n\r",0);
+    write_to_buffer(d,"over humans, and are highly recommended as your starting race if you are new to\n\r",0);
+    write_to_buffer(d,"Haven of the Embraced.  The added survivability allows you to explore more easily,\n\r",0);
+    write_to_buffer(d,"learning the MUD at a better pace.\n\r",0);
 
     write_to_buffer(d,"Do you wish to start the game as a Vampire (Recommended): [Y/N]? ",0);
     d->connected = CON_CHOICE_VAMP;
@@ -2381,9 +2381,9 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
 
         write_to_buffer(d,"Assamite                      Brujah\n\r",0);
         write_to_buffer(d,"Gangrel                       Malkavian\n\r",0);
-        write_to_buffer(d,"Nosferatu                     Ravnos\n\r",0);
-        write_to_buffer(d,"Toreador                      Tremere\n\r",0);
-        write_to_buffer(d,"Ventrue\n\r",0);
+        write_to_buffer(d,"Nosferatu                     FollowerOfSet\n\r",0);
+        write_to_buffer(d,"Ravnos                        Toreador\n\r",0);
+        write_to_buffer(d,"Tremere                       Ventrue\n\r",0);
 
         write_to_buffer(d,"\n\r(Newbie Recommended) clans, in order:  1) Brujah 2) Nosferatu 3) Gangrel",0);
         write_to_buffer(d,"\n\rPlease choose a clan: ",0);
@@ -2416,7 +2416,7 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
 
 
         write_to_buffer(d,"Please choose a Clan (Assamite, Brujah, Gangrel, Malkavian, Nosferatu, Ravnos,\n\r", 0);
-	   write_to_buffer(d,"Toreador, Tremere, Ventrue or help <clan>) ",0);
+	   write_to_buffer(d,"FollowerOfSet, Toreador, Tremere, Ventrue or help <clan>) ",0);
         d->connected = CON_PICK_CLAN;
         break;
     }
@@ -2427,6 +2427,7 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
     str_prefix(buf, "malkavian") &&
     str_prefix(buf, "nosferatu") &&
     str_prefix(buf, "ravnos") &&
+    str_prefix(buf, "followerofset") &&
     str_prefix(buf, "toreador" ) &&
 	str_prefix(buf, "tremere") &&
 	str_prefix(buf, "ventrue") )
@@ -2434,7 +2435,7 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
     {
         write_to_buffer(d,"[  Invalid clan choice.  ]\n\r",0);
         write_to_buffer(d,"Please choose a Clan (Assamite, Brujah, Gangrel, Malkavian, Nosferatu, Ravnos,\n\r", 0);
-        write_to_buffer(d,"Toreador, Tremere, Ventrue or help <clan>) ",0);
+        write_to_buffer(d,"FollowerOfSet, Toreador, Tremere, Ventrue or help <clan>) ",0);
         d->connected = CON_PICK_CLAN;
         break;
     }

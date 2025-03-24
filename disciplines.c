@@ -7761,6 +7761,45 @@ void do_formofthecobra( CHAR_DATA *ch, char *argument )
 void do_darkheart( CHAR_DATA *ch, char *argument )
 {
     AFFECT_DATA af;
+    OBJ_DATA *obj;
+    OBJ_DATA *obj_next;
+
+    if (IS_NPC(ch)) return;
+
+    if(!IS_VAMP(ch))
+    {
+        send_to_char("You are not a Vampire!\n\r",ch);
+        return;
+    }
+
+    if (is_affected(ch, gsn_darkheart))
+    {
+        affect_strip(ch, gsn_darkheart);
+        act( "$n replaces $s heart into $s chest.", ch, NULL, NULL, TO_NOTVICT );
+        act( "With utmost precision, you carefully place your heart back into your chest cavity.", ch, NULL, NULL, TO_CHAR );
+        return;
+    }
+
+    if ( IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
+    {
+        send_to_char("Your cursed blood prevents you from reaching the glorious perfect form!\n\r" ,ch);
+        return;
+    }
+
+    if(ch->pcdata->discipline[SERPENTIS] < 5)
+    {
+        send_to_char( "Only those who have mastered the way of the Serpent can do this.\n\r", ch );
+        return;
+    }
+
+    if (ch->pblood < 30)
+    {
+        send_to_char( "You don't have enough precious vitae in your system.\n\r", ch );
+        return;
+    }
+
+    WAIT_STATE(ch, 20);
+    ch->pblood-= 30;
 
     return;
 }

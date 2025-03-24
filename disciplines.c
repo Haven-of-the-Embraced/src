@@ -7615,6 +7615,12 @@ void do_tonguelash( CHAR_DATA *ch, char *argument )
     return;
 }
 
+void do_skinoftheadder( CHAR_DATA *ch, char *argument )
+{
+    AFFECT_DATA af;
+    return;
+}
+
 void do_taste( CHAR_DATA *ch, char *argument )
 {
     char buf[MAX_STRING_LENGTH];

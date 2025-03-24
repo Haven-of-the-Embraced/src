@@ -3044,6 +3044,7 @@ extern sh_int  gsn_eyesoftheserpent;
 extern sh_int  gsn_tongueoftheasp;
 extern sh_int  gsn_tonguelash;
 extern sh_int  gsn_skinoftheadder;
+extern sh_int  gsn_formofthecobra;
 extern sh_int  gsn_sanctus;
 extern sh_int  gsn_bandage;
 extern sh_int  gsn_ground;

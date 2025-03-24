@@ -6372,6 +6372,13 @@ void do_claws(CHAR_DATA *ch, char *argument)
         send_to_char("Your blood curse prevents it!\n\r" ,ch);
         return;
     }
+
+    if (is_affected(ch, gsn_formofthecobra))
+    {
+        send_to_char("You cannot use claws in serpent form.\n\r", ch);
+        return;
+    }
+
     if(ch->pcdata->discipline[PROTEAN] < 2)
     {
         send_to_char("You do not have enough skill in the arts of Protean.\n\r",ch);
@@ -7682,6 +7689,7 @@ void do_formofthecobra( CHAR_DATA *ch, char *argument )
         affect_strip(ch, gsn_formofthecobra);
         act( "$n's serpentine form grows limbs, shifting back to a humanoid form.", ch, NULL, NULL, TO_NOTVICT );
         act( "You revert your perfect serpent body back to your original vampire self.", ch, NULL, NULL, TO_CHAR );
+        ch->dam_type = 17;
         return;
     }
 
@@ -7704,14 +7712,48 @@ void do_formofthecobra( CHAR_DATA *ch, char *argument )
         return;
     }
 
-    if (ch->pblood < 25)
+    if (ch->pblood < 30)
     {
-        send_to_char( "You don't have enough blood!\n\r", ch );
+        send_to_char( "You don't have enough precious vitae in your system.\n\r", ch );
         return;
     }
 
+    WAIT_STATE(ch, 80);
+    ch->pblood-= 30;
+
     if ( is_affected( ch, gsn_claws ) )
         do_function(ch, &do_claws, " ");
+
+    ch->dam_type = 10;
+    act( "Your body slowly shifts forms into a large cobra.", ch, NULL, NULL, TO_CHAR );
+    act( "$n ripples, and shifts form into that of a large cobra.", ch, NULL, NULL, TO_NOTVICT );
+    ch->short_descr = str_dup( "A hooded cobra" );
+    sprintf(buf, "A large, hooded cobra");
+    ch->shift = str_dup( buf );
+
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_formofthecobra;
+    af.level     = ch->level;
+    af.duration  = 24;
+    af.location  = APPLY_CS_STR;
+    af.modifier  = -1;
+    af.bitvector = AFF_SHIFT;
+    affect_to_char( ch, &af );
+
+    af.location  = APPLY_CS_DEX;
+    af.modifier  = 2;
+    af.bitvector = AFF_SNEAK;
+    affect_to_char( ch, &af );
+
+    af.location  = APPLY_CS_STA;
+    af.modifier  = 1;
+    af.bitvector = AFF_HIDE;
+    affect_to_char( ch, &af );
+
+    af.location  = APPLY_CS_MAN;
+    af.modifier  = -10;
+    af.bitvector = 0;
+    affect_to_char( ch, &af );
 
     return;
 }

@@ -4940,6 +4940,7 @@ sh_int          gsn_tongueoftheasp;
 sh_int          gsn_tonguelash;
 sh_int          gsn_skinoftheadder;
 sh_int          gsn_formofthecobra;
+sh_int          gsn_darkheart;
 sh_int          gsn_forget;
 sh_int          gsn_mental_resilience;
 sh_int          gsn_mask;

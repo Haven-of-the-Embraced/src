@@ -2289,6 +2289,10 @@ Total (3) */
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_SLEEPING,
     &gsn_formofthecobra,            SLOT(0),   0, 12, "serpent form",  "", "Your body shifts back from its serpentine form." },
 
+    { "dark heart",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_SLEEPING,
+    &gsn_darkheart,            SLOT(0),   0, 12, "severed heart",  "", "You replace your heart back into your chest." },
+
 //    --Thaumaturgy: Path of Blood--
 // Total (4)
     { "blood rage",   { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },

@@ -7618,6 +7618,47 @@ void do_tonguelash( CHAR_DATA *ch, char *argument )
 void do_skinoftheadder( CHAR_DATA *ch, char *argument )
 {
     AFFECT_DATA af;
+
+    if (IS_NPC(ch))
+      return;
+
+    if (!IS_VAMP(ch))
+    {
+        send_to_char("You cannot learn the skin of the serpents.\n\r", ch);
+        return;
+    }
+
+    if(ch->pcdata->discipline[SERPENTIS] < 3)
+    {
+        send_to_char( "You have not yet proven yourself worthy of this ability.\n\r", ch );
+        return;
+    }
+
+    if(is_affected(ch, gsn_skinoftheadder))
+    {
+        affect_strip(ch, gsn_tongueoftheasp);
+        send_to_char("Your skin clears itself of scales, returning to normal.\n\r", ch);
+        return;
+    }
+
+    if (ch->pblood <= 30)
+    {
+        send_to_char("You do not have enough Vitae to enact this.\n\r", ch);
+        return;
+    }
+
+    ch->pblood-= 30;
+    act("Focusing your vitae, your skin becomes flexible, mottled and scaled.", ch, NULL, NULL, TO_CHAR);
+    act("Mottled scales form all over $n's skin.", ch, NULL, NULL, TO_NOTVICT);
+
+    af.where        = TO_AFFECTS;
+    af.type         = gsn_skinoftheadder;
+    af.level        = ch->level;
+    af.location     = 0;
+    af.modifier     = 0;
+    af.duration     = 48;
+    af.bitvector    = 0;
+    affect_to_char(ch, &af);
     return;
 }
 

@@ -7761,8 +7761,7 @@ void do_formofthecobra( CHAR_DATA *ch, char *argument )
 void do_darkheart( CHAR_DATA *ch, char *argument )
 {
     AFFECT_DATA af;
-    OBJ_DATA *obj;
-    OBJ_DATA *obj_next;
+    OBJ_DATA *heart;
 
     if (IS_NPC(ch)) return;
 
@@ -7800,6 +7799,16 @@ void do_darkheart( CHAR_DATA *ch, char *argument )
 
     WAIT_STATE(ch, 20);
     ch->pblood-= 30;
+
+    send_to_char("You meticulously remove your heart, safeguarding it for later.\n\r", ch);
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_darkheart;
+    af.level     = ch->level;
+    af.duration  = 48;
+    af.location  = 0;
+    af.modifier  = 0;
+    af.bitvector = 0;
+    affect_to_char( ch, &af );
 
     return;
 }

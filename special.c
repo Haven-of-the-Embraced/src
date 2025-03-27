@@ -116,6 +116,7 @@ DECLARE_SPEC_FUN(   spec_nocturne           );
 DECLARE_SPEC_FUN(   spec_armsoftheabyss     );
 DECLARE_SPEC_FUN(   spec_awe                );
 DECLARE_SPEC_FUN(   spec_dreadgaze          );
+DECLARE_SPEC_FUN(   spec_gleamoftheredeye   );
 DECLARE_SPEC_FUN(   spec_eyesoftheserpent   );
 DECLARE_SPEC_FUN(   spec_tongueoftheasp     );
 DECLARE_SPEC_FUN(   spec_skinoftheadder     );
@@ -207,6 +208,7 @@ const   struct  spec_type    spec_table[] =
     {   "spec_armsoftheabyss",    spec_armsoftheabyss   },
     {   "spec_awe",               spec_awe              },
     {   "spec_dreadgaze",         spec_dreadgaze        },
+    {   "spec_gleamoftheredeye",  spec_gleamoftheredeye },
     {   "spec_eyesoftheserpent",  spec_eyesoftheserpent },
     {   "spec_tongueoftheasp",    spec_tongueoftheasp   },
     {   "spec_skinoftheadder",    spec_skinoftheadder   },
@@ -2314,6 +2316,34 @@ bool spec_dreadgaze( CHAR_DATA *ch)
   return FALSE;
 }
 */
+
+/* Protean Specs */
+bool spec_gleamoftheredeye( CHAR_DATA *ch )
+{
+    AFFECT_DATA af;
+
+  if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected(ch, gsn_forget)
+    || is_affected(ch, gsn_silencethesanemind))
+      return FALSE;
+
+    if (is_affected(ch, gsn_gleam))
+        return FALSE;
+
+    act( "$n lets forth a savage growl, $s eyes begin glowing {Rred{x.", ch, 0, 0, TO_NOTVICT );
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_gleam;
+    af.level     = ch->level;
+    af.duration  = -1;
+    af.location  = APPLY_CS_CHA;
+    af.modifier  = -1;
+    af.bitvector = AFF_INFRARED;
+    affect_to_char( ch, &af );
+
+    af.location  = APPLY_CS_MAN;
+    af.bitvector = AFF_DARK_VISION;
+    affect_to_char( ch, &af );
+    return TRUE;
+}
 
 /* Serpentis Specs */
 bool spec_eyesoftheserpent( CHAR_DATA *ch )

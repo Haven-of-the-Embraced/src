@@ -117,6 +117,7 @@ DECLARE_SPEC_FUN(   spec_armsoftheabyss     );
 DECLARE_SPEC_FUN(   spec_awe                );
 DECLARE_SPEC_FUN(   spec_dreadgaze          );
 DECLARE_SPEC_FUN(   spec_gleamoftheredeye   );
+DECLARE_SPEC_FUN(   spec_feralclaws         );
 DECLARE_SPEC_FUN(   spec_eyesoftheserpent   );
 DECLARE_SPEC_FUN(   spec_tongueoftheasp     );
 DECLARE_SPEC_FUN(   spec_skinoftheadder     );
@@ -209,6 +210,7 @@ const   struct  spec_type    spec_table[] =
     {   "spec_awe",               spec_awe              },
     {   "spec_dreadgaze",         spec_dreadgaze        },
     {   "spec_gleamoftheredeye",  spec_gleamoftheredeye },
+    {   "spec_feralclaws",        spec_feralclaws       },
     {   "spec_eyesoftheserpent",  spec_eyesoftheserpent },
     {   "spec_tongueoftheasp",    spec_tongueoftheasp   },
     {   "spec_skinoftheadder",    spec_skinoftheadder   },
@@ -2322,9 +2324,9 @@ bool spec_gleamoftheredeye( CHAR_DATA *ch )
 {
     AFFECT_DATA af;
 
-  if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected(ch, gsn_forget)
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected(ch, gsn_forget)
     || is_affected(ch, gsn_silencethesanemind))
-      return FALSE;
+        return FALSE;
 
     if (is_affected(ch, gsn_gleam))
         return FALSE;
@@ -2342,6 +2344,51 @@ bool spec_gleamoftheredeye( CHAR_DATA *ch )
     af.location  = APPLY_CS_MAN;
     af.bitvector = AFF_DARK_VISION;
     affect_to_char( ch, &af );
+    return TRUE;
+}
+
+bool spec_feralclaws( CHAR_DATA *ch )
+{
+    AFFECT_DATA af;
+    CHAR_DATA *victim;
+    CHAR_DATA *v_next;
+    int dicesuccess, damagesuccess;
+
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected(ch, gsn_forget)
+    || is_affected(ch, gsn_silencethesanemind))
+        return FALSE;
+
+    for ( victim = ch->in_room->people; victim != NULL; victim = v_next )
+    {
+        v_next = victim->next_in_room;
+        if (( victim->fighting == ch && number_bits( 2 ) == 0 )
+        &&  can_see(victim, ch) && can_see(ch, victim))
+            break;
+    }
+
+    if ( victim == NULL )
+        return FALSE;
+
+    if (is_affected(ch, gsn_claws))
+    {
+        dicesuccess = godice(get_attribute(ch, DEXTERITY) + ch->csabilities[CSABIL_BRAWL], 6);
+        if (dicesuccess <= 0)
+            return FALSE;
+        damagesuccess = godice(get_attribute(ch, STRENGTH) + 1, 6);
+        d10_damage(ch, victim, damagesuccess, ch->level, gsn_shred, DAM_SLASH, DEFENSE_FULL, TRUE, TRUE);
+        return TRUE;
+    }
+
+    act("Feral claws slide out from under $n's fingernails!",ch,NULL,ch,TO_NOTVICT);
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_claws;
+    af.level     = ch->level;
+    af.duration  = -1;
+    af.location  = APPLY_NONE;
+    af.modifier  = 0;
+    af.bitvector = 0;
+    affect_to_char( ch, &af );
+
     return TRUE;
 }
 

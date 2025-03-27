@@ -734,6 +734,8 @@ void one_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt )
     dt = TYPE_HIT;
     if ( wield != NULL && wield->item_type == ITEM_WEAPON )
         dt += wield->value[3];
+    else if (is_affected(ch, gsn_claws))
+        dt += 5;
     else
         dt += ch->dam_type;
 

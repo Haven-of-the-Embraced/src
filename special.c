@@ -1768,6 +1768,22 @@ bool spec_ventrue( CHAR_DATA *ch )
 }
 
 /* Discipline Specs */
+bool spec_animalism( CHAR_DATA *ch )
+{
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget )
+    || is_affected(ch, gsn_silencethesanemind))
+        return FALSE;
+
+    switch ( number_range( 0,2 ) )
+    {
+        case 0: return spec_feralspeech (ch);
+        case 1: return spec_noahscall (ch);
+        case 2: return spec_songofserenity (ch);
+    }
+
+    return FALSE;
+}
+
 bool spec_celerity( CHAR_DATA *ch )
 {
     CHAR_DATA *victim;

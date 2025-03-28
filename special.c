@@ -86,9 +86,9 @@ DECLARE_SPEC_FUN(   spec_salubri            );
 DECLARE_SPEC_FUN(   spec_toreador           );
 DECLARE_SPEC_FUN(   spec_tremere            );
 DECLARE_SPEC_FUN(   spec_tzimisce           );
-DECLARE_SPEC_FUN(   spec_ventrue            );
+DECLARE_SPEC_FUN(   spec_ventrue            ); */
 DECLARE_SPEC_FUN(   spec_animalism          );
-DECLARE_SPEC_FUN(   spec_auspex             ); */
+/* DECLARE_SPEC_FUN(   spec_auspex             ); */
 DECLARE_SPEC_FUN(   spec_celerity           );
 /* DECLARE_SPEC_FUN(   spec_chimerstry         );
 DECLARE_SPEC_FUN(   spec_daimoinon          );
@@ -108,6 +108,9 @@ DECLARE_SPEC_FUN(   spec_serpentis          );
 /* DECLARE_SPEC_FUN(   spec_thaum_regovitae    );
 DECLARE_SPEC_FUN(   spec_valeran            );
 DECLARE_SPEC_FUN(   spec_vicissitude        ); */
+DECLARE_SPEC_FUN(   spec_feralspeech        );
+DECLARE_SPEC_FUN(   spec_noahscall          );
+DECLARE_SPEC_FUN(   spec_songofserenity     );
 DECLARE_SPEC_FUN(   spec_command            );
 DECLARE_SPEC_FUN(   spec_mesmerize          );
 DECLARE_SPEC_FUN(   spec_forgetfulmind      );
@@ -179,8 +182,8 @@ const   struct  spec_type    spec_table[] =
     {   "spec_tzimisce",          spec_tzimisce         },
     {   "spec_ventrue",           spec_ventrue          },*/
 // Disciplines
-/*    {   "spec_animalism",         spec_animalism        },
-    {   "spec_auspex",            spec_auspex           },  */
+    {   "spec_animalism",         spec_animalism        },
+/*    {   "spec_auspex",            spec_auspex           },  */
     {   "spec_celerity",          spec_celerity         },
 /*    {   "spec_chimerstry",        spec_chimerstry       },
     {   "spec_daimoinon",         spec_daimoinon        },
@@ -202,6 +205,9 @@ const   struct  spec_type    spec_table[] =
     {   "spec_vicissitude",       spec_vicissitude      },
 */
 // Individual Discipline Powers
+    {   "spec_feralspeech",       spec_feralspeech      },
+    {   "spec_noahscall",         spec_noahscall        },
+    {   "spec_songofserenity",    spec_songofserenity   },
     {   "spec_command",           spec_command          },
     {   "spec_mesmerize",         spec_mesmerize        },
     {   "spec_forgetfulmind",     spec_forgetfulmind    },
@@ -1592,8 +1598,7 @@ bool spec_gangrel( CHAR_DATA *ch )
 
     switch ( number_range( 0,2 ) )
     {
-//        case 0: return spec_animalism (ch);
-        case 0:
+        case 0: return spec_animalism (ch);
         case 1: return spec_fortitude (ch);
         case 2: return spec_protean (ch);
     }
@@ -1976,6 +1981,22 @@ bool spec_serpentis( CHAR_DATA *ch )
       case 5: return spec_skinoftheadder (ch);
     }
 
+    return FALSE;
+}
+
+/*Animalism Specs */
+bool spec_feralspeech( CHAR_DATA *ch)
+{
+    return FALSE;
+}
+
+bool spec_noahscall( CHAR_DATA *ch)
+{
+    return FALSE;
+}
+
+bool spec_songofserenity( CHAR_DATA *ch)
+{
     return FALSE;
 }
 

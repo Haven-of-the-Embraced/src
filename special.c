@@ -118,6 +118,7 @@ DECLARE_SPEC_FUN(   spec_awe                );
 DECLARE_SPEC_FUN(   spec_dreadgaze          );
 DECLARE_SPEC_FUN(   spec_gleamoftheredeye   );
 DECLARE_SPEC_FUN(   spec_feralclaws         );
+DECLARE_SPEC_FUN(   spec_earthmeld          );
 DECLARE_SPEC_FUN(   spec_eyesoftheserpent   );
 DECLARE_SPEC_FUN(   spec_tongueoftheasp     );
 DECLARE_SPEC_FUN(   spec_skinoftheadder     );
@@ -211,6 +212,7 @@ const   struct  spec_type    spec_table[] =
     {   "spec_dreadgaze",         spec_dreadgaze        },
     {   "spec_gleamoftheredeye",  spec_gleamoftheredeye },
     {   "spec_feralclaws",        spec_feralclaws       },
+    {   "spec_earthmeld",         spec_earthmeld        },
     {   "spec_eyesoftheserpent",  spec_eyesoftheserpent },
     {   "spec_tongueoftheasp",    spec_tongueoftheasp   },
     {   "spec_skinoftheadder",    spec_skinoftheadder   },
@@ -2389,6 +2391,32 @@ bool spec_feralclaws( CHAR_DATA *ch )
     af.bitvector = 0;
     affect_to_char( ch, &af );
 
+    return TRUE;
+}
+
+bool spec_earthmeld( CHAR_DATA *ch )
+{
+    AFFECT_DATA af;
+    CHAR_DATA *rch;
+
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected(ch, gsn_forget)
+    || is_affected(ch, gsn_silencethesanemind) || is_affected(ch, gsn_earthmeld))
+        return FALSE;
+
+    act("$n quickly sinks into the earth, disappearing completely!",ch,NULL,ch,TO_NOTVICT);
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_earthmeld;
+    af.level     = ch->level;
+    af.duration  = 0;
+    af.location  = APPLY_NONE;
+    af.modifier  = 0;
+    af.bitvector = 0;
+    affect_to_char( ch, &af );
+
+    stop_fighting(ch, TRUE);
+    for ( rch = ch->in_room->people; rch != NULL; rch = rch->next_in_room )
+        if ( rch->fighting == ch )
+            stop_fighting( rch, TRUE );
     return TRUE;
 }
 

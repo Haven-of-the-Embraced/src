@@ -266,6 +266,8 @@ void show_char_to_char_0( CHAR_DATA *victim, CHAR_DATA *ch )
 
     buf[0] = '\0';
 
+    if (IS_IMMORTAL(ch) && is_affected(victim, gsn_earthmeld))
+        strcat(buf, "{y[{gInterred{y> ");
     if (IS_SET(victim->comm,COMM_AFK )) strcat( buf, "{x[{RAFK{x]{y ");
     if ( victim->invis_level >= LEVEL_HERO ) strcat( buf, "{x(Wizi){y ");
     if (IS_NPC(victim) && IS_SET(victim->act, ACT_QUESTMOB) && IS_IMMORTAL(ch))

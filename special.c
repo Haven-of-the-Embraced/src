@@ -76,8 +76,8 @@ DECLARE_SPEC_FUN(   spec_baali              ); */
 DECLARE_SPEC_FUN(   spec_brujah             );
 /* DECLARE_SPEC_FUN(   spec_cappadocian        );*/
 DECLARE_SPEC_FUN(   spec_followersofset     );
-/*DECLARE_SPEC_FUN(   spec_gangrel            );
-DECLARE_SPEC_FUN(   spec_gargoyle           );*/
+DECLARE_SPEC_FUN(   spec_gangrel            );
+/* DECLARE_SPEC_FUN(   spec_gargoyle           );*/
 DECLARE_SPEC_FUN(   spec_lasombra           );
 /* DECLARE_SPEC_FUN(   spec_malkavian          );
 DECLARE_SPEC_FUN(   spec_nosferatu          );
@@ -94,16 +94,16 @@ DECLARE_SPEC_FUN(   spec_celerity           );
 DECLARE_SPEC_FUN(   spec_daimoinon          );
 DECLARE_SPEC_FUN(   spec_dementation        ); */
 DECLARE_SPEC_FUN(   spec_dominate           );
-/* DECLARE_SPEC_FUN(   spec_flight             );
+/* DECLARE_SPEC_FUN(   spec_flight             ); */
 DECLARE_SPEC_FUN(   spec_fortitude          );
-DECLARE_SPEC_FUN(   spec_mortis             );
+/* DECLARE_SPEC_FUN(   spec_mortis             );
 DECLARE_SPEC_FUN(   spec_obeah              );
 DECLARE_SPEC_FUN(   spec_obfuscate          ); */
 DECLARE_SPEC_FUN(   spec_obtenebration      );
 DECLARE_SPEC_FUN(   spec_potence            );
 DECLARE_SPEC_FUN(   spec_presence           );
-/* DECLARE_SPEC_FUN(   spec_protean            );
-DECLARE_SPEC_FUN(   spec_quietus            ); */
+DECLARE_SPEC_FUN(   spec_protean            );
+/* DECLARE_SPEC_FUN(   spec_quietus            ); */
 DECLARE_SPEC_FUN(   spec_serpentis          );
 /* DECLARE_SPEC_FUN(   spec_thaum_regovitae    );
 DECLARE_SPEC_FUN(   spec_valeran            );
@@ -167,8 +167,8 @@ const   struct  spec_type    spec_table[] =
     {   "spec_brujah",            spec_brujah           },
 /*    {   "spec_cappadocian",       spec_cappadocian      },*/
     {   "spec_followersofset",    spec_followersofset   },
-/*    {   "spec_gangrel",           spec_gangrel          },
-    {   "spec_gargoyle",          spec_gargoyle         },*/
+    {   "spec_gangrel",           spec_gangrel          },
+/*    {   "spec_gargoyle",          spec_gargoyle         },*/
     {   "spec_lasombra",          spec_lasombra         },
 /*    {   "spec_malkavian",         spec_malkavian        },
     {   "spec_nosferatu",         spec_nosferatu        },
@@ -186,16 +186,16 @@ const   struct  spec_type    spec_table[] =
     {   "spec_daimoinon",         spec_daimoinon        },
     {   "spec_dementation",       spec_dementation      }, */
     {   "spec_dominate",          spec_dominate         },
-/*    {   "spec_flight",            spec_flight           },
+/*    {   "spec_flight",            spec_flight           }, */
     {   "spec_fortitude",         spec_fortitude        },
-    {   "spec_mortis",            spec_mortis           },
+/*    {   "spec_mortis",            spec_mortis           },
     {   "spec_obeah",             spec_obeah            },
     {   "spec_obfuscate",         spec_obfuscate        },*/
     {   "spec_obtenebration",     spec_obtenebration    },
     {   "spec_potence",           spec_potence          },
     {   "spec_presence",          spec_presence          },
-/*    {   "spec_protean",           spec_protean          },
-    {   "spec_quietus",           spec_quietus          },*/
+    {   "spec_protean",           spec_protean          },
+/*    {   "spec_quietus",           spec_quietus          },*/
     {   "spec_serpentis",         spec_serpentis        },
 /*    {   "spec_thaum_regovitae",   spec_thaum_regovitae  },
     {   "spec_valeran",           spec_valeran          },
@@ -1589,6 +1589,8 @@ bool spec_gangrel( CHAR_DATA *ch )
           case 2: return spec_protean (ch);
           }
     */
+
+    return spec_protean (ch);
     return FALSE;
 }
 
@@ -1887,6 +1889,23 @@ bool spec_presence( CHAR_DATA *ch )
     case 0:
     case 1: return spec_awe (ch);
     case 2: return spec_dreadgaze (ch);
+    }
+
+    return FALSE;
+}
+
+bool spec_protean( CHAR_DATA *ch )
+{
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget )
+        || is_affected(ch, gsn_silencethesanemind))
+    return FALSE;
+
+    switch ( number_range( 0,3 ) )
+    {
+        case 0: return spec_gleamoftheredeye (ch);
+        case 1:
+        case 2: return spec_feralclaws (ch);
+        case 3: return spec_earthmeld (ch);
     }
 
     return FALSE;

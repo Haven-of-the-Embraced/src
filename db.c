@@ -4820,6 +4820,7 @@ sh_int          gsn_fourth_attack;
 sh_int          gsn_knight_training;
 
 /*Spells*/
+sh_int          gsn_armor;
 sh_int          gsn_blindness;
 sh_int          gsn_charm_person;
 sh_int          gsn_curse;

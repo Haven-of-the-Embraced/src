@@ -1271,7 +1271,7 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
 
     { "armor", {  7,  2, 10, 5, 102, 102, 102, 102, 102, 102, 11, 20, 10},
     { 1,  1,  2,  2 , 1, 1, 1, 1, 1, 1, 2, 2, 2}, spell_armor, TAR_CHAR_DEFENSIVE, POS_STANDING,
-    NULL,           SLOT( 1),    5, 12,    "",         "You feel less armored.",   ""    },
+    &gsn_armor,           SLOT( 1),    5, 12,    "",         "You feel less armored.",   ""    },
 
     { "bless", { 102,  7, 102, 8, 102, 102, 102, 102, 102, 102, 68, 102, 102 },
     { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 2, 2, 2}, spell_bless, TAR_OBJ_CHAR_DEF,   POS_STANDING,

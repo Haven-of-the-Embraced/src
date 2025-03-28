@@ -2932,6 +2932,7 @@ extern  sh_int  gsn_third_attack;
 extern  sh_int  gsn_fourth_attack;
 extern  sh_int  gsn_knight_training;
 /*Spells*/
+extern  sh_int  gsn_armor;
 extern  sh_int  gsn_blindness;
 extern  sh_int  gsn_charm_person;
 extern  sh_int  gsn_curse;

@@ -1807,6 +1807,37 @@ bool spec_dominate( CHAR_DATA *ch )
     return FALSE;
 }
 
+bool spec_fortitude( CHAR_DATA *ch )
+{
+    AFFECT_DATA af;
+
+    if (ch->position != POS_FIGHTING || is_affected(ch, gsn_armor))
+        return FALSE;
+
+    act("You take the brunt of damage directed to you.", ch, NULL, NULL, TO_CHAR);
+    act("$n shrugs off blows that would cripple normal beings.", ch, NULL, NULL, TO_NOTVICT);
+
+    af.where     = TO_RESIST;
+    af.type      = gsn_armor;
+    af.level     = ch->level;
+    af.duration  = 0;
+    af.location  = 0;
+    af.modifier  = 0;
+    af.bitvector = RES_FIRE;
+    affect_to_char( ch, &af );
+
+    af.bitvector = RES_SUNLIGHT;
+    affect_to_char( ch, &af );
+
+    af.where     = TO_AFFECTS;
+    af.location  = APPLY_AC;
+    af.modifier  = ch->level * 3;
+    af.bitvector = 0;
+    affect_to_char( ch, &af );
+
+    return TRUE;
+}
+
 bool spec_obtenebration( CHAR_DATA *ch )
 {
     if ( ch->position != POS_FIGHTING || ch->stopped > 0)

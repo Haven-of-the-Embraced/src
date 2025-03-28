@@ -974,6 +974,10 @@ void char_update( void )
               send_to_char( skill_table[paf->type].msg_off, ch );
               send_to_char( "\n\r", ch );
             }
+
+            if (paf->type == gsn_earthmeld)
+                act("$n rises from the ground, showering dirt everywhere.", ch, NULL, NULL, TO_NOTVICT);
+
             if (paf->type == gsn_gift_lambentfire)
             {
               act("The shining silver light surrounding $n dims, and fades away.", ch, NULL, NULL, TO_NOTVICT);

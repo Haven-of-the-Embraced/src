@@ -1590,7 +1590,14 @@ bool spec_gangrel( CHAR_DATA *ch )
           }
     */
 
-    return spec_protean (ch);
+    switch ( number_range( 0,2 ) )
+    {
+//        case 0: return spec_animalism (ch);
+        case 0:
+        case 1: return spec_fortitude (ch);
+        case 2: return spec_protean (ch);
+    }
+
     return FALSE;
 }
 

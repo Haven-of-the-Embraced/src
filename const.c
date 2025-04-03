@@ -2085,7 +2085,10 @@ Total (3) */
 
 //  ***Disciplines***
 //    --Animalism--
-// Total (0)
+// Total (1)
+    { "feral whispers",       {  102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+    &gsn_feralwhispers,            SLOT(0),     0, 12, "animal minion assault",         "",    "" },
 
 //    --Auspex--
 // Total (4)

@@ -1040,6 +1040,7 @@ struct  kill_data
 #define ABIL_SURVIVALIST    (J)
 #define ABIL_HERMIT         (K)
 #define ABIL_ENTERTAINER    (L)
+#define ABIL_BEASTMASTER    (M)
 
 /* damage classes */
 #define DAM_NONE                0

@@ -2003,6 +2003,32 @@ bool spec_serpentis( CHAR_DATA *ch )
 /*Animalism Specs */
 bool spec_feralspeech( CHAR_DATA *ch)
 {
+    CHAR_DATA *victim;
+    CHAR_DATA *v_next;
+    int success;
+
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected(ch, gsn_forget)
+        || is_affected(ch, gsn_silencethesanemind))
+        return FALSE;
+    if (room_is_silent( ch, ch->in_room ))
+        return FALSE;
+
+    for ( victim = ch->in_room->people; victim != NULL; victim = v_next )
+    {
+        v_next = victim->next_in_room;
+        if (( victim->fighting == ch && number_bits( 2 ) == 0 )
+        && can_see(ch, victim))
+            break;
+    }
+
+    if ( victim == NULL )
+        return FALSE;
+
+    success = godice(get_attribute(ch, MANIPULATION) + get_ability(ch, CSABIL_ANIMAL_KEN), 6);
+
+    if (success <= 0)
+      return FALSE;
+
     return FALSE;
 }
 

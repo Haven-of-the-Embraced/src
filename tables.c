@@ -230,6 +230,7 @@ const struct flag_type abil_flags[] =
 	{"survivalist",	J, TRUE  },
 	{"hermit",	K, TRUE  },
 	{"entertainer",	L, TRUE  },
+    {"beastmaster", M, TRUE  },
 	{NULL,				0,	FALSE 	}
 };
 

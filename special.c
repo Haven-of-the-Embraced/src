@@ -2056,14 +2056,21 @@ bool spec_noahscall( CHAR_DATA *ch)
     if (success <= 0)
         return FALSE;
 
+    if (get_char_room( ch, NULL, "noahscallrats" ))
+        return FALSE;
+
     act("Chittering excitedly, $n calls forth a swarm of rats.", ch, NULL, NULL, TO_NOTVICT);
     mob = create_mobile( pMobIndex );
     char_to_room( mob, ch->in_room );
     mob->level = ch->level;
-    mob->max_hit = ch->max_hit / 3;
-    mob->hitroll = ch->hitroll / 2;
-    mob->damroll = ch->damroll / 3;
+    mob->max_hit = ch->max_hit;
+    mob->hitroll = ch->hitroll;
+    mob->damroll = ch->damroll;
     mob->hit = mob->max_hit;
+    mob->ac[AC_PIERCE] = ch->ac[AC_PIERCE];
+    mob->ac[AC_BASH] = ch->ac[AC_BASH];
+    mob->ac[AC_SLASH] = ch->ac[AC_SLASH];
+    mob->ac[AC_EXOTIC] = ch->ac[AC_EXOTIC];
     mob->short_descr = str_dup("a swarm of rats");
     mob->long_descr = str_dup("A swarm of rats scurries about, looking for food.\n\r");
     mob->name = str_dup("swarm rats noahscallrats");

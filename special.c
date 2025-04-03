@@ -2039,7 +2039,42 @@ bool spec_feralspeech( CHAR_DATA *ch)
 
 bool spec_noahscall( CHAR_DATA *ch)
 {
-    return FALSE;
+    MOB_INDEX_DATA *pMobIndex;
+    CHAR_DATA *mob;
+    int success;
+
+    pMobIndex = get_mob_index(MOB_VNUM_HORDE_RATS);
+
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected(ch, gsn_forget)
+        || is_affected(ch, gsn_silencethesanemind))
+        return FALSE;
+    if (room_is_silent( ch, ch->in_room ))
+        return FALSE;
+
+    success = godice(get_attribute(ch, CHARISMA) + get_ability(ch, CSABIL_SURVIVAL), 6);
+
+    if (success <= 0)
+        return FALSE;
+
+    act("Chittering excitedly, $n calls forth a swarm of rats.", ch, NULL, NULL, TO_NOTVICT);
+    mob = create_mobile( pMobIndex );
+    char_to_room( mob, ch->in_room );
+    mob->level = ch->level;
+    mob->max_hit = ch->max_hit / 3;
+    mob->hitroll = ch->hitroll / 2;
+    mob->damroll = ch->damroll / 3;
+    mob->hit = mob->max_hit;
+    mob->short_descr = str_dup("a swarm of rats");
+    mob->long_descr = str_dup("A swarm of rats scurries about, looking for food.\n\r");
+    mob->name = str_dup("swarm rats noahscallrats");
+
+    if (success > 1)
+        SET_BIT(mob->off_flags, OFF_SECOND_ATTACK);
+    if (success > 3)
+        SET_BIT(mob->off_flags, OFF_THIRD_ATTACK);
+    SET_BIT(mob->act, ACT_AGGRESSIVE);
+
+    return TRUE;
 }
 
 bool spec_songofserenity( CHAR_DATA *ch)

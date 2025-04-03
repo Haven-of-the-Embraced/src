@@ -4918,7 +4918,7 @@ sh_int          gsn_cauldron;
 sh_int          gsn_armsoftheabyss;
 sh_int          gsn_awe;
 sh_int          gsn_claws;
-sh_int          gsn_feralwhispers;
+sh_int          gsn_feralspeech;
 sh_int          gsn_celbuff;
 sh_int          gsn_incubuspassion;
 sh_int          gsn_hauntthesoul;

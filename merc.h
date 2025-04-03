@@ -3002,7 +3002,7 @@ extern sh_int  gsn_wands;
 extern sh_int  gsn_recall;
 extern sh_int  gsn_riding;
 extern sh_int  gsn_claws;
-extern sh_int  gsn_feralwhispers;
+extern sh_int  gsn_feralspeech;
 extern sh_int  gsn_celbuff;
 extern sh_int  gsn_incubuspassion;
 extern sh_int  gsn_hauntthesoul;

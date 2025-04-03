@@ -2678,6 +2678,14 @@ void mob_charsheet (CHAR_DATA *mob, MOB_INDEX_DATA *pMobIndex)
     	mob->csabilities[CSABIL_COMMERCE] += 2;
     }
 
+    if (IS_ABILFLAGGED(pMobIndex, ABIL_BEASTMASTER))
+    {
+        mob->csabilities[CSABIL_ALERTNESS] += 2;
+        mob->csabilities[CSABIL_ANIMAL_KEN] += 4;
+        mob->csabilities[CSABIL_RIDING] += 4;
+        mob->csabilities[CSABIL_SURVIVAL] += 2;
+    }
+
     for (i = 0; i < 30; i++)
         if (mob->csabilities[i] > 5)
             mob->csabilities[i] = 5;

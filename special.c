@@ -2005,7 +2005,7 @@ bool spec_feralspeech( CHAR_DATA *ch)
 {
     CHAR_DATA *victim;
     CHAR_DATA *v_next;
-    int success;
+    int success, damagesuccess;
 
     if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected(ch, gsn_forget)
         || is_affected(ch, gsn_silencethesanemind))
@@ -2027,9 +2027,14 @@ bool spec_feralspeech( CHAR_DATA *ch)
     success = godice(get_attribute(ch, MANIPULATION) + get_ability(ch, CSABIL_ANIMAL_KEN), 6);
 
     if (success <= 0)
-      return FALSE;
+        return FALSE;
 
-    return FALSE;
+    act("A large rat appears from behind you, biting your ankle!", ch, NULL, victim, TO_VICT);
+    act("A large rat bites $N on the ankle, then scurries away!", ch, NULL, victim, TO_NOTVICT);
+    damagesuccess = godice(success + 1, 6);
+    d10_damage(ch, victim, damagesuccess, ch->level, gsn_feralspeech, DAM_PIERCE, DEFENSE_FULL, TRUE, TRUE);
+
+    return TRUE;
 }
 
 bool spec_noahscall( CHAR_DATA *ch)

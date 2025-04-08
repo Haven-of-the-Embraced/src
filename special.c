@@ -85,8 +85,8 @@ DECLARE_SPEC_FUN(   spec_ravnos             );
 DECLARE_SPEC_FUN(   spec_salubri            );
 DECLARE_SPEC_FUN(   spec_toreador           );
 DECLARE_SPEC_FUN(   spec_tremere            );
-DECLARE_SPEC_FUN(   spec_tzimisce           );
-DECLARE_SPEC_FUN(   spec_ventrue            ); */
+DECLARE_SPEC_FUN(   spec_tzimisce           ); */
+DECLARE_SPEC_FUN(   spec_ventrue            );
 DECLARE_SPEC_FUN(   spec_animalism          );
 /* DECLARE_SPEC_FUN(   spec_auspex             ); */
 DECLARE_SPEC_FUN(   spec_celerity           );
@@ -179,8 +179,8 @@ const   struct  spec_type    spec_table[] =
     {   "spec_salubri",           spec_salubri          },
     {   "spec_toreador",          spec_toreador         },
     {   "spec_tremere",           spec_tremere          },
-    {   "spec_tzimisce",          spec_tzimisce         },
-    {   "spec_ventrue",           spec_ventrue          },*/
+    {   "spec_tzimisce",          spec_tzimisce         },*/
+    {   "spec_ventrue",           spec_ventrue          },
 // Disciplines
     {   "spec_animalism",         spec_animalism        },
 /*    {   "spec_auspex",            spec_auspex           },  */
@@ -1756,14 +1756,14 @@ bool spec_ventrue( CHAR_DATA *ch )
     if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected( ch, gsn_forget )
         || is_affected(ch, gsn_silencethesanemind))
     return FALSE;
-    /*
-          switch ( number_range( 0,2 ) )
-          {
-          case 0: return spec_dominate (ch);
-          case 1: return spec_fortitude (ch);
-          case 2: return spec_presence (ch);
-          }
-    */
+
+    switch ( number_range( 0,2 ) )
+    {
+        case 0: return spec_dominate (ch);
+        case 1: return spec_fortitude (ch);
+        case 2: return spec_presence (ch);
+    }
+
     return FALSE;
 }
 

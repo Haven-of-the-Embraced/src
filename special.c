@@ -2067,10 +2067,10 @@ bool spec_noahscall( CHAR_DATA *ch)
     mob->hitroll = ch->hitroll;
     mob->damroll = ch->damroll;
     mob->hit = mob->max_hit;
-    mob->ac[AC_PIERCE] = ch->ac[AC_PIERCE];
-    mob->ac[AC_BASH] = ch->ac[AC_BASH];
-    mob->ac[AC_SLASH] = ch->ac[AC_SLASH];
-    mob->ac[AC_EXOTIC] = ch->ac[AC_EXOTIC];
+    mob->armor[AC_PIERCE] = 90 - (mob->level * 10);
+    mob->armor[AC_BASH] = 90 - (mob->level * 10);
+    mob->armor[AC_SLASH] = 90 - (mob->level * 10);
+    mob->armor[AC_EXOTIC] = 100 - (mob->level * 5);
     mob->short_descr = str_dup("a swarm of rats");
     mob->long_descr = str_dup("A swarm of rats scurries about, looking for food.\n\r");
     mob->name = str_dup("swarm rats noahscallrats");
@@ -2086,7 +2086,50 @@ bool spec_noahscall( CHAR_DATA *ch)
 
 bool spec_songofserenity( CHAR_DATA *ch)
 {
-    return FALSE;
+    int success;
+    CHAR_DATA *victim;
+    CHAR_DATA *v_next;
+    AFFECT_DATA af;
+
+    if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected(ch, gsn_forget)
+        || is_affected(ch, gsn_silencethesanemind))
+        return FALSE;
+    if (room_is_silent( ch, ch->in_room ))
+        return FALSE;
+
+    success = godice(get_attribute(ch, MANIPULATION) + get_ability(ch, CSABIL_EMPATHY), 7);
+
+    if (success <= 0)
+        return FALSE;
+
+    for ( victim = ch->in_room->people; victim != NULL; victim = v_next )
+    {
+        v_next = victim->next_in_room;
+        if (( victim->fighting == ch && number_bits( 2 ) == 0 )
+        && !is_affected(victim, gsn_deafened) && can_see(victim, ch) && can_see(ch, victim))
+            break;
+    }
+
+    if ( victim == NULL )
+        return FALSE;
+
+    if (IS_AFFECTED(victim, AFF_CALM))
+        return FALSE;
+
+    act("You reach out to $n's Beast, coaxing it into submission.", ch, NULL, victim, TO_CHAR);
+    act("You feel your anger and determination both slip away.", ch, NULL, victim, TO_VICT);
+    act("$N seems to relax, almost becoming complacent.", ch, NULL, victim, TO_NOTVICT);
+
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_songofserenity;
+    af.level     = success;
+    af.duration  = 1;
+    af.location  = APPLY_HITROLL;
+    af.modifier  = success * ch->level * 2;
+    af.bitvector = AFF_CALM;
+    affect_to_char( victim, &af );
+
+    return TRUE;
 }
 
 /* Dominate Specs */

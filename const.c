@@ -1255,8 +1255,8 @@ void cskill_update(CHAR_DATA *ch, bool show)
 
 const   struct  skill_type  skill_table [MAX_SKILL] =
 {
-// TOTAL SKILLS AS OF 3/9/25 =  452
-// MAX_SKILL INCREASED TO 452 3/9/25
+// TOTAL SKILLS AS OF 4/4/25 =  454
+// MAX_SKILL INCREASED TO 457 4/4/25
 /*
  * Magic spells.  Total (108)
  */
@@ -2085,10 +2085,14 @@ Total (3) */
 
 //  ***Disciplines***
 //    --Animalism--
-// Total (1)
+// Total (2)
     { "feral speech",       {  102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
     &gsn_feralspeech,            SLOT(0),     0, 12, "animal minion assault",         "",    "" },
+
+    { "song of serenity",   {  102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+    &gsn_songofserenity,            SLOT(0),     0, 12, "",         "",    "" },
 
 //    --Auspex--
 // Total (4)

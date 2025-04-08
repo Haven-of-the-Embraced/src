@@ -2125,7 +2125,7 @@ bool spec_songofserenity( CHAR_DATA *ch)
     af.level     = success;
     af.duration  = 1;
     af.location  = APPLY_HITROLL;
-    af.modifier  = success * ch->level * 2;
+    af.modifier  = -success * ch->level * 2;
     af.bitvector = AFF_CALM;
     affect_to_char( victim, &af );
 

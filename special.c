@@ -1906,13 +1906,13 @@ bool spec_potence( CHAR_DATA *ch )
     if ( victim == NULL )
         return FALSE;
 
-    act( "$n roars and winds up for a massive roundhouse punch!", ch, NULL, victim, TO_ROOM );
+    act( "$n roars and winds up for a massive jab!", ch, NULL, victim, TO_ROOM );
 
     successes = godice(get_attribute(ch, DEXTERITY) + get_ability(ch, CSABIL_BRAWL), 6);
     if (successes <= 0)
     {
-      act("$n's swing goes wide, missing you!", ch, NULL, victim, TO_VICT);
-      act("$n's swing misses $N by a wide margin!", ch, NULL, victim, TO_NOTVICT);
+      act("$n's punch goes wide, missing you!", ch, NULL, victim, TO_VICT);
+      act("$n's punch misses $N by a wide margin!", ch, NULL, victim, TO_NOTVICT);
       return FALSE;
     }
     potence = ch->level / 12;
@@ -1923,10 +1923,8 @@ bool spec_potence( CHAR_DATA *ch )
 
     act("With a resounding crack, $n's punch collides into your chest cavity!", ch, NULL, victim, TO_VICT);
     act("With a loud crack, $n punches $N directly in the chest!", ch, NULL, victim, TO_NOTVICT);
-/*  -- D10 damage calculations removed until d10 for mobs fixed and calculated correctly
-    d10_damage(ch, victim, damagesuccess, damagemod*4 , gsn_hand_to_hand, DAM_BASH, DEFENSE_ARMOR, TRUE, TRUE);
-*/
-    damage(ch, victim, damagemod * damagesuccess, gsn_hand_to_hand, DAM_BASH, TRUE);
+    d10_damage(ch, victim, damagesuccess, damagemod * 2, gsn_hand_to_hand, DAM_BASH, DEFENSE_ARMOR, TRUE, TRUE);
+
     DAZE_STATE(victim, 3*PULSE_VIOLENCE);
     victim->stopped += 1 + successes;
 

@@ -1693,8 +1693,43 @@ void spell_gift_motherstouch( int sn, int level, CHAR_DATA *ch, void *vo, int ta
 //any
 //int + enigmas roll diff by storyteller to puzzle out riddles from spirits
 //the garou gains an intuitive understanding of the language of spirits
-void spell_gift_spiritspeech( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_spiritspeech( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  AFFECT_DATA af;
+  int success;
+
+  if (is_affected(ch, sn))
+  {
+    sendch("You already understand the language of spirits.\n\r", ch);
     return;
+  }
+
+  if (ch->pcdata->gnosis[TEMP] < 1)
+  {
+    send_to_char("You do not possess the spiritual reserves to activate this gift.\n\r", ch);
+    return;
+  }
+
+  if (ch->move <= ch->level + 10)
+  {
+    send_to_char("You are too tired to try and understand spirits' languages.\n\r", ch);
+    return;
+  }
+
+  success = godice(get_attribute(ch, CSATTRIB_INTELLIGENCE) + get_ability(ch, CSABIL_ENIGMAS), 6);
+  ch->move -= ch->level + 10;
+
+  af.where     = TO_AFFECTS;
+  af.type      = sn;
+  af.level     = ch->level;
+  af.modifier  = 0;
+  af.location  = APPLY_NONE;
+  af.bitvector = 0;
+  af.duration  = 50 + (success * 5);
+  affect_to_char( ch, &af );
+  send_to_char( "You feel light and sure-footed, as if you could pass any terrain with ease.\n\r", ch );
+  act("$n seems lighter and more sure-footed.",ch,NULL,ch,TO_NOTVICT);
+  return;
 }
 //
 //Rank Two

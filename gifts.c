@@ -1464,37 +1464,38 @@ void spell_gift_scentofrunningwater( int sn, int level, CHAR_DATA *ch, void *vo,
 //Roll:None
 //The deep snows of winter in much of Europe bring privation at best and starvation at worst to the unprepared and snowbound. This gift allows the garou to travel with ease across the surface of ice and snow. (Halve movement costs based on terrain. lasts a day)
 //Cost: 1 gnosis
-void spell_gift_snowrunning( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-        AFFECT_DATA af;
-        int success;
+void spell_gift_snowrunning( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  AFFECT_DATA af;
+  int success;
 
-        if (is_affected(ch, sn))
-        {
-        sendch("You are already able to travel any terrain with ease.\n\r", ch);
-        return;
-        }
-        if (ch->pcdata->gnosis[TEMP] < 1)
-        {
-            send_to_char("You do not possess the spiritual reserves to activate this gift.\n\r", ch);
-        }
+  if (is_affected(ch, sn))
+  {
+    sendch("You are already able to travel any terrain with ease.\n\r", ch);
+    return;
+  }
+  if (ch->pcdata->gnosis[TEMP] < 1)
+  {
+    send_to_char("You do not possess the spiritual reserves to activate this gift.\n\r", ch);
+    return;
+  }
 
-        success = godice(ch->pcdata->gnosis[PERM], 6);
+  success = godice(ch->pcdata->gnosis[PERM], 6);
+  ch->pcdata->gnosis[TEMP]--;
 
-        ch->pcdata->gnosis[TEMP]--;
-        af.where     = TO_AFFECTS;
-        af.type      = sn;
-        af.level     = ch->level;
-        af.modifier  = 0;
-        af.location  = APPLY_NONE;
-        af.bitvector    = 0;
-        af.duration  = 24 + (success * 3);
-        affect_to_char( ch, &af );
-        send_to_char( "You feel light and sure-footed, like you could pass any terrain with ease.\n\r", ch );
-        act("$n seems lighter and more sure-footed.",ch,NULL,ch,TO_NOTVICT);
+  af.where     = TO_AFFECTS;
+  af.type      = sn;
+  af.level     = ch->level;
+  af.modifier  = 0;
+  af.location  = APPLY_NONE;
+  af.bitvector = 0;
+  af.duration  = 50 + (success * 5);
+  affect_to_char( ch, &af );
+  send_to_char( "You feel light and sure-footed, as if you could pass any terrain with ease.\n\r", ch );
+  act("$n seems lighter and more sure-footed.",ch,NULL,ch,TO_NOTVICT);
 
-        gain_exp(ch, success * 2);
-
-        return;
+  gain_exp(ch, success * 2);
+  return;
 }
 //
 //Rank 2

@@ -1719,6 +1719,20 @@ void spell_gift_spiritspeech( int sn, int level, CHAR_DATA *ch, void *vo, int ta
   success = godice(get_attribute(ch, CSATTRIB_INTELLIGENCE) + get_ability(ch, CSABIL_ENIGMAS), 6);
   ch->move -= ch->level + 10;
 
+  if (success < 0)
+  {
+    send_to_char("Trying to understand the nuances of spirits is mentally and spiritually taxxing.\n\r", ch);
+    ch->pcdata->gnosis[TEMP]--;
+    return;
+  }
+
+  if (success == 0)
+  {
+    send_to_char("Spirits you encounter lately seem to be beyond your language abilities.\n\r", ch);
+    WAIT_STATE(ch, 6);
+    return;
+  }
+
   af.where     = TO_AFFECTS;
   af.type      = sn;
   af.level     = ch->level;
@@ -1727,8 +1741,7 @@ void spell_gift_spiritspeech( int sn, int level, CHAR_DATA *ch, void *vo, int ta
   af.bitvector = 0;
   af.duration  = 50 + (success * 5);
   affect_to_char( ch, &af );
-  send_to_char( "You feel light and sure-footed, as if you could pass any terrain with ease.\n\r", ch );
-  act("$n seems lighter and more sure-footed.",ch,NULL,ch,TO_NOTVICT);
+  send_to_char( "The spirits lend you aid in understanding their speech and mannerisms.\n\r", ch );
   return;
 }
 //

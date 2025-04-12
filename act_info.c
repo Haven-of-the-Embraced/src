@@ -3402,6 +3402,19 @@ void do_consider( CHAR_DATA *ch, char *argument )
         send_to_char( buf, ch );
     }
 
+    if (is_affected(ch, gsn_gift_spiritspeech) && 
+        (victim->race == race_lookup("spirit") || ch->race == race_lookup("elemental")))
+    {
+        send_to_char("{M|-------------------------( ( {mSpirit Speech{M  ) )-------------------------|{x \n\r", ch);
+        sprintf( buf, " {mAfter quick conversation, %s lets slip that %s has an irrational fear of\n\r  [{Y%s{m],\n\r",
+            victim->sex == SEX_MALE ? "he" : victim->sex == SEX_FEMALE ? "she" : "it", 
+            victim->sex == SEX_MALE ? "he" : victim->sex == SEX_FEMALE ? "she" : "it", 
+            imm_bit_name(victim->vuln_flags));
+        send_to_char( buf, ch );
+        sprintf( buf, " {mat the same time being completely unfazed by\n\r  [{Y%s{m].{x\n\r", imm_bit_name(victim->imm_flags));
+        send_to_char( buf, ch );
+    }
+
     send_to_char("--------------------------( ( ( ---------- ) ) )-------------------------- \n\r", ch);
 
     return;

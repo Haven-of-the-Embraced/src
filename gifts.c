@@ -1752,8 +1752,166 @@ void spell_gift_spiritspeech( int sn, int level, CHAR_DATA *ch, void *vo, int ta
 //1 wp
 //char + leadership (diff spirit gnosis)
 //gives commands to spirits, botch makes the spirit attack the garou
-void spell_gift_commandspirit( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_commandspirit( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  AFFECT_DATA af;
+  char arg[MAX_INPUT_LENGTH];
+  CHAR_DATA *gch;
+  CHAR_DATA *victim = (CHAR_DATA *) vo;
+  int group_members = 0;
+
+  argument = one_argument( argument, arg );
+
+  if ( ( victim = get_char_room( ch, NULL, arg ) ) == NULL )
+  {
+    send_to_char( "Nobody here by that name.\n\r", ch );
     return;
+  }
+
+  if (victim->race != race_lookup("spirit") && victim->race != race_lookup("elemental"))
+  {
+    send_to_char("This Gift only allows you to speak with spirits or elementals.\n\r", ch);
+    return;
+  }
+
+  if (is_affected(ch, gsn_laryngitis))
+  {
+    send_to_char("Your throat is still too swollen to request assistance.\n\r", ch);
+    return;
+  }
+
+  if(ch->pet != NULL)
+  {
+    send_to_char( "You cannot command that many creatures at once!\n\r",ch );
+    return;
+  }
+
+  if (ch->cswillpower <= 1)
+  {
+    send_to_char("You do not have the force of Willpower to command such a Gift.\n\r", ch);
+    return;
+  }
+
+  if (room_is_silent( ch, ch->in_room ))
+  {
+    send_to_char("Try as you might, no sound emerges from your lips.\n\r",ch);
+    return;
+  }
+
+  for (gch = char_list; gch != NULL; gch = gch->next)
+  {
+    if (is_same_group(gch, ch) && gch != ch)
+      group_members++;
+  }
+
+  if (group_members + 1 > (ch->csabilities[CSABIL_LEADERSHIP]*2)+1)
+  {
+    send_to_char("You are already leading around as much of an entourage as you can manage.\n\r", ch);
+    return;
+  }
+
+  ch->cswillpower--;
+  sh_int diff, success;
+  success = 0;
+  diff = 6;
+
+  if (victim->level > ch->level)
+    diff++;
+  if (victim->level > ch->level + 10)
+    diff++;
+  if (IS_SET(victim->res_flags, RES_CHARM) || IS_SET(victim->res_flags, RES_MENTAL))
+    diff++;
+  if (IS_SET(victim->vuln_flags, VULN_CHARM) || IS_SET(victim->vuln_flags, VULN_MENTAL))
+    diff-= 2;
+  if (is_affected(ch, gsn_gift_spiritspeech))
+    diff--;
+  success = godice(get_attribute(ch, CHARISMA) + ch->csabilities[CSABIL_LEADERSHIP], diff);
+
+  if (success < 0)
+  {
+    act( "$n stares deeply into your eyes, as if $e is expecting something.", ch, NULL, victim, TO_VICT );
+    act( "$n stares into $N's eyes for an extended period of time, unmoving.", ch, NULL, victim, TO_NOTVICT );
+    act( "You try to exert your total control of $N, but $E seems to be unfazed!", ch, NULL, victim, TO_CHAR );
+
+    if (!IS_SET(victim->imm_flags, IMM_MENTAL))
+    {
+      af.where     = TO_IMMUNE;
+      af.type      = gsn_mental_resilience;
+      af.level     = ch->level;
+      af.duration  = 20;
+      af.location  = APPLY_NONE;
+      af.modifier  = 0;
+      af.bitvector = IMM_MENTAL;
+      affect_to_char(victim, &af);
+    }
+    if (!IS_SET(victim->imm_flags, IMM_CHARM))
+    {
+      af.where     = TO_IMMUNE;
+      af.type      = gsn_mental_resilience;
+      af.level     = ch->level;
+      af.duration  = 20;
+      af.location  = APPLY_NONE;
+      af.modifier  = 0;
+      af.bitvector = IMM_CHARM;
+      affect_to_char(victim, &af);
+    }
+    return;
+  }
+
+  if (success == 0)
+  {
+    act( "$n stares deeply into your eyes, as if $e is expecting something.", ch, NULL, victim, TO_VICT );
+    act( "$n stares into $N's eyes for an extended period of time, unmoving.", ch, NULL, victim, TO_NOTVICT );
+    act( "You cannot seem to exert control over $N.", ch, NULL, victim, TO_CHAR );
+    WAIT_STATE(ch, 6);
+    return;
+  }
+
+  if (is_affected(victim, gsn_deafened))
+  {
+    act( "$n stares into your eyes and speaks, but you cannot hear a single word.", ch, NULL, victim, TO_VICT );
+    act( "$n stares into $N's eyes, and seems perplexed at the lack of response.", ch, NULL, victim, TO_NOTVICT );
+    act( "You speak to $N, trying to coax $M to your whims, but $E doesn't seem to hear you.", ch, NULL, victim, TO_CHAR );
+    return;
+  }
+
+  if ( IS_AFFECTED(victim, AFF_CHARM)
+  ||   IS_AFFECTED(ch, AFF_CHARM)
+  ||   IS_SET(victim->imm_flags,IMM_CHARM)
+  ||   saves_spell( ch->level, victim,DAM_CHARM)
+  ||   IS_SET(victim->act2, ACT2_ULTRA_MOB))
+  {
+    act( "$n stares into your eyes, but you shrug off the mental intrusion with no problem.", ch, NULL, victim, TO_VICT );
+    act( "$n stares into $N's eyes, and seems perplexed at the lack of response.", ch, NULL, victim, TO_NOTVICT );
+    act( "You feel a barrier of mental resistance as you try to Condition $N.", ch, NULL, victim, TO_CHAR );
+    return;
+  }
+
+  act( "With a strange feeling of complacency, you submit to $n's will.", ch, NULL, victim, TO_VICT );
+  if ( ch != victim )
+    act("After coaxing, $N offers little resistance as $E submits to your every whim.",ch,NULL,victim,TO_CHAR);
+  act( "With a longing look and some coaxing, $N begins to follow $n obediently.",  ch, NULL, victim, TO_NOTVICT );
+  if (success > 4)
+    act("With pure adoration on $S face, $N pledges $S undying loyalty to you.", ch, NULL, victim, TO_CHAR);
+
+  if ( victim->master )
+  stop_follower( victim );
+  add_follower( victim, ch );
+  victim->leader = ch;
+  ch->pet = victim;
+  af.where     = TO_AFFECTS;
+  af.type      = gsn_charm_person;
+  af.level     = ch->pcdata->discipline[DOMINATE];
+  if (success > 4)
+    af.duration = -1;
+  else
+    af.duration  = success * 10 + 25;
+  af.location  = 0;
+  af.modifier  = 0;
+  af.bitvector = AFF_CHARM;
+  affect_to_char( victim, &af );
+  gain_exp(ch, success * 10);
+  return;
 }
 //
 //“Sight from Beyond”

@@ -4223,6 +4223,8 @@ void do_bash( CHAR_DATA *ch, char *argument )
 
         if(is_affected(victim,gsn_precognition))
             mobdice -= get_affect_level(victim,gsn_precognition);
+        if(is_affected(victim, gsn_gift_sightfrombeyond))
+            mobdice -= get_affect_level(victim,gsn_gift_sightfrombeyond);
         if (mobdice < 0)
             mobdice = 0;
 
@@ -4261,6 +4263,8 @@ void do_bash( CHAR_DATA *ch, char *argument )
 
     if(is_affected(victim,gsn_precognition))
         precog = get_affect_level(victim,gsn_precognition);
+    if(is_affected(victim, gsn_gift_sightfrombeyond))
+        precog -= get_affect_level(victim,gsn_gift_sightfrombeyond);
 
     dicesuccess = godice(get_attribute(ch, DEXTERITY) + ch->csabilities[CSABIL_MELEE], 6) - precog;
 
@@ -4431,6 +4435,8 @@ void do_dirt( CHAR_DATA *ch, char *argument )
     success = godice(dice, diff);
     if(is_affected(victim,gsn_precognition))
         precog = get_affect_level(victim,gsn_precognition);
+    if(is_affected(victim,gsn_gift_sightfrombeyond))
+        precog = get_affect_level(victim,gsn_gift_sightfrombeyond);
     success -= precog;
 
     if (IS_DEBUGGING(ch)) {
@@ -4609,6 +4615,8 @@ void do_trip( CHAR_DATA *ch, char *argument )
 	tripsuccess = godice(get_attribute(ch, DEXTERITY) + get_ability(ch, CSABIL_BRAWL), tripdiff);
     if(is_affected(victim,gsn_precognition))
         precog = get_affect_level(victim,gsn_precognition);
+    if(is_affected(victim,gsn_gift_sightfrombeyond))
+        precog = get_affect_level(victim,gsn_gift_sightfrombeyond);
     tripsuccess -= precog;
 
 	if (tripsuccess < 0)
@@ -5225,6 +5233,8 @@ void do_kick(CHAR_DATA *ch, char *argument)
 
         if(is_affected(victim,gsn_precognition))
             precog = get_affect_level(victim,gsn_precognition);
+        if(is_affected(victim,gsn_gift_sightfrombeyond))
+            precog = get_affect_level(victim,gsn_gift_sightfrombeyond);
         mobdice -= precog;
 
         dicesuccess = godice(mobdice, 6);
@@ -5445,6 +5455,8 @@ void do_disarm( CHAR_DATA *ch, char *argument )
 
     if(is_affected(victim,gsn_precognition))
         precog = get_affect_level(victim,gsn_precognition);
+    if(is_affected(victim,gsn_gift_sightfrombeyond))
+        precog = get_affect_level(victim,gsn_gift_sightfrombeyond);
     dice -= precog;
 
      if (wielded == NULL && !IS_NPC(ch))
@@ -5471,7 +5483,8 @@ void do_disarm( CHAR_DATA *ch, char *argument )
       return;
     }
 
-    if(is_affected(victim,gsn_precognition) && number_percent() > 50)
+    if((is_affected(victim,gsn_precognition) || is_affected(victim,gsn_gift_sightfrombeyond) 
+        && number_percent() > 50)
 		{
     		act("You attempt to disarm $N, but $E twists to the side, holding $S weapon tightly!", ch, NULL, victim, TO_CHAR);
     		act("You sense $n striking in to try and disarm you, but you twist to the side and hold your weapon tightly.", ch, NULL, victim, TO_VICT);
@@ -5596,6 +5609,8 @@ void do_bite(CHAR_DATA *ch, char *argument)
 
     if(is_affected(victim,gsn_precognition))
         precog = get_affect_level(victim,gsn_precognition);
+    if(is_affected(victim,gsn_gift_sightfrombeyond))
+        precog = get_affect_level(victim,gsn_gift_sightfrombeyond);
 
     dicesuccess = godice(get_attribute(ch, DEXTERITY) + ch->csabilities[CSABIL_BRAWL], 5);
     dicesuccess -= precog;
@@ -5715,7 +5730,8 @@ void do_shred(CHAR_DATA *ch, char *argument)
     if (!IS_NPC(ch))
         ch->move -= ch->level / 5;
 
-    if (is_affected(victim, gsn_precognition) && number_percent() > 50)
+    if ((is_affected(victim, gsn_precognition) || is_affected(victim, gsn_gift_sightfrombeyond))
+        && number_percent() > 50)
     {
         act("$N moves out of the way of your shred attack, seconds before it connects!", ch, NULL, victim, TO_CHAR);
         act("With a brief flash of insight, you swiftly react and dodge $n's shredding claws.", ch, NULL, victim, TO_VICT);

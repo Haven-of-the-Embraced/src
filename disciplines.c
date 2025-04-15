@@ -7561,6 +7561,8 @@ void do_tonguelash( CHAR_DATA *ch, char *argument )
 
     if(is_affected(victim,gsn_precognition))
         precog = get_affect_level(victim,gsn_precognition);
+    if(is_affected(victim, gsn_gift_sightfrombeyond))
+        precog = get_affect_level(victim,gsn_gift_sightfrombeyond);
 
     dicesuccess = godice(get_attribute(ch, DEXTERITY) + ch->csabilities[CSABIL_BRAWL], 5);
     dicesuccess -= precog;

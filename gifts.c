@@ -1888,8 +1888,52 @@ void spell_gift_commandspirit( int sn, int level, CHAR_DATA *ch, void *vo, int t
 //crow / snake spirit
 //wits + occult diff 7
 //the garou becomes an oracle, she receives visions that strike without warning
-void spell_gift_sightfrombeyond( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_sightfrombeyond( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  AFFECT_DATA af;
+  int success;
+
+  if (is_affected(ch, gsn_gift_sightfrombeyond))
+  {
+    sendch("Visions already periodically assail your mind.\n\r", ch);
     return;
+  }
+
+  if (ch->move < (ch->level * 5) / 4)
+  {
+    send_to_char("You are too exhausted to activate this Gift.\n\r", ch);
+    return;
+  }
+
+  ch->move -= (ch->level * 5) / 4;
+  success = godice(get_attribute(ch, WITS) + get_ability(ch, CSABIL_OCCULT), 7);
+
+  if (success < 0)
+  {
+    send_to_char("An explosion of visions assaults your mind, wreaking havoc.\n\r", ch);
+    d10_damage( ch, ch, 5, ch->level, gsn_telepathy, DAM_MENTAL, DEFENSE_NONE, TRUE, TRUE);
+    WAIT_STATE(ch, 6);
+    return;
+  }
+
+  if (success == 0)
+  {
+    send_to_char("Neither crow- nor snake-spirits answer your request for precognisance.\n\r", ch);
+    WAIT_STATE(ch, 6);
+    return;
+  }
+
+  sendch("A large group of spirits, a murder of crows and a den of snakes, imparts knowledge upon you.\n\r", ch);
+  af.where        = TO_AFFECTS;
+  af.type         = gsn_gift_sightfrombeyond;
+  af.level        = ch->pcdata->rank;
+  af.duration     = success * 10 + 20;
+  af.modifier     = 0;
+  af.location     = APPLY_NONE;
+  af.bitvector    = 0;
+  affect_to_char(ch, &af);
+
+  return;
 }
 //
 //Rank Three

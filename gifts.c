@@ -1755,18 +1755,9 @@ void spell_gift_spiritspeech( int sn, int level, CHAR_DATA *ch, void *vo, int ta
 void spell_gift_commandspirit( int sn, int level, CHAR_DATA *ch, void *vo, int target)
 {
   AFFECT_DATA af;
-  char arg[MAX_INPUT_LENGTH];
   CHAR_DATA *gch;
   CHAR_DATA *victim = (CHAR_DATA *) vo;
   int group_members = 0;
-
-  argument = one_argument( argument, arg );
-
-  if ( ( victim = get_char_room( ch, NULL, arg ) ) == NULL )
-  {
-    send_to_char( "Nobody here by that name.\n\r", ch );
-    return;
-  }
 
   if (victim->race != race_lookup("spirit") && victim->race != race_lookup("elemental"))
   {
@@ -1786,7 +1777,7 @@ void spell_gift_commandspirit( int sn, int level, CHAR_DATA *ch, void *vo, int t
     return;
   }
 
-  if (ch->cswillpower <= 1)
+  if (ch->cswillpower < 1)
   {
     send_to_char("You do not have the force of Willpower to command such a Gift.\n\r", ch);
     return;
@@ -1829,49 +1820,28 @@ void spell_gift_commandspirit( int sn, int level, CHAR_DATA *ch, void *vo, int t
 
   if (success < 0)
   {
-    act( "$n stares deeply into your eyes, as if $e is expecting something.", ch, NULL, victim, TO_VICT );
-    act( "$n stares into $N's eyes for an extended period of time, unmoving.", ch, NULL, victim, TO_NOTVICT );
-    act( "You try to exert your total control of $N, but $E seems to be unfazed!", ch, NULL, victim, TO_CHAR );
+    act( "$n speaks gibberish, offending you as $e does so!", ch, NULL, victim, TO_VICT );
+    act( "$n speaks gibberish to $N, who attacks at the insult!", ch, NULL, victim, TO_NOTVICT );
+    act( "You speak plainly to $N, but $E seems offended and attacks!", ch, NULL, victim, TO_CHAR );
 
-    if (!IS_SET(victim->imm_flags, IMM_MENTAL))
-    {
-      af.where     = TO_IMMUNE;
-      af.type      = gsn_mental_resilience;
-      af.level     = ch->level;
-      af.duration  = 20;
-      af.location  = APPLY_NONE;
-      af.modifier  = 0;
-      af.bitvector = IMM_MENTAL;
-      affect_to_char(victim, &af);
-    }
-    if (!IS_SET(victim->imm_flags, IMM_CHARM))
-    {
-      af.where     = TO_IMMUNE;
-      af.type      = gsn_mental_resilience;
-      af.level     = ch->level;
-      af.duration  = 20;
-      af.location  = APPLY_NONE;
-      af.modifier  = 0;
-      af.bitvector = IMM_CHARM;
-      affect_to_char(victim, &af);
-    }
+    multi_hit( victim, ch, TYPE_UNDEFINED );
     return;
   }
 
   if (success == 0)
   {
-    act( "$n stares deeply into your eyes, as if $e is expecting something.", ch, NULL, victim, TO_VICT );
-    act( "$n stares into $N's eyes for an extended period of time, unmoving.", ch, NULL, victim, TO_NOTVICT );
-    act( "You cannot seem to exert control over $N.", ch, NULL, victim, TO_CHAR );
+    act( "$n speaks slowly, but $e is quite boring.", ch, NULL, victim, TO_VICT );
+    act( "$n speaks to $N, who seems unimpressed.", ch, NULL, victim, TO_NOTVICT );
+    act( "Your words seem to bore $N.", ch, NULL, victim, TO_CHAR );
     WAIT_STATE(ch, 6);
     return;
   }
 
   if (is_affected(victim, gsn_deafened))
   {
-    act( "$n stares into your eyes and speaks, but you cannot hear a single word.", ch, NULL, victim, TO_VICT );
-    act( "$n stares into $N's eyes, and seems perplexed at the lack of response.", ch, NULL, victim, TO_NOTVICT );
-    act( "You speak to $N, trying to coax $M to your whims, but $E doesn't seem to hear you.", ch, NULL, victim, TO_CHAR );
+    act( "$n tries to speak to you, but you cannot hear a single word.", ch, NULL, victim, TO_VICT );
+    act( "$n begins speaking to $N, but seems perplexed at the lack of response.", ch, NULL, victim, TO_NOTVICT );
+    act( "You try to speak to $N, but $E doesn't seem to hear you.", ch, NULL, victim, TO_CHAR );
     return;
   }
 
@@ -1881,18 +1851,18 @@ void spell_gift_commandspirit( int sn, int level, CHAR_DATA *ch, void *vo, int t
   ||   saves_spell( ch->level, victim,DAM_CHARM)
   ||   IS_SET(victim->act2, ACT2_ULTRA_MOB))
   {
-    act( "$n stares into your eyes, but you shrug off the mental intrusion with no problem.", ch, NULL, victim, TO_VICT );
-    act( "$n stares into $N's eyes, and seems perplexed at the lack of response.", ch, NULL, victim, TO_NOTVICT );
-    act( "You feel a barrier of mental resistance as you try to Condition $N.", ch, NULL, victim, TO_CHAR );
+    act( "$n speaks, but you ignore the words completely.", ch, NULL, victim, TO_VICT );
+    act( "$n speaks to $N, who promptly ignores $m.", ch, NULL, victim, TO_NOTVICT );
+    act( "You feel slighted, $N is ignoring you completely.", ch, NULL, victim, TO_CHAR );
     return;
   }
 
-  act( "With a strange feeling of complacency, you submit to $n's will.", ch, NULL, victim, TO_VICT );
+  act( "With a strange feeling of complacency, you agree to $n's request for aid.", ch, NULL, victim, TO_VICT );
   if ( ch != victim )
-    act("After coaxing, $N offers little resistance as $E submits to your every whim.",ch,NULL,victim,TO_CHAR);
-  act( "With a longing look and some coaxing, $N begins to follow $n obediently.",  ch, NULL, victim, TO_NOTVICT );
+    act("After coaxing, $N offers little resistance as $E follows your request for aid.",ch,NULL,victim,TO_CHAR);
+  act( "With a bit of coaxing, $N begins to follow $n's commands.",  ch, NULL, victim, TO_NOTVICT );
   if (success > 4)
-    act("With pure adoration on $S face, $N pledges $S undying loyalty to you.", ch, NULL, victim, TO_CHAR);
+    act("Realizing what you say is for the best, $N pledges service to you.", ch, NULL, victim, TO_CHAR);
 
   if ( victim->master )
   stop_follower( victim );
@@ -1901,11 +1871,11 @@ void spell_gift_commandspirit( int sn, int level, CHAR_DATA *ch, void *vo, int t
   ch->pet = victim;
   af.where     = TO_AFFECTS;
   af.type      = gsn_charm_person;
-  af.level     = ch->pcdata->discipline[DOMINATE];
+  af.level     = ch->pcdata->rank;
   if (success > 4)
     af.duration = -1;
   else
-    af.duration  = success * 10 + 25;
+    af.duration  = success * 10 + 50;
   af.location  = 0;
   af.modifier  = 0;
   af.bitvector = AFF_CHARM;

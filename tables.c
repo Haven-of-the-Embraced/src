@@ -1409,7 +1409,7 @@ const struct    gift_type   gift_table  [MAX_GIFTS_CODED]  =
     {   "chimerical form", 				0,     24, 0,     0,      RAGABASH,   0,        5,   0},
     {   "mothers touch", 				1,     24, 0,     0,      THEURGE,    CHILDREN_OF_GAIA, 1,   0},
     {   "spirit speech", 				1,     24, 0,     0,      THEURGE,    0,        1,   0},
-    {   "command spirit", 				0,     24, 0,     0,      THEURGE,    0,        2,   0},
+    {   "command spirit", 				1,     24, 0,     0,      THEURGE,    0,        2,   0},
     {   "sight from beyond", 			0,     24, 0,     0,      THEURGE,    0,        2,   0},
     {   "expel spirit", 				0,     24, 0,     0,      THEURGE,    0,        3,   0},
     {   "grasp the beyond", 			0,     24, 0,     0,      THEURGE,    0,        4,   0},

@@ -2563,7 +2563,7 @@ Total (3) */
     &gsn_gift_spiritspeech,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     { "command spirit", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_commandspirit,  TAR_IGNORE, POS_STANDING,
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_commandspirit,  TAR_CHAR_DEFENSIVE, POS_STANDING,
     &gsn_gift_commandspirit,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     { "sight from beyond", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },

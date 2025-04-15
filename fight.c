@@ -5484,7 +5484,7 @@ void do_disarm( CHAR_DATA *ch, char *argument )
     }
 
     if((is_affected(victim,gsn_precognition) || is_affected(victim,gsn_gift_sightfrombeyond) 
-        && number_percent() > 50)
+        && number_percent() > 50))
 		{
     		act("You attempt to disarm $N, but $E twists to the side, holding $S weapon tightly!", ch, NULL, victim, TO_CHAR);
     		act("You sense $n striking in to try and disarm you, but you twist to the side and hold your weapon tightly.", ch, NULL, victim, TO_VICT);

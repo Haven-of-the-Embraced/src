@@ -2568,7 +2568,7 @@ Total (3) */
 
     { "sight from beyond", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_sightfrombeyond,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_sightfrombeyond,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+    &gsn_gift_sightfrombeyond,          SLOT( 0),        0,     12, "",             "Your precognitive visions fade.",        "" },
 
     { "expel spirit", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_expelspirit,  TAR_IGNORE, POS_STANDING,

@@ -1890,7 +1890,7 @@ bool spec_potence( CHAR_DATA *ch )
     CHAR_DATA *v_next;
     char *spell;
     int sn, num;
-    int potence, successes, damagesuccess, damagemod;
+    int potence, successes, damagesuccess, damagemod, precog = 0;
 
     if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected(ch, gsn_forget)
         || is_affected(ch, gsn_silencethesanemind))
@@ -1909,6 +1909,11 @@ bool spec_potence( CHAR_DATA *ch )
     act( "$n roars and winds up for a massive jab!", ch, NULL, victim, TO_ROOM );
 
     successes = godice(get_attribute(ch, DEXTERITY) + get_ability(ch, CSABIL_BRAWL), 6);
+    if(is_affected(victim,gsn_precognition))
+        precog = get_affect_level(victim,gsn_precognition);
+    if(is_affected(victim,gsn_gift_sightfrombeyond))
+        precog = get_affect_level(victim,gsn_gift_sightfrombeyond);
+    successes-= precog;
     if (successes <= 0)
     {
       act("$n's punch goes wide, missing you!", ch, NULL, victim, TO_VICT);
@@ -2003,7 +2008,7 @@ bool spec_feralspeech( CHAR_DATA *ch)
 {
     CHAR_DATA *victim;
     CHAR_DATA *v_next;
-    int success, damagesuccess;
+    int success, damagesuccess, precog = 0;
 
     if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected(ch, gsn_forget)
         || is_affected(ch, gsn_silencethesanemind))
@@ -2023,6 +2028,11 @@ bool spec_feralspeech( CHAR_DATA *ch)
         return FALSE;
 
     success = godice(get_attribute(ch, MANIPULATION) + get_ability(ch, CSABIL_ANIMAL_KEN), 6);
+    if(is_affected(victim,gsn_precognition))
+        precog = get_affect_level(victim,gsn_precognition);
+    if(is_affected(victim,gsn_gift_sightfrombeyond))
+        precog = get_affect_level(victim,gsn_gift_sightfrombeyond);
+    success-= precog;
 
     if (success <= 0)
         return FALSE;
@@ -2302,7 +2312,7 @@ bool spec_shadowplay( CHAR_DATA *ch )
 {
   CHAR_DATA *victim;
   CHAR_DATA *v_next;
-  int shadowsuccess, obtenebration;
+  int shadowsuccess, obtenebration, precog = 0;
   AFFECT_DATA af;
 
   if ( ch->position != POS_FIGHTING || ch->stopped > 0
@@ -2326,6 +2336,11 @@ bool spec_shadowplay( CHAR_DATA *ch )
   act( "{DDarkness{x rises from $n's {Ds{wh{Dad{wo{Dw{x and gathers around $s form.", ch, NULL, victim, TO_ROOM );
   obtenebration = ch->level / 20;
   shadowsuccess = godice(get_attribute(ch, WITS) + obtenebration, 6);
+  if(is_affected(victim,gsn_precognition))
+    precog = get_affect_level(victim,gsn_precognition);
+  if(is_affected(victim,gsn_gift_sightfrombeyond))
+    precog = get_affect_level(victim,gsn_gift_sightfrombeyond);
+  shadowsuccess-= precog;
 
   if (shadowsuccess <= 0)
   {
@@ -2401,7 +2416,7 @@ bool spec_armsoftheabyss( CHAR_DATA *ch )
   CHAR_DATA *victim;
   CHAR_DATA *v_next;
   AFFECT_DATA af;
-  int obtenebration, obtensuccess;
+  int obtenebration, obtensuccess, precog = 0;
 
     obtenebration = (ch->level / 20) + 1;
     obtensuccess = godice(get_attribute(ch, MANIPULATION) + get_ability(ch, CSABIL_OCCULT), 7);
@@ -2426,6 +2441,11 @@ bool spec_armsoftheabyss( CHAR_DATA *ch )
       return FALSE;
 
     act( "$n smiles as large, shadow tendrils grow and writhe from $s form.", ch, NULL, victim, TO_ROOM );
+    if(is_affected(victim,gsn_precognition))
+        precog = get_affect_level(victim,gsn_precognition);
+    if(is_affected(victim,gsn_gift_sightfrombeyond))
+        precog = get_affect_level(victim,gsn_gift_sightfrombeyond);
+    obtensuccess-= precog;
     if (obtensuccess <= 0)
       return FALSE;
 
@@ -2562,7 +2582,7 @@ bool spec_feralclaws( CHAR_DATA *ch )
     AFFECT_DATA af;
     CHAR_DATA *victim;
     CHAR_DATA *v_next;
-    int dicesuccess, damagesuccess;
+    int dicesuccess, damagesuccess, precog = 0;
 
     if ( ch->position != POS_FIGHTING || ch->stopped > 0 || is_affected(ch, gsn_forget)
     || is_affected(ch, gsn_silencethesanemind))
@@ -2582,6 +2602,11 @@ bool spec_feralclaws( CHAR_DATA *ch )
     if (is_affected(ch, gsn_claws))
     {
         dicesuccess = godice(get_attribute(ch, DEXTERITY) + ch->csabilities[CSABIL_BRAWL], 6);
+        if(is_affected(victim,gsn_precognition))
+            precog = get_affect_level(victim,gsn_precognition);
+        if(is_affected(victim,gsn_gift_sightfrombeyond))
+            precog = get_affect_level(victim,gsn_gift_sightfrombeyond);
+        dicesuccess-= precog;
         if (dicesuccess <= 0)
             return FALSE;
         damagesuccess = godice(get_attribute(ch, STRENGTH) + 1, 6);
@@ -2666,7 +2691,7 @@ bool spec_tongueoftheasp( CHAR_DATA *ch )
 {
   CHAR_DATA *victim;
   CHAR_DATA *v_next;
-  int serpentis, tonguesuccess, damagesuccess, damagemod;
+  int serpentis, tonguesuccess, damagesuccess, damagemod, precog = 0;
   AFFECT_DATA af;
 
   serpentis = (ch->level / 20) + 1;
@@ -2684,8 +2709,17 @@ bool spec_tongueoftheasp( CHAR_DATA *ch )
             break;
     }
 
-    if (victim == NULL || tonguesuccess <= 0 )
+    if (victim == NULL )
       return FALSE;
+
+    if(is_affected(victim,gsn_precognition))
+        precog = get_affect_level(victim,gsn_precognition);
+    if(is_affected(victim,gsn_gift_sightfrombeyond))
+        precog = get_affect_level(victim,gsn_gift_sightfrombeyond);
+    tonguesuccess-= precog;
+
+    if (tonguesuccess <= 0)
+        return FALSE;
 
     act("You lash out with your forked tongue, slicing into $N's neck.", ch, NULL, victim, TO_CHAR);
     act("You flinch in pain as $n's forked tongue slices open a wound on your neck!", ch, NULL, victim, TO_VICT);

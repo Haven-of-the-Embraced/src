@@ -1926,7 +1926,7 @@ void spell_gift_sightfrombeyond( int sn, int level, CHAR_DATA *ch, void *vo, int
   sendch("A large group of spirits, a murder of crows and a den of snakes, imparts knowledge upon you.\n\r", ch);
   af.where        = TO_AFFECTS;
   af.type         = gsn_gift_sightfrombeyond;
-  af.level        = ch->pcdata->rank;
+  af.level        = success;
   af.duration     = success * 10 + 20;
   af.modifier     = 0;
   af.location     = APPLY_NONE;

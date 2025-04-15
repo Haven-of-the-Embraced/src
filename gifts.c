@@ -1918,7 +1918,7 @@ void spell_gift_sightfrombeyond( int sn, int level, CHAR_DATA *ch, void *vo, int
 
   if (success == 0)
   {
-    send_to_char("Neither crow- nor snake-spirits answer your request for precognisance.\n\r", ch);
+    send_to_char("Neither crow- nor snake-spirits answer your request for precognizance.\n\r", ch);
     WAIT_STATE(ch, 6);
     return;
   }
@@ -1942,15 +1942,46 @@ void spell_gift_sightfrombeyond( int sn, int level, CHAR_DATA *ch, void *vo, int
 //any incarna avatar
 //man + intimidation (diff spirit wp) must concentrate for 3 turns
 //the garou forces a spirit to go from place to place, to get it out of a fetish diff is 9
-void spell_gift_expelspirit( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_expelspirit( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  OBJ_DATA *obj = (OBJ_DATA *) vo;;
+  AFFECT_DATA *paf;
+  char buf[MAX_STRING_LENGTH];
+
+  if ((obj =  get_obj_carry(ch, obj, ch)) == NULL)
+  {
+    sendch("You aren't carrying that item.\n\r", ch);
     return;
+  }
+
+  if (paf = affect_find(obj->affected,skill_lookup("fetish")) == NULL)
+  {
+    sprintf(buf, "There are no {MSpirits{x inhabiting %s.", obj->short_descr);
+    send_to_char(buf, ch);
+    return;
+  }
+
+  if (obj->level > ch->level)
+  {
+    send_to_char("This object is too powerful to use this Gift on.\n\r", ch);
+    return;
+  }
+
+  if (ch->move < (ch->level * 5) / 4)
+  {
+    send_to_char("You are too exhausted to activate this Gift.\n\r", ch);
+    return;
+  }
+
+  ch->move -= (ch->level * 5) / 4;
+
+  return;
 }
 //
 //“Pulse of the Invisible”
 //any spirit
 //if perm gnosis => gauntlet rating then can see into umbra without problems, if not must roll gnosis diff gauntlet rating
 //
-
 void spell_gift_pulseoftheinvisible( int sn, int level, CHAR_DATA *ch, void *vo, int target )
 {
     AFFECT_DATA af;

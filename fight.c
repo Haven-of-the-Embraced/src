@@ -302,6 +302,12 @@ void multi_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt )
     if (ch->position < POS_RESTING)
     return;
 
+    if (is_affected(ch, gsn_earthmeld))
+    {
+        if (!IS_NPC(ch))
+            send_to_char("You are melded to the earth, and cannot attack.\n\r", ch);
+        return;
+    }
 
     if (IS_NPC(ch))
     {

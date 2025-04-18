@@ -159,6 +159,9 @@ void check_assist(CHAR_DATA *ch,CHAR_DATA *victim)
     {
     rch_next = rch->next_in_room;
 
+    if (is_affected(ch, gsn_earthmeld))
+        continue;
+
     if (IS_AWAKE(rch) && rch->fighting == NULL && SAME_UMBRA(ch, rch))
     {
           if (RIDDEN(rch) == ch || MOUNTED(rch) == ch)

@@ -1703,6 +1703,39 @@ void affect_join( CHAR_DATA *ch, AFFECT_DATA *paf )
 }
 
 /*
+ * Return true if an obj is affected by a spell.
+ */
+bool is_obj_affected( OBJ_DATA *obj, int sn )
+{
+    AFFECT_DATA *paf;
+
+    for ( paf = obj->affected; paf != NULL; paf = paf->next )
+    {
+    if ( paf->type == sn )
+        return TRUE;
+    }
+
+    return FALSE;
+}
+
+/*
+ * Strip all affects of a given sn from an obj.
+ */
+void affect_strip_obj( OBJ_DATA *obj, int sn )
+{
+    AFFECT_DATA *paf;
+    AFFECT_DATA *paf_next;
+
+    for ( paf = obj->affected; paf != NULL; paf = paf_next )
+    {
+    paf_next = paf->next;
+    if ( paf->type == sn )
+        affect_remove_obj( obj, paf );
+    }
+
+    return;
+}
+/*
  * Check if char has self induced shadowplay (+1 stealth/intimidation die)
  * Return 1 dice result if so.
 */

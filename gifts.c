@@ -1944,11 +1944,13 @@ void spell_gift_sightfrombeyond( int sn, int level, CHAR_DATA *ch, void *vo, int
 //the garou forces a spirit to go from place to place, to get it out of a fetish diff is 9
 void spell_gift_expelspirit( int sn, int level, CHAR_DATA *ch, void *vo, int target)
 {
-  OBJ_DATA *obj = (OBJ_DATA *) vo;;
+  char arg1[MIL];
+  OBJ_DATA *obj;
+  gift_target_name = one_argument(gift_target_name, arg1);
   AFFECT_DATA *paf;
   char buf[MAX_STRING_LENGTH];
 
-  if ((obj =  get_obj_carry(ch, obj, ch)) == NULL)
+  if ((obj =  get_obj_carry(ch, arg1, ch)) == NULL)
   {
     sendch("You aren't carrying that item.\n\r", ch);
     return;

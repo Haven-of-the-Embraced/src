@@ -1276,6 +1276,7 @@ void do_bind(CHAR_DATA *ch, char *argument )
         af.duration  = 60 + (success*10);
         af.location  = 0;
         af.modifier  = 0;
+        af.bitvector = 0;
         switch(spirit->group)
         {
             case MOB_GROUP_EARTHSPIRIT:

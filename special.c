@@ -2078,6 +2078,7 @@ bool spec_noahscall( CHAR_DATA *ch)
     if (success > 3)
         SET_BIT(mob->off_flags, OFF_THIRD_ATTACK);
     SET_BIT(mob->act, ACT_AGGRESSIVE);
+    REMOVE_BIT(mob->act, ACT_PET);
 
     return TRUE;
 }

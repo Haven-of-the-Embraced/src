@@ -2190,8 +2190,32 @@ void spell_gift_callofduty( int sn, int level, CHAR_DATA *ch, void *vo, int targ
 //wolf spirit
 //stamina + rituals diff 7 every 2 successes the char recovers 1 wp pt up to his max, useable once per scene
 //
-void spell_gift_strengthofpurpose( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_strengthofpurpose( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  AFFECT_DATA af;
+  int successes;
+
+  if(is_affected(ch, gsn_gift_strengthofpurpose))
+  {
+    send_to_char("You have already requested aid from the wolf spirits recently.\n\r",ch);
     return;
+  }
+
+  if (ch->cswillpower == ch->csmax_willpower)
+  {
+    send_to_char("Your Willpower is already at maximum, even wolf-spirits cannot give you more.\n\r", ch);
+    return;
+  }
+
+  if (ch->move <= ch->level * 3)
+  {
+    send_to_char("You are much too tired to call upon the strength of wolf-spirits.\n\r", ch);
+    return;
+  }
+
+  ch->move -= ch->level * 2;
+
+  return;
 }
 //Rank Three
 //

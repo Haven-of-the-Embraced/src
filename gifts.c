@@ -2213,7 +2213,26 @@ void spell_gift_strengthofpurpose( int sn, int level, CHAR_DATA *ch, void *vo, i
     return;
   }
 
-  ch->move -= ch->level * 2;
+  ch->move -= ch->level * 3;
+  successes = godice(get_attribute(ch, CSATTRIB_STAMINA) + get_ability(ch, CSABIL_RITUALS), 7);
+  send_to_char("Calling upon aid from wolf-spirits, you howl loudly.\n\r", ch);
+  act("$n lets out a loud howl.", ch, NULL, NULL, TO_ROOM);
+
+  if (successes < 0)
+    successes = 0;
+
+  ch->cswillpower += successes / 2;
+  if (successes > ch->csmax_willpower)
+    ch->cswillpower = ch->csmax_willpower;
+
+  af.where        = TO_AFFECTS;
+  af.type         = gsn_gift_strengthofpurpose;
+  af.level        = successes;
+  af.duration     = 40;
+  af.modifier     = 0;
+  af.location     = APPLY_NONE;
+  af.bitvector    = 0;
+  affect_to_char(ch, &af);
 
   return;
 }

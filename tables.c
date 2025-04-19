@@ -1419,7 +1419,7 @@ const struct    gift_type   gift_table  [MAX_GIFTS_CODED]  =
     {   "scent of the true form", 		1,     24, 0,     0,      PHILODOX,   0,        1,   0},
     {   "truth of gaia", 				0,     24, 0,     0,      PHILODOX,   0,        1,   0},
     {   "call of duty", 				0,     24, 0,     0,      PHILODOX,   0,        2,   0},
-    {   "strength of purpose", 			0,     24, 0,     0,      PHILODOX,   0,        2,   0},
+    {   "strength of purpose", 			1,     24, 0,     0,      PHILODOX,   0,        2,   0},
     {   "spirit witness", 				0,     24, 0,     0,      PHILODOX,   0,        3,   0},
     {   "warriors eye", 				0,     24, 0,     0,      PHILODOX,   0,        3,   0},
     {   "roll over", 					0,     24, 0,     0,      PHILODOX,   0,        4,   0},

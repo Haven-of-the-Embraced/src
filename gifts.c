@@ -2252,8 +2252,32 @@ void spell_gift_spiritwitness( int sn, int level, CHAR_DATA *ch, void *vo, int t
 //each success gives the player one bonus die to add to attack or damage rolls against their opponent, can split the dice ie 4 successes gives you 3 to attack and 1 to damage, cannot change where these dice are set and only useable once per scene
 //ability to exploit weakness of opponent
 //
-void spell_gift_warriorseye( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_warriorseye( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  AFFECT_DATA af;
+  OBJ_DATA *wield;
+  int successes, weapondice;
+
+  if(is_affected(ch, gsn_gift_warriorseye))
+  {
+    send_to_char("Wind-spirits already help your attacks strike true.\n\r",ch);
     return;
+  }
+
+  if (ch->move <= ch->level * 2)
+  {
+    send_to_char("You are too tired to call out to wind-spirits.\n\r", ch);
+    return;
+  }
+
+  if (wield = get_eq_char( ch, WEAR_WIELD ) == NULL)
+    weapondice = get_ability(ch, CSABIL_BRAWL);
+  else
+    weapondice = get_ability(ch, CSABIL_MELEE);
+
+  ch->move -= ch->level * 2;
+  successes = godice(get_attribute(ch, CSATTRIB_PERCEPTION) + weapondice, 7);
+  return;
 }
 //Rank Four
 //

@@ -2013,27 +2013,37 @@ void spell_gift_expelspirit( int sn, int level, CHAR_DATA *ch, void *vo, int tar
 //
 void spell_gift_pulseoftheinvisible( int sn, int level, CHAR_DATA *ch, void *vo, int target )
 {
-    AFFECT_DATA af;
+  AFFECT_DATA af;
+  int success;
 
+  if (ch->move <= (ch->level * 2) + 10)
+  {
+    send_to_char("You are too tired to view into the Umbra.\n\r", ch);
+  }
 
-    if ( is_affected( ch, gsn_gift_pulseoftheinvisible ) )
-    {
-        send_to_char("You shift your sight back to the mundane.\n\r",ch);
-        affect_strip(ch,gsn_gift_pulseoftheinvisible);
-    }
-    else
-        send_to_char("You open your mind to seeing the unseen.\n\r",ch);
-
-    af.where     = TO_AFFECTS;
-    af.type      = gsn_gift_pulseoftheinvisible;
-    af.level     = level;
-    af.duration  = (ch->pcdata->gnosis[PERM]*2) + 10;
-    af.modifier  = 0;
-    af.location  = APPLY_NONE;
-    af.bitvector = 0;
-    affect_to_char( ch, &af );
-    act("$n's eyes turn a pale, unearthly white for a moment then fade back to normal.",ch,NULL,NULL,TO_ROOM);
+  if ( is_affected( ch, gsn_gift_pulseoftheinvisible ) )
+  {
+    send_to_char("You shift your sight back to the mundane.\n\r",ch);
+    affect_strip(ch,gsn_gift_pulseoftheinvisible);
     return;
+  }
+  else
+    send_to_char("You open your mind to seeing the unseen.\n\r",ch);
+
+  success = godice(ch->pcdata->gnosis[PERM], get_gauntlet(ch));
+  if (success < 1)
+    success = 1;
+
+  af.where     = TO_AFFECTS;
+  af.type      = gsn_gift_pulseoftheinvisible;
+  af.level     = success;
+  af.duration  = (success * 5) + 10;
+  af.modifier  = 0;
+  af.location  = APPLY_NONE;
+  af.bitvector = 0;
+  affect_to_char( ch, &af );
+  act("$n's eyes turn a pale, unearthly white for a moment then fade back to normal.",ch,NULL,NULL,TO_ROOM);
+  return;
 }
 //Rank Four
 //

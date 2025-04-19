@@ -1949,6 +1949,7 @@ void spell_gift_expelspirit( int sn, int level, CHAR_DATA *ch, void *vo, int tar
   gift_target_name = one_argument(gift_target_name, arg1);
   AFFECT_DATA *paf;
   char buf[MAX_STRING_LENGTH];
+  int success;
 
   if ((obj =  get_obj_carry(ch, arg1, ch)) == NULL)
   {
@@ -1975,7 +1976,33 @@ void spell_gift_expelspirit( int sn, int level, CHAR_DATA *ch, void *vo, int tar
     return;
   }
 
+  if (ch->cswillpower <= 1)
+  {
+    send_to_char("You do not have the strength of Willpower to expel the Spirit.\n\r", ch);
+    return;
+  }
+
   ch->move -= (ch->level * 5) / 4;
+  success = godice(get_attribute(ch, WITS) + get_ability(ch, CSBACK_RITUALS), 7);
+
+  if (success < 0)
+  {
+    send_to_char("You focus your intent to expel the Spirit, but it stubbornly clings on.\n\r", ch);
+    ch->cswillpower--;
+    send_to_char("The struggle taxes your Willpower.\n\r", ch);
+    WAIT_STATE(ch, 9);
+    return;
+  }
+
+  if (success == 0)
+  {
+    send_to_char("Try as you might, the Spirit is refusing to budge.\n\r", ch);
+    WAIT_STATE(ch, 3);
+    return;
+  }
+
+  send_to_char("With help from an Incarna, you force the Spirit out forcefully!\n\r", ch);
+  affect_strip_obj(obj, gsn_fetish);
 
   return;
 }

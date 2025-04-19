@@ -1411,7 +1411,7 @@ const struct    gift_type   gift_table  [MAX_GIFTS_CODED]  =
     {   "spirit speech", 				1,     24, 0,     0,      THEURGE,    0,        1,   0},
     {   "command spirit", 				1,     24, 0,     0,      THEURGE,    0,        2,   0},
     {   "sight from beyond", 			1,     24, 0,     0,      THEURGE,    0,        2,   0},
-    {   "expel spirit", 				0,     24, 0,     0,      THEURGE,    0,        3,   0},
+    {   "expel spirit", 				1,     24, 0,     0,      THEURGE,    0,        3,   0},
     {   "grasp the beyond", 			0,     24, 0,     0,      THEURGE,    0,        4,   0},
     {   "spirit wassail", 				0,     24, 0,     0,      THEURGE,    0,        4,   0},
     {   "nightmare possession", 		0,     24, 0,     0,      THEURGE,    0,        5,   0},

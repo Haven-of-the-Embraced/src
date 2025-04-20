@@ -2614,7 +2614,7 @@ Total (3) */
 
     { "strength of purpose", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_strengthofpurpose,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_strengthofpurpose,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+    &gsn_gift_strengthofpurpose,          SLOT( 0),        0,     12, "",             "Enough time has passed since calling on the wolf-spirits for aid.",        "" },
 
     { "spirit witness", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_spiritwitness,  TAR_IGNORE, POS_STANDING,

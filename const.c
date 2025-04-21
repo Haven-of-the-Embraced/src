@@ -2622,7 +2622,7 @@ Total (3) */
 
     { "warriors eye", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_warriorseye,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_warriorseye,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+    &gsn_gift_warriorseye,          SLOT( 0),        0,     12, "",             "Wind-spirits no longer guide your strikes.",        "" },
 
     { "roll over", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_rollover,  TAR_IGNORE, POS_STANDING,

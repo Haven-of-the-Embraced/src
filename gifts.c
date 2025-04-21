@@ -2277,6 +2277,45 @@ void spell_gift_warriorseye( int sn, int level, CHAR_DATA *ch, void *vo, int tar
 
   ch->move -= ch->level * 2;
   successes = godice(get_attribute(ch, CSATTRIB_PERCEPTION) + weapondice, 7);
+
+  if(successes < 0)
+  {
+    send_to_char("Wind-spirits are offended at your request, buffeting you incessantly.\n\r",ch);
+    WAIT_STATE(ch, 9);
+    af.where        = TO_AFFECTS;
+    af.type         = gsn_gift_warriorseye;
+    af.level        = -1;
+    af.duration     = -successes;
+    af.modifier     = -ch->level * 2;
+    af.location     = APPLY_HITROLL;
+    af.bitvector    = 0;
+    affect_to_char(ch, &af);
+
+    af.location     = APPLY_DAMROLL;
+    affect_to_char(ch, &af);
+    return;
+  }
+
+  if(successes == 0)
+  {
+    send_to_char("The spirits of the wind whisper past, and then are gone.\n\r",ch);
+    return;
+  }
+
+  send_to_char("Wind-spirits guide your attacks to strike true.\n\r",ch);
+
+  af.where        = TO_AFFECTS;
+  af.type         = gsn_gift_warriorseye;
+  af.level        = successes;
+  af.duration     = successes * 2 + 5;
+  af.modifier     = ch->level * 2;
+  af.location     = APPLY_HITROLL;
+  af.bitvector    = 0;
+  affect_to_char(ch, &af);
+
+  af.location     = APPLY_DAMROLL;
+  af.modifier     = ch->level;
+  affect_to_char(ch, &af);
   return;
 }
 //Rank Four

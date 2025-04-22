@@ -2377,10 +2377,45 @@ void spell_gift_callofthewyld( int sn, int level, CHAR_DATA *ch, void *vo, int t
 {
     AFFECT_DATA af;
     CHAR_DATA *gch;
+    int success;
 
     if (is_affected(ch, gsn_laryngitis))
     {
       act( "You attempt a savage howl, but your enflamed throat causes it to come out broken and disjointed.", ch, NULL, NULL, TO_CHAR );
+      return;
+    }
+
+    if (ch->move <= ch->level * 3)
+    {
+      send_to_char("You are too tired to call spirits of aid with your howl.\n\r", ch);
+      return;
+    }
+
+    ch->move -= ch->level * 3;
+
+    success = godice(get_attribute(ch, CSATTRIB_STAMINA) + get_ability(ch, CSABIL_EMPATHY), 6);
+
+    if (success < 0)
+    {
+      act( "You attempt a savage howl of rage and praise, but stop as your voice strains.", ch, NULL, NULL, TO_CHAR );
+      act( "$n begins to howl, but $s voice cracks.", ch, NULL, NULL, TO_ROOM );
+
+      af.where     = TO_AFFECTS;
+      af.type      = gsn_laryngitis;
+      af.level     = level;
+      af.duration  = 3;
+      af.location  = 0;
+      af.modifier  = 0;
+      af.bitvector = 0;
+      affect_to_char( gch, &af );
+      return;
+    }
+
+    if (success == 0)
+    {
+      act( "You let out a loud howl, but no spirits come to aid.", ch, NULL, NULL, TO_CHAR );
+      act( "$n begins a loud howl, lasting for a good minute.", ch, NULL, NULL, TO_ROOM );
+      WAIT_STATE(ch, 9);
       return;
     }
 

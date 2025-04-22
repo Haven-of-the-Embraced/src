@@ -159,6 +159,9 @@ void check_assist(CHAR_DATA *ch,CHAR_DATA *victim)
     {
     rch_next = rch->next_in_room;
 
+    if (is_affected(ch, gsn_earthmeld))
+        continue;
+
     if (IS_AWAKE(rch) && rch->fighting == NULL && SAME_UMBRA(ch, rch))
     {
           if (RIDDEN(rch) == ch || MOUNTED(rch) == ch)
@@ -299,6 +302,12 @@ void multi_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt )
     if (ch->position < POS_RESTING)
     return;
 
+    if (is_affected(ch, gsn_earthmeld))
+    {
+        if (!IS_NPC(ch))
+            send_to_char("You are melded to the earth, and cannot attack.\n\r", ch);
+        return;
+    }
 
     if (IS_NPC(ch))
     {

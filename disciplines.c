@@ -7146,7 +7146,7 @@ void do_bloodcurse(CHAR_DATA *ch, char *argument)
 void do_bloodagony(CHAR_DATA *ch, char *argument)
 {
     OBJ_DATA *obj;
-    AFFECT_DATA *af;
+    AFFECT_DATA af;
     int success;
 
     if (IS_NPC(ch)) return;
@@ -7183,20 +7183,26 @@ void do_bloodagony(CHAR_DATA *ch, char *argument)
         send_to_char( "You may only coat weapons with your acidic blood.\n\r", ch );
         return;
     }
+
+    if (IS_WEAPON_STAT(obj, WEAPON_AGG_DAMAGE))
+    {
+        act("$p already deals aggravated damage, your vitae will not help.",ch,obj,NULL,TO_CHAR);
+        return;
+    }
+
     ch->pblood -= 15;
     success = godice(ch->csmax_willpower, 6);
     if (success <= 0)
         success = 1;
 
-    af = new_affect();
-    af->where     = TO_WEAPON;
-    af->type      = gsn_blood_agony;
-    af->level     = ch->level;
-    af->duration  = ch->level / 3 + 25;
-    af->location  = APPLY_DAMROLL;
-    af->modifier  = 20 * success;
-    af->bitvector = WEAPON_AGG_DAMAGE;
-    obj->affected   = af;
+    af.where     = TO_WEAPON;
+    af.type      = gsn_blood_agony;
+    af.level     = ch->level;
+    af.duration  = ch->level / 3 + 25;
+    af.location  = APPLY_DAMROLL;
+    af.modifier  = 20 * success;
+    af.bitvector = WEAPON_AGG_DAMAGE;
+    affect_to_obj(obj, &af);
     act("You convert vitae into a potent acid, coating $p in the name of Haqim.",ch,obj,NULL,TO_CHAR);
     act("$n coats $p in $s blood.",ch,obj,NULL,TO_NOTVICT);
     return;

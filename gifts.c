@@ -2375,98 +2375,76 @@ void spell_gift_beastspirit( int sn, int level, CHAR_DATA *ch, void *vo, int tar
 
 void spell_gift_callofthewyld( int sn, int level, CHAR_DATA *ch, void *vo, int target )
 {
-    AFFECT_DATA af;
-    CHAR_DATA *gch;
-    int success;
+  AFFECT_DATA af;
+  CHAR_DATA *gch;
+  int success;
 
-    if (is_affected(ch, gsn_laryngitis))
+  if (is_affected(ch, gsn_laryngitis))
+  {
+    act( "You attempt a savage howl, but your enflamed throat causes it to come out broken and disjointed.", ch, NULL, NULL, TO_CHAR );
+    return;
+  }
+
+  if (ch->move <= (ch->level * 2) + 50)
+  {
+    send_to_char("You are too tired to call spirits of aid with your howl.\n\r", ch);
+    return;
+  }
+
+  ch->move -= (ch->level * 2) + 50;
+  success = godice(get_attribute(ch, CSATTRIB_STAMINA) + get_ability(ch, CSABIL_EMPATHY), 6);
+
+  if (success < 0)
+  {
+    act( "You attempt a savage howl of rage and praise, but stop as your voice strains.", ch, NULL, NULL, TO_CHAR );
+    act( "$n begins to howl, but $s voice cracks.", ch, NULL, NULL, TO_ROOM );
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_laryngitis;
+    af.level     = level;
+    af.duration  = 3;
+    af.location  = 0;
+    af.modifier  = 0;
+    af.bitvector = 0;
+    affect_to_char( gch, &af );
+    return;
+  }
+
+  if (success == 0)
+  {
+    act( "You let out a loud howl, but no spirits come to aid.", ch, NULL, NULL, TO_CHAR );
+    act( "$n begins a loud howl, lasting for a good minute.", ch, NULL, NULL, TO_ROOM );
+    WAIT_STATE(ch, 9);
+    return;
+  }
+
+  act( "You let forth a savage howl of rage and praise to Luna.", ch, NULL, NULL, TO_CHAR );
+  act( "$n lets forth a savage howl.", ch, NULL, NULL, TO_ROOM );
+
+  for ( gch = ch->in_room->people; gch != NULL; gch = gch->next_in_room )
+  {
+    if ( !is_same_group( gch, ch ) || is_affected(gch, gsn_gift_callofthewyld) || gch->race != race_lookup("garou") )
+      continue;
+    if(gch != ch)
     {
-      act( "You attempt a savage howl, but your enflamed throat causes it to come out broken and disjointed.", ch, NULL, NULL, TO_CHAR );
-      return;
+      act( "$N raises $S head and joins $n in a savage howl!", ch, NULL, gch, TO_NOTVICT );
+      act( "$N raises $S head and joins you in your savage howl!", ch, NULL, gch, TO_CHAR );
+      act( "You feel invigorated by $n's howl and join in the praise to Luna.", ch, NULL, gch, TO_VICT );
     }
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_gift_callofthewyld;
+    af.level     = success;
+    af.duration  = 10 + (success * 5);
+    af.location  = APPLY_CS_STR;
+    af.modifier  = 1;
+    af.bitvector = 0;
+    affect_to_char( gch, &af );
 
-    if (ch->move <= ch->level * 3)
+    if (success > 3)
     {
-      send_to_char("You are too tired to call spirits of aid with your howl.\n\r", ch);
-      return;
-    }
-
-    ch->move -= ch->level * 3;
-
-    success = godice(get_attribute(ch, CSATTRIB_STAMINA) + get_ability(ch, CSABIL_EMPATHY), 6);
-
-    if (success < 0)
-    {
-      act( "You attempt a savage howl of rage and praise, but stop as your voice strains.", ch, NULL, NULL, TO_CHAR );
-      act( "$n begins to howl, but $s voice cracks.", ch, NULL, NULL, TO_ROOM );
-
-      af.where     = TO_AFFECTS;
-      af.type      = gsn_laryngitis;
-      af.level     = level;
-      af.duration  = 3;
-      af.location  = 0;
-      af.modifier  = 0;
-      af.bitvector = 0;
+      af.location  = APPLY_CS_STA;
       affect_to_char( gch, &af );
-      return;
     }
-
-    if (success == 0)
-    {
-      act( "You let out a loud howl, but no spirits come to aid.", ch, NULL, NULL, TO_CHAR );
-      act( "$n begins a loud howl, lasting for a good minute.", ch, NULL, NULL, TO_ROOM );
-      WAIT_STATE(ch, 9);
-      return;
-    }
-
-    act( "You let forth a savage howl of rage and praise to Luna.", ch, NULL, NULL, TO_CHAR );
-    act( "$n lets forth a savage howl.", ch, NULL, NULL, TO_ROOM );
-
-    for ( gch = ch->in_room->people; gch != NULL; gch = gch->next_in_room )
-    {
-        if ( !is_same_group( gch, ch ) || is_affected(gch, gsn_gift_callofthewyld) || gch->race != race_lookup("garou") )
-            continue;
-        if(gch != ch)
-        {
-            act( "$N raises $S head and joins $n in a savage howl!", ch, NULL, gch, TO_NOTVICT );
-            act( "You feel invigorated by $n's howl and join in the praise to Luna.", ch, NULL, gch, TO_VICT );
-        }
-        af.where     = TO_AFFECTS;
-        af.type      = gsn_gift_callofthewyld;
-        af.level     = level;
-        af.duration  = 5 + level/4;
-        af.location  = APPLY_CS_STR;
-        af.modifier  = 1;
-        af.bitvector = 0;
-        affect_to_char( gch, &af );
-
-        af.where     = TO_AFFECTS;
-        af.type      = gsn_gift_callofthewyld;
-        af.level     = level;
-        af.duration  = 5 + level/4;
-        af.location  = APPLY_CS_STA;
-        af.modifier  = 2;
-        af.bitvector = 0;
-        affect_to_char( gch, &af );
-
-        af.where     = TO_AFFECTS;
-        af.type      = gsn_gift_callofthewyld;
-        af.level     = level;
-        af.duration  = 5 + level/4;
-        af.location  = APPLY_AC;
-        af.modifier  = -(level);
-        af.bitvector = 0;
-        affect_to_char( gch, &af );
-
-        af.where     = TO_AFFECTS;
-        af.type      = gsn_gift_callofthewyld;
-        af.level     = level;
-        af.duration  = 5 + level/4;
-        af.location  = APPLY_SAVES;
-        af.modifier  = -(level/10);
-        af.bitvector = 0;
-        affect_to_char( gch, &af );
-    }
+  }
 
     return;
 }

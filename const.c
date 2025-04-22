@@ -2648,7 +2648,7 @@ Total (3) */
 
     { "call of the wyld",             { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_callofthewyld,             TAR_IGNORE,             POS_FIGHTING,
-    &gsn_gift_callofthewyld,          SLOT( 0),        0,     12, "",             "You feel your bloodlust subsiding.",       "" },
+    &gsn_gift_callofthewyld,          SLOT( 0),        0,     12, "",             "The magnificent howl resonating through your body fades.",       "" },
 
     { "waking dream", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_wakingdream,  TAR_IGNORE, POS_STANDING,

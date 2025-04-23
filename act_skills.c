@@ -873,6 +873,12 @@ void do_vigor(CHAR_DATA *ch, char *argument)
       return;
     }
 
+    if (get_skill(ch,gsn_vigor) == 0)
+    {
+        send_to_char("You are not quite powerful enough to whip yourself into shape.\n\r", ch);
+        return;
+    }
+
     if (is_affected(ch, gsn_vigor) && get_affect_level(ch, gsn_vigor) == 0)
     {
       send_to_char("Try as you might, you still cannot remember your training yet.\n\r", ch);

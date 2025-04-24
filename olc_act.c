@@ -1517,11 +1517,11 @@ REDIT( redit_show )
      {
          if (cnt ==0)
          {
-             send_to_char ( " Number Vnum Trigger Phrase\n\r", ch );
-             send_to_char ( " ------ ---- ------- ------\n\r", ch );
+             send_to_char ( "  [P#]   Vnum  TRIGGER  'Phrase'\n\r", ch );
+             send_to_char ( "  ----  -----  -------  --------\n\r", ch );
          }
 
-         sprintf(buf, "[%5d] %4d %7s %s\n\r", cnt,
+         sprintf(buf, "[%2d] %5d %7.7s '%s'\n\r", cnt,
              list->vnum,prog_type_to_name(list->trig_type),
              list->trig_phrase);
          send_to_char( buf, ch );

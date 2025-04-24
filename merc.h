@@ -2878,6 +2878,7 @@ struct  group_type
 #define TRIG_SIT	(S)
 #define TRIG_SYSTIME   (T)
 #define TRIG_MUDTIME (U)
+#define TRIG_TALK   (V)
 
 /*
  * Prog types
@@ -4243,6 +4244,7 @@ void	p_give_trigger   args( ( CHAR_DATA *mob, OBJ_DATA *obj,
 				OBJ_DATA *dropped, int type ) );
 void 	p_greet_trigger  args( ( CHAR_DATA *ch, int type ) );
 void	p_hprct_trigger  args( ( CHAR_DATA *mob, CHAR_DATA *ch ) );
+void    p_talk_trigger  args( ( CHAR_DATA *mob, CHAR_DATA *ch ) );
 
 /* mob_cmds.c */
 void    mob_interpret   args( ( CHAR_DATA *ch, char *argument ) );

@@ -167,6 +167,7 @@ char *prog_type_to_name( int type )
     case TRIG_SIT:				return "SIT";
 	case TRIG_SYSTIME:			return "SYSTIME";
 	case TRIG_MUDTIME: 			return "MUDTIME";
+    case TRIG_TALK:             return "TALK";
     default:                  	return "ERROR";
     }
 }

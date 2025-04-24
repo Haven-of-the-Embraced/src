@@ -1611,15 +1611,13 @@ void do_talk( CHAR_DATA *ch, char *argument )
     CHAR_DATA *victim;
     char arg[MSL];
 
-    argument = one_argument( argument, arg );
-
-    if ( arg[0] == '\0' || argument[0] == '\0' )
+    if (argument[0] == NULL)
     {
         send_to_char( "Whom are you trying to talk to?\n\r", ch );
         return;
     }
 
-    if ( ( victim = get_char_world( ch, arg ) ) == NULL
+    if ( ( victim = get_char_world( ch, argument ) ) == NULL
     || victim->in_room != ch->in_room )
     {
         act("You can't seem to find $N in this room.", ch, NULL, victim, TO_CHAR);

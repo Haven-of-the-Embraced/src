@@ -1645,7 +1645,7 @@ void do_talk( CHAR_DATA *ch, char *argument )
 
     ch->move--;
     WAIT_STATE(ch, 2);
-    success = godice(get_attribute(CSATTR_CHARISMA) + get_ability(CSABIL_ETIQUETTE), diff);
+    success = godice(get_attribute(ch, CSATTRIB_CHARISMA) + get_ability(ch, CSABIL_ETIQUETTE), diff);
 
     if (success <= 0)
     {

@@ -552,7 +552,6 @@ const struct flag_type mprog_flags[] =
     {   "surr",         TRIG_SURR,      TRUE    },
 	{   "systime", 		TRIG_SYSTIME, 	TRUE	},
 	{   "mudtime", 		TRIG_MUDTIME, 	TRUE	},
-    {   "talk",         TRIG_TALK,      TRUE    },
     {   NULL,           0,          	TRUE    }
 };
 

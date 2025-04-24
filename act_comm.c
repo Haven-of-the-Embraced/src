@@ -1637,6 +1637,14 @@ void do_talk( CHAR_DATA *ch, char *argument )
         return;
     }
 
+    if (is_affected(ch, gsn_silencethesanemind)  || is_affected(ch, gsn_howlinglunacy))
+    {
+        act("You babble incoherently at $N.", ch, NULL, victim, TO_CHAR);
+        act("$n babbles on and on, making no sense at all.", ch, NULL, victim, TO_VICT);
+        act("$n begins babbling about nothing to $N.", ch, NULL, victim, TO_NOTVICT);
+        return;
+    }
+
     if (is_affected(victim, gsn_deafened))
     {
         send_to_char("Your target seems to be unable to hear you.\n\r", ch);
@@ -1675,7 +1683,7 @@ void do_talk( CHAR_DATA *ch, char *argument )
         return;
     }
 
-    act("You try to strike up a conversation with $N, but to no avail.", ch, NULL, victim, TO_CHAR);
+    act("You try to strike up a conversation with $N, but $E has nothing to say.", ch, NULL, victim, TO_CHAR);
     act("$n tries to start a conversation with you.", ch, NULL, victim, TO_VICT);
     act("$n tries to start a conversation with $N.", ch, NULL, victim, TO_NOTVICT);
     return;

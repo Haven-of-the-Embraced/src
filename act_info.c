@@ -3736,6 +3736,9 @@ void do_wimpy( CHAR_DATA *ch, char *argument )
     else if ( !strcmp( arg, "default" ) )
     {
         wimpy = ch->max_hit / 5;
+        ch->wimpy   = wimpy;
+        sprintf( buf, "{y|    {xYou will automatically try to flee when you drop to %5d hit points.     {y|{x\n\r", ch->wimpy );
+        send_to_char( buf, ch );
     }
 
     else
@@ -3744,16 +3747,16 @@ void do_wimpy( CHAR_DATA *ch, char *argument )
 
         if ( wimpy < 0 )
         {
-            send_to_char( "Your courage exceeds your wisdom.  # must be > 0.\n\r", ch );
+            send_to_char( "{y|                {xYour courage exceeds your wisdom.  # must be > 0.             {y|{x\n\r", ch );
         }
         else if ( wimpy > ch->max_hit/2 )
         {
-            send_to_char( "Such cowardice ill becomes you.  Choose a value < 50% of your max hit points.\n\r", ch );
+            send_to_char( "{y| {xSuch cowardice ill becomes you.  Choose a value < 50% of your max hit points.{y|{x\n\r", ch );
         }
         else
         {
             ch->wimpy   = wimpy;
-            sprintf( buf, "Wimpy is now set to %d hit points.\n\r", wimpy );
+            sprintf( buf, "{y|{x                    Wimpy is now set to %5d hit points.                     {y|{x\n\r", wimpy );
             send_to_char( buf, ch );
         }
     }

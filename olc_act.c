@@ -5905,7 +5905,14 @@ MEDIT ( medit_addmprog )
   list                  = new_mprog();
   list->vnum            = atoi(num);
   list->trig_type       = value;
-  list->trig_phrase     = str_dup(phrase);
+  if ( (value = flag_value (mprog_flags, trigger) ) == TRIG_TALK && 
+    phrase != 0)
+  {
+        send_to_char("Currently, [phrase] can only be '0' for 'TALK' programs.  Setting to '0'.\n\r",ch);
+        list->trig_phrase   = str_dup("0");
+  }
+  else
+      list->trig_phrase     = str_dup(phrase);
   list->code            = code->code;
   SET_BIT(pMob->mprog_flags,value);
   list->next            = pMob->mprogs;

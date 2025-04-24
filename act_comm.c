@@ -1610,6 +1610,7 @@ void do_talk( CHAR_DATA *ch, char *argument )
 {
     CHAR_DATA *victim;
     char arg[MSL];
+    int success, diff = 6;
 
     if (argument[0] == NULL)
     {
@@ -1643,6 +1644,16 @@ void do_talk( CHAR_DATA *ch, char *argument )
     }
 
     ch->move--;
+    WAIT_STATE(ch, 2);
+    success = godice(get_attribute(CSATTR_CHARISMA) + get_ability(CSABIL_ETIQUETTE), diff);
+
+    if (success <= 0)
+    {
+        send_to_char("You try to form a sentence, but words elude you.\n\r", ch);
+        WAIT_STATE(ch, 6);
+        return;
+    }
+
     if (!IS_NPC(victim))
     {
         act("You try to strike up a conversation with $N.", ch, NULL, victim, TO_CHAR);
@@ -1652,12 +1663,21 @@ void do_talk( CHAR_DATA *ch, char *argument )
         return;
     }
 
+    if (!IS_SET(victim->form,FORM_SENTIENT))
+    {
+        act("$N does not seem capable of conversation.", ch, NULL, victim, TO_CHAR);
+        return;
+    }
+
     if (IS_NPC( victim ) && HAS_TRIGGER_MOB( victim, TRIG_TALK ))
     {
         p_talk_trigger( victim, ch );
         return;
     }
 
+    act("You try to strike up a conversation with $N, but to no avail.", ch, NULL, victim, TO_CHAR);
+    act("$n tries to start a conversation with you.", ch, NULL, victim, TO_VICT);
+    act("$n tries to start a conversation with $N.", ch, NULL, victim, TO_NOTVICT);
     return;
 }
 

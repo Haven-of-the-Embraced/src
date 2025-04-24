@@ -2759,7 +2759,7 @@ void p_talk_trigger( CHAR_DATA *mob, CHAR_DATA *ch )
             if(test->ch == ch && test->vnum == prg->vnum)
                 return;
 
-        program_flow( prg->vnum, prg->code, mob, NULL, NULL, ch, NULL, NULL, TRIG_TALK );
+        program_flow( prg->vnum, prg->code, mob, NULL, NULL, ch, NULL, NULL, 1 );
         break;
     }
 }

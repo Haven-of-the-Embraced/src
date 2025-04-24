@@ -1622,7 +1622,35 @@ void do_talk( CHAR_DATA *ch, char *argument )
     if ( ( victim = get_char_world( ch, arg ) ) == NULL
     || victim->in_room != ch->in_room )
     {
-        send_to_char( "They aren't here to chat with.\n\r", ch );
+        act("You can't seem to find $N in this room.", ch, NULL, victim, TO_CHAR);
+        return;
+    }
+
+    if (ch->move < 1)
+    {
+        send_to_char("Talking is too exhausting right now.\n\r", ch);
+        return;
+    }
+
+    if (is_affected(ch, gsn_laryngitis))
+    {
+        send_to_char("Your throat is too sore to talk.\n\r", ch);
+        return;
+    }
+
+    if (is_affected(victim, gsn_deafened))
+    {
+        send_to_char("Your target seems to be unable to hear you.\n\r", ch);
+        return;
+    }
+
+    ch->move--;
+    if (!IS_NPC(victim))
+    {
+        act("You try to strike up a conversation with $N.", ch, NULL, victim, TO_CHAR);
+        act("$n begins a conversation with you.", ch, NULL, victim, TO_VICT);
+        act("$n starts talking to $N.", ch, NULL, victim, TO_NOTVICT);
+        WAIT_STATE(ch, 3);
         return;
     }
 

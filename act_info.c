@@ -3711,40 +3711,53 @@ void do_wimpy( CHAR_DATA *ch, char *argument )
     int wimpy;
 
     one_argument( argument, arg );
+    send_to_char("{y                                | WIMPY |{x\n\r", ch);
+    send_to_char("{yW______________________________________________________________________________W{x\n\r", ch);
 
-    if( !strcmp( arg, "show" ) )
+    if (arg[0] == '\0')
     {
-      send_to_char("{y                                | WIMPY |{x\n\r", ch);
-      send_to_char("{yW______________________________________________________________________________W{x\n\r", ch);
+        send_to_char("{y|     {xCommand:  {cwimpy (option)                                                 {y|{x\n\r", ch);
+        send_to_char("{y|     {x(option)                                                                 {y|{x\n\r", ch);
+        send_to_char("{y|     {x--------                                                                 {y|{x\n\r", ch);
+        send_to_char("{y|     {x  show        Shows current Wimpy setting.                               {y|{x\n\r", ch);
+        send_to_char("{y|     {x default      Sets Wimpy to 20% maximum hit points.                      {y|{x\n\r", ch);
+        send_to_char("{y|     {x   #          Sets Wimpy to # hit points.                                {y|{x\n\r", ch);
+    }
+
+    else if( !strcmp( arg, "show" ) )
+    {
       if (ch->wimpy == 0)
         sprintf( buf, "{y|     {xYou will never flee automatically.  Set your Wimpy above 0 to do so.     {y|{x\n\r");
       else
         sprintf( buf, "{y|    {xYou will automatically try to flee when you drop to %5d hit points.     {y|{x\n\r", ch->wimpy );
       send_to_char( buf, ch );
-      send_to_char("{yW------------------------------------------------------------------------------W{x\n\r", ch);
-      return;
     }
 
-    if ( arg[0] == '\0' )
-    wimpy = ch->max_hit / 5;
+    else if ( !strcmp( arg, "default" ) )
+    {
+        wimpy = ch->max_hit / 5;
+    }
+
     else
-    wimpy = atoi( arg );
-
-    if ( wimpy < 0 )
     {
-    send_to_char( "Your courage exceeds your wisdom.\n\r", ch );
-    return;
-    }
+        wimpy = atoi( arg );
 
-    if ( wimpy > ch->max_hit/2 )
-    {
-    send_to_char( "Such cowardice ill becomes you.  Choose a lower value.\n\r", ch );
-    return;
+        if ( wimpy < 0 )
+        {
+            send_to_char( "Your courage exceeds your wisdom.  # must be > 0.\n\r", ch );
+        }
+        else if ( wimpy > ch->max_hit/2 )
+        {
+            send_to_char( "Such cowardice ill becomes you.  Choose a value < 50% of your max hit points.\n\r", ch );
+        }
+        else
+        {
+            ch->wimpy   = wimpy;
+            sprintf( buf, "Wimpy is now set to %d hit points.\n\r", wimpy );
+            send_to_char( buf, ch );
+        }
     }
-
-    ch->wimpy   = wimpy;
-    sprintf( buf, "Wimpy is now set to %d hit points.\n\r", wimpy );
-    send_to_char( buf, ch );
+    send_to_char("{yW______________________________________________________________________________W{x\n\r", ch);
     return;
 }
 

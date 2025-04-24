@@ -1652,6 +1652,12 @@ void do_talk( CHAR_DATA *ch, char *argument )
         return;
     }
 
+    if (IS_NPC( victim ) && HAS_TRIGGER_MOB( victim, TRIG_TALK ))
+    {
+        p_talk_trigger( victim, ch );
+        return;
+    }
+
     return;
 }
 

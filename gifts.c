@@ -2472,8 +2472,54 @@ void spell_gift_callofthewyrm( int sn, int level, CHAR_DATA *ch, void *vo, int t
 //wits + performance diff target wp
 //each success takes one from target’s dice pool on next turn
 //
-void spell_gift_distractions( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_distractions( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  AFFECT_DATA af;
+  CHAR_DATA *victim = (CHAR_DATA *) vo;
+  int success, diff = 6;
+
+  if (ch-> move < ch->level * 2)
+  {
+    send_to_char("You are too tired to call on wolf-spirits for assistance.\n\r", ch);
     return;
+  }
+
+  if (is_affected(ch, gsn_laryngitis))
+  {
+    send_to_char("Your throat is too sore to properly yip and howl.\n\r", ch);
+    return;
+  }
+
+  if (victim->level > ch->level + 10)
+    diff++;
+  if (IS_SET(victim->act2, ACT2_ULTRA_MOB))
+    diff++;
+
+  ch->move -= ch->level * 2;
+  success = godice(get_attribute(ch, CSATTRIB_WITS) + get_ability(ch, CSABIL_PERFORMANCE), diff);
+
+  if (success < 0)
+  {
+    send_to_char("Wolf-spirits answer, but are angered at your request.  They constantly harrass you.\n\r", ch);
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_gift_distractions;
+    af.level     = -1;
+    af.duration  = 2;
+    af.location  = APPLY_HITROLL;
+    af.modifier  = -success * 200;
+    af.bitvector = 0;
+    affect_to_char( gch, &af );
+    return;
+  }
+
+  if (success == 0)
+  {
+    send_to_char("The wolf-spirits do not recognize you as alpha, and refuse to aid.\n\r", ch);
+    WAIT_STATE(ch, 6);
+    return;
+  }
+
+  return;
 }
 //Rank Three
 //

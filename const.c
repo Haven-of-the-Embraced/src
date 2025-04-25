@@ -2659,7 +2659,7 @@ Total (3) */
     &gsn_gift_callofthewyrm,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     { "distractions", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_distractions,  TAR_IGNORE, POS_STANDING,
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_distractions,  TAR_CHAR_OFFENSIVE, POS_STANDING,
     &gsn_gift_distractions,          SLOT( 0),        0,     12, "",             "The yipping and howling in your ear subsides.",        "" },
 
     { "eye of the asp", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },

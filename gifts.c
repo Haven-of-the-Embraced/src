@@ -2484,12 +2484,20 @@ void spell_gift_distractions( int sn, int level, CHAR_DATA *ch, void *vo, int ta
     return;
   }
 
+  if (is_affected(victim, gsn_gift_distractions))
+  {
+    send_to_char("Your target is already bombarded by howls and yips.\n\r", ch);
+    return;
+  }
+
   if (is_affected(ch, gsn_laryngitis))
   {
     send_to_char("Your throat is too sore to properly yip and howl.\n\r", ch);
     return;
   }
 
+  if (victim->level < ch->level - 10)
+    diff--;
   if (victim->level > ch->level + 10)
     diff++;
   if (IS_SET(victim->act2, ACT2_ULTRA_MOB))
@@ -2508,7 +2516,7 @@ void spell_gift_distractions( int sn, int level, CHAR_DATA *ch, void *vo, int ta
     af.location  = APPLY_HITROLL;
     af.modifier  = -success * 200;
     af.bitvector = 0;
-    affect_to_char( gch, &af );
+    affect_to_char( ch, &af );
     return;
   }
 
@@ -2519,6 +2527,18 @@ void spell_gift_distractions( int sn, int level, CHAR_DATA *ch, void *vo, int ta
     return;
   }
 
+  act("You request a pack of wolf-spirits to harrass $N!", ch, NULL, victim, TO_CHAR);
+  act("Wolf howls and yips assault your eardrums!", ch, NULL, victim, TO_VICT);
+  act("$n tries to reach out and touch $N, but misses.", ch, NULL, victim, TO_NOTVICT);
+
+  af.where     = TO_AFFECTS;
+  af.type      = gsn_gift_distractions;
+  af.level     = success;
+  af.duration  = 2;
+  af.location  = APPLY_HITROLL;
+  af.modifier  = -success * ch->level - 25;
+  af.bitvector = 0;
+  affect_to_char( victim, &af );
   return;
 }
 //Rank Three

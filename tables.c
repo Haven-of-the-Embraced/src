@@ -1429,7 +1429,7 @@ const struct    gift_type   gift_table  [MAX_GIFTS_CODED]  =
     {   "beast speech", 				0,     24, 0,     0,      GALLIARD,   RED_TALON,  1,   0},
     {   "walking dream", 				0,     24, 0,     0,      GALLIARD,   0,        1,   0},
     {   "call of the wyrm", 			0,     24, 0,     0,      GALLIARD,   0,        2,   0},
-    {   "distractions", 				0,     24, 0,     0,      GALLIARD,   0,        2,   0},
+    {   "distractions", 				1,     24, 0,     0,      GALLIARD,   0,        2,   0},
     {   "eye of the asp", 				0,     24, 0,     0,      GALLIARD,   0,        3,   0},
     {   "song of rage", 				0,     24, 0,     0,      GALLIARD,   0,        3,   0},
     {   "shadows by the firelight",		0,     24, 0,     0,      GALLIARD,   0,        4,   0},

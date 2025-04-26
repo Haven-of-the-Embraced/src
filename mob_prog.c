@@ -2747,6 +2747,23 @@ void p_hprct_trigger( CHAR_DATA *mob, CHAR_DATA *ch )
     }
 }
 
+void p_talk_trigger( CHAR_DATA *mob, CHAR_DATA *ch )
+{
+    PROG_LIST *prg;
+    SLEEP_DATA *test;
+
+    for ( prg = mob->pIndexData->mprogs; prg != NULL; prg = prg->next )
+    if ( prg->trig_type == TRIG_TALK )
+    {
+        for(test = first_sleep; test != NULL; test = test->next)
+            if(test->ch == ch && test->vnum == prg->vnum)
+                return;
+
+        program_flow( prg->vnum, prg->code, mob, NULL, NULL, ch, NULL, NULL, 1 );
+        break;
+    }
+}
+
 PROG_CODE *get_mprog_by_vnum(int vnum)
 {
     PROG_CODE *temp;

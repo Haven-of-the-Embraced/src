@@ -495,7 +495,7 @@ void mobile_update( void )
     }
 
     /* Wander */
-    if ( !IS_SET(ch->act, ACT_SENTINEL)
+    if ( !IS_SET(ch->act, ACT_SENTINEL) && !is_affected(ch, gsn_earthmeld)
     && number_bits(3) == 0
     && ( door = number_bits( 5 ) ) <= 5
     && ( pexit = ch->in_room->exit[door] ) != NULL

@@ -1774,13 +1774,22 @@ void reset_room( ROOM_INDEX_DATA *pRoom )
     if((pRoom->sector_type == SECT_NODE) && pRoom->room_flags != ROOM_UMBRA &&
         number_range(1, 20) == 1)
     {
+        OBJ_DATA *obj;
+        int shrooms = 0;
+        for ( obj = pRoom->contents; obj; obj = obj->next_content )
+        {
+            if (obj->pIndexData->vnum == OBJ_VNUM_TASS_MUSHROOM)
+            shrooms++;
+        }
         /*spawn*/
         OBJ_DATA *faeriemushroom;
-
-        if((faeriemushroom = create_object(get_obj_index(OBJ_VNUM_TASS_MUSHROOM),0)) != NULL);
+        if (shrooms < 5)
         {
-          faeriemushroom->value[0] = number_range(1,50);
-          obj_to_room( faeriemushroom, pRoom );
+            if((faeriemushroom = create_object(get_obj_index(OBJ_VNUM_TASS_MUSHROOM),0)) != NULL);
+            {
+                faeriemushroom->value[0] = number_range(1,50);
+                obj_to_room( faeriemushroom, pRoom );
+            }
         }
     }
 

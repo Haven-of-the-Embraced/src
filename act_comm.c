@@ -1606,6 +1606,88 @@ void do_pose( CHAR_DATA *ch, char *argument )
     return;
 }
 
+void do_talk( CHAR_DATA *ch, char *argument )
+{
+    CHAR_DATA *victim;
+    char arg[MSL];
+    int success, diff = 6;
+
+    if (argument[0] == NULL)
+    {
+        send_to_char( "Whom are you trying to talk to?\n\r", ch );
+        return;
+    }
+
+    if ( ( victim = get_char_world( ch, argument ) ) == NULL
+    || victim->in_room != ch->in_room )
+    {
+        act("You can't seem to find $N in this room.", ch, NULL, victim, TO_CHAR);
+        return;
+    }
+
+    if (ch->move < 1)
+    {
+        send_to_char("Talking is too exhausting right now.\n\r", ch);
+        return;
+    }
+
+    if (is_affected(ch, gsn_laryngitis))
+    {
+        send_to_char("Your throat is too sore to talk.\n\r", ch);
+        return;
+    }
+
+    if (is_affected(ch, gsn_silencethesanemind)  || is_affected(ch, gsn_howlinglunacy))
+    {
+        act("You babble incoherently at $N.", ch, NULL, victim, TO_CHAR);
+        act("$n babbles on and on, making no sense at all.", ch, NULL, victim, TO_VICT);
+        act("$n begins babbling about nothing to $N.", ch, NULL, victim, TO_NOTVICT);
+        return;
+    }
+
+    if (is_affected(victim, gsn_deafened))
+    {
+        send_to_char("Your target seems to be unable to hear you.\n\r", ch);
+        return;
+    }
+
+    ch->move--;
+    WAIT_STATE(ch, 2);
+    success = godice(get_attribute(ch, CSATTRIB_CHARISMA) + get_ability(ch, CSABIL_ETIQUETTE), diff);
+
+    if (success <= 0)
+    {
+        send_to_char("You try to form a sentence, but words elude you.\n\r", ch);
+        WAIT_STATE(ch, 6);
+        return;
+    }
+
+    if (!IS_NPC(victim))
+    {
+        act("You try to strike up a conversation with $N.", ch, NULL, victim, TO_CHAR);
+        act("$n begins a conversation with you.", ch, NULL, victim, TO_VICT);
+        act("$n starts talking to $N.", ch, NULL, victim, TO_NOTVICT);
+        WAIT_STATE(ch, 3);
+        return;
+    }
+
+    if (!IS_SET(victim->form,FORM_SENTIENT))
+    {
+        act("$N does not seem capable of conversation.", ch, NULL, victim, TO_CHAR);
+        return;
+    }
+
+    if (IS_NPC( victim ) && HAS_TRIGGER_MOB( victim, TRIG_TALK ))
+    {
+        p_talk_trigger( victim, ch );
+        return;
+    }
+
+    act("You try to strike up a conversation with $N, but $E has nothing to say.", ch, NULL, victim, TO_CHAR);
+    act("$n tries to start a conversation with you.", ch, NULL, victim, TO_VICT);
+    act("$n tries to start a conversation with $N.", ch, NULL, victim, TO_NOTVICT);
+    return;
+}
 
 
 void do_dictionary( CHAR_DATA *ch, char *argument )

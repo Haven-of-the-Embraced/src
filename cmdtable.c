@@ -100,6 +100,7 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "stand",      do_stand },
     { "tell",       do_tell },
     { "whisper",    do_whisper},
+    { "talk",       do_talk },
     { "unlock",         do_unlock },
     { "wield",      do_wear }, // DOES NOT MATCH.
     { "emote",      do_emote },

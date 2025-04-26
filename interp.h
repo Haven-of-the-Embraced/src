@@ -337,6 +337,7 @@ DECLARE_DO_FUN( do_surrender);
 DECLARE_DO_FUN( do_switch   );
 DECLARE_DO_FUN( do_tell );
 DECLARE_DO_FUN( do_whisper);
+DECLARE_DO_FUN( do_talk );
 DECLARE_DO_FUN( do_time );
 DECLARE_DO_FUN( do_title    );
 DECLARE_DO_FUN( do_train    );

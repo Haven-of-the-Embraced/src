@@ -1517,11 +1517,11 @@ REDIT( redit_show )
      {
          if (cnt ==0)
          {
-             send_to_char ( " Number Vnum Trigger Phrase\n\r", ch );
-             send_to_char ( " ------ ---- ------- ------\n\r", ch );
+             send_to_char ( "  [P#]   Vnum  TRIGGER  'Phrase'\n\r", ch );
+             send_to_char ( "  ----  -----  -------  --------\n\r", ch );
          }
 
-         sprintf(buf, "[%5d] %4d %7s %s\n\r", cnt,
+         sprintf(buf, "[%2d] %5d %7.7s '%s'\n\r", cnt,
              list->vnum,prog_type_to_name(list->trig_type),
              list->trig_phrase);
          send_to_char( buf, ch );
@@ -3373,11 +3373,11 @@ OEDIT( oedit_show )
 	{
 		if (cnt ==0)
 		{
-			send_to_char ( " Number Vnum Trigger Phrase\n\r", ch );
-			send_to_char ( " ------ ---- ------- ------\n\r", ch );
+			send_to_char ( " [P#]   Vnum  TRIGGER  'Phrase'\n\r", ch );
+			send_to_char ( " ----  -----  -------  --------\n\r", ch );
 		}
 
-		sprintf(buf, "[%5d] %4d %7s %s\n\r", cnt,
+		sprintf(buf, " [%2d]  %5d  %7.7s  '%s'\n\r", cnt,
 			list->vnum,prog_type_to_name(list->trig_type),
 			list->trig_phrase);
 		send_to_char( buf, ch );
@@ -4384,11 +4384,11 @@ MEDIT( medit_show )
     {
         if (cnt ==0)
         {
-            send_to_char ( " Number Vnum Trigger Phrase\n\r", ch );
-            send_to_char ( " ------ ---- ------- ------\n\r", ch );
+            send_to_char ( "  [P#]   Vnum  TRIGGER  'Phrase'\n\r", ch );
+            send_to_char ( "  ----  -----  -------  --------\n\r", ch );
         }
 
-        sprintf(buf, "[%5d] %4d %7s %s\n\r", cnt,
+        sprintf(buf, "  [%2d]  %5d  %7.7s  '%s'\n\r", cnt,
             list->vnum,prog_type_to_name(list->trig_type),
             list->trig_phrase);
         send_to_char( buf, ch );
@@ -5905,7 +5905,14 @@ MEDIT ( medit_addmprog )
   list                  = new_mprog();
   list->vnum            = atoi(num);
   list->trig_type       = value;
-  list->trig_phrase     = str_dup(phrase);
+  if ( (value = flag_value (mprog_flags, trigger) ) == TRIG_TALK && 
+    phrase != 0)
+  {
+        send_to_char("Currently, [phrase] can only be '0' for 'TALK' programs.  Setting to '0'.\n\r",ch);
+        list->trig_phrase   = str_dup("0");
+  }
+  else
+      list->trig_phrase     = str_dup(phrase);
   list->code            = code->code;
   SET_BIT(pMob->mprog_flags,value);
   list->next            = pMob->mprogs;

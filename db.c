@@ -1774,10 +1774,11 @@ void reset_room( ROOM_INDEX_DATA *pRoom )
     if((pRoom->sector_type == SECT_NODE) && pRoom->room_flags != ROOM_UMBRA &&
         number_range(1, 20) == 1)
     {
+        OBJ_DATA *obj;
         int shrooms = 0;
         for ( obj = pRoom->contents; obj; obj = obj->next_content )
         {
-            if (obj->vnum == OBJ_VNUM_TASS_MUSHROOM)
+            if (obj->pIndexData->vnum == OBJ_VNUM_TASS_MUSHROOM)
             shrooms++;
         }
         /*spawn*/

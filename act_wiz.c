@@ -1283,7 +1283,7 @@ do_crossgauntlet(CHAR_DATA *ch, char *argument)
         }
 
     act("You force $N across the Gauntlet.", ch, NULL, victim, TO_CHAR);
-    act("You feel yourself being forced through the Gauntlet.", ch, NULL, victim, TO_VICT);
+    act("{mYou feel yourself being forced through the Gauntlet.{x", ch, NULL, victim, TO_VICT);
     pass_gauntlet(victim, TRUE);
     do_function(victim, &do_look, "auto");
 

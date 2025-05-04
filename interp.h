@@ -342,6 +342,7 @@ DECLARE_DO_FUN( do_time );
 DECLARE_DO_FUN( do_title    );
 DECLARE_DO_FUN( do_train    );
 DECLARE_DO_FUN( do_transfer );
+DECLARE_DO_FUN( do_crossgauntlet);
 DECLARE_DO_FUN( do_trip     );
 DECLARE_DO_FUN( do_trust    );
 DECLARE_DO_FUN( do_typo );

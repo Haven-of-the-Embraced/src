@@ -568,6 +568,7 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "xp boost",   do_xp_boost},
     { "teleport",   do_transfer},
     { "transfer",   do_transfer},
+    { "crossgauntlet",  do_crossgauntlet},
     { "write",      do_write},
     { "seal",       do_seal},
     { "unseal",     do_unseal},

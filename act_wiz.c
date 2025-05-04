@@ -1275,12 +1275,17 @@ do_crossgauntlet(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if (IS_AFFECTED2(ch, AFF2_UMBRA))
-        if (IS_SET(ch->in_room->room_flags, ROOM_UMBRA))
+    if (IS_AFFECTED2(victim, AFF2_UMBRA))
+        if (IS_SET(victim->in_room->room_flags, ROOM_UMBRA))
         {
-            sendch("You cannot return to Reality, this place does not exist there!\n\r", ch);
+            act("The room that $N is in is UMBRAL ONLY, you cannot bring them back.", ch, NULL, victim, TO_CHAR);
             return FALSE;
         }
+
+    act("You force $N across the Gauntlet.", ch, NULL, victim, TO_CHAR);
+    act("You feel yourself being forced through the Gauntlet.", ch, NULL, victim, TO_VICT);
+    pass_gauntlet(victim, TRUE);
+    do_function(victim, &do_look, "auto");
 
     return;
 }

@@ -4604,7 +4604,8 @@ char *quintessencedot2( int num, bool space)
 
 bool grudge_check(CHAR_DATA *ch, CHAR_DATA *victim)
 {
-    if(victim && (ch->grudge == victim))
+    if(victim && (ch->grudge == victim) 
+        && !is_affected(ch, gsn_earthmeld) && !is_affected(victim, gsn_earthmeld))
     return TRUE;
     else return FALSE;
 }

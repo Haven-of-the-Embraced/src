@@ -1160,8 +1160,6 @@ ROOM_INDEX_DATA *find_location( CHAR_DATA *ch, char *arg )
     return NULL;
 }
 
-
-
 void do_transfer( CHAR_DATA *ch, char *argument )
 {
     char arg1[MAX_INPUT_LENGTH];
@@ -1255,6 +1253,36 @@ void do_transfer( CHAR_DATA *ch, char *argument )
     act( "$n has transferred you.", ch, NULL, victim, TO_VICT );
     do_function(victim, &do_look, "auto" );
     send_to_char( "Ok.\n\r", ch );
+}
+
+do_crossgauntlet(CHAR_DATA *ch, char *argument)
+{
+    CHAR_DATA *victim;
+    char arg [MAX_INPUT_LENGTH];
+    AFFECT_DATA af;
+
+    argument = one_argument( argument, arg );
+
+    if ( arg[0] == '\0' )
+    {
+        send_to_char("Whom are you trying to force accross the Gauntlet?\n\r",ch);
+        return;
+    }
+
+    if ( ( victim = get_char_world( ch, arg ) ) == NULL )
+    {
+        send_to_char("That person isn't anywhere to be found, on any plane, Tellurian or Umbral.\n\r",ch);
+        return;
+    }
+
+    if (IS_AFFECTED2(ch, AFF2_UMBRA))
+        if (IS_SET(ch->in_room->room_flags, ROOM_UMBRA))
+        {
+            sendch("You cannot return to Reality, this place does not exist there!\n\r", ch);
+            return FALSE;
+        }
+
+    return;
 }
 
 void do_rat(CHAR_DATA *ch, char *argument)

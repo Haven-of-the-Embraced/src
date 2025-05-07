@@ -2302,7 +2302,7 @@ void do_hometown (CHAR_DATA *ch, char *argument)
       sendch(" + Syntax:          hometown <city>              +\n\r", ch);
       sendch(" +                  hometown list                +\n\r", ch);
       sendch(" +-----------------------------------------------+\n\r", ch);
-      sendch(" + Cost  :          {Y250 Quest Points{x             +\n\r", ch);
+      sendch(" + Cost  :          {Y200 Quest Points{x             +\n\r", ch);
       if (is_affected(ch, gsn_hometown_change))
       {
         sendch(" +-----------------------------------------------+\n\r", ch);
@@ -2352,15 +2352,15 @@ void do_hometown (CHAR_DATA *ch, char *argument)
       return;
     }
 
-    if (ch->qpoints < 250)
+    if (ch->qpoints < 200)
     {
-      send_to_char("It costs {Y250 Quest Points{x to be able to change your Hometown location.\n\r", ch);
+      send_to_char("It costs {Y200 Quest Points{x to be able to change your Hometown location.\n\r", ch);
       return;
     }
 
     if (!str_cmp(arg2, "confirm"))
     {
-        ch->qpoints -= 250;
+        ch->qpoints -= 200;
         sendch(" +-----------------------------------------------+\n\r", ch);
         cprintf(ch, " +    Setting new hometown to:   {y%10s{x      +\n\r +    {Y250QP{x deducted.    {g%6dQP{x remaining.     +\n\r", hometown_table[hn].name, ch->qpoints);
         sendch(" +-----------------------------------------------+\n\r", ch);
@@ -2369,7 +2369,7 @@ void do_hometown (CHAR_DATA *ch, char *argument)
         af.where      = TO_AFFECTS;
         af.type       = gsn_hometown_change;
         af.level      = 0;
-        af.duration   = 500;
+        af.duration   = 250;
         af.modifier   = 0;
         af.location   = APPLY_NONE;
         af.bitvector  = 0;
@@ -2378,7 +2378,7 @@ void do_hometown (CHAR_DATA *ch, char *argument)
     }
     else
     {
-        cprintf(ch, "To set your recall location to %s, type 'hometown %s confirm'\n\rRemember, you will be charged {Y250QP{x for this change.\n\r",
+        cprintf(ch, "To set your recall location to %s, type 'hometown %s confirm'\n\rRemember, you will be charged {Y200QP{x for this change.\n\r",
           hometown_table[hn].name, hometown_table[hn].name);
         return;
     }

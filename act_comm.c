@@ -1625,6 +1625,12 @@ void do_talk( CHAR_DATA *ch, char *argument )
         return;
     }
 
+    if (!SAME_UMBRA(ch, victim))
+    {
+        act("$N seems to be on a different Umbral plane than you.", ch, NULL, victim, TO_CHAR);
+        return;
+    }
+
     if (ch->move < 1)
     {
         send_to_char("Talking is too exhausting right now.\n\r", ch);

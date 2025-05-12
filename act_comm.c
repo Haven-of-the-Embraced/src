@@ -1631,6 +1631,12 @@ void do_talk( CHAR_DATA *ch, char *argument )
         return;
     }
 
+    if (victim->position <= POS_SLEEPING)
+    {
+        send_to_char("You cannot talk to someone who is sleeping.\n\r", ch);
+        return;
+    }
+
     if (ch->move < 1)
     {
         send_to_char("Talking is too exhausting right now.\n\r", ch);

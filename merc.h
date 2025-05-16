@@ -49,8 +49,8 @@
 #endif
 
 /* system calls */
-int unlink();
-int system();
+int unlink(const char *);
+int system(const char *);
 
 #define DECLARE_REPEAT_FUN(fun, repeat) void fun (CHAR_DATA *ch, char *argument) \
         {do_function(ch, repeat, argument);}
@@ -85,7 +85,6 @@ typedef int             bool;
 #define unix
 #else
 typedef short   int         sh_int;
-typedef unsigned char           bool;
 #endif
 
 /* ea */

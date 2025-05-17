@@ -380,7 +380,7 @@ void fwrite_char( CHAR_DATA *ch, FILE *fp )
         ch->pcdata->discipline[15], ch->pcdata->discipline[16], ch->pcdata->discipline[17]);
     }
 
-    fprintf( fp, "CSbackgrounds %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d\n",
+    fprintf( fp, "CSbackgrounds %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d\n",
     ch->pcdata->csbackgrounds[0],   ch->pcdata->csbackgrounds[1],   ch->pcdata->csbackgrounds[2],
     ch->pcdata->csbackgrounds[3],   ch->pcdata->csbackgrounds[4],   ch->pcdata->csbackgrounds[5],
     ch->pcdata->csbackgrounds[6],   ch->pcdata->csbackgrounds[7],   ch->pcdata->csbackgrounds[8],

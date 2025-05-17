@@ -452,7 +452,18 @@ struct buf_type
 #define CSBACK_PUREBREED        16
 #define CSBACK_FETISH           17
 #define CSBACK_RITES            18
-#define MAX_CSBACK              19
+#define CSBACK_NONE1            19
+#define CSBACK_NONE2            20
+#define CSBACK_NONE3            21
+#define CSBACK_NONE4            22
+#define CSBACK_NONE5            23
+#define CSBACK_NONE6            24
+#define CSBACK_NONE7            25
+#define CSBACK_NONE8            26
+#define CSBACK_NONE9            27
+#define CSBACK_NONE10           28
+#define CSBACK_NONE11           29
+#define MAX_CSBACK              30
 
 #define CSBACK_NORACE           0
 #define CSBACK_VAMPIRE          1

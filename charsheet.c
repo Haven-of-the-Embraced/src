@@ -3427,7 +3427,7 @@ void do_backgrounds (CHAR_DATA *ch, char *argument)
     send_to_char("                                                                     \n\r",ch);
     for (i = 0;i < MAX_CSBACK;i++)
     {
-        if (victim->pcdata->csbackgrounds[i] > 0)
+        if (csback_table[i].name != NULL && victim->pcdata->csbackgrounds[i] > 0)
         {
             sprintf(buf, " %-15s %s ", csback_table[i].name, dots(victim->pcdata->csbackgrounds[i], FALSE));
             col++;
@@ -3451,7 +3451,7 @@ void do_backgrounds (CHAR_DATA *ch, char *argument)
     send_to_char("                                                                     \n\r",ch);
     for (i = 0;i < MAX_CSBACK;i++)
     {
-            if ((csback_table[i].race == CSBACK_VAMPIRE && !IS_VAMP(ch)) ||
+            if (csback_table[i].name == NULL || (csback_table[i].race == CSBACK_VAMPIRE && !IS_VAMP(ch)) ||
                 (csback_table[i].race == CSBACK_WEREWOLF && ch->race != race_lookup("garou")) ||
                 (csback_table[i].race == CSBACK_MAGE && (ch->arete < 1 && ch->avatar < 1)))
                     continue;

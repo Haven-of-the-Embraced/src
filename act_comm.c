@@ -1625,6 +1625,18 @@ void do_talk( CHAR_DATA *ch, char *argument )
         return;
     }
 
+    if (!SAME_UMBRA(ch, victim))
+    {
+        act("$N seems to be on a different Umbral plane than you.", ch, NULL, victim, TO_CHAR);
+        return;
+    }
+
+    if (victim->position <= POS_SLEEPING)
+    {
+        send_to_char("You cannot talk to someone who is sleeping.\n\r", ch);
+        return;
+    }
+
     if (ch->move < 1)
     {
         send_to_char("Talking is too exhausting right now.\n\r", ch);
@@ -1674,6 +1686,14 @@ void do_talk( CHAR_DATA *ch, char *argument )
     if (!IS_SET(victim->form,FORM_SENTIENT))
     {
         act("$N does not seem capable of conversation.", ch, NULL, victim, TO_CHAR);
+        return;
+    }
+
+    if (!can_see(victim, ch))
+    {
+        act("Startled, $N looks around, '{WWho is there?'", ch, NULL, victim, TO_CHAR);
+        act("Startled, you look around, '{WWho is there?'", ch, NULL, victim, TO_VICT);
+        act("Startled, $N looks around, '{WWho is there?'", ch, NULL, victim, TO_ROOM);
         return;
     }
 

@@ -1388,11 +1388,6 @@ void do_freebie(CHAR_DATA *ch, char *argument)
                 send_to_char("The vampiric vitae within your veins is not strong enough to learn that discipline.\n\r", ch);
                 return;
             }
-            if (ch->pblood < 75)
-            {
-                send_to_char("You do not have enough vampiric vitae within you to learn that discipline.\n\r", ch);
-                return;
-            }
 
             if (i == CELERITY || i == FORTITUDE || i == POTENCE)
                 cost = ch->pcdata->discipline[i]*7;

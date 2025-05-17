@@ -919,6 +919,45 @@ void do_freebie(CHAR_DATA *ch, char *argument)
                 cost = gencost = (ch->pcdata->csbackgrounds[CSBACK_GENERATION] == 0) ? 10 : (ch->pcdata->csbackgrounds[CSBACK_GENERATION] * 30);
     }
 
+    if (!str_prefix(arg, "ghouledage"))
+            {
+                if (ch->race != race_lookup("ghoul")) 
+                {
+                    send_to_char("You cannot purchase this background.\n\r", ch);
+                    return;
+                }
+                step = 19;
+                sh_int minimictime;
+                sh_int minimage;
+                if ((ch->pcdata->csbackgrounds[CSBACK_GHOULEDAGE] == 1) && (ch->remorts < 75))
+                {
+                   send_to_char("You require at least {Y75{x remorts to extend your ghouled age.\n\r",ch);
+                   return;
+                }
+                if ((ch->pcdata->csbackgrounds[CSBACK_GHOULEDAGE] == 2) && (ch->remorts < 150))
+                {
+                   send_to_char("You require at least {Y150{x remorts to extend your ghouled age.\n\r",ch);
+                   return;
+                }
+                if ((ch->pcdata->csbackgrounds[CSBACK_GHOULEDAGE] == 3) && (ch->remorts < 225))
+                {
+                   send_to_char("You require at least {Y225{x remorts to extend your ghouled age.\n\r",ch);
+                   return;
+                }
+                if ((ch->pcdata->csbackgrounds[CSBACK_GHOULEDAGE] == 4) && (ch->remorts < 300))
+                {
+                   send_to_char("You require at least {Y300{x remorts to extend your ghouled age.\n\r",ch);
+                   return;
+                }
+                if (ch->pcdata->csbackgrounds[CSBACK_GHOULEDAGE] == 5)
+                {
+                    send_to_char("You have already outlived most ghouls.\n\r", ch);
+                    return;
+                }
+                count = CSBACK_GHOULEDAGE;
+                cost = gencost = (ch->pcdata->csbackgrounds[CSBACK_GHOULEDAGE] == 0) ? 10 : (ch->pcdata->csbackgrounds[CSBACK_GHOULEDAGE] * 30);
+    }
+
     if(!str_prefix( arg, "conscience"))
     {
         if(ch->pcdata->csvirtues[CSVIRT_CONSCIENCE] == 5)

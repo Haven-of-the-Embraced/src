@@ -3440,6 +3440,7 @@ void do_backgrounds (CHAR_DATA *ch, char *argument)
     for (i = 0;i < MAX_CSBACK;i++)
     {
             if (csback_table[i].name == NULL || (csback_table[i].race == CSBACK_VAMPIRE && !IS_VAMP(ch)) ||
+                (csback_table[i].race == CSBACK_GHOUL && ch->race != race_lookup("ghoul")) ||
                 (csback_table[i].race == CSBACK_WEREWOLF && ch->race != race_lookup("garou")) ||
                 (csback_table[i].race == CSBACK_MAGE && (ch->arete < 1 && ch->avatar < 1)))
                     continue;

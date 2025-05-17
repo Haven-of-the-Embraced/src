@@ -801,9 +801,9 @@ void do_freebie(CHAR_DATA *ch, char *argument)
         send_to_char("New Common Disc:         15\n\r", ch);
         send_to_char("Clan/Combat Discipline:  Current Rating*7\n\r",ch);
         send_to_char("Other Discipline:        Current Rating*10\n\r",ch);
-        if ((ch->pcdata->csbackgrounds[CSBACK_AGE] < 5))
+        if ((ch->pcdata->csbackgrounds[CSBACK_GHOULEDAGE] < 5))
         {
-        gencost = (ch->pcdata->csbackgrounds[CSBACK_AGE] == 0) ? 10 : (ch->pcdata->csbackgrounds[CSBACK_AGE] * 30);
+        gencost = (ch->pcdata->csbackgrounds[CSBACK_GHOULEDAGE] == 0) ? 10 : (ch->pcdata->csbackgrounds[CSBACK_GHOULEDAGE] * 30);
         sprintf(buf,"Ghouled Age:             {Y%d{x\n\r",gencost);
         send_to_char(buf,ch);
         }

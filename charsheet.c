@@ -3588,6 +3588,12 @@ void do_backgrounds (CHAR_DATA *ch, char *argument)
             if (ch->max_pblood > 200)
                 ch->max_pblood = 200;
         }
+        if (trait == CSBACK_GHOULEDAGE && 
+         (ch->pcdata->csbackgrounds[trait] == 0 ||
+            ch->pcdata->csbackgrounds[trait] == 2 ||
+            ch->pcdata->csbackgrounds[trait] == 4))
+            ch->max_pblood += 10;
+
         if (trait == CSBACK_FOUNT)
             ch->max_quintessence += 10;
         ch->pcdata->csbackgrounds[trait]++;
@@ -3616,6 +3622,6 @@ void do_backgrounds (CHAR_DATA *ch, char *argument)
         sprintf(buf, "\n\rYou have %d points to be spent on backgrounds.\n\rPlease type 'background <trait>' to set these stats.\n\r", ch->dpoints);
         send_to_char(buf, ch);
         send_to_char("Type 'background show' to show the list of backgrounds available to you.\n\r", ch);
-        sendch("{RPlease be aware that points set on Backgrounds are permenant so be sure of your selection.{x\n\r", ch);
+        sendch("{RPlease be aware that points spent on Backgrounds are permanent, be sure\n\rof your selection.{x\n\r", ch);
         }
 }

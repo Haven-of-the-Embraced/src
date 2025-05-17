@@ -3511,8 +3511,13 @@ void do_backgrounds (CHAR_DATA *ch, char *argument)
     {
         sprintf(buf, "\n\rYou have %d points to be spent on backgrounds.\n\rType 'background <trait>' to set these stats.\n\r", ch->dpoints);
         send_to_char(buf, ch);
-        sendch("{RPlease be aware that points set on Backgrounds are permenant so be sure of your selection.{x\n\r", ch);
-        sendch("{RYou may wish to save some background points if you are intending to be embraced by a player.{x\n\r", ch);
+        sendch("{RPlease be aware that points spent on Backgrounds are permanent, be sure{x\n\r", ch);
+        sendch("{Rof your selection.  You may wish to save some background points if you{x\n\r", ch);
+        sendch("{Rare intending one of the following:{x\n\r", ch);
+        sendch("    {Y1){W    Being Embraced by another player.{x\n\r", ch);
+        sendch("    {Y2){W    Being Ghouled by another player.{x\n\r", ch);
+        sendch("    {Y3){W    Remorting into a Garou.{x\n\r", ch);
+        sendch("    {Y4){W    Remorting into a Mage.{x\n\r", ch);
     }
     return;
     }
@@ -3520,7 +3525,7 @@ void do_backgrounds (CHAR_DATA *ch, char *argument)
     trait = -1;
     max = 4;
     trait = background_lookup(arg1);
-    if (trait == background_lookup("generation"))
+    if (trait == background_lookup("generation") || trait == background_lookup("ghouledage"))
         max = 1;
 
     if (trait != -1)

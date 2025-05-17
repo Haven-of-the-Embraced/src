@@ -1676,7 +1676,7 @@ const struct    csback_type csback_table    [MAX_CSBACK]    =
     {   "Purebreed", CSBACK_WEREWOLF },
     {   "Fetish", CSBACK_WEREWOLF },
     {   "Rites", CSBACK_WEREWOLF },
-    {   "GhoulAge", CSBACK_GHOUL },
+    {   "GhouledAge", CSBACK_GHOUL },
     {   NULL   , CSBACK_NORACE },
     {   NULL   , CSBACK_NORACE },
     {   NULL   , CSBACK_NORACE },

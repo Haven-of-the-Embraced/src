@@ -3535,31 +3535,44 @@ void do_backgrounds (CHAR_DATA *ch, char *argument)
             case CSBACK_VAMPIRE:
                 if (!IS_VAMP(ch))
                 {
-                    send_to_char("That is a Kindred background and you are not a vampire!\n\r", ch);
+                    send_to_char("That is a Kindred background and you are not a Vampire!\n\r", ch);
                     return;
                 }
                 break;
             case CSBACK_WEREWOLF:
-                if (ch->race != race_lookup("garou")) {
-                    send_to_char("That is a Garou background and you are not a werewolf!\n\r", ch);
+                if (ch->race != race_lookup("garou")) 
+                {
+                    send_to_char("That is a Garou background and you are not a Werewolf!\n\r", ch);
                     return;
                 }
                 break;
             case CSBACK_MAGE:
-                if (ch->arete < 1 && ch->avatar < 1) {
+                if (ch->arete < 1 && ch->avatar < 1) 
+                {
                     send_to_char("That is a Mage background and you are not a Mage!\n\r", ch);
                     return;
                 }
                 break;
-            }
+            case CSBACK_GHOUL:
+                if (ch->race != race_lookup("ghoul")) 
+                {
+                    send_to_char("That is a Ghoul background and you are not a Ghoul!\n\r", ch);
+                    return;
+                }
+         }
         if(ch->pcdata->csbackgrounds[trait] >= max)
         {
-            send_to_char("You cannot set that trait any higher at creation.\n\r",ch);
+            send_to_char("You cannot set that trait any higher with starting Background points.\n\r",ch);
             return;
         }
         if ((trait == CSBACK_GENERATION) && (ch->pcdata->csgeneration <= 9))
         {
             send_to_char("You cannot purchase any further points in Generation without seeking Admin approval.\n\r",ch);
+            return;
+        }
+        if ((trait == CSBACK_GHOULEDAGE) && (ch->pcdata->csbackgrounds[trait] >= 1))
+        {
+            send_to_char("You cannot purchase any further points in Ghouled Age with Background Points.\n\r",ch);
             return;
         }
         if (ch->dpoints < 1)

@@ -1380,18 +1380,11 @@ void do_freebie(CHAR_DATA *ch, char *argument)
 
         } else if (ch->race == race_lookup("ghoul"))
         {
-            int max;
+            int max = 3;
             int num;
-            if (ch->pcdata->csgeneration > 10)
-                max = 1;
-            if (ch->pcdata->csgeneration <= 10)
-                max = 2;
-            if (ch->pcdata->csgeneration <= 8)
-                max = 3;
-            if (ch->pcdata->csgeneration <= 6)
-                max = 4;
 
-            if (ch->pcdata->discipline[i] >= max) {
+            if (ch->pcdata->discipline[i] >= max) 
+            {
                 send_to_char("The vampiric vitae within your veins is not strong enough to learn that discipline.\n\r", ch);
                 return;
             }

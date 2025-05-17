@@ -1655,6 +1655,7 @@ const struct    csback_type csback_table    [MAX_CSBACK]    =
 #define CSBACK_VAMPIRE          1
 #define CSBACK_WEREWOLF         2
 #define CSBACK_MAGE             3
+#define CSBACK_GHOUL            4
 */
     {   "Allies", CSBACK_NORACE },
     {   "Contacts", CSBACK_NORACE },

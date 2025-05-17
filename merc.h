@@ -452,7 +452,7 @@ struct buf_type
 #define CSBACK_PUREBREED        16
 #define CSBACK_FETISH           17
 #define CSBACK_RITES            18
-#define CSBACK_AGE              19
+#define CSBACK_GHOULEDAGE       19
 #define CSBACK_NONE2            20
 #define CSBACK_NONE3            21
 #define CSBACK_NONE4            22

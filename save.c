@@ -380,14 +380,17 @@ void fwrite_char( CHAR_DATA *ch, FILE *fp )
         ch->pcdata->discipline[15], ch->pcdata->discipline[16], ch->pcdata->discipline[17]);
     }
 
-    fprintf( fp, "CSbackgrounds %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d\n",
+    fprintf( fp, "CSbackgrounds %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d\n",
     ch->pcdata->csbackgrounds[0],   ch->pcdata->csbackgrounds[1],   ch->pcdata->csbackgrounds[2],
     ch->pcdata->csbackgrounds[3],   ch->pcdata->csbackgrounds[4],   ch->pcdata->csbackgrounds[5],
     ch->pcdata->csbackgrounds[6],   ch->pcdata->csbackgrounds[7],   ch->pcdata->csbackgrounds[8],
     ch->pcdata->csbackgrounds[9],   ch->pcdata->csbackgrounds[10],  ch->pcdata->csbackgrounds[11],
     ch->pcdata->csbackgrounds[12],  ch->pcdata->csbackgrounds[13],  ch->pcdata->csbackgrounds[14],
     ch->pcdata->csbackgrounds[15],  ch->pcdata->csbackgrounds[16],  ch->pcdata->csbackgrounds[17],
-    ch->pcdata->csbackgrounds[18]);
+    ch->pcdata->csbackgrounds[18],  ch->pcdata->csbackgrounds[19],  ch->pcdata->csbackgrounds[20],
+    ch->pcdata->csbackgrounds[21],  ch->pcdata->csbackgrounds[22],  ch->pcdata->csbackgrounds[23],
+    ch->pcdata->csbackgrounds[24],  ch->pcdata->csbackgrounds[25],  ch->pcdata->csbackgrounds[26],
+    ch->pcdata->csbackgrounds[27],  ch->pcdata->csbackgrounds[28],  ch->pcdata->csbackgrounds[29]);
 
     fprintf( fp, "CSvirtues %d %d %d\n",
     ch->pcdata->csvirtues[CSVIRT_CONSCIENCE], ch->pcdata->csvirtues[CSVIRT_SELF_CONTROL], ch->pcdata->csvirtues[CSVIRT_COURAGE]);
@@ -1338,8 +1341,16 @@ void fread_char( CHAR_DATA *ch, FILE *fp )
 */
         if ( !str_cmp( word, "CSbackgrounds"  ))
         {
-        int i;
-        for (i = 0; i < MAX_CSBACK; i ++)
+        int i, max;
+
+        if (ch->version < 15) {
+            ch->version = 15;
+            max = 19;
+        }
+        else
+            max = MAX_CSBACK;
+        
+        for (i = 0; i < max; i ++)
            ch->pcdata->csbackgrounds[i] = fread_number(fp);
         fMatch = TRUE;
         break;

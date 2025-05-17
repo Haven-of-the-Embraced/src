@@ -1674,7 +1674,19 @@ const struct    csback_type csback_table    [MAX_CSBACK]    =
     {   "Ancestor", CSBACK_WEREWOLF},
     {   "Purebreed", CSBACK_WEREWOLF },
     {   "Fetish", CSBACK_WEREWOLF },
-    {   "Rites", CSBACK_WEREWOLF }
+    {   "Rites", CSBACK_WEREWOLF },
+    {   NULL   , CSBACK_NORACE },
+    {   NULL   , CSBACK_NORACE },
+    {   NULL   , CSBACK_NORACE },
+    {   NULL   , CSBACK_NORACE },
+    {   NULL   , CSBACK_NORACE },
+    {   NULL   , CSBACK_NORACE },
+    {   NULL   , CSBACK_NORACE },
+    {   NULL   , CSBACK_NORACE },
+    {   NULL   , CSBACK_NORACE },
+    {   NULL   , CSBACK_NORACE },
+    {   NULL   , CSBACK_NORACE }
+
 };
 
 const struct    tradition_type  tradition_table [MAX_TRADITION] =

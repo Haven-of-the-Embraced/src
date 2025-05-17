@@ -83,7 +83,7 @@ int background_lookup(const char *name)
 
     for (back = 0; back < MAX_CSBACK; back++)
     {
-    if (LOWER(name[0]) == LOWER(csback_table[back].name[0])
+    if (csback_table[back].name != NULL && LOWER(name[0]) == LOWER(csback_table[back].name[0])
     &&  !str_cmp(name,csback_table[back].name))
         return back;
     }

@@ -1561,6 +1561,13 @@ void do_freebie(CHAR_DATA *ch, char *argument)
                         if (ch->max_pblood+10 <= 200)
                           ch->max_pblood += 10;
                     }
+                    if (count == CSBACK_GHOULEDAGE)
+                    {
+                        if (ch->pcdata->csbackgrounds[count] == 1 || 
+                           ch->pcdata->csbackgrounds[count] == 3 ||
+                           ch->pcdata->csbackgrounds[count] == 5)
+                              ch->max_pblood += 10;
+                    }
                     if (count == CSBACK_FOUNT)
                         ch->max_quintessence += 10;
                     sprintf(buf,"You increase your %s.\n\r",capitalize(csback_table[count].name));

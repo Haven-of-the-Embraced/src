@@ -2024,7 +2024,6 @@ void do_visible( CHAR_DATA *ch, char *argument )
     affect_strip ( ch, gsn_mass_invis           );
     affect_strip ( ch, gsn_sneak            );
     affect_strip ( ch, gsn_hide         );
-    affect_strip ( ch, gsn_cloakshadow          );
     affect_strip ( ch, gsn_cloak_the_gathering      );
     affect_strip ( ch, gsn_unseen               );
     affect_strip ( ch, gsn_veil);

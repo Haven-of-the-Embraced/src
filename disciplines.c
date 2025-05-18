@@ -5586,6 +5586,7 @@ void do_shadowwalk(CHAR_DATA *ch, char *argument)
 void do_shroudofnight(CHAR_DATA *ch, char *argument)
 {
     AFFECT_DATA af;
+    int success;
 
     if (IS_NPC(ch)) return;
 
@@ -5597,21 +5598,41 @@ void do_shroudofnight(CHAR_DATA *ch, char *argument)
 
     if (ch->pcdata->discipline[OBTENEBRATION] < 2)
     {
-        send_to_char( "You are not skilled enough in your powers of Obtenebration!.\n\r", ch );
+        send_to_char( "You don't have enough control over the darkness of Obtenebration!\n\r", ch );
         return;
     }
+
     if ( IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
     {
         send_to_char("Your blood curse prevents it!\n\r" ,ch);
         return;
     }
 
-
-    if ( ch->pblood < 40 && !is_affected(ch,gsn_shadowform))
+    if ( ch->pblood < 11 && !is_affected(ch,gsn_shadowform))
     {
         send_to_char( "You don't have enough blood.\n\r", ch );
         return;
     }
+
+    ch->pblood -= 10;
+    success = godice(get_attribute(ch, MANIPULATION) + get_ability(ch, CSABIL_OCCULT), 7);
+
+    if (success < 0)
+    {
+        send_to_char("You pull the darkness of the Abyss, and the Abyss pulls back!\n\r", ch);
+        d10_damage( ch, ch, -success, ch->level, gsn_nocturne, DAM_NEGATIVE, DEFENSE_NONE, TRUE, TRUE);
+        WAIT_STATE(ch, 6);
+        return;
+    }
+
+    if (success == 0)
+    {
+        send_to_char("You try to wrench forth part of the Abyss, but fail in your endeavor.\n\r", ch);
+        WAIT_STATE(ch, 3);
+        return;
+    }
+
+/*
     if ( is_affected( ch, gsn_cloakshadow ) )
     {
         send_to_char( "You release the shadow cloaking you.\n\r", ch );
@@ -5632,6 +5653,7 @@ void do_shroudofnight(CHAR_DATA *ch, char *argument)
     affect_to_char( ch, &af );
     send_to_char( "You call darkness to protect you against the sun.\n\r", ch );
     WAIT_STATE(ch, 8);
+*/
     return;
 }
 

@@ -1226,13 +1226,25 @@ if (ch->qpoints > MAX_QPOINTS)
     else if(ch->race == race_lookup("ghoul") && !IS_NPC(ch) && !IS_SET(ch->act,PLR_IC))
     {
 /* Sengir temp hack to lower blood loss */
-        if(number_range(1,6) == 3)
+        if(number_range(1,6) == 3  && ch->pcdata->csbackgrounds[CSBACK_GHOULEDAGE] < 4)
             ch->pblood--;
+        if(number_range(1,6) == 3  && ch->pcdata->csbackgrounds[CSBACK_GHOULEDAGE] == 5)
+        {
+            if (ch->pcdata->condition[COND_HUNGER] != 0 && ch->pcdata->condition[COND_THIRST] != 0)
+                ch->pblood++;
+            if (ch->position == POS_SLEEPING)
+                ch->pblood++;
+            if (ch->pblood > ch->max_pblood)
+                ch->pblood = ch->max_pblood;
+        }
+        if (ch->pblood < 10)
+            send_to_char("Your body begins going into withdrawals from the lack of vitae.\n\r", ch);
         if(ch->pblood < 0)
         {
             ch->pblood = 0;
-            send_to_char("Your body begins going into withdrawals from the lack of vitae.\n\r", ch);
-            if(number_range(1,24) == 1)
+                send_to_char("\n\r{WThe last of precious {Rvitae{W burns out of your system, and your body violently shakes from lack of your preferred addiction.\n\r", ch);
+                d10_damage( ch, ch, 1, ch->level / 3 + 1, gsn_curse, DAM_HARM, DEFENSE_NONE, TRUE, TRUE);
+/*            if(number_range(1,24) == 1)
             {
                 send_to_char("Thoughts of your master's sweet {Rvitae{x flash briefly in your mind, but the\n\r intensity of the longing isn't nearly what you recall it once being.\n\r", ch);
                 ch->bonded--;
@@ -1256,7 +1268,7 @@ if (ch->qpoints > MAX_QPOINTS)
 
             }
 
-/*          damage(ch,ch,ch->max_hit/2,0,DAM_FIRE,FALSE);
+            damage(ch,ch,ch->max_hit/2,0,DAM_FIRE,FALSE);
             send_to_char( "You are DYING from lack of nourishment! You MUST fulfill your addiction!\n\r", ch );
             act( "$n screams in agony from lack of nourishment.", ch, NULL, NULL, TO_ROOM );
 */

@@ -1427,11 +1427,45 @@ void do_freebie(CHAR_DATA *ch, char *argument)
         {
             int max = 3;
             int num;
+            bool clandisc = FALSE;
 
-            if (ch->pcdata->discipline[i] >= max) 
+            for (num = 0; num < 3; num ++)
             {
-                send_to_char("The vampiric vitae within your veins is not strong enough to learn that discipline.\n\r", ch);
-                return;
+                if (i == clandisc_table[ch->clan].clan_disc[num])
+                {
+                  clandisc = TRUE;
+                  break;
+                }
+            }
+
+            if (i == CELERITY || i == FORTITUDE || i == POTENCE || (clandisc))
+            {
+               if (ch->pcdata->csbackgrounds[CSBACK_GHOULEDAGE] >= 1)
+                  max = 4;
+               if (ch->pcdata->csbackgrounds[CSBACK_GHOULEDAGE] >= 3)
+                  max = 5;
+            }
+            else
+            {
+               if (ch->pcdata->csbackgrounds[CSBACK_GHOULEDAGE] >= 2)
+                  max = 4;
+               if (ch->pcdata->csbackgrounds[CSBACK_GHOULEDAGE] >= 4)
+                  max = 5;
+            }
+
+            if (ch->pcdata->discipline[i] >= max)
+            {
+               if (max == 5)
+               {
+                  sprintf(buf, "You have already mastered the discipline of %s.", capitalize(disc_table[count].name));
+                  send_to_char(buf, ch);
+               }
+               else
+               {
+                  sprintf(buf, "You have not been ghouled long enough to increase %s further.", capitalize(disc_table[count].name));
+                  send_to_char(buf, ch);
+               }
+               return;
             }
 
             if (i == CELERITY || i == FORTITUDE || i == POTENCE)

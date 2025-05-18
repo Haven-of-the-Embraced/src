@@ -2211,7 +2211,7 @@ Total (3) */
 
     { "nocturne",  { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
-    &gsn_nocturne,           SLOT(0),     0, 12, "",         "The darkness lifts from around you.",  "" },
+    &gsn_nocturne,           SLOT(0),     0, 12, "abyssal darkness",         "The darkness lifts from around you.",  "" },
 
     { "shadowform",       {  102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,

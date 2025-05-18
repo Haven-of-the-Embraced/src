@@ -1456,15 +1456,9 @@ void do_freebie(CHAR_DATA *ch, char *argument)
             if (ch->pcdata->discipline[i] >= max)
             {
                if (max == 5)
-               {
-                  sprintf(buf, "You have already mastered the discipline of %s.", capitalize(disc_table[count].name));
-                  send_to_char(buf, ch);
-               }
+                  send_to_char("You have already mastered this Discipline.\n\r", ch);
                else
-               {
-                  sprintf(buf, "You have not been ghouled long enough to increase %s further.", capitalize(disc_table[count].name));
-                  send_to_char(buf, ch);
-               }
+                  send_to_char("You have not been ghouled long enough to increase this Discipline further.\n\r", ch);
                return;
             }
 

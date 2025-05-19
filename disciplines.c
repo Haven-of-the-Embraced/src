@@ -8248,20 +8248,18 @@ void do_bloodofpotency(CHAR_DATA *ch, char *argument)
         af.type     = gsn_bloodofpotency;
         af.level    = -1;
         af.duration = -(dicesuccess * 5) + 10;
-        af.location = APPLY_GENERATION;
-        af.modifier = 2;
         af.bitvector    = 0;
-        affect_to_char( ch, &af );
 
-        af.where    = TO_AFFECTS;
-        af.type     = gsn_bloodofpotency;
-        af.level    = -1;
-        af.duration = -(dicesuccess * 5) + 10;
+        if (ch->race != race_lookup("ghoul"))
+        {
+            af.location = APPLY_GENERATION;
+            af.modifier = 2;
+            affect_to_char( ch, &af );
+        }
+
         af.location = APPLY_MAX_BLOOD;
         af.modifier = -20;
-        af.bitvector    = 0;
         affect_to_char( ch, &af );
-
         WAIT_STATE(ch, 6);
 
         return;

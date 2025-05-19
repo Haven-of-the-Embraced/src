@@ -5585,6 +5585,8 @@ void do_shadowwalk(CHAR_DATA *ch, char *argument)
 
 void do_shroudofnight(CHAR_DATA *ch, char *argument)
 {
+    CHAR_DATA *vch;
+    CHAR_DATA *vch_next;
     AFFECT_DATA af;
     int success;
 
@@ -5614,7 +5616,8 @@ void do_shroudofnight(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    ch->pblood -= 10;
+    if (!is_affected(ch,gsn_shadowform))
+        ch->pblood -= 10;
     success = godice(get_attribute(ch, MANIPULATION) + get_ability(ch, CSABIL_OCCULT), 7);
 
     if (success < 0)

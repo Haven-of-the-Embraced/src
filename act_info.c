@@ -319,7 +319,8 @@ void show_char_to_char_0( CHAR_DATA *victim, CHAR_DATA *ch )
     if ( is_affected(victim, gsn_gleam))    strcat( buf, "{x@{REyes{x@{y ");
 /*Players able to see those hovering above the ground - Sengir*/
     if (IS_AFFECTED(victim, AFF_FLYING))    strcat( buf, "{x({GAloft{x){y " );
-    if(IS_SET(victim->imm_flags,IMM_SUNLIGHT) && (victim->race == race_lookup("vampire") || victim->race == race_lookup("methuselah")))    strcat( buf, "{x({DShadowy{x){y "  );
+    if (is_affected(victim, gsn_nocturne) || is_affected(victim, gsn_shadowplay))
+        strcat( buf, "{x*{DEnveloped{x*{y "  );
     if(IS_SET(victim->act,PLR_IC))      strcat( buf, "{x{D({CIC{D){x{y "    );
     if(IS_SET(victim->act,PLR_SPEC) && !IS_NPC(victim))     strcat( buf, "{x({GSpec{x){y "  );
     if(!IS_NPC(victim) && IS_SET(victim->act,PLR_ARENA))       strcat( buf, "{x({RArena{x){y " );

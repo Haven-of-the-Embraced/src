@@ -5663,7 +5663,7 @@ void do_shroudofnight(CHAR_DATA *ch, char *argument)
                     af.where     = TO_AFFECTS;
                     af.type      = gsn_nocturne;
                     af.level     = ch->level;
-                    af.duration  = 1;
+                    af.duration  = 0;
                     af.location  = APPLY_CS_STA;
                     af.modifier  = -1;
                     if (success > 3)

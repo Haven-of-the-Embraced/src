@@ -5635,6 +5635,47 @@ void do_shroudofnight(CHAR_DATA *ch, char *argument)
         return;
     }
 
+    for ( vch = char_list; vch != NULL; vch = vch_next )
+    {
+        vch_next = vch->next;
+        if ( vch->in_room == NULL )
+            continue;
+        if ( vch->in_room == ch->in_room && SAME_UMBRA(ch, vch))
+        {
+            if ( vch != ch && !is_same_group(vch, ch) && IS_NPC(vch) && !is_safe_spell(ch,vch,TRUE))
+            {
+                if (is_affected(vch, gsn_nocturne) || is_affected(vch, gsn_shadowplay))
+                    act("Shadows are already enveloping $N.", ch, NULL, vch, TO_CHAR);
+                else
+                {
+                    act("Shadows rise from the Abyss, encasing $N.", ch, NULL, vch, TO_CHAR);
+                    act("Darkness arises from nothingness, encasing your body!", ch, NULL, vch, TO_VICT);
+                    act("Shadows spring forth, encasing $N fully!", ch, NULL, vch, TO_NOTVICT);
+                    af.where     = TO_AFFECTS;
+                    af.type      = gsn_nocturne;
+                    af.level     = ch->level;
+                    af.duration  = 1;
+                    af.location  = APPLY_CS_STA;
+                    af.modifier  = -1;
+                    if (success > 3)
+                    {
+                        act("The Abyss fully blocks $N's vision.", ch, NULL, vch, TO_CHAR);
+                        act("The darkness prevents you from seeing anything!", ch, NULL, vch, TO_VICT);
+                        af.bitvector = AFF_BLIND;
+                    }
+                    else
+                        af.bitvector = 0;
+                    affect_to_char( vch, &af );
+                    af.location  = APPLY_HITROLL;
+                    af.modifier  = -(success*ch->level/2);
+                    af.bitvector = 0;
+                    affect_to_char( vch, &af );
+                }
+            }
+            continue;
+        }
+    }
+
 /*
     if ( is_affected( ch, gsn_cloakshadow ) )
     {

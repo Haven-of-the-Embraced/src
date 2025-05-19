@@ -5616,8 +5616,17 @@ void do_shroudofnight(CHAR_DATA *ch, char *argument)
         return;
     }
 
+    if (is_affected(ch, gsn_shadowform) && ch->move < ch->level / 10)
+    {
+        send_to_char( "You are too exhausted to summon darkness from the Abyss.\n\r", ch );
+        return;
+    }
+
     if (!is_affected(ch,gsn_shadowform))
         ch->pblood -= 10;
+    else
+        ch->move -= ch->move / 10;
+
     success = godice(get_attribute(ch, MANIPULATION) + get_ability(ch, CSABIL_OCCULT), 7);
 
     if (success < 0)
@@ -5675,29 +5684,6 @@ void do_shroudofnight(CHAR_DATA *ch, char *argument)
             continue;
         }
     }
-
-/*
-    if ( is_affected( ch, gsn_cloakshadow ) )
-    {
-        send_to_char( "You release the shadow cloaking you.\n\r", ch );
-        affect_strip(ch,gsn_cloakshadow);
-        return;
-    }
-
-    if(!is_affected(ch,gsn_shadowform)) ch->pblood -= 30;
-    af.where     = TO_IMMUNE;
-    af.type      = gsn_cloakshadow;
-    af.level     = ch->level;
-    af.duration  = 20-ch->gen;
-    if (ch->clan == clan_lookup("Lasombra"))
-        af.duration += 12;
-    af.location  = 0;
-    af.modifier  = 0;
-    af.bitvector = IMM_SUNLIGHT;
-    affect_to_char( ch, &af );
-    send_to_char( "You call darkness to protect you against the sun.\n\r", ch );
-    WAIT_STATE(ch, 8);
-*/
     return;
 }
 

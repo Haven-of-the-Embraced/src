@@ -452,7 +452,7 @@ struct buf_type
 #define CSBACK_PUREBREED        16
 #define CSBACK_FETISH           17
 #define CSBACK_RITES            18
-#define CSBACK_NONE1            19
+#define CSBACK_GHOULEDAGE       19
 #define CSBACK_NONE2            20
 #define CSBACK_NONE3            21
 #define CSBACK_NONE4            22
@@ -469,6 +469,7 @@ struct buf_type
 #define CSBACK_VAMPIRE          1
 #define CSBACK_WEREWOLF         2
 #define CSBACK_MAGE             3
+#define CSBACK_GHOUL            4
 /* virtues */
 #define CSVIRT_CONSCIENCE       0
 #define CSVIRT_SELF_CONTROL     1

@@ -801,6 +801,12 @@ void do_freebie(CHAR_DATA *ch, char *argument)
         send_to_char("New Common Disc:         15\n\r", ch);
         send_to_char("Clan/Combat Discipline:  Current Rating*7\n\r",ch);
         send_to_char("Other Discipline:        Current Rating*10\n\r",ch);
+        if ((ch->pcdata->csbackgrounds[CSBACK_GHOULEDAGE] < 5))
+        {
+        gencost = (ch->pcdata->csbackgrounds[CSBACK_GHOULEDAGE] == 0) ? 10 : (ch->pcdata->csbackgrounds[CSBACK_GHOULEDAGE] * 30);
+        sprintf(buf,"Ghouled Age:             {Y%d{x\n\r",gencost);
+        send_to_char(buf,ch);
+        }
     }
 
         if(( ch->pcdata->rank > 0) && (ch->race == race_lookup("garou")))
@@ -911,6 +917,45 @@ void do_freebie(CHAR_DATA *ch, char *argument)
                 }
                 count = CSBACK_GENERATION;
                 cost = gencost = (ch->pcdata->csbackgrounds[CSBACK_GENERATION] == 0) ? 10 : (ch->pcdata->csbackgrounds[CSBACK_GENERATION] * 30);
+    }
+
+    if (!str_prefix(arg, "ghouledage"))
+            {
+                if (ch->race != race_lookup("ghoul")) 
+                {
+                    send_to_char("You cannot purchase this background.\n\r", ch);
+                    return;
+                }
+                step = 19;
+                sh_int minimictime;
+                sh_int minimage;
+                if ((ch->pcdata->csbackgrounds[CSBACK_GHOULEDAGE] == 1) && (ch->remorts < 75))
+                {
+                   send_to_char("You require at least {Y75{x remorts to extend your ghouled age.\n\r",ch);
+                   return;
+                }
+                if ((ch->pcdata->csbackgrounds[CSBACK_GHOULEDAGE] == 2) && (ch->remorts < 150))
+                {
+                   send_to_char("You require at least {Y150{x remorts to extend your ghouled age.\n\r",ch);
+                   return;
+                }
+                if ((ch->pcdata->csbackgrounds[CSBACK_GHOULEDAGE] == 3) && (ch->remorts < 225))
+                {
+                   send_to_char("You require at least {Y225{x remorts to extend your ghouled age.\n\r",ch);
+                   return;
+                }
+                if ((ch->pcdata->csbackgrounds[CSBACK_GHOULEDAGE] == 4) && (ch->remorts < 300))
+                {
+                   send_to_char("You require at least {Y300{x remorts to extend your ghouled age.\n\r",ch);
+                   return;
+                }
+                if (ch->pcdata->csbackgrounds[CSBACK_GHOULEDAGE] == 5)
+                {
+                    send_to_char("You have already outlived most ghouls.\n\r", ch);
+                    return;
+                }
+                count = CSBACK_GHOULEDAGE;
+                cost = gencost = (ch->pcdata->csbackgrounds[CSBACK_GHOULEDAGE] == 0) ? 10 : (ch->pcdata->csbackgrounds[CSBACK_GHOULEDAGE] * 30);
     }
 
     if(!str_prefix( arg, "conscience"))
@@ -1380,25 +1425,41 @@ void do_freebie(CHAR_DATA *ch, char *argument)
 
         } else if (ch->race == race_lookup("ghoul"))
         {
-            int max;
+            int max = 3;
             int num;
-            if (ch->pcdata->csgeneration > 10)
-                max = 1;
-            if (ch->pcdata->csgeneration <= 10)
-                max = 2;
-            if (ch->pcdata->csgeneration <= 8)
-                max = 3;
-            if (ch->pcdata->csgeneration <= 6)
-                max = 4;
+            bool clandisc = FALSE;
 
-            if (ch->pcdata->discipline[i] >= max) {
-                send_to_char("The vampiric vitae within your veins is not strong enough to learn that discipline.\n\r", ch);
-                return;
-            }
-            if (ch->pblood < 75)
+            for (num = 0; num < 3; num ++)
             {
-                send_to_char("You do not have enough vampiric vitae within you to learn that discipline.\n\r", ch);
-                return;
+                if (i == clandisc_table[ch->clan].clan_disc[num])
+                {
+                  clandisc = TRUE;
+                  break;
+                }
+            }
+
+            if (i == CELERITY || i == FORTITUDE || i == POTENCE || (clandisc))
+            {
+               if (ch->pcdata->csbackgrounds[CSBACK_GHOULEDAGE] >= 1)
+                  max = 4;
+               if (ch->pcdata->csbackgrounds[CSBACK_GHOULEDAGE] >= 3)
+                  max = 5;
+            }
+            else
+            {
+               if (ch->pcdata->csbackgrounds[CSBACK_GHOULEDAGE] >= 2)
+                  max = 4;
+               if (ch->pcdata->csbackgrounds[CSBACK_GHOULEDAGE] >= 4)
+                  max = 5;
+            }
+
+            if (ch->pcdata->discipline[i] >= max)
+            {
+               if (max == 5)
+                  send_to_char("You have already mastered this Discipline.\n\r", ch);
+               else
+                  send_to_char("You have not been ghouled long enough to increase this Discipline further.\n\r", ch);
+               return;
             }
 
             if (i == CELERITY || i == FORTITUDE || i == POTENCE)
@@ -1527,6 +1588,13 @@ void do_freebie(CHAR_DATA *ch, char *argument)
                         ch->pcdata->csgeneration = ch->gen;
                         if (ch->max_pblood+10 <= 200)
                           ch->max_pblood += 10;
+                    }
+                    if (count == CSBACK_GHOULEDAGE)
+                    {
+                        if (ch->pcdata->csbackgrounds[count] == 1 || 
+                           ch->pcdata->csbackgrounds[count] == 3 ||
+                           ch->pcdata->csbackgrounds[count] == 5)
+                              ch->max_pblood += 10;
                     }
                     if (count == CSBACK_FOUNT)
                         ch->max_quintessence += 10;
@@ -3452,6 +3520,7 @@ void do_backgrounds (CHAR_DATA *ch, char *argument)
     for (i = 0;i < MAX_CSBACK;i++)
     {
             if (csback_table[i].name == NULL || (csback_table[i].race == CSBACK_VAMPIRE && !IS_VAMP(ch)) ||
+                (csback_table[i].race == CSBACK_GHOUL && ch->race != race_lookup("ghoul")) ||
                 (csback_table[i].race == CSBACK_WEREWOLF && ch->race != race_lookup("garou")) ||
                 (csback_table[i].race == CSBACK_MAGE && (ch->arete < 1 && ch->avatar < 1)))
                     continue;
@@ -3470,8 +3539,13 @@ void do_backgrounds (CHAR_DATA *ch, char *argument)
     {
         sprintf(buf, "\n\rYou have %d points to be spent on backgrounds.\n\rType 'background <trait>' to set these stats.\n\r", ch->dpoints);
         send_to_char(buf, ch);
-        sendch("{RPlease be aware that points set on Backgrounds are permenant so be sure of your selection.{x\n\r", ch);
-        sendch("{RYou may wish to save some background points if you are intending to be embraced by a player.{x\n\r", ch);
+        sendch("{RPlease be aware that points spent on Backgrounds are permanent, be sure{x\n\r", ch);
+        sendch("{Rof your selection.  You may wish to save some background points if you{x\n\r", ch);
+        sendch("{Rare intending one of the following:{x\n\r", ch);
+        sendch("    {Y1){W    Being Embraced by another player.{x\n\r", ch);
+        sendch("    {Y2){W    Being Ghouled by another player.{x\n\r", ch);
+        sendch("    {Y3){W    Remorting into a Garou.{x\n\r", ch);
+        sendch("    {Y4){W    Remorting into a Mage.{x\n\r", ch);
     }
     return;
     }
@@ -3479,7 +3553,7 @@ void do_backgrounds (CHAR_DATA *ch, char *argument)
     trait = -1;
     max = 4;
     trait = background_lookup(arg1);
-    if (trait == background_lookup("generation"))
+    if (trait == background_lookup("generation") || trait == background_lookup("ghouledage"))
         max = 1;
 
     if (trait != -1)
@@ -3489,31 +3563,44 @@ void do_backgrounds (CHAR_DATA *ch, char *argument)
             case CSBACK_VAMPIRE:
                 if (!IS_VAMP(ch))
                 {
-                    send_to_char("That is a Kindred background and you are not a vampire!\n\r", ch);
+                    send_to_char("That is a Kindred background and you are not a Vampire!\n\r", ch);
                     return;
                 }
                 break;
             case CSBACK_WEREWOLF:
-                if (ch->race != race_lookup("garou")) {
-                    send_to_char("That is a Garou background and you are not a werewolf!\n\r", ch);
+                if (ch->race != race_lookup("garou")) 
+                {
+                    send_to_char("That is a Garou background and you are not a Werewolf!\n\r", ch);
                     return;
                 }
                 break;
             case CSBACK_MAGE:
-                if (ch->arete < 1 && ch->avatar < 1) {
+                if (ch->arete < 1 && ch->avatar < 1) 
+                {
                     send_to_char("That is a Mage background and you are not a Mage!\n\r", ch);
                     return;
                 }
                 break;
-            }
+            case CSBACK_GHOUL:
+                if (ch->race != race_lookup("ghoul")) 
+                {
+                    send_to_char("That is a Ghoul background and you are not a Ghoul!\n\r", ch);
+                    return;
+                }
+         }
         if(ch->pcdata->csbackgrounds[trait] >= max)
         {
-            send_to_char("You cannot set that trait any higher at creation.\n\r",ch);
+            send_to_char("You cannot set that trait any higher with starting Background points.\n\r",ch);
             return;
         }
         if ((trait == CSBACK_GENERATION) && (ch->pcdata->csgeneration <= 9))
         {
             send_to_char("You cannot purchase any further points in Generation without seeking Admin approval.\n\r",ch);
+            return;
+        }
+        if ((trait == CSBACK_GHOULEDAGE) && (ch->pcdata->csbackgrounds[trait] >= 1))
+        {
+            send_to_char("You cannot purchase any further points in Ghouled Age with Background Points.\n\r",ch);
             return;
         }
         if (ch->dpoints < 1)
@@ -3529,6 +3616,12 @@ void do_backgrounds (CHAR_DATA *ch, char *argument)
             if (ch->max_pblood > 200)
                 ch->max_pblood = 200;
         }
+        if (trait == CSBACK_GHOULEDAGE && 
+         (ch->pcdata->csbackgrounds[trait] == 0 ||
+            ch->pcdata->csbackgrounds[trait] == 2 ||
+            ch->pcdata->csbackgrounds[trait] == 4))
+            ch->max_pblood += 10;
+
         if (trait == CSBACK_FOUNT)
             ch->max_quintessence += 10;
         ch->pcdata->csbackgrounds[trait]++;
@@ -3557,6 +3650,6 @@ void do_backgrounds (CHAR_DATA *ch, char *argument)
         sprintf(buf, "\n\rYou have %d points to be spent on backgrounds.\n\rPlease type 'background <trait>' to set these stats.\n\r", ch->dpoints);
         send_to_char(buf, ch);
         send_to_char("Type 'background show' to show the list of backgrounds available to you.\n\r", ch);
-        sendch("{RPlease be aware that points set on Backgrounds are permenant so be sure of your selection.{x\n\r", ch);
+        sendch("{RPlease be aware that points spent on Backgrounds are permanent, be sure\n\rof your selection.{x\n\r", ch);
         }
 }

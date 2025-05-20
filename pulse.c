@@ -25,11 +25,13 @@ void affects_update (void) {
 
     //EMERGOD POISON ACTUALLY SUCKS NOW CODE
     if ( IS_AFFECTED (ch, AFF_POISON) && ch->hit > (ch->max_hit / 20) &&
+        !is_affected(ch, gsn_earthmeld) && !is_affected(ch, gsn_earthmeld) &&
         godice(get_attribute(ch, STAMINA), 8) < 1)
         damage(ch, ch, (ch->max_hit / (50*get_attribute(ch, STAMINA))),
             gsn_poison,DAM_POISON,FALSE);
 
-    if (is_affected(ch, gsn_bleeding) && has_blood(ch) && ch->hit > 10 * ch->level / 50)
+    if (is_affected(ch, gsn_bleeding) && has_blood(ch) && 
+        !is_affected(ch, gsn_earthmeld) && ch->hit > 10 * ch->level / 50)
     {
       level = get_affect_level(ch, gsn_bleeding);
       if (godice(get_attribute(ch, STAMINA), 8) < 1)

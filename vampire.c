@@ -1479,6 +1479,7 @@ bool make_vamp(CHAR_DATA *ch, char *argument)
 {
     char clan[MAX_INPUT_LENGTH];
     int i;
+    bool wasghoul = FALSE;
 
     one_argument(argument,clan);
 
@@ -1488,6 +1489,8 @@ bool make_vamp(CHAR_DATA *ch, char *argument)
         return FALSE;
     if(IS_NPC(ch))
         return FALSE;
+    if(ch->race == race_lookup("ghoul"))
+        wasghoul = TRUE;
 
     ch->race = race_lookup("vampire");
     ch->embraced++;
@@ -1501,10 +1504,11 @@ bool make_vamp(CHAR_DATA *ch, char *argument)
     ch->pcdata->condition[COND_HUNGER] = -1;
     ch->affected_by = race_table[ch->race].aff;
     REMOVE_BIT(ch->imm_flags, IMM_SUNLIGHT);
-    for (i = 0; i < 3; i++)
-    {
-        if (ch->pcdata->discipline[clandisc_table[ch->clan].clan_disc[i]] == 0)
-            ch->pcdata->discipline[clandisc_table[ch->clan].clan_disc[i]] = 1;
-    }
+    if (!wasghoul)
+        for (i = 0; i < 3; i++)
+        {
+            if (ch->pcdata->discipline[clandisc_table[ch->clan].clan_disc[i]] == 0)
+                ch->pcdata->discipline[clandisc_table[ch->clan].clan_disc[i]] = 1;
+        }
     return TRUE;
 }

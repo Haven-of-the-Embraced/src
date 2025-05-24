@@ -316,8 +316,116 @@ void spell_gift_staredown( int sn, int level, CHAR_DATA *ch, void *vo, int targe
 //roll: Manipulation + Primal Urge (diff 8)
 //This gift allows the werewolf to ‘lend’ a frenzying garou the will to loose the hold that her Rage has on her. (If successful, stop combat and remove aggressive)
 //Cost: 1 Willpower
-void spell_gift_calmthesavagebeast( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_calmthesavagebeast( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  CHAR_DATA *victim = (CHAR_DATA *) vo;
+  AFFECT_DATA af;
+  int success;
+
+  if (IS_NPC(ch)) return;
+
+  if ( victim == NULL )
+  {
+    send_to_char("Whom do you want to lend your strength of will to?\n\r", ch );
     return;
+  }
+
+  if (victim == ch)
+  {
+    send_to_char("You cannot calm your own beastial fury.\n\r", ch);
+    return;
+  }
+
+  if ( ( victim = get_char_room( ch, NULL, arg ) ) == NULL )
+  {
+    send_to_char( "No one here by that name.\n\r", ch );
+    return;
+  }
+
+  if(!IS_NPC(victim))
+  {
+    send_to_char("The spirits of Unicorn frown upon using this against other players.\n\r",ch);
+    return;
+  }
+
+  if (IS_NPC(victim) && victim->pIndexData->pShop != NULL)
+  {
+    send_to_char("Unicorn wishes you to continue to be able to purchase supplies.\n\r",ch);
+    return;
+  }
+
+  if ( IS_AFFECTED(victim, AFF_CALM)) 
+  {
+    send_to_char("They are already pretty calm!\n\r", ch);
+    return;
+  }
+
+  if ( IS_IMMORTAL(victim))
+  {
+    send_to_char( "Yeah, right.\n\r", ch );
+    return;
+  }
+
+  if ( ch->cswillpower < 1 )
+  {
+    send_to_char( "You don't the strength of will to activate this Gift.\n\r", ch );
+    return;
+  }
+
+  act("You petition Unicorn to help lend control to $N.\n\r", ch, NULL, victim, TO_CHAR);
+  if ( IS_AFFECTED(victim, AFF_CHARM) || IS_SET(victim->act2, ACT2_ULTRA_MOB) ||
+  ||   ch->level+25 < victim->level)
+  {
+    act( "$N appears to be unable to calm down.",  ch, NULL, victim, TO_CHAR );
+    return;
+  }
+
+  WAIT_STATE( ch, 24 );
+  success = godice(get_attribute(ch,MANIPULATION)+ch->primal_urge, 8);
+  if(success < 0)
+  {
+    act( "$N seems unmoved by the power of your Will, and instead attacks!",  ch, NULL, victim, TO_CHAR );
+    multi_hit( victim, ch, TYPE_UNDEFINED );
+    ch->cswillpower--;
+    return;
+  }
+
+  if (success == 0) 
+  {
+    act( "$N seems utterly unaffected by your Will.", ch, NULL, victim, TO_CHAR);
+    ch->cswillpower--;
+    return;
+  }
+
+  act("Spirits of Unicorn grant your request, calming the fury dwelling in $N.",ch,NULL,victim,TO_CHAR);
+
+  REMOVE_BIT(victim->act, ACT_AGGRESSIVE);
+  affect_strip(victim, gsn_berserk);
+  affect_strip(victim, gsn_vamp_frenzy);
+  affect_strip(victim, gsn_garou_frenzy);
+  affect_strip(victim, gsn_thaumaturgy_frenzy);
+  affect_strip(victim, gsn_vigor);
+  affect_strip(victim, gsn_zeal);
+
+  af.where = TO_AFFECTS;
+  af.type = skill_lookup("calm");
+  af.level = success*20;
+  af.duration = success*4;
+  af.location = APPLY_HITROLL;
+  if (!IS_NPC(victim))
+    af.modifier = -success * 10;
+  else
+    af.modifier = -success * 25;
+  af.bitvector = AFF_CALM;
+  affect_to_char(victim,&af);
+
+  af.location = APPLY_DAMROLL;
+  affect_to_char(victim,&af);
+
+  af.location = APPLY_AC;
+  af.modifier = success * 50;
+  affect_to_char(victim, &af);
+  return;
 }
 //
 //“Reshape Object”

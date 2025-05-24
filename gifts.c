@@ -336,12 +336,6 @@ void spell_gift_calmthesavagebeast( int sn, int level, CHAR_DATA *ch, void *vo, 
     return;
   }
 
-  if ( ( victim = get_char_room( ch, NULL, arg ) ) == NULL )
-  {
-    send_to_char( "No one here by that name.\n\r", ch );
-    return;
-  }
-
   if(!IS_NPC(victim))
   {
     send_to_char("The spirits of Unicorn frown upon using this against other players.\n\r",ch);
@@ -372,15 +366,15 @@ void spell_gift_calmthesavagebeast( int sn, int level, CHAR_DATA *ch, void *vo, 
     return;
   }
 
-  act("You petition Unicorn to help lend control to $N.\n\r", ch, NULL, victim, TO_CHAR);
+  act("You petition Unicorn to help lend control to $N.", ch, NULL, victim, TO_CHAR);
   if ( IS_AFFECTED(victim, AFF_CHARM) || IS_SET(victim->act2, ACT2_ULTRA_MOB) ||
-  ||   ch->level+25 < victim->level)
+    ch->level+25 < victim->level)
   {
     act( "$N appears to be unable to calm down.",  ch, NULL, victim, TO_CHAR );
     return;
   }
 
-  if (victim->race != race_lookup("vampire") && victim->race != race_lookup("methuselah")
+  if (victim->race != race_lookup("vampire") && victim->race != race_lookup("methuselah") &&
     victim->race != race_lookup("garou") && victim->race != race_lookup("fera") &&
     victim->race != race_lookup("abomination"))
   {
@@ -389,10 +383,10 @@ void spell_gift_calmthesavagebeast( int sn, int level, CHAR_DATA *ch, void *vo, 
   }
 
   WAIT_STATE( ch, 24 );
-  success = godice(get_attribute(ch,MANIPULATION)+ch->primal_urge, 8);
+  success = godice(get_attribute(ch,MANIPULATION)+ch->pcdata->primal_urge, 8);
   if(success < 0)
   {
-    act( "$N seems unmoved by the power of your Will, and instead attacks!",  ch, NULL, victim, TO_CHAR );
+    act( "$N seems unmoved by the power of the spirits, and instead attacks!",  ch, NULL, victim, TO_CHAR );
     send_to_char("The toll of summoning Unicorn leaves you feeling less determined.\n\r", ch);
     multi_hit( victim, ch, TYPE_UNDEFINED );
     ch->cswillpower--;
@@ -428,11 +422,13 @@ void spell_gift_calmthesavagebeast( int sn, int level, CHAR_DATA *ch, void *vo, 
   if (!IS_NPC(victim))
     af.modifier = -success * 10;
   else
-    af.modifier = -success * 25;
+    af.modifier = (-success * 25) - ch->level / 2;
   af.bitvector = AFF_CALM;
   affect_to_char(victim,&af);
 
   af.location = APPLY_DAMROLL;
+  af.modifier = -success * 10;
+  af.bitvector = 0;
   affect_to_char(victim,&af);
 
   af.location = APPLY_AC;

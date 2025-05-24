@@ -4139,12 +4139,12 @@ void spell_gift_auraofconfidence( int sn, int level, CHAR_DATA *ch, void *vo, in
     act("$N hangs $S head low for a moment.", ch, NULL, NULL, TO_NOTVICT);
     af.where     = TO_AFFECTS;
     af.type      = gsn_gift_auraofconfidence;
-    af.level     = ch->level;
-    af.duration  = success * 5;
-    af.modifier  = -2;
+    af.level     = -1;
+    af.duration  = -success;
+    af.modifier  = -1;
     af.location  = APPLY_CS_CHA;
     af.bitvector = 0;
-    affect_to_char( victim, &af );
+    affect_to_char( ch, &af );
     WAIT_STATE(ch, 6);
     return;
   }
@@ -4155,6 +4155,18 @@ void spell_gift_auraofconfidence( int sn, int level, CHAR_DATA *ch, void *vo, in
     WAIT_STATE(ch, 6);
     return;
   }
+
+    act("The ancestor-spirits decree you are worthy, bringing honor to the Garou.  Your rightful place is to rule.", ch, NULL, NULL, TO_CHAR);
+    act("$N raises $S head high, holding it regally.", ch, NULL, NULL, TO_NOTVICT);
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_gift_auraofconfidence;
+    af.level     = success;
+    af.duration  = (success * 5) + ch->level;
+    af.modifier  = 2;
+    af.location  = APPLY_CS_CHA;
+    af.bitvector = 0;
+    affect_to_char( ch, &af );
+    WAIT_STATE(ch, 6);
 
   return;
 }

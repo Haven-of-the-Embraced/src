@@ -4107,8 +4107,29 @@ void spell_gift_wolfatthedoor( int sn, int level, CHAR_DATA *ch, void *vo, int t
 //Shadow Lords
 
 //Rank 1
-void spell_gift_auraofconfidence( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_auraofconfidence( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  AFFECT_DATA af;
+  int success;
+
+  if (IS_NPC(ch))
     return;
+
+  if (is_affected(ch, gsn_gift_auraofconfidence))
+  {
+    send_to_char("You already exude a remarkable amount of confidence.\n\r", ch);
+    return;
+  }
+
+  if (ch->move < ch->level)
+  {
+    send_to_char("You are too tired to request a bolster to your confidence.\n\r", ch);
+    return;
+  }
+
+  success = godice(get_attribute(ch, CHARISMA) + get_ability(ch, CSABIL_SUBTERFUGE), 7);
+
+  return;
 }
 
 void spell_gift_fatalflaw( int sn, int level, CHAR_DATA *ch, void *vo, int target)

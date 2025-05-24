@@ -4117,17 +4117,44 @@ void spell_gift_auraofconfidence( int sn, int level, CHAR_DATA *ch, void *vo, in
 
   if (is_affected(ch, gsn_gift_auraofconfidence))
   {
-    send_to_char("You already exude a remarkable amount of confidence.\n\r", ch);
+    if (get_affect_level(ch, gsn_gift_auraofconfidence) == -1)
+      send_to_char("Dishonor on you.  Dishonor on your family.  Dishonor on your cow.\n\r", ch);
+    else
+      send_to_char("You already exude a remarkable amount of confidence.\n\r", ch);
     return;
   }
 
-  if (ch->move < ch->level)
+  if (ch->move < ch->level + 5)
   {
     send_to_char("You are too tired to request a bolster to your confidence.\n\r", ch);
     return;
   }
 
+  ch->move -= (ch->level + 5);
   success = godice(get_attribute(ch, CHARISMA) + get_ability(ch, CSABIL_SUBTERFUGE), 7);
+
+  if (success < 0)
+  {
+    act("The ancestor-spirits decree that you have brought shame and dishonor to the Garou!", ch, NULL, NULL, TO_CHAR);
+    act("$N hangs $S head low for a moment.", ch, NULL, NULL, TO_NOTVICT);
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_gift_auraofconfidence;
+    af.level     = ch->level;
+    af.duration  = success * 5;
+    af.modifier  = -2;
+    af.location  = APPLY_CS_CHA;
+    af.bitvector = 0;
+    affect_to_char( victim, &af );
+    WAIT_STATE(ch, 6);
+    return;
+  }
+
+  if (success == 0)
+  {
+    send_to_char("The ancestor-spirits seem to have shunned you, and refuse to answer.\n\r", ch);
+    WAIT_STATE(ch, 6);
+    return;
+  }
 
   return;
 }

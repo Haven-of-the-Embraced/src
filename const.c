@@ -2944,7 +2944,7 @@ Total (3) */
 //  Total (10)
 {   "aura of confidence", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_auraofconfidence,  TAR_IGNORE, POS_STANDING,
-&gsn_gift_auraofconfidence,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+&gsn_gift_auraofconfidence,          SLOT( 0),        0,     12, "",             "Your ancestor's aura fades into the past.",        "" },
 
 {   "fatal flaw", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_fatalflaw,  TAR_CHAR_DEFENSIVE, POS_STANDING,

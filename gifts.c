@@ -380,11 +380,20 @@ void spell_gift_calmthesavagebeast( int sn, int level, CHAR_DATA *ch, void *vo, 
     return;
   }
 
+  if (victim->race != race_lookup("vampire") && victim->race != race_lookup("methuselah")
+    victim->race != race_lookup("garou") && victim->race != race_lookup("fera") &&
+    victim->race != race_lookup("abomination"))
+  {
+    send_to_char("Your victim isn't harboring an inherent supernatural fury.\n\r", ch);
+    return;
+  }
+
   WAIT_STATE( ch, 24 );
   success = godice(get_attribute(ch,MANIPULATION)+ch->primal_urge, 8);
   if(success < 0)
   {
     act( "$N seems unmoved by the power of your Will, and instead attacks!",  ch, NULL, victim, TO_CHAR );
+    send_to_char("The toll of summoning Unicorn leaves you feeling less determined.\n\r", ch);
     multi_hit( victim, ch, TYPE_UNDEFINED );
     ch->cswillpower--;
     return;
@@ -392,8 +401,12 @@ void spell_gift_calmthesavagebeast( int sn, int level, CHAR_DATA *ch, void *vo, 
 
   if (success == 0) 
   {
-    act( "$N seems utterly unaffected by your Will.", ch, NULL, victim, TO_CHAR);
-    ch->cswillpower--;
+    act( "$N seems unaffected by the spirit's presence.", ch, NULL, victim, TO_CHAR);
+    if (godice(ch->csmax_willpower, 6) <= 0)
+    {
+      send_to_char("The toll of summoning Unicorn leaves you feeling less determined.\n\r", ch);
+      ch->cswillpower--;
+    }
     return;
   }
 

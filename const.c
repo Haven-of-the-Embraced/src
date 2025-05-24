@@ -2387,8 +2387,8 @@ Total (3) */
     NULL,          SLOT( 0),        0,     12, "",             "!STAREDOWN!",      "" },
 
     { "calm the savage beast", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_calmthesavagebeast,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_calmthesavagebeast,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_calmthesavagebeast,  TAR_CHAR_DEFENSIVE, POS_STANDING,
+    &gsn_gift_calmthesavagebeast,          SLOT( 0),        0,     12, "", "The calmness in your being gently flows away.",        "" },
 
     { "reshape object", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_reshapeobject,  TAR_IGNORE, POS_STANDING,

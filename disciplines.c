@@ -1251,7 +1251,7 @@ void do_auraperception( CHAR_DATA *ch, char *argument )
         }
     }
 
-    if (!is_humanoid(victim))
+    if (!is_humanoid(victim) || is_affected(victim, gsn_gift_auraofconfidence))
     {
         send_to_char("You do not see any particular aura surrounding your target.\n\r", ch);
         return;

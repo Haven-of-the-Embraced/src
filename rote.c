@@ -567,6 +567,12 @@ void rote_perceiveentropy(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DAT
     if (IS_SET(victim->act2, ACT2_INFLUENCE))
       send_to_char("|       {BGreat, influential things await this target in the future.{x       |\n\r", ch);
 
+    if (is_affected(victim, gsn_gift_auraofconfidence))
+    {
+        send_to_char("+------------------------------------------------------------------------+\n\r", ch);
+        return;
+    }
+
     if(success > 1 )
     {
       send_to_char("+------------------------------------------------------------------------+\n\r", ch);

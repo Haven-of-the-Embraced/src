@@ -4289,8 +4289,26 @@ void spell_gift_seizingtheedge( int sn, int level, CHAR_DATA *ch, void *vo, int 
     return;
 }
 //Rank 2
-void spell_gift_clapofthunder( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_clapofthunder( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  AFFECT_DATA af;
+  CHAR_DATA *gch;
+  int wpsuccess = 0, wpdice = 5;
+
+  if (ch->pcdata->gnosis[TEMP] < 1)
+  {
+    send_to_char("You do not possess the spiritual reserves to activate this Gift.\n\r", ch);
     return;
+  }
+
+  ch->pcdata->gnosis[TEMP] -= 1;
+
+  for ( gch = ch->in_room->people; gch != NULL; gch = gch->next_in_room )
+  {
+
+  }
+
+  return;
 }
 //Luna's Armor - Duplicate gift, as ChildrenofGaia
 

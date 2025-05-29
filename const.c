@@ -2955,8 +2955,8 @@ Total (3) */
 &gsn_gift_seizingtheedge,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
 {   "clap of thunder", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_clapofthunder,  TAR_IGNORE, POS_STANDING,
-&gsn_gift_clapofthunder,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_clapofthunder,  TAR_IGNORE, POS_FIGHTING,
+&gsn_gift_clapofthunder,          SLOT( 0),        0,     12, "resounding {Ythunderclap{x",             "The ringing in your ears subsides.",        "" },
 
 {   "ravens curse", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_ravenscurse,  TAR_IGNORE, POS_STANDING,

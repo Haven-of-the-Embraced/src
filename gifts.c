@@ -4295,6 +4295,7 @@ void spell_gift_clapofthunder( int sn, int level, CHAR_DATA *ch, void *vo, int t
   CHAR_DATA *vch;
   CHAR_DATA *vch_next;
   int wpsuccess = 0, wpdice = 0;
+  int clapdamage = ch->level;
 
   if (ch->pcdata->gnosis[TEMP] < 1)
   {

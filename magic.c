@@ -1222,7 +1222,16 @@ void spell_cancellation( int sn, int level, CHAR_DATA *ch, void *vo,int target )
 
 void spell_cause_light( int sn, int level, CHAR_DATA *ch, void *vo,int target )
 {
-    damage( ch, (CHAR_DATA *) vo, dice(1, level) + level / 2, sn,DAM_HARM,TRUE);
+    CHAR_DATA *victim = (CHAR_DATA *) vo;
+    int dam;
+
+    if (!IS_NPC(ch))
+        dam = godice(ch->csmax_willpower, 7);
+    else
+        dam = ch->level / 25;
+
+    d10_damage( ch, victim, dam, ch->level / 2, gsn_cause_light, DAM_HARM, DEFENSE_NONE, TRUE, TRUE);
+
     return;
 }
 

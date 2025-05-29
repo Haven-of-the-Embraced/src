@@ -4292,8 +4292,9 @@ void spell_gift_seizingtheedge( int sn, int level, CHAR_DATA *ch, void *vo, int 
 void spell_gift_clapofthunder( int sn, int level, CHAR_DATA *ch, void *vo, int target)
 {
   AFFECT_DATA af;
-  CHAR_DATA *gch;
-  int wpsuccess = 0, wpdice = 5;
+  CHAR_DATA *vch;
+  CHAR_DATA *vch_next;
+  int wpsuccess = 0, wpdice = 0;
 
   if (ch->pcdata->gnosis[TEMP] < 1)
   {
@@ -4302,10 +4303,40 @@ void spell_gift_clapofthunder( int sn, int level, CHAR_DATA *ch, void *vo, int t
   }
 
   ch->pcdata->gnosis[TEMP] -= 1;
+  act("You slam your hands together, creating a mighty {Ythunderclap{x.", ch, NULL, NULL, TO_CHAR);
+  act("$N slam $s hands together, creating a mighty {Ythunderclap{x.", ch, NULL, NULL, TO_NOTVICT);
+  WAIT_STATE(ch, 6);
 
-  for ( gch = ch->in_room->people; gch != NULL; gch = gch->next_in_room )
+  for ( vch = char_list; vch != NULL; vch = vch_next )
   {
-
+    vch_next    = vch->next;
+    if ( vch->in_room == NULL )
+      continue;
+    if ( vch->in_room == ch->in_room && SAME_UMBRA(ch, vch))
+    {
+      if ( vch != ch && !is_same_group(vch, ch) && IS_NPC(vch)
+        && !is_affected(vch, gsn_gift_clapofthunder))
+      {
+        wpdice = vch->level / 20;
+        wpsuccess = godice(wpdice, 8);
+        if (wpsuccess <= 0)
+        {
+          d10_damage( ch, vch, 1, ch->level, gsn_gift_clapofthunder, DAM_SOUND, DEFENSE_NONE, TRUE, TRUE);
+          vch->stopped += 3;
+          send_to_char("The thunderclap rings in your ears, disorienting you momentarily!\n\r", vch);
+          act("$N appears disoriented by the thunderclap.", ch, NULL, vch, TO_CHAR);
+          act("$N appears disoriented by the thunderclap.", ch, NULL, vch, TO_NOTVICT);
+          af.where     = TO_AFFECTS;
+          af.type      = gsn_gift_clapofthunder;
+          af.level     = 1;
+          af.duration  = 1;
+          af.modifier  = -1;
+          af.location  = APPLY_CS_PER;
+          af.bitvector = 0;
+          affect_to_char( vch, &af );
+        }
+      }
+    }
   }
 
   return;

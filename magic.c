@@ -933,38 +933,37 @@ void spell_call_lightning( int sn, int level,CHAR_DATA *ch,void *vo,int target)
     CHAR_DATA *vch_next;
     int dam;
 
+    if (!IS_NPC(ch))
+        dam = godice(ch->csmax_willpower, 7);
+    else
+        dam = ch->level / 25;
+
     if ( !IS_OUTSIDE(ch) )
     {
-    send_to_char( "You must be out of doors.\n\r", ch );
-    return;
+        send_to_char( "You must be out of doors.\n\r", ch );
+        return;
     }
 
-    dam = dice(level/2, 8);
-
-    /* spell enhancing code */
-    dam += 20+level;
-
-    send_to_char( "You pay homage to the Old Gods of Asgard and the mighty Thor strikes down your enemies!\n\r", ch );
-    act( "$n invokes the might of Thor to strike down $s foes!",
-    ch, NULL, NULL, TO_ROOM );
+    send_to_char( "You pay homage to the Old Gods, and they respond by striking down your enemies!\n\r", ch );
+    act( "$n invokes the might of the Gods to strike down $s foes!", ch, NULL, NULL, TO_ROOM );
 
     for ( vch = char_list; vch != NULL; vch = vch_next )
     {
-    vch_next    = vch->next;
-    if ( vch->in_room == NULL )
-        continue;
-    if ( vch->in_room == ch->in_room && SAME_UMBRA(ch, vch))
-    {
-        if ( vch != ch && !is_same_group(vch, ch) && ( IS_NPC(ch) ? !IS_NPC(vch) : IS_NPC(vch) ))
-        damage( ch, vch, saves_spell( level,vch,DAM_LIGHTNING)
-        ? dam / 2 : dam, sn,DAM_LIGHTNING,TRUE);
-        continue;
-    }
+        vch_next    = vch->next;
+        if ( vch->in_room == NULL )
+            continue;
+        if ( vch->in_room == ch->in_room && SAME_UMBRA(ch, vch))
+        {
+            if ( vch != ch && !is_same_group(vch, ch) && ( IS_NPC(ch) ? !IS_NPC(vch) : IS_NPC(vch) ))
+            {
+                d10_damage( ch, vch, dam, ch->level / 2, gsn_call_lightning, DAM_LIGHTNING, DEFENSE_NONE, TRUE, TRUE);
+                continue;
+            }
+        }
 
-    if ( vch->in_room->area == ch->in_room->area
-    &&   IS_OUTSIDE(vch)
-    &&   IS_AWAKE(vch) )
-        send_to_char( "Lightning flashes in the sky.\n\r", vch );
+        if ( vch->in_room->area == ch->in_room->area
+        && IS_OUTSIDE(vch) && IS_AWAKE(vch) )
+            send_to_char( "Lightning flashes in the sky.\n\r", vch );
     }
 
     return;

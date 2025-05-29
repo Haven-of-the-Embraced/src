@@ -1287,7 +1287,7 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
 
     { "call lightning",   { 26, 18, 31, 22, 102, 102, 102, 102, 102, 102, 39, 102, 30 },
     { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 4, 4, 4}, spell_call_lightning,   TAR_IGNORE,     POS_FIGHTING,
-    &gsn_call_lightning,           SLOT( 6),   15, 12, "lightning bolt",   "!Call Lightning!", "" },
+    &gsn_call_lightning,           SLOT( 6),   15, 12, "lightning storm",   "!Call Lightning!", "" },
 
     { "calm",         { 48, 16, 50, 20 , 102, 102, 102, 102, 102, 102, 21, 25, 16},
     { 1,  1,  2,  2, 1, 1, 1, 1, 1, 1, 2, 2, 2}, spell_calm,     TAR_IGNORE,     POS_FIGHTING,

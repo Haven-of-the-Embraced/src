@@ -4317,12 +4317,20 @@ void spell_gift_clapofthunder( int sn, int level, CHAR_DATA *ch, void *vo, int t
       if ( vch != ch && !is_same_group(vch, ch) && IS_NPC(vch)
         && !is_affected(vch, gsn_gift_clapofthunder))
       {
-        wpdice = vch->level / 20;
+        wpdice = vch->level / 30;
+        if (vch->level > ch->level + 15)
+          wpdice++;
+        if (vch->level < ch->level)
+          wpdice--;
         wpsuccess = godice(wpdice, 8);
+        if (wpsuccess < 0)
+          clapdamage = clapdamage * 2;
         if (wpsuccess <= 0)
         {
-          d10_damage( ch, vch, 1, ch->level, gsn_gift_clapofthunder, DAM_SOUND, DEFENSE_NONE, TRUE, TRUE);
-          vch->stopped += 3;
+          d10_damage( ch, vch, 1, clapdamage, gsn_gift_clapofthunder, DAM_SOUND, DEFENSE_NONE, TRUE, TRUE);
+          vch->stopped += 5;
+          if (wpsuccess < 0)
+            vch->stopped += 3;
           send_to_char("The thunderclap rings in your ears, disorienting you momentarily!\n\r", vch);
           act("$N appears disoriented by the thunderclap.", ch, NULL, vch, TO_CHAR);
           act("$N appears disoriented by the thunderclap.", ch, NULL, vch, TO_NOTVICT);
@@ -4330,7 +4338,10 @@ void spell_gift_clapofthunder( int sn, int level, CHAR_DATA *ch, void *vo, int t
           af.type      = gsn_gift_clapofthunder;
           af.level     = 1;
           af.duration  = 1;
-          af.modifier  = -1;
+          if (wpsuccess < 0)
+            af.modifier = -2;
+          else
+            af.modifier  = -1;
           af.location  = APPLY_CS_PER;
           af.bitvector = 0;
           affect_to_char( vch, &af );

@@ -3610,7 +3610,7 @@ void spell_lightning_bolt(int sn,int level,CHAR_DATA *ch,void *vo,int target)
     else
         dam = ch->level / 25;
 
-    d10_damage( ch, victim, dam, ch->level / 3, gsn_lightning_bolt, DAM_LIGHTNING, DEFENSE_NONE, TRUE, TRUE);
+    d10_damage( ch, victim, dam, ch->level * 2 / 3, gsn_lightning_bolt, DAM_LIGHTNING, DEFENSE_NONE, TRUE, TRUE);
     return;
 }
 

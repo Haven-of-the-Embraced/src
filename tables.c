@@ -1496,7 +1496,7 @@ const struct    gift_type   gift_table  [MAX_GIFTS_CODED]  =
     {   "aura of confidence", 			1,     24, 0,     0,      0,          SHADOW_LORD, 1,   0},
     {   "fatal flaw", 					1,     24, 0,     0,      0,          SHADOW_LORD, 1,   0},
     {   "seizing the edge", 			0,     24, 0,     0,      0,          SHADOW_LORD, 1,   0},
-    {   "clap of thunder", 				0,     24, 0,     0,      0,          SHADOW_LORD, 2,   0},
+    {   "clap of thunder", 				1,     24, 0,     0,      0,          SHADOW_LORD, 2,   0},
     {   "ravens curse", 				0,     24, 0,     0,      0,          SHADOW_LORD, 3,   0},
     {   "shadow cutting", 				0,     24, 0,     0,      0,          SHADOW_LORD, 3,   0},
     {   "dolorous stroke", 				0,     24, 0,     0,      0,          SHADOW_LORD, 4,   0},

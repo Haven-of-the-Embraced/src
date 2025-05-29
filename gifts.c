@@ -4304,7 +4304,7 @@ void spell_gift_clapofthunder( int sn, int level, CHAR_DATA *ch, void *vo, int t
 
   ch->pcdata->gnosis[TEMP] -= 1;
   act("You slam your hands together, creating a mighty {Ythunderclap{x.", ch, NULL, NULL, TO_CHAR);
-  act("$N slam $s hands together, creating a mighty {Ythunderclap{x.", ch, NULL, NULL, TO_NOTVICT);
+  act("$n slam $s hands together, creating a mighty {Ythunderclap{x.", ch, NULL, NULL, TO_NOTVICT);
   WAIT_STATE(ch, 6);
 
   for ( vch = char_list; vch != NULL; vch = vch_next )

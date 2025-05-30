@@ -5578,7 +5578,7 @@ void do_bite(CHAR_DATA *ch, char *argument)
       get_affect_level(ch, gsn_mutateform) != MUTATE_BEAR &&
       get_affect_level(ch, gsn_shift) != SHIFT_WOLF &&
       get_affect_level(ch, gsn_shift) != SHIFT_BEAR &&
-      !is_affected(ch, gsn_formofthecobra))
+      !is_affected(ch, gsn_formofthecobra) && !is_affected(ch, gsn_mythicform))
     {
       send_to_char("You don't have sharp enough teeth to bite effectively.\n\r", ch);
       return;

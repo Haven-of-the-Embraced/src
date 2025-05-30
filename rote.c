@@ -1845,7 +1845,7 @@ void rote_mythicform(CHAR_DATA *ch, int success, char *arg)
         ch->shift = str_dup( buf );
 
         af.where     = TO_AFFECTS;
-        af.type      = gsn_mutateform;
+        af.type      = gsn_mythicform;
         af.level     = MUTATE_DRAGON;
         af.duration  = success * 10 + 5;
         af.location  = APPLY_CS_STR;

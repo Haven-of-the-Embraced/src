@@ -1825,6 +1825,65 @@ void rote_cellularmitosis(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DAT
     return;
 }
 
+void rote_mythicform(CHAR_DATA *ch, int success, char *arg)
+{
+    char buf[MAX_STRING_LENGTH];
+    AFFECT_DATA af;
+
+    if ( IS_AFFECTED(ch, AFF_SHIFT))
+    {
+        send_to_char( "You must reform your Pattern back to normal first.\n\r{WSyntax: {crote 'mutate form' human{x\n\r", ch );
+        ch->quintessence += 25;
+        return;
+    }
+
+        act( "You shift your body into a terrifying creature of legends.", ch, NULL, NULL, TO_CHAR );
+        act( "$n shifts $s form into that of a red dragon.", ch, NULL, NULL, TO_NOTVICT );
+        ch->short_descr = str_dup( "A mighty red dragon" );
+        sprintf(buf, "A mighty red dragon");
+        ch->shift = str_dup( buf );
+
+        af.where     = TO_AFFECTS;
+        af.type      = gsn_mutateform;
+        af.level     = MUTATE_DRAGON;
+        af.duration  = success * 10 + 5;
+        af.location  = APPLY_CS_STR;
+        af.modifier  = 4;
+        af.bitvector = AFF_SHIFT;
+        affect_to_char( ch, &af );
+
+        af.location  = APPLY_CS_DEX;
+        af.modifier  = -1;
+        af.bitvector = AFF_FLYING;
+        affect_to_char( ch, &af );
+
+        af.location  = APPLY_CS_STA;
+        af.modifier  = 4;
+        af.bitvector = AFF_DARK_VISION;
+        affect_to_char( ch, &af );
+
+        af.location  = APPLY_CS_MAN;
+        af.modifier  = -3;
+        af.bitvector = 0;
+        affect_to_char( ch, &af );
+
+        af.location  = APPLY_CS_APP;
+        af.modifier  = -10;
+        af.bitvector = 0;
+        affect_to_char( ch, &af );
+
+        af.where     = TO_AFFECTS;
+        af.type      = gsn_claws;
+        af.level     = ch->level;
+        af.duration  = success * 10 + 5;
+        af.location  = APPLY_NONE;
+        af.modifier  = 0;
+        af.bitvector = 0;
+        affect_to_char( ch, &af );
+
+        return;
+}
+
 void rote_matterperception(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
 {
     AFFECT_DATA *paf;

@@ -2275,27 +2275,25 @@ void spell_earthquake( int sn, int level, CHAR_DATA *ch, void *vo,int target )
 
     for ( vch = char_list; vch != NULL; vch = vch_next )
     {
-    vch_next    = vch->next;
-    if ( vch->in_room == NULL )
-        continue;
-    if ( vch->in_room == ch->in_room && SAME_UMBRA(ch, vch))
-    {
-        if ( vch != ch && !is_same_group(vch, ch) && IS_NPC(vch) && !is_safe_spell(ch,vch,TRUE))
+        vch_next    = vch->next;
+        if ( vch->in_room == NULL )
+            continue;
+        if ( vch->in_room == ch->in_room && SAME_UMBRA(ch, vch))
         {
-            if (IS_AFFECTED(vch,AFF_FLYING))
-                send_to_char("A low rumbling crosses the ground below.\n\r", vch);
-            else
+            if ( vch != ch && !is_same_group(vch, ch) && IS_NPC(vch) && !is_safe_spell(ch,vch,TRUE))
             {
-                d10_damage( ch, vch, dam, ch->level * 5, gsn_earthquake, DAM_BASH, DEFENSE_FULL, TRUE, TRUE);
-                continue;
+                if (IS_AFFECTED(vch,AFF_FLYING))
+                    send_to_char("A low rumbling crosses the ground below.\n\r", vch);
+                else
+                {
+                    d10_damage( ch, vch, dam, ch->level * 5, gsn_earthquake, DAM_BASH, DEFENSE_FULL, TRUE, TRUE);
+                    continue;
+                }
             }
         }
+        if ( vch->in_room->area == ch->in_room->area )
+            send_to_char( "The earth trembles and shivers with seismic shocks, before settling down once again.\n\r", vch );
     }
-
-    if ( vch->in_room->area == ch->in_room->area )
-        send_to_char( "The earth trembles and shivers with seismic shocks, before settling down once again.\n\r", vch );
-    }
-
     return;
 }
 

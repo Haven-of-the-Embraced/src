@@ -183,7 +183,7 @@ typedef void ROOM_FUN	args( ( ROOM_INDEX_DATA *room, char *argument ) );
  */
 #define MAX_HELP        5
 #define MAX_SOCIALS       256
-#define MAX_SKILL         457 //4/04/25
+#define MAX_SKILL         458 //5/30/25
 #define MAX_GIFT          90
 #define MAX_GIFTS_CODED   168
 #define MAX_BREW        24
@@ -2771,7 +2771,7 @@ struct  room_index_data
 #define SHIFT_MIST          6
 
 /*
- * Life4 Mutate Forms
+ * Life4 & Combo Mutate Forms
  * Refers to Affect level of Mutate Form
 */
 #define MUTATE_SLOTH        0
@@ -2779,6 +2779,7 @@ struct  room_index_data
 #define MUTATE_SQUIRREL     2
 #define MUTATE_PANTHER      3
 #define MUTATE_BEAR         4
+#define MUTATE_DRAGON       5
 
 /*
  * Types of attacks.

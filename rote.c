@@ -1708,36 +1708,35 @@ void rote_mutateform(CHAR_DATA *ch, int success, char *arg)
 
     if ( !str_prefix( arg, "sloth") )
     {
-      act( "Your body shifts forms, and you feel very lethargic.", ch, NULL, NULL, TO_CHAR );
-      act( "$n shifts their form into that of a sloth.", ch, NULL, NULL, TO_NOTVICT );
-      ch->short_descr = str_dup( "A slow-moving sloth" );
-      sprintf(buf, "A slow-moving sloth");
-      ch->shift = str_dup( buf );
+        act( "Your body shifts forms, and you feel very lethargic.", ch, NULL, NULL, TO_CHAR );
+        act( "$n shifts their form into that of a sloth.", ch, NULL, NULL, TO_NOTVICT );
+        ch->short_descr = str_dup( "A slow-moving sloth" );
+        sprintf(buf, "A slow-moving sloth");
+        ch->shift = str_dup( buf );
+        af.where     = TO_AFFECTS;
+        af.type      = gsn_mutateform;
+        af.level     = MUTATE_SLOTH;
+        af.duration  = success * 15;
+        af.location  = APPLY_CS_STR;
+        af.modifier  = -2;
+        af.bitvector = AFF_SHIFT;
+        affect_to_char( ch, &af );
 
-      af.where     = TO_AFFECTS;
-      af.type      = gsn_mutateform;
-      af.level     = MUTATE_SLOTH;
-      af.duration  = success * 15;
-      af.location  = APPLY_CS_STR;
-      af.modifier  = -2;
-      af.bitvector = AFF_SHIFT;
-      affect_to_char( ch, &af );
+        af.location  = APPLY_CS_DEX;
+        af.modifier  = -4;
+        af.bitvector = AFF_SLOW;
+        affect_to_char( ch, &af );
 
-      af.location  = APPLY_CS_DEX;
-      af.modifier  = -4;
-      af.bitvector = AFF_SLOW;
-      affect_to_char( ch, &af );
+        af.location  = APPLY_CS_MAN;
+        af.modifier  = -3;
+        af.bitvector = 0;
+        affect_to_char( ch, &af );
 
-      af.location  = APPLY_CS_MAN;
-      af.modifier  = -3;
-      af.bitvector = 0;
-      affect_to_char( ch, &af );
+        af.location  = APPLY_MOVE;
+        af.modifier  = -ch->level;
+        affect_to_char( ch, &af );
 
-      af.location  = APPLY_MOVE;
-      af.modifier  = -ch->level;
-      affect_to_char( ch, &af );
-
-      return;
+        return;
     }
 
     return;

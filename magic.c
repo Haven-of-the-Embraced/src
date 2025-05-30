@@ -2263,6 +2263,12 @@ void spell_earthquake( int sn, int level, CHAR_DATA *ch, void *vo,int target )
 {
     CHAR_DATA *vch;
     CHAR_DATA *vch_next;
+    int dam;
+
+    if (!IS_NPC(ch))
+        dam = godice(ch->csmax_willpower, 6);
+    else
+        dam = ch->level / 25;
 
     send_to_char( "The earth trembles beneath your feet!\n\r", ch );
     act( "$n makes the earth tremble and shiver.", ch, NULL, NULL, TO_ROOM );
@@ -2273,15 +2279,17 @@ void spell_earthquake( int sn, int level, CHAR_DATA *ch, void *vo,int target )
     if ( vch->in_room == NULL )
         continue;
     if ( vch->in_room == ch->in_room && SAME_UMBRA(ch, vch))
-    {               /*Code change by Sengir, earthquake misses flying mobs properly*/
+    {
         if ( vch != ch && !is_same_group(vch, ch) && IS_NPC(vch) && !is_safe_spell(ch,vch,TRUE))
-            {
+        {
             if (IS_AFFECTED(vch,AFF_FLYING))
-            send_to_char("A low rumbling crosses the ground below.\n\r", vch);
-        else
-            damage( ch,vch,level + dice(10, 20), sn, DAM_BASH,TRUE);
+                send_to_char("A low rumbling crosses the ground below.\n\r", vch);
+            else
+            {
+                d10_damage( ch, vch, dam, ch->level * 5, gsn_earthquake, DAM_BASH, DEFENSE_FULL, TRUE, TRUE);
+                continue;
             }
-            continue;
+        }
     }
 
     if ( vch->in_room->area == ch->in_room->area )

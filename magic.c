@@ -3636,7 +3636,7 @@ void spell_lightning_bolt(int sn,int level,CHAR_DATA *ch,void *vo,int target)
     int dam;
 
     if (!IS_NPC(ch))
-        dam = godice(ch->csmax_willpower, 7);
+        dam = godice(ch->csmax_willpower, 6);
     else
         dam = ch->level / 25;
 

@@ -303,6 +303,7 @@ void do_cast( CHAR_DATA *ch, char *argument )
     int mana;
     int sn, csn;
     int target;
+    int wpcast = 0, success = 0;
 
     /*
      * Switched NPC's can cast spells, but others can't.
@@ -575,8 +576,14 @@ IC mode to fight.\n\r", ch );
 
     if ( !IS_NPC(ch) && ch->mana < mana )
     {
-    send_to_char( "You don't have enough mana.\n\r", ch );
-    return;
+        send_to_char( "You don't have enough mana.\n\r", ch );
+        return;
+    }
+
+    if (!IS_NPC(ch) && ch->cswillpower < 1)
+    {
+        send_to_char("You don't have the strength of Willpower to recite a proper prayer.\n\r", ch);
+        return;
     }
 
     if ( str_cmp( skill_table[sn].name, "ventriloquate" ) )

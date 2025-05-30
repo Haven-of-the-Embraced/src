@@ -593,8 +593,8 @@ IC mode to fight.\n\r", ch );
 
     if( is_affected( ch, gsn_forget ) && number_percent( ) > (get_skill(ch,sn)/2) )
     {
-    send_to_char( "For a moment you forget how to do that.\n\r", ch );
-    ch->mana -= mana / 2;
+        send_to_char( "Your memory is fuzzy, and the details of the prayer elude you.\n\r", ch );
+        ch->mana -= mana / 2;
     }
 
     else
@@ -631,6 +631,8 @@ IC mode to fight.\n\r", ch );
         ch->mana -= mana;
         (*skill_table[sn].spell_fun) ( sn, ch->level, ch, vo,target);
         check_improve(ch,sn,TRUE,2);
+        if (success > 3)
+            gain_exp(ch, success);
 
         if ((skill_table[sn].target == TAR_CHAR_OFFENSIVE
         || (skill_table[sn].target == TAR_OBJ_CHAR_OFF && target == TARGET_CHAR))

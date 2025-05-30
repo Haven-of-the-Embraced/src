@@ -967,7 +967,7 @@ void spell_call_lightning( int sn, int level,CHAR_DATA *ch,void *vo,int target)
     if (!IS_NPC(ch))
         dam = godice(ch->csmax_willpower, 6);
     else
-        dam = ch->level / 25;
+        dam = godice(ch->level / 25, 6);
 
     if ( !IS_OUTSIDE(ch) )
     {
@@ -1258,7 +1258,7 @@ void spell_cause_light( int sn, int level, CHAR_DATA *ch, void *vo,int target )
     if (!IS_NPC(ch))
         dam = godice(ch->csmax_willpower, 6);
     else
-        dam = ch->level / 25;
+        dam = godice(ch->level / 25, 6);
 
     d10_damage( ch, victim, dam, ch->level / 2, gsn_cause_light, DAM_HARM, DEFENSE_NONE, TRUE, TRUE);
 
@@ -2268,7 +2268,7 @@ void spell_earthquake( int sn, int level, CHAR_DATA *ch, void *vo,int target )
     if (!IS_NPC(ch))
         dam = godice(ch->csmax_willpower, 6);
     else
-        dam = ch->level / 25;
+        dam = godice(ch->level / 25, 6);
 
     send_to_char( "The earth trembles beneath your feet!\n\r", ch );
     act( "$n makes the earth tremble and shiver.", ch, NULL, NULL, TO_ROOM );
@@ -3644,7 +3644,7 @@ void spell_lightning_bolt(int sn,int level,CHAR_DATA *ch,void *vo,int target)
     if (!IS_NPC(ch))
         dam = godice(ch->csmax_willpower, 6);
     else
-        dam = ch->level / 25;
+        dam = godice(ch->level / 25, 6);
 
     d10_damage( ch, victim, dam, ch->level * 2 / 3, gsn_lightning_bolt, DAM_LIGHTNING, DEFENSE_NONE, TRUE, TRUE);
     return;

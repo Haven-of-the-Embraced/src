@@ -1255,8 +1255,8 @@ void cskill_update(CHAR_DATA *ch, bool show)
 
 const   struct  skill_type  skill_table [MAX_SKILL] =
 {
-// TOTAL SKILLS AS OF 4/4/25 =  454
-// MAX_SKILL INCREASED TO 457 4/4/25
+// TOTAL SKILLS AS OF 5/30/25 =  455
+// MAX_SKILL INCREASED TO 458 4/4/25
 /*
  * Magic spells.  Total (108)
  */
@@ -3196,7 +3196,7 @@ Total (3) */
     &gsn_sidesteptime,          SLOT( 0),        0,     24, "",             "You step back into the normal stream of time.",        "" },
 
 /*    --Extra Combination Sphere Rotes--
-Total (4)
+Total (5)
 */
     { "camouflage discernment",           { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
@@ -3213,6 +3213,10 @@ Total (4)
     { "sluggish speed",          { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
     &gsn_sluggishspeed,          SLOT( 0),        0,     24, "",             "Your body begins to move quicker as the temporal energies dissipate.",       "" },
+
+    { "mythic form",          { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
+    &gsn_mythicform,          SLOT( 0),        0,     24, "",             "The strain of holding a mythic form wears you down, you finally release it.",       "" },
 
 /*
   ----Immortal Functions----

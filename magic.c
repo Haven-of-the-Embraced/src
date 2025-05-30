@@ -596,6 +596,35 @@ IC mode to fight.\n\r", ch );
     send_to_char( "For a moment you forget how to do that.\n\r", ch );
     ch->mana -= mana / 2;
     }
+
+    else
+    {
+        if (IS_NPC(ch))
+            wpcast = ch->level / 25;
+        else
+            wpcast = ch->csmax_willpower;
+
+        success = godice(wpcast, 6);
+
+        if (success < 0)
+        {
+            act("The dejection of failing to commune with your deity causes your Willpower to faulter.", ch, NULL, victim, TO_CHAR);
+            act("$n looks dejected, almost sullen.", ch, NULL, victim, TO_NOTVICT);
+            if (!IS_NPC(ch))
+                ch->cswillpower--;
+            WAIT_STATE(ch, 3);
+            return;
+        }
+
+        if (success == 0)
+        {
+            act("You lose your concentration, and stumble through your prayer.", ch, NULL, victim, TO_CHAR);
+            act("$n stumbles over the words of $s prayer.", ch, NULL, victim, TO_NOTVICT);
+            WAIT_STATE(ch, 3);
+            return;
+        }
+    }
+
     else if ( number_percent( ) > get_skill(ch,sn) )
     {
     send_to_char( "You lost your concentration.\n\r", ch );

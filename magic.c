@@ -4030,30 +4030,37 @@ void spell_protection_good(int sn,int level,CHAR_DATA *ch,void *vo,int target)
 void spell_ray_of_truth (int sn, int level, CHAR_DATA *ch, void *vo,int target)
 {
     CHAR_DATA *victim = (CHAR_DATA *) vo;
-    int dam;
+    int dam, dmg = ch->level;
 
     if (victim != ch)
     {
-        act("$n raises $s hand, and a blinding ray of light shoots forth!",
+        act("$n raises $s hand, and a blinding {Yra{Wy of l{Yight{x shoots forth!",
             ch,NULL,NULL,TO_ROOM);
-        send_to_char("You raise your hand and a blinding ray of light shoots forth!\n\r", ch);
+        send_to_char("Communing with the Heavens, you raise your hand and a blinding {Yra{Wy of l{Yight{x shoots forth!\n\r", ch);
     }
 
     if (!IS_NPC(ch))
-        dam = godice( ch->csmax_willpower, 7 );
+        dam = godice( ch->csmax_willpower, 6 );
     else
-        dam = godice( ch->level / 20, 7 );
+        dam = godice( ch->level / 25, 6 );
 
-    damage( ch, victim, dam*2, sn, DAM_HOLY ,TRUE);
-    d10_damage( ch, victim, dam, ch->level, gsn_ray_of_truth, DAM_HOLY, DEFENSE_NONE, TRUE, TRUE);
-    spell_blindness(gsn_blindness, 3 * level / 4, ch, (void *) victim,TARGET_CHAR);
+    if (is_supernatural(victim))
+        dmg = dmg * 3 / 2;
+    else
+        dmg = dmg / 2;
 
-/*Sengir added dmg to 'tainted' priests, until true faith at least :P */
-    if(ch->race == race_lookup("vampire") || ch->race == race_lookup("methuselah") || ch->race == race_lookup("ghoul") || ch->race == race_lookup("dhampire"))
+    d10_damage( ch, victim, dam, dmg, gsn_ray_of_truth, DAM_HOLY, DEFENSE_NONE, TRUE, TRUE);
+    if (dam > 3)
+        spell_blindness(gsn_blindness, 3 * level / 4, ch, (void *) victim,TARGET_CHAR);
+
+/* Supernaturals repurcussion to pure holiness from Heaven */
+    if(ch->race == race_lookup("vampire") || ch->race == race_lookup("methuselah") 
+        || ch->race == race_lookup("ghoul") || ch->race == race_lookup("dhampire") 
+        || ch->race == race_lookup("garou") || ch->arete > 0)
     {
         act("The purity of your attack sends repercussions throughout your tainted body.", ch, NULL, victim, TO_CHAR);
         act("$n lets out a brief shriek of ecstasy mixed with pain.", ch, victim, NULL, TO_ROOM);
-        damage( ch, ch, ch->level/5, sn, DAM_HOLY, TRUE);
+        d10_damage( ch, ch, dam, dmg / 20, gsn_ray_of_truth, DAM_HOLY, DEFENSE_NONE, TRUE, TRUE);
     }
 
 }

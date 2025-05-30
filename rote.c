@@ -1481,7 +1481,7 @@ void rote_mutateform(CHAR_DATA *ch, int success, char *arg)
     if (!str_prefix(arg, "human"))
     {
       ch->quintessence += 4;
-      if (!is_affected(ch, gsn_mutateform))
+      if (!is_affected(ch, gsn_mutateform) && !is_affected(ch, gsn_mythicform))
       {
         send_to_char("You have not altered your body into another form.\n\r", ch);
         ch->paradox--;
@@ -1495,6 +1495,7 @@ void rote_mutateform(CHAR_DATA *ch, int success, char *arg)
 
       send_to_char( "You reset your Pattern back into humanoid form.\n\r", ch );
       affect_strip(ch,gsn_mutateform);
+      affect_strip(ch, gsn_mythicform);
       affect_strip(ch,gsn_claws);
       ch->affected_by = race_table[ch->race].aff;
       act( "$n's form slowly shifts back into a humanoid form.", ch, NULL, NULL, TO_NOTVICT );

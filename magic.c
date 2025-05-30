@@ -612,6 +612,8 @@ IC mode to fight.\n\r", ch );
             act("$n looks dejected, almost sullen.", ch, NULL, victim, TO_NOTVICT);
             if (!IS_NPC(ch))
                 ch->cswillpower--;
+            check_improve(ch,sn,FALSE,2);
+            ch->mana -= mana / 3;
             WAIT_STATE(ch, 3);
             return;
         }
@@ -620,43 +622,34 @@ IC mode to fight.\n\r", ch );
         {
             act("You lose your concentration, and stumble through your prayer.", ch, NULL, victim, TO_CHAR);
             act("$n stumbles over the words of $s prayer.", ch, NULL, victim, TO_NOTVICT);
+            check_improve(ch,sn,FALSE,2);
+            ch->mana -= mana / 2;
             WAIT_STATE(ch, 3);
             return;
         }
-    }
 
-    else if ( number_percent( ) > get_skill(ch,sn) )
-    {
-    send_to_char( "You lost your concentration.\n\r", ch );
-    check_improve(ch,sn,FALSE,2);
-    ch->mana -= mana / 2;
-    }
-    else
-    {
         ch->mana -= mana;
         (*skill_table[sn].spell_fun) ( sn, ch->level, ch, vo,target);
         check_improve(ch,sn,TRUE,2);
-    }
 
-    if ((skill_table[sn].target == TAR_CHAR_OFFENSIVE
-    ||   (skill_table[sn].target == TAR_OBJ_CHAR_OFF && target == TARGET_CHAR))
-    &&   victim != ch
-    &&   victim->master != ch)
-    {
-    CHAR_DATA *vch;
-    CHAR_DATA *vch_next;
-
-    for ( vch = ch->in_room->people; vch; vch = vch_next )
-    {
-        vch_next = vch->next_in_room;
-        if ( victim == vch && victim->fighting == NULL )
+        if ((skill_table[sn].target == TAR_CHAR_OFFENSIVE
+        || (skill_table[sn].target == TAR_OBJ_CHAR_OFF && target == TARGET_CHAR))
+        && victim != ch && victim->master != ch)
         {
-        multi_hit( victim, ch, TYPE_UNDEFINED );
-        break;
+            CHAR_DATA *vch;
+            CHAR_DATA *vch_next;
+
+            for ( vch = ch->in_room->people; vch; vch = vch_next )
+            {
+                vch_next = vch->next_in_room;
+                if ( victim == vch && victim->fighting == NULL )
+                {
+                    multi_hit( victim, ch, TYPE_UNDEFINED );
+                    break;
+                }
+            }
         }
     }
-    }
-
     return;
 }
 

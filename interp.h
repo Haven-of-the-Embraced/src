@@ -556,6 +556,7 @@ DECLARE_DO_FUN( do_mage);
 DECLARE_DO_FUN( do_sphere);
 DECLARE_DO_FUN( do_rote);
 DECLARE_DO_FUN( do_rotelist    );
+DECLARE_DO_FUN( do_breathweapon );
 //DECLARE_DO_FUN( do_flaw);
 DECLARE_DO_FUN( do_dash);
 DECLARE_DO_FUN( do_immmask);

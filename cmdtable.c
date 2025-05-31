@@ -248,6 +248,7 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "rote",       do_rote },
     { "rotelist",       do_rotelist },
     { "sphere", do_sphere},
+    { "breathweapon",   do_breathweapon },
 
 /* new specials for professions */
     { "assassinate",        do_assassinate },

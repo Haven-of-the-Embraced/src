@@ -3421,49 +3421,56 @@ void rote_mythicform(CHAR_DATA *ch, int success, char *arg)
         return;
     }
 
-        act( "You shift your body into a terrifying creature of legends.", ch, NULL, NULL, TO_CHAR );
-        act( "$n shifts $s form into that of a red dragon.", ch, NULL, NULL, TO_NOTVICT );
-        ch->short_descr = str_dup( "A mighty red dragon" );
-        sprintf(buf, "A mighty red dragon");
-        ch->shift = str_dup( buf );
+    act( "You shift your body into a terrifying creature of legends.", ch, NULL, NULL, TO_CHAR );
+    act( "$n shifts $s form into that of a red dragon.", ch, NULL, NULL, TO_NOTVICT );
+    ch->short_descr = str_dup( "A mighty red dragon" );
+    sprintf(buf, "A mighty red dragon");
+    ch->shift = str_dup( buf );
 
-        af.where     = TO_AFFECTS;
-        af.type      = gsn_mythicform;
-        af.level     = MUTATE_DRAGON;
-        af.duration  = success * 10 + 5;
-        af.location  = APPLY_CS_STR;
-        af.modifier  = 4;
-        af.bitvector = AFF_SHIFT;
-        affect_to_char( ch, &af );
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_mythicform;
+    af.level     = MUTATE_DRAGON;
+    af.duration  = success * 10 + 5;
+    af.location  = APPLY_CS_STR;
+    af.modifier  = 4;
+    af.bitvector = AFF_SHIFT;
+    affect_to_char( ch, &af );
 
-        af.location  = APPLY_CS_DEX;
-        af.modifier  = -1;
-        af.bitvector = AFF_FLYING;
-        affect_to_char( ch, &af );
+    af.location  = APPLY_CS_DEX;
+    af.modifier  = -1;
+    af.bitvector = AFF_FLYING;
+    affect_to_char( ch, &af );
 
-        af.location  = APPLY_CS_STA;
-        af.modifier  = 4;
-        af.bitvector = AFF_DARK_VISION;
-        affect_to_char( ch, &af );
+    af.location  = APPLY_CS_STA;
+    af.modifier  = 4;
+    af.bitvector = AFF_DARK_VISION;
+    affect_to_char( ch, &af );
 
-        af.location  = APPLY_CS_MAN;
-        af.modifier  = -3;
-        af.bitvector = 0;
-        affect_to_char( ch, &af );
+    af.location  = APPLY_CS_MAN;
+    af.modifier  = -3;
+    af.bitvector = 0;
+    affect_to_char( ch, &af );
 
-        af.location  = APPLY_CS_APP;
-        af.modifier  = -10;
-        af.bitvector = 0;
-        affect_to_char( ch, &af );
+    af.location  = APPLY_CS_APP;
+    af.modifier  = -10;
+    af.bitvector = 0;
+    affect_to_char( ch, &af );
 
-        af.where     = TO_AFFECTS;
-        af.type      = gsn_claws;
-        af.level     = ch->level;
-        af.duration  = success * 10 + 5;
-        af.location  = APPLY_NONE;
-        af.modifier  = 0;
-        af.bitvector = 0;
-        affect_to_char( ch, &af );
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_claws;
+    af.level     = ch->level;
+    af.duration  = success * 10 + 5;
+    af.location  = APPLY_NONE;
+    af.modifier  = 0;
+    af.bitvector = 0;
+    affect_to_char( ch, &af );
 
-        return;
+    return;
+}
+
+void do_breathweapon(CHAR_DATA *ch, char *argument)
+{
+    CHAR_DATA *victim;
+
+    return;
 }

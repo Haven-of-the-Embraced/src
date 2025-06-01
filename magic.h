@@ -224,7 +224,7 @@ DECLARE_SPELL_FUN(spell_gift_rollover);
 DECLARE_SPELL_FUN(spell_gift_scentofbeyond);
 DECLARE_SPELL_FUN(spell_gift_earthfriendspact);
 DECLARE_SPELL_FUN(spell_gift_geas);
-DECLARE_SPELL_FUN(spell_gift_beastspirit);
+DECLARE_SPELL_FUN(spell_gift_beastspeech);
 DECLARE_SPELL_FUN(spell_gift_wakingdream);
 DECLARE_SPELL_FUN(spell_gift_callofthewyrm);
 DECLARE_SPELL_FUN(spell_gift_distractions);

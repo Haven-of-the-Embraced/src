@@ -2480,7 +2480,8 @@ void spell_gift_geas( int sn, int level, CHAR_DATA *ch, void *vo, int target){
 //any animal spirit
 //charisma + animal ken
 //allows you to speak with animals, not influence them
-void spell_gift_beastspirit( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_beastspeech( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
     return;
 }
 //

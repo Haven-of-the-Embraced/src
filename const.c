@@ -2642,9 +2642,9 @@ Total (3) */
 
 //    --Galliard--
 // Total (11)
-    { "beast spirit", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_beastspirit,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_beastspirit,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+    { "beast speech", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_beastspeech,  TAR_IGNORE, POS_STANDING,
+    &gsn_gift_beastspeech,          SLOT( 0),        0,     12, "",             "You no longer speak in the tongue of beasts.",        "" },
 
     { "call of the wyld",             { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_callofthewyld,             TAR_IGNORE,             POS_FIGHTING,

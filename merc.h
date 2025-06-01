@@ -3945,7 +3945,7 @@ extern sh_int  gsn_gift_rollover;
 extern sh_int  gsn_gift_scentofbeyond;
 extern sh_int  gsn_gift_earthfriendspact;
 extern sh_int  gsn_gift_geas;
-extern sh_int  gsn_gift_beastspirit;
+extern sh_int  gsn_gift_beastspeech;
 extern sh_int  gsn_gift_wakingdream;
 extern sh_int  gsn_gift_callofthewyrm;
 extern sh_int  gsn_gift_distractions;

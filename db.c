@@ -5146,7 +5146,7 @@ sh_int  gsn_gift_rollover;
 sh_int  gsn_gift_scentofbeyond;
 sh_int  gsn_gift_earthfriendspact;
 sh_int  gsn_gift_geas;
-sh_int  gsn_gift_beastspirit;
+sh_int  gsn_gift_beastspeech;
 sh_int  gsn_gift_wakingdream;
 sh_int  gsn_gift_callofthewyrm;
 sh_int  gsn_gift_distractions;

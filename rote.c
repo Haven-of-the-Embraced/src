@@ -3472,9 +3472,9 @@ void do_breathweapon(CHAR_DATA *ch, char *argument)
 {
     CHAR_DATA *victim;
 
-    if (ch->quintessence < 5)
+    if (!is_affected(ch, gsn_mythicform))
     {
-        send_to_char("Your reserves of Quintessence are dangerously low.\n\r", ch);
+        send_to_char("You do not have the proper anatomy to expel a breath weapon.\n\r", ch);
         return;
     }
 
@@ -3501,6 +3501,28 @@ void do_breathweapon(CHAR_DATA *ch, char *argument)
         send_to_char("Blasting yourself would be a bad idea.\n\r", ch);
         return;
     }
+
+    if (IS_NPC(victim) && victim->pIndexData->pShop != NULL)
+    {
+        if (!IS_NPC(ch))
+            send_to_char("This isn't what the shopkeeper meant by a 'fire sale'.\n\r", ch);
+        return;
+    }
+
+    if (is_safe(ch, victim))
+    {
+        if (!IS_NPC(ch))
+            send_to_char("Blasting your target here is ill advised.\n\r", ch);
+        return;
+    }
+
+    if (ch->quintessence < 5)
+    {
+        send_to_char("Your reserves of Quintessence are dangerously low.\n\r", ch);
+        return;
+    }
+
+    ch->quintessence -= 5;
 
     return;
 }

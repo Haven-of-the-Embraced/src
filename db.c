@@ -5062,6 +5062,8 @@ sh_int          gsn_camouflagediscernment;
 sh_int          gsn_negationfield;
 sh_int          gsn_touchofhelios;
 sh_int          gsn_sluggishspeed;
+sh_int          gsn_mythicform;
+sh_int          gsn_breathweapon;
 sh_int          gsn_quintessence;
 /*sh_int            gsn_quintessentialbond;*/
 sh_int          gsn_botched_allies;

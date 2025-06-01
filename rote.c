@@ -1481,7 +1481,7 @@ void rote_mutateform(CHAR_DATA *ch, int success, char *arg)
     if (!str_prefix(arg, "human"))
     {
       ch->quintessence += 4;
-      if (!is_affected(ch, gsn_mutateform))
+      if (!is_affected(ch, gsn_mutateform) && !is_affected(ch, gsn_mythicform))
       {
         send_to_char("You have not altered your body into another form.\n\r", ch);
         ch->paradox--;
@@ -1495,6 +1495,7 @@ void rote_mutateform(CHAR_DATA *ch, int success, char *arg)
 
       send_to_char( "You reset your Pattern back into humanoid form.\n\r", ch );
       affect_strip(ch,gsn_mutateform);
+      affect_strip(ch, gsn_mythicform);
       affect_strip(ch,gsn_claws);
       ch->affected_by = race_table[ch->race].aff;
       act( "$n's form slowly shifts back into a humanoid form.", ch, NULL, NULL, TO_NOTVICT );
@@ -1708,36 +1709,35 @@ void rote_mutateform(CHAR_DATA *ch, int success, char *arg)
 
     if ( !str_prefix( arg, "sloth") )
     {
-      act( "Your body shifts forms, and you feel very lethargic.", ch, NULL, NULL, TO_CHAR );
-      act( "$n shifts their form into that of a sloth.", ch, NULL, NULL, TO_NOTVICT );
-      ch->short_descr = str_dup( "A slow-moving sloth" );
-      sprintf(buf, "A slow-moving sloth");
-      ch->shift = str_dup( buf );
+        act( "Your body shifts forms, and you feel very lethargic.", ch, NULL, NULL, TO_CHAR );
+        act( "$n shifts their form into that of a sloth.", ch, NULL, NULL, TO_NOTVICT );
+        ch->short_descr = str_dup( "A slow-moving sloth" );
+        sprintf(buf, "A slow-moving sloth");
+        ch->shift = str_dup( buf );
+        af.where     = TO_AFFECTS;
+        af.type      = gsn_mutateform;
+        af.level     = MUTATE_SLOTH;
+        af.duration  = success * 15;
+        af.location  = APPLY_CS_STR;
+        af.modifier  = -2;
+        af.bitvector = AFF_SHIFT;
+        affect_to_char( ch, &af );
 
-      af.where     = TO_AFFECTS;
-      af.type      = gsn_mutateform;
-      af.level     = MUTATE_SLOTH;
-      af.duration  = success * 15;
-      af.location  = APPLY_CS_STR;
-      af.modifier  = -2;
-      af.bitvector = AFF_SHIFT;
-      affect_to_char( ch, &af );
+        af.location  = APPLY_CS_DEX;
+        af.modifier  = -4;
+        af.bitvector = AFF_SLOW;
+        affect_to_char( ch, &af );
 
-      af.location  = APPLY_CS_DEX;
-      af.modifier  = -4;
-      af.bitvector = AFF_SLOW;
-      affect_to_char( ch, &af );
+        af.location  = APPLY_CS_MAN;
+        af.modifier  = -3;
+        af.bitvector = 0;
+        affect_to_char( ch, &af );
 
-      af.location  = APPLY_CS_MAN;
-      af.modifier  = -3;
-      af.bitvector = 0;
-      affect_to_char( ch, &af );
+        af.location  = APPLY_MOVE;
+        af.modifier  = -ch->level;
+        affect_to_char( ch, &af );
 
-      af.location  = APPLY_MOVE;
-      af.modifier  = -ch->level;
-      affect_to_char( ch, &af );
-
-      return;
+        return;
     }
 
     return;
@@ -3365,5 +3365,191 @@ void rote_sluggishspeed(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA 
       af.bitvector = 0;
       affect_to_char( victim, &af );
     }
+    return;
+}
+
+void rote_mythicform(CHAR_DATA *ch, int success, char *arg)
+{
+    char buf[MAX_STRING_LENGTH];
+    AFFECT_DATA af;
+
+    if ( IS_AFFECTED(ch, AFF_SHIFT))
+    {
+        send_to_char( "You must reform your Pattern back to normal first.\n\r{WSyntax: {crote 'mutate form' human{x\n\r", ch );
+        ch->quintessence += 25;
+        return;
+    }
+
+    if (success < 0)
+    {
+        act( "Your body shifts forms, and you feel very lethargic.", ch, NULL, NULL, TO_CHAR );
+        act( "$n shifts $s form into that of a sloth.", ch, NULL, NULL, TO_NOTVICT );
+        ch->short_descr = str_dup( "A slow-moving sloth" );
+        sprintf(buf, "A slow-moving sloth");
+        ch->shift = str_dup( buf );
+
+        af.where     = TO_AFFECTS;
+        af.type      = gsn_mutateform;
+        af.level     = -1;
+        af.duration  = 2;
+        af.location  = APPLY_CS_STR;
+        af.modifier  = -2;
+        af.bitvector = AFF_SHIFT;
+        affect_to_char( ch, &af );
+
+        af.location  = APPLY_CS_DEX;
+        af.modifier  = -4;
+        af.bitvector = AFF_SLOW;
+        affect_to_char( ch, &af );
+
+        af.location  = APPLY_CS_MAN;
+        af.modifier  = -3;
+        af.bitvector = 0;
+        affect_to_char( ch, &af );
+
+        af.location  = APPLY_MOVE;
+        af.modifier  = -ch->level;
+        affect_to_char( ch, &af );
+
+        return;
+    }
+
+    if (success == 0)
+    {
+        send_to_char("You try to alter yourself to a mighty dragon, but your body refuses to cooperate.\n\r", ch);
+        WAIT_STATE(ch, 6);
+        return;
+    }
+
+    act( "You shift your body into a terrifying creature of legends.", ch, NULL, NULL, TO_CHAR );
+    act( "$n shifts $s form into that of a red dragon.", ch, NULL, NULL, TO_NOTVICT );
+    ch->short_descr = str_dup( "A mighty red dragon" );
+    sprintf(buf, "A mighty red dragon");
+    ch->shift = str_dup( buf );
+
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_mythicform;
+    af.level     = MUTATE_DRAGON;
+    af.duration  = success * 10 + 5;
+    af.location  = APPLY_CS_STR;
+    af.modifier  = 4;
+    af.bitvector = AFF_SHIFT;
+    affect_to_char( ch, &af );
+
+    af.location  = APPLY_CS_DEX;
+    af.modifier  = -1;
+    af.bitvector = AFF_FLYING;
+    affect_to_char( ch, &af );
+
+    af.location  = APPLY_CS_STA;
+    af.modifier  = 4;
+    af.bitvector = AFF_DARK_VISION;
+    affect_to_char( ch, &af );
+
+    af.location  = APPLY_CS_MAN;
+    af.modifier  = -3;
+    af.bitvector = 0;
+    affect_to_char( ch, &af );
+
+    af.location  = APPLY_CS_APP;
+    af.modifier  = -10;
+    af.bitvector = 0;
+    affect_to_char( ch, &af );
+
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_claws;
+    af.level     = ch->level;
+    af.duration  = success * 10 + 5;
+    af.location  = APPLY_NONE;
+    af.modifier  = 0;
+    af.bitvector = 0;
+    affect_to_char( ch, &af );
+
+    return;
+}
+
+void do_breathweapon(CHAR_DATA *ch, char *argument)
+{
+    CHAR_DATA *victim;
+    int success = 0, flames = 0;
+
+    if (!is_affected(ch, gsn_mythicform))
+    {
+        send_to_char("You do not have the proper anatomy to expel a breath weapon.\n\r", ch);
+        return;
+    }
+
+    if (argument[0] == '\0')
+    {
+        victim = ch->fighting;
+        if (victim == NULL)
+        {
+            if (!IS_NPC(ch))
+                send_to_char("You need a target to blast with your breath.\n\r", ch);
+            return;
+        }
+    }
+
+    else if ((victim = get_char_room(ch, NULL, argument)) == NULL)
+    {
+        if (!IS_NPC(ch))
+            send_to_char("Your target seems to be conspicuously absent.\n\r", ch);
+        return;
+    }
+
+    if (victim == ch)
+    {
+        send_to_char("Blasting yourself would be a bad idea.\n\r", ch);
+        return;
+    }
+
+    if (IS_NPC(victim) && victim->pIndexData->pShop != NULL)
+    {
+        if (!IS_NPC(ch))
+            send_to_char("This isn't what the shopkeeper meant by a 'fire sale'.\n\r", ch);
+        return;
+    }
+
+    if (is_safe(ch, victim))
+    {
+        if (!IS_NPC(ch))
+            send_to_char("Blasting your target here is ill advised.\n\r", ch);
+        return;
+    }
+
+    if (ch->quintessence < 10)
+    {
+        send_to_char("Your reserves of Quintessence are dangerously low.\n\r", ch);
+        return;
+    }
+
+    ch->quintessence -= 10;
+    WAIT_STATE(ch, 3);
+    success = godice(get_attribute(ch, CSATTRIB_DEXTERITY)+get_ability(ch, CSABIL_BRAWL), 8);
+    flames = godice(ch->arete, 6) + 2;
+
+    WAIT_STATE(ch, 6);
+
+    if(success < 0)
+    {
+        act( "$n coughs violently, smoke coming from $s nostrils.",  ch, NULL, NULL, TO_NOTVICT    );
+        act( "You cough violently as the {Rf{Yl{Wa{Ym{Re{x gets caught in your throat.", ch, NULL, victim, TO_CHAR );
+        d10_damage( ch, ch, 2, ch->level / 2, gsn_breathweapon, DAM_FIRE, DEFENSE_NONE, TRUE, TRUE);
+        return;
+    }
+
+    if(success == 0)
+    {
+        act( "$n spews a gout of {Rf{Yl{Wa{Ym{Re{x from $s maw, narrowly missing $N.",  ch, NULL, victim, TO_NOTVICT    );
+        act( "A jet of {Rf{Yl{Wa{Ym{Re{x erupts from $n's mouth, narrowly missing you.",  ch, NULL, victim, TO_VICT );
+        act( "You spit a massive cone of {Rf{Yl{Wa{Ym{Re{x at $N, but miss your target.", ch, NULL, victim, TO_CHAR );
+        return;
+    }
+
+    act( "$n spews a gout of {Rf{Yl{Wa{Ym{Re{x from $s maw, striking $N!",  ch, NULL, victim, TO_NOTVICT    );
+    act( "A jet of {Rf{Yl{Wa{Ym{Re{x erupts from $n's mouth, burning you horribly!",  ch, NULL, victim, TO_VICT );
+    act( "You spit a massive cone of {Rf{Yl{Wa{Ym{Re{x at $N, hitting $M solidly!", ch, NULL, victim, TO_CHAR );
+    d10_damage( ch, victim, flames, ch->level * 7 / 2, gsn_breathweapon, DAM_FIRE, DEFENSE_NONE, TRUE, TRUE);
+
     return;
 }

@@ -1759,7 +1759,8 @@ const struct    rote_type   rote_table  [MAX_ROTE]  =
 	{	"Camouflage Discernment",rote_camouflagediscernment, 1, 0, 0, 1, 0, 1, 0, 0, 0, TARGET_NONE, 1, 1, FALSE, TRUE},
     {   "Mental Link",          rote_mentallink,            2, 0, 0, 0, 0, 3, 0, 0, 0, TARGET_NONE, 4, 4, FALSE, FALSE},
     {   "Negation Field",       rote_negationfield,         0, 0, 3, 0, 2, 0, 5, 0, 0, TARGET_NONE, 15, 5, TRUE, FALSE},
-	{   "Sluggish Speed",       rote_sluggishspeed,         0, 0, 0, 3, 0, 0, 0, 0, 3, TARGET_CHAR, 4, 5, TRUE, TRUE}
+	{   "Sluggish Speed",       rote_sluggishspeed,         0, 0, 0, 3, 0, 0, 0, 0, 3, TARGET_CHAR, 4, 5, TRUE, TRUE},
+    {   "Mythic Form",          rote_mythicform,            0, 0, 4, 5, 0, 3, 3, 3, 0, TARGET_NONE, 25, 5, TRUE, TRUE}
 };
 
 /* Garou forms */

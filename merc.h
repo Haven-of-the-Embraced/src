@@ -183,7 +183,7 @@ typedef void ROOM_FUN	args( ( ROOM_INDEX_DATA *room, char *argument ) );
  */
 #define MAX_HELP        5
 #define MAX_SOCIALS       256
-#define MAX_SKILL         457 //4/04/25
+#define MAX_SKILL         460 //5/31/25
 #define MAX_GIFT          90
 #define MAX_GIFTS_CODED   168
 #define MAX_BREW        24
@@ -195,7 +195,7 @@ typedef void ROOM_FUN	args( ( ROOM_INDEX_DATA *room, char *argument ) );
 #define MAX_CLAN            34
 #define MAX_SECT            7
 #define MAX_TRADITION       6
-#define MAX_ROTE            53
+#define MAX_ROTE            55
 #define MAX_DAMAGE_MESSAGE  42
 #define MAX_TEST_LOOPS      3
 #define MAX_LEVEL          110
@@ -2771,7 +2771,7 @@ struct  room_index_data
 #define SHIFT_MIST          6
 
 /*
- * Life4 Mutate Forms
+ * Life4 & Combo Mutate Forms
  * Refers to Affect level of Mutate Form
 */
 #define MUTATE_SLOTH        0
@@ -2779,6 +2779,7 @@ struct  room_index_data
 #define MUTATE_SQUIRREL     2
 #define MUTATE_PANTHER      3
 #define MUTATE_BEAR         4
+#define MUTATE_DRAGON       5
 
 /*
  * Types of attacks.
@@ -3161,6 +3162,8 @@ extern  sh_int  gsn_camouflagediscernment;
 extern  sh_int  gsn_negationfield;
 extern  sh_int  gsn_touchofhelios;
 extern  sh_int  gsn_sluggishspeed;
+extern  sh_int  gsn_mythicform;
+extern  sh_int  gsn_breathweapon;
 /*extern  sh_int  gsn_quintessentialbond;*/
 // Matthew's random GSNs.
 extern  sh_int  gsn_botched_allies;

@@ -3218,6 +3218,10 @@ Total (5)
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
     &gsn_mythicform,          SLOT( 0),        0,     24, "",             "The strain of holding a mythic form wears you down, you finally release it.",       "" },
 
+    { "breath weapon",          { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_IGNORE,             POS_STANDING,
+    &gsn_breathweapon,          SLOT( 0),        0,     24, "flaming breath",             "!Breath Weapon!",       "" },
+
 /*
   ----Immortal Functions----
 Total (1)

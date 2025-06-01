@@ -3163,6 +3163,7 @@ extern  sh_int  gsn_negationfield;
 extern  sh_int  gsn_touchofhelios;
 extern  sh_int  gsn_sluggishspeed;
 extern  sh_int  gsn_mythicform;
+extern  sh_int  gsn_breathweapon;
 /*extern  sh_int  gsn_quintessentialbond;*/
 // Matthew's random GSNs.
 extern  sh_int  gsn_botched_allies;

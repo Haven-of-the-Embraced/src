@@ -3534,7 +3534,7 @@ void do_breathweapon(CHAR_DATA *ch, char *argument)
     {
         act( "$n coughs violently, smoke coming from $s nostrils.",  ch, NULL, NULL, TO_NOTVICT    );
         act( "You cough violently as the {Rf{Yl{Wa{Ym{Re{x gets caught in your throat.", ch, NULL, victim, TO_CHAR );
-        d10_damage( ch, ch, 2, ch->level, gsn_breathweapon, DAM_FIRE, DEFENSE_NONE, TRUE, TRUE);
+        d10_damage( ch, ch, 2, ch->level / 2, gsn_breathweapon, DAM_FIRE, DEFENSE_NONE, TRUE, TRUE);
         return;
     }
 
@@ -3549,7 +3549,7 @@ void do_breathweapon(CHAR_DATA *ch, char *argument)
     act( "$n spews a gout of {Rf{Yl{Wa{Ym{Re{x from $s maw, striking $N!",  ch, NULL, victim, TO_NOTVICT    );
     act( "A jet of {Rf{Yl{Wa{Ym{Re{x erupts from $n's mouth, burning you horribly!",  ch, NULL, victim, TO_VICT );
     act( "You spit a massive cone of {Rf{Yl{Wa{Ym{Re{x at $N, hitting $M solidly!", ch, NULL, victim, TO_CHAR );
-    d10_damage( ch, ch, flames, ch->level * 3, gsn_breathweapon, DAM_FIRE, DEFENSE_NONE, TRUE, TRUE);
+    d10_damage( ch, victim, flames, ch->level * 7 / 2, gsn_breathweapon, DAM_FIRE, DEFENSE_NONE, TRUE, TRUE);
 
     return;
 }

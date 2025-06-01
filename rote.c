@@ -3472,5 +3472,35 @@ void do_breathweapon(CHAR_DATA *ch, char *argument)
 {
     CHAR_DATA *victim;
 
+    if (ch->quintessence < 5)
+    {
+        send_to_char("Your reserves of Quintessence are dangerously low.\n\r", ch);
+        return;
+    }
+
+    if (argument[0] == '\0')
+    {
+        victim = ch->fighting;
+        if (victim == NULL)
+        {
+            if (!IS_NPC(ch))
+                send_to_char("You need a target to blast with your breath.\n\r", ch);
+            return;
+        }
+    }
+
+    else if ((victim = get_char_room(ch, NULL, argument)) == NULL)
+    {
+        if (!IS_NPC(ch))
+            send_to_char("Your target seems to be conspicuously absent.\n\r", ch);
+        return;
+    }
+
+    if (victim == ch)
+    {
+        send_to_char("Blasting yourself would be a bad idea.\n\r", ch);
+        return;
+    }
+
     return;
 }

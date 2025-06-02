@@ -2482,7 +2482,35 @@ void spell_gift_geas( int sn, int level, CHAR_DATA *ch, void *vo, int target){
 //allows you to speak with animals, not influence them
 void spell_gift_beastspeech( int sn, int level, CHAR_DATA *ch, void *vo, int target)
 {
+  AFFECT_DATA af;
+  int success;
+
+  if(is_affected(ch, gsn_gift_beastspeech))
+  {
+    send_to_char("Animal-spirits already help you converse with beasts.\n\r",ch);
     return;
+  }
+
+  if (ch->move <= ch->level * 2)
+  {
+    send_to_char("You are too tired to ask animal-spirits for aid.\n\r", ch);
+    return;
+  }
+
+  ch->move -= ch->level * 2
+  success = godice(get_attribute(ch, CSATTRIB_CHARISMA) + get_ability(CSABIL_ANIMAL_KEN), 6);
+
+  if (success < 0)
+  {
+    return;
+  }
+
+  if (success < 0)
+  {
+    return;
+  }
+
+  return;
 }
 //
 //“Call of the Wyld”

@@ -1631,6 +1631,15 @@ void do_talk( CHAR_DATA *ch, char *argument )
         return;
     }
 
+    if (beast_speech(victim))
+    {
+        if (!is_affected(ch, gsn_gift_beastspeech))
+        {
+            send_to_char("Dr. Doolittle, you are not.\n\r", ch);
+            return;
+        }
+    }
+
     if (victim->position <= POS_SLEEPING)
     {
         send_to_char("You cannot talk to someone who is sleeping.\n\r", ch);

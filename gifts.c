@@ -2790,6 +2790,12 @@ void spell_gift_songofrage( int sn, int level, CHAR_DATA *ch, void *vo, int targ
   CHAR_DATA *victim = (CHAR_DATA *) vo;
   int success, diff = 6;
 
+  if (is_affected(ch, gsn_laryngitis))
+  {
+    send_to_char("Your throat is too enflamed to produce a proper howl.\n\r", ch);
+    return;
+  }
+
   if (ch-> move < ch->level * 2)
   {
     send_to_char("You are too tired to invoke rage in another.\n\r", ch);
@@ -2798,7 +2804,7 @@ void spell_gift_songofrage( int sn, int level, CHAR_DATA *ch, void *vo, int targ
 
   if (is_affected(victim, gsn_gift_songofrage) || is_affected(victim, gsn_berserk)
     || is_affected(victim, gsn_garou_frenzy) || is_affected(victim, gsn_vamp_frenzy)
-    || is_affected(victim, gsn_thaumaturgy_frenzy) )
+    || is_affected(victim, gsn_thaumaturgy_frenzy) || IS_AFFECTED(ch, AFF_BERSERK))
   {
     send_to_char("Your target is already in a frenzy.\n\r", ch);
     return;
@@ -2822,21 +2828,21 @@ void spell_gift_songofrage( int sn, int level, CHAR_DATA *ch, void *vo, int targ
 
   if (success < 0)
   {
-    send_to_char("Angered at your request, the snake spirits constantly entwine your legs.\n\r", ch);
+    send_to_char("Wolverine-spirits don't take kindly to having their time wasted.\n\r", ch);
     af.where     = TO_AFFECTS;
-    af.type      = gsn_gift_eyeoftheasp;
+    af.type      = gsn_gift_songofrage;
     af.level     = -1;
     af.duration  = 2;
-    af.location  = APPLY_CS_DEX;
-    af.modifier  = -1;
-    af.bitvector = 0;
+    af.location  = APPLY_HITROLL;
+    af.modifier  = -300 - (ch->level * 2);
+    af.bitvector = AFF_BERSERK;
     affect_to_char( ch, &af );
     return;
   }
 
   if (success == 0)
   {
-    send_to_char("The venomous snake spirits slither away, ignoring your call.\n\r", ch);
+    send_to_char("Your howl doesn't seem to reach the spirits as intended.\n\r", ch);
     WAIT_STATE(ch, 6);
     return;
   }

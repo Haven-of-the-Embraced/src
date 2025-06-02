@@ -2705,8 +2705,68 @@ void spell_gift_distractions( int sn, int level, CHAR_DATA *ch, void *vo, int ta
 //venomous snake spirit
 //apperance + enigmas diff victom’s wp
 //3 successes needed to bring target to the garou
-void spell_gift_eyeoftheasp( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_eyeoftheasp( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  AFFECT_DATA af;
+  CHAR_DATA *victim = (CHAR_DATA *) vo;
+  int success, diff = 6;
+
+  if (ch-> move < ch->level * 2)
+  {
+    send_to_char("You are too tired to beseech venomous snake spirits.\n\r", ch);
     return;
+  }
+
+  if (is_affected(victim, gsn_gift_eyeoftheasp))
+  {
+    send_to_char("Your target is as close to you as possible already.\n\r", ch);
+    return;
+  }
+
+  if (victim->level < ch->level - 10)
+    diff--;
+  if (victim->level > ch->level + 10)
+    diff++;
+  if (IS_SET(victim->act2, ACT2_ULTRA_MOB))
+    diff++;
+
+  ch->move -= ch->level * 2;
+  success = godice(get_attribute(ch, CSATTRIB_APPEARANCE) + get_ability(ch, CSABIL_ENIGMAS), diff);
+
+  if (success < 0)
+  {
+    send_to_char("Wolf-spirits answer, but are angered at your request.  They constantly harrass you.\n\r", ch);
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_gift_distractions;
+    af.level     = -1;
+    af.duration  = 2;
+    af.location  = APPLY_HITROLL;
+    af.modifier  = -success * 200;
+    af.bitvector = 0;
+    affect_to_char( ch, &af );
+    return;
+  }
+
+  if (success == 0)
+  {
+    send_to_char("The wolf-spirits do not recognize you as alpha, and refuse to aid.\n\r", ch);
+    WAIT_STATE(ch, 6);
+    return;
+  }
+
+  act("You request a pack of wolf-spirits to harrass $N!", ch, NULL, victim, TO_CHAR);
+  act("Wolf howls and yips assault your eardrums!", ch, NULL, victim, TO_VICT);
+  act("$n tries to reach out and touch $N, but misses.", ch, NULL, victim, TO_NOTVICT);
+
+  af.where     = TO_AFFECTS;
+  af.type      = gsn_gift_distractions;
+  af.level     = success;
+  af.duration  = 2;
+  af.location  = APPLY_HITROLL;
+  af.modifier  = -success * ch->level - 25;
+  af.bitvector = 0;
+  affect_to_char( victim, &af );
+  return;
 }
 //
 //“Song of Rage”

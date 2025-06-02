@@ -2784,7 +2784,75 @@ void spell_gift_eyeoftheasp( int sn, int level, CHAR_DATA *ch, void *vo, int tar
 //wolverine spirit
 //manipulation + leadership diff target’s wp
 //victim flies into a rage or frenzy for one turn per success
-void spell_gift_songofrage( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_songofrage( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  AFFECT_DATA af;
+  CHAR_DATA *victim = (CHAR_DATA *) vo;
+  int success, diff = 6;
+
+  if (ch-> move < ch->level * 2)
+  {
+    send_to_char("You are too tired to invoke rage in another.\n\r", ch);
+    return;
+  }
+
+  if (is_affected(victim, gsn_gift_songofrage) || is_affected(victim, gsn_berserk)
+    || is_affected(victim, gsn_garou_frenzy) || is_affected(victim, gsn_vamp_frenzy)
+    || is_affected(victim, gsn_thaumaturgy_frenzy) )
+  {
+    send_to_char("Your target is already in a frenzy.\n\r", ch);
+    return;
+  }
+
+  if (is_affected(ch, gsn_gift_songofrage))
+  {
+    send_to_char("You are too enraged to concentrate on calling wolverine-spirits.\n\r", ch);
+    return;
+  }
+
+  if (victim->level < ch->level - 10)
+    diff--;
+  if (victim->level > ch->level + 10)
+    diff++;
+  if (IS_SET(victim->act2, ACT2_ULTRA_MOB))
+    diff++;
+
+  ch->move -= ch->level * 2;
+  success = godice(get_attribute(ch, CSATTRIB_MANIPULATION) + get_ability(ch, CSABIL_LEADERSHIP), diff);
+
+  if (success < 0)
+  {
+    send_to_char("Angered at your request, the snake spirits constantly entwine your legs.\n\r", ch);
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_gift_eyeoftheasp;
+    af.level     = -1;
+    af.duration  = 2;
+    af.location  = APPLY_CS_DEX;
+    af.modifier  = -1;
+    af.bitvector = 0;
+    affect_to_char( ch, &af );
+    return;
+  }
+
+  if (success == 0)
+  {
+    send_to_char("The venomous snake spirits slither away, ignoring your call.\n\r", ch);
+    WAIT_STATE(ch, 6);
+    return;
+  }
+
+  act("Snake spirits help allure $N, bringing $M in closer.", ch, NULL, victim, TO_CHAR);
+  act("$n seems hypnotic and alluring, you move closer to $m.", ch, NULL, victim, TO_VICT);
+  act("$N moves towards $n, as if in a trance.", ch, NULL, victim, TO_NOTVICT);
+
+  af.where     = TO_AFFECTS;
+  af.type      = gsn_gift_eyeoftheasp;
+  af.level     = success;
+  af.duration  = 2;
+  af.location  = APPLY_AC;
+  af.modifier  = success * ch->level + 100;
+  af.bitvector = 0;
+  affect_to_char( victim, &af );
     return;
 }
 //

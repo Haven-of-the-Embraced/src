@@ -1427,7 +1427,7 @@ const struct    gift_type   gift_table  [MAX_GIFTS_CODED]  =
     {   "scent of beyond", 				0,     24, 0,     0,      PHILODOX,   0,        4,   0},
     {   "earthfriends pact", 			0,     24, 0,     0,      PHILODOX,   0,        5,   0},
     {   "geas", 						0,     24, 0,     0,      PHILODOX,   0,        5,   0},
-    {   "beast speech", 				0,     24, 0,     0,      GALLIARD,   RED_TALON,  1,   0},
+    {   "beast speech", 				1,     24, 0,     0,      GALLIARD,   RED_TALON,  1,   0},
     {   "walking dream", 				0,     24, 0,     0,      GALLIARD,   0,        1,   0},
     {   "call of the wyrm", 			0,     24, 0,     0,      GALLIARD,   0,        2,   0},
     {   "distractions", 				1,     24, 0,     0,      GALLIARD,   0,        2,   0},

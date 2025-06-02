@@ -2834,7 +2834,7 @@ void spell_gift_songofrage( int sn, int level, CHAR_DATA *ch, void *vo, int targ
     af.level     = -1;
     af.duration  = 2;
     af.location  = APPLY_HITROLL;
-    af.modifier  = -300 - (ch->level * 2);
+    af.modifier  = -100 - (ch->level * 2);
     af.bitvector = AFF_BERSERK;
     affect_to_char( ch, &af );
     return;
@@ -2847,19 +2847,22 @@ void spell_gift_songofrage( int sn, int level, CHAR_DATA *ch, void *vo, int targ
     return;
   }
 
-  act("Snake spirits help allure $N, bringing $M in closer.", ch, NULL, victim, TO_CHAR);
-  act("$n seems hypnotic and alluring, you move closer to $m.", ch, NULL, victim, TO_VICT);
-  act("$N moves towards $n, as if in a trance.", ch, NULL, victim, TO_NOTVICT);
+  act("You howl a note of pure fury, stirring $N into a rage.", ch, NULL, victim, TO_CHAR);
+  act("$n howls furiously, assaulting your ears.", ch, NULL, victim, TO_VICT);
+  act("$N enrages at hearing $n's howl.", ch, NULL, victim, TO_NOTVICT);
 
   af.where     = TO_AFFECTS;
-  af.type      = gsn_gift_eyeoftheasp;
+  af.type      = gsn_gift_songofrage;
   af.level     = success;
-  af.duration  = 2;
-  af.location  = APPLY_AC;
-  af.modifier  = success * ch->level + 100;
+  af.duration  = success + 2;
+  af.location  = APPLY_HITROLL;
+  af.modifier  = -success * 100 - ch->level;
   af.bitvector = 0;
   affect_to_char( victim, &af );
-    return;
+
+  af.location  = APPLY_DAMROLL;
+  af.modifier  = -success * 25;
+  return;
 }
 //
 //Rank Four

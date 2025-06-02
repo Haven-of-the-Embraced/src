@@ -4104,6 +4104,7 @@ bool    has_blood	args( ( CHAR_DATA *ch ) );
 bool    breathes	args( ( CHAR_DATA *ch ) );
 bool    is_natural  args( ( CHAR_DATA *ch) );
 bool    higher_beast args( ( CHAR_DATA *ch) );
+bool    beast_speech args( ( CHAR_DATA *ch) );
 bool    human_variant args( ( CHAR_DATA *ch) );
 bool    is_humanoid args( ( CHAR_DATA *ch));
 bool    is_supernatural args( ( CHAR_DATA *ch));

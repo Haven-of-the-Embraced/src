@@ -2723,6 +2723,12 @@ void spell_gift_eyeoftheasp( int sn, int level, CHAR_DATA *ch, void *vo, int tar
     return;
   }
 
+  if (is_affected(ch, gsn_gift_eyeoftheasp) && get_affect_level(ch, gsn_gift_eyeoftheasp) == -1)
+  {
+    send_to_char("Venous snake spirits are entangling your legs, ignoring your further reqests.\n\r", ch);
+    return;
+  }
+
   if (victim->level < ch->level - 10)
     diff--;
   if (victim->level > ch->level + 10)
@@ -2735,13 +2741,13 @@ void spell_gift_eyeoftheasp( int sn, int level, CHAR_DATA *ch, void *vo, int tar
 
   if (success < 0)
   {
-    send_to_char("Wolf-spirits answer, but are angered at your request.  They constantly harrass you.\n\r", ch);
+    send_to_char("Angered at your request, the snake spirits constantly entwine your legs.\n\r", ch);
     af.where     = TO_AFFECTS;
-    af.type      = gsn_gift_distractions;
+    af.type      = gsn_gift_eyeoftheasp;
     af.level     = -1;
     af.duration  = 2;
-    af.location  = APPLY_HITROLL;
-    af.modifier  = -success * 200;
+    af.location  = APPLY_CS_DEX;
+    af.modifier  = -1;
     af.bitvector = 0;
     affect_to_char( ch, &af );
     return;
@@ -2749,7 +2755,7 @@ void spell_gift_eyeoftheasp( int sn, int level, CHAR_DATA *ch, void *vo, int tar
 
   if (success == 0)
   {
-    send_to_char("The wolf-spirits do not recognize you as alpha, and refuse to aid.\n\r", ch);
+    send_to_char("The venomous snake spirits slither away, ignoring your call.\n\r", ch);
     WAIT_STATE(ch, 6);
     return;
   }

@@ -2502,14 +2502,26 @@ void spell_gift_beastspeech( int sn, int level, CHAR_DATA *ch, void *vo, int tar
 
   if (success < 0)
   {
+    act("You spend an extended amount of time waiting for animal-spirits to aid, but to no avail.", ch, NULL, NULL, TO_CHAR);
+    WAIT_STATE(ch, 12);
     return;
   }
 
-  if (success < 0)
+  if (success == 0)
   {
+    act("The animal-spirits seem to ignore your request.", ch, NULL, NULL, TO_CHAR);
     return;
   }
 
+  act("Adhering to your call, animal-spirits help you communicate with natural creatures.", ch, NULL, NULL, TO_CHAR);
+  af.where     = TO_AFFECTS;
+  af.type      = gsn_gift_beastspeech;
+  af.level     = success;
+  af.duration  = 25 + (success * 10);
+  af.location  = 0;
+  af.modifier  = 0;
+  af.bitvector = 0;
+  affect_to_char( ch, &af );
   return;
 }
 //

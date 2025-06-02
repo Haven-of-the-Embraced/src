@@ -1631,15 +1631,6 @@ void do_talk( CHAR_DATA *ch, char *argument )
         return;
     }
 
-    if (beast_speech(victim))
-    {
-        if (!is_affected(ch, gsn_gift_beastspeech))
-        {
-            send_to_char("Dr. Doolittle, you are not.\n\r", ch);
-            return;
-        }
-    }
-
     if (victim->position <= POS_SLEEPING)
     {
         send_to_char("You cannot talk to someone who is sleeping.\n\r", ch);
@@ -1692,6 +1683,15 @@ void do_talk( CHAR_DATA *ch, char *argument )
         return;
     }
 
+    if (beast_speech(victim))
+    {
+        if (!is_affected(ch, gsn_gift_beastspeech))
+        {
+            send_to_char("Dr. Doolittle, you are not.\n\r", ch);
+            return;
+        }
+    }
+    else
     if (!IS_SET(victim->form,FORM_SENTIENT))
     {
         act("$N does not seem capable of conversation.", ch, NULL, victim, TO_CHAR);

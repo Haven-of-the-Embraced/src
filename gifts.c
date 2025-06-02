@@ -2497,8 +2497,8 @@ void spell_gift_beastspeech( int sn, int level, CHAR_DATA *ch, void *vo, int tar
     return;
   }
 
-  ch->move -= ch->level * 2
-  success = godice(get_attribute(ch, CSATTRIB_CHARISMA) + get_ability(CSABIL_ANIMAL_KEN), 6);
+  ch->move -= ch->level * 2;
+  success = godice(get_attribute(ch, CSATTRIB_CHARISMA) + get_ability(ch, CSABIL_ANIMAL_KEN), 6);
 
   if (success < 0)
   {

@@ -2709,7 +2709,7 @@ void spell_gift_eyeoftheasp( int sn, int level, CHAR_DATA *ch, void *vo, int tar
 {
   AFFECT_DATA af;
   CHAR_DATA *victim = (CHAR_DATA *) vo;
-  int success, diff = 6;
+  int success, diff = 6, appearance;
 
   if (ch-> move < ch->level * 2)
   {
@@ -2735,9 +2735,14 @@ void spell_gift_eyeoftheasp( int sn, int level, CHAR_DATA *ch, void *vo, int tar
     diff++;
   if (IS_SET(victim->act2, ACT2_ULTRA_MOB))
     diff++;
+  if (is_affected(ch, gsn_change))
+    appearance = 2;
+  else
+    appearance = get_attribute(ch, CSATTRIB_APPEARANCE);
+
 
   ch->move -= ch->level * 2;
-  success = godice(get_attribute(ch, CSATTRIB_APPEARANCE) + get_ability(ch, CSABIL_ENIGMAS), diff);
+  success = godice(appearance + get_ability(ch, CSABIL_ENIGMAS), diff);
 
   if (success < 0)
   {
@@ -2760,16 +2765,16 @@ void spell_gift_eyeoftheasp( int sn, int level, CHAR_DATA *ch, void *vo, int tar
     return;
   }
 
-  act("You request a pack of wolf-spirits to harrass $N!", ch, NULL, victim, TO_CHAR);
-  act("Wolf howls and yips assault your eardrums!", ch, NULL, victim, TO_VICT);
-  act("$n tries to reach out and touch $N, but misses.", ch, NULL, victim, TO_NOTVICT);
+  act("Snake spirits help allure $N, bringing $M in closer.", ch, NULL, victim, TO_CHAR);
+  act("$n seems hypnotic and alluring, you move closer to $m.", ch, NULL, victim, TO_VICT);
+  act("$N moves towards $n, as if in a trance.", ch, NULL, victim, TO_NOTVICT);
 
   af.where     = TO_AFFECTS;
-  af.type      = gsn_gift_distractions;
+  af.type      = gsn_gift_eyeoftheasp;
   af.level     = success;
   af.duration  = 2;
-  af.location  = APPLY_HITROLL;
-  af.modifier  = -success * ch->level - 25;
+  af.location  = APPLY_AC;
+  af.modifier  = success * ch->level + 100;
   af.bitvector = 0;
   affect_to_char( victim, &af );
   return;

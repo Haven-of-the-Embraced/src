@@ -2667,7 +2667,7 @@ Total (3) */
     &gsn_gift_eyeoftheasp,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     { "song of rage", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_songofrage,  TAR_IGNORE, POS_STANDING,
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_songofrage,  TAR_CHAR_OFFENSIVE, POS_STANDING,
     &gsn_gift_songofrage,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     { "shadows by the firelight", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },

@@ -5786,7 +5786,7 @@ void do_beseech(CHAR_DATA *ch, char *argument)
 void do_gifts(CHAR_DATA *ch, char *argument)
 {
   char buf[MAX_STRING_LENGTH];
-  int i, gbreed, gauspice, gtribe;
+  int i, gbreed, gauspice, gtribe, uncoded = 0, coded = 0;
   int col = 1;
   BUFFER *buffer;
   buffer = new_buf();
@@ -5810,6 +5810,10 @@ void do_gifts(CHAR_DATA *ch, char *argument)
       gbreed = gift_table[i].breed;
       gauspice = gift_table[i].auspice;
       gtribe = gift_table[i].tribe;
+      if (gift_table[i].level == 0)
+        uncoded++;
+      else
+        coded++;
       sprintf(buf, "{R%s{x[  {B%d{x ] %s %s %s {D:: {C%-30s{x\n\r",
         gift_table[i].level == 0 ? "*" : " ",
         gift_table[i].rank,
@@ -5826,6 +5830,12 @@ void do_gifts(CHAR_DATA *ch, char *argument)
       send_to_char(buf, ch);
     }
     send_to_char("\\===============================================================================/\n\r", ch);
+    sprintf(buf, " \\  {R*{x Total Uncoded Gifts:  %3d                                                /\n\r", uncoded);
+    send_to_char(buf, ch);
+    sprintf(buf, "  \\    Total Coded Gifts:  %3d                                                /\n\r", coded);
+    send_to_char(buf, ch);
+    send_to_char("   \\=========================================================================/\n\r", ch);
+
     return;
   }
 

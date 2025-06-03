@@ -5795,7 +5795,15 @@ void do_gifts(CHAR_DATA *ch, char *argument)
 
   if (!str_cmp(argument, "\0"))
   {
-    send_to_char("{WSyntax: {cgifts (all/list/learn){x", ch);
+    send_to_char("          {GHaven Garou Gifts from Gaia{x\n\r", ch);
+    send_to_char(" {WSyntax:  {cgifts (all/breed/auspice/tribe/list/learn){x\n\r", ch);
+    send_to_char("    all:  Display all Gifts in Haven.\n\r", ch);
+    send_to_char("  breed:  Display all Breed Gifts.\n\r", ch);
+    send_to_char("auspice:  Display all Auspice Gifts.\n\r", ch);
+    send_to_char("  tribe:  Display all Tribe Gifts.\n\r", ch);
+    send_to_char("  {G*{xlist:  Display Gifts you currently know.\n\r", ch);
+    send_to_char(" {G*{xlearn:  Display Gifts you can learn based on your Breed/Auspice/Tribe.\n\r\n\r", ch);
+    send_to_char("{G*{xThese options available to {GGarou{x only.\n\r", ch);
     return;
   }
 
@@ -5873,13 +5881,37 @@ void do_gifts(CHAR_DATA *ch, char *argument)
         "                  ",
         capitalize(gift_table[i].name));
       if ((!str_cmp(argument, "breed") && gbreed != 0))
+      {
+        if (gift_table[i].level == 0)
+          uncoded++;
+        else
+          coded++;
         send_to_char(buf, ch);
+      }
       if ((!str_cmp(argument, "auspice") && gauspice != 0))
+      {
+        if (gift_table[i].level == 0)
+          uncoded++;
+        else
+          coded++;
         send_to_char(buf, ch);
+      }
       if ((!str_cmp(argument, "tribe") && gtribe != 0))
+      {
+        if (gift_table[i].level == 0)
+          uncoded++;
+        else
+          coded++;
         send_to_char(buf, ch);
+      }
     }
     send_to_char("\\===============================================================================/\n\r", ch);
+    sprintf(buf, " \\  {R*{x Total Uncoded %7s Gifts:  %3d                                        /\n\r", capitalize(argument), uncoded);
+    send_to_char(buf, ch);
+    sprintf(buf, "  \\    Total Coded %7s Gifts:  %3d                                        /\n\r", capitalize(argument), coded);
+    send_to_char(buf, ch);
+    send_to_char("   \\=========================================================================/\n\r", ch);
+
     return;
   }
 

@@ -2479,7 +2479,7 @@ Total (3) */
     &gsn_gift_sensetheunnatural,          SLOT( 0),        0,     12, "",             "You no longer feel supernatural beings nearby.",        "" },
 
     { "devils child", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_devilschild,  TAR_IGNORE, POS_STANDING,
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_devilschild,  TAR_IGNORE, POS_FIGHTING,
     &gsn_gift_devilschild,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     { "catfeet",              { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },

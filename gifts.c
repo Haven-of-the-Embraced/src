@@ -1377,7 +1377,8 @@ void spell_gift_scentofsight( int sn, int level, CHAR_DATA *ch, void *vo, int ta
 //Cost None. (Optionally, can add a ‘gnosis’ option to this gift to spend a gnosis point and affect every person in the room.)
 void spell_gift_devilschild( int sn, int level, CHAR_DATA *ch, void *vo, int target)
 {
-  //wp 6 for diff, entire room of non-sentinel mobs
+  CHAR_DATA *victim;
+  CHAR_DATA *vict_next;
   int success;
 
   if (ch->pcdata->gnosis[TEMP] < 1)
@@ -1393,7 +1394,7 @@ void spell_gift_devilschild( int sn, int level, CHAR_DATA *ch, void *vo, int tar
   }
 
   ch->pcdata->gnosis[TEMP]--;
-  success = godice(get_attribute(ch, CSATTRIB_MANIPULATION) + get_ability(ch->pcdata->primal_urge), 6);
+  success = godice(get_attribute(ch, CSATTRIB_MANIPULATION) + ch->pcdata->primal_urge, 6);
 
   if (success < 0)
   {
@@ -1410,6 +1411,24 @@ void spell_gift_devilschild( int sn, int level, CHAR_DATA *ch, void *vo, int tar
     WAIT_STATE(ch, 3);
     return;
   }
+
+  act("Snarling viciously, you bare your teeth and channel wolf-spirits for assistance!",ch,NULL,victim,TO_CHAR);
+  act("$n bares $s teeth, and snarls ferociously, inciting you to flee!",ch,NULL,NULL,TO_ROOM);
+  for ( victim = char_list; victim != NULL; victim = vict_next )
+  {
+    vict_next = victim->next;
+    if(!IS_NPC(victim) || victim->in_room == NULL )
+      continue;
+
+    if ( victim->in_room == ch->in_room && SAME_UMBRA(ch, victim) && !IS_AFFECTED(victim, AFF_INVISIBLE) &&
+        victim != ch && !IS_SET(victim->imm_flags,IMM_CHARM) && !IS_SET(victim->act2, ACT2_ULTRA_MOB ) &&
+        !is_same_group(ch, victim))
+      {
+        act("The urge is overwhelming, and you leave as fast as possible!",ch,NULL,victim,TO_VICT);
+        do_function(victim, &do_flee, "auto" );
+      }
+      continue;
+    }
 
   return;
 }

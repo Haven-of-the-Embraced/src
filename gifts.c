@@ -1375,8 +1375,37 @@ void spell_gift_scentofsight( int sn, int level, CHAR_DATA *ch, void *vo, int ta
 //Roll:Manipulation + Primal Urge (diff target willpower)
 //Wolves are often seen as the offspring of the devil himself, and while they don’t fully understand that implication the lupus are happy to capitalize on the fear it inspires. The garou lets loose a fierce snarl that terrifies and cows opponents. (Staredown affect. forces target to stop fighting and flee.)
 //Cost None. (Optionally, can add a ‘gnosis’ option to this gift to spend a gnosis point and affect every person in the room.)
-void spell_gift_devilschild( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_devilschild( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  //wp 6 for diff, entire room of non-sentinel mobs
+  int success;
+
+  if (ch->pcdata->gnosis[TEMP] < 1)
+  {
+    sendch("You do not have the spiritual reserves to activate this gift.\n\r", ch);
     return;
+  }
+
+  if (ch->pcdata->shiftform != LUPUS)
+  {
+    send_to_char("You must be in Lupus form to properly channel wolf-spirits for this Gift.\n\r", ch);
+    return;
+  }
+
+  ch->pcdata->gnosis[TEMP]--;
+  success = godice(get_attribute(ch, CSATTRIB_MANIPULATION) + get_ability(ch->primal_urge), 6);
+
+  if (success < 0)
+  {
+    return;
+  }
+
+  if (success == 0)
+  {
+    return;
+  }
+
+  return;
 }
 
 //"Catfeet"

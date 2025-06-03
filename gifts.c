@@ -5785,130 +5785,168 @@ void do_beseech(CHAR_DATA *ch, char *argument)
 
 void do_gifts(CHAR_DATA *ch, char *argument)
 {
-    char buf[MAX_STRING_LENGTH];
-    int i, gbreed, gauspice, gtribe;
-    int col = 1;
-    BUFFER *buffer;
-    buffer = new_buf();
+  char buf[MAX_STRING_LENGTH];
+  int i, gbreed, gauspice, gtribe;
+  int col = 1;
+  BUFFER *buffer;
+  buffer = new_buf();
 
-    if(IS_NPC(ch)) return;
+  if(IS_NPC(ch)) return;
 
-    if (!str_cmp(argument, "\0"))
+  if (!str_cmp(argument, "\0"))
+  {
+    send_to_char("{WSyntax: {cgifts (all/list/learn){x", ch);
+    return;
+  }
+
+  if (!str_cmp(argument, "all"))
+  {
+    send_to_char("All of Haven's Garou Gifts from Gaia:\n\r\n\r",ch);
+    send_to_char("{R*{xGift is currently Uncoded.\n\r", ch);
+    cprintf(ch, "%s{x\n\r", " [{BRank{x] ({RBreed{x) {{{MAuspice{x } <     {GTribe{x      > {D:: {CGift Name");
+    send_to_char("/===============================================================================\\\n\r", ch);
+    for (i = 1; i < MAX_GIFTS_CODED; i++)
     {
-      send_to_char("{WSyntax: {cgifts (all/list/learn){x", ch);
-      return;
+      gbreed = gift_table[i].breed;
+      gauspice = gift_table[i].auspice;
+      gtribe = gift_table[i].tribe;
+      sprintf(buf, "{R%s{x[  {B%d{x ] %s %s %s {D:: {C%-30s{x\n\r",
+        gift_table[i].level == 0 ? "*" : " ",
+        gift_table[i].rank,
+        gbreed == HOMID ? "({RHomid{x)" : gbreed == LUPUS ? "({RLupus{x)" : gbreed == METIS ? "({RMetis{x)" : "       ",
+        gauspice == RAGABASH ? "{{{MRagabash{x}" : gauspice == THEURGE ? "{{{MTheurge{x }" : gauspice == PHILODOX ? "{{{MPhilodox{x}" : 
+        gauspice == GALLIARD ? "{{{MGalliard{x}" : gauspice == AHROUN ? "{ {MAhroun{x }" : "          ",
+        gtribe == BLACK_FURY ? "<   {GBlack Fury{x   >" : gtribe == CHILDREN_OF_GAIA ? "<{GChildren of Gaia{x>" : 
+        gtribe == FIANNA ? "<     {GFianna{x     >" : gtribe == FENRIR ? "< {GGet of Fenris{x  >" : 
+        gtribe == SHADOW_LORD ? "<  {GShadow Lord{x   >" : gtribe == BONE_GNAWER ? "<  {GBone Gnawer{x   >" : 
+        gtribe == SILVER_FANG ? "<  {GSilver Fang{x   >" : gtribe == WARDERSOFMEN ? "< {GWarders of Men{x >" : 
+        gtribe == RED_TALON ? "<   {GRed Talon{x    >" : gtribe == SILENT_STRIDER ? "< {GSilent Strider{x >" : 
+        "                  ",
+        capitalize(gift_table[i].name));
+      send_to_char(buf, ch);
     }
+    send_to_char("\\===============================================================================/\n\r", ch);
+    return;
+  }
 
-    if (!str_cmp(argument, "all"))
+  if (!str_cmp(argument, "breed") || !str_cmp(argument, "tribe") || !str_cmp(argument, "auspice"))
+  {
+    sprintf(buf, "Haven's Garou %s%s{x Gifts from Gaia:\n\r\n\r", 
+      !str_cmp(argument, "breed") ? "{R" : !str_cmp(argument, "tribe") ? "{G" :
+      !str_cmp(argument, "auspice") ? "{M" : "", capitalize(argument));
+    send_to_char(buf, ch);
+    send_to_char("{R*{xGift is currently Uncoded.\n\r", ch);
+    sprintf(buf, " [Rank] %s(Breed){x %s{Auspice }{x %s<     Tribe      >{x :: Gift\n\r",
+      !str_cmp(argument, "breed") ? "{R" : "", !str_cmp(argument, "auspice") ? "{M" : "",
+      !str_cmp(argument, "tribe") ? "{G" : "");
+    send_to_char(buf, ch);
+    send_to_char("/===============================================================================\\\n\r", ch);
+    for (i = 1; i < MAX_GIFTS_CODED; i++)
     {
-      send_to_char("All of Haven's Garou Gifts from Gaia:\n\r\n\r",ch);
-      send_to_char("{R*{xGift is currently Uncoded.\n\r", ch);
-      cprintf(ch, "%s{x\n\r", " [{BRank{x] ({RBreed{x) {{{MAuspice{x } <     {GTribe{x      > {D:: {CGift Name");
-      send_to_char("/===============================================================================\\\n\r", ch);
-      for (i = 1; i < MAX_GIFTS_CODED; i++)
-      {
-        gbreed = gift_table[i].breed;
-        gauspice = gift_table[i].auspice;
-        gtribe = gift_table[i].tribe;
-        sprintf(buf, "{R%s{x[  {B%d{x ] %s %s %s {D:: {C%-30s{x\n\r",
-          gift_table[i].level == 0 ? "*" : " ",
-          gift_table[i].rank,
-          gbreed == HOMID ? "({RHomid{x)" : gbreed == LUPUS ? "({RLupus{x)" : gbreed == METIS ? "({RMetis{x)" : "       ",
-          gauspice == RAGABASH ? "{{{MRagabash{x}" : gauspice == THEURGE ? "{{{MTheurge{x }" : gauspice == PHILODOX ? "{{{MPhilodox{x}" : 
-          gauspice == GALLIARD ? "{{{MGalliard{x}" : gauspice == AHROUN ? "{ {MAhroun{x }" : "          ",
-          gtribe == BLACK_FURY ? "<   {GBlack Fury{x   >" : gtribe == CHILDREN_OF_GAIA ? "<{GChildren of Gaia{x>" : 
-          gtribe == FIANNA ? "<     {GFianna{x     >" : gtribe == FENRIR ? "< {GGet of Fenris{x  >" : 
-          gtribe == SHADOW_LORD ? "<  {GShadow Lord{x   >" : gtribe == BONE_GNAWER ? "<  {GBone Gnawer{x   >" : 
-          gtribe == SILVER_FANG ? "<  {GSilver Fang{x   >" : gtribe == WARDERSOFMEN ? "< {GWarders of Men{x >" : 
-          gtribe == RED_TALON ? "<   {GRed Talon{x    >" : gtribe == SILENT_STRIDER ? "< {GSilent Strider{x >" : 
-          "                  ",
-          capitalize(gift_table[i].name));
+      gbreed = gift_table[i].breed;
+      gauspice = gift_table[i].auspice;
+      gtribe = gift_table[i].tribe;
+      sprintf(buf, "{R%s{x[  %d ] %s%s{x %s%s{x %s%s{x :: %-30s{x\n\r",
+        gift_table[i].level == 0 ? "*" : " ",
+        gift_table[i].rank,
+        !str_cmp(argument, "breed") ? "{R" : "",
+        gbreed == HOMID ? "(Homid)" : gbreed == LUPUS ? "(Lupus)" : gbreed == METIS ? "(Metis)" : "       ",
+        !str_cmp(argument, "auspice") ? "{M" : "",
+        gauspice == RAGABASH ? "{{Ragabash}" : gauspice == THEURGE ? "{Theurge }" : gauspice == PHILODOX ? "{Philodox}" : 
+        gauspice == GALLIARD ? "{{Galliard}" : gauspice == AHROUN ? "{ Ahroun }" : "          ",
+        !str_cmp(argument, "tribe") ? "{G" : "",
+        gtribe == BLACK_FURY ? "<   Black Fury   >" : gtribe == CHILDREN_OF_GAIA ? "<Children of Gaia>" : 
+        gtribe == FIANNA ? "<     Fianna     >" : gtribe == FENRIR ? "< Get of Fenris  >" : 
+        gtribe == SHADOW_LORD ? "<  Shadow Lord   >" : gtribe == BONE_GNAWER ? "<  Bone Gnawer   >" : 
+        gtribe == SILVER_FANG ? "<  Silver Fang   >" : gtribe == WARDERSOFMEN ? "< Warders of Men >" : 
+        gtribe == RED_TALON ? "<   Red Talon    >" : gtribe == SILENT_STRIDER ? "< Silent Strider >" : 
+        "                  ",
+        capitalize(gift_table[i].name));
+      if ((!str_cmp(argument, "breed") && gbreed != 0))
         send_to_char(buf, ch);
-      }
-      send_to_char("\\===============================================================================/\n\r", ch);
-      return;
+      if ((!str_cmp(argument, "auspice") && gauspice != 0))
+        send_to_char(buf, ch);
+      if ((!str_cmp(argument, "tribe") && gtribe != 0))
+        send_to_char(buf, ch);
     }
+    send_to_char("\\===============================================================================/\n\r", ch);
+    return;
+  }
 
-    if (!str_cmp(argument, "breed") || !str_cmp(argument, "tribe") || !str_cmp(argument, "auspice"))
-    {
-      sprintf(buf, "Haven's Garou %s%s{x Gifts from Gaia:\n\r\n\r", 
-        !str_cmp(argument, "breed") ? "{R" : !str_cmp(argument, "tribe") ? "{G" :
-        !str_cmp(argument, "auspice") ? "{M" : "", capitalize(argument));
-      send_to_char(buf, ch);
-      send_to_char("{R*{xGift is currently Uncoded.\n\r", ch);
-      sprintf(buf, " [Rank] %s(Breed){x %s{Auspice }{x %s<     Tribe      >{x :: Gift\n\r",
-        !str_cmp(argument, "breed") ? "{R" : "", !str_cmp(argument, "auspice") ? "{M" : "",
-        !str_cmp(argument, "tribe") ? "{G" : "");
-      send_to_char(buf, ch);
-      send_to_char("/===============================================================================\\\n\r", ch);
-      for (i = 1; i < MAX_GIFTS_CODED; i++)
-      {
-        gbreed = gift_table[i].breed;
-        gauspice = gift_table[i].auspice;
-        gtribe = gift_table[i].tribe;
-        sprintf(buf, "{R%s{x[  %d ] %s%s{x %s%s{x %s%s{x :: %-30s{x\n\r",
-          gift_table[i].level == 0 ? "*" : " ",
-          gift_table[i].rank,
-          !str_cmp(argument, "breed") ? "{R" : "",
-          gbreed == HOMID ? "(Homid)" : gbreed == LUPUS ? "(Lupus)" : gbreed == METIS ? "(Metis)" : "       ",
-          !str_cmp(argument, "auspice") ? "{M" : "",
-          gauspice == RAGABASH ? "{{Ragabash}" : gauspice == THEURGE ? "{Theurge }" : gauspice == PHILODOX ? "{Philodox}" : 
-          gauspice == GALLIARD ? "{{Galliard}" : gauspice == AHROUN ? "{ Ahroun }" : "          ",
-          !str_cmp(argument, "tribe") ? "{G" : "",
-          gtribe == BLACK_FURY ? "<   Black Fury   >" : gtribe == CHILDREN_OF_GAIA ? "<Children of Gaia>" : 
-          gtribe == FIANNA ? "<     Fianna     >" : gtribe == FENRIR ? "< Get of Fenris  >" : 
-          gtribe == SHADOW_LORD ? "<  Shadow Lord   >" : gtribe == BONE_GNAWER ? "<  Bone Gnawer   >" : 
-          gtribe == SILVER_FANG ? "<  Silver Fang   >" : gtribe == WARDERSOFMEN ? "< Warders of Men >" : 
-          gtribe == RED_TALON ? "<   Red Talon    >" : gtribe == SILENT_STRIDER ? "< Silent Strider >" : 
-          "                  ",
-          capitalize(gift_table[i].name));
-        if ((!str_cmp(argument, "breed") && gbreed != 0))
-          send_to_char(buf, ch);
-        if ((!str_cmp(argument, "auspice") && gauspice != 0))
-          send_to_char(buf, ch);
-        if ((!str_cmp(argument, "tribe") && gtribe != 0))
-          send_to_char(buf, ch);
-      }
-      send_to_char("\\===============================================================================/\n\r", ch);
-      return;
-    }
+  if(ch->race != race_lookup("garou"))
+  {
+    send_to_char("You are not one of Gaia's chosen!\n\r",ch);
+    return;
+  }
 
-    if(ch->race != race_lookup("garou"))
-    {
-        send_to_char("You are not one of Gaia's chosen!\n\r",ch);
-        return;
-    }
+  if(ch->pcdata->rank == 0)
+  {
+    send_to_char("You must finish setting your Garou stats with {Ggogarou{x before using gifts.\n\r", ch);
+    return;
+  }
 
-    if(ch->pcdata->rank == 0)
-    {
-      send_to_char("You must finish setting your Garou stats with {Ggogarou{x before using gifts.\n\r", ch);
-      return;
-    }
-
-    if (!str_cmp(argument, "list"))
+  if (!str_cmp(argument, "list"))
 	{
 		send_to_char("Your Gifts from Gaia:\n\r\n\r",ch);
-
-    cprintf(ch, "%-37s%s{x\n\r", "[Rank] Gift", "[Rank] Gift");
-
+    cprintf(ch, "%-50s%s{x\n\r", "[Rank] (Bre|Aus|Tri) Gift", "[Rank] (Bre|Aus|Tri) Gift");
 		for (i = 0; i < MAX_GIFT; i++)
 		{
+      gbreed = gift_table[ch->pcdata->gift[i]].breed;
+      gauspice = gift_table[ch->pcdata->gift[i]].auspice;
+      gtribe = gift_table[ch->pcdata->gift[i]].tribe;
 			if (ch->pcdata->gift[i] == 0)
 				continue;
-			else {
+			else 
+      {
 				if (col < 2)
-          {
-              if (gift_table[ch->pcdata->gift[i]].level == 0)
-              sprintf(buf, "  %3d  {r%-30s{x", gift_table[ch->pcdata->gift[i]].rank, capitalize(gift_table[ch->pcdata->gift[i]].name));
-            else
-             sprintf(buf, "  %3d  %-30s", gift_table[ch->pcdata->gift[i]].rank, capitalize(gift_table[ch->pcdata->gift[i]].name));
-        }
-         else
         {
           if (gift_table[ch->pcdata->gift[i]].level == 0)
-            sprintf(buf, "  %3d  {r%-30s{x\n\r", gift_table[ch->pcdata->gift[i]].rank, capitalize(gift_table[ch->pcdata->gift[i]].name));
+            sprintf(buf, "  %d     %s %s %s  {r%-30s{x", gift_table[ch->pcdata->gift[i]].rank, 
+              gbreed == HOMID ? "{RHom{x" : gbreed == LUPUS ? "{RLup{x" : gbreed == METIS ? "{RMet{x" : "   ",
+              gauspice == RAGABASH ? "{MRag{x" : gauspice == THEURGE ? "{MThe{x" : gauspice == PHILODOX ? "{MPhi{x" : 
+              gauspice == GALLIARD ? "{MGal{x" : gauspice == AHROUN ? "{MAhr{x" : "   ",
+              gtribe == BLACK_FURY ? "{GBla{x" : gtribe == CHILDREN_OF_GAIA ? "{GChi{x" : 
+              gtribe == FIANNA ? "{GFia{x" : gtribe == FENRIR ? "{GGet{x" : 
+              gtribe == SHADOW_LORD ? "{GSha{x" : gtribe == BONE_GNAWER ? "{GBon{x" : 
+              gtribe == SILVER_FANG ? "{GSil{x" : gtribe == WARDERSOFMEN ? "{GWar{x" : 
+              gtribe == RED_TALON ? "{GRed{x" : gtribe == SILENT_STRIDER ? "{GStr{x" : "   ",
+              capitalize(gift_table[ch->pcdata->gift[i]].name));
           else
-           sprintf(buf, "  %3d  %s\n\r", gift_table[ch->pcdata->gift[i]].rank, capitalize(gift_table[ch->pcdata->gift[i]].name));
+            sprintf(buf, "  %d     %s %s %s  %-30s{x", gift_table[ch->pcdata->gift[i]].rank, 
+              gbreed == HOMID ? "{RHom{x" : gbreed == LUPUS ? "{RLup{x" : gbreed == METIS ? "{RMet{x" : "   ",
+              gauspice == RAGABASH ? "{MRag{x" : gauspice == THEURGE ? "{MThe{x" : gauspice == PHILODOX ? "{MPhi{x" : 
+              gauspice == GALLIARD ? "{MGal{x" : gauspice == AHROUN ? "{MAhr{x" : "   ",
+              gtribe == BLACK_FURY ? "{GBla{x" : gtribe == CHILDREN_OF_GAIA ? "{GChi{x" : 
+              gtribe == FIANNA ? "{GFia{x" : gtribe == FENRIR ? "{GGet{x" : 
+              gtribe == SHADOW_LORD ? "{GSha{x" : gtribe == BONE_GNAWER ? "{GBon{x" : 
+              gtribe == SILVER_FANG ? "{GSil{x" : gtribe == WARDERSOFMEN ? "{GWar{x" : 
+              gtribe == RED_TALON ? "{GRed{x" : gtribe == SILENT_STRIDER ? "{GStr{x" : "   ",
+              capitalize(gift_table[ch->pcdata->gift[i]].name));
+        }
+        else
+        {
+          if (gift_table[ch->pcdata->gift[i]].level == 0)
+            sprintf(buf, "  %d     %s %s %s  {r%-30s{x\n\r", gift_table[ch->pcdata->gift[i]].rank, 
+              gbreed == HOMID ? "{RHom{x" : gbreed == LUPUS ? "{RLup{x" : gbreed == METIS ? "{RMet{x" : "   ",
+              gauspice == RAGABASH ? "{MRag{x" : gauspice == THEURGE ? "{MThe{x" : gauspice == PHILODOX ? "{MPhi{x" : 
+              gauspice == GALLIARD ? "{MGal{x" : gauspice == AHROUN ? "{MAhr{x" : "   ",
+              gtribe == BLACK_FURY ? "{GBla{x" : gtribe == CHILDREN_OF_GAIA ? "{GChi{x" : 
+              gtribe == FIANNA ? "{GFia{x" : gtribe == FENRIR ? "{GGet{x" : 
+              gtribe == SHADOW_LORD ? "{GSha{x" : gtribe == BONE_GNAWER ? "{GBon{x" : 
+              gtribe == SILVER_FANG ? "{GSil{x" : gtribe == WARDERSOFMEN ? "{GWar{x" : 
+              gtribe == RED_TALON ? "{GRed{x" : gtribe == SILENT_STRIDER ? "{GStr{x" : "   ",
+              capitalize(gift_table[ch->pcdata->gift[i]].name));
+          else
+           sprintf(buf, "  %d     %s %s %s  %s\n\r", gift_table[ch->pcdata->gift[i]].rank, 
+              gbreed == HOMID ? "{RHom{x" : gbreed == LUPUS ? "{RLup{x" : gbreed == METIS ? "{RMet{x" : "   ",
+              gauspice == RAGABASH ? "{MRag{x" : gauspice == THEURGE ? "{MThe{x" : gauspice == PHILODOX ? "{MPhi{x" : 
+              gauspice == GALLIARD ? "{MGal{x" : gauspice == AHROUN ? "{MAhr{x" : "   ",
+              gtribe == BLACK_FURY ? "{GBla{x" : gtribe == CHILDREN_OF_GAIA ? "{GChi{x" : 
+              gtribe == FIANNA ? "{GFia{x" : gtribe == FENRIR ? "{GGet{x" : 
+              gtribe == SHADOW_LORD ? "{GSha{x" : gtribe == BONE_GNAWER ? "{GBon{x" : 
+              gtribe == SILVER_FANG ? "{GSil{x" : gtribe == WARDERSOFMEN ? "{GWar{x" : 
+              gtribe == RED_TALON ? "{GRed{x" : gtribe == SILENT_STRIDER ? "{GStr{x" : "   ",
+              capitalize(gift_table[ch->pcdata->gift[i]].name));
           col = 0;
           }
 
@@ -5916,8 +5954,10 @@ void do_gifts(CHAR_DATA *ch, char *argument)
 				col++;
 			}
 		}
-	} else {
-	    send_to_char("Gifts you may learn:\n\r\n\r",ch);
+	}
+  else 
+  {
+	  send_to_char("Gifts you may learn:\n\r\n\r",ch);
 
     cprintf(ch, "%-37s%s{x\n\r", "[Rank] Gift", "[Rank] Gift");
 

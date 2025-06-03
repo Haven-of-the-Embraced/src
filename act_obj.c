@@ -4290,6 +4290,17 @@ void do_rite( CHAR_DATA *ch, char *argument )
     }
     else if(!str_cmp(arg,"of the Opened Bridge"))
     {
+        if (ch->pcdata->csbackgrounds[CSBACK_RITES] < 4)
+        {
+          ritemaster = TRUE;
+          sendch("You do not have the mystical knowledge to perform this rite yourself,\n\r", ch);
+          if ( ( obj = get_obj_here( ch, NULL, "platinum" ) ) == NULL )
+          {
+            send_to_char("and the Ritesmaster summoned to assist requires proper payment.\n\r",ch);
+            return;
+          }
+          send_to_char("but the Ritesmaster summoned to assist will gladly accept your tribute.\n\r", ch);
+        }
         for ( obj = ch->carrying; obj != NULL; obj = obj->next_content )
         {
             if (obj->item_type == ITEM_WARP_STONE)

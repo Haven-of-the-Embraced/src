@@ -4207,16 +4207,24 @@ void do_rite( CHAR_DATA *ch, char *argument )
     else if(!str_cmp(arg,"of the Opened Caern"))
     {
 
-                if (ch->pcdata->csbackgrounds[CSBACK_RITES] < 1)
+        if (ch->pcdata->csbackgrounds[CSBACK_RITES] < 1)
         {
-        sendch("You do not have the mystical knowledge to perform this rite.\n\r", ch);
-        return;
+          ritemaster = TRUE;
+          sendch("You do not have the mystical knowledge to perform this rite yourself,\n\r", ch);
+          if ( ( obj = get_obj_here( ch, NULL, "platinum" ) ) == NULL )
+          {
+            send_to_char("and the Ritesmaster summoned to assist requires proper payment.\n\r",ch);
+            return;
+          }
+          send_to_char("but the Ritesmaster summoned to assist will gladly accept your tribute.\n\r", ch);
         }
+
         if ( ( obj = get_obj_here( ch, NULL, "heart" ) ) == NULL )
         {
             send_to_char( "This Rite requires the heart of brave creature or person to be placed in the center of the Caern.\n\r", ch );
             return;
         }
+
         if(caern->value[2] <= 0)
         {
             send_to_char("This Caern has been drained of the power of Gaia.\n\r",ch);

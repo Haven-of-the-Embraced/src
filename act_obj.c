@@ -4130,7 +4130,12 @@ void do_rite( CHAR_DATA *ch, char *argument )
 
     if ( arg[0] == '\0')
     {
-    send_to_char( "Preform which Rite?\n\r", ch );
+    send_to_char( "Perform which Rite?\n\r", ch );
+    send_to_char( "Syntax:  {crite <option>{x\n\r", ch);
+    send_to_char( "Options (must include ' ')\n\r", ch);
+    send_to_char( "'of moot'\n\r", ch);
+    send_to_char( "'of the opened caern'\n\r", ch);
+    send_to_char( "'of the opened bridge'\n\r", ch);
     return;
     }
 
@@ -4145,13 +4150,7 @@ void do_rite( CHAR_DATA *ch, char *argument )
     send_to_char( "This Rite must be performed in the presence of a Caern.\n\r", ch );
     return;
     }
-/*No longer have to be IC
-    if (!IS_SET(ch->act,PLR_IC))
-    {
-        send_to_char("You must be IC to perform this rite.\n\r",ch);
-        return;
-    }
-*/
+
     if (!str_cmp(arg,"of Moot"))
     {
         if (ch->pcdata->csbackgrounds[CSBACK_RITES] < 1)
@@ -4173,7 +4172,7 @@ void do_rite( CHAR_DATA *ch, char *argument )
         }
 
         ch->pcdata->gnosis[TEMP] -= 3;
-       if (ritemaster)
+        if (ritemaster)
         {
           extract_obj(obj);
           rites_roll = godice(4, 7);

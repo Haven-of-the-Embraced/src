@@ -1393,15 +1393,21 @@ void spell_gift_devilschild( int sn, int level, CHAR_DATA *ch, void *vo, int tar
   }
 
   ch->pcdata->gnosis[TEMP]--;
-  success = godice(get_attribute(ch, CSATTRIB_MANIPULATION) + get_ability(ch->primal_urge), 6);
+  success = godice(get_attribute(ch, CSATTRIB_MANIPULATION) + get_ability(ch->pcdata->primal_urge), 6);
 
   if (success < 0)
   {
+    act("You bare teeth, snarling for a long time posturing, but the wolf-spirits refuse to lend a hand.", ch, NULL, NULL, TO_CHAR);
+    act("$n attempts to snarl, but it comes off quite comical.", ch, NULL, NULL, TO_ROOM);
+    WAIT_STATE(ch, 9);
     return;
   }
 
   if (success == 0)
   {
+    act("You bare your teeth, snarling, but your wolf-spirit kin are nowhere to be found.", ch, NULL, NULL, TO_CHAR);
+    act("$n bares $s teeth, snarling.", ch, NULL, NULL, TO_ROOM);
+    WAIT_STATE(ch, 3);
     return;
   }
 

@@ -4884,18 +4884,15 @@ void spell_caern_rage(int sn,int level,CHAR_DATA *ch,void *vo,int target)
 
 void spell_caern_healing(int sn,int level,CHAR_DATA *ch,void *vo,int target)
 {
-    if(ch->race == race_lookup("garou"))
-    {
-        ch->agg -= level * 5;
-        if (ch->agg < 0)
-            ch->agg = 0;
-        ch->hit += level * 10;
-        if (ch->hit > ch->max_hit)
-            ch->hit = ch->max_hit;
+    ch->agg -= level * 5;
+    if (ch->agg < 0)
+        ch->agg = 0;
+    ch->hit += level * 10;
+    if (ch->hit > ch->max_hit)
+        ch->hit = ch->max_hit;
 
-        act("You rest peacefully as the tranquility pours through you body, revitalizing your body.", ch, NULL, NULL, TO_CHAR);
-        act("$n rests comfortably, at ease with $s surroundings.", ch, NULL, NULL, TO_NOTVICT);
-    }
+    act("You rest peacefully as the tranquility pours through you body, revitalizing your body.", ch, NULL, NULL, TO_CHAR);
+    act("$n rests comfortably, at ease with $s surroundings.", ch, NULL, NULL, TO_NOTVICT);
     return;
 }
 

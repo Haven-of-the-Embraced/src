@@ -4114,20 +4114,21 @@ void do_dip(CHAR_DATA *ch, char *argument)
 void do_rite( CHAR_DATA *ch, char *argument )
 {
     char arg[MAX_INPUT_LENGTH];
-    CHAR_DATA *garou;
-    CHAR_DATA *garou_next;
-    CHAR_DATA *spirit;
-    OBJ_DATA *caern;
-    OBJ_DATA *obj;
-    OBJ_DATA *plat;
-    ROOM_INDEX_DATA *location;
-    ROOM_INDEX_DATA *old_room;
+    CHAR_DATA *garou, *garou_next, *spirit;
+    OBJ_DATA *caern, *heart, *plat, *warpstone;
+    ROOM_INDEX_DATA *location, *old_room;
     MOB_INDEX_DATA *pMobIndex;
     int count=0;
     int rites_roll = 0;
     bool ritemaster = FALSE;
 
     one_argument( argument, arg );
+
+    if(ch->race != race_lookup("garou"))
+    {
+        send_to_char("Only a Garou can utilize Rites properly.\n\r",ch);
+        return;
+    }
 
     if ( arg[0] == '\0')
     {
@@ -4138,12 +4139,6 @@ void do_rite( CHAR_DATA *ch, char *argument )
     send_to_char( "'of the opened caern'\n\r", ch);
     send_to_char( "'of the opened bridge'\n\r", ch);
     return;
-    }
-
-    if(ch->race != race_lookup("garou"))
-    {
-        send_to_char("This is a Garou ability!\n\r",ch);
-        return;
     }
 
     if ( ( caern = get_obj_here( ch, NULL,  "caern" ) ) == NULL )
@@ -4367,45 +4362,8 @@ void do_rite( CHAR_DATA *ch, char *argument )
             send_to_char("There is no such Rite!\n\r",ch);
             return;
     }
-    if(number_range(1,100) < 5)
-    {
-        if(number_range(1,100) > 25)
-        {
-            for(garou = ch; garou != NULL; garou = garou->next_in_room)
-            {
-                if(garou->race == race_lookup("garou"))
-                {
-
-                    act( "The spirit of Gaia smiles upon you.", garou, NULL, NULL, TO_CHAR );
-                    act( "$n howls in honor of the spirit of Gaia.", garou, NULL, NULL, TO_ROOM );
-                    garou->hit = garou->max_hit;
-                    garou->mana = garou->max_mana;
-                    garou->move = garou->max_move;
-                    garou->rage = 0;
-                }
-            }
-        }
-        else
-        {
-            for(garou = ch; garou != NULL; garou = garou->next_in_room)
-            {
-                if(garou->race == race_lookup("garou"))
-                {
-
-                    act( "The spirit of Gaia sheds a single tear as the Wyrm grips the world.", garou, NULL, NULL, TO_CHAR );
-                    act( "$n howls in pain as the forces of the Wyrm gain power in the world.", garou, NULL, NULL, TO_ROOM );
-                    garou->hit = 1;
-                    garou->mana = 1;
-                    garou->move = 1;
-                    garou->rage = 100;
-                }
-            }
-        }
-    }
     return;
 }
-
-
 
 void do_learn(CHAR_DATA *ch, char *argument)
 {

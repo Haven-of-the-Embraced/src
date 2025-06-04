@@ -4894,7 +4894,7 @@ void spell_caern_healing(int sn,int level,CHAR_DATA *ch,void *vo,int target)
             ch->hit = ch->max_hit;
 
         act("You rest peacefully as the tranquility pours through you body, revitalizing your body.", ch, NULL, NULL, TO_CHAR);
-        act("$n rests comfortably, at ease with $s surroundings.", ch, NULL, NULL, TO_ROOM);
+        act("$n rests comfortably, at ease with $s surroundings.", ch, NULL, NULL, TO_NOTVICT);
     }
     return;
 }

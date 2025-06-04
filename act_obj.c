@@ -4221,7 +4221,7 @@ void do_rite( CHAR_DATA *ch, char *argument )
           send_to_char("but the Ritesmaster summoned to assist will gladly accept your tribute.\n\r", ch);
         }
 
-        if ( ( obj = get_obj_here( ch, NULL, "heart" ) ) == NULL )
+        if ( ( heart = get_obj_here( ch, NULL, "heart" ) ) == NULL )
         {
             send_to_char( "This Rite requires the heart of brave creature or person to be placed in the center of the Caern.\n\r", ch );
             return;
@@ -4233,7 +4233,7 @@ void do_rite( CHAR_DATA *ch, char *argument )
             return;
         }
 
-        extract_obj(obj);
+        extract_obj(heart);
         if (ritemaster)
         {
           extract_obj(plat);
@@ -4243,9 +4243,12 @@ void do_rite( CHAR_DATA *ch, char *argument )
 
         for(garou = ch; garou != NULL; garou = garou->next_in_room)
         {
-            if(garou->race == race_lookup("garou"))
+            if(garou->race == race_lookup("garou") || is_same_group(ch, garou))
             {
-                act( "You feel the power of Gaia enter you from $p.", garou, caern, NULL, TO_CHAR );
+                if (garou->race == race_lookup("garou"))
+                    act( "You feel the power of Gaia enter you from $p.", garou, caern, NULL, TO_CHAR );
+                else
+                   act( "A strange power flows into you from $p.", garou, caern, NULL, TO_CHAR);
                 obj_cast_spell( caern->value[3], caern->value[0], ch, garou, caern );
             }
         }
@@ -4309,19 +4312,19 @@ void do_rite( CHAR_DATA *ch, char *argument )
           }
           send_to_char("but the Ritesmaster summoned to assist will gladly accept your tribute.\n\r", ch);
         }
-        for ( obj = ch->carrying; obj != NULL; obj = obj->next_content )
+        for ( warpstone = ch->carrying; warpstone != NULL; warpstone = warpstone->next_content )
         {
-            if (obj->item_type == ITEM_WARP_STONE)
+            if (warpstone->item_type == ITEM_WARP_STONE)
             {
-                obj_from_char(obj);
-                extract_obj(obj);
+                obj_from_char(warpstone);
+                extract_obj(warpstone);
                 count++;
                 break;
             }
         }
         if(count == 0)
         {
-            send_to_char("You do not have the proper Pathstone.\n\r",ch);
+            send_to_char("You do not have a proper Pathstone to open a Moon Bridge.\n\r",ch);
             return;
         }
 
@@ -4345,7 +4348,7 @@ void do_rite( CHAR_DATA *ch, char *argument )
         {
             garou_next = garou->next_in_room;
 
-            if(garou->race == race_lookup("garou"))
+            if(garou->race == race_lookup("garou") || is_same_group(ch, garou))
             {
                 act( "You feel the power of Gaia enter you from $p.", garou, caern, NULL, TO_CHAR );
                 act( "A Moon Gate opens before you and you step within.", garou, NULL, NULL, TO_CHAR );

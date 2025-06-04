@@ -4119,6 +4119,7 @@ void do_rite( CHAR_DATA *ch, char *argument )
     CHAR_DATA *spirit;
     OBJ_DATA *caern;
     OBJ_DATA *obj;
+    OBJ_DATA *plat;
     ROOM_INDEX_DATA *location;
     ROOM_INDEX_DATA *old_room;
     MOB_INDEX_DATA *pMobIndex;
@@ -4151,13 +4152,19 @@ void do_rite( CHAR_DATA *ch, char *argument )
     return;
     }
 
+    if (IS_AFFECTED2(ch, AFF2_UMBRA))
+    {
+        send_to_char("You must be in the physical realm to enact a Rite.\n\r", ch);
+        return;
+    }
+
     if (!str_cmp(arg,"of Moot"))
     {
         if (ch->pcdata->csbackgrounds[CSBACK_RITES] < 1)
         {
           ritemaster = TRUE;
           sendch("You do not have the mystical knowledge to perform this rite yourself,\n\r", ch);
-          if ( ( obj = get_obj_here( ch, NULL, "platinum" ) ) == NULL )
+          if ( ( plat = get_obj_here( ch, NULL, "platinum" ) ) == NULL )
           {
             send_to_char("and the Ritesmaster summoned to assist requires proper payment.\n\r",ch);
             return;
@@ -4174,7 +4181,7 @@ void do_rite( CHAR_DATA *ch, char *argument )
         ch->pcdata->gnosis[TEMP] -= 3;
         if (ritemaster)
         {
-          extract_obj(obj);
+          extract_obj(plat);
           rites_roll = godice(4, 7);
           act("The Ritemaster accepts the tribute and leads the garou present in a resonating howl.", ch, NULL, NULL, TO_ROOM);
         }
@@ -4211,7 +4218,7 @@ void do_rite( CHAR_DATA *ch, char *argument )
         {
           ritemaster = TRUE;
           sendch("You do not have the mystical knowledge to perform this rite yourself,\n\r", ch);
-          if ( ( obj = get_obj_here( ch, NULL, "platinum" ) ) == NULL )
+          if ( ( plat = get_obj_here( ch, NULL, "platinum" ) ) == NULL )
           {
             send_to_char("and the Ritesmaster summoned to assist requires proper payment.\n\r",ch);
             return;
@@ -4232,6 +4239,12 @@ void do_rite( CHAR_DATA *ch, char *argument )
         }
 
         extract_obj(obj);
+        if (ritemaster)
+        {
+          extract_obj(plat);
+          rites_roll = godice(4, 7);
+          act("The Ritemaster accepts the tribute and leads the garou present in a resonating howl.", ch, NULL, NULL, TO_ROOM);
+        }
 
         for(garou = ch; garou != NULL; garou = garou->next_in_room)
         {
@@ -4258,12 +4271,12 @@ void do_rite( CHAR_DATA *ch, char *argument )
             send_to_char("Only a true Mystic can summon forth a spirit.\n\r",ch);
             return;
         }
-        if ( ( obj = get_obj_here( ch, NULL, "platinum" ) ) == NULL )
+        if ( ( plat = get_obj_here( ch, NULL, "platinum" ) ) == NULL )
         {
             send_to_char("This sacrifice is not great enough to please Gaia.\n\r",ch);
             return;
         }
-        extract_obj(obj);
+        extract_obj(plat);
 
 /*      if(number_range(1,100) > 90)
         {
@@ -4294,7 +4307,7 @@ void do_rite( CHAR_DATA *ch, char *argument )
         {
           ritemaster = TRUE;
           sendch("You do not have the mystical knowledge to perform this rite yourself,\n\r", ch);
-          if ( ( obj = get_obj_here( ch, NULL, "platinum" ) ) == NULL )
+          if ( ( plat = get_obj_here( ch, NULL, "platinum" ) ) == NULL )
           {
             send_to_char("and the Ritesmaster summoned to assist requires proper payment.\n\r",ch);
             return;
@@ -4316,6 +4329,14 @@ void do_rite( CHAR_DATA *ch, char *argument )
             send_to_char("You do not have the proper Pathstone.\n\r",ch);
             return;
         }
+
+        if (ritemaster)
+        {
+          extract_obj(plat);
+          rites_roll = godice(4, 7);
+          act("The Ritemaster accepts the tribute and leads the garou present in a resonating howl.", ch, NULL, NULL, TO_ROOM);
+        }
+
         act( "You feel the power of Gaia enter you from $p.", ch, caern, NULL, TO_CHAR );
         act( "A Moon Gate opens before you and you step within.", ch, NULL, NULL, TO_CHAR );
         act( "$n steps within a shimmering moongate.", ch, NULL, NULL, TO_ROOM );

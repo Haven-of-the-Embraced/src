@@ -4178,6 +4178,7 @@ void do_rite( CHAR_DATA *ch, char *argument )
         {
           extract_obj(plat);
           rites_roll = godice(4, 7);
+          act("The Ritemaster accepts the tribute and leads the garou present in a resonating howl.", ch, NULL, NULL, TO_CHAR);
           act("The Ritemaster accepts the tribute and leads the garou present in a resonating howl.", ch, NULL, NULL, TO_ROOM);
         }
         else
@@ -4238,18 +4239,43 @@ void do_rite( CHAR_DATA *ch, char *argument )
         {
           extract_obj(plat);
           rites_roll = godice(4, 7);
+          act("The Ritemaster accepts the tribute and leads the garou present in a resonating howl.", ch, NULL, NULL, TO_CHAR);
           act("The Ritemaster accepts the tribute and leads the garou present in a resonating howl.", ch, NULL, NULL, TO_ROOM);
         }
-
-        for(garou = ch; garou != NULL; garou = garou->next_in_room)
+        else
         {
-            if(garou->race == race_lookup("garou") || is_same_group(ch, garou))
+          rites_roll = godice(ch->pcdata->gnosis[PERM], 7);
+          act("You begin a resonating howl, pledging your energies to the Caern.", ch, NULL, NULL, TO_CHAR);
+          act("$n lifts $s head in a resonating howl, echoing throughout the area.", ch, NULL, NULL, TO_NOTVICT);
+        }
+
+        if (rites_roll < 0)
+        {
+          act("Midway through the Rite, you notice that the howling isn't as fluid as it should be.\n\rWith a pulse of energy, $p's spiritual essence dims, and finally winks out.", ch, caern, NULL, TO_CHAR);
+          act("Amidst the howling, $p pulses briefly and then subsides.", ch, caern, NULL, TO_NOTVICT);
+          return;
+        }
+
+        if (rites_roll == 0)
+        {
+          act("The howling subsides, but $p's spiritual essence seems unchanged.", ch, caern, NULL, TO_CHAR);
+          act("The howling reaches a final point, and then there is silence.", ch, caern, NULL, TO_NOTVICT);
+          return;
+        }
+
+        for(garou = char_list; garou != NULL; garou = garou_next)
+        {
+            garou_next = garou->next;
+            if (IS_NPC(garou) || garou->in_room == NULL)
+                continue;
+            if((garou->race == race_lookup("garou") || is_same_group(ch, garou)) 
+                && garou->in_room == ch->in_room && !IS_AFFECTED(garou, AFF_INVISIBLE))
             {
                 if (garou->race == race_lookup("garou"))
                     act( "You feel the power of Gaia enter you from $p.", garou, caern, NULL, TO_CHAR );
                 else
                    act( "A strange power flows into you from $p.", garou, caern, NULL, TO_CHAR);
-                obj_cast_spell( caern->value[3], caern->value[0], ch, garou, caern );
+                obj_cast_spell( caern->value[3], caern->value[0], garou, garou, caern );
             }
         }
         caern->value[2]--;
@@ -4332,7 +4358,29 @@ void do_rite( CHAR_DATA *ch, char *argument )
         {
           extract_obj(plat);
           rites_roll = godice(4, 7);
+          act("The Ritemaster accepts the tribute and leads the garou present in a resonating howl.", ch, NULL, NULL, TO_CHAR);
           act("The Ritemaster accepts the tribute and leads the garou present in a resonating howl.", ch, NULL, NULL, TO_ROOM);
+        }
+        else
+        {
+          rites_roll = godice(ch->pcdata->gnosis[PERM], 7);
+          act("You begin a resonating howl, pledging your energies to the Caern.", ch, NULL, NULL, TO_CHAR);
+          act("$n lifts $s head in a resonating howl, echoing throughout the area.", ch, NULL, NULL, TO_NOTVICT);
+        }
+
+        if (rites_roll < 0)
+        {
+          act("Midway through the Rite, you notice that the howling isn't as fluid as it should be.\n\rWith a pulse of energy, $p's spiritual essence dims, and finally winks out.", ch, caern, NULL, TO_CHAR);
+          act("Amidst the howling, $p pulses briefly and then subsides.", ch, caern, NULL, TO_NOTVICT);
+          caern->value[2] = 0;
+          return;
+        }
+
+        if (rites_roll == 0)
+        {
+          act("The howling subsides, but $p's spiritual essence seems unchanged.", ch, caern, NULL, TO_CHAR);
+          act("The howling reaches a final point, and then there is silence.", ch, caern, NULL, TO_NOTVICT);
+          return;
         }
 
         act( "You feel the power of Gaia enter you from $p.", ch, caern, NULL, TO_CHAR );

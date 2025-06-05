@@ -4209,7 +4209,6 @@ void do_rite( CHAR_DATA *ch, char *argument )
     }
     else if(!str_cmp(arg,"of the Opened Caern"))
     {
-
         if (ch->pcdata->csbackgrounds[CSBACK_RITES] < 1)
         {
           ritemaster = TRUE;
@@ -4243,11 +4242,12 @@ void do_rite( CHAR_DATA *ch, char *argument )
           act("The Ritemaster accepts the tribute and leads the garou present in a resonating howl.", ch, NULL, NULL, TO_ROOM);
         }
         else
-        {
           rites_roll = godice(ch->pcdata->gnosis[PERM], 7);
-          act("You begin a resonating howl, pledging your energies to the Caern.", ch, NULL, NULL, TO_CHAR);
-          act("$n lifts $s head in a resonating howl, echoing throughout the area.", ch, NULL, NULL, TO_NOTVICT);
-        }
+
+        act("You place $p in the middle of the caern.", ch, heart, NULL, TO_CHAR);
+        act("$n places $p in the middle of the caern.", ch, heart, NULL, TO_NOTVICT);
+        act("You begin a resonating howl, pledging your energies to the Caern.", ch, NULL, NULL, TO_CHAR);
+        act("$n lifts $s head in a resonating howl, echoing throughout the area.", ch, NULL, NULL, TO_NOTVICT);
 
         if (rites_roll < 0)
         {
@@ -4258,7 +4258,7 @@ void do_rite( CHAR_DATA *ch, char *argument )
 
         if (rites_roll == 0)
         {
-          act("The howling subsides, but $p's spiritual essence seems unchanged.", ch, caern, NULL, TO_CHAR);
+          act("The howling subsides, but $p's spirits seem to have ignored the tribute.", ch, caern, NULL, TO_CHAR);
           act("The howling reaches a final point, and then there is silence.", ch, caern, NULL, TO_NOTVICT);
           return;
         }

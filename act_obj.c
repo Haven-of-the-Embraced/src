@@ -4345,7 +4345,6 @@ void do_rite( CHAR_DATA *ch, char *argument )
             if (warpstone->item_type == ITEM_WARP_STONE)
             {
                 obj_from_char(warpstone);
-                extract_obj(warpstone);
                 count++;
                 break;
             }
@@ -4364,11 +4363,13 @@ void do_rite( CHAR_DATA *ch, char *argument )
           act("The Ritemaster accepts the tribute and leads the garou present in a resonating howl.", ch, NULL, NULL, TO_ROOM);
         }
         else
-        {
           rites_roll = godice(ch->pcdata->gnosis[PERM], 7);
-          act("You begin a resonating howl, pledging your energies to the Caern.", ch, NULL, NULL, TO_CHAR);
-          act("$n lifts $s head in a resonating howl, echoing throughout the area.", ch, NULL, NULL, TO_NOTVICT);
-        }
+
+        act("You begin a resonating howl, pledging your energies to the Caern.", ch, NULL, NULL, TO_CHAR);
+        act("$n lifts $s head in a resonating howl, echoing throughout the area.", ch, NULL, NULL, TO_NOTVICT);
+        act("Softly glowing, $p vanishes in a flash.", ch, warpstone, NULL, TO_CHAR);
+        act("Softly glowing, $p vanishes in a flash.", ch, warpstone, NULL, TO_NOTVICT);
+        extract_obj(warpstone);
 
         if (rites_roll < 0)
         {

@@ -4233,7 +4233,6 @@ void do_rite( CHAR_DATA *ch, char *argument )
             return;
         }
 
-        extract_obj(heart);
         if (ritemaster)
         {
           extract_obj(plat);
@@ -4246,6 +4245,7 @@ void do_rite( CHAR_DATA *ch, char *argument )
 
         act("You place $p in the middle of the caern.", ch, heart, NULL, TO_CHAR);
         act("$n places $p in the middle of the caern.", ch, heart, NULL, TO_NOTVICT);
+        extract_obj(heart);
         act("You begin a resonating howl, pledging your energies to the Caern.", ch, NULL, NULL, TO_CHAR);
         act("$n lifts $s head in a resonating howl, echoing throughout the area.", ch, NULL, NULL, TO_NOTVICT);
 

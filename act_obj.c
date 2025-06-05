@@ -4173,7 +4173,6 @@ void do_rite( CHAR_DATA *ch, char *argument )
           return;
         }
 
-        ch->pcdata->gnosis[TEMP] -= 3;
         if (ritemaster)
         {
           extract_obj(plat);
@@ -4182,11 +4181,12 @@ void do_rite( CHAR_DATA *ch, char *argument )
           act("The Ritemaster accepts the tribute and leads the garou present in a resonating howl.", ch, NULL, NULL, TO_ROOM);
         }
         else
-        {
           rites_roll = godice(ch->pcdata->gnosis[PERM], 7);
-          act("You begin a resonating howl, pledging your energies to the Caern.", ch, NULL, NULL, TO_CHAR);
-          act("$n lifts $s head in a resonating howl, echoing throughout the area.", ch, NULL, NULL, TO_NOTVICT);
-        }
+
+        act("You begin a resonating howl, pledging your energies to the Caern.", ch, NULL, NULL, TO_CHAR);
+        act("$n lifts $s head in a resonating howl, echoing throughout the area.", ch, NULL, NULL, TO_NOTVICT);
+        send_to_char("You pledge your personal Gnosis to further the cause of eradicating the Wyrm.\n\r", ch);
+        ch->pcdata->gnosis[TEMP] -= 3;
 
         if (rites_roll < 0)
         {

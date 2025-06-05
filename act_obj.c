@@ -4284,6 +4284,8 @@ void do_rite( CHAR_DATA *ch, char *argument )
     }
     else if(!str_cmp(arg,"of Summoning"))
     {
+        send_to_char("This Rite is currently unavailable.\n\r", ch);
+        return;
         if (ch->pcdata->csbackgrounds[CSBACK_RITES] < 2)
         {
         sendch("You do not have the mystical knowledge to perform this rite.\n\r", ch);

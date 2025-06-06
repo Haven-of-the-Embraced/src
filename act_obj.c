@@ -4335,11 +4335,14 @@ void do_rite( CHAR_DATA *ch, char *argument )
           sendch("You do not have the mystical knowledge to perform this rite yourself,\n\r", ch);
           if ( ( plat = get_obj_here( ch, NULL, "platinum" ) ) == NULL )
           {
-            send_to_char("and the Ritesmaster summoned to assist requires proper payment.\n\r",ch);
+            send_to_char("and the Ritesmaster summoned to assist requires proper payment.\n\r\n\r",ch);
             return;
           }
-          send_to_char("but the Ritesmaster summoned to assist will gladly accept your tribute.\n\r", ch);
+          send_to_char("but the Ritesmaster summoned to assist will gladly accept your tribute.\n\r\n\r", ch);
         }
+        else
+            send_to_char("You prepare to lead the Rite of the Opened Bridge.\n\r\n\r", ch);
+
         for ( warpstone = ch->carrying; warpstone != NULL; warpstone = warpstone->next_content )
         {
             if (warpstone->item_type == ITEM_WARP_STONE)
@@ -4351,24 +4354,24 @@ void do_rite( CHAR_DATA *ch, char *argument )
         }
         if(count == 0)
         {
-            send_to_char("You do not have a proper Pathstone to open a Moon Bridge.\n\r",ch);
+            send_to_char("You do not have a proper {GPathstone{x to open a Moon Bridge.\n\r",ch);
             return;
         }
 
         if (ritemaster)
         {
-          extract_obj(plat);
           rites_roll = godice(4, 7);
-          act("The Ritemaster accepts the tribute and leads the garou present in a resonating howl.", ch, NULL, NULL, TO_CHAR);
-          act("The Ritemaster accepts the tribute and leads the garou present in a resonating howl.", ch, NULL, NULL, TO_ROOM);
+          act("{gThe Ritemaster accepts the tribute of $p, and leads the Garou present in a resonating howl.{x\n\r", ch, plat, NULL, TO_CHAR);
+          act("{gThe Ritemaster accepts the tribute of $p, and leads the Garou present in a resonating howl.{x\n\r", ch, plat, NULL, TO_ROOM);
+          extract_obj(plat);
         }
         else
           rites_roll = godice(ch->pcdata->gnosis[PERM], 7);
 
         act("You begin a resonating howl, pledging your energies to the Caern.", ch, NULL, NULL, TO_CHAR);
         act("$n lifts $s head in a resonating howl, echoing throughout the area.", ch, NULL, NULL, TO_NOTVICT);
-        act("Softly glowing, $p vanishes in a flash.", ch, warpstone, NULL, TO_CHAR);
-        act("Softly glowing, $p vanishes in a flash.", ch, warpstone, NULL, TO_NOTVICT);
+        act("Softly glowing, {m$p{x vanishes in a {Yflash{x.\n\r", ch, warpstone, NULL, TO_CHAR);
+        act("Softly glowing, {m$p{x vanishes in a {Yflash{x.\n\r", ch, warpstone, NULL, TO_NOTVICT);
         extract_obj(warpstone);
 
         if (rites_roll < 0)
@@ -4393,6 +4396,7 @@ void do_rite( CHAR_DATA *ch, char *argument )
         location = get_room_index(caern->pIndexData->vnum);
         char_from_room(ch);
         char_to_room(ch, location);
+        act( "$n materializes on the Moon Bridge.", ch, NULL, NULL, TO_ROOM );
         do_function(ch, &do_look, "auto");
 
         for ( garou = old_room->people; garou != NULL; garou = garou_next )
@@ -4407,6 +4411,7 @@ void do_rite( CHAR_DATA *ch, char *argument )
                 location = get_room_index(caern->pIndexData->vnum);
                 char_from_room(garou);
                 char_to_room(garou, location);
+                act( "$n materializes on the Moon Bridge.", garou, NULL, NULL, TO_ROOM );
                 do_function(garou, &do_look, "auto");
             }
         }

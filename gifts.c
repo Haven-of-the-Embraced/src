@@ -5987,7 +5987,7 @@ void do_gifts(CHAR_DATA *ch, char *argument)
 	{
     list = TRUE;
 		send_to_char("Your Gifts from Gaia:\n\r\n\r",ch);
-    send_to_char(" [Rank]  {RBre{x|{MAus{x|{GTri{x  - Gift{x\n\r", ch);
+    send_to_char(" [{BRank{x]  {RBre{x|{MAus{x|{GTri{x  - {CGift Name{x\n\r", ch);
     send_to_char("----------------------------------------------------------{x\n\r", ch);
 		for (i = 0; i < MAX_GIFT; i++)
 		{
@@ -5998,7 +5998,7 @@ void do_gifts(CHAR_DATA *ch, char *argument)
 				continue;
 			else 
       {
-        sprintf(buf, "%s  %d     %s %s %s  - %-30s{x\n\r", 
+        sprintf(buf, "%s  {B%d{x     %s %s %s  - {C%-30s{x\n\r", 
           gift_table[ch->pcdata->gift[i]].level == 0 ? "{r*{x" : " ",
           gift_table[ch->pcdata->gift[i]].rank, 
           gbreed == HOMID ? "{RHom{x" : gbreed == LUPUS ? "{RLup{x" : gbreed == METIS ? "{RMet{x" : "   ",
@@ -6020,13 +6020,16 @@ void do_gifts(CHAR_DATA *ch, char *argument)
   {
     learn = TRUE;
 	  send_to_char("Gifts you may learn:\n\r\n\r",ch);
-    send_to_char(" [Rank]  {RBre{x|{MAus{x|{GTri{x  - Gift{x\n\r", ch);
+    send_to_char(" [{BRank{x]  {RBre{x|{MAus{x|{GTri{x  - {CGift Name{x\n\r", ch);
     send_to_char("----------------------------------------------------------{x\n\r", ch);
 
     for (i = 1; i < MAX_GIFTS_CODED; i++)
 		{
 			int gn;
       bool islearned = FALSE;
+      gbreed = gift_table[i].breed;
+      gauspice = gift_table[i].auspice;
+      gtribe = gift_table[i].tribe;
 
       if (ch->pcdata->rank < gift_table[i].rank || (gift_table[i].breed != ch->pcdata->breed &&
 					gift_table[i].auspice != ch->pcdata->auspice && gift_table[i].tribe != ch->pcdata->tribe))
@@ -6038,7 +6041,7 @@ void do_gifts(CHAR_DATA *ch, char *argument)
 			if (islearned)
 				continue;
 
-      sprintf(buf, "%s  %d     %s %s %s  - %-30s\n\r", gift_table[i].level == 0 ? "{r*{x" : " ", 
+      sprintf(buf, "%s  {B%d{x     %s %s %s  - {C%-30s{x\n\r", gift_table[i].level == 0 ? "{r*{x" : " ", 
         gift_table[i].rank, 
         gbreed == HOMID ? "{RHom{x" : gbreed == LUPUS ? "{RLup{x" : gbreed == METIS ? "{RMet{x" : "   ",
         gauspice == RAGABASH ? "{MRag{x" : gauspice == THEURGE ? "{MThe{x" : gauspice == PHILODOX ? "{MPhi{x" : 
@@ -6062,7 +6065,7 @@ void do_gifts(CHAR_DATA *ch, char *argument)
     send_to_char("----------------------------------------------------------{x\n\r", ch);
     if (list)
     {
-      sprintf(buf, "   You have learned [%2d/%2d] Gifts.\n\r", learned, MAX_GIFT);
+      sprintf(buf, "   You have learned [{Y%2d{x/{y%2d{x] Gifts.\n\r", learned, MAX_GIFT);
       send_to_char(buf, ch);
     }
     send_to_char("  {r*{xGift is not currently coded.\n\r", ch);
@@ -6077,7 +6080,7 @@ void do_gifts(CHAR_DATA *ch, char *argument)
         case 5: sprintf(buf2,"Elder"); break;
         default: sprintf(buf2,"Pup"); break;
       }
-      sprintf(buf, "   Gifts above your current Rank [ {c%s{x ({c%d{x) ] are not shown.\n\r", buf2, ch->pcdata->rank);
+      sprintf(buf, "   Gifts above your current Rank [ {B%s{x ({B%d{x) ] are not shown.\n\r", buf2, ch->pcdata->rank);
       send_to_char(buf, ch);
     }
 

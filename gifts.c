@@ -6031,30 +6031,15 @@ void do_gifts(CHAR_DATA *ch, char *argument)
 					gift_table[i].auspice != ch->pcdata->auspice && gift_table[i].tribe != ch->pcdata->tribe))
 				continue;
 
-				for (gn = 0; gn < MAX_GIFT; gn++)
-					if (ch->pcdata->gift[gn] == i) learned = TRUE;
+			for (gn = 0; gn < MAX_GIFT; gn++)
+				if (ch->pcdata->gift[gn] == i) learned = TRUE;
 
-				if (learned)
-					continue;
+			if (learned)
+				continue;
 
-				if (col < 2)
-        {
-            if (gift_table[i].level == 0)
-              sprintf(buf, "  %3d  {r%-30s{x", gift_table[i].rank, capitalize(gift_table[i].name));
-            else
-					   sprintf(buf, "  %3d  %-30s", gift_table[i].rank, capitalize(gift_table[i].name));
-				}
-         else
-				{
-          if (gift_table[i].level == 0)
-            sprintf(buf, "  %3d  {r%-30s{x\n\r", gift_table[i].rank, capitalize(gift_table[i].name));
-          else
-           sprintf(buf, "  %3d  %s\n\r", gift_table[i].rank, capitalize(gift_table[i].name));
-					col = 0;
-					}
-
-				add_buf(buffer, buf);
-				col++;
+      sprintf(buf, "%s  %d  %-30s\n\r", gift_table[i].level == 0 ? "{r*{x" : " ", 
+        gift_table[i].rank, capitalize(gift_table[i].name));
+			add_buf(buffer, buf);
 		}
   }
   else

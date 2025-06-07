@@ -1122,9 +1122,9 @@ void do_freebie(CHAR_DATA *ch, char *argument)
 						if (ch->pcdata->gift[i] != 0)
 						gcount++;
 					}
-					if (gcount > 15)
+					if (gcount == MAX_GIFT)
 					{
-						sendch("You can only purchase up to a max of fifteen gifts with freebies.\n\r", ch);
+						sendch("You can only purchase up to a max of ninety Gifts with freebies.\n\r", ch);
 						return;
 					}
 

@@ -5840,10 +5840,11 @@ void do_beseech(CHAR_DATA *ch, char *argument)
 void do_gifts(CHAR_DATA *ch, char *argument)
 {
   char buf[MAX_STRING_LENGTH];
-  int i, gbreed, gauspice, gtribe, uncoded = 0, coded = 0;
+  int i, gbreed, gauspice, gtribe, uncoded = 0, coded = 0, learned = 0;
   int col = 1;
   BUFFER *buffer;
   buffer = new_buf();
+  bool list = FALSE;
 
   if(IS_NPC(ch)) return;
 

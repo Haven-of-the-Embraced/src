@@ -5840,6 +5840,7 @@ void do_beseech(CHAR_DATA *ch, char *argument)
 void do_gifts(CHAR_DATA *ch, char *argument)
 {
   char buf[MAX_STRING_LENGTH];
+  char buf2[MSL];
   int i, gbreed, gauspice, gtribe, uncoded = 0, coded = 0, learned = 0;
   int col = 1;
   BUFFER *buffer;
@@ -6019,22 +6020,22 @@ void do_gifts(CHAR_DATA *ch, char *argument)
   {
     learn = TRUE;
 	  send_to_char("Gifts you may learn:\n\r\n\r",ch);
-
-    cprintf(ch, "%-37s%s{x\n\r", "[Rank] Gift", "[Rank] Gift");
+    send_to_char(" [Rank]  {RBre{x|{MAus{x|{GTri{x  - Gift{x\n\r", ch);
+    send_to_char("----------------------------------------------------------{x\n\r", ch);
 
     for (i = 1; i < MAX_GIFTS_CODED; i++)
 		{
 			int gn;
-      bool learned = FALSE;
+      bool islearned = FALSE;
 
       if (ch->pcdata->rank < gift_table[i].rank || (gift_table[i].breed != ch->pcdata->breed &&
 					gift_table[i].auspice != ch->pcdata->auspice && gift_table[i].tribe != ch->pcdata->tribe))
 				continue;
 
 			for (gn = 0; gn < MAX_GIFT; gn++)
-				if (ch->pcdata->gift[gn] == i) learned = TRUE;
+				if (ch->pcdata->gift[gn] == i) islearned = TRUE;
 
-			if (learned)
+			if (islearned)
 				continue;
 
       sprintf(buf, "%s  %d  %-30s\n\r", gift_table[i].level == 0 ? "{r*{x" : " ", 
@@ -6055,6 +6056,21 @@ void do_gifts(CHAR_DATA *ch, char *argument)
       sprintf(buf, "  You have learned [%2d/%2d] Gifts.\n\r", learned, MAX_GIFT);
       send_to_char(buf, ch);
     }
-    send_to_char("  {r*{xGift is not currently coded.\n\r   Gifts above your rank are not shown.\n\r", ch);
+    send_to_char("  {r*{xGift is not currently coded.\n\r", ch);
+    if (learn)
+    {
+      switch(ch->pcdata->rank)
+      {
+        case 1: sprintf(buf2,"Cliath"); break;
+        case 2: sprintf(buf2,"Fostern"); break;
+        case 3: sprintf(buf2,"Adren"); break;
+        case 4: sprintf(buf2,"Athro"); break;
+        case 5: sprintf(buf2,"Elder"); break;
+        default: sprintf(buf2,"Pup"); break;
+      }
+      sprintf(buf, "   Gifts above your current Rank [ {G%s{x ({g%d{x) ] are not shown.\n\r", buf2, ch->pcdata->rank);
+      send_to_char(buf, ch);
+    }
+
     return;
 }

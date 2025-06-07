@@ -6894,7 +6894,8 @@ void do_warcry( CHAR_DATA *ch, char *argument )
       if ( victim->in_room == ch->in_room && SAME_UMBRA(ch, victim))
       {
         if ( victim != ch && !is_safe_spell(ch,victim,TRUE)
-        && !is_affected(victim, gsn_deafened) && !IS_SET(victim->imm_flags,IMM_SOUND))
+        && !is_affected(victim, gsn_deafened) && !IS_SET(victim->imm_flags,IMM_SOUND)
+        && !is_affected(victim, gsn_earthmeld))
         {
 /*       ** Taunt Removed until Figured out how to make it work properly **
           fch = victim->fighting;

@@ -6038,8 +6038,17 @@ void do_gifts(CHAR_DATA *ch, char *argument)
 			if (islearned)
 				continue;
 
-      sprintf(buf, "%s  %d  %-30s\n\r", gift_table[i].level == 0 ? "{r*{x" : " ", 
-        gift_table[i].rank, capitalize(gift_table[i].name));
+      sprintf(buf, "%s  %d     %s %s %s  - %-30s\n\r", gift_table[i].level == 0 ? "{r*{x" : " ", 
+        gift_table[i].rank, 
+        gbreed == HOMID ? "{RHom{x" : gbreed == LUPUS ? "{RLup{x" : gbreed == METIS ? "{RMet{x" : "   ",
+        gauspice == RAGABASH ? "{MRag{x" : gauspice == THEURGE ? "{MThe{x" : gauspice == PHILODOX ? "{MPhi{x" : 
+        gauspice == GALLIARD ? "{MGal{x" : gauspice == AHROUN ? "{MAhr{x" : "   ",
+        gtribe == BLACK_FURY ? "{GBla{x" : gtribe == CHILDREN_OF_GAIA ? "{GChi{x" : 
+        gtribe == FIANNA ? "{GFia{x" : gtribe == FENRIR ? "{GGet{x" : 
+        gtribe == SHADOW_LORD ? "{GSha{x" : gtribe == BONE_GNAWER ? "{GBon{x" : 
+        gtribe == SILVER_FANG ? "{GSil{x" : gtribe == WARDERSOFMEN ? "{GWar{x" : 
+        gtribe == RED_TALON ? "{GRed{x" : gtribe == SILENT_STRIDER ? "{GStr{x" : "   ",
+        capitalize(gift_table[i].name));
 			add_buf(buffer, buf);
 		}
   }
@@ -6053,7 +6062,7 @@ void do_gifts(CHAR_DATA *ch, char *argument)
     send_to_char("----------------------------------------------------------{x\n\r", ch);
     if (list)
     {
-      sprintf(buf, "  You have learned [%2d/%2d] Gifts.\n\r", learned, MAX_GIFT);
+      sprintf(buf, "   You have learned [%2d/%2d] Gifts.\n\r", learned, MAX_GIFT);
       send_to_char(buf, ch);
     }
     send_to_char("  {r*{xGift is not currently coded.\n\r", ch);
@@ -6068,7 +6077,7 @@ void do_gifts(CHAR_DATA *ch, char *argument)
         case 5: sprintf(buf2,"Elder"); break;
         default: sprintf(buf2,"Pup"); break;
       }
-      sprintf(buf, "   Gifts above your current Rank [ {G%s{x ({g%d{x) ] are not shown.\n\r", buf2, ch->pcdata->rank);
+      sprintf(buf, "   Gifts above your current Rank [ {c%s{x ({c%d{x) ] are not shown.\n\r", buf2, ch->pcdata->rank);
       send_to_char(buf, ch);
     }
 

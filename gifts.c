@@ -5844,7 +5844,7 @@ void do_gifts(CHAR_DATA *ch, char *argument)
   int col = 1;
   BUFFER *buffer;
   buffer = new_buf();
-  bool list = FALSE;
+  bool list = FALSE, learn = FALSE;
 
   if(IS_NPC(ch)) return;
 
@@ -6014,8 +6014,10 @@ void do_gifts(CHAR_DATA *ch, char *argument)
 			}
 		}
 	}
-  else 
+  else
+  if (!str_cmp(argument, "learn"))
   {
+    learn = TRUE;
 	  send_to_char("Gifts you may learn:\n\r\n\r",ch);
 
     cprintf(ch, "%-37s%s{x\n\r", "[Rank] Gift", "[Rank] Gift");
@@ -6054,6 +6056,11 @@ void do_gifts(CHAR_DATA *ch, char *argument)
 				add_buf(buffer, buf);
 				col++;
 		}
+  }
+  else
+  {
+    send_to_char("Valid options are: all/breed/auspice/tribe/list/learn\n\r", ch);
+    return;
   }
 
     page_to_char(buf_string(buffer), ch);

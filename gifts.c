@@ -936,8 +936,37 @@ void spell_gift_eyesofthecat( int sn, int level, CHAR_DATA *ch, void *vo, int ta
 //Roll: Charisma + Empathy (diff 8)
 //This gift allows mental communication even over vast distances. (This power is made useless by tells. Will find something to replace it.)
 //Cost: 1 Willpower
-void spell_gift_mentalspeech( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_mentalspeech( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  AFFECT_DATA af;
+  int success;
+
+  if (is_affected(ch, gsn_gift_mentalspeech))
+  {
+    send_to_char("You drop the mental coordination with your current group.\n\r", ch);
     return;
+  }
+
+  if (ch->cswillpower < 1)
+  {
+    send_to_char("You do not have enough Willpower to enact a group coordination.\n\r", ch);
+    return;
+  }
+
+  ch->cswillpower--;
+  success = godice(get_attribute(ch, CHARISMA)+get_ability(ch, CSABIL_EMPATHY), 8);
+
+  if (success < 0)
+  {
+    return;
+  }
+
+  if (success == 0)
+  {
+    return;
+  }
+
+  return;
 }
 //
 //Rank 4

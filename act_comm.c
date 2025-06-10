@@ -2370,19 +2370,23 @@ void do_group( CHAR_DATA *ch, char *argument )
 
     if ( is_same_group( victim, ch ) && ch != victim )
     {
-    victim->leader = NULL;
-    act_new("$n removes $N from $s group.",
-        ch,NULL,victim,TO_NOTVICT,POS_DEAD, FALSE);
-    act_new("$n removes you from $s group.",
-        ch,NULL,victim,TO_VICT,POS_DEAD, FALSE);
-    act_new("You remove $N from your group.",
-        ch,NULL,victim,TO_CHAR,POS_DEAD, FALSE);
-    if (!str_cmp(arg2, "abandon"))
-    {
-        act_new("You abandon $N entirely.", ch, NULL, victim, TO_CHAR, POS_DEAD, FALSE);
-        victim->master = NULL;
-    }
-    return;
+        victim->leader = NULL;
+        act_new("$n removes $N from $s group.", ch,NULL,victim,TO_NOTVICT,POS_DEAD, FALSE);
+        act_new("$n removes you from $s group.", ch,NULL,victim,TO_VICT,POS_DEAD, FALSE);
+        act_new("You remove $N from your group.", ch,NULL,victim,TO_CHAR,POS_DEAD, FALSE);
+
+        if (!str_cmp(arg2, "abandon"))
+        {
+            act_new("You abandon $N entirely.", ch, NULL, victim, TO_CHAR, POS_DEAD, FALSE);
+            victim->master = NULL;
+        }
+
+        if (is_affected(victim, gsn_gift_mentalspeech))
+        {
+            send_to_char("You lose the mental communication with your former group.\n\r", victim);
+            affect_strip(victim, gsn_gift_mentalspeech);
+        }
+        return;
     }
 
     for ( groupie = char_list; groupie != NULL; groupie = groupie->next )

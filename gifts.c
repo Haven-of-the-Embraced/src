@@ -939,6 +939,7 @@ void spell_gift_eyesofthecat( int sn, int level, CHAR_DATA *ch, void *vo, int ta
 void spell_gift_mentalspeech( int sn, int level, CHAR_DATA *ch, void *vo, int target)
 {
   AFFECT_DATA af;
+  CHAR_DATA *groupmate, *group_next;
   int success;
 
   if (is_affected(ch, gsn_gift_mentalspeech))
@@ -987,6 +988,29 @@ void spell_gift_mentalspeech( int sn, int level, CHAR_DATA *ch, void *vo, int ta
     send_to_char("Bird spirits are refusing to carry your mental communications.\n\r", ch);
     WAIT_STATE(ch, 6);
     return;
+  }
+
+  for ( groupmate = char_list; groupmate != NULL; groupmate = group_next )
+  {
+    group_next = groupmate->next;
+    if(!IS_NPC(groupmate) || groupmate->in_room == NULL )
+      continue;
+
+    if ( SAME_UMBRA(ch, groupmate) && is_same_group(ch, groupmate))
+    {
+      af.where     = TO_AFFECTS;
+      af.type      = gsn_gift_mentalspeech;
+      af.level     = success;
+      af.duration  = success * 10 + 20;
+      af.modifier  = ch->level * 2 + 20;
+      af.location  = APPLY_HITROLL;
+      af.bitvector = 0;
+      affect_to_char( ch, &af );
+      af.bitvector = APPLY_DAMROLL;
+      af.modifier  = ch->level / 2;
+      affect_to_char( ch, &af );
+    }
+    continue;
   }
 
   return;

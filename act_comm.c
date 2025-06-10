@@ -2067,6 +2067,13 @@ void stop_follower( CHAR_DATA *ch )
     act( "$n stops following you.",     ch, NULL, ch->master, TO_VICT    );
         act( "You stop following $N.",      ch, NULL, ch->master, TO_CHAR    );
     }
+
+    if (is_affected(ch, gsn_gift_mentalspeech))
+    {
+        send_to_char("You lose the mental communication with your former group.\n\r", ch);
+        affect_strip(ch, gsn_gift_mentalspeech);
+    }
+
     if (ch->master->pet == ch)
     ch->master->pet = NULL;
 

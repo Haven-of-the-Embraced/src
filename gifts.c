@@ -950,6 +950,17 @@ void spell_gift_mentalspeech( int sn, int level, CHAR_DATA *ch, void *vo, int ta
       return;
     }
     send_to_char("You drop the mental coordination with your current group.\n\r", ch);
+    for ( groupmate = char_list; groupmate != NULL; groupmate = group_next )
+    {
+      group_next = groupmate->next;
+      if(!IS_NPC(groupmate) || groupmate->in_room == NULL )
+        continue;
+
+      if ( SAME_UMBRA(ch, groupmate) && is_same_group(ch, groupmate))
+        affect_strip(groupmate, gsn_gift_mentalspeech);
+
+      continue;
+    }
     return;
   }
 

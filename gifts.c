@@ -943,6 +943,11 @@ void spell_gift_mentalspeech( int sn, int level, CHAR_DATA *ch, void *vo, int ta
 
   if (is_affected(ch, gsn_gift_mentalspeech))
   {
+    if (get_affect_level(ch, gsn_gift_mentalspeech) == -1)
+    {
+      send_to_char("The constant chirping in the background makes it hard to focus.\n\r", ch);
+      return;
+    }
     send_to_char("You drop the mental coordination with your current group.\n\r", ch);
     return;
   }
@@ -958,11 +963,29 @@ void spell_gift_mentalspeech( int sn, int level, CHAR_DATA *ch, void *vo, int ta
 
   if (success < 0)
   {
+    send_to_char("Bird spirits assault you with a cacaphony of sounds in the background.\n\r", ch);
+    if (!is_affected(ch, gsn_deafened))
+    {
+      af.where     = TO_AFFECTS;
+      af.type      = gsn_gift_mentalspeech;
+      af.level     = -1;
+      af.duration  = 1;
+      af.modifier  = -ch->level;
+      af.location  = APPLY_HITROLL;
+      af.bitvector = 0;
+      affect_to_char( ch, &af );
+      af.bitvector = APPLY_DAMROLL;
+      af.modifier  = -ch->level / 2;
+      affect_to_char( ch, &af );
+    }
+    WAIT_STATE(ch, 3);
     return;
   }
 
   if (success == 0)
   {
+    send_to_char("Bird spirits are refusing to carry your mental communications.\n\r", ch);
+    WAIT_STATE(ch, 6);
     return;
   }
 

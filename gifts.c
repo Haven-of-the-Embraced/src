@@ -959,6 +959,9 @@ void spell_gift_mentalspeech( int sn, int level, CHAR_DATA *ch, void *vo, int ta
       if ( SAME_UMBRA(ch, groupmate) && is_same_group(ch, groupmate))
         affect_strip(groupmate, gsn_gift_mentalspeech);
 
+      if (groupmate != ch)
+        send_to_char("The mental coordination with the group has been cut off.\n\r", ch);
+
       continue;
     }
     return;

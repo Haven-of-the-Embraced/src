@@ -1838,8 +1838,42 @@ void spell_gift_senseofprey( int sn, int level, CHAR_DATA *ch, void *vo, int tar
 //lune
 //cost: 1 gnosis
 //The garou has the ability to open a moon bridge with or without the permission of the totem of the Caern. (Allows the garou to create a permenant bridge between Caerns. Will have to re-code caerns.)
-void spell_gift_openmoonbridge( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_openmoonbridge( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  if (ch->pcdata->gnosis[TEMP] < 0)
+  {
+    send_to_char("You do not have enough Gnosis to activate this Gift.\n\r", ch);
     return;
+  }
+
+  ch->pcdata->gnosis[TEMP]--;
+
+  act( "You feel the power of Gaia enter you from $p.", ch, caern, NULL, TO_CHAR );
+  act( "A Moon Gate opens before you and you step within.", ch, NULL, NULL, TO_CHAR );
+  act( "$n steps within a shimmering moongate.", ch, NULL, NULL, TO_ROOM );
+  old_room = ch->in_room;
+  location = get_room_index(caern->pIndexData->vnum);
+  char_from_room(ch);
+  char_to_room(ch, location);
+  act( "$n materializes on the Moon Bridge.", ch, NULL, NULL, TO_ROOM );
+  do_function(ch, &do_look, "auto");
+
+  for ( garou = old_room->people; garou != NULL; garou = garou_next )
+  {
+    garou_next = garou->next_in_room;
+    if(garou->race == race_lookup("garou") || is_same_group(ch, garou))
+    {
+      act( "You feel the power of Gaia enter you from $p.", garou, caern, NULL, TO_CHAR );
+      act( "A Moon Gate opens before you and you step within.", garou, NULL, NULL, TO_CHAR );
+      act( "$n steps within a shimmering moongate.", garou, NULL, NULL, TO_ROOM );
+      location = get_room_index(caern->pIndexData->vnum);
+      char_from_room(garou);
+      char_to_room(garou, location);
+      act( "$n materializes on the Moon Bridge.", garou, NULL, NULL, TO_ROOM );
+      do_function(garou, &do_look, "auto");
+    }
+  }
+  return;
 }
 //
 //“Reynards Lie”

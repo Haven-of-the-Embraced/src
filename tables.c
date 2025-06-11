@@ -1383,7 +1383,7 @@ const struct    gift_type   gift_table  [MAX_GIFTS_CODED]  =
     {   "curse of hatred", 				1,     24, 0,     METIS,  0,          0,        2,   0},
     {   "sense silver", 				1,     24, 0,     METIS,  0,          0,        2,   0},
     {   "eyes of the cat", 				1,     24, 0,     METIS,  0,          0,        3,   0},
-    {   "mental speech", 				0,     24, 0,     METIS,  0,          0,        3,   0},
+    {   "mental speech", 				1,     24, 0,     METIS,  0,          0,        3,   0},
     {   "wither limb", 					1,     24, 0,     METIS,  0,          0,        4,   0},
     {   "madness", 						0,     24, 0,     METIS,  0,          0,        5,   0},
     {   "totem gift", 					0,     24, 0,     METIS,  0,          0,        5,   0},

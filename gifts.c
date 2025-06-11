@@ -953,7 +953,7 @@ void spell_gift_mentalspeech( int sn, int level, CHAR_DATA *ch, void *vo, int ta
     for ( groupmate = char_list; groupmate != NULL; groupmate = group_next )
     {
       group_next = groupmate->next;
-      if(!IS_NPC(groupmate) || groupmate->in_room == NULL )
+      if(IS_NPC(groupmate) || groupmate->in_room == NULL )
         continue;
 
       if ( SAME_UMBRA(ch, groupmate) && is_same_group(ch, groupmate))
@@ -986,7 +986,7 @@ void spell_gift_mentalspeech( int sn, int level, CHAR_DATA *ch, void *vo, int ta
       af.location  = APPLY_HITROLL;
       af.bitvector = 0;
       affect_to_char( ch, &af );
-      af.bitvector = APPLY_DAMROLL;
+      af.location  = APPLY_DAMROLL;
       af.modifier  = -ch->level / 2;
       affect_to_char( ch, &af );
     }
@@ -1004,22 +1004,23 @@ void spell_gift_mentalspeech( int sn, int level, CHAR_DATA *ch, void *vo, int ta
   for ( groupmate = char_list; groupmate != NULL; groupmate = group_next )
   {
     group_next = groupmate->next;
-    if(!IS_NPC(groupmate) || groupmate->in_room == NULL )
+    if(IS_NPC(groupmate) || groupmate->in_room == NULL )
       continue;
 
     if ( SAME_UMBRA(ch, groupmate) && is_same_group(ch, groupmate))
     {
+      send_to_char("Bird spirits relay information mentally for your whole group, allowing better coordination.\n\r", groupmate);
       af.where     = TO_AFFECTS;
       af.type      = gsn_gift_mentalspeech;
       af.level     = success;
       af.duration  = success * 10 + 20;
-      af.modifier  = ch->level * 2 + 20;
+      af.modifier  = (ch->level  + success * 2);
       af.location  = APPLY_HITROLL;
       af.bitvector = 0;
-      affect_to_char( ch, &af );
-      af.bitvector = APPLY_DAMROLL;
+      affect_to_char( groupmate, &af );
+      af.location = APPLY_DAMROLL;
       af.modifier  = ch->level / 2;
-      affect_to_char( ch, &af );
+      affect_to_char( groupmate, &af );
     }
     continue;
   }

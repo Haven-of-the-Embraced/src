@@ -2438,7 +2438,7 @@ Total (3) */
 
     { "mental speech", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_mentalspeech,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_mentalspeech,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+    &gsn_gift_mentalspeech,          SLOT( 0),        0,     12, "",             "Bird spirits no longer relay information to your ear.",        "" },
 
     { "gift of the porcupine",        { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_porcupine,             TAR_CHAR_SELF,             POS_STANDING,

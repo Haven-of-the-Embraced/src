@@ -1840,6 +1840,21 @@ void spell_gift_senseofprey( int sn, int level, CHAR_DATA *ch, void *vo, int tar
 //The garou has the ability to open a moon bridge with or without the permission of the totem of the Caern. (Allows the garou to create a permenant bridge between Caerns. Will have to re-code caerns.)
 void spell_gift_openmoonbridge( int sn, int level, CHAR_DATA *ch, void *vo, int target)
 {
+  OBJ_DATA *caern;
+  ROOM_INDEX_DATA *location, *old_room;
+
+    if ( ( caern = get_obj_here( ch, NULL,  "caern" ) ) == NULL )
+    {
+      send_to_char( "This Gift must be activated in the presence of a Caern.\n\r", ch );
+      return;
+    }
+
+    if (IS_AFFECTED2(ch, AFF2_UMBRA))
+    {
+        send_to_char("You must be in the physical realm to use this Gift.\n\r", ch);
+        return;
+    }
+
   if (ch->pcdata->gnosis[TEMP] < 0)
   {
     send_to_char("You do not have enough Gnosis to activate this Gift.\n\r", ch);

@@ -1840,6 +1840,7 @@ void spell_gift_senseofprey( int sn, int level, CHAR_DATA *ch, void *vo, int tar
 //The garou has the ability to open a moon bridge with or without the permission of the totem of the Caern. (Allows the garou to create a permenant bridge between Caerns. Will have to re-code caerns.)
 void spell_gift_openmoonbridge( int sn, int level, CHAR_DATA *ch, void *vo, int target)
 {
+  CHAR_DATA *garou, *garou_next;
   OBJ_DATA *caern;
   ROOM_INDEX_DATA *location, *old_room;
 
@@ -1851,8 +1852,8 @@ void spell_gift_openmoonbridge( int sn, int level, CHAR_DATA *ch, void *vo, int 
 
     if (IS_AFFECTED2(ch, AFF2_UMBRA))
     {
-        send_to_char("You must be in the physical realm to use this Gift.\n\r", ch);
-        return;
+      send_to_char("You must be in the physical realm to use this Gift.\n\r", ch);
+      return;
     }
 
   if (ch->pcdata->gnosis[TEMP] < 0)
@@ -1876,7 +1877,7 @@ void spell_gift_openmoonbridge( int sn, int level, CHAR_DATA *ch, void *vo, int 
   for ( garou = old_room->people; garou != NULL; garou = garou_next )
   {
     garou_next = garou->next_in_room;
-    if(garou->race == race_lookup("garou") || is_same_group(ch, garou))
+    if((garou->race == race_lookup("garou") || is_same_group(ch, garou)) && !IS_NPC(garou))
     {
       act( "You feel the power of Gaia enter you from $p.", garou, caern, NULL, TO_CHAR );
       act( "A Moon Gate opens before you and you step within.", garou, NULL, NULL, TO_CHAR );

@@ -4403,7 +4403,7 @@ void do_rite( CHAR_DATA *ch, char *argument )
         {
             garou_next = garou->next_in_room;
 
-            if(garou->race == race_lookup("garou") || is_same_group(ch, garou))
+            if((garou->race == race_lookup("garou") || is_same_group(ch, garou)) && !IS_NPC(garou))
             {
                 act( "You feel the power of Gaia enter you from $p.", garou, caern, NULL, TO_CHAR );
                 act( "A Moon Gate opens before you and you step within.", garou, NULL, NULL, TO_CHAR );

@@ -2534,7 +2534,7 @@ Total (3) */
 
     { "reynards lie", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_reynardslie,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_reynardslie,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+    &gsn_gift_reynardslie,          SLOT( 0),        0,     12, "",             "Fox-spirits no longer speak in your ear.",        "" },
 
     { "lepers curse", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_leperscurse,  TAR_IGNORE, POS_STANDING,

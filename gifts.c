@@ -2538,8 +2538,37 @@ void spell_gift_scentofthetrueform( int sn, int level, CHAR_DATA *ch, void *vo, 
 //gaffling of falcon
 //int + empathy diff subjects man + subterfuge
 //reveals which words are true and which are false
-void spell_gift_truthofgaia( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_truthofgaia( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  AFFECT_DATA af;
+  int success;
+
+  if (is_affected(ch, gsn_gift_truthofgaia))
+  {
+    send_to_char("You already know when someone is lying or being truthful.\n\r", ch);
     return;
+  }
+
+  if (ch->move < ch->level)
+  {
+    send_to_char("You are too tired to enact this Gift.\n\r", ch);
+    return;
+  }
+
+  ch->move -= ch->level;
+  success = godice(get_attribute(ch, CSATTRIB_INTELLIGENCE) + get_ability(ch, CSABIL_EMPATHY), 6);
+
+  if (success < 0)
+  {
+    return;
+  }
+
+  if (success == 0)
+  {
+    return;
+  }
+
+  return;
 }
 
 //

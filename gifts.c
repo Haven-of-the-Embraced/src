@@ -1903,9 +1903,13 @@ void spell_gift_reynardslie( int sn, int level, CHAR_DATA *ch, void *vo, int tar
 
   if (is_affected(ch, sn))
   {
-    sendch("Fox spirits already assist you in passing off lies as the solumn truth.\n\r", ch);
+    if (get_affect_level(ch, sn) == -1)
+      send_to_char("A skulk of fox-spirits keeps yipping in your ear.\n\r", ch);
+    else
+      sendch("Fox spirits already assist you in passing off lies as the solumn truth.\n\r", ch);
     return;
   }
+
   if (ch->move < ch->level * 2)
   {
     send_to_char("You are too tired to activate this gift.\n\r", ch);
@@ -1914,8 +1918,27 @@ void spell_gift_reynardslie( int sn, int level, CHAR_DATA *ch, void *vo, int tar
 
   success = godice(get_attribute(ch, CSATTRIB_WITS) + get_ability(ch, CSABIL_SUBTERFUGE), 6);
   ch->move-= ch->level * 2;
+  WAIT_STATE(ch, 6);
 
+  if (success < 0)
+  {
+    send_to_char("Fox-spirits yip in your ear, displeased at your call.\n\r", ch);
+    af.where     = TO_AFFECTS;
+    af.type      = sn;
+    af.level     = -1;
+    af.modifier  = -1;
+    af.location  = APPLY_CS_CHA;
+    af.bitvector = 0;
+    af.duration  = 2;
+    affect_to_char( ch, &af );
+    return;
+  }
 
+  if (success == 0)
+  {
+    send_to_char("You reach out for fox-spirits to aid you, but they stay nestled in their dens.\n\r", ch);
+    return;
+  }
 
   af.where     = TO_AFFECTS;
   af.type      = sn;
@@ -1926,10 +1949,9 @@ void spell_gift_reynardslie( int sn, int level, CHAR_DATA *ch, void *vo, int tar
     af.modifier  = 2;
   af.location  = APPLY_CS_CHA;
   af.bitvector = 0;
-  af.duration  = 50 + (success * 5);
+  af.duration  = 25 + (success * 5);
   affect_to_char( ch, &af );
-  send_to_char( "You feel light and sure-footed, as if you could pass any terrain with ease.\n\r", ch );
-  act("$n seems lighter and more sure-footed.",ch,NULL,ch,TO_NOTVICT);
+  send_to_char( "Your request has been granted, and you feel as sly as a fox.\n\r", ch );
     return;
 }
 //

@@ -1896,7 +1896,40 @@ void spell_gift_openmoonbridge( int sn, int level, CHAR_DATA *ch, void *vo, int 
 //fox spirit
 //wits + subterfuge (wits+subterfuge)
 //The garou can pass off a lie, no matter how ridiculous, as credible fact and utter truth. For a short while. (No idea. Find something else.)
-void spell_gift_reynardslie( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_reynardslie( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  AFFECT_DATA af;
+  int success;
+
+  if (is_affected(ch, sn))
+  {
+    sendch("Fox spirits already assist you in passing off lies as the solumn truth.\n\r", ch);
+    return;
+  }
+  if (ch->move < ch->level * 2)
+  {
+    send_to_char("You are too tired to activate this gift.\n\r", ch);
+    return;
+  }
+
+  success = godice(get_attribute(ch, CSATTRIB_WITS) + get_ability(ch, CSABIL_SUBTERFUGE), 6);
+  ch->move-= ch->level * 2;
+
+
+
+  af.where     = TO_AFFECTS;
+  af.type      = sn;
+  af.level     = ch->level;
+  if (success > 3)
+    af.modifier  = 3;
+  else
+    af.modifier  = 2;
+  af.location  = APPLY_CS_CHA;
+  af.bitvector = 0;
+  af.duration  = 50 + (success * 5);
+  affect_to_char( ch, &af );
+  send_to_char( "You feel light and sure-footed, as if you could pass any terrain with ease.\n\r", ch );
+  act("$n seems lighter and more sure-footed.",ch,NULL,ch,TO_NOTVICT);
     return;
 }
 //

@@ -2591,8 +2591,83 @@ void spell_gift_truthofgaia( int sn, int level, CHAR_DATA *ch, void *vo, int tar
 //char + leadership diff spirit’s wp
 //summon any spirit to you and command it to do one thing
 //
-void spell_gift_callofduty( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
+void spell_gift_callofduty( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+    if(ch->pet != NULL)
+    {
+        send_to_char( "You cannot control two creatures at once!\n\r",ch );
+        return;
+    }
+
+    if ( (pMobIndex = get_mob_index(MOB_VNUM_MORTIS_SPIRIT)) == NULL )
+    {
+        send_to_char( "Error: please infrorm the Coders!\n\r", ch );
+        return;
+    }
+
+    if (ch->pcdata->gnosis[TEMP] < 2)
+    {
+      send_to_char("You do not have enough Gnosis to call for a Spirit.\n\r", ch);
+      return;
+    }
+
+
+    ch->pcdata->gnosis[TEMP]-= 2;
+    act( "Concentrating, you call out across the Gauntlet and into the Penumbra.", ch, NULL, mob, TO_CHAR );
+    success = godice(get_attribute(ch, CSATTRIB_CHARISMA) + get_ability(ch, CSABIL_LEADERSHIP), 6);
+    mob = create_mobile( pMobIndex );
+
+    if (success < 0)
+    {
+      char_to_room( mob, ch->in_room );
+      mob->level  = ch->level;
+      mob->max_hit = ch->max_hit / 4;
+      mob->hitroll = ch->hitroll;
+      mob->damroll = ch->damroll;
+      mob->hit = mob->max_hit;
+      mob->short_descr = str_dup("a ravenous spectre");
+      mob->long_descr = str_dup("Lured from the depths of the Tempest, a shadowy spectre lunges for its prey.\n\r");
+      mob->name = str_dup("ravenous spectre");
+
+      act("A shadowy form rips through the Gauntlet and into existence, and it turns immediately upon you!", ch, NULL, NULL, TO_CHAR);
+      act("Seemingly out of nowhere, a shadowy figure emerges and immediately attacks $n!", ch, NULL, NULL, TO_NOTVICT);
+      act("Shrieking, $N says, '{DYour soul will be a feast for Oblivion!{x'", ch, NULL, mob, TO_ROOM);
+      multi_hit( mob, ch, TYPE_UNDEFINED );
+      return;
+    }
+
+    if (success == 0)
+    {
+      act("Your call seems to have gone unanswered, as nothing responds from across the Gauntlet.", ch, NULL, NULL, TO_CHAR);
+      WAIT_STATE(ch, 9);
+      return;
+    }
+
+    char_to_room( mob, ch->in_room );
+
+    act( "A disruption in the Gauntlet appears before you, and $N tears through into this reality.", ch, NULL, mob, TO_CHAR );
+    act( "With eyes seemingly boring into your soul, $E rasps, '{WI have answered, what is thy bidding?{x'", ch, NULL, mob, TO_CHAR);
+    act( "With a look of anguish and pain, $N materializes before your very eyes!", ch, NULL, mob, TO_NOTVICT );
+    act( "In a raspy voice, $E looks at $n and says, '{WI have answered, what is they bidding?{x'", ch, NULL, mob, TO_NOTVICT);
+
+    add_follower( mob, ch );
+    mob->leader = ch;
+    mob->level  = ch->level;
+    ch->pet = mob;
+    mob->max_hit = ch->max_hit / 2;
+    mob->hitroll = ch->hitroll;
+    mob->damroll = ch->damroll * 2 / 3;
+    mob->hit = mob->max_hit;
+
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_charm_person;
+    af.level     = (ch->level + ch->sphere[SPHERE_SPIRIT]);
+    af.duration  = 15 + (8 * success);
+    af.location  = 0;
+    af.modifier  = 0;
+    af.bitvector = AFF_CHARM;
+    affect_to_char( mob, &af );
+  return;
 }
 //“Strength of Purpose”
 //wolf spirit

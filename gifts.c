@@ -2560,14 +2560,26 @@ void spell_gift_truthofgaia( int sn, int level, CHAR_DATA *ch, void *vo, int tar
 
   if (success < 0)
   {
+    send_to_char("You come to the realization that everyone is lying to you.\n\r", ch);
+    WAIT_STATE(ch, 3);
     return;
   }
 
   if (success == 0)
   {
+    send_to_char("The spirits refuse your call.\n\r", ch);
     return;
   }
 
+  send_to_char("Blessed by the spirits, you can tell truth from lies.\n\r", ch);
+  af.where        = TO_AFFECTS;
+  af.type         = gsn_gift_truthofgaia;
+  af.level        = success;
+  af.duration     = success * 5;
+  af.modifier     = 0;
+  af.location     = APPLY_NONE;
+  af.bitvector    = 0;
+  affect_to_char(ch, &af);
   return;
 }
 

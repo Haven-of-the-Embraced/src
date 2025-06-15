@@ -2608,9 +2608,9 @@ Total (3) */
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_truthofgaia,  TAR_IGNORE, POS_STANDING,
     &gsn_gift_truthofgaia,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
-    { "call of duty", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_callofduty,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_callofduty,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+    { "call to duty", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_calltoduty,  TAR_IGNORE, POS_STANDING,
+    &gsn_gift_calltoduty,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     { "strength of purpose", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_strengthofpurpose,  TAR_IGNORE, POS_STANDING,

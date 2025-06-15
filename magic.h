@@ -216,7 +216,7 @@ DECLARE_SPELL_FUN(spell_gift_nightmarepossession);
 DECLARE_SPELL_FUN(spell_gift_malleablespirit);
 DECLARE_SPELL_FUN(spell_gift_scentofthetrueform);
 DECLARE_SPELL_FUN(spell_gift_truthofgaia);
-DECLARE_SPELL_FUN(spell_gift_callofduty);
+DECLARE_SPELL_FUN(spell_gift_calltoduty);
 DECLARE_SPELL_FUN(spell_gift_strengthofpurpose);
 DECLARE_SPELL_FUN(spell_gift_spiritwitness);
 DECLARE_SPELL_FUN(spell_gift_warriorseye);

@@ -3937,7 +3937,7 @@ extern sh_int  gsn_gift_nightmarepossession;
 extern sh_int  gsn_gift_malleablespirit;
 extern sh_int  gsn_gift_scentofthetrueform;
 extern sh_int  gsn_gift_truthofgaia;
-extern sh_int  gsn_gift_callofduty;
+extern sh_int  gsn_gift_calltoduty;
 extern sh_int  gsn_gift_strengthofpurpose;
 extern sh_int  gsn_gift_spiritwitness;
 extern sh_int  gsn_gift_warriorseye;

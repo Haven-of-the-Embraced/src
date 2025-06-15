@@ -5138,7 +5138,7 @@ sh_int  gsn_gift_nightmarepossession;
 sh_int  gsn_gift_malleablespirit;
 sh_int  gsn_gift_scentofthetrueform;
 sh_int  gsn_gift_truthofgaia;
-sh_int  gsn_gift_callofduty;
+sh_int  gsn_gift_calltoduty;
 sh_int  gsn_gift_strengthofpurpose;
 sh_int  gsn_gift_spiritwitness;
 sh_int  gsn_gift_warriorseye;

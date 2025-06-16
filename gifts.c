@@ -3486,8 +3486,32 @@ void spell_gift_razorclaws( int sn, int level, CHAR_DATA *ch, void *vo, int targ
 //no roll
 //player adds 10 to all initiative rolls, cannot spend rage for extra actions when this is activated
 //
-void spell_gift_spiritofthefray( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_spiritofthefray( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  AFFECT_DATA af;
+
+  if (is_affected(ch, gsn_gift_spiritofthefray))
+  {
+    send_to_char("Cat-spirits already lend you their dexterity.\n\r", ch);
     return;
+  }
+  if (ch->pcdata->gnosis[TEMP] < 1)
+  {
+    send_to_char("You do not have the spiritual reserves to activate this gift.\n\r", ch);
+    return;
+  }
+
+  ch->pcdata->gnosis[TEMP]--;
+  send_to_char("With the help of feline spirits, you gain the advantage at the start of combat.\n\r", ch);
+  af.where      = TO_AFFECTS;
+  af.type       = gsn_gift_spiritofthefray;
+  af.level      = successes;
+  af.duration  = (successes * 10) + 25;
+  af.location  = 0;
+  af.modifier  = 0;
+  af.bitvector = 0;
+  affect_to_char( ch, &af );
+  return;
 }
 
 //“True Fear”

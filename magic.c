@@ -985,7 +985,8 @@ void spell_call_lightning( int sn, int level,CHAR_DATA *ch,void *vo,int target)
             continue;
         if ( vch->in_room == ch->in_room && SAME_UMBRA(ch, vch))
         {
-            if ( vch != ch && !is_same_group(vch, ch) && ( IS_NPC(ch) ? !IS_NPC(vch) : IS_NPC(vch) ))
+            if ( vch != ch && !is_affected(vch, gsn_earthmeld) && !is_same_group(vch, ch) 
+                && ( IS_NPC(ch) ? !IS_NPC(vch) : IS_NPC(vch) ))
             {
                 d10_damage( ch, vch, dam, ch->level / 2, gsn_call_lightning, DAM_LIGHTNING, DEFENSE_NONE, TRUE, TRUE);
                 continue;

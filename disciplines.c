@@ -496,7 +496,7 @@ void do_beckoning(CHAR_DATA *ch, char *argument)
     }
     if ( (pMobIndex = get_mob_index(MOB_VNUM_HORDE_RATS)) == NULL )
     {
-        send_to_char( "Error: please inform the Coders!\n\r", ch );
+        send_to_char( "{RError: {WInvalid Mob vnum, please inform the Coders!{x\n\r", ch );
         return;
     }
 
@@ -2220,7 +2220,7 @@ void do_chimaera(CHAR_DATA *ch, char *argument)
 
     if ( (pMobIndex = get_mob_index(MOB_VNUM_DOPPLEGANGER)) == NULL )
     {
-        send_to_char( "{RError: {Wplease inform the Coders!{x\n\r", ch );
+        send_to_char( "{RError: {WInvalid Mob vnum, please inform the Coders!{x\n\r", ch );
         return;
     }
 
@@ -4134,7 +4134,7 @@ void do_homunculusservant(CHAR_DATA *ch, char *argument)
     }
     if ( (pMobIndex = get_mob_index(MOB_VNUM_HOMUNCULUS)) == NULL )
     {
-        send_to_char( "{RError: {Wplease inform the Coders!{x\n\r", ch );
+        send_to_char( "{RError: {WInvalid Mob vnum, please inform the Coders!{x\n\r", ch );
         return;
     }
 
@@ -4315,7 +4315,7 @@ void do_animatedead(CHAR_DATA *ch, char *argument)
     }
     if ( (pMobIndex = get_mob_index(MOB_VNUM_MORTIS_ZOMBIE)) == NULL )
     {
-        send_to_char( "{RError: {Wplease inform the Coders!{x\n\r", ch );
+        send_to_char( "{RError: {WInvalid Mob vnum, please inform the Coders!{x\n\r", ch );
         return;
     }
     WAIT_STATE(ch, 48);
@@ -4420,7 +4420,7 @@ void do_callathanatos(CHAR_DATA *ch, char *argument)
     }
     if ( (pMobIndex = get_mob_index(MOB_VNUM_ATHANATOS)) == NULL )
     {
-        send_to_char( "{RError: {Wplease inform the Coders!{x\n\r", ch );
+        send_to_char( "{RError: {WInvalid Mob vnum, please inform the Coders!{x\n\r", ch );
         return;
     }
     WAIT_STATE(ch, 48);
@@ -4641,7 +4641,7 @@ void do_musterthecorpsearmy(CHAR_DATA *ch, char *argument)
     }
     if ( (pMobIndex = get_mob_index(MOB_VNUM_ATHANATOS)) == NULL )
     {
-        send_to_char( "{RError: {Wplease inform the Coders!{x\n\r", ch );
+        send_to_char( "{RError: {WInvalid Mob vnum, please inform the Coders!{x\n\r", ch );
         return;
     }
     WAIT_STATE(ch, 48);
@@ -5452,7 +5452,7 @@ void do_nightshades(CHAR_DATA *ch, char *argument)
     }
     if ( (pMobIndex = get_mob_index(MOB_VNUM_OBTEN_SERVANT)) == NULL )
     {
-        send_to_char( "Error: please inform the Coders!\n\r", ch );
+        send_to_char( "{RError: {WInvalid Mob vnum, please inform the Coders!{x\n\r", ch );
         return;
     }
     if(!is_affected(ch,gsn_shadowform)) ch->pblood -= 15;

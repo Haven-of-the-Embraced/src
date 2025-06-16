@@ -7101,7 +7101,7 @@ void do_allies(CHAR_DATA *ch, char *argument)
     }
     if ( (pMobIndex = get_mob_index(MOB_VNUM_ALLIES)) == NULL )
     {
-        send_to_char( "Error: please infrorm the Coders!\n\r", ch );
+        send_to_char( "{RError: {WInvalid Mob vnum, please inform the Coders!{x\n\r", ch );
         return;
     }
 

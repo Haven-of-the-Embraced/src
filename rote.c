@@ -2674,7 +2674,7 @@ void rote_callspirit(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *ob
     }
     if ( (pMobIndex = get_mob_index(MOB_VNUM_MORTIS_SPIRIT)) == NULL )
     {
-        send_to_char( "Error: please inform the Coders!\n\r", ch );
+        send_to_char( "{RError: {WInvalid Mob vnum, please inform the Coders!{x\n\r", ch );
         return;
     }
 

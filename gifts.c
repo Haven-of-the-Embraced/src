@@ -3489,6 +3489,7 @@ void spell_gift_razorclaws( int sn, int level, CHAR_DATA *ch, void *vo, int targ
 void spell_gift_spiritofthefray( int sn, int level, CHAR_DATA *ch, void *vo, int target)
 {
   AFFECT_DATA af;
+  int success;
 
   if (is_affected(ch, gsn_gift_spiritofthefray))
   {
@@ -3505,8 +3506,8 @@ void spell_gift_spiritofthefray( int sn, int level, CHAR_DATA *ch, void *vo, int
   send_to_char("With the help of feline spirits, you gain the advantage at the start of combat.\n\r", ch);
   af.where      = TO_AFFECTS;
   af.type       = gsn_gift_spiritofthefray;
-  af.level      = successes;
-  af.duration  = (successes * 10) + 25;
+  af.level      = success;
+  af.duration  = (success * 10) + 25;
   af.location  = 0;
   af.modifier  = 0;
   af.bitvector = 0;

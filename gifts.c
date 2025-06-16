@@ -2606,7 +2606,7 @@ void spell_gift_calltoduty( int sn, int level, CHAR_DATA *ch, void *vo, int targ
 
     if ( (pMobIndex = get_mob_index(MOB_VNUM_MORTIS_SPIRIT)) == NULL )
     {
-        send_to_char( "Error: please infrorm the Coders!\n\r", ch );
+        send_to_char( "Error: please inform the Coders!\n\r", ch );
         return;
     }
 

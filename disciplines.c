@@ -5452,7 +5452,7 @@ void do_nightshades(CHAR_DATA *ch, char *argument)
     }
     if ( (pMobIndex = get_mob_index(MOB_VNUM_OBTEN_SERVANT)) == NULL )
     {
-        send_to_char( "Error: please infrorm the Coders!\n\r", ch );
+        send_to_char( "Error: please inform the Coders!\n\r", ch );
         return;
     }
     if(!is_affected(ch,gsn_shadowform)) ch->pblood -= 15;

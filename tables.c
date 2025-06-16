@@ -1439,7 +1439,7 @@ const struct    gift_type   gift_table  [MAX_GIFTS_CODED]  =
     {   "call for vengeance", 			0,     24, 0,     0,      GALLIARD,   0,        5,   0},
     {   "falling touch", 				1,     24, 0,     0,      AHROUN,     0,        1,   0},
     {   "inspiration", 					1,     24, 0,     0,      AHROUN,     0,        1,   0},
-    {   "spirit of the fray", 			0,     24, 0,     0,      AHROUN,     0,        2,   0},
+    {   "spirit of the fray", 			1,     24, 0,     0,      AHROUN,     0,        2,   0},
     {   "true fear", 					0,     24, 0,     0,      AHROUN,     0,        2,   0},
     {   "heart of fury", 				0,     24, 0,     0,      AHROUN,     0,        3,   0},
     {   "full moons light", 			0,     24, 0,     0,      AHROUN,     0,        4,   0},

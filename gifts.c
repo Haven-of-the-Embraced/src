@@ -3468,7 +3468,7 @@ void spell_gift_razorclaws( int sn, int level, CHAR_DATA *ch, void *vo, int targ
     af.where      = TO_AFFECTS;
     af.type       = gsn_gift_razorclaws;
     af.level      = successes;
-    af.duration  = (successes * 3) + 15;
+    af.duration  = (successes * 10) + 25;
     af.location  = APPLY_DAMROLL;
     af.modifier  = (successes * 10) + 50;
     af.bitvector = 0;

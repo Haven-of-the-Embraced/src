@@ -4755,6 +4755,15 @@ void do_kill( CHAR_DATA *ch, char *argument )
     return;
     }
     WAIT_STATE( ch, 1 * PULSE_VIOLENCE );
+
+    if (is_affected(ch, gsn_gift_spiritofthefray))
+    {
+        if (number_range(1,2) == 2)
+        {
+            send_to_char("Feline-spirit intuition guides your attack, allowing you to strike quickly!\n\r", ch);
+            one_hit(ch, victim, TYPE_UNDEFINED);
+        }
+    }
     multi_hit( ch, victim, TYPE_UNDEFINED );
     return;
 }

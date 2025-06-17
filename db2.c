@@ -432,6 +432,8 @@ void load_objects( FILE *fp )
         pObjIndex->vnum                 = vnum;
         pObjIndex->area                 = area_last;            /* OLC */
         pObjIndex->new_format           = TRUE;
+            pObjIndex->delete           = FALSE;
+
     pObjIndex->reset_num        = 0;
     newobjs++;
         pObjIndex->name                 = fread_string( fp );

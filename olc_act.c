@@ -3647,6 +3647,36 @@ OEDIT( oedit_name )
     return TRUE;
 }
 
+OEDIT( oedit_delete )
+{
+    OBJ_INDEX_DATA *pObj;
+    char command[MAX_INPUT_LENGTH];
+
+    EDIT_OBJ(ch, pObj);
+
+    if ( argument[0] == '\0' )
+    {
+    send_to_char( "Syntax:  delete [true/false]\n\r", ch );
+    return FALSE;
+    }
+
+    argument = one_argument( argument, command );
+
+    if ( !str_cmp( command, "true" ) )
+    {
+        pObj->delete = TRUE;
+        send_to_char( "Object marked for deletion.\n\r", ch);
+        return TRUE;
+    } else if ( !str_cmp( command, "false"))
+    {
+        pObj->delete = FALSE;
+        send_to_char( "Object no longer marked for deletion.\n\r", ch);
+        return TRUE;
+    } else {
+        send_to_char( "Syntax:  delete [true/false]\n\r", ch );
+        return FALSE;
+    }
+}
 
 
 OEDIT( oedit_short )

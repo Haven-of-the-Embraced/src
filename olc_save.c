@@ -521,7 +521,7 @@ void save_objects( FILE *fp, AREA_DATA *pArea )
 
     for( i = pArea->min_vnum; i <= pArea->max_vnum; i++ )
     {
-    if ( (pObj = get_obj_index( i )) )
+    if ( (pObj = get_obj_index( i )) && pObj->delete == FALSE)
         save_object( fp, pObj );
     }
 

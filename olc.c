@@ -371,6 +371,7 @@ const struct olc_cmd_type oedit_table[] =
     {   "cost",     oedit_cost  },
     {   "create",   oedit_create    },
     {   "delaffect",    oedit_delaffect },
+    {   "delete",    oedit_delete },
     {   "ed",       oedit_ed    },
     {   "long",     oedit_long  },
     {   "name",     oedit_name  },

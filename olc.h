@@ -239,6 +239,7 @@ DECLARE_OLC_FUN( redit_delrprog		);
 DECLARE_OLC_FUN( oedit_show     );
 DECLARE_OLC_FUN( oedit_create       );
 DECLARE_OLC_FUN( oedit_name     );
+DECLARE_OLC_FUN( oedit_delete        );
 DECLARE_OLC_FUN( oedit_short        );
 DECLARE_OLC_FUN( oedit_long     );
 DECLARE_OLC_FUN( oedit_addaffect    );

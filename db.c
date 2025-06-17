@@ -895,6 +895,7 @@ void load_old_obj( FILE *fp )
     pObjIndex->vnum         = vnum;
         pObjIndex->area                 = area_last;            /* OLC */
     pObjIndex->new_format       = FALSE;
+    pObjIndex->delete           = FALSE;
     pObjIndex->reset_num        = 0;
     pObjIndex->name         = fread_string( fp );
     pObjIndex->short_descr      = fread_string( fp );

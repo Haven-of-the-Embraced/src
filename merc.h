@@ -2545,6 +2545,7 @@ struct  obj_index_data
     PROG_LIST *     oprogs;
     long        oprog_flags;
     bool        new_format;
+    bool        delete;
     char *      name;
     char *      short_descr;
     char *      description;

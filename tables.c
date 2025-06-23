@@ -1403,7 +1403,7 @@ const struct    gift_type   gift_table  [MAX_GIFTS_CODED]  =
     {   "snow running", 				1,     24, 0,     0,      RAGABASH,   0,        1,   0},
     {   "sense of prey", 				1,     24, 0,     0,      RAGABASH,   BLACK_FURY, 2,   0},
     {   "open moon bridge", 			1,     24, 0,     0,      RAGABASH,   0,        3,   0},
-    {   "reynards lie", 				0,     24, 0,     0,      RAGABASH,   0,        3,   0},
+    {   "reynards lie", 				1,     24, 0,     0,      RAGABASH,   0,        3,   0},
     {   "lepers curse", 				0,     24, 0,     0,      RAGABASH,   0,        4,   0},
     {   "lunas blessing", 				0,     24, 0,     0,      RAGABASH,   0,        4,   0},
     {   "thieving talons of the magpie",0,     24, 0,     0,      RAGABASH,   0,        5,   0},

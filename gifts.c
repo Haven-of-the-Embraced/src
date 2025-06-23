@@ -4491,7 +4491,71 @@ void spell_gift_haltthecowardsflight( int sn, int level, CHAR_DATA *ch, void *vo
 // Sense Guilt
 // perception + empathy diff 8
 // Reveals guilt of the target. No idea for codewise.
-void spell_gift_senseguilt( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_senseguilt( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+    char buf[MAX_STRING_LENGTH];
+    CHAR_DATA *victim = (CHAR_DATA *) vo;
+    int success;
+
+    if (ch->move < ch->level)
+    {
+      send_to_char("You are too tired to activate this Gift.\n\r", ch);
+      return;
+    }
+
+    ch->move -= ch->level;
+    success = godice(get_attribute(ch, CSATTRIB_PERCEPTION) + get_ability(ch, CSABIL_EMPATHY), 8);
+
+    if (success < 0)
+    {
+      send_to_char("Fenrir spirit servants refuse to help discern guilt, until you spend time reconciling your own.\n\r", ch);
+      WAIT_STATE(ch, 9);
+      return;
+    }
+
+    if (success == 0)
+    {
+      send_to_char("Fenrir servants refuse to aid you at this time.\n\r", ch);
+      return;
+    }
+
+    if (IS_NPC(ch)) return;
+    send_to_char("+========================       SENSE GUILT       =======================+\n\r", ch);
+    send_to_char("| A spirit servant of Fenrir assists in digging for your target's guilt. |\n\r", ch);
+    if (IS_NPC(victim))
+      sprintf(buf, "+====================[ %s ]====================+\n\r", center(victim->short_descr, 28, " "));
+    else
+      sprintf(buf, "+====================[ %s ]====================+\n\r", center(victim->name, 28, " "));
+    send_to_char(buf, ch);
+    sprintf(buf, "|                    [       Age: %3d year%s old     ]                    |\n\r",
+      get_age(victim), get_age(victim) == 1 ? " " : "s");
+    send_to_char(buf,ch);
+
+    if (is_affected(victim, gsn_gift_auraofconfidence))
+    {
+        send_to_char("+------------------------------------------------------------------------+\n\r", ch);
+        return;
+    }
+
+    send_to_char("+------------------------------------------------------------------------+\n\r", ch);
+    sprintf(buf, "| Immune to    : %s\n\r", imm_bit_name(victim->imm_flags));
+    send_to_char(buf,ch);
+    sprintf(buf, "| Resistant to : %s\n\r", imm_bit_name(victim->res_flags));
+    send_to_char(buf,ch);
+    sprintf(buf, "| Vulnerable to: %s\n\r", imm_bit_name(victim->vuln_flags));
+    send_to_char(buf,ch);
+
+    if(success >= 3)
+    {
+      send_to_char("+------------------------------------------------------------------------+\n\r", ch);
+      sprintf(buf, "| %6d/%6d Health     %6d/%6d Mana     %6d/%6d Movement |\n\r",
+        victim->hit,  victim->max_hit,
+        victim->mana, victim->max_mana,
+        victim->move, victim->max_move);
+      send_to_char(buf,ch);
+    }
+
+    send_to_char("+------------------------------------------------------------------------+\n\r", ch);
     return;
 }
 

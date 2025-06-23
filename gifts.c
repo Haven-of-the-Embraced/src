@@ -4558,7 +4558,7 @@ void spell_gift_mightofthor( int sn, int level, CHAR_DATA *ch, void *vo, int tar
     af.where     = TO_AFFECTS;
     af.type      = gsn_gift_mightofthor;
     af.level     = ch->level;
-    af.duration  = success; // * 3 + 10;
+    af.duration  = success* 3 + 20;
     af.location  = APPLY_CS_STR;
     af.modifier  = 2;
     af.bitvector = 0;

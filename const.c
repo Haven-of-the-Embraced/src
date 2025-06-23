@@ -2865,7 +2865,7 @@ Total (3) */
 &gsn_gift_haltthecowardsflight,          SLOT( 0),        0,     12, "",             "The terror gripping you passes, allowing you to move more freely again.",        "" },
 
 {   "sense guilt", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_senseguilt,  TAR_IGNORE, POS_STANDING,
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_senseguilt,  TAR_CHAR_DEFENSIVE, POS_STANDING,
 &gsn_gift_senseguilt,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
 {   "might of thor", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },

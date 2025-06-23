@@ -1399,13 +1399,18 @@ void rote_healother(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj
 
     victim->hit = UMIN( victim->hit + gain, victim->max_hit );
     victim->move = UMIN(victim->move + (gain/5), victim->max_move);
-    victim->agg_dam -= success * ch->sphere[SPHERE_LIFE];
+    victim->agg_dam -= aggheal;
     if(victim->hit > victim->max_hit - victim->agg_dam) victim->hit = (victim->max_hit - victim->agg_dam);
     if(victim->agg_dam < 0) victim->agg_dam = 0;
     update_pos( victim );
-    act("$n reaches out and lightly touches $N who seems to be feeling better.",ch,NULL,victim,TO_NOTVICT);
-    act("You reach out and touch $N regulating their Life Patterns.",ch,NULL,victim,TO_CHAR);
-    act("$n reaches out and lightly touches you. You feel healing energies enter your body and feel much better.",ch,NULL,victim,TO_VICT);
+    sprintf(buf, "You reach out and touch %s, regulating %s {GLife{x pattern. {G[{R%d{G][{r%d{G][{B%d{G]{x\n\r",
+     victim->name, victim->sex == 0 ? "its" : victim->sex == 1 ? "his" : "her",
+     gain, aggheal, gain/5);
+    send_to_char(buf, ch);
+    sprintf(buf, "%s lightly touches you, healing energies entering your body. {G[{R%d{G][{r%d{G][{B%d{G]{x\n\r",
+     ch->short_descr, gain, aggheal, gain/5);
+    send_to_char(buf, victim);
+    act("$n reaches out and lightly touches $N, who seems to be feeling better.",ch,NULL,victim,TO_NOTVICT);
     return;
 }
 

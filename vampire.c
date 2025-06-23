@@ -910,6 +910,8 @@ bool can_use_disc(CHAR_DATA *ch, int disc, int dot, int blood, bool message)
 void do_regenerate(CHAR_DATA *ch, char *argument )
 {
     AFFECT_DATA af;
+    int success;
+    char buf[MSL];
 
     if((ch->race != race_lookup("vampire")) & (ch->race != race_lookup("ghoul")))
     {
@@ -929,7 +931,35 @@ void do_regenerate(CHAR_DATA *ch, char *argument )
     }
     if(ch->position == POS_FIGHTING)
     {
-        send_to_char( "You cannot do this in combat!\n\r", ch );
+        if (ch->pblood < 5)
+        {
+            send_to_char("You don't have enough Vitae to regenerate in a fight.\n\r", ch);
+            return;
+        }
+        ch->pblood--;
+        act("You burn a bit of Vitae in an attempt to quickly heal, ", ch, NULL, NULL, TO_CHAR);
+        success = godice(get_attribute(ch, CSATTRIB_STAMINA) + get_ability(ch, CSABIL_SURVIVAL), 8);
+        WAIT_STATE(ch, 4+success);
+        if (success < 1)
+        {
+            act(" but your body is currently too strained.", ch, NULL, NULL, TO_CHAR);
+        }
+        else if (is_affected(ch, gsn_bleeding))
+        {
+            affect_strip(ch, gsn_bleeding);
+            success--;
+            sprintf(buf, " and reflexively seal your wounds to stop the bleeding. {G[{R%d{G]{x\n\r", success * (ch->level/5) + 60);
+            ch->hit += success * (ch->level/5) + 60 + success;
+            send_to_char(buf, ch);
+        }
+        else
+        {
+            sprintf(buf, " and feel some of your wounds close. {G[{R%d{G]{x\n\r", success * (ch->level/5) + 60);
+            ch->hit += success * (ch->level/5) + 60 + success;
+            send_to_char(buf, ch);
+        }
+        if (ch->hit > ch->max_hit)
+            ch->hit = ch->max_hit;
         return;
     }
 

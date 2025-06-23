@@ -2854,7 +2854,7 @@ Total (3) */
 // Total (10)
 {   "hunters harmony", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_huntersharmony,  TAR_IGNORE, POS_STANDING,
-&gsn_gift_huntersharmony,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+&gsn_gift_huntersharmony,          SLOT( 0),        0,     12, "",             "The howls of spirit wolves fade into the distance.",        "" },
 
 {   "visage of fenris", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_visageoffenris,  TAR_IGNORE, POS_FIGHTING,

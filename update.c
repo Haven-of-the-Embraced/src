@@ -789,6 +789,7 @@ void char_update( void )
     int         qpaward;
     int         rpxp, rpaddictxp;
     ch_quit = NULL;
+    bool THORSMIGHT = FALSE;
 
     /* update save counter */
     save_number++;
@@ -798,7 +799,7 @@ void char_update( void )
 
     for ( ch = char_list; ch != NULL; ch = ch_next )
     {
-    AFFECT_DATA *paf;
+    AFFECT_DATA *paf, af;
     AFFECT_DATA *paf_next;
 
     ch_next = ch->next;
@@ -983,10 +984,33 @@ void char_update( void )
               act("The shining silver light surrounding $n dims, and fades away.", ch, NULL, NULL, TO_NOTVICT);
               ch->in_room->light -= 2;
             }
+
+            if (paf->type == gsn_gift_mightofthor && get_affect_level(ch, gsn_gift_mightofthor) > 0)
+            {
+                act("The blessing of Thor's Might leaves you exhausted as it dwindles.", ch, NULL, NULL, TO_CHAR);
+                THORSMIGHT = TRUE;
+            }
         }
 
         affect_remove( ch, paf );
+
+        if (THORSMIGHT)
+        {
+            af.where     = TO_AFFECTS;
+            af.type      = gsn_gift_mightofthor;
+            af.level     = -1;
+            af.duration  = 1;
+            af.location  = APPLY_CS_STR;
+            af.modifier  = -1;
+            af.bitvector = 0;
+            affect_to_char( ch, &af );
+            af.location  = APPLY_CS_DEX;
+            affect_to_char( ch, &af );
+            af.location  = APPLY_CS_STA;
+            affect_to_char( ch, &af );
         }
+        }
+
     }
 
         if (!ch) // Guard against null ch being returned from chimaera wearing off.

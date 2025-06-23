@@ -960,7 +960,7 @@ void spell_gift_mentalspeech( int sn, int level, CHAR_DATA *ch, void *vo, int ta
         affect_strip(groupmate, gsn_gift_mentalspeech);
 
       if (groupmate != ch)
-        send_to_char("The mental coordination with the group has been cut off.\n\r", ch);
+        send_to_char("The mental coordination with the group has been cut off.\n\r", groupmate);
 
       continue;
     }

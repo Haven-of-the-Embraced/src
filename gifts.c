@@ -4219,8 +4219,98 @@ void spell_gift_thelivingwood( int sn, int level, CHAR_DATA *ch, void *vo, int t
 // charisma + primal-urge diff 6
 // Allows the garou to convey complex battle concepts to pack members.
 // buff that boosts pack bonus.
-void spell_gift_huntersharmony( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_huntersharmony( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  AFFECT_DATA af;
+  CHAR_DATA *groupmate, *group_next;
+  int success;
+
+  if (is_affected(ch, gsn_gift_huntersharmony))
+  {
+    if (get_affect_level(ch, gsn_gift_huntersharmony) == -1)
+    {
+      send_to_char("Spiritual howls echo in the distance, distracting you.\n\r", ch);
+      return;
+    }
+    send_to_char("You stop conveying thoughts with your current group.\n\r", ch);
+    for ( groupmate = char_list; groupmate != NULL; groupmate = group_next )
+    {
+      group_next = groupmate->next;
+      if(IS_NPC(groupmate) || groupmate->in_room == NULL )
+        continue;
+
+      if ( SAME_UMBRA(ch, groupmate) && is_same_group(ch, groupmate))
+        affect_strip(groupmate, gsn_gift_huntersharmony);
+
+      if (groupmate != ch)
+        send_to_char("The mental thoughts projected to the group has been cut off.\n\r", groupmate);
+
+      continue;
+    }
     return;
+  }
+
+  if (ch->move < ch->level + 50)
+  {
+    send_to_char("You do not have enough Willpower to enact a group coordination.\n\r", ch);
+    return;
+  }
+
+  ch->move -= ch->level + 50;
+  success = godice(get_attribute(ch, CHARISMA) + ch->pcdata->primal_urge, 6);
+
+  if (success < 0)
+  {
+    send_to_char("Wolf spirits distract you with howls directly in your ears.\n\r", ch);
+    if (!is_affected(ch, gsn_deafened))
+    {
+      af.where     = TO_AFFECTS;
+      af.type      = gsn_gift_huntersharmony;
+      af.level     = -1;
+      af.duration  = 1;
+      af.modifier  = -ch->level;
+      af.location  = APPLY_HITROLL;
+      af.bitvector = 0;
+      affect_to_char( ch, &af );
+      af.location  = APPLY_DAMROLL;
+      af.modifier  = -ch->level / 2;
+      affect_to_char( ch, &af );
+    }
+    WAIT_STATE(ch, 3);
+    return;
+  }
+
+  if (success == 0)
+  {
+    send_to_char("Wolf spirits howl in the distance, but refuse to answer your call.\n\r", ch);
+    WAIT_STATE(ch, 6);
+    return;
+  }
+
+  for ( groupmate = char_list; groupmate != NULL; groupmate = group_next )
+  {
+    group_next = groupmate->next;
+    if(IS_NPC(groupmate) || groupmate->in_room == NULL )
+      continue;
+
+    if ( SAME_UMBRA(ch, groupmate) && is_same_group(ch, groupmate))
+    {
+      send_to_char("Wolf spirits howl, carrying mental communcations between the group.\n\r", groupmate);
+      af.where     = TO_AFFECTS;
+      af.type      = gsn_gift_huntersharmony;
+      af.level     = success;
+      af.duration  = success * 10;
+      af.modifier  = (ch->level / 2  + success);
+      af.location  = APPLY_HITROLL;
+      af.bitvector = 0;
+      affect_to_char( groupmate, &af );
+      af.location = APPLY_DAMROLL;
+      af.modifier  = ch->level / 4;
+      affect_to_char( groupmate, &af );
+    }
+    continue;
+  }
+  return;
 }
 
 //Resist Pain - Duplicate gift, as the Philodox gift

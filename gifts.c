@@ -4500,8 +4500,71 @@ void spell_gift_senseguilt( int sn, int level, CHAR_DATA *ch, void *vo, int targ
 //Might of Thor
 // 1 gnosis, 1 rage
 // Doubles strength for one turn, wearoff causes -1 to physical attributes
-void spell_gift_mightofthor( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_mightofthor( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  AFFECT_DATA af;
+  int success;
+
+  if (is_affected(ch, gsn_gift_mightofthor))
+  {
+    if (get_affect_level(ch, gsn_gift_mightofthor) == -1)
+      send_to_char("You have not yet overcome the exhaustion of your last request.\n\r", ch);
+    else
+      send_to_char("You already have the blessing of mighty Thor.\n\r", ch);
     return;
+  }
+
+  if (ch->pcdata->gnosis[TEMP] < 1)
+  {
+    send_to_char("Your spiritual reserves of Gnosis are too low.\n\r", ch);
+    return;
+  }
+
+  if (ch->pcdata->rage[TEMP] < 1)
+  {
+    send_to_char("You do not have enough Rage.\n\r", ch);
+    return;
+  }
+
+  ch->pcdata->gnosis[TEMP]--;
+  ch->pcdata->rage[TEMP]--;
+  success = godice(ch->csmax_willpower, 8);
+
+  if (success < 0)
+  {
+    send_to_char("Wolf-spirits refuse to impart Thor's might, instead striking you for your insolence.\n\r", ch);
+    WAIT_STATE(ch, 9);
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_gift_mightofthor;
+    af.level     = -1;
+    af.duration  = -success;
+    af.location  = APPLY_CS_STR;
+    af.modifier  = -2;
+    af.bitvector = 0;
+    affect_to_char( ch, &af );
+    return;
+  }
+
+  if (success == 0)
+  {
+    send_to_char("Wolf-spirits keep their distance, not answering your call.\n\r", ch);
+    WAIT_STATE(ch, 3);
+    return;
+  }
+
+    act( "Fenrir sends his wolf-spirits to bless you with Thor's Might!",  ch, NULL, NULL, TO_CHAR );
+    act( "$n's stature shifts, appearing much mightier than before.",  ch, NULL, NULL, TO_NOTVICT );
+
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_gift_mightofthor;
+    af.level     = ch->level;
+    af.duration  = success; // * 3 + 10;
+    af.location  = APPLY_CS_STR;
+    af.modifier  = 2;
+    af.bitvector = 0;
+    affect_to_char( ch, &af );
+
+  return;
 }
 // Redirect Pain
 // 1 rage

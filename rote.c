@@ -1340,6 +1340,9 @@ void rote_littlegooddeath(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DAT
 
 void rote_healself(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
 {
+    char buf[MSL];
+    int aggheal = success * ch->sphere[SPHERE_LIFE];
+
     if(victim != ch)
     {
         send_to_char("You require more advanced knowledge to alter the Life Pattern of another.\n\r",ch);
@@ -1363,17 +1366,22 @@ void rote_healself(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
 
     victim->hit = UMIN( victim->hit + gain, victim->max_hit );
     victim->move = UMIN(victim->move + (gain/5), victim->max_move);
-    victim->agg_dam -= success * ch->sphere[SPHERE_LIFE];
+    victim->agg_dam -= aggheal;
     if(victim->hit > victim->max_hit - victim->agg_dam) victim->hit = (victim->max_hit - victim->agg_dam);
     if(victim->agg_dam < 0) victim->agg_dam = 0;
     update_pos( victim );
-    send_to_char( "You feel your wounds mend as you restore your Life pattern..\n\r", victim );
+    sprintf(buf, "You feel your wounds mend as you restore your {GLife{x pattern. {G[{R%d{G][{r%d{G][{B%d{G]{x\n\r",
+     gain, aggheal, gain/5);
+    send_to_char( buf, victim );
     return;
 }
 
 void rote_healother(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
 {
+    char buf[MSL];
     int gain;
+    int aggheal = success * ch->sphere[SPHERE_LIFE];
+
     if (ch->level < 20)
     gain = success * ch->level * (10*ch->sphere[SPHERE_LIFE]);
     else

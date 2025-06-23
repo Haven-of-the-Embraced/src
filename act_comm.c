@@ -2068,10 +2068,11 @@ void stop_follower( CHAR_DATA *ch )
         act( "You stop following $N.",      ch, NULL, ch->master, TO_CHAR    );
     }
 
-    if (is_affected(ch, gsn_gift_mentalspeech))
+    if (is_affected(ch, gsn_gift_mentalspeech) || is_affected(ch, gsn_gift_huntersharmony))
     {
         send_to_char("You lose the mental communication with your former group.\n\r", ch);
         affect_strip(ch, gsn_gift_mentalspeech);
+        affect_strip(ch, gsn_gift_huntersharmony);
     }
 
     if (ch->master->pet == ch)
@@ -2381,10 +2382,11 @@ void do_group( CHAR_DATA *ch, char *argument )
             victim->master = NULL;
         }
 
-        if (is_affected(victim, gsn_gift_mentalspeech))
+        if (is_affected(ch, gsn_gift_mentalspeech) || is_affected(ch, gsn_gift_huntersharmony))
         {
-            send_to_char("You lose the mental communication with your former group.\n\r", victim);
-            affect_strip(victim, gsn_gift_mentalspeech);
+            send_to_char("You lose the mental communication with your former group.\n\r", ch);
+            affect_strip(ch, gsn_gift_mentalspeech);
+            affect_strip(ch, gsn_gift_huntersharmony);
         }
         return;
     }

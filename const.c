@@ -2854,7 +2854,7 @@ Total (3) */
 // Total (10)
 {   "hunters harmony", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_huntersharmony,  TAR_IGNORE, POS_STANDING,
-&gsn_gift_huntersharmony,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+&gsn_gift_huntersharmony,          SLOT( 0),        0,     12, "",             "The howls of spirit wolves fade into the distance.",        "" },
 
 {   "visage of fenris", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_visageoffenris,  TAR_IGNORE, POS_FIGHTING,
@@ -2865,7 +2865,7 @@ Total (3) */
 &gsn_gift_haltthecowardsflight,          SLOT( 0),        0,     12, "",             "The terror gripping you passes, allowing you to move more freely again.",        "" },
 
 {   "sense guilt", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_senseguilt,  TAR_IGNORE, POS_STANDING,
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_senseguilt,  TAR_CHAR_DEFENSIVE, POS_STANDING,
 &gsn_gift_senseguilt,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
 {   "might of thor", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
@@ -2873,8 +2873,8 @@ Total (3) */
 &gsn_gift_mightofthor,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
 {   "redirect pain", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_redirectpain,  TAR_IGNORE, POS_STANDING,
-&gsn_gift_redirectpain,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_redirectpain,  TAR_CHAR_OFFENSIVE, POS_FIGHTING,
+&gsn_gift_redirectpain,          SLOT( 0),        0,     12, "agonizing pain",             "The agonizing pain you are in suddenly ceases.",        "" },
 
 {   "berserkers song", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_berserkerssong,  TAR_IGNORE, POS_STANDING,

@@ -960,7 +960,7 @@ void spell_gift_mentalspeech( int sn, int level, CHAR_DATA *ch, void *vo, int ta
         affect_strip(groupmate, gsn_gift_mentalspeech);
 
       if (groupmate != ch)
-        send_to_char("The mental coordination with the group has been cut off.\n\r", ch);
+        send_to_char("The mental coordination with the group has been cut off.\n\r", groupmate);
 
       continue;
     }
@@ -4219,8 +4219,98 @@ void spell_gift_thelivingwood( int sn, int level, CHAR_DATA *ch, void *vo, int t
 // charisma + primal-urge diff 6
 // Allows the garou to convey complex battle concepts to pack members.
 // buff that boosts pack bonus.
-void spell_gift_huntersharmony( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_huntersharmony( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  AFFECT_DATA af;
+  CHAR_DATA *groupmate, *group_next;
+  int success;
+
+  if (is_affected(ch, gsn_gift_huntersharmony))
+  {
+    if (get_affect_level(ch, gsn_gift_huntersharmony) == -1)
+    {
+      send_to_char("Spiritual howls echo in the distance, distracting you.\n\r", ch);
+      return;
+    }
+    send_to_char("You stop conveying thoughts with your current group.\n\r", ch);
+    for ( groupmate = char_list; groupmate != NULL; groupmate = group_next )
+    {
+      group_next = groupmate->next;
+      if(IS_NPC(groupmate) || groupmate->in_room == NULL )
+        continue;
+
+      if ( SAME_UMBRA(ch, groupmate) && is_same_group(ch, groupmate))
+        affect_strip(groupmate, gsn_gift_huntersharmony);
+
+      if (groupmate != ch)
+        send_to_char("The mental thoughts projected to the group has been cut off.\n\r", groupmate);
+
+      continue;
+    }
     return;
+  }
+
+  if (ch->move < ch->level + 50)
+  {
+    send_to_char("You do not have enough Willpower to enact a group coordination.\n\r", ch);
+    return;
+  }
+
+  ch->move -= ch->level + 50;
+  success = godice(get_attribute(ch, CHARISMA) + ch->pcdata->primal_urge, 6);
+
+  if (success < 0)
+  {
+    send_to_char("Wolf spirits distract you with howls directly in your ears.\n\r", ch);
+    if (!is_affected(ch, gsn_deafened))
+    {
+      af.where     = TO_AFFECTS;
+      af.type      = gsn_gift_huntersharmony;
+      af.level     = -1;
+      af.duration  = 1;
+      af.modifier  = -ch->level;
+      af.location  = APPLY_HITROLL;
+      af.bitvector = 0;
+      affect_to_char( ch, &af );
+      af.location  = APPLY_DAMROLL;
+      af.modifier  = -ch->level / 2;
+      affect_to_char( ch, &af );
+    }
+    WAIT_STATE(ch, 3);
+    return;
+  }
+
+  if (success == 0)
+  {
+    send_to_char("Wolf spirits howl in the distance, but refuse to answer your call.\n\r", ch);
+    WAIT_STATE(ch, 6);
+    return;
+  }
+
+  for ( groupmate = char_list; groupmate != NULL; groupmate = group_next )
+  {
+    group_next = groupmate->next;
+    if(IS_NPC(groupmate) || groupmate->in_room == NULL )
+      continue;
+
+    if ( SAME_UMBRA(ch, groupmate) && is_same_group(ch, groupmate))
+    {
+      send_to_char("Wolf spirits howl, carrying mental communcations between the group.\n\r", groupmate);
+      af.where     = TO_AFFECTS;
+      af.type      = gsn_gift_huntersharmony;
+      af.level     = success;
+      af.duration  = success * 10;
+      af.modifier  = (ch->level / 2  + success);
+      af.location  = APPLY_HITROLL;
+      af.bitvector = 0;
+      affect_to_char( groupmate, &af );
+      af.location = APPLY_DAMROLL;
+      af.modifier  = ch->level / 4;
+      affect_to_char( groupmate, &af );
+    }
+    continue;
+  }
+  return;
 }
 
 //Resist Pain - Duplicate gift, as the Philodox gift
@@ -4401,7 +4491,71 @@ void spell_gift_haltthecowardsflight( int sn, int level, CHAR_DATA *ch, void *vo
 // Sense Guilt
 // perception + empathy diff 8
 // Reveals guilt of the target. No idea for codewise.
-void spell_gift_senseguilt( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_senseguilt( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+    char buf[MAX_STRING_LENGTH];
+    CHAR_DATA *victim = (CHAR_DATA *) vo;
+    int success;
+
+    if (ch->move < ch->level)
+    {
+      send_to_char("You are too tired to activate this Gift.\n\r", ch);
+      return;
+    }
+
+    ch->move -= ch->level;
+    success = godice(get_attribute(ch, CSATTRIB_PERCEPTION) + get_ability(ch, CSABIL_EMPATHY), 8);
+
+    if (success < 0)
+    {
+      send_to_char("Fenrir spirit servants refuse to help discern guilt, until you spend time reconciling your own.\n\r", ch);
+      WAIT_STATE(ch, 9);
+      return;
+    }
+
+    if (success == 0)
+    {
+      send_to_char("Fenrir servants refuse to aid you at this time.\n\r", ch);
+      return;
+    }
+
+    if (IS_NPC(ch)) return;
+    send_to_char("+========================       SENSE GUILT       =======================+\n\r", ch);
+    send_to_char("| A spirit servant of Fenrir assists in digging for your target's guilt. |\n\r", ch);
+    if (IS_NPC(victim))
+      sprintf(buf, "+====================[ %s ]====================+\n\r", center(victim->short_descr, 28, " "));
+    else
+      sprintf(buf, "+====================[ %s ]====================+\n\r", center(victim->name, 28, " "));
+    send_to_char(buf, ch);
+    sprintf(buf, "|                    [       Age: %3d year%s old     ]                    |\n\r",
+      get_age(victim), get_age(victim) == 1 ? " " : "s");
+    send_to_char(buf,ch);
+
+    if (is_affected(victim, gsn_gift_auraofconfidence))
+    {
+        send_to_char("+------------------------------------------------------------------------+\n\r", ch);
+        return;
+    }
+
+    send_to_char("+------------------------------------------------------------------------+\n\r", ch);
+    sprintf(buf, "| Immune to    : %s\n\r", imm_bit_name(victim->imm_flags));
+    send_to_char(buf,ch);
+    sprintf(buf, "| Resistant to : %s\n\r", imm_bit_name(victim->res_flags));
+    send_to_char(buf,ch);
+    sprintf(buf, "| Vulnerable to: %s\n\r", imm_bit_name(victim->vuln_flags));
+    send_to_char(buf,ch);
+
+    if(success >= 3)
+    {
+      send_to_char("+------------------------------------------------------------------------+\n\r", ch);
+      sprintf(buf, "| %6d/%6d Health     %6d/%6d Mana     %6d/%6d Movement |\n\r",
+        victim->hit,  victim->max_hit,
+        victim->mana, victim->max_mana,
+        victim->move, victim->max_move);
+      send_to_char(buf,ch);
+    }
+
+    send_to_char("+------------------------------------------------------------------------+\n\r", ch);
     return;
 }
 
@@ -4410,13 +4564,118 @@ void spell_gift_senseguilt( int sn, int level, CHAR_DATA *ch, void *vo, int targ
 //Might of Thor
 // 1 gnosis, 1 rage
 // Doubles strength for one turn, wearoff causes -1 to physical attributes
-void spell_gift_mightofthor( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_mightofthor( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  AFFECT_DATA af;
+  int success;
+
+  if (is_affected(ch, gsn_gift_mightofthor))
+  {
+    if (get_affect_level(ch, gsn_gift_mightofthor) == -1)
+      send_to_char("You have not yet overcome the exhaustion of your last request.\n\r", ch);
+    else
+      send_to_char("You already have the blessing of mighty Thor.\n\r", ch);
     return;
+  }
+
+  if (ch->pcdata->gnosis[TEMP] < 1)
+  {
+    send_to_char("Your spiritual reserves of Gnosis are too low.\n\r", ch);
+    return;
+  }
+
+  if (ch->pcdata->rage[TEMP] < 1)
+  {
+    send_to_char("You do not have enough Rage.\n\r", ch);
+    return;
+  }
+
+  ch->pcdata->gnosis[TEMP]--;
+  ch->pcdata->rage[TEMP]--;
+  success = godice(ch->csmax_willpower, 8);
+
+  if (success < 0)
+  {
+    send_to_char("Wolf-spirits refuse to impart Thor's might, instead striking you for your insolence.\n\r", ch);
+    WAIT_STATE(ch, 9);
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_gift_mightofthor;
+    af.level     = -1;
+    af.duration  = -success;
+    af.location  = APPLY_CS_STR;
+    af.modifier  = -2;
+    af.bitvector = 0;
+    affect_to_char( ch, &af );
+    return;
+  }
+
+  if (success == 0)
+  {
+    send_to_char("Wolf-spirits keep their distance, not answering your call.\n\r", ch);
+    WAIT_STATE(ch, 3);
+    return;
+  }
+
+    act( "Fenrir sends his wolf-spirits to bless you with Thor's Might!",  ch, NULL, NULL, TO_CHAR );
+    act( "$n's stature shifts, appearing much mightier than before.",  ch, NULL, NULL, TO_NOTVICT );
+
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_gift_mightofthor;
+    af.level     = ch->level;
+    af.duration  = success* 3 + 20;
+    af.location  = APPLY_CS_STR;
+    af.modifier  = 2;
+    af.bitvector = 0;
+    affect_to_char( ch, &af );
+
+  return;
 }
 // Redirect Pain
 // 1 rage
-// aura, reduces damage by 1/2, 1/2 damage gets sent back.
-void spell_gift_redirectpain( int sh, int level, CHAR_DATA *ch, void *vo, int target) {
+// minor dmg to target plus debuff, based on your missing health
+void spell_gift_redirectpain( int sh, int level, CHAR_DATA *ch, void *vo, int target) 
+{
+  CHAR_DATA *victim = (CHAR_DATA *) vo;
+  int success, penalty;
+  AFFECT_DATA af;
+
+  if (ch->pcdata->rage[TEMP] < 1)
+  {
+    send_to_char("You do not have enough Rage.\n\r", ch);
+    return;
+  }
+
+  ch->pcdata->rage[TEMP]--;
+  success = godice(get_attribute(ch, CSATTRIB_MANIPULATION) + ch->pcdata->primal_urge, 8);
+
+  if (success < 0)
+  {
+    send_to_char("Cukoo-spirits return the call, reverberating their pain unto you.\n\r", ch);
+    d10_damage( ch, ch, -success, ch->level, gsn_gift_redirectpain, DAM_NEGATIVE, DEFENSE_NONE, TRUE, TRUE);
+    return;
+  }
+
+  if (success == 0)
+  {
+    send_to_char("You call to cukoo-spirits, but none answer.\n\r", ch);
+    WAIT_STATE(ch, 3);
+    return;
+  }
+
+  send_to_char("Cukoo-spirits help share your pain with your enemy.\n\r", ch);
+  d10_damage( ch, victim, success, ch->level, gsn_gift_redirectpain, DAM_NEGATIVE, DEFENSE_NONE, TRUE, TRUE);
+  if (!is_affected(victim, gsn_gift_redirectpain))
+  {
+    penalty = (get_wound_penalty(ch) - 1) * (200 + ch->level);
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_gift_redirectpain;
+    af.level     = ch->level;
+    af.duration  = success* 3 + 20;
+    af.location  = APPLY_HITROLL;
+    af.modifier  = penalty;
+    af.bitvector = 0;
+    affect_to_char( victim, &af );
+  }  
 	return;
 }
 

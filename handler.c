@@ -1027,6 +1027,30 @@ char *name_the_spirit( CHAR_DATA *ch )
         return "  Energies of Oblivion radiate from this being.\n\r";
     return "  This being is beyond your understanding of the Umbra.\n\r";
 }
+
+int get_wound_penalty( CHAR_DATA *ch )
+{
+    int percent = (ch->hit * 100) / ch->max_hit;
+
+    if (percent >= 100)
+        return 0;
+    else if (percent >= 90)
+        return 0;
+    else if (percent >= 75)
+        return -1;
+    else if (percent >= 50)
+        return -1;
+    else if (percent >= 30)
+        return -2;
+    else if (percent >= 15)
+        return -2;
+    else if (percent >= 0)
+        return -5;
+    else
+        return 0;
+
+}
+
 bool has_silver( CHAR_DATA *ch )
 {
   if (

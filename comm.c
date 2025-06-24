@@ -1544,6 +1544,8 @@ void bust_a_prompt( CHAR_DATA *ch )
     if (cshealth > 7)
         cshealth = 7;
 
+    int wound = get_wound_penalty(ch);
+
     point = buf;
     str = ch->prompt;
     if( !str || str[0] == '\0')
@@ -1598,6 +1600,9 @@ void bust_a_prompt( CHAR_DATA *ch )
         i = buf2; break;
     case 'C' :
         sprintf(buf2, "%s", health_level[cshealth]);
+        i = buf2; break;
+    case 'p' :
+        sprintf(buf2, "%d", wound);
         i = buf2; break;
      case 'E' :
         sprintf(buf2, "%d", global_xp);

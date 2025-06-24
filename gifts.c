@@ -4632,17 +4632,12 @@ void spell_gift_mightofthor( int sn, int level, CHAR_DATA *ch, void *vo, int tar
 }
 // Redirect Pain
 // 1 rage
-// aura, reduces damage by 1/2, 1/2 damage gets sent back.
+// minor dmg to target plus debuff, based on your missing health
 void spell_gift_redirectpain( int sh, int level, CHAR_DATA *ch, void *vo, int target) 
 {
-  int success;
+  CHAR_DATA *victim = (CHAR_DATA *) vo;
+  int success, penalty;
   AFFECT_DATA af;
-
-  if (is_affected(ch, gsn_gift_redirectpain))
-  {
-    send_to_char("You are already redirecting pain to your attackers.\n\r", ch);
-    return;
-  }
 
   if (ch->pcdata->rage[TEMP] < 1)
   {
@@ -4667,6 +4662,20 @@ void spell_gift_redirectpain( int sh, int level, CHAR_DATA *ch, void *vo, int ta
     return;
   }
 
+  send_to_char("Cukoo-spirits help share your pain with your enemy.\n\r", ch);
+  d10_damage( ch, victim, success, ch->level, gsn_gift_redirectpain, DAM_NEGATIVE, DEFENSE_NONE, TRUE, TRUE);
+  if (!is_affected(victim, gsn_gift_redirectpain))
+  {
+    penalty = (get_wound_penalty(ch) - 1) * (200 + ch->level);
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_gift_redirectpain;
+    af.level     = ch->level;
+    af.duration  = success* 3 + 20;
+    af.location  = APPLY_HITROLL;
+    af.modifier  = penalty;
+    af.bitvector = 0;
+    affect_to_char( victim, &af );
+  }  
 	return;
 }
 

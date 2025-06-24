@@ -4111,6 +4111,7 @@ bool    is_humanoid args( ( CHAR_DATA *ch));
 bool    is_supernatural args( ( CHAR_DATA *ch));
 bool    is_umbral_denizen args( ( CHAR_DATA *ch) );
 char    *name_the_spirit args( (CHAR_DATA *ch) );
+int     get_wound_penalty args( (CHAR_DATA * ch) );
 bool    has_silver args( ( CHAR_DATA *ch ) );
 bool    carries_silver_obj args( ( CHAR_DATA *ch) );
 void    affect_to_char  args( ( CHAR_DATA *ch, AFFECT_DATA *paf ) );

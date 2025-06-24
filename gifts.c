@@ -4633,7 +4633,26 @@ void spell_gift_mightofthor( int sn, int level, CHAR_DATA *ch, void *vo, int tar
 // Redirect Pain
 // 1 rage
 // aura, reduces damage by 1/2, 1/2 damage gets sent back.
-void spell_gift_redirectpain( int sh, int level, CHAR_DATA *ch, void *vo, int target) {
+void spell_gift_redirectpain( int sh, int level, CHAR_DATA *ch, void *vo, int target) 
+{
+  int success;
+  AFFECT_DATA af;
+
+  if (is_affected(ch, gsn_gift_redirectpain))
+  {
+    send_to_char("You are already redirecting pain to your attackers.\n\r", ch);
+    return;
+  }
+
+  if (ch->pcdata->rage[TEMP] < 1)
+  {
+    send_to_char("You do not have enough Rage.\n\r", ch);
+    return;
+  }
+
+  ch->pcdata->rage[TEMP]--;
+  success = godice(get_attribute(ch, CSATTRIB_MANIPULATION) + ch->pcdata->primal_urge, 8);
+
 	return;
 }
 

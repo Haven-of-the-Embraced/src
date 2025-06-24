@@ -1030,7 +1030,7 @@ char *name_the_spirit( CHAR_DATA *ch )
 
 int get_wound_penalty( CHAR_DATA *ch )
 {
-    int percent = ch->hit / ch->max_hit * 100;
+    int percent = (ch->hit * 100) / ch->max_hit;
 
     if (percent >= 100)
         return 0;

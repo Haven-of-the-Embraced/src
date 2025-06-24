@@ -2873,8 +2873,8 @@ Total (3) */
 &gsn_gift_mightofthor,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
 {   "redirect pain", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_redirectpain,  TAR_IGNORE, POS_STANDING,
-&gsn_gift_redirectpain,          SLOT( 0),        0,     12, "agonizing pain",             "You no longer redirect your own pain unto others.",        "" },
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_redirectpain,  TAR_CHAR_OFFENSIVE, POS_FIGHTING,
+&gsn_gift_redirectpain,          SLOT( 0),        0,     12, "agonizing pain",             "The agonizing pain you are in suddenly ceases.",        "" },
 
 {   "berserkers song", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_berserkerssong,  TAR_IGNORE, POS_STANDING,

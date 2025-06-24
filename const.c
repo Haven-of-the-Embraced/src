@@ -2874,7 +2874,7 @@ Total (3) */
 
 {   "redirect pain", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_redirectpain,  TAR_IGNORE, POS_STANDING,
-&gsn_gift_redirectpain,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+&gsn_gift_redirectpain,          SLOT( 0),        0,     12, "agonizing pain",             "You no longer redirect your own pain unto others.",        "" },
 
 {   "berserkers song", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_berserkerssong,  TAR_IGNORE, POS_STANDING,

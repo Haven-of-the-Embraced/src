@@ -4653,6 +4653,20 @@ void spell_gift_redirectpain( int sh, int level, CHAR_DATA *ch, void *vo, int ta
   ch->pcdata->rage[TEMP]--;
   success = godice(get_attribute(ch, CSATTRIB_MANIPULATION) + ch->pcdata->primal_urge, 8);
 
+  if (success < 0)
+  {
+    send_to_char("Cukoo-spirits return the call, reverberating their pain unto you.\n\r", ch);
+    d10_damage( ch, ch, -success, ch->level, gsn_gift_redirectpain, DAM_NEGATIVE, DEFENSE_NONE, TRUE, TRUE);
+    return;
+  }
+
+  if (success == 0)
+  {
+    send_to_char("You call to cukoo-spirits, but none answer.\n\r", ch);
+    WAIT_STATE(ch, 3);
+    return;
+  }
+
 	return;
 }
 

@@ -1404,7 +1404,7 @@ void rote_healother(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj
     if(victim->agg_dam < 0) victim->agg_dam = 0;
     update_pos( victim );
     sprintf(buf, "You reach out and touch %s, regulating %s {GLife{x pattern. {G[{R%d{G][{r%d{G][{B%d{G]{x\n\r",
-     victim->name, victim->sex == 0 ? "its" : victim->sex == 1 ? "his" : "her",
+     victim->short_descr, victim->sex == 0 ? "its" : victim->sex == 1 ? "his" : "her",
      gain, aggheal, gain/5);
     send_to_char(buf, ch);
     sprintf(buf, "%s lightly touches you, healing energies entering your body. {G[{R%d{G][{r%d{G][{B%d{G]{x\n\r",

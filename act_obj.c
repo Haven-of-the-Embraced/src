@@ -2102,16 +2102,13 @@ void do_sacrifice( CHAR_DATA *ch, char *argument )
     int members;
     char buffer[100];
 
-
     one_argument( argument, arg );
 
     if ( arg[0] == '\0' || !str_cmp( arg, ch->name ) )
     {
-    act( "$n offers $mself to the Immortals, who graciously decline.",
-        ch, NULL, NULL, TO_ROOM );
-    send_to_char(
-        "The Immortals appreciate your offer and may accept it later.\n\r", ch );
-    return;
+        act( "$n offers $mself to the Immortals, who graciously decline.",ch, NULL, NULL, TO_ROOM );
+        send_to_char("The Immortals appreciate your offer and may accept it later.\n\r", ch );
+        return;
     }
 
     if (!str_cmp(arg, "all"))
@@ -2137,7 +2134,12 @@ void do_sacrifice( CHAR_DATA *ch, char *argument )
             extract_obj(obj);
         }
 
+        sprintf(buffer,"You sacrifice %d items to the gods! You receive %d silver!\n\r", count, total);
+        sendch(buffer, ch);
         ch->silver += total;
+        act( "$n sacrifices a number of items to the Immortals.", ch, NULL, NULL, TO_ROOM );
+        wiznet("$N sacrificed the whole room!", ch,NULL,WIZ_SACCING,0,0);
+
         if (IS_SET(ch->act,PLR_AUTOSPLIT) )
         { /* AUTOSPLIT code */
             members = 0;
@@ -2147,18 +2149,12 @@ void do_sacrifice( CHAR_DATA *ch, char *argument )
                     members++;
             }
 
-            sprintf(buffer,"You sacrifice %d items to the gods! You receive %d silver!\n\r", count, total);
-            sendch(buffer, ch);
-
             if ( members > 1 && total > 1)
             {
                 sprintf(buffer,"%d",total);
                 do_function(ch, &do_split, buffer);
             }
         }
-
-        act( "$n sacrifices a number of items to the Immortals.", ch, NULL, NULL, TO_ROOM );
-        wiznet("$N sacrificed the whole room!", ch,NULL,WIZ_SACCING,0,0);
         return;
     }
 

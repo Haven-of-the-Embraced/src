@@ -410,6 +410,7 @@ const struct olc_cmd_type medit_table[] =
     {   "alignment",    medit_align },
     {   "commands", show_commands   },
     {   "create",   medit_create    },
+    {   "delete",   medit_delete    },
     {   "desc",     medit_desc  },
     {   "level",    medit_level },
     {   "long",     medit_long  },

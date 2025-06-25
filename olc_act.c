@@ -4429,7 +4429,36 @@ MEDIT( medit_show )
     return FALSE;
 }
 
+OEDIT( medit_delete )
+{
+    MOB_INDEX_DATA *pMob;
+    char command[MAX_INPUT_LENGTH];
 
+    EDIT_MOB(ch, pMob);
+
+    if ( argument[0] == '\0' )
+    {
+    send_to_char( "Syntax:  delete [true/false]\n\r", ch );
+    return FALSE;
+    }
+
+    argument = one_argument( argument, command );
+
+    if ( !str_cmp( command, "true" ) )
+    {
+        pMob->delete = TRUE;
+        send_to_char( "Mobile marked for deletion.\n\r", ch);
+        return TRUE;
+    } else if ( !str_cmp( command, "false"))
+    {
+        pMob->delete = FALSE;
+        send_to_char( "Mobile no longer marked for deletion.\n\r", ch);
+        return TRUE;
+    } else {
+        send_to_char( "Syntax:  delete [true/false]\n\r", ch );
+        return FALSE;
+    }
+}
 
 MEDIT( medit_create )
 {

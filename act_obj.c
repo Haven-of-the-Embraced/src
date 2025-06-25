@@ -2116,64 +2116,63 @@ void do_sacrifice( CHAR_DATA *ch, char *argument )
 
     if (!str_cmp(arg, "all"))
     {
-      silver = total = count = 0;
+        silver = total = count = 0;
 
-      for (obj = ch->in_room->contents; obj; obj = obj_next)
-      {
-        if (!obj)
-          break;
+        for (obj = ch->in_room->contents; obj; obj = obj_next)
+        {
+            if (!obj)
+                break;
 
-        obj_next = obj->next_content;
+            obj_next = obj->next_content;
 
-        if (!acceptable_sacrifice(ch, obj))
-          continue;
+            if (!acceptable_sacrifice(ch, obj))
+                continue;
 
-        silver = UMAX(1,obj->level * 3);
-        count++;
-        if (obj->item_type != ITEM_CORPSE_NPC && obj->item_type != ITEM_CORPSE_PC)
-            silver = UMIN(silver,obj->cost);
+            silver = UMAX(1,obj->level * 3);
+            count++;
+            if (obj->item_type != ITEM_CORPSE_NPC && obj->item_type != ITEM_CORPSE_PC)
+                silver = UMIN(silver,obj->cost);
 
-        total += silver;
-        extract_obj(obj);
-      }
+            total += silver;
+            extract_obj(obj);
+        }
 
-      if (IS_SET(ch->act,PLR_AUTOSPLIT) )
-      { /* AUTOSPLIT code */
-          members = 0;
-          for (gch = ch->in_room->people; gch != NULL; gch = gch->next_in_room )
-              {
-                  if ( is_same_group( gch, ch ) )
-                  members++;
-              }
+        ch->silver += total;
+        if (IS_SET(ch->act,PLR_AUTOSPLIT) )
+        { /* AUTOSPLIT code */
+            members = 0;
+            for (gch = ch->in_room->people; gch != NULL; gch = gch->next_in_room )
+            {
+                if ( is_same_group( gch, ch ) )
+                    members++;
+            }
 
-          ch->silver += total;
-          sprintf(buffer,"You sacrifice %d items to the gods! You receive %d silver!\n\r", count, total);
-          sendch(buffer, ch);
+            sprintf(buffer,"You sacrifice %d items to the gods! You receive %d silver!\n\r", count, total);
+            sendch(buffer, ch);
 
-          if ( members > 1 && total > 1)
-          {
-              sprintf(buffer,"%d",total);
-              do_function(ch, &do_split, buffer);
-          }
-      }
+            if ( members > 1 && total > 1)
+            {
+                sprintf(buffer,"%d",total);
+                do_function(ch, &do_split, buffer);
+            }
+        }
 
-      act( "$n sacrifices a number of items to the Immortals.", ch, NULL, NULL, TO_ROOM );
-      wiznet("$N sacrificed the whole room!",
-         ch,NULL,WIZ_SACCING,0,0);
-      return;
+        act( "$n sacrifices a number of items to the Immortals.", ch, NULL, NULL, TO_ROOM );
+        wiznet("$N sacrificed the whole room!", ch,NULL,WIZ_SACCING,0,0);
+        return;
     }
 
     obj = get_obj_list( ch, arg, ch->in_room->contents );
     if ( obj == NULL )
     {
-    send_to_char( "You can't find it.\n\r", ch );
-    return;
+        send_to_char( "You can't find it.\n\r", ch );
+        return;
     }
 
     if (!acceptable_sacrifice(ch, obj))
     {
-      send_to_char("That item cannot be sacrificed to the Gods.\n\r", ch);
-      return;
+        send_to_char("That item cannot be sacrificed to the Gods.\n\r", ch);
+        return;
     }
 
     silver = UMAX(1,obj->level * 3);
@@ -2182,13 +2181,11 @@ void do_sacrifice( CHAR_DATA *ch, char *argument )
         silver = UMIN(silver,obj->cost);
 
     if (silver == 1)
-        send_to_char(
-        "The Immortals give you one silver coin for your sacrifice.\n\r", ch );
+        send_to_char("The Immortals give you one silver coin for your sacrifice.\n\r", ch );
     else
     {
-    sprintf(buf,"The Immortals give you %d silver coins for your sacrifice.\n\r",
-        silver);
-    send_to_char(buf,ch);
+        sprintf(buf,"The Immortals give you %d silver coins for your sacrifice.\n\r",silver);
+        send_to_char(buf,ch);
     }
 
     ch->silver += silver;
@@ -2196,22 +2193,21 @@ void do_sacrifice( CHAR_DATA *ch, char *argument )
     if (IS_SET(ch->act,PLR_AUTOSPLIT) )
     { /* AUTOSPLIT code */
         members = 0;
-    for (gch = ch->in_room->people; gch != NULL; gch = gch->next_in_room )
+        for (gch = ch->in_room->people; gch != NULL; gch = gch->next_in_room )
         {
             if ( is_same_group( gch, ch ) )
             members++;
         }
 
-    if ( members > 1 && silver > 1)
-    {
-        sprintf(buffer,"%d",silver);
-        do_function(ch, &do_split, buffer);
-    }
+        if ( members > 1 && silver > 1)
+        {
+            sprintf(buffer,"%d",silver);
+            do_function(ch, &do_split, buffer);
+        }
     }
 
     act( "$n sacrifices $p to the Immortals.", ch, obj, NULL, TO_ROOM );
-    wiznet("$N sends up $p as a burnt offering.",
-       ch,obj,WIZ_SACCING,0,0);
+    wiznet("$N sends up $p as a burnt offering.", ch,obj,WIZ_SACCING,0,0);
     extract_obj( obj );
     return;
 }

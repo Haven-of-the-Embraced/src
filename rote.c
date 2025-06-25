@@ -486,24 +486,44 @@ void do_sphere(CHAR_DATA *ch, char *argument)
     char buf[MAX_STRING_LENGTH];
     CHAR_DATA *victim;
 
-
     if (IS_NPC(ch)) return;
-
 
     if ( IS_IMMORTAL(ch) && (victim = get_char_world(ch, argument)) != NULL &&
     !IS_NPC(victim))
     {//print to IMMs.
-        cprintf(ch,"%s's Arete knowledge is %d and your Avatar strength is %d.\n\r",victim->name, victim->arete, victim->avatar);
-        cprintf(ch,"%s's strength in the Spheres are as follows:\n\r", victim->name);
-        cprintf(ch,"Prime:           %s\n\r",dots(victim->sphere[SPHERE_PRIME], FALSE));
-        cprintf(ch,"Spirit:          %s\n\r",dots(victim->sphere[SPHERE_SPIRIT], FALSE));
-        cprintf(ch,"Time:            %s\n\r",dots(victim->sphere[SPHERE_TIME], FALSE));
-        cprintf(ch,"Mind:            %s\n\r",dots(victim->sphere[SPHERE_MIND], FALSE));
-        cprintf(ch,"Matter:          %s\n\r",dots(victim->sphere[SPHERE_MATTER], FALSE));
-        cprintf(ch,"Life:            %s\n\r",dots(victim->sphere[SPHERE_LIFE], FALSE));
-        cprintf(ch,"Forces:          %s\n\r",dots(victim->sphere[SPHERE_FORCES], FALSE));
-        cprintf(ch,"Correspondence:  %s\n\r",dots(victim->sphere[SPHERE_CORRESPONDENCE], FALSE));
-        cprintf(ch,"Entropy:         %s\n\r",dots(victim->sphere[SPHERE_ENTROPY], FALSE));
+        cprintf(ch,"%s's Arete knowledge is %d and %s Avatar strength is %d.\n\r",victim->name, 
+            victim->arete, victim->sex == 0 ? "its" : victim->sex == 1 ? "his" : "her", victim->avatar);
+        cprintf(ch,"%s strength in the Spheres are as follows:\n\r", 
+            victim->sex == 0 ? "Its" : victim->sex == 1 ? "His" : "Her");
+        cprintf(ch,"%s{YPrime{x:           {D%s{x\n\r",
+            tradition_table[victim->tradition].sphere == SPHERE_PRIME ? "{R*{x" : " ", 
+            dots(victim->sphere[SPHERE_PRIME], FALSE));
+        cprintf(ch,"%s{MSpirit{x:          {D%s{x\n\r",
+            tradition_table[victim->tradition].sphere == SPHERE_SPIRIT ? "{R*{x" : " ",
+            dots(victim->sphere[SPHERE_SPIRIT], FALSE));
+        cprintf(ch,"%s{cTime{x:            {D%s{x\n\r",
+            tradition_table[victim->tradition].sphere == SPHERE_TIME ? "{R*{x" : " ",
+            dots(victim->sphere[SPHERE_TIME], FALSE));
+        cprintf(ch,"%s{CMind{x:            {D%s{x\n\r",
+            tradition_table[victim->tradition].sphere == SPHERE_MIND ? "{R*{x" : " ",
+            dots(victim->sphere[SPHERE_MIND], FALSE));
+        cprintf(ch,"%s{yMatter{x:          {D%s{x\n\r",
+            tradition_table[victim->tradition].sphere == SPHERE_MATTER ? "{R*{x" : " ",
+            dots(victim->sphere[SPHERE_MATTER], FALSE));
+        cprintf(ch,"%s{GLife{x:            {D%s{x\n\r",
+            tradition_table[victim->tradition].sphere == SPHERE_LIFE ? "{R*{x" : " ",
+            dots(victim->sphere[SPHERE_LIFE], FALSE));
+        cprintf(ch,"%s{RForces{x:          {D%s{x\n\r",
+            tradition_table[victim->tradition].sphere == SPHERE_FORCES ? "{R*{x" : " ",
+            dots(victim->sphere[SPHERE_FORCES], FALSE));
+        cprintf(ch,"%s{BCorrespondence{x:  {D%s{x\n\r",
+            tradition_table[victim->tradition].sphere == SPHERE_CORRESPONDENCE ? "{R*{x" : " ",
+            dots(victim->sphere[SPHERE_CORRESPONDENCE], FALSE));
+        cprintf(ch,"%s{DEntropy{x:         {D%s{x\n\r",
+            tradition_table[victim->tradition].sphere == SPHERE_ENTROPY ? "{R*{x" : " ",
+            dots(victim->sphere[SPHERE_ENTROPY], FALSE));
+        cprintf(ch,"\n\r{R*{x%s's Tradition Sphere for %s.\n\r", victim->name, 
+            capitalize(tradition_table[victim->tradition].name));
         return;
     }
     if(ch->avatar == 0)
@@ -517,25 +537,45 @@ void do_sphere(CHAR_DATA *ch, char *argument)
         send_to_char(buf,ch);
         sprintf(buf,"Your strength in the Spheres are as follows:\n\r");
         send_to_char(buf,ch);
-        sprintf(buf,"Prime:           %s\n\r",dots(ch->sphere[SPHERE_PRIME], FALSE));
+        sprintf(buf,"%s{YPrime{x:            {D%s{x\n\r",
+            tradition_table[ch->tradition].sphere == SPHERE_PRIME ? "{R*{x" : " ",
+            dots(ch->sphere[SPHERE_PRIME], FALSE));
         send_to_char(buf,ch);
-        sprintf(buf,"Spirit:          %s\n\r",dots(ch->sphere[SPHERE_SPIRIT], FALSE));
+        sprintf(buf,"%s{MSpirit{x:           {D%s{x\n\r",
+            tradition_table[ch->tradition].sphere == SPHERE_SPIRIT ? "{R*{x" : " ",
+            dots(ch->sphere[SPHERE_SPIRIT], FALSE));
         send_to_char(buf,ch);
-        sprintf(buf,"Time:            %s\n\r",dots(ch->sphere[SPHERE_TIME], FALSE));
+        sprintf(buf,"%s{cTime{x:             {D%s{x\n\r",
+            tradition_table[ch->tradition].sphere == SPHERE_TIME ? "{R*{x" : " ",
+            dots(ch->sphere[SPHERE_TIME], FALSE));
         send_to_char(buf,ch);
-        sprintf(buf,"Mind:            %s\n\r",dots(ch->sphere[SPHERE_MIND], FALSE));
+        sprintf(buf,"%s{CMind{x:             {D%s{x\n\r",
+            tradition_table[ch->tradition].sphere == SPHERE_MIND ? "{R*{x" : " ",
+            dots(ch->sphere[SPHERE_MIND], FALSE));
         send_to_char(buf,ch);
-        sprintf(buf,"Matter:          %s\n\r",dots(ch->sphere[SPHERE_MATTER], FALSE));
+        sprintf(buf,"%s{yMatter{x:           {D%s{x\n\r",
+            tradition_table[ch->tradition].sphere == SPHERE_MATTER ? "{R*{x" : " ",
+            dots(ch->sphere[SPHERE_MATTER], FALSE));
         send_to_char(buf,ch);
-        sprintf(buf,"Life:            %s\n\r",dots(ch->sphere[SPHERE_LIFE], FALSE));
+        sprintf(buf,"%s{GLife{x:             {D%s{x\n\r",
+            tradition_table[ch->tradition].sphere == SPHERE_LIFE ? "{R*{x" : " ",
+            dots(ch->sphere[SPHERE_LIFE], FALSE));
         send_to_char(buf,ch);
-        sprintf(buf,"Forces:          %s\n\r",dots(ch->sphere[SPHERE_FORCES], FALSE));
+        sprintf(buf,"%s{RForces{x:           {D%s{x\n\r",
+            tradition_table[ch->tradition].sphere == SPHERE_FORCES ? "{R*{x" : " ",
+            dots(ch->sphere[SPHERE_FORCES], FALSE));
         send_to_char(buf,ch);
-        sprintf(buf,"Correspondence:  %s\n\r",dots(ch->sphere[SPHERE_CORRESPONDENCE], FALSE));
+        sprintf(buf,"%s{BCorrespondence{x:   {D%s{x\n\r",
+            tradition_table[ch->tradition].sphere == SPHERE_CORRESPONDENCE ? "{R*{x" : " ",
+            dots(ch->sphere[SPHERE_CORRESPONDENCE], FALSE));
         send_to_char(buf,ch);
-        sprintf(buf,"Entropy:         %s\n\r",dots(ch->sphere[SPHERE_ENTROPY], FALSE));
+        sprintf(buf,"%s{DEntropy{x:          {D%s{x\n\r",
+            tradition_table[ch->tradition].sphere == SPHERE_ENTROPY ? "{R*{x" : " ",
+            dots(ch->sphere[SPHERE_ENTROPY], FALSE));
         send_to_char(buf,ch);
-        return;
+        sprintf(buf,"\n\r{R*{xYour Tradition Sphere for %s.\n\r", 
+            capitalize(tradition_table[ch->tradition].name));
+        send_to_char(buf,ch);
 
 }
 

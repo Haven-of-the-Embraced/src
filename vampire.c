@@ -159,8 +159,6 @@ void do_vampire(CHAR_DATA *ch, char *argument)
     send_to_char(buf,ch);
     sprintf(buf, "You have %d of %d Blood Points.\n\r", ch->pblood/10, ch->max_pblood/10);
     send_to_char(buf,ch);
-    sprintf(buf, "You have %d Freebie points.\n\r", ch->freebie);
-    send_to_char(buf,ch);
 /*  sprintf(buf, "You have drained %d Kindred of their blood.\n\r", ch->drains);
     send_to_char(buf,ch);
 */
@@ -176,87 +174,87 @@ void do_vampire(CHAR_DATA *ch, char *argument)
     send_to_char("***********************************\n\r",ch);
     if(ch->pcdata->discipline[ANIMALISM])
     {
-        sprintf(buf, "Animalism                  -    %d\n\r", ch->pcdata->discipline[ANIMALISM]);
+        sprintf(buf, "Animalism                  -  {D%s{x\n\r", dots(ch->pcdata->discipline[ANIMALISM], TRUE));
         send_to_char(buf,ch);
     }
     if(ch->pcdata->discipline[AUSPEX])
     {
-        sprintf(buf, "Auspex                     -    %d\n\r", ch->pcdata->discipline[AUSPEX]);
+        sprintf(buf, "Auspex                     -  {D%s{x\n\r", dots(ch->pcdata->discipline[AUSPEX], TRUE));
         send_to_char(buf,ch);
     }
     if(ch->pcdata->discipline[PROTEAN])
     {
-        sprintf(buf, "Protean                    -    %d\n\r", ch->pcdata->discipline[PROTEAN]);
+        sprintf(buf, "Protean                    -  {D%s{x\n\r", dots(ch->pcdata->discipline[PROTEAN], TRUE));
         send_to_char(buf,ch);
     }
     if(ch->pcdata->discipline[CELERITY])
     {
-        sprintf(buf, "Celerity                   -    %d\n\r", ch->pcdata->discipline[CELERITY]);
+        sprintf(buf, "Celerity                   -  {D%s{x\n\r", dots(ch->pcdata->discipline[CELERITY], TRUE));
         send_to_char(buf,ch);
     }
     if(ch->pcdata->discipline[CHIMERSTRY])
     {
-        sprintf(buf, "Chimerstry                 -    %d\n\r", ch->pcdata->discipline[CHIMERSTRY]);
+        sprintf(buf, "Chimerstry                 -  {D%s{x\n\r", dots(ch->pcdata->discipline[CHIMERSTRY], TRUE));
         send_to_char(buf,ch);
     }
     if(ch->pcdata->discipline[FORTITUDE])
     {
-        sprintf(buf, "Fortitude                  -    %d\n\r", ch->pcdata->discipline[FORTITUDE]);
+        sprintf(buf, "Fortitude                  -  {D%s{x\n\r", dots(ch->pcdata->discipline[FORTITUDE], TRUE));
         send_to_char(buf,ch);
     }
     if(ch->pcdata->discipline[POTENCE])
     {
-        sprintf(buf, "Potence                    -    %d\n\r", ch->pcdata->discipline[POTENCE]);
+        sprintf(buf, "Potence                    -  {D%s{x\n\r", dots(ch->pcdata->discipline[POTENCE], TRUE));
         send_to_char(buf,ch);
     }
     if(ch->pcdata->discipline[OBFUSCATE])
     {
-        sprintf(buf, "Obfuscate                  -    %d\n\r", ch->pcdata->discipline[OBFUSCATE]);
+        sprintf(buf, "Obfuscate                  -  {D%s{x\n\r", dots(ch->pcdata->discipline[OBFUSCATE], TRUE));
         send_to_char(buf,ch);
     }
     if(ch->pcdata->discipline[OBTENEBRATION])
     {
-        sprintf(buf, "Obtenebration              -    %d\n\r", ch->pcdata->discipline[OBTENEBRATION]);
+        sprintf(buf, "Obtenebration              -  {D%s{x\n\r", dots(ch->pcdata->discipline[OBTENEBRATION], TRUE));
         send_to_char(buf,ch);
     }
     if(ch->pcdata->discipline[DOMINATE])
     {
-        sprintf(buf, "Dominate                   -    %d\n\r", ch->pcdata->discipline[DOMINATE]);
+        sprintf(buf, "Dominate                   -  {D%s{x\n\r", dots(ch->pcdata->discipline[DOMINATE], TRUE));
         send_to_char(buf,ch);
     }
     if(ch->pcdata->discipline[PRESENCE])
     {
-        sprintf(buf, "Presence                   -    %d\n\r", ch->pcdata->discipline[PRESENCE]);
+        sprintf(buf, "Presence                   -  {D%s{x\n\r", dots(ch->pcdata->discipline[PRESENCE], TRUE));
         send_to_char(buf,ch);
     }
     if(ch->pcdata->discipline[MORTIS])
     {
-        sprintf(buf, "Mortis                     -    %d\n\r", ch->pcdata->discipline[MORTIS]);
+        sprintf(buf, "Mortis                     -  {D%s{x\n\r", dots(ch->pcdata->discipline[MORTIS], TRUE));
         send_to_char(buf,ch);
     }
     if(ch->pcdata->discipline[THAUMATURGY])
     {
-        sprintf(buf, "Thaumaturgy Path of Blood  -    %d\n\r", ch->pcdata->discipline[THAUMATURGY]);
+        sprintf(buf, "Thaumaturgy Path of Blood  -  {D%s{x\n\r", dots(ch->pcdata->discipline[THAUMATURGY], TRUE));
         send_to_char(buf,ch);
     }
     if(ch->pcdata->discipline[QUIETUS])
     {
-        sprintf(buf, "Quietus                    -    %d\n\r", ch->pcdata->discipline[QUIETUS]);
+        sprintf(buf, "Quietus                    -  {D%s{x\n\r", dots(ch->pcdata->discipline[QUIETUS], TRUE));
         send_to_char(buf,ch);
     }
     if(ch->pcdata->discipline[VICISSITUDE])
     {
-        sprintf(buf, "Vicissitude                -    %d\n\r", ch->pcdata->discipline[VICISSITUDE]);
+        sprintf(buf, "Vicissitude                -  {D%s{x\n\r", dots(ch->pcdata->discipline[VICISSITUDE], TRUE));
         send_to_char(buf,ch);
     }
     if(ch->pcdata->discipline[DEMENTATION])
     {
-        sprintf(buf, "Dementation                -    %d\n\r", ch->pcdata->discipline[DEMENTATION]);
+        sprintf(buf, "Dementation                -  {D%s{x\n\r", dots(ch->pcdata->discipline[DEMENTATION], TRUE));
         send_to_char(buf,ch);
     }
     if(ch->pcdata->discipline[SERPENTIS])
     {
-        sprintf(buf, "Serpentis                  -    %d\n\r", ch->pcdata->discipline[SERPENTIS]);
+        sprintf(buf, "Serpentis                  -  {D%s{x\n\r", dots(ch->pcdata->discipline[SERPENTIS], TRUE));
         send_to_char(buf,ch);
     }
     return;

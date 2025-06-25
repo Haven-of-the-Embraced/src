@@ -4202,6 +4202,7 @@ char *  center      args( ( char *argument, int width, char *fill ) );
 char *  dots        args( ( int num, bool plus ) );
 char *  dots2       args( ( int num, bool space) );
 char *  dots3       args( ( int num, bool space ) );
+char *  dots6       args( ( int num, bool space ) );
 char *  bloodpooldot    args( ( int num, bool space ) );
 char *  bloodpooldot2   args( ( int num, bool space ) );
 char *  quintessencedot    args( ( int num, bool space ) );

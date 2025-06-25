@@ -4491,6 +4491,37 @@ char *dots3( int num, bool space)
     return "(unknown)";
 }
 
+//Specifically for 6th dot in do_vampire
+char *dots6( int num, bool plus )
+{
+    if(plus)
+    {
+        switch ( num )
+        {
+            case 0:     return "OOOOOO";
+            case 1:     return "{W@{xOOOOO";
+            case 2:     return "{W@@{xOOOO";
+            case 3:     return "{W@@@{xOOO";
+            case 4:     return "{W@@@@{xOO";
+            case 5:     return "{W@@@@@{xO";
+            case 6:     return "{W@@@@@@{x";
+        }
+    }
+    switch ( num )
+    {
+        case 0:     return "OOOOOO";
+        case 1:     return "{W@{xOOOOO";
+        case 2:     return "{W@@{xOOOO";
+        case 3:     return "{W@@@{xOOO";
+        case 4:     return "{W@@@@{xOO";
+        case 5:     return "{W@@@@@{xO";
+        case 6:     return "{W@@@@@@{x";
+    }
+
+    bug( "[dots3()] - Invalid dot rating: %d.", num );
+    return "{RX 0-6 {x";
+}
+
 char *bloodpooldot( int num, bool space)
 {
 

@@ -2613,7 +2613,7 @@ void do_pstat( CHAR_DATA *ch, char *argument )
     char buf2[MSL];
     char buf3[MSL];
     char arg[MAX_INPUT_LENGTH];
-    AFFECT_DATA *paf;
+    AFFECT_DATA *paf, *paf_last = NULL;
     CHAR_DATA *victim;
     int hometown;
     ROOM_INDEX_DATA *room;
@@ -3013,6 +3013,16 @@ void do_pstat( CHAR_DATA *ch, char *argument )
         paf->where == TO_RESIST ? imm_bit_name(paf->bitvector) : paf->where == TO_VULN ? imm_bit_name(paf->bitvector) :
         paf->where == TO_IMMUNE ? imm_bit_name(paf->bitvector) :
         paf->where == TO_AFFECTS ? affect_bit_name( paf->bitvector ) : affect2_bit_name( paf->bitvector ));
+    if (paf_last != NULL && paf->type == paf_last->type)
+        sprintf( buf,
+        "                              : %18s (%4d) - %3d %s%s",
+        affect_loc_name( paf->location ),
+        paf->modifier,
+        paf->duration,
+        paf->duration == -1 ? "permanently" : paf->duration == 1 ? "tick " : "ticks",
+        buf2
+        );
+    else
     sprintf( buf,
         " {y'{W%-18s{y'{W(Lvl-%3d){x: %18s (%4d) - %3d %s%s",
         skill_table[(int) paf->type].name,
@@ -3024,6 +3034,7 @@ void do_pstat( CHAR_DATA *ch, char *argument )
         buf2
         );
     send_to_char( buf, ch );
+    paf_last = paf;
     }
 
     return;

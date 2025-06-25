@@ -3014,14 +3014,29 @@ void do_pstat( CHAR_DATA *ch, char *argument )
         paf->where == TO_IMMUNE ? imm_bit_name(paf->bitvector) :
         paf->where == TO_AFFECTS ? affect_bit_name( paf->bitvector ) : affect2_bit_name( paf->bitvector ));
     if (paf_last != NULL && paf->type == paf_last->type)
-        sprintf( buf,
-        "                              : %18s (%4d) - %3d %s%s",
-        affect_loc_name( paf->location ),
-        paf->modifier,
-        paf->duration,
-        paf->duration == -1 ? "permanently" : paf->duration == 1 ? "tick " : "ticks",
-        buf2
-        );
+    {
+        if ((affect_loc_name( paf->location ) == affect_loc_name( paf_last->location ))
+            && (!str_cmp(affect_loc_name( paf->location ), "none")))
+        {
+            if (paf->bitvector != 0)
+            {
+                sprintf(buf, "      Associated Bit [{y%s%s{x]\n\r",
+                paf->where == TO_RESIST ? "res_" : paf->where == TO_IMMUNE ? "imm_" : paf->where == TO_VULN ? "vuln_" : "",
+                paf->where == TO_RESIST ? imm_bit_name(paf->bitvector) : paf->where == TO_VULN ? imm_bit_name(paf->bitvector) :
+                paf->where == TO_IMMUNE ? imm_bit_name(paf->bitvector) :
+                paf->where == TO_AFFECTS ? affect_bit_name( paf->bitvector ) : affect2_bit_name( paf->bitvector ));
+            }
+        }
+        else
+            sprintf( buf,
+            "                              : %18s (%4d) - %3d %s%s",
+            affect_loc_name( paf->location ),
+            paf->modifier,
+            paf->duration,
+            paf->duration == -1 ? "permanently" : paf->duration == 1 ? "tick " : "ticks",
+            buf2
+            );
+    }
     else
     sprintf( buf,
         " {y'{W%-18s{y'{W(Lvl-%3d){x: %18s (%4d) - %3d %s%s",

@@ -127,6 +127,7 @@ void do_vampire(CHAR_DATA *ch, char *argument)
 {
     char buf[MAX_STRING_LENGTH];
     bool compact = FALSE;
+    bool elder = FALSE;
 
     if (IS_SET(ch->comm,COMM_COMPACT))
         compact = TRUE;
@@ -145,6 +146,9 @@ void do_vampire(CHAR_DATA *ch, char *argument)
     if(ch->pcdata->csgeneration == 8) send_to_char("You are a Vampire of the Eighth Generation,\n\r" ,ch);
     if(ch->pcdata->csgeneration == 9) send_to_char("You are a Vampire of the Ninth Generation,\n\r" ,ch);
     if(ch->pcdata->csgeneration == 10) send_to_char("You are a Vampire of the Tenth Generation,\n\r" ,ch);
+
+    if (ch->pcdata->csgeneration <= 7)
+        elder = TRUE;
 
     sprintf(buf, "and have {r%d{x / {r%d{x Blood Points in your system.\n\r", ch->pblood/10, ch->max_pblood/10);
     send_to_char(buf,ch);
@@ -167,103 +171,103 @@ void do_vampire(CHAR_DATA *ch, char *argument)
     if(ch->pcdata->discipline[ANIMALISM])
     {
         sprintf(buf, "  %sAnimalism                  -  {D%s{x\n\r", is_clan_disc(ch, ANIMALISM) ? "{R*{x" : " ",
-            dots(ch->pcdata->discipline[ANIMALISM], TRUE));
+            elder ? dots6(ch->pcdata->discipline[ANIMALISM], TRUE) : dots(ch->pcdata->discipline[ANIMALISM], TRUE));
         send_to_char(buf,ch);
     }
     if(ch->pcdata->discipline[AUSPEX])
     {
         sprintf(buf, "  %sAuspex                     -  {D%s{x\n\r", is_clan_disc(ch, AUSPEX) ? "{R*{x" : " ",
-            dots(ch->pcdata->discipline[AUSPEX], TRUE));
+            elder ? dots6(ch->pcdata->discipline[AUSPEX], TRUE) : dots(ch->pcdata->discipline[AUSPEX], TRUE));
         send_to_char(buf,ch);
     }
     if(ch->pcdata->discipline[CELERITY])
     {
         sprintf(buf, "  %sCelerity                   -  {D%s{x\n\r", is_clan_disc(ch, CELERITY) ? "{R*{x" : " ",
-            dots(ch->pcdata->discipline[CELERITY], TRUE));
+            elder ? dots6(ch->pcdata->discipline[CELERITY], TRUE) : dots(ch->pcdata->discipline[CELERITY], TRUE));
         send_to_char(buf,ch);
     }
     if(ch->pcdata->discipline[CHIMERSTRY])
     {
         sprintf(buf, "  %sChimerstry                 -  {D%s{x\n\r", is_clan_disc(ch, CHIMERSTRY) ? "{R*{x" : " ",
-            dots(ch->pcdata->discipline[CHIMERSTRY], TRUE));
+            elder ? dots6(ch->pcdata->discipline[CHIMERSTRY], TRUE) : dots(ch->pcdata->discipline[CHIMERSTRY], TRUE));
         send_to_char(buf,ch);
     }
     if(ch->pcdata->discipline[DEMENTATION])
     {
         sprintf(buf, "  %sDementation                -  {D%s{x\n\r", is_clan_disc(ch, DEMENTATION) ? "{R*{x" : " ",
-            dots(ch->pcdata->discipline[DEMENTATION], TRUE));
+            elder ? dots6(ch->pcdata->discipline[DEMENTATION], TRUE) : dots(ch->pcdata->discipline[DEMENTATION], TRUE));
         send_to_char(buf,ch);
     }
     if(ch->pcdata->discipline[DOMINATE])
     {
         sprintf(buf, "  %sDominate                   -  {D%s{x\n\r", is_clan_disc(ch, DOMINATE) ? "{R*{x" : " ",
-            dots(ch->pcdata->discipline[DOMINATE], TRUE));
+            elder ? dots6(ch->pcdata->discipline[DOMINATE], TRUE) : dots(ch->pcdata->discipline[DOMINATE], TRUE));
         send_to_char(buf,ch);
     }
     if(ch->pcdata->discipline[FORTITUDE])
     {
         sprintf(buf, "  %sFortitude                  -  {D%s{x\n\r", is_clan_disc(ch, FORTITUDE) ? "{R*{x" : " ",
-            dots(ch->pcdata->discipline[FORTITUDE], TRUE));
+            elder ? dots6(ch->pcdata->discipline[FORTITUDE], TRUE) : dots(ch->pcdata->discipline[FORTITUDE], TRUE));
         send_to_char(buf,ch);
     }
     if(ch->pcdata->discipline[MORTIS])
     {
         sprintf(buf, "  %sMortis                     -  {D%s{x\n\r", is_clan_disc(ch, MORTIS) ? "{R*{x" : " ",
-            dots(ch->pcdata->discipline[MORTIS], TRUE));
+            elder ? dots6(ch->pcdata->discipline[MORTIS], TRUE) : dots(ch->pcdata->discipline[MORTIS], TRUE));
         send_to_char(buf,ch);
     }
     if(ch->pcdata->discipline[OBFUSCATE])
     {
         sprintf(buf, "  %sObfuscate                  -  {D%s{x\n\r", is_clan_disc(ch, OBFUSCATE) ? "{R*{x" : " ",
-            dots(ch->pcdata->discipline[OBFUSCATE], TRUE));
+            elder ? dots6(ch->pcdata->discipline[OBFUSCATE], TRUE) : dots(ch->pcdata->discipline[OBFUSCATE], TRUE));
         send_to_char(buf,ch);
     }
     if(ch->pcdata->discipline[OBTENEBRATION])
     {
         sprintf(buf, "  %sObtenebration              -  {D%s{x\n\r", is_clan_disc(ch, OBTENEBRATION) ? "{R*{x" : " ",
-            dots(ch->pcdata->discipline[OBTENEBRATION], TRUE));
+            elder ? dots6(ch->pcdata->discipline[OBTENEBRATION], TRUE) : dots(ch->pcdata->discipline[OBTENEBRATION], TRUE));
         send_to_char(buf,ch);
     }
     if(ch->pcdata->discipline[POTENCE])
     {
         sprintf(buf, "  %sPotence                    -  {D%s{x\n\r", is_clan_disc(ch, POTENCE) ? "{R*{x" : " ",
-            dots(ch->pcdata->discipline[POTENCE], TRUE));
+            elder ? dots6(ch->pcdata->discipline[POTENCE], TRUE) : dots(ch->pcdata->discipline[POTENCE], TRUE));
         send_to_char(buf,ch);
     }
     if(ch->pcdata->discipline[PRESENCE])
     {
         sprintf(buf, "  %sPresence                   -  {D%s{x\n\r", is_clan_disc(ch, PRESENCE) ? "{R*{x" : " ",
-            dots(ch->pcdata->discipline[PRESENCE], TRUE));
+            elder ? dots6(ch->pcdata->discipline[PRESENCE], TRUE) : dots(ch->pcdata->discipline[PRESENCE], TRUE));
         send_to_char(buf,ch);
     }
     if(ch->pcdata->discipline[PROTEAN])
     {
         sprintf(buf, "  %sProtean                    -  {D%s{x\n\r", is_clan_disc(ch, PROTEAN) ? "{R*{x" : " ",
-            dots(ch->pcdata->discipline[PROTEAN], TRUE));
+            elder ? dots6(ch->pcdata->discipline[PROTEAN], TRUE) : dots(ch->pcdata->discipline[PROTEAN], TRUE));
         send_to_char(buf,ch);
     }
     if(ch->pcdata->discipline[QUIETUS])
     {
         sprintf(buf, "  %sQuietus                    -  {D%s{x\n\r", is_clan_disc(ch, QUIETUS) ? "{R*{x" : " ",
-            dots(ch->pcdata->discipline[QUIETUS], TRUE));
+            elder ? dots6(ch->pcdata->discipline[QUIETUS], TRUE) : dots(ch->pcdata->discipline[QUIETUS], TRUE));
         send_to_char(buf,ch);
     }
     if(ch->pcdata->discipline[SERPENTIS])
     {
         sprintf(buf, "  %sSerpentis                  -  {D%s{x\n\r", is_clan_disc(ch, SERPENTIS) ? "{R*{x" : " ",
-            dots(ch->pcdata->discipline[SERPENTIS], TRUE));
+            elder ? dots6(ch->pcdata->discipline[SERPENTIS], TRUE) : dots(ch->pcdata->discipline[SERPENTIS], TRUE));
         send_to_char(buf,ch);
     }
     if(ch->pcdata->discipline[THAUMATURGY])
     {
         sprintf(buf, "  %sThaumaturgy Path of Blood  -  {D%s{x\n\r", is_clan_disc(ch, THAUMATURGY) ? "{R*{x" : " ",
-            dots(ch->pcdata->discipline[THAUMATURGY], TRUE));
+            elder ? dots6(ch->pcdata->discipline[THAUMATURGY], TRUE) : dots(ch->pcdata->discipline[THAUMATURGY], TRUE));
         send_to_char(buf,ch);
     }
     if(ch->pcdata->discipline[VICISSITUDE])
     {
         sprintf(buf, "  %sVicissitude                -  {D%s{x\n\r", is_clan_disc(ch, VICISSITUDE) ? "{R*{x" : " ",
-            dots(ch->pcdata->discipline[VICISSITUDE], TRUE));
+            elder ? dots6(ch->pcdata->discipline[VICISSITUDE], TRUE) : dots(ch->pcdata->discipline[VICISSITUDE], TRUE));
         send_to_char(buf,ch);
     }
     return;

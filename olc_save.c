@@ -308,7 +308,7 @@ void save_mobiles( FILE *fp, AREA_DATA *pArea )
 
     for( i = pArea->min_vnum; i <= pArea->max_vnum; i++ )
     {
-    if ( (pMob = get_mob_index( i )) )
+    if ( (pMob = get_mob_index( i )) && pMob->delete == FALSE)
         save_mobile( fp, pMob );
     }
 

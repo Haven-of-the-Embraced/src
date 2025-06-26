@@ -2097,6 +2097,7 @@ struct  mob_index_data
     sh_int      vnum;
     sh_int      group;
     bool        new_format;
+    bool        delete;
     sh_int      count;
     sh_int      killed;
     sh_int      maxload;

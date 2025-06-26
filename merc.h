@@ -3629,7 +3629,6 @@ void wiznet     args( (char *string, CHAR_DATA *ch, OBJ_DATA *obj,
                    long flag, long flag_skip, int min_level ) );
 void read_wizlist       args( (CHAR_DATA *ch));
 void copyover_recover args((void));
-void key_unlocks args(( CHAR_DATA *ch, char *key ));
 
 /* alias.c */
 void    substitute_alias args( (DESCRIPTOR_DATA *d, char *input) );

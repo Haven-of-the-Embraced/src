@@ -2284,7 +2284,10 @@ void do_ostat( CHAR_DATA *ch, char *argument )
     return;
 }
 
-
+void key_unlocks ( CHAR_DATA *ch, char *key )
+{
+    return;
+}
 
 void do_mstat( CHAR_DATA *ch, char *argument )
 {

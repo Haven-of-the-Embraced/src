@@ -392,6 +392,7 @@ DECLARE_DO_FUN( do_mpedit   );
 DECLARE_DO_FUN( do_hedit    );
 DECLARE_DO_FUN( do_embrace  );
 DECLARE_DO_FUN( do_vampire  );
+DECLARE_DO_FUN( do_ghoul    );
 DECLARE_DO_FUN( do_disclist );
 DECLARE_DO_FUN( do_remort   );
 DECLARE_DO_FUN( do_fangs    );

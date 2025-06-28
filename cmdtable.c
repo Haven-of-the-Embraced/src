@@ -136,8 +136,9 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "lpromote",   do_promote_leader},
     { "expel",      do_expel},
 
-/* Vampire commands */
-    { "vampire",        do_vampire  },
+/* Vampire/Ghoul commands */
+    { "vampire",    do_vampire  },
+    { "ghoul",     do_ghoul    },
     { "fangs",      do_fangs },
     { "feed",       do_feed  },
     { "regenerate", do_regenerate },

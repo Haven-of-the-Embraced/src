@@ -52,12 +52,20 @@ void do_werewolf(CHAR_DATA *ch, char *argument)
     sprintf(buf, "%s has accepted your membership as part of the {G%s{x Tribe.\n\r", 
         tribe_table[tribe].totemname, tribe_table[tribe].whoname);
     send_to_char(buf, ch);
-    sprintf(buf, "Your spiritual Gnosis is {Y%d{x / {Y%d{x, and your harnessed Rage is {r%d{x / {r%d{x.\n\r", 
+    sprintf(buf, "Your spiritual {YGnosis{x is {Y%d{x / {Y%d{x, and your harnessed {rRage{x is {r%d{x / {r%d{x.\n\r", 
         ch->pcdata->gnosis[TEMP], ch->pcdata->gnosis[PERM],
         ch->pcdata->rage[TEMP], ch->pcdata->rage[PERM]);
     send_to_char(buf,ch);
-    send_to_char("\n\rTo see Spirit-given Gifts for your Breed, Tribe, and Auspice, \n\ruse the {cgift{x command.\n\r", ch);
-
+    sprintf(buf, "The form that you are currently in is {g%s{x, and you have %s fur.\n\r", 
+        ch->pcdata->shiftform == HOMID ? "Homid" : ch->pcdata->shiftform == GLABRO ? "Glabro" :
+        ch->pcdata->shiftform == CRINOS ? "Crinos" : ch->pcdata->shiftform == HISPO ? "Hispo" :
+        "Lupus", ch->pcdata->garou_fur);
+    send_to_char(buf,ch);
+    if (!compact)
+        send_to_char("\n\rWwWwWwWwWwWwWwWwWwWwWwWwWwWwWwWwWwWwWwWwWwWwWwWwWwWwWwWwWwWwWwWwW\n\r",ch);
+    send_to_char("To see Spirit-given Gifts for your Breed, Tribe, and Auspice, \n\ruse the {cgift{x command.\n\r", ch);
+    if (!compact)
+        send_to_char("WwWwWwWwWwWwWwWwWwWwWwWwWwWwWwWwWwWwWwWwWwWwWwWwWwWwWwWwWwWwWwWwW\n\r",ch);
     return;
 }
 

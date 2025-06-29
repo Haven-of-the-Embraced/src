@@ -11,6 +11,28 @@
 
 bool    shiftform   args((CHAR_DATA *ch, int desired, bool rage));
 
+void do_werewolf(CHAR_DATA *ch, char *argument)
+{
+    char buf[MAX_STRING_LENGTH];
+    bool compact = FALSE;
+
+    if (IS_SET(ch->comm,COMM_COMPACT))
+        compact = TRUE;
+    if(ch->race != race_lookup("garou"))
+    {
+        send_to_char("You are not a Werewolf!\n\r" ,ch);
+        return;
+    }
+
+    sprintf(buf,"{wYou are a %s %s of Tribe %s.{x",
+        ch->pcdata->breed == LUPUS ? "Lupus" : ch->pcdata->breed == METIS ? "Metis" : "Homid",
+        ch->pcdata->auspice == RAGABASH ? "Ragabash" : ch->pcdata->auspice == THEURGE ?
+        "Theurge" : ch->pcdata->auspice == PHILODOX ? "Philodox" : ch->pcdata->auspice == GALLIARD ?
+        "Galliard" : "Ahroun",  capitalize(clan_table[ch->clan].name));
+    send_to_char(buf, ch);
+    return;
+}
+
 void do_shapeshift(CHAR_DATA *ch, char *argument)
 {
     char arg[MAX_INPUT_LENGTH];

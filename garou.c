@@ -15,12 +15,27 @@ void do_werewolf(CHAR_DATA *ch, char *argument)
 {
     char buf[MAX_STRING_LENGTH];
     bool compact = FALSE;
+    int tribe;
 
     if (IS_SET(ch->comm,COMM_COMPACT))
         compact = TRUE;
     if(ch->race != race_lookup("garou"))
     {
         send_to_char("You are not a Werewolf!\n\r" ,ch);
+        return;
+    }
+
+    for (tribe = 0; tribe < 11; tribe++)
+    {
+/*        sprintf(buf, "Clan [%s] - Tribe %d: %s\n\r", clan_table[ch->clan].name, tribe, tribe_table[tribe].name);
+        send_to_char(buf, ch);
+*/        if (!str_cmp((clan_table[ch->clan].name), tribe_table[tribe].name))
+            break;
+    }
+
+    if (tribe == 11)
+    {
+        send_to_char("Error!  Tribe not set.\n\r", ch);
         return;
     }
 
@@ -32,15 +47,16 @@ void do_werewolf(CHAR_DATA *ch, char *argument)
         ch->pcdata->auspice == THEURGE ? "the Mystic, Theurge" : 
         ch->pcdata->auspice == PHILODOX ? "the Judge, Philodox" : 
         ch->pcdata->auspice == GALLIARD ? "the Dancer, Galliard" : 
-        "the Warrior, Ahroun",  capitalize(clan_table[ch->clan].name));
+        "the Warrior, Ahroun");
     send_to_char(buf, ch);
     sprintf(buf, "%s has accepted your membership as part of the {G%s{x Tribe.\n\r", 
-        capitalize(clan_table[ch->clan].name), capitalize(clan_table[ch->clan].name));
+        tribe_table[tribe].totemname, tribe_table[tribe].whoname);
     send_to_char(buf, ch);
-    sprintf(buf, "Your spiritual Gnosis is {Y%d{x / {Y%d{x, and your harnessed Rage is {r%d{x / {r%d{x.", 
+    sprintf(buf, "Your spiritual Gnosis is {Y%d{x / {Y%d{x, and your harnessed Rage is {r%d{x / {r%d{x.\n\r", 
         ch->pcdata->gnosis[TEMP], ch->pcdata->gnosis[PERM],
         ch->pcdata->rage[TEMP], ch->pcdata->rage[PERM]);
     send_to_char(buf,ch);
+    send_to_char("\n\rTo see Spirit-given Gifts for your Breed, Tribe, and Auspice, \n\ruse the {cgift{x command.\n\r", ch);
 
     return;
 }

@@ -1786,7 +1786,7 @@ const struct    tribe_type  tribe_table []  =
     {   "fenrir",           "Fenrir",           SPIRIT_FENRIS_WOLF,         "Great Fenris"},
     {   "Shadowlord",       "Shadow Lords",     SPIRIT_GRANDFATHER_THUNDER, "Grandfather Thunder"},
     {   "bonegnawer",       "Bone Gnawers",     SPIRIT_RAT,                 "Rat"},
-    {   "SilverFang",       "Silver Fang",      SPIRIT_FALCON,              "Falcon"},
+    {   "Silverfang",       "Silver Fang",      SPIRIT_FALCON,              "Falcon"},
     {   "Wardersofmen",     "Warders of Men",   SPIRIT_COCKROACH,           "Cockroach"},
 	{	"RedTalon",         "Red Talons",       SPIRIT_GRIFFIN,             "Griffin"},
 	{	"Silentstrider",	"Silent Striders",  SPIRIT_OWL,                 "Owl"},

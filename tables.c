@@ -1777,19 +1777,19 @@ const struct garou_form_type garou_form_table[6] =
 
 const struct    tribe_type  tribe_table []  =
 {
-/*  {   name,       who name,   totem, */
+/*  {   name,       who name,   totem, totem name*/
 
-    {   "reserved",         "",             0},
-    {   "Black Furies",     "Furies",       SPIRIT_PEGASUS},
-    {   "Children of Gaia", "Children",     SPIRIT_UNICORN},
-    {   "Fianna",           "Fianna",       SPIRIT_STAG},
-    {   "Fenrir",    "Fenrir",          SPIRIT_FENRIS_WOLF},
-    {   "Shadow Lords",     "Shadowlord",   SPIRIT_GRANDFATHER_THUNDER},
-    {   "Bone Gnawer",  "Gnawer",      SPIRIT_RAT},
-    {   "Silver Fangs",     "Fang",         SPIRIT_FALCON},
-    {   "Warders Of Men",  "Warder",    SPIRIT_COCKROACH},
-		{		"Red Talons",		"Redtalon",			SPIRIT_GRIFFIN},
-		{		"Silent Striders",	"Striders",	SPIRIT_OWL},
+    {   "reserved",         "",                 0, "None"},
+    {   "Blackfury",        "Black Furies",     SPIRIT_PEGASUS,             "Pegasus"},
+    {   "Childrenofgaia",   "Children of Gaia", SPIRIT_UNICORN,             "Unicorn"},
+    {   "Fianna",           "Fianna",           SPIRIT_STAG,                "Stag"},
+    {   "fenrir",           "Fenrir",           SPIRIT_FENRIS_WOLF,         "Great Fenris"},
+    {   "Shadowlord",       "Shadow Lords",     SPIRIT_GRANDFATHER_THUNDER, "Grandfather Thunder"},
+    {   "bonegnawer",       "Bone Gnawers",     SPIRIT_RAT,                 "Rat"},
+    {   "SilverFang",       "Silver Fang",      SPIRIT_FALCON,              "Falcon"},
+    {   "Wardersofmen",     "Warders of Men",   SPIRIT_COCKROACH,           "Cockroach"},
+	{	"RedTalon",         "Red Talons",       SPIRIT_GRIFFIN,             "Griffin"},
+	{	"Silentstrider",	"Silent Striders",  SPIRIT_OWL,                 "Owl"},
 };
 
 

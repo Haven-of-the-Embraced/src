@@ -179,6 +179,7 @@ struct  tribe_type
     char *name;
     char *whoname;
     int totem;
+    char *totemname;
 };
 
 struct  crafted_item_type

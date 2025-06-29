@@ -230,6 +230,7 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "wingclaws", do_wingclaws },
 
 /* Garou commands */
+    { "werewolf",   do_werewolf},
     { "induct",     do_induct},
     { "renown",     do_renown},
     { "garou",      do_garou},

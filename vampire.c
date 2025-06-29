@@ -292,9 +292,10 @@ void do_vampire(CHAR_DATA *ch, char *argument)
 
 void do_ghoul(CHAR_DATA *ch, char *argument)
 {
-    char buf[MAX_STRING_LENGTH];
+    char buf[MAX_STRING_LENGTH], timeghouled[MSL];
     bool compact = FALSE;
     bool elder = FALSE;
+    int ghouledage = ch->pcdata->csbackgrounds[CSBACK_GHOULEDAGE];
 
     if (IS_SET(ch->comm,COMM_COMPACT))
         compact = TRUE;
@@ -303,31 +304,32 @@ void do_ghoul(CHAR_DATA *ch, char *argument)
         send_to_char("You are not a ghoul!\n\r" ,ch);
         return;
     }
-    if(ch->pcdata->csgeneration == 1) send_to_char("You are a Vampire of the First Generation,\n\r" ,ch);
-    if(ch->pcdata->csgeneration == 2) send_to_char("You are a Vampire of the Second Generation,\n\r" ,ch);
-    if(ch->pcdata->csgeneration == 3) send_to_char("You are a Vampire of the Third Generation,\n\r" ,ch);
-    if(ch->pcdata->csgeneration == 4) send_to_char("You are a Vampire of the Fourth Generation,\n\r" ,ch);
-    if(ch->pcdata->csgeneration == 5) send_to_char("You are a Vampire of the Fifth Generation,\n\r" ,ch);
-    if(ch->pcdata->csgeneration == 6) send_to_char("You are a Vampire of the Sixth Generation,\n\r" ,ch);
-    if(ch->pcdata->csgeneration == 7) send_to_char("You are a Vampire of the Seventh Generation,\n\r" ,ch);
-    if(ch->pcdata->csgeneration == 8) send_to_char("You are a Vampire of the Eighth Generation,\n\r" ,ch);
-    if(ch->pcdata->csgeneration == 9) send_to_char("You are a Vampire of the Ninth Generation,\n\r" ,ch);
-    if(ch->pcdata->csgeneration == 10) send_to_char("You are a Vampire of the Tenth Generation,\n\r" ,ch);
 
-    if (ch->pcdata->csgeneration <= 7)
-        elder = TRUE;
-
-    sprintf(buf, "and have {r%d{x / {r%d{x Blood Points in your system.\n\r", ch->pblood/10, ch->max_pblood/10);
-    send_to_char(buf,ch);
-    sprintf(buf, "You are the Childe of %s, siring %d Childer yourself.\n\r", ch->sire, ch->childer);
-    send_to_char(buf,ch);
-/*  sprintf(buf, "You have drained %d Kindred of their blood.\n\r", ch->drains);
-    send_to_char(buf,ch);
-*/
-    if (IS_AFFECTED(ch,AFF_FANGS))
-    {
-        send_to_char("{rYour {Wfangs{r are extended.{x\n\r" ,ch);
+    switch (ghouledage)
+    {   case (0):   sprintf(timeghouled, "between 0 - 50");
+            break;
+        case (1):   sprintf(timeghouled, "between 51 - 100");
+            break;
+        case (2):   sprintf(timeghouled, "between 101 - 150");
+            break;
+        case (3):   sprintf(timeghouled, "between 151 - 200");
+            break;
+        case (4):   sprintf(timeghouled, "between 201 - 250");
+            break;
+        case (5):   sprintf(timeghouled, "between 251 - 300");
+            break;
+        default:    sprintf(timeghouled, "??????");
     }
+
+    sprintf(buf, "You have been in service to your Domitor, %s of Clan %s,\n\r", 
+        ch->vamp_master, capitalize(clan_table[ch->clan].name));
+    send_to_char(buf, ch);
+    sprintf(buf, "for {c%s{x blissful years.  You have {r%d{x / {r%d{x Blood Points\n\r", 
+        timeghouled, ch->pblood/10, ch->max_pblood/10);
+    send_to_char(buf,ch);
+    sprintf(buf, "worth of your Master's vitae in your system.\n\r");
+    send_to_char(buf,ch);
+
 
     if (!compact)
         send_to_char("___________________________________________________________\n\r",ch);

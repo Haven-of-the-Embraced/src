@@ -24,12 +24,24 @@ void do_werewolf(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    sprintf(buf,"{wYou are a %s %s of Tribe %s.{x",
-        ch->pcdata->breed == LUPUS ? "Lupus" : ch->pcdata->breed == METIS ? "Metis" : "Homid",
-        ch->pcdata->auspice == RAGABASH ? "Ragabash" : ch->pcdata->auspice == THEURGE ?
-        "Theurge" : ch->pcdata->auspice == PHILODOX ? "Philodox" : ch->pcdata->auspice == GALLIARD ?
-        "Galliard" : "Ahroun",  capitalize(clan_table[ch->clan].name));
+    sprintf(buf,"Your Breed is a {R%s{x, while your Lunar Auspice is {M%s{x.\n\r",
+        ch->pcdata->breed == LUPUS ? "wolf-born Lupus" : 
+        ch->pcdata->breed == METIS ? "werewolf-born Metis" :
+        "human-born Homid",
+        ch->pcdata->auspice == RAGABASH ? "the Trickster, Ragabash" : 
+        ch->pcdata->auspice == THEURGE ? "the Mystic, Theurge" : 
+        ch->pcdata->auspice == PHILODOX ? "the Judge, Philodox" : 
+        ch->pcdata->auspice == GALLIARD ? "the Dancer, Galliard" : 
+        "the Warrior, Ahroun",  capitalize(clan_table[ch->clan].name));
     send_to_char(buf, ch);
+    sprintf(buf, "%s has accepted your membership as part of the {G%s{x Tribe.\n\r", 
+        capitalize(clan_table[ch->clan].name), capitalize(clan_table[ch->clan].name));
+    send_to_char(buf, ch);
+    sprintf(buf, "Your spiritual Gnosis is {Y%d{x / {Y%d{x, and your harnessed Rage is {r%d{x / {r%d{x.", 
+        ch->pcdata->gnosis[TEMP], ch->pcdata->gnosis[PERM],
+        ch->pcdata->rage[TEMP], ch->pcdata->rage[PERM]);
+    send_to_char(buf,ch);
+
     return;
 }
 

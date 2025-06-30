@@ -3318,8 +3318,8 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
         send_to_char( "{y| {WObj types   : {xextra, wear, affect, apply, damage, type, weapon          {y|\n\r",ch);
         send_to_char( "{y| {W            : {xspecial, spell, size, level, cost, delete                 {y|\n\r",ch);
         send_to_char( "{y+-------------------------------------------------------------------------+{x\n\r", ch);
-        send_to_char( "{y| {WMob types   : {xlevel, race, special, shop, aff, aff2, act, act2,         {y|\n\r",ch);
-        send_to_char( "{y| {W            : {xoff, res, vuln, imm, attr, abil, form, parts, size        {y|\n\r",ch);
+        send_to_char( "{y| {WMob types   : {xlevel, race, special, shop, aff, aff2, act, act2, off     {y|\n\r",ch);
+        send_to_char( "{y| {W            : {xres, vuln, imm, attr, abil, form, parts, size, delete     {y|\n\r",ch);
         send_to_char( "{y+-------------------------------------------------------------------------+{x\n\r", ch);
         send_to_char( "{y| {WRoom types  : {xsector, room, clan, owner                                 {y|\n\r",ch);
         send_to_char( "{y+-------------------------------------------------------------------------+{x\n\r", ch);
@@ -3413,9 +3413,9 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
             racetable = TRUE;
         else if (!str_prefix(arg2, "special"))
             specprog = TRUE;
-/*        else if (!str_prefix(arg2, "delete"))
+        else if (!str_prefix(arg2, "delete"))
             deletion = TRUE;
-*/        else
+        else
             findflag = FALSE;
 
         if (findflag)
@@ -3433,9 +3433,9 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                     if (is_exact_name(arg3, spec_table[i].name))
                         bitfound = TRUE;
                 }
-/*            else if (deletion)
+            else if (deletion)
                 bitfound = TRUE;
-*/            else
+            else
                 for (i = 0; table[i].name != NULL; i++)
                 {
                     if (is_exact_name(arg3, table[i].name))
@@ -3510,7 +3510,10 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
             }
         }
 
-        send_to_char("      <{YLvl{x> [ {gVnum{x] {BLoad{x : Short Description\n\r", ch);
+        if(!str_prefix(arg2,"delete"))
+            send_to_char("{R*** Marked for Deletion on Copyover ***{x\n\r      <{YLvl{x> [ {gVnum{x] {BLoad{x : Short Description\n\r", ch);
+        else
+            send_to_char("      <{YLvl{x> [ {gVnum{x] {BLoad{x : Short Description\n\r", ch);
         send_to_char("      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\r", ch);
         for ( vnum = 0; nMatch < top_mob_index; vnum++ )
         {
@@ -3692,6 +3695,14 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                     add_buf(buffer,buf);
                 }
                 if (!str_prefix(arg2, "size") && (pMobIndex->size == flag_value( size_flags, arg3)))
+                {
+                    found = TRUE;
+                    count++;
+                    sprintf( buf, "(%3d) <{Y%3d{x> [{g%5d{x] {Bx %2d{x : %s\n\r",
+                    count, pMobIndex->level, pMobIndex->vnum, pMobIndex->count, pMobIndex->short_descr );
+                    add_buf(buffer,buf);
+                }
+                if(!str_prefix(arg2, "delete") && pMobIndex->delete == TRUE)
                 {
                     found = TRUE;
                     count++;
@@ -3892,10 +3903,10 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
             }
         }
 
-        if (!str_prefix(arg2, "cost"))
-            send_to_char("      <{YLvl{x> [ {gVnum{x] {BLoad{x {y${w    Silver {x: Short Description\n\r", ch);
-        else if(!str_prefix(arg2,"delete"))
+        if(!str_prefix(arg2,"delete"))
             send_to_char("{R*** Marked for Deletion on Copyover ***{x\n\r      <{YLvl{x> [ {gVnum{x] {BLoad{x : Short Description\n\r", ch);
+        else if (!str_prefix(arg2, "cost"))
+            send_to_char("      <{YLvl{x> [ {gVnum{x] {BLoad{x {y${w    Silver {x: Short Description\n\r", ch);
         else
             send_to_char("      <{YLvl{x> [ {gVnum{x] {BLoad{x : Short Description\n\r", ch);
         send_to_char("      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\r", ch);

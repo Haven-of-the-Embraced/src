@@ -46,7 +46,7 @@ void do_disclist(CHAR_DATA *ch, char *argument)
     if (ch->pcdata->discipline[ANIMALISM] > 4)
         send_to_char("{D  <{r5{D>  {xDrawing Out the Beast\n\r",ch);
     if (ch->pcdata->discipline[ANIMALISM] > 5)
-        send_to_char("{D  <{r6{D>  {x{R*{DUncoded{R*{x\n\r",ch);
+        send_to_char("{D  <{r6{D>  {xQuell the Herd\n\r",ch);
 
     if (ch->pcdata->discipline[AUSPEX] > 0)
     {
@@ -60,9 +60,9 @@ void do_disclist(CHAR_DATA *ch, char *argument)
     if (ch->pcdata->discipline[AUSPEX] > 3)
         send_to_char("{D  <{r4{D>  {xTelepathy\n\r",ch);
     if (ch->pcdata->discipline[AUSPEX] > 4)
-       send_to_char("{D  <{r5{D>  {xPsychic Projection\n\r",ch);
+        send_to_char("{D  <{r5{D>  {xPsychic Projection\n\r",ch);
     if (ch->pcdata->discipline[AUSPEX] > 5)
-        send_to_char("{D  <{r6{D>  {x{R*{DUncoded{R*{x\n\r",ch);
+        send_to_char("{D  <{r6{D>  {xFarsight\n\r",ch);
 
     if (ch->pcdata->discipline[CELERITY] > 0)
     {
@@ -259,19 +259,19 @@ void do_disclist(CHAR_DATA *ch, char *argument)
     if (ch->pcdata->discipline[SERPENTIS] > 0)
     {
         send_to_char("{D        [{R         Serpentis         {D]{x\n\r",ch);
-        send_to_char("{R*{DUncoded{R*{x\n\r",ch);
-    }/*
+        send_to_char("{D  <{r1{D>  {xEyes of the Serpent\n\r",ch);
+    }
     if (ch->pcdata->discipline[] > 1)
-        send_to_char("\n\r",ch);
+        send_to_char("{D  <{r2{D>  {xTongue of the Asp\n\r",ch);
     if (ch->pcdata->discipline[] > 2)
-        send_to_char("\n\r",ch);
+        send_to_char("{D  <{r2{D>  {xSkin of the Adder\n\r",ch);
     if (ch->pcdata->discipline[] > 3)
-        send_to_char("\n\r",ch);
+        send_to_char("{D  <{r2{D>  {xForm of the Cobra\n\r",ch);
     if (ch->pcdata->discipline[] > 4)
-        send_to_char("\n\r",ch);
+        send_to_char("{D  <{r2{D>  {xDark Heart\n\r",ch);
     if (ch->pcdata->discipline[] > 5)
         send_to_char("{R*{DUncoded{R*{x\n\r",ch);
-*/
+
     if (ch->pcdata->discipline[THAUMATURGY] > 0)
     {
         send_to_char("{D        [{RThaumaturgy 'Path of Blood'{D]{x\n\r",ch);

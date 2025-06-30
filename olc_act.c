@@ -4246,6 +4246,11 @@ MEDIT( medit_show )
 
     EDIT_MOB(ch, pMob);
 
+    sprintf( buf, "Delete:      [%s%s{x] %s\n\r", pMob->delete == TRUE ? "{R" : "",
+        pMob->delete == TRUE ? "true" : "false",
+        pMob->delete == TRUE ? "{RThis mob will be deleted on copyover!{x" : "");
+    send_to_char(buf, ch);
+
     sprintf( buf, "Name:        [%s]\n\rArea:        [%5d] %s\n\r",
     pMob->player_name,
     !pMob->area ? -1        : pMob->area->vnum,
@@ -4433,6 +4438,9 @@ MEDIT( medit_show )
         cnt++;
     }
     }
+
+    sprintf( buf, "%s", pMob->delete == TRUE ? "\n\r{R*****        This mob will be deleted on copyover!{x\n\r" : "");
+    send_to_char(buf, ch);
 
     return FALSE;
 }

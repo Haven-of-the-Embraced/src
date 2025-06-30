@@ -3283,6 +3283,11 @@ OEDIT( oedit_show )
 
     EDIT_OBJ(ch, pObj);
 
+    sprintf( buf, "Delete:      [%s%s{x] %s\n\r", pObj->delete == TRUE ? "{R" : "",
+        pObj->delete == TRUE ? "true" : "false",
+        pObj->delete == TRUE ? "{RThis object will be deleted on copyover!{x" : "");
+    send_to_char(buf, ch);
+
     sprintf( buf, "Name:        [%s]\n\rArea:        [%5d] %s\n\r",
     pObj->name,
     !pObj->area ? -1        : pObj->area->vnum,
@@ -3384,6 +3389,9 @@ OEDIT( oedit_show )
 		cnt++;
 	}
     }
+
+    sprintf( buf, "%s", pObj->delete == TRUE ? "\n\r{R*****        This object will be deleted on copyover!{x\n\r" : "");
+    send_to_char(buf, ch);
     return FALSE;
 }
 

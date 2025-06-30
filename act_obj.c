@@ -1300,14 +1300,12 @@ void do_drink( CHAR_DATA *ch, char *argument )
     OBJ_DATA *obj;
     int amount;
     int liquid;
+    bool drinksblood = FALSE;
+
+    if ((ch->race == race_lookup("vampire") || ch->race == race_lookup("methuselah")) && !IS_IMMORTAL(ch))
+        drinksblood == TRUE;
 
     one_argument( argument, arg );
-
-    if((ch->race == race_lookup("vampire") || ch->race == race_lookup("methuselah")) && !IS_IMMORTAL(ch))
-    {
-        send_to_char("You cannot drink anything but blood!\n\r" ,ch);
-        return;
-    }
 
     if ( arg[0] == '\0' )
     {
@@ -1340,36 +1338,54 @@ void do_drink( CHAR_DATA *ch, char *argument )
 
     switch ( obj->item_type )
     {
-    default:
-    send_to_char( "You can't drink from that.\n\r", ch );
-    return;
+        default:
+            send_to_char( "You can't drink from that.\n\r", ch );
+            return;
 
-    case ITEM_FOUNTAIN:
-        if ( ( liquid = obj->value[2] )  < 0 )
-        {
-            bug( "Do_drink: bad liquid number %d.", liquid );
-            liquid = obj->value[2] = 0;
-        }
-    amount = liq_table[liquid].liq_affect[4] * 3;
-    break;
+        case ITEM_FOUNTAIN:
+            if ( obj->value[1] <= 0 )
+            {
+                act("$p is already dried up.", ch, obj, NULL, TO_CHAR);
+                return;
+            }
 
-    case ITEM_DRINK_CON:
-    if ( obj->value[1] <= 0 )
-    {
-        send_to_char( "It is already empty.\n\r", ch );
-        return;
+            if ( ( liquid = obj->value[2] )  < 0 )
+            {
+                bug( "Do_drink: bad liquid number %d.", liquid );
+                liquid = obj->value[2] = 0;
+            }
+
+            if ((drinksblood) && ( liquid = obj->value[2] ) != 13 )
+            {
+                send_to_char("You cannot drink anything but blood!\n\r" ,ch);
+                return;
+            }
+            amount = liq_table[liquid].liq_affect[4] * 3;
+            break;
+
+        case ITEM_DRINK_CON:
+            if ( obj->value[1] <= 0 )
+            {
+                send_to_char( "It is already empty.\n\r", ch );
+                return;
+            }
+
+            if ( ( liquid = obj->value[2] )  < 0 )
+            {
+                bug( "Do_drink: bad liquid number %d.", liquid );
+                liquid = obj->value[2] = 0;
+            }
+
+            if ((drinksblood) && ( liquid = obj->value[2] ) != 13 )
+            {
+                send_to_char("You cannot drink anything but blood!\n\r" ,ch);
+                return;
+            }
+
+            amount = liq_table[liquid].liq_affect[4];
+            amount = UMIN(amount, obj->value[1]);
+            break;
     }
-
-    if ( ( liquid = obj->value[2] )  < 0 )
-    {
-        bug( "Do_drink: bad liquid number %d.", liquid );
-        liquid = obj->value[2] = 0;
-    }
-
-        amount = liq_table[liquid].liq_affect[4];
-        amount = UMIN(amount, obj->value[1]);
-    break;
-     }
     if (!IS_NPC(ch) && !IS_IMMORTAL(ch)
     &&  ch->pcdata->condition[COND_FULL] > 45)
     {

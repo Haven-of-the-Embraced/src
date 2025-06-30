@@ -3293,6 +3293,7 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
     bool dmgflag = FALSE;
     bool racetable = FALSE;
     bool specprog = FALSE;
+    bool deletion = FALSE;
     bool clan = FALSE;
     bool owner = FALSE;
     int col = 0;
@@ -3306,7 +3307,7 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
     argument = one_argument( argument, arg4 );
     argument = one_argument (argument, arg5 );
 
-    if ( arg1[0] == '\0' || arg2[0] == '\0' || arg3[0] == '\0')
+    if ( arg1[0] == '\0' || arg2[0] == '\0' || (arg3[0] == '\0' && str_cmp(arg2, "delete")))
     {
         send_to_char( "\n\r", ch);
         send_to_char( "{y+=========================================================================+{x\n\r", ch);
@@ -3314,8 +3315,8 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
         send_to_char( "{y| {WOptions     : {xobj, mob, room, light                                     {y|\n\r",ch);
         send_to_char( "{y| {RSyntax Note {W: {xSee '{chelp flagfind{x' for special syntax.                   {y|\n\r", ch);
         send_to_char( "{y+=========================================================================+{x\n\r", ch);
-        send_to_char( "{y| {WObj types   : {xextra, wear, affect, apply, damage, type,                 {y|\n\r",ch);
-        send_to_char( "{y| {W            : {xweapon, special, spell, size, level, cost                 {y|\n\r",ch);
+        send_to_char( "{y| {WObj types   : {xextra, wear, affect, apply, damage, type, weapon          {y|\n\r",ch);
+        send_to_char( "{y| {W            : {xspecial, spell, size, level, cost, delete                 {y|\n\r",ch);
         send_to_char( "{y+-------------------------------------------------------------------------+{x\n\r", ch);
         send_to_char( "{y| {WMob types   : {xlevel, race, special, shop, aff, aff2, act, act2,         {y|\n\r",ch);
         send_to_char( "{y| {W            : {xoff, res, vuln, imm, attr, abil, form, parts, size        {y|\n\r",ch);
@@ -3412,7 +3413,9 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
             racetable = TRUE;
         else if (!str_prefix(arg2, "special"))
             specprog = TRUE;
-        else
+/*        else if (!str_prefix(arg2, "delete"))
+            deletion = TRUE;
+*/        else
             findflag = FALSE;
 
         if (findflag)
@@ -3430,7 +3433,9 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                     if (is_exact_name(arg3, spec_table[i].name))
                         bitfound = TRUE;
                 }
-            else
+/*            else if (deletion)
+                bitfound = TRUE;
+*/            else
                 for (i = 0; table[i].name != NULL; i++)
                 {
                     if (is_exact_name(arg3, table[i].name))
@@ -3712,7 +3717,7 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                 tlevel = LEVEL_ABOVE;
                 if (!is_number(arg4))
                 {
-                    sendch("Search for mobs above which level?\n\r", ch);
+                    sendch("Search for objectss above which level?\n\r", ch);
                     return;
                 } else
                     llevel = atoi(arg4);
@@ -3721,7 +3726,7 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                 tlevel = LEVEL_BELOW;
                 if (!is_number(arg4))
                 {
-                    sendch("Search for mobs below which level?\n\r", ch);
+                    sendch("Search for objects below which level?\n\r", ch);
                     return;
                 } else
                     ulevel = atoi(arg4);
@@ -3814,6 +3819,8 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
             table = &affect_flags;
         else if (!str_prefix(arg2, "damage"))
             dmgflag = TRUE;
+        else if (!str_prefix(arg2, "delete"))
+            deletion = TRUE;
         else
             findflag = FALSE;
 
@@ -3826,6 +3833,8 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                     if (is_exact_name(arg3, attack_table[i].name))
                         bitfound = TRUE;
                 }
+            else if (deletion)
+                bitfound = TRUE;
             else
                 for (i = 0; table[i].name != NULL; i++)
                 {
@@ -3885,6 +3894,8 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
 
         if (!str_prefix(arg2, "cost"))
             send_to_char("      <{YLvl{x> [ {gVnum{x] {BLoad{x {y${w    Silver {x: Short Description\n\r", ch);
+        else if(!str_prefix(arg2,"delete"))
+            send_to_char("{R*** Marked for Deletion on Copyover ***{x\n\r      <{YLvl{x> [ {gVnum{x] {BLoad{x : Short Description\n\r", ch);
         else
             send_to_char("      <{YLvl{x> [ {gVnum{x] {BLoad{x : Short Description\n\r", ch);
         send_to_char("      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\r", ch);
@@ -4057,6 +4068,17 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                         count, pObjIndex->level, pObjIndex->vnum, pObjIndex->count, pObjIndex->short_descr );
                         add_buf(buffer,buf);
                         foundlevel = FALSE;
+                    }
+                }
+                else if(!str_prefix(arg2,"delete"))
+                {
+                    if(pObjIndex->delete)
+                    {
+                        found = TRUE;
+                        count++;
+                        sprintf( buf, "(%3d) <{Y%3d{x> [{g%5d{x] {Bx %2d{x : %s\n\r",
+                            count, pObjIndex->level, pObjIndex->vnum, pObjIndex->count, pObjIndex->short_descr );
+                        add_buf(buffer,buf);
                     }
                 }
                 else if (!str_prefix(arg2, "cost"))

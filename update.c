@@ -1438,6 +1438,14 @@ void obj_update( void )
             }
         }
 
+        if (obj->item_type == ITEM_FOUNTAIN && obj->wear_loc == WEAR_NONE &&
+            obj->value[1] < obj->value[0])
+        {
+            obj->value[1] += number_range(10,50);
+            if (obj->value[1] >= obj->value[0])
+                obj->value[1] = obj->value[0];
+        }
+
         if ( obj->wear_loc == WEAR_NONE && IS_SET(obj->extra_flags, ITEM_PAUSE_TIMER) )
             continue;
 

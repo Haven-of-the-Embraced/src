@@ -1441,9 +1441,22 @@ void obj_update( void )
         if (obj->item_type == ITEM_FOUNTAIN && obj->wear_loc == WEAR_NONE &&
             obj->value[1] < obj->value[0])
         {
-            obj->value[1] += number_range(10,50);
+            obj->value[1] += number_range(1,25);
             if (obj->value[1] >= obj->value[0])
                 obj->value[1] = obj->value[0];
+            if ( obj->in_room != NULL && ( rch = obj->in_room->people ) != NULL )
+            {
+                if (obj->value[1] == obj->value[0])
+                {
+                    act("$p fills to the brim, almost overflowing.", rch, obj, NULL, TO_ROOM);
+                    act("$p fills to the brim, almost overflowing.", rch, obj, NULL, TO_CHAR);
+                }
+                else
+                {
+                    act("$p slowly fills.", rch, obj, NULL, TO_ROOM);
+                    act("$p slowly fills.", rch, obj, NULL, TO_CHAR);
+                }
+            }
         }
 
         if ( obj->wear_loc == WEAR_NONE && IS_SET(obj->extra_flags, ITEM_PAUSE_TIMER) )

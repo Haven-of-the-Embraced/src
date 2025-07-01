@@ -1360,6 +1360,13 @@ void do_drink( CHAR_DATA *ch, char *argument )
                 send_to_char("You cannot drink anything but blood!\n\r" ,ch);
                 return;
             }
+
+            if ((!drinksblood) && ( liquid = obj->value[2] ) == 13 )
+            {
+                send_to_char("You cannot drink blood!\n\r" ,ch);
+                return;
+            }
+
             amount = liq_table[liquid].liq_affect[4] * 3;
             break;
 
@@ -1379,6 +1386,12 @@ void do_drink( CHAR_DATA *ch, char *argument )
             if ((drinksblood) && ( liquid = obj->value[2] ) != 13 )
             {
                 send_to_char("You cannot drink anything but blood!\n\r" ,ch);
+                return;
+            }
+
+            if ((!drinksblood) && ( liquid = obj->value[2] ) == 13 )
+            {
+                send_to_char("You cannot drink blood!\n\r" ,ch);
                 return;
             }
 

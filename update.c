@@ -1448,13 +1448,13 @@ void obj_update( void )
             {
                 if (obj->value[1] == obj->value[0])
                 {
-                    act("$p fills to the brim, almost overflowing.", rch, obj, NULL, TO_ROOM);
-                    act("$p fills to the brim, almost overflowing.", rch, obj, NULL, TO_CHAR);
+                    act("$p fills to the brim, almost overflowing with a $T liquid.", rch, obj, liq_table[obj->value[2]].liq_color, TO_ROOM);
+                    act("$p fills to the brim, almost overflowing with a $T liquid.", rch, obj, liq_table[obj->value[2]].liq_color, TO_CHAR);
                 }
                 else
                 {
-                    act("$p slowly fills.", rch, obj, NULL, TO_ROOM);
-                    act("$p slowly fills.", rch, obj, NULL, TO_CHAR);
+                    act("$p slowly fills with a $T liquid.", rch, obj, liq_table[obj->value[2]].liq_color, TO_ROOM);
+                    act("$p slowly fills with a $T liquid.", rch, obj, liq_table[obj->value[2]].liq_color, TO_CHAR);
                 }
             }
         }

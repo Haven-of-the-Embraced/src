@@ -1302,8 +1302,8 @@ void do_drink( CHAR_DATA *ch, char *argument )
     int liquid;
     bool drinksblood = FALSE;
 
-    if ((ch->race == race_lookup("vampire") || ch->race == race_lookup("methuselah")) && !IS_IMMORTAL(ch))
-        drinksblood == TRUE;
+    if (ch->race == race_lookup("vampire") || ch->race == race_lookup("methuselah"))
+        drinksblood = TRUE;
 
     one_argument( argument, arg );
 
@@ -1355,16 +1355,24 @@ void do_drink( CHAR_DATA *ch, char *argument )
                 liquid = obj->value[2] = 0;
             }
 
-            if ((drinksblood) && ( liquid = obj->value[2] ) != 13 )
+            if (!IS_IMMORTAL(ch))
             {
-                send_to_char("You cannot drink anything but blood!\n\r" ,ch);
-                return;
-            }
-
-            if ((!drinksblood) && ( liquid = obj->value[2] ) == 13 )
-            {
-                send_to_char("You cannot drink blood!\n\r" ,ch);
-                return;
+                if (drinksblood)
+                {
+                    if (obj->value[2] != 13)
+                    {
+                        send_to_char("You cannot drink anything but blood!\n\r" ,ch);
+                        return;
+                    }
+                }
+                else
+                {
+                    if (obj->value[2] == 13)
+                    {
+                        send_to_char("You cannot drink blood!\n\r" ,ch);
+                        return;
+                    }
+                }
             }
 
             amount = liq_table[liquid].liq_affect[4] * 3;
@@ -1399,11 +1407,19 @@ void do_drink( CHAR_DATA *ch, char *argument )
             amount = UMIN(amount, obj->value[1]);
             break;
     }
-    if (!IS_NPC(ch) && !IS_IMMORTAL(ch)
-    &&  ch->pcdata->condition[COND_FULL] > 45)
+    if (!IS_NPC(ch) && !IS_IMMORTAL(ch))
     {
-    send_to_char("You're too full to drink more.\n\r",ch);
-    return;
+        if (ch->pcdata->condition[COND_FULL] > 45)
+        {
+            send_to_char("You're too full to drink more.\n\r",ch);
+            return;
+        }
+
+        if (drinksblood && (ch->pblood >= ch->max_pblood))
+        {
+            send_to_char("You're too full to drink more.\n\r",ch);
+            return;
+        }
     }
 
     act( "$n drinks $T from $p.",

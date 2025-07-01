@@ -1417,7 +1417,7 @@ void do_drink( CHAR_DATA *ch, char *argument )
 
         if (drinksblood && (ch->pblood >= ch->max_pblood))
         {
-            send_to_char("You're too full to drink more.\n\r",ch);
+            send_to_char("You are already saturated with {rVi{Rt{rae{x.\n\r",ch);
             return;
         }
     }
@@ -1443,6 +1443,16 @@ void do_drink( CHAR_DATA *ch, char *argument )
     if ( !IS_NPC(ch) && ch->pcdata->condition[COND_THIRST] > 40 )
     send_to_char( "Your thirst is quenched.\n\r", ch );
 
+    if (drinksblood)
+    {
+        ch->pblood += number_range(1,3);
+        if (ch->pblood >= ch->max_pblood)
+        {
+            send_to_char("You feel flush as you fill up on {rVi{Rt{rae{x.\n\r",ch);
+            ch->pblood = ch->max_pblood;
+        }
+    }
+
     if ( obj->value[3] != 0 )
     {
     /* The drink was poisoned ! */
@@ -1462,6 +1472,8 @@ void do_drink( CHAR_DATA *ch, char *argument )
 
     if (obj->value[0] > 0)
         obj->value[1] -= amount;
+    if (obj->value[0] <= 0)
+        obj->value[0] = 0;
 
     return;
 }

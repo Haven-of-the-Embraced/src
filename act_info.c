@@ -1765,7 +1765,15 @@ void do_examine( CHAR_DATA *ch, char *argument )
         if ( obj->value[1] <= 0 )
             sprintf( buf, "%s | --{x It is empty.\n\r", condition);
         else
-            sprintf( buf, "%s | --{x It's %sfilled with  a %s liquid.\n\r", condition,
+            sprintf( buf, "%s | --{x It's %sfilled with a %s liquid.\n\r", condition,
+                obj->value[1] < obj->value[0] / 4 ? "less than half-" :
+                obj->value[1] < 3 * obj->value[0] / 4 ? "about half-" : "more than half-",
+                liq_table[obj->value[2]].liq_color);
+    if (obj->item_type == ITEM_FOUNTAIN)
+        if ( obj->value[1] <= 0 )
+            sprintf( buf, "%s | --{x It is currently dried up.\n\r", condition);
+        else
+            sprintf( buf, "%s | --{x It's %sfilled with a %s liquid.\n\r", condition,
                 obj->value[1] < obj->value[0] / 4 ? "less than half-" :
                 obj->value[1] < 3 * obj->value[0] / 4 ? "about half-" : "more than half-",
                 liq_table[obj->value[2]].liq_color);

@@ -261,15 +261,15 @@ void do_disclist(CHAR_DATA *ch, char *argument)
         send_to_char("{D        [{R         Serpentis         {D]{x\n\r",ch);
         send_to_char("{D  <{r1{D>  {xEyes of the Serpent\n\r",ch);
     }
-    if (ch->pcdata->discipline[] > 1)
+    if (ch->pcdata->discipline[SERPENTIS] > 1)
         send_to_char("{D  <{r2{D>  {xTongue of the Asp\n\r",ch);
-    if (ch->pcdata->discipline[] > 2)
+    if (ch->pcdata->discipline[SERPENTIS] > 2)
         send_to_char("{D  <{r2{D>  {xSkin of the Adder\n\r",ch);
-    if (ch->pcdata->discipline[] > 3)
+    if (ch->pcdata->discipline[SERPENTIS] > 3)
         send_to_char("{D  <{r2{D>  {xForm of the Cobra\n\r",ch);
-    if (ch->pcdata->discipline[] > 4)
+    if (ch->pcdata->discipline[SERPENTIS] > 4)
         send_to_char("{D  <{r2{D>  {xDark Heart\n\r",ch);
-    if (ch->pcdata->discipline[] > 5)
+    if (ch->pcdata->discipline[SERPENTIS] > 5)
         send_to_char("{R*{DUncoded{R*{x\n\r",ch);
 
     if (ch->pcdata->discipline[THAUMATURGY] > 0)

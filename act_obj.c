@@ -1112,31 +1112,31 @@ void do_fill( CHAR_DATA *ch, char *argument )
 
     if ( arg[0] == '\0' )
     {
-    send_to_char( "Fill what?\n\r", ch );
-    return;
+        send_to_char( "Fill what?\n\r", ch );
+        return;
     }
 
     if ( ( obj = get_obj_carry( ch, arg, ch ) ) == NULL )
     {
-    send_to_char( "You do not have that item.\n\r", ch );
-    return;
+        send_to_char( "You do not have that item.\n\r", ch );
+        return;
     }
 
     found = FALSE;
     for ( fountain = ch->in_room->contents; fountain != NULL;
     fountain = fountain->next_content )
     {
-    if ( (fountain->item_type == ITEM_FOUNTAIN) && SAME_UMBRA_OBJ(ch, fountain) )
-    {
-        found = TRUE;
-        break;
-    }
+        if ( (fountain->item_type == ITEM_FOUNTAIN) && SAME_UMBRA_OBJ(ch, fountain) )
+        {
+            found = TRUE;
+            break;
+        }
     }
 
     if ( !found )
     {
-    send_to_char( "There is no fountain here!\n\r", ch );
-    return;
+        send_to_char( "There is no fountain here!\n\r", ch );
+        return;
     }
 
     if (fountain->value[1] <= 0)
@@ -1147,20 +1147,20 @@ void do_fill( CHAR_DATA *ch, char *argument )
 
     if ( obj->item_type != ITEM_DRINK_CON )
     {
-    send_to_char( "You can't fill that.\n\r", ch );
-    return;
+        send_to_char( "You can't fill that.\n\r", ch );
+        return;
     }
 
     if ( obj->value[1] != 0 && obj->value[2] != fountain->value[2] )
     {
-    send_to_char( "There is already another liquid in it.\n\r", ch );
-    return;
+        send_to_char( "There is already another liquid in it.\n\r", ch );
+        return;
     }
 
     if ( obj->value[1] >= obj->value[0] )
     {
-    send_to_char( "Your container is full.\n\r", ch );
-    return;
+        send_to_char( "Your container is full.\n\r", ch );
+        return;
     }
 
     amount = obj->value[0] - obj->value[1];
@@ -1198,42 +1198,41 @@ void do_pour (CHAR_DATA *ch, char *argument)
     return;
     }
 
-
     if ((out = get_obj_carry(ch,arg, ch)) == NULL)
     {
-    send_to_char("You don't have that item.\n\r",ch);
-    return;
+        send_to_char("You don't have that item.\n\r",ch);
+        return;
     }
 
     if (out->item_type != ITEM_DRINK_CON)
     {
-    send_to_char("That's not a drink container.\n\r",ch);
-    return;
+        send_to_char("That's not a drink container.\n\r",ch);
+        return;
     }
 
     if (!str_cmp(argument,"out"))
     {
-    if (out->value[1] == 0)
-    {
-        send_to_char("It's already empty.\n\r",ch);
+        if (out->value[1] == 0)
+        {
+            send_to_char("It's already empty.\n\r",ch);
+            return;
+        }
+
+        out->value[1] = 0;
+        out->value[3] = 0;
+        sprintf(buf,"You invert $p, spilling %s all over the ground.",
+            liq_table[out->value[2]].liq_name);
+        act(buf,ch,out,NULL,TO_CHAR);
+
+        sprintf(buf,"$n inverts $p, spilling %s all over the ground.",
+            liq_table[out->value[2]].liq_name);
+        act(buf,ch,out,NULL,TO_ROOM);
         return;
-    }
-
-    out->value[1] = 0;
-    out->value[3] = 0;
-    sprintf(buf,"You invert $p, spilling %s all over the ground.",
-        liq_table[out->value[2]].liq_name);
-    act(buf,ch,out,NULL,TO_CHAR);
-
-    sprintf(buf,"$n inverts $p, spilling %s all over the ground.",
-        liq_table[out->value[2]].liq_name);
-    act(buf,ch,out,NULL,TO_ROOM);
-    return;
     }
 
     if ((in = get_obj_here(ch,NULL, argument)) == NULL)
     {
-    vch = get_char_room(ch,NULL,argument);
+        vch = get_char_room(ch,NULL,argument);
 
     if (vch == NULL)
     {
@@ -1252,32 +1251,32 @@ void do_pour (CHAR_DATA *ch, char *argument)
 
     if (in->item_type != ITEM_DRINK_CON)
     {
-    send_to_char("You can only pour into other drink containers.\n\r",ch);
-    return;
+        send_to_char("You can only pour into other drink containers.\n\r",ch);
+        return;
     }
 
     if (in == out)
     {
-    send_to_char("You cannot change the laws of physics!\n\r",ch);
-    return;
+        send_to_char("You cannot change the laws of physics!\n\r",ch);
+        return;
     }
 
     if (in->value[1] != 0 && in->value[2] != out->value[2])
     {
-    send_to_char("They don't hold the same liquid.\n\r",ch);
-    return;
+        send_to_char("They don't hold the same liquid.\n\r",ch);
+        return;
     }
 
     if (out->value[1] == 0)
     {
-    act("There's nothing in $p to pour.",ch,out,NULL,TO_CHAR);
-    return;
+        act("There's nothing in $p to pour.",ch,out,NULL,TO_CHAR);
+        return;
     }
 
     if (in->value[1] >= in->value[0])
     {
-    act("$p is already filled to the top.",ch,in,NULL,TO_CHAR);
-    return;
+        act("$p is already filled to the top.",ch,in,NULL,TO_CHAR);
+        return;
     }
 
     amount = UMIN(out->value[1],in->value[0] - in->value[1]);
@@ -1300,13 +1299,12 @@ void do_pour (CHAR_DATA *ch, char *argument)
         sprintf(buf,"You pour some %s for $N.",
             liq_table[out->value[2]].liq_name);
         act(buf,ch,NULL,vch,TO_CHAR);
-    sprintf(buf,"$n pours you some %s.",
-        liq_table[out->value[2]].liq_name);
-    act(buf,ch,NULL,vch,TO_VICT);
+        sprintf(buf,"$n pours you some %s.",
+            liq_table[out->value[2]].liq_name);
+        act(buf,ch,NULL,vch,TO_VICT);
         sprintf(buf,"$n pours some %s for $N.",
             liq_table[out->value[2]].liq_name);
         act(buf,ch,NULL,vch,TO_NOTVICT);
-
     }
 }
 

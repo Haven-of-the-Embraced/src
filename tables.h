@@ -267,6 +267,7 @@ extern  const   struct  flag_type   apply_flags[];
 extern  const   struct  flag_type   sex_flags[];
 extern  const   struct  flag_type   furniture_flags[];
 extern  const   struct  flag_type   light_flags[];
+extern  const   struct  flag_type   fountain_flags[];
 extern  const   struct  flag_type   trap_flags[];
 extern  const   struct  flag_type   trigger_flags[];
 extern  const   struct  flag_type   focus_flags[];

@@ -1643,6 +1643,9 @@ struct  kill_data
 #define LIGHT_PULSING       (F)
 #define LIGHT_RECHARGE      (G)
 
+/* fountain flags */
+#define FOUNTAIN_REFILL     (A)
+
 /*
  * Apply types (for affects).
  * Used in #OBJECTS.
@@ -4192,6 +4195,7 @@ char *  comm_bit_name   args( ( int comm_flags ) );
 char *  cont_bit_name   args( ( int cont_flags) );
 char *  trap_bit_name   args( ( int trap_flags ) );
 char *  light_bit_name  args( ( int light_flags ) );
+char *  fountain_bit_name   args( ( int fountain_flags ) );
 char *  trigger_bit_name    args( ( int trigger_flags ) );
 char *  focus_bit_name  args( ( int focus_flags ) );
 char *  room_bit_name   args( ( int room_flags ) );

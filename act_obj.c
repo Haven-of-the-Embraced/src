@@ -1106,6 +1106,7 @@ void do_fill( CHAR_DATA *ch, char *argument )
     OBJ_DATA *obj;
     OBJ_DATA *fountain;
     bool found;
+    int amount;
 
     one_argument( argument, arg );
 
@@ -1138,6 +1139,12 @@ void do_fill( CHAR_DATA *ch, char *argument )
     return;
     }
 
+    if (fountain->value[1] <= 0)
+    {
+        send_to_char("There is no liquid left to fill your container.\n\r", ch);
+        return;
+    }
+
     if ( obj->item_type != ITEM_DRINK_CON )
     {
     send_to_char( "You can't fill that.\n\r", ch );
@@ -1156,6 +1163,7 @@ void do_fill( CHAR_DATA *ch, char *argument )
     return;
     }
 
+    amount = obj->value[0] - obj->value[1];
     sprintf(buf,"You fill $p with %s from $P.",
     liq_table[fountain->value[2]].liq_name);
     act( buf, ch, obj,fountain, TO_CHAR );
@@ -1163,7 +1171,15 @@ void do_fill( CHAR_DATA *ch, char *argument )
     liq_table[fountain->value[2]].liq_name);
     act(buf,ch,obj,fountain,TO_ROOM);
     obj->value[2] = fountain->value[2];
-    obj->value[1] = obj->value[0];
+    if (amount > fountain->value[1])
+        amount = fountain->value[1];
+    fountain->value[1] -= amount;
+    if (fountain->value[1] < 0)
+        fountain->value[1] = 0;
+    obj->value[1] += amount;
+    if (obj->value[1] > obj->value[0])
+        obj->value[1] = obj->value[0];
+
     return;
 }
 

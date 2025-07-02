@@ -1112,6 +1112,12 @@ const struct flag_type light_flags[]=
 		{		NULL,				0,								0			}
 };
 
+const struct flag_type fountain_flags[]=
+{
+        {       "refill",           FOUNTAIN_REFILL,        TRUE    },
+        {       NULL,               0,                              0           }
+};
+
 const struct flag_type trap_flags[]=
 {
     {   "bash",   TRAP_BASH,    TRUE    },

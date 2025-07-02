@@ -131,6 +131,7 @@ const struct olc_help_type help_table[] =
     {   "crafted",      crafted_table,      "Crafted item types."        },
     {   "trap", trap_flags,  "Trap flags."       },
     {   "light", light_flags,   "Special Light Flags."},
+    {   "fountain", fountain_flags, "Special Fountain Flags."},
     {   NULL,       NULL,        NULL                }
 };
 
@@ -2665,12 +2666,14 @@ void show_obj_values( CHAR_DATA *ch, OBJ_INDEX_DATA *obj )
 
     case ITEM_FOUNTAIN:
         sprintf( buf,
-            "[v0] Liquid Total: [%d]\n\r"
-            "[v1] Liquid Left:  [%d]\n\r"
-            "[v2] Liquid:       %s\n\r",
+            "[v0] Liquid Total:    [%d]\n\r"
+            "[v1] Liquid Left:     [%d]\n\r"
+            "[v2] Liquid:          %s\n\r"
+            "[v3] Fountain Flags:  [%s]\n\r",
             obj->value[0],
             obj->value[1],
-            liq_table[obj->value[2]].liq_name );
+            liq_table[obj->value[2]].liq_name,
+            flag_string( fountain_flags, obj->value[3]) );
         send_to_char( buf,ch );
         break;
 
@@ -3102,6 +3105,10 @@ bool set_obj_values( CHAR_DATA *ch, OBJ_INDEX_DATA *pObj, int value_num, char *a
                 send_to_char( "LIQUID TYPE SET.\n\r\n\r", ch );
                 pObj->value[2] = ( liq_lookup( argument ) != -1 ?
                                liq_lookup( argument ) : 0 );
+                break;
+            case 3:
+                send_to_char( "SPECIAL FOUNTAIN FLAG SET.\n\r\n\r", ch );
+                ALT_FLAGVALUE_SET( pObj->value[3], fountain_flags, argument );
                 break;
             }
     break;

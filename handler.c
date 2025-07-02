@@ -3818,6 +3818,16 @@ char *cont_bit_name( int cont_flags)
     return (buf[0] != '\0' ) ? buf+1 : "none";
 }
 
+char *fountain_bit_name( int fountain_flags)
+{
+    static char buf[512];
+
+    buf[0] = '\0';
+
+    if (fountain_flags & FOUNTAIN_REFILL      ) strcat(buf, " refill");
+
+    return (buf[0] != '\0' ) ? buf+1 : "none";
+}
 
 char *off_bit_name(int off_flags)
 {
@@ -3953,6 +3963,13 @@ bool *has_light_bit(int light_flags, char *light_bit)
     if (light_flags & LIGHT_PULSING         && (!str_cmp(light_bit, "pulsing"))     ) return TRUE;
     if (light_flags & LIGHT_RECHARGE        && (!str_cmp(light_bit, "recharge"))    ) return TRUE;
 
+    return FALSE;
+}
+
+bool *has_fountain_bit(int fountain_flags, char *fountain_bit)
+{
+    if (fountain_flags & FOUNTAIN_REFILL     && (!str_cmp(fountain_bit, "refill"))      ) return TRUE;
+ 
     return FALSE;
 }
 

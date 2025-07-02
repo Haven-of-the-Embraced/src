@@ -86,6 +86,7 @@ const struct flag_stat_type flag_stat_table[] =
     {   weapon_type2,            FALSE   },
     {   apply_types,        TRUE    },
     {   light_flags,            FALSE   },
+    {   fountain_flags,          FALSE   },
     {   0,          0   }
 };
 

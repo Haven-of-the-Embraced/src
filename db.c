@@ -4539,8 +4539,8 @@ void append_file( CHAR_DATA *ch, char *file, char *str, bool add)
     }
     else
     {
-        fprintf( fp, "[%5d] %s: %s\n",
-            ch->in_room ? ch->in_room->vnum : 0, ch->name, str );
+        fprintf( fp, "%s: %s  --> %s",
+            ch->name, str, (char *) ctime( &current_time ) );
     }
     fclose( fp );
     }

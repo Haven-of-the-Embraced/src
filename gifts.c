@@ -3522,8 +3522,26 @@ void spell_gift_spiritofthefray( int sn, int level, CHAR_DATA *ch, void *vo, int
 //spirit of fear
 //str + intimidation diff target wp
 //each success cows the target for one rturn, they cannot attack but can defend
-void spell_gift_truefear( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
+void spell_gift_truefear( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  AFFECT_DATA af;
+  int success; willpower =  6;
+
+
+  success = godice(ch->pcdata->gnosis[PERM], willpower);
+  if (success < 0)
+    success = 0;
+  send_to_char("Spirits of fear cause your target to tremble.\n\r", ch);
+  af.where      = TO_AFFECTS;
+  af.type       = gsn_gift_truefear;
+  af.level      = success;
+  af.duration  = (success * 10) + 25;
+  af.location  = 0;
+  af.modifier  = 0;
+  af.bitvector = 0;
+  affect_to_char( victim, &af );
+
+  return;
 }//
 //Rank Three
 //

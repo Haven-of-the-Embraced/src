@@ -3525,21 +3525,56 @@ void spell_gift_spiritofthefray( int sn, int level, CHAR_DATA *ch, void *vo, int
 void spell_gift_truefear( int sn, int level, CHAR_DATA *ch, void *vo, int target)
 {
   AFFECT_DATA af;
-  int success; willpower =  6;
+  CHAR_DATA *victim = (CHAR_DATA *) vo;
+  int success, willpower =  6;
 
+  if (is_affected(victim, gsn_gift_truefear))
+  {
+    send_to_char("Your target is already petrified by fear.\n\r", ch);
+    return;
+  }
 
-  success = godice(ch->pcdata->gnosis[PERM], willpower);
+  if (IS_NPC(victim))
+  {
+    if (IS_SET(victim->act2, ACT2_ULTRA_MOB))
+      willpower += 2;
+    if (victim->level > ch->level + 5)
+      willpower++;
+    if (victim->level < ch->level - 5)
+      willpower--;
+  }
+  else
+    willpower = victim->csmax_willpower;
+
+  success = godice(get_attribute(ch, CSATTRIB_STRENGTH) + get_ability(ch, CSABIL_INTIMIDATION), willpower);
+
   if (success < 0)
-    success = 0;
-  send_to_char("Spirits of fear cause your target to tremble.\n\r", ch);
+  {
+    act("Spirits of fear take offense at your request, instead terrifying you briefly.",ch,NULL,NULL,TO_CHAR);
+    act("A look of absolute terror crosses $n's face.",ch,NULL,NULL,TO_NOTVICT);
+    ch->stopped += 3;
+    return;
+  }
+
+  if (success == 0)
+  {
+    act("The spirits of fear seem to avoid your call.",ch,NULL,NULL,TO_CHAR);
+    WAIT_STATE(ch, 3);
+    return;
+  }
+
+  act("Spirits of fear cause $N to cower before your might.",ch,NULL,victim,TO_CHAR);
+  act("Abject fear grips you as you see $n's might displayed.",ch,NULL,victim,TO_VICT);
+  act("$N cowers before $n, trembling in fear.",ch,NULL,victim,TO_NOTVICT);
   af.where      = TO_AFFECTS;
   af.type       = gsn_gift_truefear;
   af.level      = success;
-  af.duration  = (success * 10) + 25;
+  af.duration  = 5;
   af.location  = 0;
   af.modifier  = 0;
   af.bitvector = 0;
   affect_to_char( victim, &af );
+  victim->stopped += success + 1;
 
   return;
 }//

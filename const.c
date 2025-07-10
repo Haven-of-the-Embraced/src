@@ -2705,7 +2705,7 @@ Total (3) */
     &gsn_gift_spiritofthefray,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     { "true fear", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_truefear,  TAR_IGNORE, POS_STANDING,
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_truefear,  TAR_CHAR_OFFENSIVE, POS_FIGHTING,
     &gsn_gift_truefear,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     { "heart of fury", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },

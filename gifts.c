@@ -3534,6 +3534,14 @@ void spell_gift_truefear( int sn, int level, CHAR_DATA *ch, void *vo, int target
     return;
   }
 
+  if (ch->move < ch->level * 2)
+  {
+    send_to_char("You are too exhausted to call upon spirits.\n\r", ch);
+    return;
+  }
+
+  ch->move -= ch->level * 2;
+
   if (IS_NPC(victim))
   {
     if (IS_SET(victim->act2, ACT2_ULTRA_MOB))

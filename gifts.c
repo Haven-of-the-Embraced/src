@@ -3924,8 +3924,39 @@ void spell_gift_curseoftheaeolus( int sn, int level, CHAR_DATA *ch, void *vo, in
 //Perception + brawl diff 6 / target rolls per + subterfuge diff 6
 //if player rolls more successes than target the player doubled the damage dice rolled on next successful attack on target
 //
-void spell_gift_coupdegrace( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_coupdegrace( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  AFFECT_DATA af;
+  int success;
+
+  if (is_affected(ch, gsn_gift_coupdegrace))
+  {
+    send_to_char("Owl-spirits already assist you in studying targets for weaknesses.\n\r", ch);
     return;
+  }
+
+  if (ch->cswillpower < 1)
+  {
+    send_to_char("You do not possess the strength of Willpower to activate this Gift.\n\r", ch);
+    return;
+  }
+
+  ch->cswillpower--;
+
+  if (success < 0)
+  {
+    send_to_char("The hooting of Owl spirits distracts you from studying targets with any clarity.\n\r", ch);
+    WAIT_STATE(ch, 9);
+    return;
+  }
+
+  if (success == 0)
+  {
+    send_to_char("Owl spirits repeatedly ask 'who' you want to study.\n\r", ch);
+    return;
+  }
+
+  return;
 }
 //“Flames of Hestia”
 //1 gnosis

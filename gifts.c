@@ -3972,6 +3972,14 @@ void spell_gift_coupdegrace( int sn, int level, CHAR_DATA *ch, void *vo, int tar
   {
     send_to_char("The hooting of Owl spirits distracts you from studying targets with any clarity.\n\r", ch);
     WAIT_STATE(ch, 9);
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_gift_coupdegrace;
+    af.level     = 0;
+    af.duration  = -success;
+    af.modifier  = 0;
+    af.location  = APPLY_NONE;
+    af.bitvector = 0;
+    affect_to_char( ch, &af );
     return;
   }
 
@@ -3980,6 +3988,15 @@ void spell_gift_coupdegrace( int sn, int level, CHAR_DATA *ch, void *vo, int tar
     send_to_char("Owl spirits repeatedly ask 'who' you want to study.\n\r", ch);
     return;
   }
+
+  af.where     = TO_AFFECTS;
+  af.type      = gsn_gift_coupdegrace;
+  af.level     = success;
+  af.duration  = (success * 5) + 15;
+  af.modifier  = 0;
+  af.location  = APPLY_NONE;
+  af.bitvector = 0;
+  affect_to_char( ch, &af );
 
   return;
 }

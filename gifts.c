@@ -3928,10 +3928,35 @@ void spell_gift_coupdegrace( int sn, int level, CHAR_DATA *ch, void *vo, int tar
 {
   AFFECT_DATA af;
   int success;
+  CHAR_DATA *victim = (CHAR_DATA *) vo;
+  MOB_INDEX_DATA *vMob;
+  int quarry = 0;
 
   if (is_affected(ch, gsn_gift_coupdegrace))
   {
     send_to_char("Owl-spirits already assist you in studying targets for weaknesses.\n\r", ch);
+    return;
+  }
+
+  if (is_affected(ch, gsn_gift_coupdegrace))
+  {
+    quarry = get_affect_modifier(ch, gsn_gift_coupdegrace);
+    vMob = get_mob_index(quarry);
+    if (get_affect_level(ch, gsn_gift_coupdegrace) == 0)
+    {
+      sprintf(buf, "The constant hooting fills your ears, making it hard to concentrate.\n\r", vMob->short_descr);
+      send_to_char(buf, ch);
+      return;
+    }
+    sprintf(buf, "You thank the Owl-spirits for their help with %s, bidding them goodbye.\n\r", capitalize(vMob->short_descr));
+    send_to_char(buf, ch);
+    affect_strip(ch, gsn_gift_coupdegrace);
+    return;
+  }
+
+  if (!IS_NPC(victim))
+  {
+    send_to_char("{R*You cannot use this Gift on players.{x\n\r", ch);
     return;
   }
 

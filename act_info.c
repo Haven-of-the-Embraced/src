@@ -2305,16 +2305,15 @@ void do_affects(CHAR_DATA *ch, char *argument )
       send_to_char( "|------------------+=======[{yGIFT: COUP DE GRACE{x]=======+-------------------|\n\r", ch );
       if (get_affect_level(ch, gsn_gift_coupdegrace) == 0)
       {
-        send_to_char( "|------------------+-----------------------------------+-------------------|\n\r", ch );
-        sprintf(buf2, "{x Owl-spirits constantly hoot in your ear, preventing studying %s{R", qMob->short_descr);
-        sprintf(buf, "|{R %s{x |\n\r| {R************ {xand cannot focus on any new opponent right now. {R*********** {x|\n\r", center(buf2, 72, "*"));
+        send_to_char( "| Owl-spirits constantly hoot in your ear, preventing your concentration.  |\n\r", ch);
+        sprintf(buf, "| {g%d{x |\n\r", coupdegraceaf->duration);
         send_to_char(buf, ch);
       }
       else
       {
       send_to_char( "|                   Current Opponent                   |   Time Remaining  |\n\r", ch );
       sprintf(buf2, "{Y%d hour%s{x", coupdegraceaf->duration, coupdegraceaf->duration != 1 ? "s" : "");
-      sprintf(buf, "| {g%s{x |", center(capitalize(qMob->short_descr), 52, " "));
+      sprintf(buf, "| {g%s{x |", center(capitalize(sMob->short_descr), 52, " "));
       send_to_char(buf, ch);
       sprintf(buf, "%s|\n\r", center(buf2, 19, " "));
       send_to_char(buf, ch);

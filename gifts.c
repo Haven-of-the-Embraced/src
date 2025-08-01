@@ -3930,7 +3930,8 @@ void spell_gift_coupdegrace( int sn, int level, CHAR_DATA *ch, void *vo, int tar
   int success;
   CHAR_DATA *victim = (CHAR_DATA *) vo;
   MOB_INDEX_DATA *vMob;
-  int quarry = 0;
+  int studied = 0;
+  char buf[MAX_STRING_LENGTH];
 
   if (is_affected(ch, gsn_gift_coupdegrace))
   {
@@ -3940,8 +3941,8 @@ void spell_gift_coupdegrace( int sn, int level, CHAR_DATA *ch, void *vo, int tar
 
   if (is_affected(ch, gsn_gift_coupdegrace))
   {
-    quarry = get_affect_modifier(ch, gsn_gift_coupdegrace);
-    vMob = get_mob_index(quarry);
+    studied = get_affect_modifier(ch, gsn_gift_coupdegrace);
+    vMob = get_mob_index(studied);
     if (get_affect_level(ch, gsn_gift_coupdegrace) == 0)
     {
       sprintf(buf, "The constant hooting fills your ears, making it hard to concentrate.\n\r", vMob->short_descr);
@@ -3993,7 +3994,7 @@ void spell_gift_coupdegrace( int sn, int level, CHAR_DATA *ch, void *vo, int tar
   af.type      = gsn_gift_coupdegrace;
   af.level     = success;
   af.duration  = (success * 5) + 15;
-  af.modifier  = 0;
+  af.modifier  = studied;
   af.location  = APPLY_NONE;
   af.bitvector = 0;
   affect_to_char( ch, &af );

@@ -2747,7 +2747,7 @@ Total (3) */
     &gsn_gift_curseoftheaeolus,          SLOT( 0),        0,     12, "",             "The dense fog dissipates as quickly as it appeared.",        "" },
 
     { "coup de grace", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_coupdegrace,  TAR_IGNORE, POS_STANDING,
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_coupdegrace,  TAR_CHAR_DEFENSIVE, POS_STANDING,
     &gsn_gift_coupdegrace,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
 
     { "flames of hestia", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },

@@ -2203,12 +2203,13 @@ void do_clans (CHAR_DATA *ch, char *argument)
 void do_affects(CHAR_DATA *ch, char *argument )
 {
     AFFECT_DATA *paf, *paf_last = NULL;
-    AFFECT_DATA *fatalflawaf;
-    MOB_INDEX_DATA *qMob;
+    AFFECT_DATA *fatalflawaf, *coupdegraceaf;
+    MOB_INDEX_DATA *qMob, *sMob;
     char buf[MAX_STRING_LENGTH], buf2 [MSL];
     bool giftfatalflaw = FALSE;
+    bool giftcoupdegrace = FALSE;
     bool awed = FALSE;
-    int quarry = 0;
+    int quarry = 0, studied = 0;
 
     if ( ch->affected != NULL )
     {
@@ -2230,6 +2231,14 @@ void do_affects(CHAR_DATA *ch, char *argument )
           fatalflawaf = paf;
           quarry = fatalflawaf->modifier;
           qMob = get_mob_index(quarry);
+          continue;
+        }
+        if (paf->type == gsn_gift_coupdegrace)
+        {
+          giftcoupdegrace = TRUE;
+          coupdegraceaf = paf;
+          studied = coupdegraceaf->modifier;
+          sMob = get_mob_index(studied);
           continue;
         }
         if (paf_last != NULL && paf->type == paf_last->type)
@@ -2288,6 +2297,27 @@ void do_affects(CHAR_DATA *ch, char *argument )
         sprintf(buf2, "{x You refuse to believe that %s is perfect, {R", qMob->short_descr);
         sprintf(buf, "|{R %s{x |\n\r| {R************ {xand cannot focus on any new opponent right now. {R*********** {x|\n\r", center(buf2, 72, "*"));
         send_to_char(buf, ch);
+      }
+    }
+
+    if (giftcoupdegrace)
+    {
+      send_to_char( "|------------------+=======[{yGIFT: COUP DE GRACE{x]=======+-------------------|\n\r", ch );
+      if (get_affect_level(ch, gsn_gift_coupdegrace) == 0)
+      {
+        send_to_char( "|------------------+-----------------------------------+-------------------|\n\r", ch );
+        sprintf(buf2, "{x Owl-spirits constantly hoot in your ear, preventing studying %s{R", qMob->short_descr);
+        sprintf(buf, "|{R %s{x |\n\r| {R************ {xand cannot focus on any new opponent right now. {R*********** {x|\n\r", center(buf2, 72, "*"));
+        send_to_char(buf, ch);
+      }
+      else
+      {
+      send_to_char( "|                   Current Opponent                   |   Time Remaining  |\n\r", ch );
+      sprintf(buf2, "{Y%d hour%s{x", coupdegraceaf->duration, coupdegraceaf->duration != 1 ? "s" : "");
+      sprintf(buf, "| {g%s{x |", center(capitalize(qMob->short_descr), 52, " "));
+      send_to_char(buf, ch);
+      sprintf(buf, "%s|\n\r", center(buf2, 19, " "));
+      send_to_char(buf, ch);
       }
     }
     send_to_char( "------------<<<<<<<<<<<<============================>>>>>>>>>>>>------------\n\r", ch );

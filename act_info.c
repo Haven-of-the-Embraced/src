@@ -2206,7 +2206,7 @@ void do_affects(CHAR_DATA *ch, char *argument )
     AFFECT_DATA *fatalflawaf;
     MOB_INDEX_DATA *qMob;
     char buf[MAX_STRING_LENGTH], buf2 [MSL];
-    bool specialaffect = FALSE;
+    bool giftfatalflaw = FALSE;
     bool awed = FALSE;
     int quarry = 0;
 
@@ -2226,7 +2226,7 @@ void do_affects(CHAR_DATA *ch, char *argument )
         }
         if (paf->type == gsn_gift_fatalflaw)
         {
-          specialaffect = TRUE;
+          giftfatalflaw = TRUE;
           fatalflawaf = paf;
           quarry = fatalflawaf->modifier;
           qMob = get_mob_index(quarry);
@@ -2273,7 +2273,7 @@ void do_affects(CHAR_DATA *ch, char *argument )
       }
     }
 
-    if (specialaffect)
+    if (giftfatalflaw)
     {
       send_to_char( "|------------------+=======[  {yGIFT: FATAL FLAW{x ]=======+-------------------|\n\r", ch );
       send_to_char( "|                   Current Opponent                   |   Time Remaining  |\n\r", ch );

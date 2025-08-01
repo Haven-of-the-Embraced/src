@@ -3969,7 +3969,6 @@ void spell_gift_coupdegrace( int sn, int level, CHAR_DATA *ch, void *vo, int tar
 
   ch->cswillpower--;
   success = godice(get_attribute(ch, CSATTRIB_PERCEPTION) + get_ability(ch, CSABIL_BRAWL), 6);
-success = -1;
 
   if (success < 0)
   {
@@ -3992,11 +3991,12 @@ success = -1;
     return;
   }
 
+  send_to_char("Owl-spirits hoot lightly, feeding you information to better attack your target.\n\r", ch);
   af.where     = TO_AFFECTS;
   af.type      = gsn_gift_coupdegrace;
   af.level     = success;
   af.duration  = (success * 5) + 15;
-  af.modifier  = studied;
+  af.modifier  = victim->pIndexData->vnum;
   af.location  = APPLY_NONE;
   af.bitvector = 0;
   affect_to_char( ch, &af );

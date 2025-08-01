@@ -3968,6 +3968,8 @@ void spell_gift_coupdegrace( int sn, int level, CHAR_DATA *ch, void *vo, int tar
   }
 
   ch->cswillpower--;
+  success = godice(get_attribute(ch, CSATTRIB_PERCEPTION) + get_ability(ch, CSABIL_BRAWL), 6);
+success = -1;
 
   if (success < 0)
   {

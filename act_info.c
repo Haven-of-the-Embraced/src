@@ -2893,7 +2893,10 @@ void do_who( CHAR_DATA *ch, char *argument )
     if (plist[0] == '\0')
         sprintf(plist, "{w |    {D< {rNone{D >{w    |\r\n");
 
-
+    if (IS_SET(ch->comm, COMM_COMPACT))
+        add_buf(output,"{DImmortals{x\n\r");
+    else
+    {
     add_buf(output,"{D\n\r                     |     |                        |      |\r\n");
     add_buf(output,"{D                     |\\   /|                        |\\    /|\r\n");
     add_buf(output,"{D                     | | | |  ___   |       |  ___  | |  | |\r\n");
@@ -2903,9 +2906,24 @@ void do_who( CHAR_DATA *ch, char *argument )
     add_buf(output,"{D                   /_/                \\ v /               \\_\\\r\n");
     add_buf(output,"{w<================={D/{w===================={D\\ /{w==================={D\\{w=================>\r\n");
     add_buf(output,"{w |{D---{WImmortals{D----{w|                     {Dv{w                                     \r\n");
+    }
     add_buf(output, ilist);
+    if (IS_SET(ch->comm, COMM_COMPACT))
+        add_buf(output,"{DPlayers{x\n\r");
+    else
     add_buf(output,"{w |{D----{wPlayers{D-----{w|{x\n\r");
     add_buf(output, plist);
+    if (IS_SET(ch->comm, COMM_COMPACT))
+    {
+        sprintf( buf2, "{DPlaying Now %2d  Most Online %2d  Since Reboot %2d{x\n\r", vMatch, max_players, most_players);
+        add_buf(output,buf2);
+        sprintf( buf2, "{DUptime %4dhours %2dminutes{x\n\r", uphours, upmins);
+        add_buf(output,buf2);
+        sprintf( buf2, "{DGlobal XP %-6d  XP Modifier %dx{x\n\r", global_xp, xpawardmult);
+        add_buf(output,buf2);
+    }
+    else
+    {
       sprintf(buf2," {w+----------------+---------------------+--------------+----------------------+\n\r");
     add_buf(output,buf2);
     sprintf( buf2, "{w |__{gPlayer{w_{gStats{w__|    {DPlaying Now{w:%2d   |__{cMUD{w__{cStats{w__|    {DUptime{w:%4d{Dh{w%2d{Dm{W   |{x\n\r", vMatch, uphours, upmins, uphours > 99 ? "" : " " );
@@ -2913,6 +2931,7 @@ void do_who( CHAR_DATA *ch, char *argument )
     sprintf(buf2, "{w |  {DMost Online{w:%2d    {DSince Reboot{w:%2d   |  {DGXp{w: %-6d      {DXP Mod{w:   %d{Dx{w      |{x\n\r", max_players, most_players, global_xp, xpawardmult);
     add_buf(output, buf2);
     add_buf(output, "{w<==============================================================================>{x\n\r");
+    }
 
     if(manualxp)
     {

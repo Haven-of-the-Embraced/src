@@ -3345,24 +3345,32 @@ void do_consider( CHAR_DATA *ch, char *argument )
     parmor = (GET_AC(ch, AC_BASH) + GET_AC(ch, AC_PIERCE) + GET_AC(ch, AC_SLASH) + GET_AC(ch, AC_EXOTIC)) / 4;
     varmor = (GET_AC(victim, AC_BASH) + GET_AC(victim, AC_PIERCE) + GET_AC(victim, AC_SLASH) + GET_AC(victim, AC_EXOTIC)) / 4;
 
-    send_to_char("                          ( ( ( {M[Consider]{x ) ) ) \n\r", ch);
-    sprintf(buf, "__________________________( ( < %sLevel %4d {x> ) )__________________________\n\r", msg, victim->level);
-    send_to_char(buf, ch);
-    sprintf(buf, "  %s \n\r",  center(capitalize(victim->short_descr),70," "));
-    send_to_char(buf, ch);
-        if ( diff <=  -5 ) msg = "  It is probably not worth your time to kill $N.";
-    else if ( diff <=   5 ) msg = "  $N would be a good match for you.";
-    else if ( diff <=  15 ) msg = "  $N might provide a bit of a challenge.";
-    else                    msg = "  Only those sure of themselves should pick this fight.";
-    act( msg, ch, NULL, victim, TO_CHAR );
+    if (!IS_SET(ch->comm, COMM_COMPACT))
+    {
+        send_to_char("                          ( ( ( {M[Consider]{x ) ) ) \n\r", ch);
+        sprintf(buf, "__________________________( ( < %sLevel %4d {x> ) )__________________________\n\r", msg, victim->level);
+        send_to_char(buf, ch);
+        sprintf(buf, "  %s \n\r",  center(capitalize(victim->short_descr),70," "));
+        send_to_char(buf, ch);
+    }
+    else
+    {
+        sprintf(buf,"Consider- %s is Level %4d.\n\r", victim->short_descr, victim->level);
+        send_to_char(buf, ch);
+    }
+            if ( diff <=  -5 ) msg = "  It is probably not worth your time to kill $N.";
+        else if ( diff <=   5 ) msg = "  $N would be a good match for you.";
+        else if ( diff <=  15 ) msg = "  $N might provide a bit of a challenge.";
+        else                    msg = "  Only those sure of themselves should pick this fight.";
+        act( msg, ch, NULL, victim, TO_CHAR );
 
-    if (parmor < varmor - 200)
-      msg = "  You are generally better armored than $N.";
-    if (parmor >= varmor - 200 && parmor <= varmor + 200)
-      msg = "  You and $N appear to be reasonably matched in total armor.";
-    if (parmor > varmor + 200)
-      msg = "  $N is wearing much better armor than you are.";
-    act(msg, ch, NULL, victim, TO_CHAR);
+        if (parmor < varmor - 200)
+          msg = "  You are generally better armored than $N.";
+        if (parmor >= varmor - 200 && parmor <= varmor + 200)
+          msg = "  You and $N appear to be reasonably matched in total armor.";
+        if (parmor > varmor + 200)
+          msg = "  $N is wearing much better armor than you are.";
+        act(msg, ch, NULL, victim, TO_CHAR);
 
     if (is_affected(ch, gsn_telepathy) && IS_SET(victim->form, FORM_SENTIENT) && IS_NPC(victim))
     {
@@ -3453,7 +3461,8 @@ void do_consider( CHAR_DATA *ch, char *argument )
         send_to_char( buf, ch );
     }
 
-    send_to_char("--------------------------( ( ( ---------- ) ) )-------------------------- \n\r", ch);
+    if (!IS_SET(ch->comm, COMM_COMPACT))
+        send_to_char("--------------------------( ( ( ---------- ) ) )-------------------------- \n\r", ch);
 
     return;
 }

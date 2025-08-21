@@ -1625,6 +1625,7 @@ int d10_damdice( CHAR_DATA *ch, CHAR_DATA *victim)
     OBJ_DATA *wield;
     int dice = 0;
     int diceroll = 0;
+    int modifier = 0;
 
     wield = get_eq_char( ch, WEAR_WIELD );
        if (wield)
@@ -1658,6 +1659,17 @@ int d10_damdice( CHAR_DATA *ch, CHAR_DATA *victim)
     if (IS_NPC(victim) && is_affected(ch, gsn_gift_fatalflaw) &&
     victim->pIndexData->vnum == get_affect_modifier(ch, gsn_gift_fatalflaw))
       dice++;
+
+    //Black Fury Gift: Coup de Grace Bonus if victim == your current saved target
+    //Target mob vnum saved under aff->modifier
+    if (IS_NPC(victim) && is_affected(ch, gsn_gift_coupdegrace) &&
+    victim->pIndexData->vnum == get_affect_modifier(ch, gsn_gift_coupdegrace))
+    {
+        modifier = get_affect_level(ch, gsn_gift_coupdegrace);
+        if (modifier > get_attribute(ch, CSATTRIB_STRENGTH))
+            modifier = get_attribute(ch, CSATTRIB_STRENGTH);
+        dice += modifier;
+    }
 
       //Mage Entropy 2
       if (is_affected(ch, gsn_controlrandomness) && number_percent( ) < get_affect_level(ch, gsn_controlrandomness) * 4)

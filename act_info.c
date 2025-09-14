@@ -2946,7 +2946,8 @@ void do_who( CHAR_DATA *ch, char *argument )
       sprintf( buf2, " =====                        It's {MC{Ga{Yr{Mn{Gi{Yv{Ma{Gl {xTime{M!{G!{Y!{x                       ===== \n");
       add_buf(output,buf2);
     }
-    if (slaughter || doubledam || nosun || doubleexp || manualxp || spookums || carnival)
+    if ((slaughter || doubledam || nosun || doubleexp || manualxp || spookums || carnival) && 
+        !IS_SET(ch->comm, COMM_COMPACT))
     {
       add_buf(output, "{w<==============================================================================>{x\n\r");
     }

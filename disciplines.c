@@ -8446,6 +8446,7 @@ void do_theft(CHAR_DATA *ch, char *argument)
 void do_cauldron(CHAR_DATA *ch, char *argument)
 {
    CHAR_DATA *victim;
+   char arg[MAX_INPUT_LENGTH];
     int dicesuccess = 0;
     int touchsuccess = 0;
     int dam = 0;
@@ -8456,11 +8457,24 @@ void do_cauldron(CHAR_DATA *ch, char *argument)
         send_to_char("You are not a vampire!\n\r" ,ch);
         return;
     }
-    if ( ( victim = get_char_room( ch, NULL, argument ) ) == NULL )
+
+    argument = one_argument(argument, arg);
+    if (argument[0] == '\0')
     {
-        send_to_char( "Boil whom?\n\r", ch );
+        victim = ch->fighting;
+        if (victim == NULL)
+        {
+            if (!IS_NPC(ch))
+                send_to_char("Whose blood do you wish to boil?\n\r", ch);
+            return;
+        }
+    }
+    else if ((victim = get_char_room(ch, NULL, arg)) == NULL)
+    {
+        send_to_char("Your target does not appear to be here.\n\r", ch);
         return;
     }
+
     if ( IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
     {
         send_to_char("Your blood curse prevents it!\n\r" ,ch);

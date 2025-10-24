@@ -7284,9 +7284,19 @@ void do_acidblood(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if ((victim = get_char_room(ch, NULL, arg)) == NULL)
+    if (argument[0] == '\0')
     {
-        send_to_char("Spit caustic blood at whom?\n\r", ch);
+        victim = ch->fighting;
+        if (victim == NULL)
+        {
+            if (!IS_NPC(ch))
+                send_to_char("Spit caustic blood upon whom?\n\r", ch);
+            return;
+        }
+    }
+    else if ((victim = get_char_room(ch, NULL, arg)) == NULL)
+    {
+        send_to_char("Your intended victim does not appear to be present.\n\r", ch);
         return;
     }
 

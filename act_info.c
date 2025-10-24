@@ -2306,7 +2306,7 @@ void do_affects(CHAR_DATA *ch, char *argument )
       if (get_affect_level(ch, gsn_gift_coupdegrace) == 0)
       {
         send_to_char( "| Owl-spirits constantly hoot in your ear, preventing your concentration.  |\n\r", ch);
-        sprintf(buf, "| {g%d{x |\n\r", coupdegraceaf->duration);
+        sprintf(buf, "|                                                                {Y%2d hour%s{x  |\n\r", coupdegraceaf->duration, coupdegraceaf->duration != 1 ? "s" : " ");
         send_to_char(buf, ch);
       }
       else

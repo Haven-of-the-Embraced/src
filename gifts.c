@@ -3593,7 +3593,24 @@ void spell_gift_truefear( int sn, int level, CHAR_DATA *ch, void *vo, int target
 //wp diff victim’s perm rage rating
 //every 2 successes adds one to frenzy diff, at the end of the scene the victim must spend a wp or immedialyt check for frenzy
 //
-void spell_gift_heartoffury( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_heartoffury( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  AFFECT_DATA af;
+  int success, rage =  6;
+  int willpower = ch->csmax_willpower;
+  if (is_affected(ch, gsn_gift_heartoffury))
+  {
+    send_to_char("You are already fighting against the pull of your Rage.\n\r", ch);
+    return;
+  }
+
+  if (ch->move < ch->level * 2)
+  {
+    send_to_char("You are too exhausted to call upon spirits.\n\r", ch);
+    return;
+  }
+
+
     return;
 }
 //“Silver Claws”

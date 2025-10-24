@@ -8489,7 +8489,7 @@ void do_cauldron(CHAR_DATA *ch, char *argument)
 
     if (ch->pcdata->discipline[THAUMATURGY] < 5)
     {
-        send_to_char( "You are not skilled enough in the arts of Thaumaturgy!.\n\r", ch );
+        send_to_char( "Your do not possess the required tutelage in Thaumaturgy: Path of Blood.\n\r", ch );
         return;
     }
 

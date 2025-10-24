@@ -3610,8 +3610,39 @@ void spell_gift_heartoffury( int sn, int level, CHAR_DATA *ch, void *vo, int tar
     return;
   }
 
-
+  if (ch->pcdata->rage[TEMP] < 1)
+  {
+    send_to_char("You do not have any Rage to worry about.\n\r", ch);
     return;
+  }
+
+  success = godice(willpower, rage);
+
+  if (success < 0)
+  {
+    act("Boar-spirits strip away your Rage, instead of helping you resist it.",ch,NULL,NULL,TO_CHAR);
+    ch->pcdata->rage[TEMP]--;
+    return;
+  }
+
+  if (success == 0)
+  {
+    act("The spirits of boars charge in the distance, but do not answer.",ch,NULL,NULL,TO_CHAR);
+    WAIT_STATE(ch, 3);
+    return;
+  }
+
+  act("Boar-spirits charge to your aid, helping you steel yourself against your rising Rage.",ch,NULL,victim,TO_CHAR);
+  af.where      = TO_AFFECTS;
+  af.type       = gsn_gift_heartoffury;
+  af.level      = success;
+  af.duration  = 5;
+  af.location  = 0;
+  af.modifier  = 0;
+  af.bitvector = 0;
+  affect_to_char( ch, &af );
+
+  return;
 }
 //“Silver Claws”
 //luna spirits

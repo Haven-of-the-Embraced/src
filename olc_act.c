@@ -3679,8 +3679,15 @@ OEDIT( oedit_delete )
 
     if ( !str_cmp( command, "true" ) )
     {
+    if ( pObj->oprogs )
+        {
+            send_to_char("{R** NOTICE **{x\n\r", ch);
+            send_to_char("   You must first remove ALL oprogs before marking an object for deletion.\n\r", ch);
+            return FALSE;
+        }
         pObj->delete = TRUE;
         send_to_char( "Object marked for deletion.\n\r", ch);
+        send_to_char( "Ensure that you have removed all resets with this object before resetting.\n\r", ch);
         return TRUE;
     } else if ( !str_cmp( command, "false"))
     {

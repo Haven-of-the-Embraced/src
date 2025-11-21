@@ -2710,7 +2710,7 @@ Total (3) */
 
     { "heart of fury", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_heartoffury,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_heartoffury,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+    &gsn_gift_heartoffury,          SLOT( 0),        0,     12, "",             "The boar-spirits' resistance to frenzy charges away.",        "" },
 
     { "silver claws",             { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_silverclaws,             TAR_CHAR_SELF,             POS_FIGHTING,

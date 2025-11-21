@@ -4476,8 +4476,15 @@ OEDIT( medit_delete )
 
     if ( !str_cmp( command, "true" ) )
     {
+    if ( pMob->mprogs )
+        {
+            send_to_char("{R** NOTICE **{x\n\r", ch);
+            send_to_char("   You must first remove ALL mprogs before marking a mob for deletion.\n\r", ch);
+            return FALSE;
+        }
         pMob->delete = TRUE;
         send_to_char( "Mobile marked for deletion.\n\r", ch);
+        send_to_char( "Ensure that all resets for this mob have been removed.\n\r", ch);
         return TRUE;
     } else if ( !str_cmp( command, "false"))
     {

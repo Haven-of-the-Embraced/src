@@ -3632,7 +3632,7 @@ void spell_gift_heartoffury( int sn, int level, CHAR_DATA *ch, void *vo, int tar
     return;
   }
 
-  act("Boar-spirits charge to your aid, helping you steel yourself against your rising Rage.",ch,NULL,victim,TO_CHAR);
+  act("Boar-spirits charge to your aid, helping you steel yourself against your rising Rage.",ch,NULL,NULL,TO_CHAR);
   af.where      = TO_AFFECTS;
   af.type       = gsn_gift_heartoffury;
   af.level      = success;

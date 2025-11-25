@@ -3895,7 +3895,10 @@ void spell_poison( int sn, int level, CHAR_DATA *ch, void *vo, int target )
     af.where     = TO_AFFECTS;
     af.type      = sn;
     af.level     = level;
-    af.duration  = level/2;
+    if (is_affected(victim, gsn_poison))
+        af.duration = 1;
+    else
+        af.duration  = level/3 + 1;
     af.location  = APPLY_CS_STR;
     af.modifier  = -2;
     af.bitvector = AFF_POISON;

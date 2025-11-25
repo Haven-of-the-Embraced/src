@@ -1336,7 +1336,7 @@ void rote_senselife(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj
         if (is_affected(victim, gsn_berserk))
             send_to_char("{g|{W             Pulse races spectacularly through your target.             {g|{x\n\r", ch);
         if (is_affected(victim, gsn_bleeding))
-            send_to_char("{g|r                 Blood flows profusely from many wounds.                 {g|{x\n\r", ch);
+            send_to_char("{g|{W                 Blood flows profusely from many wounds.                 {g|{x\n\r", ch);
         if (is_affected(victim, gsn_deafened))
             send_to_char("{g|{W                        Your target cannot hear.                        {g|{x\n\r", ch);
         if (is_affected(victim, gsn_laryngitis))

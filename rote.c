@@ -1921,7 +1921,7 @@ void rote_matterperception(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DA
 
     send_to_char( "{y#{x\n\r", ch );
     sprintf( buf,
-        "{y#{x  Level:     %3d                Type:   %-18s     {x\n\r{y#{x  Weight: %4d.%d lbs            Durability: %3d%%{x\n\r",
+        "{y#{x  Level:     %3d                Type:   %-18s     {x\n\r{y#{x  Weight: %4d.%d lbs            Durability:         %3d%%{x\n\r",
         obj->level, item_name(obj->item_type),
         obj->weight / 10, obj->weight % 10,  obj->condition
         );
@@ -1938,8 +1938,8 @@ void rote_matterperception(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DA
             break;
 
             case ITEM_CONTAINER:
-                sprintf(buf,"{y#  {xCapacity: %d#  Maximum weight: %d#  \n\r{y#  {xFlags: %s\n\r",
-                obj->value[0], obj->value[3], cont_bit_name(obj->value[1]));
+                sprintf(buf,"{y#  {xCapacity: %4d items          Maximum weight: %5d.%d lbs  \n\r{y#  {xFlags: %s\n\r",
+                obj->value[3], obj->value[0] / 10, obj->value[0] % 10, cont_bit_name(obj->value[1]));
                 send_to_char(buf,ch);
                 if (obj->value[4] != 100)
                 {

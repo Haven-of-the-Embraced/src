@@ -1689,6 +1689,10 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_vampire_blood,    TAR_CHAR_SELF,      POS_RESTING,
     NULL,           SLOT(0),     0, 12, "",         "!Blood!",  "" },
 
+    { "willpower",    { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_willpower,    TAR_CHAR_SELF,      POS_RESTING,
+    NULL,           SLOT(0),     0, 12, "",         "Willpower Boost",  "" },
+
 /* combat and weapons skills
 Total (33) */
     { "axe",{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },

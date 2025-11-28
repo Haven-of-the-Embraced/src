@@ -432,6 +432,17 @@ void spell_vampire_blood( int sn, int level, CHAR_DATA *ch, void *vo, int target
     return;
 }
 
+void spell_willpower( int sn, int level, CHAR_DATA *ch, void *vo, int target )
+{
+
+    ch->cswillpower += 1;
+    if(ch->cswillpower > ch->csmax_willpower)
+        ch->cswillpower = ch->csmax_willpower;
+
+    send_to_char( "You regain a little Willpower, ready to tackle any challenge.\n\r", ch );
+    return;
+}
+
 void spell_change_alignment( int sn, int level, CHAR_DATA *ch, void *vo,int target )
 {
     CHAR_DATA *victim = (CHAR_DATA *) vo;

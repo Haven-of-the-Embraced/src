@@ -450,7 +450,7 @@ void spell_gnosis( int sn, int level, CHAR_DATA *ch, void *vo, int target )
 
     ch->pcdata->gnosis[TEMP]++;
     if (ch->pcdata->gnosis[TEMP] > ch->pcdata->gnosis[PERM])
-        ch->pcdata->gnosis = ch->pcdata->gnosis[PERM];
+        ch->pcdata->gnosis[TEMP] = ch->pcdata->gnosis[PERM];
 
     send_to_char( "You feel a small rush of spiritual energy.\n\r", ch );
     return;
@@ -463,7 +463,7 @@ void spell_rage( int sn, int level, CHAR_DATA *ch, void *vo, int target )
 
     ch->pcdata->rage[TEMP]++;
     if (ch->pcdata->rage[TEMP] > ch->pcdata->rage[PERM])
-        ch->pcdata->rage = ch->pcdata->rage[PERM];
+        ch->pcdata->rage[TEMP] = ch->pcdata->rage[PERM];
 
     send_to_char( "You feel a small rush as Gaia fuels your Rage.\n\r", ch );
     return;

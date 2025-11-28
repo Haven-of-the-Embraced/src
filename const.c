@@ -1697,9 +1697,9 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gnosis,    TAR_CHAR_SELF,      POS_RESTING,
     NULL,           SLOT(0),     0, 12, "",         "Gnosis",  "" },
 
-    { "willpower",    { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_willpower,    TAR_CHAR_SELF,      POS_RESTING,
-    NULL,           SLOT(0),     0, 12, "",         "Willpower Boost",  "" },
+    { "rage",    { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_rage,    TAR_CHAR_SELF,      POS_RESTING,
+    NULL,           SLOT(0),     0, 12, "",         "Rage",  "" },
 
 /* combat and weapons skills
 Total (33) */

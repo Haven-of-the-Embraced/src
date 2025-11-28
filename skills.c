@@ -410,6 +410,11 @@ void do_skillmap(CHAR_DATA *ch, char *argument)
 	    sprintf(buf, "|=====================================================================|\n\r");
     	add_buf(output, buf);
     }
+    else
+    {
+    	sprintf(buf, "   %9s        %-3s %-17s   %-17s         \n\r", "Name", "Lvl", "Primary       Dot", "Secondary     Dot");
+    	add_buf(output, buf);
+    }
     for (i = 0; csskill_table[i].name != NULL; i++)
     {
         switch (csskill_table[i].primary[TYPE])
@@ -474,9 +479,14 @@ void do_skillmap(CHAR_DATA *ch, char *argument)
     {
 	    sprintf(buf, "|=====================================================================|\n\r");
     	add_buf(output, buf);
-	    sprintf(buf, "|  {rX{x - CS Dot requirements have not been met.                         |\n\r");
+	    sprintf(buf, "|  {rX{c - CS Dot requirements have not been met.                         {x|\n\r");
     	add_buf(output, buf);
 	    sprintf(buf, "|=====================================================================|\n\r");
+    	add_buf(output, buf);
+    }
+    else
+    {
+	    sprintf(buf, " {rX{c - CS Dot requirements have not been met.{x\n\r");
     	add_buf(output, buf);
     }
     page_to_char(buf_string(output), ch);

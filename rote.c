@@ -485,23 +485,23 @@ void do_mage(CHAR_DATA *ch, char *argument)
     }
     else
     {
-        sprintf(buf,"{YPrime{x:            {D%s{x\n\r",dots(ch->sphere[SPHERE_PRIME], FALSE));
+        sprintf(buf,"{YPrime{x:            {D%d{x\n\r",ch->sphere[SPHERE_PRIME], FALSE);
         send_to_char(buf,ch);
-        sprintf(buf,"{MSpirit{x:           {D%s{x\n\r",dots(ch->sphere[SPHERE_SPIRIT], FALSE));
+        sprintf(buf,"{MSpirit{x:           {D%d{x\n\r",ch->sphere[SPHERE_SPIRIT], FALSE);
         send_to_char(buf,ch);
-        sprintf(buf,"{cTime{x:             {D%s{x\n\r",dots(ch->sphere[SPHERE_TIME], FALSE));
+        sprintf(buf,"{cTime{x:             {D%d{x\n\r",ch->sphere[SPHERE_TIME], FALSE);
         send_to_char(buf,ch);
-        sprintf(buf,"{CMind{x:             {D%s{x\n\r",dots(ch->sphere[SPHERE_MIND], FALSE));
+        sprintf(buf,"{CMind{x:             {D%d{x\n\r",ch->sphere[SPHERE_MIND], FALSE);
         send_to_char(buf,ch);
-        sprintf(buf,"{yMatter{x:           {D%s{x\n\r",dots(ch->sphere[SPHERE_MATTER], FALSE));
+        sprintf(buf,"{yMatter{x:           {D%d{x\n\r",ch->sphere[SPHERE_MATTER], FALSE);
         send_to_char(buf,ch);
-        sprintf(buf,"{GLife{x:             {D%s{x\n\r",dots(ch->sphere[SPHERE_LIFE], FALSE));
+        sprintf(buf,"{GLife{x:             {D%d{x\n\r",ch->sphere[SPHERE_LIFE], FALSE);
         send_to_char(buf,ch);
-        sprintf(buf,"{RForces{x:           {D%s{x\n\r",dots(ch->sphere[SPHERE_FORCES], FALSE));
+        sprintf(buf,"{RForces{x:           {D%d{x\n\r",ch->sphere[SPHERE_FORCES], FALSE);
         send_to_char(buf,ch);
-        sprintf(buf,"{BCorrespondence{x:   {D%s{x\n\r",dots(ch->sphere[SPHERE_CORRESPONDENCE], FALSE));
+        sprintf(buf,"{BCorrespondence{x:   {D%d{x\n\r",ch->sphere[SPHERE_CORRESPONDENCE], FALSE);
         send_to_char(buf,ch);
-        sprintf(buf,"{DEntropy{x:          {D%s{x\n\r",dots(ch->sphere[SPHERE_ENTROPY], FALSE));
+        sprintf(buf,"{DEntropy{x:          {D%d{x\n\r",ch->sphere[SPHERE_ENTROPY], FALSE);
         send_to_char(buf,ch);
     }
 

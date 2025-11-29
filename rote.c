@@ -443,6 +443,9 @@ void do_mage(CHAR_DATA *ch, char *argument)
 {
     char buf[MAX_STRING_LENGTH];
     int quint, natta, para;
+    bool compact = FALSE;
+    if (IS_SET(ch->comm,COMM_COMPACT))
+        compact = TRUE;
 
     if(ch->avatar == 0)
     {
@@ -459,24 +462,48 @@ void do_mage(CHAR_DATA *ch, char *argument)
     send_to_char(buf,ch);
     sprintf(buf,"Your strength in the Spheres are as follows:\n\r");
     send_to_char(buf,ch);
-    sprintf(buf,"{YPrime{x:            {D%s{x\n\r",dots(ch->sphere[SPHERE_PRIME], FALSE));
-    send_to_char(buf,ch);
-    sprintf(buf,"{MSpirit{x:           {D%s{x\n\r",dots(ch->sphere[SPHERE_SPIRIT], FALSE));
-    send_to_char(buf,ch);
-    sprintf(buf,"{cTime{x:             {D%s{x\n\r",dots(ch->sphere[SPHERE_TIME], FALSE));
-    send_to_char(buf,ch);
-    sprintf(buf,"{CMind{x:             {D%s{x\n\r",dots(ch->sphere[SPHERE_MIND], FALSE));
-    send_to_char(buf,ch);
-    sprintf(buf,"{yMatter{x:           {D%s{x\n\r",dots(ch->sphere[SPHERE_MATTER], FALSE));
-    send_to_char(buf,ch);
-    sprintf(buf,"{GLife{x:             {D%s{x\n\r",dots(ch->sphere[SPHERE_LIFE], FALSE));
-    send_to_char(buf,ch);
-    sprintf(buf,"{RForces{x:           {D%s{x\n\r",dots(ch->sphere[SPHERE_FORCES], FALSE));
-    send_to_char(buf,ch);
-    sprintf(buf,"{BCorrespondence{x:   {D%s{x\n\r",dots(ch->sphere[SPHERE_CORRESPONDENCE], FALSE));
-    send_to_char(buf,ch);
-    sprintf(buf,"{DEntropy{x:          {D%s{x\n\r",dots(ch->sphere[SPHERE_ENTROPY], FALSE));
-    send_to_char(buf,ch);
+    if (!compact)
+    {
+        sprintf(buf,"{YPrime{x:            {D%s{x\n\r",dots(ch->sphere[SPHERE_PRIME], FALSE));
+        send_to_char(buf,ch);
+        sprintf(buf,"{MSpirit{x:           {D%s{x\n\r",dots(ch->sphere[SPHERE_SPIRIT], FALSE));
+        send_to_char(buf,ch);
+        sprintf(buf,"{cTime{x:             {D%s{x\n\r",dots(ch->sphere[SPHERE_TIME], FALSE));
+        send_to_char(buf,ch);
+        sprintf(buf,"{CMind{x:             {D%s{x\n\r",dots(ch->sphere[SPHERE_MIND], FALSE));
+        send_to_char(buf,ch);
+        sprintf(buf,"{yMatter{x:           {D%s{x\n\r",dots(ch->sphere[SPHERE_MATTER], FALSE));
+        send_to_char(buf,ch);
+        sprintf(buf,"{GLife{x:             {D%s{x\n\r",dots(ch->sphere[SPHERE_LIFE], FALSE));
+        send_to_char(buf,ch);
+        sprintf(buf,"{RForces{x:           {D%s{x\n\r",dots(ch->sphere[SPHERE_FORCES], FALSE));
+        send_to_char(buf,ch);
+        sprintf(buf,"{BCorrespondence{x:   {D%s{x\n\r",dots(ch->sphere[SPHERE_CORRESPONDENCE], FALSE));
+        send_to_char(buf,ch);
+        sprintf(buf,"{DEntropy{x:          {D%s{x\n\r",dots(ch->sphere[SPHERE_ENTROPY], FALSE));
+        send_to_char(buf,ch);
+    }
+    else
+    {
+        sprintf(buf,"{YPrime{x:            {D%s{x\n\r",dots(ch->sphere[SPHERE_PRIME], FALSE));
+        send_to_char(buf,ch);
+        sprintf(buf,"{MSpirit{x:           {D%s{x\n\r",dots(ch->sphere[SPHERE_SPIRIT], FALSE));
+        send_to_char(buf,ch);
+        sprintf(buf,"{cTime{x:             {D%s{x\n\r",dots(ch->sphere[SPHERE_TIME], FALSE));
+        send_to_char(buf,ch);
+        sprintf(buf,"{CMind{x:             {D%s{x\n\r",dots(ch->sphere[SPHERE_MIND], FALSE));
+        send_to_char(buf,ch);
+        sprintf(buf,"{yMatter{x:           {D%s{x\n\r",dots(ch->sphere[SPHERE_MATTER], FALSE));
+        send_to_char(buf,ch);
+        sprintf(buf,"{GLife{x:             {D%s{x\n\r",dots(ch->sphere[SPHERE_LIFE], FALSE));
+        send_to_char(buf,ch);
+        sprintf(buf,"{RForces{x:           {D%s{x\n\r",dots(ch->sphere[SPHERE_FORCES], FALSE));
+        send_to_char(buf,ch);
+        sprintf(buf,"{BCorrespondence{x:   {D%s{x\n\r",dots(ch->sphere[SPHERE_CORRESPONDENCE], FALSE));
+        send_to_char(buf,ch);
+        sprintf(buf,"{DEntropy{x:          {D%s{x\n\r",dots(ch->sphere[SPHERE_ENTROPY], FALSE));
+        send_to_char(buf,ch);
+    }
 
     return;
 }

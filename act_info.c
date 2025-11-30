@@ -310,6 +310,8 @@ void show_char_to_char_0( CHAR_DATA *victim, CHAR_DATA *ch )
         (is_affected(victim, gsn_slow) || IS_AFFECTED(victim, AFF_SLOW)  ))
         strcat( buf, "{x{Y({DDecelerated{Y){y "   );
     if(is_affected(ch, gsn_telepathy) && IS_SET(victim->form,FORM_SENTIENT)) strcat( buf, "{x{w[{G::{w]{y " );
+    if (victim->pIndexData->pShop)
+        strcat(buf, "{x{y[{Y${y] ");
     if (HAS_TRIGGER_MOB( victim, TRIG_TALK ))
         strcat(buf, "{x{D[{W!{D]{y ");
     if ( IS_AFFECTED(victim, AFF_PASS_DOOR)   ) strcat( buf, "{x({cTranslucent{x){y ");

@@ -432,6 +432,43 @@ void spell_vampire_blood( int sn, int level, CHAR_DATA *ch, void *vo, int target
     return;
 }
 
+void spell_willpower( int sn, int level, CHAR_DATA *ch, void *vo, int target )
+{
+
+    ch->cswillpower += 1;
+    if(ch->cswillpower > ch->csmax_willpower)
+        ch->cswillpower = ch->csmax_willpower;
+
+    send_to_char( "You regain a little Willpower, ready to tackle any challenge.\n\r", ch );
+    return;
+}
+
+void spell_gnosis( int sn, int level, CHAR_DATA *ch, void *vo, int target )
+{
+    if(ch->race != race_lookup("garou"))
+        return;
+
+    ch->pcdata->gnosis[TEMP]++;
+    if (ch->pcdata->gnosis[TEMP] > ch->pcdata->gnosis[PERM])
+        ch->pcdata->gnosis[TEMP] = ch->pcdata->gnosis[PERM];
+
+    send_to_char( "You feel a small rush of spiritual energy.\n\r", ch );
+    return;
+}
+
+void spell_rage( int sn, int level, CHAR_DATA *ch, void *vo, int target )
+{
+    if(ch->race != race_lookup("garou"))
+        return;
+
+    ch->pcdata->rage[TEMP]++;
+    if (ch->pcdata->rage[TEMP] > ch->pcdata->rage[PERM])
+        ch->pcdata->rage[TEMP] = ch->pcdata->rage[PERM];
+
+    send_to_char( "You feel a small rush as Gaia fuels your Rage.\n\r", ch );
+    return;
+}
+
 void spell_change_alignment( int sn, int level, CHAR_DATA *ch, void *vo,int target )
 {
     CHAR_DATA *victim = (CHAR_DATA *) vo;

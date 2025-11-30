@@ -1255,8 +1255,8 @@ void cskill_update(CHAR_DATA *ch, bool show)
 
 const   struct  skill_type  skill_table [MAX_SKILL] =
 {
-// TOTAL SKILLS AS OF 5/30/25 =  455
-// MAX_SKILL INCREASED TO 458 4/4/25
+// TOTAL SKILLS AS OF 11/27/25 =  458
+// MAX_SKILL INCREASED TO 465 11/27/25
 /*
  * Magic spells.  Total (108)
  */
@@ -1688,6 +1688,18 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
     { "kindred vitae",    { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_vampire_blood,    TAR_CHAR_SELF,      POS_RESTING,
     NULL,           SLOT(0),     0, 12, "",         "!Blood!",  "" },
+
+    { "willpower",    { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_willpower,    TAR_CHAR_SELF,      POS_RESTING,
+    NULL,           SLOT(0),     0, 12, "",         "Willpower Boost",  "" },
+
+    { "gnosis",    { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gnosis,    TAR_CHAR_SELF,      POS_RESTING,
+    NULL,           SLOT(0),     0, 12, "",         "Gnosis",  "" },
+
+    { "rage",    { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_rage,    TAR_CHAR_SELF,      POS_RESTING,
+    NULL,           SLOT(0),     0, 12, "",         "Rage",  "" },
 
 /* combat and weapons skills
 Total (33) */

@@ -401,8 +401,20 @@ void do_skillmap(CHAR_DATA *ch, char *argument)
 
     has_secondary = TRUE;
     output = new_buf();
-    sprintf(buf, "%9s        %-3s %-17s   %-17s\n\r", "Name", "Lvl", "Primary       Dot", "Secondary     Dot");
-    add_buf(output, buf);
+    if (!IS_SET(ch->comm, COMM_COMPACT))
+    {
+	    sprintf(buf, "|=====================================================================|\n\r");
+    	add_buf(output, buf);
+    	sprintf(buf, "|  %9s        %-3s %-17s   %-17s         |\n\r", "Name", "Lvl", "Primary       Dot", "Secondary     Dot");
+    	add_buf(output, buf);
+	    sprintf(buf, "|=====================================================================|\n\r");
+    	add_buf(output, buf);
+    }
+    else
+    {
+    	sprintf(buf, "   %9s        %-3s %-17s   %-17s         \n\r", "Name", "Lvl", "Primary       Dot", "Secondary     Dot");
+    	add_buf(output, buf);
+    }
     for (i = 0; csskill_table[i].name != NULL; i++)
     {
         switch (csskill_table[i].primary[TYPE])
@@ -452,18 +464,31 @@ void do_skillmap(CHAR_DATA *ch, char *argument)
 
         if (has_secondary)
         {
-            sprintf(buf, "%s%16s %-3d %-15s %-2d  %-15s %-2d{x\n\r", ch->pcdata->learned[*csskill_table[i].gsn] ? "" : "{c" , csskill_table[i].name, csskill_table[i].level,
+            sprintf(buf, "%s%16s %-3d %-15s %-2d  %-15s %-2d{x\n\r", ch->pcdata->learned[*csskill_table[i].gsn] ? "   " : " {rX{c " , csskill_table[i].name, csskill_table[i].level,
                                                         primary, csskill_table[i].primary[DOT],
                                                         secondary, csskill_table[i].secondary[DOT]);
         }
         else
         {
-            sprintf(buf, "%s%16s %-3d %-15s %-2d{x\n\r", ch->pcdata->learned[*csskill_table[i].gsn] ? "" : "{c" , csskill_table[i].name, csskill_table[i].level,
+            sprintf(buf, "%s%16s %-3d %-15s %-2d{x\n\r", ch->pcdata->learned[*csskill_table[i].gsn] ? "   " : " {rX{c " , csskill_table[i].name, csskill_table[i].level,
                                                         primary, csskill_table[i].primary[DOT]);
         }
         add_buf(output, buf);
     }
-
+    if (!IS_SET(ch->comm, COMM_COMPACT))
+    {
+	    sprintf(buf, "|=====================================================================|\n\r");
+    	add_buf(output, buf);
+	    sprintf(buf, "|  {rX{c - CS Dot requirements have not been met.                         {x|\n\r");
+    	add_buf(output, buf);
+	    sprintf(buf, "|=====================================================================|\n\r");
+    	add_buf(output, buf);
+    }
+    else
+    {
+	    sprintf(buf, " {rX{c - CS Dot requirements have not been met.{x\n\r");
+    	add_buf(output, buf);
+    }
     page_to_char(buf_string(output), ch);
 
 }

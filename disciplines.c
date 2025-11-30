@@ -8301,15 +8301,6 @@ void do_bloodofpotency(CHAR_DATA *ch, char *argument)
     if ((ch->gen + genmod) < 4)
         genmod = -(ch->gen - 4);
 
-    af.modifier = genmod;
-    af.duration = (10*dicesuccess);
-    af.where     = TO_AFFECTS;
-    af.type      = gsn_bloodofpotency;
-    af.level     = ch->pcdata->discipline[THAUMATURGY];
-    af.location  = APPLY_GENERATION;
-    af.bitvector = 0;
-    affect_to_char( ch, &af );
-
     af.where    = TO_AFFECTS;
     af.type     = gsn_bloodofpotency;
     af.level    = ch->pcdata->discipline[THAUMATURGY];
@@ -8318,6 +8309,14 @@ void do_bloodofpotency(CHAR_DATA *ch, char *argument)
     af.modifier = 10*(-genmod);
     af.bitvector    = 0;
     affect_to_char( ch, &af );
+
+    if (ch->race != race_lookup("ghoul"))
+    {
+        af.modifier = genmod;
+        af.duration = (10*dicesuccess);
+        af.location  = APPLY_GENERATION;
+        affect_to_char( ch, &af );
+    }
 
     gain_exp(ch, dicesuccess * 5);
     return;

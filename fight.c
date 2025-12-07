@@ -2406,6 +2406,11 @@ if (DEBUG_MESSAGES || IS_DEBUGGING(ch))	{
 
     if((victim->race == race_lookup("methuselah") || victim->race == race_lookup("vampire")) && victim->hit <= 0 && !IS_IMMORTAL(victim) && !IS_SET(victim->act,PLR_ARENA))
     {
+        if ( IS_NPC( victim ) && HAS_TRIGGER_MOB( victim, TRIG_TORPOR) )
+        {
+            act("{RTorpor Trigger{x", victim, NULL, NULL, TO_ROOM);
+            p_percent_trigger( victim, NULL, NULL, ch, NULL, NULL, TRIG_TORPOR );
+        }
             victim->position = POS_TORPOR;
             victim->hit = -20;
 

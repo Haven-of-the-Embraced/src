@@ -2897,6 +2897,7 @@ struct  group_type
 #define TRIG_SYSTIME   (T)
 #define TRIG_MUDTIME (U)
 #define TRIG_TALK   (V)
+#define TRIG_TORPOR (X)
 
 /*
  * Prog types

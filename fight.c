@@ -2407,72 +2407,58 @@ if (DEBUG_MESSAGES || IS_DEBUGGING(ch))	{
     if((victim->race == race_lookup("methuselah") || victim->race == race_lookup("vampire")) && victim->hit <= 0 && !IS_IMMORTAL(victim) && !IS_SET(victim->act,PLR_ARENA))
     {
         if ( IS_NPC( victim ) && HAS_TRIGGER_MOB( victim, TRIG_TORPOR) )
-        {
-            act("{RTorpor Trigger{x", victim, NULL, NULL, TO_ROOM);
             p_percent_trigger( victim, NULL, NULL, ch, NULL, NULL, TRIG_TORPOR );
-        }
-            victim->position = POS_TORPOR;
-            victim->hit = -20;
 
-                        if((number_range(1,100) < 50) && (!IS_NPC(victim)))
-                        {
-                                victim->perm_stat[number_range(0, 4)] -= 1;
-                                update_csstats(victim);
-                                send_to_char("Your struggle for life has permanently weakened you!\n\r",victim);
-                        }
+        victim->position = POS_TORPOR;
+        victim->hit = -20;
 
-            stop_fighting( victim, TRUE );
-            if(IS_NPC(ch)) grudge_update(ch,victim);
-            if(IS_NPC(victim)) grudge_update(victim,ch);
+        stop_fighting( victim, TRUE );
+        if(IS_NPC(ch)) grudge_update(ch,victim);
+        if(IS_NPC(victim)) grudge_update(victim,ch);
 
-            for ( d = descriptor_list; d != NULL; d = d->next )
+        for ( d = descriptor_list; d != NULL; d = d->next )
+        {
+            if ( d->connected == CON_PLAYING &&
+            d->character != victim &&
+            is_same_clan(victim,d->character) && IS_VAMP(d->character) &&
+            !IS_SET(d->character->comm,COMM_NOCLAN))
             {
-                if ( d->connected == CON_PLAYING &&
-                d->character != victim &&
-                is_same_clan(victim,d->character) && IS_VAMP(d->character) &&
-                !IS_SET(d->character->comm,COMM_NOCLAN))
-                {
                 act_new("You sense that $n has entered Torpor!",victim,NULL,d->character,TO_VICT,POS_DEAD, TRUE);
-                }
             }
+        }
 
-            OBJ_DATA *obj, *obj_next;
-
-            /* rot_torp - Ugha */
-
-            for ( obj = victim->carrying; obj != NULL; obj = obj_next )
+        OBJ_DATA *obj, *obj_next;
+        /* rot_torp - Ugha */
+        for ( obj = victim->carrying; obj != NULL; obj = obj_next )
+        {
+            obj_next = obj->next_content;
+            if (IS_SET(obj->extra_flags,ITEM_ROT_DEATH))
             {
-                obj_next = obj->next_content;
-
-                if (IS_SET(obj->extra_flags,ITEM_ROT_DEATH))
+                if(obj->wear_loc == WEAR_FLOAT)
                 {
-
-                    if(obj->wear_loc == WEAR_FLOAT)
+                    if (obj->contains != NULL)
                     {
-                        if (obj->contains != NULL)
+                        OBJ_DATA *in, *in_next;
+                        act("$p evaporates,scattering its contents.",victim,obj,NULL,TO_ROOM);
+                        for (in = obj->contains; in != NULL; in = in_next)
                         {
-
-                            OBJ_DATA *in, *in_next;
-
-                            act("$p evaporates,scattering its contents.",victim,obj,NULL,TO_ROOM);
-                            for (in = obj->contains; in != NULL; in = in_next)
-                            {
-                                in_next = in->next_content;
-                                obj_from_obj(in);
-                                obj_to_room(in,victim->in_room);
-                            }
+                            in_next = in->next_content;
+                            obj_from_obj(in);
+                            obj_to_room(in,victim->in_room);
                         }
-                        else act("$p evaporates.",victim,obj,NULL,TO_ROOM);
-
-                        extract_obj(obj);
                     }
                     else
-                    {
-                        obj->timer = number_range(5,10);
-                        REMOVE_BIT(obj->extra_flags,ITEM_ROT_DEATH);
-                    }
+                        act("$p evaporates.",victim,obj,NULL,TO_ROOM);
+
+                    extract_obj(obj);
+                }
+                else
+                {
+                    obj->timer = number_range(5,10);
+                    REMOVE_BIT(obj->extra_flags,ITEM_ROT_DEATH);
                 }
             }
+        }
     }
     update_pos( victim );
     if(IS_NPC(ch)) grudge_update(ch,victim);

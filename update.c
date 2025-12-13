@@ -1439,6 +1439,7 @@ void obj_update( void )
         }
 
         if (obj->item_type == ITEM_FOUNTAIN && obj->wear_loc == WEAR_NONE &&
+            IS_FOUNTAIN_FLAG(obj, FOUNTAIN_REFILL) &&
             obj->value[1] < obj->value[0])
         {
             obj->value[1] += number_range(1,25);

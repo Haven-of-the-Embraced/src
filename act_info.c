@@ -272,7 +272,7 @@ void show_char_to_char_0( CHAR_DATA *victim, CHAR_DATA *ch )
     if ( victim->invis_level >= LEVEL_HERO ) strcat( buf, "{x(Wizi){y ");
     if (IS_NPC(victim) && IS_SET(victim->act, ACT_QUESTMOB) && IS_IMMORTAL(ch))
       strcat( buf, "{W*{D!{GQ{gu{ce{Cst{cM{go{Gb{D!{W*{y "        );
-
+    if (is_affected(ch, gsn_gift_fullmoonslight))   strcat(buf, "{Y*{y ");
     if (IS_NPC(victim) && IS_SET(victim->act2, ACT2_INFLUENCE) &&
         !IS_NPC(ch) && is_affected(ch, gsn_notoriety))
             strcat(buf, "{R({rInfluence{R){y ");

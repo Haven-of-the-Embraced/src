@@ -3108,7 +3108,7 @@ bool set_obj_values( CHAR_DATA *ch, OBJ_INDEX_DATA *pObj, int value_num, char *a
                 break;
             case 3:
                 send_to_char( "SPECIAL FOUNTAIN FLAG SET.\n\r\n\r", ch );
-                ALT_FLAGVALUE_SET( pObj->value[3], fountain_flags, argument );
+                ALT_FLAGVALUE_SET( pObj->value[4], fountain_flags, argument );
                 break;
             }
     break;

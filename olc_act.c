@@ -2669,11 +2669,11 @@ void show_obj_values( CHAR_DATA *ch, OBJ_INDEX_DATA *obj )
             "[v0] Liquid Total:    [%d]\n\r"
             "[v1] Liquid Left:     [%d]\n\r"
             "[v2] Liquid:          %s\n\r"
-            "[v3] Fountain Flags:  [%s]\n\r",
+            "[v4] Fountain Flags:  [%s]\n\r",
             obj->value[0],
             obj->value[1],
             liq_table[obj->value[2]].liq_name,
-            flag_string( fountain_flags, obj->value[3]) );
+            flag_string( fountain_flags, obj->value[4]) );
         send_to_char( buf,ch );
         break;
 

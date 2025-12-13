@@ -3127,7 +3127,8 @@ bool can_see_room( CHAR_DATA *ch, ROOM_INDEX_DATA *pRoomIndex )
 
 bool unseen_check(CHAR_DATA *ch, CHAR_DATA *victim)
 {
-    /* Checks all types of Unseen/veil versus PCs reveal*/
+    int detect, hide;
+    /* Checks all types of Unseen/veil versus PCs Detect Unseen */
     if (!IS_AFFECTED2(victim, AFF2_VEIL) && !IS_AFFECTED2(victim, AFF2_UNSEEN))
         return TRUE;
 
@@ -3144,6 +3145,26 @@ bool unseen_check(CHAR_DATA *ch, CHAR_DATA *victim)
         return FALSE;
     else
         return TRUE;
+
+    if (ch->race == race_lookup("vampire") || ch->race == race_lookup("methuselah")
+    || ch->race == race_lookup("ghoul"))
+        detect = ch->auspex;
+    else if (ch->race == race_lookup("garou"))
+        detect = ch->pcdata->rank;
+    else if (clan_table[ch->clan].clan_type == TYPE_TRADITION)
+        detect = ch->sphere[SPHERE_MIND];
+    else
+        detect = 0;
+
+    if (victim->race == race_lookup("vampire") || victim->race == race_lookup("methuselah")
+    || victim->race == race_lookup("ghoul"))
+        hide = victim->auspex;
+    else if (victim->race == race_lookup("garou"))
+        hide = victim->pcdata->rank;
+    else if (clan_table[victim->clan].clan_type == TYPE_TRADITION)
+        hide = victim->sphere[SPHERE_MIND];
+    else
+        hide = 0;
 
     if ((IS_AFFECTED2(victim, AFF2_VEIL) || is_affected(victim, gsn_veil)) &&
         is_affected(ch, gsn_reveal) && !IS_NPC(ch) && !IS_NPC(victim))

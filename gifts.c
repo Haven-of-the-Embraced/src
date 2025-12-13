@@ -3687,8 +3687,24 @@ void spell_gift_silverclaws( int sn, int level, CHAR_DATA *ch, void *vo, int tar
 //lunes
 //no roll
 //anyone who is against the pack glows, can go against those who are obfuscated or have magic that hides them but only if the target is trying to harm the pack
-void spell_gift_fullmoonslight( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
+void spell_gift_fullmoonslight( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+
+  if (success <= 0)
+    success = 1;
+
+  act("Boar-spirits charge to your aid, helping you steel yourself against your rising Rage.",ch,NULL,NULL,TO_CHAR);
+  af.where      = TO_AFFECTS;
+  af.type       = gsn_gift_fullmoonslight;
+  af.level      = success;
+  af.duration  = (success * 10) + 20;
+  af.location  = 0;
+  af.modifier  = 0;
+  af.bitvector = AFF_DETECT_HIDDEN;
+  affect_to_char( ch, &af );
+  af.bitvector = AFF2_DETECT_UNSEEN;
+  affect_to_char( ch, &af );
+  return;
 }
 //
 //“Stoking Fury’s Furnace”

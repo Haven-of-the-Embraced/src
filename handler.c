@@ -3128,6 +3128,7 @@ bool can_see_room( CHAR_DATA *ch, ROOM_INDEX_DATA *pRoomIndex )
 bool unseen_check(CHAR_DATA *ch, CHAR_DATA *victim)
 {
     int detect, hide;
+    int success, diff = 7;
     /* Checks all types of Unseen/veil versus PCs Detect Unseen */
     if (!IS_AFFECTED2(victim, AFF2_VEIL) && !IS_AFFECTED2(victim, AFF2_UNSEEN))
         return TRUE;
@@ -3158,7 +3159,7 @@ bool unseen_check(CHAR_DATA *ch, CHAR_DATA *victim)
 
     if (victim->race == race_lookup("vampire") || victim->race == race_lookup("methuselah")
     || victim->race == race_lookup("ghoul"))
-        hide = victim->auspex;
+        hide = victim->obfuscate;
     else if (victim->race == race_lookup("garou"))
         hide = victim->pcdata->rank;
     else if (clan_table[victim->clan].clan_type == TYPE_TRADITION)
@@ -3166,25 +3167,17 @@ bool unseen_check(CHAR_DATA *ch, CHAR_DATA *victim)
     else
         hide = 0;
 
-    if ((IS_AFFECTED2(victim, AFF2_VEIL) || is_affected(victim, gsn_veil)) &&
-        is_affected(ch, gsn_reveal) && !IS_NPC(ch) && !IS_NPC(victim))
-    {
-        int success;
-        int diff;
-        diff = 7;
-        if (victim->pcdata->discipline[OBFUSCATE] > ch->pcdata->discipline[AUSPEX])
-            return FALSE;
+    if (hide > detect)
+        return FALSE;
 
-        if (ch->pcdata->discipline[AUSPEX] > victim->pcdata->discipline[OBFUSCATE])
-            diff -= (ch->pcdata->discipline[AUSPEX] - victim->pcdata->discipline[OBFUSCATE]);
+    if (detect > hide)
+        return TRUE;
 
-        success = godice(get_attribute(ch, PERCEPTION)+ch->csabilities[CSABIL_ALERTNESS], diff);
+    success = godice(get_attribute(ch, PERCEPTION)+ch->csabilities[CSABIL_ALERTNESS], diff);
+    success -= godice(get_attribute(victim, MANIPULATION) + victim->csabilities[CSABIL_SUBTERFUGE], diff);
 
-        if (ch->pcdata->discipline[AUSPEX] == victim->pcdata->discipline[OBFUSCATE])
-            success -= godice(get_attribute(victim, MANIPULATION) + victim->csabilities[CSABIL_SUBTERFUGE], diff);
-
-        if (success < 1)
-            return FALSE;
+    if (success < 1)
+        return FALSE;
     }
 
     if (is_affected(victim, gsn_unseen) && !IS_AFFECTED2(ch, AFF2_DETECT_UNSEEN) &&

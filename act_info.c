@@ -295,6 +295,7 @@ void show_char_to_char_0( CHAR_DATA *victim, CHAR_DATA *ch )
             strcat( buf, "{x*{MTaint{x*{y " );
     }
     if ( IS_AFFECTED(victim, AFF_INVISIBLE)   ) strcat( buf, "{x({CInvis{x){y "      );
+    if ( IS_AFFECTED2(victim, AFF2_UNSEEN))      strcat( buf, "{x({DUnseen{x){y ");
     if ( IS_AFFECTED(victim, AFF_HIDE)        ) strcat( buf, "{x({yHide{x){y "       );
     if ( IS_AFFECTED(victim, AFF_CHARM)       ) strcat( buf, "{x({BCharmed{x){y "    );
     if ( IS_AFFECTED2(victim, AFF2_MAJESTY)   ) strcat( buf, "{x({RM{Da{rj{Res{rt{Di{Rc{x){y " );
@@ -317,7 +318,6 @@ void show_char_to_char_0( CHAR_DATA *victim, CHAR_DATA *ch )
     if ( IS_AFFECTED(victim, AFF_PASS_DOOR)   ) strcat( buf, "{x({cTranslucent{x){y ");
     if ( IS_AFFECTED(victim, AFF_FAERIE_FIRE) ) strcat( buf, "{x({MPink Aura{x){y "  );
     if ( IS_AFFECTED(victim, AFF_SANCTUARY)   ) strcat( buf, "{x({wWhite Aura{x){y " );
-    if ( is_affected(victim, gsn_unseen))      strcat( buf, "{x({DUnseen{x){y ");
     if(IS_AFFECTED(victim, AFF_FANGS)       )   strcat( buf, "{x({rFangs{x){y "  );
     if ( is_affected(victim, gsn_gift_eyesofthecat))    strcat( buf, "{x@{GEyes{x@{y ");
     if ( is_affected(victim, gsn_gleam))    strcat( buf, "{x@{REyes{x@{y ");

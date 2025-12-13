@@ -3708,6 +3708,7 @@ void spell_gift_fullmoonslight( int sn, int level, CHAR_DATA *ch, void *vo, int 
   af.modifier  = 0;
   af.bitvector = AFF_DETECT_HIDDEN;
   affect_to_char( ch, &af );
+  af.where     = TO_AFFECTS2;
   af.bitvector = AFF2_DETECT_UNSEEN;
   affect_to_char( ch, &af );
   return;

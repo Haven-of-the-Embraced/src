@@ -296,6 +296,7 @@ void show_char_to_char_0( CHAR_DATA *victim, CHAR_DATA *ch )
     }
     if ( IS_AFFECTED(victim, AFF_INVISIBLE)   ) strcat( buf, "{x({CInvis{x){y "      );
     if ( IS_AFFECTED2(victim, AFF2_UNSEEN))      strcat( buf, "{x({DUnseen{x){y ");
+    if ( IS_AFFECTED2(victim, AFF2_VEIL))      strcat( buf, "{x({DVeil{x){y ");
     if ( IS_AFFECTED(victim, AFF_HIDE)        ) strcat( buf, "{x({yHide{x){y "       );
     if ( IS_AFFECTED(victim, AFF_CHARM)       ) strcat( buf, "{x({BCharmed{x){y "    );
     if ( IS_AFFECTED2(victim, AFF2_MAJESTY)   ) strcat( buf, "{x({RM{Da{rj{Res{rt{Di{Rc{x){y " );

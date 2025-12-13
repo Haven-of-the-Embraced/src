@@ -3204,11 +3204,8 @@ bool can_see( CHAR_DATA *ch, CHAR_DATA *victim )
     if ( get_trust(ch) < victim->invis_level)
         return FALSE;
 
-        if (is_affected(victim, gsn_trappedingauntlet) && !IS_IMMORTAL(ch))
-        	return FALSE;
-
-    if (IS_NPC(ch) && IS_AFFECTED2(ch,  AFF2_DETECT_UNSEEN))
-        return TRUE;
+    if (is_affected(victim, gsn_trappedingauntlet) && !IS_IMMORTAL(ch))
+    	return FALSE;
 
     if (get_trust(ch) < victim->incog_level && ch->in_room != victim->in_room)
         return FALSE;
@@ -3217,17 +3214,18 @@ bool can_see( CHAR_DATA *ch, CHAR_DATA *victim )
         (IS_NPC(ch) && IS_IMMORTAL(ch)))
         return TRUE;
 
+    if (is_affected(victim,gsn_earthmeld))
+        return FALSE;
+
     if (IS_AFFECTED(ch, AFF_BLIND) && !is_affected(ch, gsn_gift_scentofsight))
         return FALSE;
 
     if ((IS_AFFECTED2(victim, AFF2_UNSEEN) || IS_AFFECTED2(victim, AFF2_VEIL)) 
-        && !IS_AFFECTED2(ch, AFF2_DETECT_UNSEEN) && !IS_IMMORTAL(ch))
+        && !IS_AFFECTED2(ch, AFF2_DETECT_UNSEEN) && !IS_IMMORTAL(ch)
+        && victim->fighting == NULL)
         return FALSE;
 
     if (unseen_check(ch, victim) == FALSE)
-        return FALSE;
-
-    if (is_affected(victim,gsn_earthmeld))
         return FALSE;
 
     if (room_is_dark( ch->in_room ) && !IS_AFFECTED(ch, AFF_INFRARED))

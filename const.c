@@ -2729,8 +2729,8 @@ Total (3) */
     &gsn_gift_silverclaws,          SLOT( 0),        0,     24, "",             "You sigh in relief as the silver fades from your claws.",      "" },
 
     { "full moons light", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_fullmoonslight,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_fullmoonslight,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_fullmoonslight,  TAR_CHAR_SELF, POS_STANDING,
+    &gsn_gift_fullmoonslight,          SLOT( 0),        0,     12, "",             "The blessing of Luna's glow fades from your sight.",        "" },
 
     { "stoking furys furnace", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_stokingfurysfurnace,  TAR_IGNORE, POS_STANDING,

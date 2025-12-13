@@ -3139,13 +3139,9 @@ bool unseen_check(CHAR_DATA *ch, CHAR_DATA *victim)
 
     if (IS_NPC(ch) && !IS_NPC(victim) && ch->level >= victim->level - 20)
         return TRUE;
-    else
-        return FALSE;
 
     if (!IS_NPC(ch) && IS_NPC(victim) && ch->level <= victim->level - 20)
         return FALSE;
-    else
-        return TRUE;
 
     if (ch->race == race_lookup("vampire") || ch->race == race_lookup("methuselah")
     || ch->race == race_lookup("ghoul"))

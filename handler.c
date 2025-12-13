@@ -3207,8 +3207,8 @@ bool can_see( CHAR_DATA *ch, CHAR_DATA *victim )
     if (IS_AFFECTED(ch, AFF_BLIND) && !is_affected(ch, gsn_gift_scentofsight))
         return FALSE;
 
-    if (IS_AFFECTED2(victim, AFF2_UNSEEN) && !IS_AFFECTED2(ch, AFF2_DETECT_UNSEEN)
-        && !IS_IMMORTAL(ch))
+    if ((IS_AFFECTED2(victim, AFF2_UNSEEN) || IS_AFFECTED2(victim, AFF2_VEIL)) 
+        && !IS_AFFECTED2(ch, AFF2_DETECT_UNSEEN) && !IS_IMMORTAL(ch))
         return FALSE;
 
     if (unseen_check(ch, victim) == FALSE)

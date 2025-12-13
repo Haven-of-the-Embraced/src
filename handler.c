@@ -3137,6 +3137,11 @@ bool unseen_check(CHAR_DATA *ch, CHAR_DATA *victim)
     else
         return FALSE;
 
+    if (!IS_NPC(ch) && IS_NPC(victim) && ch->level <= victim->level - 20)
+        return FALSE;
+    else
+        return TRUE;
+
         if ((IS_AFFECTED2(victim, AFF2_VEIL) || is_affected(victim, gsn_veil)) &&
             is_affected(ch, gsn_reveal) && !IS_NPC(ch) && !IS_NPC(victim))
         {

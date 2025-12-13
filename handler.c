@@ -3128,9 +3128,9 @@ bool can_see_room( CHAR_DATA *ch, ROOM_INDEX_DATA *pRoomIndex )
 bool unseen_check(CHAR_DATA *ch, CHAR_DATA *victim)
 {
     /* Checks all types of Unseen/veil versus PCs reveal*/
-    if (IS_AFFECTED2(victim, AFF2_VEIL) &&
-        (IS_NPC(victim) || !is_affected(ch, gsn_reveal)))
-       return FALSE;
+    if (IS_NPC(victim) && (IS_AFFECTED2(victim, AFF2_VEIL) || IS_AFFECTED2(victim, AFF2_UNSEEN))
+        && !IS_AFFECTED2(ch, AFF2_DETECT_UNSEEN))
+        return FALSE;
 
         if ((IS_AFFECTED2(victim, AFF2_VEIL) || is_affected(victim, gsn_veil)) &&
             is_affected(ch, gsn_reveal) && !IS_NPC(ch) && !IS_NPC(victim))

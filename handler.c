@@ -3146,7 +3146,7 @@ bool unseen_check(CHAR_DATA *ch, CHAR_DATA *victim)
     if (ch->race == race_lookup("vampire") || ch->race == race_lookup("methuselah")
     || ch->race == race_lookup("ghoul"))
         detect = ch->auspex;
-    else if (ch->race == race_lookup("garou"))
+    else if (!IS_NPC(ch) && ch->race == race_lookup("garou"))
         detect = ch->pcdata->rank;
     else if (clan_table[ch->clan].clan_type == TYPE_TRADITION)
         detect = ch->sphere[SPHERE_MIND];
@@ -3156,7 +3156,7 @@ bool unseen_check(CHAR_DATA *ch, CHAR_DATA *victim)
     if (victim->race == race_lookup("vampire") || victim->race == race_lookup("methuselah")
     || victim->race == race_lookup("ghoul"))
         hide = victim->obfuscate;
-    else if (victim->race == race_lookup("garou"))
+    else if (!IS_NPC(victim) && victim->race == race_lookup("garou"))
         hide = victim->pcdata->rank;
     else if (clan_table[victim->clan].clan_type == TYPE_TRADITION)
         hide = victim->sphere[SPHERE_MIND];

@@ -3506,13 +3506,13 @@ void spell_gift_spiritofthefray( int sn, int level, CHAR_DATA *ch, void *vo, int
 
   ch->pcdata->gnosis[TEMP]--;
   success = godice(ch->pcdata->gnosis[PERM], 6);
-  if (success < 0)
-    success = 0;
+  if (success < 1)
+    success = 1;
   send_to_char("With the help of feline spirits, you gain the advantage at the start of combat.\n\r", ch);
   af.where      = TO_AFFECTS;
   af.type       = gsn_gift_spiritofthefray;
   af.level      = success;
-  af.duration  = (success * 10) + 25;
+  af.duration  = (success * 25) + 50;
   af.location  = 0;
   af.modifier  = 0;
   af.bitvector = 0;

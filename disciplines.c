@@ -321,26 +321,23 @@ void do_feralspeech(CHAR_DATA *ch, char *argument)
         send_to_char("You are not a vampire!\n\r", ch);
         return;
     }
+
+    if (ch->pcdata->discipline[ANIMALISM] < 1)
+    {
+        send_to_char( "You have not begun to learn the natural ways of Animalism.\n\r", ch );
+        return;
+    }
+
     if ( arg[0] == '\0')
     {
         send_to_char("To what creature do you wish to speak to?\n\r", ch );
         return;
     }
+
     if ( ( victim = get_char_room( ch, NULL, arg ) ) == NULL )
     {
         send_to_char( "No creature here by that name.\n\r", ch );
         return;
-    }
-        if (!IS_NPC(victim))
-        {
-                send_to_char("Disabled on players due to the potential for abuse.\n\r", ch);
-                return;
-        }
-
-    if (is_affected(ch, gsn_laryngitis))
-    {
-      send_to_char("Your throat is too sore to properly mimic the speech of animals.\n\r", ch);
-      return;
     }
 
     if ( IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
@@ -348,17 +345,25 @@ void do_feralspeech(CHAR_DATA *ch, char *argument)
         send_to_char("Your blood curse prevents it!\n\r" ,ch);
         return;
     }
+
+    if (is_affected(ch, gsn_laryngitis))
+    {
+      send_to_char("Your throat is too sore to properly mimic the speech of animals.\n\r", ch);
+      return;
+    }
+
+    if (!IS_NPC(victim))
+    {
+        send_to_char("Disabled against players due to the potential for abuse.\n\r", ch);
+        return;
+    }
+
     if (IS_NPC(victim) && victim->pIndexData->pShop != NULL)
     {
         send_to_char("You fear that it may hinder your future purchases.\n\r",ch);
         return;
     }
 
-    if (ch->pcdata->discipline[ANIMALISM] < 1)
-    {
-        send_to_char( "You are not skilled enough in Animalism!.\n\r", ch );
-        return;
-    }
     if (!str_prefix(argument,"delete"))
     {
         send_to_char("That will NOT be done.\n\r",ch);
@@ -385,24 +390,13 @@ void do_feralspeech(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if ( IS_IMMORTAL(victim))
-    {
-        send_to_char( "Yeah, right.\n\r", ch );
-        return;
-    }
-    if ( ch->pblood < 20 )
+    if ( ch->pblood < 10 )
     {
         send_to_char( "You don't have enough blood.\n\r", ch );
         return;
     }
-    ch->pblood -= 10;
-    if(victim->race == race_lookup("vampire") && ch->gen > victim->gen)
-    {
-        send_to_char( "You cannot command your betters!\n\r", ch );
-        sprintf( buf, "%s foolishly attempts to dominate your mind!\n\r", ch->name );
-        send_to_char(buf,victim);
-        return;
-    }
+    ch->pblood -= 5;
+
     if(IS_SET(victim->form,FORM_SENTIENT))
     {
         send_to_char("This creature is too intelligent to control.\n\r",ch);
@@ -417,7 +411,7 @@ void do_feralspeech(CHAR_DATA *ch, char *argument)
         victim->race != race_lookup("water fowl") && victim->race != race_lookup("wolf") &&
         victim->race != race_lookup("horse"))
     {
-        send_to_char("You can only use this ability on animals.\n\r",ch);
+        send_to_char("You can only use this ability on natural animals.\n\r",ch);
         return;
     }
 

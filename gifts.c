@@ -3692,6 +3692,14 @@ void spell_gift_fullmoonslight( int sn, int level, CHAR_DATA *ch, void *vo, int 
   AFFECT_DATA af;
   int success, gnosis = ch->pcdata->gnosis[PERM];
 
+  if (ch->pcdata->gnosis[TEMP] < 1)
+  {
+    send_to_char("You do not possess the spiritual reserves to activate this gift.\n\r", ch);
+    return;
+  }
+
+  ch->pcdata->gnosis[TEMP]--;
+
   if (gnosis < 5)
     gnosis = 5;
 

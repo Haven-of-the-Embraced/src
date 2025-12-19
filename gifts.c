@@ -3285,63 +3285,65 @@ void spell_gift_callforvengeance( int sn, int level, CHAR_DATA *ch, void *vo, in
 //any flying spirit
 //dex + medicine diff victim’s stamin + athletics
 //sends their foe sprawling with a touch
-void spell_gift_fallingtouch( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    CHAR_DATA *victim = (CHAR_DATA *) vo;
-    int dicesuccess = 0;
-    int diff = 0;
+void spell_gift_fallingtouch( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  CHAR_DATA *victim = (CHAR_DATA *) vo;
+  int dicesuccess = 0;
+  int diff = 0;
 
-        if (IS_NPC(ch))
-                return;
-
-        if (ch == victim)
-        {
-                send_to_char("You wisely reconsider that.\n\r", ch );
-                return;
-        }
-
-    if(IS_AFFECTED2(ch,AFF2_MIST) || IS_AFFECTED2(victim,AFF2_MIST))
-    {
-        send_to_char("Your hand passes right through!\n\r",ch);
-        return;
-    }
-
-    if(victim->position == POS_SLEEPING || victim->position == POS_TORPOR)
-    {
-            send_to_char("They are already incapacitated!\n\r", ch );
-            return;
-    }
-
-    if (ch->move < ch->level / 20)
-    {
-      send_to_char("You are too tired to perform this ability.\n\r", ch);
-      return;
-    }
-
-    ch->move -= ch->level / 20;
-    diff = get_attribute(victim, STAMINA) + get_ability(victim, CSABIL_ATHLETICS);
-    dicesuccess = godice(get_attribute(ch, DEXTERITY) + ch->csabilities[CSABIL_MEDICINE], diff);
-
-    WAIT_STATE(ch, 3);
-
-    if(dicesuccess <= 0)
-    {
-        act("You miss $N!", ch, NULL, victim, TO_CHAR);
-        act("$n tries to reach out and touch you and misses!", ch, NULL, victim, TO_VICT);
-        act("$n tries to reach out and touch $N, but misses.", ch, NULL, victim, TO_NOTVICT);
-        WAIT_STATE(ch, 6);
-        return;
-    }
-
-    act( "You reach out and touch $N, sending $M sprawling!", ch, NULL, victim, TO_CHAR );
-    act( "$n reaches out and touches you, and you are sent sprawling!", ch, NULL, victim, TO_VICT );
-    act( "$n reaches out and touches $N, sending $M sprawling!", ch, NULL, victim, TO_ROOM );
-
-    STOPPED(victim, UMAX(2, dicesuccess) * PULSE_VIOLENCE);
-    damage(ch, victim, dicesuccess*UMAX(5, ch->level * 3 / 2), gsn_gift_fallingtouch, DAM_BASH, TRUE);
-    victim->position = POS_RESTING;
-    gain_exp(ch, dicesuccess*2);
-
+  if (IS_NPC(ch))
     return;
+
+  if (ch == victim)
+  {
+    send_to_char("You wisely reconsider that.\n\r", ch );
+    return;
+  }
+
+  if(IS_AFFECTED2(ch,AFF2_MIST) || IS_AFFECTED2(victim,AFF2_MIST))
+  {
+    send_to_char("Your hand passes right through!\n\r",ch);
+    return;
+  }
+
+  if(victim->position == POS_SLEEPING || victim->position == POS_TORPOR)
+  {
+    send_to_char("They are already incapacitated!\n\r", ch );
+    return;
+  }
+
+  if (ch->move < ch->level / 5 + 5)
+  {
+    send_to_char("You are too tired to perform this ability.\n\r", ch);
+    return;
+  }
+
+  ch->move -= ch->level / 5 + 5;
+  diff = get_attribute(victim, STAMINA) + get_ability(victim, CSABIL_ATHLETICS);
+  dicesuccess = godice(get_attribute(ch, DEXTERITY) + ch->csabilities[CSABIL_MEDICINE], diff);
+
+  WAIT_STATE(ch, 3);
+
+  if(dicesuccess <= 0)
+  {
+    act("You miss $N!", ch, NULL, victim, TO_CHAR);
+    act("$n tries to reach out and touch you and misses!", ch, NULL, victim, TO_VICT);
+    act("$n tries to reach out and touch $N, but misses.", ch, NULL, victim, TO_NOTVICT);
+    WAIT_STATE(ch, 6);
+    return;
+  }
+
+  act( "You reach out and touch $N, sending $M sprawling!", ch, NULL, victim, TO_CHAR );
+  act( "$n reaches out and touches you, and you are sent sprawling!", ch, NULL, victim, TO_VICT );
+  act( "$n reaches out and touches $N, sending $M sprawling!", ch, NULL, victim, TO_ROOM );
+
+  STOPPED(victim, UMAX(2, dicesuccess) * PULSE_VIOLENCE);
+  d10_damage( ch, victim, dicesuccess, ch->level, gsn_gift_fallingtouch, DAM_BASH, DEFENSE_FULL, TRUE, TRUE);
+
+  victim->position = POS_RESTING;
+  gain_exp(ch, dicesuccess*2);
+
+  return;
 }
 
 //

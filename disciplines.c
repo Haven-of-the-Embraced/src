@@ -8462,7 +8462,7 @@ void do_cauldron(CHAR_DATA *ch, char *argument)
     }
 
     argument = one_argument(argument, arg);
-    if (argument[0] == '\0')
+    if (arg[0] == '\0')
     {
         victim = ch->fighting;
         if (victim == NULL)
@@ -8492,7 +8492,7 @@ void do_cauldron(CHAR_DATA *ch, char *argument)
 
     if (ch->pcdata->discipline[THAUMATURGY] < 5)
     {
-        send_to_char( "Your do not possess the required tutelage in Thaumaturgy: Path of Blood.\n\r", ch );
+        send_to_char( "You do not possess the required tutelage in Thaumaturgy: Path of Blood.\n\r", ch );
         return;
     }
 

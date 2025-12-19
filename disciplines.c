@@ -421,7 +421,16 @@ void do_feralspeech(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if ( IS_AFFECTED(victim, AFF_CHARM)
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_feralspeech;
+    af.level     = ch->pcdata->discipline[AUSPEX];
+    af.duration  = 20;
+    af.location  = APPLY_NONE;
+    af.modifier  = 0;
+    af.bitvector = 0;
+    affect_to_char( ch, &af );
+
+/*    if ( IS_AFFECTED(victim, AFF_CHARM)
     ||   IS_AFFECTED(ch, AFF_CHARM)
     ||   IS_SET(victim->imm_flags,IMM_CHARM))
     {
@@ -448,6 +457,7 @@ void do_feralspeech(CHAR_DATA *ch, char *argument)
     act(buf,ch,NULL,victim,TO_CHAR);
     act( "$n stares into $N's eyes a moment then whispers a command.",  ch, NULL, victim, TO_NOTVICT );
     interpret( victim, argument );
+*/
     return;
 }
 

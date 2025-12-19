@@ -7288,7 +7288,7 @@ void do_acidblood(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if (argument[0] == '\0')
+    if (arg[0] == '\0')
     {
         victim = ch->fighting;
         if (victim == NULL)

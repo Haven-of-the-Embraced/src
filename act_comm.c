@@ -1703,9 +1703,18 @@ void do_talk( CHAR_DATA *ch, char *argument )
 
     if (!can_see(victim, ch))
     {
-        act("Startled, $N looks around, '{WWho is there?'", ch, NULL, victim, TO_CHAR);
-        act("Startled, you look around, '{WWho is there?'", ch, NULL, victim, TO_VICT);
-        act("Startled, $N looks around, '{WWho is there?'", ch, NULL, victim, TO_ROOM);
+        if (beast_speech(victim))
+        {
+            act("Startled, $N perks up and looks around nervously.", ch, NULL, victim, TO_CHAR);
+            act("Startled, you look around nervously.", ch, NULL, victim, TO_VICT);
+            act("Startled, $N perks up and looks around nervously.", ch, NULL, victim, TO_ROOM);
+        }
+        else
+        {
+            act("Startled, $N looks around, '{WWho is there?'", ch, NULL, victim, TO_CHAR);
+            act("Startled, you look around, '{WWho is there?'", ch, NULL, victim, TO_VICT);
+            act("Startled, $N looks around, '{WWho is there?'", ch, NULL, victim, TO_ROOM);
+        }
         return;
     }
 

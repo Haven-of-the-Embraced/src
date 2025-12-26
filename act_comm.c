@@ -1612,6 +1612,9 @@ void do_talk( CHAR_DATA *ch, char *argument )
     char arg[MSL];
     int success, diff = 6;
 
+    if (IS_NPC(ch))
+        return;
+
     if (argument[0] == NULL)
     {
         send_to_char( "Whom are you trying to talk to?\n\r", ch );

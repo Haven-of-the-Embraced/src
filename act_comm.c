@@ -1688,10 +1688,21 @@ void do_talk( CHAR_DATA *ch, char *argument )
 
     if (beast_speech(victim))
     {
-        if (!is_affected(ch, gsn_gift_beastspeech))
+        if (!is_affected(ch, gsn_gift_beastspeech) && ch->pcdata->discipline[ANIMALISM] < 1)
         {
             send_to_char("Dr. Doolittle, you are not.\n\r", ch);
             return;
+        }
+        if ((ch->race == race_lookup("vampire") || ch->race == race_lookup("methuselah")
+            || ch->race == race_lookup("ghoul")))
+        {
+            if (ch->pblood <= 1)
+            {
+                send_to_char("You are too low on blood to talk to the animals.\n\r", ch);
+                return;
+            }
+            else
+                ch->pblood--;
         }
     }
     else

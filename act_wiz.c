@@ -3280,6 +3280,7 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
     OBJ_INDEX_DATA *pObjIndex;
     MOB_INDEX_DATA *pMobIndex;
     ROOM_INDEX_DATA *pRoomIndex;
+    PROG_LIST  *prg;
     int vnum;
     int nMatch;
     int count = 0;
@@ -3297,6 +3298,7 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
     bool clan = FALSE;
     bool owner = FALSE;
     int col = 0;
+    int foundprog = 0;
 
     found   = FALSE;
     nMatch  = 0;

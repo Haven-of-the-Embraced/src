@@ -3522,6 +3522,22 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
             if ( ( pMobIndex = get_mob_index( vnum ) ) != NULL )
             {
                 nMatch++;
+
+                if(!str_prefix(arg2, "mprog") && pMobIndex->mprogs != NULL)
+                {
+                    found = TRUE;
+                    count++;
+                    foundprog = atoi(arg3);
+                    sprintf( buf, " [%d %s] has mprogs:  {x", pMobIndex->vnum, 
+                        pMobIndex->short_descr);
+                    add_buf(buffer,buf);
+                    for (prg = pMobIndex->mprogs; prg != NULL;prg = prg->next )
+                    {
+                        sprintf( buf, " {W<{C%d{W>{x",prg->vnum);
+                        add_buf(buffer, buf);
+                    }
+                    add_buf(buffer,"\n\r");
+                }
                 if(!str_prefix(arg2, "race") && pMobIndex->race == race_lookup(arg3))
                 {
                     found = TRUE;

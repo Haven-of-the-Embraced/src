@@ -3525,18 +3525,29 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
 
                 if(!str_prefix(arg2, "mprog") && pMobIndex->mprogs != NULL)
                 {
-                    found = TRUE;
-                    count++;
                     foundprog = atoi(arg3);
-                    sprintf( buf, " [%d %s] has mprogs:  {x", pMobIndex->vnum, 
-                        pMobIndex->short_descr);
-                    add_buf(buffer,buf);
-                    for (prg = pMobIndex->mprogs; prg != NULL;prg = prg->next )
+                    for (prg = pMobIndex->mprogs; prg;prg = prg->next )
                     {
-                        sprintf( buf, " {W<{C%d{W>{x",prg->vnum);
-                        add_buf(buffer, buf);
+                        if (prg->vnum == foundprog)
+                            found = TRUE;
+                    }
+                    if (found)
+                    {
+                        for (prg = pMobIndex->mprogs; prg;prg = prg->next )
+                        {
+                            sprintf( buf, " {W<{C%d{W>{x",prg->vnum);
+                            add_buf(buffer, buf);
+                        }
+                        sprintf( buf, " [%d] %s has mprogs:  {x", pMobIndex->vnum, 
+                            pMobIndex->short_descr);
+                            add_buf(buffer,buf);
+ 
+                            found = TRUE;
+                            count++;
+                    }
                     }
                     add_buf(buffer,"\n\r");
+
                 }
                 if(!str_prefix(arg2, "race") && pMobIndex->race == race_lookup(arg3))
                 {

@@ -3280,7 +3280,7 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
     OBJ_INDEX_DATA *pObjIndex;
     MOB_INDEX_DATA *pMobIndex;
     ROOM_INDEX_DATA *pRoomIndex;
-    PROG_LIST  *prg;
+    PROG_LIST  *prg, *prgfnd;
     int vnum;
     int nMatch;
     int count = 0;
@@ -3529,26 +3529,25 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                     for (prg = pMobIndex->mprogs; prg;prg = prg->next )
                     {
                         if (prg->vnum == foundprog)
-                            found = TRUE;
-                    }
-                    if (found)
-                    {
-                        for (prg = pMobIndex->mprogs; prg;prg = prg->next )
                         {
-                            sprintf( buf, " {W<{C%d{W>{x",prg->vnum);
-                            add_buf(buffer, buf);
-                        }
-                        sprintf( buf, " [%d] %s has mprogs:  {x", pMobIndex->vnum, 
-                            pMobIndex->short_descr);
-                            add_buf(buffer,buf);
- 
                             found = TRUE;
                             count++;
-                    }
-                    }
-                    add_buf(buffer,"\n\r");
+                            sprintf( buf, "(%3d) <{Y%3d{x> [{g%5d{x] {Bx %2d{x : %s\n\r",
+                            count, pMobIndex->level, pMobIndex->vnum, pMobIndex->count, pMobIndex->short_descr );
+                            add_buf(buffer,buf);
+                            sprintf( buf, "                           has ->{x");
+                            add_buf(buffer,buf);
 
+                           for (prgfnd = pMobIndex->mprogs; prgfnd;prgfnd = prgfnd->next )
+                            {
+                                sprintf( buf, " {W<{C%d{W>{x",prgfnd->vnum);
+                                add_buf(buffer, buf);
+                            }
+                            add_buf(buffer,"\n\r");
+                        }
+                    }
                 }
+
                 if(!str_prefix(arg2, "race") && pMobIndex->race == race_lookup(arg3))
                 {
                     found = TRUE;

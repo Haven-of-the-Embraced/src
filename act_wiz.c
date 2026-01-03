@@ -3322,6 +3322,7 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
         send_to_char( "{y+-------------------------------------------------------------------------+{x\n\r", ch);
         send_to_char( "{y| {WMob types   : {xlevel, race, special, shop, aff, aff2, act, act2, off     {y|\n\r",ch);
         send_to_char( "{y| {W            : {xres, vuln, imm, attr, abil, form, parts, size, delete     {y|\n\r",ch);
+        send_to_char( "{y| {W            : {xmprog                                                     {y|\n\r", ch);
         send_to_char( "{y+-------------------------------------------------------------------------+{x\n\r", ch);
         send_to_char( "{y| {WRoom types  : {xsector, room, clan, owner                                 {y|\n\r",ch);
         send_to_char( "{y+-------------------------------------------------------------------------+{x\n\r", ch);
@@ -3516,6 +3517,8 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
             send_to_char("{R*** Marked for Deletion on Copyover ***{x\n\r      <{YLvl{x> [ {gVnum{x] {BLoad{x : Short Description\n\r", ch);
         else
             send_to_char("      <{YLvl{x> [ {gVnum{x] {BLoad{x : Short Description\n\r", ch);
+        if(!str_prefix(arg2,"mprog"))
+            send_to_char("                           has {CMprog Vnum{x\n\r", ch);
         send_to_char("      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\r", ch);
         for ( vnum = 0; nMatch < top_mob_index; vnum++ )
         {
@@ -3535,12 +3538,12 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
                             sprintf( buf, "(%3d) <{Y%3d{x> [{g%5d{x] {Bx %2d{x : %s\n\r",
                             count, pMobIndex->level, pMobIndex->vnum, pMobIndex->count, pMobIndex->short_descr );
                             add_buf(buffer,buf);
-                            sprintf( buf, "                           has ->{x");
+                            sprintf( buf, "                           has{x");
                             add_buf(buffer,buf);
 
                            for (prgfnd = pMobIndex->mprogs; prgfnd;prgfnd = prgfnd->next )
                             {
-                                sprintf( buf, " {W<{C%d{W>{x",prgfnd->vnum);
+                                sprintf( buf, " {C%d{x",prgfnd->vnum);
                                 add_buf(buffer, buf);
                             }
                             add_buf(buffer,"\n\r");

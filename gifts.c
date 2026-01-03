@@ -6263,8 +6263,38 @@ void spell_gift_doppelganger( int sn, int level, CHAR_DATA *ch, void *vo, int ta
 }
 
 //Rank 5
-void spell_gift_commandtheblaze( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_commandtheblaze( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  CHAR_DATA *victim = (CHAR_DATA *) vo;
+  int success = 0;
+
+  if (ch == victim)
+  {
+    send_to_char("You wisely reconsider that.\n\r", ch );
     return;
+  }
+
+  if (ch->pcdata->gnosis[TEMP] < 1)
+  {
+    send_to_char("You don't have the spiritual energy to attempt to activate this gift.\n\r", ch);
+    return;
+  }
+
+  ch->pcdata->gnosis[TEMP]--;
+  success = godice(ch->csmax_willpower, 7);
+
+  if(success < 0)
+  {
+    return;
+  }
+
+  if(success == 0)
+  {
+    return;
+  }
+
+
+  return;
 }
 //False Comfort, duplicate gift, as HOMID
 

@@ -6285,11 +6285,16 @@ void spell_gift_commandtheblaze( int sn, int level, CHAR_DATA *ch, void *vo, int
 
   if(success < 0)
   {
+    sendch("The flame spirits remind you why you should never play with fire, or else you get burned.\n\r", ch);
+    WAIT_STATE(ch, 9);
+    d10_damage( ch, ch, -success, ch->level, gsn_gift_commandtheblaze, DAM_FIRE, DEFENSE_NONE, TRUE, TRUE);
     return;
   }
 
   if(success == 0)
   {
+    sendch("Your call to the spirits of flame go unanswered.\n\r", ch);
+    WAIT_STATE(ch, 12);
     return;
   }
 

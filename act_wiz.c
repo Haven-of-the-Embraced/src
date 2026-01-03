@@ -4310,6 +4310,34 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
             if ((pRoomIndex = get_room_index(vnum)) != NULL)
             {
                 nMatch++;
+                if(!str_prefix(arg2, "rprog") && pRoomIndex->rprogs != NULL)
+                {
+                    foundprog = atoi(arg3);
+                    for (prg = pRoomIndex->rprogs; prg;prg = prg->next )
+                    {
+                        if (prg->vnum == foundprog)
+                        {
+                            found = TRUE;
+                            count++;
+                            sprintf( buf, " (%3d) [{g%5d{x] : %s\n\r",
+                            count, pRoomIndex->vnum, pRoomIndex->name );
+                            add_buf(buffer,buf);
+
+                           for (prgfnd = pRoomIndex->rprogs; prgfnd;prgfnd = prgfnd->next )
+                            {
+                                if (col == 5)
+                                    add_buf(buffer,"\n\r");
+                                col++;
+                                sprintf( buf, "    %s%s %s%d{x", prgfnd->vnum == foundprog ? "{W" : "{x",
+                                    prog_type_to_name(prgfnd->trig_type),
+                                    prgfnd->vnum == foundprog ? "{C" : "{x", prgfnd->vnum);
+                                add_buf(buffer, buf);
+                            }
+                            add_buf(buffer,"\n\r");
+                            break;
+                        }
+                    }
+                }
                 if(!str_prefix(arg2, "sector"))
                 {
                     if (!str_cmp(arg3, flag_string(sector_flags,pRoomIndex->sector_type)))

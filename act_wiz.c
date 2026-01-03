@@ -3318,7 +3318,7 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
         send_to_char( "{y| {RSyntax Note {W: {xSee '{chelp flagfind{x' for special syntax.                   {y|\n\r", ch);
         send_to_char( "{y+=========================================================================+{x\n\r", ch);
         send_to_char( "{y| {WObj types   : {xextra, wear, affect, apply, damage, type, weapon          {y|\n\r",ch);
-        send_to_char( "{y| {W            : {xspecial, spell, size, level, cost, delete                 {y|\n\r",ch);
+        send_to_char( "{y| {W            : {xspecial, spell, size, level, cost, delete, oprog          {y|\n\r",ch);
         send_to_char( "{y+-------------------------------------------------------------------------+{x\n\r", ch);
         send_to_char( "{y| {WMob types   : {xlevel, race, special, shop, aff, aff2, act, act2, off     {y|\n\r",ch);
         send_to_char( "{y| {W            : {xres, vuln, imm, attr, abil, form, parts, size, delete     {y|\n\r",ch);
@@ -3944,12 +3944,42 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
             send_to_char("      <{YLvl{x> [ {gVnum{x] {BLoad{x {y${w    Silver {x: Short Description\n\r", ch);
         else
             send_to_char("      <{YLvl{x> [ {gVnum{x] {BLoad{x : Short Description\n\r", ch);
+        if(!str_prefix(arg2,"mprog"))
+            send_to_char("    {WTrigger {COprog Vnum{x\n\r", ch);
         send_to_char("      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\r", ch);
         for ( vnum = 0; nMatch < top_obj_index; vnum++ )
         {
             if ( ( pObjIndex = get_obj_index( vnum ) ) != NULL )
             {
                 nMatch++;
+                if(!str_prefix(arg2, "oprog") && pObjIndex->oprogs != NULL)
+                {
+                    foundprog = atoi(arg3);
+                    for (prg = pObjIndex->oprogs; prg;prg = prg->next )
+                    {
+                        if (prg->vnum == foundprog)
+                        {
+                            found = TRUE;
+                            count++;
+                            sprintf( buf, "(%3d) <{Y%3d{x> [{g%5d{x] {Bx %2d{x : %s\n\r",
+                            count, pObjIndex->level, pObjIndex->vnum, pObjIndex->count, pObjIndex->short_descr );
+                            add_buf(buffer,buf);
+
+                           for (prgfnd = pObjIndex->oprogs; prgfnd;prgfnd = prgfnd->next )
+                            {
+                                if (col == 5)
+                                    add_buf(buffer,"\n\r");
+                                col++;
+                                sprintf( buf, "    %s%s %s%d{x", prgfnd->vnum == foundprog ? "{W" : "{x",
+                                    prog_type_to_name(prgfnd->trig_type),
+                                    prgfnd->vnum == foundprog ? "{C" : "{x", prgfnd->vnum);
+                                add_buf(buffer, buf);
+                            }
+                            add_buf(buffer,"\n\r");
+                            break;
+                        }
+                    }
+                }
                 if(!str_prefix(arg2,"extra"))
                 {
                     if ( is_exact_name( arg3, extra_bit_name( pObjIndex->extra_flags ) ) )

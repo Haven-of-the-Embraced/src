@@ -3074,7 +3074,7 @@ Total (3) */
 
 {   "command the blaze", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_commandtheblaze,  TAR_IGNORE, POS_STANDING,
-&gsn_gift_commandtheblaze,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+&gsn_gift_commandtheblaze,          SLOT( 0),        0,     12, "blazing inferno",             "!!Wearoffmsg!!",        "" },
 
 //  --Uncoded Tribes--
 // Total (2)

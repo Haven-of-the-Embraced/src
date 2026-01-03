@@ -6298,6 +6298,10 @@ void spell_gift_commandtheblaze( int sn, int level, CHAR_DATA *ch, void *vo, int
     return;
   }
 
+  act( "You unleash a conflaguration towards $N!", ch, NULL, victim, TO_CHAR );
+  act( "$n directs a wall of flame directly at you!", ch, NULL, victim, TO_VICT );
+  act( "$n directs a wall of flame towards $N!", ch, NULL, victim, TO_ROOM );
+  d10_damage( ch, victim, success, ch->level * 3, gsn_gift_commandtheblaze, DAM_FIRE, DEFENSE_NONE, TRUE, TRUE);
 
   return;
 }

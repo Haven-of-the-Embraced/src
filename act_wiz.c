@@ -3518,7 +3518,7 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
         else
             send_to_char("      <{YLvl{x> [ {gVnum{x] {BLoad{x : Short Description\n\r", ch);
         if(!str_prefix(arg2,"mprog"))
-            send_to_char("  {WTrigger {CMprog Vnum{x\n\r", ch);
+            send_to_char("    {WTrigger {CMprog Vnum{x\n\r", ch);
         send_to_char("      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\r", ch);
         for ( vnum = 0; nMatch < top_mob_index; vnum++ )
         {
@@ -3541,7 +3541,12 @@ void do_flagfind( CHAR_DATA *ch, char *argument )
 
                            for (prgfnd = pMobIndex->mprogs; prgfnd;prgfnd = prgfnd->next )
                             {
-                                sprintf( buf, "  {W%s {C%d{x",prog_type_to_name(prgfnd->trig_type),prgfnd->vnum);
+                                if (col == 5)
+                                    add_buf(buffer,"\n\r");
+                                col++;
+                                sprintf( buf, "    %s%s %s%d{x", prgfnd->vnum == foundprog ? "{W" : "{x",
+                                    prog_type_to_name(prgfnd->trig_type),
+                                    prgfnd->vnum == foundprog ? "{C" : "{x", prgfnd->vnum);
                                 add_buf(buffer, buf);
                             }
                             add_buf(buffer,"\n\r");

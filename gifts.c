@@ -6266,6 +6266,7 @@ void spell_gift_doppelganger( int sn, int level, CHAR_DATA *ch, void *vo, int ta
 void spell_gift_commandtheblaze( int sn, int level, CHAR_DATA *ch, void *vo, int target)
 {
   CHAR_DATA *victim = (CHAR_DATA *) vo;
+  CHAR_DATA *vch, *vch_next;
   int success = 0;
 
   if (ch == victim)
@@ -6298,10 +6299,33 @@ void spell_gift_commandtheblaze( int sn, int level, CHAR_DATA *ch, void *vo, int
     return;
   }
 
-  act( "You unleash a conflaguration towards $N!", ch, NULL, victim, TO_CHAR );
-  act( "$n directs a wall of flame directly at you!", ch, NULL, victim, TO_VICT );
-  act( "$n directs a wall of flame towards $N!", ch, NULL, victim, TO_ROOM );
-  d10_damage( ch, victim, success, ch->level * 3, gsn_gift_commandtheblaze, DAM_FIRE, DEFENSE_NONE, TRUE, TRUE);
+  if(success > 4)
+  {
+    act( "Your pour Quintessence into a towering inferno, cleansing the room!", ch, NULL, victim, TO_CHAR);
+    act( "$n engulfs the room in a massive wall of flame!", ch, NULL, victim, TO_ROOM );
+
+    for ( vch = char_list; vch != NULL; vch = vch_next )
+    {
+      vch_next    = vch->next;
+      if ( vch->in_room == NULL )
+        continue;
+      if ( vch->in_room == ch->in_room && SAME_UMBRA(ch, vch))
+      {
+        if ( vch != ch && !is_same_group(vch, ch) && IS_NPC(vch))
+        {
+          d10_damage( ch, vch, success, ch->level * 5, gsn_gift_commandtheblaze, DAM_FIRE, DEFENSE_NONE, TRUE, TRUE);
+          continue;
+        }
+      }
+    }
+  }
+  else
+  {
+    act( "You unleash a conflaguration towards $N!", ch, NULL, victim, TO_CHAR );
+    act( "$n directs a wall of flame directly at you!", ch, NULL, victim, TO_VICT );
+    act( "$n directs a wall of flame towards $N!", ch, NULL, victim, TO_ROOM );
+    d10_damage( ch, victim, success, ch->level * 5, gsn_gift_commandtheblaze, DAM_FIRE, DEFENSE_NONE, TRUE, TRUE);
+  }
 
   return;
 }

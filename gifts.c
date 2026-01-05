@@ -6283,25 +6283,25 @@ void spell_gift_commandtheblaze( int sn, int level, CHAR_DATA *ch, void *vo, int
 
   ch->pcdata->gnosis[TEMP]--;
   success = godice(ch->csmax_willpower, 7);
+  WAIT_STATE(ch, 3);
 
   if(success < 0)
   {
     sendch("The flame spirits remind you why you should never play with fire, or else you get burned.\n\r", ch);
     WAIT_STATE(ch, 9);
-    d10_damage( ch, ch, -success, ch->level, gsn_gift_commandtheblaze, DAM_FIRE, DEFENSE_NONE, TRUE, TRUE);
+    d10_damage( ch, ch, -success, ch->level / 2, gsn_gift_commandtheblaze, DAM_FIRE, DEFENSE_NONE, TRUE, TRUE);
     return;
   }
 
   if(success == 0)
   {
     sendch("Your call to the spirits of flame go unanswered.\n\r", ch);
-    WAIT_STATE(ch, 12);
     return;
   }
 
-  if(success > 4)
+  if(success > 3)
   {
-    act( "Your pour Quintessence into a towering inferno, cleansing the room!", ch, NULL, victim, TO_CHAR);
+    act( "Your pour Gnosis into flame spirits to create a towering inferno, cleansing the room!", ch, NULL, victim, TO_CHAR);
     act( "$n engulfs the room in a massive wall of flame!", ch, NULL, victim, TO_ROOM );
 
     for ( vch = char_list; vch != NULL; vch = vch_next )
@@ -6313,7 +6313,7 @@ void spell_gift_commandtheblaze( int sn, int level, CHAR_DATA *ch, void *vo, int
       {
         if ( vch != ch && !is_same_group(vch, ch) && IS_NPC(vch))
         {
-          d10_damage( ch, vch, success, ch->level * 5, gsn_gift_commandtheblaze, DAM_FIRE, DEFENSE_NONE, TRUE, TRUE);
+          d10_damage( ch, vch, success, ch->level * 7 / 2, gsn_gift_commandtheblaze, DAM_FIRE, DEFENSE_NONE, TRUE, TRUE);
           continue;
         }
       }
@@ -6321,10 +6321,10 @@ void spell_gift_commandtheblaze( int sn, int level, CHAR_DATA *ch, void *vo, int
   }
   else
   {
-    act( "You unleash a conflaguration towards $N!", ch, NULL, victim, TO_CHAR );
+    act( "You unleash a spiritual conflaguration towards $N!", ch, NULL, victim, TO_CHAR );
     act( "$n directs a wall of flame directly at you!", ch, NULL, victim, TO_VICT );
     act( "$n directs a wall of flame towards $N!", ch, NULL, victim, TO_ROOM );
-    d10_damage( ch, victim, success, ch->level * 5, gsn_gift_commandtheblaze, DAM_FIRE, DEFENSE_NONE, TRUE, TRUE);
+    d10_damage( ch, victim, success, ch->level * 7 /2, gsn_gift_commandtheblaze, DAM_FIRE, DEFENSE_NONE, TRUE, TRUE);
   }
 
   return;

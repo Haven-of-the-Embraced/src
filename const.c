@@ -3073,7 +3073,7 @@ Total (3) */
 &gsn_gift_doppelganger,          SLOT( 0),        0,     12, "",             "Your spirit-bestowed disguise wears off.",        "" },
 
 {   "command the blaze", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
-{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_commandtheblaze,  TAR_IGNORE, POS_STANDING,
+{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_commandtheblaze,  TAR_IGNORE, POS_FIGHTING,
 &gsn_gift_commandtheblaze,          SLOT( 0),        0,     12, "blazing inferno",             "!!Wearoffmsg!!",        "" },
 
 //  --Uncoded Tribes--

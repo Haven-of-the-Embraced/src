@@ -483,6 +483,7 @@ void spell_gift_assimilation( int sn, int level, CHAR_DATA *ch, void *vo, int ta
 //
 void spell_gift_falsecomfort( int sn, int level, CHAR_DATA *ch, void *vo, int target)
 {
+  int success = 0;
 
   if (ch->pcdata->gnosis[TEMP] < 1)
   {
@@ -491,6 +492,17 @@ void spell_gift_falsecomfort( int sn, int level, CHAR_DATA *ch, void *vo, int ta
   } 
 
   ch->pcdata->gnosis[TEMP]--;
+
+  if (success < 0)
+  {
+    return;
+  }
+
+  if (success == 0)
+  {
+    return;
+  }
+
   return;
 }
 //Metis

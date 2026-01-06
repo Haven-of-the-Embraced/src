@@ -498,16 +498,22 @@ void spell_gift_falsecomfort( int sn, int level, CHAR_DATA *ch, void *vo, int ta
   }
 
   ch->pcdata->gnosis[TEMP]--;
+  success = godice(ch->pcdata->gnosis[MAX], 7);
 
   if (success < 0)
   {
+    act("The ancestor-spirits decree dishonor on your, your family, and your cow.",ch,NULL,NULL,TO_CHAR);
+    WAIT_STATE(ch, 24);
     return;
   }
 
   if (success == 0)
   {
+    act("The ancestor-spirits deem you beneath their notice.\n\r",ch,NULL,NULL,TO_CHAR);
     return;
   }
+
+  act("Ancestor-spirits grant your request to ignore the creations of mankind.",ch,NULL,NULL,TO_CHAR);
 
   af.where = TO_AFFECTS;
   af.type  = gsn_gift_falsecomfort;

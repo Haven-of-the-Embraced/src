@@ -481,8 +481,17 @@ void spell_gift_assimilation( int sn, int level, CHAR_DATA *ch, void *vo, int ta
 //Humanity has done much to surround itself with comfort and safety. Armor to protect themselves from their own weapons, locks to keep out their own brothers, but the ancestor spirits remember when these comforts were merely dreams and can teach the Garou how to bypass them (Allows the garou to ignore human technology. Give immunity to weapon, completely ignore opponents armor class. 1 tick per success)
 //Cost: 1 Gnosis
 //
-void spell_gift_falsecomfort( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_falsecomfort( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+
+  if (ch->pcdata->gnosis[TEMP] < 1)
+  {
+    sendch("You do not possess the spiritual reserves to activate this gift.\n\r", ch);
     return;
+  } 
+
+  ch->pcdata->gnosis[TEMP]--;
+  return;
 }
 //Metis
 //Rank 1

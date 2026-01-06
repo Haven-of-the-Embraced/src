@@ -491,6 +491,12 @@ void spell_gift_falsecomfort( int sn, int level, CHAR_DATA *ch, void *vo, int ta
     return;
   } 
 
+  if (IS_AFFECTED(ch, AFF_PASS_DOOR))
+  {
+    send_to_char("You can already ignore closed doorways.\n\r", ch);
+    return;
+  }
+
   ch->pcdata->gnosis[TEMP]--;
 
   if (success < 0)
@@ -502,6 +508,15 @@ void spell_gift_falsecomfort( int sn, int level, CHAR_DATA *ch, void *vo, int ta
   {
     return;
   }
+
+  af.where = TO_AFFECTS;
+  af.type  = gsn_gift_falsecomfort;
+  af.level = success;
+  af.duration = success * 5 + 25;
+  af.bitvector = AFF_PASS_DOOR;
+  af.modifier = 0;
+  af.location = 0;
+  affect_to_char(ch, &af);
 
   return;
 }

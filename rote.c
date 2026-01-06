@@ -3020,21 +3020,10 @@ void rote_controlgauntlet(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DAT
 
 void rote_umbralrescue(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
 {
-    ROOM_INDEX_DATA *location;
 
-    if ( ( location = get_room_index( ROOM_VNUM_PARADOX ) ) == NULL )
+    if(!is_affected(victim, gsn_trappedingauntlet))
     {
-        send_to_char( "Error! Contact the imms at once!\n\r", ch );
-        return;
-    }
-    if ( ch->in_room == location )
-    {
-        send_to_char("You cannot rescue yourself from the Umbra!\n\r",ch);
-        return;
-    }
-    if ( victim->in_room != location )
-    {
-        send_to_char("You cannot rescue someone who is not trapped!\n\r",ch);
+        send_to_char("Your intended target is not stuck in the Gauntlet.\n\r", ch);
         return;
     }
 

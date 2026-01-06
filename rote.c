@@ -3032,12 +3032,16 @@ void rote_umbralrescue(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *
         send_to_char("You've failed to extract them from the Umbra.\n\r",ch);
         return;
     }
+
+    act( "You open a hole in reality and $N {Mmaterializes{x!",  ch, NULL, victim, TO_CHAR    );
+    affect_strip(victim, gsn_trappedingauntlet);
     char_from_room( victim );
     char_to_room( victim, ch->in_room );
+    pass_gauntlet(victim, FALSE);
+    act( "{MYour scattered body untangles from the Gauntlet, as a hole in reality pulls you through!{x",  ch, NULL, victim, TO_VICT    );
+    act( "$N's form {Mmaterializes{x before your eyes.",  ch, NULL, victim, TO_NOTVICT );
     do_function(victim, &do_look, "auto" );
-    act( "You open a hole in reality and $N steps forth!",  ch, NULL, victim, TO_CHAR    );
-    act( "A hole in reality opens before you and you are sucked in!",  ch, NULL, victim, TO_VICT    );
-    act( "$N is drawn into this reality by $n!",  ch, NULL, victim, TO_NOTVICT );
+
     return;
 }
 

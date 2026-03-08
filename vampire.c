@@ -982,64 +982,27 @@ void do_smell(CHAR_DATA *ch, char *argument)
         return;
     }
 
+    if( obj->item_type != ITEM_CORPSE_PC && obj->item_type != ITEM_CORPSE_NPC)
+    {
+        send_to_char("That isn't a corpse to smell.\n\r", ch);
+        return;
+    }
+
     act("$n sniffs a corpse.", ch,NULL,NULL,TO_NOTVICT);
     send_to_char( "You sniff the corpse...\n\r", ch );
 
-    if( obj->item_type == ITEM_CORPSE_PC )
+    if( obj->item_type == ITEM_CORPSE_PC || obj->item_type == ITEM_CORPSE_NPC)
     {
         if ( obj->timer < 10)
-        {
             send_to_char( "A rotten stench permeates your nostrils!\n\r", ch );
-            return;
-        }
-        if ( obj->timer < 20)
-        {
+        else if ( obj->timer < 20)
             send_to_char( "It stinks pretty bad!\n\r", ch );
-            return;
-        }
-        if ( obj->timer < 30)
-        {
+        else if ( obj->timer < 30)
             send_to_char( "It has been dead for a little while.\n\r", ch );
-            return;
-        }
-        if ( obj->timer < 40)
-        {
+        else if ( obj->timer < 40)
             send_to_char( "Decomposition has started to set in.\n\r", ch );
-            return;
-        }
-        if ( obj->timer < 100)
-        {
+        else
             send_to_char( "It must have died very recently, as rot has not yet set in.\n\r", ch );
-            return;
-        }
-    }
-    if( obj->item_type == ITEM_CORPSE_NPC )
-    {
-        if ( obj->timer < 10)
-        {
-            send_to_char( "A rotten stench permeates your nostrils!\n\r", ch );
-            return;
-        }
-        if ( obj->timer < 20)
-        {
-            send_to_char( "It stinks pretty bad!\n\r", ch );
-            return;
-        }
-        if ( obj->timer < 30)
-        {
-            send_to_char( "It has been dead for a little while.\n\r", ch );
-            return;
-        }
-        if ( obj->timer < 40)
-        {
-            send_to_char( "Decomposition has started to set in.\n\r", ch );
-            return;
-        }
-        if ( obj->timer < 100)
-        {
-            send_to_char( "It must have died very recently, as rot has not yet set in.\n\r", ch );
-            return;
-        }
         return;
     }
     return;

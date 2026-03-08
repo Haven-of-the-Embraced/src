@@ -969,85 +969,80 @@ void do_smell(CHAR_DATA *ch, char *argument)
 {
     OBJ_DATA *obj;
 
-   if (argument[0] == '\0')
+    if (argument[0] == '\0')
     {
-    send_to_char( "Smell what?\n\r", ch );
-    return;
+        send_to_char( "Smell what?\n\r", ch );
+        return;
     }
+
     obj = get_obj_here( ch, NULL, argument );
     if ( obj == NULL )
-
     {
-
         send_to_char( "Smell what?\n\r", ch );
-
         return;
-
     }
+
     act("$n sniffs a corpse.", ch,NULL,NULL,TO_NOTVICT);
     send_to_char( "You sniff the corpse...\n\r", ch );
 
     if( obj->item_type == ITEM_CORPSE_PC )
     {
-
-    if ( obj->timer < 10)
+        if ( obj->timer < 10)
         {
-        send_to_char( "It's as rotten as week old fish!\n\r", ch );
-        return;
+            send_to_char( "A rotten stench permeates your nostrils!\n\r", ch );
+            return;
         }
-    if ( obj->timer < 20)
+        if ( obj->timer < 20)
         {
-        send_to_char( "It stinks pretty bad!\n\r", ch );
-        return;
+            send_to_char( "It stinks pretty bad!\n\r", ch );
+            return;
         }
-    if ( obj->timer < 30)
+        if ( obj->timer < 30)
         {
-        send_to_char( "It smells fresh!\n\r", ch );
-        return;
+            send_to_char( "It has been dead for a little while.\n\r", ch );
+            return;
         }
-    if ( obj->timer < 40)
+        if ( obj->timer < 40)
         {
-        send_to_char( "It must have died only seconds ago!\n\r", ch );
-        return;
+            send_to_char( "Decomposition has started to set in.\n\r", ch );
+            return;
         }
-    if ( obj->timer < 100)
+        if ( obj->timer < 100)
         {
-        send_to_char( "It must have died only seconds ago!\n\r", ch );
-        return;
+            send_to_char( "It must have died very recently, as rot has not yet set in.\n\r", ch );
+            return;
         }
-
     }
     if( obj->item_type == ITEM_CORPSE_NPC )
     {
-
-    if ( obj->timer < 1)
+        if ( obj->timer < 10)
         {
-        send_to_char( "It's as rotten as week old fish!\n\r", ch );
-        return;
+            send_to_char( "A rotten stench permeates your nostrils!\n\r", ch );
+            return;
         }
-    if ( obj->timer < 2)
+        if ( obj->timer < 20)
         {
-        send_to_char( "It stinks pretty bad!\n\r", ch );
-        return;
+            send_to_char( "It stinks pretty bad!\n\r", ch );
+            return;
         }
-    if ( obj->timer < 3)
+        if ( obj->timer < 30)
         {
-        send_to_char( "It smells fresh!\n\r", ch );
-        return;
+            send_to_char( "It has been dead for a little while.\n\r", ch );
+            return;
         }
-    if ( obj->timer < 4)
+        if ( obj->timer < 40)
         {
-        send_to_char( "It must have died only seconds ago!\n\r", ch );
-        return;
+            send_to_char( "Decomposition has started to set in.\n\r", ch );
+            return;
         }
-    if ( obj->timer < 100)
+        if ( obj->timer < 100)
         {
-        send_to_char( "It must have died only seconds ago!\n\r", ch );
-        return;
+            send_to_char( "It must have died very recently, as rot has not yet set in.\n\r", ch );
+            return;
         }
-    return;
+        return;
     }
-return;
+    return;
 }
 
 void do_nourish(CHAR_DATA *ch, char *argument)

@@ -803,7 +803,6 @@ void do_feed(CHAR_DATA *ch, char *argument)
                 ch->gen = 8;
                 ch->pcdata->csgeneration = victim->pcdata->csgeneration;
                 ch->clan = victim->clan;
-                ch->dpoints = 0;
                 ch->pblood = 100;
                 ch->max_pblood = 100;
                 ch->pblood = ch->max_pblood;

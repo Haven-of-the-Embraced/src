@@ -2890,7 +2890,7 @@ void do_create( CHAR_DATA *ch, char *argument )
                }
                if (backgrounds) ch->dpoints = 5;
                send_to_char("{R[{x  You can now use the '{cbackgrounds{x' command to set your background traits.  {R]{x\n\r",ch);
-               send_to_char("{R|{x         Background Points awarded: [{W5{x]         {chelp do_backgrounds{x         {R|{x\n\r", ch);
+               send_to_char("{R|{x         Background Points awarded: [{W5{x]         {chelp backgrounds{x            {R|{x\n\r", ch);
                send_to_char("{R[{xSave some background points if you are intending to be embraced by a player.{R]{x\n\r\n\r", ch);
                send_to_char("When you've finished setting your backgrounds, you use the {cfreebie{x command to spend\n\r", ch);
                send_to_char("{yfreebies{x ({chelp freebie{x) to further increase your traits!\n\r",ch);

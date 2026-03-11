@@ -978,7 +978,7 @@ void do_smell(CHAR_DATA *ch, char *argument)
     obj = get_obj_here( ch, NULL, argument );
     if ( obj == NULL )
     {
-        send_to_char( "Smell what?\n\r", ch );
+        send_to_char( "That object is not here.\n\r", ch );
         return;
     }
 
@@ -988,23 +988,24 @@ void do_smell(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    act("$n sniffs a corpse.", ch,NULL,NULL,TO_NOTVICT);
-    send_to_char( "You sniff the corpse...\n\r", ch );
+    act("$n sniffs $p.", ch,obj,NULL,TO_NOTVICT);
+    act("You lean over to smell $p.", ch,obj,NULL,TO_CHAR);
 
-    if( obj->item_type == ITEM_CORPSE_PC || obj->item_type == ITEM_CORPSE_NPC)
-    {
-        if ( obj->timer < 10)
-            send_to_char( "A rotten stench permeates your nostrils!\n\r", ch );
-        else if ( obj->timer < 20)
-            send_to_char( "It stinks pretty bad!\n\r", ch );
-        else if ( obj->timer < 30)
-            send_to_char( "It has been dead for a little while.\n\r", ch );
-        else if ( obj->timer < 40)
-            send_to_char( "Decomposition has started to set in.\n\r", ch );
-        else
-            send_to_char( "It must have died very recently, as rot has not yet set in.\n\r", ch );
-        return;
-    }
+    if ( obj->timer < 10)
+        send_to_char( "A rotten stench permeates your nostrils!\n\r", ch );
+    else if ( obj->timer < 20)
+        send_to_char( "It stinks pretty bad!\n\r", ch );
+    else if ( obj->timer < 30)
+        send_to_char( "It seems to have been dead for a little while.\n\r", ch );
+    else if ( obj->timer < 40)
+        send_to_char( "Decomposition has started to set in.\n\r", ch );
+    else
+        send_to_char( "It must have died very recently, as rot has not yet taken hold.\n\r", ch );
+
+    if ((ch->race == race_lookup("vampire") || ch->race == race_lookup("methuselah")) &&
+        obj->value[2] > 0)
+        send_to_char("The smell of blood in the corpse entices your senses.\n\r", ch);
+
     return;
 }
 

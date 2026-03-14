@@ -990,39 +990,40 @@ void do_smell(CHAR_DATA *ch, char *argument)
     }
 
     act("$n sniffs $p.", ch,obj,NULL,TO_NOTVICT);
-    act("You lean over to smell $p.", ch,obj,NULL,TO_CHAR);
+    act("You lean over to smell $p, and", ch,obj,NULL,TO_CHAR);
     if( obj->item_type == ITEM_CORPSE_PC)
     {
         if ( obj->timer < 10)
-            send_to_char( "A rotten stench permeates your nostrils!\n\r", ch );
+            send_to_char( "a rotten stench permeates your nostrils!\n\r", ch );
         else if ( obj->timer < 20)
-            send_to_char( "It stinks pretty bad!\n\r", ch );
+            send_to_char( "notice that it stinks pretty bad!\n\r", ch );
         else if ( obj->timer < 30)
-            send_to_char( "It seems to have been dead for a little while.\n\r", ch );
+            send_to_char( "it seems to have been dead for a little while.\n\r", ch );
         else if ( obj->timer < 40)
-            send_to_char( "Decomposition has started to set in.\n\r", ch );
+            send_to_char( "decomposition has already started to set in.\n\r", ch );
         else
-            send_to_char( "It must have died very recently, as rot has not yet taken hold.\n\r", ch );
+            send_to_char( "it must have died very recently, as rot has not yet taken hold.\n\r", ch );
     }
     else
     {
         if ( obj->timer < 2)
-            send_to_char( "A rotten stench permeates your nostrils!\n\r", ch );
+            send_to_char( "a rotten stench permeates your nostrils!\n\r", ch );
         else if ( obj->timer < 3)
-            send_to_char( "It stinks pretty bad!\n\r", ch );
+            send_to_char( "notice that it stinks pretty bad!\n\r", ch );
         else if ( obj->timer < 4)
-            send_to_char( "It seems to have been dead for a little while.\n\r", ch );
+            send_to_char( "it seems to have been dead for a little while.\n\r", ch );
         else if ( obj->timer < 5)
-            send_to_char( "Decomposition has started to set in.\n\r", ch );
+            send_to_char( "decomposition has already started to set in.\n\r", ch );
         else
-            send_to_char( "It must have died very recently, as rot has not yet taken hold.\n\r", ch );
+            send_to_char( "it must have died very recently, as rot has not yet taken hold.\n\r", ch );
     }
 
     if ((ch->race == race_lookup("vampire") || ch->race == race_lookup("methuselah")) &&
         obj->value[2] > 0)
     {
         send_to_char("The smell of blood in the corpse entices your senses, and you estimate\n\r", ch);
-        sprintf(buf, "{R%d{D.{R%d {rpoints of blood{x are still remaining.\n\r", obj->value[2] / 10, obj->value[2] % 10);
+        sprintf(buf, "that {R%d{D.{R%d {rpoint%s of blood{x are still remaining.\n\r", obj->value[2] / 10,
+            obj->value[2] % 10, obj->value[2] == 1 || obj->value[2] == 10 ? "" : "s");
         send_to_char(buf, ch);
     }
 

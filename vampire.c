@@ -968,6 +968,7 @@ void do_feed(CHAR_DATA *ch, char *argument)
 void do_smell(CHAR_DATA *ch, char *argument)
 {
     OBJ_DATA *obj;
+    char buf[MSL];
 
     if (argument[0] == '\0')
     {
@@ -1019,7 +1020,11 @@ void do_smell(CHAR_DATA *ch, char *argument)
 
     if ((ch->race == race_lookup("vampire") || ch->race == race_lookup("methuselah")) &&
         obj->value[2] > 0)
-        send_to_char("The smell of blood in the corpse entices your senses.\n\r", ch);
+    {
+        send_to_char("The smell of blood in the corpse entices your senses, and you estimate\n\r", ch);
+        sprintf(buf, "{R%d{D.{R%d {rpoints of blood{x are still remaining.\n\r", obj->value[2] / 10, obj->value[2] % 10);
+        send_to_char(buf, ch);
+    }
 
     return;
 }

@@ -1384,7 +1384,7 @@ const struct    gift_type   gift_table  [MAX_GIFTS_CODED]  =
     {   "bury the wolf", 				0,     24, 0,     HOMID,  0,          0,        4,   0},
     {   "spirit ward", 					0,     24, 0,     HOMID,  0,          0,        4,   0},
     {   "assimilation", 				0,     24, 0,     HOMID,  0,          0,        5,   0},
-    {   "false comfort", 				0,     24, 0,     HOMID,  0,          WARDERSOFMEN, 5,   0},
+    {   "false comfort", 				1,     24, 0,     HOMID,  0,          WARDERSOFMEN, 5,   0},
     {   "create element", 				1,     24, 0,     METIS,  0,          0,        1,   0},
     {   "shed", 						1,     24, 0,     METIS,  0,          0,        1,   0},
     {   "curse of hatred", 				1,     24, 0,     METIS,  0,          0,        2,   0},

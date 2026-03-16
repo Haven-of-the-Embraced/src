@@ -483,6 +483,7 @@ void spell_gift_assimilation( int sn, int level, CHAR_DATA *ch, void *vo, int ta
 //
 void spell_gift_falsecomfort( int sn, int level, CHAR_DATA *ch, void *vo, int target)
 {
+  AFFECT_DATA af;
   int success = 0;
 
   if (ch->pcdata->gnosis[TEMP] < 1)
@@ -498,7 +499,7 @@ void spell_gift_falsecomfort( int sn, int level, CHAR_DATA *ch, void *vo, int ta
   }
 
   ch->pcdata->gnosis[TEMP]--;
-  success = godice(ch->pcdata->gnosis[MAX], 7);
+  success = godice(ch->pcdata->gnosis[PERM], 7);
 
   if (success < 0)
   {

@@ -491,9 +491,9 @@ void spell_gift_falsecomfort( int sn, int level, CHAR_DATA *ch, void *vo, int ta
     return;
   } 
 
-  if (IS_AFFECTED(ch, AFF_PASS_DOOR))
+  if (is_affected(ch, gsn_gift_falsecomfort))
   {
-    send_to_char("You can already ignore closed doorways.\n\r", ch);
+    send_to_char("You already ignore the creations of humans.\n\r", ch);
     return;
   }
 
@@ -502,7 +502,7 @@ void spell_gift_falsecomfort( int sn, int level, CHAR_DATA *ch, void *vo, int ta
 
   if (success < 0)
   {
-    act("The ancestor-spirits decree dishonor on your, your family, and your cow.",ch,NULL,NULL,TO_CHAR);
+    act("The ancestor-spirits decree dishonor on you, your family, and your cow.",ch,NULL,NULL,TO_CHAR);
     WAIT_STATE(ch, 24);
     return;
   }

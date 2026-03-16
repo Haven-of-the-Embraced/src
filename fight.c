@@ -2258,6 +2258,13 @@ bool d10_damage(CHAR_DATA *ch, CHAR_DATA *victim, int damsuccess, int modifier, 
     if (dam_type <= DAM_SLASH || dt == attack_lookup("claws") )
         armordice += get_armor_diff(ch, victim, dam_type);
 
+    if (is_affected(ch, gsn_gift_falsecomfort))
+    {
+        armordice -= get_affect_level(ch, gsn_gift_falsecomfort);
+        if (armordice < 0)
+            armordice = 0;
+    }
+
     if (is_affected(victim, gsn_skinoftheadder))
         soakdiff = 5;
     else

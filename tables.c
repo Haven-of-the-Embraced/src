@@ -746,6 +746,7 @@ const struct flag_type type_flags[] =
 	{   "plasm",		ITEM_PLASM, 			TRUE 		},
 	{	"lockpick",		ITEM_LOCKPICK,			TRUE		},
 	{	"blastpowder",	ITEM_BLASTPOWDER,		TRUE		},
+    {   "caern",        ITEM_CAERN,       TRUE        },
     {   NULL,           0,          0   }
 };
 

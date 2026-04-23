@@ -1519,7 +1519,7 @@ struct  kill_data
 #define ITEM_PLASM            37
 #define ITEM_LOCKPICK         38
 #define ITEM_BLASTPOWDER      39
-
+#define ITEM_CAERN            40
 
 
 /*

@@ -77,6 +77,7 @@ const struct item_type      item_table  []  =
     {   ITEM_PLASM,         "plasm"         },
     {   ITEM_LOCKPICK,      "lockpick"      },
     {   ITEM_BLASTPOWDER,   "blast_powder"  },
+    {   ITEM_CAERN,         "caern"         },
     {   0,      NULL        }
 };
 

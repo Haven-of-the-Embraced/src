@@ -2477,26 +2477,27 @@ void fread_obj( CHAR_DATA *ch, FILE *fp )
         if (obj->item_type == ITEM_WEAPON && obj->value[0] == 0)
            obj->value[0] = obj->pIndexData->value[0];
 
-        switch (obj->item_type) {
-
-          case ITEM_LIGHT:
-          case ITEM_SCROLL:
-          case ITEM_WAND:
-          case ITEM_STAFF:
-          case ITEM_POTION:
-          case ITEM_DRINK_CON:
-          case ITEM_FOUNTAIN:
-          case ITEM_PILL:
-          case ITEM_PORTAL:
-          case ITEM_TRAP:
-          case ITEM_PLASM:
-          case ITEM_LOCKPICK:
-          case ITEM_BLASTPOWDER:
-            break;
-          default:
-            for (ic=0;ic<4;ic++)
-              obj->value[ic] = obj->pIndexData->value[ic];
-            }
+        switch (obj->item_type)
+        {
+            case ITEM_LIGHT:
+            case ITEM_SCROLL:
+            case ITEM_WAND:
+            case ITEM_STAFF:
+            case ITEM_POTION:
+            case ITEM_DRINK_CON:
+            case ITEM_FOUNTAIN:
+            case ITEM_PILL:
+            case ITEM_PORTAL:
+            case ITEM_TRAP:
+            case ITEM_PLASM:
+            case ITEM_LOCKPICK:
+            case ITEM_BLASTPOWDER:
+            case ITEM_CAERN:
+                break;
+            default:
+                for (ic=0;ic<4;ic++)
+                    obj->value[ic] = obj->pIndexData->value[ic];
+        }
 
         fMatch      = TRUE;
         break;

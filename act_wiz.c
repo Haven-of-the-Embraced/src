@@ -2124,6 +2124,24 @@ void do_ostat( CHAR_DATA *ch, char *argument )
           send_to_char("{c-----------------------------------------------------{x\n\r", ch);
           break;
 
+        case ITEM_CAERN:
+            send_to_char("{c-----------------------{YVALUES{c------------------------{x\n\r", ch);
+            sprintf( buf,
+                "Charges           : %2d\n\r"
+                "Caern Spell       : %s\n\r"
+                "Destination 1     : %d\n\r"
+                "Destination 2     : %d\n\r"
+                "Destination 3     : %d\n\r",
+                obj->value[0],
+                obj->value[1] != -1 ? skill_table[obj->value[1]].name
+                    : "none",
+                obj->value[2],
+                obj->value[3],
+                obj->value[4]);
+            send_to_char( buf, ch );
+            send_to_char("{c-----------------------------------------------------{x\n\r", ch);
+            break;
+
         case ITEM_TREASURE:
         case ITEM_TRASH:
         case ITEM_KEY:

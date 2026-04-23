@@ -2748,6 +2748,24 @@ void show_obj_values( CHAR_DATA *ch, OBJ_INDEX_DATA *obj )
         send_to_char( buf, ch );
         send_to_char("{c-----------------------------------------------------{x\n\r", ch);
         break;
+
+    case ITEM_CAERN:
+        send_to_char("{c-----------------------{YVALUES{c------------------------{x\n\r", ch);
+        sprintf( buf,
+            "v[0] Charges           : %2d Charges\n\r"
+            "v[1] Caern Spell       : %s\n\r"
+            "v[2] Destination 1     : %d\n\r"
+            "v[3] Destination 2     : %d\n\r"
+            "v[4] Destination 3     : %d\n\r",
+            obj->value[0],
+            obj->value[1] != -1 ? skill_table[obj->value[1]].name
+                            : "none",
+            obj->value[2],
+            obj->value[3],
+            obj->value[4]);
+        send_to_char( buf, ch );
+        send_to_char("{c-----------------------------------------------------{x\n\r", ch);
+        break;
     }
 
     return;

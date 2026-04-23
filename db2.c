@@ -831,6 +831,7 @@ void convert_object( OBJ_INDEX_DATA *pObjIndex )
         case ITEM_PLASM:
         case ITEM_LOCKPICK:
         case ITEM_BLASTPOWDER:
+        case ITEM_CAERN:
         break;
 
         case ITEM_WAND:

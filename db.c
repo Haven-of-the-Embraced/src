@@ -2874,6 +2874,7 @@ OBJ_DATA *create_object( OBJ_INDEX_DATA *pObjIndex, int level )
     case ITEM_PLASM:
     case ITEM_LOCKPICK:
     case ITEM_BLASTPOWDER:
+    case ITEM_CAERN:
     break;
 
     case ITEM_JUKEBOX:

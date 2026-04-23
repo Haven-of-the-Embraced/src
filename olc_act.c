@@ -3292,6 +3292,39 @@ bool set_obj_values( CHAR_DATA *ch, OBJ_INDEX_DATA *pObj, int value_num, char *a
          }
          break;
 
+    case ITEM_CAERN:
+        switch (value_num)
+        {
+            default:
+                do_help(ch, "ITEM_CAERN");
+                return FALSE;
+            case 0:
+                if (set_value < 0 || set_value > 5)
+                {
+                    send_to_char("Caern Charges is between 0 and 5.\n\r", ch);
+                    break;
+                }
+                send_to_char( "CAERN SPELL CHARGES SET.\n\r\n\r", ch );
+                pObj->value[0] = atoi( argument );
+                break;
+            case 1:
+                send_to_char( "CAERN SPELL TYPE SET.\n\r\n\r", ch );
+                pObj->value[1] = skill_lookup( argument );
+                break;
+            case 2:
+                send_to_char( "CAERN DESTINATION 1 SET.\n\r\n\r", ch );
+                pObj->value[2] = atoi( argument );
+                break;
+            case 3:
+                send_to_char( "CAERN DESTINATION 2 SET.\n\r\n\r", ch );
+                pObj->value[3] = atoi( argument );
+                break;
+            case 4:
+                send_to_char( "CAERN DESTINATION 3 SET.\n\r\n\r", ch );
+                pObj->value[4] = atoi( argument );
+                break;
+        }
+
     }
 
     show_obj_values( ch, pObj );

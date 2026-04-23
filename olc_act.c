@@ -2507,263 +2507,266 @@ void show_obj_values( CHAR_DATA *ch, OBJ_INDEX_DATA *obj )
 
     switch( obj->item_type )
     {
-    default:    /* No values. */
-        break;
+        default:    /* No values. */
+            break;
 
-    case ITEM_LIGHT:
-      send_to_char("{c-----------------------{YVALUES{c------------------------{x\n\r", ch);
-      sprintf(buf, "v[0] Replenish Rate      : %3d %s  \n\rv[1] Replenish Chance    : %3d%  \n\rv[2] Current Light Hours : %3d %s  \n\rv[3] Max Light Hours     : %3d %s \n\rv[4] Light Flags         : %s\n\r",
-        obj->value[0],
-        obj->value[0] == 0 ? "[{yNo Replenish{x]" : "Per Update",
-        obj->value[1],
-        obj->value[2],
-        obj->value[2] == -1 || obj->value[2] == 999 ? "[{MInfinite{x]" : "",
-        obj->value[3],
-        obj->value[3] == -1 || obj->value[3] == 999 ? "[{MInfinite{x]" : "",
-        flag_string( light_flags, obj->value[4]));
-      send_to_char( buf, ch );
-      send_to_char("{c-----------------------------------------------------{x\n\r", ch);
-      break;
+        case ITEM_LIGHT:
+            send_to_char("{c-----------------------{YVALUES{c------------------------{x\n\r", ch);
+            sprintf(buf, "v[0] Replenish Rate      : %3d %s  \n\rv[1] Replenish Chance    : %3d%  \n\rv[2] Current Light Hours : %3d %s  \n\rv[3] Max Light Hours     : %3d %s \n\rv[4] Light Flags         : %s\n\r",
+                obj->value[0],
+                obj->value[0] == 0 ? "[{yNo Replenish{x]" : "Per Update",
+                obj->value[1],
+                obj->value[2],
+                obj->value[2] == -1 || obj->value[2] == 999 ? "[{MInfinite{x]" : "",
+                obj->value[3],
+                obj->value[3] == -1 || obj->value[3] == 999 ? "[{MInfinite{x]" : "",
+                flag_string( light_flags, obj->value[4]));
+            send_to_char( buf, ch );
+            send_to_char("{c-----------------------------------------------------{x\n\r", ch);
+            break;
 
-    case ITEM_WAND:
-    case ITEM_STAFF:
+        case ITEM_WAND:
+        case ITEM_STAFF:
             sprintf( buf,
-        "[v0] Level:          [%d]\n\r"
-        "[v1] Charges Total:  [%d]\n\r"
-        "[v2] Charges Left:   [%d]\n\r"
-        "[v3] Spell:          %s\n\r",
-        obj->value[0],
-        obj->value[1],
-        obj->value[2],
-        obj->value[3] != -1 ? skill_table[obj->value[3]].name
-                            : "none" );
-        send_to_char( buf, ch );
-        break;
+                "[v0] Level:          [%d]\n\r"
+                "[v1] Charges Total:  [%d]\n\r"
+                "[v2] Charges Left:   [%d]\n\r"
+                "[v3] Spell:          %s\n\r",
+                obj->value[0],
+                obj->value[1],
+                obj->value[2],
+                obj->value[3] != -1 ? skill_table[obj->value[3]].name
+                    : "none" );
+            send_to_char( buf, ch );
+            break;
 
-    case ITEM_PORTAL:
-        sprintf( buf,
-            "[v0] Charges:        [%d]\n\r"
-            "[v1] Exit Flags:     %s\n\r"
-            "[v2] Portal Flags:   %s\n\r"
-            "[v3] Goes to (vnum): [%d]\n\r",
-            obj->value[0],
-            flag_string( exit_flags, obj->value[1]),
-            flag_string( portal_flags , obj->value[2]),
-            obj->value[3] );
-        send_to_char( buf, ch);
-        break;
-
-    case ITEM_FURNITURE:
-        sprintf( buf,
-            "[v0] Max people:      [%d]\n\r"
-            "[v1] Max weight:      [%d]\n\r"
-            "[v2] Furniture Flags: %s\n\r"
-            "[v3] Heal bonus:      [%d]\n\r"
-            "[v4] Mana bonus:      [%d]\n\r",
-            obj->value[0],
-            obj->value[1],
-            flag_string( furniture_flags, obj->value[2]),
-            obj->value[3],
-            obj->value[4] );
-        send_to_char( buf, ch );
-        break;
-
-    case ITEM_TRAP:
-        sprintf( buf,
-            "[v0] Damage flags:     %s\n\r"
-            "[v1] Trigger flags:    %s\n\r"
-            "[v2] Target flags:     %s\n\r"
-            "[v3] Trap Charges:    [%d]\n\r",
-            flag_string( trap_flags, obj->value[0]),
-            flag_string( trigger_flags, obj->value[1]),
-            flag_string( focus_flags, obj->value[2]),
-            obj->value[3]);
-        send_to_char( buf, ch );
-        break;
-
-    case ITEM_SCROLL:
-    case ITEM_POTION:
-    case ITEM_PILL:
+        case ITEM_PORTAL:
             sprintf( buf,
-        "[v0] Level:  [%d]\n\r"
-        "[v1] Spell:  %s\n\r"
-        "[v2] Spell:  %s\n\r"
-        "[v3] Spell:  %s\n\r"
-        "[v4] Spell:  %s\n\r",
-        obj->value[0],
-        obj->value[1] != -1 ? skill_table[obj->value[1]].name
-                            : "none",
-        obj->value[2] != -1 ? skill_table[obj->value[2]].name
-                                    : "none",
-        obj->value[3] != -1 ? skill_table[obj->value[3]].name
-                            : "none",
-        obj->value[4] != -1 ? skill_table[obj->value[4]].name
-                            : "none" );
-        send_to_char( buf, ch );
-        break;
+                "[v0] Charges:        [%d]\n\r"
+                "[v1] Exit Flags:     %s\n\r"
+                "[v2] Portal Flags:   %s\n\r"
+                "[v3] Goes to (vnum): [%d]\n\r",
+                obj->value[0],
+                flag_string( exit_flags, obj->value[1]),
+                flag_string( portal_flags , obj->value[2]),
+                obj->value[3] );
+            send_to_char( buf, ch);
+            break;
+
+        case ITEM_FURNITURE:
+            sprintf( buf,
+                "[v0] Max people:      [%d]\n\r"
+                "[v1] Max weight:      [%d]\n\r"
+                "[v2] Furniture Flags: %s\n\r"
+                "[v3] Heal bonus:      [%d]\n\r"
+                "[v4] Mana bonus:      [%d]\n\r",
+                obj->value[0],
+                obj->value[1],
+                flag_string( furniture_flags, obj->value[2]),
+                obj->value[3],
+                obj->value[4] );
+            send_to_char( buf, ch );
+            break;
+
+        case ITEM_TRAP:
+            sprintf( buf,
+                "[v0] Damage flags:     %s\n\r"
+                "[v1] Trigger flags:    %s\n\r"
+                "[v2] Target flags:     %s\n\r"
+                "[v3] Trap Charges:    [%d]\n\r",
+                flag_string( trap_flags, obj->value[0]),
+                flag_string( trigger_flags, obj->value[1]),
+                flag_string( focus_flags, obj->value[2]),
+                obj->value[3]);
+            send_to_char( buf, ch );
+            break;
+
+        case ITEM_SCROLL:
+        case ITEM_POTION:
+        case ITEM_PILL:
+            sprintf( buf,
+                "[v0] Level:  [%d]\n\r"
+                "[v1] Spell:  %s\n\r"
+                "[v2] Spell:  %s\n\r"
+                "[v3] Spell:  %s\n\r"
+                "[v4] Spell:  %s\n\r",
+                obj->value[0],
+                obj->value[1] != -1 ? skill_table[obj->value[1]].name
+                    : "none",
+                obj->value[2] != -1 ? skill_table[obj->value[2]].name
+                    : "none",
+                obj->value[3] != -1 ? skill_table[obj->value[3]].name
+                    : "none",
+                obj->value[4] != -1 ? skill_table[obj->value[4]].name
+                    : "none" );
+            send_to_char( buf, ch );
+            break;
 
 /* ARMOR for ROM */
-
         case ITEM_ARMOR:
-        sprintf( buf,
-        "[v0] Ac pierce       [%d]\n\r"
-        "[v1] Ac bash         [%d]\n\r"
-        "[v2] Ac slash        [%d]\n\r"
-        "[v3] Ac exotic       [%d]\n\r",
-        obj->value[0],
-        obj->value[1],
-        obj->value[2],
-        obj->value[3] );
-        send_to_char( buf, ch );
-        break;
+            sprintf( buf,
+                "[v0] Ac pierce       [%d]\n\r"
+                "[v1] Ac bash         [%d]\n\r"
+                "[v2] Ac slash        [%d]\n\r"
+                "[v3] Ac exotic       [%d]\n\r",
+                obj->value[0],
+                obj->value[1],
+                obj->value[2],
+                obj->value[3] );
+            send_to_char( buf, ch );
+            break;
 
 /* WEAPON changed in ROM: */
 /* I had to split the output here, I have no idea why, but it helped -- Hugin */
 /* It somehow fixed a bug in showing scroll/pill/potions too ?! */
-    case ITEM_WEAPON:
+        case ITEM_WEAPON:
             sprintf( buf, "[v0] Weapon class:   %s\n\r",
-             flag_string( weapon_class, obj->value[0] ) );
-        send_to_char( buf, ch );
-        sprintf( buf, "[v1] Number of dice: [%d]\n\r", obj->value[1] );
-        send_to_char( buf, ch );
-        sprintf( buf, "[v2] Type of dice:   [%d]\n\r", obj->value[2] );
-        send_to_char( buf, ch );
-        sprintf( buf, "[v3] Type:           %s\n\r",
-            attack_table[obj->value[3]].name );
-        send_to_char( buf, ch );
-        sprintf( buf, "[v4] Special type:   %s\n\r",
-             flag_string( weapon_type2,  obj->value[4] ) );
-        send_to_char( buf, ch );
-        break;
+                flag_string( weapon_class, obj->value[0] ) );
+            send_to_char( buf, ch );
+            sprintf( buf, "[v1] Number of dice: [%d]\n\r", obj->value[1] );
+            send_to_char( buf, ch );
+            sprintf( buf, "[v2] Type of dice:   [%d]\n\r", obj->value[2] );
+            send_to_char( buf, ch );
+            sprintf( buf, "[v3] Type:           %s\n\r",
+                attack_table[obj->value[3]].name );
+            send_to_char( buf, ch );
+            sprintf( buf, "[v4] Special type:   %s\n\r",
+                flag_string( weapon_type2,  obj->value[4] ) );
+            send_to_char( buf, ch );
+            break;
 
-    case ITEM_CONTAINER:
-      send_to_char("{c-----------------------{YVALUES{c------------------------{x\n\r", ch);
-      sprintf(buf,
-        "v[0] Maximum Weight      : %5d.%d lbs  \n\rv[1] Container Flags     : %s  \n\rv[2] Key                 : %5d %s  \n\rv[3] Max Capacity        : %5d items \n\rv[4] Weight Multiplier   : %5d % \n\r",
-        obj->value[0] / 10, obj->value[0] % 10,
-        flag_string( container_flags, obj->value[1] ),
-        obj->value[2],
-        get_obj_index(obj->value[2])
-          ? get_obj_index(obj->value[2])->short_descr : "none",
-        obj->value[3],
-        obj->value[4] );
-      send_to_char( buf, ch );
-      send_to_char("{c-----------------------------------------------------{x\n\r", ch);
-        break;
+        case ITEM_CONTAINER:
+            send_to_char("{c-----------------------{YVALUES{c------------------------{x\n\r", ch);
+            sprintf(buf,
+                "v[0] Maximum Weight      : %5d.%d lbs\n\r"
+                "v[1] Container Flags     : %s\n\r"
+                "v[2] Key                 : %5d %s\n\r"
+                "v[3] Max Capacity        : %5d items\n\r"
+                "v[4] Weight Multiplier   : %5d %\n\r",
+                obj->value[0] / 10, obj->value[0] % 10,
+                flag_string( container_flags, obj->value[1] ),
+                obj->value[2],
+                get_obj_index(obj->value[2])
+                  ? get_obj_index(obj->value[2])->short_descr : "none",
+                obj->value[3],
+                obj->value[4] );
+            send_to_char( buf, ch );
+            send_to_char("{c-----------------------------------------------------{x\n\r", ch);
+            break;
 
-    case ITEM_DRINK_CON:
-        sprintf( buf,
-            "[v0] Liquid Total: [%d]\n\r"
-            "[v1] Liquid Left:  [%d]\n\r"
-            "[v2] Liquid:       %s\n\r"
-            "[v3] Poisoned:     %s\n\r",
-            obj->value[0],
-            obj->value[1],
-            liq_table[obj->value[2]].liq_name,
-            obj->value[3] != 0 ? "Yes" : "No" );
-        send_to_char( buf, ch );
-        break;
+        case ITEM_DRINK_CON:
+            sprintf( buf,
+                "[v0] Liquid Total: [%d]\n\r"
+                "[v1] Liquid Left:  [%d]\n\r"
+                "[v2] Liquid:       %s\n\r"
+                "[v3] Poisoned:     %s\n\r",
+                obj->value[0],
+                obj->value[1],
+                liq_table[obj->value[2]].liq_name,
+                obj->value[3] != 0 ? "Yes" : "No" );
+            send_to_char( buf, ch );
+            break;
 
-    case ITEM_FOUNTAIN:
-        sprintf( buf,
-            "[v0] Liquid Total:    [%d]\n\r"
-            "[v1] Liquid Left:     [%d]\n\r"
-            "[v2] Liquid:          %s\n\r"
-            "[v4] Fountain Flags:  [%s]\n\r",
-            obj->value[0],
-            obj->value[1],
-            liq_table[obj->value[2]].liq_name,
-            flag_string( fountain_flags, obj->value[4]) );
-        send_to_char( buf,ch );
-        break;
+        case ITEM_FOUNTAIN:
+            sprintf( buf,
+                "[v0] Liquid Total:    [%d]\n\r"
+                "[v1] Liquid Left:     [%d]\n\r"
+                "[v2] Liquid:          %s\n\r"
+                "[v4] Fountain Flags:  [%s]\n\r",
+                obj->value[0],
+                obj->value[1],
+                liq_table[obj->value[2]].liq_name,
+                flag_string( fountain_flags, obj->value[4]) );
+            send_to_char( buf,ch );
+            break;
 
-    case ITEM_FOOD:
-        sprintf( buf,
-        "[v0] Food hours: [%d]\n\r"
-        "[v1] Full hours: [%d]\n\r"
-        "[v3] Poisoned:   %s\n\r",
-        obj->value[0],
-        obj->value[1],
-        obj->value[3] != 0 ? "Yes" : "No" );
-        send_to_char( buf, ch );
-        break;
+        case ITEM_FOOD:
+            sprintf( buf,
+                "[v0] Food hours: [%d]\n\r"
+                "[v1] Full hours: [%d]\n\r"
+                "[v3] Poisoned:   %s\n\r",
+                obj->value[0],
+                obj->value[1],
+                obj->value[3] != 0 ? "Yes" : "No" );
+            send_to_char( buf, ch );
+            break;
 
-    case ITEM_MONEY:
+        case ITEM_MONEY:
             sprintf( buf, "[v0] Gold:   [%d]\n\r", obj->value[0] );
-        send_to_char( buf, ch );
+            send_to_char( buf, ch );
+            break;
+
+        case ITEM_TOOL:
+            sprintf( buf,
+                "[v0] Quality: [%d]\n\r"
+                "[v1] Type:    %s\n\r",
+                obj->value[0],
+                tool_table[obj->value[1]].tool_name );
+            send_to_char( buf, ch );
+            break;
+
+        case ITEM_CRAFTED:
+            sprintf( buf,
+                "[v0] Quality: [%d]\n\r"
+                "[v1] Type:    %s\n\r"
+                "[v2] Socket1: %d\n\r"
+                "[v3] Socket2: %d\n\r"
+                "[v4] Socket3: %d\n\r",
+                obj->value[0],
+                crafted_table[obj->value[1]].crafted_name,
+                obj->value[2],
+                obj->value[3],
+                obj->value[4]);
+            send_to_char( buf, ch );
+            break;
+
+        case ITEM_PLASM:
+            send_to_char("{c-----------------------{YVALUES{c------------------------{x\n\r", ch);
+            sprintf(buf, "v[0] Total Plasm         : %3d Pieces\n\r",
+                obj->value[0]);
+            send_to_char( buf, ch );
+            send_to_char("{c-----------------------------------------------------{x\n\r", ch);
+            break;
+
+        case ITEM_LOCKPICK:
+            send_to_char("{c-----------------------{YVALUES{c------------------------{x\n\r", ch);
+            sprintf(buf,
+                "v[0] Durability          : %3d \n\r"
+                "v[1] Difficulty          : %3d Adjustment\n\r",
+                obj->value[0],
+                obj->value[1]);
+            send_to_char( buf, ch );
+            send_to_char("{c-----------------------------------------------------{x\n\r", ch);
+            break;
+
+        case ITEM_BLASTPOWDER:
+            send_to_char("{c-----------------------{YVALUES{c------------------------{x\n\r", ch);
+            sprintf(buf,
+                "v[0] Charges             : %2d Charges\n\r"
+                "v[1] Damage Dice         : %2d Dice\n\r",
+                obj->value[0],
+                obj->value[1]);
+            send_to_char( buf, ch );
+            send_to_char("{c-----------------------------------------------------{x\n\r", ch);
         break;
 
-    case ITEM_TOOL:
-        sprintf( buf,
-        "[v0] Quality: [%d]\n\r"
-        "[v1] Type:    %s\n\r",
-        obj->value[0],
-        tool_table[obj->value[1]].tool_name );
-        send_to_char( buf, ch );
-        break;
-
-    case ITEM_CRAFTED:
-        sprintf( buf,
-        "[v0] Quality: [%d]\n\r"
-        "[v1] Type:    %s\n\r"
-        "[v2] Socket1: %d\n\r"
-        "[v3] Socket2: %d\n\r"
-        "[v4] Socket3: %d\n\r",
-        obj->value[0],
-        crafted_table[obj->value[1]].crafted_name,
-        obj->value[2],
-        obj->value[3],
-        obj->value[4]);
-        send_to_char( buf, ch );
-        break;
-
-      case ITEM_PLASM:
-        send_to_char("{c-----------------------{YVALUES{c------------------------{x\n\r", ch);
-        sprintf(buf, "v[0] Total Plasm         : %3d Pieces\n\r",
-          obj->value[0]);
-        send_to_char( buf, ch );
-        send_to_char("{c-----------------------------------------------------{x\n\r", ch);
-        break;
-
-      case ITEM_LOCKPICK:
-        send_to_char("{c-----------------------{YVALUES{c------------------------{x\n\r", ch);
-        sprintf(buf,
-          "v[0] Durability          : %3d \n\r"
-          "v[1] Difficulty          : %3d Adjustment\n\r",
-          obj->value[0],
-          obj->value[1]);
-        send_to_char( buf, ch );
-        send_to_char("{c-----------------------------------------------------{x\n\r", ch);
-        break;
-
-      case ITEM_BLASTPOWDER:
-        send_to_char("{c-----------------------{YVALUES{c------------------------{x\n\r", ch);
-        sprintf(buf,
-          "v[0] Charges             : %2d Charges\n\r"
-          "v[1] Damage Dice         : %2d Dice\n\r",
-          obj->value[0],
-          obj->value[1]);
-        send_to_char( buf, ch );
-        send_to_char("{c-----------------------------------------------------{x\n\r", ch);
-        break;
-
-    case ITEM_CAERN:
-        send_to_char("{c-----------------------{YVALUES{c------------------------{x\n\r", ch);
-        sprintf( buf,
-            "v[0] Charges           : %2d Charges\n\r"
-            "v[1] Caern Spell       : %s\n\r"
-            "v[2] Destination 1     : %d\n\r"
-            "v[3] Destination 2     : %d\n\r"
-            "v[4] Destination 3     : %d\n\r",
-            obj->value[0],
-            obj->value[1] != -1 ? skill_table[obj->value[1]].name
-                            : "none",
-            obj->value[2],
-            obj->value[3],
-            obj->value[4]);
-        send_to_char( buf, ch );
-        send_to_char("{c-----------------------------------------------------{x\n\r", ch);
-        break;
+        case ITEM_CAERN:
+            send_to_char("{c-----------------------{YVALUES{c------------------------{x\n\r", ch);
+            sprintf( buf,
+                "v[0] Charges           : %2d Charges\n\r"
+                "v[1] Caern Spell       : %s\n\r"
+                "v[2] Destination 1     : %d\n\r"
+                "v[3] Destination 2     : %d\n\r"
+                "v[4] Destination 3     : %d\n\r",
+                obj->value[0],
+                obj->value[1] != -1 ? skill_table[obj->value[1]].name
+                    : "none",
+                obj->value[2],
+                obj->value[3],
+                obj->value[4]);
+            send_to_char( buf, ch );
+            send_to_char("{c-----------------------------------------------------{x\n\r", ch);
+            break;
     }
 
     return;

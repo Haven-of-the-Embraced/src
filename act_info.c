@@ -743,14 +743,14 @@ void do_scroll(CHAR_DATA *ch, char *argument)
 void do_socials(CHAR_DATA *ch, char *argument)
 {
     char buf[MAX_STRING_LENGTH];
-    int iSocial;
+    struct social_type *social;
     int col;
 
     col = 0;
 
-    for (iSocial = 0; social_table[iSocial].name[0] != '\0'; iSocial++)
+    for (social = social_first; social != NULL; social = social->next)
     {
-    sprintf(buf,"%-12s",social_table[iSocial].name);
+    sprintf(buf,"%-12s",social->name);
     send_to_char(buf,ch);
     if (++col % 6 == 0)
         send_to_char("\n\r",ch);

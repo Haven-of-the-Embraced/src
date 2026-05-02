@@ -62,6 +62,9 @@ bool run_olc_editor( DESCRIPTOR_DATA *d )
     case ED_HELP:
         hedit( d->character, d->incomm );
         break;
+    case ED_SOCIAL:
+        sedit( d->character, d->incomm );
+        break;
     case ED_COMMAND:
         cmdedit( d->character, d->incomm);
         break;
@@ -111,6 +114,9 @@ char *olc_ed_name( CHAR_DATA *ch )
     case ED_HELP:
         sprintf( buf, "HEdit" );
         break;
+    case ED_SOCIAL:
+        sprintf( buf, "SEdit" );
+        break;
    case ED_COMMAND:
     sprintf(buf, "CmdEdit" );
     break;
@@ -142,6 +148,7 @@ char *olc_ed_vnum( CHAR_DATA *ch )
     HELP_DATA *pHelp;
     CMD_DATA  *pCmd;
     QITEM_DATA *pItem;
+    struct social_type *pSocial;
     static char buf[MIL];
 
     buf[0] = '\0';
@@ -178,6 +185,10 @@ char *olc_ed_vnum( CHAR_DATA *ch )
     case ED_HELP:
         pHelp = (HELP_DATA *)ch->desc->pEdit;
         sprintf( buf, "%s", pHelp ? pHelp->keyword : "" );
+        break;
+    case ED_SOCIAL:
+        pSocial = (struct social_type *)ch->desc->pEdit;
+        sprintf( buf, "%s", pSocial ? pSocial->name : "" );
         break;
     case ED_CLAN:
         pClan = (CLAN_DATA *) ch->desc->pEdit;
@@ -266,6 +277,9 @@ bool show_commands( CHAR_DATA *ch, char *argument )
 	    break;
     case ED_HELP:
         show_olc_cmds( ch, hedit_table );
+        break;
+    case ED_SOCIAL:
+        show_olc_cmds( ch, sedit_table );
         break;
     case ED_COMMAND:
         show_olc_cmds( ch, cmdedit_table );
@@ -1965,6 +1979,110 @@ const struct olc_cmd_type hedit_table[] =
     {   "?",      show_help      },
 
     {   NULL, 0, }
+};
+
+/* Social Editor */
+void sedit( CHAR_DATA *ch, char *argument)
+{
+    char command[MIL];
+    char arg[MIL];
+    int cmd;
+
+    smash_tilde(argument);
+    strcpy(arg, argument);
+    argument = one_argument( argument, command);
+
+    if (ch->level < SUPREME)
+    {
+        send_to_char("SEdit: Insufficient security to modify socials.\n\r", ch);
+        edit_done(ch);
+        return;
+    }
+
+    if ( !str_cmp(command, "done") )
+    {
+        edit_done( ch );
+        return;
+    }
+
+    if ( command[0] == '\0' )
+    {
+        sedit_show( ch, argument );
+        return;
+    }
+
+    for ( cmd = 0; sedit_table[cmd].name != NULL; cmd++ )
+    {
+        if ( !str_prefix( command, sedit_table[cmd].name ) )
+        {
+            (*sedit_table[cmd].olc_fun) ( ch, argument );
+            return;
+        }
+    }
+
+    interpret( ch, arg );
+    return;
+}
+
+void do_sedit( CHAR_DATA *ch, char *argument )
+{
+    struct social_type *pSocial;
+    char arg1[MIL];
+    bool found = FALSE;
+
+    strcpy(arg1, argument);
+    if(argument[0] != '\0')
+    {
+        for ( pSocial = social_first; pSocial != NULL; pSocial = pSocial->next )
+        {
+            if ( is_name( arg1, pSocial->name ) )
+            {
+                ch->desc->pEdit = (void *)pSocial;
+                ch->desc->editor = ED_SOCIAL;
+                found = TRUE;
+                return;
+            }
+        }
+    }
+
+    if(!found)
+    {
+        argument = one_argument(arg1, arg1);
+
+        if(!str_cmp(arg1,"make"))
+        {
+            if (argument[0] == '\0')
+            {
+                send_to_char("Syntax: sedit make [social]\n\r",ch);
+                return;
+            }
+            if (sedit_make(ch, argument) )
+                ch->desc->editor = ED_SOCIAL;
+            return;
+        }
+    }
+
+    send_to_char( "SEdit:  There is no default social to edit.\n\r", ch );
+    return;
+}
+
+const struct olc_cmd_type sedit_table[] =
+{
+    { "commands", show_commands  },
+    { "show",     sedit_show     },
+    { "make",     sedit_make     },
+    { "delete",   sedit_delete   },
+    { "cnoarg",   sedit_cnoarg   },
+    { "onoarg",   sedit_onoarg   },
+    { "cfound",   sedit_cfound   },
+    { "ofound",   sedit_ofound   },
+    { "vfound",   sedit_vfound   },
+    { "cnotfound",sedit_cnotfound},
+    { "cauto",    sedit_cauto    },
+    { "oauto",    sedit_oauto    },
+    { "?",        show_help      },
+
+    { NULL, 0, }
 };
 /*Throw this in at the bottom of olc.c */
 

@@ -3357,7 +3357,7 @@ char    *PERS   args( (CHAR_DATA *ch, CHAR_DATA *looker, bool channel) );
  */
 struct  social_type
 {
-    char      name[20];
+    char *    name;
     char *    char_no_arg; // Shown to char, no argument.
     char *    others_no_arg; // Shown to room, no argument.
     char *    char_found; // Shown to char, target found.
@@ -3366,6 +3366,7 @@ struct  social_type
     char *    char_not_found; // Target not found
     char *      char_auto; // Show to char, (social) self
     char *      others_auto; // Show to room, (social) self
+    struct social_type *next;
 };
 
 
@@ -3393,7 +3394,7 @@ extern  const   struct  tool_type   tool_table  [];
 extern  const   struct  crafted_type    crafted_table   [];
 extern  const   struct  skill_type  skill_table [MAX_SKILL];
 extern  const   struct  group_type      group_table [MAX_GROUP];
-extern          struct social_type      social_table    [MAX_SOCIALS];
+extern          struct social_type      *social_first;
 
 
 

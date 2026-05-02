@@ -72,6 +72,7 @@ void save_helps args( (void) );
 #define ED_QITEM    9
 #define ED_OPCODE   10
 #define ED_RPCODE   11
+#define ED_SOCIAL   12
 
 
 
@@ -90,6 +91,7 @@ void    cedit           args( ( CHAR_DATA *ch, char *argument ) );
 void    qiedit          args( ( CHAR_DATA *ch, char *argument ));
 void    opedit          args( ( CHAR_DATA *ch, char *argument ) );
 void    rpedit          args( ( CHAR_DATA *ch, char *argument ) );
+void    sedit           args( ( CHAR_DATA *ch, char *argument ) );
 
 
 /*
@@ -149,6 +151,7 @@ extern const struct olc_cmd_type        cedit_table[];
 extern const struct olc_cmd_type    qiedit_table[];
 extern const struct olc_cmd_type        opedit_table[];
 extern const struct olc_cmd_type        rpedit_table[];
+extern const struct olc_cmd_type        sedit_table[];
 
 
 
@@ -167,6 +170,7 @@ DECLARE_DO_FUN( do_cmdedit  );
 DECLARE_DO_FUN( do_qiedit   );
 DECLARE_DO_FUN( do_opedit       );
 DECLARE_DO_FUN( do_rpedit       );
+DECLARE_DO_FUN( do_sedit        );
 
 /*
  * General Functions
@@ -326,6 +330,19 @@ DECLARE_OLC_FUN( hedit_level   );
 DECLARE_OLC_FUN( hedit_keywords   );
 DECLARE_OLC_FUN( hedit_delete );
 
+/* Social Editor */
+DECLARE_OLC_FUN( sedit_show );
+DECLARE_OLC_FUN( sedit_make );
+DECLARE_OLC_FUN( sedit_delete );
+DECLARE_OLC_FUN( sedit_cnoarg );
+DECLARE_OLC_FUN( sedit_onoarg );
+DECLARE_OLC_FUN( sedit_cfound );
+DECLARE_OLC_FUN( sedit_ofound );
+DECLARE_OLC_FUN( sedit_vfound );
+DECLARE_OLC_FUN( sedit_cnotfound );
+DECLARE_OLC_FUN( sedit_cauto );
+DECLARE_OLC_FUN( sedit_oauto );
+
 
 //Cmdedit functions
 DECLARE_OLC_FUN( cmdedit_show       );
@@ -395,6 +412,7 @@ DECLARE_OLC_FUN( rpedit_list		);
 #define EDIT_QITEM( Ch, Item ) (Item = (QITEM_DATA *) Ch->desc->pEdit )
 #define EDIT_OPCODE(Ch, Code)   ( Code = (PROG_CODE*)Ch->desc->pEdit )
 #define EDIT_RPCODE(Ch, Code)   ( Code = (PROG_CODE*)Ch->desc->pEdit )
+#define EDIT_SOCIAL(Ch, Social) ( Social = (struct social_type *)Ch->desc->pEdit )
 
 
 /*

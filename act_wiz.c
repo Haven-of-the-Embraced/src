@@ -8712,6 +8712,7 @@ void do_copyover (CHAR_DATA *ch, char * argument)
     do_function( NULL, &do_asave, "helps");
     do_function( NULL, &do_asave, "commands");
     do_function( NULL, &do_asave, "quests");
+    do_function( NULL, &do_asave, "socials");
     write_to_descriptor (ch->desc->descriptor, "Proceeding to copyover...\n\r", 0);
 
     sprintf (buf, "\n\r\n\r *** Pull the Lever, Kronk! \n\r\n\r");

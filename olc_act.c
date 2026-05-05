@@ -6893,6 +6893,13 @@ bool sedit_show( CHAR_DATA *ch, char *argument )
 
     EDIT_SOCIAL(ch, soc);
 
+    send_to_char("Substitution codes:\n\r", ch);
+    send_to_char("$n: actor name       $N: victim name\n\r", ch);
+    send_to_char("$e: actor he/she     $E: victim he/she\n\r", ch);
+    send_to_char("$m: actor him/her    $M: victim him/her\n\r", ch);
+    send_to_char("$s: actor his/her    $S: victim his/her\n\r", ch);
+    send_to_char("--------------------------------------------------\n\r", ch);
+
     sprintf(buf, "Name:        [%s]\n\r", soc->name);
     send_to_char(buf, ch);
     sprintf(buf, "cnoarg:      [%s]\n\r", soc->char_no_arg ? soc->char_no_arg : "(none)");
@@ -6988,7 +6995,7 @@ bool sedit_delete( CHAR_DATA *ch, char *argument )
     free_mem(soc, sizeof(*soc));
 
     social_count--;
-    
+
     send_to_char("Social deleted.\n\r", ch);
     edit_done(ch);
     return TRUE;

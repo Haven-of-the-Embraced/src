@@ -1,0 +1,32 @@
+name: Production Deployment
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  deploy-and-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH into CentOS and Build
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SERVER_PORT }}
+          script: |
+            # Navigate to the production directory
+            cd /home/havenlive/src
+            
+            # Fetch latest data and tags, pruning deleted branches
+            git fetch -p --tags force
+            
+            # Checkout the specific tag of the release in a detached HEAD state
+            git checkout tags/${{ github.event.release.tag_name }}
+            
+            # Compile the codebase
+            make new
+            
+            # INFERRED: You will likely need to restart the MUD binary here.
+            # E.g., ./copyover or systemctl restart mud

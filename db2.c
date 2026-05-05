@@ -70,124 +70,104 @@ void load_socials( void )
             fclose(fp);
             return;  /* done */
         }
-#if defined(social_debug)
-    else
-        fprintf(stderr,"%s\n\r",temp);
-#endif
 
         social = alloc_mem(sizeof(*social));
-        social->name = str_dup(temp);
+        /* Backwards compatibility: skip the # if it exists */
+        social->name = str_dup(temp[0] == '#' ? &temp[1] : temp);
         fread_to_eol(fp);
 
-    temp = fread_string_eol(fp);
-    if (!strcmp(temp,"$"))
-         social->char_no_arg = NULL;
-    else if (!strcmp(temp,"#"))
-    {
-         social->next = social_first;
-         social_first = social;
-         social_count++;
-         continue;
-    }
-        else
-        social->char_no_arg = temp;
-
-        temp = fread_string_eol(fp);
-        if (!strcmp(temp,"$"))
-             social->others_no_arg = NULL;
-        else if (!strcmp(temp,"#"))
-        {
-         social->next = social_first;
-         social_first = social;
-             social_count++;
-             continue;
-        }
-        else
-        social->others_no_arg = temp;
-
-        temp = fread_string_eol(fp);
-        if (!strcmp(temp,"$"))
-             social->char_found = NULL;
-        else if (!strcmp(temp,"#"))
-        {
-         social->next = social_first;
-         social_first = social;
-             social_count++;
-             continue;
-        }
-        else
-        social->char_found = temp;
-
-        temp = fread_string_eol(fp);
-        if (!strcmp(temp,"$"))
-             social->others_found = NULL;
-        else if (!strcmp(temp,"#"))
-        {
-         social->next = social_first;
-         social_first = social;
-             social_count++;
-             continue;
-        }
-        else
-        social->others_found = temp;
-
-        temp = fread_string_eol(fp);
-        if (!strcmp(temp,"$"))
-             social->vict_found = NULL;
-        else if (!strcmp(temp,"#"))
-        {
-         social->next = social_first;
-         social_first = social;
-             social_count++;
-             continue;
-        }
-        else
-        social->vict_found = temp;
-
-        temp = fread_string_eol(fp);
-        if (!strcmp(temp,"$"))
-             social->char_not_found = NULL;
-        else if (!strcmp(temp,"#"))
-        {
-         social->next = social_first;
-         social_first = social;
-             social_count++;
-             continue;
-        }
-        else
-        social->char_not_found = temp;
-
-        temp = fread_string_eol(fp);
-        if (!strcmp(temp,"$"))
-             social->char_auto = NULL;
-        else if (!strcmp(temp,"#"))
-        {
-         social->next = social_first;
-         social_first = social;
-             social_count++;
-             continue;
-        }
-        else
-        social->char_auto = temp;
-
-        temp = fread_string_eol(fp);
-        if (!strcmp(temp,"$"))
-             social->others_auto = NULL;
-        else if (!strcmp(temp,"#"))
+        social->char_no_arg = fread_string(fp);
+        if (social->char_no_arg[0] == '$' && social->char_no_arg[1] == '\0')
+             social->char_no_arg = NULL;
+        else if (social->char_no_arg[0] == '#' && social->char_no_arg[1] == '\0')
         {
              social->next = social_first;
              social_first = social;
              social_count++;
              continue;
         }
-        else
-        social->others_auto = temp;
 
-    social->next = social_first;
-    social_first = social;
-    social_count++;
+        social->others_no_arg = fread_string(fp);
+        if (social->others_no_arg[0] == '$' && social->others_no_arg[1] == '\0')
+             social->others_no_arg = NULL;
+        else if (social->others_no_arg[0] == '#' && social->others_no_arg[1] == '\0')
+        {
+             social->next = social_first;
+             social_first = social;
+             social_count++;
+             continue;
+        }
+
+        social->char_found = fread_string(fp);
+        if (social->char_found[0] == '$' && social->char_found[1] == '\0')
+             social->char_found = NULL;
+        else if (social->char_found[0] == '#' && social->char_found[1] == '\0')
+        {
+             social->next = social_first;
+             social_first = social;
+             social_count++;
+             continue;
+        }
+
+        social->others_found = fread_string(fp);
+        if (social->others_found[0] == '$' && social->others_found[1] == '\0')
+             social->others_found = NULL;
+        else if (social->others_found[0] == '#' && social->others_found[1] == '\0')
+        {
+             social->next = social_first;
+             social_first = social;
+             social_count++;
+             continue;
+        }
+
+        social->vict_found = fread_string(fp);
+        if (social->vict_found[0] == '$' && social->vict_found[1] == '\0')
+             social->vict_found = NULL;
+        else if (social->vict_found[0] == '#' && social->vict_found[1] == '\0')
+        {
+             social->next = social_first;
+             social_first = social;
+             social_count++;
+             continue;
+        }
+
+        social->char_not_found = fread_string(fp);
+        if (social->char_not_found[0] == '$' && social->char_not_found[1] == '\0')
+             social->char_not_found = NULL;
+        else if (social->char_not_found[0] == '#' && social->char_not_found[1] == '\0')
+        {
+             social->next = social_first;
+             social_first = social;
+             social_count++;
+             continue;
+        }
+
+        social->char_auto = fread_string(fp);
+        if (social->char_auto[0] == '$' && social->char_auto[1] == '\0')
+             social->char_auto = NULL;
+        else if (social->char_auto[0] == '#' && social->char_auto[1] == '\0')
+        {
+             social->next = social_first;
+             social_first = social;
+             social_count++;
+             continue;
+        }
+
+        social->others_auto = fread_string(fp);
+        if (social->others_auto[0] == '$' && social->others_auto[1] == '\0')
+             social->others_auto = NULL;
+        else if (social->others_auto[0] == '#' && social->others_auto[1] == '\0')
+        {
+             social->next = social_first;
+             social_first = social;
+             social_count++;
+             continue;
+        }
+
+        social->next = social_first;
+        social_first = social;
+        social_count++;
    }
-
 }
 
 void save_socials()

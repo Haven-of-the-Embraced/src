@@ -389,6 +389,7 @@ DECLARE_DO_FUN( do_aedit    );
 DECLARE_DO_FUN( do_medit    );
 DECLARE_DO_FUN( do_oedit    );
 DECLARE_DO_FUN( do_mpedit   );
+DECLARE_DO_FUN( do_lootedit  );
 DECLARE_DO_FUN( do_hedit    );
 DECLARE_DO_FUN( do_sedit    );
 DECLARE_DO_FUN( do_embrace  );

@@ -73,6 +73,7 @@ void save_helps args( (void) );
 #define ED_OPCODE   10
 #define ED_RPCODE   11
 #define ED_SOCIAL   12
+#define ED_LOOTTABLE 12
 
 
 
@@ -92,6 +93,7 @@ void    qiedit          args( ( CHAR_DATA *ch, char *argument ));
 void    opedit          args( ( CHAR_DATA *ch, char *argument ) );
 void    rpedit          args( ( CHAR_DATA *ch, char *argument ) );
 void    sedit           args( ( CHAR_DATA *ch, char *argument ) );
+void    lootedit         args( ( CHAR_DATA *ch, char *argument ) );
 
 
 /*
@@ -148,6 +150,7 @@ extern const struct olc_cmd_type    mpedit_table[];
 extern const struct olc_cmd_type    hedit_table[];
 extern const struct olc_cmd_type    cmdedit_table[];
 extern const struct olc_cmd_type        cedit_table[];
+extern const struct olc_cmd_type        lootedit_table[];
 extern const struct olc_cmd_type    qiedit_table[];
 extern const struct olc_cmd_type        opedit_table[];
 extern const struct olc_cmd_type        rpedit_table[];
@@ -171,6 +174,7 @@ DECLARE_DO_FUN( do_qiedit   );
 DECLARE_DO_FUN( do_opedit       );
 DECLARE_DO_FUN( do_rpedit       );
 DECLARE_DO_FUN( do_sedit        );
+DECLARE_DO_FUN( do_lootedit      );
 
 /*
  * General Functions
@@ -314,6 +318,7 @@ DECLARE_OLC_FUN( medit_group        );  /* ROM */
 DECLARE_OLC_FUN( medit_addmprog     );  /* ROM */
 DECLARE_OLC_FUN( medit_delmprog     );
 DECLARE_OLC_FUN( medit_copy     );
+DECLARE_OLC_FUN( medit_loot     );
 
 /* Mobprog editor */
 DECLARE_OLC_FUN( mpedit_create      );
@@ -397,6 +402,13 @@ DECLARE_OLC_FUN( rpedit_code		);
 DECLARE_OLC_FUN( rpedit_show		);
 DECLARE_OLC_FUN( rpedit_list		);
 
+/* Loot table editor */
+DECLARE_OLC_FUN( lootedit_show       );
+DECLARE_OLC_FUN( lootedit_create     );
+DECLARE_OLC_FUN( lootedit_list       );
+DECLARE_OLC_FUN( lootedit_slot       );
+DECLARE_OLC_FUN( lootedit_name       );
+
 
 /*
  * Macros
@@ -413,6 +425,7 @@ DECLARE_OLC_FUN( rpedit_list		);
 #define EDIT_OPCODE(Ch, Code)   ( Code = (PROG_CODE*)Ch->desc->pEdit )
 #define EDIT_RPCODE(Ch, Code)   ( Code = (PROG_CODE*)Ch->desc->pEdit )
 #define EDIT_SOCIAL(Ch, Social) ( Social = (struct social_type *)Ch->desc->pEdit )
+#define EDIT_LOOTTABLE(Ch, Loot) ( Loot = (LOOT_TABLE_DATA *)Ch->desc->pEdit )
 
 
 /*

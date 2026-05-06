@@ -698,6 +698,7 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "fixme",        do_fixme},
     { "create",     do_create},
     { "becomeactive", do_becomeactive},
+    { "lootedit",      do_lootedit},
 
     { NULL,         NULL            }
 };

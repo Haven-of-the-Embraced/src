@@ -32,6 +32,7 @@
 #include "merc.h"
 #include "tables.h"
 #include "olc.h"
+#include "db.h"
 
 #define DIF(a,b) (~((~a)|(b)))
 
@@ -256,6 +257,8 @@ void save_mobile( FILE *fp, MOB_INDEX_DATA *pMobIndex )
     fprintf( fp, "Size %s\n", size_table[pMobIndex->size].name );
     fprintf( fp, "Material %s~\n", IS_NULLSTR(pMobIndex->material) ? "unknown" : pMobIndex->material );
     fprintf( fp, "MaxLoad %d\n", pMobIndex->maxload );
+    if ( pMobIndex->loot_vnum > 0 )
+        fprintf( fp, "Loot %d\n", pMobIndex->loot_vnum );
 
     if ((temp = DIF(race_table[race].act,pMobIndex->act)))
         fprintf( fp, "F act %s\n", fwrite_flag(temp, buf) );
@@ -1126,6 +1129,34 @@ void save_other_helps( CHAR_DATA *ch )
     return;
 }
 */
+void save_loottables( FILE *fp, AREA_DATA *pArea )
+{
+    LOOT_TABLE_DATA *pLoot;
+    int i;
+    bool found = FALSE;
+
+    for ( pLoot = loot_table_list; pLoot != NULL; pLoot = pLoot->next )
+    {
+        if ( pLoot->area == pArea )
+        {
+            if ( !found )
+            {
+                fprintf( fp, "#LOOTTABLE\n" );
+                found = TRUE;
+            }
+            fprintf( fp, "#%d\n", pLoot->vnum );
+            fprintf( fp, "%s~\n", pLoot->name ? pLoot->name : "none" );
+            for ( i = 0; i < 5; i++ )
+            {
+                fprintf( fp, "%d %d\n", pLoot->slots[i].vnum, pLoot->slots[i].rate );
+            }
+        }
+    }
+
+    if ( found )
+        fprintf( fp, "#0\n\n" );
+}
+
 /*****************************************************************************
  Name:      save_area
  Purpose:   Save an area, note that this format is new.
@@ -1195,6 +1226,7 @@ void save_area( AREA_DATA *pArea )
     save_mobprogs( fp, pArea );
     save_objprogs( fp, pArea );
     save_roomprogs( fp, pArea );
+    save_loottables( fp, pArea );
 /*
     if ( pArea->helps && pArea->helps->first )
     save_helps( fp, pArea->helps );

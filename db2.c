@@ -43,6 +43,7 @@
 #include "lookup.h"
 
 extern int flag_lookup args((const char *name, const struct flag_type *flag_table));
+void load_mobile_dynamic( FILE *fp, MOB_INDEX_DATA *pMobIndex );
 
 /* values for db2.c */
 struct      social_type *social_first = NULL;
@@ -366,8 +367,9 @@ void load_mobile_dynamic( FILE *fp, MOB_INDEX_DATA *pMobIndex )
             break;
 
         case 'L':
-            KEY( "Level",       pMobIndex->level,       fread_number( fp ) );
             SKEY( "LnD",        pMobIndex->long_descr );
+            KEY( "Level",       pMobIndex->level,       fread_number( fp ) );
+            KEY( "Loot",        pMobIndex->loot_vnum,   fread_number( fp ) );
             break;
 
         case 'M':

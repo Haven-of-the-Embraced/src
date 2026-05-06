@@ -3118,6 +3118,27 @@ void make_corpse( CHAR_DATA *ch )
         ch->silver = 0;
       }
       corpse->cost = 0;
+
+      if ( ch->pIndexData->loot_vnum > 0 )
+      {
+          LOOT_TABLE_DATA *pLoot = loot_table_lookup( ch->pIndexData->loot_vnum );
+          if ( pLoot != NULL )
+          {
+              int i;
+              for ( i = 0; i < 5; i++ )
+              {
+                  if ( pLoot->slots[i].vnum > 0 && number_percent() <= pLoot->slots[i].rate )
+                  {
+                      OBJ_INDEX_DATA *pObjIndex = get_obj_index( pLoot->slots[i].vnum );
+                      if ( pObjIndex != NULL )
+                      {
+                          OBJ_DATA *pObj = create_object( pObjIndex, ch->level );
+                          obj_to_obj( pObj, corpse );
+                      }
+                  }
+              }
+          }
+      }
     }
     else
     {

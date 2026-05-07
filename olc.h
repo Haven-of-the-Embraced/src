@@ -73,7 +73,7 @@ void save_helps args( (void) );
 #define ED_OPCODE   10
 #define ED_RPCODE   11
 #define ED_SOCIAL   12
-#define ED_LOOTTABLE 12
+#define ED_LOOTTABLE 13
 
 
 

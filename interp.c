@@ -410,14 +410,14 @@ bool check_social( CHAR_DATA *ch, char *command, char *argument )
 {
     char arg[MAX_INPUT_LENGTH];
     CHAR_DATA *victim;
-    int cmd;
+    struct social_type *social;
     bool found;
 
     found  = FALSE;
-    for ( cmd = 0; social_table[cmd].name[0] != '\0'; cmd++ )
+    for ( social = social_first; social != NULL; social = social->next )
     {
-    if ( command[0] == social_table[cmd].name[0]
-    &&   !str_prefix( command, social_table[cmd].name ) )
+    if ( command[0] == social->name[0]
+    &&   !str_prefix( command, social->name ) )
     {
         found = TRUE;
         break;
@@ -457,7 +457,7 @@ bool check_social( CHAR_DATA *ch, char *command, char *argument )
      * I just know this is the path to a 12" 'if' statement.  :(
      * But two players asked for it already!  -- Furey
      */
-    if ( !str_cmp( social_table[cmd].name, "snore" ) )
+    if ( !str_cmp( social->name, "snore" ) )
         break;
     send_to_char( "In your dreams, or what?\n\r", ch );
     return TRUE;
@@ -468,8 +468,8 @@ bool check_social( CHAR_DATA *ch, char *command, char *argument )
     victim = NULL;
     if ( arg[0] == '\0' )
     {
-    act( social_table[cmd].others_no_arg, ch, NULL, victim, TO_ROOM    );
-    act( social_table[cmd].char_no_arg,   ch, NULL, victim, TO_CHAR    );
+    act( social->others_no_arg, ch, NULL, victim, TO_ROOM    );
+    act( social->char_no_arg,   ch, NULL, victim, TO_CHAR    );
     }
     else if ( ( victim = get_char_room( ch, NULL, arg ) ) == NULL )
     {
@@ -477,14 +477,14 @@ bool check_social( CHAR_DATA *ch, char *command, char *argument )
     }
     else if ( victim == ch )
     {
-    act( social_table[cmd].others_auto,   ch, NULL, victim, TO_ROOM    );
-    act( social_table[cmd].char_auto,     ch, NULL, victim, TO_CHAR    );
+    act( social->others_auto,   ch, NULL, victim, TO_ROOM    );
+    act( social->char_auto,     ch, NULL, victim, TO_CHAR    );
     }
     else
     {
-    act( social_table[cmd].others_found,  ch, NULL, victim, TO_NOTVICT );
-    act( social_table[cmd].char_found,    ch, NULL, victim, TO_CHAR    );
-    act( social_table[cmd].vict_found,    ch, NULL, victim, TO_VICT    );
+    act( social->others_found,  ch, NULL, victim, TO_NOTVICT );
+    act( social->char_found,    ch, NULL, victim, TO_CHAR    );
+    act( social->vict_found,    ch, NULL, victim, TO_VICT    );
 
     if ( !IS_NPC(ch) && IS_NPC(victim)
     &&   !IS_AFFECTED(victim, AFF_CHARM)
@@ -497,11 +497,11 @@ bool check_social( CHAR_DATA *ch, char *command, char *argument )
 
         case 1: case 2: case 3: case 4:
         case 5: case 6: case 7: case 8:
-        act( social_table[cmd].others_found,
+        act( social->others_found,
             victim, NULL, ch, TO_NOTVICT );
-        act( social_table[cmd].char_found,
+        act( social->char_found,
             victim, NULL, ch, TO_CHAR    );
-        act( social_table[cmd].vict_found,
+        act( social->vict_found,
             victim, NULL, ch, TO_VICT    );
         break;
 

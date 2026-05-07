@@ -1255,6 +1255,7 @@ void do_asave( CHAR_DATA *ch, char *argument )
         send_to_char( "  asave commands - saves the command table\n\r", ch);
         send_to_char( "  asave config   - saves configuration file\n\r", ch);
         send_to_char( "  asave quests   - saves quest item table\n\r", ch);
+        send_to_char( "  asave socials  - saves socials\n\r", ch);
         send_to_char( "\n\r", ch );
     }
 
@@ -1420,6 +1421,16 @@ void do_asave( CHAR_DATA *ch, char *argument )
             sendch("QItem Table Saved.\n\r", ch);
         else
             log_string("Autosave: Quests");
+        return;
+    }
+    if (!str_prefix( arg1, "socials") )
+    {
+        extern void save_socials(void);
+        save_socials();
+        if (ch)
+            sendch("Socials Saved.\n\r", ch);
+        else
+            log_string("Autosave: Socials");
         return;
     }
     /* Save area being edited, if authorized. */

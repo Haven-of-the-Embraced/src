@@ -49,6 +49,77 @@ void load_mobile_dynamic( FILE *fp, MOB_INDEX_DATA *pMobIndex );
 struct      social_type *social_first = NULL;
 int     social_count;
 
+/* 
+ * Helper to read a social string. 
+ * Supports both new style (tilde-terminated) and old style (newline-terminated).
+ */
+char *fread_social_string( FILE *fp )
+{
+    static char buf[MAX_STRING_LENGTH];
+    char *p = buf;
+    char c;
+
+    /* Skip leading spaces/tabs but NOT newlines (as old format relies on lines) */
+    do {
+        c = getc(fp);
+    } while (c == ' ' || c == '\t');
+
+    if (c == EOF)
+        return NULL;
+
+    if (c == '\n' || c == '\r')
+    {
+        /* Skip any accompanying \r or \n */
+        if (c == '\r') {
+            c = getc(fp);
+            if (c != '\n') ungetc(c, fp);
+        }
+        return str_dup("");
+    }
+
+    if (c == '~')
+    {
+        /* Consume until end of line to stay in sync */
+        char skip;
+        do {
+            skip = getc(fp);
+        } while (skip != '\n' && skip != '\r' && skip != EOF);
+        if (skip == '\r') {
+            skip = getc(fp);
+            if (skip != '\n') ungetc(skip, fp);
+        }
+        return str_dup("");
+    }
+
+    /* Start reading the string */
+    *p++ = c;
+
+    for ( ; p < buf + MAX_STRING_LENGTH - 1; )
+    {
+        c = getc(fp);
+        if (c == '~' || c == '\n' || c == '\r' || c == EOF)
+        {
+            if (c == '\r') continue;
+            if (c == '~') {
+                /* Consume until end of line to stay in sync */
+                char skip;
+                do {
+                    skip = getc(fp);
+                } while (skip != '\n' && skip != '\r' && skip != EOF);
+                if (skip == '\r') {
+                    skip = getc(fp);
+                    if (skip != '\n') ungetc(skip, fp);
+                }
+            }
+            break;
+        }
+        *p++ = c;
+    }
+    *p = '\0';
+
+    return str_dup(buf);
+}
+
 /* snarf a socials file */
 void load_socials( void )
 {
@@ -77,88 +148,185 @@ void load_socials( void )
         social->name = str_dup(temp[0] == '#' ? &temp[1] : temp);
         fread_to_eol(fp);
 
-        social->char_no_arg = fread_string(fp);
+        social->char_no_arg = fread_social_string(fp);
+        if (social->char_no_arg == NULL)
+        {
+            bug("load_socials: unexpected EOF at char_no_arg", 0);
+            free_mem(social, sizeof(*social));
+            fclose(fp);
+            return;
+        }
+
         if (social->char_no_arg[0] == '$' && social->char_no_arg[1] == '\0')
+        {
+             free_string(social->char_no_arg);
              social->char_no_arg = NULL;
+        }
         else if (social->char_no_arg[0] == '#' && social->char_no_arg[1] == '\0')
         {
+             free_string(social->char_no_arg);
+             social->char_no_arg = NULL;
              social->next = social_first;
              social_first = social;
              social_count++;
              continue;
         }
 
-        social->others_no_arg = fread_string(fp);
+        social->others_no_arg = fread_social_string(fp);
+        if (social->others_no_arg == NULL)
+        {
+             bug("load_socials: unexpected EOF at others_no_arg", 0);
+             fclose(fp);
+             return;
+        }
+
         if (social->others_no_arg[0] == '$' && social->others_no_arg[1] == '\0')
+        {
+             free_string(social->others_no_arg);
              social->others_no_arg = NULL;
+        }
         else if (social->others_no_arg[0] == '#' && social->others_no_arg[1] == '\0')
         {
+             free_string(social->others_no_arg);
+             social->others_no_arg = NULL;
              social->next = social_first;
              social_first = social;
              social_count++;
              continue;
         }
 
-        social->char_found = fread_string(fp);
+        social->char_found = fread_social_string(fp);
+        if (social->char_found == NULL)
+        {
+             bug("load_socials: unexpected EOF at char_found", 0);
+             fclose(fp);
+             return;
+        }
+
         if (social->char_found[0] == '$' && social->char_found[1] == '\0')
+        {
+             free_string(social->char_found);
              social->char_found = NULL;
+        }
         else if (social->char_found[0] == '#' && social->char_found[1] == '\0')
         {
+             free_string(social->char_found);
+             social->char_found = NULL;
              social->next = social_first;
              social_first = social;
              social_count++;
              continue;
         }
 
-        social->others_found = fread_string(fp);
+        social->others_found = fread_social_string(fp);
+        if (social->others_found == NULL)
+        {
+             bug("load_socials: unexpected EOF at others_found", 0);
+             fclose(fp);
+             return;
+        }
+
         if (social->others_found[0] == '$' && social->others_found[1] == '\0')
+        {
+             free_string(social->others_found);
              social->others_found = NULL;
+        }
         else if (social->others_found[0] == '#' && social->others_found[1] == '\0')
         {
+             free_string(social->others_found);
+             social->others_found = NULL;
              social->next = social_first;
              social_first = social;
              social_count++;
              continue;
         }
 
-        social->vict_found = fread_string(fp);
+        social->vict_found = fread_social_string(fp);
+        if (social->vict_found == NULL)
+        {
+             bug("load_socials: unexpected EOF at vict_found", 0);
+             fclose(fp);
+             return;
+        }
+
         if (social->vict_found[0] == '$' && social->vict_found[1] == '\0')
+        {
+             free_string(social->vict_found);
              social->vict_found = NULL;
+        }
         else if (social->vict_found[0] == '#' && social->vict_found[1] == '\0')
         {
+             free_string(social->vict_found);
+             social->vict_found = NULL;
              social->next = social_first;
              social_first = social;
              social_count++;
              continue;
         }
 
-        social->char_not_found = fread_string(fp);
+        social->char_not_found = fread_social_string(fp);
+        if (social->char_not_found == NULL)
+        {
+             bug("load_socials: unexpected EOF at char_not_found", 0);
+             fclose(fp);
+             return;
+        }
+
         if (social->char_not_found[0] == '$' && social->char_not_found[1] == '\0')
+        {
+             free_string(social->char_not_found);
              social->char_not_found = NULL;
+        }
         else if (social->char_not_found[0] == '#' && social->char_not_found[1] == '\0')
         {
+             free_string(social->char_not_found);
+             social->char_not_found = NULL;
              social->next = social_first;
              social_first = social;
              social_count++;
              continue;
         }
 
-        social->char_auto = fread_string(fp);
+        social->char_auto = fread_social_string(fp);
+        if (social->char_auto == NULL)
+        {
+             bug("load_socials: unexpected EOF at char_auto", 0);
+             fclose(fp);
+             return;
+        }
+
         if (social->char_auto[0] == '$' && social->char_auto[1] == '\0')
+        {
+             free_string(social->char_auto);
              social->char_auto = NULL;
+        }
         else if (social->char_auto[0] == '#' && social->char_auto[1] == '\0')
         {
+             free_string(social->char_auto);
+             social->char_auto = NULL;
              social->next = social_first;
              social_first = social;
              social_count++;
              continue;
         }
 
-        social->others_auto = fread_string(fp);
+        social->others_auto = fread_social_string(fp);
+        if (social->others_auto == NULL)
+        {
+             bug("load_socials: unexpected EOF at others_auto", 0);
+             fclose(fp);
+             return;
+        }
+
         if (social->others_auto[0] == '$' && social->others_auto[1] == '\0')
+        {
+             free_string(social->others_auto);
              social->others_auto = NULL;
+        }
         else if (social->others_auto[0] == '#' && social->others_auto[1] == '\0')
         {
+             free_string(social->others_auto);
+             social->others_auto = NULL;
              social->next = social_first;
              social_first = social;
              social_count++;

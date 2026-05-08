@@ -2935,6 +2935,7 @@ struct prog_list
 struct prog_code
 {
     sh_int              vnum;
+    char *              name;
     char *              code;
     PROG_CODE *         next;
 };

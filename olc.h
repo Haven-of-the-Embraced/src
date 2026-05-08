@@ -325,6 +325,7 @@ DECLARE_OLC_FUN( mpedit_create      );
 DECLARE_OLC_FUN( mpedit_code        );
 DECLARE_OLC_FUN( mpedit_show        );
 DECLARE_OLC_FUN( mpedit_list        );
+DECLARE_OLC_FUN( mpedit_name        );
 
 /* Editor de helps */
 /* Help Editor - kermit 1/98 */
@@ -395,12 +396,14 @@ DECLARE_OLC_FUN( opedit_create		);
 DECLARE_OLC_FUN( opedit_code		);
 DECLARE_OLC_FUN( opedit_show		);
 DECLARE_OLC_FUN( opedit_list		);
+DECLARE_OLC_FUN( opedit_name		);
 
 /* Roomprog editor */
 DECLARE_OLC_FUN( rpedit_create		);
 DECLARE_OLC_FUN( rpedit_code		);
 DECLARE_OLC_FUN( rpedit_show		);
 DECLARE_OLC_FUN( rpedit_list		);
+DECLARE_OLC_FUN( rpedit_name		);
 
 /* Loot table editor */
 DECLARE_OLC_FUN( lootedit_show       );

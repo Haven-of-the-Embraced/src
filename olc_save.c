@@ -142,17 +142,18 @@ char *fwrite_flag( long flags, char buf[] )
 
 void save_mobprogs( FILE *fp, AREA_DATA *pArea )
 {
-    PROG_CODE *pMprog;
+    PROG_CODE *pMcode;
         int i;
 
-        fprintf(fp, "#MOBPROGS\n");
+        fprintf(fp, "#MPCODE\n");
 
     for( i = pArea->min_vnum; i <= pArea->max_vnum; i++ )
         {
-          if ( (pMprog = get_prog_index(i, PRG_MPROG) ) != NULL)
+          if ( (pMcode = get_prog_index(i, PRG_MPROG) ) != NULL)
         {
                   fprintf(fp, "#%d\n", i);
-                  fprintf(fp, "%s~\n", fix_string(pMprog->code));
+                  fprintf(fp, "%s~\n", fix_string(pMcode->name));
+                  fprintf(fp, "%s~\n", fix_string(pMcode->code));
         }
         }
 
@@ -161,17 +162,18 @@ void save_mobprogs( FILE *fp, AREA_DATA *pArea )
 }
 void save_objprogs( FILE *fp, AREA_DATA *pArea )
 {
-	PROG_CODE *pOprog;
+	PROG_CODE *pOcode;
         int i;
 
-        fprintf(fp, "#OBJPROGS\n");
+        fprintf(fp, "#OPCODE\n");
 
 	for( i = pArea->min_vnum; i <= pArea->max_vnum; i++ )
         {
-          if ( (pOprog = get_prog_index(i, PRG_OPROG) ) != NULL)
+          if ( (pOcode = get_prog_index(i, PRG_OPROG) ) != NULL)
 		{
 		          fprintf(fp, "#%d\n", i);
-		          fprintf(fp, "%s~\n", fix_string(pOprog->code));
+		          fprintf(fp, "%s~\n", fix_string(pOcode->name));
+		          fprintf(fp, "%s~\n", fix_string(pOcode->code));
 		}
         }
 
@@ -181,17 +183,18 @@ void save_objprogs( FILE *fp, AREA_DATA *pArea )
 
 void save_roomprogs( FILE *fp, AREA_DATA *pArea )
 {
-	PROG_CODE *pRprog;
+	PROG_CODE *pRcode;
         int i;
 
-        fprintf(fp, "#ROOMPROGS\n");
+        fprintf(fp, "#RPCODE\n");
 
 	for( i = pArea->min_vnum; i <= pArea->max_vnum; i++ )
         {
-          if ( (pRprog = get_prog_index(i,PRG_RPROG) ) != NULL)
+          if ( (pRcode = get_prog_index(i,PRG_RPROG) ) != NULL)
 		{
 		          fprintf(fp, "#%d\n", i);
-		          fprintf(fp, "%s~\n", fix_string(pRprog->code));
+		          fprintf(fp, "%s~\n", fix_string(pRcode->name));
+		          fprintf(fp, "%s~\n", fix_string(pRcode->code));
 		}
         }
 

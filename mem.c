@@ -468,7 +468,7 @@ PROG_CODE	       *       rpcode_free;
 PROG_CODE *new_mpcode(void)
 {
      PROG_CODE *NewCode;
-
+ 
      if (!mpcode_free)
      {
          NewCode = alloc_perm(sizeof(*NewCode) );
@@ -479,16 +479,18 @@ PROG_CODE *new_mpcode(void)
          NewCode     = mpcode_free;
          mpcode_free = mpcode_free->next;
      }
-
+ 
      NewCode->vnum    = 0;
+     NewCode->name    = str_dup("");
      NewCode->code    = str_dup("");
      NewCode->next    = NULL;
-
+ 
      return NewCode;
 }
 
 void free_mpcode(PROG_CODE *pMcode)
 {
+    free_string(pMcode->name);
     free_string(pMcode->code);
     pMcode->next = mpcode_free;
     mpcode_free  = pMcode;
@@ -498,8 +500,8 @@ void free_mpcode(PROG_CODE *pMcode)
 PROG_CODE *new_opcode(void)
 {
      PROG_CODE *NewCode;
-
-     if (!rpcode_free)
+ 
+     if (!opcode_free)
      {
          NewCode = alloc_perm(sizeof(*NewCode) );
          top_oprog_index++;
@@ -509,18 +511,19 @@ PROG_CODE *new_opcode(void)
          NewCode     = opcode_free;
          opcode_free = opcode_free->next;
      }
-
+ 
      NewCode->vnum    = 0;
+     NewCode->name    = str_dup("");
      NewCode->code    = str_dup("");
      NewCode->next    = NULL;
-
+ 
      return NewCode;
 }
 
 PROG_CODE *new_rpcode(void)
 {
      PROG_CODE *NewCode;
-
+ 
      if (!rpcode_free)
      {
          NewCode = alloc_perm(sizeof(*NewCode) );
@@ -531,16 +534,18 @@ PROG_CODE *new_rpcode(void)
          NewCode     = rpcode_free;
          rpcode_free = rpcode_free->next;
      }
-
+ 
      NewCode->vnum    = 0;
+     NewCode->name    = str_dup("");
      NewCode->code    = str_dup("");
      NewCode->next    = NULL;
-
+ 
      return NewCode;
 }
 
 void free_opcode(PROG_CODE *pOcode)
 {
+    free_string(pOcode->name);
     free_string(pOcode->code);
     pOcode->next = opcode_free;
     opcode_free  = pOcode;
@@ -549,6 +554,7 @@ void free_opcode(PROG_CODE *pOcode)
 
 void free_rpcode(PROG_CODE *pRcode)
 {
+    free_string(pRcode->name);
     free_string(pRcode->code);
     pRcode->next = rpcode_free;
     rpcode_free  = pRcode;

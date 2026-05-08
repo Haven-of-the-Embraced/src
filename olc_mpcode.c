@@ -30,6 +30,7 @@ const struct olc_cmd_type mpedit_table[] =
 	{	"code",		mpedit_code	},
 	{	"show",		mpedit_show	},
 	{	"list",		mpedit_list	},
+	{	"name",		mpedit_name	},
 	{	"?",		show_help	},
 
 	{	NULL,		0		}
@@ -44,6 +45,7 @@ const struct olc_cmd_type opedit_table[] =
 	{	"code",		opedit_code	},
 	{	"show",		opedit_show	},
 	{	"list",		opedit_list	},
+	{	"name",		opedit_name	},
 	{	"?",		show_help	},
 
 	{	NULL,		0		}
@@ -58,6 +60,7 @@ const struct olc_cmd_type rpedit_table[] =
 	{	"code",		rpedit_code	},
 	{	"show",		rpedit_show	},
 	{	"list",		rpedit_list	},
+	{	"name",		rpedit_name	},
 	{	"?",		show_help	},
 
 	{	NULL,		0		}
@@ -553,11 +556,30 @@ MPEDIT(mpedit_show)
 
     sprintf(buf,
            "Vnum:       [%d]\n\r"
+           "Name:       %s\n\r"
            "Code:\n\r%s\n\r",
-           pMcode->vnum, pMcode->code);
+           pMcode->vnum, pMcode->name, pMcode->code);
     send_to_char(buf, ch);
 
     return FALSE;
+}
+
+MPEDIT(mpedit_name)
+{
+    PROG_CODE *pMcode;
+    EDIT_MPCODE(ch, pMcode);
+
+    if (argument[0] == '\0')
+    {
+	send_to_char("Syntax: name [name]\n\r", ch);
+	return FALSE;
+    }
+
+    free_string(pMcode->name);
+    pMcode->name = str_dup(argument);
+
+    send_to_char("Name set.\n\r", ch);
+    return TRUE;
 }
 
 OPEDIT(opedit_show)
@@ -569,11 +591,30 @@ OPEDIT(opedit_show)
 
     sprintf(buf,
            "Vnum:       [%d]\n\r"
+           "Name:       %s\n\r"
            "Code:\n\r%s\n\r",
-           pOcode->vnum, pOcode->code);
+           pOcode->vnum, pOcode->name, pOcode->code);
     send_to_char(buf, ch);
 
     return FALSE;
+}
+
+OPEDIT(opedit_name)
+{
+    PROG_CODE *pOcode;
+    EDIT_OPCODE(ch, pOcode);
+
+    if (argument[0] == '\0')
+    {
+	send_to_char("Syntax: name [name]\n\r", ch);
+	return FALSE;
+    }
+
+    free_string(pOcode->name);
+    pOcode->name = str_dup(argument);
+
+    send_to_char("Name set.\n\r", ch);
+    return TRUE;
 }
 
 RPEDIT(rpedit_show)
@@ -585,11 +626,30 @@ RPEDIT(rpedit_show)
 
     sprintf(buf,
            "Vnum:       [%d]\n\r"
+           "Name:       %s\n\r"
            "Code:\n\r%s\n\r",
-           pRcode->vnum, pRcode->code);
+           pRcode->vnum, pRcode->name, pRcode->code);
     send_to_char(buf, ch);
 
     return FALSE;
+}
+
+RPEDIT(rpedit_name)
+{
+    PROG_CODE *pRcode;
+    EDIT_RPCODE(ch, pRcode);
+
+    if (argument[0] == '\0')
+    {
+	send_to_char("Syntax: name [name]\n\r", ch);
+	return FALSE;
+    }
+
+    free_string(pRcode->name);
+    pRcode->name = str_dup(argument);
+
+    send_to_char("Name set.\n\r", ch);
+    return TRUE;
 }
 
 MPEDIT(mpedit_code)
@@ -644,25 +704,25 @@ MPEDIT( mpedit_list )
     char buf[MAX_STRING_LENGTH];
     BUFFER *buffer;
     bool fAll = !str_cmp(argument, "all");
-    char blah;
+    char writable;
     AREA_DATA *ad;
 
     buffer = new_buf();
 
     for (mprg = mprog_list; mprg !=NULL; mprg = mprg->next)
-	if ( fAll || ENTRE(ch->in_room->area->min_vnum, mprg->vnum, ch->in_room->area->max_vnum) )
+	if ( fAll || (mprg->vnum >= ch->in_room->area->min_vnum && mprg->vnum <= ch->in_room->area->max_vnum) )
 	{
 		ad = get_vnum_area(mprg->vnum);
 
 		if ( ad == NULL )
-			blah = '?';
+			writable = '?';
 		else
 		if ( IS_BUILDER(ch, ad) )
-			blah = '*';
+			writable = '*';
 		else
-			blah = ' ';
+			writable = ' ';
 
-		sprintf(buf, "[%3d] (%c) %5d\n\r", count, blah, mprg->vnum );
+		sprintf(buf, "[%5d] (%c) %s\n\r", mprg->vnum, writable, mprg->name );
 		add_buf(buffer, buf);
 
 		count++;
@@ -689,25 +749,25 @@ OPEDIT( opedit_list )
     char buf[MAX_STRING_LENGTH];
     BUFFER *buffer;
     bool fAll = !str_cmp(argument, "all");
-    char blah;
+    char writable;
     AREA_DATA *ad;
 
     buffer = new_buf();
 
     for (oprg = oprog_list; oprg !=NULL; oprg = oprg->next)
-	if ( fAll || ENTRE(ch->in_room->area->min_vnum, oprg->vnum, ch->in_room->area->max_vnum) )
+	if ( fAll || (oprg->vnum >= ch->in_room->area->min_vnum && oprg->vnum <= ch->in_room->area->max_vnum) )
 	{
 		ad = get_vnum_area(oprg->vnum);
 
 		if ( ad == NULL )
-			blah = '?';
+			writable = '?';
 		else
 		if ( IS_BUILDER(ch, ad) )
-			blah = '*';
+			writable = '*';
 		else
-			blah = ' ';
+			writable = ' ';
 
-		sprintf(buf, "[%3d] (%c) %5d\n\r", count, blah, oprg->vnum );
+		sprintf(buf, "[%5d] (%c) %s\n\r", oprg->vnum, writable, oprg->name );
 		add_buf(buffer, buf);
 
 		count++;
@@ -734,25 +794,25 @@ RPEDIT( rpedit_list )
     char buf[MAX_STRING_LENGTH];
     BUFFER *buffer;
     bool fAll = !str_cmp(argument, "all");
-    char blah;
+    char writable;
     AREA_DATA *ad;
 
     buffer = new_buf();
 
     for (rprg = rprog_list; rprg !=NULL; rprg = rprg->next)
-	if ( fAll || ENTRE(ch->in_room->area->min_vnum, rprg->vnum, ch->in_room->area->max_vnum) )
+	if ( fAll || (rprg->vnum >= ch->in_room->area->min_vnum && rprg->vnum <= ch->in_room->area->max_vnum) )
 	{
 		ad = get_vnum_area(rprg->vnum);
 
 		if ( ad == NULL )
-			blah = '?';
+			writable = '?';
 		else
 		if ( IS_BUILDER(ch, ad) )
-			blah = '*';
+			writable = '*';
 		else
-			blah = ' ';
+			writable = ' ';
 
-		sprintf(buf, "[%3d] (%c) %5d\n\r", count, blah, rprg->vnum );
+		sprintf(buf, "[%5d] (%c) %s\n\r", rprg->vnum, writable, rprg->name );
 		add_buf(buffer, buf);
 
 		count++;

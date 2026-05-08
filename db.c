@@ -200,8 +200,11 @@ void    load_specials   args( ( FILE *fp ) );
 void    load_notes  args( ( void ) );
 void    load_bans   args( ( void ) );
 void    load_mobprogs   args( ( FILE *fp ) );
-void load_objprogs		args(( FILE *fp ));
-void load_roomprogs	args(( FILE *fp ));
+void    load_mpcode     args( ( FILE *fp ) );
+void    load_objprogs   args( ( FILE *fp ) );
+void    load_opcode     args( ( FILE *fp ) );
+void    load_roomprogs  args( ( FILE *fp ) );
+void    load_rpcode     args( ( FILE *fp ) );
 void fix_objprogs    		args( ( void ) );
 void fix_roomprogs   	args( ( void ) );
 void load_clans args ( (void) ); /* Clans */
@@ -345,8 +348,11 @@ void boot_db()
         else if ( !str_cmp( word, "MOBOLD"   ) ) load_old_mob (fpArea);
         else if ( !str_cmp( word, "MOBILES"  ) ) load_mobiles (fpArea);
         else if ( !str_cmp( word, "MOBPROGS" ) ) load_mobprogs(fpArea);
+        else if ( !str_cmp( word, "MPCODE"    ) ) load_mpcode(fpArea);
         else if ( !str_cmp( word, "OBJPROGS" ) ) load_objprogs(fpArea);
+        else if ( !str_cmp( word, "OPCODE"    ) ) load_opcode(fpArea);
         else if ( !str_cmp( word, "ROOMPROGS") ) load_roomprogs(fpArea);
+        else if ( !str_cmp( word, "RPCODE"    ) ) load_rpcode(fpArea);
         else if ( !str_cmp( word, "OBJOLD"   ) ) load_old_obj (fpArea);
         else if ( !str_cmp( word, "OBJECTS"  ) ) load_objects (fpArea);
         else if ( !str_cmp( word, "RESETS"   ) ) load_resets  (fpArea);
@@ -1728,6 +1734,7 @@ void load_mobprogs( FILE *fp )
 
     pMprog      = alloc_perm( sizeof(*pMprog) );
     pMprog->vnum    = vnum;
+    pMprog->name    = str_dup( "Untitled" );
     pMprog->code    = fread_string( fp );
     if ( mprog_list == NULL )
         mprog_list = pMprog;
@@ -1737,6 +1744,51 @@ void load_mobprogs( FILE *fp )
         mprog_list  = pMprog;
     }
     top_mprog_index++;
+    }
+    return;
+}
+
+void load_mpcode( FILE *fp )
+{
+    PROG_CODE *pMcode;
+
+    if ( area_last == NULL )
+    {
+	bug( "Load_mpcode: no #AREA seen yet.", 0 );
+	exit( 1 );
+    }
+
+    for ( ; ; )
+    {
+	sh_int vnum;
+	char letter;
+
+	letter		= fread_letter( fp );
+	if ( letter != '#' )
+	{
+	    bug( "Load_mpcode: # not found.", 0 );
+	    exit( 1 );
+	}
+
+	vnum		= fread_number( fp );
+	if ( vnum == 0 )
+	    break;
+
+	fBootDb = FALSE;
+	if ( get_prog_index( vnum, PRG_MPROG ) != NULL )
+	{
+	    bug( "Load_mpcode: vnum %d duplicated.", vnum );
+	    exit( 1 );
+	}
+	fBootDb = TRUE;
+
+	pMcode		= alloc_perm( sizeof(*pMcode) );
+	pMcode->vnum	= vnum;
+	pMcode->name	= fread_string( fp );
+	pMcode->code	= fread_string( fp );
+	pMcode->next	= mprog_list;
+	mprog_list	= pMcode;
+	top_mprog_index++;
     }
     return;
 }
@@ -4794,6 +4846,7 @@ void load_objprogs( FILE *fp )
 
 	pOprog		= alloc_perm( sizeof(*pOprog) );
 	pOprog->vnum  	= vnum;
+	pOprog->name    = str_dup( "Untitled" );
 	pOprog->code  	= fread_string( fp );
 	if ( oprog_list == NULL )
 	    oprog_list = pOprog;
@@ -4802,6 +4855,51 @@ void load_objprogs( FILE *fp )
 	    pOprog->next = oprog_list;
 	    oprog_list 	= pOprog;
 	}
+	top_oprog_index++;
+    }
+    return;
+}
+
+void load_opcode( FILE *fp )
+{
+    PROG_CODE *pOcode;
+
+    if ( area_last == NULL )
+    {
+	bug( "Load_opcode: no #AREA seen yet.", 0 );
+	exit( 1 );
+    }
+
+    for ( ; ; )
+    {
+	sh_int vnum;
+	char letter;
+
+	letter		= fread_letter( fp );
+	if ( letter != '#' )
+	{
+	    bug( "Load_opcode: # not found.", 0 );
+	    exit( 1 );
+	}
+
+	vnum		= fread_number( fp );
+	if ( vnum == 0 )
+	    break;
+
+	fBootDb = FALSE;
+	if ( get_prog_index( vnum, PRG_OPROG ) != NULL )
+	{
+	    bug( "Load_opcode: vnum %d duplicated.", vnum );
+	    exit( 1 );
+	}
+	fBootDb = TRUE;
+
+	pOcode		= alloc_perm( sizeof(*pOcode) );
+	pOcode->vnum	= vnum;
+	pOcode->name	= fread_string( fp );
+	pOcode->code	= fread_string( fp );
+	pOcode->next	= oprog_list;
+	oprog_list	= pOcode;
 	top_oprog_index++;
     }
     return;
@@ -4843,6 +4941,7 @@ void load_roomprogs( FILE *fp )
 
 	pRprog		= alloc_perm( sizeof(*pRprog) );
 	pRprog->vnum  	= vnum;
+	pRprog->name    = str_dup( "Untitled" );
 	pRprog->code  	= fread_string( fp );
 	if ( rprog_list == NULL )
 	    rprog_list = pRprog;
@@ -4851,6 +4950,51 @@ void load_roomprogs( FILE *fp )
 	    pRprog->next = rprog_list;
 	    rprog_list 	= pRprog;
 	}
+	top_rprog_index++;
+    }
+    return;
+}
+
+void load_rpcode( FILE *fp )
+{
+    PROG_CODE *pRcode;
+
+    if ( area_last == NULL )
+    {
+	bug( "Load_rpcode: no #AREA seen yet.", 0 );
+	exit( 1 );
+    }
+
+    for ( ; ; )
+    {
+	sh_int vnum;
+	char letter;
+
+	letter		= fread_letter( fp );
+	if ( letter != '#' )
+	{
+	    bug( "Load_rpcode: # not found.", 0 );
+	    exit( 1 );
+	}
+
+	vnum		= fread_number( fp );
+	if ( vnum == 0 )
+	    break;
+
+	fBootDb = FALSE;
+	if ( get_prog_index( vnum, PRG_RPROG ) != NULL )
+	{
+	    bug( "Load_rpcode: vnum %d duplicated.", vnum );
+	    exit( 1 );
+	}
+	fBootDb = TRUE;
+
+	pRcode		= alloc_perm( sizeof(*pRcode) );
+	pRcode->vnum	= vnum;
+	pRcode->name	= fread_string( fp );
+	pRcode->code	= fread_string( fp );
+	pRcode->next	= rprog_list;
+	rprog_list	= pRcode;
 	top_rprog_index++;
     }
     return;

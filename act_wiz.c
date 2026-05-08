@@ -9280,13 +9280,14 @@ void do_vlist( CHAR_DATA *ch, char *argument )
 
     if (!str_cmp(arg,"mprog"))
     {
+        PROG_CODE *pProg;
         for ( i = 0,vnum = bvnum; vnum <= tvnum; vnum++)
         {
-            if ( ( get_prog_index( vnum, PRG_MPROG ) ) != NULL )
+            if ( ( pProg = get_prog_index( vnum, PRG_MPROG ) ) != NULL )
             {
                     found = TRUE;
                     i++;
-                    sprintf( buf, "{W[%2d] {cVnum {W[{C%5d{W]{x\n\r",i,vnum);
+                    sprintf( buf, "{W[%2d] {cVnum {W[{C%5d{W]{x : %s\n\r",i,vnum, pProg->name);
                     send_to_char( buf, ch );
             }
         }
@@ -9296,13 +9297,14 @@ void do_vlist( CHAR_DATA *ch, char *argument )
     }
     if (!str_cmp(arg,"oprog"))
     {
+        PROG_CODE *pProg;
         for ( i = 0,vnum = bvnum; vnum <= tvnum; vnum++)
         {
-            if ( ( get_prog_index( vnum, PRG_OPROG ) ) != NULL )
+            if ( ( pProg = get_prog_index( vnum, PRG_OPROG ) ) != NULL )
             {
                     found = TRUE;
                     i++;
-                    sprintf( buf, "{W[%2d] {cVnum {W[{C%5d{W]{x\n\r",i,vnum);
+                    sprintf( buf, "{W[%2d] {cVnum {W[{C%5d{W]{x : %s\n\r",i,vnum, pProg->name);
                     send_to_char( buf, ch );
             }
         }
@@ -9312,13 +9314,14 @@ void do_vlist( CHAR_DATA *ch, char *argument )
     }
     if (!str_cmp(arg,"rprog"))
     {
+        PROG_CODE *pProg;
         for ( i = 0,vnum = bvnum; vnum <= tvnum; vnum++)
         {
-            if ( ( get_prog_index( vnum, PRG_RPROG ) ) != NULL )
+            if ( ( pProg = get_prog_index( vnum, PRG_RPROG ) ) != NULL )
             {
                     found = TRUE;
                     i++;
-                    sprintf( buf, "{W[%2d] {cVnum {W[{C%5d{W]{x\n\r",i,vnum);
+                    sprintf( buf, "{W[%2d] {cVnum {W[{C%5d{W]{x : %s\n\r",i,vnum, pProg->name);
                     send_to_char( buf, ch );
             }
         }

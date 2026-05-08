@@ -86,6 +86,8 @@ extern NOTE_DATA *     note_free;
 PROG_CODE *        mprog_list;
 PROG_CODE *     oprog_list;
 PROG_CODE *     rprog_list;
+LOOT_TABLE_DATA * loot_table_list;
+LOOT_TABLE_DATA * loot_table_free;
 
 char            bug_buf     [2*MAX_INPUT_LENGTH];
 CHAR_DATA *     char_list;
@@ -351,6 +353,7 @@ void boot_db()
         else if ( !str_cmp( word, "ROOMS"    ) ) load_rooms   (fpArea);
         else if ( !str_cmp( word, "SHOPS"    ) ) load_shops   (fpArea);
         else if ( !str_cmp( word, "SPECIALS" ) ) load_specials(fpArea);
+        else if ( !str_cmp( word, "LOOTTABLE") ) load_loottables(fpArea);
         else
         {
             bug( "Boot_db: bad section name.", 0 );
@@ -1397,6 +1400,117 @@ void load_shops( FILE *fp )
     }
 
     return;
+}
+
+LOOT_TABLE_DATA *loot_table_lookup( int vnum )
+{
+    LOOT_TABLE_DATA *pLoot;
+
+    for ( pLoot = loot_table_list; pLoot != NULL; pLoot = pLoot->next )
+    {
+        if ( pLoot->vnum == vnum )
+            return pLoot;
+    }
+
+    return NULL;
+}
+
+LOOT_TABLE_DATA *new_loot_table( void )
+{
+    LOOT_TABLE_DATA *pLoot;
+    int i;
+
+    if ( loot_table_free == NULL )
+    {
+        pLoot = alloc_perm( sizeof(*pLoot) );
+    }
+    else
+    {
+        pLoot = loot_table_free;
+        loot_table_free = loot_table_free->next;
+    }
+
+    pLoot->next = NULL;
+    pLoot->name = NULL;
+    pLoot->vnum = 0;
+    pLoot->area = NULL;
+    for ( i = 0; i < 5; i++ )
+    {
+        pLoot->slots[i].vnum = 0;
+        pLoot->slots[i].rate = 0;
+    }
+    pLoot->valid = TRUE;
+
+    return pLoot;
+}
+
+void free_loot_table( LOOT_TABLE_DATA *pLoot )
+{
+    if ( !pLoot->valid )
+        return;
+
+    free_string( pLoot->name );
+    pLoot->valid = FALSE;
+    pLoot->next = loot_table_free;
+    loot_table_free = pLoot;
+}
+
+void load_loottables( FILE *fp )
+{
+    LOOT_TABLE_DATA *pLoot;
+
+    if ( !area_last )
+    {
+        bug( "Load_loottables: no #AREA seen yet.", 0 );
+        exit( 1 );
+    }
+
+    for ( ; ; )
+    {
+        sh_int vnum;
+        char letter;
+        int i;
+
+        letter = fread_letter( fp );
+        if ( letter != '#' )
+        {
+            bug( "Load_loottables: # not found.", 0 );
+            exit( 1 );
+        }
+
+        vnum = fread_number( fp );
+        if ( vnum == 0 )
+            break;
+
+        if ( loot_table_lookup( vnum ) != NULL )
+        {
+            bug( "Load_loottables: vnum %d duplicated.", vnum );
+            exit( 1 );
+        }
+
+        pLoot = new_loot_table();
+        pLoot->vnum = vnum;
+        pLoot->area = area_last;
+
+        /* Backward compatibility check */
+        {
+            char c = fread_letter( fp );
+            ungetc( c, fp );
+            if ( isdigit(c) || c == '-' )
+                pLoot->name = str_dup( "none" );
+            else
+                pLoot->name = fread_string( fp );
+        }
+
+        for ( i = 0; i < 5; i++ )
+        {
+            pLoot->slots[i].vnum = fread_number( fp );
+            pLoot->slots[i].rate = fread_number( fp );
+        }
+
+        pLoot->next = loot_table_list;
+        loot_table_list = pLoot;
+    }
 }
 
 

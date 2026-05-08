@@ -28,9 +28,11 @@
 #include "olc.h"
 #include "recycle.h"
 #include "lookup.h"
+#include "db.h"
 
 #define HEDIT( fun )            bool fun( CHAR_DATA *ch, char *argument )
 #define CEDIT( fun )        bool fun( CHAR_DATA *ch, char *argument )
+#define LOOTEDIT( fun )      bool fun( CHAR_DATA *ch, char *argument )
 
 
 char * prog_type_to_name ( int type );
@@ -4311,6 +4313,7 @@ MEDIT( medit_show )
     MOB_INDEX_DATA *pMob;
     char buf[MAX_STRING_LENGTH];
     PROG_LIST *list;
+    int i;
 
     EDIT_MOB(ch, pMob);
 
@@ -4506,6 +4509,37 @@ MEDIT( medit_show )
         cnt++;
     }
     }
+    if ( pMob->loot_vnum > 0 )
+    {
+        LOOT_TABLE_DATA *pLoot = loot_table_lookup( pMob->loot_vnum );
+        if ( pLoot )
+        {
+            sprintf( buf, "\n\rLoot Table: [%d] %s\n\r", pLoot->vnum, pLoot->name ? pLoot->name : "none" );
+            send_to_char( buf, ch );
+            for ( i = 0; i < 5; i++ )
+            {
+                if ( pLoot->slots[i].vnum > 0 )
+                {
+                    OBJ_INDEX_DATA *pObj = get_obj_index( pLoot->slots[i].vnum );
+                    sprintf( buf, "  Slot %d: [%5d] %3d%% - %s\n\r",
+                        i + 1,
+                        pLoot->slots[i].vnum,
+                        pLoot->slots[i].rate,
+                        pObj ? pObj->short_descr : "none" );
+                    send_to_char( buf, ch );
+                }
+            }
+        }
+        else
+        {
+            send_to_char( "\n\rLoot Table: [Invalid Vnum]\n\r", ch );
+        }
+    }
+    else
+    {
+        send_to_char( "\n\rNo loot table found.\n\r", ch );
+    }
+
 
     sprintf( buf, "%s", pMob->delete == TRUE ? "\n\r{R*****        This mob will be deleted on copyover!{x\n\r" : "");
     send_to_char(buf, ch);
@@ -5047,6 +5081,7 @@ MEDIT( medit_copy )
     pMob->off_flags  = pMob2->off_flags;
     pMob->attr_flags = pMob2->attr_flags;
     pMob->abil_flags = pMob2->abil_flags;
+    pMob->loot_vnum = pMob2->loot_vnum;
 
     pMob->size     = pMob2->size;
 
@@ -6932,3 +6967,370 @@ REDIT ( redit_delrprog )
     send_to_char("Rprog removed.\n\r", ch);
     return TRUE;
 }
+
+/* Loot table editor functions */
+LOOTEDIT( lootedit_show )
+{
+    LOOT_TABLE_DATA *pLoot;
+    char buf[MAX_STRING_LENGTH];
+    int i;
+
+    EDIT_LOOTTABLE( ch, pLoot );
+
+    sprintf( buf, "Name: %s\n\r", pLoot->name ? pLoot->name : "none" );
+    send_to_char( buf, ch );
+
+    sprintf( buf, "Vnum: [%d]\n\r", pLoot->vnum );
+    send_to_char( buf, ch );
+
+    for ( i = 0; i < 5; i++ )
+    {
+        OBJ_INDEX_DATA *pObj = get_obj_index( pLoot->slots[i].vnum );
+        sprintf( buf, "Slot %d: [%5d] %3d%% - %s\n\r",
+            i + 1,
+            pLoot->slots[i].vnum,
+            pLoot->slots[i].rate,
+            pObj ? pObj->short_descr : "none" );
+        send_to_char( buf, ch );
+    }
+
+    sprintf( buf, "{cSyntax: slot <1-5> <vnum> <rate 0-100>{x\n\r" );
+    send_to_char( buf, ch );
+    sprintf( buf, "{cSyntax: name <string>{x\n\r" );
+    send_to_char( buf, ch );
+
+    return FALSE;
+}
+
+LOOTEDIT( lootedit_create )
+{
+    LOOT_TABLE_DATA *pLoot;
+    int vnum;
+
+    if ( argument[0] == '\0' || !is_number( argument ) )
+    {
+        send_to_char( "Syntax: lootedit create <vnum>\n\r", ch );
+        return FALSE;
+    }
+
+    vnum = atoi( argument );
+
+    if ( vnum <= 0 )
+    {
+        send_to_char( "LootEdit: Vnum must be greater than 0.\n\r", ch );
+        return FALSE;
+    }
+
+    if ( !IS_BUILDER( ch, ch->in_room->area ) )
+    {
+        send_to_char( "LootEdit: Insufficient security to create loot table.\n\r", ch );
+        return FALSE;
+    }
+
+    if ( loot_table_lookup( vnum ) )
+    {
+        send_to_char( "LootEdit: Loot table vnum already exists.\n\r", ch );
+        return FALSE;
+    }
+
+    pLoot = new_loot_table();
+    pLoot->vnum = vnum;
+    pLoot->area = ch->in_room->area;
+    pLoot->next = loot_table_list;
+    loot_table_list = pLoot;
+
+    ch->desc->pEdit = (void *)pLoot;
+
+    send_to_char( "Loot table created.\n\r", ch );
+    SET_BIT( pLoot->area->area_flags, AREA_CHANGED );
+    return TRUE;
+}
+
+LOOTEDIT( lootedit_name )
+{
+    LOOT_TABLE_DATA *pLoot;
+
+    EDIT_LOOTTABLE( ch, pLoot );
+
+    if ( argument[0] == '\0' )
+    {
+        send_to_char( "Syntax: name <string>\n\r", ch );
+        return FALSE;
+    }
+
+    free_string( pLoot->name );
+    pLoot->name = str_dup( argument );
+
+    send_to_char( "Name set.\n\r", ch );
+    SET_BIT( pLoot->area->area_flags, AREA_CHANGED );
+    return TRUE;
+}
+
+LOOTEDIT( lootedit_list )
+{
+    LOOT_TABLE_DATA *pLoot;
+    char buf[MAX_STRING_LENGTH];
+    int count = 0;
+
+    for ( pLoot = loot_table_list; pLoot != NULL; pLoot = pLoot->next )
+    {
+        if ( pLoot->area == ch->in_room->area )
+        {
+            sprintf( buf, "[%5d] %s\n\r", pLoot->vnum, pLoot->name ? pLoot->name : "(no name)" );
+            send_to_char( buf, ch );
+            count++;
+        }
+    }
+
+    if ( count == 0 )
+        send_to_char( "No loot tables in this area.\n\r", ch );
+
+    return FALSE;
+}
+
+LOOTEDIT( lootedit_slot )
+{
+    LOOT_TABLE_DATA *pLoot;
+    char arg1[MAX_INPUT_LENGTH];
+    char arg2[MAX_INPUT_LENGTH];
+    char arg3[MAX_INPUT_LENGTH];
+    int slot, vnum, rate;
+
+    EDIT_LOOTTABLE( ch, pLoot );
+
+    argument = one_argument( argument, arg1 ); // slot
+    argument = one_argument( argument, arg2 ); // vnum
+    argument = one_argument( argument, arg3 ); // rate
+
+    if ( arg1[0] == '\0' || !is_number( arg1 ) )
+    {
+        send_to_char( "Syntax: slot <1-5> <obj vnum> <rate 1-100>\n\r", ch );
+        return FALSE;
+    }
+
+    slot = atoi( arg1 ) - 1;
+
+    if ( slot < 0 || slot > 4 )
+    {
+        send_to_char( "LootEdit: Slot must be between 1 and 5.\n\r", ch );
+        return FALSE;
+    }
+
+    if ( arg2[0] == '\0' || !is_number( arg2 ) )
+    {
+        send_to_char( "Syntax: slot <1-5> <obj vnum> <rate 1-100>\n\r", ch );
+        return FALSE;
+    }
+
+    vnum = atoi( arg2 );
+
+    if ( vnum < 0 || (vnum > 0 && get_obj_index( vnum ) == NULL) )
+    {
+        send_to_char( "LootEdit: Invalid object vnum.\n\r", ch );
+        return FALSE;
+    }
+
+    if ( arg3[0] == '\0' || !is_number( arg3 ) )
+    {
+        send_to_char( "Syntax: slot <1-5> <obj vnum> <rate 1-100>\n\r", ch );
+        return FALSE;
+    }
+
+    rate = atoi( arg3 );
+
+    if ( rate < 0 || rate > 100 )
+    {
+        send_to_char( "LootEdit: Rate must be between 0 and 100.\n\r", ch );
+        return FALSE;
+    }
+
+    pLoot->slots[slot].vnum = vnum;
+    pLoot->slots[slot].rate = rate;
+
+    send_to_char( "Slot updated.\n\r", ch );
+    SET_BIT( pLoot->area->area_flags, AREA_CHANGED );
+    return TRUE;
+}
+
+/* medit loot command */
+bool medit_loot( CHAR_DATA *ch, char *argument )
+{
+    MOB_INDEX_DATA *pMob;
+    int vnum;
+
+    EDIT_MOB( ch, pMob );
+
+    if ( argument[0] == '\0' || !is_number( argument ) )
+    {
+        send_to_char( "Syntax: loot <vnum>\n\r", ch );
+        return FALSE;
+    }
+
+    vnum = atoi( argument );
+
+    if ( vnum < 0 || (vnum > 0 && loot_table_lookup( vnum ) == NULL) )
+    {
+        send_to_char( "MEdit: Invalid loot table vnum.\n\r", ch );
+        return FALSE;
+    }
+
+    pMob->loot_vnum = vnum;
+    send_to_char( "Loot table assigned.\n\r", ch );
+    SET_BIT( pMob->area->area_flags, AREA_CHANGED );
+    return TRUE;
+}
+
+
+/* ========================================================================= */
+/*                              SOCIAL EDITOR                                */
+/* ========================================================================= */
+
+extern int social_count;
+
+bool sedit_show( CHAR_DATA *ch, char *argument )
+{
+    struct social_type *soc;
+    char buf[MAX_STRING_LENGTH];
+
+    EDIT_SOCIAL(ch, soc);
+
+    send_to_char("Substitution codes:\n\r", ch);
+    send_to_char("$n: actor name       $N: victim name\n\r", ch);
+    send_to_char("$e: actor he/she     $E: victim he/she\n\r", ch);
+    send_to_char("$m: actor him/her    $M: victim him/her\n\r", ch);
+    send_to_char("$s: actor his/her    $S: victim his/her\n\r", ch);
+    send_to_char("--------------------------------------------------\n\r", ch);
+
+    sprintf(buf, "Name:        [%s]\n\r", soc->name);
+    send_to_char(buf, ch);
+    sprintf(buf, "cnoarg:      [%s]\n\r", soc->char_no_arg ? soc->char_no_arg : "(none)");
+    send_to_char(buf, ch);
+    sprintf(buf, "onoarg:      [%s]\n\r", soc->others_no_arg ? soc->others_no_arg : "(none)");
+    send_to_char(buf, ch);
+    sprintf(buf, "cfound:      [%s]\n\r", soc->char_found ? soc->char_found : "(none)");
+    send_to_char(buf, ch);
+    sprintf(buf, "ofound:      [%s]\n\r", soc->others_found ? soc->others_found : "(none)");
+    send_to_char(buf, ch);
+    sprintf(buf, "vfound:      [%s]\n\r", soc->vict_found ? soc->vict_found : "(none)");
+    send_to_char(buf, ch);
+    sprintf(buf, "cnotfound:   [%s]\n\r", soc->char_not_found ? soc->char_not_found : "(none)");
+    send_to_char(buf, ch);
+    sprintf(buf, "cauto:       [%s]\n\r", soc->char_auto ? soc->char_auto : "(none)");
+    send_to_char(buf, ch);
+    sprintf(buf, "oauto:       [%s]\n\r", soc->others_auto ? soc->others_auto : "(none)");
+    send_to_char(buf, ch);
+
+    return FALSE;
+}
+
+bool sedit_make( CHAR_DATA *ch, char *argument )
+{
+    struct social_type *soc;
+    char arg[MAX_STRING_LENGTH];
+
+    one_argument(argument, arg);
+
+    if ( arg[0] == '\0' )
+    {
+        send_to_char("Syntax: sedit make [social]\n\r", ch);
+        return FALSE;
+    }
+
+    for ( soc = social_first; soc != NULL; soc = soc->next )
+    {
+        if ( !str_cmp(arg, soc->name) )
+        {
+            send_to_char("A social with that name already exists.\n\r", ch);
+            return FALSE;
+        }
+    }
+
+    soc = alloc_mem(sizeof(*soc));
+    soc->name = str_dup(arg);
+    soc->char_no_arg = NULL;
+    soc->others_no_arg = NULL;
+    soc->char_found = NULL;
+    soc->others_found = NULL;
+    soc->vict_found = NULL;
+    soc->char_not_found = NULL;
+    soc->char_auto = NULL;
+    soc->others_auto = NULL;
+
+    soc->next = social_first;
+    social_first = soc;
+    social_count++;
+
+    ch->desc->pEdit = (void *)soc;
+    send_to_char("Social created.\n\r", ch);
+    return TRUE;
+}
+
+bool sedit_delete( CHAR_DATA *ch, char *argument )
+{
+    struct social_type *soc;
+    struct social_type *prev = NULL;
+
+    EDIT_SOCIAL(ch, soc);
+
+    for ( struct social_type *s = social_first; s != NULL; s = s->next )
+    {
+        if ( s == soc )
+            break;
+        prev = s;
+    }
+
+    if ( prev == NULL )
+        social_first = soc->next;
+    else
+        prev->next = soc->next;
+
+    free_string(soc->name);
+    free_string(soc->char_no_arg);
+    free_string(soc->others_no_arg);
+    free_string(soc->char_found);
+    free_string(soc->others_found);
+    free_string(soc->vict_found);
+    free_string(soc->char_not_found);
+    free_string(soc->char_auto);
+    free_string(soc->others_auto);
+    free_mem(soc, sizeof(*soc));
+
+    social_count--;
+
+    send_to_char("Social deleted.\n\r", ch);
+    edit_done(ch);
+    return TRUE;
+}
+
+#define SEDIT_STR( func, field ) \
+bool sedit_##func( CHAR_DATA *ch, char *argument ) \
+{ \
+    struct social_type *soc; \
+    EDIT_SOCIAL(ch, soc); \
+    if ( argument[0] == '\0' ) \
+    { \
+        send_to_char("Syntax: " #func " [string]\n\r", ch); \
+        send_to_char("        " #func " none\n\r", ch); \
+        return FALSE; \
+    } \
+    if ( !str_cmp(argument, "none") ) \
+    { \
+        free_string(soc->field); \
+        soc->field = NULL; \
+        send_to_char(#field " cleared.\n\r", ch); \
+        return TRUE; \
+    } \
+    free_string(soc->field); \
+    soc->field = str_dup(argument); \
+    send_to_char(#field " set.\n\r", ch); \
+    return TRUE; \
+}
+
+SEDIT_STR(cnoarg, char_no_arg)
+SEDIT_STR(onoarg, others_no_arg)
+SEDIT_STR(cfound, char_found)
+SEDIT_STR(ofound, others_found)
+SEDIT_STR(vfound, vict_found)
+SEDIT_STR(cnotfound, char_not_found)
+SEDIT_STR(cauto, char_auto)
+SEDIT_STR(oauto, others_auto)

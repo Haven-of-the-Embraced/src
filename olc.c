@@ -62,6 +62,9 @@ bool run_olc_editor( DESCRIPTOR_DATA *d )
     case ED_HELP:
         hedit( d->character, d->incomm );
         break;
+    case ED_SOCIAL:
+        sedit( d->character, d->incomm );
+        break;
     case ED_COMMAND:
         cmdedit( d->character, d->incomm);
         break;
@@ -69,7 +72,10 @@ bool run_olc_editor( DESCRIPTOR_DATA *d )
             cedit (d->character, d->incomm);
             break;
     case ED_QITEM:
-        qiedit (d->character, d->incomm);
+        qiedit (d->character, d->incomm );
+        break;
+    case ED_LOOTTABLE:
+        lootedit( d->character, d->incomm );
         break;
 
     default:
@@ -111,6 +117,9 @@ char *olc_ed_name( CHAR_DATA *ch )
     case ED_HELP:
         sprintf( buf, "HEdit" );
         break;
+    case ED_SOCIAL:
+        sprintf( buf, "SEdit" );
+        break;
    case ED_COMMAND:
     sprintf(buf, "CmdEdit" );
     break;
@@ -119,6 +128,9 @@ char *olc_ed_name( CHAR_DATA *ch )
             break;
     case ED_QITEM:
         sprintf(buf, "QIEdit");
+        break;
+    case ED_LOOTTABLE:
+        sprintf(buf, "LootEdit");
         break;
     default:
     sprintf( buf, " " );
@@ -142,6 +154,7 @@ char *olc_ed_vnum( CHAR_DATA *ch )
     HELP_DATA *pHelp;
     CMD_DATA  *pCmd;
     QITEM_DATA *pItem;
+    struct social_type *pSocial;
     static char buf[MIL];
 
     buf[0] = '\0';
@@ -179,6 +192,10 @@ char *olc_ed_vnum( CHAR_DATA *ch )
         pHelp = (HELP_DATA *)ch->desc->pEdit;
         sprintf( buf, "%s", pHelp ? pHelp->keyword : "" );
         break;
+    case ED_SOCIAL:
+        pSocial = (struct social_type *)ch->desc->pEdit;
+        sprintf( buf, "%s", pSocial ? pSocial->name : "" );
+        break;
     case ED_CLAN:
         pClan = (CLAN_DATA *) ch->desc->pEdit;
         sprintf (buf, "%s", pClan ? pClan->name : "");
@@ -190,6 +207,12 @@ char *olc_ed_vnum( CHAR_DATA *ch )
     case ED_QITEM:
         pItem = (QITEM_DATA *) ch->desc->pEdit;
         sprintf(buf, "%s", pItem ? pItem->name : "");
+        break;
+    case ED_LOOTTABLE:
+        {
+            LOOT_TABLE_DATA *pLoot = (LOOT_TABLE_DATA *)ch->desc->pEdit;
+            sprintf( buf, "%d", pLoot ? pLoot->vnum : 0 );
+        }
         break;
 
 
@@ -267,6 +290,9 @@ bool show_commands( CHAR_DATA *ch, char *argument )
     case ED_HELP:
         show_olc_cmds( ch, hedit_table );
         break;
+    case ED_SOCIAL:
+        show_olc_cmds( ch, sedit_table );
+        break;
     case ED_COMMAND:
         show_olc_cmds( ch, cmdedit_table );
         break;
@@ -275,6 +301,9 @@ bool show_commands( CHAR_DATA *ch, char *argument )
             break;
     case ED_QITEM:
         show_olc_cmds (ch, qiedit_table);
+        break;
+    case ED_LOOTTABLE:
+        show_olc_cmds (ch, lootedit_table);
         break;
     }
 
@@ -449,6 +478,7 @@ const struct olc_cmd_type medit_table[] =
     {   "addmprog", medit_addmprog  },  /* ROM */
     {   "delmprog", medit_delmprog  },  /* ROM */
     {   "copy", medit_copy },
+    {   "loot", medit_loot },
     {   "?",        show_help   },
     {   "version",  show_version    },
 
@@ -474,6 +504,19 @@ const struct olc_cmd_type cedit_table[] =
     {   "show",         cedit_show      },
     {   "?",            show_help       },
     {   NULL,           0               }
+};
+
+/* Loot table editor command table */
+const struct olc_cmd_type lootedit_table[] =
+{
+    {   "commands", show_commands   },
+    {   "create",   lootedit_create  },
+    {   "list",     lootedit_list    },
+    {   "show",     lootedit_show    },
+    {   "slot",     lootedit_slot    },
+    {   "name",     lootedit_name    },
+    {   "?",        show_help       },
+    {   NULL,       0,              }
 };
 
 /*****************************************************************************
@@ -779,6 +822,58 @@ void medit( CHAR_DATA *ch, char *argument )
     return;
 }
 
+/* Loot table Interpreter, called by do_lootedit. */
+void lootedit( CHAR_DATA *ch, char *argument )
+{
+    LOOT_TABLE_DATA *pLoot;
+    char command[MAX_INPUT_LENGTH];
+    char arg[MAX_INPUT_LENGTH];
+    int  cmd;
+
+    EDIT_LOOTTABLE(ch, pLoot);
+    smash_tilde( argument );
+    strcpy( arg, argument );
+    argument = one_argument( argument, command );
+
+    if ( !IS_BUILDER( ch, pLoot->area ) )
+    {
+        send_to_char( "LootEdit: Insufficient security to modify area.\n\r", ch );
+        edit_done( ch );
+        return;
+    }
+
+    if ( !str_cmp(command, "done") )
+    {
+        edit_done( ch );
+        return;
+    }
+
+    if ( command[0] == '\0' )
+    {
+        lootedit_show( ch, argument );
+        return;
+    }
+
+    /* Search Table and Dispatch Command. */
+    for ( cmd = 0; lootedit_table[cmd].name != NULL; cmd++ )
+    {
+        if ( !str_prefix( command, lootedit_table[cmd].name ) )
+        {
+            if ( (*lootedit_table[cmd].olc_fun) ( ch, argument ) )
+            {
+                SET_BIT( pLoot->area->area_flags, AREA_CHANGED );
+                return;
+            }
+            else
+                return;
+        }
+    }
+
+    /* Default to Standard Interpreter. */
+    interpret( ch, arg );
+    return;
+}
+
 /* Clan interpreter, called by cedit */
 void cedit( CHAR_DATA *ch, char *argument )
 {
@@ -851,9 +946,8 @@ const struct editor_cmd_type editor_table[] =
     {	"rpcode",	do_rpedit	},
     {   "help", do_hedit    },
      {   "commands",     do_cmdedit  },
-         {"clan", do_cedit},
-
-
+    {   "clan",     do_cedit    },
+    {   "loottable", do_lootedit   },
     {   NULL,       0,      }
 };
 
@@ -1263,6 +1357,52 @@ void do_cedit( CHAR_DATA *ch, char *argument )
     else
         sendch ("CEdit: There is no default clan to edit.\n\r", ch);
         return;
+}
+
+/* Entry point for editing loot tables */
+void do_lootedit( CHAR_DATA *ch, char *argument )
+{
+    LOOT_TABLE_DATA *pLoot;
+    int vnum;
+    char arg[MAX_INPUT_LENGTH];
+
+    if ( IS_NPC(ch) )
+        return;
+
+    argument = one_argument( argument, arg );
+
+    if ( is_number( arg ) )
+    {
+        vnum = atoi( arg );
+        if ( (pLoot = loot_table_lookup( vnum )) == NULL )
+        {
+            send_to_char( "LootEdit: That vnum does not exist.\n\r", ch );
+            return;
+        }
+
+        if ( !IS_BUILDER( ch, pLoot->area ) )
+        {
+            send_to_char( "LootEdit: Insufficient security to modify area.\n\r", ch );
+            return;
+        }
+
+        ch->desc->pEdit = (void *)pLoot;
+        ch->desc->editor = ED_LOOTTABLE;
+        return;
+    }
+
+    if ( !str_cmp( arg, "create" ) )
+    {
+        if ( lootedit_create( ch, argument ) )
+        {
+            ch->desc->editor = ED_LOOTTABLE;
+        }
+        return;
+    }
+
+    send_to_char( "Syntax: lootedit <vnum>\n\r", ch );
+    send_to_char( "        lootedit create <vnum>\n\r", ch );
+    return;
 }
 
 void cmdedit( CHAR_DATA *ch, char *argument )
@@ -1965,6 +2105,110 @@ const struct olc_cmd_type hedit_table[] =
     {   "?",      show_help      },
 
     {   NULL, 0, }
+};
+
+/* Social Editor */
+void sedit( CHAR_DATA *ch, char *argument)
+{
+    char command[MIL];
+    char arg[MIL];
+    int cmd;
+
+    smash_tilde(argument);
+    strcpy(arg, argument);
+    argument = one_argument( argument, command);
+
+    if (ch->level < SUPREME)
+    {
+        send_to_char("SEdit: Insufficient security to modify socials.\n\r", ch);
+        edit_done(ch);
+        return;
+    }
+
+    if ( !str_cmp(command, "done") )
+    {
+        edit_done( ch );
+        return;
+    }
+
+    if ( command[0] == '\0' )
+    {
+        sedit_show( ch, argument );
+        return;
+    }
+
+    for ( cmd = 0; sedit_table[cmd].name != NULL; cmd++ )
+    {
+        if ( !str_prefix( command, sedit_table[cmd].name ) )
+        {
+            (*sedit_table[cmd].olc_fun) ( ch, argument );
+            return;
+        }
+    }
+
+    interpret( ch, arg );
+    return;
+}
+
+void do_sedit( CHAR_DATA *ch, char *argument )
+{
+    struct social_type *pSocial;
+    char arg1[MIL];
+    bool found = FALSE;
+
+    strcpy(arg1, argument);
+    if(argument[0] != '\0')
+    {
+        for ( pSocial = social_first; pSocial != NULL; pSocial = pSocial->next )
+        {
+            if ( is_name( arg1, pSocial->name ) )
+            {
+                ch->desc->pEdit = (void *)pSocial;
+                ch->desc->editor = ED_SOCIAL;
+                found = TRUE;
+                return;
+            }
+        }
+    }
+
+    if(!found)
+    {
+        argument = one_argument(arg1, arg1);
+
+        if(!str_cmp(arg1,"make"))
+        {
+            if (argument[0] == '\0')
+            {
+                send_to_char("Syntax: sedit make [social]\n\r",ch);
+                return;
+            }
+            if (sedit_make(ch, argument) )
+                ch->desc->editor = ED_SOCIAL;
+            return;
+        }
+    }
+
+    send_to_char( "SEdit:  There is no default social to edit.\n\r", ch );
+    return;
+}
+
+const struct olc_cmd_type sedit_table[] =
+{
+    { "commands", show_commands  },
+    { "show",     sedit_show     },
+    { "make",     sedit_make     },
+    { "delete",   sedit_delete   },
+    { "cnoarg",   sedit_cnoarg   },
+    { "onoarg",   sedit_onoarg   },
+    { "cfound",   sedit_cfound   },
+    { "ofound",   sedit_ofound   },
+    { "vfound",   sedit_vfound   },
+    { "cnotfound",sedit_cnotfound},
+    { "cauto",    sedit_cauto    },
+    { "oauto",    sedit_oauto    },
+    { "?",        show_help      },
+
+    { NULL, 0, }
 };
 /*Throw this in at the bottom of olc.c */
 

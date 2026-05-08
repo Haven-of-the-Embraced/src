@@ -43,10 +43,82 @@
 #include "lookup.h"
 
 extern int flag_lookup args((const char *name, const struct flag_type *flag_table));
+void load_mobile_dynamic( FILE *fp, MOB_INDEX_DATA *pMobIndex );
 
 /* values for db2.c */
-struct      social_type social_table        [MAX_SOCIALS];
+struct      social_type *social_first = NULL;
 int     social_count;
+
+/* 
+ * Helper to read a social string. 
+ * Supports both new style (tilde-terminated) and old style (newline-terminated).
+ */
+char *fread_social_string( FILE *fp )
+{
+    static char buf[MAX_STRING_LENGTH];
+    char *p = buf;
+    char c;
+
+    /* Skip leading spaces/tabs but NOT newlines (as old format relies on lines) */
+    do {
+        c = getc(fp);
+    } while (c == ' ' || c == '\t');
+
+    if (c == EOF)
+        return NULL;
+
+    if (c == '\n' || c == '\r')
+    {
+        /* Skip any accompanying \r or \n */
+        if (c == '\r') {
+            c = getc(fp);
+            if (c != '\n') ungetc(c, fp);
+        }
+        return str_dup("");
+    }
+
+    if (c == '~')
+    {
+        /* Consume until end of line to stay in sync */
+        char skip;
+        do {
+            skip = getc(fp);
+        } while (skip != '\n' && skip != '\r' && skip != EOF);
+        if (skip == '\r') {
+            skip = getc(fp);
+            if (skip != '\n') ungetc(skip, fp);
+        }
+        return str_dup("");
+    }
+
+    /* Start reading the string */
+    *p++ = c;
+
+    for ( ; p < buf + MAX_STRING_LENGTH - 1; )
+    {
+        c = getc(fp);
+        if (c == '~' || c == '\n' || c == '\r' || c == EOF)
+        {
+            if (c == '\r') continue;
+            if (c == '~') {
+                /* Consume until end of line to stay in sync */
+                char skip;
+                do {
+                    skip = getc(fp);
+                } while (skip != '\n' && skip != '\r' && skip != EOF);
+                if (skip == '\r') {
+                    skip = getc(fp);
+                    if (skip != '\n') ungetc(skip, fp);
+                }
+            }
+            break;
+        }
+        *p++ = c;
+    }
+    *p = '\0';
+
+    return str_dup(buf);
+}
 
 /* snarf a socials file */
 void load_socials( void )
@@ -61,137 +133,495 @@ void load_socials( void )
 
     for ( ; ; )
     {
-        struct social_type social;
+        struct social_type *social;
         char *temp;
-        /* clear social */
-    social.char_no_arg = NULL;
-    social.others_no_arg = NULL;
-    social.char_found = NULL;
-    social.others_found = NULL;
-    social.vict_found = NULL;
-    social.char_not_found = NULL;
-    social.char_auto = NULL;
-    social.others_auto = NULL;
 
         temp = fread_word(fp);
         if (!strcmp(temp,"#0"))
-        return;  /* done */
-#if defined(social_debug)
-    else
-        fprintf(stderr,"%s\n\r",temp);
-#endif
+        {
+            fclose(fp);
+            return;  /* done */
+        }
 
-        strcpy(social.name,temp);
+        social = alloc_mem(sizeof(*social));
+        /* Backwards compatibility: skip the # if it exists */
+        social->name = str_dup(temp[0] == '#' ? &temp[1] : temp);
         fread_to_eol(fp);
 
-    temp = fread_string_eol(fp);
-    if (!strcmp(temp,"$"))
-         social.char_no_arg = NULL;
-    else if (!strcmp(temp,"#"))
-    {
-         social_table[social_count] = social;
-         social_count++;
-         continue;
-    }
-        else
-        social.char_no_arg = temp;
-
-        temp = fread_string_eol(fp);
-        if (!strcmp(temp,"$"))
-             social.others_no_arg = NULL;
-        else if (!strcmp(temp,"#"))
+        social->char_no_arg = fread_social_string(fp);
+        if (social->char_no_arg == NULL)
         {
-         social_table[social_count] = social;
+            bug("load_socials: unexpected EOF at char_no_arg", 0);
+            free_mem(social, sizeof(*social));
+            fclose(fp);
+            return;
+        }
+
+        if (social->char_no_arg[0] == '$' && social->char_no_arg[1] == '\0')
+        {
+             free_string(social->char_no_arg);
+             social->char_no_arg = NULL;
+        }
+        else if (social->char_no_arg[0] == '#' && social->char_no_arg[1] == '\0')
+        {
+             free_string(social->char_no_arg);
+             social->char_no_arg = NULL;
+             social->next = social_first;
+             social_first = social;
              social_count++;
              continue;
         }
-        else
-        social.others_no_arg = temp;
 
-        temp = fread_string_eol(fp);
-        if (!strcmp(temp,"$"))
-             social.char_found = NULL;
-        else if (!strcmp(temp,"#"))
+        social->others_no_arg = fread_social_string(fp);
+        if (social->others_no_arg == NULL)
         {
-         social_table[social_count] = social;
+             bug("load_socials: unexpected EOF at others_no_arg", 0);
+             fclose(fp);
+             return;
+        }
+
+        if (social->others_no_arg[0] == '$' && social->others_no_arg[1] == '\0')
+        {
+             free_string(social->others_no_arg);
+             social->others_no_arg = NULL;
+        }
+        else if (social->others_no_arg[0] == '#' && social->others_no_arg[1] == '\0')
+        {
+             free_string(social->others_no_arg);
+             social->others_no_arg = NULL;
+             social->next = social_first;
+             social_first = social;
              social_count++;
              continue;
         }
-        else
-        social.char_found = temp;
 
-        temp = fread_string_eol(fp);
-        if (!strcmp(temp,"$"))
-             social.others_found = NULL;
-        else if (!strcmp(temp,"#"))
+        social->char_found = fread_social_string(fp);
+        if (social->char_found == NULL)
         {
-         social_table[social_count] = social;
+             bug("load_socials: unexpected EOF at char_found", 0);
+             fclose(fp);
+             return;
+        }
+
+        if (social->char_found[0] == '$' && social->char_found[1] == '\0')
+        {
+             free_string(social->char_found);
+             social->char_found = NULL;
+        }
+        else if (social->char_found[0] == '#' && social->char_found[1] == '\0')
+        {
+             free_string(social->char_found);
+             social->char_found = NULL;
+             social->next = social_first;
+             social_first = social;
              social_count++;
              continue;
         }
-        else
-        social.others_found = temp;
 
-        temp = fread_string_eol(fp);
-        if (!strcmp(temp,"$"))
-             social.vict_found = NULL;
-        else if (!strcmp(temp,"#"))
+        social->others_found = fread_social_string(fp);
+        if (social->others_found == NULL)
         {
-         social_table[social_count] = social;
+             bug("load_socials: unexpected EOF at others_found", 0);
+             fclose(fp);
+             return;
+        }
+
+        if (social->others_found[0] == '$' && social->others_found[1] == '\0')
+        {
+             free_string(social->others_found);
+             social->others_found = NULL;
+        }
+        else if (social->others_found[0] == '#' && social->others_found[1] == '\0')
+        {
+             free_string(social->others_found);
+             social->others_found = NULL;
+             social->next = social_first;
+             social_first = social;
              social_count++;
              continue;
         }
-        else
-        social.vict_found = temp;
 
-        temp = fread_string_eol(fp);
-        if (!strcmp(temp,"$"))
-             social.char_not_found = NULL;
-        else if (!strcmp(temp,"#"))
+        social->vict_found = fread_social_string(fp);
+        if (social->vict_found == NULL)
         {
-         social_table[social_count] = social;
+             bug("load_socials: unexpected EOF at vict_found", 0);
+             fclose(fp);
+             return;
+        }
+
+        if (social->vict_found[0] == '$' && social->vict_found[1] == '\0')
+        {
+             free_string(social->vict_found);
+             social->vict_found = NULL;
+        }
+        else if (social->vict_found[0] == '#' && social->vict_found[1] == '\0')
+        {
+             free_string(social->vict_found);
+             social->vict_found = NULL;
+             social->next = social_first;
+             social_first = social;
              social_count++;
              continue;
         }
-        else
-        social.char_not_found = temp;
 
-        temp = fread_string_eol(fp);
-        if (!strcmp(temp,"$"))
-             social.char_auto = NULL;
-        else if (!strcmp(temp,"#"))
+        social->char_not_found = fread_social_string(fp);
+        if (social->char_not_found == NULL)
         {
-         social_table[social_count] = social;
+             bug("load_socials: unexpected EOF at char_not_found", 0);
+             fclose(fp);
+             return;
+        }
+
+        if (social->char_not_found[0] == '$' && social->char_not_found[1] == '\0')
+        {
+             free_string(social->char_not_found);
+             social->char_not_found = NULL;
+        }
+        else if (social->char_not_found[0] == '#' && social->char_not_found[1] == '\0')
+        {
+             free_string(social->char_not_found);
+             social->char_not_found = NULL;
+             social->next = social_first;
+             social_first = social;
              social_count++;
              continue;
         }
-        else
-        social.char_auto = temp;
 
-        temp = fread_string_eol(fp);
-        if (!strcmp(temp,"$"))
-             social.others_auto = NULL;
-        else if (!strcmp(temp,"#"))
+        social->char_auto = fread_social_string(fp);
+        if (social->char_auto == NULL)
         {
-             social_table[social_count] = social;
+             bug("load_socials: unexpected EOF at char_auto", 0);
+             fclose(fp);
+             return;
+        }
+
+        if (social->char_auto[0] == '$' && social->char_auto[1] == '\0')
+        {
+             free_string(social->char_auto);
+             social->char_auto = NULL;
+        }
+        else if (social->char_auto[0] == '#' && social->char_auto[1] == '\0')
+        {
+             free_string(social->char_auto);
+             social->char_auto = NULL;
+             social->next = social_first;
+             social_first = social;
              social_count++;
              continue;
         }
-        else
-        social.others_auto = temp;
 
-    social_table[social_count] = social;
+        social->others_auto = fread_social_string(fp);
+        if (social->others_auto == NULL)
+        {
+             bug("load_socials: unexpected EOF at others_auto", 0);
+             fclose(fp);
+             return;
+        }
+
+        if (social->others_auto[0] == '$' && social->others_auto[1] == '\0')
+        {
+             free_string(social->others_auto);
+             social->others_auto = NULL;
+        }
+        else if (social->others_auto[0] == '#' && social->others_auto[1] == '\0')
+        {
+             free_string(social->others_auto);
+             social->others_auto = NULL;
+             social->next = social_first;
+             social_first = social;
+             social_count++;
+             continue;
+        }
+
+        social->next = social_first;
+        social_first = social;
         social_count++;
    }
+}
 
-   fclose( fp );
-   return;
+void save_socials()
+{
+    FILE *fp;
+    struct social_type *social;
+
+    if ( ( fp = fopen( SOCIAL_FILE, "w" ) ) == NULL )
+    {
+        perror( SOCIAL_FILE );
+        return;
+    }
+
+    for ( social = social_first; social != NULL; social = social->next )
+    {
+        if ( social->name == NULL || social->name[0] == '\0' )
+            continue;
+
+        fprintf( fp, "#%s\n", social->name );
+        fprintf( fp, "%s~\n", social->char_no_arg ? social->char_no_arg : "$" );
+        fprintf( fp, "%s~\n", social->others_no_arg ? social->others_no_arg : "$" );
+        fprintf( fp, "%s~\n", social->char_found ? social->char_found : "$" );
+        fprintf( fp, "%s~\n", social->others_found ? social->others_found : "$" );
+        fprintf( fp, "%s~\n", social->vict_found ? social->vict_found : "$" );
+        fprintf( fp, "%s~\n", social->char_not_found ? social->char_not_found : "$" );
+        fprintf( fp, "%s~\n", social->char_auto ? social->char_auto : "$" );
+        fprintf( fp, "%s~\n", social->others_auto ? social->others_auto : "$" );
+        fprintf( fp, "\n" );
+    }
+
+    fprintf( fp, "#0\n" );
+    fclose( fp );
 }
 
 
 
 
 
+
+
+#if defined(KEY)
+#undef KEY
+#endif
+
+#define KEY( literal, field, value )                \
+                if ( !str_cmp( word, literal ) )    \
+                {                                   \
+                    field  = value;                 \
+                    fMatch = TRUE;                  \
+                    break;                          \
+                                }
+
+#if defined(SKEY)
+#undef SKEY
+#endif
+
+#define SKEY( string, field )                       \
+                if ( !str_cmp( word, string ) )     \
+                {                                   \
+                    free_string( field );           \
+                    field = fread_string( fp );     \
+                    fMatch = TRUE;                  \
+                    break;                          \
+                                }
+
+void load_mobile_dynamic( FILE *fp, MOB_INDEX_DATA *pMobIndex )
+{
+    char *word;
+    bool fMatch;
+
+    for ( ; ; )
+    {
+        word   = feof( fp ) ? "End" : fread_word( fp );
+        fMatch = FALSE;
+
+        switch ( UPPER(word[0]) )
+        {
+        case '*':
+            fMatch = TRUE;
+            fread_to_eol( fp );
+            break;
+
+        case 'A':
+            KEY( "Act",         pMobIndex->act,         fread_flag( fp ) | ACT_IS_NPC | race_table[pMobIndex->race].act );
+            KEY( "Act2",        pMobIndex->act2,        fread_flag( fp ) | ACT2_IS_NPC );
+            KEY( "Aff",         pMobIndex->affected_by, fread_flag( fp ) | race_table[pMobIndex->race].aff );
+            KEY( "Align",       pMobIndex->alignment,   fread_number( fp ) );
+            KEY( "AbilFlags",   pMobIndex->abil_flags,  fread_flag( fp ) );
+            KEY( "AttrFlags",   pMobIndex->attr_flags,  fread_flag( fp ) );
+            if ( !str_cmp( word, "AcPierce" ) )
+            {
+                pMobIndex->ac[AC_PIERCE] = fread_number( fp ) * 10;
+                fMatch = TRUE;
+                break;
+            }
+            if ( !str_cmp( word, "AcBash" ) )
+            {
+                pMobIndex->ac[AC_BASH] = fread_number( fp ) * 10;
+                fMatch = TRUE;
+                break;
+            }
+            if ( !str_cmp( word, "AcSlash" ) )
+            {
+                pMobIndex->ac[AC_SLASH] = fread_number( fp ) * 10;
+                fMatch = TRUE;
+                break;
+            }
+            if ( !str_cmp( word, "AcExotic" ) )
+            {
+                pMobIndex->ac[AC_EXOTIC] = fread_number( fp ) * 10;
+                fMatch = TRUE;
+                break;
+            }
+            break;
+
+        case 'D':
+            SKEY( "Desc",       pMobIndex->description );
+            KEY( "DefaultPos",  pMobIndex->default_pos, position_lookup( fread_word( fp ) ) );
+            if ( !str_cmp( word, "DamDice" ) )
+            {
+                pMobIndex->damage[DICE_NUMBER] = fread_number( fp );
+                fread_letter( fp ); // 'd'
+                pMobIndex->damage[DICE_TYPE] = fread_number( fp );
+                fread_letter( fp ); // '+'
+                pMobIndex->damage[DICE_BONUS] = fread_number( fp );
+                fMatch = TRUE;
+                break;
+            }
+            KEY( "DamType",     pMobIndex->dam_type,    attack_lookup( fread_word( fp ) ) );
+            break;
+
+        case 'E':
+            if ( !str_cmp( word, "End" ) )
+            {
+                return;
+            }
+            break;
+
+        case 'F':
+            if ( !str_cmp( word, "Form" ) )
+            {
+                pMobIndex->form = fread_flag( fp ) | race_table[pMobIndex->race].form;
+                fMatch = TRUE;
+                break;
+            }
+            if ( !str_cmp( word, "F" ) ) // Flag remove
+            {
+                char *word_f;
+                long vector;
+                word_f = fread_word(fp);
+                vector = fread_flag(fp);
+
+                if (!str_prefix(word_f,"act"))
+                    REMOVE_BIT(pMobIndex->act,vector);
+                else if (!str_prefix(word_f,"aff"))
+                    REMOVE_BIT(pMobIndex->affected_by,vector);
+                else if (!str_prefix(word_f,"af2"))
+                    SET_BIT(pMobIndex->affected2_by,vector);
+                else if (!str_prefix(word_f,"off"))
+                    REMOVE_BIT(pMobIndex->off_flags,vector);
+                else if (!str_prefix(word_f,"imm"))
+                    REMOVE_BIT(pMobIndex->imm_flags,vector);
+                else if (!str_prefix(word_f,"res"))
+                    REMOVE_BIT(pMobIndex->res_flags,vector);
+                else if (!str_prefix(word_f,"vul"))
+                    REMOVE_BIT(pMobIndex->vuln_flags,vector);
+                else if (!str_prefix(word_f,"for"))
+                    REMOVE_BIT(pMobIndex->form,vector);
+                else if (!str_prefix(word_f,"par"))
+                    REMOVE_BIT(pMobIndex->parts,vector);
+                fMatch = TRUE;
+                break;
+            }
+            break;
+
+        case 'G':
+            KEY( "Group",       pMobIndex->group,       fread_number( fp ) );
+            break;
+
+        case 'H':
+            KEY( "Hitroll",     pMobIndex->hitroll,     fread_number( fp ) );
+            if ( !str_cmp( word, "HitDice" ) )
+            {
+                pMobIndex->hit[DICE_NUMBER] = fread_number( fp );
+                fread_letter( fp ); // 'd'
+                pMobIndex->hit[DICE_TYPE] = fread_number( fp );
+                fread_letter( fp ); // '+'
+                pMobIndex->hit[DICE_BONUS] = fread_number( fp );
+                fMatch = TRUE;
+                break;
+            }
+            break;
+
+        case 'I':
+            KEY( "ImmFlags",    pMobIndex->imm_flags,   fread_flag( fp ) | race_table[pMobIndex->race].imm );
+            break;
+
+        case 'L':
+            SKEY( "LnD",        pMobIndex->long_descr );
+            KEY( "Level",       pMobIndex->level,       fread_number( fp ) );
+            KEY( "Loot",        pMobIndex->loot_vnum,   fread_number( fp ) );
+            break;
+
+        case 'M':
+            SKEY( "Material",   pMobIndex->material );
+            KEY( "MaxLoad",     pMobIndex->maxload,     fread_number( fp ) );
+            if ( !str_cmp( word, "ManaDice" ) )
+            {
+                pMobIndex->mana[DICE_NUMBER] = fread_number( fp );
+                fread_letter( fp ); // 'd'
+                pMobIndex->mana[DICE_TYPE] = fread_number( fp );
+                fread_letter( fp ); // '+'
+                pMobIndex->mana[DICE_BONUS] = fread_number( fp );
+                fMatch = TRUE;
+                break;
+            }
+            if ( !str_cmp( word, "M" ) ) // Mobprog
+            {
+                PROG_LIST *pMprog;
+                char *word_m;
+                int trigger = 0;
+
+                pMprog              = alloc_perm(sizeof(*pMprog));
+                word_m            = fread_word( fp );
+                if ( (trigger = flag_lookup( word_m, mprog_flags )) == NO_FLAG )
+                {
+                    bug("MOBprogs: invalid trigger.",0);
+                    exit(1);
+                }
+                SET_BIT( pMobIndex->mprog_flags, trigger );
+                pMprog->trig_type   = trigger;
+                pMprog->vnum        = fread_number( fp );
+                pMprog->trig_phrase = fread_string( fp );
+                pMprog->next        = pMobIndex->mprogs;
+                pMobIndex->mprogs   = pMprog;
+                fMatch = TRUE;
+                break;
+            }
+            break;
+
+        case 'N':
+            SKEY( "Name",       pMobIndex->player_name );
+            break;
+
+        case 'O':
+            KEY( "OffFlags",    pMobIndex->off_flags,   fread_flag( fp ) | race_table[pMobIndex->race].off );
+            break;
+
+        case 'P':
+            KEY( "Parts",       pMobIndex->parts,       fread_flag( fp ) | race_table[pMobIndex->race].parts );
+            break;
+
+        case 'R':
+            if ( !str_cmp( word, "Race" ) )
+            {
+                pMobIndex->race = race_lookup( fread_string( fp ) );
+                fMatch = TRUE;
+                break;
+            }
+            KEY( "ResFlags",    pMobIndex->res_flags,   fread_flag( fp ) | race_table[pMobIndex->race].res );
+            break;
+
+        case 'S':
+            SKEY( "ShD",        pMobIndex->short_descr );
+            KEY( "Sex",         pMobIndex->sex,         sex_lookup( fread_word( fp ) ) );
+            KEY( "Size",        pMobIndex->size,        size_lookup( fread_word( fp ) ) );
+            KEY( "StartPos",    pMobIndex->start_pos,   position_lookup( fread_word( fp ) ) );
+            break;
+
+        case 'V':
+            KEY( "VulnFlags",   pMobIndex->vuln_flags,  fread_flag( fp ) | race_table[pMobIndex->race].vuln );
+            break;
+
+        case 'W':
+            KEY( "Wealth",      pMobIndex->wealth,      fread_number( fp ) );
+            break;
+        }
+
+        if ( !fMatch )
+        {
+            bug( "load_mobile_dynamic: no match for word %s", word );
+            fread_to_eol( fp );
+        }
+    }
+}
 
 /*
  * Snarf a mob section.  new style
@@ -211,6 +641,7 @@ void load_mobiles( FILE *fp )
         sh_int vnum;
         char letter;
         int iHash;
+        char *word;
 
         letter                          = fread_letter( fp );
         if ( letter != '#' )
@@ -237,146 +668,174 @@ void load_mobiles( FILE *fp )
         pMobIndex->area                 = area_last;               /* OLC */
     pMobIndex->new_format       = TRUE;
     newmobs++;
-        pMobIndex->player_name          = fread_string( fp );
-        pMobIndex->short_descr          = fread_string( fp );
-        pMobIndex->long_descr           = fread_string( fp );
-        pMobIndex->description          = fread_string( fp );
-    pMobIndex->race         = race_lookup(fread_string( fp ));
 
-        pMobIndex->long_descr[0]        = UPPER(pMobIndex->long_descr[0]);
-        pMobIndex->description[0]       = UPPER(pMobIndex->description[0]);
-
-        pMobIndex->act                  = fread_flag( fp ) | ACT_IS_NPC
-                    | race_table[pMobIndex->race].act;
-        pMobIndex->act2                 = fread_flag( fp ) | ACT2_IS_NPC;
-        pMobIndex->affected_by          = fread_flag( fp )
-                    | race_table[pMobIndex->race].aff;
-        pMobIndex->pShop                = NULL;
-        pMobIndex->alignment            = fread_number( fp );
-        pMobIndex->group                = fread_number( fp );
-
-        pMobIndex->level                = fread_number( fp );
-        pMobIndex->hitroll              = fread_number( fp );
-
-    /* read hit dice */
-        pMobIndex->hit[DICE_NUMBER]     = fread_number( fp );
-        /* 'd'          */                fread_letter( fp );
-        pMobIndex->hit[DICE_TYPE]       = fread_number( fp );
-        /* '+'          */                fread_letter( fp );
-        pMobIndex->hit[DICE_BONUS]      = fread_number( fp );
-
-    /* read mana dice */
-    pMobIndex->mana[DICE_NUMBER]    = fread_number( fp );
-                      fread_letter( fp );
-    pMobIndex->mana[DICE_TYPE]  = fread_number( fp );
-                      fread_letter( fp );
-    pMobIndex->mana[DICE_BONUS] = fread_number( fp );
-
-    /* read damage dice */
-    pMobIndex->damage[DICE_NUMBER]  = fread_number( fp );
-                      fread_letter( fp );
-    pMobIndex->damage[DICE_TYPE]    = fread_number( fp );
-                      fread_letter( fp );
-    pMobIndex->damage[DICE_BONUS]   = fread_number( fp );
-    pMobIndex->dam_type     = attack_lookup(fread_word(fp));
-
-    /* read armor class */
-    pMobIndex->ac[AC_PIERCE]    = fread_number( fp ) * 10;
-    pMobIndex->ac[AC_BASH]      = fread_number( fp ) * 10;
-    pMobIndex->ac[AC_SLASH]     = fread_number( fp ) * 10;
-    pMobIndex->ac[AC_EXOTIC]    = fread_number( fp ) * 10;
-
-    /* read flags and add in data from the race table */
-    pMobIndex->attr_flags       = fread_flag( fp );
-    pMobIndex->abil_flags       = fread_flag( fp );
-    pMobIndex->off_flags        = fread_flag( fp )
-                    | race_table[pMobIndex->race].off;
-    pMobIndex->imm_flags        = fread_flag( fp )
-                    | race_table[pMobIndex->race].imm;
-    pMobIndex->res_flags        = fread_flag( fp )
-                    | race_table[pMobIndex->race].res;
-    pMobIndex->vuln_flags       = fread_flag( fp )
-                    | race_table[pMobIndex->race].vuln;
-
-    /* vital statistics */
-    pMobIndex->start_pos        = position_lookup(fread_word(fp));
-    pMobIndex->default_pos      = position_lookup(fread_word(fp));
-    pMobIndex->sex          = sex_lookup(fread_word(fp));
-
-    pMobIndex->wealth       = fread_number( fp );
-
-    pMobIndex->form         = fread_flag( fp )
-                    | race_table[pMobIndex->race].form;
-    pMobIndex->parts        = fread_flag( fp )
-                    | race_table[pMobIndex->race].parts;
-    /* size */
-    CHECK_POS( pMobIndex->size, size_lookup(fread_word(fp)), "size" );
-/*  pMobIndex->size         = size_lookup(fread_word(fp)); */
-    pMobIndex->material     = str_dup(fread_word( fp ));
-    pMobIndex->maxload      = fread_number (fp );
-
-    for ( ; ; )
+        letter = fread_letter( fp );
+        if ( letter == '#' )
         {
-            letter = fread_letter( fp );
-
-        if (letter == 'F')
+            word = fread_word( fp );
+            if ( !str_cmp( word, "MOBFORMAT" ) )
             {
-        char *word;
-        long vector;
-
-                word                    = fread_word(fp);
-        vector          = fread_flag(fp);
-
-        if (!str_prefix(word,"act"))
-            REMOVE_BIT(pMobIndex->act,vector);
-                else if (!str_prefix(word,"aff"))
-            REMOVE_BIT(pMobIndex->affected_by,vector);
-                else if (!str_prefix(word,"af2"))
-            SET_BIT(pMobIndex->affected2_by,vector);
-        else if (!str_prefix(word,"off"))
-            REMOVE_BIT(pMobIndex->off_flags,vector);
-        else if (!str_prefix(word,"imm"))
-            REMOVE_BIT(pMobIndex->imm_flags,vector);
-        else if (!str_prefix(word,"res"))
-            REMOVE_BIT(pMobIndex->res_flags,vector);
-        else if (!str_prefix(word,"vul"))
-            REMOVE_BIT(pMobIndex->vuln_flags,vector);
-        else if (!str_prefix(word,"for"))
-            REMOVE_BIT(pMobIndex->form,vector);
-        else if (!str_prefix(word,"par"))
-            REMOVE_BIT(pMobIndex->parts,vector);
+                word = fread_word( fp );
+                if ( !str_cmp( word, "dynamic" ) )
+                {
+                    load_mobile_dynamic( fp, pMobIndex );
+                }
+                else
+                {
+                    bug( "Load_mobiles: bad mob format %s", word );
+                    exit( 1 );
+                }
+            }
+            else
+            {
+                bug( "Load_mobiles: # found but not MOBFORMAT", 0 );
+                exit( 1 );
+            }
+        }
         else
         {
-            bug("Flag remove: flag not found.",0);
-            exit(1);
-        }
-         }
-         else if ( letter == 'M' )
-         {
-        PROG_LIST *pMprog;
-        char *word;
-        int trigger = 0;
+            ungetc( letter, fp );
+            pMobIndex->player_name          = fread_string( fp );
+            pMobIndex->short_descr          = fread_string( fp );
+            pMobIndex->long_descr           = fread_string( fp );
+            pMobIndex->description          = fread_string( fp );
+            pMobIndex->race         = race_lookup(fread_string( fp ));
 
-        pMprog              = alloc_perm(sizeof(*pMprog));
-        word            = fread_word( fp );
-        if ( (trigger = flag_lookup( word, mprog_flags )) == NO_FLAG )
-        {
-            bug("MOBprogs: invalid trigger.",0);
-            exit(1);
+            pMobIndex->long_descr[0]        = UPPER(pMobIndex->long_descr[0]);
+            pMobIndex->description[0]       = UPPER(pMobIndex->description[0]);
+
+            pMobIndex->act                  = fread_flag( fp ) | ACT_IS_NPC
+                        | race_table[pMobIndex->race].act;
+            pMobIndex->act2                 = fread_flag( fp ) | ACT2_IS_NPC;
+            pMobIndex->affected_by          = fread_flag( fp )
+                        | race_table[pMobIndex->race].aff;
+            pMobIndex->pShop                = NULL;
+            pMobIndex->alignment            = fread_number( fp );
+            pMobIndex->group                = fread_number( fp );
+
+            pMobIndex->level                = fread_number( fp );
+            pMobIndex->hitroll              = fread_number( fp );
+
+        /* read hit dice */
+            pMobIndex->hit[DICE_NUMBER]     = fread_number( fp );
+            /* 'd'          */                fread_letter( fp );
+            pMobIndex->hit[DICE_TYPE]       = fread_number( fp );
+            /* '+'          */                fread_letter( fp );
+            pMobIndex->hit[DICE_BONUS]      = fread_number( fp );
+
+        /* read mana dice */
+        pMobIndex->mana[DICE_NUMBER]    = fread_number( fp );
+                          fread_letter( fp );
+        pMobIndex->mana[DICE_TYPE]  = fread_number( fp );
+                          fread_letter( fp );
+        pMobIndex->mana[DICE_BONUS] = fread_number( fp );
+
+        /* read damage dice */
+        pMobIndex->damage[DICE_NUMBER]  = fread_number( fp );
+                          fread_letter( fp );
+        pMobIndex->damage[DICE_TYPE]    = fread_number( fp );
+                          fread_letter( fp );
+        pMobIndex->damage[DICE_BONUS]   = fread_number( fp );
+        pMobIndex->dam_type     = attack_lookup(fread_word(fp));
+
+        /* read armor class */
+        pMobIndex->ac[AC_PIERCE]    = fread_number( fp ) * 10;
+        pMobIndex->ac[AC_BASH]      = fread_number( fp ) * 10;
+        pMobIndex->ac[AC_SLASH]     = fread_number( fp ) * 10;
+        pMobIndex->ac[AC_EXOTIC]    = fread_number( fp ) * 10;
+
+        /* read flags and add in data from the race table */
+        pMobIndex->attr_flags       = fread_flag( fp );
+        pMobIndex->abil_flags       = fread_flag( fp );
+        pMobIndex->off_flags        = fread_flag( fp )
+                        | race_table[pMobIndex->race].off;
+        pMobIndex->imm_flags        = fread_flag( fp )
+                        | race_table[pMobIndex->race].imm;
+        pMobIndex->res_flags        = fread_flag( fp )
+                        | race_table[pMobIndex->race].res;
+        pMobIndex->vuln_flags       = fread_flag( fp )
+                        | race_table[pMobIndex->race].vuln;
+
+        /* vital statistics */
+        pMobIndex->start_pos        = position_lookup(fread_word(fp));
+        pMobIndex->default_pos      = position_lookup(fread_word(fp));
+        pMobIndex->sex          = sex_lookup(fread_word(fp));
+
+        pMobIndex->wealth       = fread_number( fp );
+
+        pMobIndex->form         = fread_flag( fp )
+                        | race_table[pMobIndex->race].form;
+        pMobIndex->parts        = fread_flag( fp )
+                        | race_table[pMobIndex->race].parts;
+        /* size */
+        CHECK_POS( pMobIndex->size, size_lookup(fread_word(fp)), "size" );
+    /*  pMobIndex->size         = size_lookup(fread_word(fp)); */
+        pMobIndex->material     = str_dup(fread_word( fp ));
+        pMobIndex->maxload      = fread_number (fp );
+
+        for ( ; ; )
+            {
+                letter = fread_letter( fp );
+
+            if (letter == 'F')
+                {
+            char *word_f;
+            long vector;
+
+                    word_f                    = fread_word(fp);
+            vector          = fread_flag(fp);
+
+            if (!str_prefix(word_f,"act"))
+                REMOVE_BIT(pMobIndex->act,vector);
+                    else if (!str_prefix(word_f,"aff"))
+                REMOVE_BIT(pMobIndex->affected_by,vector);
+                    else if (!str_prefix(word_f,"af2"))
+                SET_BIT(pMobIndex->affected2_by,vector);
+            else if (!str_prefix(word_f,"off"))
+                REMOVE_BIT(pMobIndex->off_flags,vector);
+            else if (!str_prefix(word_f,"imm"))
+                REMOVE_BIT(pMobIndex->imm_flags,vector);
+            else if (!str_prefix(word_f,"res"))
+                REMOVE_BIT(pMobIndex->res_flags,vector);
+            else if (!str_prefix(word_f,"vul"))
+                REMOVE_BIT(pMobIndex->vuln_flags,vector);
+            else if (!str_prefix(word_f,"for"))
+                REMOVE_BIT(pMobIndex->form,vector);
+            else if (!str_prefix(word_f,"par"))
+                REMOVE_BIT(pMobIndex->parts,vector);
+            else
+            {
+                bug("Flag remove: flag not found.",0);
+                exit(1);
+            }
+             }
+             else if ( letter == 'M' )
+             {
+            PROG_LIST *pMprog;
+            char *word_m;
+            int trigger = 0;
+
+            pMprog              = alloc_perm(sizeof(*pMprog));
+            word_m            = fread_word( fp );
+            if ( (trigger = flag_lookup( word_m, mprog_flags )) == NO_FLAG )
+            {
+                bug("MOBprogs: invalid trigger.",0);
+                exit(1);
+            }
+            SET_BIT( pMobIndex->mprog_flags, trigger );
+            pMprog->trig_type   = trigger;
+            pMprog->vnum        = fread_number( fp );
+            pMprog->trig_phrase = fread_string( fp );
+            pMprog->next        = pMobIndex->mprogs;
+            pMobIndex->mprogs   = pMprog;
+             }
+             else
+             {
+            ungetc(letter,fp);
+            break;
+             }
         }
-        SET_BIT( pMobIndex->mprog_flags, trigger );
-        pMprog->trig_type   = trigger;
-        pMprog->vnum        = fread_number( fp );
-        pMprog->trig_phrase = fread_string( fp );
-        pMprog->next        = pMobIndex->mprogs;
-        pMobIndex->mprogs   = pMprog;
-         }
-         else
-         {
-        ungetc(letter,fp);
-        break;
-         }
-    }
+        }
 
         iHash                   = vnum % MAX_KEY_HASH;
         pMobIndex->next         = mob_index_hash[iHash];

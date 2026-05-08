@@ -32,6 +32,7 @@
 #include "merc.h"
 #include "tables.h"
 #include "olc.h"
+#include "db.h"
 
 #define DIF(a,b) (~((~a)|(b)))
 
@@ -211,49 +212,53 @@ void save_mobile( FILE *fp, MOB_INDEX_DATA *pMobIndex )
     long temp;
 
     fprintf( fp, "#%d\n",   pMobIndex->vnum );
-    fprintf( fp, "%s~\n",   pMobIndex->player_name );
-    fprintf( fp, "%s~\n",   pMobIndex->short_descr );
-    fprintf( fp, "%s~\n",   fix_string( pMobIndex->long_descr ) );
-    fprintf( fp, "%s~\n",   fix_string( pMobIndex->description) );
-    fprintf( fp, "%s~\n",   race_table[race].name );
-    fprintf( fp, "%s ",     fwrite_flag( pMobIndex->act,        buf ) );
-    fprintf( fp, "%s ",     fwrite_flag( pMobIndex->act2,       buf ) );
-    fprintf( fp, "%s ",     fwrite_flag( pMobIndex->affected_by,    buf ) );
-    fprintf( fp, "%d %d\n", pMobIndex->alignment , pMobIndex->group);
-    fprintf( fp, "%d ",     pMobIndex->level );
-    fprintf( fp, "%d ",     pMobIndex->hitroll );
-    fprintf( fp, "%dd%d+%d ",   pMobIndex->hit[DICE_NUMBER],
-                pMobIndex->hit[DICE_TYPE],
-                pMobIndex->hit[DICE_BONUS] );
-    fprintf( fp, "%dd%d+%d ",   pMobIndex->mana[DICE_NUMBER],
-                pMobIndex->mana[DICE_TYPE],
-                pMobIndex->mana[DICE_BONUS] );
-    fprintf( fp, "%dd%d+%d ",   pMobIndex->damage[DICE_NUMBER],
-                pMobIndex->damage[DICE_TYPE],
-                pMobIndex->damage[DICE_BONUS] );
-    fprintf( fp, "%s\n",    attack_table[pMobIndex->dam_type].name );
-    fprintf( fp, "%d %d %d %d\n",
-                pMobIndex->ac[AC_PIERCE] / 10,
-                pMobIndex->ac[AC_BASH]   / 10,
-                pMobIndex->ac[AC_SLASH]  / 10,
-                pMobIndex->ac[AC_EXOTIC] / 10 );
-    fprintf( fp, "%s ",     fwrite_flag( pMobIndex->attr_flags, buf ) );
-    fprintf( fp, "%s ",     fwrite_flag( pMobIndex->abil_flags, buf ) );
-    fprintf( fp, "%s ",     fwrite_flag( pMobIndex->off_flags,  buf ) );
-    fprintf( fp, "%s ",     fwrite_flag( pMobIndex->imm_flags,  buf ) );
-    fprintf( fp, "%s ",     fwrite_flag( pMobIndex->res_flags,  buf ) );
-    fprintf( fp, "%s\n",    fwrite_flag( pMobIndex->vuln_flags, buf ) );
-    fprintf( fp, "%s %s %s %ld\n",
-                position_table[pMobIndex->start_pos].short_name,
-                position_table[pMobIndex->default_pos].short_name,
-                sex_table[pMobIndex->sex].name,
-                pMobIndex->wealth );
-    fprintf( fp, "%s ",     fwrite_flag( pMobIndex->form,  buf ) );
-    fprintf( fp, "%s ",     fwrite_flag( pMobIndex->parts, buf ) );
-
-    fprintf( fp, "%s ",     size_table[pMobIndex->size].name );
-    fprintf( fp, "%s\n",    IS_NULLSTR(pMobIndex->material) ? pMobIndex->material : "unknown" );
-    fprintf( fp, "%d\n ", pMobIndex->maxload);
+    fprintf( fp, "#MOBFORMAT dynamic\n" );
+    fprintf( fp, "Name %s~\n", pMobIndex->player_name );
+    fprintf( fp, "ShD %s~\n", pMobIndex->short_descr );
+    fprintf( fp, "LnD %s~\n", fix_string( pMobIndex->long_descr ) );
+    fprintf( fp, "Desc %s~\n", fix_string( pMobIndex->description) );
+    fprintf( fp, "Race %s~\n", race_table[race].name );
+    fprintf( fp, "Act %s\n", fwrite_flag( pMobIndex->act, buf ) );
+    fprintf( fp, "Act2 %s\n", fwrite_flag( pMobIndex->act2, buf ) );
+    fprintf( fp, "Aff %s\n", fwrite_flag( pMobIndex->affected_by, buf ) );
+    fprintf( fp, "Align %d\n", pMobIndex->alignment );
+    fprintf( fp, "Group %d\n", pMobIndex->group );
+    fprintf( fp, "Level %d\n", pMobIndex->level );
+    fprintf( fp, "Hitroll %d\n", pMobIndex->hitroll );
+    fprintf( fp, "HitDice %dd%d+%d\n", 
+        pMobIndex->hit[DICE_NUMBER], 
+        pMobIndex->hit[DICE_TYPE], 
+        pMobIndex->hit[DICE_BONUS] );
+    fprintf( fp, "ManaDice %dd%d+%d\n", 
+        pMobIndex->mana[DICE_NUMBER], 
+        pMobIndex->mana[DICE_TYPE], 
+        pMobIndex->mana[DICE_BONUS] );
+    fprintf( fp, "DamDice %dd%d+%d\n", 
+        pMobIndex->damage[DICE_NUMBER], 
+        pMobIndex->damage[DICE_TYPE], 
+        pMobIndex->damage[DICE_BONUS] );
+    fprintf( fp, "DamType %s\n", attack_table[pMobIndex->dam_type].name );
+    fprintf( fp, "AcPierce %d\n", pMobIndex->ac[AC_PIERCE] / 10 );
+    fprintf( fp, "AcBash %d\n", pMobIndex->ac[AC_BASH] / 10 );
+    fprintf( fp, "AcSlash %d\n", pMobIndex->ac[AC_SLASH] / 10 );
+    fprintf( fp, "AcExotic %d\n", pMobIndex->ac[AC_EXOTIC] / 10 );
+    fprintf( fp, "AttrFlags %s\n", fwrite_flag( pMobIndex->attr_flags, buf ) );
+    fprintf( fp, "AbilFlags %s\n", fwrite_flag( pMobIndex->abil_flags, buf ) );
+    fprintf( fp, "OffFlags %s\n", fwrite_flag( pMobIndex->off_flags, buf ) );
+    fprintf( fp, "ImmFlags %s\n", fwrite_flag( pMobIndex->imm_flags, buf ) );
+    fprintf( fp, "ResFlags %s\n", fwrite_flag( pMobIndex->res_flags, buf ) );
+    fprintf( fp, "VulnFlags %s\n", fwrite_flag( pMobIndex->vuln_flags, buf ) );
+    fprintf( fp, "StartPos %s\n", position_table[pMobIndex->start_pos].short_name );
+    fprintf( fp, "DefaultPos %s\n", position_table[pMobIndex->default_pos].short_name );
+    fprintf( fp, "Sex %s\n", sex_table[pMobIndex->sex].name );
+    fprintf( fp, "Wealth %ld\n", pMobIndex->wealth );
+    fprintf( fp, "Form %s\n", fwrite_flag( pMobIndex->form, buf ) );
+    fprintf( fp, "Parts %s\n", fwrite_flag( pMobIndex->parts, buf ) );
+    fprintf( fp, "Size %s\n", size_table[pMobIndex->size].name );
+    fprintf( fp, "Material %s~\n", IS_NULLSTR(pMobIndex->material) ? "unknown" : pMobIndex->material );
+    fprintf( fp, "MaxLoad %d\n", pMobIndex->maxload );
+    if ( pMobIndex->loot_vnum > 0 )
+        fprintf( fp, "Loot %d\n", pMobIndex->loot_vnum );
 
     if ((temp = DIF(race_table[race].act,pMobIndex->act)))
         fprintf( fp, "F act %s\n", fwrite_flag(temp, buf) );
@@ -288,6 +293,8 @@ void save_mobile( FILE *fp, MOB_INDEX_DATA *pMobIndex )
         prog_type_to_name(pMprog->trig_type), pMprog->vnum,
                 pMprog->trig_phrase);
     }
+
+    fprintf( fp, "End\n" );
 
     return;
 }
@@ -1122,6 +1129,34 @@ void save_other_helps( CHAR_DATA *ch )
     return;
 }
 */
+void save_loottables( FILE *fp, AREA_DATA *pArea )
+{
+    LOOT_TABLE_DATA *pLoot;
+    int i;
+    bool found = FALSE;
+
+    for ( pLoot = loot_table_list; pLoot != NULL; pLoot = pLoot->next )
+    {
+        if ( pLoot->area == pArea )
+        {
+            if ( !found )
+            {
+                fprintf( fp, "#LOOTTABLE\n" );
+                found = TRUE;
+            }
+            fprintf( fp, "#%d\n", pLoot->vnum );
+            fprintf( fp, "%s~\n", pLoot->name ? pLoot->name : "none" );
+            for ( i = 0; i < 5; i++ )
+            {
+                fprintf( fp, "%d %d\n", pLoot->slots[i].vnum, pLoot->slots[i].rate );
+            }
+        }
+    }
+
+    if ( found )
+        fprintf( fp, "#0\n\n" );
+}
+
 /*****************************************************************************
  Name:      save_area
  Purpose:   Save an area, note that this format is new.
@@ -1191,6 +1226,7 @@ void save_area( AREA_DATA *pArea )
     save_mobprogs( fp, pArea );
     save_objprogs( fp, pArea );
     save_roomprogs( fp, pArea );
+    save_loottables( fp, pArea );
 /*
     if ( pArea->helps && pArea->helps->first )
     save_helps( fp, pArea->helps );
@@ -1251,6 +1287,7 @@ void do_asave( CHAR_DATA *ch, char *argument )
         send_to_char( "  asave commands - saves the command table\n\r", ch);
         send_to_char( "  asave config   - saves configuration file\n\r", ch);
         send_to_char( "  asave quests   - saves quest item table\n\r", ch);
+        send_to_char( "  asave socials  - saves socials\n\r", ch);
         send_to_char( "\n\r", ch );
     }
 
@@ -1416,6 +1453,16 @@ void do_asave( CHAR_DATA *ch, char *argument )
             sendch("QItem Table Saved.\n\r", ch);
         else
             log_string("Autosave: Quests");
+        return;
+    }
+    if (!str_prefix( arg1, "socials") )
+    {
+        extern void save_socials(void);
+        save_socials();
+        if (ch)
+            sendch("Socials Saved.\n\r", ch);
+        else
+            log_string("Autosave: Socials");
         return;
     }
     /* Save area being edited, if authorized. */

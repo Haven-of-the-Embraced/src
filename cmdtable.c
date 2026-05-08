@@ -689,6 +689,7 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "rpdump",     do_rpdump},
     { "rpstat",     do_rpstat},
     { "hedit",      do_hedit},
+    { "sedit",      do_sedit},
     { "cedit",      do_cedit},
     { "csave",      do_save_clans},
 
@@ -697,6 +698,7 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "fixme",        do_fixme},
     { "create",     do_create},
     { "becomeactive", do_becomeactive},
+    { "lootedit",      do_lootedit},
 
     { NULL,         NULL            }
 };

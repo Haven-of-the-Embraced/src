@@ -39,6 +39,8 @@ extern int      top_clan;
 extern AREA_DATA    * area_first;
 extern CMD_DATA * cmd_first;
 extern CMD_DATA * cmd_last;
+extern LOOT_TABLE_DATA * loot_table_list;
+extern LOOT_TABLE_DATA * loot_table_free;
 
 
 /* from db2.c */
@@ -62,3 +64,6 @@ extern void assign_area_vnum( int vnum );                    /* OLC */
 void convert_mobile( MOB_INDEX_DATA *pMobIndex );            /* OLC ROM */
 void convert_objects( void );                                /* OLC ROM */
 void convert_object( OBJ_INDEX_DATA *pObjIndex );            /* OLC ROM */
+void load_mobile_dynamic( FILE *fp, MOB_INDEX_DATA *pMobIndex );
+LOOT_TABLE_DATA * loot_table_lookup args( ( int vnum ) );
+LOOT_TABLE_DATA * new_loot_table args( ( void ) );

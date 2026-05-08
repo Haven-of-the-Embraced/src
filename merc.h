@@ -125,7 +125,8 @@ typedef struct  config_data         CONFIG_DATA;
 // typedef struct   database_data       DATABASE_DATA;  non-functional database code
 typedef struct  prog_list      PROG_LIST;
 typedef struct  prog_code      PROG_CODE;
-typedef struct    clan_type        CLAN_DATA;
+typedef struct  clan_type        CLAN_DATA;
+typedef struct  loot_table_data  LOOT_TABLE_DATA;
 
 
 /*
@@ -2085,6 +2086,20 @@ struct clan_type
     sh_int  clanhall;
 };
 
+struct loot_table_data
+{
+    LOOT_TABLE_DATA *   next;
+    AREA_DATA *         area;
+    char *              name;
+    sh_int              vnum;
+    struct
+    {
+        sh_int  vnum;
+        sh_int  rate;
+    } slots[5];
+    bool                valid;
+};
+
 /*
  * Prototype for a mob.
  * This is the in-memory version of #MOBILES.
@@ -2136,6 +2151,7 @@ struct  mob_index_data
     long        mprog_flags;
     long        attr_flags;
     long        abil_flags;
+    sh_int      loot_vnum;
 };
 
 
@@ -3357,7 +3373,7 @@ char    *PERS   args( (CHAR_DATA *ch, CHAR_DATA *looker, bool channel) );
  */
 struct  social_type
 {
-    char      name[20];
+    char *    name;
     char *    char_no_arg; // Shown to char, no argument.
     char *    others_no_arg; // Shown to room, no argument.
     char *    char_found; // Shown to char, target found.
@@ -3366,6 +3382,7 @@ struct  social_type
     char *    char_not_found; // Target not found
     char *      char_auto; // Show to char, (social) self
     char *      others_auto; // Show to room, (social) self
+    struct social_type *next;
 };
 
 
@@ -3393,7 +3410,7 @@ extern  const   struct  tool_type   tool_table  [];
 extern  const   struct  crafted_type    crafted_table   [];
 extern  const   struct  skill_type  skill_table [MAX_SKILL];
 extern  const   struct  group_type      group_table [MAX_GROUP];
-extern          struct social_type      social_table    [MAX_SOCIALS];
+extern          struct social_type      *social_first;
 
 
 
@@ -3708,6 +3725,9 @@ char *  get_extra_descr args( ( const char *name, EXTRA_DESCR_DATA *ed ) );
 MID *   get_mob_index   args( ( int vnum ) );
 OID *   get_obj_index   args( ( int vnum ) );
 RID *   get_room_index  args( ( int vnum ) );
+LOOT_TABLE_DATA * loot_table_lookup args( ( int vnum ) );
+LOOT_TABLE_DATA * new_loot_table args( ( void ) );
+void    free_loot_table args( ( LOOT_TABLE_DATA *pLoot ) );
 MPC *   get_prog_index args( ( int vnum, int type ) );
 char    fread_letter    args( ( FILE *fp ) );
 int fread_number    args( ( FILE *fp ) );

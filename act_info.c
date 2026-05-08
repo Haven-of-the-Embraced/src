@@ -1727,7 +1727,8 @@ void do_examine( CHAR_DATA *ch, char *argument )
     {
 	int cond = obj->condition;
 	sprintf( condition, "%s", cond == 0 ? "{D" : cond <= 15 ? "{r" : cond <= 45 ? "{y" : cond < 100 ? "{g" : "{W");
-    ROOM_INDEX_DATA *location1, *location2, *location3;
+    //ROOM_INDEX_DATA *location1, *location2, *location3;
+    int location1 = 0, location2 = 0, location3 = 0;
 
 	send_to_char( condition, ch );
 	send_to_char("()-----------------------=======ooooOOOOOOOOoooo=======-----------------------()\n\r",ch);
@@ -1883,11 +1884,11 @@ void do_examine( CHAR_DATA *ch, char *argument )
         sprintf( buf, "%s |-----------------------======    {mCaern Lore    %s======-----------------------|\n\r", 
             condition, condition);
         send_to_char( buf, ch );
-        sprintf(buf, "%s | --{x Tribal Lore states that this Caern's Spirit can grant %s to the worthy.",
+        sprintf(buf, "%s | --{x Tribal Lore states that this Caern's Spirit can grant {M'{W%s{M'{x\n\r",
             condition, obj->value[1] != -1 ? skill_table[obj->value[1]].name : "none");
         send_to_char( buf, ch );
-        sprintf(buf, "%s | --{x The Caern is linked to the following places:\n\r(1) %s\n\r(2) %s\n\r(3) %s\n\r",
-            condition, location1->name, location2->name, location3->name);
+        sprintf(buf, "%s | --{x The Caern is linked to the following places:\n\r%s | --{x (1) %d\n\r%s | --{x (2) %d\n\r%s | --{x (3) %d\n\r",
+            condition, condition, location1, condition, location2, condition, location3);
         send_to_char( buf, ch );
     }
     send_to_char( condition, ch );

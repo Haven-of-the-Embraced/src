@@ -7272,7 +7272,9 @@ bool sedit_delete( CHAR_DATA *ch, char *argument )
 
     EDIT_SOCIAL(ch, soc);
 
-    for ( struct social_type *s = social_first; s != NULL; s = s->next )
+    struct social_type *s;
+
+    for ( s = social_first; s != NULL; s = s->next )
     {
         if ( s == soc )
             break;

@@ -2216,30 +2216,38 @@ void do_cmdedit( CHAR_DATA *ch, char *argument )
 {
     CMD_DATA *cmd;
     char arg[MAX_STRING_LENGTH];
-
-    arg[0] = '\0';
+    char command[MAX_STRING_LENGTH];
 
     if ( IS_NPC(ch) )
         return;
 
-    argument = one_argument(argument, arg);
-
-    if(arg[0]  == '\0')
+    if(argument[0]  == '\0')
     {
         send_to_char("Syntax: Cmdedit <command>\n\r",ch);
+        send_to_char("        Cmdedit new <command>\n\r",ch);
         return;
     }
 
-    if( (cmd = cmd_lookup(arg) ) == NULL )
+    strcpy(command, argument);
+    one_argument(command, arg);
+
+    if( (cmd = cmd_lookup(arg) ) != NULL )
     {
-        send_to_char("What command is this?\n\r",ch);
+        ch->desc->pEdit = (void *)cmd;
+        ch->desc->editor = ED_COMMAND;
+        printf_to_char(ch, "Entering Command Editor for %s.\n\r", cmd->name );
         return;
     }
 
-    ch->desc->pEdit = (void *)cmd;
-    ch->desc->editor = ED_COMMAND;
-    printf_to_char(ch, "Entering Command Editor for %s.\n\r", cmd->name );
+    argument = one_argument(argument, arg);
 
+    if (!str_cmp(arg, "new"))
+    {
+        if (cmdedit_new(ch, argument))
+            ch->desc->editor = ED_COMMAND;
+        return;
+    }
 
+    send_to_char("What command is this?\n\r",ch);
     return;
 }

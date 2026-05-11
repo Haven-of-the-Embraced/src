@@ -3165,6 +3165,9 @@ void make_corpse( CHAR_DATA *ch )
     corpse->cost = 0;
     }
 
+    if (ch->pblood == -1)
+        corpse->value[2] = 0;
+
     corpse->level = ch->level;
 
     sprintf( buf, corpse->short_descr, name );
@@ -6071,6 +6074,17 @@ void kill_em(CHAR_DATA *ch,CHAR_DATA *victim)
         save_area(victim->in_room->area);
     }
 
+    if (ch && !IS_NPC(ch) && ch->race == race_lookup("ghoul") && !IS_SET(victim->parts, PART_HEAD)
+    && (victim->race == race_lookup("vampire") || victim->race == race_lookup("methuselah")))
+    {
+        act("Giving in to your addiction, you scramble to the headless body of $N and begin lapping up the sweet vitae.", ch, NULL, victim, TO_CHAR);
+        act("$n scrambles to the body of $N, lapping up the blood flowing from the severed neck.", ch, NULL, victim, TO_NOTVICT);
+        ch->pblood += (victim->level / 4) + 10;
+        if(ch->pblood > ch->max_pblood)
+            ch->pblood = ch->max_pblood;
+        victim->pblood = -1;
+    }
+
     raw_kill( victim );
 
     if (!IS_NPC(ch))
@@ -7090,14 +7104,7 @@ void do_behead( CHAR_DATA *ch, char *argument )
     act("The severed head rolls away from the body, coming to rest by your foot.", ch, NULL, victim, TO_CHAR);
     act("The severed head rolls away from the body and comes to rest by $n's feet.", ch, NULL, victim, TO_NOTVICT);
 
-    if(ch->race == race_lookup("ghoul"))
-    {
-        act("Giving in to your addiction, you scramble to the headless corpse and begin lapping up the sweet vitae.", ch, NULL, victim, TO_CHAR);
-        act("$n scrambles to the corpse, lapping up the blood flowing from the severed neck.", ch, NULL, victim, TO_NOTVICT);
-        ch->pblood += (victim->level / 4) + 10;
-        if(ch->pblood > ch->max_pblood)
-            ch->pblood = ch->max_pblood;
-    }
+
 
 
     gain_exp(ch, dicesuccess * 5);

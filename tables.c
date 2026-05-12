@@ -45,30 +45,92 @@ const struct hometown_type hometown_table[MAX_HOMETOWN] =
 	{"Venice",		1954}
 };
 
-const struct cr_abil_type cr_abil_table[3] =
-{
-    /*   */
-
-    {{ 0,0,1,4,4,0,3,1,0,0,0,2,0,2,4,0,0,0,0,1,0,0,2,2,1,0,0,0,0,0 }, { 3, 2, 5}},
-    {{ 0,0,3,2,4,0,0,0,4,0,0,0,0,0,3,0,0,2,4,0,0,0,0,0,0,3,0,0,2,0 }, { 2, 5, 3}},
-    {{ 0,2,1,1,1,2,0,2,0,0,0,0,1,0,1,2,0,1,0,0,1,4,0,0,0,2,2,1,0,2 }, { 4, 3, 3}}
-};
-
-const struct cr_attribute_type cr_attribute_table[3] =
+const struct cr_abil_type cr_abil_table[10] =
 {
     /*
-#define CSATTRIB_STRENGTH       0
-#define CSATTRIB_DEXTERITY      1
-#define CSATTRIB_STAMINA        2
-#define CSATTRIB_CHARISMA       3
-#define CSATTRIB_MANIPULATION   4
-#define CSATTRIB_APPEARANCE     5
-#define CSATTRIB_PERCEPTION     6
-#define CSATTRIB_INTELLIGENCE   7
-#define CSATTRIB_WITS           8 */
-    {{ 4,3,3,3,3,2,2,1,3 }},
-    {{ 2,4,2,3,4,3,2,2,2 }},
-    {{ 1,3,2,4,2,2,3,4,3 }}
+     * Ability indices:
+     *  0:Expression   1:Alertness    2:Athletics    3:Brawl        4:Dodge
+     *  5:Empathy      6:Intimidation 7:Leadership   8:Legerdemain  9:Subterfuge
+     * 10:Animal Ken  11:Riding      12:Etiquette   13:Archery     14:Melee
+     * 15:Performance 16:Crafts      17:Commerce    18:Stealth     19:Survival
+     * 20:Academics   21:Theology    22:Seneschal   23:Investigation 24:Law
+     * 25:Linguistics 26:Medicine    27:Occult      28:Politics    29:Hearth Wisdom
+     *
+     * Virtues: { Conscience, Self-Control, Courage }
+     * Budget:  27 ability pts, 10 virtue pts
+     */
+
+    /* [0] Knight - Chivalric melee warrior, mounted combat, leadership */
+    {{ 0,1,2,2,3,0,2,3,0,0,0,3,2,0,4,0,0,0,0,1,0,0,1,0,2,0,0,0,1,0 }, { 3, 3, 4}},
+
+    /* [1] Man-at-Arms - Professional soldier, pure combat */
+    {{ 0,2,3,4,4,0,3,1,0,0,0,1,0,2,4,0,1,0,0,2,0,0,0,0,0,0,0,0,0,0 }, { 2, 3, 5}},
+
+    /* [2] Hunter - Wilderness predator, archery and tracking */
+    {{ 0,3,3,3,2,0,1,0,0,0,3,0,0,2,2,0,0,0,3,4,0,0,0,0,0,0,0,0,0,1 }, { 2, 3, 5}},
+
+    /* [3] Outlaw - Brigand, stealth ambush fighter */
+    {{ 0,2,3,3,3,0,2,0,3,2,0,0,0,1,2,0,0,0,4,2,0,0,0,0,0,0,0,0,0,0 }, { 2, 3, 5}},
+
+    /* [4] Berserker - Frenzied brawler, rage-driven */
+    {{ 0,3,4,4,3,0,4,0,0,0,0,0,0,0,3,0,0,0,1,3,0,0,0,0,0,0,0,0,0,2 }, { 1, 4, 5}},
+
+    /* [5] Ranger - Scout, balanced archery and melee */
+    {{ 0,2,2,2,3,0,0,1,0,0,2,2,0,3,3,0,1,0,2,3,0,0,0,1,0,0,0,0,0,0 }, { 3, 3, 4}},
+
+    /* [6] Inquisitor - Zealot warrior-priest, faith and combat */
+    {{ 0,1,1,2,3,0,3,2,0,0,0,1,0,0,3,0,0,0,0,1,1,3,0,3,1,0,0,2,0,0 }, { 4, 2, 4}},
+
+    /* [7] Assassin - Precision stealth killer */
+    {{ 0,3,2,2,3,0,1,0,3,2,0,0,0,0,3,0,0,0,4,1,0,0,0,2,0,1,0,0,0,0 }, { 2, 4, 4}},
+
+    /* [8] Witch-Hunter - Occult-aware combatant */
+    {{ 0,2,2,2,3,1,2,0,0,0,0,0,0,1,3,0,0,0,1,2,1,1,0,2,0,0,1,3,0,0 }, { 3, 3, 4}},
+
+    /* [9] Hedge Wizard - Folk magic with basic combat */
+    {{ 0,2,1,1,2,2,0,0,0,1,2,0,0,0,2,0,1,0,1,2,1,1,0,1,0,0,2,4,0,1 }, { 4, 3, 3}}
+};
+
+const struct cr_attribute_type cr_attribute_table[10] =
+{
+    /*
+     * Attribute indices:
+     * 0:Strength  1:Dexterity  2:Stamina
+     * 3:Charisma  4:Manipulation  5:Appearance
+     * 6:Perception  7:Intelligence  8:Wits
+     *
+     * Budget: 24 attribute pts
+     */
+
+    /* [0] Knight */
+    {{ 4,3,3,3,2,2,2,2,3 }},
+
+    /* [1] Man-at-Arms */
+    {{ 4,3,4,2,1,1,3,2,4 }},
+
+    /* [2] Hunter */
+    {{ 3,4,3,1,1,2,4,2,4 }},
+
+    /* [3] Outlaw */
+    {{ 3,4,2,2,3,2,3,2,3 }},
+
+    /* [4] Berserker */
+    {{ 4,3,4,1,1,1,3,3,4 }},
+
+    /* [5] Ranger */
+    {{ 3,4,3,2,2,2,3,2,3 }},
+
+    /* [6] Inquisitor */
+    {{ 3,2,3,3,3,2,2,2,4 }},
+
+    /* [7] Assassin */
+    {{ 2,4,3,2,3,2,3,2,3 }},
+
+    /* [8] Witch-Hunter */
+    {{ 3,3,3,2,2,2,3,3,3 }},
+
+    /* [9] Hedge Wizard */
+    {{ 2,2,3,2,3,2,3,4,3 }}
 };
 
 const struct template_type template_table[] =

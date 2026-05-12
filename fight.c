@@ -3052,6 +3052,45 @@ void stop_fighting( CHAR_DATA *ch, bool fBoth )
 /*
  * Make a corpse out of a character.
  */
+int get_corpse_blood( CHAR_DATA *ch )
+{
+    int blood = 0;
+
+    if (has_blood(ch))
+        blood = (ch->level / 4) + 5;
+
+    if( ch->race == race_lookup("dhampire") ||
+        ch->race == race_lookup("garou") ||
+        ch->race == race_lookup("vampire") ||
+        ch->race == race_lookup("methuselah") ||
+        ch->race == race_lookup("bygone") ||
+        ch->race == race_lookup("dragon") ||
+        ch->race == race_lookup("fera"))
+      blood = blood * 3 / 2;
+
+    if( ch->race == race_lookup("amphibian") ||
+        ch->race == race_lookup("ape") ||
+        ch->race == race_lookup("bat") ||
+        ch->race == race_lookup("bear") ||
+        ch->race == race_lookup("cat") ||
+        ch->race == race_lookup("dog") ||
+        ch->race == race_lookup("fish") ||
+        ch->race == race_lookup("fox") ||
+        ch->race == race_lookup("lizard") ||
+        ch->race == race_lookup("marine mammal") ||
+        ch->race == race_lookup("monkey") ||
+        ch->race == race_lookup("pig") ||
+        ch->race == race_lookup("rabbit") ||
+        ch->race == race_lookup("rodent") ||
+        ch->race == race_lookup("snake") ||
+        ch->race == race_lookup("song bird") ||
+        ch->race == race_lookup("water fowl") ||
+        ch->race == race_lookup("wolf"))
+      blood = blood / 2;
+
+    return blood;
+}
+
 void make_corpse( CHAR_DATA *ch )
 {
     char buf[MAX_STRING_LENGTH];
@@ -3074,39 +3113,7 @@ void make_corpse( CHAR_DATA *ch )
       corpse->timer   = number_range( 3, 6 );
       corpse->value[0]    = ch->pIndexData->vnum;
 
-      if (has_blood(ch))
-        blood = (ch->level / 4) + 5;
-
-        if( ch->race == race_lookup("dhampire") ||
-            ch->race == race_lookup("garou") ||
-            ch->race == race_lookup("vampire") ||
-            ch->race == race_lookup("methuselah") ||
-            ch->race == race_lookup("bygone") ||
-            ch->race == race_lookup("dragon") ||
-            ch->race == race_lookup("fera"))
-          blood = blood * 3 / 2;
-
-        if( ch->race == race_lookup("amphibian") ||
-            ch->race == race_lookup("ape") ||
-            ch->race == race_lookup("bat") ||
-            ch->race == race_lookup("bear") ||
-            ch->race == race_lookup("cat") ||
-            ch->race == race_lookup("dog") ||
-            ch->race == race_lookup("fish") ||
-            ch->race == race_lookup("fox") ||
-            ch->race == race_lookup("lizard") ||
-            ch->race == race_lookup("marine mammal") ||
-            ch->race == race_lookup("monkey") ||
-            ch->race == race_lookup("pig") ||
-            ch->race == race_lookup("rabbit") ||
-            ch->race == race_lookup("rodent") ||
-            ch->race == race_lookup("snake") ||
-            ch->race == race_lookup("song bird") ||
-            ch->race == race_lookup("water fowl") ||
-            ch->race == race_lookup("wolf"))
-          blood = blood / 2;
-
-      corpse->value[2] = blood;
+      corpse->value[2] = get_corpse_blood(ch);
 
       if ( ch->gold > 0 )
       {
@@ -6079,7 +6086,7 @@ void kill_em(CHAR_DATA *ch,CHAR_DATA *victim)
     {
         act("Giving in to your addiction, you scramble to the headless body of $N and begin lapping up the sweet vitae.", ch, NULL, victim, TO_CHAR);
         act("$n scrambles to the body of $N, lapping up the blood flowing from the severed neck.", ch, NULL, victim, TO_NOTVICT);
-        ch->pblood += (victim->level / 4) + 10;
+        ch->pblood += get_corpse_blood(victim);
         if(ch->pblood > ch->max_pblood)
             ch->pblood = ch->max_pblood;
         victim->pblood = -1;

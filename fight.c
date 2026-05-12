@@ -3056,8 +3056,10 @@ int get_corpse_blood( CHAR_DATA *ch )
 {
     int blood = 0;
 
-    if (has_blood(ch))
-        blood = (ch->level / 4) + 5;
+    if (!has_blood(ch))
+        return 0;
+
+    blood = (ch->level / 4) + 5;
 
     if( ch->race == race_lookup("dhampire") ||
         ch->race == race_lookup("garou") ||

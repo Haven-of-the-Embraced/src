@@ -3931,6 +3931,8 @@ void do_possession( CHAR_DATA *ch, char *argument )
     }
     sprintf(buf,"$N switches into %s using Possession.",victim->short_descr);
     wiznet(buf,ch,NULL,WIZ_SWITCHES,WIZ_SECURE,get_trust(ch));
+    act("You possess the mind of $N!",ch,NULL,victim,TO_CHAR);
+    send_to_char("Type 'return' to return to your own body.\n\r", ch);
 
     ch->desc->character = victim;
     ch->desc->original  = ch;
@@ -3941,7 +3943,6 @@ void do_possession( CHAR_DATA *ch, char *argument )
         victim->prompt = str_dup(ch->prompt);
     victim->comm = ch->comm;
     victim->lines = ch->lines;
-    act("You possess the mind of $N!",ch,NULL,victim,TO_VICT);
     return;
 }
 

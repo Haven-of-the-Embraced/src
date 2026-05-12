@@ -2272,9 +2272,16 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
     write_to_buffer(d,"process in-game using the 'create' command.\n\r", 0);
 
     write_to_buffer(d,"\n\rAvailable Archetypes:\n\r\n\r",0);
-    write_to_buffer(d,"[0] Warrior\n\r",0);
-    write_to_buffer(d,"[1] Rogue\n\r",0);
-    write_to_buffer(d,"[2] Clergy\n\r\n\r",0);
+    write_to_buffer(d,"[0] Knight        - Chivalric warrior, swordplay and mounted combat\n\r",0);
+    write_to_buffer(d,"[1] Man-at-Arms   - Professional soldier, a master of all weapons\n\r",0);
+    write_to_buffer(d,"[2] Hunter        - Wilderness predator, archery and tracking\n\r",0);
+    write_to_buffer(d,"[3] Outlaw        - Brigand and ambush fighter, strikes from the shadows\n\r",0);
+    write_to_buffer(d,"[4] Berserker     - Frenzied brawler, overwhelms foes with raw fury\n\r",0);
+    write_to_buffer(d,"[5] Ranger        - Balanced scout, skilled with bow and blade\n\r",0);
+    write_to_buffer(d,"[6] Inquisitor    - Zealot warrior-priest, faith tempered in steel\n\r",0);
+    write_to_buffer(d,"[7] Assassin      - Precision killer, stealth and lethality\n\r",0);
+    write_to_buffer(d,"[8] Witch-Hunter  - Occult-aware combatant, slayer of monsters\n\r",0);
+    write_to_buffer(d,"[9] Hedge Wizard  - Folk sorcerer with survival instincts\n\r\n\r",0);
 
     write_to_buffer(d,"Please select the number of the archetype that best fits you Character.\n\r",0);
     write_to_buffer(d,"Or, enter 'CUSTOM' to skip this step and create a custom sheet later:\n\r",0);
@@ -2307,9 +2314,16 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
     {
         write_to_buffer(d,"That is not a valid choice.\n\r\n\r",0);
         write_to_buffer(d,"\n\rAvailable Archetypes:\n\r\n\r",0);
-        write_to_buffer(d,"[0] Warrior\n\r",0);
-        write_to_buffer(d,"[1] Rogue\n\r",0);
-        write_to_buffer(d,"[2] Clergy\n\r\n\r",0);
+        write_to_buffer(d,"[0] Knight        - Chivalric warrior, swordplay and mounted combat\n\r",0);
+        write_to_buffer(d,"[1] Man-at-Arms   - Professional soldier, a master of all weapons\n\r",0);
+        write_to_buffer(d,"[2] Hunter        - Wilderness predator, archery and tracking\n\r",0);
+        write_to_buffer(d,"[3] Outlaw        - Brigand and ambush fighter, strikes from the shadows\n\r",0);
+        write_to_buffer(d,"[4] Berserker     - Frenzied brawler, overwhelms foes with raw fury\n\r",0);
+        write_to_buffer(d,"[5] Ranger        - Balanced scout, skilled with bow and blade\n\r",0);
+        write_to_buffer(d,"[6] Inquisitor    - Zealot warrior-priest, faith tempered in steel\n\r",0);
+        write_to_buffer(d,"[7] Assassin      - Precision killer, stealth and lethality\n\r",0);
+        write_to_buffer(d,"[8] Witch-Hunter  - Occult-aware combatant, slayer of monsters\n\r",0);
+        write_to_buffer(d,"[9] Hedge Wizard  - Folk sorcerer with survival instincts\n\r\n\r",0);
         write_to_buffer(d,"Please select the number of the archetype that best fits you Character.\n\r",0);
         write_to_buffer(d,"Or, enter 'CUSTOM' to skip this step and create a custom sheet later:\n\r",0);
         d->connected = CON_PICK_CHILDHOOD;

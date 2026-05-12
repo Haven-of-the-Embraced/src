@@ -395,9 +395,13 @@ void do_skillmap(CHAR_DATA *ch, char *argument)
     int i;
     BUFFER *output;
     char buf[MSL];
+    char arg[MAX_INPUT_LENGTH];
     char primary[MSL];
     char secondary[MSL];
     bool has_secondary;
+    bool found = FALSE;
+
+    one_argument(argument, arg);
 
     has_secondary = TRUE;
     output = new_buf();
@@ -462,6 +466,14 @@ void do_skillmap(CHAR_DATA *ch, char *argument)
                 return;
         }
 
+        if (arg[0] != '\0')
+        {
+            if (str_prefix(arg, primary) && (!has_secondary || str_prefix(arg, secondary)))
+                continue;
+        }
+
+        found = TRUE;
+
         if (has_secondary)
         {
             sprintf(buf, "%s%16s %-3d %-15s %-2d  %-15s %-2d{x\n\r", ch->pcdata->learned[*csskill_table[i].gsn] ? "   " : " {rX{c " , csskill_table[i].name, csskill_table[i].level,
@@ -475,6 +487,13 @@ void do_skillmap(CHAR_DATA *ch, char *argument)
         }
         add_buf(output, buf);
     }
+
+    if (arg[0] != '\0' && !found)
+    {
+        sprintf(buf, " {RNo skills found unlocking with '%s'.{x\n\r", arg);
+        add_buf(output, buf);
+    }
+
     if (!IS_SET(ch->comm, COMM_COMPACT))
     {
 	    sprintf(buf, "|=====================================================================|\n\r");

@@ -57,6 +57,13 @@ int system();
 
 
 
+/* MSSP Constants */
+#define MUD_NAME "Haven of the Embraced"
+#define MUD_CODEBASE "ROM2.4/Haven"
+#define MUD_CONTACT "admin@havenmud.net"
+#define MUD_WEBSITE "https://www.havenmud.net"
+#define MUD_DISCORD "https://discord.gg/s9W2RjB"
+
 // Special XP global and QP
 extern int global_qp;
 extern int global_xp;

@@ -4107,22 +4107,22 @@ void send_mssp( DESCRIPTOR_DATA *d )
             players++;
     }
 
-    sprintf( buf, "%c%c%c%cNAME%cHaven of the Embraced"
+    sprintf( buf, "%c%c%c%cNAME%c%s"
                   "%cPLAYERS%c%d"
                   "%cUPTIME%c%d"
-                  "%cCODEBASE%cROM2.4/Haven"
-                  "%cCONTACT%cadmin@havenmud.net"
-                  "%cWEBSITE%chttps://www.havenmud.net"
-                  "%cDISCORD%chttps://discord.gg/s9W2RjB"
+                  "%cCODEBASE%c%s"
+                  "%cCONTACT%c%s"
+                  "%cWEBSITE%c%s"
+                  "%cDISCORD%c%s"
                   "%c%c",
              IAC, SB, TELOPT_MSSP,
-             MSSP_VAR, MSSP_VAL,
+             MSSP_VAR, MSSP_VAL, MUD_NAME,
              MSSP_VAR, MSSP_VAL, players,
              MSSP_VAR, MSSP_VAL, (int)boot_time,
-             MSSP_VAR, MSSP_VAL,
-             MSSP_VAR, MSSP_VAL,
-             MSSP_VAR, MSSP_VAL,
-             MSSP_VAR, MSSP_VAL,
+             MSSP_VAR, MSSP_VAL, MUD_CODEBASE,
+             MSSP_VAR, MSSP_VAL, MUD_CONTACT,
+             MSSP_VAR, MSSP_VAL, MUD_WEBSITE,
+             MSSP_VAR, MSSP_VAL, MUD_DISCORD,
              IAC, SE );
     write_to_buffer( d, buf, 0 );
 }

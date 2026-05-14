@@ -373,6 +373,7 @@ char randomcolors[MAX_RANDOM+2] = "RrGgYyBbMmCcWwD";
  * Other local functions (OS-independent).
  */
 bool    check_parse_name    args( ( char *name ) );
+void    send_mssp           args( ( DESCRIPTOR_DATA *d ) );
 bool    check_reconnect     args( ( DESCRIPTOR_DATA *d, char *name,
                     bool fConn ) );
 bool    check_playing       args( ( DESCRIPTOR_DATA *d, char *name ) );
@@ -1105,6 +1106,9 @@ void init_descriptor( int control )
      */
     {
     extern char * help_greeting;
+    const char mssp_will[] = { IAC, WILL, TELOPT_MSSP, '\0' };
+    write_to_buffer( dnew, mssp_will, 0 );
+
     if ( help_greeting[0] == '.' )
         write_to_buffer( dnew, help_greeting+1, 0 );
     else
@@ -1283,6 +1287,65 @@ void read_from_buffer( DESCRIPTOR_DATA *d )
     return;
 
     /*
+     * Process and strip Telnet sequences.
+     */
+    for ( i = 0, j = 0; d->inbuf[i] != '\0'; )
+    {
+        if ( (unsigned char)d->inbuf[i] == IAC )
+        {
+            if ( d->inbuf[i+1] == '\0' ) 
+            {
+                d->inbuf[j++] = d->inbuf[i++];
+                break;
+            }
+            unsigned char cmd = d->inbuf[i+1];
+            if ( cmd == DO && d->inbuf[i+2] == TELOPT_MSSP )
+            {
+                send_mssp(d);
+                i += 3;
+                continue;
+            }
+            if ( cmd == DO || cmd == DONT || cmd == WILL || cmd == WONT )
+            {
+                if ( d->inbuf[i+2] == '\0' )
+                {
+                     d->inbuf[j++] = d->inbuf[i++];
+                     break;
+                }
+                i += 3;
+                continue;
+            }
+            if ( cmd == SB )
+            {
+                int start_i = i;
+                while ( d->inbuf[i] != '\0' && !((unsigned char)d->inbuf[i] == IAC && (unsigned char)d->inbuf[i+1] == SE) )
+                    i++;
+                if ( d->inbuf[i] != '\0' ) 
+                {
+                    i += 2; /* skip SE */
+                    continue;
+                }
+                else
+                {
+                    i = start_i;
+                    d->inbuf[j++] = d->inbuf[i++];
+                    break;
+                }
+            }
+            if ( cmd == IAC )
+            {
+                 d->inbuf[j++] = d->inbuf[i++];
+                 i++;
+                 continue;
+            }
+            i += 2;
+            continue;
+        }
+        d->inbuf[j++] = d->inbuf[i++];
+    }
+    d->inbuf[j] = '\0';
+
+    /*
      * Look for at least one new line.
      */
     for ( i = 0; d->inbuf[i] != '\n' && d->inbuf[i] != '\r'; i++ )
@@ -1310,6 +1373,8 @@ void read_from_buffer( DESCRIPTOR_DATA *d )
         d->inbuf[i+1] = '\0';
         break;
     }
+
+
 
     if ( d->inbuf[i] == '\b' && k > 0 )
         --k;
@@ -4028,4 +4093,36 @@ void load_config( void )
 
         }
     }
+}
+
+void send_mssp( DESCRIPTOR_DATA *d )
+{
+    char buf[MAX_STRING_LENGTH];
+    int players = 0;
+    DESCRIPTOR_DATA *d_count;
+
+    for ( d_count = descriptor_list; d_count != NULL; d_count = d_count->next )
+    {
+        if ( d_count->connected == CON_PLAYING )
+            players++;
+    }
+
+    sprintf( buf, "%c%c%c%cNAME%cHaven of the Embraced"
+                  "%cPLAYERS%c%d"
+                  "%cUPTIME%c%d"
+                  "%cCODEBASE%cROM2.4/Haven"
+                  "%cCONTACT%cadmin@havenmud.net"
+                  "%cWEBSITE%chttps://www.havenmud.net"
+                  "%cDISCORD%chttps://discord.gg/s9W2RjB"
+                  "%c%c",
+             IAC, SB, TELOPT_MSSP,
+             MSSP_VAR, MSSP_VAL,
+             MSSP_VAR, MSSP_VAL, players,
+             MSSP_VAR, MSSP_VAL, (int)boot_time,
+             MSSP_VAR, MSSP_VAL,
+             MSSP_VAR, MSSP_VAL,
+             MSSP_VAR, MSSP_VAL,
+             MSSP_VAR, MSSP_VAL,
+             IAC, SE );
+    write_to_buffer( d, buf, 0 );
 }

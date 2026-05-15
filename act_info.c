@@ -43,6 +43,9 @@
 #include "tables.h"
 #include "lookup.h"
 #include "addict.h"
+#include <sys/stat.h>
+#include <dirent.h>
+#include <unistd.h>
 
 ROOM_INDEX_DATA *       find_location   args( ( CHAR_DATA *ch, char *arg ) );
 
@@ -5516,4 +5519,224 @@ void do_addict (CHAR_DATA *ch, char *argument)
     page_to_char(buf_string(output), ch);
     free_buf(output);
     return;
+}
+
+void do_laston( CHAR_DATA *ch, char *argument )
+{
+    char arg[MIL];
+    argument = one_argument(argument, arg);
+
+    bool is_imm = IS_IMMORTAL(ch);
+    int max_list = is_imm ? 15 : 5;
+
+    if ( arg[0] == '\0' )
+    {
+        struct laston_data {
+            char name[50];
+            time_t time;
+        };
+        struct laston_data top[20];
+        int i, j;
+
+        for (i = 0; i < 20; i++) {
+            top[i].time = 0;
+            top[i].name[0] = '\0';
+        }
+
+        DIR *dp;
+        struct dirent *ep;
+        char path[MSL];
+        struct stat st;
+
+        dp = opendir("../player");
+        if ( dp != NULL )
+        {
+            while ( (ep = readdir(dp)) )
+            {
+                if ( ep->d_name[0] == '.' )
+                    continue;
+
+                // Check if currently logged in
+                bool online = FALSE;
+                DESCRIPTOR_DATA *d;
+                for ( d = descriptor_list; d != NULL; d = d->next )
+                {
+                    if ( d->character && d->connected == CON_PLAYING )
+                    {
+                        if ( !str_cmp( d->character->name, ep->d_name ) )
+                        {
+                            online = TRUE;
+                            break;
+                        }
+                    }
+                }
+                if ( online ) continue;
+
+                sprintf(path, "../player/%s", ep->d_name);
+                if ( stat(path, &st) == 0 )
+                {
+                    // If Mortal, we shouldn't show Immortals.
+                    // To verify without loading the whole char if possible, we use load_char_obj.
+                    if ( !is_imm )
+                    {
+                        DESCRIPTOR_DATA d_tmp;
+                        bool found = load_char_obj(&d_tmp, ep->d_name);
+                        if ( found )
+                        {
+                            bool victim_imm = IS_IMMORTAL(d_tmp.character);
+                            free_char(d_tmp.character);
+                            if ( victim_imm ) continue;
+                        }
+                    }
+
+                    time_t t = st.st_mtime;
+                    for ( i = 0; i < max_list; i++ )
+                    {
+                        if ( t > top[i].time )
+                        {
+                            for ( j = max_list - 1; j > i; j-- )
+                            {
+                                top[j] = top[j-1];
+                            }
+                            top[i].time = t;
+                            strncpy(top[i].name, ep->d_name, 49);
+                            top[i].name[49] = '\0';
+                            break;
+                        }
+                    }
+                }
+            }
+            closedir(dp);
+        }
+
+        if ( is_imm )
+            send_to_char("Recent logouts (Exact):\n\r", ch);
+        else
+            send_to_char("Recent logouts:\n\r", ch);
+
+        for ( i = 0; i < max_list; i++ )
+        {
+            if ( top[i].time == 0 ) break;
+
+            if ( is_imm )
+            {
+                char *time_str = ctime(&top[i].time);
+                time_str[strlen(time_str)-1] = '\0'; // remove newline
+                cprintf(ch, "%-15s - %s\n\r", capitalize(top[i].name), time_str);
+            }
+            else
+            {
+                // Mortal approximate
+                long diff = current_time - top[i].time;
+                char *approx;
+                if ( diff < 3600 ) approx = "a short while ago";
+                else if ( diff < 86400 ) approx = "within the last day";
+                else if ( diff < 172800 ) approx = "two days ago";
+                else if ( diff < 604800 ) approx = "within the last week";
+                else if ( diff < 2592000 ) approx = "within the last month";
+                else approx = "quite a while ago";
+
+                cprintf(ch, "%-15s logged off %s.\n\r", capitalize(top[i].name), approx);
+            }
+        }
+    }
+    else
+    {
+        // 1 argument
+        DESCRIPTOR_DATA *d;
+        CHAR_DATA *victim = NULL;
+        for ( d = descriptor_list; d != NULL; d = d->next )
+        {
+            if ( d->character && d->connected == CON_PLAYING )
+            {
+                if ( !str_cmp( d->character->name, arg ) )
+                {
+                    victim = d->character;
+                    break;
+                }
+            }
+        }
+
+        // If not online, maybe it's an offline immortal?
+        // We must load char to check if it's an immortal.
+        bool victim_is_imm = FALSE;
+        time_t victim_st_mtime = 0;
+
+        if ( victim != NULL )
+        {
+            victim_is_imm = IS_IMMORTAL(victim);
+        }
+        else
+        {
+            char path[MSL];
+            struct stat st;
+            sprintf(path, "../player/%s", capitalize(arg));
+            if ( stat(path, &st) == 0 )
+            {
+                victim_st_mtime = st.st_mtime;
+                DESCRIPTOR_DATA d_tmp;
+                if ( load_char_obj(&d_tmp, capitalize(arg)) )
+                {
+                    victim_is_imm = IS_IMMORTAL(d_tmp.character);
+                    free_char(d_tmp.character);
+                }
+            }
+            else
+            {
+                send_to_char("No such character exists.\n\r", ch);
+                return;
+            }
+        }
+
+        if ( !is_imm && victim_is_imm )
+        {
+            send_to_char("If you need Immortal assistance, try the Discord server.\n\r", ch);
+            return;
+        }
+
+        if ( victim != NULL )
+        {
+            // Online
+            if ( is_imm )
+            {
+                long diff = current_time - victim->logon;
+                int hours = diff / 3600;
+                int minutes = (diff % 3600) / 60;
+                cprintf(ch, "%s is currently logged in. They have been logged in for %d hours and %d minutes.\n\r", 
+                    victim->name, hours, minutes);
+            }
+            else
+            {
+                cprintf(ch, "%s is either currently logged in or very recently logged out.\n\r", capitalize(arg));
+            }
+            return;
+        }
+
+        // Offline
+        long diff = current_time - victim_st_mtime;
+        if ( !is_imm && diff < 300 )
+        {
+            cprintf(ch, "%s is either currently logged in or very recently logged out.\n\r", capitalize(arg));
+            return;
+        }
+
+        if ( is_imm )
+        {
+            char *time_str = ctime(&victim_st_mtime);
+            time_str[strlen(time_str)-1] = '\0';
+            cprintf(ch, "%s last logged out at %s.\n\r", capitalize(arg), time_str);
+        }
+        else
+        {
+            char *approx;
+            if ( diff < 3600 ) approx = "a short while ago";
+            else if ( diff < 86400 ) approx = "within the last day";
+            else if ( diff < 172800 ) approx = "two days ago";
+            else if ( diff < 604800 ) approx = "within the last week";
+            else if ( diff < 2592000 ) approx = "within the last month";
+            else approx = "quite a while ago";
+
+            cprintf(ch, "%s logged off %s.\n\r", capitalize(arg), approx);
+        }
+    }
 }

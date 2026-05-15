@@ -31,8 +31,8 @@ extern int mobile_count;
 
 /* stuff for providing a crash-proof buffer */
 
-#define MAX_BUF		16384
-#define MAX_BUF_LIST 	10
+#define MAX_BUF		131072
+#define MAX_BUF_LIST 	13
 #define BASE_BUF 	1024
 
 /* valid states */

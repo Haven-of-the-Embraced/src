@@ -532,7 +532,7 @@ void free_mem_data(MEM_DATA *memory)
 /* buffer sizes */
 const int buf_size[MAX_BUF_LIST] =
 {
-    16,32,64,128,256,1024,2048,4096,8192,16384
+    16,32,64,128,256,1024,2048,4096,8192,16384,32768,65536,131072
 };
 
 /* local procedure for finding the next acceptable size */
@@ -637,9 +637,14 @@ bool add_buf(BUFFER *buffer, char *string)
     {
         if (buffer->size == -1) /* overflow */
         {
+        char buf[MAX_STRING_LENGTH];
         buffer->size = oldsize;
         buffer->state = BUFFER_OVERFLOW;
         bug("buffer overflow past size %d",buffer->size);
+        sprintf(buf, "Context: %.100s", buffer->string);
+        log_string(buf);
+        sprintf(buf, "Appending: %.100s", string);
+        log_string(buf);
         return FALSE;
         }
     }

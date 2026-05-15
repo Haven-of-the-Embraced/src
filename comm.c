@@ -1066,8 +1066,8 @@ void init_descriptor( int control )
         ( addr >> 24 ) & 0xFF, ( addr >> 16 ) & 0xFF,
         ( addr >>  8 ) & 0xFF, ( addr       ) & 0xFF
         );
-    sprintf( log_buf, "Sock.sinaddr:  %s", buf );
-    log_string( log_buf );
+    // sprintf( log_buf, "Sock.sinaddr:  %s", buf );
+    // log_string( log_buf );
     if (!resolver)
     {from = NULL;}
     else
@@ -1254,14 +1254,15 @@ bool read_from_descriptor( DESCRIPTOR_DATA *d )
     }
     else if ( nRead == 0 )
     {
-        log_string( "EOF encountered on read." );
+        // log_string( "EOF encountered on read." );
         return FALSE;
     }
     else if ( errno == EWOULDBLOCK )
         break;
     else
     {
-        perror( "Read_from_descriptor" );
+        if (errno != ECONNRESET)
+            perror( "Read_from_descriptor" );
         return FALSE;
     }
     }

@@ -153,7 +153,8 @@ void gain_qp( CHAR_DATA *ch, int gain )
         return;
 
     ch->qpoints += gain;
-    ch->totalqpoints += gain;
+    if (gain > 0)
+        ch->totalqpoints += gain;
     
     if (ch->qpoints > MAX_QPOINTS)
     {
@@ -162,6 +163,10 @@ void gain_qp( CHAR_DATA *ch, int gain )
         send_to_char(buf, ch);
 
         ch->qpoints = MAX_QPOINTS;
+    }
+    else if (ch->qpoints < 0)
+    {
+        ch->qpoints = 0;
     }
 
     return;
@@ -895,7 +900,7 @@ void char_update( void )
                 REMOVE_BIT(ch->act,PLR_IC);
                 send_to_char("You are no longer {D({CIC{D){x!  Quit trying to break the buffer!\n\r",ch);
                 wiznet("{D$N has voided while {W({CIC{W){D!{x",ch,NULL,WIZ_LINKS,0,0);
-                ch->qpoints -= 10;
+                gain_qp(ch, -10);
                 send_to_char("You have just lost {R10{x quest points! This is a warning!\n\r",ch);
                 send_to_char("Chronic voiding while IC will be met with further warnings and\n\r", ch);
                 send_to_char("potential flagging for being excluded from the IC qp gain system.\n\r", ch);
@@ -1016,8 +1021,7 @@ void char_update( void )
         if (!ch) // Guard against null ch being returned from chimaera wearing off.
             continue;
 
-if (ch->qpoints > MAX_QPOINTS)
-    ch->qpoints = MAX_QPOINTS;
+
 
     if(!IS_NPC(ch) && ch->in_room != NULL && !IS_IMMORTAL(ch) && ch->in_room->sector_type == SECT_WATER_DROWN && (ch->race != race_lookup("vampire") ||
     ch->race != race_lookup("methuselah")))
@@ -1159,8 +1163,7 @@ if (ch->qpoints > MAX_QPOINTS)
 
         // Line for this into gxp as well
              global_xp += qpaward*xpmult;
-             ch->qpoints += qpaward;
-             ch->totalqpoints += qpaward;
+             gain_qp(ch, qpaward);
         }
 
 /*
@@ -1179,8 +1182,7 @@ if (ch->qpoints > MAX_QPOINTS)
        }
 */
 
-       if (ch->qpoints > MAX_QPOINTS)
-           ch->qpoints = MAX_QPOINTS;
+
         }
 
 

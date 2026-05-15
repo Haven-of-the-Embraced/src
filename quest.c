@@ -831,7 +831,7 @@ const struct reward_type reward_table[]=
     {
     ch->level += 1;
     advance_level( ch,TRUE);
-    ch->qpoints -= 100;
+    gain_qp(ch, -100);
     }
     sprintf(buf, "You spend %d quest points and purchase yourself to level %d!\n\r", atoi(arg2)*100, ch->level);
     send_to_char(buf, ch);
@@ -878,7 +878,7 @@ const struct reward_type reward_table[]=
     {
     victim->level += 1;
     advance_level( victim,TRUE);
-    ch->qpoints -= 100;
+    gain_qp(ch, -100);
     }
     sprintf(buf, "You spend %d quest points and purchase %s to level %d!\n\r", atoi(arg3)*100, victim->name, victim->level);
     send_to_char(buf, ch);
@@ -926,7 +926,7 @@ const struct reward_type reward_table[]=
     { found = TRUE;
         if (ch->qpoints >= reward_table[i].cost)
         {
-        ch->qpoints -= reward_table[i].cost;
+        gain_qp(ch, -reward_table[i].cost);
         if(reward_table[i].object)
                 obj = create_object(get_obj_index(reward_table[i].value),ch->level);
         else
@@ -1046,7 +1046,7 @@ const struct reward_type reward_table[]=
         ch->questobj = 0;
             ch->nextquest = 10;
         ch->gold += reward;
-        ch->qpoints += pointreward;
+        gain_qp(ch, pointreward);
         ch->quest_accum += pointreward;
         if(obj_found) extract_obj(obj);
      return;

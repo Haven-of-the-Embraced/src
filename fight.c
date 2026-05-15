@@ -3540,10 +3540,7 @@ void group_gain( CHAR_DATA *ch, CHAR_DATA *victim )
         }
         send_to_char( buf, gch );
         gain_exp( gch, xp );
-        gch->qpoints += qp;
-        gch->totalqpoints += qp;
-        if (gch->qpoints > MAX_QPOINTS)
-            gch->qpoints = MAX_QPOINTS;
+        gain_qp(gch, qp);
 
         if (IS_SET(ch->act2, PLR2_QUESTOR)&&IS_NPC(victim))
         {
@@ -3577,10 +3574,7 @@ void group_gain( CHAR_DATA *ch, CHAR_DATA *victim )
                 else
                 {
                     qp = number_range(1,5);
-                    gch->qpoints += qp;
-                    gch->totalqpoints += qp;
-                    if (gch->qpoints > MAX_QPOINTS)
-                        gch->qpoints = MAX_QPOINTS;
+                    gain_qp(gch, qp);
                     sprintf(buf, "{MTREAT!:  {GMystic energy fills you, as you gain %d quest points.{x\n\r", qp);
                     send_to_char(buf, gch);
                 }

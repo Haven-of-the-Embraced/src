@@ -9922,7 +9922,6 @@ void do_qpoint(CHAR_DATA *ch, char *argument)
 
     if(points > 0)
     {
-        victim->totalqpoints += points;
         sprintf(buf, "You have been rewarded {Y%d {xquest points!\n\r", points);
         send_to_char(buf,victim);
     }
@@ -9932,7 +9931,7 @@ void do_qpoint(CHAR_DATA *ch, char *argument)
         send_to_char(buf,victim);
     }
 
-    victim->qpoints += points;
+    gain_qp(victim, points);
     sprintf(buf, "{W%s {xnow has {Y%d {xquest points.\n\r", victim->name, victim->qpoints);
     send_to_char(buf,ch);
     sprintf(buf, "You now have {Y%d {xquest points.\n\r", victim->qpoints);

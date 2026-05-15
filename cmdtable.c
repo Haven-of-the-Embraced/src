@@ -307,6 +307,7 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "weather",    do_weather,},
     { "who",        do_who},
     { "whois",      do_whois},
+    { "laston",     do_laston},
     { "wizlist",    do_wizlist},
     { "worth",      do_worth},
 

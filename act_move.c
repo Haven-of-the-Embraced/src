@@ -2359,7 +2359,7 @@ void do_hometown (CHAR_DATA *ch, char *argument)
 
     if (!str_cmp(arg2, "confirm"))
     {
-        ch->qpoints -= 200;
+        gain_qp(ch, -200);
         sendch(" +-----------------------------------------------+\n\r", ch);
         cprintf(ch, " +    Setting new hometown to:   {y%10s{x      +\n\r +    {Y250QP{x deducted.    {g%6dQP{x remaining.     +\n\r", hometown_table[hn].name, ch->qpoints);
         sendch(" +-----------------------------------------------+\n\r", ch);

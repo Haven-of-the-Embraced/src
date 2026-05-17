@@ -1940,6 +1940,7 @@ void do_quit( CHAR_DATA *ch, char *argument )
     /*
      * After extract_char the ch is no longer valid!
      */
+    update_laston( ch );
     save_char_obj( ch );
     id = ch->id;
     d = ch->desc;

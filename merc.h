@@ -134,6 +134,8 @@ typedef struct  prog_list      PROG_LIST;
 typedef struct  prog_code      PROG_CODE;
 typedef struct  clan_type        CLAN_DATA;
 typedef struct  loot_table_data  LOOT_TABLE_DATA;
+typedef struct  laston_entry     LASTON_ENTRY;
+
 
 
 /*
@@ -305,6 +307,17 @@ struct  ban_data
     sh_int  level;
     char *  name;
 };
+
+struct laston_entry
+{
+    LASTON_ENTRY *  next;
+    char *          name;
+    time_t          logout_time;
+    bool            is_immortal;
+};
+
+extern LASTON_ENTRY *laston_list;
+
 
 extern SLEEP_DATA *first_sleep;
 /*
@@ -3723,6 +3736,10 @@ void    reset_area      args( ( AREA_DATA * pArea ) );      /* OLC */
 void    reset_room  args( ( ROOM_INDEX_DATA *pRoom ) ); /* OLC */
 char *  print_flags args( ( int flag ));
 void    boot_db     args( ( void ) );
+void    load_laston args( ( void ) );
+void    save_laston args( ( void ) );
+void    update_laston args( ( CHAR_DATA *ch ) );
+
 void    area_update args( ( void ) );
 CD *    create_mobile   args( ( MOB_INDEX_DATA *pMobIndex ) );
 void    clone_mobile    args( ( CHAR_DATA *parent, CHAR_DATA *clone) );

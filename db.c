@@ -398,6 +398,7 @@ void boot_db()
     load_notes( );
     load_bans();
     load_songs();
+    load_laston();
     }
 
     return;

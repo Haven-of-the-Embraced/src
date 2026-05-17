@@ -5521,6 +5521,130 @@ void do_addict (CHAR_DATA *ch, char *argument)
     return;
 }
 
+LASTON_ENTRY *laston_list = NULL;
+
+void load_laston( void )
+{
+    FILE *fp;
+    char *word;
+    LASTON_ENTRY *entry;
+    LASTON_ENTRY *last = NULL;
+
+    laston_list = NULL;
+
+    if ( ( fp = fopen( "../data/laston.txt", "r" ) ) == NULL )
+    {
+        return;
+    }
+
+    for ( ; ; )
+    {
+        word = feof( fp ) ? "End" : fread_word( fp );
+        if ( !str_cmp( word, "End" ) )
+            break;
+
+        if ( !str_cmp( word, "Entry" ) )
+        {
+            entry = alloc_mem( sizeof( *entry ) );
+            entry->name = fread_string( fp );
+            entry->logout_time = fread_number( fp );
+            entry->is_immortal = fread_number( fp );
+            entry->next = NULL;
+
+            if ( laston_list == NULL )
+                laston_list = entry;
+            else
+                last->next = entry;
+
+            last = entry;
+        }
+    }
+
+    fclose( fp );
+}
+
+void save_laston( void )
+{
+    FILE *fp;
+    LASTON_ENTRY *curr;
+
+    if ( ( fp = fopen( "../data/laston.txt", "w" ) ) == NULL )
+    {
+        bug( "save_laston: fopen failed", 0 );
+        return;
+    }
+
+    for ( curr = laston_list; curr != NULL; curr = curr->next )
+    {
+        fprintf( fp, "Entry %s~\n", curr->name );
+        fprintf( fp, "%ld %d\n", (long)curr->logout_time, curr->is_immortal ? 1 : 0 );
+    }
+    fprintf( fp, "End\n" );
+
+    fclose( fp );
+}
+
+void update_laston( CHAR_DATA *ch )
+{
+    LASTON_ENTRY *curr, *prev = NULL;
+    LASTON_ENTRY *entry;
+    int count = 0;
+
+    if ( IS_NPC( ch ) )
+        return;
+
+    // 1. Remove if already exists in laston_list
+    for ( curr = laston_list; curr != NULL; curr = curr->next )
+    {
+        if ( !str_cmp( curr->name, ch->name ) )
+        {
+            if ( prev == NULL )
+                laston_list = curr->next;
+            else
+                prev->next = curr->next;
+
+            free_string( curr->name );
+            free_mem( curr, sizeof( *curr ) );
+            break;
+        }
+        prev = curr;
+    }
+
+    // 2. Create new entry and place at the front of the list
+    entry = alloc_mem( sizeof( *entry ) );
+    entry->name = str_dup( ch->name );
+    entry->logout_time = current_time;
+    entry->is_immortal = IS_IMMORTAL( ch );
+    entry->next = laston_list;
+    laston_list = entry;
+
+    // 3. Keep only the first 50 entries
+    curr = laston_list;
+    count = 1;
+    while ( curr != NULL && count < 50 )
+    {
+        curr = curr->next;
+        count++;
+    }
+
+    if ( curr != NULL && curr->next != NULL )
+    {
+        LASTON_ENTRY *to_free = curr->next;
+        curr->next = NULL;
+
+        while ( to_free != NULL )
+        {
+            LASTON_ENTRY *next = to_free->next;
+            free_string( to_free->name );
+            free_mem( to_free, sizeof( *to_free ) );
+            to_free = next;
+        }
+    }
+
+    // 4. Persist to disk
+    save_laston();
+}
+
 void do_laston( CHAR_DATA *ch, char *argument )
 {
     char arg[MIL];
@@ -5531,103 +5655,30 @@ void do_laston( CHAR_DATA *ch, char *argument )
 
     if ( arg[0] == '\0' )
     {
-        struct laston_data {
-            char name[50];
-            time_t time;
-        };
-        struct laston_data top[20];
-        int i, j;
-
-        for (i = 0; i < 20; i++) {
-            top[i].time = 0;
-            top[i].name[0] = '\0';
-        }
-
-        DIR *dp;
-        struct dirent *ep;
-        char path[MSL];
-        struct stat st;
-
-        dp = opendir("../player");
-        if ( dp != NULL )
-        {
-            while ( (ep = readdir(dp)) )
-            {
-                if ( ep->d_name[0] == '.' )
-                    continue;
-
-                // Check if currently logged in
-                bool online = FALSE;
-                DESCRIPTOR_DATA *d;
-                for ( d = descriptor_list; d != NULL; d = d->next )
-                {
-                    if ( d->character && d->connected == CON_PLAYING )
-                    {
-                        if ( !str_cmp( d->character->name, ep->d_name ) )
-                        {
-                            online = TRUE;
-                            break;
-                        }
-                    }
-                }
-                if ( online ) continue;
-
-                sprintf(path, "../player/%s", ep->d_name);
-                if ( stat(path, &st) == 0 )
-                {
-                    // If Mortal, we shouldn't show Immortals.
-                    // To verify without loading the whole char if possible, we use load_char_obj.
-                    if ( !is_imm )
-                    {
-                        DESCRIPTOR_DATA d_tmp;
-                        bool found = load_char_obj(&d_tmp, ep->d_name);
-                        if ( found )
-                        {
-                            bool victim_imm = IS_IMMORTAL(d_tmp.character);
-                            free_char(d_tmp.character);
-                            if ( victim_imm ) continue;
-                        }
-                    }
-
-                    time_t t = st.st_mtime;
-                    for ( i = 0; i < max_list; i++ )
-                    {
-                        if ( t > top[i].time )
-                        {
-                            for ( j = max_list - 1; j > i; j-- )
-                            {
-                                top[j] = top[j-1];
-                            }
-                            top[i].time = t;
-                            strncpy(top[i].name, ep->d_name, 49);
-                            top[i].name[49] = '\0';
-                            break;
-                        }
-                    }
-                }
-            }
-            closedir(dp);
-        }
+        LASTON_ENTRY *curr;
+        int count = 0;
 
         if ( is_imm )
             send_to_char("Recent logouts (Exact):\n\r", ch);
         else
             send_to_char("Recent logouts:\n\r", ch);
 
-        for ( i = 0; i < max_list; i++ )
+        for ( curr = laston_list; curr != NULL && count < max_list; curr = curr->next )
         {
-            if ( top[i].time == 0 ) break;
+            if ( !is_imm && curr->is_immortal )
+                continue;
+
+            count++;
 
             if ( is_imm )
             {
-                char *time_str = ctime(&top[i].time);
-                time_str[strlen(time_str)-1] = '\0'; // remove newline
-                cprintf(ch, "%-15s - %s\n\r", capitalize(top[i].name), time_str);
+                char *time_str = ctime(&curr->logout_time);
+                time_str[strlen(time_str)-1] = '\0';
+                cprintf(ch, "%-15s - %s\n\r", capitalize(curr->name), time_str);
             }
             else
             {
-                // Mortal approximate
-                long diff = current_time - top[i].time;
+                long diff = current_time - curr->logout_time;
                 char *approx;
                 if ( diff < 3600 ) approx = "a short while ago";
                 else if ( diff < 86400 ) approx = "within the last day";
@@ -5636,8 +5687,13 @@ void do_laston( CHAR_DATA *ch, char *argument )
                 else if ( diff < 2592000 ) approx = "within the last month";
                 else approx = "quite a while ago";
 
-                cprintf(ch, "%-15s logged off %s.\n\r", capitalize(top[i].name), approx);
+                cprintf(ch, "%-15s logged off %s.\n\r", capitalize(curr->name), approx);
             }
+        }
+
+        if ( count == 0 )
+        {
+            send_to_char("No recent logouts recorded.\n\r", ch);
         }
     }
     else
@@ -5645,6 +5701,12 @@ void do_laston( CHAR_DATA *ch, char *argument )
         // 1 argument
         DESCRIPTOR_DATA *d;
         CHAR_DATA *victim = NULL;
+        LASTON_ENTRY *curr;
+        bool found_in_cache = FALSE;
+        time_t logout_time = 0;
+        bool victim_is_imm = FALSE;
+
+        // Check if currently online
         for ( d = descriptor_list; d != NULL; d = d->next )
         {
             if ( d->character && d->connected == CON_PLAYING )
@@ -5657,34 +5719,45 @@ void do_laston( CHAR_DATA *ch, char *argument )
             }
         }
 
-        // If not online, maybe it's an offline immortal?
-        // We must load char to check if it's an immortal.
-        bool victim_is_imm = FALSE;
-        time_t victim_st_mtime = 0;
-
         if ( victim != NULL )
         {
             victim_is_imm = IS_IMMORTAL(victim);
         }
         else
         {
-            char path[MSL];
-            struct stat st;
-            sprintf(path, "../player/%s", capitalize(arg));
-            if ( stat(path, &st) == 0 )
+            // Search cache first
+            for ( curr = laston_list; curr != NULL; curr = curr->next )
             {
-                victim_st_mtime = st.st_mtime;
-                DESCRIPTOR_DATA d_tmp;
-                if ( load_char_obj(&d_tmp, capitalize(arg)) )
+                if ( !str_cmp( curr->name, arg ) )
                 {
-                    victim_is_imm = IS_IMMORTAL(d_tmp.character);
-                    free_char(d_tmp.character);
+                    found_in_cache = TRUE;
+                    logout_time = curr->logout_time;
+                    victim_is_imm = curr->is_immortal;
+                    break;
                 }
             }
-            else
+
+            // Fallback to single player file stat/load only if not found in cache
+            if ( !found_in_cache )
             {
-                send_to_char("No such character exists.\n\r", ch);
-                return;
+                char path[MSL];
+                struct stat st;
+                sprintf(path, "../player/%s", capitalize(arg));
+                if ( stat(path, &st) == 0 )
+                {
+                    logout_time = st.st_mtime;
+                    DESCRIPTOR_DATA d_tmp;
+                    if ( load_char_obj(&d_tmp, capitalize(arg)) )
+                    {
+                        victim_is_imm = IS_IMMORTAL(d_tmp.character);
+                        free_char(d_tmp.character);
+                    }
+                }
+                else
+                {
+                    send_to_char("No such character exists.\n\r", ch);
+                    return;
+                }
             }
         }
 
@@ -5696,7 +5769,6 @@ void do_laston( CHAR_DATA *ch, char *argument )
 
         if ( victim != NULL )
         {
-            // Online
             if ( is_imm )
             {
                 long diff = current_time - victim->logon;
@@ -5713,7 +5785,7 @@ void do_laston( CHAR_DATA *ch, char *argument )
         }
 
         // Offline
-        long diff = current_time - victim_st_mtime;
+        long diff = current_time - logout_time;
         if ( !is_imm && diff < 300 )
         {
             cprintf(ch, "%s is either currently logged in or very recently logged out.\n\r", capitalize(arg));
@@ -5722,7 +5794,7 @@ void do_laston( CHAR_DATA *ch, char *argument )
 
         if ( is_imm )
         {
-            char *time_str = ctime(&victim_st_mtime);
+            char *time_str = ctime(&logout_time);
             time_str[strlen(time_str)-1] = '\0';
             cprintf(ch, "%s last logged out at %s.\n\r", capitalize(arg), time_str);
         }

@@ -68,6 +68,8 @@ char *telcmds[] = {
 #define	TELOPT_EOR	25	/* end or record */
 #define TELOPT_EXOPL	255	/* extended-options-list */
 #define TELOPT_MSSP	70	/* mud server status protocol */
+#define TELOPT_GMCP	201	/* generic mud communication protocol */
+
 
 #define MSSP_VAR	1
 #define MSSP_VAL	2

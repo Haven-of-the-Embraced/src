@@ -2657,10 +2657,53 @@ void do_colour( CHAR_DATA *ch, char *argument )
     }
     return;
     }
+    else if ( !str_cmp( arg, "256" ) || !str_cmp( arg, "ansi256" ) )
+    {
+        if ( !IS_SET( ch->act, PLR_COLOUR ) )
+        {
+            send_to_char( "You must have standard colour enabled first.\n\r", ch );
+            return;
+        }
+        if ( !IS_SET( ch->act2, PLR2_ANSI256 ) )
+        {
+            SET_BIT( ch->act2, PLR2_ANSI256 );
+            send_to_char( "Extended 256-color support is now {vON{x!\n\r", ch );
+        }
+        else
+        {
+            REMOVE_BIT( ch->act2, PLR2_ANSI256 );
+            send_to_char( "Extended 256-color support is now OFF (falling back to standard ANSI).\n\r", ch );
+        }
+        return;
+    }
+    else if ( !str_cmp( arg, "palette" ) || !str_cmp( arg, "list" ) || !str_cmp( arg, "chart" ) )
+    {
+        send_to_char( "{D-===========================================================================-{x\n\r", ch );
+        send_to_char( "                         {WExtended Color Palette Chart{x\n\r", ch );
+        send_to_char( "{D-===========================================================================-{x\n\r", ch );
+        send_to_char( "  {{r{r dark red{x      {{g{g dark green{x    {{b{b dark blue{x     {{c{c dark cyan{x\n\r", ch );
+        send_to_char( "  {{m{m dark magenta{x  {{y{y dark yellow{x   {{w{w gray/white{x    {{D{D dark gray{x\n\r", ch );
+        send_to_char( "  {{R{R bright red{x    {{G{G bright green{x  {{B{B cornflower{x    {{C{C bright cyan{x\n\r", ch );
+        send_to_char( "  {{M{M bright mag{x    {{Y{Y bright yel{x    {{W{W bright white{x\n\r", ch );
+        send_to_char( "{D- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -{x\n\r", ch );
+        send_to_char( "  {{v{v violet{x        {{V{V br violet{x     {{P{P hot pink{x      {{p{p peach{x\n\r", ch );
+        send_to_char( "  {{o{o orange{x        {{O{O br orange{x     {{l{l lime green{x    {{L{L light green{x\n\r", ch );
+        send_to_char( "  {{t{t teal{x          {{T{T turquoise{x     {{a{a azure{x         {{A{A sky blue{x\n\r", ch );
+        send_to_char( "  {{n{n navy{x          {{N{N midnight{x      {{e{e emerald{x       {{E{E br emerald{x\n\r", ch );
+        send_to_char( "  {{f{f forest gr{x     {{F{F fern green{x    {{s{s silver{x        {{S{S steel gray{x\n\r", ch );
+        send_to_char( "  {{I{I indigo{x        {{i{i ice blue{x      {{j{j jade{x          {{J{J bright jade{x\n\r", ch );
+        send_to_char( "  {{k{k khaki{x         {{K{K gold{x          {{u{u rust{x          {{U{U umber{x\n\r", ch );
+        send_to_char( "  {{q{q quartz{x        {{Q{Q cream{x         {{h{h honey gold{x    {{H{H lavender{x\n\r", ch );
+        send_to_char( "  {{d{d dusty rose{x    {{z{z crimson{x       {{Z{Z scarlet{x\n\r", ch );
+        send_to_char( "{D-===========================================================================-{x\n\r", ch );
+        send_to_char( "  Usage: {gcolour 256{x to toggle 256-color support manually.\n\r", ch );
+        return;
+    }
     else
     {
-    send_to_char_bw( "Colour Configuration is unavailable in this\n\r", ch );
-    send_to_char_bw( "version of colour, sorry\n\r", ch );
+        send_to_char( "Syntax: colour\n\r", ch );
+        send_to_char( "        colour 256\n\r", ch );
+        send_to_char( "        colour palette\n\r", ch );
     }
 
     return;

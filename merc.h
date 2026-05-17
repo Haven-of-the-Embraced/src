@@ -259,24 +259,61 @@ typedef void ROOM_FUN	args( ( ROOM_INDEX_DATA *room, char *argument ) );
 /*
  * Colour stuff by Lope of Loping Through The MUD
  */
-#define CLEAR       "[0m"      /* Resets Colour    */
-#define C_RED       "[0;31m"   /* Normal Colours   */
-#define C_GREEN     "[0;32m"
-#define C_YELLOW    "[0;33m"
-#define C_BLUE      "[0;34m"
-#define C_MAGENTA   "[0;35m"
-#define C_CYAN      "[0;36m"
-#define C_WHITE     "[0;37m"
-#define C_D_GREY    "[1;30m"   /* Light Colors     */
-#define C_B_RED     "[1;31m"
-#define C_B_GREEN   "[1;32m"
-#define C_B_YELLOW  "[1;33m"
-#define C_B_BLUE    "[1;34m"
-#define C_B_MAGENTA "[1;35m"
-#define C_B_CYAN    "[1;36m"
-#define C_B_WHITE   "[1;37m"
+#define CLEAR       "\033[0m"      /* Resets Colour    */
+#define C_RED       "\033[0;31m"   /* Normal Colours   */
+#define C_GREEN     "\033[0;32m"
+#define C_YELLOW    "\033[0;33m"
+#define C_BLUE      "\033[0;34m"
+#define C_MAGENTA   "\033[0;35m"
+#define C_CYAN      "\033[0;36m"
+#define C_WHITE     "\033[0;37m"
+#define C_D_GREY    "\033[1;30m"   /* Light Colors     */
+#define C_B_RED     "\033[1;31m"
+#define C_B_GREEN   "\033[1;32m"
+#define C_B_YELLOW  "\033[1;33m"
+#define C_B_BLUE    "\033[38;5;68m" /* Softer Cornflower Blue */
+#define C_B_MAGENTA "\033[1;35m"
+#define C_B_CYAN    "\033[1;36m"
+#define C_B_WHITE   "\033[1;37m"
 
-#define MAX_RANDOM 14
+/* Extended 256-Color Palette */
+#define C_VIOLET       "\033[38;5;135m"
+#define C_B_VIOLET     "\033[38;5;171m"
+#define C_PINK         "\033[38;5;198m"
+#define C_PEACH        "\033[38;5;222m"
+#define C_ORANGE       "\033[38;5;208m"
+#define C_B_ORANGE     "\033[38;5;214m"
+#define C_LIME         "\033[38;5;118m"
+#define C_B_LIME       "\033[38;5;120m"
+#define C_TEAL         "\033[38;5;30m"
+#define C_TURQUOISE    "\033[38;5;44m"
+#define C_AZURE        "\033[38;5;33m"
+#define C_SKY          "\033[38;5;117m"
+#define C_NAVY         "\033[38;5;18m"
+#define C_MIDNIGHT     "\033[38;5;17m"
+#define C_EMERALD      "\033[38;5;35m"
+#define C_B_EMERALD    "\033[38;5;48m"
+#define C_FOREST       "\033[38;5;22m"
+#define C_FERN         "\033[38;5;28m"
+#define C_SILVER       "\033[38;5;249m"
+#define C_STEEL        "\033[38;5;245m"
+#define C_INDIGO       "\033[38;5;62m"
+#define C_ICE          "\033[38;5;159m"
+#define C_JADE         "\033[38;5;29m"
+#define C_B_JADE       "\033[38;5;42m"
+#define C_KHAKI        "\033[38;5;143m"
+#define C_GOLD         "\033[38;5;178m"
+#define C_RUST         "\033[38;5;130m"
+#define C_UMBER        "\033[38;5;94m"
+#define C_QUARTZ       "\033[38;5;230m"
+#define C_CREAM        "\033[38;5;229m"
+#define C_HONEY        "\033[38;5;172m"
+#define C_LAVENDER     "\033[38;5;183m"
+#define C_DUSTY_ROSE   "\033[38;5;174m"
+#define C_CRIMSON      "\033[38;5;160m"
+#define C_SCARLET      "\033[38;5;196m"
+
+#define MAX_RANDOM 49
 extern char randomcolors[MAX_RANDOM + 2];
 
 
@@ -624,6 +661,7 @@ struct  descriptor_data
     void *      pEdit;      /* OLC */
     char **     pString;    /* OLC */
     int         editor;     /* OLC */
+    bool        gmcp_enabled; /* Client supports GMCP */
 };
 
 
@@ -1965,6 +2003,8 @@ struct  kill_data
 #define PLR2_DEBUG        (O) // Flag char a debugger
 #define PLR2_DEBUGMSG     (P) // Show debug messages
 #define PLR2_RP_AVAILABLE (Q) // Show player looking for RP
+#define PLR2_ANSI256      (R) // Client supports 256 colors manually
+
 
 
 /* RT comm flags -- may be used on both mobs and chars */
@@ -3730,6 +3770,13 @@ int colour      args( ( char type, CHAR_DATA *ch, char *string ) );
 void    colourconv  args( ( char *buffer, const char *txt, CHAR_DATA *ch ) );
 void    send_to_char_bw args( ( const char *txt, CHAR_DATA *ch ) );
 void    page_to_char_bw args( ( const char *txt, CHAR_DATA *ch ) );
+
+/* gmcp.c */
+void    gmcp_send           args( ( DESCRIPTOR_DATA *d, const char *package, const char *data ) );
+void    gmcp_send_room      args( ( CHAR_DATA *ch ) );
+void    gmcp_send_char_vitals args( ( CHAR_DATA *ch ) );
+const char * sector_name    args( ( int sector ) );
+
 
 /* db.c */
 void    reset_area      args( ( AREA_DATA * pArea ) );      /* OLC */

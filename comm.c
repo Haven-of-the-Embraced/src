@@ -367,7 +367,7 @@ bool    write_to_descriptor args( ( int desc, char *txt, int length ) );
 
 
 
-char randomcolors[MAX_RANDOM+2] = "RrGgYyBbMmCcWwD";
+char randomcolors[MAX_RANDOM+2] = "RrGgYyBbMmCcWwDvVPpoOlLtTaAnNeEfFsSiIjJkKuUqQhHdzZ";
 
 /*
  * Other local functions (OS-independent).
@@ -1107,7 +1107,10 @@ void init_descriptor( int control )
     {
     extern char * help_greeting;
     const char mssp_will[] = { IAC, WILL, TELOPT_MSSP, '\0' };
+    const char gmcp_will[] = { IAC, WILL, TELOPT_GMCP, '\0' };
     write_to_buffer( dnew, mssp_will, 0 );
+    write_to_buffer( dnew, gmcp_will, 0 );
+
 
     if ( help_greeting[0] == '.' )
         write_to_buffer( dnew, help_greeting+1, 0 );
@@ -1301,11 +1304,25 @@ void read_from_buffer( DESCRIPTOR_DATA *d )
             }
             unsigned char cmd = d->inbuf[i+1];
             if ( cmd == DO && d->inbuf[i+2] == TELOPT_MSSP )
+
             {
                 send_mssp(d);
                 i += 3;
                 continue;
             }
+            if ( cmd == DO && (unsigned char)d->inbuf[i+2] == TELOPT_GMCP )
+            {
+                d->gmcp_enabled = TRUE;
+                i += 3;
+                continue;
+            }
+            if ( cmd == DONT && (unsigned char)d->inbuf[i+2] == TELOPT_GMCP )
+            {
+                d->gmcp_enabled = FALSE;
+                i += 3;
+                continue;
+            }
+
             if ( cmd == DO || cmd == DONT || cmd == WILL || cmd == WONT )
             {
                 if ( d->inbuf[i+2] == '\0' )
@@ -1586,8 +1603,11 @@ bool process_output( DESCRIPTOR_DATA *d, bool fPrompt )
  */
 void bust_a_prompt( CHAR_DATA *ch )
 {
+    if ( ch->desc && ch->desc->gmcp_enabled )
+        gmcp_send_char_vitals( ch );
 
     char buf[MAX_STRING_LENGTH];
+
     char buf2[MAX_STRING_LENGTH];
     const char *str;
     const char *i;
@@ -3703,18 +3723,20 @@ int gettimeofday( struct timeval *tp, void *tzp )
 
 int colour( char type, CHAR_DATA *ch, char *string )
 {
-    char    code[ 20 ];
+    char    code[ 32 ];
     char    *p = NULL;
+    bool    is_256 = FALSE;
 
     if( IS_NPC( ch ) )
     return( 0 );
 
+    if ( ch->desc && (ch->desc->gmcp_enabled || (!IS_NPC(ch) && IS_SET(ch->act2, PLR2_ANSI256))) )
+        is_256 = TRUE;
 
         switch( type )
         {
         default:
             sprintf(code, "{%c",type);
-//          sprintf( code, CLEAR );
             break;
         case 'x':
             sprintf( code, CLEAR );
@@ -3771,7 +3793,114 @@ int colour( char type, CHAR_DATA *ch, char *string )
             sprintf( code, "%c", '{' );
             break;
 
+        /* Extended 256-color cases with standard ANSI fallback */
+        case 'v':
+            sprintf( code, is_256 ? C_VIOLET : C_MAGENTA );
+            break;
+        case 'V':
+            sprintf( code, is_256 ? C_B_VIOLET : C_B_MAGENTA );
+            break;
+        case 'P':
+            sprintf( code, is_256 ? C_PINK : C_B_MAGENTA );
+            break;
+        case 'p':
+            sprintf( code, is_256 ? C_PEACH : C_YELLOW );
+            break;
+        case 'o':
+            sprintf( code, is_256 ? C_ORANGE : C_YELLOW );
+            break;
+        case 'O':
+            sprintf( code, is_256 ? C_B_ORANGE : C_B_YELLOW );
+            break;
+        case 'l':
+            sprintf( code, is_256 ? C_LIME : C_B_GREEN );
+            break;
+        case 'L':
+            sprintf( code, is_256 ? C_B_LIME : C_B_GREEN );
+            break;
+        case 't':
+            sprintf( code, is_256 ? C_TEAL : C_CYAN );
+            break;
+        case 'T':
+            sprintf( code, is_256 ? C_TURQUOISE : C_B_CYAN );
+            break;
+        case 'a':
+            sprintf( code, is_256 ? C_AZURE : C_BLUE );
+            break;
+        case 'A':
+            sprintf( code, is_256 ? C_SKY : C_B_CYAN );
+            break;
+        case 'n':
+            sprintf( code, is_256 ? C_NAVY : C_BLUE );
+            break;
+        case 'N':
+            sprintf( code, is_256 ? C_MIDNIGHT : C_BLUE );
+            break;
+        case 'e':
+            sprintf( code, is_256 ? C_EMERALD : C_B_GREEN );
+            break;
+        case 'E':
+            sprintf( code, is_256 ? C_B_EMERALD : C_B_GREEN );
+            break;
+        case 'f':
+            sprintf( code, is_256 ? C_FOREST : C_GREEN );
+            break;
+        case 'F':
+            sprintf( code, is_256 ? C_FERN : C_GREEN );
+            break;
+        case 's':
+            sprintf( code, is_256 ? C_SILVER : C_WHITE );
+            break;
+        case 'S':
+            sprintf( code, is_256 ? C_STEEL : C_D_GREY );
+            break;
+        case 'I':
+            sprintf( code, is_256 ? C_INDIGO : C_BLUE );
+            break;
+        case 'i':
+            sprintf( code, is_256 ? C_ICE : C_B_CYAN );
+            break;
+        case 'j':
+            sprintf( code, is_256 ? C_JADE : C_GREEN );
+            break;
+        case 'J':
+            sprintf( code, is_256 ? C_B_JADE : C_B_GREEN );
+            break;
+        case 'k':
+            sprintf( code, is_256 ? C_KHAKI : C_YELLOW );
+            break;
+        case 'K':
+            sprintf( code, is_256 ? C_GOLD : C_B_YELLOW );
+            break;
+        case 'u':
+            sprintf( code, is_256 ? C_RUST : C_RED );
+            break;
+        case 'U':
+            sprintf( code, is_256 ? C_UMBER : C_RED );
+            break;
+        case 'q':
+            sprintf( code, is_256 ? C_QUARTZ : C_WHITE );
+            break;
+        case 'Q':
+            sprintf( code, is_256 ? C_CREAM : C_B_WHITE );
+            break;
+        case 'h':
+            sprintf( code, is_256 ? C_HONEY : C_YELLOW );
+            break;
+        case 'H':
+            sprintf( code, is_256 ? C_LAVENDER : C_B_MAGENTA );
+            break;
+        case 'd':
+            sprintf( code, is_256 ? C_DUSTY_ROSE : C_RED );
+            break;
+        case 'z':
+            sprintf( code, is_256 ? C_CRIMSON : C_RED );
+            break;
+        case 'Z':
+            sprintf( code, is_256 ? C_SCARLET : C_B_RED );
+            break;
         }
+
     p = code;
     while( *p != '\0' )
     {

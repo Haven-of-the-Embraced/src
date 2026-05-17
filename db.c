@@ -3710,7 +3710,7 @@ char *fread_word( FILE *fp )
     for ( ; pword < word + MAX_INPUT_LENGTH; pword++ )
     {
     *pword = getc( fp );
-    if ( cEnd == ' ' ? isspace(*pword) : *pword == cEnd )
+    if ( ( cEnd == ' ' ? isspace(*pword) : *pword == cEnd ) || *pword == EOF )
     {
         if ( cEnd == ' ' )
         ungetc( *pword, fp );

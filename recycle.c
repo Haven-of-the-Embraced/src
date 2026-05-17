@@ -131,8 +131,10 @@ DESCRIPTOR_DATA *new_descriptor(void)
     d->showstr_point = NULL;
     d->outsize  = 2000;
     d->outbuf   = alloc_mem( d->outsize );
+    d->gmcp_enabled = FALSE;
 
     return d;
+
 }
 
 void free_descriptor(DESCRIPTOR_DATA *d)

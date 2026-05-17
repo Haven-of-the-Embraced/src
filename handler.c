@@ -1899,7 +1899,11 @@ void char_to_room( CHAR_DATA *ch, ROOM_INDEX_DATA *pRoomIndex )
     if (is_affected(ch, gsn_gift_lambentfire))
       ch->in_room->light += 2;
 
+    if ( ch->desc && ch->desc->gmcp_enabled )
+        gmcp_send_room( ch );
+
     return;
+
 }
 
 

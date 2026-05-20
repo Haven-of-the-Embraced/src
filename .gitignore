@@ -4,3 +4,4 @@ nohup.out
 .ftpignore
 .ftpconfig
 .gitignore
+.vscode

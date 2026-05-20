@@ -1053,7 +1053,10 @@ void do_say( CHAR_DATA *ch, char *argument )
     act( "{xYou say '{w$T{x'", ch, NULL, argument, TO_CHAR );
     RECORD_TO_REPLAYROOM=FALSE;
     if (!IS_NPC(ch) && IS_SET(ch->act, PLR_IC))
+    {
         ch->pcdata->last_pose = 0;
+        gain_rp_activity(ch, argument);
+    }
     if ( !IS_NPC(ch) )
     {
         CHAR_DATA *mob, *mob_next;
@@ -1219,6 +1222,9 @@ void do_whisper( CHAR_DATA *ch, char *argument )
     if (!IS_NPC(ch) && IS_NPC(victim) && HAS_TRIGGER_MOB(victim,TRIG_SPEECH) &&
         (victim->position > POS_SLEEPING) && (victim->position != POS_FIGHTING))
         p_act_trigger( argument, victim,NULL, NULL, ch, NULL, NULL, TRIG_SPEECH );
+
+    if (!IS_NPC(ch) && IS_SET(ch->act, PLR_IC))
+        gain_rp_activity(ch, argument);
 
 }// do_whisper
 
@@ -1464,7 +1470,10 @@ void do_emote( CHAR_DATA *ch, char *argument )
         mob->pcdata->room_last_pose = 0;
     }
     if (!IS_NPC(ch) && IS_SET(ch->act, PLR_IC))
+    {
         ch->pcdata->last_pose = 0;
+        gain_rp_activity(ch, argument);
+    }
 
     return;
 }
@@ -1564,7 +1573,10 @@ void do_pmote( CHAR_DATA *ch, char *argument )
         mob->pcdata->room_last_pose = 0;
     }
     if (!IS_NPC(ch) && IS_SET(ch->act, PLR_IC))
+    {
         ch->pcdata->last_pose = 0;
+        gain_rp_activity(ch, argument);
+    }
 
     }
 

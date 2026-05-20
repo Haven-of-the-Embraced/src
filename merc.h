@@ -2545,6 +2545,8 @@ struct  pc_data
 /* Matt's anti rp milking code. */
     int         last_pose;
     int         room_last_pose;
+    long        rp_activity;
+    int         rp_lines;
 
 // replay buffers
     unsigned int        next_replaytell;
@@ -4543,3 +4545,13 @@ extern      ROOM_INDEX_DATA *   room_index_hash [MAX_KEY_HASH];
 extern      char            *help_list  [MAX_HELP];
 
 CMD_DATA *cmd_lookup(const char *name );
+
+/* Dawn of Time style RPEXP constants and functions */
+#define MAX_RP_ACTIVITY         3000
+#define RP_EXP_MULTIPLIER       8
+#define RP_QP_DIVISOR           4
+#define RP_TICK_DRAIN_FRACTION  10
+#define RP_TICK_DRAIN_MIN       50
+
+void gain_rp_activity(CHAR_DATA *ch, char *argument);
+void gain_social_activity(CHAR_DATA *ch);

@@ -182,7 +182,9 @@ void fwrite_char( CHAR_DATA *ch, FILE *fp )
         fprintf( fp, "ICtotal %ld\n",ch->pcdata->IC_total);
         fprintf( fp, "ICrank %ld\n",ch->pcdata->IC_rank);
         fprintf( fp, "ICgoal %ld\n",ch->pcdata->IC_goal);
-        fprintf (fp, "Influ %d\n", ch->pcdata->influenced);
+        fprintf( fp, "Influ %d\n", ch->pcdata->influenced);
+        fprintf( fp, "RPAct %ld\n", ch->pcdata->rp_activity);
+        fprintf( fp, "RPLin %d\n", ch->pcdata->rp_lines);
 
         if(ch->pcdata->registered)
         {
@@ -911,6 +913,8 @@ bool load_char_obj( DESCRIPTOR_DATA *d, char *name )
     ch->pcdata->condition[COND_HUNGER]  = 48;
     ch->pcdata->last_pose = 5;
     ch->pcdata->room_last_pose = 5;
+    ch->pcdata->rp_activity = 0;
+    ch->pcdata->rp_lines = 0;
     ch->pcdata->security        = 0;    /* OLC */
     ch->pcdata->immclass = 0;
     ch->pcdata->sect        = 0;
@@ -1621,6 +1625,8 @@ void fread_char( CHAR_DATA *ch, FILE *fp )
         KEY( "Remorts", ch->remorts,        fread_number( fp ) );
         KEY( "Renown",  ch->renown, fread_number( fp ) );
                 KEY( "Resis",     ch->res_flags,        fread_flag( fp ) );
+        KEY( "RPAct",   ch->pcdata->rp_activity,        fread_number( fp ) );
+        KEY( "RPLin",   ch->pcdata->rp_lines,           fread_number( fp ) );
 
         if ( !str_cmp( word, "Room" ) )
         {

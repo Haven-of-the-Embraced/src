@@ -1134,68 +1134,37 @@ void char_update( void )
         }
     }   /* add rank gain and goal gain here */
         }
-    if(ch->qpoints < MAX_QPOINTS)
-    {
-        ichours = ch->pcdata->IC_total/60;
-
-            qpgain = number_range(ichours, ichours/2 + 8);
-        if (ichours >= 100)
-            qpgain = number_range(ichours/2, ichours/4 + 8);
-        if (ichours > 300)
-            qpgain = number_range(ichours/4, ichours/8 + 8);
-        if (ichours > 600)
-            qpgain = number_range(ichours/8, ichours/16 + 8);
-
-       switch (ch->pcdata->room_last_pose) {
-           case 0: case 1:
-           case 2: case 3: qpgain = 3*qpgain/2;break;
-           case 4: case 5: break;
-           case 6: case 7: qpgain = qpgain/2;break;
-           default: qpgain = 4;break;
-       }
-        // Doing math ahead of time so variables match
-        qpaward = UMIN(200+ch->remorts, qpgain);
-        if (qpaward > 50)
-          qpaward = 50;
-
-       if (ch->pcdata->last_pose < 8)
+        if (!IS_NPC(ch))
         {
+            long drain_amount = ch->pcdata->rp_activity / RP_TICK_DRAIN_FRACTION;
+            if (drain_amount < RP_TICK_DRAIN_MIN)
+                drain_amount = UMIN(ch->pcdata->rp_activity, RP_TICK_DRAIN_MIN);
 
-        // Line for this into gxp as well
-             global_xp += qpaward*xpmult;
-             gain_qp(ch, qpaward);
+            if (drain_amount > 0)
+            {
+                ch->pcdata->rp_activity -= drain_amount;
+
+                /* Calculate QP Reward */
+                qpaward = drain_amount / RP_QP_DIVISOR;
+                qpaward = UMIN(50, qpaward);
+
+                if (qpaward > 0 && ch->qpoints < MAX_QPOINTS)
+                {
+                    global_xp += qpaward * xpmult;
+                    gain_qp(ch, qpaward);
+                }
+
+                /* Calculate EXP Reward */
+                rpxp = drain_amount * RP_EXP_MULTIPLIER;
+                rpaddictxp = get_addict_bonus(ch, rpxp);
+                rpxp += rpaddictxp;
+                rpxp = UMIN((370 + ch->remorts) * 2, rpxp);
+
+                gain_exp(ch, rpxp);
+                if (doubleexp)
+                    gain_exp(ch, rpxp);
+            }
         }
-
-/*
-       if (doubleexp)
-           {
-           qpaward = qpaward*2;
-           global_xp -= qpaward*2;
-
-            if (global_qp > 40000)
-              {
-                 qpaward = qpaward*2;
-                 global_qp -= qpaward;
-              }
-           ch->qpoints += qpaward;
-           ch->totalqpoints += qpaward;
-       }
-*/
-
-
-        }
-
-
-/* New experience code added by Sengir to help out the hardcore RP'ers, Revised by Matthew
-   Calculation: exp random 50-rphrs+100 max 370+remorts*2 */
-
-   ichours = (ch->played + (int) (current_time - ch->logon)) / 3600;
-   rpxp = UMIN( (370 + ch->remorts)*2, number_range( ichours/8, (ichours/6 + ch->roleplaying)));
-   rpaddictxp = get_addict_bonus(ch, rpxp);
-   rpxp += rpaddictxp;
-   gain_exp(ch, rpxp);
-   if (doubleexp)
-      gain_exp( ch, UMIN( (370 + ch->remorts)*2, number_range( ichours/8, (ichours/6 + ch->roleplaying))*xpawardmult));
     }
 
     if(ch->race == race_lookup("vampire") || ch->race == race_lookup("methuselah"))

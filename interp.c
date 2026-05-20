@@ -514,6 +514,9 @@ bool check_social( CHAR_DATA *ch, char *command, char *argument )
     }
     }
 
+    if (!IS_NPC(ch) && IS_SET(ch->act, PLR_IC))
+        gain_social_activity(ch);
+
     return TRUE;
 }
 

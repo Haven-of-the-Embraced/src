@@ -294,10 +294,27 @@ void do_rote(CHAR_DATA *ch, char *argument)
                                 return;
                             }
                             break;
-        case TARGET_OBJ:    if(arg2[0] == '\0'|| (obj = get_obj_carry(ch,arg2,ch)) == NULL)
+        case TARGET_OBJ:
+                            if (arg2[0] == '\0')
                             {
-                                send_to_char("You do not have that object.\n\r",ch);
+                                send_to_char("Target what object?\n\r", ch);
                                 return;
+                            }
+                            if (rote == rote_lookup("matter perception"))
+                            {
+                                if ((obj = get_obj_here(ch, NULL, arg2)) == NULL)
+                                {
+                                    send_to_char("You do not see that object here.\n\r", ch);
+                                    return;
+                                }
+                            }
+                            else
+                            {
+                                if ((obj = get_obj_carry(ch, arg2, ch)) == NULL)
+                                {
+                                    send_to_char("You do not have that object.\n\r", ch);
+                                    return;
+                                }
                             }
                             break;
     }

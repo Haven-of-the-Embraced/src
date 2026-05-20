@@ -97,17 +97,38 @@ char * string_replace( char * orig, char * old, char * new )
     char xbuf[MAX_STRING_LENGTH];
     int i;
 
+    if ( orig == NULL )
+        return str_dup( "" );
+    if ( old == NULL || new == NULL )
+        return str_dup( orig );
+
     xbuf[0] = '\0';
-    strcpy( xbuf, orig );
     if ( strstr( orig, old ) != NULL )
     {
         i = strlen( orig ) - strlen( strstr( orig, old ) );
+        if ( i >= MAX_STRING_LENGTH )
+        {
+            i = MAX_STRING_LENGTH - 1;
+        }
+        
+        strncpy( xbuf, orig, i );
         xbuf[i] = '\0';
-        strcat( xbuf, new );
-        strcat( xbuf, &orig[i+strlen( old )] );
+        
+        strncat( xbuf, new, MAX_STRING_LENGTH - i - 1 );
+        
+        int len_so_far = strlen( xbuf );
+        int old_len = strlen( old );
+        if ( len_so_far < MAX_STRING_LENGTH - 1 )
+        {
+            strncat( xbuf, &orig[i + old_len], MAX_STRING_LENGTH - len_so_far - 1 );
+        }
+        
         free_string( orig );
+        return str_dup( xbuf );
     }
 
+    strncpy( xbuf, orig, MAX_STRING_LENGTH - 1 );
+    xbuf[MAX_STRING_LENGTH - 1] = '\0';
     return str_dup( xbuf );
 }
 
@@ -136,7 +157,8 @@ void string_add( CHAR_DATA *ch, char *argument )
 
         argument = one_argument( argument, arg1 );
         argument = first_arg( argument, arg2, FALSE );
-    strcpy( tmparg3, argument );
+    strncpy( tmparg3, argument, MAX_INPUT_LENGTH - 1 );
+    tmparg3[MAX_INPUT_LENGTH - 1] = '\0';
         argument = first_arg( argument, arg3, FALSE );
 
         if ( !str_cmp( arg1, ".c" ) )
@@ -286,7 +308,8 @@ void string_add( CHAR_DATA *ch, char *argument )
         return;
     }
 
-    strcpy( buf, *ch->desc->pString );
+    strncpy( buf, *ch->desc->pString, MAX_STRING_LENGTH - 1 );
+    buf[MAX_STRING_LENGTH - 1] = '\0';
 
     /*
      * Truncate strings to MAX_STRING_LENGTH.
@@ -307,8 +330,8 @@ void string_add( CHAR_DATA *ch, char *argument )
      */
     smash_tilde( argument );
 
-    strcat( buf, argument );
-    strcat( buf, "\n\r" );
+    strncat( buf, argument, MAX_STRING_LENGTH - strlen(buf) - 1 );
+    strncat( buf, "\n\r", MAX_STRING_LENGTH - strlen(buf) - 1 );
     free_string( *ch->desc->pString );
     *ch->desc->pString = str_dup( buf );
     return;
@@ -333,15 +356,25 @@ char *format_string( char *oldstring /*, bool fSpace */)
   int i=0;
   bool cap=TRUE;
 
+  if (oldstring == NULL || oldstring[0] == '\0')
+  {
+      if (oldstring != NULL)
+          free_string(oldstring);
+      return str_dup("");
+  }
+
   xbuf[0]=xbuf2[0]=0;
 
   i=0;
 
   for (rdesc = oldstring; *rdesc; rdesc++)
   {
+    if (i >= MAX_STRING_LENGTH - 10)
+      break;
+
     if (*rdesc=='\n')
     {
-      if (xbuf[i-1] != ' ')
+      if (i > 0 && xbuf[i-1] != ' ')
       {
         xbuf[i]=' ';
         i++;
@@ -350,7 +383,7 @@ char *format_string( char *oldstring /*, bool fSpace */)
     else if (*rdesc=='\r') ;
     else if (*rdesc==' ')
     {
-      if (xbuf[i-1] != ' ')
+      if (i > 0 && xbuf[i-1] != ' ')
       {
         xbuf[i]=' ';
         i++;
@@ -358,7 +391,7 @@ char *format_string( char *oldstring /*, bool fSpace */)
     }
     else if (*rdesc==')')
     {
-      if (xbuf[i-1]==' ' && xbuf[i-2]==' ' &&
+      if (i >= 3 && xbuf[i-1]==' ' && xbuf[i-2]==' ' &&
           (xbuf[i-3]=='.' || xbuf[i-3]=='?' || xbuf[i-3]=='!'))
       {
         xbuf[i-2]=*rdesc;
@@ -373,7 +406,7 @@ char *format_string( char *oldstring /*, bool fSpace */)
       }
     }
     else if (*rdesc=='.' || *rdesc=='?' || *rdesc=='!') {
-      if (xbuf[i-1]==' ' && xbuf[i-2]==' ' &&
+      if (i >= 3 && xbuf[i-1]==' ' && xbuf[i-2]==' ' &&
           (xbuf[i-3]=='.' || xbuf[i-3]=='?' || xbuf[i-3]=='!')) {
         xbuf[i-2]=*rdesc;
         if (*(rdesc+1) != '\"')
@@ -423,7 +456,9 @@ char *format_string( char *oldstring /*, bool fSpace */)
     }
   }
   xbuf[i]=0;
-  strcpy(xbuf2,xbuf);
+
+  strncpy(xbuf2, xbuf, MAX_STRING_LENGTH - 1);
+  xbuf2[MAX_STRING_LENGTH - 1] = '\0';
 
   rdesc=xbuf2;
 
@@ -446,8 +481,8 @@ char *format_string( char *oldstring /*, bool fSpace */)
     if (i)
     {
       *(rdesc+i)=0;
-      strcat(xbuf,rdesc);
-      strcat(xbuf,"\n\r");
+      strncat(xbuf, rdesc, MAX_STRING_LENGTH - strlen(xbuf) - 1);
+      strncat(xbuf, "\n\r", MAX_STRING_LENGTH - strlen(xbuf) - 1);
       rdesc += i+1;
       while (*rdesc == ' ') rdesc++;
     }
@@ -455,19 +490,30 @@ char *format_string( char *oldstring /*, bool fSpace */)
     {
       bug ("No spaces", 0);
       *(rdesc+75)=0;
-      strcat(xbuf,rdesc);
-      strcat(xbuf,"-\n\r");
+      strncat(xbuf, rdesc, MAX_STRING_LENGTH - strlen(xbuf) - 1);
+      strncat(xbuf, "-\n\r", MAX_STRING_LENGTH - strlen(xbuf) - 1);
       rdesc += 76;
     }
   }
-  while (*(rdesc+i) && (*(rdesc+i)==' '||
-                        *(rdesc+i)=='\n'||
-                        *(rdesc+i)=='\r'))
+  
+  for (i = 0; i < 77; i++)
+  {
+    if (!*(rdesc+i)) break;
+  }
+  i--;
+
+  while (i >= 0 && *(rdesc+i) && (*(rdesc+i)==' '||
+                                  *(rdesc+i)=='\n'||
+                                  *(rdesc+i)=='\r'))
     i--;
   *(rdesc+i+1)=0;
-  strcat(xbuf,rdesc);
-  if (xbuf[strlen(xbuf)-2] != '\n')
-    strcat(xbuf,"\n\r");
+  strncat(xbuf, rdesc, MAX_STRING_LENGTH - strlen(xbuf) - 1);
+  
+  int len = strlen(xbuf);
+  if (len >= 2 && xbuf[len-2] != '\n')
+    strncat(xbuf, "\n\r", MAX_STRING_LENGTH - len - 1);
+  else if (len < 2)
+    strncat(xbuf, "\n\r", MAX_STRING_LENGTH - len - 1);
 
   free_string(oldstring);
   return(str_dup(xbuf));
@@ -485,17 +531,27 @@ char *wrapstring( char *oldstring )
   char xbuf[HSL];
   char *rdesc;
   bool cap=TRUE;
-char strwrap[HSL];
-int i = 0;
-int count = 0;
+  char strwrap[HSL];
+  int i = 0;
+  int count = 0;
+
+  if (oldstring == NULL || oldstring[0] == '\0')
+  {
+      if (oldstring != NULL)
+          free_string(oldstring);
+      return str_dup("");
+  }
 
   xbuf[0]=strwrap[0]=0;
 
   for (rdesc = oldstring; *rdesc; rdesc++)
   {
+    if (i >= HSL - 10)
+      break;
+
     if (*rdesc=='\n')
     {
-      if (xbuf[i-1] != ' ')
+      if (i > 0 && xbuf[i-1] != ' ')
       {
         xbuf[i]=' ';
         i++;
@@ -504,7 +560,7 @@ int count = 0;
     else if (*rdesc=='\r') ;
     else if (*rdesc==' ')
     {
-      if (xbuf[i-1] != ' ')
+      if (i > 0 && xbuf[i-1] != ' ')
       {
         xbuf[i]=' ';
         i++;
@@ -512,7 +568,7 @@ int count = 0;
     }
     else if (*rdesc==')')
     {
-      if (xbuf[i-1]==' ' && xbuf[i-2]==' ' &&
+      if (i >= 3 && xbuf[i-1]==' ' && xbuf[i-2]==' ' &&
           (xbuf[i-3]=='.' || xbuf[i-3]=='?' || xbuf[i-3]=='!'))
       {
         xbuf[i-2]=*rdesc;
@@ -527,7 +583,7 @@ int count = 0;
       }
     }
     else if (*rdesc=='.' || *rdesc=='?' || *rdesc=='!') {
-      if (xbuf[i-1]==' ' && xbuf[i-2]==' ' &&
+      if (i >= 3 && xbuf[i-1]==' ' && xbuf[i-2]==' ' &&
           (xbuf[i-3]=='.' || xbuf[i-3]=='?' || xbuf[i-3]=='!')) {
         xbuf[i-2]=*rdesc;
         if (*(rdesc+1) != '\"')
@@ -576,36 +632,49 @@ int count = 0;
       i++;
     }
   }
+  xbuf[i] = '\0';
 
+  int xbuf_len = strlen(xbuf);
+  for ( i = 0; i < xbuf_len; i++ )
+  {
+    if (i >= HSL - 5)
+      break;
 
-for ( i = 0; i < strlen(xbuf); i++ )
-{
-count++;
-if ( count > 70 && xbuf[i] == ' ' )
-{
-strwrap[i] = '\n';
-strwrap[i+1] = '\r';
-count = 0;
-    if (xbuf[i+1] == ' ' )
-        i++;
+    count++;
+    if ( count > 70 && xbuf[i] == ' ' )
+    {
+      strwrap[i] = '\n';
+      strwrap[i+1] = '\r';
+      count = 0;
+      if (i + 1 < xbuf_len && xbuf[i+1] == ' ' )
+          i++;
+    }
+    else
+    {
+      if (i + 1 < xbuf_len && xbuf[i] == '{' && xbuf[i+1] == '/' )
+          count = 0;
 
-}
-else
-{
-if (xbuf[i] == '{' && xbuf[i+1] == '/' )
-        count = 0;
+      strwrap[i] = xbuf[i];
+    }
+  }
 
-strwrap[i] = xbuf[i];
-}
-}
-strwrap[i] = '\0';
-strwrap[i] = '\n';
-strwrap[i+1] = '\r';
-strwrap[i+2] = '\0';
-sprintf(xbuf, "\n\r%s", strwrap);
-sprintf(strwrap, "%s", xbuf);
-free_string(oldstring);
-return(str_dup(strwrap));
+  if (i < HSL - 3)
+  {
+    strwrap[i] = '\n';
+    strwrap[i+1] = '\r';
+    strwrap[i+2] = '\0';
+  }
+  else
+  {
+    strwrap[HSL - 1] = '\0';
+  }
+
+  snprintf(xbuf, HSL, "\n\r%s", strwrap);
+  strncpy(strwrap, xbuf, HSL - 1);
+  strwrap[HSL - 1] = '\0';
+
+  free_string(oldstring);
+  return(str_dup(strwrap));
 }
 
 
@@ -678,7 +747,8 @@ char * string_unpad( char * argument )
     while ( *s == ' ' )
         s++;
 
-    strcpy( buf, s );
+    strncpy( buf, s, MAX_STRING_LENGTH - 1 );
+    buf[MAX_STRING_LENGTH - 1] = '\0';
     s = buf;
 
     if ( *s != '\0' )
@@ -736,6 +806,9 @@ char *string_linedel( char *string, int line )
 
     for ( ; *strtmp != '\0'; strtmp++ )
     {
+        if ( tmp >= MAX_STRING_LENGTH - 5 )
+            break;
+
         if ( cnt != line )
             buf[tmp++] = *strtmp;
 
@@ -744,9 +817,12 @@ char *string_linedel( char *string, int line )
             if ( *(strtmp + 1) == '\r' )
             {
                 if ( cnt != line )
-                    buf[tmp++] = *(++strtmp);
+                {
+                    strtmp++;
+                    buf[tmp++] = *strtmp;
+                }
                 else
-                    ++strtmp;
+                    strtmp++;
             }
 
             cnt++;
@@ -768,39 +844,55 @@ char *string_lineadd( char *string, char *newstr, int line )
 
     buf[0] = '\0';
 
-    for ( ; *strtmp != '\0' || (!done && cnt == line); strtmp++ )
+    for ( ; *strtmp != '\0' || (!done && cnt == line); )
     {
+        if ( tmp >= MAX_STRING_LENGTH - 5 )
+            break;
+
         if ( cnt == line && !done )
         {
-            strcat( buf, newstr );
-            strcat( buf, "\n\r" );
-            tmp += strlen(newstr) + 2;
+            int new_len = strlen(newstr);
+            if ( tmp + new_len + 2 < MAX_STRING_LENGTH - 1 )
+            {
+                strcpy( &buf[tmp], newstr );
+                tmp += new_len;
+                buf[tmp++] = '\n';
+                buf[tmp++] = '\r';
+                buf[tmp] = '\0';
+            }
             cnt++;
             done = TRUE;
         }
 
-        buf[tmp++] = *strtmp;
-
-        if ( done && *strtmp == '\0' )
+        if ( *strtmp == '\0' )
             break;
+
+        buf[tmp++] = *strtmp;
 
         if ( *strtmp == '\n' )
         {
             if ( *(strtmp + 1) == '\r' )
-                buf[tmp++] = *(++strtmp);
+            {
+                strtmp++;
+                if ( tmp < MAX_STRING_LENGTH - 1 )
+                    buf[tmp++] = *strtmp;
+            }
 
             cnt++;
         }
 
+        strtmp++;
         buf[tmp] = '\0';
     }
+
+    buf[tmp] = '\0';
 
     free_string(string);
     return str_dup(buf);
 }
 
 /* buf queda con la linea sin \n\r */
-char *ugetline( char *str, char *buf )
+char *ugetline( char *str, char *buf, int max_len )
 {
     int tmp = 0;
     bool found = FALSE;
@@ -813,7 +905,11 @@ char *ugetline( char *str, char *buf )
             break;
         }
 
-        buf[tmp++] = *(str++);
+        if ( tmp < max_len - 1 )
+        {
+            buf[tmp++] = *str;
+        }
+        str++;
     }
 
     if ( found )
@@ -832,17 +928,31 @@ char *ugetline( char *str, char *buf )
 char *numlineas( char *string )
 {
     int cnt = 1;
-    static char buf[MAX_STRING_LENGTH*2];
+    static char buf[4][MAX_STRING_LENGTH*2];
+    static int toggle = 0;
     char buf2[MAX_STRING_LENGTH], tmpb[MAX_STRING_LENGTH];
 
-    buf[0] = '\0';
+    toggle = (toggle + 1) % 4;
+    char *pbuf = buf[toggle];
+    pbuf[0] = '\0';
+
+    if ( string == NULL )
+        return pbuf;
 
     while ( *string )
     {
-        string = ugetline( string, tmpb );
-        sprintf( buf2, "%2d. %s\n\r", cnt++, tmpb );
-        strcat( buf, buf2 );
+        string = ugetline( string, tmpb, MAX_STRING_LENGTH );
+        snprintf( buf2, sizeof(buf2), "%2d. %s\n\r", cnt++, tmpb );
+        
+        if ( strlen(pbuf) + strlen(buf2) < (MAX_STRING_LENGTH * 2) - 1 )
+        {
+            strcat( pbuf, buf2 );
+        }
+        else
+        {
+            break;
+        }
     }
 
-    return buf;
+    return pbuf;
 }

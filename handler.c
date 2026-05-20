@@ -4366,11 +4366,7 @@ char *center( char *argument, int width, char *fill )
         fill = " ";
 
     if( !argument )
-    {
-        sprintf( log_buf, "ERROR! Please note an imm if you see this message.\n\r"
-                          "Please include EXACTLY what you did before you got this message.\n\r");
-        return log_buf;
-    }
+        argument = "";
 
     length = strlen_color( argument );
 

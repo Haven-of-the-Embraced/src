@@ -1326,7 +1326,7 @@ void do_touch( CHAR_DATA *ch, char *argument )
         return;
     }
 
-    if ( ( obj = get_obj_carry( ch, arg, ch ) ) == NULL)
+    if ( ( obj = get_obj_here( ch, NULL, arg ) ) == NULL)
     {
         send_to_char( "Touch what?.\n\r", ch );
         return;

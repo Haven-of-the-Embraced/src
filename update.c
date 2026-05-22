@@ -1394,10 +1394,15 @@ void obj_update( void )
                             rch = obj->carried_by;
                             act(skill_table[paf->type].msg_obj,rch,obj,NULL,TO_CHAR);
                         }
-                        if (obj->in_room != NULL && obj->in_room->people != NULL)
+                        if (obj->in_room != NULL)
                         {
-                            rch = obj->in_room->people;
-                            act(skill_table[paf->type].msg_obj,rch,obj,NULL,TO_ALL);
+                            for (rch = obj->in_room->people; rch != NULL; rch = rch->next_in_room)
+                            {
+                                if (SAME_UMBRA_OBJ(rch, obj))
+                                {
+                                    act(skill_table[paf->type].msg_obj,rch,obj,NULL,TO_CHAR);
+                                }
+                            }
                         }
                     }
                 }
@@ -1447,17 +1452,21 @@ void obj_update( void )
             obj->value[1] += number_range(1,25);
             if (obj->value[1] >= obj->value[0])
                 obj->value[1] = obj->value[0];
-            if ( obj->in_room != NULL && ( rch = obj->in_room->people ) != NULL )
+            if ( obj->in_room != NULL )
             {
-                if (obj->value[1] == obj->value[0])
+                for ( rch = obj->in_room->people; rch != NULL; rch = rch->next_in_room )
                 {
-                    act("$p fills to the brim, almost overflowing with a $T liquid.", rch, obj, liq_table[obj->value[2]].liq_color, TO_ROOM);
-                    act("$p fills to the brim, almost overflowing with a $T liquid.", rch, obj, liq_table[obj->value[2]].liq_color, TO_CHAR);
-                }
-                else
-                {
-                    act("$p slowly fills with a $T liquid.", rch, obj, liq_table[obj->value[2]].liq_color, TO_ROOM);
-                    act("$p slowly fills with a $T liquid.", rch, obj, liq_table[obj->value[2]].liq_color, TO_CHAR);
+                    if ( SAME_UMBRA_OBJ( rch, obj ) )
+                    {
+                        if (obj->value[1] == obj->value[0])
+                        {
+                            act("$p fills to the brim, almost overflowing with a $T liquid.", rch, obj, liq_table[obj->value[2]].liq_color, TO_CHAR);
+                        }
+                        else
+                        {
+                            act("$p slowly fills with a $T liquid.", rch, obj, liq_table[obj->value[2]].liq_color, TO_CHAR);
+                        }
+                    }
                 }
             }
         }
@@ -1502,14 +1511,18 @@ void obj_update( void )
                     act(message,obj->carried_by,obj,NULL,TO_ROOM);
             }
         }
-        else if ( obj->in_room != NULL
-        && ( rch = obj->in_room->people ) != NULL )
+        else if ( obj->in_room != NULL )
         {
             if (! (obj->in_obj && obj->in_obj->pIndexData->vnum == OBJ_VNUM_PIT
                && !CAN_WEAR(obj->in_obj,ITEM_TAKE)))
             {
-                act( message, rch, obj, NULL, TO_ROOM );
-                act( message, rch, obj, NULL, TO_CHAR );
+                for ( rch = obj->in_room->people; rch != NULL; rch = rch->next_in_room )
+                {
+                    if ( SAME_UMBRA_OBJ( rch, obj ) )
+                    {
+                        act( message, rch, obj, NULL, TO_CHAR );
+                    }
+                }
             }
         }
 

@@ -2990,6 +2990,8 @@ OBJ_DATA *create_object( OBJ_INDEX_DATA *pObjIndex, int level )
     obj->weight     = pObjIndex->weight;
     obj->timer      = pObjIndex->timer;
     obj->condition  = pObjIndex->condition;
+    obj->size       = pObjIndex->size;
+
 
     if (level == -1 || pObjIndex->new_format)
     obj->cost   = pObjIndex->cost;
@@ -3129,6 +3131,8 @@ void clone_object(OBJ_DATA *parent, OBJ_DATA *clone)
     clone->condition    = parent->condition;
     clone->material = str_dup(parent->material);
     clone->timer    = parent->timer;
+    clone->size     = parent->size;
+
 
     for (i = 0;  i < 5; i ++)
     clone->value[i] = parent->value[i];

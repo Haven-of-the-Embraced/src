@@ -45,6 +45,8 @@ void scan_list           args((ROOM_INDEX_DATA *scan_room, CHAR_DATA *ch,
                                sh_int depth, sh_int door));
 void scan_char           args((CHAR_DATA *victim, CHAR_DATA *ch,
                                sh_int depth, sh_int door));
+void scan_obj            args((OBJ_DATA *obj, CHAR_DATA *ch,
+                               sh_int depth, sh_int door));
 void do_scan(CHAR_DATA *ch, char *argument)
 {
    extern char *const dir_name[];
@@ -97,6 +99,7 @@ void scan_list(ROOM_INDEX_DATA *scan_room, CHAR_DATA *ch, sh_int depth,
                sh_int door)
 {
    CHAR_DATA *rch;
+   OBJ_DATA *obj;
 
    if (scan_room == NULL) return;
    for (rch=scan_room->people; rch != NULL; rch=rch->next_in_room)
@@ -104,6 +107,18 @@ void scan_list(ROOM_INDEX_DATA *scan_room, CHAR_DATA *ch, sh_int depth,
       if (rch == ch) continue;
       if (!IS_NPC(rch) && rch->invis_level > get_trust(ch)) continue;
       if (can_see(ch, rch)) scan_char(rch, ch, depth, door);
+   }
+
+   for (obj = scan_room->contents; obj != NULL; obj = obj->next_content)
+   {
+      if (can_see_obj(ch, obj))
+      {
+         if ((obj->pIndexData != NULL && obj->pIndexData->vnum >= OBJ_VNUM_TREE && obj->pIndexData->vnum <= OBJ_VNUM_TREE + 4)
+             || obj->size >= SIZE_LARGE)
+         {
+            scan_obj(obj, ch, depth, door);
+         }
+      }
    }
    return;
 }
@@ -117,6 +132,31 @@ void scan_char(CHAR_DATA *victim, CHAR_DATA *ch, sh_int depth, sh_int door)
    buf[0] = '\0';
 
    strcat(buf, PERS(victim, ch, FALSE));
+   strcat(buf, ", ");
+   sprintf(buf2, distance[depth], dir_name[door]);
+   strcat(buf, buf2);
+   strcat(buf, "\n\r");
+
+   send_to_char(buf, ch);
+   return;
+}
+
+void scan_obj(OBJ_DATA *obj, CHAR_DATA *ch, sh_int depth, sh_int door)
+{
+   extern char *const dir_name[];
+   extern char *const distance[];
+   char buf[MAX_INPUT_LENGTH], buf2[MAX_INPUT_LENGTH];
+   char short_descr[MAX_INPUT_LENGTH];
+
+   if (obj->short_descr == NULL || obj->short_descr[0] == '\0')
+      return;
+
+   strcpy(short_descr, obj->short_descr);
+   short_descr[0] = UPPER(short_descr[0]);
+
+   buf[0] = '\0';
+
+   strcat(buf, short_descr);
    strcat(buf, ", ");
    sprintf(buf2, distance[depth], dir_name[door]);
    strcat(buf, buf2);

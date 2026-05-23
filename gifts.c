@@ -1662,8 +1662,47 @@ void spell_gift_beastlife( int sn, int level, CHAR_DATA *ch, void *vo, int targe
 //Roll: Stamina + 4 (Variable difficulty)
 //The garou’s jaw grows massively powerful and it’s teeth razored sharp allowing it to do large amounts of damage in combat and gnaw through almost any material. (Multiple affects. “gnaw” by itself Affects melee damage done by bite, adding two extra dice, difficulty 7 “Gnaw (direction)” Will allow the garou to gnaw through the lock on a door. Difficulty based on pick-ability of the lock. A pickable lock would be difficulty 5, an infuriating lock would be difficulty 8)
 //Cost: 1 willpower
-void spell_gift_gnaw( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_gnaw( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  AFFECT_DATA af;
+  int dicesuccess;
+
+  if (ch->cswillpower < 1)
+  {
+    sendch("You do not possess the strength of Willpower to enact this Gift.\n\r", ch);
     return;
+  }
+
+  ch->cswillpower--;
+  dicesuccess = godice(get_attribute(ch, STAMINA) + 4, 7);
+
+  if (dicesuccess < 0)
+  {
+    send_to_char("Wolf spirits deem you unworthy of their boon.\n\r", ch);
+    WAIT_STATE(ch, 14);
+    return;
+  }
+
+  if (dicesuccess == 0)
+  {
+    send_to_char("Your request for assistance seems to go unanswered.\n\r", ch);
+    WAIT_STATE(ch, 2);
+    return;
+  }
+
+  sendch("Wolf-spirits strengthen your jaw, aiding your fight against the Wyrm's taint.\n\r",ch);
+
+  af.where     = TO_AFFECTS;
+  af.type      = sn;
+  af.level     = dicesuccess;
+  af.duration  = (dicesuccess * 25) + 15;
+  af.modifier  = 0;
+  af.location  = 0;
+  af.bitvector = 0;
+  affect_to_char( ch, &af );
+
+  gain_exp(ch, dicesuccess * 5);
+  return;
 }
 //
 //Rank 5

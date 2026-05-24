@@ -5591,6 +5591,7 @@ void do_bite(CHAR_DATA *ch, char *argument)
     int poisondice = 0;
     int critical = 1;
     int precog = 0;
+    int gnaw = 0;
 
     if (IS_NPC(ch))
       return;
@@ -5707,7 +5708,9 @@ void do_bite(CHAR_DATA *ch, char *argument)
         gain_exp(ch, dicesuccess*2);
     }
 
-    damagesuccess = godice(get_attribute(ch, STRENGTH) + 1 + ch->pcdata->discipline[POTENCE], 6);
+    if (is_affected(ch, gsn_gift_gnaw))
+        gnaw = 2;
+    damagesuccess = godice(get_attribute(ch, STRENGTH) + 1 + ch->pcdata->discipline[POTENCE] + gnaw, 6);
 
     if (damagesuccess < 0)
         damagesuccess = 0;

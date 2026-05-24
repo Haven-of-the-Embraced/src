@@ -1695,7 +1695,7 @@ void spell_gift_gnaw( int sn, int level, CHAR_DATA *ch, void *vo, int target)
   af.where     = TO_AFFECTS;
   af.type      = sn;
   af.level     = dicesuccess;
-  af.duration  = (dicesuccess * 25) + 15;
+  af.duration  = (dicesuccess * 15) + 35;
   af.modifier  = 0;
   af.location  = 0;
   af.bitvector = 0;

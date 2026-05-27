@@ -2374,7 +2374,8 @@ void do_resettime( CHAR_DATA *ch, char *argument )
     time_info.hour = 0;
     time_info.day = 0;
     time_info.month = 0;
-    time_info.year = 0;
+    time_info.year = 1210;
+    weather_info.sunlight = SUN_DARK;
     return;
 }
 
@@ -2393,7 +2394,8 @@ void do_resettime( CHAR_DATA *ch, char *argument )
         time_info.hour = 0;
         time_info.day = 0;
         time_info.month = 0;
-        time_info.year = 0;
+        time_info.year = 1210;
+        weather_info.sunlight = SUN_DARK;
     }
 
     day     = time_info.day + 1;
@@ -2421,83 +2423,8 @@ void do_resettime( CHAR_DATA *ch, char *argument )
     {
         if(weather_info.sunlight == SUN_SET || weather_info.sunlight == SUN_DARK)
         {
-            switch(time_info.phase)
-            {
-                case 0:
-                        send_to_char("The Moon is New.\n\r",ch);
-                        send_to_char ("{D         _..._\n\r", ch);
-                        send_to_char ("{D       .:::::::.\n\r", ch);
-                        send_to_char ("{D      :::::::::::\n\r", ch);
-                        send_to_char ("{D      :::::::::::\n\r", ch);
-                        send_to_char ("{D      `:::::::::'\n\r", ch);
-                        send_to_char ("{D        `':::''{x\n\r\n\r", ch);
-                        break;
-                case 1:
-                        send_to_char("The Crescent Moon shimmers mysteriously.\n\r",ch);
-                        send_to_char ("{D        {W_..._\n\r", ch);
-                        send_to_char ("{D      .::::{W. `.\n\r", ch);
-                        send_to_char ("{D     :::::::{W.  :\n\r", ch);
-                        send_to_char ("{D     :::::::{W:  :\n\r", ch);
-                        send_to_char ("{D     `::::::{W' .'\n\r", ch);
-                        send_to_char ("{D      `'::{W'-'{x\n\r\n\r", ch);
-                        break;
-                case 2:
-                        send_to_char("The Half Moon glimmers overhead.\n\r",ch);
-                        send_to_char ("{x        _.{W.._\n\r", ch);
-                        send_to_char ("{x      .:::{W:  `.\n\r", ch);
-                        send_to_char ("{x     :::::{W:    :\n\r", ch);
-                        send_to_char ("{x     :::::{W:    :\n\r", ch);
-                        send_to_char ("{x     `::::{W:   .'\n\r", ch);
-                        send_to_char ("{x       `':{W:.-'{x\n\r\n\r", ch);
-                        break;
-                case 3:
-                        send_to_char("The Gibbous Moon winks from the shadows.\n\r",ch);
-                        send_to_char ("{x        _{W..._\n\r", ch);
-                        send_to_char ("{x      .::{W'   `.\n\r", ch);
-                        send_to_char ("{x     ::{W:       :\n\r", ch);
-                        send_to_char ("{x     ::{W:       :\n\r", ch);
-                        send_to_char ("{x     `::{W.     .'\n\r", ch);
-                        send_to_char ("{x      `':{W..-'{x\n\r\n\r", ch);
-                        break;
-                case 4:
-                        send_to_char("The Full Moon fills the heavens with it's brilliance.\n\r",ch);
-                        send_to_char ("{W        _..._\n\r", ch);
-                        send_to_char ("{W      .'     `.\n\r", ch);
-                        send_to_char ("{W     :         :\n\r", ch);
-                        send_to_char ("{W     :         :\n\r", ch);
-                        send_to_char ("{W     `.       .'\n\r", ch);
-                        send_to_char ("{W       `-...-' {x\n\r\n\r", ch);
-                        break;
-                case 5:
-                        send_to_char("The Gibbous Moon winks from the shadows.\n\r",ch);
-                        send_to_char ("{W        _{D..._\n\r", ch);
-                        send_to_char ("{W      .'   {D`::.\n\r", ch);
-                        send_to_char ("{W     :       {D:::\n\r", ch);
-                        send_to_char ("{W     :       {D:::\n\r", ch);
-                        send_to_char ("{W     `.     {D.::'\n\r", ch);
-                        send_to_char ("{W       `-{D..:''{x\n\r\n\r", ch);
-                        break;
-                case 6:
-                        send_to_char("The Half Moon beams down from overhead.\n\r",ch);
-                        send_to_char ("{W        _.{D.._\n\r", ch);
-                        send_to_char ("{W      .'  {D::::.\n\r", ch);
-                        send_to_char ("{W     :    {D::::::\n\r", ch);
-                        send_to_char ("{W     :    {D::::::\n\r", ch);
-                        send_to_char ("{W     `.   {D:::::'\n\r", ch);
-                        send_to_char ("{W       `-.{D::''{x\n\r\n\r", ch);
-                        break;
-                case 7:
-                        send_to_char("The Crescent Moon hangs in the sky like a beautiful ornament.\n\r",ch);
-                        send_to_char ("{W        _..._{D\n\r", ch);
-                        send_to_char ("{W      .' .{D::::.\n\r", ch);
-                        send_to_char ("{W     :  :{D:::::::\n\r", ch);
-                        send_to_char ("{W     :  :{D:::::::\n\r", ch);
-                        send_to_char ("{W     `. '{D::::::'\n\r", ch);
-                        send_to_char ("{W       `-.::{D''{x\n\r\n\r", ch);
-                        break;
-                default: send_to_char("Error.\n\r",ch);
-                        break;
-            }
+            send_to_char(get_moon_phase_desc(time_info.phase), ch);
+            send_to_char(get_moon_ascii_art(time_info.phase), ch);
         }
     }
     return;

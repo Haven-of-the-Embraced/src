@@ -4543,3 +4543,6 @@ extern      ROOM_INDEX_DATA *   room_index_hash [MAX_KEY_HASH];
 extern      char            *help_list  [MAX_HELP];
 
 CMD_DATA *cmd_lookup(const char *name );
+
+#include "moon.h"
+

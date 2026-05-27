@@ -184,8 +184,8 @@ void gmcp_send_char_vitals( CHAR_DATA *ch )
         max_gnosis = ch->pcdata->gnosis[1];
     }
 
-    bloodpool = ch->pblood;
-    max_bloodpool = ch->max_pblood;
+    bloodpool = ch->pblood/10;
+    max_bloodpool = ch->max_pblood/10;
     quintessence = ch->quintessence;
     max_quintessence = ch->max_quintessence;
     paradox = ch->paradox;

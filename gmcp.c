@@ -178,14 +178,14 @@ void gmcp_send_char_vitals( CHAR_DATA *ch )
 
     if ( ch->pcdata )
     {
-        bloodpool = ch->pcdata->csbloodpool;
-        max_bloodpool = ch->pcdata->csmax_bloodpool;
         rage = ch->pcdata->rage[0];
         max_rage = ch->pcdata->rage[1];
         gnosis = ch->pcdata->gnosis[0];
         max_gnosis = ch->pcdata->gnosis[1];
     }
 
+    bloodpool = ch->pblood;
+    max_bloodpool = ch->max_pblood;
     quintessence = ch->quintessence;
     max_quintessence = ch->max_quintessence;
     paradox = ch->paradox;

@@ -530,7 +530,6 @@ void weather_update( void )
 {
     char buf[MAX_STRING_LENGTH];
     char buf2[MSL];
-    char phase[MSL];
     DESCRIPTOR_DATA *d;
     CHAR_DATA *ch;
     int diff;
@@ -570,41 +569,13 @@ void weather_update( void )
     case 24:
     time_info.hour = 0;
     time_info.day++;
-    time_info.moon_count++;
-
-    if ( time_info.moon_count == 3)
-    {
-        time_info.moon_count = 0;
-        if(time_info.phase == 7) time_info.phase = 0;
-        else
-            time_info.phase++;
-    }
-
-    switch(time_info.phase)
-    {
-      case  0:
-                break;
-      case  1:  strcpy(phase, "crescent");
-                break;
-      case  2:  strcpy(phase, "half");
-                break;
-      case  3:  strcpy(phase, "gibbous");
-                break;
-      case  4:  strcpy(phase, "full");
-                break;
-      case  5:  strcpy(phase, "gibbous");
-                break;
-      case  6:  strcpy(phase, "half");
-                break;
-      case  7:  strcpy(phase, "crescent");
-                break;
-    }
+    update_moon_phase();
 
     if(time_info.phase == 0)
         strcat(buf,"Stars sparkle in the moonless sky above.\n\r");
     else
     {
-        sprintf(buf2, "The %s moon shines down upon the land.\n\r", phase);
+        sprintf(buf2, "The %s moon shines down upon the land.\n\r", get_moon_phase_name(time_info.phase));
         strcat(buf, buf2);
     }
 
@@ -744,7 +715,7 @@ void weather_update( void )
             && time_info.hour == 0)
         {
             ch->pcdata->rage[TEMP]++;
-            if(ch->pcdata->auspice-1 == time_info.phase || ch->pcdata->rage[TEMP] > ch->pcdata->rage[PERM])
+            if(is_auspice_moon(ch->pcdata->auspice, time_info.phase) || ch->pcdata->rage[TEMP] > ch->pcdata->rage[PERM])
                 ch->pcdata->rage[TEMP] = ch->pcdata->rage[PERM];
         }
 

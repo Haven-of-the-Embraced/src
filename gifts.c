@@ -5859,9 +5859,9 @@ void spell_gift_lordlywill( int sn, int level, CHAR_DATA *ch, void *vo, int targ
 {
     AFFECT_DATA af;
 
-    if (ch->pcdata->gnosis[TEMP] < 1)
+    if (ch->cswillpower < 1)
     {
-        sendch("You do not possess the spiritual reserves to activate this gift.\n\r", ch);
+        sendch("You do not have the Willpower to commune with Falcon.\n\r", ch);
         return;
         }
 
@@ -5871,12 +5871,12 @@ void spell_gift_lordlywill( int sn, int level, CHAR_DATA *ch, void *vo, int targ
         return;
       }
 
-    ch->pcdata->gnosis[TEMP]--;
+    ch->cswillpower--;
 
     af.where        = TO_IMMUNE;
     af.type         = gsn_gift_lordlywill;
     af.level        = ch->pcdata->rank;
-    af.duration     = ch->pcdata->gnosis[PERM]*2;
+    af.duration     = ch->csmax_willpower*7;
     af.modifier     = 0;
     af.location     = 0;
     af.bitvector    = IMM_MENTAL;

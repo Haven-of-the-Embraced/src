@@ -5798,29 +5798,6 @@ void do_awe(CHAR_DATA *ch, char *argument)
 
         return;
     }
-/*
-    else if (dicesuccess > 0)
-    {
-        if (dicesuccess >= 5)
-            send_to_char("...and gain the nearly undivided attention of everyone nearby.\n\r", ch);
-        if (dicesuccess == 4 || dicesuccess == 3)
-            send_to_char("...and feel many eyes in the room turn to regard you with awe.\n\r", ch);
-        if (dicesuccess == 2 || dicesuccess == 1)
-            send_to_char("...and notice a few people regarding you with approval.\n\r", ch);
-        act("You turn and notice $n, whose very presence seems to fill you with awe.", ch, NULL, NULL, TO_NOTVICT);
-
-
-        af.where    = TO_AFFECTS;
-        af.type     = gsn_awe;
-        af.level    = ch->pcdata->discipline[PRESENCE];
-        af.duration = dicesuccess * 9;
-        af.location = APPLY_HITROLL;
-        af.modifier = ((dicesuccess/2)+1)*ch->level/3 + 10;
-        af.bitvector    = 0;
-        affect_to_char( ch, &af );
-
-        gain_exp(ch, dicesuccess * 6);
-    }*/
 
     if (dicesuccess >= 5)
         send_to_char("...and gain the nearly undivided attention of everyone nearby.\n\r", ch);
@@ -5836,6 +5813,8 @@ void do_awe(CHAR_DATA *ch, char *argument)
     af.duration = dicesuccess * 2 + 5;
     af.location = APPLY_NONE;
     af.bitvector    = 0;
+
+    gain_exp(ch, dicesuccess *6);
 
     for ( victim = char_list; victim != NULL; victim = vict_next )
     {
@@ -5874,8 +5853,6 @@ void do_majesty(CHAR_DATA *ch, char *argument)
         affect_strip(ch, gsn_majesty);
         return;
     }
-
-
 
     if ( IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
     {

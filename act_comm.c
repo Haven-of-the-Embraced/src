@@ -1688,7 +1688,8 @@ void do_talk( CHAR_DATA *ch, char *argument )
 
     if (beast_speech(victim))
     {
-        if (!is_affected(ch, gsn_gift_beastspeech) && ch->pcdata->discipline[ANIMALISM] < 1)
+        if (!is_affected(ch, gsn_gift_beastspeech) && ch->pcdata->discipline[ANIMALISM] < 1
+            && !is_affected(ch, gsn_gift_beastlife))
         {
             send_to_char("Dr. Doolittle, you are not.\n\r", ch);
             return;

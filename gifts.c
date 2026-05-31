@@ -5855,7 +5855,33 @@ void spell_gift_wrathofgaia( int sn, int level, CHAR_DATA *ch, void *vo, int tar
     return;
 }
 //Rank 4
-void spell_gift_lordlywill( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_lordlywill( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+    AFFECT_DATA af;
+
+    if (ch->pcdata->gnosis[TEMP] < 1)
+    {
+        sendch("You do not possess the spiritual reserves to activate this gift.\n\r", ch);
+        return;
+        }
+
+     if (is_affected(ch, gsn_gift_lordlywill))
+     {
+        sendch("Falcon's Avatar already steels your mind against intrusion.\n\r", ch);
+        return;
+      }
+
+    ch->pcdata->gnosis[TEMP]--;
+
+    af.where        = TO_IMMUNE;
+    af.type         = gsn_gift_lordlywill;
+    af.level        = ch->pcdata->rank;
+    af.duration     = ch->pcdata->gnosis[PERM]*2;
+    af.modifier     = 0;
+    af.location     = 0;
+    af.bitvector    = IMM_MENTAL;
+    affect_to_char(ch, &af);
+    sendch("You request the aid of mighty Falcon, to bolster your mind against intrusion.\n\r", ch);
     return;
 }
 

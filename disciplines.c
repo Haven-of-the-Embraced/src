@@ -3256,23 +3256,18 @@ void do_mesmerize(CHAR_DATA *ch, char *argument)
         send_to_char( "You are not trained enough in Dominate!\n\r", ch );
         return;
     }
-/*    if ( arg1[0] == '\0' || arg2[0] == '\0')
+
+    if (arg1[0] == '\0')
     {
-        send_to_char("Mesmerize whom to do what?\n\r", ch );
+        send_to_char("Mesmerize whom?\n\r", ch);
         return;
     }
-*/
-  if (arg1[0] == '\0')
-  {
-    send_to_char("Mesmerize whom?\n\r", ch);
-    return;
-  }
 
-  if (argument == '\0')
-  {
-    act("What do you wish to Mesmerize $N into doing?", ch, NULL, arg1, TO_CHAR);
-    return;
-  }
+    if (argument == '\0')
+    {
+        act("What do you wish to Mesmerize $N into doing?", ch, NULL, arg1, TO_CHAR);
+        return;
+    }
 
     if ( ( victim = get_char_room( ch, NULL, arg1 ) ) == NULL )
     {
@@ -3303,7 +3298,6 @@ void do_mesmerize(CHAR_DATA *ch, char *argument)
       return;
     }
 
-
     if (!str_prefix(arg2,"delete"))
     {
         send_to_char("That will NOT be done.\n\r",ch);
@@ -3311,31 +3305,35 @@ void do_mesmerize(CHAR_DATA *ch, char *argument)
     }
 
     if (!str_prefix(arg2,"ic"))
-        {
-                send_to_char("Nope!\n\r",ch);
-                return;
-        }
+    {
+        send_to_char("Nope!\n\r",ch);
+        return;
+    }
+
     if (!str_prefix(arg2, "quit"))
-        {
-                send_to_char("I don't think so!.\n\r", ch);
-                return;
-        }
+    {
+        send_to_char("I don't think so!.\n\r", ch);
+        return;
+    }
 
     if ( victim == ch )
     {
         send_to_char( "You get a headache trying to command yourself.\n\r", ch );
         return;
     }
+
     if ( IS_IMMORTAL(victim))
     {
         send_to_char( "Yeah, right.\n\r", ch );
         return;
     }
+
     if ( ch->pblood < 15 )
     {
         send_to_char( "You don't have enough blood.\n\r", ch );
         return;
     }
+
     if (victim->race != race_lookup("human")
      && victim->race != race_lookup("vampire")
      && victim->race != race_lookup("ghoul")

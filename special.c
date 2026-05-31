@@ -2165,6 +2165,9 @@ bool spec_command( CHAR_DATA *ch )
     if ( victim == NULL )
         return FALSE;
 
+    if (IS_SET(victim->imm_flags, IMM_MENTAL))
+        return FALSE;
+
     switch(number_range(1,3))
     {
         case 1:
@@ -2224,6 +2227,9 @@ bool spec_mesmerize( CHAR_DATA *ch )
     }
 
     if ( victim == NULL )
+        return FALSE;
+
+    if (IS_SET(victim->imm_flags, IMM_MENTAL))
         return FALSE;
 
     if ( ( wield = get_eq_char( victim, WEAR_WIELD ) ) == NULL )
@@ -2288,6 +2294,9 @@ bool spec_forgetfulmind( CHAR_DATA *ch )
 
     if ( victim == NULL )
       return FALSE;
+
+    if (IS_SET(victim->imm_flags, IMM_MENTAL))
+        return FALSE;
 
     if ( is_affected(victim, gsn_forget))
       return FALSE;
@@ -2489,6 +2498,8 @@ bool spec_awe( CHAR_DATA *ch )
     v_next = victim->next_in_room;
     if ( is_affected(victim, gsn_awe))
       continue;
+    if (IS_SET(victim->imm_flags, IMM_MENTAL))
+        continue;
     af.where     = TO_AFFECTS;
     af.type      = gsn_awe;
     af.level     = -1;
@@ -2524,6 +2535,9 @@ bool spec_dreadgaze( CHAR_DATA *ch)
 
   if ( victim == NULL )
       return FALSE;
+
+    if (IS_SET(victim->imm_flags, IMM_MENTAL))
+        return FALSE;
 
   if (!IS_NPC(victim))
     dreaddiff = get_attribute(victim, WITS) + victim->pcdata->csvirtues[CSVIRT_COURAGE];

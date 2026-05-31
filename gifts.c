@@ -1650,8 +1650,47 @@ void spell_gift_sensetheunnatural( int sn, int level, CHAR_DATA *ch, void *vo, i
 //Roll: Charisma + Animal Ken (diff 7)
 //The werewolf can communicate with and even command wild animals. (Gives the garou an affect that lets them ‘command’ any animal type mob (one line command. last 6-10 ticks.)
 //Cost: 1 gnosos
-void spell_gift_beastlife( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_beastlife( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  AFFECT_DATA af;
+  int dicesuccess;
+
+  if (ch->gnosis[TEMP] < 1)
+  {
+    sendch("You do not possess the spiritual reserves to activate this Gift.\n\r", ch);
     return;
+  }
+
+  dicesuccess = godice(get_attribute(ch, CHARISMA) + get_ability2(ch, CSABIL_ANIMAL_KEN), 7);
+
+  ch->gnosis[TEMP]--;
+
+  if (dicesuccess < 0)
+  {
+    send_to_char("Wolf-spirits refuse to allow you to communicate with other animals.\n\r", ch);
+    WAIT_STATE(ch, 6);
+    return;
+  }
+
+  if (dicesuccess == 0)
+  {
+    send_to_char("Your request for assistance seems to go unanswered.\n\r", ch);
+    WAIT_STATE(ch, 2);
+    return;
+  }
+
+  sendch("Beseeching the spirit servants of Gaia, you take notice of supernatural beings nearby.\n\r",ch);
+
+  af.where     = TO_AFFECTS;
+  af.type      = sn;
+  af.level     = dicesuccess;
+  af.duration  = (dicesuccess * 10) + 20;
+  af.modifier  = 0;
+  af.location  = 0;
+  af.bitvector = 0;
+  affect_to_char( ch, &af );
+
+  gain_exp(ch, dicesuccess * 3);
 }
 //
 //

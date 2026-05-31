@@ -5876,7 +5876,7 @@ void spell_gift_lordlywill( int sn, int level, CHAR_DATA *ch, void *vo, int targ
     af.where        = TO_IMMUNE;
     af.type         = gsn_gift_lordlywill;
     af.level        = ch->pcdata->rank;
-    af.duration     = ch->csmax_willpower*7;
+    af.duration     = ch->csmax_willpower*7 + 15;
     af.modifier     = 0;
     af.location     = 0;
     af.bitvector    = IMM_MENTAL;

@@ -1111,9 +1111,9 @@ void do_prompt(CHAR_DATA *ch, char *argument)
       strcpy( buf, "{c<%hhp %mm %vmv>{x " );
    else
    {
-      if ( strlen(argument) > 120 )
+      if ( strlen(argument) > 240 )
       {
-          argument[100] = '\0';
+          argument[240] = '\0';
           send_to_char("Prompt too long! Truncated.\n\r", ch);
       }
       strcpy( buf, argument );

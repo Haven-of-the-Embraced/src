@@ -3900,7 +3900,6 @@ void do_possession( CHAR_DATA *ch, char *argument )
     return;
     }
 
-
     if ( ( victim = get_char_room( ch, NULL, arg ) ) == NULL )
     {
     send_to_char( "They aren't here to possess.\n\r", ch );
@@ -3913,7 +3912,9 @@ void do_possession( CHAR_DATA *ch, char *argument )
     return;
     }
 
-    if (!IS_NPC(victim) || victim->level > (10-ch->gen)*10+ch->level/2  /* ch->level/2*/ || victim->race != race_lookup("human"))
+    if (!IS_NPC(victim) || victim->level > (10-ch->gen)*10+ch->level/2
+        || victim->race != race_lookup("human")
+        || IS_SET(victim->imm_flags, IMM_MENTAL))
     {
     send_to_char("That person's mind is too powerful to possess.\n\r",ch);
     return;

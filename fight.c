@@ -5654,15 +5654,6 @@ void do_bite(CHAR_DATA *ch, char *argument)
     if (!IS_NPC(ch))
         ch->move -= ch->level / 4;
 
- /*   if (is_affected(victim, gsn_precognition) && number_percent() > 50)
-    {
-        act("Almost as if $E sees it coming, $N avoids your bite!", ch, NULL, victim, TO_CHAR);
-        act("With a brief flash of insight, you swiftly react and dodge $n's ferocious bite.", ch, NULL, victim, TO_VICT);
-        act("Without missing a beat, $N moves aside and dodges $n's bite.", ch, NULL, victim, TO_NOTVICT);
-        return;
-    }
-*/
-
     if(is_affected(victim,gsn_precognition))
         precog = get_affect_level(victim,gsn_precognition);
     if(is_affected(victim,gsn_gift_sightfrombeyond))

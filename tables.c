@@ -1578,7 +1578,7 @@ const struct    gift_type   gift_table  [MAX_GIFTS_CODED]  =
     {   "empathy", 						1,     24, 0,     0,      0,          SILVER_FANG, 2,   0},
     {   "exceptional swordplay", 		1,     24, 0,     0,      0,          SILVER_FANG, 3,   0},
     {   "wrath of gaia", 				0,     24, 0,     0,      0,          SILVER_FANG, 3,   0},
-    {   "lordly will", 					0,     24, 0,     0,      0,          SILVER_FANG, 4,   0},
+    {   "lordly will", 					1,     24, 0,     0,      0,          SILVER_FANG, 4,   0},
     {   "sidestep death", 				0,     24, 0,     0,      0,          SILVER_FANG, 4,   0},
     {   "lunas avenger", 				0,     24, 0,     0,      0,          SILVER_FANG, 5,   0},
     {   "paws of the newborn cub", 		0,     24, 0,     0,      0,          SILVER_FANG, 5,   0},

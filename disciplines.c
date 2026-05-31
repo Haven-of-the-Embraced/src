@@ -3826,6 +3826,7 @@ void do_conditioning(CHAR_DATA *ch, char *argument)
     if ( IS_AFFECTED(victim, AFF_CHARM)
     ||   IS_AFFECTED(ch, AFF_CHARM)
     ||   IS_SET(victim->imm_flags,IMM_CHARM)
+    ||   IS_SET(victim->imm_flags,IMM_MENTAL)
     ||   saves_spell( ch->level, victim,DAM_CHARM)
     ||   IS_SET(victim->act2, ACT2_ULTRA_MOB))
     {

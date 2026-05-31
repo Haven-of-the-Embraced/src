@@ -1679,7 +1679,7 @@ void spell_gift_beastlife( int sn, int level, CHAR_DATA *ch, void *vo, int targe
     return;
   }
 
-  sendch("Beseeching the spirit servants of Gaia, you take notice of supernatural beings nearby.\n\r",ch);
+  sendch("Beseeching the wolf-spirits, you now communicate with wild animals.\n\r",ch);
 
   af.where     = TO_AFFECTS;
   af.type      = sn;

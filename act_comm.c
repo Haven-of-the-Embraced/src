@@ -2183,6 +2183,7 @@ void do_order( CHAR_DATA *ch, char *argument )
     CHAR_DATA *och_next;
     bool found;
     bool fAll;
+    bool beast;
 
     argument = one_argument( argument, arg );
     one_argument(argument,arg2);
@@ -2245,6 +2246,7 @@ void do_order( CHAR_DATA *ch, char *argument )
         return;
     }
 
+    found = FALSE;
     if ( victim->mount == ch )
     {
         if ( !mount_success(ch, victim, FALSE) )
@@ -2260,6 +2262,19 @@ void do_order( CHAR_DATA *ch, char *argument )
             return;
         }
     }
+    else if (is_affected(ch, gsn_gift_beastlife) && higher_beast(victim)
+        && !IS_AFFECTED(victim, AFF_CHARM))
+    {
+        beast = TRUE;
+        if (ch->move < ch->level / 2)
+        {
+            send_to_char("You are too tired to give orders to beasts.\n\r", ch);
+            return;
+        }
+        else
+            ch->move -= ch->level / 2;
+        send_to_char("Your bestowed Gift allows you to communicate flawlessly.\n\r", ch);
+    }
     else if (!IS_AFFECTED(victim, AFF_CHARM) || victim->master != ch
     ||  (IS_IMMORTAL(victim) && victim->trust >= ch->trust))
     {
@@ -2268,14 +2283,13 @@ void do_order( CHAR_DATA *ch, char *argument )
     }
     }
 
-    found = FALSE;
     for ( och = ch->in_room->people; och != NULL; och = och_next )
     {
     och_next = och->next_in_room;
 
-    if ( IS_AFFECTED(och, AFF_CHARM)
+    if (( IS_AFFECTED(och, AFF_CHARM)
     &&   och->master == ch
-    && ( fAll || och == victim ) )
+    && ( fAll || och == victim ) ) || beast)
     {
         found = TRUE;
         sprintf( buf, "$n orders you to '%s'.", argument );

@@ -1464,7 +1464,7 @@ const struct    gift_type   gift_table  [MAX_GIFTS_CODED]  =
     {   "sense the unnatural", 			1,     24, 0,     LUPUS,  0,          0,        3,   0},
     {   "devils child", 				1,     24, 0,     LUPUS,  0,          0,        3,   0},
     {   "name the spirit", 				1,     24, 0,     LUPUS,  THEURGE,    0,        2,   0},
-    {   "beast life", 					0,     24, 0,     LUPUS,  0,          CHILDREN_OF_GAIA, 4,   0},
+    {   "beast life", 					1,     24, 0,     LUPUS,  0,          CHILDREN_OF_GAIA, 4,   0},
     {   "gnaw", 						1,     24, 0,     LUPUS,  0,          0,        4,   0},
     {   "elemental gift", 				0,     24, 0,     LUPUS,  0,          0,        5,   0},
     {   "song of the great beast", 		0,     24, 0,     LUPUS,  0,          0,        5,   0},

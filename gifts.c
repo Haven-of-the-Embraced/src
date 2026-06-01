@@ -1655,7 +1655,7 @@ void spell_gift_beastlife( int sn, int level, CHAR_DATA *ch, void *vo, int targe
   AFFECT_DATA af;
   int dicesuccess;
 
-  if (ch->gnosis[TEMP] < 1)
+  if (ch->pcdata->gnosis[TEMP] < 1)
   {
     sendch("You do not possess the spiritual reserves to activate this Gift.\n\r", ch);
     return;
@@ -1663,7 +1663,7 @@ void spell_gift_beastlife( int sn, int level, CHAR_DATA *ch, void *vo, int targe
 
   dicesuccess = godice(get_attribute(ch, CHARISMA) + get_ability2(ch, CSABIL_ANIMAL_KEN), 7);
 
-  ch->gnosis[TEMP]--;
+  ch->pcdata->gnosis[TEMP]--;
 
   if (dicesuccess < 0)
   {

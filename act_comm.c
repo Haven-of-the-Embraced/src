@@ -2266,13 +2266,13 @@ void do_order( CHAR_DATA *ch, char *argument )
         && !IS_AFFECTED(victim, AFF_CHARM))
     {
         beast = TRUE;
-        if (ch->move < ch->level / 2)
+        if (ch->move < ch->level / 4 + 20)
         {
             send_to_char("You are too tired to give orders to beasts.\n\r", ch);
             return;
         }
         else
-            ch->move -= ch->level / 2;
+            ch->move -= ch->level / 4 + 20;
         send_to_char("Your bestowed Gift allows you to communicate flawlessly.\n\r", ch);
     }
     else if (!IS_AFFECTED(victim, AFF_CHARM) || victim->master != ch
@@ -2289,7 +2289,7 @@ void do_order( CHAR_DATA *ch, char *argument )
 
     if (( IS_AFFECTED(och, AFF_CHARM)
     &&   och->master == ch
-    && ( fAll || och == victim ) ) || beast)
+    && ( fAll || och == victim ) ) || (beast && ch != och))
     {
         found = TRUE;
         sprintf( buf, "$n orders you to '%s'.", argument );

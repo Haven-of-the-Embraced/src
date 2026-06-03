@@ -4273,6 +4273,28 @@ void spell_gift_cookery( int sn, int level, CHAR_DATA *ch, void *vo, int target)
   OBJ_DATA *stew;
   int success;
 
+  if (ch->move < ch->level)
+  {
+    send_to_char("You are too tired to call on raccoon spirits at this time.\n\r", ch);
+    return;
+  }
+
+  ch->move-= ch->level;
+
+  if (success < 0)
+  {
+    act( "The obj disintegrates.",   ch, stew, NULL, TO_ROOM );
+    act( "Racoon spirits are offended by your paltry offerings.", ch, stew, NULL, TO_CHAR );
+    WAIT_STATE(ch, 8);
+    return;
+  }
+
+  if (success == 0)
+  {
+    act( "Racoon spirits seem to be ignoring your request.", ch, NULL, NULL, TO_CHAR );
+    WAIT_STATE(ch, 6);
+    return;
+  }
 
   stew = create_object( get_obj_index( 20 ), 1 );
   stew->value[0] += (success * 5) + (stew->level / 10);

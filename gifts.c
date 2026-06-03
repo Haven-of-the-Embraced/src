@@ -4322,19 +4322,22 @@ void spell_gift_cookery( int sn, int level, CHAR_DATA *ch, void *vo, int target)
   }
 
   stew = create_object( get_obj_index( 20 ), 1 );
+  stew->level = obj->level;
   stew->value[0] += (success * 5) + (stew->level / 10);
   stew->value[1] += (success * 5) + (stew->level / 10);
   stew->timer += (success * 10) + (ch->level);
+  stew->size = SIZE_SMALL;
   sprintf(buf,"stew");
   stew->name = str_dup(buf);
   sprintf(buf,"an unappetizing stew");
   stew->short_descr = str_dup(buf);
-  sprintf(buf,"An unappetizing stew was hastily cooked.");
+  sprintf(buf,"An unappetizing stew was hastily cooked, packed with nutrients.");
   stew->description = str_dup(buf);
 
   obj_to_room( stew, ch->in_room );
-  act( "$n hastily cooks $p.",   ch, stew, NULL, TO_ROOM );
-  act( "You quickly prepare $p.", ch, stew, NULL, TO_CHAR );
+  act( "$n hastily cooks $p.", ch, stew, NULL, TO_ROOM );
+  act( "Raccoon spirits assist you to quickly prepare a stew from $p.", ch, obj, NULL, TO_CHAR );
+  extract_obj(obj);
   return;
 }
 //

@@ -1525,7 +1525,7 @@ const struct    gift_type   gift_table  [MAX_GIFTS_CODED]  =
     {   "bow of pegasus", 				0,     24, 0,     0,      0,          BLACK_FURY, 4,   0},
     {   "gaze of the gorgon", 			0,     24, 0,     0,      0,          BLACK_FURY, 5,   0},
     {   "wyld warp", 					0,     24, 0,     0,      0,          BLACK_FURY, 5,   0},
-    {   "cookery", 						0,     24, 0,     0,      0,          BONE_GNAWER, 1,   0},
+    {   "cookery", 						1,     24, 0,     0,      0,          BONE_GNAWER, 1,   0},
     {   "resist toxin", 				0,     24, 0,     0,      0,          BONE_GNAWER, 1,   0},//Fianna
     {   "scent of the honeycomb", 		1,     24, 0,     0,      0,          BONE_GNAWER, 1,   0},
     {   "cornered rat", 				0,     24, 0,     0,      0,          BONE_GNAWER, 2,   0},

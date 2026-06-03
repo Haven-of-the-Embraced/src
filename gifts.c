@@ -4273,6 +4273,24 @@ void spell_gift_cookery( int sn, int level, CHAR_DATA *ch, void *vo, int target)
   OBJ_DATA *stew;
   int success;
 
+  if ((obj = get_obj_here( ch, NULL, arg2 )) == NULL)
+  {
+    send_to_char("What are you trying to cook?\n\r",ch);
+    return;
+  }
+
+  if (obj->item_type != ITEM_TRASH)
+  {
+    send_to_char("Raccon spirits do not approve of that offering.\n\r", ch);
+    return;
+  }
+
+  if (obj->size >= SIZE_MEDIUM)
+  {
+    act("Raccoon-spirits inform you that %p is too large to use Cookery upon.", ch, obj, TO_CHAR);
+    return;
+  }
+
   if (ch->move < ch->level)
   {
     send_to_char("You are too tired to call on raccoon spirits at this time.\n\r", ch);

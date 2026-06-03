@@ -4289,9 +4289,9 @@ void spell_gift_cookery( int sn, int level, CHAR_DATA *ch, void *vo, int target)
     return;
   }
 
-  if (obj->size >= SIZE_MEDIUM)
+  if (obj->size != SIZE_SMALL)
   {
-    act("Raccoon-spirits inform you that $p is too large to use Cookery upon.", ch, obj, NULL, TO_CHAR);
+    act("Raccoon-spirits inform you that Cookery can only be used upon small items.", ch, obj, NULL, TO_CHAR);
     return;
   }
 
@@ -4303,10 +4303,13 @@ void spell_gift_cookery( int sn, int level, CHAR_DATA *ch, void *vo, int target)
 
   ch->move-= ch->level;
 
+  success = godice(get_attribute(ch, WITS) + get_ability(ch, CSABIL_SURVIVAL), 6);
+
   if (success < 0)
   {
-    act( "The obj disintegrates.",   ch, stew, NULL, TO_ROOM );
-    act( "Racoon spirits are offended by your paltry offerings.", ch, stew, NULL, TO_CHAR );
+    act( "Quite suddenly, $p deteriorates into nothingness!", ch, obj, NULL, TO_ROOM );
+    act( "Racoon spirits are offended by your paltry offerings, and destroy $p.", ch, obj, NULL, TO_CHAR );
+    extract_obj( obj );
     WAIT_STATE(ch, 8);
     return;
   }

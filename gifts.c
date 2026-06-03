@@ -4268,8 +4268,27 @@ void spell_gift_wyldwarp( int sn, int level, CHAR_DATA *ch, void *vo, int target
 //wits + survival diff 6 for inedible not poisonous ingrediants to 10 for hot cinders or rusted iron
 //must have pot and ladle or spoon and water
 //takes inedible stuff and makes it into an edible stew
-void spell_gift_cookery( int sn, int level, CHAR_DATA *ch, void *vo, int target){
-    return;
+void spell_gift_cookery( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  OBJ_DATA *stew;
+  int success;
+
+
+  stew = create_object( get_obj_index( 20 ), 1 );
+  stew->value[0] += (success * 5) + (stew->level / 10);
+  stew->value[1] += (success * 5) + (stew->level / 10);
+  stew->timer += (success * 10) + (ch->level);
+  sprintf(buf,"stew");
+  stew->name = str_dup(buf);
+  sprintf(buf,"an unappetizing stew");
+  stew->short_descr = str_dup(buf);
+  sprintf(buf,"An unappetizing stew was hastily cooked.");
+  stew->description = str_dup(buf);
+
+  obj_to_room( stew, ch->in_room );
+  act( "$n hastily cooks $p.",   ch, stew, NULL, TO_ROOM );
+  act( "You quickly prepare $p.", ch, stew, NULL, TO_CHAR );
+  return;
 }
 //
 //“Resist Toxin”

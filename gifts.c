@@ -1706,6 +1706,12 @@ void spell_gift_gnaw( int sn, int level, CHAR_DATA *ch, void *vo, int target)
   AFFECT_DATA af;
   int dicesuccess;
 
+  if (is_affected(ch, gsn_gift_gnaw))
+  {
+    send_to_char("Your bite is already strengthened by wolf-spirits.\n\r", ch);
+    return;
+  }
+
   if (ch->cswillpower < 1)
   {
     sendch("You do not possess the strength of Willpower to enact this Gift.\n\r", ch);

@@ -4271,9 +4271,13 @@ void spell_gift_wyldwarp( int sn, int level, CHAR_DATA *ch, void *vo, int target
 void spell_gift_cookery( int sn, int level, CHAR_DATA *ch, void *vo, int target)
 {
   OBJ_DATA *stew;
+  OBJ_DATA *obj;
   int success;
+  char buf[MAX_STRING_LENGTH];
+  char arg1[MIL];
+  gift_target_name = one_argument(gift_target_name, arg1);
 
-  if ((obj = get_obj_here( ch, NULL, arg2 )) == NULL)
+  if ((obj = get_obj_here( ch, NULL, arg1 )) == NULL)
   {
     send_to_char("What are you trying to cook?\n\r",ch);
     return;
@@ -4287,7 +4291,7 @@ void spell_gift_cookery( int sn, int level, CHAR_DATA *ch, void *vo, int target)
 
   if (obj->size >= SIZE_MEDIUM)
   {
-    act("Raccoon-spirits inform you that %p is too large to use Cookery upon.", ch, obj, TO_CHAR);
+    act("Raccoon-spirits inform you that $p is too large to use Cookery upon.", ch, obj, NULL, TO_CHAR);
     return;
   }
 

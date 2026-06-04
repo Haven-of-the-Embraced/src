@@ -4522,6 +4522,17 @@ void spell_gift_plaguevisage( int sn, int level, CHAR_DATA *ch, void *vo, int ta
     return;
   }
 
+  act("Rat-spirits cast an illusion of leprosy onto you.", ch, NULL, NULL, TO_CHAR);
+  act("$n's body becomes covered in sores and other skin lesions.", ch, NULL, NULL, TO_NOTVICT);
+
+  af.where     = TO_AFFECTS;
+  af.type      = gsn_gift_plaguevisage;
+  af.level     = success;
+  af.duration  = success * 5 + 10;
+  af.modifier  = 0;
+  af.location  = 0;
+  af.bitvector = 0;
+  affect_to_char( ch, &af );
   return;
 }
 //

@@ -2509,7 +2509,7 @@ Total (3) */
 
     { "gnaw", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_gnaw,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_gnaw,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+    &gsn_gift_gnaw,          SLOT( 0),        0,     12, "",             "The spirit imbued strength leaves your jaws.",        "" },
 
     { "elemental gift", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_elementalgift,  TAR_IGNORE, POS_STANDING,

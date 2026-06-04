@@ -2505,7 +2505,7 @@ Total (3) */
 
     { "beast life", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_beastlife,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_beastlife,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+    &gsn_gift_beastlife,          SLOT( 0),        0,     12, "",             "You can no longer communicate and control natural animals.",        "" },
 
     { "gnaw", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_gnaw,  TAR_IGNORE, POS_STANDING,

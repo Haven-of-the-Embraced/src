@@ -1529,7 +1529,7 @@ const struct    gift_type   gift_table  [MAX_GIFTS_CODED]  =
     {   "resist toxin", 				0,     24, 0,     0,      0,          BONE_GNAWER, 1,   0},//Fianna
     {   "scent of the honeycomb", 		1,     24, 0,     0,      0,          BONE_GNAWER, 1,   0},
     {   "cornered rat", 				0,     24, 0,     0,      0,          BONE_GNAWER, 2,   0},
-    {   "plague visage", 				0,     24, 0,     0,      0,          BONE_GNAWER, 2,   0},
+    {   "plague visage", 				1,     24, 0,     0,      0,          BONE_GNAWER, 2,   0},
     {   "call the rust", 				0,     24, 0,     0,      0,          BONE_GNAWER, 3,   0},
     {   "friend in need", 				0,     24, 0,     0,      0,          BONE_GNAWER, 3,   0},
     {   "blink", 						0,     24, 0,     0,      0,          BONE_GNAWER, 4,   0},

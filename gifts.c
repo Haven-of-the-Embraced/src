@@ -4468,8 +4468,39 @@ void spell_gift_scentofthehoneycomb( int sn, int level, CHAR_DATA *ch, void *vo,
 //rat or badger
 //rage diff 8
 //forces their rage to go into frenzy
-void spell_gift_corneredrat( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_corneredrat( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  AFFECT_DATA af;
+  int success;
+
+  if (is_affected(ch, gsn_gift_corneredrat))
+  {
+    send_to_char("You are already fueled by a frenzy lent by Rat-spirits.\n\r", ch);
     return;
+  }
+
+  if (ch->pcdata->rage[TEMP] < 1)
+  {
+    send_to_char("You do not have enough Rage to go into a frenzy.\n\r", ch);
+    return;
+  }
+
+  ch->pcdata->rage[TEMP]--;
+
+  if (success < 0)
+  {
+    act("Rat-spirits accept your donation of Rage, but flee immediately.", ch, NULL, victim, TO_CHAR);
+    WAIT_STATE(ch, 10);
+    return;
+  }
+
+  if (success == 0)
+  {
+    act("Your attempt to further enrage yourself seems to have failed.", ch, NULL, victim, TO_CHAR);
+    WAIT_STATE(ch, 4);
+    return;
+  }
+  return;
 }
 //
 //“Plague Visage”

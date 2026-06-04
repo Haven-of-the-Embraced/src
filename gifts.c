@@ -4484,10 +4484,17 @@ void spell_gift_plaguevisage( int sn, int level, CHAR_DATA *ch, void *vo, int ta
 
   if (is_affected(ch, gsn_gift_plaguevisage))
   {
-    send_to_char("Rat-spirits already altered your visage.\n\r", ch);
+    send_to_char("Rat-spirits have already altered your visage.\n\r", ch);
     return;
   }
 
+  if (ch->move < 2 * ch-> level)
+  {
+    send_to_char("You are too tired to call upon the Rat-spirits.\n\r", ch);
+    return;
+  }
+
+  ch->move-= ch->level *2;
   success = godice(get_attribute(ch, MANIPULATION) + get_ability(ch, CSABIL_MEDICINE), 6);
 
   if (success < 0)

@@ -4482,27 +4482,36 @@ void spell_gift_plaguevisage( int sn, int level, CHAR_DATA *ch, void *vo, int ta
   AFFECT_DATA af;
   int success;
 
+  if (is_affected(ch, gsn_gift_plaguevisage))
+  {
+    send_to_char("Rat-spirits already altered your visage.\n\r", ch);
+    return;
+  }
+
   success = godice(get_attribute(ch, MANIPULATION) + get_ability(ch, CSABIL_MEDICINE), 6);
 
   if (success < 0)
   {
-    act("Rat-spirits attack you, infecting you with disease!", ch, NULL, victim, TO_CHAR);
-    act("$n howls in pain, beseiged by unseen forces.", ch, NULL, victim, TO_NOTVICT);
+    act("Rat-spirits attack you, infecting you with disease!", ch, NULL, NULL, TO_CHAR);
+    act("$n howls in pain, beseiged by unseen forces.", ch, NULL, NULL, TO_NOTVICT);
 
     af.where     = TO_AFFECTS;
     af.type      = gsn_gift_plaguevisage;
     af.level     = success;
     af.duration  = -success + 1;
     af.modifier  = -1;
-    af.location  = APPLY_CS_DEX;
+    af.location  = APPLY_CS_STR;
     af.bitvector = AFF_POISON;
     affect_to_char( ch, &af );
 
-    af.location  = APPLY_CS_STA;
+    af.location  = APPLY_CS_DEX;
     af.bitvector = 0;
     affect_to_char( ch, &af );
 
-    WAIT_STATE(ch,1);
+    af.location  = APPLY_CS_STA;
+    affect_to_char( ch, &af );
+
+    WAIT_STATE(ch,9);
     return;
   }
 

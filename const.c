@@ -3029,7 +3029,7 @@ Total (3) */
 
 {   "lordly will", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_lordlywill,  TAR_IGNORE, POS_STANDING,
-&gsn_gift_lordlywill,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+&gsn_gift_lordlywill,          SLOT( 0),        0,     12, "",             "Falcon's Gift against deception leaves your body.",        "" },
 
 {   "sidestep death", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_sidestepdeath,  TAR_IGNORE, POS_STANDING,

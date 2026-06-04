@@ -4477,8 +4477,43 @@ void spell_gift_corneredrat( int sn, int level, CHAR_DATA *ch, void *vo, int tar
 //manipul + medicine diff 6
 //illusion lasts one scene, makes them look like  a leper
 //humans have to roll humanity diff 8 or risk running way from them, supernaturals diff 6
-void spell_gift_plaguevisage( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_plaguevisage( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  AFFECT_DATA af;
+  int success;
+
+  success = godice(get_attribute(ch, MANIPULATION) + get_ability(ch, CSABIL_MEDICINE), 6);
+
+  if (success < 0)
+  {
+    act("Rat-spirits attack you, infecting you with disease!", ch, NULL, victim, TO_CHAR);
+    act("$n howls in pain, beseiged by unseen forces.", ch, NULL, victim, TO_NOTVICT);
+
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_gift_plaguevisage;
+    af.level     = success;
+    af.duration  = -success + 1;
+    af.modifier  = -1;
+    af.location  = APPLY_CS_DEX;
+    af.bitvector = AFF_POISON;
+    affect_to_char( ch, &af );
+
+    af.location  = APPLY_CS_STA;
+    af.bitvector = 0;
+    affect_to_char( ch, &af );
+
+    WAIT_STATE(ch,1);
     return;
+  }
+
+  if (success == 0)
+  {
+    send_to_char("Rat-spirits scatter from your presence.\n\r", ch);
+    WAIT_STATE(ch,4);
+    return;
+  }
+
+  return;
 }
 //
 //Rank Three

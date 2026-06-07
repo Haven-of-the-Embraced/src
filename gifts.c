@@ -4491,28 +4491,31 @@ void spell_gift_corneredrat( int sn, int level, CHAR_DATA *ch, void *vo, int tar
 
   if (success < 0)
   {
-    act("Rat-spirits accept your donation of Rage, but flee immediately.", ch, NULL, victim, TO_CHAR);
+    act("Rat-spirits accept your donation of Rage, but flee immediately.", ch, NULL, NULL, TO_CHAR);
     WAIT_STATE(ch, 10);
     return;
   }
 
   if (success == 0)
   {
-    act("Your attempt to further enrage yourself seems to have failed.", ch, NULL, victim, TO_CHAR);
+    act("Your attempt to further enrage yourself seems to have failed.", ch, NULL, NULL, TO_CHAR);
     WAIT_STATE(ch, 4);
     return;
   }
+
+  act("Rat-spirits bless you with a powerful rage.", ch, NULL, NULL, TO_CHAR);
+  act("$n throws $mself into a wild rage.", ch, NULL, NULL, TO_NOTVICT);
 
   af.where     = TO_AFFECTS;
   af.type      = gsn_gift_corneredrat;
   af.level     = success;
   af.duration  = 2;
-  af.modifier  = (success * ch->level / 4) + 20;
+  af.modifier  = (success * ch->level) + 20;
   af.location  = APPLY_HITROLL;
   af.bitvector = 0;
   affect_to_char( ch, &af );
 
-  af.modifier  = (success * ch->level / 10) + 10;
+  af.modifier  = (success * ch->level / 2) + 10;
   af.location  = APPLY_DAMROLL;
   affect_to_char( ch, &af );
   return;

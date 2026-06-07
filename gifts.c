@@ -4487,6 +4487,8 @@ void spell_gift_corneredrat( int sn, int level, CHAR_DATA *ch, void *vo, int tar
 
   ch->pcdata->rage[TEMP]--;
 
+  success = godice(ch->pcdata->rage[PERM], 8);
+
   if (success < 0)
   {
     act("Rat-spirits accept your donation of Rage, but flee immediately.", ch, NULL, victim, TO_CHAR);
@@ -4500,6 +4502,19 @@ void spell_gift_corneredrat( int sn, int level, CHAR_DATA *ch, void *vo, int tar
     WAIT_STATE(ch, 4);
     return;
   }
+
+  af.where     = TO_AFFECTS;
+  af.type      = gsn_gift_corneredrat;
+  af.level     = success;
+  af.duration  = 2;
+  af.modifier  = (success * ch->level / 4) + 20;
+  af.location  = APPLY_HITROLL;
+  af.bitvector = 0;
+  affect_to_char( ch, &af );
+
+  af.modifier  = (success * ch->level / 10) + 10;
+  af.location  = APPLY_DAMROLL;
+  affect_to_char( ch, &af );
   return;
 }
 //

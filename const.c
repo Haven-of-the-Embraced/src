@@ -2799,11 +2799,11 @@ Total (3) */
 
     { "cornered rat", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_corneredrat,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_corneredrat,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+    &gsn_gift_corneredrat,          SLOT( 0),        0,     12, "",             "Rat's Rage leaves your body.",        "" },
 
     { "plague visage", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_plaguevisage,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_plaguevisage,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+    &gsn_gift_plaguevisage,          SLOT( 0),        0,     12, "",             "The illusion of the plague vanishes from you.",        "" },
 
     { "call the rust", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_calltherust,  TAR_IGNORE, POS_STANDING,

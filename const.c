@@ -1700,7 +1700,7 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
 
     { "rage",    { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_rage,    TAR_CHAR_SELF,      POS_RESTING,
-    NULL,           SLOT(0),     0, 12, "",         "Rage",  "" },
+    NULL,           SLOT(0),     0, 12, "",         "The righteous fury of your Rage subsides as you calm yourself.",  "" },
 
 /* combat and weapons skills
 Total (33) */

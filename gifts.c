@@ -4509,7 +4509,7 @@ void spell_gift_corneredrat( int sn, int level, CHAR_DATA *ch, void *vo, int tar
   af.where     = TO_AFFECTS;
   af.type      = gsn_gift_corneredrat;
   af.level     = success;
-  af.duration  = 2;
+  af.duration  = 3 + success;
   af.modifier  = (success * ch->level) + 20;
   af.location  = APPLY_HITROLL;
   af.bitvector = 0;

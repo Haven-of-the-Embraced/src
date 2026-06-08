@@ -1830,7 +1830,11 @@ void d10_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt)
 		if (wield)
 			dice = get_attribute(ch,DEXTERITY)+ch->csabilities[CSABIL_MELEE];
 		else
+        {
 			dice = get_attribute(ch,DEXTERITY)+ch->csabilities[CSABIL_BRAWL];
+            if(is_affected(ch, gsn_gift_corneredrat))
+                dice += 3;
+        }
 
 		//Dicepool Modifiers.
 

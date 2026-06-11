@@ -9161,6 +9161,13 @@ void do_vlist( CHAR_DATA *ch, char *argument )
 
     bvnum = atoi( arg2 );
     tvnum = atoi( argument );
+
+    if ( tvnum - bvnum > 200 )
+    {
+        send_to_char( "{RRange is too large. Max range is 200 to prevent overflow.{x\n\r", ch );
+        return;
+    }
+
     found = FALSE;
 
     if (!str_cmp(arg,"obj"))

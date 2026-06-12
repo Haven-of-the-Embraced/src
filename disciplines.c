@@ -9125,16 +9125,16 @@ void do_essence(CHAR_DATA *ch, char *argument)
 
     if (IS_AFFECTED(ch, AFF_SHIFT) || is_affected(ch,gsn_vicissitude_horrid))
     {
-        send_to_char("You have already altered your form!\n\r", ch);
+        send_to_char("You have already altered yourself to another form!\n\r", ch);
         return;
     }
 
-    send_to_char("Invoking your Inner Essence transforms your body into a sentient puddle of sweet vitae!\n\r.", ch);
+    send_to_char("Invoking your Inner Essence slowly transforms your body into a sentient puddle of sweet vitae!\n\r.", ch);
     if (IS_AFFECTED(ch,AFF_FANGS))
         do_function(ch, &do_fangs, "" );
 
     af.where     = TO_IMMUNE;
-    af.type      = gsn_vicissitude_chiropteran;
+    af.type      = gsn_vicissitude_essence;
     af.level     = ch->level;
     af.duration  = -1;
     af.location  = 0;
@@ -9144,6 +9144,10 @@ void do_essence(CHAR_DATA *ch, char *argument)
 
     af.where     = TO_AFFECTS;
     af.bitvector = AFF_PASS_DOOR;
+    affect_to_char( ch, &af );
+
+    af.bitvector = AFF_SHIFT;
+    affect_to_char( ch, &af );
 
     WAIT_STATE( ch, 60 );
     return;

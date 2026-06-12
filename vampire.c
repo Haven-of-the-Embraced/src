@@ -676,16 +676,22 @@ void do_fangs(CHAR_DATA *ch, char *argument)
             send_to_char("You cannot retract your fangs!\n\r" ,ch);
             return;
         }*/
-REMOVE_BIT(ch->affected_by, AFF_FANGS);
-send_to_char("Your fangs slide back into your gums.\n\r" ,ch);
-act("$n's fangs disappear into $s mouth.", ch,NULL,NULL,TO_NOTVICT);
-return;
-}
+        REMOVE_BIT(ch->affected_by, AFF_FANGS);
+        send_to_char("Your fangs slide back into your gums.\n\r" ,ch);
+        act("$n's fangs disappear into $s mouth.", ch,NULL,NULL,TO_NOTVICT);
+        return;
+    }
 
-SET_BIT(ch->affected_by, AFF_FANGS);
-send_to_char("You unsheath your fangs.\n\r" ,ch);
-act("$n shows $s true form and unsheaths $s vampiric fangs!", ch,NULL,NULL,TO_NOTVICT);
-return;
+    if (is_affected(ch, gsn_vicissitude_essence))
+    {
+        send_to_char("You have no fangs to extend while being a puddle of Vitae!\n\r", ch);
+        return;
+    }
+
+    SET_BIT(ch->affected_by, AFF_FANGS);
+    send_to_char("You unsheath your fangs.\n\r" ,ch);
+    act("$n shows $s true form and unsheaths $s vampiric fangs!", ch,NULL,NULL,TO_NOTVICT);
+    return;
 }
 
 void do_feed(CHAR_DATA *ch, char *argument)

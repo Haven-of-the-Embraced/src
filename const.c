@@ -158,7 +158,7 @@ const   struct attack_type  attack_table    [MAX_DAMAGE_MESSAGE]    =
     {   "peckb",    "peck",     DAM_BASH    },
     {   "chop",     "chop",     DAM_SLASH   },  /* 25 */
     {   "sting",    "sting",    DAM_PIERCE  },
-    {   "smash",     "smash",   DAM_BASH    },
+    {   "smash",    "smash",   DAM_BASH    },
     {   "shbite",   "shocking bite",DAM_LIGHTNING   },
     {   "flbite",   "flaming bite", DAM_FIRE    },
     {   "frbite",   "freezing bite", DAM_COLD   },  /* 30 */
@@ -172,7 +172,8 @@ const   struct attack_type  attack_table    [MAX_DAMAGE_MESSAGE]    =
     {   "flame",    "flame",    DAM_FIRE    },
     {   "chill",    "chill",    DAM_COLD    },
     {   "claws",    "claws",    DAM_AGGREVATED }, /*40 */
-    {   NULL,       NULL,       0       } /* 41 */
+    {   "blood",    "blood splash", DAM_BASH},
+    {   NULL,       NULL,       0       } /* 42 */
 };
 /* Language Table*/ /* BROKEN!
 const   struct  lang_type       lang_table      [ MAX_LANGUAGE ]  =

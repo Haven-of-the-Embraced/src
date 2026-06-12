@@ -1322,6 +1322,12 @@ void do_drink( CHAR_DATA *ch, char *argument )
 
     one_argument( argument, arg );
 
+    if (is_affected(ch, gsn_vicissitude_essence))
+    {
+        send_to_char("You have no mouth in this form!\n\r", ch);
+        return;
+    }
+
     if ( arg[0] == '\0' )
     {
     for ( obj = ch->in_room->contents; obj; obj = obj->next_content )

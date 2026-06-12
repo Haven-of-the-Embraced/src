@@ -1521,6 +1521,12 @@ void do_eat( CHAR_DATA *ch, char *argument )
     return;
     }
 
+    if (is_affected(ch, gsn_vicissitude_essence))
+    {
+        send_to_char("You have no mouth in this form!\n\r", ch);
+        return;
+    }
+
     if ( ( obj = get_obj_carry( ch, arg, ch ) ) == NULL )
     {
     send_to_char( "You do not have that item.\n\r", ch );

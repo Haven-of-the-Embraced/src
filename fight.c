@@ -5072,6 +5072,12 @@ void do_flee( CHAR_DATA *ch, char *argument )
         return;
     }
 
+    if (is_affected(ch,gsn_vicissitude_essence) && number_percent() < 80)
+    {
+        send_to_char("Your blood form is too sluggish to escape effectively!\n\r",ch);
+        return;
+    }
+
     was_in = ch->in_room;
     for ( attempt = 0; attempt < 6; attempt++ )
     {

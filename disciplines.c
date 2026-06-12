@@ -9093,6 +9093,7 @@ void do_essence(CHAR_DATA *ch, char *argument)
 {
     char arg [MAX_INPUT_LENGTH];
     AFFECT_DATA af;
+    char buf[MAX_STRING_LENGTH];
 
     argument = one_argument( argument, arg );
 
@@ -9129,7 +9130,11 @@ void do_essence(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    send_to_char("Invoking your Inner Essence slowly transforms your body into a sentient puddle of sweet vitae!\n\r.", ch);
+    if (is_affected( ch, gsn_mask ))
+        do_function(ch, &do_mask, "" );
+
+    send_to_char("Invoking your Inner Essence slowly transforms your body into a sentient puddle of sweet vitae!\n\r", ch);
+    act("$n's body melts slowly, dissolving into a puddle of blood.", ch, NULL, NULL, TO_NOTVICT);
     if (IS_AFFECTED(ch,AFF_FANGS))
         do_function(ch, &do_fangs, "" );
 
@@ -9148,6 +9153,11 @@ void do_essence(CHAR_DATA *ch, char *argument)
 
     af.bitvector = AFF_SHIFT;
     affect_to_char( ch, &af );
+
+    sprintf(buf, "A puddle of blood",ch->name);
+    ch->short_descr = str_dup( buf );
+    sprintf(buf, "A sticky puddle of blood slowly oozes around.");
+    ch->shift = str_dup( buf );
 
     WAIT_STATE( ch, 60 );
     return;

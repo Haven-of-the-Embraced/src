@@ -1750,7 +1750,6 @@ void d10_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt)
     extern bool slaughter;
     extern bool doubledam;
 
-
     int tohit = 0;
 	int dice = 0;
     int soak = 0;
@@ -1767,7 +1766,6 @@ void d10_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt)
     bool result;
     int diceroll;
 
-
     /* just in case */
     if (victim == ch || ch == NULL || victim == NULL)
         return;
@@ -1781,22 +1779,23 @@ void d10_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt)
          ch->in_room != victim->in_room )
         return;
 
-
   /* Figure out the type of damage message.
      */
     wield = get_eq_char( ch, WEAR_WIELD );
     if ( dt == TYPE_UNDEFINED )
     {
-    dt = TYPE_HIT;
-    if ( wield != NULL && wield->item_type == ITEM_WEAPON )
-        dt += wield->value[3];
-    else
+        dt = TYPE_HIT;
+        if (is_affected(ch, gsn_vicissitude_essence))
+            dt += attack_lookup("blood");
+        else if ( wield != NULL && wield->item_type == ITEM_WEAPON )
+            dt += wield->value[3];
+        else
         {
             if ( is_affected(ch, gsn_claws) || is_affected(ch, gsn_wingclaws))
                 dt += attack_lookup("claws");
             else
                 dt += ch->dam_type;
-            }
+        }
     }
 
 

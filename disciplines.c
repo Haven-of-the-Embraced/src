@@ -9104,6 +9104,13 @@ void do_essence(CHAR_DATA *ch, char *argument)
         return;
     }
 
+    if (is_affected(ch,gsn_vicissitude_essence))
+    {
+        send_to_char("You force your Vitae to reform into your body.\n\r", ch);
+        affect_strip(ch, gsn_vicissitude_essence);
+        return;
+    }
+
     if ( IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
     {
         send_to_char("Your blood curse prevents it!\n\r" ,ch);
@@ -9122,16 +9129,9 @@ void do_essence(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if(ch->hit < ch->max_hit/4)
-    {
-        send_to_char("Your body is too weak to perform Inner Essence!\n\r",ch);
-        return;
-    }
-
     send_to_char("Invoking your Inner Essence transforms your body into a sentient puddle of sweet vitae!\n\r.", ch);
     if (IS_AFFECTED(ch,AFF_FANGS))
         do_function(ch, &do_fangs, "" );
-
 
     af.where     = TO_IMMUNE;
     af.type      = gsn_vicissitude_chiropteran;

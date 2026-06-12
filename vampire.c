@@ -1088,6 +1088,12 @@ void do_nourish(CHAR_DATA *ch, char *argument)
         return;
     }
 
+    if (is_affected(victim, gsn_vicissitude_essence))
+    {
+        send_to_char("A puddle of blood has no mouth to feed from you.\n\r", ch);
+        return;
+    }
+
     if(victim->race == race_lookup("human"))
     {
         send_to_char("That Kine must feed from you willingly.\n\r",ch);

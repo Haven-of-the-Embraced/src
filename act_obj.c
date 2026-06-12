@@ -2312,6 +2312,12 @@ void do_quaff( CHAR_DATA *ch, char *argument )
     if (IS_NPC(ch))
         return;
 
+    if (is_affected(ch, gsn_vicissitude_essence))
+    {
+        send_to_char("You have no mouth in this form!\n\r", ch);
+        return;
+    }
+
     if ( arg[0] == '\0' )
     {
     send_to_char( "Quaff what?\n\r", ch );

@@ -1256,7 +1256,7 @@ void cskill_update(CHAR_DATA *ch, bool show)
 
 const   struct  skill_type  skill_table [MAX_SKILL] =
 {
-// TOTAL SKILLS AS OF 11/27/25 =  458
+// TOTAL SKILLS AS OF 06/12/26 =  459
 // MAX_SKILL INCREASED TO 465 11/27/25
 /*
  * Magic spells.  Total (108)
@@ -2332,7 +2332,7 @@ Total (3) */
     &gsn_cauldron,          SLOT(406),   0, 12, "boiling blood",            "", "" },
 
 //    --Vicissitude--
-// Total (4)
+// Total (5)
     { "bonecrafting",     { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null,             TAR_CHAR_SELF,             POS_STANDING,
     &gsn_vicissitude_bonecraft,          SLOT( 0),        0,     48, "bone spikes",             "Your body slowly reforms into its normal skeletal structure.",      "" },
@@ -2340,6 +2340,10 @@ Total (3) */
     { "horrid form",  { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
     &gsn_vicissitude_horrid,                     SLOT(0),    0, 12, "",      "Your form shrinks and you slowly return to your 'normal' form.",  "" },
+
+    { "inner essence",  { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
+    { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,
+    &gsn_vicissitude_essence,                     SLOT(0),    0, 12, "",      "The essence of your Vitae coalensces back into your human form.",  "" },
 
     { "chiropteran marauder",  { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
   	{ 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_null, TAR_CHAR_SELF,      POS_STANDING,

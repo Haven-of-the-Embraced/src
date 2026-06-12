@@ -5234,6 +5234,7 @@ sh_int          gsn_earthmeld;
 sh_int          gsn_shadowform;
 sh_int          gsn_vicissitude_horrid;
 sh_int          gsn_vicissitude_bonecraft;
+sh_int          gsn_vicissitude_essence;
 sh_int          gsn_vicissitude_chiropteran;
 sh_int          gsn_wingclaws;
 sh_int          gsn_weaken;

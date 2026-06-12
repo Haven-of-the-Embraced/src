@@ -9092,6 +9092,7 @@ void do_horrid(CHAR_DATA *ch, char *argument)
 void do_essence(CHAR_DATA *ch, char *argument)
 {
     char arg [MAX_INPUT_LENGTH];
+    AFFECT_DATA af;
 
     argument = one_argument( argument, arg );
 
@@ -9102,8 +9103,6 @@ void do_essence(CHAR_DATA *ch, char *argument)
         send_to_char("You are not a Vampire!\n\r",ch);
         return;
     }
-
-
 
     if ( IS_AFFECTED2(ch, AFF2_QUIETUS_BLOODCURSE))
     {
@@ -9122,18 +9121,18 @@ void do_essence(CHAR_DATA *ch, char *argument)
         send_to_char("Your body is too weak to perform Inner Essence!\n\r",ch);
         return;
     }
-    if (number_range(0,100) < 10)
-    {
-        send_to_char("You try to invoke your Inner Essence, but you fail and scream in agony as your body is disrupted.\n\r", ch);
-        ch->hit -= ch->max_hit/4;
-        if(ch->pblood-10 < 0) ch->pblood = 1; else ch->pblood -= 10;
-    }
-    else
-    {
-        send_to_char("You invoke your Inner essence and transform parts of your body into sweet vitae!\n\r.", ch);
-        ch->hit -= ch->max_hit/4;
-        ch->pblood += ch->max_pblood/6;
-    }
+
+    send_to_char("Invoking your Inner Essence transforms your body into a sentient puddle of sweet vitae!\n\r.", ch);
+
+    af.where     = TO_IMMUNE;
+    af.type      = gsn_vicissitude_chiropteran;
+    af.level     = ch->level;
+    af.duration  = -1;
+    af.location  = 0;
+    af.modifier  = 0;
+    af.bitvector = IMM_WEAPON;
+    affect_to_char( ch, &af );
+
     WAIT_STATE( ch, 60 );
     return;
 }

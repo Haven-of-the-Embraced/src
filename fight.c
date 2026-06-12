@@ -334,6 +334,8 @@ void multi_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt )
                 one_hit(ch,victim,dt);
         }
 
+    if (is_affected(ch, gsn_vicissitude_essence))
+        return;
 
     /*Time Intrinsic. Acts like Celerity for Mages.
      */

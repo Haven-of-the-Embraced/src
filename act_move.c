@@ -261,6 +261,13 @@ void move_char( CHAR_DATA *ch, int door, bool follow )
         if (IS_AFFECTED(ch,AFF_SLOW) || ch->in_room->sector_type == SECT_COLD)
         move *= 2;
 
+
+        if (is_affected(ch, gsn_vicissitude_essence))
+        {
+            WAIT_STATE(ch, 2);
+            move += 2;
+        }
+
         if ( ch->move < move )
         {
         send_to_char( "You are too exhausted to move another step.\n\r", ch );

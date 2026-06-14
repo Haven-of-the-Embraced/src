@@ -2561,6 +2561,12 @@ if (DEBUG_MESSAGES || IS_DEBUGGING(ch))	{
     }
     }
 
+    if (IS_NPC(victim) && dam > 0 && is_affected(ch, gsn_vicissitude_essence))
+    {
+        if (number_range(1,3) == 2)
+            do_function(victim, &do_flee, "");
+    }
+
     /*
      * Wimp out?
      */

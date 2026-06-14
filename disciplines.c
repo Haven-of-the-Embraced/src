@@ -9148,10 +9148,10 @@ void do_essence(CHAR_DATA *ch, char *argument)
     affect_to_char( ch, &af );
 
     af.where     = TO_AFFECTS;
-    af.bitvector = AFF_PASS_DOOR;
+    af.bitvector = AFF_SHIFT;
     affect_to_char( ch, &af );
 
-    af.bitvector = AFF_SHIFT;
+    af.bitvector = AFF_PASS_DOOR;
     affect_to_char( ch, &af );
 
     sprintf(buf, "A puddle of blood",ch->name);

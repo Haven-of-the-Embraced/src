@@ -1706,6 +1706,12 @@ void spell_gift_gnaw( int sn, int level, CHAR_DATA *ch, void *vo, int target)
   AFFECT_DATA af;
   int dicesuccess;
 
+  if (is_affected(ch, gsn_gift_gnaw))
+  {
+    send_to_char("Your bite is already strengthened by wolf-spirits.\n\r", ch);
+    return;
+  }
+
   if (ch->cswillpower < 1)
   {
     sendch("You do not possess the strength of Willpower to enact this Gift.\n\r", ch);
@@ -4262,8 +4268,77 @@ void spell_gift_wyldwarp( int sn, int level, CHAR_DATA *ch, void *vo, int target
 //wits + survival diff 6 for inedible not poisonous ingrediants to 10 for hot cinders or rusted iron
 //must have pot and ladle or spoon and water
 //takes inedible stuff and makes it into an edible stew
-void spell_gift_cookery( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_cookery( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  OBJ_DATA *stew;
+  OBJ_DATA *obj;
+  int success;
+  char buf[MAX_STRING_LENGTH];
+  char arg1[MIL];
+  gift_target_name = one_argument(gift_target_name, arg1);
+
+  if ((obj = get_obj_here( ch, NULL, arg1 )) == NULL)
+  {
+    send_to_char("What are you trying to cook?\n\r",ch);
     return;
+  }
+
+  if (obj->item_type != ITEM_TRASH)
+  {
+    send_to_char("Raccon spirits do not approve of that offering.\n\r", ch);
+    return;
+  }
+
+  if (obj->size != SIZE_SMALL)
+  {
+    act("Raccoon-spirits inform you that Cookery can only be used upon small items.", ch, obj, NULL, TO_CHAR);
+    return;
+  }
+
+  if (ch->move < ch->level)
+  {
+    send_to_char("You are too tired to call on raccoon spirits at this time.\n\r", ch);
+    return;
+  }
+
+  ch->move-= ch->level;
+
+  success = godice(get_attribute(ch, WITS) + get_ability(ch, CSABIL_SURVIVAL), 6);
+
+  if (success < 0)
+  {
+    act( "Quite suddenly, $p deteriorates into nothingness!", ch, obj, NULL, TO_ROOM );
+    act( "Racoon spirits are offended by your paltry offerings, and destroy $p.", ch, obj, NULL, TO_CHAR );
+    extract_obj( obj );
+    WAIT_STATE(ch, 8);
+    return;
+  }
+
+  if (success == 0)
+  {
+    act( "Racoon spirits seem to be ignoring your request.", ch, NULL, NULL, TO_CHAR );
+    WAIT_STATE(ch, 6);
+    return;
+  }
+
+  stew = create_object( get_obj_index( 20 ), 1 );
+  stew->level = obj->level;
+  stew->value[0] += (success * 5) + (stew->level / 10);
+  stew->value[1] += (success * 5) + (stew->level / 10);
+  stew->timer += (success * 10) + (ch->level);
+  stew->size = SIZE_SMALL;
+  sprintf(buf,"stew");
+  stew->name = str_dup(buf);
+  sprintf(buf,"an unappetizing stew");
+  stew->short_descr = str_dup(buf);
+  sprintf(buf,"An unappetizing stew was hastily cooked, packed with nutrients.");
+  stew->description = str_dup(buf);
+
+  obj_to_room( stew, ch->in_room );
+  act( "$n hastily cooks $p.", ch, stew, NULL, TO_ROOM );
+  act( "Raccoon spirits assist you to quickly prepare a stew from $p.", ch, obj, NULL, TO_CHAR );
+  extract_obj(obj);
+  return;
 }
 //
 //“Resist Toxin”
@@ -4393,8 +4468,57 @@ void spell_gift_scentofthehoneycomb( int sn, int level, CHAR_DATA *ch, void *vo,
 //rat or badger
 //rage diff 8
 //forces their rage to go into frenzy
-void spell_gift_corneredrat( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_corneredrat( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  AFFECT_DATA af;
+  int success;
+
+  if (is_affected(ch, gsn_gift_corneredrat))
+  {
+    send_to_char("You are already fueled by a frenzy lent by Rat-spirits.\n\r", ch);
     return;
+  }
+
+  if (ch->pcdata->rage[TEMP] < 1)
+  {
+    send_to_char("You do not have enough Rage to go into a frenzy.\n\r", ch);
+    return;
+  }
+
+  ch->pcdata->rage[TEMP]--;
+
+  success = godice(ch->pcdata->rage[PERM], 8);
+
+  if (success < 0)
+  {
+    act("Rat-spirits accept your donation of Rage, but flee immediately.", ch, NULL, NULL, TO_CHAR);
+    WAIT_STATE(ch, 10);
+    return;
+  }
+
+  if (success == 0)
+  {
+    act("Your attempt to further enrage yourself seems to have failed.", ch, NULL, NULL, TO_CHAR);
+    WAIT_STATE(ch, 4);
+    return;
+  }
+
+  act("Rat-spirits bless you with a powerful rage.", ch, NULL, NULL, TO_CHAR);
+  act("$n throws $mself into a wild rage.", ch, NULL, NULL, TO_NOTVICT);
+
+  af.where     = TO_AFFECTS;
+  af.type      = gsn_gift_corneredrat;
+  af.level     = success;
+  af.duration  = 3 + success;
+  af.modifier  = (success * ch->level) + 20;
+  af.location  = APPLY_HITROLL;
+  af.bitvector = 0;
+  affect_to_char( ch, &af );
+
+  af.modifier  = (success * ch->level / 2) + 10;
+  af.location  = APPLY_DAMROLL;
+  affect_to_char( ch, &af );
+  return;
 }
 //
 //“Plague Visage”
@@ -4402,8 +4526,70 @@ void spell_gift_corneredrat( int sn, int level, CHAR_DATA *ch, void *vo, int tar
 //manipul + medicine diff 6
 //illusion lasts one scene, makes them look like  a leper
 //humans have to roll humanity diff 8 or risk running way from them, supernaturals diff 6
-void spell_gift_plaguevisage( int sn, int level, CHAR_DATA *ch, void *vo, int target){
+void spell_gift_plaguevisage( int sn, int level, CHAR_DATA *ch, void *vo, int target)
+{
+  AFFECT_DATA af;
+  int success;
+
+  if (is_affected(ch, gsn_gift_plaguevisage))
+  {
+    send_to_char("Rat-spirits have already altered your visage.\n\r", ch);
     return;
+  }
+
+  if (ch->move < 2 * ch-> level)
+  {
+    send_to_char("You are too tired to call upon the Rat-spirits.\n\r", ch);
+    return;
+  }
+
+  ch->move-= ch->level *2;
+  success = godice(get_attribute(ch, MANIPULATION) + get_ability(ch, CSABIL_MEDICINE), 6);
+
+  if (success < 0)
+  {
+    act("Rat-spirits attack you, infecting you with disease!", ch, NULL, NULL, TO_CHAR);
+    act("$n howls in pain, beseiged by unseen forces.", ch, NULL, NULL, TO_NOTVICT);
+
+    af.where     = TO_AFFECTS;
+    af.type      = gsn_gift_plaguevisage;
+    af.level     = success;
+    af.duration  = -success + 1;
+    af.modifier  = -1;
+    af.location  = APPLY_CS_STR;
+    af.bitvector = AFF_POISON;
+    affect_to_char( ch, &af );
+
+    af.location  = APPLY_CS_DEX;
+    af.bitvector = 0;
+    affect_to_char( ch, &af );
+
+    af.location  = APPLY_CS_STA;
+    affect_to_char( ch, &af );
+
+    WAIT_STATE(ch,9);
+    return;
+  }
+
+  if (success == 0)
+  {
+    send_to_char("Rat-spirits scatter from your presence.\n\r", ch);
+    WAIT_STATE(ch,4);
+    return;
+  }
+
+  act("Rat-spirits cast an illusion of leprosy onto you.", ch, NULL, NULL, TO_CHAR);
+  act("$n's body becomes covered in sores and other skin lesions.", ch, NULL, NULL, TO_NOTVICT);
+
+  af.where     = TO_AFFECTS;
+  af.type      = gsn_gift_plaguevisage;
+  af.level     = success;
+  af.duration  = success * 5 + 10;
+  af.modifier  = 0;
+  af.location  = 0;
+  af.bitvector = 0;
+  affect_to_char( ch, &af );
+  return;
 }
 //
 //Rank Three

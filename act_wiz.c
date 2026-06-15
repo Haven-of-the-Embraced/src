@@ -9154,13 +9154,20 @@ void do_vlist( CHAR_DATA *ch, char *argument )
     {
         send_to_char( "{WSyntax: {Yvlist <sub_command> <min_vnum> <max_vnum>{x\n\r", ch );
         sendch("\n\rValid Subcommands:\n\r", ch);
-        sendch("obj, room, mob, mprog, oprog, rprog, showmp{R*{x, showop{R*{x, showrp{R*{x\n\r", ch);
+        sendch("obj, room, mob, loottable, mprog, oprog, rprog, showmp{R*{x, showop{R*{x, showrp{R*{x\n\r", ch);
         sendch("\n\r{R*{x - min and max vnum refer to the mob/room/obj, not program.\n\r", ch);
         return;
     }
 
     bvnum = atoi( arg2 );
     tvnum = atoi( argument );
+
+    if ( tvnum - bvnum > 200 )
+    {
+        send_to_char( "{RRange is too large. Max range is 200 to prevent overflow.{x\n\r", ch );
+        return;
+    }
+
     found = FALSE;
 
     if (!str_cmp(arg,"obj"))
@@ -9193,6 +9200,23 @@ void do_vlist( CHAR_DATA *ch, char *argument )
         }
         if(!found)
             send_to_char( "{RNo {Cmobs {Rfound in that range.\n\r", ch );
+        return;
+    }
+
+    if (!str_cmp(arg,"loottable"))
+    {
+        LOOT_TABLE_DATA *pLoot;
+        for ( vnum = bvnum; vnum <= tvnum; vnum++ )
+        {
+            if ( ( pLoot = loot_table_lookup( vnum ) ) != NULL )
+            {
+                    found = TRUE;
+                    sprintf( buf, "{W[{G%5d{W] {x%s\n\r", pLoot->vnum, pLoot->name );
+                    send_to_char( buf, ch );
+            }
+        }
+        if(!found)
+            send_to_char( "{RNo {Cloottables {Rfound in that range.\n\r", ch );
         return;
     }
 

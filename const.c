@@ -1701,7 +1701,7 @@ const   struct  skill_type  skill_table [MAX_SKILL] =
 
     { "rage",    { 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_rage,    TAR_CHAR_SELF,      POS_RESTING,
-    NULL,           SLOT(0),     0, 12, "",         "Rage",  "" },
+    NULL,           SLOT(0),     0, 12, "",         "The righteous fury of your Rage subsides as you calm yourself.",  "" },
 
 /* combat and weapons skills
 Total (33) */
@@ -2510,11 +2510,11 @@ Total (3) */
 
     { "beast life", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_beastlife,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_beastlife,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+    &gsn_gift_beastlife,          SLOT( 0),        0,     12, "",             "You can no longer communicate and control natural animals.",        "" },
 
     { "gnaw", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_gnaw,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_gnaw,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+    &gsn_gift_gnaw,          SLOT( 0),        0,     12, "",             "The spirit imbued strength leaves your jaws.",        "" },
 
     { "elemental gift", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_elementalgift,  TAR_IGNORE, POS_STANDING,
@@ -2804,11 +2804,11 @@ Total (3) */
 
     { "cornered rat", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_corneredrat,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_corneredrat,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+    &gsn_gift_corneredrat,          SLOT( 0),        0,     12, "",             "Rat's Rage leaves your body.",        "" },
 
     { "plague visage", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_plaguevisage,  TAR_IGNORE, POS_STANDING,
-    &gsn_gift_plaguevisage,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+    &gsn_gift_plaguevisage,          SLOT( 0),        0,     12, "",             "The illusion of the plague vanishes from you.",        "" },
 
     { "call the rust", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
     { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_calltherust,  TAR_IGNORE, POS_STANDING,
@@ -3034,7 +3034,7 @@ Total (3) */
 
 {   "lordly will", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_lordlywill,  TAR_IGNORE, POS_STANDING,
-&gsn_gift_lordlywill,          SLOT( 0),        0,     12, "",             "!!Wearoffmsg!!",        "" },
+&gsn_gift_lordlywill,          SLOT( 0),        0,     12, "",             "Falcon's Gift against deception leaves your body.",        "" },
 
 {   "sidestep death", { 102, 102,  102, 102, 102, 102, 102, 102, 102, 102, 102, 102, 102 },
 { 1, 1, 1,  1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, spell_gift_sidestepdeath,  TAR_IGNORE, POS_STANDING,

@@ -1785,9 +1785,12 @@ void aggr_update( void )
         &&   (!is_affected(vch, gsn_glower) || get_affect_level(vch, gsn_glower) == 0 || get_affect_level(vch, gsn_glower) < ch->level)
         &&   (!is_affected(vch, gsn_gift_maskthepredator) && !is_natural(ch) && get_affect_level(vch, gsn_gift_maskthepredator) + 5 < ch->level)
         &&   (!is_affected(vch, gsn_gift_visageoffenris) || get_affect_level(vch, gsn_gift_visageoffenris) == 0 || get_affect_level(vch, gsn_gift_visageoffenris) + 5 < ch->level)
+        &&   (!is_affected(vch, gsn_gift_plaguevisage) || vch->level < ch->level)
         &&   (!(IS_VAMP(ch) && (vch->pcdata->csbackgrounds[CSBACK_STATUS]*10 > number_range(1, 100)))
         ||   !(ch->race == race_lookup("human") && (vch->pcdata->csbackgrounds[CSBACK_FAME]*10 > number_range(1, 100)))
-        ||   !(ch->race == race_lookup("garou") && (vch->pcdata->csbackgrounds[CSBACK_PUREBREED]*10 > number_range(1, 100)))))
+        ||   !(ch->race == race_lookup("garou") && (vch->pcdata->csbackgrounds[CSBACK_PUREBREED]*10 > number_range(1, 100))))
+
+        )
 
         {
             if ( number_range( 0, count ) == 0 )

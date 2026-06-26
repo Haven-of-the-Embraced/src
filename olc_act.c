@@ -2547,11 +2547,15 @@ void show_obj_values( CHAR_DATA *ch, OBJ_INDEX_DATA *obj )
                 "[v0] Charges:        [%d]\n\r"
                 "[v1] Exit Flags:     %s\n\r"
                 "[v2] Portal Flags:   %s\n\r"
-                "[v3] Goes to (vnum): [%d]\n\r",
+                "[v3] Goes to (vnum): [%d]\n\r"
+                "[v4] Key (vnum):     [%d] (%s)\n\r",
                 obj->value[0],
                 flag_string( exit_flags, obj->value[1]),
                 flag_string( portal_flags , obj->value[2]),
-                obj->value[3] );
+                obj->value[3],
+                obj->value[4],
+                get_obj_index(obj->value[4])
+                    ? get_obj_index(obj->value[4])->short_descr : "none" );
             send_to_char( buf, ch);
             break;
 
@@ -2975,6 +2979,23 @@ bool set_obj_values( CHAR_DATA *ch, OBJ_INDEX_DATA *pObj, int value_num, char *a
             case 3:
                 send_to_char( "EXIT VNUM SET.\n\r\n\r", ch);
                 pObj->value[3] = atoi ( argument );
+                break;
+            case 4:
+                if ( atoi(argument) != 0 )
+                {
+                    if ( !get_obj_index( atoi( argument ) ) )
+                    {
+                        send_to_char( "THERE IS NO SUCH ITEM.\n\r\n\r", ch );
+                        return FALSE;
+                    }
+                    if ( get_obj_index( atoi( argument ) )->item_type != ITEM_KEY && get_obj_index( atoi( argument ) )->item_type != ITEM_ROOM_KEY )
+                    {
+                        send_to_char( "THAT ITEM IS NOT A KEY.\n\r\n\r", ch );
+                        return FALSE;
+                    }
+                }
+                send_to_char( "PORTAL KEY SET.\n\r\n\r", ch );
+                pObj->value[4] = atoi( argument );
                 break;
        }
        break;

@@ -381,7 +381,7 @@ struct buf_type
     BUFFER *    next;
     bool        valid;
     sh_int      state;  /* error state of the buffer */
-    sh_int      size;   /* size in k */
+    int         size;   /* size in k */
     char *      string; /* buffer's string */
 };
 

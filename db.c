@@ -154,13 +154,13 @@ int         newobjs = 0;
  * Tune the others only if you understand what you're doing.
  */
 #define         MAX_STRING  8388608
-#define         MAX_PERM_BLOCK  131072
-#define         MAX_MEM_LIST    11
+#define         MAX_PERM_BLOCK  262144
+#define         MAX_MEM_LIST    14
 
 void *          rgFreeList  [MAX_MEM_LIST];
 const int       rgSizeList  [MAX_MEM_LIST]  =
 {
-    16, 32, 64, 128, 256, 1024, 2048, 4096, 8192, 16384, 32768-64
+    16, 32, 64, 128, 256, 1024, 2048, 4096, 8192, 16384, 32768, 65536, 131072, 262144
 };
 
 int         nAllocString;

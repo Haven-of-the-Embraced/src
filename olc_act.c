@@ -2769,6 +2769,11 @@ void show_obj_values( CHAR_DATA *ch, OBJ_INDEX_DATA *obj )
             send_to_char( buf, ch );
             send_to_char("{c-----------------------------------------------------{x\n\r", ch);
             break;
+
+        case ITEM_KEY:
+        case ITEM_ROOM_KEY:
+            show_key_opens( ch, obj->vnum );
+            break;
     }
 
     return;

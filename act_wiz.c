@@ -1797,6 +1797,70 @@ void do_rstat( CHAR_DATA *ch, char *argument )
 
 
 
+/*
+ * show_key_opens: Display what doors, containers, and portals
+ * a key vnum opens. Used by do_ostat and oedit show_obj_values.
+ */
+void show_key_opens( CHAR_DATA *ch, int key_vnum )
+{
+    char buf[MAX_STRING_LENGTH];
+    ROOM_INDEX_DATA *pRoom;
+    OBJ_INDEX_DATA *pObjIdx;
+    int iHash, door, found = 0;
+
+    send_to_char("{c-----------------------{YOPENS{c-------------------------{x\n\r", ch);
+
+    /* Scan all rooms for exits that use this key */
+    for ( iHash = 0; iHash < MAX_KEY_HASH; iHash++ )
+    {
+        for ( pRoom = room_index_hash[iHash]; pRoom != NULL; pRoom = pRoom->next )
+        {
+            for ( door = 0; door <= 5; door++ )
+            {
+                EXIT_DATA *pexit = pRoom->exit[door];
+                if ( pexit != NULL && pexit->key == key_vnum )
+                {
+                    sprintf( buf, "  {YDoor{x : Room [%5d] '%-30.30s' - %s (%s)\n\r",
+                        pRoom->vnum,
+                        pRoom->name,
+                        dir_name[door],
+                        pexit->keyword[0] != '\0' ? pexit->keyword : "no keyword" );
+                    send_to_char( buf, ch );
+                    found++;
+                }
+            }
+        }
+    }
+
+    /* Scan all object prototypes for containers/portals that use this key */
+    for ( iHash = 0; iHash < MAX_KEY_HASH; iHash++ )
+    {
+        for ( pObjIdx = obj_index_hash[iHash]; pObjIdx != NULL; pObjIdx = pObjIdx->next )
+        {
+            if ( pObjIdx->item_type == ITEM_CONTAINER && pObjIdx->value[2] == key_vnum )
+            {
+                sprintf( buf, "  {GContainer{x : [%5d] '%s'\n\r",
+                    pObjIdx->vnum, pObjIdx->short_descr );
+                send_to_char( buf, ch );
+                found++;
+            }
+            if ( pObjIdx->item_type == ITEM_PORTAL && pObjIdx->value[4] == key_vnum )
+            {
+                sprintf( buf, "  {MPortal{x    : [%5d] '%s'\n\r",
+                    pObjIdx->vnum, pObjIdx->short_descr );
+                send_to_char( buf, ch );
+                found++;
+            }
+        }
+    }
+
+    if ( found == 0 )
+        send_to_char("  {D(No doors, containers, or portals use this key){x\n\r", ch);
+
+    send_to_char("{c-----------------------------------------------------{x\n\r", ch);
+}
+
+
 void do_ostat( CHAR_DATA *ch, char *argument )
 {
     char buf[MAX_STRING_LENGTH];
@@ -2165,6 +2229,10 @@ void do_ostat( CHAR_DATA *ch, char *argument )
           send_to_char("{c-----------------------------------------------------{x\n\r", ch);
           break;
     }
+
+    /* Key reverse-lookup: show what doors/containers/portals this key opens */
+    if ( obj->item_type == ITEM_KEY || obj->item_type == ITEM_ROOM_KEY )
+        show_key_opens( ch, obj->pIndexData->vnum );
 
     if ( obj->extra_descr != NULL || obj->pIndexData->extra_descr != NULL )
     {

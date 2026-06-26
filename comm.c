@@ -1946,8 +1946,8 @@ void write_to_buffer( DESCRIPTOR_DATA *d, const char *txt, int length )
 
         if (d->outsize >= 32000)
     {
-        bug("Buffer overflow. Truncating output.\n\r",0);
-        write_to_descriptor(d->descriptor, "\n\r*** Output too large. Truncating. ***\n\r", 0);
+        bug("Buffer overflow. Not sending output.\n\r",0);
+        write_to_descriptor(d->descriptor, "\n\r*** Output too large. Not sending. ***\n\r", 0);
         return;
     }
     outbuf      = alloc_mem( 2 * d->outsize );

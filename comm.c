@@ -3047,13 +3047,17 @@ void send_to_char( const char *txt, CHAR_DATA *ch )
 {
     const   char    *point;
             char    *point2;
-            char    buf[ MAX_STRING_LENGTH*4 ];
+            char    *buf;
         int skip = 0;
 
-    buf[0] = '\0';
-    point2 = buf;
     if( txt && ch->desc )
     {
+        int max_len = strlen(txt) * 20 + 1;
+        buf = (char *) malloc(max_len);
+        if (!buf) return;
+        buf[0] = '\0';
+        point2 = buf;
+
         if( IS_SET( ch->act, PLR_COLOUR ) )
         {
         for( point = txt ; *point ; point++ )
@@ -3061,6 +3065,7 @@ void send_to_char( const char *txt, CHAR_DATA *ch )
             if( *point == '{' )
             {
             point++;
+            if (*point == '\0') break;
             if(*point == '<')
             {
                 skip = colour2(*++point,ch,point2);
@@ -3086,6 +3091,7 @@ void send_to_char( const char *txt, CHAR_DATA *ch )
             if( *point == '{' )
             {
             point++;
+            if (*point == '\0') break;
             continue;
             }
             *point2 = *point;
@@ -3094,6 +3100,7 @@ void send_to_char( const char *txt, CHAR_DATA *ch )
         *point2 = '\0';
             write_to_buffer( ch->desc, buf, point2 - buf );
         }
+        free(buf);
     }
     return;
 }
@@ -3129,25 +3136,25 @@ void page_to_char( const char *txt, CHAR_DATA *ch )
 {
     const char *point;
     char *point2;
-    char buf[ MAX_STRING_LENGTH * 4 ];
-    char text[ MAX_STRING_LENGTH * 4];
+    char *buf;
     int skip = 0;
 
+    if (txt == NULL || ch->desc == NULL) return;
+
+    int max_len = strlen(txt) * 20 + 1;
+    buf = (char *) malloc(max_len);
+    if (!buf) return;
     buf[0] = '\0';
     point2 = buf;
 
-
-         strcpy(text, txt);
-
-    if(ch->desc)
+    if( IS_SET( ch->act, PLR_COLOUR ) )
     {
-     if( IS_SET( ch->act, PLR_COLOUR ) )
-     {
-         for( point = text ; *point ; point++ )
-         {
-              if( *point == '{' )
-              {
-                 point++;
+        for( point = txt ; *point ; point++ )
+        {
+            if( *point == '{' )
+            {
+                point++;
+                if (*point == '\0') break;
 
                 if(*point == '<')
                 {
@@ -3156,39 +3163,41 @@ void page_to_char( const char *txt, CHAR_DATA *ch )
                 skip = colour( randomcolors[number_range(0, MAX_RANDOM)], ch, point2 );
                 else
                     skip = colour( *point, ch, point2 );
-                 while( skip-- > 0 )
+                while( skip-- > 0 )
                     ++point2;
-                 continue;
-              }
-              *point2 = *point;
-              *++point2 = '\0';
-         }
-         *point2 = '\0';
+                continue;
+            }
+            *point2 = *point;
+            *++point2 = '\0';
+        }
+        *point2 = '\0';
 
-         ch->desc->showstr_head  = alloc_mem( strlen( buf ) + 1 );
-         strcpy( ch->desc->showstr_head, buf );
-         ch->desc->showstr_point = ch->desc->showstr_head;
-         show_string( ch->desc, "" );
-     }
-     else
-     {
-         for( point = txt ; *point ; point++ )
-         {
-              if( *point == '{' )
-              {
-                  point++;
-                  continue;
-              }
-              *point2 = *point;
-              *++point2 = '\0';
-         }
-         *point2 = '\0';
-         ch->desc->showstr_head  = alloc_mem( strlen( buf ) + 1 );
-         strcpy( ch->desc->showstr_head, buf );
-         ch->desc->showstr_point = ch->desc->showstr_head;
-         show_string( ch->desc, "" );
-     }
+        ch->desc->showstr_head  = alloc_mem( strlen( buf ) + 1 );
+        strcpy( ch->desc->showstr_head, buf );
+        ch->desc->showstr_point = ch->desc->showstr_head;
+        show_string( ch->desc, "" );
     }
+    else
+    {
+        for( point = txt ; *point ; point++ )
+        {
+            if( *point == '{' )
+            {
+                point++;
+                if (*point == '\0') break;
+                continue;
+            }
+            *point2 = *point;
+            *++point2 = '\0';
+        }
+        *point2 = '\0';
+        ch->desc->showstr_head  = alloc_mem( strlen( buf ) + 1 );
+        strcpy( ch->desc->showstr_head, buf );
+        ch->desc->showstr_point = ch->desc->showstr_head;
+        show_string( ch->desc, "" );
+    }
+    
+    free(buf);
     return;
 }
 
@@ -3196,7 +3205,7 @@ void page_to_char( const char *txt, CHAR_DATA *ch )
 /* string pager */
 void show_string(struct descriptor_data *d, char *input)
 {
-    char buffer[4*MAX_STRING_LENGTH];
+    char *buffer;
     char buf[MAX_INPUT_LENGTH];
     register char *scan, *chk;
     int lines = 0, toggle = 1;
@@ -3218,6 +3227,9 @@ void show_string(struct descriptor_data *d, char *input)
     show_lines = d->character->lines;
     else
     show_lines = 0;
+
+    buffer = (char *) malloc(strlen(d->showstr_point) + 1);
+    if (!buffer) return;
 
     for (scan = buffer; ; scan++, d->showstr_point++)
     {
@@ -3241,9 +3253,11 @@ void show_string(struct descriptor_data *d, char *input)
                 d->showstr_point  = 0;
             }
         }
+        free(buffer);
         return;
     }
     }
+    free(buffer);
     return;
 }
 

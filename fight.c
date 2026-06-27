@@ -50,7 +50,7 @@ bool    check_block args( ( CHAR_DATA *ch, CHAR_DATA *victim ) );
 bool    check_parry args( ( CHAR_DATA *ch, CHAR_DATA *victim ) );
 bool    check_shield_block     args( ( CHAR_DATA *ch, CHAR_DATA *victim ) );
 void    dam_message     args( ( CHAR_DATA *ch, CHAR_DATA *victim, int dam,
-                            int dt, bool immune ) );
+                            int dt, bool immune, bool soak ) );
 void    death_cry   args( ( CHAR_DATA *ch ) );
 void    group_gain  args( ( CHAR_DATA *ch, CHAR_DATA *victim ) );
 int xp_compute  args( ( CHAR_DATA *gch, CHAR_DATA *victim,
@@ -1366,7 +1366,7 @@ bool damage(CHAR_DATA *ch,CHAR_DATA *victim,int dam,int dt,int dam_type,
     if(dam < 0) dam = 0;
 
     if (show)
-        dam_message( ch, victim, dam, dt, immune );
+        dam_message( ch, victim, dam, dt, immune, FALSE );
 
     if (dam == 0)
     return FALSE;
@@ -2298,6 +2298,7 @@ bool d10_damage(CHAR_DATA *ch, CHAR_DATA *victim, int damsuccess, int modifier, 
     if (soak < 0)
         soak = 0;
 
+    int original_damsuccess = damsuccess;
     damsuccess -= soak;
 
     //turn successes into real damage via the modifier.
@@ -2358,7 +2359,10 @@ if (DEBUG_MESSAGES || IS_DEBUGGING(ch) || IS_DEBUGGING(victim))	{
         dam *= 2;
 
     if (show)
-        dam_message( ch, victim, dam, dt, immune );
+    {
+        bool is_soak = (original_damsuccess > 0 && dam == 0 && !immune);
+        dam_message( ch, victim, dam, dt, immune, is_soak );
+    }
 
     if (silver)
     {
@@ -3898,7 +3902,7 @@ int xp_compute( CHAR_DATA *gch, CHAR_DATA *victim, int total_levels )
 }
 
 
-void dam_message( CHAR_DATA *ch, CHAR_DATA *victim,int dam,int dt,bool immune )
+void dam_message( CHAR_DATA *ch, CHAR_DATA *victim,int dam,int dt,bool immune, bool soak )
 {
     char buf1[256], buf2[256], buf3[256];
     const char *vs;
@@ -3950,7 +3954,37 @@ void dam_message( CHAR_DATA *ch, CHAR_DATA *victim,int dam,int dt,bool immune )
 
     punct   = (dam <= 24) ? '.' : '!';
 
-    if ( dt == TYPE_HIT )
+    if (soak)
+    {
+        if ( dt >= 0 && dt < MAX_SKILL )
+            attack  = skill_table[dt].noun_damage;
+        else if ( dt >= TYPE_HIT && dt < TYPE_HIT + MAX_DAMAGE_MESSAGE)
+            attack  = attack_table[dt - TYPE_HIT].noun;
+        else
+            attack  = attack_table[0].name;
+
+        if (ch == victim)
+        {
+            sprintf(buf1, "$n's %s harmlessly bounces off $s armor.", attack);
+            sprintf(buf2, "Your %s harmlessly bounces off your armor.", attack);
+        }
+        else
+        {
+            if (dt == TYPE_HIT)
+            {
+                sprintf(buf1, "$N's armor completely absorbs $n's attack.");
+                sprintf(buf2, "$N's armor completely absorbs your attack.");
+                sprintf(buf3, "Your armor completely absorbs $n's attack.");
+            }
+            else
+            {
+                sprintf(buf1, "$N's armor completely absorbs $n's %s.", attack);
+                sprintf(buf2, "$N's armor completely absorbs your %s.", attack);
+                sprintf(buf3, "Your armor completely absorbs $n's %s.", attack);
+            }
+        }
+    }
+    else if ( dt == TYPE_HIT )
     {
     if (ch  == victim)
     {

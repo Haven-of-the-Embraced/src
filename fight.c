@@ -1904,16 +1904,26 @@ if (DEBUG_MESSAGES || IS_DEBUGGING(ch) || IS_DEBUGGING(victim)){
             affect_strip(ch, gsn_gift_exceptionalswordplay);
     }
 
+    bool dodged = FALSE;
 	if (check_dodge(ch, victim) ||
       check_parry(ch, victim) ||
 			check_shield_block(ch, victim) ||
 			check_block(ch, victim) )
-		tohit = 0;
+    {
+        dodged = TRUE;
+    }
 
 	if (DEBUG_MESSAGES || IS_DEBUGGING(ch) || IS_DEBUGGING(victim)){
 		//Debug Message
-		cprintf(ch, "t{R%d{x ", tohit);
-		if (IS_NPC(ch)) cprintf(victim, "t{R%d{x ", tohit);}
+		cprintf(ch, "t{R%d{x ", dodged ? 0 : tohit);
+		if (IS_NPC(ch)) cprintf(victim, "t{R%d{x ", dodged ? 0 : tohit);}
+
+    if (dodged)
+    {
+        d10_damage(ch, victim, 0, 0, dt, dam_type, DEFENSE_FULL, FALSE, TRUE);
+        tail_chain( );
+        return;
+    }
 
 
 

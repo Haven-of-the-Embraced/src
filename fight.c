@@ -521,7 +521,10 @@ void mob_hit (CHAR_DATA *ch, CHAR_DATA *victim, int dt)
                                 case (2):
                                         act( "$n reaches out and touches $N who suddenly screams in agony!",  ch, NULL, victim, TO_NOTVICT );
                                         act( "You scream in agony as $n reaches out and touches you!",  ch, NULL, victim, TO_VICT );
-                                        damage( ch, victim, success*800, gsn_magick, DAM_DISEASE, TRUE);
+                                        if (PLAYTESTING(victim))
+                                            d10_damage(ch, victim, success, ch->level * 2, gsn_magick, DAM_DISEASE, DEFENSE_NONE, TRUE, TRUE);
+                                        else
+                                            damage( ch, victim, success*800, gsn_magick, DAM_DISEASE, TRUE);
                                         break;
                                 case (3):
                                         if(is_affected(victim,gsn_forget)) break;
@@ -545,12 +548,18 @@ void mob_hit (CHAR_DATA *ch, CHAR_DATA *victim, int dt)
                                 case (1):
                                         act( "$n's hair stands on end a moment before pointing at $N who gets a real charge out of it!",  ch, NULL, victim, TO_NOTVICT );
                                         act( "$n points at you and.. zzzzzZAP! You have an electrifying experience!",  ch, NULL, victim, TO_VICT    );
-                                        damage( ch, victim, success*300, gsn_magick, DAM_LIGHTNING, TRUE);
+                                        if (PLAYTESTING(victim))
+                                            d10_damage(ch, victim, success, ch->level * 2, gsn_magick, DAM_LIGHTNING, DEFENSE_NONE, TRUE, TRUE);
+                                        else
+                                            damage( ch, victim, success*300, gsn_magick, DAM_LIGHTNING, TRUE);
                                         break;
                                 case (2):
                                         act( "$n peers intently at $N who suddenly bursts into flame!",  ch, NULL, victim, TO_NOTVICT );
                                         act( "A wall of flame consumes you as a flash of heat engulfs your body and burns away at your skin!",  ch, NULL, victim, TO_VICT );
-                                        damage( ch, victim, success*800, gsn_magick, DAM_FIRE, TRUE);
+                                        if (PLAYTESTING(victim))
+                                            d10_damage(ch, victim, success, ch->level * 2, gsn_magick, DAM_FIRE, DEFENSE_NONE, TRUE, TRUE);
+                                        else
+                                            damage( ch, victim, success*800, gsn_magick, DAM_FIRE, TRUE);
                                         break;
                                 case (3):
                                         if(is_affected(ch,gsn_kineticshield)) break;
@@ -734,7 +743,7 @@ void one_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt )
     wield = get_eq_char( ch, WEAR_WIELD );
 
     // All Hits for Players get redirected to d10_hit for wod-style damage calculations.
-    if(!IS_NPC(ch))
+    if(!IS_NPC(ch) || PLAYTESTING(victim))
     {
         d10_hit(ch,victim, dt);
         return;
@@ -1709,6 +1718,9 @@ int d10_damdice( CHAR_DATA *ch, CHAR_DATA *victim)
 
 		dice += get_attribute(ch, STRENGTH);
 
+        if (IS_NPC(ch))
+            dice += ch->level / 6;
+
     return dice;
 
 }
@@ -1866,7 +1878,7 @@ void d10_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt)
     if (diff > 10)
         diff = 10;
 
-if (DEBUG_MESSAGES || IS_DEBUGGING(ch)){
+if (DEBUG_MESSAGES || IS_DEBUGGING(ch) || IS_DEBUGGING(victim)){
 	cprintf(ch, "hp{r%d{w df{c%d{x ", dice, diff);
 	if (IS_NPC(ch)) cprintf(victim, "hp{r%d{w df{c%d{x ", dice, diff);}
 
@@ -1898,7 +1910,7 @@ if (DEBUG_MESSAGES || IS_DEBUGGING(ch)){
 			check_block(ch, victim) )
 		tohit = 0;
 
-	if (DEBUG_MESSAGES || IS_DEBUGGING(ch)){
+	if (DEBUG_MESSAGES || IS_DEBUGGING(ch) || IS_DEBUGGING(victim)){
 		//Debug Message
 		cprintf(ch, "t{R%d{x ", tohit);
 		if (IS_NPC(ch)) cprintf(victim, "t{R%d{x ", tohit);}
@@ -1952,7 +1964,7 @@ if (DEBUG_MESSAGES || IS_DEBUGGING(ch)){
         dice = d10_damdice(ch, victim);
         damsuccess += godice(dice, 5);
 
-		if (DEBUG_MESSAGES || IS_DEBUGGING(ch))	{
+		if (DEBUG_MESSAGES || IS_DEBUGGING(ch) || IS_DEBUGGING(victim))	{
             cprintf(ch, "dp{r%d{x ", dice);
             if (IS_NPC(ch)) cprintf(victim, "dp{r%d{x ", dice);
         }
@@ -2228,7 +2240,7 @@ bool d10_damage(CHAR_DATA *ch, CHAR_DATA *victim, int damsuccess, int modifier, 
       REMOVE_BIT(ch->affected_by, AFF_HIDE);
     }
 
-    if (DEBUG_MESSAGES || IS_DEBUGGING(ch))	{
+    if (DEBUG_MESSAGES || IS_DEBUGGING(ch) || IS_DEBUGGING(victim))	{
         cprintf(ch, "d{W%d{x ", damsuccess);
     if (IS_NPC(ch))
     cprintf(victim, "d{W%d{x ", damsuccess);
@@ -2334,7 +2346,7 @@ bool d10_damage(CHAR_DATA *ch, CHAR_DATA *victim, int damsuccess, int modifier, 
             }
     }
 
-if (DEBUG_MESSAGES || IS_DEBUGGING(ch))	{
+if (DEBUG_MESSAGES || IS_DEBUGGING(ch) || IS_DEBUGGING(victim))	{
         cprintf(ch, "M{D%d{x Ar{c%d{x sd{c%d{x s{c%d{x ", modifier, armordice, soakdice, soak, dam);
         if (IS_NPC(ch))
         cprintf(victim, "{xm{D%d Ar{c%d {xsd{c%d{x s{c%d{x ", modifier, armordice, soakdice, soak, dam);

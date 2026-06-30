@@ -1727,7 +1727,7 @@ int d10_damdice( CHAR_DATA *ch, CHAR_DATA *victim)
 		dice += get_attribute(ch, STRENGTH);
 
         if (IS_NPC(ch))
-            dice += ch->level / 6;
+            dice += ch->level / 12;
 
     return dice;
 

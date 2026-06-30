@@ -2954,6 +2954,11 @@ bool check_parry( CHAR_DATA *ch, CHAR_DATA *victim, int tohit )
     int successes = godice(pool, 6);
     if (!can_see(victim, ch)) successes -= 1;
 
+    if (DEBUG_MESSAGES || IS_DEBUGGING(ch) || IS_DEBUGGING(victim)){
+        cprintf(ch, "def{G%d{x ", successes);
+        if (IS_NPC(ch)) cprintf(victim, "def{G%d{x ", successes);
+    }
+
     if (successes >= tohit)
     {
         if(!IS_SET(victim->comm,COMM_COMBAT_BRIEF))
@@ -3001,6 +3006,11 @@ bool check_shield_block( CHAR_DATA *ch, CHAR_DATA *victim, int tohit )
 
     int successes = godice(pool, 6);
     if (!can_see(victim, ch)) successes -= 1;
+
+    if (DEBUG_MESSAGES || IS_DEBUGGING(ch) || IS_DEBUGGING(victim)){
+        cprintf(ch, "def{G%d{x ", successes);
+        if (IS_NPC(ch)) cprintf(victim, "def{G%d{x ", successes);
+    }
 
     if (successes >= tohit)
     {
@@ -3058,6 +3068,11 @@ bool check_dodge( CHAR_DATA *ch, CHAR_DATA *victim, int tohit )
     int successes = godice(pool, 6);
     if (!can_see(victim, ch)) successes -= 1;
 
+    if (DEBUG_MESSAGES || IS_DEBUGGING(ch) || IS_DEBUGGING(victim)){
+        cprintf(ch, "def{G%d{x ", successes);
+        if (IS_NPC(ch)) cprintf(victim, "def{G%d{x ", successes);
+    }
+
     if (successes >= tohit)
     {
         if(!IS_SET(victim->comm,COMM_COMBAT_BRIEF))
@@ -3104,6 +3119,11 @@ bool check_block( CHAR_DATA *ch, CHAR_DATA *victim, int tohit )
 
     int successes = godice(pool, 6);
     if (!can_see(victim, ch)) successes -= 1;
+
+    if (DEBUG_MESSAGES || IS_DEBUGGING(ch) || IS_DEBUGGING(victim)){
+        cprintf(ch, "def{G%d{x ", successes);
+        if (IS_NPC(ch)) cprintf(victim, "def{G%d{x ", successes);
+    }
 
     if (successes >= tohit)
     {

@@ -44,11 +44,11 @@
  * Local functions.
  */
 void    check_assist    args( ( CHAR_DATA *ch, CHAR_DATA *victim ) );
-bool    check_dodge args( ( CHAR_DATA *ch, CHAR_DATA *victim ) );
-bool    check_block args( ( CHAR_DATA *ch, CHAR_DATA *victim ) );
+bool    check_dodge args( ( CHAR_DATA *ch, CHAR_DATA *victim, int tohit ) );
+bool    check_block args( ( CHAR_DATA *ch, CHAR_DATA *victim, int tohit ) );
  void check_killer    args( ( CHAR_DATA *ch, CHAR_DATA *victim ) );
-bool    check_parry args( ( CHAR_DATA *ch, CHAR_DATA *victim ) );
-bool    check_shield_block     args( ( CHAR_DATA *ch, CHAR_DATA *victim ) );
+bool    check_parry args( ( CHAR_DATA *ch, CHAR_DATA *victim, int tohit ) );
+bool    check_shield_block     args( ( CHAR_DATA *ch, CHAR_DATA *victim, int tohit ) );
 void    dam_message     args( ( CHAR_DATA *ch, CHAR_DATA *victim, int dam,
                             int dt, bool immune, bool soak ) );
 void    death_cry   args( ( CHAR_DATA *ch ) );
@@ -64,7 +64,7 @@ void    raw_kill    args( ( CHAR_DATA *victim ) );
 void    set_fighting    args( ( CHAR_DATA *ch, CHAR_DATA *victim ) );
 void    disarm      args( ( CHAR_DATA *ch, CHAR_DATA *victim ) );
 bool    check_critical  args( ( CHAR_DATA *ch, CHAR_DATA *victim ) );
-bool    perform_best_defense args( ( CHAR_DATA *ch, CHAR_DATA *victim ) );
+bool    perform_best_defense args( ( CHAR_DATA *ch, CHAR_DATA *victim, int tohit ) );
 
 
 /* experimental garou code */
@@ -1298,18 +1298,18 @@ bool damage(CHAR_DATA *ch,CHAR_DATA *victim,int dam,int dt,int dam_type,
     {
         if (PLAYTESTING(victim))
         {
-            if (perform_best_defense(ch, victim))
+            if (perform_best_defense(ch, victim, 0))
                 return FALSE;
         }
         else
         {
-            if ( check_parry( ch, victim ) )
+            if ( check_parry( ch, victim, 0 ) )
                 return FALSE;
-            if ( check_dodge( ch, victim ) )
+            if ( check_dodge( ch, victim, 0 ) )
                 return FALSE;
-            if ( check_block( ch, victim ) )
+            if ( check_block( ch, victim, 0 ) )
                 return FALSE;
-            if ( check_shield_block(ch,victim))
+            if ( check_shield_block(ch,victim, 0))
                 return FALSE;
         }
     }
@@ -1760,7 +1760,7 @@ int d10_modifier ( CHAR_DATA *ch)
 /*
  * Contextually evaluate and perform the single best defense
  */
-bool perform_best_defense(CHAR_DATA *ch, CHAR_DATA *victim)
+bool perform_best_defense(CHAR_DATA *ch, CHAR_DATA *victim, int tohit)
 {
     int primary_type; // 2=Parry, 3=Shield, 4=Block
     int primary_ability = 0;
@@ -1783,14 +1783,14 @@ bool perform_best_defense(CHAR_DATA *ch, CHAR_DATA *victim)
 
     // 2. Compare against Dodge
     if (!MOUNTED(victim) && dodge_ability > primary_ability) {
-        return check_dodge(ch, victim);
+        return check_dodge(ch, victim, tohit);
     }
 
     // 3. Execute Primary
     switch(primary_type) {
-        case 2: return check_parry(ch, victim);
-        case 3: return check_shield_block(ch, victim);
-        case 4: return check_block(ch, victim);
+        case 2: return check_parry(ch, victim, tohit);
+        case 3: return check_shield_block(ch, victim, tohit);
+        case 4: return check_block(ch, victim, tohit);
     }
 
     return FALSE;
@@ -1954,14 +1954,14 @@ if (DEBUG_MESSAGES || IS_DEBUGGING(ch) || IS_DEBUGGING(victim)){
     bool dodged = FALSE;
     if (PLAYTESTING(victim))
     {
-        dodged = perform_best_defense(ch, victim);
+        dodged = perform_best_defense(ch, victim, tohit);
     }
     else
     {
-        if (check_dodge(ch, victim) ||
-            check_parry(ch, victim) ||
-            check_shield_block(ch, victim) ||
-            check_block(ch, victim) )
+        if (check_dodge(ch, victim, 0) ||
+            check_parry(ch, victim, 0) ||
+            check_shield_block(ch, victim, 0) ||
+            check_block(ch, victim, 0) )
         {
             dodged = TRUE;
         }
@@ -2901,74 +2901,124 @@ bool is_safe_spell(CHAR_DATA *ch, CHAR_DATA *victim, bool area )
 /*
  * Check for parry.
  */
-bool check_parry( CHAR_DATA *ch, CHAR_DATA *victim )
+bool check_parry( CHAR_DATA *ch, CHAR_DATA *victim, int tohit )
 {
     int chance;
 
     if ( !IS_AWAKE(victim) )
     return FALSE;
 
-    if(!IS_NPC(victim)) chance = get_skill(victim,gsn_parry) / 6;
-    else chance = get_skill(victim,gsn_parry) /2;
-
-    if ( get_eq_char( victim, WEAR_WIELD ) == NULL )
+    if (tohit <= 0)
     {
-        if (IS_NPC(victim)) chance /= 2;
-        else
+        if(!IS_NPC(victim)) chance = get_skill(victim,gsn_parry) / 6;
+        else chance = get_skill(victim,gsn_parry) /2;
+
+        if ( get_eq_char( victim, WEAR_WIELD ) == NULL )
         {
-            if (get_skill(ch,gsn_hand_to_hand) <= 75) return FALSE;
-            chance *= godice(get_attribute(victim,DEXTERITY)+victim->csabilities[CSABIL_BRAWL],6);
+            if (IS_NPC(victim)) chance /= 2;
+            else
+            {
+                if (get_skill(victim,gsn_hand_to_hand) <= 75) return FALSE;
+                chance *= godice(get_attribute(victim,DEXTERITY)+victim->csabilities[CSABIL_BRAWL],6);
+            }
         }
+        else if(!IS_NPC(victim)) chance *= godice(get_attribute(victim,DEXTERITY)+victim->csabilities[CSABIL_MELEE],6);
+
+        if (!can_see(ch,victim))
+        chance /= 2;
+
+        if ( number_percent( ) >= chance + victim->level - ch->level )
+        return FALSE;
+
+        if(!IS_SET(victim->comm,COMM_COMBAT_BRIEF))
+            act( "You parry $n's attack.",  ch, NULL, victim, TO_VICT    );
+        if(!IS_SET(ch->comm,COMM_COMBAT_BRIEF))
+            act( "$N parries your attack.", ch, NULL, victim, TO_CHAR    );
+        check_improve(victim,gsn_parry,TRUE,6);
+        return TRUE;
     }
-    else if(!IS_NPC(victim)) chance *= godice(get_attribute(victim,DEXTERITY)+victim->csabilities[CSABIL_MELEE],6);
 
-    if (!can_see(ch,victim))
-    chance /= 2;
+    int skill = get_skill(victim, gsn_parry);
+    int pool = get_attribute(victim, DEXTERITY);
+    if (get_eq_char(victim, WEAR_WIELD) != NULL)
+        pool += victim->csabilities[CSABIL_MELEE];
+    else
+    {
+        if (get_skill(victim, gsn_hand_to_hand) <= 75) return FALSE;
+        pool += victim->csabilities[CSABIL_BRAWL];
+    }
+    
+    pool = (pool * (20 + skill)) / 100;
+    pool = UMAX(1, pool);
 
-    if ( number_percent( ) >= chance + victim->level - ch->level )
+    int successes = godice(pool, 6);
+    if (!can_see(victim, ch)) successes -= 1;
+
+    if (successes >= tohit)
+    {
+        if(!IS_SET(victim->comm,COMM_COMBAT_BRIEF))
+            act( "You parry $n's attack.",  ch, NULL, victim, TO_VICT    );
+        if(!IS_SET(ch->comm,COMM_COMBAT_BRIEF))
+            act( "$N parries your attack.", ch, NULL, victim, TO_CHAR    );
+        check_improve(victim,gsn_parry,TRUE,6);
+        return TRUE;
+    }
     return FALSE;
-
-    if(!IS_SET(victim->comm,COMM_COMBAT_BRIEF))
-        act( "You parry $n's attack.",  ch, NULL, victim, TO_VICT    );
-    if(!IS_SET(ch->comm,COMM_COMBAT_BRIEF))
-        act( "$N parries your attack.", ch, NULL, victim, TO_CHAR    );
-    check_improve(victim,gsn_parry,TRUE,6);
-    return TRUE;
 }
 
 /*
  * Check for shield block.
  */
-bool check_shield_block( CHAR_DATA *ch, CHAR_DATA *victim )
+bool check_shield_block( CHAR_DATA *ch, CHAR_DATA *victim, int tohit )
 {
     int chance;
 
     if ( !IS_AWAKE(victim) )
         return FALSE;
 
-
-    chance = get_skill(victim,gsn_shield_block) / 5 + 3;
-
-
     if ( get_eq_char( victim, WEAR_SHIELD ) == NULL )
         return FALSE;
 
-    if ( number_percent( ) >= chance + victim->level - ch->level )
-        return FALSE;
+    if (tohit <= 0)
+    {
+        chance = get_skill(victim,gsn_shield_block) / 5 + 3;
 
-    if(!IS_SET(victim->comm,COMM_COMBAT_BRIEF))
-        act( "You block $n's attack with your shield.",  ch, NULL, victim,TO_VICT    );
-    if(!IS_SET(ch->comm,COMM_COMBAT_BRIEF))
-        act( "$N blocks your attack with a shield.", ch, NULL, victim,TO_CHAR    );
-    check_improve(victim,gsn_shield_block,TRUE,6);
-    return TRUE;
+        if ( number_percent( ) >= chance + victim->level - ch->level )
+            return FALSE;
+
+        if(!IS_SET(victim->comm,COMM_COMBAT_BRIEF))
+            act( "You block $n's attack with your shield.",  ch, NULL, victim,TO_VICT    );
+        if(!IS_SET(ch->comm,COMM_COMBAT_BRIEF))
+            act( "$N blocks your attack with a shield.", ch, NULL, victim,TO_CHAR    );
+        check_improve(victim,gsn_shield_block,TRUE,6);
+        return TRUE;
+    }
+
+    int skill = get_skill(victim, gsn_shield_block);
+    int pool = get_attribute(victim, DEXTERITY) + victim->csabilities[CSABIL_MELEE];
+    pool = (pool * (20 + skill)) / 100;
+    pool = UMAX(1, pool);
+
+    int successes = godice(pool, 6);
+    if (!can_see(victim, ch)) successes -= 1;
+
+    if (successes >= tohit)
+    {
+        if(!IS_SET(victim->comm,COMM_COMBAT_BRIEF))
+            act( "You block $n's attack with your shield.",  ch, NULL, victim,TO_VICT    );
+        if(!IS_SET(ch->comm,COMM_COMBAT_BRIEF))
+            act( "$N blocks your attack with a shield.", ch, NULL, victim,TO_CHAR    );
+        check_improve(victim,gsn_shield_block,TRUE,6);
+        return TRUE;
+    }
+    return FALSE;
 }
 
 
 /*
  * Check for dodge.
  */
-bool check_dodge( CHAR_DATA *ch, CHAR_DATA *victim )
+bool check_dodge( CHAR_DATA *ch, CHAR_DATA *victim, int tohit )
 {
     int chance;
 
@@ -2978,29 +3028,50 @@ bool check_dodge( CHAR_DATA *ch, CHAR_DATA *victim )
     if ( MOUNTED(victim) )
     return FALSE;
 
-    if(!IS_NPC(victim))
+    if (tohit <= 0)
     {
-        chance = get_skill(victim,gsn_dodge) / 6;
-        chance *= godice(get_attribute(victim,DEXTERITY)+victim->csabilities[CSABIL_DODGE],6);
+        if(!IS_NPC(victim))
+        {
+            chance = get_skill(victim,gsn_dodge) / 6;
+            chance *= godice(get_attribute(victim,DEXTERITY)+victim->csabilities[CSABIL_DODGE],6);
+        }
+        else chance = get_skill(victim,gsn_dodge) / 2;
+
+        if (!can_see(victim,ch))
+        chance /= 2;
+
+        if ( number_percent( ) >= chance)
+            return FALSE;
+        if(!IS_SET(victim->comm,COMM_COMBAT_BRIEF))
+            act( "You dodge $n's attack.", ch, NULL, victim, TO_VICT    );
+        if(!IS_SET(ch->comm,COMM_COMBAT_BRIEF))
+            act( "$N dodges your attack.", ch, NULL, victim, TO_CHAR    );
+        check_improve(victim,gsn_dodge,TRUE,6);
+        return TRUE;
     }
-    else chance = get_skill(victim,gsn_dodge) / 2;
 
-    if (!can_see(victim,ch))
-    chance /= 2;
+    int skill = get_skill(victim, gsn_dodge);
+    int pool = get_attribute(victim, DEXTERITY) + victim->csabilities[CSABIL_DODGE];
+    pool = (pool * (20 + skill)) / 100;
+    pool = UMAX(1, pool);
 
-/*    if ( number_percent( ) >= chance + victim->level - ch->level ) */
-    if ( number_percent( ) >= chance)
-        return FALSE;
-    if(!IS_SET(victim->comm,COMM_COMBAT_BRIEF))
-        act( "You dodge $n's attack.", ch, NULL, victim, TO_VICT    );
-    if(!IS_SET(ch->comm,COMM_COMBAT_BRIEF))
-        act( "$N dodges your attack.", ch, NULL, victim, TO_CHAR    );
-    check_improve(victim,gsn_dodge,TRUE,6);
-    return TRUE;
+    int successes = godice(pool, 6);
+    if (!can_see(victim, ch)) successes -= 1;
+
+    if (successes >= tohit)
+    {
+        if(!IS_SET(victim->comm,COMM_COMBAT_BRIEF))
+            act( "You dodge $n's attack.", ch, NULL, victim, TO_VICT    );
+        if(!IS_SET(ch->comm,COMM_COMBAT_BRIEF))
+            act( "$N dodges your attack.", ch, NULL, victim, TO_CHAR    );
+        check_improve(victim,gsn_dodge,TRUE,6);
+        return TRUE;
+    }
+    return FALSE;
 }
 
 /* check for guardsman block */
-bool check_block( CHAR_DATA *ch, CHAR_DATA *victim )
+bool check_block( CHAR_DATA *ch, CHAR_DATA *victim, int tohit )
 {
     int chance;
 
@@ -3009,19 +3080,41 @@ bool check_block( CHAR_DATA *ch, CHAR_DATA *victim )
 
     if (get_skill(victim,gsn_block) == 0) return FALSE;
 
-    chance = get_skill(victim,gsn_block) / 2;
+    if (tohit <= 0)
+    {
+        chance = get_skill(victim,gsn_block) / 2;
 
-    if (!can_see(victim,ch))
-    chance /= 2;
+        if (!can_see(victim,ch))
+        chance /= 2;
 
-    if ( number_percent( ) >= chance + victim->level - ch->level )
-        return FALSE;
-    if(!IS_SET(victim->comm,COMM_COMBAT_BRIEF))
-        act( "You manage to block $n's attack.", ch, NULL, victim, TO_VICT    );
-    if(!IS_SET(ch->comm,COMM_COMBAT_BRIEF))
-        act( "$N swiftly blocks your attack.", ch, NULL, victim, TO_CHAR    );
-    check_improve(victim,gsn_block,TRUE,6);
-    return TRUE;
+        if ( number_percent( ) >= chance + victim->level - ch->level )
+            return FALSE;
+        if(!IS_SET(victim->comm,COMM_COMBAT_BRIEF))
+            act( "You manage to block $n's attack.", ch, NULL, victim, TO_VICT    );
+        if(!IS_SET(ch->comm,COMM_COMBAT_BRIEF))
+            act( "$N swiftly blocks your attack.", ch, NULL, victim, TO_CHAR    );
+        check_improve(victim,gsn_block,TRUE,6);
+        return TRUE;
+    }
+
+    int skill = get_skill(victim, gsn_block);
+    int pool = get_attribute(victim, DEXTERITY) + victim->csabilities[CSABIL_BRAWL];
+    pool = (pool * (20 + skill)) / 100;
+    pool = UMAX(1, pool);
+
+    int successes = godice(pool, 6);
+    if (!can_see(victim, ch)) successes -= 1;
+
+    if (successes >= tohit)
+    {
+        if(!IS_SET(victim->comm,COMM_COMBAT_BRIEF))
+            act( "You manage to block $n's attack.", ch, NULL, victim, TO_VICT    );
+        if(!IS_SET(ch->comm,COMM_COMBAT_BRIEF))
+            act( "$N swiftly blocks your attack.", ch, NULL, victim, TO_CHAR    );
+        check_improve(victim,gsn_block,TRUE,6);
+        return TRUE;
+    }
+    return FALSE;
 }
 
 

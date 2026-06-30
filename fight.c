@@ -64,6 +64,7 @@ void    raw_kill    args( ( CHAR_DATA *victim ) );
 void    set_fighting    args( ( CHAR_DATA *ch, CHAR_DATA *victim ) );
 void    disarm      args( ( CHAR_DATA *ch, CHAR_DATA *victim ) );
 bool    check_critical  args( ( CHAR_DATA *ch, CHAR_DATA *victim ) );
+bool    perform_best_defense args( ( CHAR_DATA *ch, CHAR_DATA *victim ) );
 
 
 /* experimental garou code */
@@ -1295,15 +1296,22 @@ bool damage(CHAR_DATA *ch,CHAR_DATA *victim,int dam,int dt,int dam_type,
      */
     if ( dt >= TYPE_HIT && ch != victim)
     {
-        if ( check_parry( ch, victim ) )
-        return FALSE;
-    if ( check_dodge( ch, victim ) )
-        return FALSE;
-    if ( check_block( ch, victim ) )
-        return FALSE;
-    if ( check_shield_block(ch,victim))
-        return FALSE;
-
+        if (PLAYTESTING(victim))
+        {
+            if (perform_best_defense(ch, victim))
+                return FALSE;
+        }
+        else
+        {
+            if ( check_parry( ch, victim ) )
+                return FALSE;
+            if ( check_dodge( ch, victim ) )
+                return FALSE;
+            if ( check_block( ch, victim ) )
+                return FALSE;
+            if ( check_shield_block(ch,victim))
+                return FALSE;
+        }
     }
 
 /* new damcap code.. may cause major unbalance */
@@ -1750,6 +1758,45 @@ int d10_modifier ( CHAR_DATA *ch)
 }
 
 /*
+ * Contextually evaluate and perform the single best defense
+ */
+bool perform_best_defense(CHAR_DATA *ch, CHAR_DATA *victim)
+{
+    int primary_type; // 2=Parry, 3=Shield, 4=Block
+    int primary_ability = 0;
+    int dodge_ability = victim->csabilities[CSABIL_DODGE];
+
+    if (!IS_AWAKE(victim)) return FALSE;
+
+    // 1. Determine primary defense based on equipment
+    if (get_eq_char(victim, WEAR_SHIELD) != NULL) {
+        primary_type = 3;
+        primary_ability = victim->csabilities[CSABIL_MELEE];
+    } else if (get_eq_char(victim, WEAR_WIELD) != NULL) {
+        primary_type = 2;
+        primary_ability = victim->csabilities[CSABIL_MELEE];
+    } else {
+        // Unarmed: Use Block
+        primary_type = 4;
+        primary_ability = victim->csabilities[CSABIL_BRAWL];
+    }
+
+    // 2. Compare against Dodge
+    if (!MOUNTED(victim) && dodge_ability > primary_ability) {
+        return check_dodge(ch, victim);
+    }
+
+    // 3. Execute Primary
+    switch(primary_type) {
+        case 2: return check_parry(ch, victim);
+        case 3: return check_shield_block(ch, victim);
+        case 4: return check_block(ch, victim);
+    }
+
+    return FALSE;
+}
+
+/*
  * Hit one guy once as d10
  */ // bm_d10_hit -- d10 bookmark.
 void d10_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt)
@@ -1905,12 +1952,19 @@ if (DEBUG_MESSAGES || IS_DEBUGGING(ch) || IS_DEBUGGING(victim)){
     }
 
     bool dodged = FALSE;
-	if (check_dodge(ch, victim) ||
-      check_parry(ch, victim) ||
-			check_shield_block(ch, victim) ||
-			check_block(ch, victim) )
+    if (PLAYTESTING(victim))
     {
-        dodged = TRUE;
+        dodged = perform_best_defense(ch, victim);
+    }
+    else
+    {
+        if (check_dodge(ch, victim) ||
+            check_parry(ch, victim) ||
+            check_shield_block(ch, victim) ||
+            check_block(ch, victim) )
+        {
+            dodged = TRUE;
+        }
     }
 
 	if (DEBUG_MESSAGES || IS_DEBUGGING(ch) || IS_DEBUGGING(victim)){
@@ -2372,6 +2426,12 @@ if (DEBUG_MESSAGES || IS_DEBUGGING(ch) || IS_DEBUGGING(victim))	{
     {
         bool is_soak = (original_damsuccess > 0 && dam == 0 && !immune);
         dam_message( ch, victim, dam, dt, immune, is_soak );
+    }
+    else if (DEBUG_MESSAGES || IS_DEBUGGING(ch) || IS_DEBUGGING(victim))
+    {
+        cprintf(ch, "\n\r");
+        if (IS_NPC(ch))
+            cprintf(victim, "\n\r");
     }
 
     if (silver)

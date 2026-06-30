@@ -425,7 +425,7 @@ void do_cast( CHAR_DATA *ch, char *argument )
     if ( !IS_NPC(ch) )
     {
 
-            if (is_safe(ch,victim) && victim != ch)
+            if (is_safe_spell(ch,victim,FALSE) && victim != ch)
         {
         send_to_char("Not on that target.\n\r",ch);
         return;
@@ -692,7 +692,7 @@ void obj_cast_spell( int sn, int level, CHAR_DATA *ch, CHAR_DATA *victim, OBJ_DA
         send_to_char( "You can't do that.\n\r", ch );
         return;
     }
-    if (is_safe(ch,victim) && ch != victim)
+    if (is_safe_spell(ch,victim,FALSE) && ch != victim)
     {
         send_to_char("Something isn't right...\n\r",ch);
         return;

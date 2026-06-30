@@ -1687,6 +1687,7 @@ void rote_mutateform(CHAR_DATA *ch, int success, char *arg)
         af.bitvector = AFF_DARK_VISION;
         affect_to_char( ch, &af );
 
+        af.bitvector = 0;
         af.location  = APPLY_MOVE;
         af.modifier  = ch->level*7;
         affect_to_char( ch, &af );

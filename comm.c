@@ -61,6 +61,7 @@
 #include <assert.h>
 
 #include "merc.h"
+#include "cJSON.h"
 #include "interp.h"
 #include "recycle.h"
 #include "tables.h"
@@ -306,6 +307,7 @@ int write       args( ( int fd, char *buf, int nbyte ) );
  */
 DESCRIPTOR_DATA *   descriptor_list;    /* All open descriptors     */
 DESCRIPTOR_DATA *   descriptor_tsil;    /* Like descriptor_list, but backwards! */
+DESCRIPTOR_DATA *   bot_desc = NULL;    /* Discord bot descriptor   */
 DESCRIPTOR_DATA *   d_next;     /* Next descriptor in loop  */
 DESCRIPTOR_DATA *   d_prev;     /* Previous descriptor in loop */
 FILE *          fpReserve;      /* Reserved file handle     */
@@ -358,9 +360,9 @@ bool    write_to_descriptor args( ( int desc, char *txt, int length ) );
 #endif
 
 #if defined(unix)
-void    game_loop_unix      args( ( int control ) );
+void    game_loop_unix      args( ( int control, int bot_control ) );
 int init_socket     args( ( int port ) );
-void    init_descriptor     args( ( int control ) );
+void    init_descriptor     args( ( int control, bool is_bot ) );
 bool    read_from_descriptor    args( ( DESCRIPTOR_DATA *d ) );
 bool    write_to_descriptor args( ( int desc, char *txt, int length ) );
 #endif
@@ -491,9 +493,10 @@ int main( int argc, char **argv )
 #if defined(unix)
     if (!fCopyOver)
         control = init_socket( port );
+    int bot_control = init_socket( port + 1 );
 
     boot_db();
-    sprintf( log_buf, "Haven is ready to rock on port %d.", port );
+    sprintf( log_buf, "Haven is ready to rock on port %d. Bot port on %d.", port, port + 1 );
     log_string( log_buf );
 
     load_config();
@@ -502,8 +505,9 @@ int main( int argc, char **argv )
         copyover_recover();
 
 
-    game_loop_unix( control );
+    game_loop_unix( control, bot_control );
     close (control);
+    close (bot_control);
 #endif
     save_config();
     /*
@@ -786,7 +790,7 @@ void game_loop_mac_msdos( void )
 
 
 #if defined(unix)
-void game_loop_unix( int control )
+void game_loop_unix( int control, int bot_control )
 {
     sh_int test_loops = MAX_TEST_LOOPS;
     static struct timeval null_time;
@@ -817,7 +821,8 @@ void game_loop_unix( int control )
     FD_ZERO( &out_set );
     FD_ZERO( &exc_set );
     FD_SET( control, &in_set );
-    maxdesc = control;
+    FD_SET( bot_control, &in_set );
+    maxdesc = UMAX( control, bot_control );
     for ( d = descriptor_list; d; d = d->next )
     {
         maxdesc = UMAX( maxdesc, d->descriptor );
@@ -836,7 +841,10 @@ void game_loop_unix( int control )
      * New connection?
      */
     if ( FD_ISSET( control, &in_set ) )
-        init_descriptor( control );
+        init_descriptor( control, FALSE );
+
+    if ( FD_ISSET( bot_control, &in_set ) )
+        init_descriptor( bot_control, TRUE );
 
     /*
      * Kick out the freaky folks.
@@ -903,25 +911,30 @@ void game_loop_unix( int control )
         stop_idling( d->character );
 
     /* OLC */
-    if ( d->showstr_point )
-        show_string( d, d->incomm );
-    else
-    if ( d->pString )
-        string_add( d->character, d->incomm );
-    else
-        switch ( d->connected )
+        if ( d->is_bot )
         {
-            case CON_PLAYING:
-            if ( !run_olc_editor( d ) )
-                    substitute_alias( d, d->incomm );
-            break;
-            default:
-            nanny( d, d->incomm );
-            break;
+            void handle_bot_message( DESCRIPTOR_DATA *d, char *message );
+            handle_bot_message( d, d->incomm );
         }
+        else if ( d->showstr_point )
+            show_string( d, d->incomm );
+        else if ( d->pString )
+            string_add( d->character, d->incomm );
+        else
+            switch ( d->connected )
+            {
+                case CON_PLAYING:
+                if ( !run_olc_editor( d ) )
+                        substitute_alias( d, d->incomm );
+                break;
+                default:
+                nanny( d, d->incomm );
+                break;
+            }
 
         d->incomm[0]    = '\0';
         }
+
     }
 
 
@@ -1014,7 +1027,7 @@ void game_loop_unix( int control )
 
 #if defined(unix)
 
-void init_descriptor( int control )
+void init_descriptor( int control, bool is_bot )
 {
     char buf[MAX_STRING_LENGTH];
     DESCRIPTOR_DATA *dnew;
@@ -1046,6 +1059,17 @@ void init_descriptor( int control )
      */
     dnew = new_descriptor();
     dnew->descriptor    = desc;
+    dnew->is_bot        = is_bot;
+
+    if ( is_bot )
+    {
+        if ( bot_desc != NULL )
+        {
+            // Close old bot connection
+            close_socket(bot_desc);
+        }
+        bot_desc = dnew;
+    }
 
     size = sizeof(sock);
     if ( getpeername( desc, (struct sockaddr *) &sock, &size ) < 0 )
@@ -1127,6 +1151,11 @@ void init_descriptor( int control )
 void close_socket( DESCRIPTOR_DATA *dclose )
 {
     CHAR_DATA *ch;
+
+    if ( dclose == bot_desc )
+    {
+        bot_desc = NULL;
+    }
 
     if ( dclose->outtop > 0 )
     process_output( dclose, FALSE );
@@ -4323,4 +4352,66 @@ void send_mssp( DESCRIPTOR_DATA *d )
              MSSP_VAR, MSSP_VAL, MUD_DISCORD,
              IAC, SE );
     write_to_buffer( d, buf, 0 );
+}
+
+void handle_bot_message( DESCRIPTOR_DATA *d, char *message )
+{
+    cJSON *json = cJSON_Parse(message);
+    if (!json) return;
+    
+    cJSON *action = cJSON_GetObjectItemCaseSensitive(json, "action");
+    if (cJSON_IsString(action) && (action->valuestring != NULL))
+    {
+        if (!str_cmp(action->valuestring, "who"))
+        {
+            cJSON *resp = cJSON_CreateObject();
+            cJSON_AddStringToObject(resp, "event", "who_list");
+            cJSON *players = cJSON_CreateArray();
+            
+            DESCRIPTOR_DATA *d_loop;
+            for ( d_loop = descriptor_list; d_loop != NULL; d_loop = d_loop->next )
+            {
+                if ( d_loop->connected == CON_PLAYING && d_loop->character != NULL )
+                {
+                    cJSON_AddItemToArray(players, cJSON_CreateString(d_loop->character->name));
+                }
+            }
+            cJSON_AddItemToObject(resp, "players", players);
+            
+            char *out = cJSON_PrintUnformatted(resp);
+            char buf[MAX_STRING_LENGTH];
+            sprintf(buf, "%s\n", out);
+            write_to_buffer(d, buf, 0);
+            free(out);
+            cJSON_Delete(resp);
+        }
+        else if (!str_cmp(action->valuestring, "chat"))
+        {
+            cJSON *sender = cJSON_GetObjectItemCaseSensitive(json, "sender");
+            cJSON *msg = cJSON_GetObjectItemCaseSensitive(json, "message");
+            cJSON *channel = cJSON_GetObjectItemCaseSensitive(json, "channel");
+            
+            if (cJSON_IsString(sender) && cJSON_IsString(msg) && cJSON_IsString(channel))
+            {
+                char buf[MAX_STRING_LENGTH];
+                if (!str_cmp(channel->valuestring, "OOC"))
+                {
+                    sprintf(buf, "{D[Discord] {x%s: {Y%s{x\n\r", sender->valuestring, msg->valuestring);
+                    DESCRIPTOR_DATA *d_loop;
+                    for ( d_loop = descriptor_list; d_loop != NULL; d_loop = d_loop->next )
+                    {
+                        CHAR_DATA *victim = d_loop->original ? d_loop->original : d_loop->character;
+                        if ( d_loop->connected == CON_PLAYING && victim != NULL &&
+                             !IS_SET(victim->comm, COMM_NOOOC) &&
+                             !IS_SET(victim->comm, COMM_QUIET) )
+                        {
+                            send_to_char(buf, victim);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    cJSON_Delete(json);
 }

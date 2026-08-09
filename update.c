@@ -1926,9 +1926,64 @@ void sleep_update(void)
  * Random times to defeat tick-timing clients and players.
  */
 
+/*
+ * Export who list to json for web integration
+ */
+void update_web_who( void )
+{
+    FILE *fp;
+    DESCRIPTOR_DATA *d;
+    bool first = TRUE;
+    
+    if ( ( fp = fopen( "../data/web_who.json", "w" ) ) == NULL )
+    {
+        bug( "update_web_who: fopen", 0 );
+        return;
+    }
+    
+    fprintf(fp, "[\n");
+    
+    for ( d = descriptor_list; d != NULL; d = d->next )
+    {
+        CHAR_DATA *wch;
+
+        if ( d->connected != CON_PLAYING || d->character == NULL )
+            continue;
+            
+        wch = ( d->original != NULL ) ? d->original : d->character;
+        
+        if ( wch->level >= LEVEL_IMMORTAL )
+            continue;
+            
+        if ( wch->invis_level > 0 || wch->incog_level > 0 )
+            continue;
+            
+        if ( !first )
+            fprintf(fp, ",\n");
+            
+        fprintf(fp, "  {\n");
+        fprintf(fp, "    \"name\": \"%s\",\n", wch->name);
+        fprintf(fp, "    \"level\": %d,\n", wch->level);
+        fprintf(fp, "    \"race\": \"%s\"\n", race_table[wch->race].name);
+        fprintf(fp, "  }");
+        
+        first = FALSE;
+    }
+    
+    fprintf(fp, "\n]\n");
+    fclose(fp);
+}
+
 void update_handler( void )
 {
-CHAR_DATA   *ch;
+    static int web_who_tick = 0;
+    CHAR_DATA   *ch;
+
+    if ( ++web_who_tick >= 12 ) /* Approx every 3 seconds (assuming pulse is 4 per sec, 12 pulses = 3s) */
+    {
+        web_who_tick = 0;
+        update_web_who();
+    }
 
     if ( --pulse_area     <= 0 )
     {

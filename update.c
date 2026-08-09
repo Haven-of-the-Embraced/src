@@ -1952,9 +1952,6 @@ void update_web_who( void )
             
         wch = ( d->original != NULL ) ? d->original : d->character;
         
-        if ( wch->level >= LEVEL_IMMORTAL )
-            continue;
-            
         if ( wch->invis_level > 0 || wch->incog_level > 0 )
             continue;
             

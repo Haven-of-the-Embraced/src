@@ -44,13 +44,13 @@
  * Local functions.
  */
 void    check_assist    args( ( CHAR_DATA *ch, CHAR_DATA *victim ) );
-bool    check_dodge args( ( CHAR_DATA *ch, CHAR_DATA *victim ) );
-bool    check_block args( ( CHAR_DATA *ch, CHAR_DATA *victim ) );
+bool    check_dodge args( ( CHAR_DATA *ch, CHAR_DATA *victim, int tohit ) );
+bool    check_block args( ( CHAR_DATA *ch, CHAR_DATA *victim, int tohit ) );
  void check_killer    args( ( CHAR_DATA *ch, CHAR_DATA *victim ) );
-bool    check_parry args( ( CHAR_DATA *ch, CHAR_DATA *victim ) );
-bool    check_shield_block     args( ( CHAR_DATA *ch, CHAR_DATA *victim ) );
+bool    check_parry args( ( CHAR_DATA *ch, CHAR_DATA *victim, int tohit ) );
+bool    check_shield_block     args( ( CHAR_DATA *ch, CHAR_DATA *victim, int tohit ) );
 void    dam_message     args( ( CHAR_DATA *ch, CHAR_DATA *victim, int dam,
-                            int dt, bool immune ) );
+                            int dt, bool immune, bool soak ) );
 void    death_cry   args( ( CHAR_DATA *ch ) );
 void    group_gain  args( ( CHAR_DATA *ch, CHAR_DATA *victim ) );
 int xp_compute  args( ( CHAR_DATA *gch, CHAR_DATA *victim,
@@ -64,6 +64,7 @@ void    raw_kill    args( ( CHAR_DATA *victim ) );
 void    set_fighting    args( ( CHAR_DATA *ch, CHAR_DATA *victim ) );
 void    disarm      args( ( CHAR_DATA *ch, CHAR_DATA *victim ) );
 bool    check_critical  args( ( CHAR_DATA *ch, CHAR_DATA *victim ) );
+bool    perform_best_defense args( ( CHAR_DATA *ch, CHAR_DATA *victim, int tohit ) );
 
 
 /* experimental garou code */
@@ -521,7 +522,10 @@ void mob_hit (CHAR_DATA *ch, CHAR_DATA *victim, int dt)
                                 case (2):
                                         act( "$n reaches out and touches $N who suddenly screams in agony!",  ch, NULL, victim, TO_NOTVICT );
                                         act( "You scream in agony as $n reaches out and touches you!",  ch, NULL, victim, TO_VICT );
-                                        damage( ch, victim, success*800, gsn_magick, DAM_DISEASE, TRUE);
+                                        if (PLAYTESTING(victim))
+                                            d10_damage(ch, victim, success, ch->level * 2, gsn_magick, DAM_DISEASE, DEFENSE_NONE, TRUE, TRUE);
+                                        else
+                                            damage( ch, victim, success*800, gsn_magick, DAM_DISEASE, TRUE);
                                         break;
                                 case (3):
                                         if(is_affected(victim,gsn_forget)) break;
@@ -545,12 +549,18 @@ void mob_hit (CHAR_DATA *ch, CHAR_DATA *victim, int dt)
                                 case (1):
                                         act( "$n's hair stands on end a moment before pointing at $N who gets a real charge out of it!",  ch, NULL, victim, TO_NOTVICT );
                                         act( "$n points at you and.. zzzzzZAP! You have an electrifying experience!",  ch, NULL, victim, TO_VICT    );
-                                        damage( ch, victim, success*300, gsn_magick, DAM_LIGHTNING, TRUE);
+                                        if (PLAYTESTING(victim))
+                                            d10_damage(ch, victim, success, ch->level * 2, gsn_magick, DAM_LIGHTNING, DEFENSE_NONE, TRUE, TRUE);
+                                        else
+                                            damage( ch, victim, success*300, gsn_magick, DAM_LIGHTNING, TRUE);
                                         break;
                                 case (2):
                                         act( "$n peers intently at $N who suddenly bursts into flame!",  ch, NULL, victim, TO_NOTVICT );
                                         act( "A wall of flame consumes you as a flash of heat engulfs your body and burns away at your skin!",  ch, NULL, victim, TO_VICT );
-                                        damage( ch, victim, success*800, gsn_magick, DAM_FIRE, TRUE);
+                                        if (PLAYTESTING(victim))
+                                            d10_damage(ch, victim, success, ch->level * 2, gsn_magick, DAM_FIRE, DEFENSE_NONE, TRUE, TRUE);
+                                        else
+                                            damage( ch, victim, success*800, gsn_magick, DAM_FIRE, TRUE);
                                         break;
                                 case (3):
                                         if(is_affected(ch,gsn_kineticshield)) break;
@@ -734,7 +744,7 @@ void one_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt )
     wield = get_eq_char( ch, WEAR_WIELD );
 
     // All Hits for Players get redirected to d10_hit for wod-style damage calculations.
-    if(!IS_NPC(ch))
+    if(!IS_NPC(ch) || PLAYTESTING(victim))
     {
         d10_hit(ch,victim, dt);
         return;
@@ -1286,15 +1296,22 @@ bool damage(CHAR_DATA *ch,CHAR_DATA *victim,int dam,int dt,int dam_type,
      */
     if ( dt >= TYPE_HIT && ch != victim)
     {
-        if ( check_parry( ch, victim ) )
-        return FALSE;
-    if ( check_dodge( ch, victim ) )
-        return FALSE;
-    if ( check_block( ch, victim ) )
-        return FALSE;
-    if ( check_shield_block(ch,victim))
-        return FALSE;
-
+        if (PLAYTESTING(victim))
+        {
+            if (perform_best_defense(ch, victim, 0))
+                return FALSE;
+        }
+        else
+        {
+            if ( check_parry( ch, victim, 0 ) )
+                return FALSE;
+            if ( check_dodge( ch, victim, 0 ) )
+                return FALSE;
+            if ( check_block( ch, victim, 0 ) )
+                return FALSE;
+            if ( check_shield_block(ch,victim, 0))
+                return FALSE;
+        }
     }
 
 /* new damcap code.. may cause major unbalance */
@@ -1357,7 +1374,7 @@ bool damage(CHAR_DATA *ch,CHAR_DATA *victim,int dam,int dt,int dam_type,
     if(dam < 0) dam = 0;
 
     if (show)
-        dam_message( ch, victim, dam, dt, immune );
+        dam_message( ch, victim, dam, dt, immune, FALSE );
 
     if (dam == 0)
     return FALSE;
@@ -1709,6 +1726,9 @@ int d10_damdice( CHAR_DATA *ch, CHAR_DATA *victim)
 
 		dice += get_attribute(ch, STRENGTH);
 
+        if (IS_NPC(ch))
+            dice += ch->level / 12;
+
     return dice;
 
 }
@@ -1735,6 +1755,45 @@ int d10_modifier ( CHAR_DATA *ch)
     modifier =  modifier * (20 + skill) / 100;
 
     return UMAX(10, modifier);
+}
+
+/*
+ * Contextually evaluate and perform the single best defense
+ */
+bool perform_best_defense(CHAR_DATA *ch, CHAR_DATA *victim, int tohit)
+{
+    int primary_type; // 2=Parry, 3=Shield, 4=Block
+    int primary_ability = 0;
+    int dodge_ability = victim->csabilities[CSABIL_DODGE];
+
+    if (!IS_AWAKE(victim)) return FALSE;
+
+    // 1. Determine primary defense based on equipment
+    if (get_eq_char(victim, WEAR_SHIELD) != NULL) {
+        primary_type = 3;
+        primary_ability = victim->csabilities[CSABIL_MELEE];
+    } else if (get_eq_char(victim, WEAR_WIELD) != NULL) {
+        primary_type = 2;
+        primary_ability = victim->csabilities[CSABIL_MELEE];
+    } else {
+        // Unarmed: Use Block
+        primary_type = 4;
+        primary_ability = victim->csabilities[CSABIL_BRAWL];
+    }
+
+    // 2. Compare against Dodge
+    if (!MOUNTED(victim) && dodge_ability > primary_ability) {
+        return check_dodge(ch, victim, tohit);
+    }
+
+    // 3. Execute Primary
+    switch(primary_type) {
+        case 2: return check_parry(ch, victim, tohit);
+        case 3: return check_shield_block(ch, victim, tohit);
+        case 4: return check_block(ch, victim, tohit);
+    }
+
+    return FALSE;
 }
 
 /*
@@ -1866,7 +1925,7 @@ void d10_hit( CHAR_DATA *ch, CHAR_DATA *victim, int dt)
     if (diff > 10)
         diff = 10;
 
-if (DEBUG_MESSAGES || IS_DEBUGGING(ch)){
+if (DEBUG_MESSAGES || IS_DEBUGGING(ch) || IS_DEBUGGING(victim)){
 	cprintf(ch, "hp{r%d{w df{c%d{x ", dice, diff);
 	if (IS_NPC(ch)) cprintf(victim, "hp{r%d{w df{c%d{x ", dice, diff);}
 
@@ -1892,16 +1951,33 @@ if (DEBUG_MESSAGES || IS_DEBUGGING(ch)){
             affect_strip(ch, gsn_gift_exceptionalswordplay);
     }
 
-	if (check_dodge(ch, victim) ||
-      check_parry(ch, victim) ||
-			check_shield_block(ch, victim) ||
-			check_block(ch, victim) )
-		tohit = 0;
+    bool dodged = FALSE;
+    if (PLAYTESTING(victim))
+    {
+        dodged = perform_best_defense(ch, victim, tohit);
+    }
+    else
+    {
+        if (check_dodge(ch, victim, 0) ||
+            check_parry(ch, victim, 0) ||
+            check_shield_block(ch, victim, 0) ||
+            check_block(ch, victim, 0) )
+        {
+            dodged = TRUE;
+        }
+    }
 
-	if (DEBUG_MESSAGES || IS_DEBUGGING(ch)){
+	if (DEBUG_MESSAGES || IS_DEBUGGING(ch) || IS_DEBUGGING(victim)){
 		//Debug Message
-		cprintf(ch, "t{R%d{x ", tohit);
-		if (IS_NPC(ch)) cprintf(victim, "t{R%d{x ", tohit);}
+		cprintf(ch, "t{R%d{x ", dodged ? 0 : tohit);
+		if (IS_NPC(ch)) cprintf(victim, "t{R%d{x ", dodged ? 0 : tohit);}
+
+    if (dodged)
+    {
+        d10_damage(ch, victim, 0, 0, dt, dam_type, DEFENSE_FULL, FALSE, TRUE);
+        tail_chain( );
+        return;
+    }
 
 
 
@@ -1952,7 +2028,7 @@ if (DEBUG_MESSAGES || IS_DEBUGGING(ch)){
         dice = d10_damdice(ch, victim);
         damsuccess += godice(dice, 5);
 
-		if (DEBUG_MESSAGES || IS_DEBUGGING(ch))	{
+		if (DEBUG_MESSAGES || IS_DEBUGGING(ch) || IS_DEBUGGING(victim))	{
             cprintf(ch, "dp{r%d{x ", dice);
             if (IS_NPC(ch)) cprintf(victim, "dp{r%d{x ", dice);
         }
@@ -2228,7 +2304,7 @@ bool d10_damage(CHAR_DATA *ch, CHAR_DATA *victim, int damsuccess, int modifier, 
       REMOVE_BIT(ch->affected_by, AFF_HIDE);
     }
 
-    if (DEBUG_MESSAGES || IS_DEBUGGING(ch))	{
+    if (DEBUG_MESSAGES || IS_DEBUGGING(ch) || IS_DEBUGGING(victim))	{
         cprintf(ch, "d{W%d{x ", damsuccess);
     if (IS_NPC(ch))
     cprintf(victim, "d{W%d{x ", damsuccess);
@@ -2286,6 +2362,7 @@ bool d10_damage(CHAR_DATA *ch, CHAR_DATA *victim, int damsuccess, int modifier, 
     if (soak < 0)
         soak = 0;
 
+    int original_damsuccess = damsuccess;
     damsuccess -= soak;
 
     //turn successes into real damage via the modifier.
@@ -2334,7 +2411,7 @@ bool d10_damage(CHAR_DATA *ch, CHAR_DATA *victim, int damsuccess, int modifier, 
             }
     }
 
-if (DEBUG_MESSAGES || IS_DEBUGGING(ch))	{
+if (DEBUG_MESSAGES || IS_DEBUGGING(ch) || IS_DEBUGGING(victim))	{
         cprintf(ch, "M{D%d{x Ar{c%d{x sd{c%d{x s{c%d{x ", modifier, armordice, soakdice, soak, dam);
         if (IS_NPC(ch))
         cprintf(victim, "{xm{D%d Ar{c%d {xsd{c%d{x s{c%d{x ", modifier, armordice, soakdice, soak, dam);
@@ -2346,7 +2423,16 @@ if (DEBUG_MESSAGES || IS_DEBUGGING(ch))	{
         dam *= 2;
 
     if (show)
-        dam_message( ch, victim, dam, dt, immune );
+    {
+        bool is_soak = (original_damsuccess > 0 && dam == 0 && !immune);
+        dam_message( ch, victim, dam, dt, immune, is_soak );
+    }
+    else if (DEBUG_MESSAGES || IS_DEBUGGING(ch) || IS_DEBUGGING(victim))
+    {
+        cprintf(ch, "\n\r");
+        if (IS_NPC(ch))
+            cprintf(victim, "\n\r");
+    }
 
     if (silver)
     {
@@ -2815,74 +2901,134 @@ bool is_safe_spell(CHAR_DATA *ch, CHAR_DATA *victim, bool area )
 /*
  * Check for parry.
  */
-bool check_parry( CHAR_DATA *ch, CHAR_DATA *victim )
+bool check_parry( CHAR_DATA *ch, CHAR_DATA *victim, int tohit )
 {
     int chance;
 
     if ( !IS_AWAKE(victim) )
     return FALSE;
 
-    if(!IS_NPC(victim)) chance = get_skill(victim,gsn_parry) / 6;
-    else chance = get_skill(victim,gsn_parry) /2;
-
-    if ( get_eq_char( victim, WEAR_WIELD ) == NULL )
+    if (tohit <= 0)
     {
-        if (IS_NPC(victim)) chance /= 2;
-        else
+        if(!IS_NPC(victim)) chance = get_skill(victim,gsn_parry) / 6;
+        else chance = get_skill(victim,gsn_parry) /2;
+
+        if ( get_eq_char( victim, WEAR_WIELD ) == NULL )
         {
-            if (get_skill(ch,gsn_hand_to_hand) <= 75) return FALSE;
-            chance *= godice(get_attribute(victim,DEXTERITY)+victim->csabilities[CSABIL_BRAWL],6);
+            if (IS_NPC(victim)) chance /= 2;
+            else
+            {
+                if (get_skill(victim,gsn_hand_to_hand) <= 75) return FALSE;
+                chance *= godice(get_attribute(victim,DEXTERITY)+victim->csabilities[CSABIL_BRAWL],6);
+            }
         }
+        else if(!IS_NPC(victim)) chance *= godice(get_attribute(victim,DEXTERITY)+victim->csabilities[CSABIL_MELEE],6);
+
+        if (!can_see(ch,victim))
+        chance /= 2;
+
+        if ( number_percent( ) >= chance + victim->level - ch->level )
+        return FALSE;
+
+        if(!IS_SET(victim->comm,COMM_COMBAT_BRIEF))
+            act( "You parry $n's attack.",  ch, NULL, victim, TO_VICT    );
+        if(!IS_SET(ch->comm,COMM_COMBAT_BRIEF))
+            act( "$N parries your attack.", ch, NULL, victim, TO_CHAR    );
+        check_improve(victim,gsn_parry,TRUE,6);
+        return TRUE;
     }
-    else if(!IS_NPC(victim)) chance *= godice(get_attribute(victim,DEXTERITY)+victim->csabilities[CSABIL_MELEE],6);
 
-    if (!can_see(ch,victim))
-    chance /= 2;
+    int skill = get_skill(victim, gsn_parry);
+    int pool = get_attribute(victim, DEXTERITY);
+    if (get_eq_char(victim, WEAR_WIELD) != NULL)
+        pool += victim->csabilities[CSABIL_MELEE];
+    else
+    {
+        if (get_skill(victim, gsn_hand_to_hand) <= 75) return FALSE;
+        pool += victim->csabilities[CSABIL_BRAWL];
+    }
+    
+    pool = (pool * (20 + skill)) / 100;
+    pool = UMAX(1, pool);
 
-    if ( number_percent( ) >= chance + victim->level - ch->level )
+    int successes = godice(pool, 6);
+    if (!can_see(victim, ch)) successes -= 1;
+
+    if (DEBUG_MESSAGES || IS_DEBUGGING(ch) || IS_DEBUGGING(victim)){
+        cprintf(ch, "def{G%d{x ", successes);
+        if (IS_NPC(ch)) cprintf(victim, "def{G%d{x ", successes);
+    }
+
+    if (successes >= tohit)
+    {
+        if(!IS_SET(victim->comm,COMM_COMBAT_BRIEF))
+            act( "You parry $n's attack.",  ch, NULL, victim, TO_VICT    );
+        if(!IS_SET(ch->comm,COMM_COMBAT_BRIEF))
+            act( "$N parries your attack.", ch, NULL, victim, TO_CHAR    );
+        check_improve(victim,gsn_parry,TRUE,6);
+        return TRUE;
+    }
     return FALSE;
-
-    if(!IS_SET(victim->comm,COMM_COMBAT_BRIEF))
-        act( "You parry $n's attack.",  ch, NULL, victim, TO_VICT    );
-    if(!IS_SET(ch->comm,COMM_COMBAT_BRIEF))
-        act( "$N parries your attack.", ch, NULL, victim, TO_CHAR    );
-    check_improve(victim,gsn_parry,TRUE,6);
-    return TRUE;
 }
 
 /*
  * Check for shield block.
  */
-bool check_shield_block( CHAR_DATA *ch, CHAR_DATA *victim )
+bool check_shield_block( CHAR_DATA *ch, CHAR_DATA *victim, int tohit )
 {
     int chance;
 
     if ( !IS_AWAKE(victim) )
         return FALSE;
 
-
-    chance = get_skill(victim,gsn_shield_block) / 5 + 3;
-
-
     if ( get_eq_char( victim, WEAR_SHIELD ) == NULL )
         return FALSE;
 
-    if ( number_percent( ) >= chance + victim->level - ch->level )
-        return FALSE;
+    if (tohit <= 0)
+    {
+        chance = get_skill(victim,gsn_shield_block) / 5 + 3;
 
-    if(!IS_SET(victim->comm,COMM_COMBAT_BRIEF))
-        act( "You block $n's attack with your shield.",  ch, NULL, victim,TO_VICT    );
-    if(!IS_SET(ch->comm,COMM_COMBAT_BRIEF))
-        act( "$N blocks your attack with a shield.", ch, NULL, victim,TO_CHAR    );
-    check_improve(victim,gsn_shield_block,TRUE,6);
-    return TRUE;
+        if ( number_percent( ) >= chance + victim->level - ch->level )
+            return FALSE;
+
+        if(!IS_SET(victim->comm,COMM_COMBAT_BRIEF))
+            act( "You block $n's attack with your shield.",  ch, NULL, victim,TO_VICT    );
+        if(!IS_SET(ch->comm,COMM_COMBAT_BRIEF))
+            act( "$N blocks your attack with a shield.", ch, NULL, victim,TO_CHAR    );
+        check_improve(victim,gsn_shield_block,TRUE,6);
+        return TRUE;
+    }
+
+    int skill = get_skill(victim, gsn_shield_block);
+    int pool = get_attribute(victim, DEXTERITY) + victim->csabilities[CSABIL_MELEE];
+    pool = (pool * (20 + skill)) / 100;
+    pool = UMAX(1, pool);
+
+    int successes = godice(pool, 6);
+    if (!can_see(victim, ch)) successes -= 1;
+
+    if (DEBUG_MESSAGES || IS_DEBUGGING(ch) || IS_DEBUGGING(victim)){
+        cprintf(ch, "def{G%d{x ", successes);
+        if (IS_NPC(ch)) cprintf(victim, "def{G%d{x ", successes);
+    }
+
+    if (successes >= tohit)
+    {
+        if(!IS_SET(victim->comm,COMM_COMBAT_BRIEF))
+            act( "You block $n's attack with your shield.",  ch, NULL, victim,TO_VICT    );
+        if(!IS_SET(ch->comm,COMM_COMBAT_BRIEF))
+            act( "$N blocks your attack with a shield.", ch, NULL, victim,TO_CHAR    );
+        check_improve(victim,gsn_shield_block,TRUE,6);
+        return TRUE;
+    }
+    return FALSE;
 }
 
 
 /*
  * Check for dodge.
  */
-bool check_dodge( CHAR_DATA *ch, CHAR_DATA *victim )
+bool check_dodge( CHAR_DATA *ch, CHAR_DATA *victim, int tohit )
 {
     int chance;
 
@@ -2892,29 +3038,55 @@ bool check_dodge( CHAR_DATA *ch, CHAR_DATA *victim )
     if ( MOUNTED(victim) )
     return FALSE;
 
-    if(!IS_NPC(victim))
+    if (tohit <= 0)
     {
-        chance = get_skill(victim,gsn_dodge) / 6;
-        chance *= godice(get_attribute(victim,DEXTERITY)+victim->csabilities[CSABIL_DODGE],6);
+        if(!IS_NPC(victim))
+        {
+            chance = get_skill(victim,gsn_dodge) / 6;
+            chance *= godice(get_attribute(victim,DEXTERITY)+victim->csabilities[CSABIL_DODGE],6);
+        }
+        else chance = get_skill(victim,gsn_dodge) / 2;
+
+        if (!can_see(victim,ch))
+        chance /= 2;
+
+        if ( number_percent( ) >= chance)
+            return FALSE;
+        if(!IS_SET(victim->comm,COMM_COMBAT_BRIEF))
+            act( "You dodge $n's attack.", ch, NULL, victim, TO_VICT    );
+        if(!IS_SET(ch->comm,COMM_COMBAT_BRIEF))
+            act( "$N dodges your attack.", ch, NULL, victim, TO_CHAR    );
+        check_improve(victim,gsn_dodge,TRUE,6);
+        return TRUE;
     }
-    else chance = get_skill(victim,gsn_dodge) / 2;
 
-    if (!can_see(victim,ch))
-    chance /= 2;
+    int skill = get_skill(victim, gsn_dodge);
+    int pool = get_attribute(victim, DEXTERITY) + victim->csabilities[CSABIL_DODGE];
+    pool = (pool * (20 + skill)) / 100;
+    pool = UMAX(1, pool);
 
-/*    if ( number_percent( ) >= chance + victim->level - ch->level ) */
-    if ( number_percent( ) >= chance)
-        return FALSE;
-    if(!IS_SET(victim->comm,COMM_COMBAT_BRIEF))
-        act( "You dodge $n's attack.", ch, NULL, victim, TO_VICT    );
-    if(!IS_SET(ch->comm,COMM_COMBAT_BRIEF))
-        act( "$N dodges your attack.", ch, NULL, victim, TO_CHAR    );
-    check_improve(victim,gsn_dodge,TRUE,6);
-    return TRUE;
+    int successes = godice(pool, 6);
+    if (!can_see(victim, ch)) successes -= 1;
+
+    if (DEBUG_MESSAGES || IS_DEBUGGING(ch) || IS_DEBUGGING(victim)){
+        cprintf(ch, "def{G%d{x ", successes);
+        if (IS_NPC(ch)) cprintf(victim, "def{G%d{x ", successes);
+    }
+
+    if (successes >= tohit)
+    {
+        if(!IS_SET(victim->comm,COMM_COMBAT_BRIEF))
+            act( "You dodge $n's attack.", ch, NULL, victim, TO_VICT    );
+        if(!IS_SET(ch->comm,COMM_COMBAT_BRIEF))
+            act( "$N dodges your attack.", ch, NULL, victim, TO_CHAR    );
+        check_improve(victim,gsn_dodge,TRUE,6);
+        return TRUE;
+    }
+    return FALSE;
 }
 
 /* check for guardsman block */
-bool check_block( CHAR_DATA *ch, CHAR_DATA *victim )
+bool check_block( CHAR_DATA *ch, CHAR_DATA *victim, int tohit )
 {
     int chance;
 
@@ -2923,19 +3095,46 @@ bool check_block( CHAR_DATA *ch, CHAR_DATA *victim )
 
     if (get_skill(victim,gsn_block) == 0) return FALSE;
 
-    chance = get_skill(victim,gsn_block) / 2;
+    if (tohit <= 0)
+    {
+        chance = get_skill(victim,gsn_block) / 2;
 
-    if (!can_see(victim,ch))
-    chance /= 2;
+        if (!can_see(victim,ch))
+        chance /= 2;
 
-    if ( number_percent( ) >= chance + victim->level - ch->level )
-        return FALSE;
-    if(!IS_SET(victim->comm,COMM_COMBAT_BRIEF))
-        act( "You manage to block $n's attack.", ch, NULL, victim, TO_VICT    );
-    if(!IS_SET(ch->comm,COMM_COMBAT_BRIEF))
-        act( "$N swiftly blocks your attack.", ch, NULL, victim, TO_CHAR    );
-    check_improve(victim,gsn_block,TRUE,6);
-    return TRUE;
+        if ( number_percent( ) >= chance + victim->level - ch->level )
+            return FALSE;
+        if(!IS_SET(victim->comm,COMM_COMBAT_BRIEF))
+            act( "You manage to block $n's attack.", ch, NULL, victim, TO_VICT    );
+        if(!IS_SET(ch->comm,COMM_COMBAT_BRIEF))
+            act( "$N swiftly blocks your attack.", ch, NULL, victim, TO_CHAR    );
+        check_improve(victim,gsn_block,TRUE,6);
+        return TRUE;
+    }
+
+    int skill = get_skill(victim, gsn_block);
+    int pool = get_attribute(victim, DEXTERITY) + victim->csabilities[CSABIL_BRAWL];
+    pool = (pool * (20 + skill)) / 100;
+    pool = UMAX(1, pool);
+
+    int successes = godice(pool, 6);
+    if (!can_see(victim, ch)) successes -= 1;
+
+    if (DEBUG_MESSAGES || IS_DEBUGGING(ch) || IS_DEBUGGING(victim)){
+        cprintf(ch, "def{G%d{x ", successes);
+        if (IS_NPC(ch)) cprintf(victim, "def{G%d{x ", successes);
+    }
+
+    if (successes >= tohit)
+    {
+        if(!IS_SET(victim->comm,COMM_COMBAT_BRIEF))
+            act( "You manage to block $n's attack.", ch, NULL, victim, TO_VICT    );
+        if(!IS_SET(ch->comm,COMM_COMBAT_BRIEF))
+            act( "$N swiftly blocks your attack.", ch, NULL, victim, TO_CHAR    );
+        check_improve(victim,gsn_block,TRUE,6);
+        return TRUE;
+    }
+    return FALSE;
 }
 
 
@@ -3886,7 +4085,7 @@ int xp_compute( CHAR_DATA *gch, CHAR_DATA *victim, int total_levels )
 }
 
 
-void dam_message( CHAR_DATA *ch, CHAR_DATA *victim,int dam,int dt,bool immune )
+void dam_message( CHAR_DATA *ch, CHAR_DATA *victim,int dam,int dt,bool immune, bool soak )
 {
     char buf1[256], buf2[256], buf3[256];
     const char *vs;
@@ -3938,7 +4137,37 @@ void dam_message( CHAR_DATA *ch, CHAR_DATA *victim,int dam,int dt,bool immune )
 
     punct   = (dam <= 24) ? '.' : '!';
 
-    if ( dt == TYPE_HIT )
+    if (soak)
+    {
+        if ( dt >= 0 && dt < MAX_SKILL )
+            attack  = skill_table[dt].noun_damage;
+        else if ( dt >= TYPE_HIT && dt < TYPE_HIT + MAX_DAMAGE_MESSAGE)
+            attack  = attack_table[dt - TYPE_HIT].noun;
+        else
+            attack  = attack_table[0].name;
+
+        if (ch == victim)
+        {
+            sprintf(buf1, "$n's %s harmlessly bounces off $s armor.", attack);
+            sprintf(buf2, "Your %s harmlessly bounces off your armor.", attack);
+        }
+        else
+        {
+            if (dt == TYPE_HIT)
+            {
+                sprintf(buf1, "$N's armor completely absorbs $n's attack.");
+                sprintf(buf2, "$N's armor completely absorbs your attack.");
+                sprintf(buf3, "Your armor completely absorbs $n's attack.");
+            }
+            else
+            {
+                sprintf(buf1, "$N's armor completely absorbs $n's %s.", attack);
+                sprintf(buf2, "$N's armor completely absorbs your %s.", attack);
+                sprintf(buf3, "Your armor completely absorbs $n's %s.", attack);
+            }
+        }
+    }
+    else if ( dt == TYPE_HIT )
     {
     if (ch  == victim)
     {

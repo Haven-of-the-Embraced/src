@@ -1132,14 +1132,17 @@ void init_descriptor( int control, bool is_bot )
     extern char * help_greeting;
     const char mssp_will[] = { IAC, WILL, TELOPT_MSSP, '\0' };
     const char gmcp_will[] = { IAC, WILL, TELOPT_GMCP, '\0' };
-    write_to_buffer( dnew, mssp_will, 0 );
-    write_to_buffer( dnew, gmcp_will, 0 );
+    
+    if ( !is_bot )
+    {
+        write_to_buffer( dnew, mssp_will, 0 );
+        write_to_buffer( dnew, gmcp_will, 0 );
 
-
-    if ( help_greeting[0] == '.' )
-        write_to_buffer( dnew, help_greeting+1, 0 );
-    else
-        write_to_buffer( dnew, help_greeting  , 0 );
+        if ( help_greeting[0] == '.' )
+            write_to_buffer( dnew, help_greeting+1, 0 );
+        else
+            write_to_buffer( dnew, help_greeting  , 0 );
+    }
     }
 
     return;

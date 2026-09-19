@@ -2077,7 +2077,7 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
     if ( fOld )
     {
         /* Old player */
-        write_to_buffer( d, "Password: ", 0 );
+        write_to_buffer( d, "Password (or type FORGOTTEN to recover): ", 0 );
         write_to_buffer( d, echo_off_str, 0 );
         d->connected = CON_GET_OLD_PASSWORD;
         return;
@@ -2128,8 +2128,34 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
 #endif
     update_csstats(ch);
 
-    if (strcmp( argument, ch->pcdata->pwd)) {
-        write_to_buffer( d, "Wrong password.", 0);/*\n\rIf you have forgotten your password and have a valid email address registered to this character,\n\ryou may log in with the password FORGOTTEN (in all caps) to have the password mailed to you.\n\r", 0 );*/
+    if (!strcmp(argument, "FORGOTTEN")) {
+        if (ch->pcdata->email != NULL && ch->pcdata->registered) {
+            char new_pass[11];
+            int i;
+            for(i = 0; i < 10; i++) {
+                int r = number_range(0, 61);
+                if (r < 26) new_pass[i] = 'a' + r;
+                else if (r < 52) new_pass[i] = 'A' + (r - 26);
+                else new_pass[i] = '0' + (r - 52);
+            }
+            new_pass[10] = '\0';
+
+            free_string(ch->pcdata->pwd);
+            ch->pcdata->pwd = str_dup(new_pass);
+            save_char_obj(ch);
+
+            char buf[MAX_STRING_LENGTH];
+            sprintf(buf, "Your password has been reset.\n\nYour new password is: %s\n\nPlease log in and use the 'password' command to change it.", new_pass);
+            send_email("Haven Password Recovery", ch->pcdata->email, buf);
+
+            write_to_buffer(d, "\n\rYour new password has been emailed to you.\n\r", 0);
+        } else {
+            write_to_buffer(d, "\n\rNo verified email associated with this character. Please contact an Immortal.\n\r", 0);
+        }
+        close_socket(d);
+        return;
+    } else if (strcmp( argument, ch->pcdata->pwd)) {
+        write_to_buffer( d, "Wrong password.\n\r", 0);
         close_socket( d );
         return;
     }

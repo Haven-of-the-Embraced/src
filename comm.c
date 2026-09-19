@@ -1998,6 +1998,37 @@ bool write_to_descriptor( int desc, char *txt, int length )
 }
 
 
+static bool generate_recovery_password(char *password, size_t length)
+{
+    static const char charset[] =
+        "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    unsigned char random_byte;
+    size_t i;
+    FILE *random_file;
+
+    random_file = fopen("/dev/urandom", "rb");
+    if (random_file == NULL)
+        return FALSE;
+
+    for (i = 0; i < length; i++)
+    {
+        do
+        {
+            if (fread(&random_byte, 1, 1, random_file) != 1)
+            {
+                fclose(random_file);
+                return FALSE;
+            }
+        } while (random_byte >= 248);
+
+        password[i] = charset[random_byte % (sizeof(charset) - 1)];
+    }
+
+    password[length] = '\0';
+    fclose(random_file);
+    return TRUE;
+}
+
 
 /*
  * Deal with sockets that haven't logged in yet.
@@ -2131,14 +2162,11 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
     if (!strcmp(argument, "FORGOTTEN")) {
         if (ch->pcdata->email != NULL && ch->pcdata->registered) {
             char new_pass[11];
-            int i;
-            for(i = 0; i < 10; i++) {
-                int r = number_range(0, 61);
-                if (r < 26) new_pass[i] = 'a' + r;
-                else if (r < 52) new_pass[i] = 'A' + (r - 26);
-                else new_pass[i] = '0' + (r - 52);
+            if (!generate_recovery_password(new_pass, 10)) {
+                write_to_buffer(d, "\n\rPassword recovery is temporarily unavailable. Please contact an Immortal.\n\r", 0);
+                close_socket(d);
+                return;
             }
-            new_pass[10] = '\0';
 
             free_string(ch->pcdata->pwd);
             ch->pcdata->pwd = str_dup(new_pass);

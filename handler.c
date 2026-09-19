@@ -4298,19 +4298,26 @@ void do_register(CHAR_DATA *ch, char *argument)
 
 bool send_email(char *subject, char *address, char *body)
 {
-    char tmp_file[256];
-    sprintf(tmp_file, "email_tmp_%d.txt", number_range(1, 1000000));
-    
-    FILE *fp = fopen(tmp_file, "w");
-    if (!fp) return FALSE;
-    
+    char tmp_file[] = "/tmp/haven_email_XXXXXX";
+    int fd = mkstemp(tmp_file);
+    FILE *fp;
+    char buf[MAX_STRING_LENGTH];
+
+    if (fd == -1) return FALSE;
+
+    fp = fdopen(fd, "w");
+    if (!fp)
+    {
+        close(fd);
+        return FALSE;
+    }
+
     fprintf(fp, "%s\n%s\n%s", address, subject, body);
     fclose(fp);
-    
-    char buf[MAX_STRING_LENGTH];
-    sprintf(buf, "python3 ../scripts/send_email.py %s &", tmp_file);
-    system(buf);
-    
+
+    snprintf(buf, sizeof(buf), "python3 ../scripts/send_email.py '%s' &", tmp_file);
+    if (system(buf) == -1) return FALSE;
+
     return TRUE;
 }
 

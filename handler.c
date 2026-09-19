@@ -4280,7 +4280,7 @@ void do_register(CHAR_DATA *ch, char *argument)
                 ch->pcdata->email = str_dup(arg1);
                 sprintf(buf,"\nThe following is your Haven registration number for %s. Please log into the mud and type register <number>.\n\nRegistration number: %d.\n",ch->name, ch->pcdata->reg_num);
                 if(send_email("Haven Registration",ch->pcdata->email,buf) == FALSE) send_to_char("Email bug. Please contact the immortals at once.",ch);
-                wrapln(ch, "Thank you. In a few moments you'll receive an email from admin@havenmud.net containing a six "
+                wrapln(ch, "Thank you. In a few moments you'll receive an email from noreply@havenmud.net containing a six "
                             "digit code you are to enter into the mud to confirm your email address."
                             "To enter this code, type register <number> "
                             "{/NOTE: If you log out of the mud you will have to start the registration process again."

@@ -1422,8 +1422,10 @@ bool damage(CHAR_DATA *ch,CHAR_DATA *victim,int dam,int dt,int dam_type,
 
     if((victim->race == race_lookup("methuselah") || victim->race == race_lookup("vampire")) && victim->hit <= 0 && !IS_IMMORTAL(victim) && !IS_SET(victim->act,PLR_ARENA))
     {
+            int min_torpor_hp = -get_attribute(victim, STAMINA);
             victim->position = POS_TORPOR;
-            victim->hit = -20;
+            if (victim->hit < min_torpor_hp)
+                victim->hit = min_torpor_hp;
 
                         if((number_range(1,100) < 50) && (!IS_NPC(victim)))
                         {
@@ -2421,8 +2423,10 @@ if (DEBUG_MESSAGES || IS_DEBUGGING(ch))	{
         if ( IS_NPC( victim ) && HAS_TRIGGER_MOB( victim, TRIG_TORPOR) )
             p_percent_trigger( victim, NULL, NULL, ch, NULL, NULL, TRIG_TORPOR );
 
+        int min_torpor_hp = -get_attribute(victim, STAMINA);
         victim->position = POS_TORPOR;
-        victim->hit = -20;
+        if (victim->hit < min_torpor_hp)
+            victim->hit = min_torpor_hp;
 
         stop_fighting( victim, TRUE );
         if(IS_NPC(ch)) grudge_update(ch,victim);
@@ -2949,7 +2953,7 @@ void update_pos( CHAR_DATA *victim )
     int torporduration = 0;
 
 /*Sengir removed     !IS_NPC(victim)    from line below, to let mobs torp*/
-    if ( victim->hit == -20 && !IS_SET(victim->act,PLR_ARENA))
+    if ( (victim->position == POS_TORPOR || victim->hit <= -get_attribute(victim, STAMINA)) && !IS_SET(victim->act,PLR_ARENA) && (victim->race == race_lookup("methuselah") || victim->race == race_lookup("vampire")) )
     {
             if(victim->race == race_lookup("methuselah") || victim->race == race_lookup("vampire"))
             {

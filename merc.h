@@ -3868,6 +3868,7 @@ bool d10_damage args( (CHAR_DATA *ch, CHAR_DATA *victim, int damsuccess,
 bool    damage_old      args( ( CHAR_DATA *ch, CHAR_DATA *victim, int dam,
                                 int dt, int class, bool show ) );
 void    update_pos  args( ( CHAR_DATA *victim ) );
+void    set_torpor  args( ( CHAR_DATA *victim ) );
 void    stop_fighting   args( ( CHAR_DATA *ch, bool fBoth ) );
 void  kill_em           args( ( CHAR_DATA *ch, CHAR_DATA *victim) );
 void  kill_triggers     args( ( CHAR_DATA *ch ));

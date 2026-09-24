@@ -1422,10 +1422,7 @@ bool damage(CHAR_DATA *ch,CHAR_DATA *victim,int dam,int dt,int dam_type,
 
     if((victim->race == race_lookup("methuselah") || victim->race == race_lookup("vampire")) && victim->hit <= 0 && !IS_IMMORTAL(victim) && !IS_SET(victim->act,PLR_ARENA))
     {
-            int min_torpor_hp = -get_attribute(victim, STAMINA);
-            victim->position = POS_TORPOR;
-            if (victim->hit < min_torpor_hp)
-                victim->hit = min_torpor_hp;
+            set_torpor(victim);
 
                         if((number_range(1,100) < 50) && (!IS_NPC(victim)))
                         {
@@ -2423,10 +2420,7 @@ if (DEBUG_MESSAGES || IS_DEBUGGING(ch))	{
         if ( IS_NPC( victim ) && HAS_TRIGGER_MOB( victim, TRIG_TORPOR) )
             p_percent_trigger( victim, NULL, NULL, ch, NULL, NULL, TRIG_TORPOR );
 
-        int min_torpor_hp = -get_attribute(victim, STAMINA);
-        victim->position = POS_TORPOR;
-        if (victim->hit < min_torpor_hp)
-            victim->hit = min_torpor_hp;
+        set_torpor(victim);
 
         stop_fighting( victim, TRUE );
         if(IS_NPC(ch)) grudge_update(ch,victim);
@@ -2942,7 +2936,22 @@ bool check_block( CHAR_DATA *ch, CHAR_DATA *victim )
     return TRUE;
 }
 
+/*
+ * Centralized torpor transition and hp clamping.
+ */
+void set_torpor( CHAR_DATA *victim )
+{
+    int min_torpor_hp;
+    
+    if (victim->race != race_lookup("vampire") && victim->race != race_lookup("methuselah"))
+        return;
 
+    min_torpor_hp = -get_attribute(victim, STAMINA);
+    victim->position = POS_TORPOR;
+    
+    if (victim->hit < min_torpor_hp)
+        victim->hit = min_torpor_hp;
+}
 
 /*
  * Set position of a victim.
@@ -2957,7 +2966,7 @@ void update_pos( CHAR_DATA *victim )
     {
             if(victim->race == race_lookup("methuselah") || victim->race == race_lookup("vampire"))
             {
-            victim->position = POS_TORPOR;
+            set_torpor(victim);
             if (!IS_NPC(victim)) {
                 torporduration = 31 - (victim->pcdata->cshumanity * 3);
                 torporduration = UMAX(1, torporduration);

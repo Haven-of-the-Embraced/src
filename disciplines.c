@@ -4585,11 +4585,7 @@ void do_blackdeath(CHAR_DATA *ch, char *argument)
             act("$N enters Torpor.",ch,NULL,victim,TO_CHAR);
             act("You enter Torpor.",ch,NULL,victim,TO_VICT);
             stop_fighting( victim, TRUE );
-            int min_torpor_hp = -get_attribute(victim, STAMINA);
-            victim->position = POS_TORPOR;
-            victim->hit = -20;
-            if (victim->hit < min_torpor_hp)
-                victim->hit = min_torpor_hp;
+            set_torpor(victim);
             for ( d = descriptor_list; d != NULL; d = d->next )
             {
                 if ( d->connected == CON_PLAYING &&
@@ -7055,7 +7051,7 @@ void do_weakness(CHAR_DATA *ch, char *argument)
             act("$N slumps to the ground, entering Torpor.",ch,NULL,victim,TO_CHAR);
             act("You enter Torpor as toxins strip away your resilience.",ch,NULL,victim,TO_VICT);
             stop_fighting( victim, TRUE );
-            victim->position = POS_TORPOR;
+            set_torpor(victim);
         }
 
         af.where     = TO_VULN;

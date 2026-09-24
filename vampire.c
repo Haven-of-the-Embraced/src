@@ -1482,21 +1482,95 @@ void vamp_frenzy( int sn, int level, CHAR_DATA *ch, void *vo, int target )
 
 void do_stake(CHAR_DATA *ch, char *argument)
 {
-   CHAR_DATA *victim;
-   OBJ_DATA *stake;
-   OBJ_DATA *obj;
-   OBJ_DATA *obj_next;
-   char buf[MAX_STRING_LENGTH];
-   char arg[MAX_INPUT_LENGTH];
-   int breaking;
-   int chance;
-   int awake;
-   int i;
+    CHAR_DATA *victim;
+    OBJ_DATA *stake;
+    char arg[MAX_INPUT_LENGTH];
+    int successes, damsuccess, dice, mod, old_hit, damage_dealt;
+
+    one_argument(argument, arg);
 
     if (IS_NPC(ch)) return;
 
-    do_huh(ch, argument);
-    return;
+    if (arg[0] == '\0') {
+        send_to_char("Stake whom?\n\r", ch);
+        return;
+    }
+
+    if ((victim = get_char_room(ch, NULL, arg)) == NULL) {
+        send_to_char("They aren't here.\n\r", ch);
+        return;
+    }
+
+    if (victim == ch) {
+        send_to_char("You cannot stake yourself.\n\r", ch);
+        return;
+    }
+
+    if (victim->race != race_lookup("vampire") && victim->race != race_lookup("methuselah")) {
+        send_to_char("They are not a vampire.\n\r", ch);
+        return;
+    }
+
+    if (victim->position == POS_TORPOR) {
+        send_to_char("They are already in torpor.\n\r", ch);
+        return;
+    }
+
+    stake = get_eq_char(ch, WEAR_WIELD);
+    if (stake == NULL || !IS_OBJ_STAT(stake, ITEM_IS_STAKE)) {
+        stake = get_eq_char(ch, WEAR_HOLD);
+    }
+    
+    if (stake == NULL || !IS_OBJ_STAT(stake, ITEM_IS_STAKE)) {
+        send_to_char("You must be wielding or holding a stake to do that.\n\r", ch);
+        return;
+    }
+
+    WAIT_STATE(ch, PULSE_VIOLENCE);
+
+    successes = godice(get_attribute(ch, DEXTERITY) + get_ability(ch, CSABIL_MELEE), 9);
+
+    if (successes <= 0) {
+        act("You lunge at $N's heart with a stake, but miss entirely!", ch, NULL, victim, TO_CHAR);
+        act("$n lunges at your heart with a stake, but misses entirely!", ch, NULL, victim, TO_VICT);
+        act("$n lunges at $N's heart with a stake, but misses entirely!", ch, NULL, victim, TO_NOTVICT);
+        d10_damage(ch, victim, 0, d10_modifier(ch), TYPE_HIT, DAM_PIERCE, DEFENSE_FULL, TRUE, FALSE);
+        return;
+    }
+
+    dice = d10_damdice(ch, victim);
+    damsuccess = (successes - 1) + godice(dice, 6);
+
+    mod = d10_modifier(ch);
+    old_hit = victim->hit;
+
+    d10_damage(ch, victim, damsuccess, mod, TYPE_HIT, DAM_PIERCE, DEFENSE_FULL, TRUE, FALSE);
+
+    if (victim->position == POS_DEAD || victim->position == POS_TORPOR)
+        return;
+
+    damage_dealt = old_hit - victim->hit;
+
+    if (damage_dealt >= 3 * mod) {
+        act("{RYou drive the stake deep into $N's heart, paralyzing $M!{x", ch, NULL, victim, TO_CHAR);
+        act("{R$n drives a stake deep into your heart! You are paralyzed!{x", ch, NULL, victim, TO_VICT);
+        act("{R$n drives a stake deep into $N's heart, paralyzing $M!{x", ch, NULL, victim, TO_NOTVICT);
+        
+        victim->position = POS_TORPOR;
+        if (!is_affected(victim, gsn_torpor)) {
+            AFFECT_DATA af;
+            af.where = TO_AFFECTS;
+            af.type = gsn_torpor;
+            af.level = victim->level;
+            af.duration = -1;
+            af.location = APPLY_NONE;
+            af.modifier = 0;
+            af.bitvector = 0;
+            affect_to_char(victim, &af);
+        }
+    } else {
+        act("You strike $N with a stake, but fail to pierce $S heart!", ch, NULL, victim, TO_CHAR);
+    }
 }
 
 void do_diablerize(CHAR_DATA *ch, char *argument)

@@ -4003,7 +4003,7 @@ void spell_gift_mansskin( int sn, int level, CHAR_DATA *ch, void *vo, int target
   if ( is_affected(ch, gsn_gift_mansskin))
   {
     send_to_char("You shift your visage back to your feminine form.\n\r",ch);
-    act("$N's visage flows back to that of a woman.",ch,NULL,NULL,TO_ROOM);
+    act("$n's visage flows back to that of a woman.",ch,NULL,NULL,TO_ROOM);
     affect_strip(ch, gsn_gift_mansskin);
     return;
   }
@@ -5244,7 +5244,7 @@ void spell_gift_distractthefool( int sn, int level, CHAR_DATA *ch, void *vo, int
   if (success < 0)
   {
     act("Your bold claim seems to be ignored.", ch, NULL, NULL, TO_CHAR);
-    act("$N makes an unbelievable claim, which you recognize as only a ruse.", ch, NULL, NULL, TO_ROOM);
+    act("$n makes an unbelievable claim, which you recognize as only a ruse.", ch, NULL, NULL, TO_ROOM);
     WAIT_STATE(ch, 6);
     return;
   }
@@ -5512,7 +5512,7 @@ void spell_gift_auraofconfidence( int sn, int level, CHAR_DATA *ch, void *vo, in
   if (success < 0)
   {
     act("The ancestor-spirits decree that you have brought shame and dishonor to the Garou!", ch, NULL, NULL, TO_CHAR);
-    act("$N hangs $S head low for a moment.", ch, NULL, NULL, TO_NOTVICT);
+    act("$n hangs $s head low for a moment.", ch, NULL, NULL, TO_NOTVICT);
     af.where     = TO_AFFECTS;
     af.type      = gsn_gift_auraofconfidence;
     af.level     = -1;
@@ -5533,7 +5533,7 @@ void spell_gift_auraofconfidence( int sn, int level, CHAR_DATA *ch, void *vo, in
   }
 
     act("The ancestor-spirits decree you are worthy, bringing honor to the Garou.  Your rightful place is to rule.", ch, NULL, NULL, TO_CHAR);
-    act("$N raises $S head high, holding it regally.", ch, NULL, NULL, TO_NOTVICT);
+    act("$n raises $s head high, holding it regally.", ch, NULL, NULL, TO_NOTVICT);
     af.where     = TO_AFFECTS;
     af.type      = gsn_gift_auraofconfidence;
     af.level     = success;

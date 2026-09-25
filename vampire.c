@@ -1556,7 +1556,7 @@ void do_stake(CHAR_DATA *ch, char *argument)
         act("{R$n drives a stake deep into your heart! You are paralyzed!{x", ch, NULL, victim, TO_VICT);
         act("{R$n drives a stake deep into $N's heart, paralyzing $M!{x", ch, NULL, victim, TO_NOTVICT);
         
-        victim->position = POS_TORPOR;
+        set_torpor(victim);
         if (!is_affected(victim, gsn_torpor)) {
             AFFECT_DATA af;
             af.where = TO_AFFECTS;

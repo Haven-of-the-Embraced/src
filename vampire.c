@@ -1770,7 +1770,7 @@ void do_incorporealpassage( CHAR_DATA *ch, char *argument )
     if (dicesuccess < 0)
     {
         act("You stare at your hand, bleeding upon the ground, as your body remains solid.", ch, NULL, NULL, TO_CHAR);
-        act("$n bleeds onto the ground from a slash on $S hand.", ch, NULL, NULL, TO_NOTVICT);
+        act("$n bleeds onto the ground from a slash on $s hand.", ch, NULL, NULL, TO_NOTVICT);
         WAIT_STATE(ch, 8);
         ch->pblood -= 5;
         return;

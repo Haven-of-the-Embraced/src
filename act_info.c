@@ -1401,6 +1401,11 @@ void do_look( CHAR_DATA *ch, char *argument )
         }
     }
 
+    if (!IS_NPC(ch) && IS_SET(ch->comm, COMM_AUTOMAP))
+    {
+        show_map_to_char(ch);
+    }
+
         if ( !IS_NPC(ch) && IS_SET(ch->act, PLR_AUTOEXIT) )
     {
         if (!IS_SET(ch->comm,COMM_COMPACT))

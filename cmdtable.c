@@ -84,6 +84,8 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "inventory",  do_inventory },
     { "kill",       do_kill },
     { "look",       do_look },
+    { "map",        do_map },
+    { "automap",    do_automap },
     { "knock",      do_knock },
     { "glance",     do_glance },
     { "clantalk",       do_clantalk },

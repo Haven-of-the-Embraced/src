@@ -2413,7 +2413,7 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
 
     write_to_buffer(d,"\n\r{CAvailable Archetypes:{x\n\r\n\r",0);
     write_to_buffer(d,"{G[0] Knight{x        - Chivalric warrior, swordplay and mounted combat (Focuses on Strength and Melee)\n\r",0);
-    write_to_buffer(d,"{G[1] Man-at-Arms{x   - Professional soldier, a master of all weapons (Focuses on Dexterity and Firearms)\n\r",0);
+    write_to_buffer(d,"{G[1] Man-at-Arms{x   - Professional soldier, a master of all weapons (Focuses on Dexterity and Melee)\n\r",0);
     write_to_buffer(d,"{G[2] Hunter{x        - Wilderness predator, archery and tracking (Focuses on Perception and Survival)\n\r",0);
     write_to_buffer(d,"{G[3] Outlaw{x        - Brigand and ambush fighter, strikes from the shadows (Focuses on Dexterity and Stealth)\n\r",0);
     write_to_buffer(d,"{G[4] Berserker{x     - Frenzied brawler, overwhelms foes with raw fury (Focuses on Stamina and Brawl)\n\r",0);
@@ -2458,7 +2458,7 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
         write_to_buffer(d,"{RThat is not a valid choice.{x\n\r\n\r",0);
         write_to_buffer(d,"\n\r{CAvailable Archetypes:{x\n\r\n\r",0);
         write_to_buffer(d,"{G[0] Knight{x        - Chivalric warrior, swordplay and mounted combat (Focuses on Strength and Melee)\n\r",0);
-        write_to_buffer(d,"{G[1] Man-at-Arms{x   - Professional soldier, a master of all weapons (Focuses on Dexterity and Firearms)\n\r",0);
+        write_to_buffer(d,"{G[1] Man-at-Arms{x   - Professional soldier, a master of all weapons (Focuses on Dexterity and Melee)\n\r",0);
         write_to_buffer(d,"{G[2] Hunter{x        - Wilderness predator, archery and tracking (Focuses on Perception and Survival)\n\r",0);
         write_to_buffer(d,"{G[3] Outlaw{x        - Brigand and ambush fighter, strikes from the shadows (Focuses on Dexterity and Stealth)\n\r",0);
         write_to_buffer(d,"{G[4] Berserker{x     - Frenzied brawler, overwhelms foes with raw fury (Focuses on Stamina and Brawl)\n\r",0);

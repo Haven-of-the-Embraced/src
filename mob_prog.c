@@ -108,6 +108,8 @@ extern int flag_lookup( const char *word, const struct flag_type *flag_table );
 #define CHK_GRPSIZE     (51)
 #define CHK_QUEST_STEP  (52)
 #define CHK_REMORT      (53)
+#define CHK_DISC   (54)
+#define CHK_PBLOOD (55)
 
 /*
  * These defines correspond to the entries in fn_evals[] table.
@@ -187,6 +189,8 @@ const char * fn_keyword[] =
     "grpsize",      /* if grpsize $n > 6    - group size check */
     "quest_step", /* if quest_step $n == 100  - quest status check */
     "remort", /* if remort $n >= 50     - check remorts on char*/
+    "disc",
+    "pblood",
     "\n"        /* Table terminator */
 };
 
@@ -723,6 +727,33 @@ int cmd_eval_mob( sh_int vnum, char *line, int check,
     default:;
     }
 
+    /* CHK_DISC: Keyword, actor, string, comparison and value */
+    if ( check == CHK_DISC )
+    {
+        int disc_idx = -1;
+        int i;
+        for ( i = 0; i < MAX_DISC; i++ )
+        {
+            if ( !str_cmp( buf, disc_table[i].name ) )
+            {
+                disc_idx = i;
+                break;
+            }
+        }
+        
+        line = one_argument( line, buf );
+        if ( (oper = keyword_lookup( fn_evals, buf )) < 0 )
+        {
+            sprintf( buf, "Cmd_eval: prog %d syntax error: '%s'", vnum, original );
+            bug( buf, 0 );
+            return FALSE;
+        }
+        one_argument( line, buf );
+        rval = atoi( buf );
+        lval = (lval_char != NULL && !IS_NPC(lval_char) && disc_idx != -1) ? lval_char->pcdata->discipline[disc_idx] : 0;
+        return num_eval( lval, oper, rval );
+    }
+
     /*
      * Case 5: Keyword, actor, comparison and value
      */
@@ -787,6 +818,8 @@ int cmd_eval_mob( sh_int vnum, char *line, int check,
         if( lval_char != NULL ) lval = quest_status(lval_char, mob->quest); break;
     case CHK_REMORT:
         if (lval_char != NULL ) lval = lval_char->remorts; break;
+    case CHK_PBLOOD:
+        if ( lval_char != NULL && !IS_NPC(lval_char) ) lval = lval_char->pblood; else lval = 0; break;
     default:
             return FALSE;
     }
@@ -1006,6 +1039,33 @@ int cmd_eval_obj( sh_int vnum, char *line, int check,
 	default:;
     }
 
+    /* CHK_DISC: Keyword, actor, string, comparison and value */
+    if ( check == CHK_DISC )
+    {
+        int disc_idx = -1;
+        int i;
+        for ( i = 0; i < MAX_DISC; i++ )
+        {
+            if ( !str_cmp( buf, disc_table[i].name ) )
+            {
+                disc_idx = i;
+                break;
+            }
+        }
+        
+        line = one_argument( line, buf );
+        if ( (oper = keyword_lookup( fn_evals, buf )) < 0 )
+        {
+            sprintf( buf, "Cmd_eval: prog %d syntax error: '%s'", vnum, original );
+            bug( buf, 0 );
+            return FALSE;
+        }
+        one_argument( line, buf );
+        rval = atoi( buf );
+        lval = (lval_char != NULL && !IS_NPC(lval_char) && disc_idx != -1) ? lval_char->pcdata->discipline[disc_idx] : 0;
+        return num_eval( lval, oper, rval );
+    }
+
     /*
      * Case 5: Keyword, actor, comparison and value
      */
@@ -1068,6 +1128,8 @@ int cmd_eval_obj( sh_int vnum, char *line, int check,
 	    if ( lval_obj != NULL ) lval = lval_obj->value[4]; break;
 	case CHK_GRPSIZE:
 	    if( lval_char != NULL ) lval = count_people_room( lval_char, NULL, NULL, 4 ); break;
+    case CHK_PBLOOD:
+        if ( lval_char != NULL && !IS_NPC(lval_char) ) lval = lval_char->pblood; else lval = 0; break;
 	default:
             return FALSE;
     }
@@ -1288,6 +1350,33 @@ int cmd_eval_room( sh_int vnum, char *line, int check,
 	default:;
     }
 
+    /* CHK_DISC: Keyword, actor, string, comparison and value */
+    if ( check == CHK_DISC )
+    {
+        int disc_idx = -1;
+        int i;
+        for ( i = 0; i < MAX_DISC; i++ )
+        {
+            if ( !str_cmp( buf, disc_table[i].name ) )
+            {
+                disc_idx = i;
+                break;
+            }
+        }
+        
+        line = one_argument( line, buf );
+        if ( (oper = keyword_lookup( fn_evals, buf )) < 0 )
+        {
+            sprintf( buf, "Cmd_eval: prog %d syntax error: '%s'", vnum, original );
+            bug( buf, 0 );
+            return FALSE;
+        }
+        one_argument( line, buf );
+        rval = atoi( buf );
+        lval = (lval_char != NULL && !IS_NPC(lval_char) && disc_idx != -1) ? lval_char->pcdata->discipline[disc_idx] : 0;
+        return num_eval( lval, oper, rval );
+    }
+
     /*
      * Case 5: Keyword, actor, comparison and value
      */
@@ -1351,6 +1440,8 @@ int cmd_eval_room( sh_int vnum, char *line, int check,
 	    if ( lval_obj != NULL ) lval = lval_obj->value[4]; break;
 	case CHK_GRPSIZE:
 	    if( lval_char != NULL ) lval = count_people_room( lval_char, NULL, NULL, 4 ); break;
+    case CHK_PBLOOD:
+        if ( lval_char != NULL && !IS_NPC(lval_char) ) lval = lval_char->pblood; else lval = 0; break;
 	default:
             return FALSE;
     }

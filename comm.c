@@ -2360,7 +2360,7 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
     ch->parts   = race_table[race].parts;
     ch->act2    = PLR2_NEWBIE;
 
-        write_to_buffer( d, "Does your client support ANSI color?[Y/N] ", 0 );
+        write_to_buffer( d, "Does your client support ANSI color? (Color greatly enhances immersion and readability) [Y/N]: ", 0 );
         d->connected = CON_GET_COLOUR;
       break;
 
@@ -2377,7 +2377,9 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
         return;
     }
 
-        write_to_buffer( d, "What is your sex (M/F)? ", 0 );
+        write_to_buffer( d, "{CWhat is your character's sex?{x\n\r", 0 );
+        write_to_buffer( d, "{W(This determines your pronouns and presentation. It has no effect on stats.){x\n\r", 0 );
+        write_to_buffer( d, "{CPlease enter [M]ale or [F]emale: {x", 0 );
         d->connected = CON_GET_NEW_SEX;
         break;
 
@@ -2392,7 +2394,7 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
                 ch->pcdata->true_sex = SEX_FEMALE;
                 break;
     default:
-        write_to_buffer( d, "That's not a sex.\n\rWhat IS your sex? ", 0 );
+        write_to_buffer( d, "{RThat is not a valid choice.{x\n\r{CWhat is your character's sex? [M/F]: {x", 0 );
         return;
     }
 
@@ -2402,14 +2404,12 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
     log_string( log_buf);
 
 
-    write_to_buffer(d,"{YHaven provides character Archetypes to assign your starting attributes and{x\n\r",0);
-    write_to_buffer(d,"{Yabilities. This will give your Character a preset Character Sheet to get you{x\n\r",0);
-    write_to_buffer(d,"{Ystarted. Afterwards You may then spend 'Freebie' points to further customize{x \n\r",0);
-    write_to_buffer(d,"{Yyour character.{x\n\r\n\r",0);
+    write_to_buffer(d,"{YArchetypes define your mortal background before you entered the World of Darkness.{x\n\r",0);
+    write_to_buffer(d,"{YMechanically, this assigns your starting Attributes and Abilities. Later, you{x\n\r",0);
+    write_to_buffer(d,"{Ywill receive 15 'Freebie' points to further customize your character's stats.{x\n\r\n\r",0);
 
-    write_to_buffer(d,"{WOr, you may skip this step and create a completely custom character sheet{x\n\r", 0);
-    write_to_buffer(d,"{Win-game. *Warning* You will have NO SKILLS until you complete the creation{x\n\r", 0);
-    write_to_buffer(d,"{Wprocess in-game using the 'create' command.{x\n\r", 0);
+    write_to_buffer(d,"{WAlternatively, you may skip this step to build a completely custom sheet in-game.{x\n\r", 0);
+    write_to_buffer(d,"{R*WARNING* You will have NO SKILLS until you type 'create' within the game.{x\n\r", 0);
 
     write_to_buffer(d,"\n\r{CAvailable Archetypes:{x\n\r\n\r",0);
     write_to_buffer(d,"{G[0] Knight{x        - Chivalric warrior, swordplay and mounted combat (Focuses on Strength and Melee)\n\r",0);
@@ -2455,7 +2455,7 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
         }
     if(num < 0 || num > 9)
     {
-        write_to_buffer(d,"That is not a valid choice.\n\r\n\r",0);
+        write_to_buffer(d,"{RThat is not a valid choice.{x\n\r\n\r",0);
         write_to_buffer(d,"\n\r{CAvailable Archetypes:{x\n\r\n\r",0);
         write_to_buffer(d,"{G[0] Knight{x        - Chivalric warrior, swordplay and mounted combat (Focuses on Strength and Melee)\n\r",0);
         write_to_buffer(d,"{G[1] Man-at-Arms{x   - Professional soldier, a master of all weapons (Focuses on Dexterity and Firearms)\n\r",0);
@@ -2509,10 +2509,13 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
         }
     }
     ch->pcdata->progress = 8;
-    write_to_buffer(d,"\n\r\n\rYou've finished setting your charsheet archetypes and have been given 5\n\r",0);
-    write_to_buffer(d,"'background' points that you can spend on background traits in-game. Once you've \n\r", 0);
-    write_to_buffer(d,"done that, you may use the 'freebie' command to further increase your traits using \n\r",0);
-    write_to_buffer(d,"experience points called 'freebies'.\n\r", 0);
+    write_to_buffer(d,"\n\r{C======================================================================{x\n\r",0);
+    write_to_buffer(d,"{YArchetype selected! Your base Attributes and Abilities have been set.{x\n\r",0);
+    write_to_buffer(d,"{YYou have also been granted 5 'Background' points to spend in-game on{x\n\r",0);
+    write_to_buffer(d,"{Ytraits like Generation, Resources, or Retainers. Afterwards, you may{x\n\r",0);
+    write_to_buffer(d,"{Yuse the 'freebie' command to spend 15 freebie points to further customize{x\n\r",0);
+    write_to_buffer(d,"{Yyour character's stats.{x\n\r", 0);
+    write_to_buffer(d,"{C======================================================================{x\n\r",0);
     ch->csmax_willpower = ch->pcdata->csvirtues[COURAGE];
     ch->pcdata->cshumanity = ch->pcdata->csvirtues[CONSCIENCE]+ch->pcdata->csvirtues[SELF_CONTROL];
     ch->cswillpower = ch->csmax_willpower;
@@ -2575,7 +2578,7 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
     d->connected = CON_READ_MOTD;
     break;
     }
-    write_to_buffer(d,"That is not a valid choice. Please type either Y or N.\n\rDo you wish to start the game as a Vampire? [Y/N]? ",0);
+    write_to_buffer(d,"{RThat is not a valid choice. Please type either Y or N.{x\n\r{CDo you wish to start the game as a Vampire? [Y/N]? {x",0);
     d->connected = CON_CHOICE_VAMP;
     break;
 
@@ -2587,8 +2590,8 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
         do_function(ch,&do_help,argument);
 
 
-        write_to_buffer(d,"Please choose a Clan (Assamite, Brujah, Gangrel, Malkavian, Nosferatu, Ravnos,\n\r", 0);
-	   write_to_buffer(d,"FollowerOfSet, Toreador, Tremere, Ventrue or help <clan>) ",0);
+        write_to_buffer(d,"{CPlease choose a Clan (Assamite, Brujah, Gangrel, Malkavian, Nosferatu, Ravnos,\n\r", 0);
+	   write_to_buffer(d,"FollowerOfSet, Toreador, Tremere, Ventrue or help <clan>): {x",0);
         d->connected = CON_PICK_CLAN;
         break;
     }
@@ -2605,9 +2608,9 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
 	str_prefix(buf, "ventrue") )
 
     {
-        write_to_buffer(d,"[  Invalid clan choice.  ]\n\r",0);
-        write_to_buffer(d,"Please choose a Clan (Assamite, Brujah, Gangrel, Malkavian, Nosferatu, Ravnos,\n\r", 0);
-        write_to_buffer(d,"FollowerOfSet, Toreador, Tremere, Ventrue or help <clan>) ",0);
+        write_to_buffer(d,"{R[  Invalid clan choice.  ]{x\n\r",0);
+        write_to_buffer(d,"{CPlease choose a Clan (Assamite, Brujah, Gangrel, Malkavian, Nosferatu, Ravnos,\n\r", 0);
+        write_to_buffer(d,"FollowerOfSet, Toreador, Tremere, Ventrue or help <clan>): {x",0);
         d->connected = CON_PICK_CLAN;
         break;
     }

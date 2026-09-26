@@ -662,6 +662,7 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "qiedit",     do_qiedit       },
     { "cmdlist",    do_cmdlist      },
     { "copyover",   do_copyover   },
+    { "hotcopy",    do_hotcopy    },
     { "admintalk",  do_admintalk },
     { "ticks",      do_ticks     },
     { "makeactive", do_makeactive},

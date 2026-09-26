@@ -105,6 +105,7 @@ DECLARE_DO_FUN( do_playtest );
 DECLARE_DO_FUN(do_nocondition);
 DECLARE_DO_FUN(do_noshortdesc);
 DECLARE_DO_FUN( do_copyover );
+DECLARE_DO_FUN( do_hotcopy );
 DECLARE_DO_FUN( do_berserk  );
 DECLARE_DO_FUN( do_bite     );
 DECLARE_DO_FUN( do_brandish );

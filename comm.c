@@ -2434,6 +2434,13 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
     else {
         if (!str_cmp(argument, "custom"))
             {
+                write_to_buffer(d,"\n\r{C======================================================================{x\n\r",0);
+                write_to_buffer(d,"{YYou have chosen a CUSTOM starting sheet.{x\n\r",0);
+                write_to_buffer(d,"{RCRITICAL INSTRUCTION:{W When you enter the game, you will have 0 in all stats.{x\n\r",0);
+                write_to_buffer(d,"{WYou MUST type {Y'create'{W to open the interactive character builder!{x\n\r",0);
+                write_to_buffer(d,"{WThis menu will walk you through assigning your Attributes, Abilities,{x\n\r",0);
+                write_to_buffer(d,"{WBackgrounds, and Freebie points manually.{x\n\r",0);
+                write_to_buffer(d,"{C======================================================================{x\n\r",0);
                 write_to_buffer(d,"\n\r{YHaven of the Embraced is focused on Vampires, but you may choose to start the{x\n\r",0);
                 write_to_buffer(d,"{Ygame as a human, if you wish.{x\n\r\n\r",0);
                 write_to_buffer(d,"{R[Vampire]:{x You are one of the Kindred, Embraced into undeath. You must manage\n\r",0);
@@ -2521,6 +2528,13 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
     ch->cswillpower = ch->csmax_willpower;
     ch->dpoints = 5;
 
+                write_to_buffer(d,"\n\r{C======================================================================{x\n\r",0);
+                write_to_buffer(d,"{YYou have chosen a CUSTOM starting sheet.{x\n\r",0);
+                write_to_buffer(d,"{RCRITICAL INSTRUCTION:{W When you enter the game, you will have 0 in all stats.{x\n\r",0);
+                write_to_buffer(d,"{WYou MUST type {Y'create'{W to open the interactive character builder!{x\n\r",0);
+                write_to_buffer(d,"{WThis menu will walk you through assigning your Attributes, Abilities,{x\n\r",0);
+                write_to_buffer(d,"{WBackgrounds, and Freebie points manually.{x\n\r",0);
+                write_to_buffer(d,"{C======================================================================{x\n\r",0);
     write_to_buffer(d,"\n\r{YHaven of the Embraced is focused on Vampires, but you may choose to start the{x\n\r",0);
     write_to_buffer(d,"{Ygame as a human, if you wish.{x\n\r\n\r",0);
     write_to_buffer(d,"{R[Vampire]:{x You are one of the Kindred, Embraced into undeath. You must manage\n\r",0);
@@ -2555,9 +2569,12 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
         write_to_buffer(d,"{RMalkavian{x- Oracles cursed with incurable insanity.\n\r",0);
         write_to_buffer(d,"{RNosferatu{x- Hideously deformed, masters of stealth and secrets.\n\r",0);
         write_to_buffer(d,"{RRavnos{x   - Nomadic tricksters and masters of illusion.\n\r",0);
+        write_to_buffer(d,"{RCappadocian{x - Scholars of death and the grave.\n\r",0);
         write_to_buffer(d,"{RFollowerOfSet{x - Corrupters and cultists worshipping the snake god Set.\n\r",0);
+        write_to_buffer(d,"{RLasombra{x - Ruthless leaders and masters of shadow manipulation.\n\r",0);
         write_to_buffer(d,"{RToreador{x - Passionate artists and socialites obsessed with beauty.\n\r",0);
         write_to_buffer(d,"{RTremere{x  - Secretive blood sorcerers organized in a strict pyramid.\n\r",0);
+        write_to_buffer(d,"{RTzimisce{x - Fiendish fleshcrafters and lords of the Old Country.\n\r",0);
         write_to_buffer(d,"{RVentrue{x  - Aristocratic rulers who command the minds of others.\n\r\n\r",0);
 
         write_to_buffer(d,"{G(Newbie Recommended) clans, in order:  1) Brujah 2) Nosferatu 3) Gangrel{x",0);
@@ -2590,13 +2607,17 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
         do_function(ch,&do_help,argument);
 
 
-        write_to_buffer(d,"{CPlease choose a Clan (Assamite, Brujah, Gangrel, Malkavian, Nosferatu, Ravnos,\n\r", 0);
-	   write_to_buffer(d,"FollowerOfSet, Toreador, Tremere, Ventrue or help <clan>): {x",0);
+        write_to_buffer(d,"{CPlease choose a Clan (Assamite, Brujah, Cappadocian, FollowerOfSet, Gangrel,\n\r", 0);
+        write_to_buffer(d,"Lasombra, Malkavian, Nosferatu, Ravnos, Toreador, Tremere, Tzimisce, Ventrue\n\r", 0);
+	   write_to_buffer(d,"or type help <clan>): {x",0);
         d->connected = CON_PICK_CLAN;
         break;
     }
 
     if(str_prefix(buf,"assamite") &&
+    str_prefix(buf, "cappadocian") &&
+    str_prefix(buf, "lasombra") &&
+    str_prefix(buf, "tzimisce") &&
     str_prefix(buf, "brujah" ) &&
     str_prefix(buf, "gangrel") &&
     str_prefix(buf, "malkavian") &&
@@ -2609,8 +2630,9 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
 
     {
         write_to_buffer(d,"{R[  Invalid clan choice.  ]{x\n\r",0);
-        write_to_buffer(d,"{CPlease choose a Clan (Assamite, Brujah, Gangrel, Malkavian, Nosferatu, Ravnos,\n\r", 0);
-        write_to_buffer(d,"FollowerOfSet, Toreador, Tremere, Ventrue or help <clan>): {x",0);
+        write_to_buffer(d,"{CPlease choose a Clan (Assamite, Brujah, Cappadocian, FollowerOfSet, Gangrel,\n\r", 0);
+        write_to_buffer(d,"Lasombra, Malkavian, Nosferatu, Ravnos, Toreador, Tremere, Tzimisce, Ventrue\n\r", 0);
+        write_to_buffer(d,"or type help <clan>): {x",0);
         d->connected = CON_PICK_CLAN;
         break;
     }

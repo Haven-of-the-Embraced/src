@@ -111,6 +111,7 @@ DECLARE_DO_FUN( do_brandish );
 DECLARE_DO_FUN( do_brief    );
 DECLARE_DO_FUN( do_combat );
 DECLARE_DO_FUN( do_bug      );
+DECLARE_DO_FUN( do_prelude  );
 DECLARE_DO_FUN( do_buy      );
 DECLARE_DO_FUN( do_bestowgift  );
 DECLARE_DO_FUN( do_cast     );

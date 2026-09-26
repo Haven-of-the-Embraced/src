@@ -5509,3 +5509,212 @@ sh_int  gsn_gift_attunement;
 sh_int  gsn_gift_doppelganger;
 sh_int  gsn_gift_commandtheblaze;
 sh_int  gsn_gift_redirectpain;
+
+void do_hotcopy( CHAR_DATA *ch, char *argument )
+{
+    char buf[MAX_STRING_LENGTH];
+    char arg1[MAX_INPUT_LENGTH];
+    char arg2[MAX_INPUT_LENGTH];
+    char import_path[MAX_STRING_LENGTH];
+    char area_path[MAX_STRING_LENGTH];
+    FILE *fp;
+    FILE *fpArea;
+    AREA_DATA *pArea, *prevArea = NULL;
+    int iHash;
+    CHAR_DATA *vch, *vch_next;
+    ROOM_INDEX_DATA *safe_room;
+    bool oldBootDb;
+
+    if ( IS_NPC(ch) ) return;
+
+    argument = one_argument( argument, arg1 );
+    one_argument( argument, arg2 );
+
+    if ( arg1[0] == '\0' )
+    {
+        send_to_char("Syntax: hotcopy <filename.are> [confirm]\n\r", ch);
+        return;
+    }
+
+    if ( strstr(arg1, "/") != NULL || strstr(arg1, "..") != NULL )
+    {
+        send_to_char("Invalid filename.\n\r", ch);
+        return;
+    }
+
+    if ( !strstr(arg1, ".are") )
+    {
+        send_to_char("You must specify a .are file.\n\r", ch);
+        return;
+    }
+
+    sprintf(import_path, "../import/%s", arg1);
+    sprintf(area_path, "../area/%s", arg1);
+
+    if ( (fp = fopen(import_path, "r")) == NULL )
+    {
+        sprintf(buf, "File not found in ../import/: %s\n\r", arg1);
+        send_to_char(buf, ch);
+        return;
+    }
+    fclose(fp);
+
+    /* Find existing area */
+    for ( pArea = area_first; pArea != NULL; prevArea = pArea, pArea = pArea->next )
+    {
+        if ( !str_cmp( pArea->file_name, arg1 ) )
+            break;
+    }
+
+    /* Require second confirmation if overwriting an existing area */
+    if ( pArea != NULL && str_cmp( arg2, "confirm" ) )
+    {
+        sprintf(buf, "WARNING: '%s' is already loaded in memory.\n\r", arg1);
+        send_to_char(buf, ch);
+        send_to_char("Type 'hotcopy <filename> confirm' to overwrite.\n\r", ch);
+        return;
+    }
+
+    /* Copy file from import to area directory */
+    sprintf(buf, "cp %s %s", import_path, area_path);
+    system(buf);
+
+    safe_room = get_room_index(3001);
+
+    if ( pArea != NULL )
+    {
+        /* Evacuate players */
+        for ( vch = char_list; vch != NULL; vch = vch_next )
+        {
+            vch_next = vch->next;
+            if ( !IS_NPC(vch) && vch->in_room && vch->in_room->area == pArea )
+            {
+                if ( vch->fighting ) stop_fighting(vch, TRUE);
+                char_from_room(vch);
+                char_to_room(vch, safe_room ? safe_room : get_room_index(2));
+                send_to_char("You have been relocated due to an area hotcopy.\n\r", vch);
+                do_look(vch, "auto");
+            }
+        }
+
+        /* Unlink structures from hash tables */
+        for ( iHash = 0; iHash < MAX_KEY_HASH; iHash++ )
+        {
+            ROOM_INDEX_DATA *pr, *pr_prev = NULL;
+            for ( pr = room_index_hash[iHash]; pr != NULL; )
+            {
+                if ( pr->area == pArea )
+                {
+                    if ( pr_prev ) pr_prev->next = pr->next;
+                    else room_index_hash[iHash] = pr->next;
+                    pr = pr->next;
+                }
+                else
+                {
+                    pr_prev = pr;
+                    pr = pr->next;
+                }
+            }
+            
+            MOB_INDEX_DATA *pm, *pm_prev = NULL;
+            for ( pm = mob_index_hash[iHash]; pm != NULL; )
+            {
+                if ( pm->area == pArea )
+                {
+                    if ( pm_prev ) pm_prev->next = pm->next;
+                    else mob_index_hash[iHash] = pm->next;
+                    pm = pm->next;
+                }
+                else
+                {
+                    pm_prev = pm;
+                    pm = pm->next;
+                }
+            }
+            
+            OBJ_INDEX_DATA *po, *po_prev = NULL;
+            for ( po = obj_index_hash[iHash]; po != NULL; )
+            {
+                if ( po->area == pArea )
+                {
+                    if ( po_prev ) po_prev->next = po->next;
+                    else obj_index_hash[iHash] = po->next;
+                    po = po->next;
+                }
+                else
+                {
+                    po_prev = po;
+                    po = po->next;
+                }
+            }
+        }
+
+        /* Remove from area list */
+        if ( prevArea ) prevArea->next = pArea->next;
+        else area_first = pArea->next;
+    }
+    else
+    {
+        char cmd[MAX_STRING_LENGTH];
+        sprintf(cmd, "grep -v '\\$' ../area/area.lst > ../area/area.lst.tmp; echo '%s' >> ../area/area.lst.tmp; echo '$' >> ../area/area.lst.tmp; mv ../area/area.lst.tmp ../area/area.lst", arg1);
+        system(cmd);
+    }
+
+    if ( (fpArea = fopen(area_path, "r")) == NULL )
+    {
+        send_to_char("Failed to open the area file for parsing.\n\r", ch);
+        return;
+    }
+
+    strcpy(strArea, arg1);
+    current_area = NULL;
+    oldBootDb = fBootDb;
+    fBootDb = TRUE;
+    
+    for ( ; ; )
+    {
+        char *word;
+        if ( fread_letter( fpArea ) != '#' )
+        {
+            bug( "Hotcopy: # not found.", 0 );
+            break;
+        }
+        word = fread_word( fpArea );
+        
+             if ( word[0] == '$'               )                 break;
+        else if ( !str_cmp( word, "AREA"     ) ) load_area    (fpArea);
+  /* OLC */     else if ( !str_cmp( word, "AREADATA" ) ) new_load_area(fpArea);
+        else if ( !str_cmp( word, "MOBOLD"   ) ) load_old_mob (fpArea);
+        else if ( !str_cmp( word, "MOBILES"  ) ) load_mobiles (fpArea);
+        else if ( !str_cmp( word, "MOBPROGS" ) ) load_mobprogs(fpArea);
+        else if ( !str_cmp( word, "MPCODE"   ) ) load_mpcode(fpArea);
+        else if ( !str_cmp( word, "OBJPROGS" ) ) load_objprogs(fpArea);
+        else if ( !str_cmp( word, "OPCODE"   ) ) load_opcode(fpArea);
+        else if ( !str_cmp( word, "ROOMPROGS") ) load_roomprogs(fpArea);
+        else if ( !str_cmp( word, "RPCODE"   ) ) load_rpcode(fpArea);
+        else if ( !str_cmp( word, "OBJOLD"   ) ) load_old_obj (fpArea);
+        else if ( !str_cmp( word, "OBJECTS"  ) ) load_objects (fpArea);
+        else if ( !str_cmp( word, "RESETS"   ) ) load_resets  (fpArea);
+        else if ( !str_cmp( word, "ROOMS"    ) ) load_rooms   (fpArea);
+        else if ( !str_cmp( word, "SHOPS"    ) ) load_shops   (fpArea);
+        else if ( !str_cmp( word, "SPECIALS" ) ) load_specials(fpArea);
+        else if ( !str_cmp( word, "LOOTTABLE") ) load_loottables(fpArea);
+        else
+        {
+            bug( "Hotcopy: bad section name.", 0 );
+            break;
+        }
+    }
+    fclose(fpArea);
+    
+    fBootDb = oldBootDb;
+    
+    fix_exits();
+    fix_mobprogs();
+    fix_objprogs();
+    fix_roomprogs();
+    convert_objects();
+    area_update();
+    
+    send_to_char("Hotcopy complete.\n\r", ch);
+}

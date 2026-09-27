@@ -1873,6 +1873,8 @@ void char_to_room( CHAR_DATA *ch, ROOM_INDEX_DATA *pRoomIndex )
 
     if ((room = get_room_index(ROOM_VNUM_TEMPLE)) != NULL)
         char_to_room(ch,room);
+    else if ((room = get_room_index(ROOM_VNUM_LIMBO)) != NULL)
+        char_to_room(ch,room);
 
     return;
     }
@@ -2458,7 +2460,13 @@ void extract_char( CHAR_DATA *ch, bool fPull )
     /* Death room is set in the clan tabe now */
     if ( !fPull )
     {
-        char_to_room(ch,get_room_index(ROOM_VNUM_ALTAR));
+        ROOM_INDEX_DATA *location = get_room_index(ROOM_VNUM_ALTAR);
+        if (location == NULL)
+            location = get_room_index(ROOM_VNUM_TEMPLE);
+        if (location == NULL)
+            location = get_room_index(ROOM_VNUM_LIMBO);
+
+        char_to_room(ch, location);
     return;
     }
 

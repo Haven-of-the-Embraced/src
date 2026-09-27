@@ -1870,7 +1870,10 @@ void do_quit( CHAR_DATA *ch, char *argument )
             return;
         }
         if ( ( location = get_room_index( ROOM_VNUM_TEMPLE ) ) == NULL )
-            return;
+        {
+            if ( ( location = get_room_index( ROOM_VNUM_LIMBO ) ) == NULL )
+                return;
+        }
         stop_fighting( ch, TRUE );
         REMOVE_BIT(ch->act,PLR_ARENA);
         REMOVE_BIT(ch->act,PLR_SPEC);

@@ -216,6 +216,58 @@ void    reset_area  args( ( AREA_DATA * pArea ) );
 
 /* Mob Charsheet Populating */
 void    mob_charsheet   args( (CHAR_DATA *mob, MOB_INDEX_DATA *pMobIndex ) );
+void check_create_room(int vnum, char *name, char *desc)
+{
+    ROOM_INDEX_DATA *pRoomIndex;
+    int iHash;
+    int door;
+
+    if (get_room_index(vnum) != NULL)
+        return;
+
+    pRoomIndex = alloc_perm( sizeof(*pRoomIndex) );
+    pRoomIndex->owner = str_dup("");
+    pRoomIndex->people = NULL;
+    pRoomIndex->contents = NULL;
+    pRoomIndex->extra_descr = NULL;
+    pRoomIndex->area = area_first;
+    pRoomIndex->vnum = vnum;
+    pRoomIndex->name = str_dup(name);
+    pRoomIndex->description = str_dup(desc);
+    pRoomIndex->room_flags = ROOM_SAFE;
+    pRoomIndex->sector_type = SECT_INSIDE;
+    pRoomIndex->light = 0;
+    for ( door = 0; door <= 5; door++ )
+        pRoomIndex->exit[door] = NULL;
+    pRoomIndex->heal_rate = 100;
+    pRoomIndex->mana_rate = 100;
+    pRoomIndex->rprogs = NULL;
+    pRoomIndex->rprog_flags = 0;
+
+    iHash = vnum % MAX_KEY_HASH;
+    pRoomIndex->next = room_index_hash[iHash];
+    room_index_hash[iHash] = pRoomIndex;
+    top_room++;
+    top_vnum_room = top_vnum_room < vnum ? vnum : top_vnum_room;
+    assign_area_vnum( vnum );
+
+    bugf("Created missing room %d: %s", vnum, name);
+}
+
+void fix_missing_rooms()
+{
+    check_create_room(ROOM_VNUM_LIMBO, "Limbo", "You are floating in a formless void.\n\r");
+    check_create_room(ROOM_VNUM_TEMPLE, "The Temple", "A quiet temple.\n\r");
+    check_create_room(ROOM_VNUM_ALTAR, "The Altar", "A sacrificial altar.\n\r");
+    check_create_room(ROOM_VNUM_DONATE, "Donation Room", "A room full of discarded junk.\n\r");
+    check_create_room(ROOM_VNUM_SCHOOL, "Mud School", "A place of learning.\n\r");
+    check_create_room(ROOM_VNUM_BALANCE, "Room of Balance", "A balanced room.\n\r");
+    check_create_room(ROOM_VNUM_CIRCLE, "The Circle", "A circular room.\n\r");
+    check_create_room(ROOM_VNUM_DEMISE, "Room of Demise", "A dangerous room.\n\r");
+    check_create_room(ROOM_VNUM_HONOR, "Room of Honor", "An honorable room.\n\r");
+    check_create_room(ROOM_VNUM_PARADOX, "Paradox", "A strange room.\n\r");
+}
+
 /*
  * Big mama top level function.
  */
@@ -385,6 +437,7 @@ void boot_db()
      * Read in commands.
      */
     load_cmd_list();
+    fix_missing_rooms();
     fix_exits( );
     fix_mobprogs( );
     fix_objprogs( );
@@ -1953,7 +2006,8 @@ void reset_room( ROOM_INDEX_DATA *pRoom )
         OBJ_DATA *faeriemushroom;
         if (shrooms < 5)
         {
-            if((faeriemushroom = create_object(get_obj_index(OBJ_VNUM_TASS_MUSHROOM),0)) != NULL);
+            OBJ_INDEX_DATA *pMushIndex = get_obj_index(OBJ_VNUM_TASS_MUSHROOM);
+            if (pMushIndex != NULL && (faeriemushroom = create_object(pMushIndex,0)) != NULL)
             {
                 faeriemushroom->value[0] = number_range(1,50);
                 obj_to_room( faeriemushroom, pRoom );
@@ -2062,9 +2116,9 @@ void reset_room( ROOM_INDEX_DATA *pRoom )
                 EXTRA_DESCR_DATA *ed;
                 int tlev,levreq, roll;
                 OBJ_DATA *tome;
+                OBJ_INDEX_DATA *pTomeIndex = get_obj_index(OBJ_VNUM_TOME);
 
-
-                if((tome = create_object(get_obj_index(OBJ_VNUM_TOME),0)) != NULL)
+                if(pTomeIndex != NULL && (tome = create_object(pTomeIndex,0)) != NULL)
                 {
                     roll = number_range(1,100);
                     if(roll <= 5) tlev = 5;

@@ -8662,7 +8662,7 @@ bool copyover_handler()
     FILE *fp;
     DESCRIPTOR_DATA *d, *d_next, *d_prev;
     char buf [100], buf2[100], buf3[MSL];
-    extern int port,control; /* db.c */
+    extern int port,control,bot_control; /* db.c */
 
     fp = fopen (COPYOVER_FILE, "w");
 
@@ -8701,7 +8701,9 @@ bool copyover_handler()
     /* exec - descriptors are inherited */
     sprintf (buf, "%d", port);
     sprintf (buf2, "%d", control);
-    execl (EXE_FILE, "rom", buf, "copyover", buf2, (char *) NULL);
+    char buf4[100];
+    sprintf (buf4, "%d", bot_control);
+    execl (EXE_FILE, "rom", buf, "copyover", buf2, buf4, (char *) NULL);
 
     /* Failed - sucessful exec will not return */
     perror ("do_copyover: execl");
@@ -8716,7 +8718,7 @@ void do_copyover (CHAR_DATA *ch, char * argument)
     FILE *fp;
     DESCRIPTOR_DATA *d, *d_next;
     char buf [100], buf2[100], buf3[MSL];
-    extern int port,control; /* db.c */
+    extern int port,control,bot_control; /* db.c */
 
     if (!str_cmp(argument, "legend"))
     {

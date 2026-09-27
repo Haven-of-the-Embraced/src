@@ -187,7 +187,7 @@ int socket      args( ( int domain, int type, int protocol ) );
 /* int  write       args( ( int fd, char *buf, int nbyte ) ); */ /* read,write in unistd.h */
 #endif
 /* Needs to be global because of do_copyover */
-int port, control;
+int port, control, bot_control;
 
 #if defined(macintosh)
 #include <console.h>
@@ -472,6 +472,10 @@ int main( int argc, char **argv )
             {
                 fCopyOver = TRUE;
                 control = atoi(argv[3]);
+                if (argv[4])
+                    bot_control = atoi(argv[4]);
+                else
+                    bot_control = init_socket(port + 1);
             } else if (!str_cmp(argv[2], "testrun"))
             {
                 test_run = TRUE;
@@ -492,8 +496,10 @@ int main( int argc, char **argv )
 
 #if defined(unix)
     if (!fCopyOver)
+    {
         control = init_socket( port );
-    int bot_control = init_socket( port + 1 );
+        bot_control = init_socket( port + 1 );
+    }
 
     boot_db();
     sprintf( log_buf, "Haven is ready to rock on port %d. Bot port on %d.", port, port + 1 );

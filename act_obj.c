@@ -4717,6 +4717,13 @@ void do_donate( CHAR_DATA *ch, char *argument)
    }
    else
    {
+      ROOM_INDEX_DATA *donate_room;
+      donate_room = get_room_index(ROOM_VNUM_DONATE);
+      if (donate_room == NULL)
+      {
+          send_to_char("The donation room seems to be missing.\n\r", ch);
+          return;
+      }
       if (!can_drop_obj(ch, obj) && ch->level < 101)
       {
          send_to_char("It seems to be stuck to you.\n\r",ch);
@@ -4737,7 +4744,7 @@ void do_donate( CHAR_DATA *ch, char *argument)
       act("You donate $p.",ch,obj,NULL,TO_CHAR);
 
       char_from_room(ch);
-      char_to_room(ch,get_room_index(ROOM_VNUM_DONATE));
+      char_to_room(ch,donate_room);
       pit = get_obj_list(ch, "donation", ch->in_room->contents);
       if (!pit)
       {

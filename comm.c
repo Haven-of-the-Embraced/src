@@ -2691,10 +2691,19 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
         set_title( ch, buf );
 
         do_function (ch, &do_outfit,"");
-        obj_to_char(create_object(get_obj_index(OBJ_VNUM_MAP),0),ch);
-        obj_to_char(create_object(get_obj_index(OBJ_VNUM_GUIDE),0),ch);
+        if (get_obj_index(OBJ_VNUM_MAP) != NULL)
+            obj_to_char(create_object(get_obj_index(OBJ_VNUM_MAP),0),ch);
+        if (get_obj_index(OBJ_VNUM_GUIDE) != NULL)
+            obj_to_char(create_object(get_obj_index(OBJ_VNUM_GUIDE),0),ch);
 
-        char_to_room( ch, get_room_index( ROOM_VNUM_SCHOOL ) );
+        {
+            ROOM_INDEX_DATA *location = get_room_index( ROOM_VNUM_SCHOOL );
+            if ( location == NULL )
+                location = get_room_index( ROOM_VNUM_TEMPLE );
+            if ( location == NULL )
+                location = get_room_index( ROOM_VNUM_LIMBO );
+            char_to_room( ch, location );
+        }
         send_to_char("\n\r",ch);
         do_function(ch, &do_help, "info");
         send_to_char("\n\r",ch);
@@ -2704,7 +2713,10 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
     else if ( ch->in_room != NULL)
     {
         if (is_affected(ch, gsn_astralprojection)) {
-            ch->in_room = get_room_index(ROOM_VNUM_TEMPLE);
+            ROOM_INDEX_DATA *location = get_room_index(ROOM_VNUM_TEMPLE);
+            if (location == NULL)
+                location = get_room_index(ROOM_VNUM_LIMBO);
+            ch->in_room = location;
             pass_gauntlet(ch, FALSE);
             sendch("{RYou were astrally projected and you body is now lost.\n\rYou've been returned to Recall.{x\n\r", ch);
             affect_strip(ch, gsn_astralprojection);
@@ -2714,11 +2726,17 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
     }
     else if ( IS_IMMORTAL(ch) )
     {
-        char_to_room( ch, get_room_index( ROOM_VNUM_LIMBO ) );
+        ROOM_INDEX_DATA *location = get_room_index( ROOM_VNUM_LIMBO );
+        if ( location == NULL )
+            location = get_room_index( ROOM_VNUM_TEMPLE );
+        char_to_room( ch, location );
     }
     else
     {
-        char_to_room( ch, get_room_index( ROOM_VNUM_TEMPLE ) );
+        ROOM_INDEX_DATA *location = get_room_index( ROOM_VNUM_TEMPLE );
+        if ( location == NULL )
+            location = get_room_index( ROOM_VNUM_LIMBO );
+        char_to_room( ch, location );
     }
 
     act( "$n has entered the game.", ch, NULL, NULL, TO_ROOM );

@@ -4605,8 +4605,11 @@ void spell_word_of_recall( int sn, int level, CHAR_DATA *ch,void *vo,int target)
 
     if ((location = get_room_index( ROOM_VNUM_TEMPLE)) == NULL)
     {
-    send_to_char("You are completely lost.\n\r",victim);
-    return;
+        if ((location = get_room_index( ROOM_VNUM_LIMBO)) == NULL)
+        {
+            send_to_char("You are completely lost.\n\r",victim);
+            return;
+        }
     }
 
     if (IS_SET(victim->in_room->room_flags,ROOM_NO_RECALL) ||

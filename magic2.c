@@ -544,8 +544,11 @@ void spell_intervention( int sn, int level, CHAR_DATA *ch, void *vo,int target )
     }
     if ((location = get_room_index( ROOM_VNUM_TEMPLE)) == NULL)
     {
-	send_to_char("You are completely lost.\n\r",ch);
-	return;
+        if ((location = get_room_index( ROOM_VNUM_LIMBO)) == NULL)
+        {
+            send_to_char("You are completely lost.\n\r",ch);
+            return;
+        }
     }
     affect_strip(ch,gsn_poison);
     affect_strip(ch,gsn_blindness);

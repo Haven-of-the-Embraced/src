@@ -1717,7 +1717,7 @@ void do_project(CHAR_DATA *ch, char *argument)
             return;
         }
 
-        act("$N grabs a shining silver cord attached to $s body, and zips away following it into the distance.", ch, NULL, NULL, TO_NOTVICT);
+        act("$n grabs a shining silver cord attached to $s body, and zips away following it into the distance.", ch, NULL, NULL, TO_NOTVICT);
         location = vamp_corpse->in_room;
         char_from_room( ch );
         char_to_room( ch, location );
@@ -4143,7 +4143,7 @@ void do_homunculusservant(CHAR_DATA *ch, char *argument)
     if (dicesuccess < 0)
     {
         act("You dribble vitae on $p and it smokes and sizzles, destroying the remnants of life left within the corpse!", ch, obj, NULL, TO_CHAR);
-        act("$N dribbles vitae on $p and it smokes and sizzles!", ch, obj, NULL, TO_NOTVICT);
+        act("$n dribbles vitae on $p and it smokes and sizzles!", ch, obj, NULL, TO_NOTVICT);
         obj->timer = 0;
         WAIT_STATE( ch, 5*PULSE_VIOLENCE );
         return;
@@ -4151,7 +4151,7 @@ void do_homunculusservant(CHAR_DATA *ch, char *argument)
     if (dicesuccess == 0)
     {
         act("You dribble vitae upon $p... and nothing happens.", ch, obj, NULL, TO_CHAR);
-        act("$N dribbles vitae upon $p... and nothing happens.", ch, obj, NULL, TO_NOTVICT);
+        act("$n dribbles vitae upon $p... and nothing happens.", ch, obj, NULL, TO_NOTVICT);
         return;
         WAIT_STATE( ch, 5*PULSE_VIOLENCE );
     }

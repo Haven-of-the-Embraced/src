@@ -4370,16 +4370,21 @@ void handle_bot_message( DESCRIPTOR_DATA *d, char *message )
             cJSON *resp = cJSON_CreateObject();
             cJSON_AddStringToObject(resp, "event", "who_list");
             cJSON *players = cJSON_CreateArray();
+            cJSON *immortals = cJSON_CreateArray();
             
             DESCRIPTOR_DATA *d_loop;
             for ( d_loop = descriptor_list; d_loop != NULL; d_loop = d_loop->next )
             {
                 if ( d_loop->connected == CON_PLAYING && d_loop->character != NULL )
                 {
-                    cJSON_AddItemToArray(players, cJSON_CreateString(d_loop->character->name));
+                    if ( IS_IMMORTAL(d_loop->character) )
+                        cJSON_AddItemToArray(immortals, cJSON_CreateString(d_loop->character->name));
+                    else
+                        cJSON_AddItemToArray(players, cJSON_CreateString(d_loop->character->name));
                 }
             }
             cJSON_AddItemToObject(resp, "players", players);
+            cJSON_AddItemToObject(resp, "immortals", immortals);
             
             char *out = cJSON_PrintUnformatted(resp);
             char buf[MAX_STRING_LENGTH];

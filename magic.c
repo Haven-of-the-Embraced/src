@@ -963,6 +963,34 @@ void spell_call_lightning( int sn, int level,CHAR_DATA *ch,void *vo,int target)
     CHAR_DATA *vch;
     CHAR_DATA *vch_next;
     int dam;
+    OBJ_DATA *obj;
+    bool found_liquor = FALSE;
+    int liquid = 0;
+
+    if (!IS_NPC(ch))
+    {
+        for ( obj = ch->carrying; obj != NULL; obj = obj->next_content )
+        {
+            if ( obj->item_type == ITEM_DRINK_CON && obj->value[1] > 0 )
+            {
+                liquid = obj->value[2];
+                if ( liq_table[liquid].liq_affect[0] > 0 )
+                {
+                    found_liquor = TRUE;
+                    obj->value[1] -= 1;
+                    act("You pour out a sacrifice of $p to the Old Gods.", ch, obj, NULL, TO_CHAR);
+                    act("$n pours out a sacrifice of $p to the Old Gods.", ch, obj, NULL, TO_ROOM);
+                    break;
+                }
+            }
+        }
+
+        if ( !found_liquor )
+        {
+            send_to_char( "You must sacrifice a measure of liquor to the Old Gods to invoke this ritual.\n\r", ch );
+            return;
+        }
+    }
 
     if (!IS_NPC(ch))
         dam = godice(ch->csmax_willpower, 6);

@@ -4930,6 +4930,7 @@ void do_backstab( CHAR_DATA *ch, char *argument )
     int damdice;
     int diff;
     int modifier;
+    int successes_needed = 2;
 
     one_argument( argument, arg );
 
@@ -5028,10 +5029,13 @@ void do_backstab( CHAR_DATA *ch, char *argument )
     // Skill Percent increases modifier.
     modifier = (modifier * (50+skill))/100;
 
+    if (IS_SET(victim->act2, ACT2_ULTRA_MOB))
+        successes_needed = 3;
+
     if (IS_DEBUGGING(ch))
         cprintf(ch, "tohit:%d diff:%d success:%d dampool:%d damsuccess:%d\n\r", dice, diff, successes, damdice, damsuccess);
 
-    if (successes < 2)
+    if (successes < successes_needed)
     {
         check_improve(ch,gsn_backstab,FALSE,2);
         act("$N seems to sense you coming and dodges your backstab!", ch, NULL, victim, TO_CHAR );

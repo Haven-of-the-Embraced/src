@@ -921,6 +921,9 @@ void do_vigor(CHAR_DATA *ch, char *argument)
     if (IS_AFFECTED(ch, AFF_CALM) || is_affected(ch, gsn_gift_resistpain))
       vigordiff--;
 
+    if (get_skill(ch, gsn_vigor) >= 90)
+      vigordiff--;
+
     vigorsuccess = godice(get_attribute(ch, STAMINA) + ch->csabilities[CSABIL_ATHLETICS], vigordiff);
 
     if (vigorsuccess < 0)
@@ -951,7 +954,7 @@ void do_vigor(CHAR_DATA *ch, char *argument)
     af.type      = gsn_vigor;
     af.level     = vigorsuccess;
     af.duration  = 5 * vigorsuccess + 15;
-    af.modifier  = (get_attribute(ch, STAMINA) * 100);
+    af.modifier  = ((get_attribute(ch, STAMINA) * 100) * (50 + get_skill(ch, gsn_vigor))) / 100;
     af.location  = APPLY_MOVE;
     af.bitvector = AFF_HASTE;
     affect_to_char( ch, &af );
@@ -961,7 +964,7 @@ void do_vigor(CHAR_DATA *ch, char *argument)
     {
       act("All of the knowledge flows from your memory to your movements, flawlessly mimicking your training.", ch, NULL, NULL, TO_CHAR);
       af.duration  = 5 * vigorsuccess + 15;
-      af.modifier  = 20 * vigorsuccess;
+      af.modifier  = ((20 * vigorsuccess) * (50 + get_skill(ch, gsn_vigor))) / 100;
       af.location  = APPLY_HITROLL;
       af.bitvector = 0;
       affect_to_char( ch, &af );

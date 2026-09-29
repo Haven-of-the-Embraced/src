@@ -2546,7 +2546,7 @@ void do_split( CHAR_DATA *ch, char *argument )
     members = 0;
     for ( gch = ch->in_room->people; gch != NULL; gch = gch->next_in_room )
     {
-    if ( is_same_group( gch, ch ) && !IS_AFFECTED(gch,AFF_CHARM))
+    if ( is_same_group( gch, ch ) && !IS_AFFECTED(gch,AFF_CHARM) && !IS_NPC(gch))
         members++;
     }
 
@@ -2608,7 +2608,7 @@ void do_split( CHAR_DATA *ch, char *argument )
 
     for ( gch = ch->in_room->people; gch != NULL; gch = gch->next_in_room )
     {
-    if ( gch != ch && is_same_group(gch,ch) && !IS_AFFECTED(gch,AFF_CHARM))
+    if ( gch != ch && is_same_group(gch,ch) && !IS_AFFECTED(gch,AFF_CHARM) && !IS_NPC(gch))
     {
         act( buf, ch, NULL, gch, TO_VICT );
         gch->gold += share_gold;

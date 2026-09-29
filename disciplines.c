@@ -3508,6 +3508,12 @@ void do_forgetful (CHAR_DATA *ch, char *argument)
       return;
     }
 
+    if ((victim->race == race_lookup("vampire") || victim->race == race_lookup("methuselah")) && victim->gen < ch->gen)
+    {
+        send_to_char("Your target's blood is too potent for you to dominate them.\n\r", ch);
+        return;
+    }
+
     if (is_affected(ch, gsn_laryngitis))
     {
       send_to_char("You cannot speak clearly enough with a sore throat to properly question your victim.\n\r", ch);
@@ -3576,7 +3582,7 @@ void do_forgetful (CHAR_DATA *ch, char *argument)
     if (diff > 10)
       diff = 10;
 
-    forget = godice(get_attribute(ch, WITS) + ch->csabilities[CSABIL_SUBTERFUGE], diff);
+    forget = godice(ch->cswillpower, diff) - godice(victim->cswillpower, diff);
     WAIT_STATE(ch, 6);
 
     act("$n locks eyes with you, asking probing questions with a strangely hypnotic voice.", ch, NULL, victim, TO_VICT);
@@ -3615,9 +3621,7 @@ void do_forgetful (CHAR_DATA *ch, char *argument)
     }
 
     if (forget == 0 || IS_SET(victim->act2, ACT2_ULTRA_MOB)
-    || IS_SET(victim->imm_flags, IMM_MENTAL) || IS_SET(victim->imm_flags, IMM_CHARM)
-    || (victim->level > ch->level + 10
-     && ( victim->race == race_lookup("vampire") || victim->race == race_lookup("methuselah"))) )
+    || IS_SET(victim->imm_flags, IMM_MENTAL) || IS_SET(victim->imm_flags, IMM_CHARM) )
     {
       act("$N seems to be unaffected by your mental probing.", ch, NULL, victim, TO_CHAR);
       act("You feel a slight mental tug, before overcoming the feeling of intrusion.", ch, NULL, victim, TO_VICT);

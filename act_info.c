@@ -5091,7 +5091,15 @@ void do_pnewpass( CHAR_DATA *ch, char *argument )
     char_list             = d.character;
     d.connected           = CON_PLAYING;
     reset_char(d.character);
-    char_to_room(d.character,get_room_index(ROOM_VNUM_ALTAR));
+    {
+        ROOM_INDEX_DATA *location;
+        if ( ( location = get_room_index( ROOM_VNUM_ALTAR ) ) == NULL )
+        {
+            if ( ( location = get_room_index( ROOM_VNUM_TEMPLE ) ) == NULL )
+                location = get_room_index( ROOM_VNUM_LIMBO );
+        }
+        char_to_room(d.character, location);
+    }
       /*
      * No tilde allowed because of player file format.
      */
@@ -5743,4 +5751,34 @@ void do_laston( CHAR_DATA *ch, char *argument )
             cprintf(ch, "%s logged off %s.\n\r", capitalize(arg), approx);
         }
     }
+}
+
+void do_prelude( CHAR_DATA *ch, char *argument )
+{
+    ROOM_INDEX_DATA *location;
+
+    if ( IS_NPC(ch) ) return;
+
+    if ( ch->level > 1 )
+    {
+        send_to_char( "You have already experienced your prelude.\n\r", ch );
+        return;
+    }
+
+    if ( ( location = get_room_index( 30000 ) ) == NULL )
+    {
+        send_to_char( "The prelude is currently unavailable.\n\r", ch );
+        return;
+    }
+
+    if ( ch->fighting ) stop_fighting( ch, TRUE );
+        
+    char_from_room( ch );
+    char_to_room( ch, location );
+    do_look( ch, "auto" );
+    send_to_char( "Welcome to the Prelude...\n\r", ch );
+
+    p_greet_trigger( ch, PRG_MPROG );
+    p_greet_trigger( ch, PRG_OPROG );
+    p_greet_trigger( ch, PRG_RPROG );
 }

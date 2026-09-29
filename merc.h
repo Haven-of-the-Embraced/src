@@ -662,6 +662,7 @@ struct  descriptor_data
     char **     pString;    /* OLC */
     int         editor;     /* OLC */
     bool        gmcp_enabled; /* Client supports GMCP */
+    bool        is_bot;       /* Discord bot */
 };
 
 
@@ -3483,9 +3484,10 @@ extern          struct social_type      *social_first;
 extern      HELP_DATA     * help_first;
 extern      SHOP_DATA     * shop_first;
 
-extern      CHAR_DATA     * char_list;
 extern      DESCRIPTOR_DATA   * descriptor_list;
 extern      DESCRIPTOR_DATA   * descriptor_tsil;
+extern      DESCRIPTOR_DATA   * bot_desc;
+extern      CHAR_DATA     * char_list;
 extern      OBJ_DATA      * object_list;
 extern      PROG_CODE    * mprog_list;
 extern          PROG_CODE         *     rprog_list;

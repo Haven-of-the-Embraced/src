@@ -1775,20 +1775,52 @@ void fread_pet( CHAR_DATA *ch, FILE *fp )
     if (!str_cmp(word,"Vnum"))
     {
         int vnum;
+        MOB_INDEX_DATA *pMob;
 
         vnum = fread_number(fp);
-        if (get_mob_index(vnum) == NULL)
-    {
+        pMob = get_mob_index(vnum);
+        if (pMob == NULL)
+        {
             bug("Fread_pet: bad vnum %d.",vnum);
-        pet = create_mobile(get_mob_index(MOB_VNUM_FIDO));
-    }
-        else
-            pet = create_mobile(get_mob_index(vnum));
+            pMob = get_mob_index(MOB_VNUM_FIDO);
+            if (pMob == NULL)
+                pMob = get_mob_index(MOB_VNUM_RAT);
+        }
+        if (pMob == NULL)
+        {
+            bug("Fread_pet: no fallback mob found.",0);
+            for ( ; ; )
+            {
+                word = feof(fp) ? "END" : fread_word(fp);
+                if (!str_cmp(word, "END"))
+                    break;
+                fread_to_eol(fp);
+            }
+            return;
+        }
+        pet = create_mobile(pMob);
     }
     else
     {
+        MOB_INDEX_DATA *pMob;
+
         bug("Fread_pet: no vnum in file.",0);
-        pet = create_mobile(get_mob_index(MOB_VNUM_FIDO));
+        pMob = get_mob_index(MOB_VNUM_FIDO);
+        if (pMob == NULL)
+            pMob = get_mob_index(MOB_VNUM_RAT);
+        if (pMob == NULL)
+        {
+            bug("Fread_pet: no fallback mob found.",0);
+            for ( ; ; )
+            {
+                word = feof(fp) ? "END" : fread_word(fp);
+                if (!str_cmp(word, "END"))
+                    break;
+                fread_to_eol(fp);
+            }
+            return;
+        }
+        pet = create_mobile(pMob);
     }
 
     for ( ; ; )
@@ -1989,20 +2021,52 @@ void fread_mount( CHAR_DATA *ch, FILE *fp )
     if (!str_cmp(word,"Vnum"))
     {
         int vnum;
+        MOB_INDEX_DATA *pMob;
 
         vnum = fread_number(fp);
-        if (get_mob_index(vnum) == NULL)
-    {
+        pMob = get_mob_index(vnum);
+        if (pMob == NULL)
+        {
             bug("Fread_mount: bad vnum %d.",vnum);
-        pet = create_mobile(get_mob_index(MOB_VNUM_FIDO));
-    }
-        else
-            pet = create_mobile(get_mob_index(vnum));
+            pMob = get_mob_index(MOB_VNUM_FIDO);
+            if (pMob == NULL)
+                pMob = get_mob_index(MOB_VNUM_RAT);
+        }
+        if (pMob == NULL)
+        {
+            bug("Fread_mount: no fallback mob found.",0);
+            for ( ; ; )
+            {
+                word = feof(fp) ? "END" : fread_word(fp);
+                if (!str_cmp(word, "END"))
+                    break;
+                fread_to_eol(fp);
+            }
+            return;
+        }
+        pet = create_mobile(pMob);
     }
     else
     {
+        MOB_INDEX_DATA *pMob;
+
         bug("Fread_mount: no vnum in file.",0);
-        pet = create_mobile(get_mob_index(MOB_VNUM_FIDO));
+        pMob = get_mob_index(MOB_VNUM_FIDO);
+        if (pMob == NULL)
+            pMob = get_mob_index(MOB_VNUM_RAT);
+        if (pMob == NULL)
+        {
+            bug("Fread_mount: no fallback mob found.",0);
+            for ( ; ; )
+            {
+                word = feof(fp) ? "END" : fread_word(fp);
+                if (!str_cmp(word, "END"))
+                    break;
+                fread_to_eol(fp);
+            }
+            return;
+        }
+        pet = create_mobile(pMob);
     }
 
     for ( ; ; )

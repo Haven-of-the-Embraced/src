@@ -5008,8 +5008,6 @@ void do_backstab( CHAR_DATA *ch, char *argument )
     {
         diff = UMIN( 10, (get_attribute(victim, PERCEPTION) + get_ability(victim, CSABIL_ALERTNESS)));
 
-        if (skill >= 80)
-            diff--;
         if (skill >= 90)
             diff--;
         if (diff < 7)
@@ -5024,7 +5022,7 @@ void do_backstab( CHAR_DATA *ch, char *argument )
         dice += 2;
     successes = godice(dice, diff);
     successes += stealth_int_shadowplay(ch,diff);
-    damdice = d10_damdice(ch, victim) + successes;
+    damdice = d10_damdice(ch, victim) + (successes - 1);
     damsuccess = godice(damdice, 4);
     modifier = d10_modifier(ch);
     // Skill Percent increases modifier.
@@ -5033,7 +5031,7 @@ void do_backstab( CHAR_DATA *ch, char *argument )
     if (IS_DEBUGGING(ch))
         cprintf(ch, "tohit:%d diff:%d success:%d dampool:%d damsuccess:%d\n\r", dice, diff, successes, damdice, damsuccess);
 
-    if (successes < 3)
+    if (successes < 1)
     {
         check_improve(ch,gsn_backstab,FALSE,2);
         act("$N seems to sense you coming and dodges your backstab!", ch, NULL, victim, TO_CHAR );

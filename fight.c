@@ -4336,7 +4336,10 @@ void do_bash( CHAR_DATA *ch, char *argument )
     if(is_affected(victim, gsn_gift_sightfrombeyond))
         precog -= get_affect_level(victim,gsn_gift_sightfrombeyond);
 
-    dicesuccess = godice(get_attribute(ch, DEXTERITY) + ch->csabilities[CSABIL_MELEE], 6) - precog;
+    int bashdiff = 6;
+    if (chance >= 90) bashdiff--;
+
+    dicesuccess = godice(get_attribute(ch, DEXTERITY) + ch->csabilities[CSABIL_MELEE], bashdiff) - precog;
 
     if(dicesuccess < 0)
     {
@@ -4377,7 +4380,10 @@ void do_bash( CHAR_DATA *ch, char *argument )
     if (damagesuccess < 0)
         damagesuccess = 0;
 
-    damage(ch, victim, 3 * (damagesuccess * (ch->level + shield->level)) / 2, gsn_bash, DAM_BASH, TRUE);
+    int final_dam = 3 * (damagesuccess * (ch->level + shield->level)) / 2;
+    final_dam = (final_dam * (50 + chance)) / 100;
+
+    damage(ch, victim, final_dam, gsn_bash, DAM_BASH, TRUE);
     check_improve(ch,gsn_bash,TRUE,2);
     return;
 }

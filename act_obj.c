@@ -226,7 +226,7 @@ void get_obj( CHAR_DATA *ch, OBJ_DATA *obj, OBJ_DATA *container )
           members = 0;
           for (gch = ch->in_room->people; gch != NULL; gch = gch->next_in_room )
           {
-            if (!IS_AFFECTED(gch,AFF_CHARM) && is_same_group( gch, ch ) )
+            if (!IS_AFFECTED(gch,AFF_CHARM) && is_same_group( gch, ch ) && !IS_NPC(gch) )
               members++;
           }
 
@@ -2237,7 +2237,7 @@ void do_sacrifice( CHAR_DATA *ch, char *argument )
             members = 0;
             for (gch = ch->in_room->people; gch != NULL; gch = gch->next_in_room )
             {
-                if ( is_same_group( gch, ch ) )
+                if ( is_same_group( gch, ch ) && !IS_NPC(gch) )
                     members++;
             }
 
@@ -2283,7 +2283,7 @@ void do_sacrifice( CHAR_DATA *ch, char *argument )
         members = 0;
         for (gch = ch->in_room->people; gch != NULL; gch = gch->next_in_room )
         {
-            if ( is_same_group( gch, ch ) )
+            if ( is_same_group( gch, ch ) && !IS_NPC(gch) )
             members++;
         }
 

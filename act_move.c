@@ -2067,7 +2067,13 @@ void do_recall( CHAR_DATA *ch, char *argument )
     else
 	    vnum = ROOM_VNUM_TEMPLE;
 
-    if ( ( location = get_room_index( vnum ) ) == NULL )
+    location = get_room_index( vnum );
+    if ( location == NULL && vnum != ROOM_VNUM_TEMPLE )
+        location = get_room_index( ROOM_VNUM_TEMPLE );
+    if ( location == NULL )
+        location = get_room_index( ROOM_VNUM_LIMBO );
+
+    if ( location == NULL )
     {
     send_to_char( "You are completely lost.\n\r", ch );
     return;
@@ -2395,6 +2401,7 @@ void do_hometown (CHAR_DATA *ch, char *argument)
 ROOM_INDEX_DATA  *get_random_room(CHAR_DATA *ch)
 {
     ROOM_INDEX_DATA *room;
+    int attempts = 0;
 
     for ( ; ; )
     {
@@ -2411,6 +2418,14 @@ ROOM_INDEX_DATA  *get_random_room(CHAR_DATA *ch)
 	&&   (IS_NPC(ch) || IS_SET(ch->act,ACT_AGGRESSIVE)
 	||   !IS_SET(room->room_flags,ROOM_LAW)))
             break;
+
+        if ( ++attempts > 50000 )
+        {
+            room = get_room_index( ROOM_VNUM_TEMPLE );
+            if ( room == NULL )
+                room = get_room_index( ROOM_VNUM_LIMBO );
+            break;
+        }
     }
 
     return room;

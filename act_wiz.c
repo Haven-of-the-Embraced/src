@@ -607,18 +607,18 @@ void do_outfit ( CHAR_DATA *ch, char *argument )
     return;
     }
 
-    if ( ( obj = get_eq_char( ch, WEAR_LIGHT ) ) == NULL )
+    if ( ( obj = get_eq_char( ch, WEAR_LIGHT ) ) == NULL && get_obj_index(OBJ_VNUM_SCHOOL_BANNER) != NULL )
     {
         obj = create_object( get_obj_index(OBJ_VNUM_SCHOOL_BANNER), 0 );
-    obj->cost = 0;
+        obj->cost = 0;
         obj_to_char( obj, ch );
         equip_char( ch, obj, WEAR_LIGHT );
     }
 
-    if ( ( obj = get_eq_char( ch, WEAR_TORSO ) ) == NULL )
+    if ( ( obj = get_eq_char( ch, WEAR_TORSO ) ) == NULL && get_obj_index(OBJ_VNUM_SCHOOL_VEST) != NULL )
     {
-    obj = create_object( get_obj_index(OBJ_VNUM_SCHOOL_VEST), 0 );
-    obj->cost = 0;
+        obj = create_object( get_obj_index(OBJ_VNUM_SCHOOL_VEST), 0 );
+        obj->cost = 0;
         obj_to_char( obj, ch );
         equip_char( ch, obj, WEAR_TORSO );
     }
@@ -639,17 +639,21 @@ void do_outfit ( CHAR_DATA *ch, char *argument )
         }
         }
 
-        obj = create_object(get_obj_index(vnum),0);
-        obj_to_char(obj,ch);
-        equip_char(ch,obj,WEAR_WIELD);
+        if (get_obj_index(vnum) != NULL)
+        {
+            obj = create_object(get_obj_index(vnum),0);
+            obj_to_char(obj,ch);
+            equip_char(ch,obj,WEAR_WIELD);
+        }
     }
 
     if (((obj = get_eq_char(ch,WEAR_WIELD)) == NULL
     ||   !IS_WEAPON_STAT(obj,WEAPON_TWO_HANDS))
-    &&  (obj = get_eq_char( ch, WEAR_SHIELD ) ) == NULL )
+    &&  (obj = get_eq_char( ch, WEAR_SHIELD ) ) == NULL
+    &&  get_obj_index(OBJ_VNUM_SCHOOL_SHIELD) != NULL )
     {
         obj = create_object( get_obj_index(OBJ_VNUM_SCHOOL_SHIELD), 0 );
-    obj->cost = 0;
+        obj->cost = 0;
         obj_to_char( obj, ch );
         equip_char( ch, obj, WEAR_SHIELD );
     }
@@ -8662,7 +8666,7 @@ bool copyover_handler()
     FILE *fp;
     DESCRIPTOR_DATA *d, *d_next, *d_prev;
     char buf [100], buf2[100], buf3[MSL];
-    extern int port,control; /* db.c */
+    extern int port,control,bot_control; /* db.c */
 
     fp = fopen (COPYOVER_FILE, "w");
 
@@ -8701,7 +8705,9 @@ bool copyover_handler()
     /* exec - descriptors are inherited */
     sprintf (buf, "%d", port);
     sprintf (buf2, "%d", control);
-    execl (EXE_FILE, "rom", buf, "copyover", buf2, (char *) NULL);
+    char buf4[100];
+    sprintf (buf4, "%d", bot_control);
+    execl (EXE_FILE, "rom", buf, "copyover", buf2, buf4, (char *) NULL);
 
     /* Failed - sucessful exec will not return */
     perror ("do_copyover: execl");
@@ -8716,7 +8722,7 @@ void do_copyover (CHAR_DATA *ch, char * argument)
     FILE *fp;
     DESCRIPTOR_DATA *d, *d_next;
     char buf [100], buf2[100], buf3[MSL];
-    extern int port,control; /* db.c */
+    extern int port,control,bot_control; /* db.c */
 
     if (!str_cmp(argument, "legend"))
     {
@@ -8892,7 +8898,11 @@ void copyover_recover ()
 
             /* Just In Case */
             if (!d->character->in_room)
+            {
                 d->character->in_room = get_room_index (ROOM_VNUM_TEMPLE);
+                if (!d->character->in_room)
+                    d->character->in_room = get_room_index (ROOM_VNUM_LIMBO);
+            }
 
             /* Insert in the char_list */
             d->character->next = char_list;
@@ -8902,6 +8912,8 @@ void copyover_recover ()
 
             if (is_affected(ch, gsn_astralprojection)) {
                 ch->in_room = get_room_index(ROOM_VNUM_TEMPLE);
+                if (!ch->in_room)
+                    ch->in_room = get_room_index(ROOM_VNUM_LIMBO);
                 pass_gauntlet(ch, FALSE);
                 sendch("{RYou were astrally projected during the copyover.\n\rYou've been returned to Recall.{x\n\r", ch);
                 affect_strip(ch, gsn_astralprojection);
@@ -9679,9 +9691,16 @@ void do_setarena( CHAR_DATA *ch, char *argument )
     send_to_char( "Not on mobs!\n\r", ch );
     return;
     }
+    int attempts = 0;
     room = number_range(1,50);
-    while (get_room_index( 26500+room ) == NULL)
+    while (get_room_index( 26500+room ) == NULL && attempts++ < 100)
         room = number_range(1,50);
+
+    if (get_room_index( 26500+room ) == NULL)
+    {
+        send_to_char( "The Arena is currently unavailable.\n\r", ch );
+        return;
+    }
 
     if (victim->in_room != NULL)
         char_from_room( victim );
@@ -9748,9 +9767,16 @@ void do_arename( CHAR_DATA *ch, char *argument )
         return;
     }
 
+    int attempts = 0;
     room = number_range(1,50);
-    while (get_room_index( 26500+room ) == NULL)
+    while (get_room_index( 26500+room ) == NULL && attempts++ < 100)
         room = number_range(1,50);
+
+    if (get_room_index( 26500+room ) == NULL)
+    {
+        send_to_char( "The Arena is currently unavailable.\n\r", ch );
+        return;
+    }
 
     if (ch->in_room != NULL)
         char_from_room( ch );
@@ -9820,9 +9846,16 @@ void do_spectate( CHAR_DATA *ch, char *argument )
         return;
     }
 
+    int attempts = 0;
     room = number_range(1,50);
-    while (get_room_index( 26500+room ) == NULL)
+    while (get_room_index( 26500+room ) == NULL && attempts++ < 100)
         room = number_range(1,50);
+
+    if (get_room_index( 26500+room ) == NULL)
+    {
+        send_to_char( "The Arena is currently unavailable.\n\r", ch );
+        return;
+    }
 
     if (ch->in_room != NULL)
         char_from_room( ch );

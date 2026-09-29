@@ -5942,6 +5942,7 @@ void kill_em(CHAR_DATA *ch,CHAR_DATA *victim)
 {
     char mobname[MAX_STRING_LENGTH];
     DOMAIN_DATA *dom;
+    ROOM_INDEX_DATA *location;
 
     if (!ch || !victim)
         return;
@@ -5959,7 +5960,12 @@ void kill_em(CHAR_DATA *ch,CHAR_DATA *victim)
                 act( "{YThe room fills with the scent of wild flowers as an unseen presence\n\r takes the soul of $N to a better place.{x",  ch, NULL, victim, TO_NOTVICT );
                 if (victim->in_room != NULL)
                         char_from_room( victim );
-                char_to_room( victim, get_room_index( ROOM_VNUM_ALTAR ) );
+                if ( ( location = get_room_index( ROOM_VNUM_ALTAR ) ) == NULL )
+                {
+                    if ( ( location = get_room_index( ROOM_VNUM_TEMPLE ) ) == NULL )
+                        location = get_room_index( ROOM_VNUM_LIMBO );
+                }
+                char_to_room( victim, location );
 
                 if(is_affected( victim, gsn_vicissitude_horrid ))
                 {

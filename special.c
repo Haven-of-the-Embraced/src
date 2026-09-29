@@ -2693,7 +2693,7 @@ bool spec_eyesoftheserpent( CHAR_DATA *ch )
     if (victim == NULL || eyessuccess <= 0 || victim->stopped > 0)
       return FALSE;
 
-    act("You turn and catch $N's eyes with your hypnotic gaze.", ch, NULL, NULL, TO_CHAR);
+    act("You turn and catch $N's eyes with your hypnotic gaze.", ch, NULL, victim, TO_CHAR);
     act("You watch as $n's eyes turn {ygolden{x, and you become transfixed in $s gaze!", ch, NULL, victim, TO_VICT);
     act("$n's eyes turn {ygolden{x as $e locks gaze with $N.", ch, NULL, victim, TO_NOTVICT);
 

@@ -5086,7 +5086,15 @@ void do_pnewpass( CHAR_DATA *ch, char *argument )
     char_list             = d.character;
     d.connected           = CON_PLAYING;
     reset_char(d.character);
-    char_to_room(d.character,get_room_index(ROOM_VNUM_ALTAR));
+    {
+        ROOM_INDEX_DATA *location;
+        if ( ( location = get_room_index( ROOM_VNUM_ALTAR ) ) == NULL )
+        {
+            if ( ( location = get_room_index( ROOM_VNUM_TEMPLE ) ) == NULL )
+                location = get_room_index( ROOM_VNUM_LIMBO );
+        }
+        char_to_room(d.character, location);
+    }
       /*
      * No tilde allowed because of player file format.
      */

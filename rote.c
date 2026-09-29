@@ -2843,7 +2843,12 @@ void rote_stepsideways(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *
     int success_needed;
     int avatar_storm = godice(ch->paradox + ch->arete, 6);
 
-    if ( ( location = get_room_index( ROOM_VNUM_PARADOX ) ) == NULL )
+    location = get_room_index( ROOM_VNUM_PARADOX );
+    if ( location == NULL )
+        location = get_room_index( ROOM_VNUM_TEMPLE );
+    if ( location == NULL )
+        location = get_room_index( ROOM_VNUM_LIMBO );
+    if ( location == NULL )
     {
         send_to_char( "Error! Contact the imms at once!\n\r", ch );
         return;
@@ -2943,7 +2948,12 @@ void rote_controlgauntlet(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DAT
     if (avatar_storm < 0)
   		avatar_storm = 0;
 
-    if ( ( location = get_room_index( ROOM_VNUM_PARADOX ) ) == NULL )
+    location = get_room_index( ROOM_VNUM_PARADOX );
+    if ( location == NULL )
+        location = get_room_index( ROOM_VNUM_TEMPLE );
+    if ( location == NULL )
+        location = get_room_index( ROOM_VNUM_LIMBO );
+    if ( location == NULL )
     {
         send_to_char( "Error! Contact the imms at once!\n\r", ch );
         return;

@@ -36,6 +36,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include "merc.h"
+#include "cJSON.h"
 #include "interp.h"
 #include "recycle.h"
 #include "tables.h"
@@ -525,6 +526,21 @@ void do_ooc( CHAR_DATA *ch, char *argument )
           act_new( "{x$n OOCs '{Y$t{x'",
                    ch,argument, d->character, TO_VICT,POS_DEAD, TRUE );
         }
+      }
+      
+      if ( bot_desc != NULL )
+      {
+          cJSON *msg = cJSON_CreateObject();
+          cJSON_AddStringToObject(msg, "event", "chat");
+          cJSON_AddStringToObject(msg, "channel", "OOC");
+          cJSON_AddStringToObject(msg, "sender", ch->name);
+          cJSON_AddStringToObject(msg, "message", argument);
+          char *out = cJSON_PrintUnformatted(msg);
+          char bot_buf[MAX_STRING_LENGTH];
+          sprintf(bot_buf, "%s\n", out);
+          write_to_buffer(bot_desc, bot_buf, 0);
+          free(out);
+          cJSON_Delete(msg);
       }
     }
 }
@@ -1854,7 +1870,10 @@ void do_quit( CHAR_DATA *ch, char *argument )
             return;
         }
         if ( ( location = get_room_index( ROOM_VNUM_TEMPLE ) ) == NULL )
-            return;
+        {
+            if ( ( location = get_room_index( ROOM_VNUM_LIMBO ) ) == NULL )
+                return;
+        }
         stop_fighting( ch, TRUE );
         REMOVE_BIT(ch->act,PLR_ARENA);
         REMOVE_BIT(ch->act,PLR_SPEC);

@@ -5031,7 +5031,7 @@ void do_backstab( CHAR_DATA *ch, char *argument )
     if (IS_DEBUGGING(ch))
         cprintf(ch, "tohit:%d diff:%d success:%d dampool:%d damsuccess:%d\n\r", dice, diff, successes, damdice, damsuccess);
 
-    if (successes < 1)
+    if (successes < 2)
     {
         check_improve(ch,gsn_backstab,FALSE,2);
         act("$N seems to sense you coming and dodges your backstab!", ch, NULL, victim, TO_CHAR );

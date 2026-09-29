@@ -70,6 +70,8 @@ DECLARE_DO_FUN( do_checklinks );
 DECLARE_DO_FUN( do_forcetick);
 DECLARE_DO_FUN( do_advance  );
 DECLARE_DO_FUN( do_rat);
+DECLARE_DO_FUN( do_map);
+DECLARE_DO_FUN( do_automap);
 //DECLARE_DO_FUN( do_addwizlist);
 DECLARE_DO_FUN( do_cmdlist    );
 DECLARE_DO_FUN( do_admintalk );

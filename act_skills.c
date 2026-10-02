@@ -866,6 +866,7 @@ void do_vigor(CHAR_DATA *ch, char *argument)
     AFFECT_DATA af;
     int vigorsuccess = 0;
     int vigordiff = 6;
+    int vigor_skill = 0;
 
     if (get_ability(ch, CSABIL_ATHLETICS) < 2)
     {
@@ -951,24 +952,25 @@ void do_vigor(CHAR_DATA *ch, char *argument)
     act("$n takes a few deep breaths, and seems to begin moving fluidly and methodically.",ch,NULL,ch,TO_NOTVICT);
 
     af.where     = TO_AFFECTS;
+    vigor_skill = get_skill(ch, gsn_vigor);
     af.type      = gsn_vigor;
     af.level     = vigorsuccess;
     af.duration  = 5 * vigorsuccess + 15;
-    af.modifier  = ((get_attribute(ch, STAMINA) * 100) * (50 + get_skill(ch, gsn_vigor))) / 100;
+    af.modifier  = ((get_attribute(ch, STAMINA) * 100) * (90 + vigor_skill / 5)) / 100;
     af.location  = APPLY_MOVE;
     af.bitvector = AFF_HASTE;
     affect_to_char( ch, &af );
-    check_improve(ch,gsn_vigor,TRUE,6);
 
     if (vigorsuccess > 3)
     {
       act("All of the knowledge flows from your memory to your movements, flawlessly mimicking your training.", ch, NULL, NULL, TO_CHAR);
       af.duration  = 5 * vigorsuccess + 15;
-      af.modifier  = ((20 * vigorsuccess) * (50 + get_skill(ch, gsn_vigor))) / 100;
+      af.modifier  = ((20 * vigorsuccess) * (90 + vigor_skill / 5)) / 100;
       af.location  = APPLY_HITROLL;
       af.bitvector = 0;
       affect_to_char( ch, &af );
     }
+    check_improve(ch,gsn_vigor,TRUE,6);
 
     gain_exp(ch, vigorsuccess * 4 + 5);
     return;

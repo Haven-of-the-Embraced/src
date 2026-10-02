@@ -964,6 +964,7 @@ void spell_call_lightning( int sn, int level,CHAR_DATA *ch,void *vo,int target)
     CHAR_DATA *vch_next;
     int dam;
     OBJ_DATA *obj;
+    OBJ_DATA *sacrifice_obj = NULL;
     bool found_liquor = FALSE;
     int liquid = 0;
 
@@ -977,9 +978,7 @@ void spell_call_lightning( int sn, int level,CHAR_DATA *ch,void *vo,int target)
                 if ( liq_table[liquid].liq_affect[0] > 0 )
                 {
                     found_liquor = TRUE;
-                    obj->value[1] -= 1;
-                    act("You pour out a sacrifice of $p to the Old Gods.", ch, obj, NULL, TO_CHAR);
-                    act("$n pours out a sacrifice of $p to the Old Gods.", ch, obj, NULL, TO_ROOM);
+                    sacrifice_obj = obj;
                     break;
                 }
             }
@@ -1001,6 +1000,13 @@ void spell_call_lightning( int sn, int level,CHAR_DATA *ch,void *vo,int target)
     {
         send_to_char( "You must be out of doors.\n\r", ch );
         return;
+    }
+
+    if (!IS_NPC(ch))
+    {
+        sacrifice_obj->value[1] -= 1;
+        act("You pour out a sacrifice of $p to the Old Gods.", ch, sacrifice_obj, NULL, TO_CHAR);
+        act("$n pours out a sacrifice of $p to the Old Gods.", ch, sacrifice_obj, NULL, TO_ROOM);
     }
 
     send_to_char( "You pay homage to the Old Gods, and they respond by striking down your enemies!\n\r", ch );

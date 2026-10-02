@@ -2546,7 +2546,7 @@ void do_split( CHAR_DATA *ch, char *argument )
     members = 0;
     for ( gch = ch->in_room->people; gch != NULL; gch = gch->next_in_room )
     {
-    if ( is_same_group( gch, ch ) && !IS_AFFECTED(gch,AFF_CHARM) && !IS_NPC(gch))
+    if ( is_same_group( gch, ch ) && !IS_AFFECTED(gch,AFF_CHARM) && (!IS_NPC(gch) || gch == ch))
         members++;
     }
 

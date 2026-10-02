@@ -3508,7 +3508,9 @@ void do_forgetful (CHAR_DATA *ch, char *argument)
       return;
     }
 
-    if ((victim->race == race_lookup("vampire") || victim->race == race_lookup("methuselah")) && victim->gen < ch->gen)
+    if (!IS_NPC(victim)
+    && (victim->race == race_lookup("vampire") || victim->race == race_lookup("methuselah"))
+    && victim->gen < ch->gen)
     {
         send_to_char("Your target's blood is too potent for you to dominate them.\n\r", ch);
         return;

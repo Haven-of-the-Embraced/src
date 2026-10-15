@@ -6624,7 +6624,8 @@ void do_headbutt( CHAR_DATA *ch, char *argument )
     if (IS_SET(victim->res_flags,RES_BASH))
         dicesuccess--;
 
-    if(dicesuccess >= 4 && !IS_SET(victim->imm_flags,IMM_BASH))
+    if(dicesuccess >= 4 && victim->position != POS_TORPOR
+    && !IS_SET(victim->imm_flags,IMM_BASH))
     {
         act("$N stares at you for a second, dazed, before slumping to the ground.", ch, NULL, victim, TO_CHAR);
         act("You stare dizzily for just a moment, then the world goes black before your eyes.", ch, NULL, victim, TO_VICT);

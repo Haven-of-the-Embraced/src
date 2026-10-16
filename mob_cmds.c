@@ -1284,7 +1284,7 @@ void do_mpcall( CHAR_DATA *ch, char *argument )
     CHAR_DATA *vch;
     OBJ_DATA *obj1, *obj2;
     PROG_CODE *prg;
-    extern void program_flow( sh_int, char *, CHAR_DATA *, OBJ_DATA *, ROOM_INDEX_DATA *, CHAR_DATA *, const void *, const void *, int );
+    extern void program_flow( int, char *, CHAR_DATA *, OBJ_DATA *, ROOM_INDEX_DATA *, CHAR_DATA *, const void *, const void *, int );
 
     argument = one_argument( argument, arg );
     if ( arg[0] == '\0' )
@@ -1397,7 +1397,7 @@ void do_mpremove( CHAR_DATA *ch, char *argument )
 {
     CHAR_DATA *victim;
     OBJ_DATA *obj, *obj_next;
-    sh_int vnum = 0;
+    int vnum = 0;
     bool fAll = FALSE;
     char arg[ MAX_INPUT_LENGTH ];
 
@@ -2316,7 +2316,7 @@ void do_opcall( OBJ_DATA *obj, char *argument )
     CHAR_DATA *vch;
     OBJ_DATA *obj1, *obj2;
     PROG_CODE *prg;
-    extern void program_flow( sh_int, char *, CHAR_DATA *, OBJ_DATA *, ROOM_INDEX_DATA *, CHAR_DATA *, const void *, const void *, int );
+    extern void program_flow( int, char *, CHAR_DATA *, OBJ_DATA *, ROOM_INDEX_DATA *, CHAR_DATA *, const void *, const void *, int );
 
     argument = one_argument( argument, arg );
     if ( arg[0] == '\0' )
@@ -2403,7 +2403,7 @@ void do_opremove( OBJ_DATA *obj, char *argument )
 {
     CHAR_DATA *victim;
     OBJ_DATA *obj1, *obj_next;
-    sh_int vnum = 0;
+    int vnum = 0;
     bool fAll = FALSE;
     char arg[ MAX_INPUT_LENGTH ];
 
@@ -3202,7 +3202,7 @@ void do_rpcall( ROOM_INDEX_DATA *room, char *argument )
     CHAR_DATA *vch;
     OBJ_DATA *obj1, *obj2;
     PROG_CODE *prg;
-    extern void program_flow( sh_int, char *, CHAR_DATA *, OBJ_DATA *, ROOM_INDEX_DATA *, CHAR_DATA *, const void *, const void *, int );
+    extern void program_flow( int, char *, CHAR_DATA *, OBJ_DATA *, ROOM_INDEX_DATA *, CHAR_DATA *, const void *, const void *, int );
 
     argument = one_argument( argument, arg );
     if ( arg[0] == '\0' )
@@ -3286,7 +3286,7 @@ void do_rpremove( ROOM_INDEX_DATA *room, char *argument )
 {
     CHAR_DATA *victim;
     OBJ_DATA *obj, *obj_next;
-    sh_int vnum = 0;
+    int vnum = 0;
     bool fAll = FALSE;
     char arg[ MAX_INPUT_LENGTH ];
 

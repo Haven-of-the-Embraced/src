@@ -413,7 +413,7 @@ int num_eval( int lval, int oper, int rval )
  * item_type: item type or -1
  * fWear: TRUE: item must be worn, FALSE: don't care
  */
-bool has_item( CHAR_DATA *ch, sh_int vnum, sh_int item_type, bool fWear )
+bool has_item( CHAR_DATA *ch, int vnum, sh_int item_type, bool fWear )
 {
     OBJ_DATA *obj;
     for ( obj = ch->carrying; obj; obj = obj->next_content )
@@ -427,7 +427,7 @@ bool has_item( CHAR_DATA *ch, sh_int vnum, sh_int item_type, bool fWear )
 /*
  * Check if there's a mob with given vnum in the room
  */
- bool get_mob_vnum_room( CHAR_DATA *ch, OBJ_DATA *obj, ROOM_INDEX_DATA *room, sh_int vnum )
+ bool get_mob_vnum_room( CHAR_DATA *ch, OBJ_DATA *obj, ROOM_INDEX_DATA *room, int vnum )
  {
      CHAR_DATA *mob;
 
@@ -458,7 +458,7 @@ bool has_item( CHAR_DATA *ch, sh_int vnum, sh_int item_type, bool fWear )
 /*
  * Check if there's an object with given vnum in the room
  */
- bool get_obj_vnum_room( CHAR_DATA *ch, OBJ_DATA *obj, ROOM_INDEX_DATA *room, sh_int vnum )
+ bool get_obj_vnum_room( CHAR_DATA *ch, OBJ_DATA *obj, ROOM_INDEX_DATA *room, int vnum )
  {
      OBJ_DATA *vobj;
 
@@ -498,7 +498,7 @@ bool has_item( CHAR_DATA *ch, sh_int vnum, sh_int item_type, bool fWear )
  *
  *----------------------------------------------------------------------
  */
-int cmd_eval_mob( sh_int vnum, char *line, int check,
+int cmd_eval_mob( int vnum, char *line, int check,
     CHAR_DATA *mob, CHAR_DATA *ch,
     const void *arg1, const void *arg2, CHAR_DATA *rch )
 {
@@ -826,7 +826,7 @@ int cmd_eval_mob( sh_int vnum, char *line, int check,
     return( num_eval( lval, oper, rval ) );
 }
 
-int cmd_eval_obj( sh_int vnum, char *line, int check,
+int cmd_eval_obj( int vnum, char *line, int check,
 	OBJ_DATA *obj, CHAR_DATA *ch,
 	const void *arg1, const void *arg2, CHAR_DATA *rch )
 {
@@ -1136,7 +1136,7 @@ int cmd_eval_obj( sh_int vnum, char *line, int check,
     return( num_eval( lval, oper, rval ) );
 }
 
-int cmd_eval_room( sh_int vnum, char *line, int check,
+int cmd_eval_room( int vnum, char *line, int check,
 	ROOM_INDEX_DATA *room, CHAR_DATA *ch,
 	const void *arg1, const void *arg2, CHAR_DATA *rch )
 {
@@ -1886,7 +1886,7 @@ void expand_arg_other( char *buf,
 #define MAX_CALL_LEVEL    5 /* Maximum nested calls */
 
 void program_flow(
-        sh_int pvnum,  /* For diagnostic purposes */
+        int pvnum,  /* For diagnostic purposes */
 	char *source,  /* the actual MOBprog code */
 	CHAR_DATA *mob,
 	OBJ_DATA *obj,
@@ -1909,7 +1909,7 @@ void program_flow(
     int count = 0;
     PROG_CODE *prog = get_mprog_by_vnum(pvnum);
 
-    sh_int mvnum = 0,ovnum = 0,rvnum = 0;
+    int mvnum = 0,ovnum = 0,rvnum = 0;
 
     if ( (mob && obj) || (mob && room) || (obj && room) )
     {

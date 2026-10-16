@@ -4,21 +4,27 @@ Haven of The Embraced (Haven) is a text-based Multi-User Dungeon (MUD) style gam
 
 ## Compiling
 
-Haven is written in C and requires gcc or an equivalent C compiler. Compilation is as simple as cloning the repository and invoking:
+For the local Docker workflow and required private runtime files, see the
+[repository setup guide](../README.md).
+
+Haven is written in C and requires gcc, make, libc development headers, and
+libcrypt development headers. From the repository root, invoke:
 
 ```bash
-make
+make -C src
 ```
 
 ## Run Haven
 
-Haven of The Embraced will not run without the associated /data and /area files, which were intentionally not provided in this repository. Those files can be recreated using the provided code as a guide for their contents.
+Haven of The Embraced requires compatible local `data/` and `area/` files and a
+writable `player/` directory. Runtime files are not included in the public
+repository. Run from `src/` so relative paths resolve correctly.
 
 
 ```bash
 ./rom [port] [testrun]
 ```
-Port: Any port above 1024 is acceptable. If a port is not specified, it defaults to 4000
+Port: Any port above 1024 is acceptable. If a port is not specified, it defaults to 2000. Docker explicitly uses 4000.
 
 Testrun: This option exists for CI/CD testing purposes. Invoking Haven with option testrun will cause the MUD to boot, complete three game_loops, and shutdown. 
 

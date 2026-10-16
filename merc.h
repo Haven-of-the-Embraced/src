@@ -157,7 +157,7 @@ typedef void ROOM_FUN	args( ( ROOM_INDEX_DATA *room, char *argument ) );
 /*
  * String and memory management parameters.
  */
-#define MAX_KEY_HASH         1024
+#define MAX_KEY_HASH         4096
 #define MAX_STRING_LENGTH    9216
 #define HUGE_STRING_LENGTH  (MAX_STRING_LENGTH * 15)
 #define HSL                 HUGE_STRING_LENGTH
@@ -746,7 +746,7 @@ struct help_area_data
 struct  shop_data
 {
     SHOP_DATA * next;           /* Next shop in list        */
-    sh_int  keeper;         /* Vnum of shop keeper mob  */
+    int     keeper;         /* Vnum of shop keeper mob  */
     sh_int  buy_type [MAX_TRADE];   /* Item types shop will buy */
     sh_int  profit_buy;     /* Cost multiplier for buying   */
     sh_int  profit_sell;        /* Cost multiplier for selling  */
@@ -772,8 +772,8 @@ struct  class_type
     char *  name;           /* the full name of the class */
     char    who_name    [4];    /* Three-letter name for 'who'  */
     sh_int  attr_prime;     /* Prime attribute      */
-    sh_int  weapon;         /* First weapon         */
-    sh_int  guild[MAX_GUILD];   /* Vnum of guild rooms      */
+    int  weapon;         /* First weapon         */
+    int     guild[MAX_GUILD];   /* Vnum of guild rooms      */
     sh_int  skill_adept;        /* Maximum skill level      */
     sh_int  thac0_00;       /* Thac0 for level  0       */
     sh_int  thac0_32;       /* Thac0 for level 32       */
@@ -793,7 +793,7 @@ struct item_type
 struct weapon_type
 {
     char *  name;
-    sh_int  vnum;
+    int     vnum;
     sh_int  type;
     sh_int  *gsn;
 };
@@ -1842,6 +1842,7 @@ struct  kill_data
 #define EX_NOLOCK             (L)
 #define EX_LIFT           (M)
 #define EX_HIDDEN             (N)
+#define EX_CLIMB              (O)
 
 
 
@@ -2095,11 +2096,11 @@ struct qitem_data
 {
     QITEM_DATA      *next;
     char            *name;
-    sh_int          qobjvnum;
+    int             qobjvnum;
     sh_int          place;
-    sh_int          roomvnum;
-    sh_int          mobvnum;
-    sh_int          objvnum;
+    int             roomvnum;
+    int             mobvnum;
+    int             objvnum;
     bool            found;
     char            *foundby;
     bool            notify;
@@ -2123,7 +2124,7 @@ DOMAIN_DATA  *new_domain args ( (void) );
 struct domain_data
 {
     DOMAIN_DATA     *next;
-    sh_int          vnum;
+    int             vnum;
     sh_int          clan;
     sh_int          influence[MAX_CLAN];
     sh_int          change[MAX_CLAN];
@@ -2145,7 +2146,7 @@ struct clan_type
     char *banker;
     sh_int     bonus;
     sh_int  clan_type; /* TYPE_NONE, TYPE_CLAN, TYPE_TRADITION, TYPE_TRIBE*/
-    sh_int  clanhall;
+    int  clanhall;
 };
 
 struct loot_table_data
@@ -2153,10 +2154,10 @@ struct loot_table_data
     LOOT_TABLE_DATA *   next;
     AREA_DATA *         area;
     char *              name;
-    sh_int              vnum;
+    int                 vnum;
     struct
     {
-        sh_int  vnum;
+        int     vnum;
         sh_int  rate;
     } slots[5];
     bool                valid;
@@ -2174,7 +2175,7 @@ struct  mob_index_data
     PROG_LIST *        mprogs;
     AREA_DATA *     area;       /* OLC */
 
-    sh_int      vnum;
+    int         vnum;
     sh_int      group;
     bool        new_format;
     bool        delete;
@@ -2213,7 +2214,7 @@ struct  mob_index_data
     long        mprog_flags;
     long        attr_flags;
     long        abil_flags;
-    sh_int      loot_vnum;
+    int         loot_vnum;
 };
 
 
@@ -2417,8 +2418,8 @@ struct  char_data
     sh_int              nextquest; /* Vassago */
     sh_int              quest_accum;
     sh_int              countdown; /* Vassago */
-    sh_int              questobj; /* Vassago */
-    sh_int              questmob; /* Vassago */
+    int                 questobj; /* Vassago */
+    int                 questmob; /* Vassago */
 
 };
 
@@ -2553,7 +2554,7 @@ struct  pc_data
     char     *          replaytell_text[MAX_REPLAYTELL];
     unsigned int        next_replayroom;
     char     *          replayroom_text[MAX_REPLAYROOM];
-    sh_int              replayroom_lastevent_roomvnum;
+    int                 replayroom_lastevent_roomvnum;
     unsigned int        next_replaychannels;
     char     *          replaychannels_text[MAX_REPLAYCHANNELS];
 
@@ -2631,7 +2632,7 @@ struct  obj_index_data
     char *      name;
     char *      short_descr;
     char *      description;
-    sh_int      vnum;
+    int         vnum;
     sh_int      reset_num;
     char *      material;
     sh_int      item_type;
@@ -2697,10 +2698,10 @@ struct  exit_data
     union
     {
     ROOM_INDEX_DATA *   to_room;
-    sh_int          vnum;
+    int             vnum;
     } u1;
     sh_int      exit_info;
-    sh_int      key;
+    int         key;
     char *      keyword;
     char *      description;
     EXIT_DATA *     next;       /* OLC */
@@ -2735,10 +2736,10 @@ struct  reset_data
 {
     RESET_DATA *    next;
     char        command;
-    sh_int      arg1;
-    sh_int      arg2;
-    sh_int      arg3;
-    sh_int      arg4;
+    int         arg1;
+    int         arg2;
+    int         arg3;
+    int         arg4;
 };
 
 
@@ -2758,8 +2759,8 @@ struct  area_data
     sh_int      nplayer;
     sh_int      low_range;
     sh_int      high_range;
-    sh_int      min_vnum;
-    sh_int      max_vnum;
+    int         min_vnum;
+    int         max_vnum;
     bool        empty;
     char *      builders;   /* OLC */ /* Listing of */
     int         vnum;       /* OLC */ /* Area vnum  */
@@ -2786,7 +2787,7 @@ struct  room_index_data
     char *      name;
     char *      description;
     char *      owner;
-    sh_int      vnum;
+    int         vnum;
     int         room_flags;
     sh_int      light;
     sh_int      sector_type;
@@ -2988,7 +2989,7 @@ struct prog_list
 {
     int                 trig_type;
     char *              trig_phrase;
-    sh_int              vnum;
+    int                 vnum;
     char *              code;
     PROG_LIST *         next;
     bool                valid;
@@ -2996,7 +2997,7 @@ struct prog_list
 
 struct prog_code
 {
-    sh_int              vnum;
+    int                 vnum;
     char *              name;
     char *              code;
     PROG_CODE *         next;
@@ -4348,7 +4349,7 @@ void    obj_cast_spell  args( ( int sn, int level, CHAR_DATA *ch,
 PROG_CODE *get_mprog_by_vnum args( (int vnum) );
 
 /* mob_prog.c */
-void	program_flow	args( ( sh_int vnum, char *source, CHAR_DATA *mob,
+void	program_flow	args( ( int vnum, char *source, CHAR_DATA *mob,
 				OBJ_DATA *obj, ROOM_INDEX_DATA *room,
 				CHAR_DATA *ch, const void *arg1,
 				const void *arg2, int numlines ) );

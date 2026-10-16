@@ -795,7 +795,7 @@ void load_old_mob( FILE *fp )
 
     for ( ; ; )
     {
-    sh_int vnum;
+    int vnum;
     char letter;
     int iHash;
 
@@ -931,7 +931,7 @@ void load_old_obj( FILE *fp )
 
     for ( ; ; )
     {
-    sh_int vnum;
+    int vnum;
     char letter;
     int iHash;
 
@@ -1212,7 +1212,7 @@ void load_rooms( FILE *fp )
 
     for ( ; ; )
     {
-    sh_int vnum;
+    int vnum;
     char letter;
     int door;
     int iHash;
@@ -1305,7 +1305,7 @@ void load_rooms( FILE *fp )
         pexit->u1.vnum      = fread_number( fp );
         pexit->orig_door    = door;         /* OLC */
 
-        switch ( locks )
+        switch ( locks & 255 )
         {
         case 1: pexit->exit_info = EX_ISDOOR;
             pexit->rs_flags  = EX_ISDOOR;            break;
@@ -1356,6 +1356,11 @@ void load_rooms( FILE *fp )
             pexit->rs_flags  = EX_ISDOOR | EX_HIDDEN | EX_NOPASS | EX_PICKPROOF;         break;
         }
 
+        if (locks & 256)
+        {
+            SET_BIT(pexit->exit_info, EX_CLIMB);
+            SET_BIT(pexit->rs_flags, EX_CLIMB);
+        }
         pRoomIndex->exit[door]  = pexit;
         top_exit++;
         }
@@ -1527,7 +1532,7 @@ void load_loottables( FILE *fp )
 
     for ( ; ; )
     {
-        sh_int vnum;
+        int vnum;
         char letter;
         int i;
 
@@ -1764,7 +1769,7 @@ void load_mobprogs( FILE *fp )
 
     for ( ; ; )
     {
-    sh_int vnum;
+    int vnum;
     char letter;
 
     letter        = fread_letter( fp );
@@ -1814,7 +1819,7 @@ void load_mpcode( FILE *fp )
 
     for ( ; ; )
     {
-	sh_int vnum;
+	int vnum;
 	char letter;
 
 	letter		= fread_letter( fp );
@@ -4881,7 +4886,7 @@ void load_objprogs( FILE *fp )
 
     for ( ; ; )
     {
-	sh_int vnum;
+	int vnum;
 	char letter;
 
 	letter		  = fread_letter( fp );
@@ -4931,7 +4936,7 @@ void load_opcode( FILE *fp )
 
     for ( ; ; )
     {
-	sh_int vnum;
+	int vnum;
 	char letter;
 
 	letter		= fread_letter( fp );
@@ -4976,7 +4981,7 @@ void load_roomprogs( FILE *fp )
 
     for ( ; ; )
     {
-	sh_int vnum;
+	int vnum;
 	char letter;
 
 	letter		  = fread_letter( fp );
@@ -5026,7 +5031,7 @@ void load_rpcode( FILE *fp )
 
     for ( ; ; )
     {
-	sh_int vnum;
+	int vnum;
 	char letter;
 
 	letter		= fread_letter( fp );

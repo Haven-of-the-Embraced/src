@@ -17,14 +17,20 @@ struct tier_case
     int damroll;
     int armor;
     bool canine;
+    const char *short_descr;
+    const char *long_descr;
 };
 
 static const struct tier_case tiers[] =
 {
-    { "hellhound", 2, 50, 1000, 2000, 100, 75, 100, TRUE },
-    { "szlachta", 3, 60, 5000, 3000, 100, 100, 500, FALSE },
-    { "mesnik", 4, 70, 5000, 3750, 75, 200, 650, FALSE },
-    { "vozhd", 5, 80, 5000, 5000, 400, 400, 1500, FALSE }
+    { "hellhound", 2, 50, 1000, 2000, 100, 75, 100, TRUE, "A Hellhound",
+        "A poor and twisted creature that slighty resembles %s cringes before its master.\n\r" },
+    { "szlachta", 3, 60, 5000, 3000, 100, 100, 500, FALSE, "A Szlachta Warghoul",
+        "A vicious creature that slighty resembles %s snarls in rage at its current form.\n\r" },
+    { "mesnik", 4, 70, 5000, 3750, 75, 200, 650, FALSE, "a Mesnik Warghoul",
+        "A hulking creature that barely resembles %s flexes its grotesque limbs looking for something to savage.\n\r" },
+    { "vozhd", 5, 80, 5000, 5000, 400, 400, 1500, FALSE, "A Vozhd Warghoul",
+        "A vicious bone-armored and spiked version of %s snarls and barely holds back it's urge to kill.\n\r" }
 };
 
 extern void save_area(AREA_DATA *area);
@@ -73,12 +79,17 @@ static void assert_created(CHAR_DATA *vampire, CHAR_DATA *target,
     const struct tier_case *tier, int dots, int health)
 {
     int armor;
+    char expected_descr[MAX_STRING_LENGTH];
 
     assert(vampire->pblood == 10);
     assert(vampire->pet == target);
     assert(vampire->wait == 300);
     assert(target->master == vampire && target->leader == vampire);
     assert(is_name((char *)tier->name, target->name));
+    assert(!strcmp(target->short_descr, tier->short_descr));
+    snprintf(expected_descr, sizeof(expected_descr), tier->long_descr,
+        target->pIndexData->short_descr);
+    assert(!strcmp(target->long_descr, expected_descr));
     assert(IS_AFFECTED(target, AFF_CHARM));
     assert(is_affected(target, gsn_charm_person));
     assert(target->max_hit == UMIN(health + tier->hit_gain, tier->hit_cap * dots));

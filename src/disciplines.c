@@ -8673,12 +8673,22 @@ void do_fleshcraft(CHAR_DATA *ch, char *argument)
         int damroll;
         int armor;
         bool canine;
+        const char *transformation;
+        const char *long_descr;
     } warghouls[] =
     {
-        { "hellhound", "a Hellhound", 2, 50, 1000, 2000, 100, 75, 100, TRUE },
-        { "szlachta", "a Szlachta Warghoul", 3, 60, 5000, 3000, 100, 100, 500, FALSE },
-        { "mesnik", "a Mesnik Warghoul", 4, 70, 5000, 3750, 75, 200, 650, FALSE },
-        { "vozhd", "a Vozhd Warghoul", 5, 80, 5000, 5000, 400, 400, 1500, FALSE }
+        { "hellhound", "A Hellhound", 2, 50, 1000, 2000, 100, 75, 100, TRUE,
+            "$n reaches out and gently massages $N's form into a twisted, disgusting shadow of it's former self.",
+            "A poor and twisted creature that slighty resembles %s cringes before its master.\n\r" },
+        { "szlachta", "A Szlachta Warghoul", 3, 60, 5000, 3000, 100, 100, 500, FALSE,
+            "$n lulls $N into a trance and slowly starts to reshape the poor wretch into a vicious and horrid version of itself.",
+            "A vicious creature that slighty resembles %s snarls in rage at its current form.\n\r" },
+        { "mesnik", "a Mesnik Warghoul", 4, 70, 5000, 3750, 75, 200, 650, FALSE,
+            "$n vivisects $N into a lump of clay-like flesh and rapidly molds it into a terrifying grotesque form.",
+            "A hulking creature that barely resembles %s flexes its grotesque limbs looking for something to savage.\n\r" },
+        { "vozhd", "A Vozhd Warghoul", 5, 80, 5000, 5000, 400, 400, 1500, FALSE,
+            "$n grasps $N and wrenches their limbs and body, calling forth bone armor from within and twists the poor creature into a warped monster of destruction.",
+            "A vicious bone-armored and spiked version of %s snarls and barely holds back it's urge to kill.\n\r" }
     };
 
 
@@ -8703,10 +8713,10 @@ void do_fleshcraft(CHAR_DATA *ch, char *argument)
     {
 		sendch("Syntax:\n\r", ch);
 		sendch("fleshcraft sex <male/female/none>                 -Alter your own sex\n\r", ch);
-        sendch("fleshcraft hellhound <victim>                     -2 dots, 50 blood, canine MOB\n\r", ch);
-        sendch("fleshcraft szlachta <victim>                      -3 dots, 60 blood, human/ghoul MOB\n\r", ch);
-        sendch("fleshcraft mesnik <victim>                        -4 dots, 70 blood, human/ghoul MOB\n\r", ch);
-        sendch("fleshcraft vozhd <victim>                         -5 dots, 80 blood, human/ghoul MOB\n\r", ch);
+		sendch("fleshcraft hellhound <victim>                     -Turn a canine MOB into a hellhound\n\r", ch);
+		sendch("fleshcraft szlachta <victim>                      -Turn a human MOB into a Szlactha Warghoul\n\r", ch);
+		sendch("fleshcraft mesnik <victim>                        -Turn a human MOB into a Mesnik Warghoul\n\r", ch);
+		sendch("fleshcraft vozhd <victim>                         -Turn a human MOB into a Vohzd Warghoul\n\r", ch);
 		return;
     }
     if(!str_prefix(arg1,"sex"))
@@ -8794,8 +8804,8 @@ void do_fleshcraft(CHAR_DATA *ch, char *argument)
             : (mob->race != race_lookup("human") && mob->race != race_lookup("ghoul")))
         {
             send_to_char(warghouls[tier].canine
-                ? "This requires a canine MOB.\n\r"
-                : "This requires a human or ghoul MOB.\n\r", ch);
+                ? "This must be performed upon a Canine.\n\r"
+                : "You can only fleshcraft a human into a warghoul!\n\r", ch);
             return;
         }
         if (mob->master != NULL || IS_AFFECTED(mob, AFF_CHARM)
@@ -8811,10 +8821,11 @@ void do_fleshcraft(CHAR_DATA *ch, char *argument)
         }
 
         ch->pblood -= warghouls[tier].blood;
+    act(warghouls[tier].transformation, ch, NULL, mob, TO_NOTVICT);
         sprintf(buf, "%s warghoul ghoul", warghouls[tier].name);
         free_string(mob->name);
         mob->name = str_dup(buf);
-        sprintf(buf, "%s waits beside its master.\n\r", warghouls[tier].short_descr);
+    snprintf(buf, sizeof(buf), warghouls[tier].long_descr, mob->short_descr);
         free_string(mob->long_descr);
         mob->long_descr = str_dup(buf);
         free_string(mob->short_descr);

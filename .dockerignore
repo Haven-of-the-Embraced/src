@@ -1,0 +1,9 @@
+**
+!Dockerfile
+!docker/
+!docker/entrypoint.sh
+!src/
+!src/*.c
+!src/*.h
+!src/Makefile
+.env

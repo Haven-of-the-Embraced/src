@@ -5,3 +5,14 @@ nohup.out
 .ftpconfig
 .gitignore
 .vscode
+/area/**
+!/area/.gitkeep
+/data/**
+!/data/.gitkeep
+/gods/**
+!/gods/.gitkeep
+/import/**
+/log/**
+/memdump/**
+/player/**
+!/player/.gitkeep

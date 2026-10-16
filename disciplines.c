@@ -8659,6 +8659,27 @@ void do_fleshcraft(CHAR_DATA *ch, char *argument)
     char buf[MAX_STRING_LENGTH];
     CHAR_DATA *mob;
     AFFECT_DATA af;
+    int tier;
+    int vicissitude;
+    static const struct
+    {
+        const char *name;
+        const char *short_descr;
+        int dots;
+        int blood;
+        int hit_gain;
+        int hit_cap;
+        int hitroll;
+        int damroll;
+        int armor;
+        bool canine;
+    } warghouls[] =
+    {
+        { "hellhound", "a Hellhound", 2, 50, 1000, 2000, 100, 75, 100, TRUE },
+        { "szlachta", "a Szlachta Warghoul", 3, 60, 5000, 3000, 100, 100, 500, FALSE },
+        { "mesnik", "a Mesnik Warghoul", 4, 70, 5000, 3750, 75, 200, 650, FALSE },
+        { "vozhd", "a Vozhd Warghoul", 5, 80, 5000, 5000, 400, 400, 1500, FALSE }
+    };
 
 
     if(IS_NPC(ch)) return;
@@ -8682,9 +8703,10 @@ void do_fleshcraft(CHAR_DATA *ch, char *argument)
     {
 		sendch("Syntax:\n\r", ch);
 		sendch("fleshcraft sex <male/female/none>                 -Alter your own sex\n\r", ch);
-		sendch("fleshcraft hellhound <victim>                     -Turn a canine MOB into a hellhound\n\r", ch);
-		sendch("fleshcraft szlachta <victim>                      -Turn a human MOB into a Szlactha Warghoul\n\r", ch);
-		sendch("fleshcraft vozhd <victim>                         -Turn a human MOB into a Vohzd Warghoul\n\r", ch);
+        sendch("fleshcraft hellhound <victim>                     -2 dots, 50 blood, canine MOB\n\r", ch);
+        sendch("fleshcraft szlachta <victim>                      -3 dots, 60 blood, human/ghoul MOB\n\r", ch);
+        sendch("fleshcraft mesnik <victim>                        -4 dots, 70 blood, human/ghoul MOB\n\r", ch);
+        sendch("fleshcraft vozhd <victim>                         -5 dots, 80 blood, human/ghoul MOB\n\r", ch);
 		return;
     }
     if(!str_prefix(arg1,"sex"))
@@ -8754,163 +8776,78 @@ void do_fleshcraft(CHAR_DATA *ch, char *argument)
         send_to_char( "That creature is too strong for your fleshcraft.\n\r", ch );
         return;
     }
-    if ( !str_prefix(arg1,"hellhound"))
+    vicissitude = ch->pcdata->discipline[VICISSITUDE];
+    for (tier = 0; tier < sizeof(warghouls) / sizeof(warghouls[0]); tier++)
     {
-        if(mob->race != race_lookup("wolf") &&
-                mob->race != race_lookup("dog"))
+        int armor;
+
+        if (str_prefix(arg1, warghouls[tier].name))
+            continue;
+        if (vicissitude < warghouls[tier].dots)
         {
-            send_to_char("This must be performed upon a Canine.\n\r",ch);
+            printf_to_char(ch, "You need %d dots of Vicissitude to create %s.\n\r",
+                warghouls[tier].dots, warghouls[tier].short_descr);
             return;
         }
-        if(ch->pblood-50 < 10)
+        if (warghouls[tier].canine
+            ? (mob->race != race_lookup("wolf") && mob->race != race_lookup("dog"))
+            : (mob->race != race_lookup("human") && mob->race != race_lookup("ghoul")))
         {
-            send_to_char("You do not have enough blood to alter this canine's form.\n\r",ch);
+            send_to_char(warghouls[tier].canine
+                ? "This requires a canine MOB.\n\r"
+                : "This requires a human or ghoul MOB.\n\r", ch);
             return;
         }
-        ch->pblood -= 50;
+        if (mob->master != NULL || IS_AFFECTED(mob, AFF_CHARM)
+            || is_affected(mob, gsn_vicissitude_bonecraft))
+        {
+            send_to_char("That creature cannot be altered again in this way.\n\r", ch);
+            return;
+        }
+        if (ch->pblood - warghouls[tier].blood < 10)
+        {
+            send_to_char("You do not have enough blood for this transformation.\n\r", ch);
+            return;
+        }
 
-        act( "$n reaches out and gently massages $N's form into a twisted, disgusting shadow of it's former self.", ch, NULL, mob, TO_NOTVICT );
-
-        mob->name = str_dup("hellhound warghoul ghoul");
-        sprintf(buf,"A poor and twisted creature that slighty resembles %s cringes before its master.\n\r",mob->short_descr);
+        ch->pblood -= warghouls[tier].blood;
+        sprintf(buf, "%s warghoul ghoul", warghouls[tier].name);
+        free_string(mob->name);
+        mob->name = str_dup(buf);
+        sprintf(buf, "%s waits beside its master.\n\r", warghouls[tier].short_descr);
+        free_string(mob->long_descr);
         mob->long_descr = str_dup(buf);
-        mob->short_descr = str_dup("A Hellhound");
-        mob->level = ch->level;
-        mob->max_hit = UMIN(mob->max_hit+1000, 2000 * ch->pcdata->discipline[VICISSITUDE]);
+        free_string(mob->short_descr);
+        mob->short_descr = str_dup(warghouls[tier].short_descr);
+        if (warghouls[tier].canine)
+            mob->level = ch->level;
+        mob->max_hit = UMIN(mob->max_hit + warghouls[tier].hit_gain,
+            warghouls[tier].hit_cap * vicissitude);
         mob->hit = mob->max_hit;
-        mob->hitroll += 100;
-        mob->damroll += 25;
-        mob->armor[0] -= 100;
-        mob->armor[1] -= 100;
-        mob->armor[2] -= 100;
-        mob->armor[3] -= 100;
+        mob->hitroll += warghouls[tier].hitroll;
+        mob->damroll += warghouls[tier].damroll;
+        for (armor = 0; armor < 4; armor++)
+            mob->armor[armor] -= warghouls[tier].armor;
 
-        add_follower( mob, ch );
+        add_follower(mob, ch);
         mob->leader = ch;
         ch->pet = mob;
-
-        af.where     = TO_AFFECTS;
-        af.type      = gsn_charm_person;
-        af.level     = ch->level;
-        af.duration  = -1;
-        af.location  = 0;
-        af.modifier  = 0;
+        af.where = TO_AFFECTS;
+        af.type = gsn_charm_person;
+        af.level = ch->level;
+        af.duration = -1;
+        af.location = APPLY_NONE;
+        af.modifier = 0;
         af.bitvector = AFF_CHARM;
-        affect_to_char(mob,&af);
-        WAIT_STATE( ch, 300 );
-        return;
-    }
-
-    if ( !str_prefix( arg1, "szlachta" ) )
-    {
-        if(ch->pcdata->discipline[VICISSITUDE] < 3)
+        affect_to_char(mob, &af);
+        if (!str_cmp(warghouls[tier].name, "vozhd"))
         {
-            send_to_char( "You are not skilled enough in Vicissitude to craft a Szlachta.\n\r", ch );
-            return;
+            af.type = gsn_vicissitude_bonecraft;
+            af.bitvector = 0;
+            affect_to_char(mob, &af);
         }
-        if (mob->race != race_lookup("human") && mob->race != race_lookup("ghoul"))
-        {
-            send_to_char( "You can only fleshcraft a human into a warghoul!\n\r", ch );
-            return;
-        }
-
-        if(ch->pblood-60 < 10)
-        {
-            send_to_char("You do not have enough blood to alter this person's form.\n\r",ch);
-            return;
-        }
-        ch->pblood -= 60;
-
-        act( "$n lulls $N into a trance and slowly starts to reshape the poor fellow into a vicious and horrid version of itself.", ch, NULL, mob, TO_NOTVICT );
-
-        mob->name = str_dup("szlachta warghoul ghoul");
-        sprintf(buf,"A vicious creature that slighty resembles %s snarls in rage at its current form.\n\r",mob->short_descr);
-        mob->long_descr = str_dup(buf);
-        mob->short_descr = str_dup("A Szlachta Warghoul");
-        mob->max_hit = UMIN(mob->max_hit+5000, 3000 * ch->pcdata->discipline[VICISSITUDE]);
-        mob->hit = mob->max_hit;
-        mob->hitroll += 100;
-        mob->damroll += 100;
-        mob->armor[0] -= 500;
-        mob->armor[1] -= 500;
-        mob->armor[2] -= 500;
-        mob->armor[3] -= 500;
-
-        add_follower( mob, ch );
-        mob->leader = ch;
-        ch->pet = mob;
-
-        af.where     = TO_AFFECTS;
-        af.type      = gsn_charm_person;
-        af.level     = ch->level;
-        af.duration  = -1;
-        af.location  = 0;
-        af.modifier  = 0;
-        af.bitvector = AFF_CHARM;
-        affect_to_char(mob,&af);
-
-        WAIT_STATE( ch, 300 );
-        return;
-    }
-
-    if ( !str_prefix( arg1, "vozhd" ) )
-    {
-        if(ch->pcdata->discipline[VICISSITUDE] < 4)
-        {
-            send_to_char( "You are not skilled enough in Vicissitude to construct a monstrous Vozhd!\n\r", ch );
-            return;
-        }
-
-        if (is_affected(mob, gsn_vicissitude_bonecraft))
-        {
-            sendch("This beast cannot be altered again in such a way!\n\r", ch);
-            return;
-            }
-
-        if(ch->pblood-80 < 10)
-        {
-            send_to_char("You do not have enough blood to alter this person's form.\n\r",ch);
-            return;
-        }
-        ch->pblood -= 80;
-
-        act( "$n grasps $N and wrenches their limbs and body, calling forth bone armor from within and twists the poor creature into a warped monster of destruction.", ch, NULL, mob, TO_NOTVICT );
-
-        mob->name = str_dup("vozhd warghoul ghoul");
-        sprintf(buf,"A vicious bone-armored and spiked version of %s snarls and barely holds back it's urge to kill.\n\r",mob->short_descr);
-        mob->long_descr = str_dup(buf);
-        mob->short_descr = str_dup("A Vozhd Warghoul");
-        mob->max_hit = UMIN(mob->max_hit+5000, 20000);
-        mob->hit = mob->max_hit;
-        mob->hitroll += 400;
-        mob->damroll += 400;
-        mob->armor[0] -= 1000;
-        mob->armor[1] -= 1000;
-        mob->armor[2] -= 1000;
-        mob->armor[3] -= 1000;
-
-        add_follower( mob, ch );
-        mob->leader = ch;
-        ch->pet = mob;
-
-        af.where     = TO_AFFECTS;
-        af.type      = gsn_charm_person;
-        af.level     = ch->level;
-        af.duration  = -1;
-        af.location  = 0;
-        af.modifier  = 0;
-        af.bitvector = AFF_CHARM;
-        affect_to_char(mob,&af);
-
-        af.where     = TO_AFFECTS;
-        af.type      = gsn_vicissitude_bonecraft;
-        af.level     = ch->level;
-        af.duration  = -1;
-        af.location  = 0;
-        af.modifier  = 0;
-        af.bitvector = 0;
-        affect_to_char(mob,&af);
-        WAIT_STATE( ch, 300 );
+        printf_to_char(ch, "You complete the %s transformation.\n\r", warghouls[tier].name);
+        WAIT_STATE(ch, 300);
         return;
     }
 

@@ -1059,7 +1059,6 @@ void rote_spatialperceptions(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_
 void rote_correspondenceperceptions(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
 {
     ROOM_INDEX_DATA *was_room;
-    char buf[MSL];
 
     if(room_is_private(victim->in_room) || victim->obfuscate >= 4 || !can_see(ch, victim))
     {
@@ -1067,13 +1066,8 @@ void rote_correspondenceperceptions(CHAR_DATA *ch, int success, CHAR_DATA *victi
         return;
     }
 
-    if (IS_SET(victim->act, ACT_QUESTMOB))
-    {
-      send_to_char("Quit trying to cheat the system!  You should be ashamed of yourself.\n\r", ch);
-      sprintf(buf,"FLAG:: %s thought they were sneaky and tried to scry on %s with Correspondence Perceptions.\n\r    Don't worry, I stopped them.",ch->name, victim->name);
-      wiznet(buf,ch,NULL,WIZ_FLAGS,0,0);
-      return;
-    }
+        if (check_questmob_target(ch, victim, "scry with Correspondence Perceptions on"))
+                return;
 
     was_room = ch->in_room;
     char_from_room( ch );
@@ -1089,7 +1083,6 @@ void rote_correspondenceperceptions(CHAR_DATA *ch, int success, CHAR_DATA *victi
 
 void rote_sevenleaguestride(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DATA *obj)
 {
-    char buf[MSL];
     ROOM_INDEX_DATA *pRoomIndex;
 
     if(victim == ch)
@@ -1098,13 +1091,8 @@ void rote_sevenleaguestride(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_D
         return;
     }
 
-    if (IS_SET(victim->act, ACT_QUESTMOB))
-    {
-      send_to_char("Quit trying to cheat the system!  You should be ashamed of yourself.\n\r", ch);
-      sprintf(buf,"FLAG:: %s thought they were sneaky and tried to Seven League Stride to %s.\n\r    Don't worry, I stopped them.",ch->name, victim->name);
-      wiznet(buf,ch,NULL,WIZ_FLAGS,0,0);
-      return;
-    }
+        if (check_questmob_target(ch, victim, "Seven League Stride to"))
+                return;
 
     if(IS_SET(victim->in_room->room_flags, ROOM_SAFE)
 	|| IS_SET(ch->in_room->room_flags, ROOM_NO_RECALL)
@@ -1156,7 +1144,6 @@ void rote_conjoinlocalities(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_D
 {
     OBJ_DATA *portal;
     ROOM_INDEX_DATA *pRoomIndex;
-    char buf[MSL];
 
     if(victim == ch)
     {
@@ -1164,13 +1151,8 @@ void rote_conjoinlocalities(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_D
         return;
     }
 
-    if (IS_SET(victim->act, ACT_QUESTMOB))
-    {
-      send_to_char("Quit trying to cheat the system!  You should be ashamed of yourself.\n\r", ch);
-      sprintf(buf,"FLAG:: %s thought they were sneaky and tried to Conjoin Localities to %s.\n\r    Don't worry, I stopped them.",ch->name, victim->name);
-      wiznet(buf,ch,NULL,WIZ_FLAGS,0,0);
-      return;
-    }
+        if (check_questmob_target(ch, victim, "Conjoin Localities to"))
+                return;
 
     if(victim->in_room == NULL || IS_SET(victim->in_room->room_flags, ROOM_SAFE)
     ||   IS_SET(victim->in_room->room_flags, ROOM_PRIVATE)
@@ -1223,7 +1205,6 @@ void rote_mergelocalities(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DAT
 {
     OBJ_DATA *portal;
     OBJ_DATA *portal2;
-    char buf[MSL];
 
     if(victim == ch)
     {
@@ -1231,13 +1212,8 @@ void rote_mergelocalities(CHAR_DATA *ch, int success, CHAR_DATA *victim, OBJ_DAT
         return;
     }
 
-    if (IS_SET(victim->act, ACT_QUESTMOB))
-    {
-      send_to_char("Quit trying to cheat the system!  You should be ashamed of yourself.\n\r", ch);
-      sprintf(buf,"FLAG:: %s thought they were sneaky and tried to Merge Localities to %s.\n\r    Don't worry, I stopped them.",ch->name, victim->name);
-      wiznet(buf,ch,NULL,WIZ_FLAGS,0,0);
-      return;
-    }
+        if (check_questmob_target(ch, victim, "Merge Localities to"))
+                return;
 
     if(victim->in_room == NULL
     ||   IS_SET(victim->in_room->room_flags, ROOM_SAFE)

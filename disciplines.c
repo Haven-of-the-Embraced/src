@@ -1908,13 +1908,8 @@ void do_farsight( CHAR_DATA *ch, char *argument )
         return;
     }
 
-    if (IS_SET(victim->act, ACT_QUESTMOB))
-    {
-      send_to_char("Quit trying to cheat the system!  You should be ashamed of yourself.\n\r", ch);
-      sprintf(buf,"FLAG:: %s thought they were sneaky and tried to use Farsight on %s.\n\r  Don't worry, I stopped them.",ch->name, victim->name);
-      wiznet(buf,ch,NULL,WIZ_FLAGS,0,0);
-      return;
-    }
+        if (check_questmob_target(ch, victim, "use Farsight on"))
+                return;
 
     if (ch->move < ch->level)
     {
@@ -1971,7 +1966,6 @@ void do_farsight( CHAR_DATA *ch, char *argument )
 void do_dash(CHAR_DATA *ch, char *argument)
 {
     CHAR_DATA *victim;
-    char buf[MSL];
 
     if (IS_NPC(ch)) return;
 
@@ -2015,13 +2009,8 @@ void do_dash(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if (IS_SET(victim->act, ACT_QUESTMOB))
-    {
-      send_to_char("Quit trying to cheat the system!  You should be ashamed of yourself.\n\r", ch);
-      sprintf(buf,"FLAG:: %s thought they were sneaky and tried to Dash to %s.\n\r  Don't worry, I stopped them.",ch->name, victim->name);
-      wiznet(buf,ch,NULL,WIZ_FLAGS,0,0);
-      return;
-    }
+        if (check_questmob_target(ch, victim, "Dash to"))
+                return;
 
     if (IS_NPC(victim) && victim->pIndexData->pShop != NULL)
     {
@@ -6146,7 +6135,6 @@ void do_entrancement(CHAR_DATA *ch, char *argument)
 void do_summon(CHAR_DATA *ch, char *argument)
 {
    CHAR_DATA *victim;
-   char buf[MSL];
 
     if(!IS_VAMP(ch))
     {
@@ -6177,13 +6165,8 @@ void do_summon(CHAR_DATA *ch, char *argument)
         return;
     }
 
-    if (IS_SET(victim->act, ACT_QUESTMOB))
-    {
-      send_to_char("Quit trying to cheat the system!  You should be ashamed of yourself.\n\r", ch);
-      sprintf(buf,"FLAG:: %s thought they were sneaky and tried to Summon %s.\n\r    Don't worry, I stopped them.",ch->name, victim->name);
-      wiznet(buf,ch,NULL,WIZ_FLAGS,0,0);
-      return;
-    }
+        if (check_questmob_target(ch, victim, "Summon"))
+                return;
 
     if (IS_NPC(victim) && victim->pIndexData->pShop != NULL)
     {

@@ -638,7 +638,7 @@ void load_mobiles( FILE *fp )
 
     for ( ; ; )
     {
-        sh_int vnum;
+        int vnum;
         char letter;
         int iHash;
         char *word;
@@ -864,7 +864,7 @@ void load_objects( FILE *fp )
 
     for ( ; ; )
     {
-        sh_int vnum;
+        int vnum;
         char letter;
         int iHash;
 

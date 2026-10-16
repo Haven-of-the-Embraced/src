@@ -703,6 +703,8 @@ void save_rooms( FILE *fp, AREA_DATA *pArea )
             && ( IS_SET( pExit->rs_flags,  EX_HIDDEN )))
                 locks = 16;
 
+                        if (IS_SET(pExit->rs_flags, EX_CLIMB))
+                            locks |= 256;
                         fprintf( fp, "D%d\n",      pExit->orig_door );
                         fprintf( fp, "%s~\n",      fix_string( pExit->description ) );
                         fprintf( fp, "%s~\n",      pExit->keyword );

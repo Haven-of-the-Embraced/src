@@ -77,10 +77,50 @@ const   sh_int  movement_loss   [SECT_MAX]  =
  */
 int find_door   args( ( CHAR_DATA *ch, char *arg ) );
 bool    has_key     args( ( CHAR_DATA *ch, int key ) );
+static void move_char_route(CHAR_DATA *ch, int door, bool follow, bool climbing);
 
 
 
 void move_char( CHAR_DATA *ch, int door, bool follow )
+{
+    move_char_route(ch, door, follow, FALSE);
+}
+
+void do_climb(CHAR_DATA *ch, char *argument)
+{
+    char target[MAX_INPUT_LENGTH];
+    EXIT_DATA *exit;
+    ROOM_INDEX_DATA *origin;
+    int door;
+
+    one_argument(argument, target);
+    if (target[0] == '\0')
+    {
+        send_to_char("Climb what?\n\r", ch);
+        return;
+    }
+    if (MOUNTED(ch) || RIDDEN(ch))
+    {
+        send_to_char("You cannot climb while mounted or carrying a rider.\n\r", ch);
+        return;
+    }
+    for (door = 0; door < MAX_DIR; door++)
+    {
+        exit = ch->in_room->exit[door];
+        if (exit != NULL && IS_SET(exit->exit_info, EX_CLIMB)
+        && is_name(target, exit->keyword))
+        {
+            origin = ch->in_room;
+            move_char_route(ch, door, FALSE, TRUE);
+            if (ch->in_room != origin)
+                act("You climb the $t.", ch, target, NULL, TO_CHAR);
+            return;
+        }
+    }
+    send_to_char("You cannot climb that here.\n\r", ch);
+}
+
+static void move_char_route(CHAR_DATA *ch, int door, bool follow, bool climbing)
 {
     CHAR_DATA *fch;
     CHAR_DATA *fch_next;
@@ -132,6 +172,11 @@ void move_char( CHAR_DATA *ch, int door, bool follow )
     {
     send_to_char( "Alas, you cannot go that way.\n\r", ch );
     return;
+    }
+    if (IS_SET(pexit->exit_info, EX_CLIMB) && !climbing)
+    {
+        send_to_char("You must climb to go that way.\n\r", ch);
+        return;
     }
     /*if(is_affected(ch, gsn_unseen) && ch->pcdata->discipline[OBFUSCATE] < 2)
     affect_strip( ch, gsn_unseen );*/
@@ -2401,34 +2446,38 @@ void do_hometown (CHAR_DATA *ch, char *argument)
 ROOM_INDEX_DATA  *get_random_room(CHAR_DATA *ch)
 {
     ROOM_INDEX_DATA *room;
-    int attempts = 0;
+    ROOM_INDEX_DATA *selected = NULL;
+    int hash;
+    int count = 0;
 
-    for ( ; ; )
+    for ( hash = 0; hash < MAX_KEY_HASH; hash++ )
     {
-        room = get_room_index( number_range( 0, 65535 ) );
-        if ( room != NULL )
-        if ( can_see_room(ch,room)
-	&&   !room_is_private(room)
-        &&  !IS_SET(room->area->area_flags, AREA_NOTELE)
-        &&  !IS_SET(room->area->area_flags, AREA_UNLINKED)
-        &&   !IS_SET(room->room_flags, ROOM_PRIVATE)
-        &&   !IS_SET(room->room_flags, ROOM_UMBRA)
-        &&   !IS_SET(room->room_flags, ROOM_SOLITARY)
-	&&   !IS_SET(room->room_flags, ROOM_SAFE)
-	&&   (IS_NPC(ch) || IS_SET(ch->act,ACT_AGGRESSIVE)
-	||   !IS_SET(room->room_flags,ROOM_LAW)))
-            break;
-
-        if ( ++attempts > 50000 )
+        for ( room = room_index_hash[hash]; room != NULL; room = room->next )
         {
-            room = get_room_index( ROOM_VNUM_TEMPLE );
-            if ( room == NULL )
-                room = get_room_index( ROOM_VNUM_LIMBO );
-            break;
+            if ( can_see_room(ch,room)
+            &&   !room_is_private(room)
+            &&   !IS_SET(room->area->area_flags, AREA_NOTELE)
+            &&   !IS_SET(room->area->area_flags, AREA_UNLINKED)
+            &&   !IS_SET(room->room_flags, ROOM_PRIVATE)
+            &&   !IS_SET(room->room_flags, ROOM_UMBRA)
+            &&   !IS_SET(room->room_flags, ROOM_SOLITARY)
+            &&   !IS_SET(room->room_flags, ROOM_SAFE)
+            &&   (IS_NPC(ch) || IS_SET(ch->act,ACT_AGGRESSIVE)
+            ||   !IS_SET(room->room_flags,ROOM_LAW)))
+            {
+                count++;
+                if ( number_range(1, count) == 1 )
+                    selected = room;
+            }
         }
     }
 
-    return room;
+    if ( selected == NULL )
+        selected = get_room_index( ROOM_VNUM_TEMPLE );
+    if ( selected == NULL )
+        selected = get_room_index( ROOM_VNUM_LIMBO );
+
+    return selected;
 }
 
 /* RT Enter portals */

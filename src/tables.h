@@ -67,7 +67,7 @@ struct sect_type
     char    *name;
     char    *cname;
     char    *who_name;
-    sh_int  hall;
+    int     hall;
     bool    vamp;
 };
 struct  rote_type
@@ -123,7 +123,7 @@ struct  brew_type
     int level;
     int plevel;
     int diff;
-    sh_int component[5];
+    int component[5];
     bool mage;
     bool immonly;
     char *color;

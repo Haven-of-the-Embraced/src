@@ -4164,6 +4164,7 @@ void renown_gain args ( (CHAR_DATA *ch ) );
 void affects_update args( (void) );
 
 /* handler.c */
+bool check_questmob_target args( (CHAR_DATA *ch, CHAR_DATA *victim, const char *action) );
 int     get_aff_mod args((CHAR_DATA *ch, int sn, int loc));
 AD      *affect_find args( (AFFECT_DATA *paf, int sn));
 void    affect_check    args( (CHAR_DATA *ch, int where, int vector) );

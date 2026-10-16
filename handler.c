@@ -52,6 +52,20 @@
 void    affect_modify   args( ( CHAR_DATA *ch, AFFECT_DATA *paf, bool fAdd ) );
 void    obj_affect_to_char args( ( CHAR_DATA *ch, OBJ_DATA *obj, int iWear ) );
 
+bool check_questmob_target(CHAR_DATA *ch, CHAR_DATA *victim, const char *action)
+{
+    char buf[MAX_STRING_LENGTH];
+
+    if (!IS_SET(victim->act, ACT_QUESTMOB))
+        return FALSE;
+
+    send_to_char("Quit trying to cheat the system!  You should be ashamed of yourself.\n\r", ch);
+    snprintf(buf, sizeof(buf), "FLAG:: %s thought they were sneaky and tried to %s %s.\n\r    Don't worry, I stopped them.",
+        ch->name, action, victim->name);
+    wiznet(buf, ch, NULL, WIZ_FLAGS, 0, 0);
+    return TRUE;
+}
+
 /* friend stuff -- for NPC's mostly */
 bool is_friend(CHAR_DATA *ch,CHAR_DATA *victim)
 {

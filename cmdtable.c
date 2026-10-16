@@ -52,6 +52,7 @@ const   struct  cmdfun_type cmdfun_table    [] =
     { "west",       do_west },
     { "up",     do_up },
     { "down",       do_down },
+    { "climb",      do_climb },
 
     /*
      * Common other commands.

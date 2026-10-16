@@ -692,6 +692,7 @@ const struct flag_type exit_flags[] =
     {   "nolock",       EX_NOLOCK,      TRUE    },
     {   "lift",     EX_LIFT,        TRUE    },
     {   "hidden",       EX_HIDDEN,      TRUE    },
+    {   "climb",        EX_CLIMB,       TRUE    },
     {   NULL,           0,          0   }
 };
 

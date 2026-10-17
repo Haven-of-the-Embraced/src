@@ -2,7 +2,7 @@
 
 All code-dependent rooms, mobiles, and objects previously scattered across 16 legacy `.are` files have been consolidated into two sanitized core system area files:
 - **`area/limbo.are` (`1–99`)**: Core engine primitives (Void/Limbo rooms, currency, corpses, body parts, discipline/spell summons and tokens).
-- **`area/codespecii.are` (`100–299`)**: Core sanctuary hub rooms (`100–113`), system NPCs & Garou spiritquest mobs (`100–131`), crafting/school/system objects (`100–142`), quest rewards (`150–170`), brewing components (`180–192`), harvestable trees & logs (`200–209`), and mineable veins, ores, & pickaxe (`210–230`).
+- **`area/codespecii.are` (`100–299`)**: Core sanctuary hub rooms (`100–113`), Prelude tutorial rooms (`250–261`), system NPCs & Garou spiritquest mobs (`100–131`), Prelude tutorial NPCs & mobprogs (`250–261`), crafting/school/system objects (`100–142`), quest rewards (`150–170`), brewing components (`180–192`), harvestable trees & logs (`200–209`), and mineable veins, ores, & pickaxe (`210–230`).
 
 ---
 
@@ -26,6 +26,7 @@ All code-dependent rooms, mobiles, and objects previously scattered across 16 le
 | `3705` | `barracks.are` | The Grand Training Barracks (`class_table` guild) | `111` | `codespecii.are` |
 | — | `codespecii.are` | The Healer's Sanctum | `112` | `codespecii.are` |
 | `26000` | `uquest.are` | The Questmaster's Office | `113` | `codespecii.are` |
+| `30000–30011` | `prelude.are` | `ROOM_VNUM_PRELUDE` (`250`) & Newbie Prelude Tutorial Rooms | `250–261` | `codespecii.are` |
 | `3001` | `midgaard.are` | `db.c` / `save.c` fallback safe room | `101` | `codespecii.are` |
 | `3003, 9619` | `midgaard.are`, `suceava.are` | `class_table` guild rooms (`const.c`) | `101, 111` | `codespecii.are` |
 | `9621, 9706` | `suceava.are` | `act_obj.c` special exit transfer rooms | `100, 101` | `codespecii.are` |
@@ -61,6 +62,7 @@ All code-dependent rooms, mobiles, and objects previously scattered across 16 le
 | `2100` | `wyrma.are` | `GROUP_VNUM_TROLLS` | `108` | `codespecii.are` |
 | `2101` | `wyrma.are` | `GROUP_VNUM_OGRES` | `109` | `codespecii.are` |
 | `30720–30731` | `umbra1.are` | `MOB_VNUM_SPIRITQUEST` (12 Garou Spiritquest Mobs) | `120–131` | `codespecii.are` |
+| `30000–30011` | `prelude.are` | Prelude Tutorial NPCs & `#MPCODE` (`250–259`) | `250–261` | `codespecii.are` |
 
 ---
 

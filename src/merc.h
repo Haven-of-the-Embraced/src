@@ -1779,6 +1779,7 @@ struct  kill_data
 #define ROOM_VNUM_DEMISE        106
 #define ROOM_VNUM_HONOR         107
 #define ROOM_VNUM_PARADOX       105
+#define ROOM_VNUM_PRELUDE       250
 
 
 

@@ -911,6 +911,498 @@ Material unknown~
 MaxLoad -1
 F af2 D
 End
+#250
+#MOBFORMAT dynamic
+Name crossroads guardian~
+ShD a mysterious guardian~
+LnD A mysterious guardian stands at the crossroads.
+~
+Desc A cloaked figure stands quietly at the fork in the road, watching travelers
+as they choose their path.
+~
+Race human~
+Act ABU
+Act2 E
+Aff 0
+Align 0
+Group 0
+Level 30
+Hitroll 10
+HitDice 1d1+999
+ManaDice 1d1+999
+DamDice 2d4+30
+DamType beating
+AcPierce -15
+AcBash -15
+AcSlash -15
+AcExotic -15
+AttrFlags 0
+AbilFlags 0
+OffFlags 0
+ImmFlags a
+ResFlags 0
+VulnFlags P
+StartPos stand
+DefaultPos stand
+Sex male
+Wealth 0
+Form AHMV
+Parts ABCDEFGHIJK
+Size medium
+Material unknown~
+MaxLoad -1
+M GREET 250 100~
+End
+#251
+#MOBFORMAT dynamic
+Name sire vampire~
+ShD your sire~
+LnD Your sire waits for you here.
+~
+Desc An imposing vampire watches you from the shadows of the alley.
+~
+Race vampire~
+Act ABU
+Act2 E
+Aff 0
+Align 0
+Group 0
+Level 30
+Hitroll 10
+HitDice 1d1+999
+ManaDice 1d1+999
+DamDice 2d4+30
+DamType beating
+AcPierce -15
+AcBash -15
+AcSlash -15
+AcExotic -15
+AttrFlags 0
+AbilFlags 0
+OffFlags 0
+ImmFlags R
+ResFlags BEL
+VulnFlags HNPa
+StartPos stand
+DefaultPos stand
+Sex male
+Wealth 0
+Form AHMV
+Parts ABCDEFGHIJK
+Size medium
+Material unknown~
+MaxLoad -1
+M GREET 251 100~
+End
+#252
+#MOBFORMAT dynamic
+Name chained vessel~
+ShD a chained vessel~
+LnD A chained vessel is here, ready for feeding.
+~
+Desc A weak human is chained to the alley wall, unable to flee.
+~
+Race human~
+Act ABU
+Act2 E
+Aff 0
+Align 0
+Group 0
+Level 1
+Hitroll 10
+HitDice 1d1+999
+ManaDice 1d1+99
+DamDice 1d1+0
+DamType beating
+AcPierce 10
+AcBash 10
+AcSlash 10
+AcExotic 10
+AttrFlags 0
+AbilFlags 0
+OffFlags 0
+ImmFlags a
+ResFlags 0
+VulnFlags P
+StartPos stand
+DefaultPos stand
+Sex either
+Wealth 0
+Form AHMV
+Parts ABCDEFGHIJK
+Size medium
+Material unknown~
+MaxLoad -1
+End
+#253
+#MOBFORMAT dynamic
+Name gatekeeper vampire~
+ShD a dark gatekeeper~
+LnD A dark gatekeeper blocks the way.
+~
+Desc A dark vampire guards the passage deeper into the training grounds.
+~
+Race vampire~
+Act ABU
+Act2 E
+Aff 0
+Align 0
+Group 0
+Level 30
+Hitroll 10
+HitDice 1d1+999
+ManaDice 1d1+999
+DamDice 2d4+30
+DamType beating
+AcPierce -15
+AcBash -15
+AcSlash -15
+AcExotic -15
+AttrFlags 0
+AbilFlags 0
+OffFlags 0
+ImmFlags R
+ResFlags BEL
+VulnFlags HNPa
+StartPos stand
+DefaultPos stand
+Sex male
+Wealth 0
+Form AHMV
+Parts ABCDEFGHIJK
+Size medium
+Material unknown~
+MaxLoad -1
+M GREET 252 100~
+End
+#254
+#MOBFORMAT dynamic
+Name discipline master~
+ShD a discipline master~
+LnD A master of vampiric disciplines waits here.
+~
+Desc A wise older vampire observes your command of the Blood.
+~
+Race vampire~
+Act ABU
+Act2 E
+Aff 0
+Align 0
+Group 0
+Level 30
+Hitroll 10
+HitDice 1d1+999
+ManaDice 1d1+999
+DamDice 2d4+30
+DamType beating
+AcPierce -15
+AcBash -15
+AcSlash -15
+AcExotic -15
+AttrFlags 0
+AbilFlags 0
+OffFlags 0
+ImmFlags R
+ResFlags BEL
+VulnFlags HNPa
+StartPos stand
+DefaultPos stand
+Sex male
+Wealth 0
+Form AHMV
+Parts ABCDEFGHIJK
+Size medium
+Material unknown~
+MaxLoad -1
+M GREET 253 100~
+End
+#255
+#MOBFORMAT dynamic
+Name sparring dummy~
+ShD a sparring dummy~
+LnD A sparring dummy is here to practice on.
+~
+Desc A stuffed training dummy stands ready for combat practice.
+~
+Race human~
+Act ABU
+Act2 E
+Aff 0
+Align 0
+Group 0
+Level 1
+Hitroll 0
+HitDice 1d1+19
+ManaDice 1d1+99
+DamDice 1d1+0
+DamType beating
+AcPierce 10
+AcBash 10
+AcSlash 10
+AcExotic 10
+AttrFlags 0
+AbilFlags 0
+OffFlags 0
+ImmFlags a
+ResFlags 0
+VulnFlags P
+StartPos stand
+DefaultPos stand
+Sex either
+Wealth 0
+Form AHMV
+Parts ABCDEFGHIJK
+Size medium
+Material unknown~
+MaxLoad -1
+M FIGHT 254 100~
+End
+#256
+#MOBFORMAT dynamic
+Name elder vampire remort~
+ShD an elder vampire~
+LnD An elder vampire stands here, radiating power.
+~
+Desc A very old vampire waits at the threshold of your graduation.
+~
+Race vampire~
+Act ABU
+Act2 E
+Aff 0
+Align 0
+Group 0
+Level 30
+Hitroll 10
+HitDice 1d1+999
+ManaDice 1d1+999
+DamDice 2d4+30
+DamType beating
+AcPierce -15
+AcBash -15
+AcSlash -15
+AcExotic -15
+AttrFlags 0
+AbilFlags 0
+OffFlags 0
+ImmFlags R
+ResFlags BEL
+VulnFlags HNPa
+StartPos stand
+DefaultPos stand
+Sex male
+Wealth 0
+Form AHMV
+Parts ABCDEFGHIJK
+Size medium
+Material unknown~
+MaxLoad -1
+M GREET 255 100~
+End
+#257
+#MOBFORMAT dynamic
+Name ranger guide~
+ShD a forest ranger~
+LnD A forest ranger welcomes you to the wilds.
+~
+Desc A seasoned human ranger watches over the forest trail.
+~
+Race human~
+Act ABU
+Act2 E
+Aff 0
+Align 0
+Group 0
+Level 30
+Hitroll 10
+HitDice 1d1+999
+ManaDice 1d1+999
+DamDice 2d4+30
+DamType beating
+AcPierce -15
+AcBash -15
+AcSlash -15
+AcExotic -15
+AttrFlags 0
+AbilFlags 0
+OffFlags 0
+ImmFlags a
+ResFlags 0
+VulnFlags P
+StartPos stand
+DefaultPos stand
+Sex male
+Wealth 0
+Form AHMV
+Parts ABCDEFGHIJK
+Size medium
+Material unknown~
+MaxLoad -1
+M GREET 256 100~
+End
+#258
+#MOBFORMAT dynamic
+Name sparring dummy forest~
+ShD a wooden sparring dummy~
+LnD A wooden sparring dummy stands in the clearing.
+~
+Desc A sturdy wooden dummy stands in the clearing for combat practice.
+~
+Race human~
+Act ABU
+Act2 E
+Aff 0
+Align 0
+Group 0
+Level 1
+Hitroll 0
+HitDice 1d1+19
+ManaDice 1d1+99
+DamDice 1d1+0
+DamType beating
+AcPierce 10
+AcBash 10
+AcSlash 10
+AcExotic 10
+AttrFlags 0
+AbilFlags 0
+OffFlags 0
+ImmFlags a
+ResFlags 0
+VulnFlags P
+StartPos stand
+DefaultPos stand
+Sex either
+Wealth 0
+Form AHMV
+Parts ABCDEFGHIJK
+Size medium
+Material unknown~
+MaxLoad -1
+M FIGHT 254 100~
+End
+#259
+#MOBFORMAT dynamic
+Name grove druid~
+ShD a grove druid~
+LnD A grove druid tends to the ancient trees.
+~
+Desc A wise druid tends the sacred grove.
+~
+Race human~
+Act ABU
+Act2 E
+Aff 0
+Align 0
+Group 0
+Level 30
+Hitroll 10
+HitDice 1d1+999
+ManaDice 1d1+999
+DamDice 2d4+30
+DamType beating
+AcPierce -15
+AcBash -15
+AcSlash -15
+AcExotic -15
+AttrFlags 0
+AbilFlags 0
+OffFlags 0
+ImmFlags a
+ResFlags 0
+VulnFlags P
+StartPos stand
+DefaultPos stand
+Sex male
+Wealth 0
+Form AHMV
+Parts ABCDEFGHIJK
+Size medium
+Material unknown~
+MaxLoad -1
+M GREET 257 100~
+End
+#260
+#MOBFORMAT dynamic
+Name skills master~
+ShD a skills master~
+LnD A skills master is ready to teach you.
+~
+Desc A master of mortal skills stands ready to instruct you.
+~
+Race human~
+Act ABU
+Act2 E
+Aff 0
+Align 0
+Group 0
+Level 30
+Hitroll 10
+HitDice 1d1+999
+ManaDice 1d1+999
+DamDice 2d4+30
+DamType beating
+AcPierce -15
+AcBash -15
+AcSlash -15
+AcExotic -15
+AttrFlags 0
+AbilFlags 0
+OffFlags 0
+ImmFlags a
+ResFlags 0
+VulnFlags P
+StartPos stand
+DefaultPos stand
+Sex male
+Wealth 0
+Form AHMV
+Parts ABCDEFGHIJK
+Size medium
+Material unknown~
+MaxLoad -1
+M GREET 258 100~
+End
+#261
+#MOBFORMAT dynamic
+Name forest remort guide~
+ShD a remort guide~
+LnD A remort guide stands here.
+~
+Desc A wise human guide prepares you to enter the world beyond the forest.
+~
+Race human~
+Act ABU
+Act2 E
+Aff 0
+Align 0
+Group 0
+Level 30
+Hitroll 10
+HitDice 1d1+999
+ManaDice 1d1+999
+DamDice 2d4+30
+DamType beating
+AcPierce -15
+AcBash -15
+AcSlash -15
+AcExotic -15
+AttrFlags 0
+AbilFlags 0
+OffFlags 0
+ImmFlags a
+ResFlags 0
+VulnFlags P
+StartPos stand
+DefaultPos stand
+Sex male
+Wealth 0
+Form AHMV
+Parts ABCDEFGHIJK
+Size medium
+Material unknown~
+MaxLoad -1
+M GREET 259 100~
+End
 #0
 
 
@@ -1173,17 +1665,393 @@ trash GY A
 0 0 0 0 0
 1 2 50 P
 E
-pagec~
-{c-------------------------------------------------------{x
-You must be bored, looking for pages that aren't supposed to
-be here. Newbie Guide Book written by Sargoth Neevosaiden,
-a.k.a. Maelstrome Neevosaiden.
+book~
+{c---------------------------------------------------------------------------{x
+Welcome to Haven of the Embraced.  This is a world loosely based on the
+World of Darkness by White Wolf.  You will see many things during your stay
+here, and there are some things you will need to know.  Below is a list of
+pages that are contained within this book.  To read a page type 'look page#'
+i.e.: {Clook page1{x
+{c---------------------------------------------------------------------------{x
+Table of Contents
  
-I hope that you have found this guide useful, if you have
-any questions please feel free to ask.
+{MPage1 {x- About Your Character
+{MPage2 {x- Getting Started
+{MPage3 {x- Freebies
+{MPage4 {x- Items and Equipment
+{MPage5 {x- Communicating on Haven
+{MPage6 {x- Skills and Prayers
+{MPage7 {x- Clans, Tribes, Traditions
+{MPage8 {x- Immortals and Administration
+{MPage9 {x- Haven's Rules
+{MPageA {x- Message Boards
+{MPageB {x- Frequently Asked Questions
+~
+E
+newbie~
+{c---------------------------------------------------------------------------{x
+Welcome to Haven of the Embraced.  This is a world loosely based on the
+World of Darkness by White Wolf.  You will see many things during your stay
+here, and there are some things you will need to know.  Below is a list of
+pages that are contained within this book.  To read a page type 'look page#'
+i.e.: {Clook page1{x
+{c---------------------------------------------------------------------------{x
+Table of Contents
+ 
+{MPage1 {x- About Your Character
+{MPage2 {x- Getting Started
+{MPage3 {x- Freebies
+{MPage4 {x- Items and Equipment
+{MPage5 {x- Communicating on Haven
+{MPage6 {x- Skills and Prayers
+{MPage7 {x- Clans, Tribes, Traditions
+{MPage8 {x- Immortals and Administration
+{MPage9 {x- Haven's Rules
+{MPageA {x- Message Boards
+{MPageB {x- Frequently Asked Questions
+~
+E
+guide~
+{c---------------------------------------------------------------------------{x
+Welcome to Haven of the Embraced.  This is a world loosely based on the
+World of Darkness by White Wolf.  You will see many things during your stay
+here, and there are some things you will need to know.  Below is a list of
+pages that are contained within this book.  To read a page type 'look page#'
+i.e.: {Clook page1{x
+{c---------------------------------------------------------------------------{x
+Table of Contents
+ 
+{MPage1 {x- About Your Character
+{MPage2 {x- Getting Started
+{MPage3 {x- Freebies
+{MPage4 {x- Items and Equipment
+{MPage5 {x- Communicating on Haven
+{MPage6 {x- Skills and Prayers
+{MPage7 {x- Clans, Tribes, Traditions
+{MPage8 {x- Immortals and Administration
+{MPage9 {x- Haven's Rules
+{MPageA {x- Message Boards
+{MPageB {x- Frequently Asked Questions
+~
+E
+page1~
+About Your Character
+{c-------------------------------------------------------{x
+At any time you wish to see the list of commands available
+to your character, simply type '{Ccommands{x' ({WBe sure to type{x
+{Wthe entire word, including the '{Ys{W'){x  This will give you a
+listing of all commands on Haven.  Be aware that some of
+the commands will not be available for use unless you meet
+certain requirements.
 
-{R--{xEdited and Updated by Gilean, the Red Robe of Balance 
-  January 2020
+By typing {Cscore{x, you will be shown a detailed report
+of your character's basic statistics.  Useful information,
+such as your health, gold, level, etc., will be displayed
+for your perusal.
+
+At any time, you can use the {Chelp{x menus, by simply typing
+{Chelp <command here>{x.  For example, {Chelp score{x will show
+you a help file on the 'score' command.  {Y*We are currently{x
+{Yin the process of updating and adding help files.*{x
+
+The {Cwho{x command will show you a list of players who are
+currently visible to you on Haven.  Some players may be
+invisible, or otherwise hidden from sight.
+ 
+Another useful command is {Carea{x, which shows a list of
+areas on Haven, and a general level range for those areas.
+This can help you judge proper areas to explore.
+
+Using {Cscan{x, you will glance at rooms adjacent to you and
+see any visible enemies or players there.
+{c-------------------------------------------------------{x
+~
+E
+page2~
+Getting Started
+{c-------------------------------------------------------{x
+By using the 'Look' command, you can see what is in a room.
+The look command can also be used to look at an object, or
+a person.  ex: {C'look'{x, '{Clook knife{x', '{Clook (playername){x'
+ 
+Another command that is as useful as look, is 'examine'
+by using this you can take a closer look at an item, or
+player. 'examine book' 'examine (playername)'
+ 
+There are 6 movement commands available to you. They are
+'{Cnorth{x' '{Csouth{x' '{Ceast{x' '{Cwest{x' '{Cup{x' and '{Cdown{x' Use these
+commands to move around Haven.
+ 
+The '{Ckill{x' command will be one of the commands that you 
+use the most. It allows you to attempt to kill a monster.
+The kill command can also be used to attack a player,
+though this isn't recommeded at this time, type 'help pk'
+for more information on our rules for player killing.
+If you have any questions about it, feel free to ask an
+immortal.
+ 
+One of the most common sights in Haven is a corpse.
+If you die, your corpse will be in the place that you
+died at. You will need to go and retrieve anything from
+your corpse. This is where the '{Cget{x' command comes in,
+'{Cget all corpse{x' will get everything that you can see from
+the corpse you are looting. '{Cget (item) corpse{x' will get
+just a particular item from a corpse. The get command will
+also allow you to pick up something that might be lying on
+the ground.
+ 
+After you have read the Newbie Guide, the best thing for
+you to do, is to go through Newbie Training School, so that
+you become more familiar with the commands that you will be
+using.
+ 
+After you have completed Newbie Training School, the
+next area that you will find yourself in is Vantage Point.
+Use this area to gain some experience before moving on.
+{c-------------------------------------------------------{x
+~
+E
+page3~
+Freebies
+{c-------------------------------------------------------{x
+Once you have finished your 'Creation Process' to flesh
+out your character (or have used one of the three starter
+templates), you will be supplied with 15 Freebie Points
+to spend at your leisure.  Aside from your initial creation,
+these points will be your main source of advancement for
+your character here on Haven of the Embraced.  All of the
+Statistics that you find on your Character Sheet ({Ccs{x, {Ccs2{x,
+and {Ccs3{x) are all increased via these Freebie Points.
+
+Using the {Cfreebie{x command, you are able to bring up the
+Freebie Cost screen for your character.  The costs of
+increasing the different sections of your character sheet
+are shown.  All characters will see the costs for common
+statistics found among all characters (Attributes, Abilities,
+Willpower, just to name a few), but you will also see any
+costs for stats that are specific to your character's race
+(Disciplines, Spheres, etc.).  Your current Freebie Points
+are also listed here for convenience.
+
+In order to gain additional Freebie Points to advance your
+character, you must level up to Level 100.  Once you have
+reached Level 100, you have the option to 'remort' to
+become more powerful.  This resets your character level
+down to level 1, but increases your Freebie Points by 3.
+Freebies do not need to be spent immediately, and can be
+saved up to purchase more expensive upgrades as needed.
+See {yhelp remort{x for additional information on remorts.
+{c-------------------------------------------------------{x
+~
+E
+page4~
+Items and Equipment
+{c-------------------------------------------------------{x
+You will start out with a few pieces of equipment. Type
+'{Cequipment{x' to see what you are currently wear{xing. Also
+type '{Cinventory{x' to see what you are currently carrying.
+ 
+To wear a particular piece of equipment, use the '{Cwear{x'
+command.  Example: '{Cwear dagger{x' '{Cwear all{x'
+ 
+To {Cremove{x a piece of equipment use the 'remove' command.
+Example : 'remove dagger' 'remove all'
+ 
+On occassion, you might not be able to remove a particular
+piece of equipment, this might be because the item is 
+cursed, in which case you might want to visit a healer, or
+convince someone to help you remove the curse upon the item.
+ 
+You will find various pieces of equipment throughout your
+travels, sometimes they will be weaker than what you might
+currently be wearing, sometimes they might be stronger
+than what you are currently wearing. You can only wear
+equipment that is equal to your current level or lower.
+{c-------------------------------------------------------{x
+~
+E
+page5~
+Communication on Haven
+{c-------------------------------------------------------{x
+There are a variety of ways in which you can communicate
+on Haven.
+ 
+OOC : is the Out of Character chat channel, this is used
+for general chat, and has absolutely nothing to do with
+any Roleplaying aspect of your character. The command for
+OOC is 'ooc (texthere)'
+OOC is broadcast to everyone on the mud.
+ 
+GOSSIP : This channel is for In Character chat, it is used
+for the Roleplaying aspect of your character. The command
+for GOSSIP is 'gossip (texthere)'
+GOSSIP is also broadcast to everyone on the mud.
+ 
+SAY : This is another of the In Character chat channels,
+that you may use in roleplaying your character.
+SAY will only be shown to those who are in the same room
+as you are. The command for SAY is 'say (texthere)'
+ 
+OSAY : This is much like the SAY command except that it is
+for out of charcter chatting to people in the same room as
+you are. The command for OSAY is 'osay (texthere)'
+ 
+TELL : This command is used to send a private message to
+another person. The TELL channel is an out of character
+channel. The command for TELL is, 'tell (person) (text)'
+ 
+Other channels available to you are SHOUT and YELL. Shout
+will send a message to all players who are awake in the 
+world. Yell will send a message to all awake players in
+the same area as you are.
+ 
+By typing 'channel' you will see a list of channels that
+are available to you. For help on a particular channel
+type 'help (channelhere)'
+{c-------------------------------------------------------{x
+~
+E
+page6~
+Skills and Prayers
+{c-------------------------------------------------------{x
+Typing 'skills' will show you a list of skills that you 
+have at your current level.  By typing 'skills all', you
+can see a list of your acquired skills, and what level
+they are accessed.
+ 
+Spells are known as prayers on Haven. By typing 'prayer'
+you will be shown a list of prayers that are available to
+you. By typing 'prayer all' you will be shown a list of 
+the prayers you have learned, and what level the prayer
+is able to be used.
+ 
+Your ability in a particular skill or prayer is respresented
+with a percentage.  This percentage has a small chance of
+increasing upon usage, whether it is successful for not.
+There are some skills that are considered "always on",
+such as 'second attack' or 'enhanced speed', and have the
+chance to increase upon triggering.
+ 
+In order to gain new skills and prayers, you must increase
+the portions of your character found on your Character
+Sheet.  Refer to the Freebies page of this guide for
+additional information.  Using the {Cskillmap{x command
+will give you a list of all skills in Haven, along with the
+corresponding character sheet statistic and dot level
+needed to learn the skill or prayer.
+{c-------------------------------------------------------{x
+~
+E
+page7~
+Clans, Tribes, Traditions
+{c-------------------------------------------------------{x
+The different 'races' of Haven have a variety of affiliations
+available, depending on which type of character you are
+playing.  Each is unique, with its own pool of powers for
+you to have access to.
+ 
+Vampires begin the game as a member of a clan, selected
+during character creation.  See {yhelp clans{x for additional
+information on clans.
+
+Werewolf Tribes are more akin to an adopted family.  A
+werewolf must be inducted into one of the tribes by a
+senior member of that specific Tribe.  See {yhelp tribes{x
+for more information.
+
+Mages must be Awakened into a specific Tradition by a
+senior member of that Tradition.  See {yhelp traditions{x
+for Tradition information.
+
+At this time, there are no specific affiliations for general
+humans.  A human can become embraced into a clan by a
+vampire, inducted into a tribe by a werewolf, or inducted
+into a tradition by a mage.  In this respect, a normal
+basic human has a multitude of options to advance.
+{c-------------------------------------------------------{x
+~
+E
+page8~
+Immortals and Administration
+{c-------------------------------------------------------{x
+Anyone who is above level 100, is an immortal, they are the
+builders and administration of the mud. If you need any
+assistiance please feel free to look for them, or use the
+OOC channel to ask for one. Immortals are here to help as
+well as work on Haven to make it a better place.
+
+You can also use the {Cplead{x command to attempt to contact
+an immortal who is logged in at the time.
+ 
+The {Cwizlist{x command will give the most current list of
+active Immortals.
+
+If you are looking to apply for a position on the immortal
+staff, please read the application that is located under
+'{chelp application{x'.  Answer the questions and write the
+required descriptions, then send them to the Immortals as
+instructed in the helpfile.  To be considered for an Immortal
+position, you must have played at least 10 hours.
+{c-------------------------------------------------------{x
+~
+E
+page9~
+Haven's Rules
+{c------------------------------------------------------------------{x
+These are the rules of Haven of the Embraced.  Read them, understand
+them, worship them.
+ 
+1: See the help pk file for Player Killing rules.
+ 
+2: Your presence here is a privilege not a right. Obey any orders
+   from gods, and you will be fine.  Deletion does not require a
+   reason, appeals should be sent to Matthew alone.
+ 
+3: Sitting around idle with a client is hazardous to your health.
+   We may choose to disconnect or forcequit you for your own safety.
+ 
+4: No multiple logins, multiple playing, or helping your own
+   characters with other characters you own -- by any arrangment.
+ 
+5: No kill stealing.  This means you cannot attack a mob someone else
+   is fighting, unless they ask you to. Also avoid attacking fleeing
+   mobs.
+ 
+6: Cheating will not be tolerated.  This includes accepting favors
+   from gods and exploiting bugs. If you find a bug, report it, then
+   do not use it.
+ 
+7: Changes to these rules are at the discretion of the immortals, and
+   may be done without warning, notice, or even evidence of sanity.
+ 
+8: On this mud, The Mad Hatter was god, is god, and will always be god. If he
+   says something, it's law. If he decides something, accept it. If
+   he rewards you, worship him. If he punishes you, be thankful he
+   didn't do worse.
+ 
+                Walk softly, and carry a big Stake.
+{c---------------------------------------------------------------------{x
+~
+E
+pagea~
+Message Boards
+{c-------------------------------------------------------{x
+There are several message boards available.
+ 
+News : is a message board from which you will see some
+       In Character announcements.
+Change : This message board is used to notify players
+       of any changes that the coders implement into the
+       mud.
+Note : This is a player message board, you may send
+       notes to everyone, or just one person.
+Idea : This message board is used to submit ideas of
+       things you would like to see put into Haven.
+RpNote: This is message board is used for IC notes and
+       global storylines.
+ 
+See 'help note' for more information on how to use
+the message boards.
 {c-------------------------------------------------------{x
 ~
 E
@@ -1233,394 +2101,18 @@ A:Log in, play and learn about the MUD.  Spread the word to your friends.
 {c---------------------------------------------------------------------{x
 ~
 E
-pagea~
-Message Boards
+pagec~
 {c-------------------------------------------------------{x
-There are several message boards available.
+You must be bored, looking for pages that aren't supposed to
+be here. Newbie Guide Book written by Sargoth Neevosaiden,
+a.k.a. Maelstrome Neevosaiden.
  
-News : is a message board from which you will see some
-       In Character announcements.
-Change : This message board is used to notify players
-       of any changes that the coders implement into the
-       mud.
-Note : This is a player message board, you may send
-       notes to everyone, or just one person.
-Idea : This message board is used to submit ideas of
-       things you would like to see put into Haven.
-RpNote: This is message board is used for IC notes and
-       global storylines.
- 
-See 'help note' for more information on how to use
-the message boards.
-{c-------------------------------------------------------{x
-~
-E
-page9~
-Haven's Rules
-{c------------------------------------------------------------------{x
-These are the rules of Haven of the Embraced.  Read them, understand
-them, worship them.
- 
-1: See the help pk file for Player Killing rules.
- 
-2: Your presence here is a privilege not a right. Obey any orders
-   from gods, and you will be fine.  Deletion does not require a
-   reason, appeals should be sent to Matthew alone.
- 
-3: Sitting around idle with a client is hazardous to your health.
-   We may choose to disconnect or forcequit you for your own safety.
- 
-4: No multiple logins, multiple playing, or helping your own
-   characters with other characters you own -- by any arrangment.
- 
-5: No kill stealing.  This means you cannot attack a mob someone else
-   is fighting, unless they ask you to. Also avoid attacking fleeing
-   mobs.
- 
-6: Cheating will not be tolerated.  This includes accepting favors
-   from gods and exploiting bugs. If you find a bug, report it, then
-   do not use it.
- 
-7: Changes to these rules are at the discretion of the immortals, and
-   may be done without warning, notice, or even evidence of sanity.
- 
-8: On this mud, The Mad Hatter was god, is god, and will always be god. If he
-   says something, it's law. If he decides something, accept it. If
-   he rewards you, worship him. If he punishes you, be thankful he
-   didn't do worse.
- 
-                Walk softly, and carry a big Stake.
-{c---------------------------------------------------------------------{x
-~
-E
-page8~
-Immortals and Administration
-{c-------------------------------------------------------{x
-Anyone who is above level 100, is an immortal, they are the
-builders and administration of the mud. If you need any
-assistiance please feel free to look for them, or use the
-OOC channel to ask for one. Immortals are here to help as
-well as work on Haven to make it a better place.
+I hope that you have found this guide useful, if you have
+any questions please feel free to ask.
 
-You can also use the {Cplead{x command to attempt to contact
-an immortal who is logged in at the time.
- 
-The {Cwizlist{x command will give the most current list of
-active Immortals.
-
-If you are looking to apply for a position on the immortal
-staff, please read the application that is located under
-'{chelp application{x'.  Answer the questions and write the
-required descriptions, then send them to the Immortals as
-instructed in the helpfile.  To be considered for an Immortal
-position, you must have played at least 10 hours.
+{R--{xEdited and Updated by Gilean, the Red Robe of Balance 
+  January 2020
 {c-------------------------------------------------------{x
-~
-E
-page7~
-Clans, Tribes, Traditions
-{c-------------------------------------------------------{x
-The different 'races' of Haven have a variety of affiliations
-available, depending on which type of character you are
-playing.  Each is unique, with its own pool of powers for
-you to have access to.
- 
-Vampires begin the game as a member of a clan, selected
-during character creation.  See {yhelp clans{x for additional
-information on clans.
-
-Werewolf Tribes are more akin to an adopted family.  A
-werewolf must be inducted into one of the tribes by a
-senior member of that specific Tribe.  See {yhelp tribes{x
-for more information.
-
-Mages must be Awakened into a specific Tradition by a
-senior member of that Tradition.  See {yhelp traditions{x
-for Tradition information.
-
-At this time, there are no specific affiliations for general
-humans.  A human can become embraced into a clan by a
-vampire, inducted into a tribe by a werewolf, or inducted
-into a tradition by a mage.  In this respect, a normal
-basic human has a multitude of options to advance.
-{c-------------------------------------------------------{x
-~
-E
-page6~
-Skills and Prayers
-{c-------------------------------------------------------{x
-Typing 'skills' will show you a list of skills that you 
-have at your current level.  By typing 'skills all', you
-can see a list of your acquired skills, and what level
-they are accessed.
- 
-Spells are known as prayers on Haven. By typing 'prayer'
-you will be shown a list of prayers that are available to
-you. By typing 'prayer all' you will be shown a list of 
-the prayers you have learned, and what level the prayer
-is able to be used.
- 
-Your ability in a particular skill or prayer is respresented
-with a percentage.  This percentage has a small chance of
-increasing upon usage, whether it is successful for not.
-There are some skills that are considered "always on",
-such as 'second attack' or 'enhanced speed', and have the
-chance to increase upon triggering.
- 
-In order to gain new skills and prayers, you must increase
-the portions of your character found on your Character
-Sheet.  Refer to the Freebies page of this guide for
-additional information.  Using the {Cskillmap{x command
-will give you a list of all skills in Haven, along with the
-corresponding character sheet statistic and dot level
-needed to learn the skill or prayer.
-{c-------------------------------------------------------{x
-~
-E
-page5~
-Communication on Haven
-{c-------------------------------------------------------{x
-There are a variety of ways in which you can communicate
-on Haven.
- 
-OOC : is the Out of Character chat channel, this is used
-for general chat, and has absolutely nothing to do with
-any Roleplaying aspect of your character. The command for
-OOC is 'ooc (texthere)'
-OOC is broadcast to everyone on the mud.
- 
-GOSSIP : This channel is for In Character chat, it is used
-for the Roleplaying aspect of your character. The command
-for GOSSIP is 'gossip (texthere)'
-GOSSIP is also broadcast to everyone on the mud.
- 
-SAY : This is another of the In Character chat channels,
-that you may use in roleplaying your character.
-SAY will only be shown to those who are in the same room
-as you are. The command for SAY is 'say (texthere)'
- 
-OSAY : This is much like the SAY command except that it is
-for out of charcter chatting to people in the same room as
-you are. The command for OSAY is 'osay (texthere)'
- 
-TELL : This command is used to send a private message to
-another person. The TELL channel is an out of character
-channel. The command for TELL is, 'tell (person) (text)'
- 
-Other channels available to you are SHOUT and YELL. Shout
-will send a message to all players who are awake in the 
-world. Yell will send a message to all awake players in
-the same area as you are.
- 
-By typing 'channel' you will see a list of channels that
-are available to you. For help on a particular channel
-type 'help (channelhere)'
-{c-------------------------------------------------------{x
-~
-E
-page4~
-Items and Equipment
-{c-------------------------------------------------------{x
-You will start out with a few pieces of equipment. Type
-'{Cequipment{x' to see what you are currently wear{xing. Also
-type '{Cinventory{x' to see what you are currently carrying.
- 
-To wear a particular piece of equipment, use the '{Cwear{x'
-command.  Example: '{Cwear dagger{x' '{Cwear all{x'
- 
-To {Cremove{x a piece of equipment use the 'remove' command.
-Example : 'remove dagger' 'remove all'
- 
-On occassion, you might not be able to remove a particular
-piece of equipment, this might be because the item is 
-cursed, in which case you might want to visit a healer, or
-convince someone to help you remove the curse upon the item.
- 
-You will find various pieces of equipment throughout your
-travels, sometimes they will be weaker than what you might
-currently be wearing, sometimes they might be stronger
-than what you are currently wearing. You can only wear
-equipment that is equal to your current level or lower.
-{c-------------------------------------------------------{x
-~
-E
-page3~
-Freebies
-{c-------------------------------------------------------{x
-Once you have finished your 'Creation Process' to flesh
-out your character (or have used one of the three starter
-templates), you will be supplied with 15 Freebie Points
-to spend at your leisure.  Aside from your initial creation,
-these points will be your main source of advancement for
-your character here on Haven of the Embraced.  All of the
-Statistics that you find on your Character Sheet ({Ccs{x, {Ccs2{x,
-and {Ccs3{x) are all increased via these Freebie Points.
-
-Using the {Cfreebie{x command, you are able to bring up the
-Freebie Cost screen for your character.  The costs of
-increasing the different sections of your character sheet
-are shown.  All characters will see the costs for common
-statistics found among all characters (Attributes, Abilities,
-Willpower, just to name a few), but you will also see any
-costs for stats that are specific to your character's race
-(Disciplines, Spheres, etc.).  Your current Freebie Points
-are also listed here for convenience.
-
-In order to gain additional Freebie Points to advance your
-character, you must level up to Level 100.  Once you have
-reached Level 100, you have the option to 'remort' to
-become more powerful.  This resets your character level
-down to level 1, but increases your Freebie Points by 3.
-Freebies do not need to be spent immediately, and can be
-saved up to purchase more expensive upgrades as needed.
-See {yhelp remort{x for additional information on remorts.
-{c-------------------------------------------------------{x
-~
-E
-page2~
-Getting Started
-{c-------------------------------------------------------{x
-By using the 'Look' command, you can see what is in a room.
-The look command can also be used to look at an object, or
-a person.  ex: {C'look'{x, '{Clook knife{x', '{Clook (playername){x'
- 
-Another command that is as useful as look, is 'examine'
-by using this you can take a closer look at an item, or
-player. 'examine book' 'examine (playername)'
- 
-There are 6 movement commands available to you. They are
-'{Cnorth{x' '{Csouth{x' '{Ceast{x' '{Cwest{x' '{Cup{x' and '{Cdown{x' Use these
-commands to move around Haven.
- 
-The '{Ckill{x' command will be one of the commands that you 
-use the most. It allows you to attempt to kill a monster.
-The kill command can also be used to attack a player,
-though this isn't recommeded at this time, type 'help pk'
-for more information on our rules for player killing.
-If you have any questions about it, feel free to ask an
-immortal.
- 
-One of the most common sights in Haven is a corpse.
-If you die, your corpse will be in the place that you
-died at. You will need to go and retrieve anything from
-your corpse. This is where the '{Cget{x' command comes in,
-'{Cget all corpse{x' will get everything that you can see from
-the corpse you are looting. '{Cget (item) corpse{x' will get
-just a particular item from a corpse. The get command will
-also allow you to pick up something that might be lying on
-the ground.
- 
-After you have read the Newbie Guide, the best thing for
-you to do, is to go through Newbie Training School, so that
-you become more familiar with the commands that you will be
-using.
- 
-After you have completed Newbie Training School, the
-next area that you will find yourself in is Vantage Point.
-Use this area to gain some experience before moving on.
-{c-------------------------------------------------------{x
-~
-E
-page1~
-About Your Character
-{c-------------------------------------------------------{x
-At any time you wish to see the list of commands available
-to your character, simply type '{Ccommands{x' ({WBe sure to type{x
-{Wthe entire word, including the '{Ys{W'){x  This will give you a
-listing of all commands on Haven.  Be aware that some of
-the commands will not be available for use unless you meet
-certain requirements.
-
-By typing {Cscore{x, you will be shown a detailed report
-of your character's basic statistics.  Useful information,
-such as your health, gold, level, etc., will be displayed
-for your perusal.
-
-At any time, you can use the {Chelp{x menus, by simply typing
-{Chelp <command here>{x.  For example, {Chelp score{x will show
-you a help file on the 'score' command.  {Y*We are currently{x
-{Yin the process of updating and adding help files.*{x
-
-The {Cwho{x command will show you a list of players who are
-currently visible to you on Haven.  Some players may be
-invisible, or otherwise hidden from sight.
- 
-Another useful command is {Carea{x, which shows a list of
-areas on Haven, and a general level range for those areas.
-This can help you judge proper areas to explore.
-
-Using {Cscan{x, you will glance at rooms adjacent to you and
-see any visible enemies or players there.
-{c-------------------------------------------------------{x
-~
-E
-guide~
-{c---------------------------------------------------------------------------{x
-Welcome to Haven of the Embraced.  This is a world loosely based on the
-World of Darkness by White Wolf.  You will see many things during your stay
-here, and there are some things you will need to know.  Below is a list of
-pages that are contained within this book.  To read a page type 'look page#'
-i.e.: {Clook page1{x
-{c---------------------------------------------------------------------------{x
-Table of Contents
- 
-{MPage1 {x- About Your Character
-{MPage2 {x- Getting Started
-{MPage3 {x- Freebies
-{MPage4 {x- Items and Equipment
-{MPage5 {x- Communicating on Haven
-{MPage6 {x- Skills and Prayers
-{MPage7 {x- Clans, Tribes, Traditions
-{MPage8 {x- Immortals and Administration
-{MPage9 {x- Haven's Rules
-{MPageA {x- Message Boards
-{MPageB {x- Frequently Asked Questions
-~
-E
-newbie~
-{c---------------------------------------------------------------------------{x
-Welcome to Haven of the Embraced.  This is a world loosely based on the
-World of Darkness by White Wolf.  You will see many things during your stay
-here, and there are some things you will need to know.  Below is a list of
-pages that are contained within this book.  To read a page type 'look page#'
-i.e.: {Clook page1{x
-{c---------------------------------------------------------------------------{x
-Table of Contents
- 
-{MPage1 {x- About Your Character
-{MPage2 {x- Getting Started
-{MPage3 {x- Freebies
-{MPage4 {x- Items and Equipment
-{MPage5 {x- Communicating on Haven
-{MPage6 {x- Skills and Prayers
-{MPage7 {x- Clans, Tribes, Traditions
-{MPage8 {x- Immortals and Administration
-{MPage9 {x- Haven's Rules
-{MPageA {x- Message Boards
-{MPageB {x- Frequently Asked Questions
-~
-E
-book~
-{c---------------------------------------------------------------------------{x
-Welcome to Haven of the Embraced.  This is a world loosely based on the
-World of Darkness by White Wolf.  You will see many things during your stay
-here, and there are some things you will need to know.  Below is a list of
-pages that are contained within this book.  To read a page type 'look page#'
-i.e.: {Clook page1{x
-{c---------------------------------------------------------------------------{x
-Table of Contents
- 
-{MPage1 {x- About Your Character
-{MPage2 {x- Getting Started
-{MPage3 {x- Freebies
-{MPage4 {x- Items and Equipment
-{MPage5 {x- Communicating on Haven
-{MPage6 {x- Skills and Prayers
-{MPage7 {x- Clans, Tribes, Traditions
-{MPage8 {x- Immortals and Administration
-{MPage9 {x- Haven's Rules
-{MPageA {x- Message Boards
-{MPageB {x- Frequently Asked Questions
 ~
 #123
 bandage roll ~
@@ -1673,11 +2165,11 @@ trash 0 A
 0 0 0 0 0
 1 0 0 P
 E
-carnival~
+bead~
 "Throw me something Mister!"
 ~
 E
-bead~
+carnival~
 "Throw me something Mister!"
 ~
 #130
@@ -1821,13 +2313,13 @@ armor GY AK
 CFG CFG CFG CFG 0
 1 0 1 P
 A
-13 300
-A
-18 15
+14 50
 A
 19 15
 A
-14 50
+18 15
+A
+13 300
 #151
 spirit guide~
 {D[{MQ{D] {Ra S{rpi{Rri{rt G{Rui{rde{x~
@@ -1839,13 +2331,13 @@ armor GY AQ
 ABDG ABDG ABDG ABDG 0
 1 0 1 P
 A
-13 100
-A
-14 50
+19 40
 A
 18 40
 A
-19 40
+14 50
+A
+13 100
 #152
 umbral pouch~
 {D[{MQ{D] {Gan U{cmbr{Gal {cPou{Gch{x~
@@ -1867,11 +2359,11 @@ armor GY AI
 BCEH BCEH BCEH BCEH 0
 1 0 1 P
 A
-18 10
+13 100
 A
 19 15
 A
-13 100
+18 10
 #154
 status ring~
 {D[{MQ{D] {Ba St{bat{Bus {bRi{Bng{x~
@@ -1883,13 +2375,13 @@ armor GY AB
 CFG CFG CFG CFG 0
 1 0 1 P
 A
-13 100
-A
-14 50
+18 50
 A
 19 50
 A
-18 50
+14 50
+A
+13 100
 #155
 shield avenging angel~
 {D[{MQ{D] {wShield {rof the {RAvenging {WAngel{x~
@@ -1901,13 +2393,13 @@ armor GY AJ
 BCEH BCEH BCEH BCEH 0
 1 0 1 P
 A
-18 55
-A
-19 55
+13 100
 A
 14 25
 A
-13 100
+19 55
+A
+18 55
 #156
 bracer of willpower~
 {D[{MQ{D] {yB{Yr{Wacer {yo{Yf {yW{Yi{Wllpower{x~
@@ -1919,11 +2411,11 @@ armor GY AM
 CFG CFG CFG CFG 0
 1 0 1 P
 A
-19 50
+13 100
 A
 18 50
 A
-13 100
+19 50
 #157
 rerebrace frenzy~
 {D[{MQ{D] Re{wre{mbrace {Dof {MFre{mnzy{x~
@@ -1935,9 +2427,9 @@ armor GY AM
 CFG CFG CFG CFG 0
 1 0 1 P
 A
-18 20
-A
 19 60
+A
+18 20
 #158
 face beast~
 {D[{MQ{D] {yFa{wce of {ythe Beast{x~
@@ -1949,9 +2441,9 @@ armor GY AE
 DGH DGH DGH DGH 0
 1 0 1 P
 A
-18 20
-A
 19 20
+A
+18 20
 #159
 sandals prophet~
 {D[{MQ{D] {GSan{ydals{G of the {yPro{Gphet{x~
@@ -1963,9 +2455,9 @@ armor GY AG
 CFG CFG CFG CFG 0
 1 0 1 P
 A
-18 15
-A
 19 10
+A
+18 15
 #160
 greaves of stamina~
 {D[{MQ{D] Gre{waves {Wof {wSta{Dmina{x~
@@ -1977,11 +2469,11 @@ armor GY AF
 ABCDFH ABCDFH ABCDFH ABCDFH 0
 1 0 1 P
 A
-18 10
+13 250
 A
 19 10
 A
-13 250
+18 10
 #161
 Cloak of Subterfuge~
 {D[{MQ{D] {WC{wloak {Wo{wf {WS{wubterfuge{x~
@@ -1993,11 +2485,11 @@ armor GY AC
 CFG CFG CFG CFG 0
 1 0 1 P
 A
-13 300
+19 15
 A
 18 15
 A
-19 15
+13 300
 #162
 archonian plate~
 {D[{MQ{D] {mA{Drchonian {mP{Dlate{x~
@@ -2009,13 +2501,13 @@ armor GY AD
 EHI EHI EHI EHI 0
 1 0 1 P
 A
-18 60
-A
-19 60
+14 100
 A
 13 400
 A
-14 100
+19 60
+A
+18 60
 #163
 Gauntlets of Antiquity~
 {D[{MQ{D] {gG{wauntlets {Wof {gA{wntiquity{x~
@@ -2027,11 +2519,11 @@ armor GY AH
 CDFI CDFI CDFI CDFI 0
 1 0 1 P
 A
-19 25
+13 100
 A
 18 25
 A
-13 100
+19 25
 #164
 earrings of darkness~
 {D[{MQ{D] {WE{garrings of {DDarkness{x~
@@ -2055,13 +2547,13 @@ armor GY AS
 ACGI ACGI ACGI ACGI 0
 0 0 1 P
 A
-13 300
-A
-14 100
+19 25
 A
 18 25
 A
-19 25
+14 100
+A
+13 300
 #166
 mystical orb~
 {D[{MQ{D] {mM{cystical {mO{crb{x~
@@ -2073,11 +2565,11 @@ light AGY AO
 AB DF CFG CFG G
 0 0 1 P
 A
-13 100
+19 75
 A
 18 75
 A
-19 75
+13 100
 #167
 emblem of power~
 {D[{MQ{D] {GE{ymblem {wof {GP{yower{x~
@@ -2089,11 +2581,11 @@ armor GY AO
 ABDG ABDG ABDG ABDG 0
 0 0 1 P
 A
-13 200
+18 50
 A
 19 50
 A
-18 50
+13 200
 #168
 potion escape true friend~
 a potion of Escape to a True Friend~
@@ -2767,6 +3259,188 @@ D1
 ~
 0 -1 111
 S
+#250
+A Forest Road~
+You are standing on a forest road. To move, type 'north'. To see what is around you, type 'look'.
+~
+0 0 3
+D0
+The road continues north to a crossroads.
+~
+~
+0 0 251
+S
+#251
+The Crossroads~
+You are at a fork in the road. To the east, you see the sealed gates of a walled city. To the west, the ancient forest thickens.
+~
+0 0 3
+D1
+The walled city lies to the east.
+~
+~
+0 0 252
+D2
+The forest road goes back south.
+~
+~
+0 0 250
+D3
+The ancient forest lies to the west.
+~
+~
+0 0 257
+S
+#252
+Dark Alley~
+You have entered the dark alleys of the city. A chained vessel is here for your feeding practice.
+~
+0 0 1
+D1
+The alley continues east.
+~
+~
+0 0 253
+D3
+The crossroads are to the west.
+~
+~
+0 0 251
+S
+#253
+Feeding Gate~
+This path requires you to have fed.
+~
+0 0 1
+D1
+The training room is east.
+~
+~
+0 0 254
+D3
+The dark alley is west.
+~
+~
+0 0 252
+S
+#254
+Discipline Training Room~
+You must use a basic discipline to pass here.
+~
+0 0 1
+D1
+The combat training room is east.
+~
+~
+0 0 255
+D3
+The feeding gate is west.
+~
+~
+0 0 253
+S
+#255
+Combat Training~
+A sparring dummy is here. Attack it to learn the basics of combat.
+~
+0 0 1
+D1
+The graduation room is east.
+~
+~
+0 0 256
+D3
+The discipline room is west.
+~
+~
+0 0 254
+S
+#256
+Graduation Room~
+You have completed your vampiric training.
+~
+0 0 1
+D3
+Combat training is west.
+~
+~
+0 0 255
+S
+#257
+Forest Clearing~
+You have stepped into the wild forest clearing.
+~
+0 0 3
+D1
+The crossroads are east.
+~
+~
+0 0 251
+D3
+The combat clearing is west.
+~
+~
+0 0 258
+S
+#258
+Combat Training~
+A sparring dummy is set up in the forest.
+~
+0 0 3
+D1
+The forest clearing is east.
+~
+~
+0 0 257
+D3
+The grove is west.
+~
+~
+0 0 259
+S
+#259
+The Grove~
+Ancient trees surround you.
+~
+0 0 3
+D1
+Combat training is east.
+~
+~
+0 0 258
+D3
+The skills room is west.
+~
+~
+0 0 260
+S
+#260
+Skills Room~
+Here you learn about survival skills.
+~
+0 0 3
+D1
+The grove is east.
+~
+~
+0 0 259
+D3
+The graduation room is west.
+~
+~
+0 0 261
+S
+#261
+Graduation Room~
+You have completed your human training.
+~
+0 0 3
+D1
+The skills room is east.
+~
+~
+0 0 260
+S
 #0
 
 
@@ -2800,6 +3474,18 @@ G 0 180 0
 G 0 230 0
 M 0 105 1 113 1
 M 0 106 1 113 1
+M 0 250 1 251 1
+M 0 251 1 252 1
+M 0 252 1 252 1
+M 0 253 1 253 1
+M 0 254 1 254 1
+M 0 255 1 255 1
+M 0 256 1 256 1
+M 0 257 1 257 1
+M 0 258 1 258 1
+M 0 259 1 259 1
+M 0 260 1 260 1
+M 0 261 1 261 1
 S
 
 
@@ -2811,6 +3497,74 @@ S
 
 
 #MPCODE
+#250
+Prelude Crossroads Guardian Greet~
+if ispc $n
+  mob echoat $n The guardian speaks: 'The city path to the east is for Vampires. The forest path to the west is for Humans.'
+endif
+~
+#251
+Prelude Sire Greet~
+if race $n vampire
+  mob echoat $n Your Sire greets you. 'Welcome to the shadows. First, type 'fangs' to extend them. Then 'kill vessel' to initiate combat, and type 'feed' while fighting!'
+else
+  mob echoat $n The city gates remain sealed to mortal blood.
+  mob transfer $n 251
+endif
+~
+#252
+Prelude Gatekeeper Feeding Check~
+if pblood $n >= 50
+  mob echoat $n You may pass.
+else
+  mob echoat $n You must feed before proceeding.
+  mob transfer $n 252
+endif
+~
+#253
+Prelude Discipline Master Check~
+if disc $n potence >= 1
+  mob echoat $n Excellent control of your disciplines.
+else
+  mob echoat $n You must use your discipline before proceeding.
+  mob transfer $n 253
+endif
+~
+#254
+Prelude Sparring Dummy Fight~
+if hpprc $n < 30
+  mob echo The sparring dummy ceases its attack and flees!
+  mob flee
+  mob goto 250
+endif
+~
+#255
+Prelude Elder Vampire Graduation~
+mob echoat $n 'Once you reach level 100, you can choose to Remort. This resets your level back to 1 but grants you additional Freebie points. True Blood mortals can Awaken as Mages or Garou, while Vampires and others gain increased capabilities through freebies.'
+mob transfer $n 101
+~
+#256
+Prelude Forest Ranger Greet~
+if race $n human
+  mob echoat $n Welcome to the forest. Type look and practice moving around.
+else
+  mob echoat $n The wild recoils from your undead presence.
+  mob transfer $n 251
+endif
+~
+#257
+Prelude Grove Druid Greet~
+mob echoat $n Here humans who prove worthy may Awaken as Werewolves (Garou) or Mages through the remort system.
+~
+#258
+Prelude Skills Master Greet~
+mob echoat $n Type 'practice', 'train', 'score', and 'cs' to manage your abilities.
+~
+#259
+Prelude Remort Guide Graduation~
+mob echoat $n 'Once you reach level 100, you can choose to Remort. This resets your level back to 1 but grants you additional Freebie points. True Blood mortals can Awaken as Mages or Garou, while Vampires and others gain increased capabilities through freebies.'
+mob transfer $n 101
+~
 #0
 
 #OPCODE

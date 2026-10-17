@@ -2728,7 +2728,7 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
             obj_to_char(create_object(get_obj_index(OBJ_VNUM_GUIDE),0),ch);
 
         {
-            ROOM_INDEX_DATA *spawn_room = get_room_index( 30000 );
+            ROOM_INDEX_DATA *spawn_room = get_room_index( ROOM_VNUM_PRELUDE );
             if ( spawn_room == NULL )
                 spawn_room = get_room_index( ROOM_VNUM_SCHOOL );
             if ( spawn_room == NULL )

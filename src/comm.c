@@ -2409,15 +2409,16 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
                     send_to_char( "\n\r{bC{ro{yl{co{mu{gr{x is now {rON{x, Way Cool!\n\r\n\r", ch );
                     break;
     case 'n': case 'N':
+                    REMOVE_BIT( ch->act, PLR_COLOUR );
                     break;
     default:
             write_to_buffer( d, "\n\rThat is not a valid choice.\n\rPlease choose [Y]es or [N]o: ", 0 );
         return;
     }
 
-        write_to_buffer( d, "{CWhat is your character's sex?{x\n\r", 0 );
-        write_to_buffer( d, "{W(This determines your pronouns and presentation. It has no effect on stats.){x\n\r", 0 );
-        write_to_buffer( d, "{CPlease enter [M]ale or [F]emale: {x", 0 );
+        send_to_char( "{CWhat is your character's sex?{x\n\r", ch );
+        send_to_char( "{W(This determines your pronouns and presentation. It has no effect on stats.){x\n\r", ch );
+        send_to_char( "{CPlease enter [M]ale or [F]emale: {x", ch );
         d->connected = CON_GET_NEW_SEX;
         break;
 
@@ -2432,7 +2433,7 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
                 ch->pcdata->true_sex = SEX_FEMALE;
                 break;
     default:
-        write_to_buffer( d, "{RThat is not a valid choice.{x\n\r{CWhat is your character's sex? [M/F]: {x", 0 );
+        send_to_char( "{RThat is not a valid choice.{x\n\r{CWhat is your character's sex? [M/F]: {x", ch );
         return;
     }
 
@@ -2442,27 +2443,27 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
     log_string( log_buf);
 
 
-    write_to_buffer(d,"{YArchetypes define your mortal background before you entered the World of Darkness.{x\n\r",0);
-    write_to_buffer(d,"{YMechanically, this assigns your starting Attributes and Abilities. Later, you{x\n\r",0);
-    write_to_buffer(d,"{Ywill receive 15 'Freebie' points to further customize your character's stats.{x\n\r\n\r",0);
+    send_to_char("{YArchetypes define your mortal background before you entered the World of Darkness.{x\n\r", ch);
+    send_to_char("{YMechanically, this assigns your starting Attributes and Abilities. Later, you{x\n\r", ch);
+    send_to_char("{Ywill receive 15 'Freebie' points to further customize your character's stats.{x\n\r\n\r", ch);
 
-    write_to_buffer(d,"{WAlternatively, you may skip this step to build a completely custom sheet in-game.{x\n\r", 0);
-    write_to_buffer(d,"{R*WARNING* You will have NO SKILLS until you type 'create' within the game.{x\n\r", 0);
+    send_to_char("{WAlternatively, you may skip this step to build a completely custom sheet in-game.{x\n\r", ch);
+    send_to_char("{R*WARNING* You will have NO SKILLS until you type 'create' within the game.{x\n\r", ch);
 
-    write_to_buffer(d,"\n\r{CAvailable Archetypes:{x\n\r\n\r",0);
-    write_to_buffer(d,"{G[0] Knight{x        - Chivalric warrior, swordplay and mounted combat (Focuses on Strength and Melee)\n\r",0);
-    write_to_buffer(d,"{G[1] Man-at-Arms{x   - Professional soldier, a master of all weapons (Focuses on Dexterity and Melee)\n\r",0);
-    write_to_buffer(d,"{G[2] Hunter{x        - Wilderness predator, archery and tracking (Focuses on Perception and Survival)\n\r",0);
-    write_to_buffer(d,"{G[3] Outlaw{x        - Brigand and ambush fighter, strikes from the shadows (Focuses on Dexterity and Stealth)\n\r",0);
-    write_to_buffer(d,"{G[4] Berserker{x     - Frenzied brawler, overwhelms foes with raw fury (Focuses on Stamina and Brawl)\n\r",0);
-    write_to_buffer(d,"{G[5] Ranger{x        - Balanced scout, skilled with bow and blade (Focuses on Wits and Alertness)\n\r",0);
-    write_to_buffer(d,"{G[6] Inquisitor{x    - Zealot warrior-priest, faith tempered in steel (Focuses on Charisma and Occult)\n\r",0);
-    write_to_buffer(d,"{G[7] Assassin{x      - Precision killer, stealth and lethality (Focuses on Dexterity and Melee)\n\r",0);
-    write_to_buffer(d,"{G[8] Witch-Hunter{x  - Occult-aware combatant, slayer of monsters (Focuses on Intelligence and Occult)\n\r",0);
-    write_to_buffer(d,"{G[9] Hedge Wizard{x  - Folk sorcerer with survival instincts (Focuses on Intelligence and Enigmas)\n\r\n\r",0);
+    send_to_char("\n\r{CAvailable Archetypes:{x\n\r\n\r", ch);
+    send_to_char("{G[0] Knight{x        - Chivalric warrior, swordplay and mounted combat (Focuses on Strength and Melee)\n\r", ch);
+    send_to_char("{G[1] Man-at-Arms{x   - Professional soldier, a master of all weapons (Focuses on Dexterity and Melee)\n\r", ch);
+    send_to_char("{G[2] Hunter{x        - Wilderness predator, archery and tracking (Focuses on Perception and Survival)\n\r", ch);
+    send_to_char("{G[3] Outlaw{x        - Brigand and ambush fighter, strikes from the shadows (Focuses on Dexterity and Stealth)\n\r", ch);
+    send_to_char("{G[4] Berserker{x     - Frenzied brawler, overwhelms foes with raw fury (Focuses on Stamina and Brawl)\n\r", ch);
+    send_to_char("{G[5] Ranger{x        - Balanced scout, skilled with bow and blade (Focuses on Wits and Alertness)\n\r", ch);
+    send_to_char("{G[6] Inquisitor{x    - Zealot warrior-priest, faith tempered in steel (Focuses on Charisma and Occult)\n\r", ch);
+    send_to_char("{G[7] Assassin{x      - Precision killer, stealth and lethality (Focuses on Dexterity and Melee)\n\r", ch);
+    send_to_char("{G[8] Witch-Hunter{x  - Occult-aware combatant, slayer of monsters (Focuses on Intelligence and Occult)\n\r", ch);
+    send_to_char("{G[9] Hedge Wizard{x  - Folk sorcerer with survival instincts (Focuses on Intelligence and Enigmas)\n\r\n\r", ch);
 
-    write_to_buffer(d,"{CPlease select the number of the archetype that best fits your Character.{x\n\r",0);
-    write_to_buffer(d,"{COr, enter 'CUSTOM' to skip this step and create a custom sheet later:{x\n\r",0);
+    send_to_char("{CPlease select the number of the archetype that best fits your Character.{x\n\r", ch);
+    send_to_char("{COr, enter 'CUSTOM' to skip this step and create a custom sheet later:{x\n\r", ch);
     d->connected = CON_PICK_CHILDHOOD;
     break;
 
@@ -2472,48 +2473,47 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
     else {
         if (!str_cmp(argument, "custom"))
             {
-                write_to_buffer(d,"\n\r{C======================================================================{x\n\r",0);
-                write_to_buffer(d,"{YYou have chosen a CUSTOM starting sheet.{x\n\r",0);
-                write_to_buffer(d,"{RCRITICAL INSTRUCTION:{W When you enter the game, you will have 0 in all stats.{x\n\r",0);
-                write_to_buffer(d,"{WYou MUST type {Y'create'{W to open the interactive character builder!{x\n\r",0);
-                write_to_buffer(d,"{WThis menu will walk you through assigning your Attributes, Abilities,{x\n\r",0);
-                write_to_buffer(d,"{WBackgrounds, and Freebie points manually.{x\n\r",0);
-                write_to_buffer(d,"{C======================================================================{x\n\r",0);
-                write_to_buffer(d,"\n\r{YHaven of the Embraced is focused on Vampires, but you may choose to start the{x\n\r",0);
-                write_to_buffer(d,"{Ygame as a human, if you wish.{x\n\r\n\r",0);
-                write_to_buffer(d,"{R[Vampire]:{x You are one of the Kindred, Embraced into undeath. You must manage\n\r",0);
-                write_to_buffer(d,"your Blood Pool, master Disciplines, and navigate the politics of the Camarilla/Sabbat.\n\r",0);
-                write_to_buffer(d,"Vampires are far more powerful at creation over humans, and are highly recommended\n\r",0);
-                write_to_buffer(d,"as your starting race if you are new to Haven of the Embraced. The added survivability\n\r",0);
-                write_to_buffer(d,"allows you to explore more easily, learning the MUD at a better pace.\n\r\n\r",0);
-                write_to_buffer(d,"{G[Human]:{x You walk the mortal path. Through remort, you may Awaken as a Mage\n\r",0);
-                write_to_buffer(d,"or undergo the First Change to become Garou (Werewolf) upon reaching level 100.\n\r\n\r",0);
+                send_to_char("\n\r{C======================================================================{x\n\r", ch);
+                send_to_char("{YYou have chosen a CUSTOM starting sheet.{x\n\r", ch);
+                send_to_char("{RCRITICAL INSTRUCTION:{W When you enter the game, you will have 0 in all stats.{x\n\r", ch);
+                send_to_char("{WYou MUST type {Y'create'{W to open the interactive character builder!{x\n\r", ch);
+                send_to_char("{WThis menu will walk you through assigning your Attributes, Abilities,{x\n\r", ch);
+                send_to_char("{WBackgrounds, and Freebie points manually.{x\n\r", ch);
+                send_to_char("{C======================================================================{x\n\r", ch);
+                send_to_char("\n\r{YHaven of the Embraced is focused on Vampires, but you may choose to start the{x\n\r", ch);
+                send_to_char("{Ygame as a human, if you wish.{x\n\r\n\r", ch);
+                send_to_char("{R[Vampire]:{x You are one of the Kindred, Embraced into undeath. You must manage\n\r", ch);
+                send_to_char("your Blood Pool, master Disciplines, and navigate the politics of the Camarilla/Sabbat.\n\r", ch);
+                send_to_char("Vampires are far more powerful at creation over humans, and are highly recommended\n\r", ch);
+                send_to_char("as your starting race if you are new to Haven of the Embraced. The added survivability\n\r", ch);
+                send_to_char("allows you to explore more easily, learning the MUD at a better pace.\n\r\n\r", ch);
+                send_to_char("{G[Human]:{x You walk the mortal path. Through remort, you may Awaken as a Mage\n\r", ch);
+                send_to_char("or undergo the First Change to become Garou (Werewolf) upon reaching level 100.\n\r\n\r", ch);
 
-                write_to_buffer(d,"{CDo you wish to start the game as a Vampire (Recommended): [Y/N]? {x",0);
+                send_to_char("{CDo you wish to start the game as a Vampire (Recommended): [Y/N]? {x", ch);
 
                 d->connected = CON_CHOICE_VAMP;
                 ch->pcdata->progress = 0;
                 break;
-
-            } else
-                num = 99;
+            }
+            num = -1;
         }
     if(num < 0 || num > 9)
     {
-        write_to_buffer(d,"{RThat is not a valid choice.{x\n\r\n\r",0);
-        write_to_buffer(d,"\n\r{CAvailable Archetypes:{x\n\r\n\r",0);
-        write_to_buffer(d,"{G[0] Knight{x        - Chivalric warrior, swordplay and mounted combat (Focuses on Strength and Melee)\n\r",0);
-        write_to_buffer(d,"{G[1] Man-at-Arms{x   - Professional soldier, a master of all weapons (Focuses on Dexterity and Melee)\n\r",0);
-        write_to_buffer(d,"{G[2] Hunter{x        - Wilderness predator, archery and tracking (Focuses on Perception and Survival)\n\r",0);
-        write_to_buffer(d,"{G[3] Outlaw{x        - Brigand and ambush fighter, strikes from the shadows (Focuses on Dexterity and Stealth)\n\r",0);
-        write_to_buffer(d,"{G[4] Berserker{x     - Frenzied brawler, overwhelms foes with raw fury (Focuses on Stamina and Brawl)\n\r",0);
-        write_to_buffer(d,"{G[5] Ranger{x        - Balanced scout, skilled with bow and blade (Focuses on Wits and Alertness)\n\r",0);
-        write_to_buffer(d,"{G[6] Inquisitor{x    - Zealot warrior-priest, faith tempered in steel (Focuses on Charisma and Occult)\n\r",0);
-        write_to_buffer(d,"{G[7] Assassin{x      - Precision killer, stealth and lethality (Focuses on Dexterity and Melee)\n\r",0);
-        write_to_buffer(d,"{G[8] Witch-Hunter{x  - Occult-aware combatant, slayer of monsters (Focuses on Intelligence and Occult)\n\r",0);
-        write_to_buffer(d,"{G[9] Hedge Wizard{x  - Folk sorcerer with survival instincts (Focuses on Intelligence and Enigmas)\n\r\n\r",0);
-        write_to_buffer(d,"{CPlease select the number of the archetype that best fits your Character.{x\n\r",0);
-        write_to_buffer(d,"{COr, enter 'CUSTOM' to skip this step and create a custom sheet later:{x\n\r",0);
+        send_to_char("{RThat is not a valid choice.{x\n\r\n\r", ch);
+        send_to_char("\n\r{CAvailable Archetypes:{x\n\r\n\r", ch);
+        send_to_char("{G[0] Knight{x        - Chivalric warrior, swordplay and mounted combat (Focuses on Strength and Melee)\n\r", ch);
+        send_to_char("{G[1] Man-at-Arms{x   - Professional soldier, a master of all weapons (Focuses on Dexterity and Melee)\n\r", ch);
+        send_to_char("{G[2] Hunter{x        - Wilderness predator, archery and tracking (Focuses on Perception and Survival)\n\r", ch);
+        send_to_char("{G[3] Outlaw{x        - Brigand and ambush fighter, strikes from the shadows (Focuses on Dexterity and Stealth)\n\r", ch);
+        send_to_char("{G[4] Berserker{x     - Frenzied brawler, overwhelms foes with raw fury (Focuses on Stamina and Brawl)\n\r", ch);
+        send_to_char("{G[5] Ranger{x        - Balanced scout, skilled with bow and blade (Focuses on Wits and Alertness)\n\r", ch);
+        send_to_char("{G[6] Inquisitor{x    - Zealot warrior-priest, faith tempered in steel (Focuses on Charisma and Occult)\n\r", ch);
+        send_to_char("{G[7] Assassin{x      - Precision killer, stealth and lethality (Focuses on Dexterity and Melee)\n\r", ch);
+        send_to_char("{G[8] Witch-Hunter{x  - Occult-aware combatant, slayer of monsters (Focuses on Intelligence and Occult)\n\r", ch);
+        send_to_char("{G[9] Hedge Wizard{x  - Folk sorcerer with survival instincts (Focuses on Intelligence and Enigmas)\n\r\n\r", ch);
+        send_to_char("{CPlease select the number of the archetype that best fits your Character.{x\n\r", ch);
+        send_to_char("{COr, enter 'CUSTOM' to skip this step and create a custom sheet later:{x\n\r", ch);
         d->connected = CON_PICK_CHILDHOOD;
         break;
     }
@@ -2554,36 +2554,29 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
         }
     }
     ch->pcdata->progress = 8;
-    write_to_buffer(d,"\n\r{C======================================================================{x\n\r",0);
-    write_to_buffer(d,"{YArchetype selected! Your base Attributes and Abilities have been set.{x\n\r",0);
-    write_to_buffer(d,"{YYou have also been granted 5 'Background' points to spend in-game on{x\n\r",0);
-    write_to_buffer(d,"{Ytraits like Generation, Resources, or Retainers. Afterwards, you may{x\n\r",0);
-    write_to_buffer(d,"{Yuse the 'freebie' command to spend 15 freebie points to further customize{x\n\r",0);
-    write_to_buffer(d,"{Yyour character's stats.{x\n\r", 0);
-    write_to_buffer(d,"{C======================================================================{x\n\r",0);
+    send_to_char("\n\r{C======================================================================{x\n\r", ch);
+    send_to_char("{YArchetype selected! Your base Attributes and Abilities have been set.{x\n\r", ch);
+    send_to_char("{YYou have also been granted 5 'Background' points to spend in-game on{x\n\r", ch);
+    send_to_char("{Ytraits like Generation, Resources, or Retainers. Afterwards, you may{x\n\r", ch);
+    send_to_char("{Yuse the 'freebie' command to spend 15 freebie points to further customize{x\n\r", ch);
+    send_to_char("{Yyour character's stats.{x\n\r", ch);
+    send_to_char("{C======================================================================{x\n\r", ch);
     ch->csmax_willpower = ch->pcdata->csvirtues[COURAGE];
     ch->pcdata->cshumanity = ch->pcdata->csvirtues[CONSCIENCE]+ch->pcdata->csvirtues[SELF_CONTROL];
     ch->cswillpower = ch->csmax_willpower;
     ch->dpoints = 5;
 
-                write_to_buffer(d,"\n\r{C======================================================================{x\n\r",0);
-                write_to_buffer(d,"{YYou have chosen a CUSTOM starting sheet.{x\n\r",0);
-                write_to_buffer(d,"{RCRITICAL INSTRUCTION:{W When you enter the game, you will have 0 in all stats.{x\n\r",0);
-                write_to_buffer(d,"{WYou MUST type {Y'create'{W to open the interactive character builder!{x\n\r",0);
-                write_to_buffer(d,"{WThis menu will walk you through assigning your Attributes, Abilities,{x\n\r",0);
-                write_to_buffer(d,"{WBackgrounds, and Freebie points manually.{x\n\r",0);
-                write_to_buffer(d,"{C======================================================================{x\n\r",0);
-    write_to_buffer(d,"\n\r{YHaven of the Embraced is focused on Vampires, but you may choose to start the{x\n\r",0);
-    write_to_buffer(d,"{Ygame as a human, if you wish.{x\n\r\n\r",0);
-    write_to_buffer(d,"{R[Vampire]:{x You are one of the Kindred, Embraced into undeath. You must manage\n\r",0);
-    write_to_buffer(d,"your Blood Pool, master Disciplines, and navigate the politics of the Camarilla/Sabbat.\n\r",0);
-    write_to_buffer(d,"Vampires are far more powerful at creation over humans, and are highly recommended\n\r",0);
-    write_to_buffer(d,"as your starting race if you are new to Haven of the Embraced. The added survivability\n\r",0);
-    write_to_buffer(d,"allows you to explore more easily, learning the MUD at a better pace.\n\r\n\r",0);
-    write_to_buffer(d,"{G[Human]:{x You walk the mortal path. Through remort, you may Awaken as a Mage\n\r",0);
-    write_to_buffer(d,"or undergo the First Change to become Garou (Werewolf) upon reaching level 100.\n\r\n\r",0);
+    send_to_char("\n\r{YHaven of the Embraced is focused on Vampires, but you may choose to start the{x\n\r", ch);
+    send_to_char("{Ygame as a human, if you wish.{x\n\r\n\r", ch);
+    send_to_char("{R[Vampire]:{x You are one of the Kindred, Embraced into undeath. You must manage\n\r", ch);
+    send_to_char("your Blood Pool, master Disciplines, and navigate the politics of the Camarilla/Sabbat.\n\r", ch);
+    send_to_char("Vampires are far more powerful at creation over humans, and are highly recommended\n\r", ch);
+    send_to_char("as your starting race if you are new to Haven of the Embraced. The added survivability\n\r", ch);
+    send_to_char("allows you to explore more easily, learning the MUD at a better pace.\n\r\n\r", ch);
+    send_to_char("{G[Human]:{x You walk the mortal path. Through remort, you may Awaken as a Mage\n\r", ch);
+    send_to_char("or undergo the First Change to become Garou (Werewolf) upon reaching level 100.\n\r\n\r", ch);
 
-    write_to_buffer(d,"{CDo you wish to start the game as a Vampire (Recommended): [Y/N]? {x",0);
+    send_to_char("{CDo you wish to start the game as a Vampire (Recommended): [Y/N]? {x", ch);
     d->connected = CON_CHOICE_VAMP;
     break;
 
@@ -2592,31 +2585,31 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
 
     if(argument[0] == 'Y' || argument[0] == 'y')
     {
-        write_to_buffer(d,"{YVampires are divided into Clans. A clan is like a family line, a tie in blood{x\n\r",0);
-        write_to_buffer(d,"{Ypassed from Sire to Childe. Each clan has a unique set of traits and different{x\n\r",0);
-        write_to_buffer(d,"{YDisciplines (vampiric powers). Mechanically, your clan determines which 3 in-clan{x\n\r",0);
-        write_to_buffer(d,"{YDisciplines you learn easily, and impacts your social standing in Kindred society.{x\n\r",0);
-        write_to_buffer(d,"{YPlease select a clan for your character. Please note that you may never change your clan.{x\n\r",0);
-        write_to_buffer(d,"{YSome clans are not available at creation and you must be 'embraced' in-game.{x\n\r",0);
-        write_to_buffer(d,"{YYou may type 'help <clan>' to gain more information about each clan. IE: help Nosferatu{x\n\r",0);
-        write_to_buffer(d,"{CThe available clan choices are:{x\n\r\n\r",0);
+        send_to_char("{YVampires are divided into Clans. A clan is like a family line, a tie in blood{x\n\r", ch);
+        send_to_char("{Ypassed from Sire to Childe. Each clan has a unique set of traits and different{x\n\r", ch);
+        send_to_char("{YDisciplines (vampiric powers). Mechanically, your clan determines which 3 in-clan{x\n\r", ch);
+        send_to_char("{YDisciplines you learn easily, and impacts your social standing in Kindred society.{x\n\r", ch);
+        send_to_char("{YPlease select a clan for your character. Please note that you may never change your clan.{x\n\r", ch);
+        send_to_char("{YSome clans are not available at creation and you must be 'embraced' in-game.{x\n\r", ch);
+        send_to_char("{YYou may type 'help <clan>' to gain more information about each clan. IE: help Nosferatu{x\n\r", ch);
+        send_to_char("{CThe available clan choices are:{x\n\r\n\r", ch);
 
-        write_to_buffer(d,"{RAssamite{x - Deadly assassins and diablerists from the Middle East.\n\r",0);
-        write_to_buffer(d,"{RBrujah{x   - Fierce rebels and warrior-scholars prone to frenzy.\n\r",0);
-        write_to_buffer(d,"{RGangrel{x  - Bestial wanderers closely tied to the wild and shapeshifting.\n\r",0);
-        write_to_buffer(d,"{RMalkavian{x- Oracles cursed with incurable insanity.\n\r",0);
-        write_to_buffer(d,"{RNosferatu{x- Hideously deformed, masters of stealth and secrets.\n\r",0);
-        write_to_buffer(d,"{RRavnos{x   - Nomadic tricksters and masters of illusion.\n\r",0);
-        write_to_buffer(d,"{RCappadocian{x - Scholars of death and the grave.\n\r",0);
-        write_to_buffer(d,"{RFollowerOfSet{x - Corrupters and cultists worshipping the snake god Set.\n\r",0);
-        write_to_buffer(d,"{RLasombra{x - Ruthless leaders and masters of shadow manipulation.\n\r",0);
-        write_to_buffer(d,"{RToreador{x - Passionate artists and socialites obsessed with beauty.\n\r",0);
-        write_to_buffer(d,"{RTremere{x  - Secretive blood sorcerers organized in a strict pyramid.\n\r",0);
-        write_to_buffer(d,"{RTzimisce{x - Fiendish fleshcrafters and lords of the Old Country.\n\r",0);
-        write_to_buffer(d,"{RVentrue{x  - Aristocratic rulers who command the minds of others.\n\r\n\r",0);
+        send_to_char("{RAssamite{x - Deadly assassins and diablerists from the Middle East.\n\r", ch);
+        send_to_char("{RBrujah{x   - Fierce rebels and warrior-scholars prone to frenzy.\n\r", ch);
+        send_to_char("{RGangrel{x  - Bestial wanderers closely tied to the wild and shapeshifting.\n\r", ch);
+        send_to_char("{RMalkavian{x- Oracles cursed with incurable insanity.\n\r", ch);
+        send_to_char("{RNosferatu{x- Hideously deformed, masters of stealth and secrets.\n\r", ch);
+        send_to_char("{RRavnos{x   - Nomadic tricksters and masters of illusion.\n\r", ch);
+        send_to_char("{RCappadocian{x - Scholars of death and the grave.\n\r", ch);
+        send_to_char("{RFollowerOfSet{x - Corrupters and cultists worshipping the snake god Set.\n\r", ch);
+        send_to_char("{RLasombra{x - Ruthless leaders and masters of shadow manipulation.\n\r", ch);
+        send_to_char("{RToreador{x - Passionate artists and socialites obsessed with beauty.\n\r", ch);
+        send_to_char("{RTremere{x  - Secretive blood sorcerers organized in a strict pyramid.\n\r", ch);
+        send_to_char("{RTzimisce{x - Fiendish fleshcrafters and lords of the Old Country.\n\r", ch);
+        send_to_char("{RVentrue{x  - Aristocratic rulers who command the minds of others.\n\r\n\r", ch);
 
-        write_to_buffer(d,"{G(Newbie Recommended) clans, in order:  1) Brujah 2) Nosferatu 3) Gangrel{x",0);
-        write_to_buffer(d,"\n\r{CPlease choose a clan: {x",0);
+        send_to_char("{G(Newbie Recommended) clans, in order:  1) Brujah 2) Nosferatu 3) Gangrel{x", ch);
+        send_to_char("\n\r{CPlease choose a clan: {x", ch);
 
         d->connected = CON_PICK_CLAN;
         break;
@@ -2633,7 +2626,7 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
     d->connected = CON_READ_MOTD;
     break;
     }
-    write_to_buffer(d,"{RThat is not a valid choice. Please type either Y or N.{x\n\r{CDo you wish to start the game as a Vampire? [Y/N]? {x",0);
+    send_to_char("{RThat is not a valid choice. Please type either Y or N.{x\n\r{CDo you wish to start the game as a Vampire? [Y/N]? {x", ch);
     d->connected = CON_CHOICE_VAMP;
     break;
 
@@ -2645,9 +2638,9 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
         do_function(ch,&do_help,argument);
 
 
-        write_to_buffer(d,"{CPlease choose a Clan (Assamite, Brujah, Cappadocian, FollowerOfSet, Gangrel,\n\r", 0);
-        write_to_buffer(d,"Lasombra, Malkavian, Nosferatu, Ravnos, Toreador, Tremere, Tzimisce, Ventrue\n\r", 0);
-	   write_to_buffer(d,"or type help <clan>): {x",0);
+        send_to_char("{CPlease choose a Clan (Assamite, Brujah, Cappadocian, FollowerOfSet, Gangrel,\n\r", ch);
+        send_to_char("Lasombra, Malkavian, Nosferatu, Ravnos, Toreador, Tremere, Tzimisce, Ventrue\n\r", ch);
+        send_to_char("or type help <clan>): {x", ch);
         d->connected = CON_PICK_CLAN;
         break;
     }
@@ -2667,10 +2660,10 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
 	str_prefix(buf, "ventrue") )
 
     {
-        write_to_buffer(d,"{R[  Invalid clan choice.  ]{x\n\r",0);
-        write_to_buffer(d,"{CPlease choose a Clan (Assamite, Brujah, Cappadocian, FollowerOfSet, Gangrel,\n\r", 0);
-        write_to_buffer(d,"Lasombra, Malkavian, Nosferatu, Ravnos, Toreador, Tremere, Tzimisce, Ventrue\n\r", 0);
-        write_to_buffer(d,"or type help <clan>): {x",0);
+        send_to_char("{R[  Invalid clan choice.  ]{x\n\r", ch);
+        send_to_char("{CPlease choose a Clan (Assamite, Brujah, Cappadocian, FollowerOfSet, Gangrel,\n\r", ch);
+        send_to_char("Lasombra, Malkavian, Nosferatu, Ravnos, Toreador, Tremere, Tzimisce, Ventrue\n\r", ch);
+        send_to_char("or type help <clan>): {x", ch);
         d->connected = CON_PICK_CLAN;
         break;
     }

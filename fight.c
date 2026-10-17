@@ -6177,7 +6177,8 @@ void kill_triggers (CHAR_DATA *ch)
         }
     }
 }
-void do_assassinate( CHAR_DATA *ch, char *argument )
+
+void do_assassinate(CHAR_DATA *ch, char *argument)
 {
     char arg[MAX_INPUT_LENGTH];
     CHAR_DATA *victim;
@@ -6186,110 +6187,110 @@ void do_assassinate( CHAR_DATA *ch, char *argument )
     int damdice, damsuccess, modifier;
     int resistdice, resistdiff, resistsuccess;
 
-    one_argument( argument, arg );
+    one_argument(argument, arg);
 
     if ((skill = get_skill(ch,gsn_assassinate)) == 0)
     {
-    send_to_char( "Huh?\n\r", ch );
-    return;
+        send_to_char("Huh?\n\r", ch);
+        return;
     }
 
     if (arg[0] == '\0')
     {
-        send_to_char("Assassinate whom?\n\r",ch);
+        send_to_char("Assassinate whom?\n\r", ch);
         return;
     }
 
     if ((victim = get_char_room(ch,NULL,arg)) == NULL)
     {
-        send_to_char("They aren't here.\n\r",ch);
+        send_to_char("They aren't here.\n\r", ch);
         return;
     }
 
     if (ch->fighting != NULL)
     {
-    send_to_char("You're facing the wrong end.\n\r",ch);
-    return;
+        send_to_char("You're facing the wrong end.\n\r", ch);
+        return;
     }
 
-    if ( victim == ch )
+    if (victim == ch)
     {
-    send_to_char( "How can you sneak up on yourself?\n\r", ch );
-    return;
+        send_to_char("How can you sneak up on yourself?\n\r", ch);
+        return;
     }
 
-    if ( is_safe( ch, victim ) )
-      return;
+    if (is_safe(ch, victim))
+        return;
 
     if (IS_NPC(victim) &&
-     victim->fighting != NULL &&
-    !is_same_group(ch,victim->fighting))
+        victim->fighting != NULL &&
+        !is_same_group(ch, victim->fighting))
     {
-        send_to_char("Kill stealing is not permitted.\n\r",ch);
+        send_to_char("Kill stealing is not permitted.\n\r", ch);
         return;
     }
 
-    if ( ( obj = get_eq_char( ch, WEAR_WIELD ) ) == NULL)
+    if (( obj = get_eq_char(ch, WEAR_WIELD)) == NULL)
     {
-    send_to_char( "You need to wield a weapon to Assassinate.\n\r", ch );
-    return;
+        send_to_char("You need to wield a weapon to Assassinate.\n\r", ch);
+        return;
     }
+
     if (obj->value[0] != WEAPON_DAGGER)
     {
-        send_to_char( "With that weapon? YEAH RIGHT!\n\r", ch );
+        send_to_char("With that weapon? YEAH RIGHT!\n\r", ch);
         return;
     }
 
-    if (!IS_AFFECTED(ch,AFF_SNEAK) && !IS_AFFECTED(ch, AFF_HIDE) &&
+    if (!IS_AFFECTED(ch, AFF_SNEAK) && !IS_AFFECTED(ch, AFF_HIDE) &&
         !IS_AFFECTED(ch, AFF_INVISIBLE) && !IS_AFFECTED2(ch, AFF2_UNSEEN) &&
         !IS_AFFECTED2(ch, AFF2_VEIL) && !IS_AFFECTED(victim, AFF_BLIND))
     {
-        send_to_char("They will undoubtedly see you coming. Try being less visible.\n\r",ch);
+        send_to_char("They will undoubtedly see you coming. Try being less visible.\n\r", ch);
         return;
     }
 
-    WAIT_STATE( ch, skill_table[gsn_assassinate].beats );
+    WAIT_STATE(ch, skill_table[gsn_assassinate].beats);
 
-    if ( victim->hit < 2 * victim->max_hit / 3 && victim->position != POS_SLEEPING)
+    if (victim->hit < 2 * victim->max_hit / 3 && victim->position != POS_SLEEPING)
     {
-    act( "$N is hurt and suspicious ... you can't sneak up.",
-        ch, NULL, victim, TO_CHAR );
-    return;
+        act("$N is hurt and suspicious ... you can't sneak up.", ch, NULL, victim, TO_CHAR);
+        return;
     }
+
     // Roll to sneak up behind victim, resisted
     dice = get_attribute(ch, DEXTERITY) + get_ability(ch, CSABIL_STEALTH);
-    if (is_affected(ch,gsn_gift_silence))
+    if (is_affected(ch, gsn_gift_silence) || is_affected(ch, gsn_silenceofdeath))
         dice += 2;
     resistdice = get_attribute(victim, PERCEPTION) + get_ability(victim, CSABIL_ALERTNESS);
     diff = resistdiff = 6;
 
     if (!can_see(victim, ch))
     {
-      diff -= 1;
-      resistdiff += 1;
+        diff -= 1;
+        resistdiff += 1;
     }
 
-    if (is_affected(ch,gsn_gift_scentofrunningwater))
+    if (is_affected(ch, gsn_gift_scentofrunningwater))
         diff--;
 
     if (!IS_AWAKE(victim))
-      resistdice = 0;
+        resistdice = 0;
 
     success = godice(dice, diff);
     success += stealth_int_shadowplay(ch, diff);
     resistsuccess = godice(resistdice, resistdiff);
 
     if (IS_DEBUGGING(ch))
-      cprintf(ch, "tohit:%d diff:%d resist:%d resdiff:%d succ:%d ressucc:%d\n\r", dice, diff,
-    resistdice, resistdiff, success, resistsuccess);
+        cprintf(ch, "tohit:%d diff:%d resist:%d resdiff:%d succ:%d ressucc:%d\n\r", dice, diff, resistdice, resistdiff, success, resistsuccess);
 
     // Failure, or detected
     if (success < 1 || success < resistsuccess)
     {
-      act( "You fail to sneak up on $N!", ch, NULL, victim, TO_CHAR);
-      check_improve(ch,gsn_assassinate,FALSE,4);
-      multi_hit(ch, victim, TYPE_UNDEFINED);
-      return;
+        act("You fail to sneak up on $N!", ch, NULL, victim, TO_CHAR);
+        check_improve(ch, gsn_assassinate, FALSE, 4);
+        multi_hit(ch, victim, TYPE_UNDEFINED);
+        return;
     }
 
     // Successful sneak, Now, do we hit the spine.
@@ -6299,33 +6300,48 @@ void do_assassinate( CHAR_DATA *ch, char *argument )
     success = godice(dice, diff);
 
     if (IS_DEBUGGING(ch))
-      cprintf(ch, "attdice:%d attdiff:%d succ:%d\n\r", dice, diff, success);
+        cprintf(ch, "attdice:%d attdiff:%d succ:%d\n\r", dice, diff, success);
+
     if (success > 0)
     {
-      check_improve(ch, gsn_assassinate, TRUE, 4);
-      damdice = d10_damdice(ch, victim);
-      modifier = d10_modifier(ch) * ((skill + ch->level)/2)/10;
-      diff = 6;
-      damsuccess = godice(damdice, diff);
+        check_improve(ch, gsn_assassinate, TRUE, 4);
 
-      if (IS_DEBUGGING(ch))
-        cprintf(ch, "damdice:%d mod:%d damsucc:%d\n\r", damdice, modifier, damsuccess);
+        if (success > 4 &&
+            !IS_SET(victim->act2, ACT2_ULTRA_MOB) &&
+            !IS_SET(victim->act, ACT_QUESTMOB) &&
+            !(victim->level > 5 + ch->level))
+        {
+            act("You strike a {RM{rO{DRT{rA{RL{x blow, {DS{wEV{WER{wIN{DG{x $N's spine!!!!! $N drop to the ground... dead!", ch, NULL, victim, TO_CHAR);
+            act("$n strikes a {RM{rO{DRT{rA{RL{x blow, {DS{wEV{WER{wIN{DG{x your spine!!!!! You drop to the ground... dead!", ch, NULL, victim, TO_VICT);
+            act("$n strikes a {RM{rO{DRT{rA{RL{x blow, {DS{wEV{WER{wIN{DG{x $N's spine!!!!! $N drops to the ground... dead!", ch, NULL, victim, TO_NOTVICT);
+            kill_em(ch, victim);
+        }
+
+        damdice = d10_damdice(ch, victim);
+        modifier = d10_modifier(ch) * ((skill + ch->level)/2)/10;
+        diff = 6;
+        damsuccess = godice(damdice, diff);
+
+        if (IS_DEBUGGING(ch))
+            cprintf(ch, "damdice:%d mod:%d damsucc:%d\n\r", damdice, modifier, damsuccess);
 
         if (d10_damage(ch, victim, damsuccess, modifier, gsn_assassinate, DAM_PIERCE, DEFENSE_SOAK, TRUE, TRUE))
-      {
-        act( "$N screams as you place your dagger in their spine!", ch, NULL, victim, TO_CHAR );
-        act( "$n plants his dagger into your spine, your body spasms in pain.", ch, NULL, victim, TO_VICT );
-        act( "$n stabs $N in the spine!", ch, NULL, victim, TO_NOTVICT );
-      } else {
-        check_improve(ch,gsn_assassinate,FALSE,4);
-        do_function(ch, &do_backstab, arg);
-     }
-     return;
+        {
+            act("$N screams as you place your dagger in $N's spine!", ch, NULL, victim, TO_CHAR);
+            act("$n plants his dagger into your spine, your body spasms in pain.", ch, NULL, victim, TO_VICT);
+            act("$n stabs $N in the spine!", ch, NULL, victim, TO_NOTVICT);
+        } else {
+            check_improve(ch, gsn_assassinate, FALSE, 4);
+            do_function(ch, &do_backstab, arg);
+        }
+
+        return;
     } else {
-      check_improve(ch,gsn_assassinate,FALSE,4);
-      do_function(ch, &do_backstab, arg);
+        check_improve(ch, gsn_assassinate, FALSE, 4);
+        do_function(ch, &do_backstab, arg);
     }
 }
+
 void do_divine_strength(CHAR_DATA *ch, char *argument )
 {
   AFFECT_DATA af;

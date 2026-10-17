@@ -919,7 +919,7 @@ LnD The Old Sexton leans on a rusted spade beside the lychgate.
 ~
 Desc A stooped, lantern-jawed man in a mud-caked cassock. He has buried more
 souls than he can count and is happy to explain the basics to the living.
-{GSay 'topics' to hear what he can teach.{x
+{cSay 'topics' to hear what he can teach.{x
 ~
 Race human~
 Act ABU
@@ -952,11 +952,11 @@ Parts ABCDEFGHIJK
 Size medium
 Material unknown~
 MaxLoad -1
-M GREET 250 100~
-M SPEECH 251 topics~
-M SPEECH 252 commands~
-M SPEECH 253 movement~
 M SPEECH 254 ooc~
+M SPEECH 253 movement~
+M SPEECH 252 commands~
+M SPEECH 251 topics~
+M GREET 250 100~
 End
 #251
 #MOBFORMAT dynamic
@@ -966,7 +966,7 @@ LnD The Verger of Ledgers stands beside a lectern heavy with parchment.
 ~
 Desc A gaunt verger in black, ink staining every finger. Three great ledgers lie
 open on the lectern - each one a page of your soul.
-{GSay 'topics' to hear what he can teach.{x
+{cSay 'topics' to hear what he can teach.{x
 ~
 Race human~
 Act ABU
@@ -999,14 +999,14 @@ Parts ABCDEFGHIJK
 Size medium
 Material unknown~
 MaxLoad -1
-M GREET 255 100~
-M SPEECH 256 topics~
-M SPEECH 257 sheet~
-M SPEECH 258 page two~
-M SPEECH 259 page three~
-M SPEECH 260 backgrounds~
-M SPEECH 261 attributes~
 M SPEECH 262 abilities~
+M SPEECH 261 attributes~
+M SPEECH 260 backgrounds~
+M SPEECH 259 page three~
+M SPEECH 258 page two~
+M SPEECH 257 sheet~
+M SPEECH 256 topics~
+M GREET 255 100~
 End
 #252
 #MOBFORMAT dynamic
@@ -1016,7 +1016,7 @@ LnD The Stone Mason chisels at an unfinished statue in the nave.
 ~
 Desc A broad-shouldered mason white with stone dust. Half-carved saints line the
 nave around her, each waiting for a face.
-{GSay 'topics' to hear what she can teach.{x
+{cSay 'topics' to hear what she can teach.{x
 ~
 Race human~
 Act ABU
@@ -1049,10 +1049,12 @@ Parts ABCDEFGHIJK
 Size medium
 Material unknown~
 MaxLoad -1
-M GREET 263 100~
-M SPEECH 264 topics~
-M SPEECH 265 create~
+M SPEECH 268 weapon_skills~
+M SPEECH 267 archetype~
 M SPEECH 266 priority~
+M SPEECH 265 create~
+M SPEECH 264 topics~
+M GREET 263 100~
 End
 #253
 #MOBFORMAT dynamic
@@ -1062,7 +1064,7 @@ LnD The Almoner tends a row of votive candles in the side chapel.
 ~
 Desc A soft-spoken almoner who keeps the chapel's offering box and the ledger
 of every freebie spent.
-{GSay 'topics' to hear what he can teach.{x
+{cSay 'topics' to hear what he can teach.{x
 ~
 Race human~
 Act ABU
@@ -1095,10 +1097,11 @@ Parts ABCDEFGHIJK
 Size medium
 Material unknown~
 MaxLoad -1
-M GREET 267 100~
-M SPEECH 268 topics~
-M SPEECH 269 freebie~
-M SPEECH 270 costs~
+M SPEECH 273 weapon_skills~
+M SPEECH 272 costs~
+M SPEECH 271 freebie~
+M SPEECH 270 topics~
+M GREET 269 100~
 End
 #254
 #MOBFORMAT dynamic
@@ -1108,7 +1111,7 @@ LnD A Scriptorium Monk copies skill charts by candlelight.
 ~
 Desc A hooded monk bent over a vast illuminated chart linking every skill to the
 dots that unlock it.
-{GSay 'topics' to hear what he can teach.{x
+{cSay 'topics' to hear what he can teach.{x
 ~
 Race human~
 Act ABU
@@ -1141,10 +1144,11 @@ Parts ABCDEFGHIJK
 Size medium
 Material unknown~
 MaxLoad -1
-M GREET 271 100~
-M SPEECH 272 topics~
-M SPEECH 273 skillmap~
-M SPEECH 274 learning~
+M SPEECH 278 weapon_skills~
+M SPEECH 277 learning~
+M SPEECH 276 skillmap~
+M SPEECH 275 topics~
+M GREET 274 100~
 End
 #255
 #MOBFORMAT dynamic
@@ -1154,7 +1158,7 @@ LnD The Keeper of Bones arranges skulls in the ossuary niches.
 ~
 Desc A pale, ageless figure surrounded by neatly stacked bones - every one a life
 lived and begun again.
-{GSay 'topics' to hear what she can teach.{x
+{cSay 'topics' to hear what she can teach.{x
 ~
 Race human~
 Act ABU
@@ -1187,10 +1191,10 @@ Parts ABCDEFGHIJK
 Size medium
 Material unknown~
 MaxLoad -1
-M GREET 275 100~
-M SPEECH 276 topics~
-M SPEECH 277 remort~
-M SPEECH 278 paths~
+M SPEECH 282 paths~
+M SPEECH 281 remort~
+M SPEECH 280 topics~
+M GREET 279 100~
 End
 #256
 #MOBFORMAT dynamic
@@ -1200,7 +1204,7 @@ LnD The Bishop of the Belfry waits beneath the great bronze bell.
 ~
 Desc An elderly bishop in tattered violet vestments. Above him hangs the bell
 whose toll sends travelers on to the New Temple.
-{GSay 'topics' to hear what he can teach.{x
+{cSay 'topics' to hear what he can teach.{x
 ~
 Race human~
 Act ABU
@@ -1233,10 +1237,10 @@ Parts ABCDEFGHIJK
 Size medium
 Material unknown~
 MaxLoad -1
-M GREET 279 100~
-M SPEECH 280 topics~
-M SPEECH 281 summary~
-M SPEECH 282 graduate~
+M SPEECH 286 graduate~
+M SPEECH 285 summary~
+M SPEECH 284 topics~
+M GREET 283 100~
 End
 #0
 
@@ -3101,28 +3105,28 @@ you cannot feel. A crooked path ends at a roofed lychgate of rotting oak,
 beyond which a ruined gothic cathedral rises from the fog, its spires
 broken like old teeth. Lantern light glows within. Fresh graves line the
 path and a rusted spade leans against the gate.
-{Y>>> {RA {WWEATHERED SIGNPOST{R stands here. Type {G'look sign'{R to read it! {Y<<<{x
-{Y>>> {RTalk to the guide: {G'say topics'{R lists everything they know. {Y<<<{x
+{y>>> {rA {wWEATHERED SIGNPOST{r stands here. Type '{clook sign{r' to read it! {y<<<{x
+{y>>> {rTalk to the guide: '{csay topics{r' lists available guidance. {y<<<{x
 ~
 0 1036 0
 E
-sign signpost post plaque placard tablet signboard weathered signpost~
-{Y+==================================================+{x
-{Y|{W                   THE LYCHGATE                   {Y|{x
-{Y+==================================================+{x
-{W  Welcome to {YHaven of the Embraced{W.{x
-{W  This cathedral teaches you the game, room by room.{x
-
-{W  {Gsay topics{W   - the guide lists what he can teach{x
-{W  {Gsay commands{W - basic commands{x
-{W  {Gsay ooc{W      - in-character vs out-of-character{x
-
-{W  Walk {Gnorth{W to enter the cathedral.{x
-{Y+==================================================+{x
-~
-E
 graves grave~
 Simple mounds with wooden crosses. None of the names are legible.
+~
+E
+sign signpost post plaque placard tablet signboard weathered signpost~
+{y+--------------------------------------------------+{x
+{y|{w                   THE LYCHGATE                   {y|{x
+{y+--------------------------------------------------+{x
+{w  Welcome to {yHaven of the Embraced{w.{x
+{w  This cathedral teaches you the game, room by room.{x
+
+{w  {csay topics{w   - the guide lists what he can teach{x
+{w  {csay commands{w - basic commands{x
+{w  {csay ooc{w      - in-character vs out-of-character{x
+
+{w  Walk {cnorth{w to enter the cathedral.{x
+{y+--------------------------------------------------+{x
 ~
 D0
 The cathedral doors stand open to the north.
@@ -3136,28 +3140,28 @@ Cold flagstones lead through the cathedral's entry hall. Faded murals of
 saints peel from the walls and a holy-water font has long since gone dry.
 A tall lectern holds three enormous ledgers, their pages turning by
 themselves in the candlelight.
-{Y>>> {RA {WBRASS PLAQUE{R stands here. Type {G'look sign'{R to read it! {Y<<<{x
-{Y>>> {RTalk to the guide: {G'say topics'{R lists everything they know. {Y<<<{x
+{y>>> {rA {wBRASS PLAQUE{r stands here. Type '{clook sign{r' to read it! {y<<<{x
+{y>>> {rTalk to the guide: '{csay topics{r' lists available guidance. {y<<<{x
 ~
 0 1036 0
 E
-sign signpost post plaque placard tablet signboard brass plaque~
-{Y+==================================================+{x
-{Y|{W               YOUR CHARACTER SHEET               {Y|{x
-{Y+==================================================+{x
-{W  {Gcs{W (or {Gsheet{W) - page 1: attributes, abilities{x
-{W  {Gcs2{W           - page 2: advantages, virtues{x
-{W  {Gcs3{W           - page 3: secondary abilities{x
-{W  {Gbackgrounds{W   - your backgrounds{x
-{W  {Gbackground show{W - backgrounds you can pick{x
-
-{W  {Gsay topics{W to the Verger for details.{x
-{W  Walk {Gnorth{W into the nave.{x
-{Y+==================================================+{x
-~
-E
 ledgers ledger lectern~
 Three ledgers: CS, CS2 and CS3. Beneath them, a thin scroll marked BACKGROUNDS.
+~
+E
+sign signpost post plaque placard tablet signboard brass plaque~
+{y+--------------------------------------------------+{x
+{y|{w               YOUR CHARACTER SHEET               {y|{x
+{y+--------------------------------------------------+{x
+{w  {ccs{w (or {csheet{w) - page 1: attributes, abilities{x
+{w  {ccs2{w           - page 2: advantages, virtues{x
+{w  {ccs3{w           - page 3: secondary abilities{x
+{w  {cbackgrounds{w   - your backgrounds{x
+{w  {cbackground show{w - backgrounds you can pick{x
+
+{w  {csay topics{w to the Verger for details.{x
+{w  Walk {cnorth{w into the nave.{x
+{y+--------------------------------------------------+{x
 ~
 D0
 The nave opens to the north.
@@ -3176,26 +3180,29 @@ Rows of shattered pews march toward a distant altar beneath a vaulted
 ceiling open to the stars. Along the aisle stand statues of saints, each
 with its face still uncarved, waiting for a sculptor to decide who they
 will become.
-{Y>>> {RA {WCARVED STONE TABLET{R stands here. Type {G'look sign'{R to read it! {Y<<<{x
-{Y>>> {RTalk to the guide: {G'say topics'{R lists everything they know. {Y<<<{x
+{y>>> {rA {wCARVED STONE TABLET{r stands here. Type '{clook sign{r' to read it! {y<<<{x
+{y>>> {rTalk to the guide: '{csay topics{r' lists available guidance. {y<<<{x
 ~
 0 1036 0
 E
-sign signpost post plaque placard tablet signboard carved stone tablet~
-{Y+==================================================+{x
-{Y|{W                 SHAPE YOUR SOUL                  {Y|{x
-{Y+==================================================+{x
-{W  Type {Gcreate{W and follow the steps.{x
-{W  {RUntil create is finished you have NO SKILLS{W{x
-{W  {Rand cannot spend freebies.{W{x
-
-{W  {Gsay topics{W to the Mason for details.{x
-{W  Walk {Gnorth{W into the side chapel.{x
-{Y+==================================================+{x
-~
-E
 statues statue saints~
 Smooth blank faces. One of them looks almost like you.
+~
+E
+sign signpost post plaque placard tablet signboard carved stone tablet~
+{y+--------------------------------------------------+{x
+{y|{w                 SHAPE YOUR SOUL                  {y|{x
+{y+--------------------------------------------------+{x
+{w  Type {ccreate{w if you chose a custom sheet.{x
+{w  {rUntil create is finished you have NO SKILLS{w{x
+{w  {rand cannot spend freebies.{w{x
+
+{w  {rArchetype & Custom Advice:{w{x
+{w  Type {chelp weapon_skills{w and invest 2-3 freebies!{x
+
+{w  {csay topics{w to the Mason for details.{x
+{w  Walk {cnorth{w into the side chapel.{x
+{y+--------------------------------------------------+{x
 ~
 D0
 A side chapel glows with candles to the north.
@@ -3213,32 +3220,35 @@ The Chapel of Offerings~
 Hundreds of votive candles burn in iron racks, filling this small chapel
 with warm light and the smell of wax. An iron-bound offering box sits
 beneath a stained-glass window of a pilgrim climbing a hill.
-{Y>>> {RA {WGILDED PLACARD{R stands here. Type {G'look sign'{R to read it! {Y<<<{x
-{Y>>> {RTalk to the guide: {G'say topics'{R lists everything they know. {Y<<<{x
+{y>>> {rA {wGILDED PLACARD{r stands here. Type '{clook sign{r' to read it! {y<<<{x
+{y>>> {rTalk to the guide: '{csay topics{r' lists available guidance. {y<<<{x
 ~
 0 1036 0
 E
-sign signpost post plaque placard tablet signboard gilded placard~
-{Y+==================================================+{x
-{Y|{W                     FREEBIES                     {Y|{x
-{Y+==================================================+{x
-{W  Type {Gfreebie{W to see costs and freebies left.{x
-{W  Type {Gfreebie <trait>{W to buy one dot.{x
-{W  Cost scales with your {Ycurrent{W dots:{x
-{W    Attributes x4, Abilities x2, Virtues x2,{x
-{W    Humanity x2, Willpower x1{x
-
-{W  {Gsay costs{W to the Almoner for the full list.{x
-{W  Walk {Gnorth{W into the scriptorium.{x
-{Y+==================================================+{x
+window glass pilgrim~
+The pilgrim climbs, falls, and climbs again - higher each time.
 ~
 E
 box offering~
 Carved on the lid: 'Each soul reborn may offer three more.'
 ~
 E
-window glass pilgrim~
-The pilgrim climbs, falls, and climbs again - higher each time.
+sign signpost post plaque placard tablet signboard gilded placard~
+{y+--------------------------------------------------+{x
+{y|{w                     FREEBIES                     {y|{x
+{y+--------------------------------------------------+{x
+{w  Type {cfreebie{w to see costs and freebies left.{x
+{w  Type {cfreebie <trait>{w to buy one dot.{x
+{w  Cost scales with your {ycurrent{w dots:{x
+{w    Attributes x4, Abilities x2, Virtues x2,{x
+{w    Humanity x2, Willpower x1{x
+
+{w  {rRecommendation:{w Type {chelp weapon_skills{w and invest{x
+{w  2-3 freebies in a weapon proficiency (light/heavy/etc).{x
+
+{w  {csay costs{w to the Almoner for the full list.{x
+{w  Walk {cnorth{w into the scriptorium.{x
+{y+--------------------------------------------------+{x
 ~
 D0
 Stairs lead north to the scriptorium.
@@ -3256,27 +3266,28 @@ The Scriptorium~
 Tall windows light rows of slanted writing desks thick with dust. Across
 the far wall hangs an enormous illuminated chart: lines of gold ink run
 from every attribute and ability to the skills they unlock.
-{Y>>> {RA {WPAINTED SIGNBOARD{R stands here. Type {G'look sign'{R to read it! {Y<<<{x
-{Y>>> {RTalk to the guide: {G'say topics'{R lists everything they know. {Y<<<{x
+{y>>> {rA {wPAINTED SIGNBOARD{r stands here. Type '{clook sign{r' to read it! {y<<<{x
+{y>>> {rTalk to the guide: '{csay topics{r' lists available guidance. {y<<<{x
 ~
 0 1036 0
 E
-sign signpost post plaque placard tablet signboard painted signboard~
-{Y+==================================================+{x
-{Y|{W                      SKILLS                      {Y|{x
-{Y+==================================================+{x
-{W  There is {Rno practice and no train{W in Haven.{x
-{W  Your dots on {Gcs{W unlock skills automatically.{x
-{W  {Gskillmap{W - what each skill needs{x
-{W  {Gskills{W   - what you know now{x
-{W  Skills improve by {Yusing{W them.{x
-
-{W  Walk {Gnorth{W down into the ossuary.{x
-{Y+==================================================+{x
-~
-E
 chart illuminated~
 Gold lines run from Dexterity and Brawl to kick, from Wits and Dodge to dodge, and on through hundreds of skills.
+~
+E
+sign signpost post plaque placard tablet signboard painted signboard~
+{y+--------------------------------------------------+{x
+{y|{w                      SKILLS                      {y|{x
+{y+--------------------------------------------------+{x
+{w  There is {rno practice and no train{w in Haven.{x
+{w  Your dots on {ccs{w unlock skills automatically.{x
+{w  {cskillmap{w     - what each skill needs{x
+{w  {cskills{w       - what you know now{x
+{w  {cweapon_skills{w- check weapon proficiency caps{x
+{w  Skills improve by {yusing{w them.{x
+
+{w  Walk {cnorth{w down into the ossuary.{x
+{y+--------------------------------------------------+{x
 ~
 D0
 A stair winds north and down to the ossuary.
@@ -3294,27 +3305,27 @@ The Ossuary~
 Niches carved into the walls hold skulls stacked in tidy rows, thousands
 of them. This is no place of grief: candles burn before every niche, and
 fresh flowers are left for each soul that has died and begun again.
-{Y>>> {RA {WBONE-FRAMED PLAQUE{R stands here. Type {G'look sign'{R to read it! {Y<<<{x
-{Y>>> {RTalk to the guide: {G'say topics'{R lists everything they know. {Y<<<{x
+{y>>> {rA {wBONE-FRAMED PLAQUE{r stands here. Type '{clook sign{r' to read it! {y<<<{x
+{y>>> {rTalk to the guide: '{csay topics{r' lists available guidance. {y<<<{x
 ~
 0 1036 0
 E
-sign signpost post plaque placard tablet signboard bone-framed plaque~
-{Y+==================================================+{x
-{Y|{W                      REMORT                      {Y|{x
-{Y+==================================================+{x
-{W  At {Ylevel 100{W, type {Gremort{W.{x
-{W  You return to level 1 but {YKEEP{W all{x
-{W  equipment, skills and traits.{x
-{W  Each remort grants {Y3 freebies{W.{x
-{W  {RThis is how characters progress in Haven.{W{x
-
-{W  Walk {Gnorth{W up into the belfry.{x
-{Y+==================================================+{x
-~
-E
 skulls skull niches bones~
 Each skull bears a small number. Some are numbered in the hundreds.
+~
+E
+sign signpost post plaque placard tablet signboard bone-framed plaque~
+{y+--------------------------------------------------+{x
+{y|{w                      REMORT                      {y|{x
+{y+--------------------------------------------------+{x
+{w  At {ylevel 100{w, type {cremort{w.{x
+{w  You return to level 1 but {yKEEP{w all{x
+{w  equipment, skills and traits.{x
+{w  Each remort grants {y3 freebies{w.{x
+{w  {rThis is how characters progress in Haven.{w{x
+
+{w  Walk {cnorth{w up into the belfry.{x
+{y+--------------------------------------------------+{x
 ~
 D0
 A narrow stair climbs north into the belfry.
@@ -3333,25 +3344,25 @@ Wind howls through the open arches of the bell tower. Far below, the
 forest stretches away into darkness, and beyond it the distant lights
 of the world. A great bronze bell hangs overhead; its toll will carry you
 to the New Temple.
-{Y>>> {RA {WIRON SIGN{R stands here. Type {G'look sign'{R to read it! {Y<<<{x
-{Y>>> {RTalk to the guide: {G'say topics'{R lists everything they know. {Y<<<{x
+{y>>> {rA {wIRON SIGN{r stands here. Type '{clook sign{r' to read it! {y<<<{x
+{y>>> {rTalk to the guide: '{csay topics{r' lists available guidance. {y<<<{x
 ~
 0 1036 0
 E
-sign signpost post plaque placard tablet signboard iron sign~
-{Y+==================================================+{x
-{Y|{W                     THE BELL                     {Y|{x
-{Y+==================================================+{x
-{W  {Gsay graduate{W - ring the bell, enter the world{x
-{W  {Gsay summary{W  - one last recap{x
-
-{W  Or walk {Gnorth{W through the arch.{x
-{W  Stuck later? {Ghelp <word>{W or {Gooc <question>{W.{x
-{Y+==================================================+{x
-~
-E
 bell bronze~
 The bell is carved with one word: BEGIN.
+~
+E
+sign signpost post plaque placard tablet signboard iron sign~
+{y+--------------------------------------------------+{x
+{y|{w                     THE BELL                     {y|{x
+{y+--------------------------------------------------+{x
+{w  {csay graduate{w - ring the bell, enter the world{x
+{w  {csay summary{w  - one last recap{x
+
+{w  Or walk {cnorth{w through the arch.{x
+{w  Stuck later? {chelp <word>{w or {cooc <question>{w.{x
+{y+--------------------------------------------------+{x
 ~
 D0
 An arch of light leads north to the New Temple.
@@ -3418,263 +3429,300 @@ S
 #250
 Prelude the Old Sexton greet~
 if ispc $n
-  mob echoat $n {CThe Old Sexton lifts his lantern and squints at you.{x
-  mob echoat $n {W'Another lost one wandering out of the woods. Welcome, child.'{x
-  mob echoat $n {W'This old cathedral will teach you how to survive in Haven.'{x
-  mob echoat $n {W{RIMPORTANT:{W read the {Gsign{W in every room ({Glook sign{W) and talk to every guide.{x
-  mob echoat $n {W'Say {Gtopics{W and I will list what I can teach you.'{x
+  mob echoat $n {cThe Old Sexton lifts his lantern and squints at you.{x
+  mob echoat $n {w'Another lost one wandering out of the woods. Welcome, child.'{x
+  mob echoat $n {w'This old cathedral will teach you how to survive in Haven.'{x
+  mob echoat $n {w{rIMPORTANT:{w read the {csign{w in every room ({clook sign{w) and talk to every guide.{x
+  mob echoat $n {w'Say {ctopics{w and I will list what I can teach you.'{x
 endif
 ~
 #251
 Prelude the Old Sexton topics~
-mob echoat $n {CThe Sexton counts on muddy fingers:{x
-mob echoat $n {W'Say any of these words aloud and I will explain:'{x
-mob echoat $n {W  {Gcommands{W  - the handful of commands you need first{x
-mob echoat $n {W  {Gmovement{W  - how to walk the world{x
-mob echoat $n {W  {Gooc{W       - in-character vs out-of-character chat{x
-mob echoat $n {W'When you are done, walk {Gnorth{W into the narthex.'{x
+mob echoat $n {cThe Sexton counts on muddy fingers:{x
+mob echoat $n {w'Say any of these words aloud and I will explain:'{x
+mob echoat $n {w  {ccommands{w  - the handful of commands you need first{x
+mob echoat $n {w  {cmovement{w  - how to walk the world{x
+mob echoat $n {w  {cooc{w       - in-character vs out-of-character chat{x
+mob echoat $n {w'When you are done, walk {cnorth{w into the narthex.'{x
 ~
 #252
 Prelude the Old Sexton commands~
-mob echoat $n {CThe Sexton ticks them off one by one:{x
-mob echoat $n {W  {Glook{W        - see the room; {Glook <thing>{W examines anything{x
-mob echoat $n {W  {Gscore{W       - your health, level and vital statistics{x
-mob echoat $n {W  {Ginventory{W / {Gequipment{W - what you carry and wear{x
-mob echoat $n {W  {Gwho{W         - who else is awake in the world{x
-mob echoat $n {W  {Ghelp <word>{W - the help files cover nearly everything{x
-mob echoat $n {W  {Gcommands{W    - the full list of every command{x
+mob echoat $n {cThe Sexton ticks them off one by one:{x
+mob echoat $n {w  {clook{w        - see the room; {clook <thing>{w examines anything{x
+mob echoat $n {w  {cscore{w       - your health, level and vital statistics{x
+mob echoat $n {w  {cinventory{w / {cequipment{w - what you carry and wear{x
+mob echoat $n {w  {cwho{w         - who else is awake in the world{x
+mob echoat $n {w  {chelp <word>{w - the help files cover nearly everything{x
+mob echoat $n {w  {ccommands{w    - the full list of every command{x
 ~
 #253
 Prelude the Old Sexton movement~
-mob echoat $n {CThe Sexton points his spade down the path:{x
-mob echoat $n {W'Walk with {Gnorth south east west up down{W (or {Gn s e w u d{W).'{x
-mob echoat $n {W'Type {Gexits{W to see which ways you can go.'{x
-mob echoat $n {W'In this cathedral, the way forward is always {Gnorth{W.'{x
+mob echoat $n {cThe Sexton points his spade down the path:{x
+mob echoat $n {w'Walk with {cnorth south east west up down{w (or {cn s e w u d{w).'{x
+mob echoat $n {w'Type {cexits{w to see which ways you can go.'{x
+mob echoat $n {w'In this cathedral, the way forward is always {cnorth{w.'{x
 ~
 #254
 Prelude the Old Sexton ooc~
-mob echoat $n {CThe Sexton lowers his voice:{x
-mob echoat $n {W'Haven is a {Yroleplaying{W game. Most of what you say is {Yin-character{W.'{x
-mob echoat $n {W  {Gsay <text>{W  - speak IN character to the room{x
-mob echoat $n {W  {Gosay <text>{W - speak OUT of character to the room{x
-mob echoat $n {W  {Gooc <text>{W  - the global OUT of character channel{x
-mob echoat $n {W'Ask game questions on {Gooc{W - players are glad to help.'{x
-mob echoat $n {W'Keep modern chatter out of {Gsay{W.'{x
+mob echoat $n {cThe Sexton lowers his voice:{x
+mob echoat $n {w'Haven is a {yroleplaying{w game. Most of what you say is {yin-character{w.'{x
+mob echoat $n {w  {csay <text>{w  - speak IN character to the room{x
+mob echoat $n {w  {cosay <text>{w - speak OUT of character to the room{x
+mob echoat $n {w  {cooc <text>{w  - the global OUT of character channel{x
+mob echoat $n {w'Ask game questions on {cooc{w - players are glad to help.'{x
+mob echoat $n {w'Keep modern chatter out of {csay{w.'{x
 ~
 #255
 Prelude the Verger of Ledgers greet~
 if ispc $n
-  mob echoat $n {CThe Verger of Ledgers looks up from his lectern.{x
-  mob echoat $n {W'Your character is written on a Storyteller {Ycharacter sheet{W of dots.'{x
-  mob echoat $n {W'It has {YTHREE{W pages plus your backgrounds. Say {Gtopics{W to learn them.'{x
+  mob echoat $n {cThe Verger of Ledgers looks up from his lectern.{x
+  mob echoat $n {w'Your character is written on a Storyteller {ycharacter sheet{w of dots.'{x
+  mob echoat $n {w'It has {yTHREE{w pages plus your backgrounds. Say {ctopics{w to learn them.'{x
 endif
 ~
 #256
 Prelude the Verger of Ledgers topics~
-mob echoat $n {CThe Verger taps each ledger in turn:{x
-mob echoat $n {W  {Gsheet{W       - page one: {Gcs{W (attributes and abilities){x
-mob echoat $n {W  {Gpage two{W    - {Gcs2{W: advantages, virtues, willpower, health{x
-mob echoat $n {W  {Gpage three{W  - {Gcs3{W: secondary abilities{x
-mob echoat $n {W  {Gbackgrounds{W - your backgrounds and how to set them{x
-mob echoat $n {W  {Gattributes{W / {Gabilities{W - what the dots mean{x
+mob echoat $n {cThe Verger taps each ledger in turn:{x
+mob echoat $n {w  {csheet{w       - page one: {ccs{w (attributes and abilities){x
+mob echoat $n {w  {cpage two{w    - {ccs2{w: advantages, virtues, willpower, health{x
+mob echoat $n {w  {cpage three{w  - {ccs3{w: secondary abilities{x
+mob echoat $n {w  {cbackgrounds{w - your backgrounds and how to set them{x
+mob echoat $n {w  {cattributes{w / {cabilities{w - what the dots mean{x
 ~
 #257
 Prelude the Verger of Ledgers sheet~
-mob echoat $n {CThe Verger opens the first ledger:{x
-mob echoat $n {W'Type {Gcs{W (or {Gsheet{W) for page one of your character sheet.'{x
-mob echoat $n {W'It shows your nine {YAttributes{W and your {YAbilities{W, rated in dots.'{x
-mob echoat $n {W'There is more: say {Gpage two{W and {Gpage three{W.'{x
+mob echoat $n {cThe Verger opens the first ledger:{x
+mob echoat $n {w'Type {ccs{w (or {csheet{w) for page one of your character sheet.'{x
+mob echoat $n {w'It shows your nine {yAttributes{w and your {yAbilities{w, rated in dots.'{x
+mob echoat $n {w'There is more: say {cpage two{w and {cpage three{w.'{x
 ~
 #258
 Prelude the Verger of Ledgers page two~
-mob echoat $n {CThe Verger opens the second ledger:{x
-mob echoat $n {W'Type {Gcs2{W for your {YAdvantages{W:'{x
-mob echoat $n {W'  disciplines, gifts or spheres, backgrounds, virtues,'{x
-mob echoat $n {W'  humanity, willpower, blood or rage, and your health track.'{x
+mob echoat $n {cThe Verger opens the second ledger:{x
+mob echoat $n {w'Type {ccs2{w for your {yAdvantages{w:'{x
+mob echoat $n {w'  disciplines, gifts or spheres, backgrounds, virtues,'{x
+mob echoat $n {w'  humanity, willpower, blood or rage, and your health track.'{x
 ~
 #259
 Prelude the Verger of Ledgers page three~
-mob echoat $n {CThe Verger opens the third ledger:{x
-mob echoat $n {W'Type {Gcs3{W for your {YSecondary Abilities{W:'{x
-mob echoat $n {W'  weapon skills (light, heavy, blunt, polearm), crafts,'{x
-mob echoat $n {W'  carving, mining, hedge magic. They appear as you unlock them.'{x
+mob echoat $n {cThe Verger opens the third ledger:{x
+mob echoat $n {w'Type {ccs3{w for your {ySecondary Abilities{w:'{x
+mob echoat $n {w'  weapon skills (light, heavy, blunt, polearm), crafts,'{x
+mob echoat $n {w'  carving, mining, hedge magic. They appear as you unlock them.'{x
 ~
 #260
 Prelude the Verger of Ledgers backgrounds~
-mob echoat $n {CThe Verger draws a thin scroll from his sleeve:{x
-mob echoat $n {W'Type {Gbackgrounds{W to see the backgrounds you own.'{x
-mob echoat $n {W'Type {Gbackground show{W to list the ones available to you.'{x
-mob echoat $n {W'Spend starting points with {Gbackground <name>{W.'{x
-mob echoat $n {W{RBackground points are PERMANENT.{W 'If you plan to be Embraced,'{x
-mob echoat $n {W'ghouled, or remort into Garou or Mage, consider saving some.'{x
+mob echoat $n {cThe Verger draws a thin scroll from his sleeve:{x
+mob echoat $n {w'Type {cbackgrounds{w to see the backgrounds you own.'{x
+mob echoat $n {w'Type {cbackground show{w to list the ones available to you.'{x
+mob echoat $n {w'Spend starting points with {cbackground <name>{w.'{x
+mob echoat $n {w{rBackground points are PERMANENT.{w 'If you plan to be Embraced,'{x
+mob echoat $n {w'ghouled, or remort into Garou or Mage, consider saving some.'{x
 ~
 #261
 Prelude the Verger of Ledgers attributes~
-mob echoat $n {CThe Verger traces three columns:{x
-mob echoat $n {W  {YPhysical{W: Strength, Dexterity, Stamina{x
-mob echoat $n {W  {YSocial{W:   Charisma, Manipulation, Appearance{x
-mob echoat $n {W  {YMental{W:   Perception, Intelligence, Wits{x
-mob echoat $n {W'Rated 1 to 5 dots. They help decide which skills you unlock.'{x
+mob echoat $n {cThe Verger traces three columns:{x
+mob echoat $n {w  {yPhysical{w: Strength, Dexterity, Stamina{x
+mob echoat $n {w  {ySocial{w:   Charisma, Manipulation, Appearance{x
+mob echoat $n {w  {yMental{w:   Perception, Intelligence, Wits{x
+mob echoat $n {w'Rated 1 to 5 dots. They help decide which skills you unlock.'{x
 ~
 #262
 Prelude the Verger of Ledgers abilities~
-mob echoat $n {CThe Verger turns a page:{x
-mob echoat $n {W'Abilities are {YTalents{W, {YSkills{W and {YKnowledges{W, rated 0 to 5.'{x
-mob echoat $n {W'Brawl, Melee, Dodge, Stealth, Occult and many more.'{x
-mob echoat $n {W'With attributes, they unlock your skills. The monk upstairs explains.'{x
+mob echoat $n {cThe Verger turns a page:{x
+mob echoat $n {w'Abilities are {yTalents{w, {ySkills{w and {yKnowledges{w, rated 0 to 5.'{x
+mob echoat $n {w'Brawl, Melee, Dodge, Stealth, Occult and many more.'{x
+mob echoat $n {w'With attributes, they unlock your skills. The monk upstairs explains.'{x
 ~
 #263
 Prelude the Stone Mason greet~
 if ispc $n
-  mob echoat $n {CThe Stone Mason sets down her chisel.{x
-  mob echoat $n {W'Every soul is carved before it walks. Here you shape yours with {Gcreate{W.'{x
-  mob echoat $n {W{RIf you have not finished create, you have NO SKILLS.{W Say {Gtopics{W.{x
+  mob echoat $n {cThe Stone Mason sets down her chisel.{x
+  mob echoat $n {w'Every soul is carved before it walks. Here you shape yours with {ccreate{w.'{x
+  mob echoat $n {w{rIf you chose a CUSTOM sheet and did not finish create, you have NO SKILLS.{w{x
+  mob echoat $n {w'Whether you used an archetype or custom sheet, say {ctopics{w to learn.'{x
 endif
 ~
 #264
 Prelude the Stone Mason topics~
-mob echoat $n {CThe Mason wipes dust from her hands:{x
-mob echoat $n {W  {Gcreate{W   - the interactive character builder{x
-mob echoat $n {W  {Gpriority{W - primary, secondary and tertiary choices{x
+mob echoat $n {cThe Mason wipes dust from her hands:{x
+mob echoat $n {w  {ccreate{w        - the interactive character builder{x
+mob echoat $n {w  {cpriority{w      - primary, secondary and tertiary choices{x
+mob echoat $n {w  {carchetype{w     - pre-built archetypes vs custom sheets{x
+mob echoat $n {w  {cweapon_skills{w - CRITICAL weapon proficiency advice for all!{x
 ~
 #265
 Prelude the Stone Mason create~
-mob echoat $n {CThe Mason gestures at the unfinished statue:{x
-mob echoat $n {W'Type {Gcreate{W and follow the prompts step by step.'{x
-mob echoat $n {W'You choose priorities, then spend dots on attributes, abilities'{x
-mob echoat $n {W'and virtues. The builder tells you what is left at each step.'{x
-mob echoat $n {W{RYou cannot use freebies until create is finished.{W{x
+mob echoat $n {cThe Mason gestures at the unfinished statue:{x
+mob echoat $n {w'Type {ccreate{w and follow the prompts step by step.'{x
+mob echoat $n {w'You choose priorities, then spend dots on attributes, abilities'{x
+mob echoat $n {w'and virtues. The builder tells you what is left at each step.'{x
+mob echoat $n {w{rYou cannot use freebies until create is finished.{w{x
 ~
 #266
 Prelude the Stone Mason priority~
-mob echoat $n {CThe Mason chalks three marks on the stone:{x
-mob echoat $n {W'You rank Physical, Social and Mental as primary, secondary, tertiary.'{x
-mob echoat $n {W'Then Talents, Skills and Knowledges the same way.'{x
-mob echoat $n {W'Primary gets the most dots. Pick what suits the character you want.'{x
+mob echoat $n {cThe Mason chalks three marks on the stone:{x
+mob echoat $n {w'You rank Physical, Social and Mental as primary, secondary, tertiary.'{x
+mob echoat $n {w'Then Talents, Skills and Knowledges the same way.'{x
+mob echoat $n {w'Primary gets the most dots. Pick what suits the character you want.'{x
 ~
 #267
-Prelude the Almoner greet~
-if ispc $n
-  mob echoat $n {CThe Almoner looks up from the candles.{x
-  mob echoat $n {W'Freebies are how your character grows. Here you learn to spend them.'{x
-  mob echoat $n {W'Say {Gtopics{W, child.'{x
-endif
+Prelude the Stone Mason archetype~
+mob echoat $n {cThe Mason taps a completed statue:{x
+mob echoat $n {w'If you chose a numbered Archetype (0-9) at creation, your base stats'{x
+mob echoat $n {w'were assigned automatically. You do NOT need to run {ccreate{w.'{x
+mob echoat $n {w'However, archetype characters MUST still heed the advice on {cweapon_skills{w!'{x
 ~
 #268
-Prelude the Almoner topics~
-mob echoat $n {CThe Almoner opens his ledger:{x
-mob echoat $n {W  {Gfreebie{W - how to spend freebies{x
-mob echoat $n {W  {Gcosts{W   - what each trait costs{x
+Prelude the Stone Mason weapon_skills~
+mob echoat $n {cThe Mason leans in with urgent advice:{x
+mob echoat $n {w'{rCRITICAL ADVICE FOR ALL PLAYERS (Archetypes and Custom):{w'{x
+mob echoat $n {w'At the conclusion of character creation, you must pick a weapon skill!'{x
+mob echoat $n {w'Type '{chelp weapon_skills{w' to view proficiencies: light, heavy, blunt, polearm.'{x
+mob echoat $n {w'Invest 2-3 points into your chosen proficiency using the '{cfreebie{w' command'{x
+mob echoat $n {w'(e.g. '{cfreebie light{w'). Without this, your weapon skill is capped!'{x
 ~
 #269
-Prelude the Almoner freebie~
-mob echoat $n {CThe Almoner turns the ledger toward you:{x
-mob echoat $n {W'Type {Gfreebie{W alone to see the cost table and how many you have.'{x
-mob echoat $n {W'Type {Gfreebie <trait>{W to raise it one dot, e.g. {Gfreebie dodge{W.'{x
-mob echoat $n {W'New freebies come from {Yremorting{W. Say {Gcosts{W for prices.'{x
+Prelude the Almoner greet~
+if ispc $n
+  mob echoat $n {cThe Almoner looks up from the candles.{x
+  mob echoat $n {w'Freebies are how your character grows. Here you learn to spend them.'{x
+  mob echoat $n {w'Say {ctopics{w, child.'{x
+endif
 ~
 #270
-Prelude the Almoner costs~
-mob echoat $n {CThe Almoner reads from the ledger:{x
-mob echoat $n {W'Costs scale with the dots you {Yalready have{W, like XP:'{x
-mob echoat $n {W  {YAttributes{W:        current rating x 4{x
-mob echoat $n {W  {YAbilities{W:         current rating x 2  (new ability: 3){x
-mob echoat $n {W  {YSecondary ability{W: current rating x 2  (new: 1){x
-mob echoat $n {W  {YVirtues{W:           current rating x 2{x
-mob echoat $n {W  {YHumanity{W:          current rating x 2{x
-mob echoat $n {W  {YWillpower{W:         current rating{x
-mob echoat $n {W  {YDisciplines{W:       clan x 5, out-of-clan x 6, new 10{x
-mob echoat $n {W'Type {Gfreebie{W for the exact table for your race.'{x
+Prelude the Almoner topics~
+mob echoat $n {cThe Almoner opens his ledger:{x
+mob echoat $n {w  {cfreebie{w       - how to spend freebies{x
+mob echoat $n {w  {ccosts{w         - what each trait costs{x
+mob echoat $n {w  {cweapon_skills{w - vital advice before spending freebies{x
 ~
 #271
-Prelude the Scriptorium Monk greet~
-if ispc $n
-  mob echoat $n {CThe Scriptorium Monk sets down his quill.{x
-  mob echoat $n {W'There is no {Rpractice{W and no {Rtrain{W in Haven. Your dots unlock skills.'{x
-  mob echoat $n {W'Say {Gtopics{W and I will show you.'{x
-endif
+Prelude the Almoner freebie~
+mob echoat $n {cThe Almoner turns the ledger toward you:{x
+mob echoat $n {w'Type {cfreebie{w alone to see the cost table and how many you have.'{x
+mob echoat $n {w'Type {cfreebie <trait>{w to raise it one dot, e.g. {cfreebie dodge{w.'{x
+mob echoat $n {w'New freebies come from {yremorting{w. Say {ccosts{w for prices.'{x
 ~
 #272
-Prelude the Scriptorium Monk topics~
-mob echoat $n {CThe Monk unrolls his chart:{x
-mob echoat $n {W  {Gskillmap{W - see what unlocks each skill{x
-mob echoat $n {W  {Glearning{W - how skills improve{x
+Prelude the Almoner costs~
+mob echoat $n {cThe Almoner reads from the ledger:{x
+mob echoat $n {w'Costs scale with the dots you {yalready have{w, like XP:'{x
+mob echoat $n {w  {yAttributes{w:        current rating x 4{x
+mob echoat $n {w  {yAbilities{w:         current rating x 2  (new ability: 3){x
+mob echoat $n {w  {ySecondary ability{w: current rating x 2  (new: 1){x
+mob echoat $n {w  {yVirtues{w:           current rating x 2{x
+mob echoat $n {w  {yHumanity{w:          current rating x 2{x
+mob echoat $n {w  {yWillpower{w:         current rating{x
+mob echoat $n {w  {yDisciplines{w:       clan x 5, out-of-clan x 6, new 10{x
+mob echoat $n {w'Type {cfreebie{w for the exact table for your race.'{x
 ~
 #273
-Prelude the Scriptorium Monk skillmap~
-mob echoat $n {CThe Monk smooths the great chart:{x
-mob echoat $n {W'Type {Gskillmap{W to see every skill and the attribute/ability dots'{x
-mob echoat $n {W'and level it needs. Raise those dots and the skill unlocks itself.'{x
-mob echoat $n {W'Type {Gskills{W to see what you already know.'{x
+Prelude the Almoner weapon_skills~
+mob echoat $n {cThe Almoner points to a line in his ledger:{x
+mob echoat $n {w'{rVital Recommendation:{w Before spending all your freebies, read {chelp weapon_skills{w!'{x
+mob echoat $n {w'Whether you picked an archetype or built custom, invest 2-3 freebies into a'{x
+mob echoat $n {w'secondary weapon proficiency ({cfreebie light{w, {cheavy{w, {cblunt{w, or {cpolearm{w).'{x
+mob echoat $n {w'This raises your weapon competency ceiling!'{x
 ~
 #274
-Prelude the Scriptorium Monk learning~
-mob echoat $n {CThe Monk nods slowly:{x
-mob echoat $n {W'Skills improve by {Yusing{W them - fighting, sneaking, crafting.'{x
-mob echoat $n {W'Each use has a chance to make you better.'{x
-mob echoat $n {W'Secondary abilities on {Gcs3{W raise how far weapon skills can go.'{x
-~
-#275
-Prelude the Keeper of Bones greet~
+Prelude the Scriptorium Monk greet~
 if ispc $n
-  mob echoat $n {CThe Keeper of Bones turns a skull in her hands.{x
-  mob echoat $n {W'Death is not the end here. {YRemort{W is how every soul grows strong.'{x
-  mob echoat $n {W{RRemorting is the ONLY real way to earn freebies.{W Say {Gtopics{W.{x
+  mob echoat $n {cThe Scriptorium Monk sets down his quill.{x
+  mob echoat $n {w'There is no {rpractice{w and no {rtrain{w in Haven. Your dots unlock skills.'{x
+  mob echoat $n {w'Say {ctopics{w and I will show you.'{x
 endif
 ~
+#275
+Prelude the Scriptorium Monk topics~
+mob echoat $n {cThe Monk unrolls his chart:{x
+mob echoat $n {w  {cskillmap{w      - see what unlocks each skill{x
+mob echoat $n {w  {clearning{w      - how skills improve{x
+mob echoat $n {w  {cweapon_skills{w - secondary weapon proficiencies and caps{x
+~
 #276
-Prelude the Keeper of Bones topics~
-mob echoat $n {CThe Keeper sets the skull down:{x
-mob echoat $n {W  {Gremort{W - what remorting is and why you must{x
-mob echoat $n {W  {Gpaths{W  - becoming Garou or Mage through remort{x
+Prelude the Scriptorium Monk skillmap~
+mob echoat $n {cThe Monk smooths the great chart:{x
+mob echoat $n {w'Type {cskillmap{w to see every skill and the attribute/ability dots'{x
+mob echoat $n {w'and level it needs. Raise those dots and the skill unlocks itself.'{x
+mob echoat $n {w'Type {cskills{w to see what you already know.'{x
 ~
 #277
-Prelude the Keeper of Bones remort~
-mob echoat $n {CThe Keeper speaks plainly:{x
-mob echoat $n {W'At {Ylevel 100{W, type {Gremort{W.'{x
-mob echoat $n {W'You return to {Ylevel 1{W, but {YKEEP{W all equipment, skills and traits.'{x
-mob echoat $n {W'Each remort grants {Y3 freebies{W. That is how you progress.'{x
-mob echoat $n {W{RRemorting is not optional - it is how characters grow in Haven.{W{x
-mob echoat $n {W'Level, remort, spend freebies, repeat.'{x
+Prelude the Scriptorium Monk learning~
+mob echoat $n {cThe Monk nods slowly:{x
+mob echoat $n {w'Skills improve by {yusing{w them - fighting, sneaking, crafting.'{x
+mob echoat $n {w'Each use has a chance to make you better via {wcheck_improve{w.'{x
+mob echoat $n {w'Secondary abilities on {ccs3{w raise how far weapon skills can go.'{x
 ~
 #278
-Prelude the Keeper of Bones paths~
-mob echoat $n {CThe Keeper gestures at two sealed tombs:{x
-mob echoat $n {W'A true-blood human may {Gremort garou{W or {Gremort mage <tradition>{W.'{x
-mob echoat $n {W'That rebuilds the sheet for the new path - you redo {Gcreate{W.'{x
-mob echoat $n {W'Vampires are made by being {YEmbraced{W by another player.'{x
-mob echoat $n {W'Read {Ghelp remort{W before choosing.'{x
+Prelude the Scriptorium Monk weapon_skills~
+mob echoat $n {cThe Monk indicates the weapon branch of the chart:{x
+mob echoat $n {w'Secondary weapon skills on {ccs3{w (light, heavy, blunt, polearm) govern your caps.'{x
+mob echoat $n {w'Check '{chelp weapon_skills{w' and buy 2-3 dots with '{cfreebie <skill>{w'.'{x
+mob echoat $n {w'As your proficiency increases, your attack ceiling rises toward mastery.'{x
 ~
 #279
-Prelude the Bishop of the Belfry greet~
+Prelude the Keeper of Bones greet~
 if ispc $n
-  mob echoat $n {CThe Bishop of the Belfry rests a hand on the bell rope.{x
-  mob echoat $n {W'You have walked the whole cathedral. Well done.'{x
-  mob echoat $n {W'Say {Ggraduate{W and I will ring you on to the New Temple.'{x
-  mob echoat $n {W'Or say {Gtopics{W for a final summary first.'{x
+  mob echoat $n {cThe Keeper of Bones turns a skull in her hands.{x
+  mob echoat $n {w'Death is not the end here. {yRemort{w is how every soul grows strong.'{x
+  mob echoat $n {w{rRemorting is the ONLY real way to earn freebies.{w Say {ctopics{w.{x
 endif
 ~
 #280
-Prelude the Bishop of the Belfry topics~
-mob echoat $n {CThe Bishop counts on his fingers:{x
-mob echoat $n {W  {Gsummary{W  - everything in one breath{x
-mob echoat $n {W  {Ggraduate{W - ring the bell and enter the world{x
+Prelude the Keeper of Bones topics~
+mob echoat $n {cThe Keeper sets the skull down:{x
+mob echoat $n {w  {cremort{w - what remorting is and why you must{x
+mob echoat $n {w  {cpaths{w  - becoming Garou or Mage through remort{x
 ~
 #281
-Prelude the Bishop of the Belfry summary~
-mob echoat $n {CThe Bishop recites:{x
-mob echoat $n {W  {Gcs{W, {Gcs2{W, {Gcs3{W, {Gbackgrounds{W - your character sheet{x
-mob echoat $n {W  {Gcreate{W   - finish this first or you have no skills{x
-mob echoat $n {W  {Gfreebie{W  - spend freebies (cost scales with current dots){x
-mob echoat $n {W  {Gskillmap{W - see what unlocks each skill{x
-mob echoat $n {W  {Gremort{W   - at level 100; the way you earn freebies{x
-mob echoat $n {W  {Gooc{W / {Gosay{W - out-of-character chat, global / room{x
-mob echoat $n {W  {Ghelp <word>{W - when in doubt{x
+Prelude the Keeper of Bones remort~
+mob echoat $n {cThe Keeper speaks plainly:{x
+mob echoat $n {w'At {ylevel 100{w, type {cremort{w.'{x
+mob echoat $n {w'You return to {ylevel 1{w, but {yKEEP{w all equipment, skills and traits.'{x
+mob echoat $n {w'Each remort grants {y3 freebies{w. That is how you progress.'{x
+mob echoat $n {w{rRemorting is not optional - it is how characters grow in Haven.{w{x
+mob echoat $n {w'Level, remort, spend freebies, repeat.'{x
 ~
 #282
+Prelude the Keeper of Bones paths~
+mob echoat $n {cThe Keeper gestures at two sealed tombs:{x
+mob echoat $n {w'A true-blood human may {cremort garou{w or {cremort mage <tradition>{w.'{x
+mob echoat $n {w'That rebuilds the sheet for the new path - you redo {ccreate{w.'{x
+mob echoat $n {w'Vampires are made by being {yEmbraced{w by another player.'{x
+mob echoat $n {w'Read {chelp remort{w before choosing.'{x
+~
+#283
+Prelude the Bishop of the Belfry greet~
+if ispc $n
+  mob echoat $n {cThe Bishop of the Belfry rests a hand on the bell rope.{x
+  mob echoat $n {w'You have walked the whole cathedral. Well done.'{x
+  mob echoat $n {w'Say {cgraduate{w and I will ring you on to the New Temple.'{x
+  mob echoat $n {w'Or say {ctopics{w for a final summary first.'{x
+endif
+~
+#284
+Prelude the Bishop of the Belfry topics~
+mob echoat $n {cThe Bishop counts on his fingers:{x
+mob echoat $n {w  {csummary{w  - everything in one breath{x
+mob echoat $n {w  {cgraduate{w - ring the bell and enter the world{x
+~
+#285
+Prelude the Bishop of the Belfry summary~
+mob echoat $n {cThe Bishop recites:{x
+mob echoat $n {w  {ccs{w, {ccs2{w, {ccs3{w, {cbackgrounds{w - your character sheet{x
+mob echoat $n {w  {ccreate{w   - finish this first if custom or you have no skills{x
+mob echoat $n {w  {cfreebie{w  - spend freebies (cost scales with current dots){x
+mob echoat $n {w  {cweapon_skills{w - check {chelp weapon_skills{w and invest 2-3 freebies{x
+mob echoat $n {w  {cskillmap{w - see what unlocks each skill{x
+mob echoat $n {w  {cremort{w   - at level 100; the way you earn freebies{x
+mob echoat $n {w  {cooc{w / {cosay{w - out-of-character chat, global / room{x
+mob echoat $n {w  {chelp <word>{w - when in doubt{x
+~
+#286
 Prelude the Bishop of the Belfry graduate~
-mob echoat $n {CThe Bishop hauls on the bell rope.{x
-mob echoat $n {W{YBOOOONG... The great bell tolls and the cathedral dissolves around you.{x{x
+mob echoat $n {cThe Bishop hauls on the bell rope.{x
+mob echoat $n {w{yBOOOONG... The great bell tolls and the cathedral dissolves around you.{x{x
 mob transfer $n 101
 ~
 #0

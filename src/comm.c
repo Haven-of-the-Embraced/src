@@ -2554,13 +2554,15 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
         }
     }
     ch->pcdata->progress = 8;
-    send_to_char("\n\r{C======================================================================{x\n\r", ch);
-    send_to_char("{YArchetype selected! Your base Attributes and Abilities have been set.{x\n\r", ch);
-    send_to_char("{YYou have also been granted 5 'Background' points to spend in-game on{x\n\r", ch);
-    send_to_char("{Ytraits like Generation, Resources, or Retainers. Afterwards, you may{x\n\r", ch);
-    send_to_char("{Yuse the 'freebie' command to spend 15 freebie points to further customize{x\n\r", ch);
-    send_to_char("{Yyour character's stats.{x\n\r", ch);
-    send_to_char("{C======================================================================{x\n\r", ch);
+    send_to_char("\n\r{c======================================================================{x\n\r", ch);
+    send_to_char("{yArchetype selected! Your base Attributes and Abilities have been set.{x\n\r", ch);
+    send_to_char("{yYou have also been granted 5 'Background' points to spend in-game on{x\n\r", ch);
+    send_to_char("{ytraits like Generation, Resources, or Retainers. Afterwards, you may{x\n\r", ch);
+    send_to_char("{yuse the 'freebie' command to spend 15 freebie points to further customize{x\n\r", ch);
+    send_to_char("{yyour character's stats.{x\n\r\n\r", ch);
+    send_to_char("{rRecommended:{w Type '{chelp weapon_skills{w' - choose a weapon proficiency\n\r", ch);
+    send_to_char("and invest 2-3 points into it via the '{cfreebie{w' command.{x\n\r", ch);
+    send_to_char("{c======================================================================{x\n\r", ch);
     ch->csmax_willpower = ch->pcdata->csvirtues[COURAGE];
     ch->pcdata->cshumanity = ch->pcdata->csvirtues[CONSCIENCE]+ch->pcdata->csvirtues[SELF_CONTROL];
     ch->cswillpower = ch->csmax_willpower;

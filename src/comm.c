@@ -2409,6 +2409,7 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
                     send_to_char( "\n\r{bC{ro{yl{co{mu{gr{x is now {rON{x, Way Cool!\n\r\n\r", ch );
                     break;
     case 'n': case 'N':
+                    REMOVE_BIT( ch->act, PLR_COLOUR );
                     break;
     default:
             write_to_buffer( d, "\n\rThat is not a valid choice.\n\rPlease choose [Y]es or [N]o: ", 0 );
@@ -2418,7 +2419,7 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
         send_to_char( "{cWhat is your character's sex?{x\n\r", ch );
         send_to_char( "{w(This determines your pronouns and presentation. It has no effect on stats.){x\n\r", ch );
         send_to_char( "{cPlease enter [M]ale or [F]emale: {x", ch );
-        d->connected = CON_GET_NEW_SEX;
+       d->connected = CON_GET_NEW_SEX;
         break;
 
 
@@ -2433,7 +2434,7 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
                 break;
     default:
         send_to_char( "{rThat is not a valid choice.{x\n\r{cWhat is your character's sex? [M/F]: {x", ch );
-        return;
+       return;
     }
 
     wiznet("Newbie alert!  $N sighted.",ch,NULL,WIZ_NEWBIE,0,0);
@@ -2463,7 +2464,7 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
 
     send_to_char("{cPlease select the number of the archetype that best fits your Character.{x\n\r",ch);
     send_to_char("{cOr, enter 'CUSTOM' to skip this step and create a custom sheet later:{x\n\r",ch);
-    d->connected = CON_PICK_CHILDHOOD;
+   d->connected = CON_PICK_CHILDHOOD;
     break;
 
     case CON_PICK_CHILDHOOD:
@@ -2490,13 +2491,11 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
                 send_to_char("or undergo the First Change to become Garou (Werewolf) upon reaching level 100.\n\r\n\r",ch);
 
                 send_to_char("{cDo you wish to start the game as a Vampire (Recommended): [Y/N]? {x",ch);
-
                 d->connected = CON_CHOICE_VAMP;
                 ch->pcdata->progress = 0;
                 break;
-
-            } else
-                num = 99;
+            }
+            num = -1;
         }
     if(num < 0 || num > 9)
     {
@@ -2514,7 +2513,7 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
         send_to_char("{g[9] Hedge Wizard{x  - Folk sorcerer with survival instincts (Focuses on Intelligence and Enigmas)\n\r\n\r",ch);
         send_to_char("{cPlease select the number of the archetype that best fits your Character.{x\n\r",ch);
         send_to_char("{cOr, enter 'CUSTOM' to skip this step and create a custom sheet later:{x\n\r",ch);
-        d->connected = CON_PICK_CHILDHOOD;
+       d->connected = CON_PICK_CHILDHOOD;
         break;
     }
     for(i = 0; i < MAX_ATTRIBUTES; i++)
@@ -2576,7 +2575,7 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
     send_to_char("or undergo the First Change to become Garou (Werewolf) upon reaching level 100.\n\r\n\r",ch);
 
     send_to_char("{cDo you wish to start the game as a Vampire (Recommended): [Y/N]? {x",ch);
-    d->connected = CON_CHOICE_VAMP;
+   d->connected = CON_CHOICE_VAMP;
     break;
 
 
@@ -2609,7 +2608,6 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
 
         send_to_char("{g(Newbie Recommended) clans, in order:  1) Brujah 2) Nosferatu 3) Gangrel{x",ch);
         send_to_char("\n\r{cPlease choose a clan: {x",ch);
-
         d->connected = CON_PICK_CLAN;
         break;
     }
@@ -2626,7 +2624,7 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
     break;
     }
     send_to_char("{rThat is not a valid choice. Please type either Y or N.{x\n\r{cDo you wish to start the game as a Vampire? [Y/N]? {x",ch);
-    d->connected = CON_CHOICE_VAMP;
+   d->connected = CON_CHOICE_VAMP;
     break;
 
     case CON_PICK_CLAN:
@@ -2640,7 +2638,7 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
         send_to_char("{cPlease choose a Clan (Assamite, Brujah, Cappadocian, FollowerOfSet, Gangrel,\n\r", ch);
         send_to_char("Lasombra, Malkavian, Nosferatu, Ravnos, Toreador, Tremere, Tzimisce, Ventrue\n\r", ch);
 	   send_to_char("or type help <clan>): {x",ch);
-        d->connected = CON_PICK_CLAN;
+       d->connected = CON_PICK_CLAN;
         break;
     }
 
@@ -2663,7 +2661,7 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
         send_to_char("{cPlease choose a Clan (Assamite, Brujah, Cappadocian, FollowerOfSet, Gangrel,\n\r", ch);
         send_to_char("Lasombra, Malkavian, Nosferatu, Ravnos, Toreador, Tremere, Tzimisce, Ventrue\n\r", ch);
         send_to_char("or type help <clan>): {x",ch);
-        d->connected = CON_PICK_CLAN;
+       d->connected = CON_PICK_CLAN;
         break;
     }
     if(!make_vamp(ch,buf))

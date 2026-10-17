@@ -2560,7 +2560,7 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
     send_to_char("{yuse the 'freebie' command to spend 15 freebie points to further customize{x\n\r",ch);
     send_to_char("{yyour character's stats.{x\n\r", ch);
     send_to_char("{c======================================================================{x\n\r",ch);
-    ch->csmax_willpower = ch->pcdata->csvirtues[COURAGE];
+   ch->csmax_willpower = ch->pcdata->csvirtues[COURAGE];
     ch->pcdata->cshumanity = ch->pcdata->csvirtues[CONSCIENCE]+ch->pcdata->csvirtues[SELF_CONTROL];
     ch->cswillpower = ch->csmax_willpower;
     ch->dpoints = 5;

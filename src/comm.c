@@ -2409,15 +2409,16 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
                     send_to_char( "\n\r{bC{ro{yl{co{mu{gr{x is now {rON{x, Way Cool!\n\r\n\r", ch );
                     break;
     case 'n': case 'N':
+                    REMOVE_BIT( ch->act, PLR_COLOUR );
                     break;
     default:
             write_to_buffer( d, "\n\rThat is not a valid choice.\n\rPlease choose [Y]es or [N]o: ", 0 );
         return;
     }
 
-        send_to_char( "{cWhat is your character's sex?{x\n\r", ch );
-        send_to_char( "{w(This determines your pronouns and presentation. It has no effect on stats.){x\n\r", ch );
-        send_to_char( "{cPlease enter [M]ale or [F]emale: {x", ch );
+        send_to_char( "{CWhat is your character's sex?{x\n\r", ch );
+        send_to_char( "{W(This determines your pronouns and presentation. It has no effect on stats.){x\n\r", ch );
+        send_to_char( "{CPlease enter [M]ale or [F]emale: {x", ch );
         d->connected = CON_GET_NEW_SEX;
         break;
 
@@ -2432,7 +2433,7 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
                 ch->pcdata->true_sex = SEX_FEMALE;
                 break;
     default:
-        send_to_char( "{rThat is not a valid choice.{x\n\r{cWhat is your character's sex? [M/F]: {x", ch );
+        send_to_char( "{RThat is not a valid choice.{x\n\r{CWhat is your character's sex? [M/F]: {x", ch );
         return;
     }
 
@@ -2442,27 +2443,27 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
     log_string( log_buf);
 
 
-    send_to_char("{yArchetypes define your mortal background before you entered the World of Darkness.{x\n\r",ch);
-    send_to_char("{yMechanically, this assigns your starting Attributes and Abilities. Later, you{x\n\r",ch);
-    send_to_char("{ywill receive 15 'Freebie' points to further customize your character's stats.{x\n\r\n\r",ch);
+    send_to_char("{YArchetypes define your mortal background before you entered the World of Darkness.{x\n\r", ch);
+    send_to_char("{YMechanically, this assigns your starting Attributes and Abilities. Later, you{x\n\r", ch);
+    send_to_char("{Ywill receive 15 'Freebie' points to further customize your character's stats.{x\n\r\n\r", ch);
 
-    send_to_char("{wAlternatively, you may skip this step to build a completely custom sheet in-game.{x\n\r", ch);
+    send_to_char("{WAlternatively, you may skip this step to build a completely custom sheet in-game.{x\n\r", ch);
     send_to_char("{R*WARNING* You will have NO SKILLS until you type 'create' within the game.{x\n\r", ch);
 
-    send_to_char("\n\r{cAvailable Archetypes:{x\n\r\n\r",ch);
-    send_to_char("{g[0] Knight{x        - Chivalric warrior, swordplay and mounted combat (Focuses on Strength and Melee)\n\r",ch);
-    send_to_char("{g[1] Man-at-Arms{x   - Professional soldier, a master of all weapons (Focuses on Dexterity and Melee)\n\r",ch);
-    send_to_char("{g[2] Hunter{x        - Wilderness predator, archery and tracking (Focuses on Perception and Survival)\n\r",ch);
-    send_to_char("{g[3] Outlaw{x        - Brigand and ambush fighter, strikes from the shadows (Focuses on Dexterity and Stealth)\n\r",ch);
-    send_to_char("{g[4] Berserker{x     - Frenzied brawler, overwhelms foes with raw fury (Focuses on Stamina and Brawl)\n\r",ch);
-    send_to_char("{g[5] Ranger{x        - Balanced scout, skilled with bow and blade (Focuses on Wits and Alertness)\n\r",ch);
-    send_to_char("{g[6] Inquisitor{x    - Zealot warrior-priest, faith tempered in steel (Focuses on Charisma and Occult)\n\r",ch);
-    send_to_char("{g[7] Assassin{x      - Precision killer, stealth and lethality (Focuses on Dexterity and Melee)\n\r",ch);
-    send_to_char("{g[8] Witch-Hunter{x  - Occult-aware combatant, slayer of monsters (Focuses on Intelligence and Occult)\n\r",ch);
-    send_to_char("{g[9] Hedge Wizard{x  - Folk sorcerer with survival instincts (Focuses on Intelligence and Enigmas)\n\r\n\r",ch);
+    send_to_char("\n\r{CAvailable Archetypes:{x\n\r\n\r", ch);
+    send_to_char("{G[0] Knight{x        - Chivalric warrior, swordplay and mounted combat (Focuses on Strength and Melee)\n\r", ch);
+    send_to_char("{G[1] Man-at-Arms{x   - Professional soldier, a master of all weapons (Focuses on Dexterity and Melee)\n\r", ch);
+    send_to_char("{G[2] Hunter{x        - Wilderness predator, archery and tracking (Focuses on Perception and Survival)\n\r", ch);
+    send_to_char("{G[3] Outlaw{x        - Brigand and ambush fighter, strikes from the shadows (Focuses on Dexterity and Stealth)\n\r", ch);
+    send_to_char("{G[4] Berserker{x     - Frenzied brawler, overwhelms foes with raw fury (Focuses on Stamina and Brawl)\n\r", ch);
+    send_to_char("{G[5] Ranger{x        - Balanced scout, skilled with bow and blade (Focuses on Wits and Alertness)\n\r", ch);
+    send_to_char("{G[6] Inquisitor{x    - Zealot warrior-priest, faith tempered in steel (Focuses on Charisma and Occult)\n\r", ch);
+    send_to_char("{G[7] Assassin{x      - Precision killer, stealth and lethality (Focuses on Dexterity and Melee)\n\r", ch);
+    send_to_char("{G[8] Witch-Hunter{x  - Occult-aware combatant, slayer of monsters (Focuses on Intelligence and Occult)\n\r", ch);
+    send_to_char("{G[9] Hedge Wizard{x  - Folk sorcerer with survival instincts (Focuses on Intelligence and Enigmas)\n\r\n\r", ch);
 
-    send_to_char("{cPlease select the number of the archetype that best fits your Character.{x\n\r",ch);
-    send_to_char("{cOr, enter 'CUSTOM' to skip this step and create a custom sheet later:{x\n\r",ch);
+    send_to_char("{CPlease select the number of the archetype that best fits your Character.{x\n\r", ch);
+    send_to_char("{COr, enter 'CUSTOM' to skip this step and create a custom sheet later:{x\n\r", ch);
     d->connected = CON_PICK_CHILDHOOD;
     break;
 
@@ -2472,48 +2473,47 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
     else {
         if (!str_cmp(argument, "custom"))
             {
-                send_to_char("\n\r{c======================================================================{x\n\r",ch);
-                send_to_char("{yYou have chosen a CUSTOM starting sheet.{x\n\r",ch);
-                send_to_char("{rCRITICAL INSTRUCTION:{w When you enter the game, you will have 0 in all stats.{x\n\r",ch);
-                send_to_char("{wYou MUST type {y'create'{w to open the interactive character builder!{x\n\r",ch);
-                send_to_char("{wThis menu will walk you through assigning your Attributes, Abilities,{x\n\r",ch);
-                send_to_char("{wBackgrounds, and Freebie points manually.{x\n\r",ch);
-                send_to_char("{c======================================================================{x\n\r",ch);
-                send_to_char("\n\r{yHaven of the Embraced is focused on Vampires, but you may choose to start the{x\n\r",ch);
-                send_to_char("{ygame as a human, if you wish.{x\n\r\n\r",ch);
-                send_to_char("{r[Vampire]:{x You are one of the Kindred, Embraced into undeath. You must manage\n\r",ch);
-                send_to_char("your Blood Pool, master Disciplines, and navigate the politics of the Camarilla/Sabbat.\n\r",ch);
-                send_to_char("Vampires are far more powerful at creation over humans, and are highly recommended\n\r",ch);
-                send_to_char("as your starting race if you are new to Haven of the Embraced. The added survivability\n\r",ch);
-                send_to_char("allows you to explore more easily, learning the MUD at a better pace.\n\r\n\r",ch);
-                send_to_char("{g[Human]:{x You walk the mortal path. Through remort, you may Awaken as a Mage\n\r",ch);
-                send_to_char("or undergo the First Change to become Garou (Werewolf) upon reaching level 100.\n\r\n\r",ch);
+                send_to_char("\n\r{C======================================================================{x\n\r", ch);
+                send_to_char("{YYou have chosen a CUSTOM starting sheet.{x\n\r", ch);
+                send_to_char("{RCRITICAL INSTRUCTION:{W When you enter the game, you will have 0 in all stats.{x\n\r", ch);
+                send_to_char("{WYou MUST type {Y'create'{W to open the interactive character builder!{x\n\r", ch);
+                send_to_char("{WThis menu will walk you through assigning your Attributes, Abilities,{x\n\r", ch);
+                send_to_char("{WBackgrounds, and Freebie points manually.{x\n\r", ch);
+                send_to_char("{C======================================================================{x\n\r", ch);
+                send_to_char("\n\r{YHaven of the Embraced is focused on Vampires, but you may choose to start the{x\n\r", ch);
+                send_to_char("{Ygame as a human, if you wish.{x\n\r\n\r", ch);
+                send_to_char("{R[Vampire]:{x You are one of the Kindred, Embraced into undeath. You must manage\n\r", ch);
+                send_to_char("your Blood Pool, master Disciplines, and navigate the politics of the Camarilla/Sabbat.\n\r", ch);
+                send_to_char("Vampires are far more powerful at creation over humans, and are highly recommended\n\r", ch);
+                send_to_char("as your starting race if you are new to Haven of the Embraced. The added survivability\n\r", ch);
+                send_to_char("allows you to explore more easily, learning the MUD at a better pace.\n\r\n\r", ch);
+                send_to_char("{G[Human]:{x You walk the mortal path. Through remort, you may Awaken as a Mage\n\r", ch);
+                send_to_char("or undergo the First Change to become Garou (Werewolf) upon reaching level 100.\n\r\n\r", ch);
 
-                send_to_char("{cDo you wish to start the game as a Vampire (Recommended): [Y/N]? {x",ch);
+                send_to_char("{CDo you wish to start the game as a Vampire (Recommended): [Y/N]? {x", ch);
 
                 d->connected = CON_CHOICE_VAMP;
                 ch->pcdata->progress = 0;
                 break;
-
-            } else
-                num = 99;
+            }
+            num = -1;
         }
     if(num < 0 || num > 9)
     {
-        send_to_char("{rThat is not a valid choice.{x\n\r\n\r",ch);
-        send_to_char("\n\r{cAvailable Archetypes:{x\n\r\n\r",ch);
-        send_to_char("{g[0] Knight{x        - Chivalric warrior, swordplay and mounted combat (Focuses on Strength and Melee)\n\r",ch);
-        send_to_char("{g[1] Man-at-Arms{x   - Professional soldier, a master of all weapons (Focuses on Dexterity and Melee)\n\r",ch);
-        send_to_char("{g[2] Hunter{x        - Wilderness predator, archery and tracking (Focuses on Perception and Survival)\n\r",ch);
-        send_to_char("{g[3] Outlaw{x        - Brigand and ambush fighter, strikes from the shadows (Focuses on Dexterity and Stealth)\n\r",ch);
-        send_to_char("{g[4] Berserker{x     - Frenzied brawler, overwhelms foes with raw fury (Focuses on Stamina and Brawl)\n\r",ch);
-        send_to_char("{g[5] Ranger{x        - Balanced scout, skilled with bow and blade (Focuses on Wits and Alertness)\n\r",ch);
-        send_to_char("{g[6] Inquisitor{x    - Zealot warrior-priest, faith tempered in steel (Focuses on Charisma and Occult)\n\r",ch);
-        send_to_char("{g[7] Assassin{x      - Precision killer, stealth and lethality (Focuses on Dexterity and Melee)\n\r",ch);
-        send_to_char("{g[8] Witch-Hunter{x  - Occult-aware combatant, slayer of monsters (Focuses on Intelligence and Occult)\n\r",ch);
-        send_to_char("{g[9] Hedge Wizard{x  - Folk sorcerer with survival instincts (Focuses on Intelligence and Enigmas)\n\r\n\r",ch);
-        send_to_char("{cPlease select the number of the archetype that best fits your Character.{x\n\r",ch);
-        send_to_char("{cOr, enter 'CUSTOM' to skip this step and create a custom sheet later:{x\n\r",ch);
+        send_to_char("{RThat is not a valid choice.{x\n\r\n\r", ch);
+        send_to_char("\n\r{CAvailable Archetypes:{x\n\r\n\r", ch);
+        send_to_char("{G[0] Knight{x        - Chivalric warrior, swordplay and mounted combat (Focuses on Strength and Melee)\n\r", ch);
+        send_to_char("{G[1] Man-at-Arms{x   - Professional soldier, a master of all weapons (Focuses on Dexterity and Melee)\n\r", ch);
+        send_to_char("{G[2] Hunter{x        - Wilderness predator, archery and tracking (Focuses on Perception and Survival)\n\r", ch);
+        send_to_char("{G[3] Outlaw{x        - Brigand and ambush fighter, strikes from the shadows (Focuses on Dexterity and Stealth)\n\r", ch);
+        send_to_char("{G[4] Berserker{x     - Frenzied brawler, overwhelms foes with raw fury (Focuses on Stamina and Brawl)\n\r", ch);
+        send_to_char("{G[5] Ranger{x        - Balanced scout, skilled with bow and blade (Focuses on Wits and Alertness)\n\r", ch);
+        send_to_char("{G[6] Inquisitor{x    - Zealot warrior-priest, faith tempered in steel (Focuses on Charisma and Occult)\n\r", ch);
+        send_to_char("{G[7] Assassin{x      - Precision killer, stealth and lethality (Focuses on Dexterity and Melee)\n\r", ch);
+        send_to_char("{G[8] Witch-Hunter{x  - Occult-aware combatant, slayer of monsters (Focuses on Intelligence and Occult)\n\r", ch);
+        send_to_char("{G[9] Hedge Wizard{x  - Folk sorcerer with survival instincts (Focuses on Intelligence and Enigmas)\n\r\n\r", ch);
+        send_to_char("{CPlease select the number of the archetype that best fits your Character.{x\n\r", ch);
+        send_to_char("{COr, enter 'CUSTOM' to skip this step and create a custom sheet later:{x\n\r", ch);
         d->connected = CON_PICK_CHILDHOOD;
         break;
     }
@@ -2554,28 +2554,31 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
         }
     }
     ch->pcdata->progress = 8;
-    send_to_char("\n\r{c======================================================================{x\n\r",ch);
-    send_to_char("{yArchetype selected! Your base Attributes and Abilities have been set.{x\n\r",ch);
-    send_to_char("{yYou have also been granted 5 'Background' points to spend in-game on{x\n\r",ch);
-    send_to_char("{ytraits like Generation, Resources, or Retainers. Afterwards, you may{x\n\r",ch);
-    send_to_char("{yuse the 'freebie' command to spend 15 freebie points to further customize{x\n\r",ch);
-    send_to_char("{yyour character's stats.{x\n\r", ch);
-    send_to_char("{c======================================================================{x\n\r",ch);
+    send_to_char("\n\r{c======================================================================{x\n\r", ch);
+    send_to_char("{yArchetype selected! Your base Attributes and Abilities have been set.{x\n\r", ch);
+    send_to_char("{yYou have also been granted 5 'Background' points to spend in-game on{x\n\r", ch);
+    send_to_char("{ytraits like Generation, Resources, or Retainers. Afterwards, you may{x\n\r", ch);
+    send_to_char("{yuse the 'freebie' command to spend 15 freebie points to further customize{x\n\r", ch);
+    send_to_char("{yyour character's stats.{x\n\r\n\r", ch);
+    send_to_char("{rRecommended:{w Type '{chelp weapon_skills{w' - choose a weapon proficiency\n\r", ch);
+    send_to_char("and invest 2-3 points into it via the '{cfreebie{w' command.{x\n\r", ch);
+    send_to_char("{c======================================================================{x\n\r", ch);
     ch->csmax_willpower = ch->pcdata->csvirtues[COURAGE];
     ch->pcdata->cshumanity = ch->pcdata->csvirtues[CONSCIENCE]+ch->pcdata->csvirtues[SELF_CONTROL];
     ch->cswillpower = ch->csmax_willpower;
     ch->dpoints = 5;
-    send_to_char("\n\r{yHaven of the Embraced is focused on Vampires, but you may choose to start the{x\n\r",ch);
-    send_to_char("{ygame as a human, if you wish.{x\n\r\n\r",ch);
-    send_to_char("{r[Vampire]:{x You are one of the Kindred, Embraced into undeath. You must manage\n\r",ch);
-    send_to_char("your Blood Pool, master Disciplines, and navigate the politics of the Camarilla/Sabbat.\n\r",ch);
-    send_to_char("Vampires are far more powerful at creation over humans, and are highly recommended\n\r",ch);
-    send_to_char("as your starting race if you are new to Haven of the Embraced. The added survivability\n\r",ch);
-    send_to_char("allows you to explore more easily, learning the MUD at a better pace.\n\r\n\r",ch);
-    send_to_char("{g[Human]:{x You walk the mortal path. Through remort, you may Awaken as a Mage\n\r",ch);
-    send_to_char("or undergo the First Change to become Garou (Werewolf) upon reaching level 100.\n\r\n\r",ch);
 
-    send_to_char("{cDo you wish to start the game as a Vampire (Recommended): [Y/N]? {x",ch);
+    send_to_char("\n\r{YHaven of the Embraced is focused on Vampires, but you may choose to start the{x\n\r", ch);
+    send_to_char("{Ygame as a human, if you wish.{x\n\r\n\r", ch);
+    send_to_char("{R[Vampire]:{x You are one of the Kindred, Embraced into undeath. You must manage\n\r", ch);
+    send_to_char("your Blood Pool, master Disciplines, and navigate the politics of the Camarilla/Sabbat.\n\r", ch);
+    send_to_char("Vampires are far more powerful at creation over humans, and are highly recommended\n\r", ch);
+    send_to_char("as your starting race if you are new to Haven of the Embraced. The added survivability\n\r", ch);
+    send_to_char("allows you to explore more easily, learning the MUD at a better pace.\n\r\n\r", ch);
+    send_to_char("{G[Human]:{x You walk the mortal path. Through remort, you may Awaken as a Mage\n\r", ch);
+    send_to_char("or undergo the First Change to become Garou (Werewolf) upon reaching level 100.\n\r\n\r", ch);
+
+    send_to_char("{CDo you wish to start the game as a Vampire (Recommended): [Y/N]? {x", ch);
     d->connected = CON_CHOICE_VAMP;
     break;
 
@@ -2584,31 +2587,31 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
 
     if(argument[0] == 'Y' || argument[0] == 'y')
     {
-        send_to_char("{yVampires are divided into Clans. A clan is like a family line, a tie in blood{x\n\r",ch);
-        send_to_char("{ypassed from Sire to Childe. Each clan has a unique set of traits and different{x\n\r",ch);
-        send_to_char("{yDisciplines (vampiric powers). Mechanically, your clan determines which 3 in-clan{x\n\r",ch);
-        send_to_char("{yDisciplines you learn easily, and impacts your social standing in Kindred society.{x\n\r",ch);
-        send_to_char("{yPlease select a clan for your character. Please note that you may never change your clan.{x\n\r",ch);
-        send_to_char("{ySome clans are not available at creation and you must be 'embraced' in-game.{x\n\r",ch);
-        send_to_char("{yYou may type 'help <clan>' to gain more information about each clan. IE: help Nosferatu{x\n\r",ch);
-        send_to_char("{cThe available clan choices are:{x\n\r\n\r",ch);
+        send_to_char("{YVampires are divided into Clans. A clan is like a family line, a tie in blood{x\n\r", ch);
+        send_to_char("{Ypassed from Sire to Childe. Each clan has a unique set of traits and different{x\n\r", ch);
+        send_to_char("{YDisciplines (vampiric powers). Mechanically, your clan determines which 3 in-clan{x\n\r", ch);
+        send_to_char("{YDisciplines you learn easily, and impacts your social standing in Kindred society.{x\n\r", ch);
+        send_to_char("{YPlease select a clan for your character. Please note that you may never change your clan.{x\n\r", ch);
+        send_to_char("{YSome clans are not available at creation and you must be 'embraced' in-game.{x\n\r", ch);
+        send_to_char("{YYou may type 'help <clan>' to gain more information about each clan. IE: help Nosferatu{x\n\r", ch);
+        send_to_char("{CThe available clan choices are:{x\n\r\n\r", ch);
 
-        send_to_char("{rAssamite{x - Deadly assassins and diablerists from the Middle East.\n\r",ch);
-        send_to_char("{rBrujah{x   - Fierce rebels and warrior-scholars prone to frenzy.\n\r",ch);
-        send_to_char("{rGangrel{x  - Bestial wanderers closely tied to the wild and shapeshifting.\n\r",ch);
-        send_to_char("{rMalkavian{x- Oracles cursed with incurable insanity.\n\r",ch);
-        send_to_char("{rNosferatu{x- Hideously deformed, masters of stealth and secrets.\n\r",ch);
-        send_to_char("{rRavnos{x   - Nomadic tricksters and masters of illusion.\n\r",ch);
-        send_to_char("{rCappadocian{x - Scholars of death and the grave.\n\r",ch);
-        send_to_char("{rFollowerOfSet{x - Corrupters and cultists worshipping the snake god Set.\n\r",ch);
-        send_to_char("{rLasombra{x - Ruthless leaders and masters of shadow manipulation.\n\r",ch);
-        send_to_char("{rToreador{x - Passionate artists and socialites obsessed with beauty.\n\r",ch);
-        send_to_char("{rTremere{x  - Secretive blood sorcerers organized in a strict pyramid.\n\r",ch);
-        send_to_char("{rTzimisce{x - Fiendish fleshcrafters and lords of the Old Country.\n\r",ch);
-        send_to_char("{rVentrue{x  - Aristocratic rulers who command the minds of others.\n\r\n\r",ch);
+        send_to_char("{RAssamite{x - Deadly assassins and diablerists from the Middle East.\n\r", ch);
+        send_to_char("{RBrujah{x   - Fierce rebels and warrior-scholars prone to frenzy.\n\r", ch);
+        send_to_char("{RGangrel{x  - Bestial wanderers closely tied to the wild and shapeshifting.\n\r", ch);
+        send_to_char("{RMalkavian{x- Oracles cursed with incurable insanity.\n\r", ch);
+        send_to_char("{RNosferatu{x- Hideously deformed, masters of stealth and secrets.\n\r", ch);
+        send_to_char("{RRavnos{x   - Nomadic tricksters and masters of illusion.\n\r", ch);
+        send_to_char("{RCappadocian{x - Scholars of death and the grave.\n\r", ch);
+        send_to_char("{RFollowerOfSet{x - Corrupters and cultists worshipping the snake god Set.\n\r", ch);
+        send_to_char("{RLasombra{x - Ruthless leaders and masters of shadow manipulation.\n\r", ch);
+        send_to_char("{RToreador{x - Passionate artists and socialites obsessed with beauty.\n\r", ch);
+        send_to_char("{RTremere{x  - Secretive blood sorcerers organized in a strict pyramid.\n\r", ch);
+        send_to_char("{RTzimisce{x - Fiendish fleshcrafters and lords of the Old Country.\n\r", ch);
+        send_to_char("{RVentrue{x  - Aristocratic rulers who command the minds of others.\n\r\n\r", ch);
 
-        send_to_char("{g(Newbie Recommended) clans, in order:  1) Brujah 2) Nosferatu 3) Gangrel{x",ch);
-        send_to_char("\n\r{cPlease choose a clan: {x",ch);
+        send_to_char("{G(Newbie Recommended) clans, in order:  1) Brujah 2) Nosferatu 3) Gangrel{x", ch);
+        send_to_char("\n\r{CPlease choose a clan: {x", ch);
 
         d->connected = CON_PICK_CLAN;
         break;
@@ -2625,7 +2628,7 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
     d->connected = CON_READ_MOTD;
     break;
     }
-    send_to_char("{rThat is not a valid choice. Please type either Y or N.{x\n\r{cDo you wish to start the game as a Vampire? [Y/N]? {x",ch);
+    send_to_char("{RThat is not a valid choice. Please type either Y or N.{x\n\r{CDo you wish to start the game as a Vampire? [Y/N]? {x", ch);
     d->connected = CON_CHOICE_VAMP;
     break;
 
@@ -2637,9 +2640,9 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
         do_function(ch,&do_help,argument);
 
 
-        send_to_char("{cPlease choose a Clan (Assamite, Brujah, Cappadocian, FollowerOfSet, Gangrel,\n\r", ch);
+        send_to_char("{CPlease choose a Clan (Assamite, Brujah, Cappadocian, FollowerOfSet, Gangrel,\n\r", ch);
         send_to_char("Lasombra, Malkavian, Nosferatu, Ravnos, Toreador, Tremere, Tzimisce, Ventrue\n\r", ch);
-	   send_to_char("or type help <clan>): {x",ch);
+        send_to_char("or type help <clan>): {x", ch);
         d->connected = CON_PICK_CLAN;
         break;
     }
@@ -2659,10 +2662,10 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
 	str_prefix(buf, "ventrue") )
 
     {
-        send_to_char("{r[  Invalid clan choice.  ]{x\n\r",ch);
-        send_to_char("{cPlease choose a Clan (Assamite, Brujah, Cappadocian, FollowerOfSet, Gangrel,\n\r", ch);
+        send_to_char("{R[  Invalid clan choice.  ]{x\n\r", ch);
+        send_to_char("{CPlease choose a Clan (Assamite, Brujah, Cappadocian, FollowerOfSet, Gangrel,\n\r", ch);
         send_to_char("Lasombra, Malkavian, Nosferatu, Ravnos, Toreador, Tremere, Tzimisce, Ventrue\n\r", ch);
-        send_to_char("or type help <clan>): {x",ch);
+        send_to_char("or type help <clan>): {x", ch);
         d->connected = CON_PICK_CLAN;
         break;
     }

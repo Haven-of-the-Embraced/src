@@ -1,7 +1,7 @@
 #AREADATA
 Name Code Specific VNUMs II~
 Builders None~
-VNUMs 100 299
+VNUMs 100 199
 Credits [  1 - 100] Core System Sanctuary~
 Security 9
 Flags 0
@@ -911,7 +911,7 @@ Material unknown~
 MaxLoad -1
 F af2 D
 End
-#250
+#150
 #MOBFORMAT dynamic
 Name sexton old gravedigger guide~
 ShD the Old Sexton~
@@ -952,13 +952,13 @@ Parts ABCDEFGHIJK
 Size medium
 Material unknown~
 MaxLoad -1
-M GREET 250 100~
-M SPEECH 251 topics~
-M SPEECH 252 commands~
-M SPEECH 253 movement~
-M SPEECH 254 ooc~
+M GREET 150 100~
+M SPEECH 151 topics~
+M SPEECH 152 commands~
+M SPEECH 153 movement~
+M SPEECH 154 ooc~
 End
-#251
+#151
 #MOBFORMAT dynamic
 Name verger keeper ledgers guide~
 ShD the Verger of Ledgers~
@@ -999,16 +999,16 @@ Parts ABCDEFGHIJK
 Size medium
 Material unknown~
 MaxLoad -1
-M GREET 255 100~
-M SPEECH 256 topics~
-M SPEECH 257 sheet~
-M SPEECH 258 page two~
-M SPEECH 259 page three~
-M SPEECH 260 backgrounds~
-M SPEECH 261 attributes~
-M SPEECH 262 abilities~
+M GREET 155 100~
+M SPEECH 156 topics~
+M SPEECH 157 sheet~
+M SPEECH 158 page two~
+M SPEECH 159 page three~
+M SPEECH 160 backgrounds~
+M SPEECH 161 attributes~
+M SPEECH 162 abilities~
 End
-#252
+#152
 #MOBFORMAT dynamic
 Name mason stone carver guide~
 ShD the Stone Mason~
@@ -1049,14 +1049,14 @@ Parts ABCDEFGHIJK
 Size medium
 Material unknown~
 MaxLoad -1
-M GREET 263 100~
-M SPEECH 264 topics~
-M SPEECH 265 create~
-M SPEECH 266 priority~
-M SPEECH 267 archetype~
-M SPEECH 268 weapon_skills~
+M GREET 163 100~
+M SPEECH 164 topics~
+M SPEECH 165 create~
+M SPEECH 166 priority~
+M SPEECH 167 archetype~
+M SPEECH 168 weapon_skills~
 End
-#253
+#153
 #MOBFORMAT dynamic
 Name almoner chapel offerings guide~
 ShD the Almoner~
@@ -1097,13 +1097,13 @@ Parts ABCDEFGHIJK
 Size medium
 Material unknown~
 MaxLoad -1
-M GREET 269 100~
-M SPEECH 270 topics~
-M SPEECH 271 freebie~
-M SPEECH 272 costs~
-M SPEECH 273 weapon_skills~
+M GREET 169 100~
+M SPEECH 170 topics~
+M SPEECH 171 freebie~
+M SPEECH 172 costs~
+M SPEECH 173 weapon_skills~
 End
-#254
+#154
 #MOBFORMAT dynamic
 Name scribe scriptorium monk guide~
 ShD the Scriptorium Monk~
@@ -1144,13 +1144,13 @@ Parts ABCDEFGHIJK
 Size medium
 Material unknown~
 MaxLoad -1
-M GREET 274 100~
-M SPEECH 275 topics~
-M SPEECH 276 skillmap~
-M SPEECH 277 learning~
-M SPEECH 278 weapon_skills~
+M GREET 174 100~
+M SPEECH 175 topics~
+M SPEECH 176 skillmap~
+M SPEECH 177 learning~
+M SPEECH 178 weapon_skills~
 End
-#255
+#155
 #MOBFORMAT dynamic
 Name ossuary keeper bones guide~
 ShD the Keeper of Bones~
@@ -1191,12 +1191,12 @@ Parts ABCDEFGHIJK
 Size medium
 Material unknown~
 MaxLoad -1
-M GREET 279 100~
-M SPEECH 280 topics~
-M SPEECH 281 remort~
-M SPEECH 282 paths~
+M GREET 179 100~
+M SPEECH 180 topics~
+M SPEECH 181 remort~
+M SPEECH 182 paths~
 End
-#256
+#156
 #MOBFORMAT dynamic
 Name bishop belfry blessing guide~
 ShD the Bishop of the Belfry~
@@ -1237,18 +1237,20 @@ Parts ABCDEFGHIJK
 Size medium
 Material unknown~
 MaxLoad -1
-M GREET 283 100~
-M SPEECH 284 topics~
-M SPEECH 285 summary~
-M SPEECH 286 vampire~
-M SPEECH 287 mortal~
-M SPEECH 288 graduate~
+M GREET 183 100~
+M SPEECH 184 topics~
+M SPEECH 185 summary~
+M SPEECH 186 vampire~
+M SPEECH 187 mortal~
+M SPEECH 188 graduate~
 End
 #0
 
 
 
 #OBJECTS
+
+
 #100
 old workbench oak bench~
 an old oak workbench~
@@ -2605,297 +2607,7 @@ food 0 A
 0 0 0 0
 ABCD ABCD 0 0 0
 1 0 20 P
-#200
-yew tree~
-a yew tree~
-A wispy yew tree grows here, reaching for the sky.~
-unknown~
-0
-resource 0 0
-0 0 0 0
-0 0 0 0 0
-3 0 0 P
-#201
-maple tree~
-a maple tree~
-A strong maple tree is heavily rooted into the ground here.~
-unknown~
-0
-resource 0 0
-0 0 0 0
-0 0 0 0 0
-4 0 0 P
-#202
-ash tree~
-an ash tree~
-A willowy ash tree sways in the wind.~
-unknown~
-0
-resource 0 0
-0 0 0 0
-0 0 0 0 0
-5 0 0 P
-#203
-walnut tree~
-a walnut tree~
-A tall and full walnut tree casts a large shady spot here on the ground.~
-unknown~
-0
-resource 0 0
-0 0 0 0
-0 0 0 0 0
-6 0 0 P
-#204
-oak tree~
-an oak tree~
-A stately oak towers over the flora and fauna in this part of the forest.~
-unknown~
-0
-resource 0 0
-0 0 0 0
-0 0 0 0 0
-7 0 0 P
-#205
-yew log~
-a log of yew~
-A log cut from a yew tree lies here.~
-unknown~
-0
-resource W A
-0 0 0 0
-0 0 0 0 0
-0 100 10000 P
-#206
-maple log~
-a log of maple~
-A log cut from a maple tree lies here.~
-unknown~
-0
-resource W A
-0 0 0 0
-0 0 0 0 0
-0 100 10000 P
-#207
-ash log~
-a log of ash~
-A log cut from an ash tree lies here.~
-unknown~
-0
-resource W A
-0 0 0 0
-0 0 0 0 0
-0 100 10000 P
-#208
-walnut log~
-a log of walnut~
-A log cut from a walnut tree lies here.~
-unknown~
-0
-resource W A
-0 0 0 0
-0 0 0 0 0
-0 100 10000 P
-#209
-oak log~
-a log of oak~
-A log cut from an oak tree lies here.~
-unknown~
-0
-resource W A
-0 0 0 0
-0 0 0 0 0
-0 100 10000 P
-#210
-vein iron~
-a vein of iron~
-A vein of iron is exposed here.~
-unknown~
-0
-resource D 0
-0 0 0 0
-0 0 0 0 0
-0 0 0 P
-#211
-vein copper~
-a vein of copper~
-A vein of copper is exposed here.~
-unknown~
-0
-resource D 0
-0 0 0 0
-0 0 0 0 0
-0 0 0 P
-#212
-vein tin~
-a vein of tin~
-A vein of tin is exposed here.~
-unknown~
-0
-resource D 0
-0 0 0 0
-0 0 0 0 0
-0 0 0 P
-#213
-vein nickel~
-a vein of nickel~
-A vein of nickel is exposed here.~
-unknown~
-0
-resource D 0
-0 0 0 0
-0 0 0 0 0
-0 0 0 P
-#214
-vein silver~
-a vein of silver~
-A vein of silver is exposed here.~
-unknown~
-0
-resource D 0
-0 0 0 0
-0 0 0 0 0
-0 0 0 P
-#215
-vein gold~
-a vein of gold~
-A vein of gold is exposed here.~
-unknown~
-0
-resource D 0
-0 0 0 0
-0 0 0 0 0
-0 0 0 P
-#216
-vein lead~
-a vein of lead~
-A vein of lead is exposed here.~
-unknown~
-0
-resource D 0
-0 0 0 0
-0 0 0 0 0
-0 0 0 P
-#217
-vein coal~
-a vein of coal~
-A vein of coal is exposed here.~
-unknown~
-0
-resource D 0
-0 0 0 0
-0 0 0 0 0
-0 0 0 P
-#218
-vein zinc~
-a vein of zinc~
-A vein of zinc is exposed here.~
-unknown~
-0
-resource D 0
-0 0 0 0
-0 0 0 0 0
-0 0 0 P
-#220
-chunk iron ore~
-a chunk of iron ore~
-A filthy piece of iron ore lies here in the dirt.~
-iron~
-0
-resource W A
-0 0 0 0
-0 0 0 0 0
-0 12 10000 P
-#221
-chunk copper ore~
-a chunk or copper ore~
-A greenish hunk of copper ore lies here.~
-copper~
-0
-resource W A
-0 0 0 0
-0 0 0 0 0
-0 12 15000 P
-#222
-chunk tin ore~
-a chunk or tin ore~
-A small, dull rock of tin ore sits in the dust.~
-tim~
-0
-resource W A
-0 0 0 0
-0 0 0 0 0
-0 12 35000 P
-#223
-chunk nickel ore~
-a chunk of nickel ore~
-A small piece of nickel pokes up out of the dirt.~
-nickel~
-0
-resource W A
-0 0 0 0
-0 0 0 0 0
-0 12 30000 P
-#224
-chunk silver ore~
-a chunk of silver ore~
-A small piece of silver gleams brightly despite a covering of dirt.~
-silver~
-0
-resource W A
-0 0 0 0
-0 0 0 0 0
-0 12 40000 P
-#225
-chunk gold ore~
-a chunk of gold ore~
-A valuable chunk of gold ore lies here.~
-gold~
-0
-resource W A
-0 0 0 0
-0 0 0 0 0
-0 12 45000 P
-#226
-chunk lead ore~
-a chunk of lead ore~
-A dark grey chunk of metal ore lies here.~
-lead~
-0
-resource W A
-0 0 0 0
-0 0 0 0 0
-0 12 25000 P
-#227
-chunk coal ore~
-a chunk of coal~
-A piece of coal lies here in the dirt.~
-coal~
-0
-resource W A
-0 0 0 0
-0 0 0 0 0
-0 12 5000 P
-#228
-chunk zinc ore~
-a chunk of zinc ore~
-A piece of rock that must have been broken off of a zinc deposit lies here.~
-zinc~
-0
-resource W A
-0 0 0 0
-0 0 0 0 0
-0 12 20000 P
-#230
-pick axe pickaxe~
-a pickaxe~
-A pickaxe lies here.~
-unknown~
-0
-tool 0 AN
-0 0 0 0
-100 'pickaxe' 0 0 0
-0 0 0 P
-#250
+#193
 weathered signpost sign post~
 a weathered signpost~
 A weathered signpost stands here. ({cType '{Clook sign{c' to read it{y)~
@@ -2921,7 +2633,7 @@ sign signpost post plaque placard tablet signboard weathered~
 {w  Walk {cnorth{w to enter the cathedral.{x
 {c+--------------------------------------------------+{x
 ~
-#251
+#194
 brass plaque sign plaque~
 a brass plaque~
 A brass plaque is affixed to the wall. ({cType '{Clook sign{c' to read it{y)~
@@ -2946,7 +2658,7 @@ sign signpost post plaque placard tablet signboard brass~
 {w  Walk {cnorth{w into the nave.{x
 {c+--------------------------------------------------+{x
 ~
-#252
+#195
 carved stone tablet sign tablet~
 a carved stone tablet~
 A carved stone tablet rests on a marble plinth. ({cType '{Clook sign{c' to read it{y)~
@@ -2972,7 +2684,7 @@ sign signpost post plaque placard tablet signboard carved~
 {w  Walk {cnorth{w into the side chapel.{x
 {c+--------------------------------------------------+{x
 ~
-#253
+#196
 gilded placard sign placard~
 a gilded placard~
 A gilded placard stands here. ({cType '{Clook sign{c' to read it{y)~
@@ -3004,7 +2716,7 @@ sign signpost post plaque placard tablet signboard gilded~
 {w  Walk {cnorth{w into the scriptorium.{x
 {c+--------------------------------------------------+{x
 ~
-#254
+#197
 painted signboard sign signboard~
 a painted signboard~
 A painted signboard hangs beside the desk. ({cType '{Clook sign{c' to read it{y)~
@@ -3029,7 +2741,7 @@ sign signpost post plaque placard tablet signboard painted~
 {w  Walk {cnorth{w down into the ossuary.{x
 {c+--------------------------------------------------+{x
 ~
-#255
+#198
 bone-framed plaque bone plaque sign~
 a bone-framed plaque~
 A bone-framed plaque is set above the archway. ({cType '{Clook sign{c' to read it{y)~
@@ -3053,7 +2765,7 @@ sign signpost post plaque placard tablet signboard bone-framed~
 {w  Walk {cnorth{w up into the belfry.{x
 {c+--------------------------------------------------+{x
 ~
-#256
+#199
 iron sign belfry sign~
 an iron sign~
 An iron sign is mounted beneath the bell. ({cType '{Clook sign{c' to read it{y)~
@@ -3280,7 +2992,7 @@ D1
 ~
 0 -1 111
 S
-#250
+#150
 The Lychgate in the Wood~
 Black pines crowd close on every side, their needles whispering in a wind
 you cannot feel. A crooked path ends at a roofed lychgate of rotting oak,
@@ -3313,9 +3025,9 @@ D0
 The cathedral doors stand open to the north.
 ~
 ~
-0 0 251
+0 0 151
 S
-#251
+#151
 The Narthex~
 Cold flagstones lead through the cathedral's entry hall. Faded murals of
 saints peel from the walls and a holy-water font has long since gone dry.
@@ -3346,14 +3058,14 @@ D0
 The nave opens to the north.
 ~
 ~
-0 0 252
+0 0 152
 D2
 The way back lies south.
 ~
 ~
-0 0 250
+0 0 150
 S
-#252
+#152
 The Nave of Unfinished Saints~
 Rows of shattered pews march toward a distant altar beneath a vaulted
 ceiling open to the stars. Along the aisle stand statues of saints, each
@@ -3385,14 +3097,14 @@ D0
 A side chapel glows with candles to the north.
 ~
 ~
-0 0 253
+0 0 153
 D2
 The way back lies south.
 ~
 ~
-0 0 251
+0 0 151
 S
-#253
+#153
 The Chapel of Offerings~
 Hundreds of votive candles burn in iron racks, filling this small chapel
 with warm light and the smell of wax. An iron-bound offering box sits
@@ -3433,14 +3145,14 @@ D0
 Stairs lead north to the scriptorium.
 ~
 ~
-0 0 254
+0 0 154
 D2
 The way back lies south.
 ~
 ~
-0 0 252
+0 0 152
 S
-#254
+#154
 The Scriptorium~
 Tall windows light rows of slanted writing desks thick with dust. Across
 the far wall hangs an enormous illuminated chart: lines of gold ink run
@@ -3470,14 +3182,14 @@ D0
 A stair winds north and down to the ossuary.
 ~
 ~
-0 0 255
+0 0 155
 D2
 The way back lies south.
 ~
 ~
-0 0 253
+0 0 153
 S
-#255
+#155
 The Ossuary~
 Niches carved into the walls hold skulls stacked in tidy rows, thousands
 of them. This is no place of grief: candles burn before every niche, and
@@ -3506,14 +3218,14 @@ D0
 A narrow stair climbs north into the belfry.
 ~
 ~
-0 0 256
+0 0 156
 D2
 The way back lies south.
 ~
 ~
-0 0 254
+0 0 154
 S
-#256
+#156
 The Belfry~
 Wind howls through the open arches of the bell tower. Far below, the
 forest stretches away into darkness, and beyond it the distant lights
@@ -3546,7 +3258,13 @@ D2
 The way back lies south.
 ~
 ~
-0 0 255
+0 0 155
+S
+#188
+An Overgrown Courtyard~
+Dry grass and weathered flagstones surround a plain oak table in this quiet,
+secluded courtyard.~
+0 12 2
 S
 #0
 
@@ -3567,8 +3285,8 @@ M 0 101 2 101 2
 M 0 102 1 101 1
 O 0 120 0 103
 O 0 100 0 110
-O 0 200 0 110
-O 0 210 0 110
+O 0 60 0 110
+O 0 70 0 110
 M 0 103 1 111 1
 M 0 104 1 112 1
 M 0 107 1 112 1
@@ -3578,23 +3296,23 @@ G 0 116 0
 G 0 121 0
 G 0 123 0
 G 0 180 0
-G 0 230 0
+G 0 90 0
 M 0 105 1 113 1
 M 0 106 1 113 1
-M 0 250 1 250 1
-O 0 250 0 250
-M 0 251 1 251 1
-O 0 251 0 251
-M 0 252 1 252 1
-O 0 252 0 252
-M 0 253 1 253 1
-O 0 253 0 253
-M 0 254 1 254 1
-O 0 254 0 254
-M 0 255 1 255 1
-O 0 255 0 255
-M 0 256 1 256 1
-O 0 256 0 256
+M 0 150 1 150 1
+O 0 193 0 150
+M 0 151 1 151 1
+O 0 194 0 151
+M 0 152 1 152 1
+O 0 195 0 152
+M 0 153 1 153 1
+O 0 196 0 153
+M 0 154 1 154 1
+O 0 197 0 154
+M 0 155 1 155 1
+O 0 198 0 155
+M 0 156 1 156 1
+O 0 199 0 156
 S
 
 
@@ -3607,7 +3325,7 @@ S
 
 
 #MPCODE
-#250
+#150
 Prelude the Old Sexton greet~
 if ispc $n
   mob echoat $n {cthe Old Sexton says,{w 'Another lost one wandering out of the woods. Welcome, child.'{x
@@ -3616,7 +3334,7 @@ if ispc $n
   mob echoat $n {cthe Old Sexton says,{w 'Say '{Csay topics{w' and I will list what I can teach you.'{x
 endif
 ~
-#251
+#151
 Prelude the Old Sexton topics~
 mob echoat $n {cthe Old Sexton says,{w 'Say any of these words aloud and I will explain:'{x
 mob echoat $n {w  {Ccommands{w  - the handful of commands you need first{x
@@ -3624,7 +3342,7 @@ mob echoat $n {w  {Cmovement{w  - how to walk the world{x
 mob echoat $n {w  {Cooc{w       - in-character vs out-of-character chat{x
 mob echoat $n {cthe Old Sexton says,{w 'When you are done, walk {cnorth{w into the narthex.'{x
 ~
-#252
+#152
 Prelude the Old Sexton commands~
 mob echoat $n {cthe Old Sexton says,{w 'Essential commands for your journey:'{x
 mob echoat $n {w  {Clook{w        - view the room; {Clook <thing>{w examines anything{x
@@ -3635,14 +3353,14 @@ mob echoat $n {w  {Cwho{w         - see who else is awake in the world{x
 mob echoat $n {w  {Chelp <word>{w - search help archives for any system or rule{x
 mob echoat $n {w  {Ccommands{w    - display a list of all available commands{x
 ~
-#253
+#153
 Prelude the Old Sexton movement~
 mob echoat $n {cthe Old Sexton says,{w 'Navigation commands in Haven:'{x
 mob echoat $n {w  {cnorth{w, {csouth{w, {ceast{w, {cwest{w, {cup{w, {cdown{w (or {cn, s, e, w, u, d{w){x
 mob echoat $n {w  {Cexits{w       - display all obvious exits leading from here{x
 mob echoat $n {cthe Old Sexton says,{w 'In this cathedral, the path forward is always {cnorth{w.'{x
 ~
-#254
+#154
 Prelude the Old Sexton ooc~
 mob echoat $n {cthe Old Sexton says,{w 'Haven is a {Wroleplaying{w game. Most speech is {Win-character{w:'{x
 mob echoat $n {w  {Csay <text>{w  - speak IN character to everyone in the room{x
@@ -3651,7 +3369,7 @@ mob echoat $n {w  {Cooc <text>{w  - global OUT of character channel for all play
 mob echoat $n {cthe Old Sexton says,{w 'Ask questions about mechanics freely on {Cooc{w.'{x
 mob echoat $n {cthe Old Sexton says,{w 'Keep real-world talk out of {Csay{w. Type '{Chelp roleplay{w' for more.'{x
 ~
-#255
+#155
 Prelude the Verger of Ledgers greet~
 if ispc $n
   mob echoat $n {cthe Verger of Ledgers says,{w 'Your character is recorded on a Storyteller sheet of dots.'{x
@@ -3659,7 +3377,7 @@ if ispc $n
   mob echoat $n {cthe Verger of Ledgers says,{w 'Say '{Csay topics{w' to learn how to read each ledger.'{x
 endif
 ~
-#256
+#156
 Prelude the Verger of Ledgers topics~
 mob echoat $n {cthe Verger of Ledgers says,{w 'Speak any of these topics to inspect your records:'{x
 mob echoat $n {w  {Csheet{w       - page one: {Ccs{w (attributes and abilities){x
@@ -3669,14 +3387,14 @@ mob echoat $n {w  {Cbackgrounds{w - mortal backgrounds and how to allocate start
 mob echoat $n {w  {Cattributes{w  - the nine core traits (Physical, Social, Mental){x
 mob echoat $n {w  {Cabilities{w   - martial and intellectual proficiencies (0-5 dots){x
 ~
-#257
+#157
 Prelude the Verger of Ledgers sheet~
 mob echoat $n {cthe Verger of Ledgers says,{w 'Type '{Ccs{w' (or '{Csheet{w') for page one of your character sheet:'{x
 mob echoat $n {w  {cAttributes:{w Nine core capabilities rated from 1 to 5 dots{x
 mob echoat $n {w  {cAbilities:{w  Talents, Skills, and Knowledges rated from 0 to 5 dots{x
 mob echoat $n {cthe Verger of Ledgers says,{w 'Say '{Cpage two{w' or '{Cpage three{w' to learn the other sheets.'{x
 ~
-#258
+#158
 Prelude the Verger of Ledgers page two~
 mob echoat $n {cthe Verger of Ledgers says,{w 'Type '{Ccs2{w' for page two (Advantages):'{x
 mob echoat $n {w  {cDisciplines:{w Supernatural powers (Disciplines, Spheres, or Gifts){x
@@ -3684,7 +3402,7 @@ mob echoat $n {w  {cVirtues:{w     Conscience, Self-Control, and Courage{x
 mob echoat $n {w  {cPools:{w       Humanity, Willpower, Blood Pool, Rage, or Quintessence{x
 mob echoat $n {w  {cHealth:{w      Wound penalty track from Bruised to Incapacitated{x
 ~
-#259
+#159
 Prelude the Verger of Ledgers page three~
 mob echoat $n {cthe Verger of Ledgers says,{w 'Type '{Ccs3{w' for page three (Secondary Abilities):'{x
 mob echoat $n {w  {cWeapons:{w     Light, Heavy, Blunt, and Polearm proficiencies{x
@@ -3692,7 +3410,7 @@ mob echoat $n {w  {cCrafts:{w      Carving, Mining, Logging, Prospecting, Masonr
 mob echoat $n {w  {cMagic:{w       Hedge magic brewing and esoteric rituals{x
 mob echoat $n {cthe Verger of Ledgers says,{w 'Secondary traits unlock as you invest in primary abilities.'{x
 ~
-#260
+#160
 Prelude the Verger of Ledgers backgrounds~
 mob echoat $n {cthe Verger of Ledgers says,{w 'Backgrounds represent mortal assets and connections:'{x
 mob echoat $n {w  {Cbackgrounds{w      - view your current background ratings{x
@@ -3700,14 +3418,14 @@ mob echoat $n {w  {Cbackground show{w  - view all backgrounds available to your 
 mob echoat $n {w  {Cbackground <name>{w- invest one of your 5 starting background points{x
 mob echoat $n {cthe Verger of Ledgers says,{w '{RImportant:{w Background points are permanent. Save some if planning Embrace or Remort.'{x
 ~
-#261
+#161
 Prelude the Verger of Ledgers attributes~
 mob echoat $n {cthe Verger of Ledgers says,{w 'Attributes represent raw innate capability (1 to 5 dots):'{x
 mob echoat $n {w  {cPhysical:{w Strength (power), Dexterity (speed/finesse), Stamina (endurance){x
 mob echoat $n {w  {cSocial:{w   Charisma (charm), Manipulation (guile), Appearance (presence){x
 mob echoat $n {w  {cMental:{w   Perception (awareness), Intelligence (logic), Wits (reaction){x
 ~
-#262
+#162
 Prelude the Verger of Ledgers abilities~
 mob echoat $n {cthe Verger of Ledgers says,{w 'Abilities represent trained proficiencies (0 to 5 dots):'{x
 mob echoat $n {w  {cTalents:{w    Innate instincts (Brawl, Dodge, Alertness, Athletics){x
@@ -3715,7 +3433,7 @@ mob echoat $n {w  {cSkills:{w     Trained techniques (Melee, Stealth, Survival, 
 mob echoat $n {w  {cKnowledges:{w Studied disciplines (Occult, Academics, Medicine, Science){x
 mob echoat $n {cthe Verger of Ledgers says,{w 'Together with attributes, these unlock combat skills.'{x
 ~
-#263
+#163
 Prelude the Stone Mason greet~
 if ispc $n
   mob echoat $n {cthe Stone Mason says,{w 'Every soul is carved before it walks the earth.'{x
@@ -3723,7 +3441,7 @@ if ispc $n
   mob echoat $n {cthe Stone Mason says,{w 'Whether custom or archetype, say '{Csay topics{w' to learn the process.'{x
 endif
 ~
-#264
+#164
 Prelude the Stone Mason topics~
 mob echoat $n {cthe Stone Mason says,{w 'Ask about any of these aspects of character creation:'{x
 mob echoat $n {w  {Ccreate{w        - step-by-step interactive builder for custom sheets{x
@@ -3731,7 +3449,7 @@ mob echoat $n {w  {Cpriority{w      - primary, secondary, and tertiary dot alloc
 mob echoat $n {w  {Carchetype{w     - how pre-built archetypes work vs custom sheets{x
 mob echoat $n {w  {Cweapon_skills{w - essential weapon proficiency advice for ALL characters{x
 ~
-#265
+#165
 Prelude the Stone Mason create~
 mob echoat $n {cthe Stone Mason says,{w 'The interactive builder workflow:'{x
 mob echoat $n {w  1. Type '{Ccreate{w' to enter the builder menu{x
@@ -3740,20 +3458,20 @@ mob echoat $n {w  3. Allocate points with '{Ccreate <trait> +{w' or '{Ccreate <t
 mob echoat $n {w  4. Type '{Ccreate done{w' when each section reaches zero{x
 mob echoat $n {cthe Stone Mason says,{w '{RNote:{w You cannot spend freebies until create is fully finished!'{x
 ~
-#266
+#166
 Prelude the Stone Mason priority~
 mob echoat $n {cthe Stone Mason says,{w 'When prioritizing custom sheets, dots are split across pools:'{x
 mob echoat $n {w  {cAttributes:{w Primary ({W7{w dots), Secondary ({W5{w dots), Tertiary ({W3{w dots){x
 mob echoat $n {w  {cAbilities:{w  Primary ({W13{w dots), Secondary ({W9{w dots), Tertiary ({W5{w dots){x
 mob echoat $n {w  {cVirtues:{w    {W7{w dots distributed across Conscience, Self-Control, Courage{x
 ~
-#267
+#167
 Prelude the Stone Mason archetype~
 mob echoat $n {cthe Stone Mason says,{w 'Pre-built archetypes (0-9) established balanced baseline stats.'{x
 mob echoat $n {cthe Stone Mason says,{w 'If you chose an archetype, you do NOT need to run '{Ccreate{w'.'{x
 mob echoat $n {cthe Stone Mason says,{w 'However, archetype characters MUST still heed '{Cweapon_skills{w'!'{x
 ~
-#268
+#168
 Prelude the Stone Mason weapon_skills~
 mob echoat $n {cthe Stone Mason says,{w 'Vital advice for both Archetype and Custom characters:'{x
 mob echoat $n {w  {cRecommendation:{w Type '{Chelp weapon_skills{w' to review combat proficiencies{x
@@ -3761,7 +3479,7 @@ mob echoat $n {w  {cProficiencies:{w  Light, Heavy, Blunt, Polearm{x
 mob echoat $n {w  {cAction:{w         Invest {W2-3{w points via '{Cfreebie <proficiency>{w'{x
 mob echoat $n {cthe Stone Mason says,{w 'Without this investment, your weapon skill caps will remain severely restricted.'{x
 ~
-#269
+#169
 Prelude the Almoner greet~
 if ispc $n
   mob echoat $n {cthe Almoner says,{w 'Freebies are the lifeblood of character advancement.'{x
@@ -3769,14 +3487,14 @@ if ispc $n
   mob echoat $n {cthe Almoner says,{w 'Say '{Csay topics{w' to inspect the offering ledgers.'{x
 endif
 ~
-#270
+#170
 Prelude the Almoner topics~
 mob echoat $n {cthe Almoner says,{w 'Speak any topic to review freebie rules:'{x
 mob echoat $n {w  {Cfreebie{w       - how to check and spend freebie points{x
 mob echoat $n {w  {Ccosts{w         - exact cost formula for each trait category{x
 mob echoat $n {w  {Cweapon_skills{w - recommended weapon proficiency allocation{x
 ~
-#271
+#171
 Prelude the Almoner freebie~
 mob echoat $n {cthe Almoner says,{w 'Using the freebie system:'{x
 mob echoat $n {w  {Cfreebie{w         - view the cost table and your unspent freebies{x
@@ -3784,7 +3502,7 @@ mob echoat $n {w  {Cfreebie <trait>{w  - raise the specified trait by one dot{x
 mob echoat $n {w  {Chelp freebie{w    - view detailed help documentation{x
 mob echoat $n {cthe Almoner says,{w 'You start with {W15{w freebies. More are earned by remorting at level 100.'{x
 ~
-#272
+#172
 Prelude the Almoner costs~
 mob echoat $n {cthe Almoner says,{w 'Costs scale with your current rating in each trait:'{x
 mob echoat $n {w  {cAttributes:{w  Rating x 4{x
@@ -3796,14 +3514,14 @@ mob echoat $n {w  {cWillpower:{w   Current Rating{x
 mob echoat $n {w  {cDisciplines:{w Clan x 5 | Out-of-clan x 6 | New: {C10{w{x
 mob echoat $n {cthe Almoner says,{w 'Type '{Cfreebie{w' to view the specific rates for your race.'{x
 ~
-#273
+#173
 Prelude the Almoner weapon_skills~
 mob echoat $n {cthe Almoner says,{w 'Crucial investment before exhausting your freebie pool:'{x
 mob echoat $n {w  {cRecommendation:{w Read '{Chelp weapon_skills{w' and choose your primary weapon style{x
 mob echoat $n {w  {cAllocation:{w     Spend {W2-3{w freebies (e.g. '{Cfreebie light{w' or '{Cfreebie heavy{w'){x
 mob echoat $n {cthe Almoner says,{w 'Doing this now ensures you can achieve full mastery with your weapon.'{x
 ~
-#274
+#174
 Prelude the Scriptorium Monk greet~
 if ispc $n
   mob echoat $n {cthe Scriptorium Monk says,{w 'There is no {Rtrain{w and no {Rpractice{w in Haven.'{x
@@ -3811,14 +3529,14 @@ if ispc $n
   mob echoat $n {cthe Scriptorium Monk says,{w 'Say '{Csay topics{w' to examine our martial matrix.'{x
 endif
 ~
-#275
+#175
 Prelude the Scriptorium Monk topics~
 mob echoat $n {cthe Scriptorium Monk says,{w 'Inquire into any of these martial disciplines:'{x
 mob echoat $n {w  {Cskillmap{w      - how Storyteller dots dynamically unlock skills{x
 mob echoat $n {w  {Clearning{w      - how skills advance through gameplay without trainers{x
 mob echoat $n {w  {Cweapon_skills{w - how secondary weapon abilities raise proficiency ceilings{x
 ~
-#276
+#176
 Prelude the Scriptorium Monk skillmap~
 mob echoat $n {cthe Scriptorium Monk says,{w 'The Skill Matrix System:'{x
 mob echoat $n {w  {Cskillmap{w        - list all skills and their attribute/ability requirements{x
@@ -3826,21 +3544,21 @@ mob echoat $n {w  {Cskillmap <trait>{w- list skills governed by a specific trait
 mob echoat $n {w  {Cskills{w          - list skills currently unlocked for your character{x
 mob echoat $n {cthe Scriptorium Monk says,{w 'When your dots meet the threshold, skills unlock automatically.'{x
 ~
-#277
+#177
 Prelude the Scriptorium Monk learning~
 mob echoat $n {cthe Scriptorium Monk says,{w 'Advancement through active use:'{x
 mob echoat $n {w  - Skills advance dynamically by using them in combat, stealth, or crafting{x
 mob echoat $n {w  - Each successful use rolls an improvement check based on relevant stats{x
 mob echoat $n {w  - Practice sessions and trainer gold do NOT exist on this engine{x
 ~
-#278
+#178
 Prelude the Scriptorium Monk weapon_skills~
 mob echoat $n {cthe Scriptorium Monk says,{w 'Secondary weapon skills on {Ccs3{w govern your mastery caps:'{x
 mob echoat $n {w  {cProficiencies:{w Light, Heavy, Blunt, Polearm{x
 mob echoat $n {w  {cImpact:{w        Higher secondary dots allow your combat weapon skill to reach 100%{x
 mob echoat $n {w  {cSyntax:{w        Read '{Chelp weapon_skills{w' and buy dots via '{Cfreebie <skill>{w'{x
 ~
-#279
+#179
 Prelude the Keeper of Bones greet~
 if ispc $n
   mob echoat $n {cthe Keeper of Bones says,{w 'Death is merely a threshold in Haven.'{x
@@ -3848,13 +3566,13 @@ if ispc $n
   mob echoat $n {cthe Keeper of Bones says,{w 'Say '{Csay topics{w' to understand the great cycle.'{x
 endif
 ~
-#280
+#180
 Prelude the Keeper of Bones topics~
 mob echoat $n {cthe Keeper of Bones says,{w 'Speak of the great transitions:'{x
 mob echoat $n {w  {Cremort{w - level 100 reset, freebie rewards, and character persistence{x
 mob echoat $n {w  {Cpaths{w  - supernatural paths: Garou, Mage, and Kindred Embrace{x
 ~
-#281
+#181
 Prelude the Keeper of Bones remort~
 mob echoat $n {cthe Keeper of Bones says,{w 'The Remort Progression Engine:'{x
 mob echoat $n {w  {cRequirement:{w Reach level {W100{w and type '{Cremort{w'{x
@@ -3863,7 +3581,7 @@ mob echoat $n {w  {cKept:{w        ALL equipment, ALL learned skills, ALL Charac
 mob echoat $n {w  {cReward:{w      {C+3 Freebies{w per remort, unlocking higher supernatural caps{x
 mob echoat $n {cthe Keeper of Bones says,{w 'Remorting is NOT optional—it is the true path of character progression.'{x
 ~
-#282
+#182
 Prelude the Keeper of Bones paths~
 mob echoat $n {cthe Keeper of Bones says,{w 'Major Supernatural Transitions:'{x
 mob echoat $n {w  {cGarou (Werewolf):{w Mortal reaches level 100 -> '{Cremort garou{w' -> '{Cgogarou{w'{x
@@ -3871,7 +3589,7 @@ mob echoat $n {w  {cMage (Awakened):{w  Mortal reaches level 100 -> '{Cremort ma
 mob echoat $n {w  {cKindred (Vampire):{w Granted through in-character Embrace by another vampire player{x
 mob echoat $n {cthe Keeper of Bones says,{w 'Type '{Chelp remort{w' for detailed rules before choosing a path.'{x
 ~
-#283
+#183
 Prelude the Bishop of the Belfry greet~
 if ispc $n
   mob echoat $n {cthe Bishop of the Belfry says,{w 'You have traversed the entire cathedral. Well done.'{x
@@ -3879,7 +3597,7 @@ if ispc $n
   mob echoat $n {cthe Bishop of the Belfry says,{w 'Or say '{Csay topics{w' for a final orientation recap.'{x
 endif
 ~
-#284
+#184
 Prelude the Bishop of the Belfry topics~
 mob echoat $n {cthe Bishop of the Belfry says,{w 'Final preparations before departing:'{x
 mob echoat $n {w  {Csummary{w  - concise recap of all core systems{x
@@ -3887,7 +3605,7 @@ mob echoat $n {w  {Cvampire{w  - survival fundamentals for Kindred characters{x
 mob echoat $n {w  {Cmortal{w   - survival fundamentals for mortal characters{x
 mob echoat $n {w  {Cgraduate{w - toll the bell and transport to The New Temple{x
 ~
-#285
+#185
 Prelude the Bishop of the Belfry summary~
 mob echoat $n {cthe Bishop of the Belfry says,{w 'Core Haven mechanics summary:'{x
 mob echoat $n {w  {cCharacter Sheet:{w {Ccs{w, {Ccs2{w, {Ccs3{w, {Cbackgrounds{w{x
@@ -3898,7 +3616,7 @@ mob echoat $n {w  {cSkill Map:{w       {Cskillmap{w (dots unlock skills; use imp
 mob echoat $n {w  {cRemort:{w          {Cremort{w at level 100 (+3 freebies per remort){x
 mob echoat $n {w  {cCommunication:{w   {Csay{w (IC), {Cosay{w (OOC room), {Cooc{w (OOC global){x
 ~
-#286
+#186
 Prelude the Bishop of the Belfry vampire~
 mob echoat $n {cthe Bishop of the Belfry says,{w 'Essential Kindred survival commands:'{x
 mob echoat $n {w  {Cfangs{w      - extend fangs before feeding{x
@@ -3908,19 +3626,19 @@ mob echoat $n {w  {Cdisclist{w   - view available vampiric disciplines{x
 mob echoat $n {w  {Cbloodbuff{w  - surge physical attributes with blood{x
 mob echoat $n {cthe Bishop of the Belfry says,{w '{RWarning:{w Beware sunlight and fire. Maintain your humanity to restrain the Beast.'{x
 ~
-#287
+#187
 Prelude the Bishop of the Belfry mortal~
 mob echoat $n {cthe Bishop of the Belfry says,{w 'Essential mortal survival guidance:'{x
 mob echoat $n {w  - Equip armor, weapons, and bandages before venturing beyond city gates{x
 mob echoat $n {w  - Level up to 100 to undergo Remort into Mage or Garou{x
 mob echoat $n {w  - Or seek an elder vampire player to negotiate the Embrace into Kindred status{x
 ~
-#288
+#188
 Prelude the Bishop of the Belfry graduate~
 mob echoat $n {cThe Bishop of the Belfry hauls on the great bell rope.{x
 mob echoat $n {cBOOOONG... The great bronze bell tolls solemnly.{x
 mob echoat $n {WThe stone walls of the old cathedral dissolve into light as you step forth!{x
-mob transfer $n 101
+mob transfer $n temple
 ~
 #0
 

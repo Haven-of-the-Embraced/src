@@ -894,6 +894,10 @@ const struct reward_type reward_table[]=
 }
     if (!strcmp(arg1, "list"))
     {
+    static const int prod_reward_vnums[] = {
+        6617, 6618, 6601, 6602, 6603, 6604, 6605, 6615, 6606, 6607, 6608,
+        6614, 6609, 6610, 6611, 6612, 6616, 6613, 30432, 1103, 3099
+    };
     send_to_char("You ask the Immortals for a list of quest items.\n\r", ch);
     send_to_char("Current Quest Items available for Purchase:\n\r", ch);
     if(reward_table[0].name == NULL)
@@ -901,7 +905,10 @@ const struct reward_type reward_table[]=
     else {
     send_to_char("  {w[{WCost{w]     [{CName{w]\n\r",ch);
     for(i=0;reward_table[i].name != NULL;i++) {
-          if (reward_table[i].object && get_obj_index(reward_table[i].value) == NULL)
+          int rvnum = reward_table[i].value;
+          if (reward_table[i].object && i < 21 && get_obj_index(prod_reward_vnums[i]) != NULL)
+              rvnum = prod_reward_vnums[i];
+          if (reward_table[i].object && get_obj_index(rvnum) == NULL)
               continue;
           sprintf(buf,"   {W%-4d{w       {c%s{w\n\r"
             ,reward_table[i].cost,reward_table[i].name);
@@ -914,6 +921,10 @@ const struct reward_type reward_table[]=
 
     else if (!strcmp(arg1, "buy"))
     {
+    static const int prod_reward_vnums[] = {
+        6617, 6618, 6601, 6602, 6603, 6604, 6605, 6615, 6606, 6607, 6608,
+        6614, 6609, 6610, 6611, 6612, 6616, 6613, 30432, 1103, 3099
+    };
     bool found=FALSE;
     if (arg2[0] == '\0')
     {
@@ -930,10 +941,13 @@ const struct reward_type reward_table[]=
         {
         if (reward_table[i].object)
         {
-            if (get_obj_index(reward_table[i].value) == NULL
-                || (obj = create_object(get_obj_index(reward_table[i].value), ch->level)) == NULL)
+            int rvnum = reward_table[i].value;
+            if (i < 21 && get_obj_index(prod_reward_vnums[i]) != NULL)
+                rvnum = prod_reward_vnums[i];
+            if (get_obj_index(rvnum) == NULL
+                || (obj = create_object(get_obj_index(rvnum), ch->level)) == NULL)
             {
-                bug("do_qwest buy: missing reward object vnum %d.", reward_table[i].value);
+                bug("do_qwest buy: missing reward object vnum %d.", rvnum);
                 send_to_char("That reward is currently unavailable.\n\r", ch);
                 return;
             }

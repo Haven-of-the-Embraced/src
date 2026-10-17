@@ -36,3 +36,8 @@ data/*.bak
 data/*.pre-init
 nohup.out
 scripts/nohup.out
+
+# External / production area files (keep core defaults tracked)
+area/*.are
+!area/limbo.are
+!area/codespecii.are

@@ -83,17 +83,17 @@ const struct item_type      item_table  []  =
 
 
 /* weapon selection table */
-const   struct  weapon_type weapon_table    []  =
+struct  weapon_type weapon_table    []  =
 {
-   { "sword",   OBJ_VNUM_SCHOOL_SWORD,  WEAPON_SWORD,   &gsn_sword  },
-   { "mace",    OBJ_VNUM_SCHOOL_MACE,   WEAPON_MACE,    &gsn_mace   },
-   { "dagger",  OBJ_VNUM_SCHOOL_DAGGER, WEAPON_DAGGER,  &gsn_dagger },
-   { "axe", OBJ_VNUM_SCHOOL_AXE,    WEAPON_AXE, &gsn_axe    },
-   { "staff",   OBJ_VNUM_SCHOOL_STAFF,  WEAPON_SPEAR,   &gsn_spear  },
-   { "flail",   OBJ_VNUM_SCHOOL_FLAIL,  WEAPON_FLAIL,   &gsn_flail  },
-   { "whip",    OBJ_VNUM_SCHOOL_WHIP,   WEAPON_WHIP,    &gsn_whip   },
-   { "lance",   OBJ_VNUM_SCHOOL_LANCE,  WEAPON_LANCE,   &gsn_lance    },
-   { "polearm", OBJ_VNUM_SCHOOL_POLEARM,WEAPON_POLEARM, &gsn_polearm    },
+   { "sword",   OBJ_VNUM_SCHOOL_SWORD_DEFAULT,  WEAPON_SWORD,   &gsn_sword  },
+   { "mace",    OBJ_VNUM_SCHOOL_MACE_DEFAULT,   WEAPON_MACE,    &gsn_mace   },
+   { "dagger",  OBJ_VNUM_SCHOOL_DAGGER_DEFAULT, WEAPON_DAGGER,  &gsn_dagger },
+   { "axe",     OBJ_VNUM_SCHOOL_AXE_DEFAULT,    WEAPON_AXE,     &gsn_axe    },
+   { "staff",   OBJ_VNUM_SCHOOL_STAFF_DEFAULT,  WEAPON_SPEAR,   &gsn_spear  },
+   { "flail",   OBJ_VNUM_SCHOOL_FLAIL_DEFAULT,  WEAPON_FLAIL,   &gsn_flail  },
+   { "whip",    OBJ_VNUM_SCHOOL_WHIP_DEFAULT,   WEAPON_WHIP,    &gsn_whip   },
+   { "lance",   OBJ_VNUM_SCHOOL_LANCE_DEFAULT,  WEAPON_LANCE,   &gsn_lance  },
+   { "polearm", OBJ_VNUM_SCHOOL_POLEARM_DEFAULT,WEAPON_POLEARM, &gsn_polearm},
    { NULL,  0,              0,  NULL        }
 };
 
@@ -634,21 +634,21 @@ const   struct  race_type   race_table  []      =
 /*
  * Class table.
  */
-const   struct  class_type  class_table [MAX_CLASS] =
-{             //Name     whoname    primeattr       begin weapon         guild rooms  max prac tha0 tha0 hpm hpx  mana     skills          groups
- /*0*/    {    "none", " ",      STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER,   { 101, 111 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
- /*1*/    {    "cleric", " ",    STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER,   { 101, 111 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
- /*2*/    {    "thief", " ",     STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER,   { 101, 111 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
- /*3*/    {    "warrior", " ",   STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER,   { 101, 111 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
- /*4*/    {    "bandit", "",     STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER,   { 101, 111 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
- /*5*/    {    "assassin", "",   STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER,   { 101, 111 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
- /*6*/    {    "trickster", "",  STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER,   { 101, 111 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
- /*7*/    {    "mercenary", "",  STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER,   { 101, 111 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
- /*8*/    {    "guardsman", "",  STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER,   { 101, 111 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
- /*9*/    {    "knight", "",     STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER,   { 101, 111 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
- /*10*/   {    "priest", "",     STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER,   { 101, 111 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
- /*11*/   {    "monk", "",       STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER,   { 101, 111 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
- /*12*/   {    "crusader", "",   STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER,   { 101, 111 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
+struct  class_type  class_table [MAX_CLASS] =
+{             //Name     whoname    primeattr       begin weapon                 guild rooms  max prac tha0 tha0 hpm hpx  mana     skills          groups
+ /*0*/    {    "none", " ",      STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER_DEFAULT,   { 101, 111 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
+ /*1*/    {    "cleric", " ",    STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER_DEFAULT,   { 101, 111 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
+ /*2*/    {    "thief", " ",     STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER_DEFAULT,   { 101, 111 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
+ /*3*/    {    "warrior", " ",   STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER_DEFAULT,   { 101, 111 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
+ /*4*/    {    "bandit", "",     STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER_DEFAULT,   { 101, 111 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
+ /*5*/    {    "assassin", "",   STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER_DEFAULT,   { 101, 111 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
+ /*6*/    {    "trickster", "",  STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER_DEFAULT,   { 101, 111 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
+ /*7*/    {    "mercenary", "",  STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER_DEFAULT,   { 101, 111 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
+ /*8*/    {    "guardsman", "",  STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER_DEFAULT,   { 101, 111 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
+ /*9*/    {    "knight", "",     STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER_DEFAULT,   { 101, 111 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
+ /*10*/   {    "priest", "",     STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER_DEFAULT,   { 101, 111 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
+ /*11*/   {    "monk", "",       STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER_DEFAULT,   { 101, 111 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
+ /*12*/   {    "crusader", "",   STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER_DEFAULT,   { 101, 111 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
 };
 
 

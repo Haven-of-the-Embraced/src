@@ -342,7 +342,8 @@ void boot_db()
         *skill_table[sn].pgsn = sn;
     }
     }
-    /* Read in the clan file. */
+    /* Read in the config and clan files. */
+    load_config();
     load_clans();
     load_socials();
     load_helps();
@@ -436,6 +437,7 @@ void boot_db()
      /*
      * Read in commands.
      */
+    apply_vnum_config();
     load_cmd_list();
     fix_missing_rooms();
     fix_exits( );
@@ -452,6 +454,8 @@ void boot_db()
     load_bans();
     load_songs();
     load_laston();
+    /* Refresh clan fallbacks now that all area rooms exist */
+    load_clans();
     }
 
     return;
@@ -1744,6 +1748,15 @@ void fix_exits( void )
         }
         }
     }
+    }
+
+    /* Dynamically link Prelude Belfry north exit to ROOM_VNUM_TEMPLE */
+    if ( ( pRoomIndex = get_room_index( ROOM_VNUM_PRELUDE + 6 ) ) != NULL
+    &&   ( pexit = pRoomIndex->exit[DIR_NORTH] ) != NULL
+    &&   ( to_room = get_room_index( ROOM_VNUM_TEMPLE ) ) != NULL )
+    {
+        pexit->u1.to_room = to_room;
+        pexit->orig_door = DIR_NORTH;
     }
 
     return;

@@ -1,8 +1,10 @@
 # VNUM Consolidation & Migration Reference
 
 All code-dependent rooms, mobiles, and objects previously scattered across 16 legacy `.are` files have been consolidated into two sanitized core system area files:
-- **`area/limbo.are` (`1–99`)**: Core engine primitives (Void/Limbo rooms, currency, corpses, body parts, discipline/spell summons and tokens).
-- **`area/codespecii.are` (`100–299`)**: Core sanctuary hub rooms (`100–113`), Prelude tutorial rooms (`250–261`), system NPCs & Garou spiritquest mobs (`100–131`), Prelude tutorial NPCs & mobprogs (`250–261`), crafting/school/system objects (`100–142`), quest rewards (`150–170`), brewing components (`180–192`), harvestable trees & logs (`200–209`), and mineable veins, ores, & pickaxe (`210–230`).
+- **`area/limbo.are` (`1–99`)**: Core engine primitives (Void/Limbo rooms, currency, corpses, body parts, discipline/spell summons and tokens), default harvesting trees/logs (`60–69`), default mining veins/ores (`70–88`), and default pickaxe (`90`).
+- **`area/codespecii.are` (`100–199`)**: Core sanctuary hub rooms (`100–113`), Prelude tutorial cathedral rooms (`150–156`), stub room for housing (`188`), system NPCs & Garou spiritquest mobs (`100–131`), Prelude tutorial guide NPCs & mobprogs (`150–188`), crafting/school/system objects (`100–142`), quest rewards (`150–170`), brewing components (`180–192`), and stationary Prelude tutorial guide plaques (`193–199`).
+
+Additionally, dynamic runtime VNUM loading via `data/config.cfg` and `scripts/import_production_areas.py` allows external production area files (`outpost.are` at `200–299`, etc.) to be loaded on top without any collision.
 
 ---
 
@@ -26,7 +28,8 @@ All code-dependent rooms, mobiles, and objects previously scattered across 16 le
 | `3705` | `barracks.are` | The Grand Training Barracks (`class_table` guild) | `111` | `codespecii.are` |
 | — | `codespecii.are` | The Healer's Sanctum | `112` | `codespecii.are` |
 | `26000` | `uquest.are` | The Questmaster's Office | `113` | `codespecii.are` |
-| `30000–30011` | `prelude.are` | `ROOM_VNUM_PRELUDE` (`250`) & Newbie Prelude Tutorial Rooms | `250–261` | `codespecii.are` |
+| `30000–30006` | `prelude.are` | `ROOM_VNUM_PRELUDE` (`150`) & Newbie Prelude Cathedral Rooms | `150–156` | `codespecii.are` |
+| `188` | `codespecii.are` | Entryway stub for `zhousing.are` exit reference | `188` | `codespecii.are` |
 | `3001` | `midgaard.are` | `db.c` / `save.c` fallback safe room | `101` | `codespecii.are` |
 | `3003, 9619` | `midgaard.are`, `suceava.are` | `class_table` guild rooms (`const.c`) | `101, 111` | `codespecii.are` |
 | `9621, 9706` | `suceava.are` | `act_obj.c` special exit transfer rooms | `100, 101` | `codespecii.are` |
@@ -62,7 +65,7 @@ All code-dependent rooms, mobiles, and objects previously scattered across 16 le
 | `2100` | `wyrma.are` | `GROUP_VNUM_TROLLS` | `108` | `codespecii.are` |
 | `2101` | `wyrma.are` | `GROUP_VNUM_OGRES` | `109` | `codespecii.are` |
 | `30720–30731` | `umbra1.are` | `MOB_VNUM_SPIRITQUEST` (12 Garou Spiritquest Mobs) | `120–131` | `codespecii.are` |
-| `30000–30011` | `prelude.are` | Prelude Tutorial NPCs & `#MPCODE` (`250–259`) | `250–261` | `codespecii.are` |
+| `30000–30006` | `prelude.are` | Prelude Tutorial Guides & `#MPCODE` (`150–188`) | `150–156` | `codespecii.are` |
 
 ---
 
@@ -82,6 +85,11 @@ All code-dependent rooms, mobiles, and objects previously scattered across 16 le
 | `32` | `limbo.are` | `OBJ_VNUM_BROKEN_MIRROR` | `32` | `limbo.are` |
 | `40` | `limbo.are` | `QUEST_OBJ` | `40` | `limbo.are` |
 | `50` | `limbo.are` | `OBJ_VNUM_RIFT` | `50` | `limbo.are` |
+| `26500–26504` | `arena.are` | `OBJ_VNUM_TREE` (`+0..4`: yew, maple, ash, walnut, oak trees) | `60–64` | `limbo.are` |
+| `26505–26509` | `arena.are` | `OBJ_VNUM_TREE` (`+5..9`: yew, maple, ash, walnut, oak logs) | `65–69` | `limbo.are` |
+| `26510–26518` | `arena.are` | `OBJ_VNUM_VEIN` (`+0..8`: iron..zinc mineral veins) | `70–78` | `limbo.are` |
+| `26520–26528` | `arena.are` | `OBJ_VNUM_VEIN` (`+10..18`: iron..zinc ore chunks) | `80–88` | `limbo.are` |
+| `26530` | `arena.are` | Mining Pickaxe | `90` | `limbo.are` |
 | `100–101` | `codespecii.are` | Old oak workbench & sharp carving knife | `100–101` | `codespecii.are` |
 | `28850–28854` (`102–106`) | `copenh.are` / `codespecii.are` | `OBJ_VNUM_PLANK` (yew, maple, ash, walnut, oak planks) | `102–106` | `codespecii.are` |
 | `28855–28859` (`107–111`) | `copenh.are` / `codespecii.are` | `OBJ_VNUM_BLOCK` (yew, maple, ash, walnut, oak blocks) | `107–111` | `codespecii.are` |
@@ -125,8 +133,4 @@ All code-dependent rooms, mobiles, and objects previously scattered across 16 le
 | `30834` | `rooms.are` | `brew_table` A Cup of Coffee | `190` | `codespecii.are` |
 | `30836` | `rooms.are` | `brew_table` A Glass of Milk | `191` | `codespecii.are` |
 | `30856` | `rooms.are` | `brew_table` Strawberries | `192` | `codespecii.are` |
-| `26500–26504` | `arena.are` | `OBJ_VNUM_TREE` (`+0..4`: yew, maple, ash, walnut, oak trees) | `200–204` | `codespecii.are` |
-| `26505–26509` | `arena.are` | `OBJ_VNUM_TREE` (`+5..9`: yew, maple, ash, walnut, oak logs) | `205–209` | `codespecii.are` |
-| `26510–26518` | `arena.are` | `OBJ_VNUM_VEIN` (`+0..8`: iron..zinc mineral veins) | `210–218` | `codespecii.are` |
-| `26520–26528` | `arena.are` | `OBJ_VNUM_VEIN` (`+10..18`: iron..zinc ore chunks) | `220–228` | `codespecii.are` |
-| `26530` | `arena.are` | Mining Pickaxe | `230` | `codespecii.are` |
+| — | `codespecii.are` | Prelude Tutorial Station Signboards (`193–199`) | `193–199` | `codespecii.are` |

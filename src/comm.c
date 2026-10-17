@@ -349,6 +349,54 @@ int xpstat; //Sets the milestone status for firing double xp
 /* config file (config.cfg in the area directory) */
 CONFIG_DATA     *config;
 
+/* Configurable system VNUMs (default to limbo.are / codespecii.are) */
+int room_vnum_chat          = ROOM_VNUM_CHAT_DEFAULT;
+int room_vnum_temple        = ROOM_VNUM_TEMPLE_DEFAULT;
+int room_vnum_altar         = ROOM_VNUM_ALTAR_DEFAULT;
+int room_vnum_donate        = ROOM_VNUM_DONATE_DEFAULT;
+int room_vnum_school        = ROOM_VNUM_SCHOOL_DEFAULT;
+int room_vnum_balance       = ROOM_VNUM_BALANCE_DEFAULT;
+int room_vnum_circle        = ROOM_VNUM_CIRCLE_DEFAULT;
+int room_vnum_demise        = ROOM_VNUM_DEMISE_DEFAULT;
+int room_vnum_honor         = ROOM_VNUM_HONOR_DEFAULT;
+int room_vnum_paradox       = ROOM_VNUM_PARADOX_DEFAULT;
+int room_vnum_prelude       = ROOM_VNUM_PRELUDE_DEFAULT;
+
+int hometown_chester        = 0;
+int hometown_geneva         = 0;
+int hometown_figueres       = 0;
+int hometown_venice         = 0;
+
+int obj_vnum_pit            = OBJ_VNUM_PIT_DEFAULT;
+int obj_vnum_school_mace    = OBJ_VNUM_SCHOOL_MACE_DEFAULT;
+int obj_vnum_school_dagger  = OBJ_VNUM_SCHOOL_DAGGER_DEFAULT;
+int obj_vnum_school_sword   = OBJ_VNUM_SCHOOL_SWORD_DEFAULT;
+int obj_vnum_school_spear   = OBJ_VNUM_SCHOOL_SPEAR_DEFAULT;
+int obj_vnum_school_staff   = OBJ_VNUM_SCHOOL_STAFF_DEFAULT;
+int obj_vnum_school_axe     = OBJ_VNUM_SCHOOL_AXE_DEFAULT;
+int obj_vnum_school_flail   = OBJ_VNUM_SCHOOL_FLAIL_DEFAULT;
+int obj_vnum_school_whip    = OBJ_VNUM_SCHOOL_WHIP_DEFAULT;
+int obj_vnum_school_polearm = OBJ_VNUM_SCHOOL_POLEARM_DEFAULT;
+int obj_vnum_school_lance   = OBJ_VNUM_SCHOOL_LANCE_DEFAULT;
+int obj_vnum_school_vest    = OBJ_VNUM_SCHOOL_VEST_DEFAULT;
+int obj_vnum_school_shield  = OBJ_VNUM_SCHOOL_SHIELD_DEFAULT;
+int obj_vnum_school_banner  = OBJ_VNUM_SCHOOL_BANNER_DEFAULT;
+int obj_vnum_map            = OBJ_VNUM_MAP_DEFAULT;
+int obj_vnum_guide          = OBJ_VNUM_GUIDE_DEFAULT;
+int obj_vnum_tome           = OBJ_VNUM_TOME_DEFAULT;
+int obj_vnum_tree           = OBJ_VNUM_TREE_DEFAULT;
+int obj_vnum_vein           = OBJ_VNUM_VEIN_DEFAULT;
+int obj_vnum_plank          = OBJ_VNUM_PLANK_DEFAULT;
+int obj_vnum_block          = OBJ_VNUM_BLOCK_DEFAULT;
+int obj_vnum_bandage        = OBJ_VNUM_BANDAGE_DEFAULT;
+int obj_vnum_tass_mushroom  = OBJ_VNUM_TASS_MUSHROOM_DEFAULT;
+
+int mob_vnum_cityguard      = MOB_VNUM_CITYGUARD_DEFAULT;
+int mob_vnum_fido           = MOB_VNUM_FIDO_DEFAULT;
+int mob_vnum_patrolman      = MOB_VNUM_PATROLMAN_DEFAULT;
+int group_vnum_trolls       = GROUP_VNUM_TROLLS_DEFAULT;
+int group_vnum_ogres        = GROUP_VNUM_OGRES_DEFAULT;
+
 
 /*
  * OS-dependent local functions.
@@ -4260,6 +4308,80 @@ void titlebar(CHAR_DATA *ch)
 }
 
 
+void apply_vnum_config( void )
+{
+    extern bool fBootDb;
+    bool saved_boot = fBootDb;
+    int i;
+
+    fBootDb = FALSE;
+
+    hometown_table[0].vnum = room_vnum_temple;
+    hometown_table[1].vnum = hometown_chester > 0 ? hometown_chester : room_vnum_temple;
+    hometown_table[2].vnum = hometown_geneva > 0 ? hometown_geneva : room_vnum_temple;
+    hometown_table[3].vnum = hometown_figueres > 0 ? hometown_figueres : room_vnum_temple;
+    hometown_table[4].vnum = hometown_venice > 0 ? hometown_venice : room_vnum_temple;
+
+    for ( i = 0; i < MAX_SECT; i++ )
+        sect_table[i].hall = room_vnum_altar;
+
+    weapon_table[0].vnum = obj_vnum_school_sword;
+    weapon_table[1].vnum = obj_vnum_school_mace;
+    weapon_table[2].vnum = obj_vnum_school_dagger;
+    weapon_table[3].vnum = obj_vnum_school_axe;
+    weapon_table[4].vnum = obj_vnum_school_staff;
+    weapon_table[5].vnum = obj_vnum_school_flail;
+    weapon_table[6].vnum = obj_vnum_school_whip;
+    weapon_table[7].vnum = obj_vnum_school_lance;
+    weapon_table[8].vnum = obj_vnum_school_polearm;
+
+    for ( i = 0; i < MAX_CLASS; i++ )
+    {
+        class_table[i].weapon = obj_vnum_school_dagger;
+        if ( get_room_index(3003) != NULL && get_room_index(9619) != NULL )
+        {
+            class_table[i].guild[0] = 3003;
+            class_table[i].guild[1] = 9619;
+        }
+        else
+        {
+            class_table[i].guild[0] = room_vnum_temple;
+            class_table[i].guild[1] = 111;
+        }
+    }
+
+    crafted_item_table[0].resource_type = obj_vnum_block;
+    crafted_item_table[1].resource_type = obj_vnum_plank;
+    crafted_item_table[2].resource_type = obj_vnum_block;
+    if ( get_obj_index(28870) != NULL )
+    {
+        crafted_item_table[0].vnum = 28870;
+        crafted_item_table[1].vnum = 28871;
+        crafted_item_table[2].vnum = 28872;
+    }
+
+    if ( get_obj_index(771) != NULL )
+    {
+        static const sh_int prod_brew[9][5] = {
+            {771, 27225, 30834, 0, 0},
+            {771, 30856, 0, 0, 0},
+            {771, 9507, 0, 0, 0},
+            {771, 302, 0, 0, 0},
+            {771, 9658, 0, 0, 0},
+            {771, 30836, 17701, 17705, 0},
+            {771, 17701, 0, 0, 0},
+            {771, 9659, 0, 0, 0},
+            {771, 11105, 30814, 0, 0}
+        };
+        int j;
+        for ( i = 0; i < 9; i++ )
+            for ( j = 0; j < 5; j++ )
+                brew_table[i + 1].component[j] = prod_brew[i][j];
+    }
+
+    fBootDb = saved_boot;
+}
+
 void save_config( void )
 {
     FILE *fp;
@@ -4269,6 +4391,8 @@ void save_config( void )
     {
     bug( "save_config: fopen", 0 );
     perror( CONFIG_FILE );
+    fpReserve = fopen( NULL_FILE, "r" );
+    return;
     }
 
     fprintf( fp, "Slaughter %d\n",      slaughter);
@@ -4285,6 +4409,96 @@ void save_config( void )
     fprintf (fp, "Xpmult %d\n",         xpawardmult);
     fprintf (fp, "Manualxp %d\n",       manualxp);
     fprintf (fp, "Maxon %d\n",          max_players);
+
+    if ( room_vnum_temple != ROOM_VNUM_TEMPLE_DEFAULT )
+        fprintf( fp, "VnumTemple %d\n", room_vnum_temple );
+    if ( room_vnum_altar != ROOM_VNUM_ALTAR_DEFAULT )
+        fprintf( fp, "VnumAltar %d\n", room_vnum_altar );
+    if ( room_vnum_donate != ROOM_VNUM_DONATE_DEFAULT )
+        fprintf( fp, "VnumDonate %d\n", room_vnum_donate );
+    if ( room_vnum_school != ROOM_VNUM_SCHOOL_DEFAULT )
+        fprintf( fp, "VnumSchool %d\n", room_vnum_school );
+    if ( room_vnum_chat != ROOM_VNUM_CHAT_DEFAULT )
+        fprintf( fp, "VnumChat %d\n", room_vnum_chat );
+    if ( room_vnum_paradox != ROOM_VNUM_PARADOX_DEFAULT )
+        fprintf( fp, "VnumParadox %d\n", room_vnum_paradox );
+    if ( room_vnum_demise != ROOM_VNUM_DEMISE_DEFAULT )
+        fprintf( fp, "VnumDemise %d\n", room_vnum_demise );
+    if ( room_vnum_honor != ROOM_VNUM_HONOR_DEFAULT )
+        fprintf( fp, "VnumHonor %d\n", room_vnum_honor );
+    if ( room_vnum_circle != ROOM_VNUM_CIRCLE_DEFAULT )
+        fprintf( fp, "VnumCircle %d\n", room_vnum_circle );
+    if ( room_vnum_balance != ROOM_VNUM_BALANCE_DEFAULT )
+        fprintf( fp, "VnumBalance %d\n", room_vnum_balance );
+    if ( room_vnum_prelude != ROOM_VNUM_PRELUDE_DEFAULT )
+        fprintf( fp, "VnumPrelude %d\n", room_vnum_prelude );
+
+    if ( hometown_chester > 0 )
+        fprintf( fp, "HometownChester %d\n", hometown_chester );
+    if ( hometown_geneva > 0 )
+        fprintf( fp, "HometownGeneva %d\n", hometown_geneva );
+    if ( hometown_figueres > 0 )
+        fprintf( fp, "HometownFigueres %d\n", hometown_figueres );
+    if ( hometown_venice > 0 )
+        fprintf( fp, "HometownVenice %d\n", hometown_venice );
+
+    if ( obj_vnum_pit != OBJ_VNUM_PIT_DEFAULT )
+        fprintf( fp, "ObjVnumPit %d\n", obj_vnum_pit );
+    if ( obj_vnum_school_mace != OBJ_VNUM_SCHOOL_MACE_DEFAULT )
+        fprintf( fp, "ObjVnumSchoolMace %d\n", obj_vnum_school_mace );
+    if ( obj_vnum_school_dagger != OBJ_VNUM_SCHOOL_DAGGER_DEFAULT )
+        fprintf( fp, "ObjVnumSchoolDagger %d\n", obj_vnum_school_dagger );
+    if ( obj_vnum_school_sword != OBJ_VNUM_SCHOOL_SWORD_DEFAULT )
+        fprintf( fp, "ObjVnumSchoolSword %d\n", obj_vnum_school_sword );
+    if ( obj_vnum_school_spear != OBJ_VNUM_SCHOOL_SPEAR_DEFAULT )
+        fprintf( fp, "ObjVnumSchoolSpear %d\n", obj_vnum_school_spear );
+    if ( obj_vnum_school_staff != OBJ_VNUM_SCHOOL_STAFF_DEFAULT )
+        fprintf( fp, "ObjVnumSchoolStaff %d\n", obj_vnum_school_staff );
+    if ( obj_vnum_school_axe != OBJ_VNUM_SCHOOL_AXE_DEFAULT )
+        fprintf( fp, "ObjVnumSchoolAxe %d\n", obj_vnum_school_axe );
+    if ( obj_vnum_school_flail != OBJ_VNUM_SCHOOL_FLAIL_DEFAULT )
+        fprintf( fp, "ObjVnumSchoolFlail %d\n", obj_vnum_school_flail );
+    if ( obj_vnum_school_whip != OBJ_VNUM_SCHOOL_WHIP_DEFAULT )
+        fprintf( fp, "ObjVnumSchoolWhip %d\n", obj_vnum_school_whip );
+    if ( obj_vnum_school_polearm != OBJ_VNUM_SCHOOL_POLEARM_DEFAULT )
+        fprintf( fp, "ObjVnumSchoolPolearm %d\n", obj_vnum_school_polearm );
+    if ( obj_vnum_school_lance != OBJ_VNUM_SCHOOL_LANCE_DEFAULT )
+        fprintf( fp, "ObjVnumSchoolLance %d\n", obj_vnum_school_lance );
+    if ( obj_vnum_school_vest != OBJ_VNUM_SCHOOL_VEST_DEFAULT )
+        fprintf( fp, "ObjVnumSchoolVest %d\n", obj_vnum_school_vest );
+    if ( obj_vnum_school_shield != OBJ_VNUM_SCHOOL_SHIELD_DEFAULT )
+        fprintf( fp, "ObjVnumSchoolShield %d\n", obj_vnum_school_shield );
+    if ( obj_vnum_school_banner != OBJ_VNUM_SCHOOL_BANNER_DEFAULT )
+        fprintf( fp, "ObjVnumSchoolBanner %d\n", obj_vnum_school_banner );
+    if ( obj_vnum_map != OBJ_VNUM_MAP_DEFAULT )
+        fprintf( fp, "ObjVnumMap %d\n", obj_vnum_map );
+    if ( obj_vnum_guide != OBJ_VNUM_GUIDE_DEFAULT )
+        fprintf( fp, "ObjVnumGuide %d\n", obj_vnum_guide );
+    if ( obj_vnum_tome != OBJ_VNUM_TOME_DEFAULT )
+        fprintf( fp, "ObjVnumTome %d\n", obj_vnum_tome );
+    if ( obj_vnum_tree != OBJ_VNUM_TREE_DEFAULT )
+        fprintf( fp, "ObjVnumTree %d\n", obj_vnum_tree );
+    if ( obj_vnum_vein != OBJ_VNUM_VEIN_DEFAULT )
+        fprintf( fp, "ObjVnumVein %d\n", obj_vnum_vein );
+    if ( obj_vnum_plank != OBJ_VNUM_PLANK_DEFAULT )
+        fprintf( fp, "ObjVnumPlank %d\n", obj_vnum_plank );
+    if ( obj_vnum_block != OBJ_VNUM_BLOCK_DEFAULT )
+        fprintf( fp, "ObjVnumBlock %d\n", obj_vnum_block );
+    if ( obj_vnum_bandage != OBJ_VNUM_BANDAGE_DEFAULT )
+        fprintf( fp, "ObjVnumBandage %d\n", obj_vnum_bandage );
+    if ( obj_vnum_tass_mushroom != OBJ_VNUM_TASS_MUSHROOM_DEFAULT )
+        fprintf( fp, "ObjVnumTassMushroom %d\n", obj_vnum_tass_mushroom );
+
+    if ( mob_vnum_cityguard != MOB_VNUM_CITYGUARD_DEFAULT )
+        fprintf( fp, "MobVnumCityguard %d\n", mob_vnum_cityguard );
+    if ( mob_vnum_fido != MOB_VNUM_FIDO_DEFAULT )
+        fprintf( fp, "MobVnumFido %d\n", mob_vnum_fido );
+    if ( mob_vnum_patrolman != MOB_VNUM_PATROLMAN_DEFAULT )
+        fprintf( fp, "MobVnumPatrolman %d\n", mob_vnum_patrolman );
+    if ( group_vnum_trolls != GROUP_VNUM_TROLLS_DEFAULT )
+        fprintf( fp, "GroupVnumTrolls %d\n", group_vnum_trolls );
+    if ( group_vnum_ogres != GROUP_VNUM_OGRES_DEFAULT )
+        fprintf( fp, "GroupVnumOgres %d\n", group_vnum_ogres );
 
     fprintf( fp, "End\n\n\n\n" );
     fclose( fp );
@@ -4327,6 +4541,9 @@ void load_config( void )
     {
     bug( "load_config: fopen", 0 );
     perror( CONFIG_FILE );
+    fpReserve = fopen( NULL_FILE, "r" );
+    apply_vnum_config();
+    return;
     }
 
 
@@ -4340,48 +4557,98 @@ void load_config( void )
           case 'A':
                KEY( "Arena", arena, fread_number(fp) );
                break;
-           case 'R':
-               KEY("Resolver", resolver, fread_number(fp) );
-               break;
-           case 'N':
-               KEY("Nosun", nosun, fread_number(fp) );
-               KEY("Newlock", newlock, fread_number(fp));
-               break;
-           case 'M':
-               KEY( "Manualxp", manualxp, fread_number(fp));
-               KEY( "Maxon", max_players, fread_number(fp));
+          case 'C':
+               KEY( "Carnival", carnival, fread_number(fp) );
                break;
           case 'D':
-                KEY( "Doubleexp", doubleexp, fread_number(fp) );
-                KEY( "Doubledam", doubledam, fread_number(fp) );
-                break;
-           case 'G':
-               KEY("Gxp", global_xp, fread_number(fp) );
-               KEY("Gqp", global_qp, fread_number(fp) );
+               KEY( "Doubleexp", doubleexp, fread_number(fp) );
+               KEY( "Doubledam", doubledam, fread_number(fp) );
                break;
-           case 'X':
-               KEY("Xpmult", xpawardmult, fread_number(fp));
+          case 'E':
+               if ( !str_cmp( word, "End" ) )
+               {
+                   fMatch = TRUE;
+                   fclose( fp );
+                   fpReserve = fopen( NULL_FILE, "r" );
+                   apply_vnum_config();
+                   return;
+               }
                break;
-           case 'S':
+          case 'G':
+               KEY( "Gxp", global_xp, fread_number(fp) );
+               KEY( "Gqp", global_qp, fread_number(fp) );
+               KEY( "GroupVnumTrolls", group_vnum_trolls, fread_number(fp) );
+               KEY( "GroupVnumOgres", group_vnum_ogres, fread_number(fp) );
+               break;
+          case 'H':
+               KEY( "HometownChester", hometown_chester, fread_number(fp) );
+               KEY( "HometownGeneva", hometown_geneva, fread_number(fp) );
+               KEY( "HometownFigueres", hometown_figueres, fread_number(fp) );
+               KEY( "HometownVenice", hometown_venice, fread_number(fp) );
+               break;
+          case 'M':
+               KEY( "Manualxp", manualxp, fread_number(fp) );
+               KEY( "Maxon", max_players, fread_number(fp) );
+               KEY( "MobVnumCityguard", mob_vnum_cityguard, fread_number(fp) );
+               KEY( "MobVnumFido", mob_vnum_fido, fread_number(fp) );
+               KEY( "MobVnumPatrolman", mob_vnum_patrolman, fread_number(fp) );
+               break;
+          case 'N':
+               KEY( "Nosun", nosun, fread_number(fp) );
+               KEY( "Newlock", newlock, fread_number(fp) );
+               break;
+          case 'O':
+               KEY( "ObjVnumPit", obj_vnum_pit, fread_number(fp) );
+               KEY( "ObjVnumSchoolMace", obj_vnum_school_mace, fread_number(fp) );
+               KEY( "ObjVnumSchoolDagger", obj_vnum_school_dagger, fread_number(fp) );
+               KEY( "ObjVnumSchoolSword", obj_vnum_school_sword, fread_number(fp) );
+               KEY( "ObjVnumSchoolSpear", obj_vnum_school_spear, fread_number(fp) );
+               KEY( "ObjVnumSchoolStaff", obj_vnum_school_staff, fread_number(fp) );
+               KEY( "ObjVnumSchoolAxe", obj_vnum_school_axe, fread_number(fp) );
+               KEY( "ObjVnumSchoolFlail", obj_vnum_school_flail, fread_number(fp) );
+               KEY( "ObjVnumSchoolWhip", obj_vnum_school_whip, fread_number(fp) );
+               KEY( "ObjVnumSchoolPolearm", obj_vnum_school_polearm, fread_number(fp) );
+               KEY( "ObjVnumSchoolLance", obj_vnum_school_lance, fread_number(fp) );
+               KEY( "ObjVnumSchoolVest", obj_vnum_school_vest, fread_number(fp) );
+               KEY( "ObjVnumSchoolShield", obj_vnum_school_shield, fread_number(fp) );
+               KEY( "ObjVnumSchoolBanner", obj_vnum_school_banner, fread_number(fp) );
+               KEY( "ObjVnumMap", obj_vnum_map, fread_number(fp) );
+               KEY( "ObjVnumGuide", obj_vnum_guide, fread_number(fp) );
+               KEY( "ObjVnumTome", obj_vnum_tome, fread_number(fp) );
+               KEY( "ObjVnumTree", obj_vnum_tree, fread_number(fp) );
+               KEY( "ObjVnumVein", obj_vnum_vein, fread_number(fp) );
+               KEY( "ObjVnumPlank", obj_vnum_plank, fread_number(fp) );
+               KEY( "ObjVnumBlock", obj_vnum_block, fread_number(fp) );
+               KEY( "ObjVnumBandage", obj_vnum_bandage, fread_number(fp) );
+               KEY( "ObjVnumTassMushroom", obj_vnum_tass_mushroom, fread_number(fp) );
+               break;
+          case 'R':
+               KEY( "Resolver", resolver, fread_number(fp) );
+               break;
+          case 'S':
                KEY( "Slaughter", slaughter, fread_number(fp) );
                KEY( "Spookums", spookums, fread_number(fp) );
                break;
-           case 'C':
-               KEY("Carnival", carnival, fread_number(fp));
-
-           case 'E':
-                if ( !str_cmp( word, "End" ) )
-                {
-                    fMatch = TRUE;
-                    fclose( fp );
-                    fpReserve = fopen( NULL_FILE, "r" );
-                    return;
-                }
-           case 'W':
-               KEY("Wizlock", wizlock, fread_number(fp));
+          case 'V':
+               KEY( "VnumTemple", room_vnum_temple, fread_number(fp) );
+               KEY( "VnumAltar", room_vnum_altar, fread_number(fp) );
+               KEY( "VnumDonate", room_vnum_donate, fread_number(fp) );
+               KEY( "VnumSchool", room_vnum_school, fread_number(fp) );
+               KEY( "VnumChat", room_vnum_chat, fread_number(fp) );
+               KEY( "VnumParadox", room_vnum_paradox, fread_number(fp) );
+               KEY( "VnumDemise", room_vnum_demise, fread_number(fp) );
+               KEY( "VnumHonor", room_vnum_honor, fread_number(fp) );
+               KEY( "VnumCircle", room_vnum_circle, fread_number(fp) );
+               KEY( "VnumBalance", room_vnum_balance, fread_number(fp) );
+               KEY( "VnumPrelude", room_vnum_prelude, fread_number(fp) );
                break;
-
-        }
+          case 'W':
+               KEY( "Wizlock", wizlock, fread_number(fp) );
+               break;
+          case 'X':
+               KEY( "Xpmult", xpawardmult, fread_number(fp) );
+               break;
+       }
     }
 }
 

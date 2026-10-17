@@ -36,13 +36,13 @@
 #include "rote.h"
 #include "tables.h"
 
-const struct hometown_type hometown_table[MAX_HOMETOWN] =
+struct hometown_type hometown_table[MAX_HOMETOWN] =
 {
-	{"None", 			ROOM_VNUM_TEMPLE},
-	{"Chester", 	ROOM_VNUM_TEMPLE},
-	{"Geneva",  	ROOM_VNUM_TEMPLE},
-	{"Figueres",	ROOM_VNUM_TEMPLE},
-	{"Venice",		ROOM_VNUM_TEMPLE}
+	{"None", 		ROOM_VNUM_TEMPLE_DEFAULT},
+	{"Chester", 	ROOM_VNUM_TEMPLE_DEFAULT},
+	{"Geneva",  	ROOM_VNUM_TEMPLE_DEFAULT},
+	{"Figueres",	ROOM_VNUM_TEMPLE_DEFAULT},
+	{"Venice",		ROOM_VNUM_TEMPLE_DEFAULT}
 };
 
 const struct cr_abil_type cr_abil_table[10] =
@@ -212,16 +212,16 @@ const struct cdisc_type clandisc_table[MAX_CLAN] =
 
     };
 
-const struct sect_type sect_table[MAX_SECT] =
+struct sect_type sect_table[MAX_SECT] =
 {
     /*  name,       color name,     who entry,  hall room, vamp */
-    {   "",        "",          "",     ROOM_VNUM_ALTAR, FALSE},
-    {   "Vampire",   "{rVampire{x", "{rVam{x",  ROOM_VNUM_ALTAR, TRUE},
-    {   "Sabbat",      "{RSabbat{x",        "{RSab{x",  ROOM_VNUM_ALTAR, TRUE},
-    {   "Independent", "{YIndependent{x",   "{YInd{x",  ROOM_VNUM_ALTAR, TRUE},
-    {   "Immortal",    "{WImmortal{x",  "{WImm{x",  ROOM_VNUM_ALTAR, FALSE},
-    {   "Mage",        "{cMage{x",      "{cMag{x",  ROOM_VNUM_ALTAR, FALSE},
-    {   "Garou",       "{gGarou{x",     "{gGar{x",  ROOM_VNUM_ALTAR, FALSE}
+    {   "",        "",          "",     ROOM_VNUM_ALTAR_DEFAULT, FALSE},
+    {   "Vampire",   "{rVampire{x", "{rVam{x",  ROOM_VNUM_ALTAR_DEFAULT, TRUE},
+    {   "Sabbat",      "{RSabbat{x",        "{RSab{x",  ROOM_VNUM_ALTAR_DEFAULT, TRUE},
+    {   "Independent", "{YIndependent{x",   "{YInd{x",  ROOM_VNUM_ALTAR_DEFAULT, TRUE},
+    {   "Immortal",    "{WImmortal{x",  "{WImm{x",  ROOM_VNUM_ALTAR_DEFAULT, FALSE},
+    {   "Mage",        "{cMage{x",      "{cMag{x",  ROOM_VNUM_ALTAR_DEFAULT, FALSE},
+    {   "Garou",       "{gGarou{x",     "{gGar{x",  ROOM_VNUM_ALTAR_DEFAULT, FALSE}
 };
 
 /* for position */
@@ -1263,7 +1263,7 @@ const   struct  bit_type    bitvector_type  []  =
     {   weapon_type2,   "weapon"    }
 };
 
-const struct    brew_type   brew_table  [MAX_BREW]  =
+struct    brew_type   brew_table  [MAX_BREW]  =
 {
 /*  {   name,       spell number,   min Brewing level,  potion level = 1,
         diff,       {component1,    component2, component3,
@@ -1863,13 +1863,13 @@ const struct    tribe_type  tribe_table []  =
 };
 
 
-const struct crafted_item_type crafted_item_table[] =
+struct crafted_item_type crafted_item_table[] =
 {
     /*  name            type        vnum    skill        skilllvl resource type     component   socket types    best resource*/
 /*  {   "null",         "blank",    0,      0,              0,      0,              {0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0}}, */
-    {   "bowl",         "none",     112,    CSABIL_WOOD,    1,      OBJ_VNUM_BLOCK, {0,0,0,0,0},{0,0,0,0,0},{99,99,99,99,99,99,99,99,99,99}},
-    {   "walkingstick", "equipment",113,    CSABIL_WOOD,    2,      OBJ_VNUM_PLANK, {0,0,0,0,0},{1,2,3,4,5},{OAK,WALNUT,ASH,MAPLE,YEW,99,99,99,99,99}},
-    {   "cross",        "relic",    114,    CSABIL_WOOD,    3,      OBJ_VNUM_BLOCK, {0,0,0,0,0},{1,2,3,4,5},{YEW,OAK,WALNUT,MAPLE,ASH,99,99,99,99,99}},
+    {   "bowl",         "none",     112,    CSABIL_WOOD,    1,      OBJ_VNUM_BLOCK_DEFAULT, {0,0,0,0,0},{0,0,0,0,0},{99,99,99,99,99,99,99,99,99,99}},
+    {   "walkingstick", "equipment",113,    CSABIL_WOOD,    2,      OBJ_VNUM_PLANK_DEFAULT, {0,0,0,0,0},{1,2,3,4,5},{OAK,WALNUT,ASH,MAPLE,YEW,99,99,99,99,99}},
+    {   "cross",        "relic",    114,    CSABIL_WOOD,    3,      OBJ_VNUM_BLOCK_DEFAULT, {0,0,0,0,0},{1,2,3,4,5},{YEW,OAK,WALNUT,MAPLE,ASH,99,99,99,99,99}},
     {   NULL,           NULL,       0,      0,              0,      0,              {0,0,0,0,0},{0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0}}
 };
 

@@ -1155,6 +1155,9 @@ ROOM_INDEX_DATA *find_location( CHAR_DATA *ch, char *arg )
     if ( is_number(arg) )
     return get_room_index( atoi( arg ) );
 
+    if ( !str_cmp( arg, "temple" ) || !str_cmp( arg, "recall" ) )
+    return get_room_index( ROOM_VNUM_TEMPLE );
+
     if ( ( victim = get_char_world( ch, arg ) ) != NULL )
     return victim->in_room;
 

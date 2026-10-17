@@ -1,42 +1,70 @@
 # Haven of The Embraced
 
-Haven of The Embraced (Haven) is a text-based Multi-User Dungeon (MUD) style game, based on the ROM code-base. Haven was created by 'Ugha' and is actively maintained by the HavenMUD team.
+Haven of The Embraced (Haven) is a text-based Multi-User Dungeon (MUD) engine based on the ROM 2.4 / Merc / Diku codebase, set in a World of Darkness environment.
 
-## Compiling
+This repository is organized as a self-contained runtime and development workspace:
+- `src/` — C source files, headers, and `Makefile`
+- `area/` — Sanitized core system areas (`limbo.are` VNUMs `1–99` and `codespecii.are` VNUMs `100–299`)
+- `data/` — Core engine data (`area.lst`, `command.dat`, `config.cfg`, `guild.dat`, `help.dat`, `music.txt`, `quest.dat`, `social.dat`)
+- `player/`, `gods/`, `log/` — Runtime storage directories
+- `docker/` — Docker entrypoint and Windows PowerShell runtime initializer (`initialize-runtime.ps1`)
+- `scripts/` — Server management and optional integration scripts
 
-Haven is written in C and requires gcc or an equivalent C compiler. Compilation is as simple as cloning the repository and invoking:
+See [`VNUM_MIGRATION.md`](VNUM_MIGRATION.md) for the complete reference table mapping legacy world VNUMs to the consolidated `limbo.are` (`1–99`) and `codespecii.are` (`100–299`) system VNUMs.
 
-```bash
-make
+---
+
+## Quick Start with Docker (Windows, macOS, and Linux)
+
+### 1. (Windows Only) Normalize Runtime Files
+If you cloned the repository on Windows with `core.autocrlf` enabled, run the PowerShell initializer once from the repository root to ensure `LF` line endings and verify runtime directories:
+```powershell
+powershell -ExecutionPolicy Bypass -File .\docker\initialize-runtime.ps1
 ```
 
-## Run Haven
-
-Haven of The Embraced will not run without the associated /data and /area files, which were intentionally not provided in this repository. Those files can be recreated using the provided code as a guide for their contents.
-
-
-```bash
-./rom [port] [testrun]
+### 2. Build and Start the Server
+```sh
+docker compose up --build
 ```
-Port: Any port above 1024 is acceptable. If a port is not specified, it defaults to 4000
+Connect your MUD client (e.g. Mudlet, TinTin++, MUSHclient) to **`127.0.0.1:4000`**.
 
-Testrun: This option exists for CI/CD testing purposes. Invoking Haven with option testrun will cause the MUD to boot, complete three game_loops, and shutdown. 
+### 3. Run the Automated Boot Test in Docker
+```sh
+docker compose run --rm --no-deps mud 4000 testrun
+```
 
-## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change. Issues labeled "Low Hanging Fruit" are relatively simple projects, great for someone just getting into MUD coding.
+---
 
-### Procedure
+## Native Linux Build & Execution
 
-1. Fork the repository
-2. Create your Feature Branch 
-    * Descriptive names are encouraged. 
-    * If you are coding a fix to formatting on 'who', a branch called 'whoformat' would be appropriate
-3. Commit your changes to the feature branch
-4. Open a Pull Request
+Install GCC, `make`, `libc6-dev`, and `libcrypt-dev`, then compile and run from `src/`:
+
+```sh
+make -C src new -j2
+cd src
+./rom 4000
+```
+
+To execute the non-interactive boot and 3-loop verification test:
+```sh
+cd src
+./rom 4055 testrun
+```
+
+---
+
+## Environment Variables & Optional Integrations (`.env.template`)
+
+Copy `.env.template` to `.env` (`cp .env.template .env`) if you use optional integrations in `scripts/`:
+- **`RESEND_API_KEY` & `RESEND_FROM_EMAIL`** (used by `scripts/send_email.py`):
+  1. Sign in at <https://resend.com/login> and verify your sending domain at <https://resend.com/domains>.
+  2. Open <https://resend.com/api-keys>, click **Create API Key**, and copy the key (`re_...`) into `.env`.
+- **`DISCORD_TOKEN`** (used by `scripts/discord_bot/bot.py`):
+  1. Open the Discord Developer Portal at <https://discord.com/developers/applications>.
+  2. Select your application → **Bot**, enable **Message Content Intent**, and copy the bot token into `.env`.
+
+---
 
 ## License
-Haven of The Embraced is covered under multiple Licenses. ROM, Diku and MERC licenses apply to code derived from those sources.
 
-Code written by the HavenMUD team are published under [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/legalcode).
-
-In brief, this means that you are free to share, edit, rework, rebuild, and redistribute this code in any fashion, so long as you follow the required licenses. In order to freely do so, you must give appropriate credit for the code (Included attribution headers in source files, a helpfile with attribution, etc) AND you must release your contributions under the same licenses as the code you received.
+Haven of The Embraced is covered under multiple licenses. ROM, Diku, and Merc licenses apply to code derived from those sources. Code written by the HavenMUD team is published under [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/legalcode).

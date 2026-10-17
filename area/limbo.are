@@ -1,0 +1,928 @@
+#AREADATA
+Name Limbo~
+Builders None~
+VNUMs 1 99
+Credits [  0 -   0] Core System Limbo~
+Security 9
+Flags 32
+Lvls 1 100
+Clan 0
+Tax 0
+Infl 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+Relation 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+End
+
+
+
+#MOBILES
+#1
+#MOBFORMAT dynamic
+Name giant rat~
+ShD the giant rat~
+LnD An ugly rat sniffs the air here.
+~
+Desc Boy is this rat ugly!
+~
+Race rodent~
+Act ACH
+Act2 E
+Aff AIJKPRWd
+Align -100
+Group 0
+Level 200
+Hitroll 0
+HitDice 1d1+0
+ManaDice 0d0+0
+DamDice 1d1+0
+DamType scratch
+AcPierce 999
+AcBash 999
+AcSlash 999
+AcExotic 999
+AttrFlags 0
+AbilFlags 0
+OffFlags F
+ImmFlags B
+ResFlags 0
+VulnFlags CDEHa
+StartPos incap
+DefaultPos incap
+Sex male
+Wealth 0
+Form AGHMV
+Parts ABCDEFGHIJKQU
+Size small
+Material unknown~
+MaxLoad -1
+F off H
+End
+#4
+#MOBFORMAT dynamic
+Name szlachta vicissitude ghoul warghoul~
+ShD Szlachta Warghoul~
+LnD Temp desc
+~
+Desc ~
+Race human~
+Act AI
+Act2 E
+Aff 0
+Align 0
+Group 0
+Level 0
+Hitroll 0
+HitDice 0d0+0
+ManaDice 0d0+0
+DamDice 0d0+0
+DamType none
+AcPierce 0
+AcBash 0
+AcSlash 0
+AcExotic 0
+AttrFlags 0
+AbilFlags 0
+OffFlags 0
+ImmFlags 0
+ResFlags 0
+VulnFlags P
+StartPos stand
+DefaultPos stand
+Sex none
+Wealth 0
+Form 0
+Parts 0
+Size medium
+Material unknown~
+MaxLoad -1
+F imm a
+F for AHMV
+F par ABCDEFGHIJK
+End
+#5
+#MOBFORMAT dynamic
+Name vozhd vicissitude ghoul warghoul~
+ShD Vozhd Warghoul~
+LnD Temp desc
+~
+Desc ~
+Race human~
+Act AI
+Act2 E
+Aff 0
+Align 0
+Group 0
+Level 0
+Hitroll 0
+HitDice 0d0+0
+ManaDice 0d0+0
+DamDice 0d0+0
+DamType none
+AcPierce 0
+AcBash 0
+AcSlash 0
+AcExotic 0
+AttrFlags 0
+AbilFlags 0
+OffFlags 0
+ImmFlags 0
+ResFlags 0
+VulnFlags P
+StartPos stand
+DefaultPos stand
+Sex none
+Wealth 0
+Form 0
+Parts 0
+Size medium
+Material unknown~
+MaxLoad -1
+F imm a
+F for AHMV
+F par ABCDEFGHIJK
+End
+#6
+#MOBFORMAT dynamic
+Name Zulo vicissitude ghoul warghoul~
+ShD Zulo Warghoul~
+LnD Temp desc
+~
+Desc ~
+Race human~
+Act AI
+Act2 E
+Aff 0
+Align 0
+Group 0
+Level 0
+Hitroll 0
+HitDice 0d0+0
+ManaDice 0d0+0
+DamDice 0d0+0
+DamType none
+AcPierce 0
+AcBash 0
+AcSlash 0
+AcExotic 0
+AttrFlags 0
+AbilFlags 0
+OffFlags 0
+ImmFlags 0
+ResFlags 0
+VulnFlags P
+StartPos stand
+DefaultPos stand
+Sex none
+Wealth 0
+Form 0
+Parts 0
+Size medium
+Material unknown~
+MaxLoad -1
+F imm a
+F for AHMV
+F par ABCDEFGHIJK
+End
+#22
+#MOBFORMAT dynamic
+Name acquaintance ally allies~
+ShD An ally~
+LnD (no long description)
+~
+Desc ~
+Race human~
+Act ABITc
+Act2 E
+Aff JZc
+Align 0
+Group 0
+Level 1
+Hitroll 20
+HitDice 5d100+100
+ManaDice 0d0+0
+DamDice 5d10+10
+DamType punch
+AcPierce 0
+AcBash 0
+AcSlash 0
+AcExotic 0
+AttrFlags 0
+AbilFlags 0
+OffFlags DFKL
+ImmFlags a
+ResFlags BEM
+VulnFlags P
+StartPos stand
+DefaultPos stand
+Sex none
+Wealth 0
+Form AHMV
+Parts ABCDEFGHIJK
+Size medium
+Material unknown~
+MaxLoad -1
+End
+#23
+#MOBFORMAT dynamic
+Name doppleganger illusion~
+ShD A doppleganger of %s~
+LnD The spitting image of %s stands here.
+~
+Desc ~
+Race spirit~
+Act ABI
+Act2 E
+Aff TU
+Align 0
+Group 0
+Level 0
+Hitroll 0
+HitDice 0d0+0
+ManaDice 0d0+0
+DamDice 0d0+0
+DamType none
+AcPierce 0
+AcBash 0
+AcSlash 0
+AcExotic 0
+AttrFlags 0
+AbilFlags 0
+OffFlags 0
+ImmFlags BILMPQRa
+ResFlags HIJKS
+VulnFlags MO
+StartPos stand
+DefaultPos stand
+Sex none
+Wealth 0
+Form ACHJMV
+Parts ABCDEFGHIJK
+Size medium
+Material unknown~
+MaxLoad 0
+F off F
+F res D
+F vul N
+End
+#27
+#MOBFORMAT dynamic
+Name lone rat animalism~
+ShD a lone rat~
+LnD A lone rat chitters and squeaks about, looking for food.
+~
+Desc Eyes, teeth, and a scaly tail.  Oh, and an appetite too.
+~
+Race rodent~
+Act AI
+Act2 E
+Aff 0
+Align 0
+Group 0
+Level 0
+Hitroll 0
+HitDice 0d0+0
+ManaDice 0d0+0
+DamDice 3d3+0
+DamType bite
+AcPierce 0
+AcBash 0
+AcSlash 0
+AcExotic 0
+AttrFlags 0
+AbilFlags 0
+OffFlags FN
+ImmFlags a
+ResFlags LPQ
+VulnFlags HI
+StartPos stand
+DefaultPos stand
+Sex none
+Wealth 0
+Form AGV
+Parts ACDEFHJKQU
+Size small
+Material unknown~
+MaxLoad -1
+F off H
+M FIGHT 27 50~
+End
+#28
+#MOBFORMAT dynamic
+Name enslaved wraith tortured~
+ShD an enslaved wraith~
+LnD A tortured wraith has been plucked from the Shadowlands, and now must obey a new master.
+~
+Desc Plucked and summonned from the very maw of Oblivion, this wraith has
+traded non-existence for a lifetime of servitude.  Its facial features twist
+and contort in anger, and the wraith strikes out with rage at those nearby. 
+Partially incorporeal, but fueled by a driving Passion, this wretched being
+can be a force to be reckoned with.  
+~
+Race wraith~
+Act AI
+Act2 E
+Aff PUZb
+Align -1000
+Group 0
+Level 1
+Hitroll 20
+HitDice 100d10+10
+ManaDice 0d0+0
+DamDice 5d5+10
+DamType wrath
+AcPierce 0
+AcBash 0
+AcSlash 0
+AcExotic 0
+AttrFlags G
+AbilFlags B
+OffFlags DFL
+ImmFlags BLQRa
+ResFlags DHIK
+VulnFlags MNO
+StartPos stand
+DefaultPos stand
+Sex either
+Wealth 0
+Form CDHILM
+Parts 0
+Size medium
+Material unknown~
+MaxLoad -1
+End
+#29
+#MOBFORMAT dynamic
+Name mortis zombie~
+ShD a mortis zombie~
+LnD A dull eyed walking corpse stumbles around here.
+~
+Desc The zombie stares back at you with blank eyes.
+~
+Race human~
+Act ABIT
+Act2 E
+Aff 0
+Align 0
+Group 0
+Level 50
+Hitroll 20
+HitDice 100d1+100
+ManaDice 100d1+100
+DamDice 10d20+20
+DamType punch
+AcPierce 0
+AcBash 0
+AcSlash 0
+AcExotic 0
+AttrFlags 0
+AbilFlags 0
+OffFlags EJLN
+ImmFlags Ba
+ResFlags 0
+VulnFlags P
+StartPos stand
+DefaultPos stand
+Sex none
+Wealth 0
+Form AHMV
+Parts ABCDEFGHIJK
+Size medium
+Material unknown~
+MaxLoad -1
+End
+#30
+#MOBFORMAT dynamic
+Name shadow servant~
+ShD a Shadow Servant~
+LnD A mass of dark shadow writhes and coalesces into a vaguely humanoid shape.
+~
+Desc The hair on the back of your neck shifts, telling you
+someone or something is watching you. You scan your
+surroundings and see nothing but darkness and shadows.
+Fear sends it's icy fingers up and down your spine as
+you catch slight movement through the corner of your
+eye. You turn to try and find the source and see
+nothing but shadows.... the shadows! A darker spot
+in the shadows shifts and wriths, reaching out to you,
+reaching out to blacken your soul.
+~
+Race shadow~
+Act AI
+Act2 E
+Aff JPTUZc
+Align 0
+Group 0
+Level 1
+Hitroll 20
+HitDice 5d100+100
+ManaDice 0d0+0
+DamDice 5d10+10
+DamType chill
+AcPierce 0
+AcBash 0
+AcSlash 0
+AcExotic 0
+AttrFlags 0
+AbilFlags 0
+OffFlags DKL
+ImmFlags BLMQR
+ResFlags DIK
+VulnFlags HNOSa
+StartPos stand
+DefaultPos stand
+Sex none
+Wealth 0
+Form CDHLM
+Parts 0
+Size medium
+Material unknown~
+MaxLoad -1
+F aff Q
+M FIGHT 30 40~
+End
+#32
+#MOBFORMAT dynamic
+Name homunculus servant flesh hand rotting disembodied~
+ShD A disembodied hand~
+LnD A disembodied, rotting hand is here, moving with a life of it's own.
+~
+Desc ~
+Race undead~
+Act AI
+Act2 E
+Aff 0
+Align 0
+Group 0
+Level 0
+Hitroll 0
+HitDice 0d0+0
+ManaDice 0d0+0
+DamDice 0d0+0
+DamType scratch
+AcPierce 0
+AcBash 0
+AcSlash 0
+AcExotic 0
+AttrFlags 0
+AbilFlags 0
+OffFlags FNV
+ImmFlags IPQRT
+ResFlags I
+VulnFlags E
+StartPos stand
+DefaultPos stand
+Sex none
+Wealth 0
+Form AHI
+Parts FG
+Size small
+Material unknown~
+MaxLoad -1
+F vul N
+F for MV
+F par ABCDEHIJK
+End
+#33
+#MOBFORMAT dynamic
+Name athanatos corpse knight death~
+ShD A Death Knight~
+LnD An avatar of Death itself, a monstrous death knight stands here.
+~
+Desc ~
+Race undead~
+Act ABIT
+Act2 E
+Aff F
+Align 0
+Group 0
+Level 0
+Hitroll 0
+HitDice 0d0+0
+ManaDice 0d0+0
+DamDice 0d0+0
+DamType slash
+AcPierce 0
+AcBash 0
+AcSlash 0
+AcExotic 0
+AttrFlags 0
+AbilFlags 0
+OffFlags CFIKV
+ImmFlags JLPa
+ResFlags EMQ
+VulnFlags HIN
+StartPos stand
+DefaultPos stand
+Sex male
+Wealth 0
+Form AHMV
+Parts ABCDEFGHIJK
+Size large
+Material unknown~
+MaxLoad -1
+F res I
+End
+#0
+
+
+
+#OBJECTS
+#1
+coin silver gcash~
+a silver coin~
+One shiny silver coin.~
+silver~
+0
+money 0 A
+0 0 0 0
+A 0 0 0 0
+0 10 0 P
+#2
+coin gold gcash~
+a gold coin~
+One valuable gold coin.~
+gold~
+0
+money 0 A
+0 0 0 0
+0 A 0 0 0
+0 10 0 P
+#3
+coins gold gcash~
+%d gold coins~
+A pile of gold coins.~
+gold~
+0
+money 0 A
+0 0 0 0
+0 0 0 0 0
+0 10 0 P
+#4
+coins silver gcash~
+%d silver coins~
+A pile of silver coins.~
+silver~
+0
+money 0 A
+0 0 0 0
+0 0 0 0 0
+0 10 0 P
+#5
+coins silver gold gcash~
+%d silver coins and %d gold coins~
+A pile of coins.~
+gold~
+0
+money 0 A
+0 0 0 0
+0 0 0 0 0
+0 10 0 P
+#6
+brew potion~
+a potion~
+A potion lies here.~
+glass~
+0
+potion 0 A
+1 0 0 0
+0 'reserved' 'reserved' 'reserved' 'reserved'
+1 5 100 P
+#7
+mixing pot~
+a mixing pot~
+A large pot meant for mixing herbs is here.~
+pot metal~
+0
+container GWYd A
+3 0 0 0
+80 0 0 22 100
+1 65 1100000 P
+#8
+golden berry berries~
+a bunch of golden berries~
+A large group of golden berries shimmer on the ground here.~
+gold~
+0
+pill 0 A
+1 0 0 0
+40 'heal' 'heal' '' ''
+50 10 0 P
+#9
+skin hide craft~
+a animal skin~
+An animal's skin~
+skin~
+0
+treasure 0 AO
+2 0 0 0
+0 0 0 0 0
+0 1 0 P
+#10
+corpse~
+the corpse of %s~
+The corpse of %s is lying here.~
+meat~
+0
+npc_corpse 0 A
+2 0 0 0
+0 0 0 A 0
+0 1000 0 D
+#11
+corpse~
+the corpse of %s~
+The corpse of %s is lying here.~
+meat~
+0
+pc_corpse O A
+2 0 0 0
+0 0 0 A 0
+0 1000 0 D
+#12
+head~
+the head of %s~
+The severed head of %s is lying here.~
+meat~
+0
+trash 0 A
+1 0 0 0
+0 0 0 0 0
+0 50 0 D
+#13
+heart~
+the heart of %s~
+The torn-out heart of %s is lying here.~
+meat~
+0
+food 0 A
+1 0 0 0
+E E 0 0 0
+0 1 0 D
+#14
+arm~
+the arm of %s~
+The sliced-off arm of %s is lying here.~
+meat~
+0
+food 0 A
+1 0 0 0
+CE CE 0 0 0
+0 50 0 D
+#15
+leg~
+the leg of %s~
+The sliced-off leg of %s is lying here.~
+meat~
+0
+food 0 A
+1 0 0 0
+CE CE 0 0 0
+0 50 0 D
+#16
+guts entrails~
+the guts of %s~
+A steaming pile of %s's entrails is lying here.~
+meat~
+0
+food 0 A
+1 0 0 0
+AC AC 0 A 0
+0 20 0 D
+#17
+brains brain~
+the brains of %s~
+The splattered brains of %s are lying here.~
+meat~
+0
+food 0 A
+1 0 0 0
+BD BD 0 0 0
+0 20 0 D
+#18
+plasm ectoplasm~
+a glob of ectoplasm~
+A shimmering glob of ectoplasm lies here.~
+ectoplasm~
+0
+treasure A AO
+0 0 0 0
+0 0 0 0 0
+1 10 0 P
+#19
+trophy~
+a trophy taken from %s~
+A trophy has been taken from %s.~
+unknown~
+0
+jewelry 0 AO
+1 0 0 0
+0 0 0 0 0
+0 0 0 P
+#20
+mushroom~
+a Magic Mushroom~
+A delicious magic mushroom is here.~
+food~
+0
+food 0 A
+0 0 0 0
+D D 0 0 0
+0 1 0 P
+#21
+eerie ball flame~
+an eerie ball of flame~
+An eerie ball of flame bobs in the air.~
+energy~
+75
+light E A
+1 0 0 0
+0 0 BEF BEF B
+1 0 0 P
+#22
+spring~
+a magical spring~
+A magical spring flows from the ground here.~
+water~
+0
+fountain G 0
+3 0 0 0
+100000 100000 'water' 0 0
+0 5000 0 P
+#23
+disc disk floating black~
+a floating disc~
+A floating black disc hangs in the air.~
+energy~
+0
+container GMPUYZ AQ
+3 0 0 0
+80 E 0 22 100
+1 0 0 P
+#24
+spirit token gift learn quest~
+a golden spirit token~
+A strange token lies on the ground here.~
+unknown~
+0
+trash 0 A
+0 0 0 0
+0 0 0 0 0
+104 1 0 P
+#25
+gate portal~
+a shimmering gate~
+A shimmering black gate rises from the ground, leading to parts unknown.~
+shadow~
+0
+portal GT A
+3 0 0 0
+0 0 0 0 0
+0 17504 0 P
+#26
+single red rose~
+a single red rose~
+A single red rose has been plucked at the height of its beauty.~
+unknown~
+0
+treasure R AN
+1 0 0 0
+0 0 0 0 0
+1 1 100 P
+#29
+empty vial~
+an empty vial~
+A glass vial lies here.~
+glass~
+0
+trash Y AO
+1 0 0 0
+0 0 0 0 0
+1 1 1000 P
+#30
+dummy object~
+a dummy object~
+Dummy object is used for loading non-existent objects~
+~
+0
+trash 0 0
+0 0 0 0
+0 0 0 0 0
+0 0 0 P
+#32
+small glass mirror~
+a small mirror~
+A small, round disk of glass with silver backing reflects all that it sees.~
+glass~
+0
+treasure K AO
+1 0 0 0
+0 0 0 0 0
+1 2 3000 P
+E
+mirror~
+A small piece of glass has been silvered on its backing, providing a
+polished finish.  The reflective surface of the glass reflects the world
+perfectly within its frame, showing the wonders and imperfections alike.
+~
+E
+glass~
+A small piece of glass has been silvered on its backing, providing a
+polished finish.  The reflective surface of the glass reflects the world
+perfectly within its frame, showing wonders and imperfections alike.
+~
+E
+small~
+A small piece of glass has been silvered on its backing, providing a
+polished finish.  The reflective surface of the glass reflects the world
+perfectly within its frame, showing wonders and imperfections alike.
+~
+#35
+Blank paper hand note~
+a blank piece of paper~
+A piece of paper lies here.~
+unknown~
+0
+paper 0 AO
+1 0 0 0
+0 0 0 0 0
+1 0 35 P
+#40
+questobj~
+questobj~
+Questobj~
+nothing~
+0
+trash SY AOP
+0 0 0 0
+0 0 0 0 0
+101 0 0 P
+#50
+wavering rift~
+a wavering rift~
+Reality wavers and bends, parting as a rift between worlds.~
+unknown~
+0
+portal 0 0
+4 0 0 0
+0 0 F 0 0
+1 0 0 P
+#0
+
+
+
+#ROOMS
+#1
+The Void~
+You float in an endless void of nothingness.
+~
+0 12 1
+S
+#2
+Limbo~
+You are floating in a formless void, detached from all sensation of physical
+matter, surrounded by swirling glowing light which fades into the relative
+darkness around you without any trace of edges or shadow.
+~
+0 12 1
+D4
+~
+~
+0 -1 101
+S
+#0
+
+
+
+#SPECIALS
+S
+
+
+
+#RESETS
+S
+
+
+
+#SHOPS
+0
+
+
+
+#MPCODE
+#27
+Rats Attack~
+mob echo {UWith a mighty ferocity, $I scurries and attacks!{x
+~
+#30
+Shadow Servant Fighting~
+mob echo {SUndulating wildly, $I lashes out with a pair of {Dshadowy tendrils{S!{x
+mob cast 'chill touch' $n
+mob cast 'chill touch' $n
+~
+#0
+
+#OPCODE
+#0
+
+#RPCODE
+#0
+
+#$

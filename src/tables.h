@@ -207,8 +207,8 @@ struct mob_group_type
 
 /* game tables */
 extern  const   struct cdisc_type clandisc_table[MAX_CLAN];
-extern  const   struct  sect_type   sect_table[MAX_SECT];
-extern  const   struct  brew_type   brew_table[MAX_BREW];
+extern          struct  sect_type   sect_table[MAX_SECT];
+extern          struct  brew_type   brew_table[MAX_BREW];
 extern  const   struct  position_type   position_table[];
 extern  const   struct  name_type    sex_table[];
 extern  const   struct  name_type   size_table[];
@@ -219,7 +219,7 @@ extern  const   struct  name_type ability_table[30];
 extern  const   struct  cs_type2    sec_abil_table[30];
 extern  const   struct  name_type attribute_table[9];
 extern  const   struct  garou_form_type garou_form_table[6];
-extern  const   struct  crafted_item_type   crafted_item_table[];
+extern          struct  crafted_item_type   crafted_item_table[];
 extern  const   struct  gift_type   gift_table  [MAX_GIFTS_CODED];
 extern  const   struct  name_type   disc_table  [MAX_DISC];
 extern  const   struct  name_type   sphere_table [MAX_SPHERE+1];
@@ -227,7 +227,7 @@ extern  const   struct  csback_type csback_table    [MAX_CSBACK];
 extern  const   struct  cr_abil_type    cr_abil_table   [10];
 extern  const   struct  cr_attribute_type   cr_attribute_table  [10];
 extern  const   struct  template_type   template_table[];
-extern 	const 	struct 	hometown_type 		hometown_table  [MAX_HOMETOWN];
+extern          struct  hometown_type       hometown_table  [MAX_HOMETOWN];
 extern  const   struct  name_type    dir_table[];
 extern  const   struct  mob_group_type  mob_group_table[];
 /* flag tables */

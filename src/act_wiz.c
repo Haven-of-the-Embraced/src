@@ -261,10 +261,10 @@ void do_tlookup(CHAR_DATA *ch, char *argument)
                     
                     "Name", crafted_item_table[i].name,
                     "Type", crafted_item_table[i].type,
-                    "VNUM", crafted_item_table[i].vnum, pObjIndex->short_descr,
+                    "VNUM", crafted_item_table[i].vnum, pObjIndex != NULL ? pObjIndex->short_descr : "missing",
                     "Skill", sec_abil_table[crafted_item_table[i].skill].name,
                     "Level", crafted_item_table[i].lvl,
-                    "Resource Type", crafted_item_table[i].resource_type, pObjIndex2->short_descr,
+                    "Resource Type", crafted_item_table[i].resource_type, pObjIndex2 != NULL ? pObjIndex2->short_descr : "missing",
                     "Components", crafted_item_table[i].comp[0],crafted_item_table[i].comp[1],crafted_item_table[i].comp[2],crafted_item_table[i].comp[3],crafted_item_table[i].comp[4],
                     "Socket Types", crafted_item_table[i].socket[0],crafted_item_table[i].socket[1],crafted_item_table[i].socket[2],crafted_item_table[i].socket[3],crafted_item_table[i].socket[4],
                     "Best Resource", crafted_item_table[i].best[0],crafted_item_table[i].best[1],crafted_item_table[i].best[2],crafted_item_table[i].best[3],crafted_item_table[i].best[4],crafted_item_table[i].best[5],crafted_item_table[i].best[6],crafted_item_table[i].best[7],crafted_item_table[i].best[8],crafted_item_table[i].best[9]);
@@ -1154,6 +1154,9 @@ ROOM_INDEX_DATA *find_location( CHAR_DATA *ch, char *arg )
 
     if ( is_number(arg) )
     return get_room_index( atoi( arg ) );
+
+    if ( !str_cmp( arg, "temple" ) || !str_cmp( arg, "recall" ) )
+    return get_room_index( ROOM_VNUM_TEMPLE );
 
     if ( ( victim = get_char_world( ch, arg ) ) != NULL )
     return victim->in_room;

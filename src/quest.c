@@ -681,27 +681,27 @@ is last field is a part of the char_data to be modified */
 const struct reward_type reward_table[]=
 {
 
-  { "Mystical Orb","mystical orb",   2000, TRUE,  6617,    0},
-  { "Emblem of Power",        "emblem power", 2500, TRUE,  6618,    0},
-  { "Tabard of Ancient Mysteries", "tabard ancient mysteries", 3000, TRUE,  6601,  0},
-  { "a Spirit Guide",     "spirit guide",     3500, TRUE,  6602,  0},
-  { "an Umbral Pouch","umbral pouch",  4000, TRUE,  6603,    0},
-  { "Arm Bands of Purity",        "arm band purity", 4000, TRUE,  6604,    0},
-  { "a Status Ring", "status ring", 4500, TRUE,  6605,  0},
-  { "Earrings of Darkness",     "earrings darkness",     5000, TRUE,  6615,  0},
-  { "Shield of the Avenging Angel","shield avenging angel",   5000, TRUE,  6606,    0},
-  { "Bracer of Willpower",        "bracer willpower", 5500, TRUE,  6607,    0},
-  { "Rerebrace of Frenzy", "rerebrace frenzy", 5500, TRUE,  6608,  0},
-  { "Gauntlets of Antiquity",     "gauntlets antiquity",    6000, TRUE,  6614,  0},
-  { "Face of the Beast","face beast",   6500, TRUE,  6609,    0},
-  { "Sandals of the Prophet",        "sandals prophet", 7000, TRUE,  6610,    0},
-  { "Greaves of Stamina", "greaves stamina",7500, TRUE, 6611,  0},
-  { "Cloak of Subterfuge",     "cloak subterfuge",    8600, TRUE,  6612,  0},
-  { "Mask of the Damned","mask damned",  9000, TRUE,  6616,    0},
-  { "Archonian Plate",        "archonian plate", 9500, TRUE,  6613,    0},
-  { "a potion of Escape to a True Friend", "escape true friend", 250, TRUE, 30432, 0},
-  { "an XP Boost Potion", "potion experience boost xp", 500, TRUE, 1103, 0},
-  { "the Godly Potion of Mana", "mana", 250, TRUE, 3099, 0},
+  { "Mystical Orb","mystical orb",   2000, TRUE,  166,    0},
+  { "Emblem of Power",        "emblem power", 2500, TRUE,  167,    0},
+  { "Tabard of Ancient Mysteries", "tabard ancient mysteries", 3000, TRUE,  150,  0},
+  { "a Spirit Guide",     "spirit guide",     3500, TRUE,  151,  0},
+  { "an Umbral Pouch","umbral pouch",  4000, TRUE,  152,    0},
+  { "Arm Bands of Purity",        "arm band purity", 4000, TRUE,  153,    0},
+  { "a Status Ring", "status ring", 4500, TRUE,  154,  0},
+  { "Earrings of Darkness",     "earrings darkness",     5000, TRUE,  164,  0},
+  { "Shield of the Avenging Angel","shield avenging angel",   5000, TRUE,  155,    0},
+  { "Bracer of Willpower",        "bracer willpower", 5500, TRUE,  156,    0},
+  { "Rerebrace of Frenzy", "rerebrace frenzy", 5500, TRUE,  157,  0},
+  { "Gauntlets of Antiquity",     "gauntlets antiquity",    6000, TRUE,  163,  0},
+  { "Face of the Beast","face beast",   6500, TRUE,  158,    0},
+  { "Sandals of the Prophet",        "sandals prophet", 7000, TRUE,  159,    0},
+  { "Greaves of Stamina", "greaves stamina",7500, TRUE, 160,  0},
+  { "Cloak of Subterfuge",     "cloak subterfuge",    8600, TRUE,  161,  0},
+  { "Mask of the Damned","mask damned",  9000, TRUE,  165,    0},
+  { "Archonian Plate",        "archonian plate", 9500, TRUE,  162,    0},
+  { "a potion of Escape to a True Friend", "escape true friend", 250, TRUE, 168, 0},
+  { "an XP Boost Potion", "potion experience boost xp", 500, TRUE, 169, 0},
+  { "the Godly Potion of Mana", "mana", 250, TRUE, 170, 0},
   { "One Freebie",      "freebie",      3500, FALSE, 1, &ch->freebie},
 
 
@@ -894,6 +894,10 @@ const struct reward_type reward_table[]=
 }
     if (!strcmp(arg1, "list"))
     {
+    static const int prod_reward_vnums[] = {
+        6617, 6618, 6601, 6602, 6603, 6604, 6605, 6615, 6606, 6607, 6608,
+        6614, 6609, 6610, 6611, 6612, 6616, 6613, 30432, 1103, 3099
+    };
     send_to_char("You ask the Immortals for a list of quest items.\n\r", ch);
     send_to_char("Current Quest Items available for Purchase:\n\r", ch);
     if(reward_table[0].name == NULL)
@@ -901,6 +905,11 @@ const struct reward_type reward_table[]=
     else {
     send_to_char("  {w[{WCost{w]     [{CName{w]\n\r",ch);
     for(i=0;reward_table[i].name != NULL;i++) {
+          int rvnum = reward_table[i].value;
+          if (reward_table[i].object && i < 21 && get_obj_index(prod_reward_vnums[i]) != NULL)
+              rvnum = prod_reward_vnums[i];
+          if (reward_table[i].object && get_obj_index(rvnum) == NULL)
+              continue;
           sprintf(buf,"   {W%-4d{w       {c%s{w\n\r"
             ,reward_table[i].cost,reward_table[i].name);
           send_to_char(buf, ch);
@@ -912,6 +921,10 @@ const struct reward_type reward_table[]=
 
     else if (!strcmp(arg1, "buy"))
     {
+    static const int prod_reward_vnums[] = {
+        6617, 6618, 6601, 6602, 6603, 6604, 6605, 6615, 6606, 6607, 6608,
+        6614, 6609, 6610, 6611, 6612, 6616, 6613, 30432, 1103, 3099
+    };
     bool found=FALSE;
     if (arg2[0] == '\0')
     {
@@ -926,11 +939,23 @@ const struct reward_type reward_table[]=
     { found = TRUE;
         if (ch->qpoints >= reward_table[i].cost)
         {
-        gain_qp(ch, -reward_table[i].cost);
-        if(reward_table[i].object)
-                obj = create_object(get_obj_index(reward_table[i].value),ch->level);
+        if (reward_table[i].object)
+        {
+            int rvnum = reward_table[i].value;
+            if (i < 21 && get_obj_index(prod_reward_vnums[i]) != NULL)
+                rvnum = prod_reward_vnums[i];
+            if (get_obj_index(rvnum) == NULL
+                || (obj = create_object(get_obj_index(rvnum), ch->level)) == NULL)
+            {
+                bug("do_qwest buy: missing reward object vnum %d.", rvnum);
+                send_to_char("That reward is currently unavailable.\n\r", ch);
+                return;
+            }
+            gain_qp(ch, -reward_table[i].cost);
+        }
         else
            {
+           gain_qp(ch, -reward_table[i].cost);
            sprintf(buf,"In exchange for %d quest points, the Immortals give you %s.\n\r",
             reward_table[i].cost, reward_table[i].name );
            send_to_char(buf, ch);

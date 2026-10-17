@@ -349,6 +349,54 @@ int xpstat; //Sets the milestone status for firing double xp
 /* config file (config.cfg in the area directory) */
 CONFIG_DATA     *config;
 
+/* Configurable system VNUMs (default to limbo.are / codespecii.are) */
+int room_vnum_chat          = ROOM_VNUM_CHAT_DEFAULT;
+int room_vnum_temple        = ROOM_VNUM_TEMPLE_DEFAULT;
+int room_vnum_altar         = ROOM_VNUM_ALTAR_DEFAULT;
+int room_vnum_donate        = ROOM_VNUM_DONATE_DEFAULT;
+int room_vnum_school        = ROOM_VNUM_SCHOOL_DEFAULT;
+int room_vnum_balance       = ROOM_VNUM_BALANCE_DEFAULT;
+int room_vnum_circle        = ROOM_VNUM_CIRCLE_DEFAULT;
+int room_vnum_demise        = ROOM_VNUM_DEMISE_DEFAULT;
+int room_vnum_honor         = ROOM_VNUM_HONOR_DEFAULT;
+int room_vnum_paradox       = ROOM_VNUM_PARADOX_DEFAULT;
+int room_vnum_prelude       = ROOM_VNUM_PRELUDE_DEFAULT;
+
+int hometown_chester        = 0;
+int hometown_geneva         = 0;
+int hometown_figueres       = 0;
+int hometown_venice         = 0;
+
+int obj_vnum_pit            = OBJ_VNUM_PIT_DEFAULT;
+int obj_vnum_school_mace    = OBJ_VNUM_SCHOOL_MACE_DEFAULT;
+int obj_vnum_school_dagger  = OBJ_VNUM_SCHOOL_DAGGER_DEFAULT;
+int obj_vnum_school_sword   = OBJ_VNUM_SCHOOL_SWORD_DEFAULT;
+int obj_vnum_school_spear   = OBJ_VNUM_SCHOOL_SPEAR_DEFAULT;
+int obj_vnum_school_staff   = OBJ_VNUM_SCHOOL_STAFF_DEFAULT;
+int obj_vnum_school_axe     = OBJ_VNUM_SCHOOL_AXE_DEFAULT;
+int obj_vnum_school_flail   = OBJ_VNUM_SCHOOL_FLAIL_DEFAULT;
+int obj_vnum_school_whip    = OBJ_VNUM_SCHOOL_WHIP_DEFAULT;
+int obj_vnum_school_polearm = OBJ_VNUM_SCHOOL_POLEARM_DEFAULT;
+int obj_vnum_school_lance   = OBJ_VNUM_SCHOOL_LANCE_DEFAULT;
+int obj_vnum_school_vest    = OBJ_VNUM_SCHOOL_VEST_DEFAULT;
+int obj_vnum_school_shield  = OBJ_VNUM_SCHOOL_SHIELD_DEFAULT;
+int obj_vnum_school_banner  = OBJ_VNUM_SCHOOL_BANNER_DEFAULT;
+int obj_vnum_map            = OBJ_VNUM_MAP_DEFAULT;
+int obj_vnum_guide          = OBJ_VNUM_GUIDE_DEFAULT;
+int obj_vnum_tome           = OBJ_VNUM_TOME_DEFAULT;
+int obj_vnum_tree           = OBJ_VNUM_TREE_DEFAULT;
+int obj_vnum_vein           = OBJ_VNUM_VEIN_DEFAULT;
+int obj_vnum_plank          = OBJ_VNUM_PLANK_DEFAULT;
+int obj_vnum_block          = OBJ_VNUM_BLOCK_DEFAULT;
+int obj_vnum_bandage        = OBJ_VNUM_BANDAGE_DEFAULT;
+int obj_vnum_tass_mushroom  = OBJ_VNUM_TASS_MUSHROOM_DEFAULT;
+
+int mob_vnum_cityguard      = MOB_VNUM_CITYGUARD_DEFAULT;
+int mob_vnum_fido           = MOB_VNUM_FIDO_DEFAULT;
+int mob_vnum_patrolman      = MOB_VNUM_PATROLMAN_DEFAULT;
+int group_vnum_trolls       = GROUP_VNUM_TROLLS_DEFAULT;
+int group_vnum_ogres        = GROUP_VNUM_OGRES_DEFAULT;
+
 
 /*
  * OS-dependent local functions.
@@ -2409,15 +2457,16 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
                     send_to_char( "\n\r{bC{ro{yl{co{mu{gr{x is now {rON{x, Way Cool!\n\r\n\r", ch );
                     break;
     case 'n': case 'N':
+                    REMOVE_BIT( ch->act, PLR_COLOUR );
                     break;
     default:
             write_to_buffer( d, "\n\rThat is not a valid choice.\n\rPlease choose [Y]es or [N]o: ", 0 );
         return;
     }
 
-        write_to_buffer( d, "{CWhat is your character's sex?{x\n\r", 0 );
-        write_to_buffer( d, "{W(This determines your pronouns and presentation. It has no effect on stats.){x\n\r", 0 );
-        write_to_buffer( d, "{CPlease enter [M]ale or [F]emale: {x", 0 );
+        send_to_char( "{CWhat is your character's sex?{x\n\r", ch );
+        send_to_char( "{W(This determines your pronouns and presentation. It has no effect on stats.){x\n\r", ch );
+        send_to_char( "{CPlease enter [M]ale or [F]emale: {x", ch );
         d->connected = CON_GET_NEW_SEX;
         break;
 
@@ -2432,7 +2481,7 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
                 ch->pcdata->true_sex = SEX_FEMALE;
                 break;
     default:
-        write_to_buffer( d, "{RThat is not a valid choice.{x\n\r{CWhat is your character's sex? [M/F]: {x", 0 );
+        send_to_char( "{RThat is not a valid choice.{x\n\r{CWhat is your character's sex? [M/F]: {x", ch );
         return;
     }
 
@@ -2442,27 +2491,27 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
     log_string( log_buf);
 
 
-    write_to_buffer(d,"{YArchetypes define your mortal background before you entered the World of Darkness.{x\n\r",0);
-    write_to_buffer(d,"{YMechanically, this assigns your starting Attributes and Abilities. Later, you{x\n\r",0);
-    write_to_buffer(d,"{Ywill receive 15 'Freebie' points to further customize your character's stats.{x\n\r\n\r",0);
+    send_to_char("{YArchetypes define your mortal background before you entered the World of Darkness.{x\n\r", ch);
+    send_to_char("{YMechanically, this assigns your starting Attributes and Abilities. Later, you{x\n\r", ch);
+    send_to_char("{Ywill receive 15 'Freebie' points to further customize your character's stats.{x\n\r\n\r", ch);
 
-    write_to_buffer(d,"{WAlternatively, you may skip this step to build a completely custom sheet in-game.{x\n\r", 0);
-    write_to_buffer(d,"{R*WARNING* You will have NO SKILLS until you type 'create' within the game.{x\n\r", 0);
+    send_to_char("{WAlternatively, you may skip this step to build a completely custom sheet in-game.{x\n\r", ch);
+    send_to_char("{R*WARNING* You will have NO SKILLS until you type 'create' within the game.{x\n\r", ch);
 
-    write_to_buffer(d,"\n\r{CAvailable Archetypes:{x\n\r\n\r",0);
-    write_to_buffer(d,"{G[0] Knight{x        - Chivalric warrior, swordplay and mounted combat (Focuses on Strength and Melee)\n\r",0);
-    write_to_buffer(d,"{G[1] Man-at-Arms{x   - Professional soldier, a master of all weapons (Focuses on Dexterity and Melee)\n\r",0);
-    write_to_buffer(d,"{G[2] Hunter{x        - Wilderness predator, archery and tracking (Focuses on Perception and Survival)\n\r",0);
-    write_to_buffer(d,"{G[3] Outlaw{x        - Brigand and ambush fighter, strikes from the shadows (Focuses on Dexterity and Stealth)\n\r",0);
-    write_to_buffer(d,"{G[4] Berserker{x     - Frenzied brawler, overwhelms foes with raw fury (Focuses on Stamina and Brawl)\n\r",0);
-    write_to_buffer(d,"{G[5] Ranger{x        - Balanced scout, skilled with bow and blade (Focuses on Wits and Alertness)\n\r",0);
-    write_to_buffer(d,"{G[6] Inquisitor{x    - Zealot warrior-priest, faith tempered in steel (Focuses on Charisma and Occult)\n\r",0);
-    write_to_buffer(d,"{G[7] Assassin{x      - Precision killer, stealth and lethality (Focuses on Dexterity and Melee)\n\r",0);
-    write_to_buffer(d,"{G[8] Witch-Hunter{x  - Occult-aware combatant, slayer of monsters (Focuses on Intelligence and Occult)\n\r",0);
-    write_to_buffer(d,"{G[9] Hedge Wizard{x  - Folk sorcerer with survival instincts (Focuses on Intelligence and Enigmas)\n\r\n\r",0);
+    send_to_char("\n\r{CAvailable Archetypes:{x\n\r\n\r", ch);
+    send_to_char("{G[0] Knight{x        - Chivalric warrior, swordplay and mounted combat (Focuses on Strength and Melee)\n\r", ch);
+    send_to_char("{G[1] Man-at-Arms{x   - Professional soldier, a master of all weapons (Focuses on Dexterity and Melee)\n\r", ch);
+    send_to_char("{G[2] Hunter{x        - Wilderness predator, archery and tracking (Focuses on Perception and Survival)\n\r", ch);
+    send_to_char("{G[3] Outlaw{x        - Brigand and ambush fighter, strikes from the shadows (Focuses on Dexterity and Stealth)\n\r", ch);
+    send_to_char("{G[4] Berserker{x     - Frenzied brawler, overwhelms foes with raw fury (Focuses on Stamina and Brawl)\n\r", ch);
+    send_to_char("{G[5] Ranger{x        - Balanced scout, skilled with bow and blade (Focuses on Wits and Alertness)\n\r", ch);
+    send_to_char("{G[6] Inquisitor{x    - Zealot warrior-priest, faith tempered in steel (Focuses on Charisma and Occult)\n\r", ch);
+    send_to_char("{G[7] Assassin{x      - Precision killer, stealth and lethality (Focuses on Dexterity and Melee)\n\r", ch);
+    send_to_char("{G[8] Witch-Hunter{x  - Occult-aware combatant, slayer of monsters (Focuses on Intelligence and Occult)\n\r", ch);
+    send_to_char("{G[9] Hedge Wizard{x  - Folk sorcerer with survival instincts (Focuses on Intelligence and Enigmas)\n\r\n\r", ch);
 
-    write_to_buffer(d,"{CPlease select the number of the archetype that best fits your Character.{x\n\r",0);
-    write_to_buffer(d,"{COr, enter 'CUSTOM' to skip this step and create a custom sheet later:{x\n\r",0);
+    send_to_char("{CPlease select the number of the archetype that best fits your Character.{x\n\r", ch);
+    send_to_char("{COr, enter 'CUSTOM' to skip this step and create a custom sheet later:{x\n\r", ch);
     d->connected = CON_PICK_CHILDHOOD;
     break;
 
@@ -2472,48 +2521,47 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
     else {
         if (!str_cmp(argument, "custom"))
             {
-                write_to_buffer(d,"\n\r{C======================================================================{x\n\r",0);
-                write_to_buffer(d,"{YYou have chosen a CUSTOM starting sheet.{x\n\r",0);
-                write_to_buffer(d,"{RCRITICAL INSTRUCTION:{W When you enter the game, you will have 0 in all stats.{x\n\r",0);
-                write_to_buffer(d,"{WYou MUST type {Y'create'{W to open the interactive character builder!{x\n\r",0);
-                write_to_buffer(d,"{WThis menu will walk you through assigning your Attributes, Abilities,{x\n\r",0);
-                write_to_buffer(d,"{WBackgrounds, and Freebie points manually.{x\n\r",0);
-                write_to_buffer(d,"{C======================================================================{x\n\r",0);
-                write_to_buffer(d,"\n\r{YHaven of the Embraced is focused on Vampires, but you may choose to start the{x\n\r",0);
-                write_to_buffer(d,"{Ygame as a human, if you wish.{x\n\r\n\r",0);
-                write_to_buffer(d,"{R[Vampire]:{x You are one of the Kindred, Embraced into undeath. You must manage\n\r",0);
-                write_to_buffer(d,"your Blood Pool, master Disciplines, and navigate the politics of the Camarilla/Sabbat.\n\r",0);
-                write_to_buffer(d,"Vampires are far more powerful at creation over humans, and are highly recommended\n\r",0);
-                write_to_buffer(d,"as your starting race if you are new to Haven of the Embraced. The added survivability\n\r",0);
-                write_to_buffer(d,"allows you to explore more easily, learning the MUD at a better pace.\n\r\n\r",0);
-                write_to_buffer(d,"{G[Human]:{x You walk the mortal path. Through remort, you may Awaken as a Mage\n\r",0);
-                write_to_buffer(d,"or undergo the First Change to become Garou (Werewolf) upon reaching level 100.\n\r\n\r",0);
+                send_to_char("\n\r{C======================================================================{x\n\r", ch);
+                send_to_char("{YYou have chosen a CUSTOM starting sheet.{x\n\r", ch);
+                send_to_char("{RCRITICAL INSTRUCTION:{W When you enter the game, you will have 0 in all stats.{x\n\r", ch);
+                send_to_char("{WYou MUST type {Y'create'{W to open the interactive character builder!{x\n\r", ch);
+                send_to_char("{WThis menu will walk you through assigning your Attributes, Abilities,{x\n\r", ch);
+                send_to_char("{WBackgrounds, and Freebie points manually.{x\n\r", ch);
+                send_to_char("{C======================================================================{x\n\r", ch);
+                send_to_char("\n\r{YHaven of the Embraced is focused on Vampires, but you may choose to start the{x\n\r", ch);
+                send_to_char("{Ygame as a human, if you wish.{x\n\r\n\r", ch);
+                send_to_char("{R[Vampire]:{x You are one of the Kindred, Embraced into undeath. You must manage\n\r", ch);
+                send_to_char("your Blood Pool, master Disciplines, and navigate the politics of the Camarilla/Sabbat.\n\r", ch);
+                send_to_char("Vampires are far more powerful at creation over humans, and are highly recommended\n\r", ch);
+                send_to_char("as your starting race if you are new to Haven of the Embraced. The added survivability\n\r", ch);
+                send_to_char("allows you to explore more easily, learning the MUD at a better pace.\n\r\n\r", ch);
+                send_to_char("{G[Human]:{x You walk the mortal path. Through remort, you may Awaken as a Mage\n\r", ch);
+                send_to_char("or undergo the First Change to become Garou (Werewolf) upon reaching level 100.\n\r\n\r", ch);
 
-                write_to_buffer(d,"{CDo you wish to start the game as a Vampire (Recommended): [Y/N]? {x",0);
+                send_to_char("{CDo you wish to start the game as a Vampire (Recommended): [Y/N]? {x", ch);
 
                 d->connected = CON_CHOICE_VAMP;
                 ch->pcdata->progress = 0;
                 break;
-
-            } else
-                num = 99;
+            }
+            num = -1;
         }
     if(num < 0 || num > 9)
     {
-        write_to_buffer(d,"{RThat is not a valid choice.{x\n\r\n\r",0);
-        write_to_buffer(d,"\n\r{CAvailable Archetypes:{x\n\r\n\r",0);
-        write_to_buffer(d,"{G[0] Knight{x        - Chivalric warrior, swordplay and mounted combat (Focuses on Strength and Melee)\n\r",0);
-        write_to_buffer(d,"{G[1] Man-at-Arms{x   - Professional soldier, a master of all weapons (Focuses on Dexterity and Melee)\n\r",0);
-        write_to_buffer(d,"{G[2] Hunter{x        - Wilderness predator, archery and tracking (Focuses on Perception and Survival)\n\r",0);
-        write_to_buffer(d,"{G[3] Outlaw{x        - Brigand and ambush fighter, strikes from the shadows (Focuses on Dexterity and Stealth)\n\r",0);
-        write_to_buffer(d,"{G[4] Berserker{x     - Frenzied brawler, overwhelms foes with raw fury (Focuses on Stamina and Brawl)\n\r",0);
-        write_to_buffer(d,"{G[5] Ranger{x        - Balanced scout, skilled with bow and blade (Focuses on Wits and Alertness)\n\r",0);
-        write_to_buffer(d,"{G[6] Inquisitor{x    - Zealot warrior-priest, faith tempered in steel (Focuses on Charisma and Occult)\n\r",0);
-        write_to_buffer(d,"{G[7] Assassin{x      - Precision killer, stealth and lethality (Focuses on Dexterity and Melee)\n\r",0);
-        write_to_buffer(d,"{G[8] Witch-Hunter{x  - Occult-aware combatant, slayer of monsters (Focuses on Intelligence and Occult)\n\r",0);
-        write_to_buffer(d,"{G[9] Hedge Wizard{x  - Folk sorcerer with survival instincts (Focuses on Intelligence and Enigmas)\n\r\n\r",0);
-        write_to_buffer(d,"{CPlease select the number of the archetype that best fits your Character.{x\n\r",0);
-        write_to_buffer(d,"{COr, enter 'CUSTOM' to skip this step and create a custom sheet later:{x\n\r",0);
+        send_to_char("{RThat is not a valid choice.{x\n\r\n\r", ch);
+        send_to_char("\n\r{CAvailable Archetypes:{x\n\r\n\r", ch);
+        send_to_char("{G[0] Knight{x        - Chivalric warrior, swordplay and mounted combat (Focuses on Strength and Melee)\n\r", ch);
+        send_to_char("{G[1] Man-at-Arms{x   - Professional soldier, a master of all weapons (Focuses on Dexterity and Melee)\n\r", ch);
+        send_to_char("{G[2] Hunter{x        - Wilderness predator, archery and tracking (Focuses on Perception and Survival)\n\r", ch);
+        send_to_char("{G[3] Outlaw{x        - Brigand and ambush fighter, strikes from the shadows (Focuses on Dexterity and Stealth)\n\r", ch);
+        send_to_char("{G[4] Berserker{x     - Frenzied brawler, overwhelms foes with raw fury (Focuses on Stamina and Brawl)\n\r", ch);
+        send_to_char("{G[5] Ranger{x        - Balanced scout, skilled with bow and blade (Focuses on Wits and Alertness)\n\r", ch);
+        send_to_char("{G[6] Inquisitor{x    - Zealot warrior-priest, faith tempered in steel (Focuses on Charisma and Occult)\n\r", ch);
+        send_to_char("{G[7] Assassin{x      - Precision killer, stealth and lethality (Focuses on Dexterity and Melee)\n\r", ch);
+        send_to_char("{G[8] Witch-Hunter{x  - Occult-aware combatant, slayer of monsters (Focuses on Intelligence and Occult)\n\r", ch);
+        send_to_char("{G[9] Hedge Wizard{x  - Folk sorcerer with survival instincts (Focuses on Intelligence and Enigmas)\n\r\n\r", ch);
+        send_to_char("{CPlease select the number of the archetype that best fits your Character.{x\n\r", ch);
+        send_to_char("{COr, enter 'CUSTOM' to skip this step and create a custom sheet later:{x\n\r", ch);
         d->connected = CON_PICK_CHILDHOOD;
         break;
     }
@@ -2554,36 +2602,31 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
         }
     }
     ch->pcdata->progress = 8;
-    write_to_buffer(d,"\n\r{C======================================================================{x\n\r",0);
-    write_to_buffer(d,"{YArchetype selected! Your base Attributes and Abilities have been set.{x\n\r",0);
-    write_to_buffer(d,"{YYou have also been granted 5 'Background' points to spend in-game on{x\n\r",0);
-    write_to_buffer(d,"{Ytraits like Generation, Resources, or Retainers. Afterwards, you may{x\n\r",0);
-    write_to_buffer(d,"{Yuse the 'freebie' command to spend 15 freebie points to further customize{x\n\r",0);
-    write_to_buffer(d,"{Yyour character's stats.{x\n\r", 0);
-    write_to_buffer(d,"{C======================================================================{x\n\r",0);
+    send_to_char("\n\r{c======================================================================{x\n\r", ch);
+    send_to_char("{yArchetype selected! Your base Attributes and Abilities have been set.{x\n\r", ch);
+    send_to_char("{yYou have also been granted 5 'Background' points to spend in-game on{x\n\r", ch);
+    send_to_char("{ytraits like Generation, Resources, or Retainers. Afterwards, you may{x\n\r", ch);
+    send_to_char("{yuse the 'freebie' command to spend 15 freebie points to further customize{x\n\r", ch);
+    send_to_char("{yyour character's stats.{x\n\r\n\r", ch);
+    send_to_char("{rRecommended:{w Type '{chelp weapon_skills{w' - choose a weapon proficiency\n\r", ch);
+    send_to_char("and invest 2-3 points into it via the '{cfreebie{w' command.{x\n\r", ch);
+    send_to_char("{c======================================================================{x\n\r", ch);
     ch->csmax_willpower = ch->pcdata->csvirtues[COURAGE];
     ch->pcdata->cshumanity = ch->pcdata->csvirtues[CONSCIENCE]+ch->pcdata->csvirtues[SELF_CONTROL];
     ch->cswillpower = ch->csmax_willpower;
     ch->dpoints = 5;
 
-                write_to_buffer(d,"\n\r{C======================================================================{x\n\r",0);
-                write_to_buffer(d,"{YYou have chosen a CUSTOM starting sheet.{x\n\r",0);
-                write_to_buffer(d,"{RCRITICAL INSTRUCTION:{W When you enter the game, you will have 0 in all stats.{x\n\r",0);
-                write_to_buffer(d,"{WYou MUST type {Y'create'{W to open the interactive character builder!{x\n\r",0);
-                write_to_buffer(d,"{WThis menu will walk you through assigning your Attributes, Abilities,{x\n\r",0);
-                write_to_buffer(d,"{WBackgrounds, and Freebie points manually.{x\n\r",0);
-                write_to_buffer(d,"{C======================================================================{x\n\r",0);
-    write_to_buffer(d,"\n\r{YHaven of the Embraced is focused on Vampires, but you may choose to start the{x\n\r",0);
-    write_to_buffer(d,"{Ygame as a human, if you wish.{x\n\r\n\r",0);
-    write_to_buffer(d,"{R[Vampire]:{x You are one of the Kindred, Embraced into undeath. You must manage\n\r",0);
-    write_to_buffer(d,"your Blood Pool, master Disciplines, and navigate the politics of the Camarilla/Sabbat.\n\r",0);
-    write_to_buffer(d,"Vampires are far more powerful at creation over humans, and are highly recommended\n\r",0);
-    write_to_buffer(d,"as your starting race if you are new to Haven of the Embraced. The added survivability\n\r",0);
-    write_to_buffer(d,"allows you to explore more easily, learning the MUD at a better pace.\n\r\n\r",0);
-    write_to_buffer(d,"{G[Human]:{x You walk the mortal path. Through remort, you may Awaken as a Mage\n\r",0);
-    write_to_buffer(d,"or undergo the First Change to become Garou (Werewolf) upon reaching level 100.\n\r\n\r",0);
+    send_to_char("\n\r{YHaven of the Embraced is focused on Vampires, but you may choose to start the{x\n\r", ch);
+    send_to_char("{Ygame as a human, if you wish.{x\n\r\n\r", ch);
+    send_to_char("{R[Vampire]:{x You are one of the Kindred, Embraced into undeath. You must manage\n\r", ch);
+    send_to_char("your Blood Pool, master Disciplines, and navigate the politics of the Camarilla/Sabbat.\n\r", ch);
+    send_to_char("Vampires are far more powerful at creation over humans, and are highly recommended\n\r", ch);
+    send_to_char("as your starting race if you are new to Haven of the Embraced. The added survivability\n\r", ch);
+    send_to_char("allows you to explore more easily, learning the MUD at a better pace.\n\r\n\r", ch);
+    send_to_char("{G[Human]:{x You walk the mortal path. Through remort, you may Awaken as a Mage\n\r", ch);
+    send_to_char("or undergo the First Change to become Garou (Werewolf) upon reaching level 100.\n\r\n\r", ch);
 
-    write_to_buffer(d,"{CDo you wish to start the game as a Vampire (Recommended): [Y/N]? {x",0);
+    send_to_char("{CDo you wish to start the game as a Vampire (Recommended): [Y/N]? {x", ch);
     d->connected = CON_CHOICE_VAMP;
     break;
 
@@ -2592,31 +2635,31 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
 
     if(argument[0] == 'Y' || argument[0] == 'y')
     {
-        write_to_buffer(d,"{YVampires are divided into Clans. A clan is like a family line, a tie in blood{x\n\r",0);
-        write_to_buffer(d,"{Ypassed from Sire to Childe. Each clan has a unique set of traits and different{x\n\r",0);
-        write_to_buffer(d,"{YDisciplines (vampiric powers). Mechanically, your clan determines which 3 in-clan{x\n\r",0);
-        write_to_buffer(d,"{YDisciplines you learn easily, and impacts your social standing in Kindred society.{x\n\r",0);
-        write_to_buffer(d,"{YPlease select a clan for your character. Please note that you may never change your clan.{x\n\r",0);
-        write_to_buffer(d,"{YSome clans are not available at creation and you must be 'embraced' in-game.{x\n\r",0);
-        write_to_buffer(d,"{YYou may type 'help <clan>' to gain more information about each clan. IE: help Nosferatu{x\n\r",0);
-        write_to_buffer(d,"{CThe available clan choices are:{x\n\r\n\r",0);
+        send_to_char("{YVampires are divided into Clans. A clan is like a family line, a tie in blood{x\n\r", ch);
+        send_to_char("{Ypassed from Sire to Childe. Each clan has a unique set of traits and different{x\n\r", ch);
+        send_to_char("{YDisciplines (vampiric powers). Mechanically, your clan determines which 3 in-clan{x\n\r", ch);
+        send_to_char("{YDisciplines you learn easily, and impacts your social standing in Kindred society.{x\n\r", ch);
+        send_to_char("{YPlease select a clan for your character. Please note that you may never change your clan.{x\n\r", ch);
+        send_to_char("{YSome clans are not available at creation and you must be 'embraced' in-game.{x\n\r", ch);
+        send_to_char("{YYou may type 'help <clan>' to gain more information about each clan. IE: help Nosferatu{x\n\r", ch);
+        send_to_char("{CThe available clan choices are:{x\n\r\n\r", ch);
 
-        write_to_buffer(d,"{RAssamite{x - Deadly assassins and diablerists from the Middle East.\n\r",0);
-        write_to_buffer(d,"{RBrujah{x   - Fierce rebels and warrior-scholars prone to frenzy.\n\r",0);
-        write_to_buffer(d,"{RGangrel{x  - Bestial wanderers closely tied to the wild and shapeshifting.\n\r",0);
-        write_to_buffer(d,"{RMalkavian{x- Oracles cursed with incurable insanity.\n\r",0);
-        write_to_buffer(d,"{RNosferatu{x- Hideously deformed, masters of stealth and secrets.\n\r",0);
-        write_to_buffer(d,"{RRavnos{x   - Nomadic tricksters and masters of illusion.\n\r",0);
-        write_to_buffer(d,"{RCappadocian{x - Scholars of death and the grave.\n\r",0);
-        write_to_buffer(d,"{RFollowerOfSet{x - Corrupters and cultists worshipping the snake god Set.\n\r",0);
-        write_to_buffer(d,"{RLasombra{x - Ruthless leaders and masters of shadow manipulation.\n\r",0);
-        write_to_buffer(d,"{RToreador{x - Passionate artists and socialites obsessed with beauty.\n\r",0);
-        write_to_buffer(d,"{RTremere{x  - Secretive blood sorcerers organized in a strict pyramid.\n\r",0);
-        write_to_buffer(d,"{RTzimisce{x - Fiendish fleshcrafters and lords of the Old Country.\n\r",0);
-        write_to_buffer(d,"{RVentrue{x  - Aristocratic rulers who command the minds of others.\n\r\n\r",0);
+        send_to_char("{RAssamite{x - Deadly assassins and diablerists from the Middle East.\n\r", ch);
+        send_to_char("{RBrujah{x   - Fierce rebels and warrior-scholars prone to frenzy.\n\r", ch);
+        send_to_char("{RGangrel{x  - Bestial wanderers closely tied to the wild and shapeshifting.\n\r", ch);
+        send_to_char("{RMalkavian{x- Oracles cursed with incurable insanity.\n\r", ch);
+        send_to_char("{RNosferatu{x- Hideously deformed, masters of stealth and secrets.\n\r", ch);
+        send_to_char("{RRavnos{x   - Nomadic tricksters and masters of illusion.\n\r", ch);
+        send_to_char("{RCappadocian{x - Scholars of death and the grave.\n\r", ch);
+        send_to_char("{RFollowerOfSet{x - Corrupters and cultists worshipping the snake god Set.\n\r", ch);
+        send_to_char("{RLasombra{x - Ruthless leaders and masters of shadow manipulation.\n\r", ch);
+        send_to_char("{RToreador{x - Passionate artists and socialites obsessed with beauty.\n\r", ch);
+        send_to_char("{RTremere{x  - Secretive blood sorcerers organized in a strict pyramid.\n\r", ch);
+        send_to_char("{RTzimisce{x - Fiendish fleshcrafters and lords of the Old Country.\n\r", ch);
+        send_to_char("{RVentrue{x  - Aristocratic rulers who command the minds of others.\n\r\n\r", ch);
 
-        write_to_buffer(d,"{G(Newbie Recommended) clans, in order:  1) Brujah 2) Nosferatu 3) Gangrel{x",0);
-        write_to_buffer(d,"\n\r{CPlease choose a clan: {x",0);
+        send_to_char("{G(Newbie Recommended) clans, in order:  1) Brujah 2) Nosferatu 3) Gangrel{x", ch);
+        send_to_char("\n\r{CPlease choose a clan: {x", ch);
 
         d->connected = CON_PICK_CLAN;
         break;
@@ -2633,7 +2676,7 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
     d->connected = CON_READ_MOTD;
     break;
     }
-    write_to_buffer(d,"{RThat is not a valid choice. Please type either Y or N.{x\n\r{CDo you wish to start the game as a Vampire? [Y/N]? {x",0);
+    send_to_char("{RThat is not a valid choice. Please type either Y or N.{x\n\r{CDo you wish to start the game as a Vampire? [Y/N]? {x", ch);
     d->connected = CON_CHOICE_VAMP;
     break;
 
@@ -2645,9 +2688,9 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
         do_function(ch,&do_help,argument);
 
 
-        write_to_buffer(d,"{CPlease choose a Clan (Assamite, Brujah, Cappadocian, FollowerOfSet, Gangrel,\n\r", 0);
-        write_to_buffer(d,"Lasombra, Malkavian, Nosferatu, Ravnos, Toreador, Tremere, Tzimisce, Ventrue\n\r", 0);
-	   write_to_buffer(d,"or type help <clan>): {x",0);
+        send_to_char("{CPlease choose a Clan (Assamite, Brujah, Cappadocian, FollowerOfSet, Gangrel,\n\r", ch);
+        send_to_char("Lasombra, Malkavian, Nosferatu, Ravnos, Toreador, Tremere, Tzimisce, Ventrue\n\r", ch);
+        send_to_char("or type help <clan>): {x", ch);
         d->connected = CON_PICK_CLAN;
         break;
     }
@@ -2667,10 +2710,10 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
 	str_prefix(buf, "ventrue") )
 
     {
-        write_to_buffer(d,"{R[  Invalid clan choice.  ]{x\n\r",0);
-        write_to_buffer(d,"{CPlease choose a Clan (Assamite, Brujah, Cappadocian, FollowerOfSet, Gangrel,\n\r", 0);
-        write_to_buffer(d,"Lasombra, Malkavian, Nosferatu, Ravnos, Toreador, Tremere, Tzimisce, Ventrue\n\r", 0);
-        write_to_buffer(d,"or type help <clan>): {x",0);
+        send_to_char("{R[  Invalid clan choice.  ]{x\n\r", ch);
+        send_to_char("{CPlease choose a Clan (Assamite, Brujah, Cappadocian, FollowerOfSet, Gangrel,\n\r", ch);
+        send_to_char("Lasombra, Malkavian, Nosferatu, Ravnos, Toreador, Tremere, Tzimisce, Ventrue\n\r", ch);
+        send_to_char("or type help <clan>): {x", ch);
         d->connected = CON_PICK_CLAN;
         break;
     }
@@ -2734,7 +2777,16 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
         if (get_obj_index(OBJ_VNUM_GUIDE) != NULL)
             obj_to_char(create_object(get_obj_index(OBJ_VNUM_GUIDE),0),ch);
 
-        char_to_room( ch, get_room_index( 30000 ) );
+        {
+            ROOM_INDEX_DATA *spawn_room = get_room_index( ROOM_VNUM_PRELUDE );
+            if ( spawn_room == NULL )
+                spawn_room = get_room_index( ROOM_VNUM_SCHOOL );
+            if ( spawn_room == NULL )
+                spawn_room = get_room_index( ROOM_VNUM_TEMPLE );
+            if ( spawn_room == NULL )
+                spawn_room = get_room_index( ROOM_VNUM_LIMBO );
+            char_to_room( ch, spawn_room );
+        }
         send_to_char("\n\r{YWelcome to Haven MUD! You have entered the Prelude.{x\n\r",ch);
         send_to_char("{YType 'look' to see your surroundings, and follow the instructions to begin your journey.{x\n\r\n\r",ch);
         do_function(ch, &do_help, "info");
@@ -4256,6 +4308,80 @@ void titlebar(CHAR_DATA *ch)
 }
 
 
+void apply_vnum_config( void )
+{
+    extern bool fBootDb;
+    bool saved_boot = fBootDb;
+    int i;
+
+    fBootDb = FALSE;
+
+    hometown_table[0].vnum = room_vnum_temple;
+    hometown_table[1].vnum = hometown_chester > 0 ? hometown_chester : room_vnum_temple;
+    hometown_table[2].vnum = hometown_geneva > 0 ? hometown_geneva : room_vnum_temple;
+    hometown_table[3].vnum = hometown_figueres > 0 ? hometown_figueres : room_vnum_temple;
+    hometown_table[4].vnum = hometown_venice > 0 ? hometown_venice : room_vnum_temple;
+
+    for ( i = 0; i < MAX_SECT; i++ )
+        sect_table[i].hall = room_vnum_altar;
+
+    weapon_table[0].vnum = obj_vnum_school_sword;
+    weapon_table[1].vnum = obj_vnum_school_mace;
+    weapon_table[2].vnum = obj_vnum_school_dagger;
+    weapon_table[3].vnum = obj_vnum_school_axe;
+    weapon_table[4].vnum = obj_vnum_school_staff;
+    weapon_table[5].vnum = obj_vnum_school_flail;
+    weapon_table[6].vnum = obj_vnum_school_whip;
+    weapon_table[7].vnum = obj_vnum_school_lance;
+    weapon_table[8].vnum = obj_vnum_school_polearm;
+
+    for ( i = 0; i < MAX_CLASS; i++ )
+    {
+        class_table[i].weapon = obj_vnum_school_dagger;
+        if ( get_room_index(3003) != NULL && get_room_index(9619) != NULL )
+        {
+            class_table[i].guild[0] = 3003;
+            class_table[i].guild[1] = 9619;
+        }
+        else
+        {
+            class_table[i].guild[0] = room_vnum_temple;
+            class_table[i].guild[1] = 111;
+        }
+    }
+
+    crafted_item_table[0].resource_type = obj_vnum_block;
+    crafted_item_table[1].resource_type = obj_vnum_plank;
+    crafted_item_table[2].resource_type = obj_vnum_block;
+    if ( get_obj_index(28870) != NULL )
+    {
+        crafted_item_table[0].vnum = 28870;
+        crafted_item_table[1].vnum = 28871;
+        crafted_item_table[2].vnum = 28872;
+    }
+
+    if ( get_obj_index(771) != NULL )
+    {
+        static const sh_int prod_brew[9][5] = {
+            {771, 27225, 30834, 0, 0},
+            {771, 30856, 0, 0, 0},
+            {771, 9507, 0, 0, 0},
+            {771, 302, 0, 0, 0},
+            {771, 9658, 0, 0, 0},
+            {771, 30836, 17701, 17705, 0},
+            {771, 17701, 0, 0, 0},
+            {771, 9659, 0, 0, 0},
+            {771, 11105, 30814, 0, 0}
+        };
+        int j;
+        for ( i = 0; i < 9; i++ )
+            for ( j = 0; j < 5; j++ )
+                brew_table[i + 1].component[j] = prod_brew[i][j];
+    }
+
+    fBootDb = saved_boot;
+}
+
 void save_config( void )
 {
     FILE *fp;
@@ -4265,6 +4391,8 @@ void save_config( void )
     {
     bug( "save_config: fopen", 0 );
     perror( CONFIG_FILE );
+    fpReserve = fopen( NULL_FILE, "r" );
+    return;
     }
 
     fprintf( fp, "Slaughter %d\n",      slaughter);
@@ -4281,6 +4409,96 @@ void save_config( void )
     fprintf (fp, "Xpmult %d\n",         xpawardmult);
     fprintf (fp, "Manualxp %d\n",       manualxp);
     fprintf (fp, "Maxon %d\n",          max_players);
+
+    if ( room_vnum_temple != ROOM_VNUM_TEMPLE_DEFAULT )
+        fprintf( fp, "VnumTemple %d\n", room_vnum_temple );
+    if ( room_vnum_altar != ROOM_VNUM_ALTAR_DEFAULT )
+        fprintf( fp, "VnumAltar %d\n", room_vnum_altar );
+    if ( room_vnum_donate != ROOM_VNUM_DONATE_DEFAULT )
+        fprintf( fp, "VnumDonate %d\n", room_vnum_donate );
+    if ( room_vnum_school != ROOM_VNUM_SCHOOL_DEFAULT )
+        fprintf( fp, "VnumSchool %d\n", room_vnum_school );
+    if ( room_vnum_chat != ROOM_VNUM_CHAT_DEFAULT )
+        fprintf( fp, "VnumChat %d\n", room_vnum_chat );
+    if ( room_vnum_paradox != ROOM_VNUM_PARADOX_DEFAULT )
+        fprintf( fp, "VnumParadox %d\n", room_vnum_paradox );
+    if ( room_vnum_demise != ROOM_VNUM_DEMISE_DEFAULT )
+        fprintf( fp, "VnumDemise %d\n", room_vnum_demise );
+    if ( room_vnum_honor != ROOM_VNUM_HONOR_DEFAULT )
+        fprintf( fp, "VnumHonor %d\n", room_vnum_honor );
+    if ( room_vnum_circle != ROOM_VNUM_CIRCLE_DEFAULT )
+        fprintf( fp, "VnumCircle %d\n", room_vnum_circle );
+    if ( room_vnum_balance != ROOM_VNUM_BALANCE_DEFAULT )
+        fprintf( fp, "VnumBalance %d\n", room_vnum_balance );
+    if ( room_vnum_prelude != ROOM_VNUM_PRELUDE_DEFAULT )
+        fprintf( fp, "VnumPrelude %d\n", room_vnum_prelude );
+
+    if ( hometown_chester > 0 )
+        fprintf( fp, "HometownChester %d\n", hometown_chester );
+    if ( hometown_geneva > 0 )
+        fprintf( fp, "HometownGeneva %d\n", hometown_geneva );
+    if ( hometown_figueres > 0 )
+        fprintf( fp, "HometownFigueres %d\n", hometown_figueres );
+    if ( hometown_venice > 0 )
+        fprintf( fp, "HometownVenice %d\n", hometown_venice );
+
+    if ( obj_vnum_pit != OBJ_VNUM_PIT_DEFAULT )
+        fprintf( fp, "ObjVnumPit %d\n", obj_vnum_pit );
+    if ( obj_vnum_school_mace != OBJ_VNUM_SCHOOL_MACE_DEFAULT )
+        fprintf( fp, "ObjVnumSchoolMace %d\n", obj_vnum_school_mace );
+    if ( obj_vnum_school_dagger != OBJ_VNUM_SCHOOL_DAGGER_DEFAULT )
+        fprintf( fp, "ObjVnumSchoolDagger %d\n", obj_vnum_school_dagger );
+    if ( obj_vnum_school_sword != OBJ_VNUM_SCHOOL_SWORD_DEFAULT )
+        fprintf( fp, "ObjVnumSchoolSword %d\n", obj_vnum_school_sword );
+    if ( obj_vnum_school_spear != OBJ_VNUM_SCHOOL_SPEAR_DEFAULT )
+        fprintf( fp, "ObjVnumSchoolSpear %d\n", obj_vnum_school_spear );
+    if ( obj_vnum_school_staff != OBJ_VNUM_SCHOOL_STAFF_DEFAULT )
+        fprintf( fp, "ObjVnumSchoolStaff %d\n", obj_vnum_school_staff );
+    if ( obj_vnum_school_axe != OBJ_VNUM_SCHOOL_AXE_DEFAULT )
+        fprintf( fp, "ObjVnumSchoolAxe %d\n", obj_vnum_school_axe );
+    if ( obj_vnum_school_flail != OBJ_VNUM_SCHOOL_FLAIL_DEFAULT )
+        fprintf( fp, "ObjVnumSchoolFlail %d\n", obj_vnum_school_flail );
+    if ( obj_vnum_school_whip != OBJ_VNUM_SCHOOL_WHIP_DEFAULT )
+        fprintf( fp, "ObjVnumSchoolWhip %d\n", obj_vnum_school_whip );
+    if ( obj_vnum_school_polearm != OBJ_VNUM_SCHOOL_POLEARM_DEFAULT )
+        fprintf( fp, "ObjVnumSchoolPolearm %d\n", obj_vnum_school_polearm );
+    if ( obj_vnum_school_lance != OBJ_VNUM_SCHOOL_LANCE_DEFAULT )
+        fprintf( fp, "ObjVnumSchoolLance %d\n", obj_vnum_school_lance );
+    if ( obj_vnum_school_vest != OBJ_VNUM_SCHOOL_VEST_DEFAULT )
+        fprintf( fp, "ObjVnumSchoolVest %d\n", obj_vnum_school_vest );
+    if ( obj_vnum_school_shield != OBJ_VNUM_SCHOOL_SHIELD_DEFAULT )
+        fprintf( fp, "ObjVnumSchoolShield %d\n", obj_vnum_school_shield );
+    if ( obj_vnum_school_banner != OBJ_VNUM_SCHOOL_BANNER_DEFAULT )
+        fprintf( fp, "ObjVnumSchoolBanner %d\n", obj_vnum_school_banner );
+    if ( obj_vnum_map != OBJ_VNUM_MAP_DEFAULT )
+        fprintf( fp, "ObjVnumMap %d\n", obj_vnum_map );
+    if ( obj_vnum_guide != OBJ_VNUM_GUIDE_DEFAULT )
+        fprintf( fp, "ObjVnumGuide %d\n", obj_vnum_guide );
+    if ( obj_vnum_tome != OBJ_VNUM_TOME_DEFAULT )
+        fprintf( fp, "ObjVnumTome %d\n", obj_vnum_tome );
+    if ( obj_vnum_tree != OBJ_VNUM_TREE_DEFAULT )
+        fprintf( fp, "ObjVnumTree %d\n", obj_vnum_tree );
+    if ( obj_vnum_vein != OBJ_VNUM_VEIN_DEFAULT )
+        fprintf( fp, "ObjVnumVein %d\n", obj_vnum_vein );
+    if ( obj_vnum_plank != OBJ_VNUM_PLANK_DEFAULT )
+        fprintf( fp, "ObjVnumPlank %d\n", obj_vnum_plank );
+    if ( obj_vnum_block != OBJ_VNUM_BLOCK_DEFAULT )
+        fprintf( fp, "ObjVnumBlock %d\n", obj_vnum_block );
+    if ( obj_vnum_bandage != OBJ_VNUM_BANDAGE_DEFAULT )
+        fprintf( fp, "ObjVnumBandage %d\n", obj_vnum_bandage );
+    if ( obj_vnum_tass_mushroom != OBJ_VNUM_TASS_MUSHROOM_DEFAULT )
+        fprintf( fp, "ObjVnumTassMushroom %d\n", obj_vnum_tass_mushroom );
+
+    if ( mob_vnum_cityguard != MOB_VNUM_CITYGUARD_DEFAULT )
+        fprintf( fp, "MobVnumCityguard %d\n", mob_vnum_cityguard );
+    if ( mob_vnum_fido != MOB_VNUM_FIDO_DEFAULT )
+        fprintf( fp, "MobVnumFido %d\n", mob_vnum_fido );
+    if ( mob_vnum_patrolman != MOB_VNUM_PATROLMAN_DEFAULT )
+        fprintf( fp, "MobVnumPatrolman %d\n", mob_vnum_patrolman );
+    if ( group_vnum_trolls != GROUP_VNUM_TROLLS_DEFAULT )
+        fprintf( fp, "GroupVnumTrolls %d\n", group_vnum_trolls );
+    if ( group_vnum_ogres != GROUP_VNUM_OGRES_DEFAULT )
+        fprintf( fp, "GroupVnumOgres %d\n", group_vnum_ogres );
 
     fprintf( fp, "End\n\n\n\n" );
     fclose( fp );
@@ -4323,6 +4541,9 @@ void load_config( void )
     {
     bug( "load_config: fopen", 0 );
     perror( CONFIG_FILE );
+    fpReserve = fopen( NULL_FILE, "r" );
+    apply_vnum_config();
+    return;
     }
 
 
@@ -4336,48 +4557,98 @@ void load_config( void )
           case 'A':
                KEY( "Arena", arena, fread_number(fp) );
                break;
-           case 'R':
-               KEY("Resolver", resolver, fread_number(fp) );
-               break;
-           case 'N':
-               KEY("Nosun", nosun, fread_number(fp) );
-               KEY("Newlock", newlock, fread_number(fp));
-               break;
-           case 'M':
-               KEY( "Manualxp", manualxp, fread_number(fp));
-               KEY( "Maxon", max_players, fread_number(fp));
+          case 'C':
+               KEY( "Carnival", carnival, fread_number(fp) );
                break;
           case 'D':
-                KEY( "Doubleexp", doubleexp, fread_number(fp) );
-                KEY( "Doubledam", doubledam, fread_number(fp) );
-                break;
-           case 'G':
-               KEY("Gxp", global_xp, fread_number(fp) );
-               KEY("Gqp", global_qp, fread_number(fp) );
+               KEY( "Doubleexp", doubleexp, fread_number(fp) );
+               KEY( "Doubledam", doubledam, fread_number(fp) );
                break;
-           case 'X':
-               KEY("Xpmult", xpawardmult, fread_number(fp));
+          case 'E':
+               if ( !str_cmp( word, "End" ) )
+               {
+                   fMatch = TRUE;
+                   fclose( fp );
+                   fpReserve = fopen( NULL_FILE, "r" );
+                   apply_vnum_config();
+                   return;
+               }
                break;
-           case 'S':
+          case 'G':
+               KEY( "Gxp", global_xp, fread_number(fp) );
+               KEY( "Gqp", global_qp, fread_number(fp) );
+               KEY( "GroupVnumTrolls", group_vnum_trolls, fread_number(fp) );
+               KEY( "GroupVnumOgres", group_vnum_ogres, fread_number(fp) );
+               break;
+          case 'H':
+               KEY( "HometownChester", hometown_chester, fread_number(fp) );
+               KEY( "HometownGeneva", hometown_geneva, fread_number(fp) );
+               KEY( "HometownFigueres", hometown_figueres, fread_number(fp) );
+               KEY( "HometownVenice", hometown_venice, fread_number(fp) );
+               break;
+          case 'M':
+               KEY( "Manualxp", manualxp, fread_number(fp) );
+               KEY( "Maxon", max_players, fread_number(fp) );
+               KEY( "MobVnumCityguard", mob_vnum_cityguard, fread_number(fp) );
+               KEY( "MobVnumFido", mob_vnum_fido, fread_number(fp) );
+               KEY( "MobVnumPatrolman", mob_vnum_patrolman, fread_number(fp) );
+               break;
+          case 'N':
+               KEY( "Nosun", nosun, fread_number(fp) );
+               KEY( "Newlock", newlock, fread_number(fp) );
+               break;
+          case 'O':
+               KEY( "ObjVnumPit", obj_vnum_pit, fread_number(fp) );
+               KEY( "ObjVnumSchoolMace", obj_vnum_school_mace, fread_number(fp) );
+               KEY( "ObjVnumSchoolDagger", obj_vnum_school_dagger, fread_number(fp) );
+               KEY( "ObjVnumSchoolSword", obj_vnum_school_sword, fread_number(fp) );
+               KEY( "ObjVnumSchoolSpear", obj_vnum_school_spear, fread_number(fp) );
+               KEY( "ObjVnumSchoolStaff", obj_vnum_school_staff, fread_number(fp) );
+               KEY( "ObjVnumSchoolAxe", obj_vnum_school_axe, fread_number(fp) );
+               KEY( "ObjVnumSchoolFlail", obj_vnum_school_flail, fread_number(fp) );
+               KEY( "ObjVnumSchoolWhip", obj_vnum_school_whip, fread_number(fp) );
+               KEY( "ObjVnumSchoolPolearm", obj_vnum_school_polearm, fread_number(fp) );
+               KEY( "ObjVnumSchoolLance", obj_vnum_school_lance, fread_number(fp) );
+               KEY( "ObjVnumSchoolVest", obj_vnum_school_vest, fread_number(fp) );
+               KEY( "ObjVnumSchoolShield", obj_vnum_school_shield, fread_number(fp) );
+               KEY( "ObjVnumSchoolBanner", obj_vnum_school_banner, fread_number(fp) );
+               KEY( "ObjVnumMap", obj_vnum_map, fread_number(fp) );
+               KEY( "ObjVnumGuide", obj_vnum_guide, fread_number(fp) );
+               KEY( "ObjVnumTome", obj_vnum_tome, fread_number(fp) );
+               KEY( "ObjVnumTree", obj_vnum_tree, fread_number(fp) );
+               KEY( "ObjVnumVein", obj_vnum_vein, fread_number(fp) );
+               KEY( "ObjVnumPlank", obj_vnum_plank, fread_number(fp) );
+               KEY( "ObjVnumBlock", obj_vnum_block, fread_number(fp) );
+               KEY( "ObjVnumBandage", obj_vnum_bandage, fread_number(fp) );
+               KEY( "ObjVnumTassMushroom", obj_vnum_tass_mushroom, fread_number(fp) );
+               break;
+          case 'R':
+               KEY( "Resolver", resolver, fread_number(fp) );
+               break;
+          case 'S':
                KEY( "Slaughter", slaughter, fread_number(fp) );
                KEY( "Spookums", spookums, fread_number(fp) );
                break;
-           case 'C':
-               KEY("Carnival", carnival, fread_number(fp));
-
-           case 'E':
-                if ( !str_cmp( word, "End" ) )
-                {
-                    fMatch = TRUE;
-                    fclose( fp );
-                    fpReserve = fopen( NULL_FILE, "r" );
-                    return;
-                }
-           case 'W':
-               KEY("Wizlock", wizlock, fread_number(fp));
+          case 'V':
+               KEY( "VnumTemple", room_vnum_temple, fread_number(fp) );
+               KEY( "VnumAltar", room_vnum_altar, fread_number(fp) );
+               KEY( "VnumDonate", room_vnum_donate, fread_number(fp) );
+               KEY( "VnumSchool", room_vnum_school, fread_number(fp) );
+               KEY( "VnumChat", room_vnum_chat, fread_number(fp) );
+               KEY( "VnumParadox", room_vnum_paradox, fread_number(fp) );
+               KEY( "VnumDemise", room_vnum_demise, fread_number(fp) );
+               KEY( "VnumHonor", room_vnum_honor, fread_number(fp) );
+               KEY( "VnumCircle", room_vnum_circle, fread_number(fp) );
+               KEY( "VnumBalance", room_vnum_balance, fread_number(fp) );
+               KEY( "VnumPrelude", room_vnum_prelude, fread_number(fp) );
                break;
-
-        }
+          case 'W':
+               KEY( "Wizlock", wizlock, fread_number(fp) );
+               break;
+          case 'X':
+               KEY( "Xpmult", xpawardmult, fread_number(fp) );
+               break;
+       }
     }
 }
 

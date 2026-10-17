@@ -939,12 +939,18 @@ struct  kill_data
 #define MOB_VNUM_OBTEN_SERVANT          30
 #define MOB_VNUM_HOMUNCULUS             32
 #define MOB_VNUM_ATHANATOS              33
-#define MOB_VNUM_FIDO                   711
-#define MOB_VNUM_CITYGUARD              708
+#define MOB_VNUM_CITYGUARD_DEFAULT      100
+#define MOB_VNUM_FIDO_DEFAULT           101
 //#define MOB_VNUM_VAMPIRE              3404
-#define MOB_VNUM_PATROLMAN              2106
-#define GROUP_VNUM_TROLLS               2100
-#define GROUP_VNUM_OGRES                2101
+#define MOB_VNUM_PATROLMAN_DEFAULT      102
+#define GROUP_VNUM_TROLLS_DEFAULT       108
+#define GROUP_VNUM_OGRES_DEFAULT        109
+
+#define MOB_VNUM_CITYGUARD              mob_vnum_cityguard
+#define MOB_VNUM_FIDO                   mob_vnum_fido
+#define MOB_VNUM_PATROLMAN              mob_vnum_patrolman
+#define GROUP_VNUM_TROLLS               group_vnum_trolls
+#define GROUP_VNUM_OGRES                group_vnum_ogres
 
 
 /*
@@ -1482,40 +1488,65 @@ struct  kill_data
 #define OBJ_VNUM_ROSE            26
 #define OBJ_VNUM_RIFT            50
 
-#define OBJ_VNUM_PIT           705
+#define OBJ_VNUM_PIT_DEFAULT           120
 
-#define OBJ_VNUM_SCHOOL_MACE       802
-#define OBJ_VNUM_SCHOOL_DAGGER     827
-#define OBJ_VNUM_SCHOOL_SWORD      826
-#define OBJ_VNUM_SCHOOL_SPEAR      809
-#define OBJ_VNUM_SCHOOL_STAFF      808
-#define OBJ_VNUM_SCHOOL_AXE        807
-#define OBJ_VNUM_SCHOOL_FLAIL      806
-#define OBJ_VNUM_SCHOOL_WHIP       805
-#define OBJ_VNUM_SCHOOL_POLEARM    804
-#define OBJ_VNUM_SCHOOL_LANCE      836
+#define OBJ_VNUM_SCHOOL_MACE_DEFAULT   130
+#define OBJ_VNUM_SCHOOL_DAGGER_DEFAULT 131
+#define OBJ_VNUM_SCHOOL_SWORD_DEFAULT  132
+#define OBJ_VNUM_SCHOOL_SPEAR_DEFAULT  133
+#define OBJ_VNUM_SCHOOL_STAFF_DEFAULT  134
+#define OBJ_VNUM_SCHOOL_AXE_DEFAULT    135
+#define OBJ_VNUM_SCHOOL_FLAIL_DEFAULT  136
+#define OBJ_VNUM_SCHOOL_WHIP_DEFAULT   137
+#define OBJ_VNUM_SCHOOL_POLEARM_DEFAULT 138
+#define OBJ_VNUM_SCHOOL_LANCE_DEFAULT  139
 
-#define OBJ_VNUM_SCHOOL_VEST       825
-#define OBJ_VNUM_SCHOOL_SHIELD     824
-#define OBJ_VNUM_SCHOOL_BANNER     812
-#define OBJ_VNUM_MAP           715
-#define OBJ_VNUM_GUIDE         3733
+#define OBJ_VNUM_SCHOOL_VEST_DEFAULT   140
+#define OBJ_VNUM_SCHOOL_SHIELD_DEFAULT 141
+#define OBJ_VNUM_SCHOOL_BANNER_DEFAULT 142
+#define OBJ_VNUM_MAP_DEFAULT           121
+#define OBJ_VNUM_GUIDE_DEFAULT         122
+
+#define OBJ_VNUM_PIT                   obj_vnum_pit
+#define OBJ_VNUM_SCHOOL_MACE           obj_vnum_school_mace
+#define OBJ_VNUM_SCHOOL_DAGGER         obj_vnum_school_dagger
+#define OBJ_VNUM_SCHOOL_SWORD          obj_vnum_school_sword
+#define OBJ_VNUM_SCHOOL_SPEAR          obj_vnum_school_spear
+#define OBJ_VNUM_SCHOOL_STAFF          obj_vnum_school_staff
+#define OBJ_VNUM_SCHOOL_AXE            obj_vnum_school_axe
+#define OBJ_VNUM_SCHOOL_FLAIL          obj_vnum_school_flail
+#define OBJ_VNUM_SCHOOL_WHIP           obj_vnum_school_whip
+#define OBJ_VNUM_SCHOOL_POLEARM        obj_vnum_school_polearm
+#define OBJ_VNUM_SCHOOL_LANCE          obj_vnum_school_lance
+#define OBJ_VNUM_SCHOOL_VEST           obj_vnum_school_vest
+#define OBJ_VNUM_SCHOOL_SHIELD         obj_vnum_school_shield
+#define OBJ_VNUM_SCHOOL_BANNER         obj_vnum_school_banner
+#define OBJ_VNUM_MAP                   obj_vnum_map
+#define OBJ_VNUM_GUIDE                 obj_vnum_guide
 
 /* vamp stuff */
-#define OBJ_VNUM_EMPTY_VIAL    29
-#define OBJ_VNUM_BROKEN_MIRROR      32
+#define OBJ_VNUM_EMPTY_VIAL        29
+#define OBJ_VNUM_BROKEN_MIRROR     32
 
-#define OBJ_VNUM_TOME      3310
+#define OBJ_VNUM_TOME_DEFAULT          124
+#define OBJ_VNUM_TOME                  obj_vnum_tome
 
 /* crafting stuff */
-#define OBJ_VNUM_TREE       26500
-#define OBJ_VNUM_VEIN       26510
-#define OBJ_VNUM_PLANK      28850
-#define OBJ_VNUM_BLOCK      28855
-#define OBJ_VNUM_BANDAGE    3735
+#define OBJ_VNUM_TREE_DEFAULT          60
+#define OBJ_VNUM_VEIN_DEFAULT          70
+#define OBJ_VNUM_PLANK_DEFAULT         102
+#define OBJ_VNUM_BLOCK_DEFAULT         107
+#define OBJ_VNUM_BANDAGE_DEFAULT       123
+
+#define OBJ_VNUM_TREE                  obj_vnum_tree
+#define OBJ_VNUM_VEIN                  obj_vnum_vein
+#define OBJ_VNUM_PLANK                 obj_vnum_plank
+#define OBJ_VNUM_BLOCK                 obj_vnum_block
+#define OBJ_VNUM_BANDAGE               obj_vnum_bandage
 
 /*Mage stuff*/
-#define OBJ_VNUM_TASS_MUSHROOM  30500
+#define OBJ_VNUM_TASS_MUSHROOM_DEFAULT 125
+#define OBJ_VNUM_TASS_MUSHROOM         obj_vnum_tass_mushroom
 
 #define QUEST_OBJ 40
 
@@ -1769,16 +1800,29 @@ struct  kill_data
  * Defined in #ROOMS.
  */
 #define ROOM_VNUM_LIMBO           2
-//#define ROOM_VNUM_CHAT           1200
-#define ROOM_VNUM_TEMPLE       701
-#define ROOM_VNUM_ALTAR        703
-#define ROOM_VNUM_DONATE       705
-#define ROOM_VNUM_SCHOOL       3700
-#define ROOM_VNUM_BALANCE      4500
-#define ROOM_VNUM_CIRCLE       4400
-#define ROOM_VNUM_DEMISE       4201
-#define ROOM_VNUM_HONOR        4300
-#define ROOM_VNUM_PARADOX      30790
+#define ROOM_VNUM_CHAT_DEFAULT    104
+#define ROOM_VNUM_TEMPLE_DEFAULT  101
+#define ROOM_VNUM_ALTAR_DEFAULT   102
+#define ROOM_VNUM_DONATE_DEFAULT  103
+#define ROOM_VNUM_SCHOOL_DEFAULT  100
+#define ROOM_VNUM_BALANCE_DEFAULT 109
+#define ROOM_VNUM_CIRCLE_DEFAULT  108
+#define ROOM_VNUM_DEMISE_DEFAULT  106
+#define ROOM_VNUM_HONOR_DEFAULT   107
+#define ROOM_VNUM_PARADOX_DEFAULT 105
+#define ROOM_VNUM_PRELUDE_DEFAULT 150
+
+#define ROOM_VNUM_CHAT          room_vnum_chat
+#define ROOM_VNUM_TEMPLE        room_vnum_temple
+#define ROOM_VNUM_ALTAR         room_vnum_altar
+#define ROOM_VNUM_DONATE        room_vnum_donate
+#define ROOM_VNUM_SCHOOL        room_vnum_school
+#define ROOM_VNUM_BALANCE       room_vnum_balance
+#define ROOM_VNUM_CIRCLE        room_vnum_circle
+#define ROOM_VNUM_DEMISE        room_vnum_demise
+#define ROOM_VNUM_HONOR         room_vnum_honor
+#define ROOM_VNUM_PARADOX       room_vnum_paradox
+#define ROOM_VNUM_PRELUDE       room_vnum_prelude
 
 
 
@@ -3461,8 +3505,8 @@ extern  const   struct  wis_app_type    wis_app     [26];
 extern  const   struct  dex_app_type    dex_app     [26];
 extern  const   struct  con_app_type    con_app     [26];
 
-extern  const   struct  class_type  class_table [MAX_CLASS];
-extern  const   struct  weapon_type weapon_table    [];
+extern          struct  class_type  class_table [MAX_CLASS];
+extern          struct  weapon_type weapon_table    [];
 extern  const   struct  item_type   item_table  [];
 extern  const   struct  wiznet_type wiznet_table    [];
 extern  const   struct  attack_type attack_table    [];
@@ -3475,6 +3519,51 @@ extern  const   struct  crafted_type    crafted_table   [];
 extern  const   struct  skill_type  skill_table [MAX_SKILL];
 extern  const   struct  group_type      group_table [MAX_GROUP];
 extern          struct social_type      *social_first;
+
+extern int room_vnum_chat;
+extern int room_vnum_temple;
+extern int room_vnum_altar;
+extern int room_vnum_donate;
+extern int room_vnum_school;
+extern int room_vnum_balance;
+extern int room_vnum_circle;
+extern int room_vnum_demise;
+extern int room_vnum_honor;
+extern int room_vnum_paradox;
+extern int room_vnum_prelude;
+
+extern int obj_vnum_pit;
+extern int obj_vnum_school_mace;
+extern int obj_vnum_school_dagger;
+extern int obj_vnum_school_sword;
+extern int obj_vnum_school_spear;
+extern int obj_vnum_school_staff;
+extern int obj_vnum_school_axe;
+extern int obj_vnum_school_flail;
+extern int obj_vnum_school_whip;
+extern int obj_vnum_school_polearm;
+extern int obj_vnum_school_lance;
+extern int obj_vnum_school_vest;
+extern int obj_vnum_school_shield;
+extern int obj_vnum_school_banner;
+extern int obj_vnum_map;
+extern int obj_vnum_guide;
+extern int obj_vnum_tome;
+extern int obj_vnum_tree;
+extern int obj_vnum_vein;
+extern int obj_vnum_plank;
+extern int obj_vnum_block;
+extern int obj_vnum_bandage;
+extern int obj_vnum_tass_mushroom;
+
+extern int mob_vnum_cityguard;
+extern int mob_vnum_fido;
+extern int mob_vnum_patrolman;
+extern int group_vnum_trolls;
+extern int group_vnum_ogres;
+
+void load_config args( ( void ) );
+void apply_vnum_config args( ( void ) );
 
 
 

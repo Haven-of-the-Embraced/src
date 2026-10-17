@@ -5765,7 +5765,8 @@ void do_prelude( CHAR_DATA *ch, char *argument )
         return;
     }
 
-    if ( ( location = get_room_index( 30000 ) ) == NULL )
+    if ( ( location = get_room_index( 30000 ) ) == NULL
+    &&   ( location = get_room_index( ROOM_VNUM_SCHOOL ) ) == NULL )
     {
         send_to_char( "The prelude is currently unavailable.\n\r", ch );
         return;

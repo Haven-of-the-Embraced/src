@@ -913,12 +913,13 @@ F af2 D
 End
 #250
 #MOBFORMAT dynamic
-Name crossroads guardian~
-ShD a mysterious guardian~
-LnD A mysterious guardian stands at the crossroads.
+Name herald awakening guide~
+ShD the Herald of Awakening~
+LnD The Herald of Awakening stands here amidst the celestial mist.
 ~
-Desc A cloaked figure stands quietly at the fork in the road, watching travelers
-as they choose their path.
+Desc A shimmering celestial guide cloaked in soft luminescent robes. He stands
+ready to guide newly awakened souls through the fundamentals of existence.
+You may say 'commands', 'movement', or 'topics' to learn more.
 ~
 Race human~
 Act ABU
@@ -926,16 +927,16 @@ Act2 E
 Aff 0
 Align 0
 Group 0
-Level 30
-Hitroll 10
-HitDice 1d1+999
-ManaDice 1d1+999
-DamDice 2d4+30
+Level 50
+Hitroll 20
+HitDice 100d10+1000
+ManaDice 100d10+1000
+DamDice 1d1+1
 DamType beating
-AcPierce -15
-AcBash -15
-AcSlash -15
-AcExotic -15
+AcPierce -30
+AcBash -30
+AcSlash -30
+AcExotic -30
 AttrFlags 0
 AbilFlags 0
 OffFlags 0
@@ -952,55 +953,18 @@ Size medium
 Material unknown~
 MaxLoad -1
 M GREET 250 100~
+M SPEECH 251 commands~
+M SPEECH 252 movement~
 End
 #251
 #MOBFORMAT dynamic
-Name sire vampire~
-ShD your sire~
-LnD Your sire waits for you here.
+Name archivist forms scribe guide~
+ShD the Archivist of Forms~
+LnD An ancient archivist pores over crystalline ledgers of character traits.
 ~
-Desc An imposing vampire watches you from the shadows of the alley.
-~
-Race vampire~
-Act ABU
-Act2 E
-Aff 0
-Align 0
-Group 0
-Level 30
-Hitroll 10
-HitDice 1d1+999
-ManaDice 1d1+999
-DamDice 2d4+30
-DamType beating
-AcPierce -15
-AcBash -15
-AcSlash -15
-AcExotic -15
-AttrFlags 0
-AbilFlags 0
-OffFlags 0
-ImmFlags R
-ResFlags BEL
-VulnFlags HNPa
-StartPos stand
-DefaultPos stand
-Sex male
-Wealth 0
-Form AHMV
-Parts ABCDEFGHIJK
-Size medium
-Material unknown~
-MaxLoad -1
-M GREET 251 100~
-End
-#252
-#MOBFORMAT dynamic
-Name chained vessel~
-ShD a chained vessel~
-LnD A chained vessel is here, ready for feeding.
-~
-Desc A weak human is chained to the alley wall, unable to flee.
+Desc An ageless scribe surrounded by hovering sheets of parchment detailing
+Attributes, Abilities, Disciplines, and Virtues.
+Say 'sheet', 'attributes', or 'abilities' to learn more.
 ~
 Race human~
 Act ABU
@@ -1008,103 +972,22 @@ Act2 E
 Aff 0
 Align 0
 Group 0
-Level 1
-Hitroll 10
-HitDice 1d1+999
-ManaDice 1d1+99
-DamDice 1d1+0
+Level 50
+Hitroll 20
+HitDice 100d10+1000
+ManaDice 100d10+1000
+DamDice 1d1+1
 DamType beating
-AcPierce 10
-AcBash 10
-AcSlash 10
-AcExotic 10
+AcPierce -30
+AcBash -30
+AcSlash -30
+AcExotic -30
 AttrFlags 0
 AbilFlags 0
 OffFlags 0
 ImmFlags a
 ResFlags 0
 VulnFlags P
-StartPos stand
-DefaultPos stand
-Sex either
-Wealth 0
-Form AHMV
-Parts ABCDEFGHIJK
-Size medium
-Material unknown~
-MaxLoad -1
-End
-#253
-#MOBFORMAT dynamic
-Name gatekeeper vampire~
-ShD a dark gatekeeper~
-LnD A dark gatekeeper blocks the way.
-~
-Desc A dark vampire guards the passage deeper into the training grounds.
-~
-Race vampire~
-Act ABU
-Act2 E
-Aff 0
-Align 0
-Group 0
-Level 30
-Hitroll 10
-HitDice 1d1+999
-ManaDice 1d1+999
-DamDice 2d4+30
-DamType beating
-AcPierce -15
-AcBash -15
-AcSlash -15
-AcExotic -15
-AttrFlags 0
-AbilFlags 0
-OffFlags 0
-ImmFlags R
-ResFlags BEL
-VulnFlags HNPa
-StartPos stand
-DefaultPos stand
-Sex male
-Wealth 0
-Form AHMV
-Parts ABCDEFGHIJK
-Size medium
-Material unknown~
-MaxLoad -1
-M GREET 252 100~
-End
-#254
-#MOBFORMAT dynamic
-Name discipline master~
-ShD a discipline master~
-LnD A master of vampiric disciplines waits here.
-~
-Desc A wise older vampire observes your command of the Blood.
-~
-Race vampire~
-Act ABU
-Act2 E
-Aff 0
-Align 0
-Group 0
-Level 30
-Hitroll 10
-HitDice 1d1+999
-ManaDice 1d1+999
-DamDice 2d4+30
-DamType beating
-AcPierce -15
-AcBash -15
-AcSlash -15
-AcExotic -15
-AttrFlags 0
-AbilFlags 0
-OffFlags 0
-ImmFlags R
-ResFlags BEL
-VulnFlags HNPa
 StartPos stand
 DefaultPos stand
 Sex male
@@ -1115,14 +998,19 @@ Size medium
 Material unknown~
 MaxLoad -1
 M GREET 253 100~
+M SPEECH 254 sheet~
+M SPEECH 255 attributes~
+M SPEECH 256 abilities~
 End
-#255
+#252
 #MOBFORMAT dynamic
-Name sparring dummy~
-ShD a sparring dummy~
-LnD A sparring dummy is here to practice on.
+Name sculptor destiny artisan guide~
+ShD the Sculptor of Destiny~
+LnD A focused artisan shapes ethereal clay at a marble pedestal.
 ~
-Desc A stuffed training dummy stands ready for combat practice.
+Desc A master craftsperson capable of explaining the interactive 'create'
+process for those who chose a custom sheet.
+Say 'create', 'priority', or 'reset' to learn more.
 ~
 Race human~
 Act ABU
@@ -1130,16 +1018,16 @@ Act2 E
 Aff 0
 Align 0
 Group 0
-Level 1
-Hitroll 0
-HitDice 1d1+19
-ManaDice 1d1+99
-DamDice 1d1+0
+Level 50
+Hitroll 20
+HitDice 100d10+1000
+ManaDice 100d10+1000
+DamDice 1d1+1
 DamType beating
-AcPierce 10
-AcBash 10
-AcSlash 10
-AcExotic 10
+AcPierce -30
+AcBash -30
+AcSlash -30
+AcExotic -30
 AttrFlags 0
 AbilFlags 0
 OffFlags 0
@@ -1148,171 +1036,7 @@ ResFlags 0
 VulnFlags P
 StartPos stand
 DefaultPos stand
-Sex either
-Wealth 0
-Form AHMV
-Parts ABCDEFGHIJK
-Size medium
-Material unknown~
-MaxLoad -1
-M FIGHT 254 100~
-End
-#256
-#MOBFORMAT dynamic
-Name elder vampire remort~
-ShD an elder vampire~
-LnD An elder vampire stands here, radiating power.
-~
-Desc A very old vampire waits at the threshold of your graduation.
-~
-Race vampire~
-Act ABU
-Act2 E
-Aff 0
-Align 0
-Group 0
-Level 30
-Hitroll 10
-HitDice 1d1+999
-ManaDice 1d1+999
-DamDice 2d4+30
-DamType beating
-AcPierce -15
-AcBash -15
-AcSlash -15
-AcExotic -15
-AttrFlags 0
-AbilFlags 0
-OffFlags 0
-ImmFlags R
-ResFlags BEL
-VulnFlags HNPa
-StartPos stand
-DefaultPos stand
-Sex male
-Wealth 0
-Form AHMV
-Parts ABCDEFGHIJK
-Size medium
-Material unknown~
-MaxLoad -1
-M GREET 255 100~
-End
-#257
-#MOBFORMAT dynamic
-Name ranger guide~
-ShD a forest ranger~
-LnD A forest ranger welcomes you to the wilds.
-~
-Desc A seasoned human ranger watches over the forest trail.
-~
-Race human~
-Act ABU
-Act2 E
-Aff 0
-Align 0
-Group 0
-Level 30
-Hitroll 10
-HitDice 1d1+999
-ManaDice 1d1+999
-DamDice 2d4+30
-DamType beating
-AcPierce -15
-AcBash -15
-AcSlash -15
-AcExotic -15
-AttrFlags 0
-AbilFlags 0
-OffFlags 0
-ImmFlags a
-ResFlags 0
-VulnFlags P
-StartPos stand
-DefaultPos stand
-Sex male
-Wealth 0
-Form AHMV
-Parts ABCDEFGHIJK
-Size medium
-Material unknown~
-MaxLoad -1
-M GREET 256 100~
-End
-#258
-#MOBFORMAT dynamic
-Name sparring dummy forest~
-ShD a wooden sparring dummy~
-LnD A wooden sparring dummy stands in the clearing.
-~
-Desc A sturdy wooden dummy stands in the clearing for combat practice.
-~
-Race human~
-Act ABU
-Act2 E
-Aff 0
-Align 0
-Group 0
-Level 1
-Hitroll 0
-HitDice 1d1+19
-ManaDice 1d1+99
-DamDice 1d1+0
-DamType beating
-AcPierce 10
-AcBash 10
-AcSlash 10
-AcExotic 10
-AttrFlags 0
-AbilFlags 0
-OffFlags 0
-ImmFlags a
-ResFlags 0
-VulnFlags P
-StartPos stand
-DefaultPos stand
-Sex either
-Wealth 0
-Form AHMV
-Parts ABCDEFGHIJK
-Size medium
-Material unknown~
-MaxLoad -1
-M FIGHT 254 100~
-End
-#259
-#MOBFORMAT dynamic
-Name grove druid~
-ShD a grove druid~
-LnD A grove druid tends to the ancient trees.
-~
-Desc A wise druid tends the sacred grove.
-~
-Race human~
-Act ABU
-Act2 E
-Aff 0
-Align 0
-Group 0
-Level 30
-Hitroll 10
-HitDice 1d1+999
-ManaDice 1d1+999
-DamDice 2d4+30
-DamType beating
-AcPierce -15
-AcBash -15
-AcSlash -15
-AcExotic -15
-AttrFlags 0
-AbilFlags 0
-OffFlags 0
-ImmFlags a
-ResFlags 0
-VulnFlags P
-StartPos stand
-DefaultPos stand
-Sex male
+Sex female
 Wealth 0
 Form AHMV
 Parts ABCDEFGHIJK
@@ -1320,14 +1044,18 @@ Size medium
 Material unknown~
 MaxLoad -1
 M GREET 257 100~
+M SPEECH 258 create~
+M SPEECH 259 priority~
 End
-#260
+#253
 #MOBFORMAT dynamic
-Name skills master~
-ShD a skills master~
-LnD A skills master is ready to teach you.
+Name benefactor essence mentor guide~
+ShD the Benefactor of Essence~
+LnD A radiant mentor sits here surrounded by glowing motes of freebie essence.
 ~
-Desc A master of mortal skills stands ready to instruct you.
+Desc A serene figure who oversees the allocation of mortal Backgrounds and
+Freebie points.
+Say 'freebie', 'backgrounds', or 'spending' to learn more.
 ~
 Race human~
 Act ABU
@@ -1335,16 +1063,61 @@ Act2 E
 Aff 0
 Align 0
 Group 0
-Level 30
-Hitroll 10
-HitDice 1d1+999
-ManaDice 1d1+999
-DamDice 2d4+30
+Level 50
+Hitroll 20
+HitDice 100d10+1000
+ManaDice 100d10+1000
+DamDice 1d1+1
 DamType beating
-AcPierce -15
-AcBash -15
-AcSlash -15
-AcExotic -15
+AcPierce -30
+AcBash -30
+AcSlash -30
+AcExotic -30
+AttrFlags 0
+AbilFlags 0
+OffFlags 0
+ImmFlags a
+ResFlags 0
+VulnFlags P
+StartPos stand
+DefaultPos stand
+Sex either
+Wealth 0
+Form AHMV
+Parts ABCDEFGHIJK
+Size medium
+Material unknown~
+MaxLoad -1
+M GREET 260 100~
+M SPEECH 261 freebie~
+M SPEECH 262 backgrounds~
+End
+#254
+#MOBFORMAT dynamic
+Name master prowess instructor guide~
+ShD the Master of Prowess~
+LnD A veteran weaponmaster leans on a polished staff, observing you.
+~
+Desc A warrior-scholar who understands the relationship between World of
+Darkness traits and combat skills.
+Say 'skillmap', 'skills', or 'learning' to learn more.
+~
+Race human~
+Act ABU
+Act2 E
+Aff 0
+Align 0
+Group 0
+Level 50
+Hitroll 20
+HitDice 100d10+1000
+ManaDice 100d10+1000
+DamDice 1d1+1
+DamType beating
+AcPierce -30
+AcBash -30
+AcSlash -30
+AcExotic -30
 AttrFlags 0
 AbilFlags 0
 OffFlags 0
@@ -1360,15 +1133,19 @@ Parts ABCDEFGHIJK
 Size medium
 Material unknown~
 MaxLoad -1
-M GREET 258 100~
+M GREET 263 100~
+M SPEECH 264 skillmap~
+M SPEECH 265 learning~
 End
-#261
+#255
 #MOBFORMAT dynamic
-Name forest remort guide~
-ShD a remort guide~
-LnD A remort guide stands here.
+Name sage cycles chronomancer guide~
+ShD the Sage of Cycles~
+LnD An ancient mystic gazes into a swirling pool of past and future lives.
 ~
-Desc A wise human guide prepares you to enter the world beyond the forest.
+Desc A wise guardian who explains the mechanics of Remort, Awakening, and the
+First Change.
+Say 'remort', 'awakening', or 'levels' to learn more.
 ~
 Race human~
 Act ABU
@@ -1376,16 +1153,61 @@ Act2 E
 Aff 0
 Align 0
 Group 0
-Level 30
-Hitroll 10
-HitDice 1d1+999
-ManaDice 1d1+999
-DamDice 2d4+30
+Level 50
+Hitroll 20
+HitDice 100d10+1000
+ManaDice 100d10+1000
+DamDice 1d1+1
 DamType beating
-AcPierce -15
-AcBash -15
-AcSlash -15
-AcExotic -15
+AcPierce -30
+AcBash -30
+AcSlash -30
+AcExotic -30
+AttrFlags 0
+AbilFlags 0
+OffFlags 0
+ImmFlags a
+ResFlags 0
+VulnFlags P
+StartPos stand
+DefaultPos stand
+Sex female
+Wealth 0
+Form AHMV
+Parts ABCDEFGHIJK
+Size medium
+Material unknown~
+MaxLoad -1
+M GREET 266 100~
+M SPEECH 267 remort~
+M SPEECH 268 awakening~
+End
+#256
+#MOBFORMAT dynamic
+Name arbiter threshold graduation guide~
+ShD the Arbiter of the Threshold~
+LnD The Arbiter of the Threshold guards the final gateway to the mortal realm.
+~
+Desc An imposing figure clad in onyx and silver armor. The gateway to Sanctuary
+Recall stands directly behind him.
+Say 'vampire', 'mortal', or 'graduate' to learn more.
+~
+Race human~
+Act ABU
+Act2 E
+Aff 0
+Align 0
+Group 0
+Level 50
+Hitroll 20
+HitDice 100d10+1000
+ManaDice 100d10+1000
+DamDice 1d1+1
+DamType beating
+AcPierce -30
+AcBash -30
+AcSlash -30
+AcExotic -30
 AttrFlags 0
 AbilFlags 0
 OffFlags 0
@@ -1401,7 +1223,10 @@ Parts ABCDEFGHIJK
 Size medium
 Material unknown~
 MaxLoad -1
-M GREET 259 100~
+M GREET 269 100~
+M SPEECH 270 vampire~
+M SPEECH 271 mortal~
+M SPEECH 272 graduate~
 End
 #0
 
@@ -3260,186 +3085,368 @@ D1
 0 -1 111
 S
 #250
-A Forest Road~
-You are standing on a forest road. To move, type 'north'. To see what is around you, type 'look'.
+The Threshold of Awakening~
+A crystalline platform hangs suspended in an endless expanse of swirling
+cerulean fog. Pillars of polished quartz rise at the four corners, inscribed
+with pulsing runes that catch the light. A carved guide post stands beside the
+path, offering guidance to those newly arrived in the World of Darkness. The
+ethereal mist coalesces northward into an illuminated grand hallway.
 ~
-0 0 3
+0 1036 0
+E
+signpost post guide guidepost~
+{C+-------------------------------------------------------------------+{x
+{C|                  {WTHE THRESHOLD OF AWAKENING                     {C|{x
+{C+-------------------------------------------------------------------+{x
+{C| {YTopics available in this chamber:                                 {C|{x
+{C|   {Glook post{x       - View this overview plaque                     {C|{x
+{C|   {Glook pillars{x    - Inspect the four foundational stones           {C|{x
+{C|   {Glook mist{x       - Study the celestial currents                  {C|{x
+{C|   {Gsay commands{x    - Ask the Herald about core interface commands  {C|{x
+{C|   {Gsay movement{x    - Ask the Herald about navigation and exits     {C|{x
+{C|                                                                   {C|{x
+{C| {WTo proceed north, simply type {Y'north'{W (or {Y'n'{W).                   {C|{x
+{C+-------------------------------------------------------------------+{x
+~
+E
+pillars pillar quartz~
+Four massive quartz pillars anchor the platform against the void. Each is
+etched with fundamental directives for the wayfarer:
+  {W[1] Perception:{x Type {Y'look'{x to examine your surroundings and objects.
+  {W[2] Movement:{x Type {Y'n', 's', 'e', 'w', 'u', 'd'{x to traverse exits.
+  {W[3] Discourse:{x Type {Y'say <text>'{x to speak with nearby guides.
+  {W[4] Awareness:{x Type {Y'score'{x or {Y'worth'{x to view vitality and coin.
+~
+E
+mist fog cerulean~
+Swirling ribbons of luminous blue vapor drift beneath your feet. They part
+gently as you step, revealing glimpses of forgotten realms and distant stars.
+~
 D0
-The road continues north to a crossroads.
+An illuminated passage leads north toward the Hall of Forms.
 ~
 ~
 0 0 251
 S
 #251
-The Crossroads~
-You are at a fork in the road. To the east, you see the sealed gates of a walled city. To the west, the ancient forest thickens.
+The Hall of Forms~
+Crystalline displays line the walls of this vaulted gallery, each hovering
+before a towering mirror of silvered glass. Pages of ethereal script shimmer
+in mid-air, detailing the nine core Attributes, thirty mortal Abilities, and
+the supernatural traits that govern Kindred, Garou, and Awakened souls. A
+tall guide post rests beside a display lectern. The path extends north into
+the Chamber of Creation, while the Threshold lies south.
 ~
-0 0 3
-D1
-The walled city lies to the east.
+0 1036 0
+E
+signpost post guide guidepost~
+{C+-------------------------------------------------------------------+{x
+{C|                       {WTHE HALL OF FORMS                         {C|{x
+{C+-------------------------------------------------------------------+{x
+{C| {YTopics available in this chamber:                                 {C|{x
+{C|   {Glook sheet{x      - How Haven's Storyteller Sheet works           {C|{x
+{C|   {Glook traits{x     - Attributes vs Abilities overview               {C|{x
+{C|   {Glook displays{x   - The hovering crystalline ledgers              {C|{x
+{C|   {Gsay sheet{x       - Ask the Archivist how to view your sheet      {C|{x
+{C|   {Gsay attributes{x  - Learn about Physical, Social & Mental stats   {C|{x
+{C|   {Gsay abilities{x   - Learn about Talents, Skills & Knowledges      {C|{x
+{C|                                                                   {C|{x
+{C| {WCore Command:{x Type {Y'cs'{W (or {Y'sheet'{W) to open your Character Sheet!   {C|{x
+{C+-------------------------------------------------------------------+{x
+~
+E
+sheet charsheet traits~
+Haven of the Embraced uses White Wolf's 1-to-5 dot Storyteller system:
+  {WAttributes (1-5):{x Raw innate capability (e.g. Strength, Wits).
+  {WAbilities (0-5):{x Trained proficiencies (e.g. Brawl, Stealth, Occult).
+  {WVirtues (1-5):{x Moral anchors: Conscience, Self-Control, and Courage.
+  {WWillpower (1-10):{x Mental grit derived from Courage; fuels powers.
+  {WHumanity (0-10):{x The barrier preserving your soul from the Beast.
+Type {Y'cs'{x to inspect your active ratings at any time.
+~
+E
+displays mirrors crystalline~
+Luminous silver mirrors reflect not physical armor, but the spiritual anatomy
+of your character: their demeanor, clan bloodline, disciplines, and rating dots.
+~
+D0
+The gallery opens north into the Chamber of Creation.
 ~
 ~
 0 0 252
 D2
-The forest road goes back south.
+The Threshold of Awakening lies south.
 ~
 ~
 0 0 250
-D3
-The ancient forest lies to the west.
-~
-~
-0 0 257
 S
 #252
-Dark Alley~
-You have entered the dark alleys of the city. A chained vessel is here for your feeding practice.
+The Chamber of Creation~
+At the center of this domed pavilion stands a pedestal of white marble bathed
+in soft golden lamplight. Vessels of soft sculpting clay and silver calipers
+rest on its surface, symbolizing the deliberate molding of identity. A detailed
+guide post explains how to craft or adjust a character sheet using Haven's
+interactive builder. An arched portal leads north to the Crucible of Essence,
+while the Hall of Forms is south.
 ~
-0 0 1
-D1
-The alley continues east.
+0 1036 0
+E
+signpost post guide guidepost~
+{C+-------------------------------------------------------------------+{x
+{C|                     {WTHE CHAMBER OF CREATION                     {C|{x
+{C+-------------------------------------------------------------------+{x
+{C| {YTopics available in this chamber:                                 {C|{x
+{C|   {Glook builder{x    - The step-by-step 'create' workflow            {C|{x
+{C|   {Glook pedestal{x   - The artisan tools and clay                     {C|{x
+{C|   {Gsay create{x      - Ask the Sculptor how to enter builder mode    {C|{x
+{C|   {Gsay priority{x    - Learn how Primary, Secondary & Tertiary work  {C|{x
+{C|                                                                   {C|{x
+{C| {WIf you picked a CUSTOM sheet at login, you MUST run {Y'create'{W!      {C|{x
+{C+-------------------------------------------------------------------+{x
+~
+E
+builder create workflow~
+{WInteractive Character Builder ('create' command):{x
+  {C1. Priorities:{x Assign 7/5/3 dots to Attributes (Physical/Social/Mental)
+     and 13/9/5 dots to Abilities (Talents/Skills/Knowledges).
+  {C2. Allocation:{x Type {Y'create <trait> +'{x to raise or {Y'create <trait> -'{x.
+  {C3. Virtues:{x Spend 7 dots across Conscience, Self-Control, and Courage.
+  {C4. Finalize:{x Once all pools hit 0, type {Y'create done'{x to seal traits!
+If you chose an Archetype (0-9), this was pre-set, but you can inspect it anytime.
+~
+E
+pedestal marble clay tools~
+A flawless plinth carved from Thessalian marble. Resting atop it is a bowl of
+ethereal clay that responds to the focused thoughts of the wayfarer.
+~
+D0
+The arched portal opens north to the Crucible of Essence.
 ~
 ~
 0 0 253
-D3
-The crossroads are to the west.
+D2
+The Hall of Forms lies south.
 ~
 ~
 0 0 251
 S
 #253
-Feeding Gate~
-This path requires you to have fed.
+The Crucible of Essence~
+Warm light radiates from floating brazier basins suspended above a floor of
+dark polished obsidian. Shimmering points of amber and sapphire light drift
+gently through the air, gathering into constellations of mortal Backgrounds
+and Freebie essence. A brass guide post stands near the center of the hall.
+An open archway continues north to the Spire of Prowess, while the Chamber of
+Creation lies south.
 ~
-0 0 1
-D1
-The training room is east.
+0 1036 0
+E
+signpost post guide guidepost~
+{C+-------------------------------------------------------------------+{x
+{C|                    {WTHE CRUCIBLE OF ESSENCE                      {C|{x
+{C+-------------------------------------------------------------------+{x
+{C| {YTopics available in this chamber:                                 {C|{x
+{C|   {Glook freebies{x   - How to spend your 15 starting freebie points  {C|{x
+{C|   {Glook background{x - Retainers, Resources, Generation & more       {C|{x
+{C|   {Gsay freebie{x     - Ask the Benefactor about the 'freebie' menu   {C|{x
+{C|   {Gsay backgrounds{x - Ask about mortal advantages and backgrounds   {C|{x
+{C|                                                                   {C|{x
+{C| {WCommands:{x Type {Y'freebie'{W to customize stats, or {Y'backgrounds'{W!   {C|{x
+{C+-------------------------------------------------------------------+{x
+~
+E
+freebies freebie spending~
+{WFreebie Point System ('freebie' command):{x
+Every character receives {Y15 Freebie points{x at creation to fine-tune stats:
+  {CAttributes:{x 5 Freebie points per dot
+  {CAbilities:{x  2 Freebie points per dot
+  {CDisciplines:{x 7 Freebie points per dot (Vampires)
+  {CVirtues:{x     2 Freebie points per dot
+  {CWillpower:{x   1 Freebie point per dot
+  {CHumanity:{x    1 Freebie point per dot
+Type {Y'freebie'{x with no arguments to view the interactive spending menu!
+~
+E
+background backgrounds advantages~
+{WBackgrounds System ('backgrounds' command):{x
+Backgrounds represent mortal assets, allies, and social standing:
+  {CGeneration:{x Lowers your generation (Vampires start at 10th gen by default).
+  {CResources:{x  Wealth, investments, and independent income.
+  {CHerd:{x       Readily available vessels to slake your hunger.
+  {CRetainers:{x  Loyal mortal servants and ghoul bodyguards.
+  {CContacts:{x   Informants and allies across the mortal city.
+~
+D0
+The archway leads north to the Spire of Prowess.
 ~
 ~
 0 0 254
-D3
-The dark alley is west.
+D2
+The Chamber of Creation lies south.
 ~
 ~
 0 0 252
 S
 #254
-Discipline Training Room~
-You must use a basic discipline to pass here.
+The Spire of Prowess~
+Racks of training armaments, sparring staves, and arcane diagrams line the
+perimeter of this lofty octagonal tower. Star charts overhead map the pathways
+between Storyteller attributes and the traditional Diku combat skills. A carved
+wooden guide post stands beside a weapon display. A broad stair ascends north
+to the Archive of Cycles, while the Crucible of Essence lies south.
 ~
-0 0 1
-D1
-The combat training room is east.
+0 1036 0
+E
+signpost post guide guidepost~
+{C+-------------------------------------------------------------------+{x
+{C|                      {WTHE SPIRE OF PROWESS                       {C|{x
+{C+-------------------------------------------------------------------+{x
+{C| {YTopics available in this chamber:                                 {C|{x
+{C|   {Glook skillmap{x   - The Storyteller-to-Skill unlocking engine    {C|{x
+{C|   {Glook learning{x   - Practice vs check_improve & real combat use   {C|{x
+{C|   {Gsay skillmap{x    - Ask the Weaponmaster about unlocking skills   {C|{x
+{C|   {Gsay learning{x    - Learn how Haven's skills advance by use       {C|{x
+{C|                                                                   {C|{x
+{C| {WCommands:{x Type {Y'skillmap'{W to see unlock requirements, or {Y'skills'{W!{C|{x
+{C+-------------------------------------------------------------------+{x
+~
+E
+skillmap skill_map unlocks~
+{WHaven's Modern Skill Matrix ('skillmap' command):{x
+Unlike traditional MUDs where you spend 'train' or 'practice' sessions at a
+guildmaster, Haven unlocks skills dynamically based on your Storyteller sheet:
+  - Having sufficient dots in {WAttributes{x (e.g. Dexterity, Wits) or
+    {WAbilities{x (e.g. Brawl, Melee, Stealth) unlocks relevant skills.
+  - Type {Y'skillmap'{x to browse every skill, its required level, and its
+    governing Attribute/Ability dot thresholds.
+  - Skills flagged with {rX{x are locked until you raise the required CS trait.
+~
+E
+learning practice improve~
+{WSkill Advancement & Mastery:{x
+  - Once unlocked, skills start at a base competency.
+  - Using a skill in active gameplay (combat, crafting, foraging, stealth)
+    rolls checks against your stats. Successful use dynamically increases your
+    proficiency toward 100% via the {Wcheck_improve{x engine.
+  - Weapons improve with practice; secondary combat skills (blunt, light, heavy)
+    raise your weapon proficiency caps.
+~
+D0
+The broad stair ascends north to the Archive of Cycles.
 ~
 ~
 0 0 255
-D3
-The feeding gate is west.
+D2
+The Crucible of Essence lies south.
 ~
 ~
 0 0 253
 S
 #255
-Combat Training~
-A sparring dummy is here. Attack it to learn the basics of combat.
+The Archive of Cycles~
+Ribbons of starlight weave through high archways, casting quiet reflections
+upon a basin of crystalline water at the room's core. Frescoes on the domed
+ceiling depict the endless wheel of life, undeath, rebirth, and ascension: the
+mortal walking the street, the Kindred prowling the night, the Garou howling at
+the moon, and the Mage rending reality. A bronze guide post stands beside the
+reflecting pool. A massive gate leads north to the Grand Crossroads, while the
+Spire of Prowess lies south.
 ~
-0 0 1
-D1
-The graduation room is east.
+0 1036 0
+E
+signpost post guide guidepost~
+{C+-------------------------------------------------------------------+{x
+{C|                     {WTHE ARCHIVE OF CYCLES                       {C|{x
+{C+-------------------------------------------------------------------+{x
+{C| {YTopics available in this chamber:                                 {C|{x
+{C|   {Glook remort{x     - Level 100 reincarnation & Awakening           {C|{x
+{C|   {Glook paths{x      - Kindred, Garou (Werewolf), and Awakened Mage  {C|{x
+{C|   {Gsay remort{x      - Ask the Sage about the Remort process         {C|{x
+{C|   {Gsay awakening{x   - Learn how mortals transcend into supernatural {C|{x
+{C|                                                                   {C|{x
+{C| {WKnowledge:{x Remort preserves your character while expanding powers!    {C|{x
+{C+-------------------------------------------------------------------+{x
+~
+E
+remort reincarnation levels~
+{WThe Remort System ('remort' command):{x
+Upon reaching maximum level ({W100{x), a mortal or supernatural may choose to
+undergo Remort:
+  - Resets character level to 1, retaining earned fame and accomplishments.
+  - Grants additional bonus Freebie points to spend on higher-tier traits.
+  - Unlocks higher supernatural paths and bloodline potencies.
+~
+E
+paths awakening garou mage vampire~
+{WThe Three Great Supernatural Spheres:{x
+  {R[Kindred]:{x Masters of the Blood, Disciplines, and shadows. Vampires
+    thrive in urban nightscapes and manage hunger and humanity.
+  {G[Garou]:{x Shape-shifting warriors of Gaia who walk between the physical
+    world and the Umbra, fueled by Primal Rage and Gnosis.
+  {M[Mages]:{x Willworkers who manipulate the Nine Spheres of True Magick,
+    channeling Quintessence while balancing the dangers of Paradox.
+~
+D0
+The massive gate opens north to the Grand Crossroads.
 ~
 ~
 0 0 256
-D3
-The discipline room is west.
+D2
+The Spire of Prowess lies south.
 ~
 ~
 0 0 254
 S
 #256
-Graduation Room~
-You have completed your vampiric training.
+The Grand Crossroads of Fate~
+You stand at the northern pinnacle of the Prelude upon a magnificent circular
+terrace of polished obsidian. Before you stands a grand arched portal swirling
+with warm golden light, leading directly into the Central Temple of Recall in
+the mortal city. Beside the archway, an iron guide post details the final
+divergence between mortal life and the undead curse. The Archive of Cycles lies
+to the south.
 ~
-0 0 1
-D3
-Combat training is west.
+0 1036 0
+E
+signpost post guide guidepost~
+{C+-------------------------------------------------------------------+{x
+{C|                  {WTHE GRAND CROSSROADS OF FATE                   {C|{x
+{C+-------------------------------------------------------------------+{x
+{C| {YTopics available in this chamber:                                 {C|{x
+{C|   {Glook portal{x     - The gateway to Sanctuary Central Temple       {C|{x
+{C|   {Glook rules{x      - In-character (IC) vs Out-of-character (OOC)  {C|{x
+{C|   {Gsay vampire{x     - Ask about vampire mechanics (blood, fangs)    {C|{x
+{C|   {Gsay mortal{x      - Ask about mortal progression and remort       {C|{x
+{C|   {Gsay graduate{x    - Request the Arbiter to transfer you to town!  {C|{x
+{C|                                                                   {C|{x
+{C| {WTo enter the world:{x Walk {Y'north'{W through the portal or say {Y'graduate'{W!{C|{x
+{C+-------------------------------------------------------------------+{x
+~
+E
+portal archway gate recall~
+A shimmering archway of pure golden light connects the tutorial realm to the
+living World of Darkness. Stepping north through this portal deposits you in
+the Central Temple of Recall (Room #101) where your journey begins in earnest.
+~
+E
+rules ic ooc etiquette~
+{WHaven of the Embraced Roleplay Etiquette:{x
+  - {WIC vs OOC:{x Haven is an immersive roleplaying game. Keep modern talk
+    confined to the {Y'ooc'{x channel. In-character speech ({Y'say'{x, {Y'tell'{x)
+    should reflect your character's gothic persona.
+  - {WHelp System:{x Type {Y'help <topic>'{x for exhaustive documentation on
+    any spell, discipline, skill, clan, or system mechanic.
+~
+D0
+The golden portal leads north to the Central Sanctuary Temple.
+~
+~
+0 0 101
+D2
+The Archive of Cycles lies south.
 ~
 ~
 0 0 255
-S
-#257
-Forest Clearing~
-You have stepped into the wild forest clearing.
-~
-0 0 3
-D1
-The crossroads are east.
-~
-~
-0 0 251
-D3
-The combat clearing is west.
-~
-~
-0 0 258
-S
-#258
-Combat Training~
-A sparring dummy is set up in the forest.
-~
-0 0 3
-D1
-The forest clearing is east.
-~
-~
-0 0 257
-D3
-The grove is west.
-~
-~
-0 0 259
-S
-#259
-The Grove~
-Ancient trees surround you.
-~
-0 0 3
-D1
-Combat training is east.
-~
-~
-0 0 258
-D3
-The skills room is west.
-~
-~
-0 0 260
-S
-#260
-Skills Room~
-Here you learn about survival skills.
-~
-0 0 3
-D1
-The grove is east.
-~
-~
-0 0 259
-D3
-The graduation room is west.
-~
-~
-0 0 261
-S
-#261
-Graduation Room~
-You have completed your human training.
-~
-0 0 3
-D1
-The skills room is east.
-~
-~
-0 0 260
 S
 #0
 
@@ -3474,18 +3481,13 @@ G 0 180 0
 G 0 230 0
 M 0 105 1 113 1
 M 0 106 1 113 1
-M 0 250 1 251 1
-M 0 251 1 252 1
+M 0 250 1 250 1
+M 0 251 1 251 1
 M 0 252 1 252 1
 M 0 253 1 253 1
 M 0 254 1 254 1
 M 0 255 1 255 1
 M 0 256 1 256 1
-M 0 257 1 257 1
-M 0 258 1 258 1
-M 0 259 1 259 1
-M 0 260 1 260 1
-M 0 261 1 261 1
 S
 
 
@@ -3498,71 +3500,221 @@ S
 
 #MPCODE
 #250
-Prelude Crossroads Guardian Greet~
+Prelude Herald Greet~
 if ispc $n
-  mob echoat $n The guardian speaks: 'The city path to the east is for Vampires. The forest path to the west is for Humans.'
+  mob echoat $n {CThe Herald of Awakening greets you warmly.{x
+  mob echoat $n {W'Welcome, traveler, to the Threshold of Awakening.'{x
+  mob echoat $n {W'I am here to guide your first steps. Type {Ylook post{W to view the room index,'{x
+  mob echoat $n {W'or speak aloud: {Ysay commands{W or {Ysay movement{W to learn the basics.'{x
+  mob echoat $n {W'When you are ready, proceed {Ynorth{W into the Hall of Forms.'{x
 endif
 ~
 #251
-Prelude Sire Greet~
-if race $n vampire
-  mob echoat $n Your Sire greets you. 'Welcome to the shadows. First, type 'fangs' to extend them. Then 'kill vessel' to initiate combat, and type 'feed' while fighting!'
-else
-  mob echoat $n The city gates remain sealed to mortal blood.
-  mob transfer $n 251
-endif
+Prelude Herald Commands Speech~
+mob echoat $n {CThe Herald of Awakening smiles and speaks:{x
+mob echoat $n {W'Essential Haven commands to remember:'{x
+mob echoat $n {W'  {Ylook{W     - Examine your surroundings, objects, or players.'{x
+mob echoat $n {W'  {Yscore{W    - View your current health, blood, and vital status.'{x
+mob echoat $n {W'  {Yworth{W    - Check your accumulated silver and gold coins.'{x
+mob echoat $n {W'  {Yhelp{W     - Search the extensive help archive on any topic.'{x
+mob echoat $n {W'  {Ysay <msg>{W- Converse in-character with those in your room.'{x
 ~
 #252
-Prelude Gatekeeper Feeding Check~
-if pblood $n >= 50
-  mob echoat $n You may pass.
-else
-  mob echoat $n You must feed before proceeding.
-  mob transfer $n 252
-endif
+Prelude Herald Movement Speech~
+mob echoat $n {CThe Herald of Awakening gestures toward the open passage:{x
+mob echoat $n {W'To move through Haven, use compass directions: {Ynorth{W, {Ysouth{W, {Yeast{W, {Ywest{W,'{x
+mob echoat $n {W'as well as {Yup{W and {Ydown{W (abbreviated {Yn, s, e, w, u, d{W).'{x
+mob echoat $n {W'Type {Yexits{W at any time to see obvious exits leading from your location.'{x
+mob echoat $n {W'Head {Ynorth{W now to inspect your Character Sheet.'{x
 ~
 #253
-Prelude Discipline Master Check~
-if disc $n potence >= 1
-  mob echoat $n Excellent control of your disciplines.
-else
-  mob echoat $n You must use your discipline before proceeding.
-  mob transfer $n 253
+Prelude Archivist Greet~
+if ispc $n
+  mob echoat $n {CThe Archivist of Forms looks up from his crystalline ledgers.{x
+  mob echoat $n {W'Greetings. Here in the Hall of Forms, we measure the spiritual anatomy of souls.'{x
+  mob echoat $n {W'Haven uses the Storyteller System of Attributes and Abilities.'{x
+  mob echoat $n {W'Type {Ycs{W (or {Ysheet{W) right now to view your full Character Sheet!'{x
+  mob echoat $n {W'You may also say {Ysheet{W, {Yattributes{W, or {Yabilities{W to learn more.'{x
 endif
 ~
 #254
-Prelude Sparring Dummy Fight~
-if hpprc $n < 30
-  mob echo The sparring dummy ceases its attack and flees!
-  mob flee
-  mob goto 250
-endif
+Prelude Archivist Sheet Speech~
+mob echoat $n {CThe Archivist unrolls a shimmering scroll before you:{x
+mob echoat $n {W'Your Character Sheet ({Ycs{W) displays:'{x
+mob echoat $n {W'  - {YAttributes:{W Physical (Str/Dex/Sta), Social (Cha/Man/App), Mental (Per/Int/Wit).'{x
+mob echoat $n {W'  - {YAbilities:{W Talents (instincts), Skills (training), and Knowledges (study).'{x
+mob echoat $n {W'  - {YVirtues:{W Conscience, Self-Control, and Courage (determine Humanity & Willpower).'{x
+mob echoat $n {W'  - {YDisciplines:{W Vampiric blood gifts, Clan affinity, and generation.'{x
 ~
 #255
-Prelude Elder Vampire Graduation~
-mob echoat $n 'Once you reach level 100, you can choose to Remort. This resets your level back to 1 but grants you additional Freebie points. True Blood mortals can Awaken as Mages or Garou, while Vampires and others gain increased capabilities through freebies.'
-mob transfer $n 101
+Prelude Archivist Attributes Speech~
+mob echoat $n {CThe Archivist taps a glyph of three interlocking rings:{x
+mob echoat $n {W'Attributes represent your raw innate potential rated from 1 to 5 dots:'{x
+mob echoat $n {W'  {YPhysical:{W Strength (damage), Dexterity (accuracy & defense), Stamina (hit points).'{x
+mob echoat $n {W'  {YSocial:{W   Charisma (presence), Manipulation (influence), Appearance (first impression).'{x
+mob echoat $n {W'  {YMental:{W   Perception (awareness), Intelligence (reasoning), Wits (reaction time).'{x
 ~
 #256
-Prelude Forest Ranger Greet~
-if race $n human
-  mob echoat $n Welcome to the forest. Type look and practice moving around.
-else
-  mob echoat $n The wild recoils from your undead presence.
-  mob transfer $n 251
-endif
+Prelude Archivist Abilities Speech~
+mob echoat $n {CThe Archivist displays an array of thirty martial and scholarly disciplines:{x
+mob echoat $n {W'Abilities represent learned technique and knowledge, rated from 0 to 5 dots:'{x
+mob echoat $n {W'  {YTalents:{W    Brawl, Dodge, Alertness, Athletics, Intimidation, Subterfuge.'{x
+mob echoat $n {W'  {YSkills:{W     Melee, Stealth, Survival, Animal Ken, Crafts, Archery.'{x
+mob echoat $n {W'  {YKnowledges:{W Occult, Enigmas, Medicine, Investigation, Academics, Science.'{x
+mob echoat $n {W'These traits unlock your active combat skills! Head {Ynorth{W to see how they are shaped.'{x
 ~
 #257
-Prelude Grove Druid Greet~
-mob echoat $n Here humans who prove worthy may Awaken as Werewolves (Garou) or Mages through the remort system.
+Prelude Sculptor Greet~
+if ispc $n
+  mob echoat $n {CThe Sculptor of Destiny pauses her work at the marble pedestal.{x
+  mob echoat $n {W'Welcome, artisan. If you chose a custom sheet at creation, this is where your identity takes form.'{x
+  mob echoat $n {W'If you selected a pre-built Archetype (0-9), your base stats are already established.'{x
+  mob echoat $n {W'Speak aloud: {Ysay create{W or {Ysay priority{W to learn how the builder works.'{x
+endif
 ~
 #258
-Prelude Skills Master Greet~
-mob echoat $n Type 'practice', 'train', 'score', and 'cs' to manage your abilities.
+Prelude Sculptor Create Speech~
+mob echoat $n {CThe Sculptor of Destiny gestures to the marble plinth:{x
+mob echoat $n {W'The {Ycreate{W command is Haven\'s interactive character builder:'{x
+mob echoat $n {W'  1. If your stats are 0, type {Ycreate{W to begin prioritizing trait categories.'{x
+mob echoat $n {W'  2. Spend dots with {Ycreate <trait> +{W or remove dots with {Ycreate <trait> -{W.'{x
+mob echoat $n {W'  3. Once your primary, secondary, and tertiary pools reach 0, type {Ycreate done{W.'{x
+mob echoat $n {W'Archetype characters may inspect their current progress anytime with {Ycs{W.'{x
 ~
 #259
-Prelude Remort Guide Graduation~
-mob echoat $n 'Once you reach level 100, you can choose to Remort. This resets your level back to 1 but grants you additional Freebie points. True Blood mortals can Awaken as Mages or Garou, while Vampires and others gain increased capabilities through freebies.'
+Prelude Sculptor Priority Speech~
+mob echoat $n {CThe Sculptor of Destiny explains the priority triad:{x
+mob echoat $n {W'When building a custom sheet, you assign priority pools:'{x
+mob echoat $n {W'  - {YAttributes:{W 7 dots Primary, 5 dots Secondary, 3 dots Tertiary.'{x
+mob echoat $n {W'  - {YAbilities:{W  13 dots Primary, 9 dots Secondary, 5 dots Tertiary.'{x
+mob echoat $n {W'  - {YVirtues:{W    7 dots distributed across Conscience, Self-Control & Courage.'{x
+mob echoat $n {W'When satisfied, walk {Ynorth{W to learn about Backgrounds and Freebie points!'{x
+~
+#260
+Prelude Benefactor Greet~
+if ispc $n
+  mob echoat $n {CThe Benefactor of Essence welcomes you with an outstretched hand.{x
+  mob echoat $n {W'Hail, traveler. Beyond raw traits lie the personal advantages of your mortal life.'{x
+  mob echoat $n {W'Every new soul receives 15 Freebie points and 5 Background points.'{x
+  mob echoat $n {W'Speak aloud: {Ysay freebie{W or {Ysay backgrounds{W to learn how to allocate them.'{x
+endif
+~
+#261
+Prelude Benefactor Freebie Speech~
+mob echoat $n {CThe Benefactor opens an ethereal menu in the air before you:{x
+mob echoat $n {W'Type {Yfreebie{W with no arguments to view the interactive Freebie Point menu!'{x
+mob echoat $n {W'You have 15 points to spend on anything you wish:'{x
+mob echoat $n {W'  - Attributes: 5 pts per dot | Abilities: 2 pts per dot'{x
+mob echoat $n {W'  - Virtues: 2 pts per dot    | Disciplines: 7 pts per dot'{x
+mob echoat $n {W'  - Willpower & Humanity: 1 pt per dot'{x
+mob echoat $n {W'Type {Yfreebie <trait>{W to invest a point directly into that stat.'{x
+~
+#262
+Prelude Benefactor Backgrounds Speech~
+mob echoat $n {CThe Benefactor weaves a tapestry of mortal connections:{x
+mob echoat $n {W'Backgrounds represent mortal power and assets. Type {Ybackgrounds{W to view them:'{x
+mob echoat $n {W'  - {YGeneration:{W Lowers your vampire generation (more blood capacity and potency).'{x
+mob echoat $n {W'  - {YResources:{W  Mortal wealth, steady income, and high society standing.'{x
+mob echoat $n {W'  - {YHerd:{W       Reliable vessels to feed upon without hunting.'{x
+mob echoat $n {W'  - {YRetainers:{W  Loyal ghoul servants and mortal bodyguards.'{x
+mob echoat $n {W'Invest your background points in-game using the backgrounds command.'{x
+mob echoat $n {W'Continue {Ynorth{W into the Spire of Prowess to see how traits unlock skills.'{x
+~
+#263
+Prelude Master Prowess Greet~
+if ispc $n
+  mob echoat $n {CThe Master of Prowess salutes you crisply with his staff.{x
+  mob echoat $n {W'Stand tall! On Haven, combat mastery is not purchased from a trainer with gold.'{x
+  mob echoat $n {W'Your Storyteller traits unlock your skills, and real practice hones them.'{x
+  mob echoat $n {W'Speak aloud: {Ysay skillmap{W or {Ysay learning{W to understand our martial engine.'{x
+endif
+~
+#264
+Prelude Master Prowess Skillmap Speech~
+mob echoat $n {CThe Master of Prowess unrolls a complex tactical star chart:{x
+mob echoat $n {W'Type {Yskillmap{W (or {Yskillmap <trait>{W) to see the skill unlock matrix!'{x
+mob echoat $n {W'Every martial skill (kick, parry, dodge, second attack, backstab, etc.) requires:'{x
+mob echoat $n {W'  1. A minimum character level.'{x
+mob echoat $n {W'  2. A minimum rating in a Primary Storyteller trait (e.g. Dex 2, Brawl 2).'{x
+mob echoat $n {W'  3. Often a Secondary trait threshold.'{x
+mob echoat $n {W'If you lack the required dots, the skill is flagged {rX{W and remains dormant.'{x
+~
+#265
+Prelude Master Prowess Learning Speech~
+mob echoat $n {CThe Master of Prowess demonstrates a fluid parry and riposte:{x
+mob echoat $n {W'How skills advance on Haven:'{x
+mob echoat $n {W'  - {WNO PRACTICE SESSIONS:{x We do not use traditional mud \'practice\' commands.'{x
+mob echoat $n {W'  - {WLEARNING BY DOING:{x Every time you use a skill in combat or explore,'{x
+mob echoat $n {W'    the engine rolls an improvement check based on your stats.'{x
+mob echoat $n {W'  - {WPROFICIENCY CAPS:{x Training your secondary weapon skills (blunt, light, heavy)'{x
+mob echoat $n {W'    raises your mastery ceiling toward 100%.'{x
+mob echoat $n {W'Ascend {Ynorth{W to the Archive of Cycles to learn about Remort and Ascension.'{x
+~
+#266
+Prelude Sage Greet~
+if ispc $n
+  mob echoat $n {CThe Sage of Cycles gazes into the luminous reflecting pool.{x
+  mob echoat $n {W'Greetings, seeker. All mortal lives and undead journeys move in grand cycles.'{x
+  mob echoat $n {W'When you achieve greatness at level 100, the path of Remort opens before you.'{x
+  mob echoat $n {W'Speak aloud: {Ysay remort{W or {Ysay awakening{W to discover what awaits.'{x
+endif
+~
+#267
+Prelude Sage Remort Speech~
+mob echoat $n {CThe Sage of Cycles gestures as concentric ripples spread across the pool:{x
+mob echoat $n {W'The Remort System ({Yremort{W command):'{x
+mob echoat $n {W'  - When you attain level 100, you may choose to undergo Remort.'{x
+mob echoat $n {W'  - Your level resets to 1, but you keep all equipment and renown.'{x
+mob echoat $n {W'  - You gain bonus Freebie points to further enhance your Storyteller sheet,'{x
+mob echoat $n {W'    growing significantly more powerful across successive incarnations.'{x
+~
+#268
+Prelude Sage Awakening Speech~
+mob echoat $n {CThe Sage of Cycles points to the celestial frescoes above:{x
+mob echoat $n {W'Beyond mortal limits lie three transcendent paths:'{x
+mob echoat $n {W'  {R[Kindred]:{W The Children of Caine. Feed on vitae, command disciplines,'{x
+mob echoat $n {W'               and rule the mortal night from the shadows.'{x
+mob echoat $n {W'  {G[Garou]:{W   Werewolves born of Gaia. Through remort, pure-blood mortals'{x
+mob echoat $n {W'               undergo the First Change to fight the Wyrm.'{x
+mob echoat $n {W'  {M[Mage]:{W    Enlightened Willworkers who Awaken to reshape reality through'{x
+mob echoat $n {W'               the Nine Spheres of True Magick.'{x
+mob echoat $n {W'Pass {Ynorth{W to the Grand Crossroads of Fate to begin your journey!'{x
+~
+#269
+Prelude Arbiter Greet~
+if ispc $n
+  mob echoat $n {CThe Arbiter of the Threshold stands before the golden gateway.{x
+  mob echoat $n {W'Halt, traveler. You stand at the threshold of the living world.'{x
+  mob echoat $n {W'Behind me lies the Central Temple of Recall in Sanctuary.'{x
+  mob echoat $n {W'Speak aloud: {Ysay vampire{W for Kindred tips, {Ysay mortal{W for mortal tips,'{x
+  mob echoat $n {W'or {Ysay graduate{W (or simply step {Ynorth{W) to enter the world!'{x
+endif
+~
+#270
+Prelude Arbiter Vampire Speech~
+mob echoat $n {CThe Arbiter of the Threshold whispers of Kindred existence:{x
+mob echoat $n {W'Vampiric Survival Rules:'{x
+mob echoat $n {W'  - {Yfangs:{W Extend your fangs before feeding on a victim.'{x
+mob echoat $n {W'  - {Yfeed:{W Slake your hunger in combat to replenish your Blood Pool.'{x
+mob echoat $n {W'  - {Yregenerate:{W Heal aggravated wounds with vitae.'{x
+mob echoat $n {W'  - {Ydisclist:{W View your available vampiric disciplines.'{x
+mob echoat $n {W'  - {Ybloodbuff:{W Temporarily surge your physical attributes with blood.'{x
+mob echoat $n {W'Beware the sun and fire, Kindred. Keep your humanity intact.'{x
+~
+#271
+Prelude Arbiter Mortal Speech~
+mob echoat $n {CThe Arbiter of the Threshold counsels the mortal traveler:{x
+mob echoat $n {W'Mortal Wayfarer Advice:'{x
+mob echoat $n {W'  - Equip yourself well: weapons, armor, and bandages save lives.'{x
+mob echoat $n {W'  - Explore towns, forge alliances, and learn crafting professions.'{x
+mob echoat $n {W'  - Strive for level 100 to undergo Remort, or seek out an elder vampire'{x
+mob echoat $n {W'    to receive the Embrace into Kindred undeath.'{x
+~
+#272
+Prelude Arbiter Graduate Speech~
+mob echoat $n {CThe Arbiter of the Threshold raises his hand in solemn blessing.{x
+mob echoat $n {Y'Go forth into the night. May your destiny be carved in legend.'{x
+mob echoat $n {CThe golden gateway blazes with light as you are transported to Recall!{x
 mob transfer $n 101
 ~
 #0

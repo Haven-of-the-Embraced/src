@@ -193,7 +193,7 @@ void fwrite_char( CHAR_DATA *ch, FILE *fp )
     if (ch->desc)
       fprintf( fp, "Hostname %s~\n", ch->desc->host);
 
-    fprintf( fp, "Vers %d\n",   ch->version > 0 ? ch->version : 6);
+    fprintf( fp, "Vers %d\n",   ch->version >= 15 ? ch->version : 15);
     fprintf( fp, "Home %d\n", ch->pcdata->home );
     fprintf( fp, "Hometown %d\n", ch->pcdata->hometown);
     fprintf( fp, "Admin %d\n",ch->pcdata->admin);
@@ -1349,9 +1349,10 @@ void fread_char( CHAR_DATA *ch, FILE *fp )
         }
         else
             max = MAX_CSBACK;
-        
+
         for (i = 0; i < max; i ++)
            ch->pcdata->csbackgrounds[i] = fread_number(fp);
+        fread_to_eol(fp);
         fMatch = TRUE;
         break;
         }

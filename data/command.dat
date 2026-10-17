@@ -1,0 +1,5131 @@
+Name north~
+Dofun north~
+Position 9
+Level 0
+Log 2
+Show 0
+Cat 0
+End
+
+Name east~
+Dofun east~
+Position 9
+Level 0
+Log 2
+Show 0
+Cat 0
+End
+
+Name south~
+Dofun south~
+Position 9
+Level 0
+Log 2
+Show 0
+Cat 0
+End
+
+Name west~
+Dofun west~
+Position 9
+Level 0
+Log 2
+Show 0
+Cat 0
+End
+
+Name up~
+Dofun up~
+Position 9
+Level 0
+Log 2
+Show 0
+Cat 0
+End
+
+Name down~
+Dofun down~
+Position 9
+Level 0
+Log 2
+Show 0
+Cat 0
+End
+
+Name checkhelps~
+Dofun checkhelps~
+Position 0
+Level 101
+Log 0
+Show 1
+Cat 0
+End
+
+Name checktypos~
+Dofun checktypos~
+Position 0
+Level 101
+Log 0
+Show 1
+Cat 0
+End
+
+Name checkbugs~
+Dofun checkbugs~
+Position 0
+Level 107
+Log 0
+Show 1
+Cat 0
+End
+
+Name at~
+Dofun at~
+Position 0
+Level 104
+Log 0
+Show 1
+Cat 0
+End
+
+Name pray~
+Dofun pray~
+Position 8
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name rote~
+Dofun rote~
+Position 8
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name beseech~
+Dofun beseech~
+Position 8
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name buy~
+Dofun buy~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name channels~
+Dofun channels~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name exits~
+Dofun exits~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name get~
+Dofun get~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name goto~
+Dofun goto~
+Position 0
+Level 101
+Log 0
+Show 1
+Cat 0
+End
+
+Name group~
+Dofun group~
+Position 5
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name guild~
+Dofun guild~
+Position 0
+Level 107
+Log 1
+Show 1
+Cat 0
+End
+
+Name inventory~
+Dofun inventory~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name kill~
+Dofun kill~
+Position 8
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name look~
+Dofun look~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name knock~
+Dofun knock~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name glance~
+Dofun glance~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name clantalk~
+Dofun clantalk~
+Position 1
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name music~
+Dofun music~
+Position 5
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name order~
+Dofun order~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name practice~
+Dofun huh~
+Position 5
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name portal~
+Dofun portal~
+Position 5
+Level 101
+Log 1
+Show 1
+Cat 0
+End
+
+Name rest~
+Dofun rest~
+Position 5
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name sit~
+Dofun sit~
+Position 5
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name sockets~
+Dofun sockets~
+Position 0
+Level 105
+Log 0
+Show 1
+Cat 0
+End
+
+Name stand~
+Dofun stand~
+Position 5
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name tell~
+Dofun tell~
+Position 5
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name unlock~
+Dofun unlock~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name wield~
+Dofun wield~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name emote~
+Dofun emote~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name vampire~
+Dofun vampire~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name dhampire~
+Dofun huh~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name cast~
+Dofun magecast~
+Position 8
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name gogarou~
+Dofun gogarou~
+Position 9
+Level 0
+Log 1
+Show 1
+Cat 0
+End
+
+Name mage~
+Dofun mage~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name embrace~
+Dofun embrace~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name claws~
+Dofun claws~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name gleam~
+Dofun gleam~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name sense~
+Dofun sense~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name fangs~
+Dofun fangs~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name feed~
+Dofun feed~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name smell~
+Dofun smell~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name nourish~
+Dofun nourish~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name reveal~
+Dofun reveal~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name auraperception~
+Dofun auraperception~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name taste~
+Dofun taste~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name potency~
+Dofun potency~
+Position 6
+Level 1
+Log 0
+Show 1
+Cat 0
+End
+
+Name theft~
+Dofun theft~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name cauldron~
+Dofun cauldron~
+Position 8
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name bloodrage~
+Dofun bloodrage~
+Position 8
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name sphere~
+Dofun sphere~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name shift~
+Dofun shift~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name unseenpresence~
+Dofun unseenpresence~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name silenceofdeath~
+Dofun silenceofdeath~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name coat~
+Dofun coat~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name veil~
+Dofun veil~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name vanish~
+Dofun vanish~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name mask~
+Dofun mask~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name feralspeech~
+Dofun feralspeech~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name beckoning~
+Dofun beckoning~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name songofserenity~
+Dofun songofserenity~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name drawingouthebeast~
+Dofun drawingouthebeast~
+Position 9
+Level 0
+Log 1
+Show 1
+Cat 0
+End
+
+Name forgetful~
+Dofun forgetful~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name dreadgaze~
+Dofun dreadgaze~
+Position 8
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name regenerate~
+Dofun regenerate~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name bloodbuff~
+Dofun bloodbuff~
+Position 8
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name command~
+Dofun command~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name mesmerize~
+Dofun mesmerize~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name awe~
+Dofun awe~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name celerity~
+Dofun celerity~
+Position 8
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name shadowplay~
+Dofun shadowplay~
+Position 8
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name shadowform~
+Dofun shadowform~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name nightshades~
+Dofun nightshades~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name shadowwalk~
+Dofun shadowwalk~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name shroudofnight~
+Dofun shroudofnight~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name armsoftheabyss~
+Dofun armsoftheabyss~
+Position 8
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name entrancement~
+Dofun entrancement~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name earthmeld~
+Dofun earthmeld~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name majesty~
+Dofun majesty~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name spiritsummoning~
+Dofun huh~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name summon~
+Dofun summon~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name resurrection~
+Dofun resurrection~
+Position 1
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name animatedead~
+Dofun animatedead~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name weakness~
+Dofun weakness~
+Position 8
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name blight~
+Dofun blight~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name blackdeath~
+Dofun blackdeath~
+Position 9
+Level 0
+Log 1
+Show 1
+Cat 0
+End
+
+Name spitblood~
+Dofun spitblood~
+Position 8
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name bloodcurse~
+Dofun bloodcurse~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name lore~
+Dofun lore~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name dip~
+Dofun dip~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name invoke~
+Dofun invoke~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name drain~
+Dofun drain~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name chant~
+Dofun chant~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name vigor~
+Dofun vigor~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name waylay~
+Dofun waylay~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name fleshcraft~
+Dofun fleshcraft~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name bonecraft~
+Dofun bonecraft~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name zuloform~
+Dofun horridform~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name essence~
+Dofun essence~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name dash~
+Dofun dash~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name traditiontalk~
+Dofun traditiontalk~
+Position 5
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name tdtalk~
+Dofun traditiontalk~
+Position 5
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name tribetalk~
+Dofun tribetalk~
+Position 5
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name tbtalk~
+Dofun tribetalk~
+Position 5
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name invite~
+Dofun invite~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name rank~
+Dofun rank~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name promote~
+Dofun lpromote~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name endow~
+Dofun huh~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name expel~
+Dofun expel~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name induct~
+Dofun induct~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name renown~
+Dofun renown~
+Position 9
+Level 106
+Log 1
+Show 1
+Cat 0
+End
+
+Name garou~
+Dofun garou~
+Position 9
+Level 0
+Log 2
+Show 1
+Cat 0
+End
+
+Name gifts~
+Dofun gifts~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name totem~
+Dofun totem~
+Position 6
+Level 110
+Log 0
+Show 1
+Cat 0
+End
+
+Name assassinate~
+Dofun assassinate~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name divine~
+Dofun divine~
+Position 8
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name stake~
+Dofun huh~
+Position 9
+Level 110
+Log 1
+Show 1
+Cat 0
+End
+
+Name wizhelp~
+Dofun wizhelp~
+Position 0
+Level 101
+Log 0
+Show 1
+Cat 0
+End
+
+Name affects~
+Dofun affects~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name areas~
+Dofun areas~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name dictionary~
+Dofun dictionary~
+Position 0
+Level 108
+Log 0
+Show 1
+Cat 0
+End
+
+Name bug~
+Dofun bug~
+Position 0
+Level 1
+Log 1
+Show 1
+Cat 0
+End
+
+Name changes~
+Dofun changes~
+Position 1
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name commands~
+Dofun commands~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name compare~
+Dofun compare~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name consider~
+Dofun consider~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name count~
+Dofun count~
+Position 5
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name credits~
+Dofun credits~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name equipment~
+Dofun equipment~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name examine~
+Dofun examine~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name help~
+Dofun help~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name idea~
+Dofun idea~
+Position 1
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name info~
+Dofun huh~
+Position 5
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name motd~
+Dofun motd~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name news~
+Dofun news~
+Position 1
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name read~
+Dofun read~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name report~
+Dofun report~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name rules~
+Dofun rules~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name score~
+Dofun score~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name charsheet~
+Dofun charsheet~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name cs~
+Dofun charsheet~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name sheet~
+Dofun charsheet~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name cs2~
+Dofun cs2~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name cs3~
+Dofun cs3~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name scan~
+Dofun scan~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name skills~
+Dofun skills~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name cmdedit~
+Dofun cmdedit~
+Position 0
+Level 109
+Log 3
+Show 1
+Cat 0
+End
+
+Name socials~
+Dofun socials~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name show~
+Dofun huh~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name prayers~
+Dofun prayers~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name story~
+Dofun story~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name time~
+Dofun time~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name typo~
+Dofun typo~
+Position 0
+Level 0
+Log 1
+Show 1
+Cat 0
+End
+
+Name weather~
+Dofun weather~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name who~
+Dofun who~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name whois~
+Dofun whois~
+Position 0
+Level 101
+Log 0
+Show 1
+Cat 0
+End
+
+Name wizlist~
+Dofun wizlist~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name worth~
+Dofun worth~
+Position 5
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name alia~
+Dofun alia~
+Position 0
+Level 0
+Log 0
+Show 0
+Cat 0
+End
+
+Name alias~
+Dofun alias~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name arename~
+Dofun arename~
+Position 9
+Level 0
+Log 1
+Show 1
+Cat 0
+End
+
+Name spectate~
+Dofun spectate~
+Position 9
+Level 0
+Log 1
+Show 1
+Cat 0
+End
+
+Name autolist~
+Dofun autolist~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name autoassist~
+Dofun autoassist~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name autoexit~
+Dofun autoexit~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name autogold~
+Dofun autogold~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name autoloot~
+Dofun autoloot~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name autosac~
+Dofun autosac~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name autosplit~
+Dofun autosplit~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name autovamp~
+Dofun huh~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name brief~
+Dofun brief~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name combat~
+Dofun combat~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name colour~
+Dofun colour~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name pueblo~
+Dofun huh~
+Position 0
+Level 110
+Log 0
+Show 1
+Cat 0
+End
+
+Name color~
+Dofun colour~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name answer~
+Dofun answer~
+Position 5
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name ansi~
+Dofun colour~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name combine~
+Dofun combine~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name compact~
+Dofun compact~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name description~
+Dofun description~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name delet~
+Dofun delet~
+Position 0
+Level 0
+Log 1
+Show 0
+Cat 0
+End
+
+Name delete~
+Dofun delete~
+Position 9
+Level 0
+Log 1
+Show 1
+Cat 0
+End
+
+Name nofollow~
+Dofun nofollow~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name ic~
+Dofun icmode~
+Position 0
+Level 0
+Log 1
+Show 1
+Cat 0
+End
+
+Name noloot~
+Dofun noloot~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name nosummon~
+Dofun nosummon~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name outfit~
+Dofun outfit~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name password~
+Dofun password~
+Position 0
+Level 0
+Log 2
+Show 1
+Cat 0
+End
+
+Name prompt~
+Dofun prompt~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name scroll~
+Dofun scroll~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name sect~
+Dofun sect~
+Position 0
+Level 0
+Log 1
+Show 1
+Cat 0
+End
+
+Name title~
+Dofun title~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name unalias~
+Dofun unalias~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name wimpy~
+Dofun wimpy~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name afk~
+Dofun afk~
+Position 5
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name deaf~
+Dofun deaf~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name pmote~
+Dofun pmote~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name .~
+Dofun huh~
+Position 5
+Level 0
+Log 0
+Show 0
+Cat 0
+End
+
+Name gossip~
+Dofun ictalk~
+Position 5
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name ,~
+Dofun emote~
+Position 6
+Level 0
+Log 0
+Show 0
+Cat 0
+End
+
+Name gtell~
+Dofun gtell~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name ;~
+Dofun gtell~
+Position 0
+Level 0
+Log 0
+Show 0
+Cat 0
+End
+
+Name notes~
+Dofun note~
+Position 1
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name pose~
+Dofun pose~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name quest~
+Dofun quest~
+Position 5
+Level 0
+Log 3
+Show 1
+Cat 0
+End
+
+Name question~
+Dofun question~
+Position 5
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name ooc~
+Dofun ooc~
+Position 1
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name plead~
+Dofun plead~
+Position 0
+Level 0
+Log 1
+Show 1
+Cat 0
+End
+
+Name gwho~
+Dofun gwho~
+Position 1
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name quiet~
+Dofun quiet~
+Position 5
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name reply~
+Dofun reply~
+Position 5
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name replay~
+Dofun replay~
+Position 5
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name say~
+Dofun say~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name osay~
+Dofun osay~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name '~
+Dofun say~
+Position 6
+Level 0
+Log 0
+Show 0
+Cat 0
+End
+
+Name shout~
+Dofun shout~
+Position 6
+Level 3
+Log 0
+Show 1
+Cat 0
+End
+
+Name unread~
+Dofun unread~
+Position 5
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name yell~
+Dofun yell~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name tsect~
+Dofun tsect~
+Position 1
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name brandish~
+Dofun brandish~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name close~
+Dofun close~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name drink~
+Dofun drink~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name drop~
+Dofun drop~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name eat~
+Dofun eat~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name envenom~
+Dofun envenom~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name fill~
+Dofun fill~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name give~
+Dofun give~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name heal~
+Dofun heal~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name hold~
+Dofun wield~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name list~
+Dofun list~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name lock~
+Dofun lock~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name open~
+Dofun open~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name lift~
+Dofun lift~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name pick~
+Dofun pick~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name pour~
+Dofun pour~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name put~
+Dofun put~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name quaff~
+Dofun quaff~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name recite~
+Dofun recite~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name remove~
+Dofun remove~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name sell~
+Dofun sell~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name take~
+Dofun get~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name sacrifice~
+Dofun sacrifice~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name junk~
+Dofun sacrifice~
+Position 6
+Level 0
+Log 0
+Show 0
+Cat 0
+End
+
+Name value~
+Dofun value~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name wear~
+Dofun wield~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name zap~
+Dofun zap~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name backstab~
+Dofun backstab~
+Position 8
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name bs~
+Dofun backstab~
+Position 8
+Level 0
+Log 0
+Show 0
+Cat 0
+End
+
+Name backgrounds~
+Dofun backgrounds~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name bash~
+Dofun bash~
+Position 8
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name berserk~
+Dofun berserk~
+Position 8
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name dirt~
+Dofun dirt~
+Position 8
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name disarm~
+Dofun disarm~
+Position 8
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name flee~
+Dofun flee~
+Position 8
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name kick~
+Dofun kick~
+Position 8
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name murde~
+Dofun murde~
+Position 8
+Level 0
+Log 0
+Show 0
+Cat 0
+End
+
+Name murder~
+Dofun murder~
+Position 8
+Level 5
+Log 1
+Show 1
+Cat 0
+End
+
+Name rescue~
+Dofun rescue~
+Position 8
+Level 0
+Log 0
+Show 0
+Cat 0
+End
+
+Name surrender~
+Dofun surrender~
+Position 8
+Level 110
+Log 0
+Show 1
+Cat 0
+End
+
+Name trip~
+Dofun trip~
+Position 8
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name ground~
+Dofun ground~
+Position 8
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name headbutt~
+Dofun headbutt~
+Position 8
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name warcry~
+Dofun warcry~
+Position 8
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name blast~
+Dofun blast~
+Position 8
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name slip~
+Dofun slip~
+Position 8
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name project~
+Dofun project~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name telepathy~
+Dofun telepathy~
+Position 6
+Level 1
+Log 0
+Show 1
+Cat 0
+End
+
+Name touch~
+Dofun touch~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name skin~
+Dofun skin~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name fortress~
+Dofun fortress~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name bind~
+Dofun bind~
+Position 9
+Level 1
+Log 1
+Show 1
+Cat 0
+End
+
+Name behead~
+Dofun behead~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name arise~
+Dofun arise~
+Position 1
+Level 0
+Log 1
+Show 1
+Cat 0
+End
+
+Name allies~
+Dofun allies~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name remort~
+Dofun remort~
+Position 6
+Level 0
+Log 1
+Show 1
+Cat 0
+End
+
+Name contact~
+Dofun contact~
+Position 0
+Level 0
+Log 1
+Show 1
+Cat 0
+End
+
+Name condition~
+Dofun conditioning~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name convert~
+Dofun huh~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name changeling~
+Dofun changeling~
+Position 9
+Level 110
+Log 0
+Show 1
+Cat 0
+End
+
+Name mob~
+Dofun huh~
+Position 0
+Level 0
+Log 2
+Show 0
+Cat 0
+End
+
+Name enter~
+Dofun enter~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name follow~
+Dofun follow~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name dismiss~
+Dofun dismiss~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name gain~
+Dofun huh~
+Position 9
+Level 110
+Log 0
+Show 1
+Cat 0
+End
+
+Name go~
+Dofun enter~
+Position 9
+Level 0
+Log 0
+Show 0
+Cat 0
+End
+
+Name groups~
+Dofun huh~
+Position 5
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name hide~
+Dofun hide~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name play~
+Dofun play~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name games~
+Dofun games~
+Position 6
+Level 110
+Log 0
+Show 1
+Cat 0
+End
+
+Name qui~
+Dofun qui~
+Position 0
+Level 0
+Log 0
+Show 0
+Cat 0
+End
+
+Name quit~
+Dofun quit~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name recall~
+Dofun recall~
+Position 1
+Level 1
+Log 0
+Show 1
+Cat 0
+End
+
+Name /~
+Dofun recall~
+Position 8
+Level 0
+Log 0
+Show 0
+Cat 0
+End
+
+Name rent~
+Dofun rent~
+Position 0
+Level 0
+Log 0
+Show 0
+Cat 0
+End
+
+Name save~
+Dofun save~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name sleep~
+Dofun sleep~
+Position 5
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name sneak~
+Dofun sneak~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name split~
+Dofun split~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name steal~
+Dofun steal~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name train~
+Dofun huh~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name visible~
+Dofun visible~
+Position 1
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name wake~
+Dofun wake~
+Position 5
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name where~
+Dofun where~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name mount~
+Dofun mount~
+Position 8
+Level 110
+Log 0
+Show 1
+Cat 0
+End
+
+Name dismount~
+Dofun dismount~
+Position 8
+Level 110
+Log 0
+Show 1
+Cat 0
+End
+
+Name changeform~
+Dofun huh~
+Position 8
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name fury~
+Dofun huh~
+Position 8
+Level 110
+Log 0
+Show 1
+Cat 0
+End
+
+Name rite~
+Dofun rite~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name learn~
+Dofun learn~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name qlog~
+Dofun qlog~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name journal~
+Dofun qlog~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name chop~
+Dofun chop~
+Position 9
+Level 1
+Log 0
+Show 1
+Cat 0
+End
+
+Name prospect~
+Dofun prospect~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name mine~
+Dofun mine~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name plane~
+Dofun plane~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name carve~
+Dofun carve~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name lag~
+Dofun lagem~
+Position 1
+Level 109
+Log 1
+Show 1
+Cat 0
+End
+
+Name dump~
+Dofun dump~
+Position 0
+Level 109
+Log 1
+Show 0
+Cat 0
+End
+
+Name trust~
+Dofun trust~
+Position 0
+Level 110
+Log 1
+Show 1
+Cat 0
+End
+
+Name violate~
+Dofun violate~
+Position 0
+Level 107
+Log 1
+Show 1
+Cat 0
+End
+
+Name teach~
+Dofun teach~
+Position 6
+Level 0
+Log 1
+Show 1
+Cat 0
+End
+
+Name brew~
+Dofun brew~
+Position 6
+Level 0
+Log 1
+Show 1
+Cat 0
+End
+
+Name allow~
+Dofun allow~
+Position 0
+Level 109
+Log 1
+Show 1
+Cat 0
+End
+
+Name ban~
+Dofun ban~
+Position 0
+Level 109
+Log 1
+Show 1
+Cat 0
+End
+
+Name beep~
+Dofun beep~
+Position 0
+Level 104
+Log 0
+Show 1
+Cat 0
+End
+
+Name roll~
+Dofun roll~
+Position 0
+Level 101
+Log 0
+Show 1
+Cat 0
+End
+
+Name dice~
+Dofun dice~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name deny~
+Dofun deny~
+Position 0
+Level 110
+Log 1
+Show 1
+Cat 0
+End
+
+Name disconnect~
+Dofun disconnect~
+Position 0
+Level 105
+Log 1
+Show 1
+Cat 0
+End
+
+Name flag~
+Dofun flag~
+Position 0
+Level 108
+Log 1
+Show 1
+Cat 0
+End
+
+Name freeze~
+Dofun freeze~
+Position 0
+Level 105
+Log 1
+Show 1
+Cat 0
+End
+
+Name permban~
+Dofun permban~
+Position 0
+Level 110
+Log 1
+Show 1
+Cat 0
+End
+
+Name protect~
+Dofun protect~
+Position 0
+Level 109
+Log 1
+Show 1
+Cat 0
+End
+
+Name reboo~
+Dofun reboo~
+Position 0
+Level 109
+Log 0
+Show 0
+Cat 0
+End
+
+Name reboot~
+Dofun reboot~
+Position 0
+Level 109
+Log 1
+Show 1
+Cat 0
+End
+
+Name set~
+Dofun set~
+Position 0
+Level 109
+Log 1
+Show 1
+Cat 0
+End
+
+Name smite~
+Dofun smite~
+Position 0
+Level 105
+Log 0
+Show 1
+Cat 0
+End
+
+Name shutdow~
+Dofun shutdow~
+Position 0
+Level 109
+Log 0
+Show 0
+Cat 0
+End
+
+Name shutdown~
+Dofun shutdown~
+Position 0
+Level 109
+Log 1
+Show 1
+Cat 0
+End
+
+Name nuk~
+Dofun nuk~
+Position 0
+Level 109
+Log 1
+Show 0
+Cat 0
+End
+
+Name nuke~
+Dofun nuke~
+Position 0
+Level 109
+Log 1
+Show 1
+Cat 0
+End
+
+Name clearaff~
+Dofun clearaff~
+Position 0
+Level 106
+Log 1
+Show 1
+Cat 0
+End
+
+Name wizlock~
+Dofun wizlock~
+Position 0
+Level 109
+Log 1
+Show 1
+Cat 0
+End
+
+Name qpoint~
+Dofun qpoint~
+Position 0
+Level 1
+Log 1
+Show 1
+Cat 0
+End
+
+Name frpoint~
+Dofun frpoint~
+Position 0
+Level 105
+Log 1
+Show 1
+Cat 0
+End
+
+Name force~
+Dofun force~
+Position 0
+Level 105
+Log 1
+Show 1
+Cat 0
+End
+
+Name load~
+Dofun load~
+Position 0
+Level 103
+Log 1
+Show 1
+Cat 0
+End
+
+Name newlock~
+Dofun newlock~
+Position 0
+Level 109
+Log 1
+Show 1
+Cat 0
+End
+
+Name nochannels~
+Dofun nochannels~
+Position 0
+Level 105
+Log 1
+Show 1
+Cat 0
+End
+
+Name noemote~
+Dofun noemote~
+Position 0
+Level 105
+Log 1
+Show 1
+Cat 0
+End
+
+Name noshout~
+Dofun noshout~
+Position 0
+Level 105
+Log 1
+Show 1
+Cat 0
+End
+
+Name notell~
+Dofun notell~
+Position 0
+Level 105
+Log 1
+Show 1
+Cat 0
+End
+
+Name pecho~
+Dofun pecho~
+Position 0
+Level 104
+Log 3
+Show 1
+Cat 0
+End
+
+Name pardon~
+Dofun pardon~
+Position 0
+Level 105
+Log 1
+Show 1
+Cat 0
+End
+
+Name purge~
+Dofun purge~
+Position 0
+Level 102
+Log 3
+Show 1
+Cat 0
+End
+
+Name restore~
+Dofun restore~
+Position 0
+Level 104
+Log 1
+Show 1
+Cat 0
+End
+
+Name sla~
+Dofun sla~
+Position 0
+Level 107
+Log 0
+Show 0
+Cat 0
+End
+
+Name slay~
+Dofun slay~
+Position 0
+Level 107
+Log 1
+Show 1
+Cat 0
+End
+
+Name obliterate~
+Dofun obliterate~
+Position 0
+Level 107
+Log 1
+Show 1
+Cat 0
+End
+
+Name salvation~
+Dofun salvation~
+Position 0
+Level 107
+Log 1
+Show 1
+Cat 0
+End
+
+Name teleport~
+Dofun teleport~
+Position 0
+Level 110
+Log 1
+Show 0
+Cat 0
+End
+
+Name transfer~
+Dofun teleport~
+Position 0
+Level 101
+Log 1
+Show 1
+Cat 0
+End
+
+Name sendhtml~
+Dofun huh~
+Position 0
+Level 110
+Log 1
+Show 1
+Cat 0
+End
+
+Name poofin~
+Dofun poofin~
+Position 0
+Level 101
+Log 0
+Show 1
+Cat 0
+End
+
+Name poofout~
+Dofun poofout~
+Position 0
+Level 102
+Log 0
+Show 1
+Cat 0
+End
+
+Name gecho~
+Dofun gecho~
+Position 0
+Level 104
+Log 3
+Show 1
+Cat 0
+End
+
+Name announce~
+Dofun announce~
+Position 0
+Level 107
+Log 1
+Show 1
+Cat 0
+End
+
+Name holylight~
+Dofun holylight~
+Position 0
+Level 102
+Log 0
+Show 1
+Cat 0
+End
+
+Name incognito~
+Dofun incognito~
+Position 0
+Level 104
+Log 0
+Show 1
+Cat 0
+End
+
+Name invis~
+Dofun invis~
+Position 0
+Level 102
+Log 0
+Show 0
+Cat 0
+End
+
+Name log~
+Dofun log~
+Position 0
+Level 109
+Log 1
+Show 1
+Cat 0
+End
+
+Name memory~
+Dofun memory~
+Position 0
+Level 108
+Log 0
+Show 1
+Cat 0
+End
+
+Name mwhere~
+Dofun mwhere~
+Position 0
+Level 102
+Log 0
+Show 1
+Cat 0
+End
+
+Name owhere~
+Dofun owhere~
+Position 0
+Level 102
+Log 0
+Show 1
+Cat 0
+End
+
+Name peace~
+Dofun peace~
+Position 0
+Level 103
+Log 0
+Show 1
+Cat 0
+End
+
+Name penalty~
+Dofun penalty~
+Position 0
+Level 102
+Log 0
+Show 1
+Cat 0
+End
+
+Name recho~
+Dofun recho~
+Position 6
+Level 1
+Log 1
+Show 1
+Cat 0
+End
+
+Name return~
+Dofun return~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name snoop~
+Dofun snoop~
+Position 0
+Level 108
+Log 1
+Show 1
+Cat 0
+End
+
+Name stat~
+Dofun stat~
+Position 0
+Level 103
+Log 1
+Show 1
+Cat 0
+End
+
+Name string~
+Dofun string~
+Position 0
+Level 101
+Log 1
+Show 1
+Cat 0
+End
+
+Name switch~
+Dofun switch~
+Position 0
+Level 110
+Log 1
+Show 1
+Cat 0
+End
+
+Name wizinvis~
+Dofun invis~
+Position 0
+Level 102
+Log 0
+Show 1
+Cat 0
+End
+
+Name vnum~
+Dofun vnum~
+Position 0
+Level 102
+Log 0
+Show 1
+Cat 0
+End
+
+Name vlist~
+Dofun vlist~
+Position 0
+Level 102
+Log 0
+Show 1
+Cat 0
+End
+
+Name flagfind~
+Dofun flagfind~
+Position 0
+Level 102
+Log 3
+Show 1
+Cat 0
+End
+
+Name zecho~
+Dofun zecho~
+Position 0
+Level 104
+Log 3
+Show 1
+Cat 0
+End
+
+Name clone~
+Dofun clone~
+Position 0
+Level 103
+Log 1
+Show 1
+Cat 0
+End
+
+Name wiznet~
+Dofun wiznet~
+Position 0
+Level 102
+Log 0
+Show 1
+Cat 0
+End
+
+Name immtalk~
+Dofun immtalk~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name imptalk~
+Dofun imptalk~
+Position 0
+Level 110
+Log 0
+Show 1
+Cat 0
+End
+
+Name immmask~
+Dofun immmask~
+Position 0
+Level 105
+Log 1
+Show 0
+Cat 0
+End
+
+Name imotd~
+Dofun imotd~
+Position 0
+Level 102
+Log 0
+Show 1
+Cat 0
+End
+
+Name :~
+Dofun immtalk~
+Position 0
+Level 101
+Log 0
+Show 0
+Cat 0
+End
+
+Name smote~
+Dofun smote~
+Position 0
+Level 1
+Log 0
+Show 1
+Cat 0
+End
+
+Name prefi~
+Dofun prefi~
+Position 0
+Level 101
+Log 0
+Show 0
+Cat 0
+End
+
+Name prefix~
+Dofun prefix~
+Position 0
+Level 102
+Log 0
+Show 1
+Cat 0
+End
+
+Name mpdump~
+Dofun mpdump~
+Position 0
+Level 103
+Log 2
+Show 1
+Cat 0
+End
+
+Name mpstat~
+Dofun mpstat~
+Position 0
+Level 103
+Log 2
+Show 1
+Cat 0
+End
+
+Name setarena~
+Dofun setarena~
+Position 1
+Level 106
+Log 1
+Show 1
+Cat 0
+End
+
+Name globalpower~
+Dofun globalpower~
+Position 1
+Level 109
+Log 1
+Show 1
+Cat 0
+End
+
+Name wipecs~
+Dofun wipecs~
+Position 1
+Level 109
+Log 1
+Show 1
+Cat 0
+End
+
+Name pload~
+Dofun pload~
+Position 0
+Level 109
+Log 1
+Show 1
+Cat 0
+End
+
+Name punload~
+Dofun punload~
+Position 0
+Level 109
+Log 1
+Show 1
+Cat 0
+End
+
+Name pnewpass~
+Dofun pnewpass~
+Position 0
+Level 109
+Log 1
+Show 1
+Cat 0
+End
+
+Name forcebank~
+Dofun forcebank~
+Position 0
+Level 109
+Log 1
+Show 1
+Cat 0
+End
+
+Name makehelper~
+Dofun makehelper~
+Position 0
+Level 106
+Log 1
+Show 1
+Cat 0
+End
+
+Name bandage~
+Dofun bandage~
+Position 9
+Level 1
+Log 0
+Show 1
+Cat 0
+End
+
+Name edit~
+Dofun edit~
+Position 0
+Level 102
+Log 1
+Show 1
+Cat 0
+End
+
+Name asave~
+Dofun asave~
+Position 0
+Level 102
+Log 3
+Show 1
+Cat 0
+End
+
+Name alist~
+Dofun alist~
+Position 0
+Level 101
+Log 0
+Show 1
+Cat 0
+End
+
+Name resets~
+Dofun resets~
+Position 0
+Level 102
+Log 3
+Show 1
+Cat 0
+End
+
+Name redit~
+Dofun redit~
+Position 0
+Level 102
+Log 3
+Show 1
+Cat 0
+End
+
+Name medit~
+Dofun medit~
+Position 0
+Level 102
+Log 3
+Show 1
+Cat 0
+End
+
+Name aedit~
+Dofun aedit~
+Position 0
+Level 105
+Log 2
+Show 1
+Cat 0
+End
+
+Name oedit~
+Dofun oedit~
+Position 0
+Level 102
+Log 3
+Show 1
+Cat 0
+End
+
+Name mpedit~
+Dofun mpedit~
+Position 0
+Level 102
+Log 1
+Show 1
+Cat 0
+End
+
+Name hedit~
+Dofun hedit~
+Position 0
+Level 1
+Log 1
+Show 1
+Cat 0
+End
+
+Name resettime~
+Dofun resettime~
+Position 0
+Level 110
+Log 1
+Show 1
+Cat 0
+End
+
+Name create~
+Dofun create~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name freebie~
+Dofun freebie~
+Position 0
+Level 0
+Log 1
+Show 1
+Cat 0
+End
+
+Name shapeshift~
+Dofun shapeshift~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name rage~
+Dofun rage~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name stepsideways~
+Dofun stepsideways~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name systemlog~
+Dofun systemlog~
+Position 0
+Level 108
+Log 0
+Show 1
+Cat 4
+End
+
+Name funlist~
+Dofun funlist~
+Position 0
+Level 109
+Log 0
+Show 1
+Cat 0
+End
+
+Name copyover~
+Dofun copyover~
+Position 0
+Level 109
+Log 0
+Show 1
+Cat 0
+End
+
+Name admintalk~
+Dofun admintalk~
+Position 0
+Level 0
+Log 2
+Show 0
+Cat 0
+End
+
+Name advance~
+Dofun advance~
+Position 0
+Level 107
+Log 1
+Show 1
+Cat 0
+End
+
+Name ticks~
+Dofun ticks~
+Position 0
+Level 109
+Log 0
+Show 1
+Cat 4
+End
+
+Name study~
+Dofun study~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name allowimmtalk~
+Dofun allowimmtalk~
+Position 0
+Level 108
+Log 1
+Show 1
+Cat 0
+End
+
+Name becomeactive~
+Dofun becomeactive~
+Position 0
+Level 0
+Log 1
+Show 1
+Cat 0
+End
+
+Name chat~
+Dofun chat~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name autoooc~
+Dofun autoooc~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name cedit~
+Dofun cedit~
+Position 0
+Level 108
+Log 1
+Show 1
+Cat 0
+End
+
+Name csave~
+Dofun csave~
+Position 0
+Level 108
+Log 0
+Show 1
+Cat 0
+End
+
+Name clans elder leader~
+Dofun clans~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name clanbank~
+Dofun clanbank~
+Position 0
+Level 1
+Log 1
+Show 1
+Cat 0
+End
+
+Name bank~
+Dofun bank~
+Position 0
+Level 1
+Log 0
+Show 1
+Cat 0
+End
+
+Name banker~
+Dofun banker~
+Position 0
+Level 0
+Log 1
+Show 1
+Cat 0
+End
+
+Name cleader~
+Dofun cleader~
+Position 0
+Level 108
+Log 1
+Show 1
+Cat 0
+End
+
+Name wiziname~
+Dofun wiziname~
+Position 0
+Level 105
+Log 0
+Show 1
+Cat 0
+End
+
+Name declare~
+Dofun declare~
+Position 0
+Level 0
+Log 1
+Show 1
+Cat 0
+End
+
+Name tax~
+Dofun tax~
+Position 0
+Level 0
+Log 1
+Show 1
+Cat 0
+End
+
+Name dinfo~
+Dofun dinfo~
+Position 0
+Level 101
+Log 0
+Show 1
+Cat 0
+End
+
+Name register~
+Dofun register~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name email~
+Dofun email~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name claim~
+Dofun claim~
+Position 0
+Level 1
+Log 1
+Show 1
+Cat 0
+End
+
+Name replaychannels~
+Dofun replaychannels~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name replayroom~
+Dofun replayroom~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name rat~
+Dofun rat~
+Position 0
+Level 110
+Log 1
+Show 1
+Cat 0
+End
+
+Name forceinfluence~
+Dofun forceinfluence~
+Position 0
+Level 110
+Log 1
+Show 1
+Cat 0
+End
+
+Name immtitle~
+Dofun immtitle~
+Position 0
+Level 104
+Log 1
+Show 1
+Cat 0
+End
+
+Name whoconfig~
+Dofun whoconfig~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name pretitle~
+Dofun pretitle~
+Position 0
+Level 106
+Log 1
+Show 1
+Cat 0
+End
+
+Name possess~
+Dofun possession~
+Position 6
+Level 110
+Log 0
+Show 1
+Cat 0
+End
+
+Name xpboost~
+Dofun xp boost~
+Position 6
+Level 109
+Log 1
+Show 1
+Cat 0
+End
+
+Name write~
+Dofun write~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name seal~
+Dofun seal~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name unseal~
+Dofun unseal~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name donate~
+Dofun donate~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name whisper~
+Dofun whisper~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name ignis~
+Dofun ignisfatuus~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name playernotes~
+Dofun playernotes~
+Position 0
+Level 108
+Log 1
+Show 1
+Cat 0
+End
+
+Name meditate~
+Dofun meditate~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name bestowgift~
+Dofun bestowgift~
+Position 0
+Level 110
+Log 1
+Show 1
+Cat 0
+End
+
+Name flaw~
+Dofun huh~
+Position 0
+Level 110
+Log 0
+Show 1
+Cat 0
+End
+
+Name nocondition~
+Dofun nocondition~
+Position 0
+Level 1
+Log 0
+Show 1
+Cat 0
+End
+
+Name noshortdesc~
+Dofun noshortdesc~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name ictalk~
+Dofun ictalk~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name icmode~
+Dofun icmode~
+Position 0
+Level 0
+Log 1
+Show 1
+Cat 0
+End
+
+Name mortalterrors~
+Dofun mortalterrors~
+Position 9
+Level 1
+Log 0
+Show 1
+Cat 0
+End
+
+Name rpnote~
+Dofun rpnote~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name battleprompt~
+Dofun battleprompt~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name mpromote~
+Dofun promote~
+Position 9
+Level 0
+Log 1
+Show 1
+Cat 0
+End
+
+Name allowadmintalk~
+Dofun allowadmintalk~
+Position 0
+Level 110
+Log 1
+Show 0
+Cat 0
+End
+
+Name hometown~
+Dofun hometown~
+Position 5
+Level 0
+Log 1
+Show 1
+Cat 0
+End
+
+Name gxp~
+Dofun gxp~
+Position 0
+Level 109
+Log 3
+Show 1
+Cat 0
+End
+
+Name resetkill~
+Dofun resetkill~
+Position 0
+Level 105
+Log 0
+Show 1
+Cat 0
+End
+
+Name demeanor~
+Dofun demeanor~
+Position 0
+Level 110
+Log 0
+Show 1
+Cat 0
+End
+
+Name nature~
+Dofun nature~
+Position 0
+Level 110
+Log 0
+Show 1
+Cat 0
+End
+
+Name ipoint~
+Dofun ipoint~
+Position 0
+Level 109
+Log 0
+Show 1
+Cat 0
+End
+
+Name tag~
+Dofun tag~
+Position 0
+Level 1
+Log 0
+Show 1
+Cat 0
+End
+
+Name cheater~
+Dofun cheater~
+Position 0
+Level 109
+Log 1
+Show 1
+Cat 0
+End
+
+Name gqp~
+Dofun gqp~
+Position 0
+Level 109
+Log 3
+Show 1
+Cat 0
+End
+
+Name qpmult~
+Dofun qpmult~
+Position 0
+Level 109
+Log 0
+Show 1
+Cat 0
+End
+
+Name xpmult~
+Dofun xpmult~
+Position 0
+Level 109
+Log 0
+Show 1
+Cat 0
+End
+
+Name quelltheherd~
+Dofun quelltheherd~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name bgs~
+Dofun backgrounds~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name homunculusservant~
+Dofun homunculusservant~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name callathanatos~
+Dofun callathanatos~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name echo~
+Dofun gecho~
+Position 0
+Level 104
+Log 3
+Show 1
+Cat 0
+End
+
+Name magepromote~
+Dofun promote~
+Position 0
+Level 0
+Log 1
+Show 1
+Cat 0
+End
+
+Name playtest~
+Dofun playtest~
+Position 0
+Level 110
+Log 1
+Show 1
+Cat 0
+End
+
+Name debugger~
+Dofun debugger~
+Position 0
+Level 110
+Log 1
+Show 1
+Cat 0
+End
+
+Name debugmsg~
+Dofun debugmsg~
+Position 0
+Level 1
+Log 0
+Show 0
+Cat 0
+End
+
+Name showdump~
+Dofun showdump~
+Position 0
+Level 110
+Log 0
+Show 1
+Cat 0
+End
+
+Name testcommands~
+Dofun huh~
+Position 0
+Level 110
+Log 1
+Show 1
+Cat 0
+End
+
+Name gouge~
+Dofun gouge~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name qiedit~
+Dofun qiedit~
+Position 0
+Level 108
+Log 1
+Show 1
+Cat 0
+End
+
+Name placeqitems~
+Dofun placeqitems~
+Position 0
+Level 108
+Log 1
+Show 1
+Cat 0
+End
+
+Name qitemlist~
+Dofun qitemlist~
+Position 0
+Level 108
+Log 0
+Show 1
+Cat 0
+End
+
+Name skillmap~
+Dofun skillmap~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name cs1~
+Dofun charsheet~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name cloakthegathering~
+Dofun cloakthegathering~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name telnetgoahead~
+Dofun telnetgoahead~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name chimaera~
+Dofun chimaera~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name phantasm~
+Dofun phantasm~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name areaflagfind~
+Dofun areaflagfind~
+Position 0
+Level 102
+Log 3
+Show 1
+Cat 0
+End
+
+Name horridreality~
+Dofun horridreality~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name charsheet2~
+Dofun cs2~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name charsheet3~
+Dofun cs3~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name mpfind~
+Dofun mpfind~
+Position 0
+Level 103
+Log 3
+Show 1
+Cat 0
+End
+
+Name musterthecorpsearmy~
+Dofun musterthecorpsearmy~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name bslap~
+Dofun bslap~
+Position 0
+Level 110
+Log 3
+Show 1
+Cat 0
+End
+
+Name rpedit~
+Dofun rpedit~
+Position 0
+Level 108
+Log 3
+Show 1
+Cat 0
+End
+
+Name opedit~
+Dofun opedit~
+Position 0
+Level 108
+Log 3
+Show 1
+Cat 0
+End
+
+Name rpdump~
+Dofun rpdump~
+Position 0
+Level 108
+Log 3
+Show 1
+Cat 0
+End
+
+Name opdump~
+Dofun opdump~
+Position 0
+Level 108
+Log 3
+Show 1
+Cat 0
+End
+
+Name chiropteran~
+Dofun chiropteranmarauder~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name wingclaws~
+Dofun wingclaws~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name addict~
+Dofun addict~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name trophy~
+Dofun trophy~
+Position 9
+Level 1
+Log 0
+Show 1
+Cat 0
+End
+
+Name checklinks~
+Dofun checklinks~
+Position 0
+Level 107
+Log 3
+Show 1
+Cat 0
+End
+
+Name checkresets~
+Dofun checkresets~
+Position 0
+Level 107
+Log 3
+Show 1
+Cat 0
+End
+
+Name glower~
+Dofun glower~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 7
+End
+
+Name rbf~
+Dofun huh~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 7
+End
+
+Name classify~
+Dofun classify~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 4
+End
+
+Name sparkofrage~
+Dofun sparkofrage~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name rpavailable~
+Dofun rpavailable~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 4
+End
+
+Name packtactics~
+Dofun packtactics~
+Position 8
+Level 0
+Log 0
+Show 1
+Cat 7
+End
+
+Name bite~
+Dofun bite~
+Position 8
+Level 1
+Log 0
+Show 1
+Cat 7
+End
+
+Name shred~
+Dofun shred~
+Position 8
+Level 1
+Log 0
+Show 1
+Cat 7
+End
+
+Name sysnote~
+Dofun sysnote~
+Position 0
+Level 110
+Log 0
+Show 1
+Cat 0
+End
+
+Name tlookup~
+Dofun tlookup~
+Position 0
+Level 108
+Log 0
+Show 1
+Cat 0
+End
+
+Name rhythm~
+Dofun rhythm~
+Position 5
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name notoriety~
+Dofun notoriety~
+Position 5
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name disclist~
+Dofun disclist~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name rotelist~
+Dofun rotelist~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name cue~
+Dofun cue~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name pshift~
+Dofun shift~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name incubuspassion~
+Dofun incubuspassion~
+Position 8
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name hauntthesoul~
+Dofun hauntthesoul~
+Position 8
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name eyesofchaos~
+Dofun eyesofchaos~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name silencethesanemind~
+Dofun silencethesanemind~
+Position 8
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name howlinglunacy~
+Dofun howlinglunacy~
+Position 8
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name serpenteyes~
+Dofun eyesoftheserpent~
+Position 8
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name tongueoftheasp~
+Dofun tongueoftheasp~
+Position 8
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name tonguelash~
+Dofun tonguelash~
+Position 8
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name skinoftheadder~
+Dofun skinoftheadder~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name cobraform~
+Dofun formofthecobra~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name darkheart~
+Dofun darkheart~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name talk~
+Dofun talk~
+Position 6
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name crossgauntlet~
+Dofun crossgauntlet~
+Position 0
+Level 109
+Log 0
+Show 1
+Cat 0
+End
+
+Name breathweapon~
+Dofun breathweapon~
+Position 8
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name farsight~
+Dofun farsight~
+Position 9
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name ghoul~
+Dofun ghoul~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name werewolf~
+Dofun werewolf~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+Name sedit~
+Dofun sedit~
+Position 0
+Level 106
+Log 1
+Show 1
+Cat 0
+End
+
+Name lootedit~
+Dofun lootedit~
+Position 0
+Level 104
+Log 1
+Show 1
+Cat 0
+End
+
+Name laston~
+Dofun laston~
+Position 0
+Level 0
+Log 0
+Show 1
+Cat 0
+End
+
+$

@@ -25,5 +25,9 @@ jobs:
             # Checkout the specific tag of the release in a detached HEAD state
             git checkout ${{ github.event.release.tag_name }}
             
-            # Compile the codebase
-            make new
+            # Compile the codebase (supports both unified root and src/ subdirectory)
+            if [ -f src/Makefile ]; then
+              make -C src new -j2
+            else
+              make new -j2
+            fi

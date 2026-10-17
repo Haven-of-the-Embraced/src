@@ -1,0 +1,332 @@
+
+Clan	none~
+Who	Empty~
+Type	0
+Bank	0
+Hall	0
+Bonus	0
+Banker	None~
+Leader	Empty~
+Flags 0
+
+
+Clan	Malkavian~
+Who	Malkavian{x~
+Type	1
+Bank	0
+Hall	101
+Bonus	0
+Banker	None~
+Leader	Nobody~
+Flags 0
+
+
+Clan	Assamite~
+Who	Assamite{x~
+Type	1
+Bank	0
+Hall	101
+Bonus	0
+Banker	None~
+Leader	Nobody~
+Flags 0
+
+
+Clan	Cappadocian~
+Who	Cappadocian{x~
+Type	1
+Bank	0
+Hall	101
+Bonus	0
+Banker	None~
+Leader	Nobody~
+Flags 0
+
+
+Clan	Gangrel~
+Who	Gangrel{x~
+Type	1
+Bank	0
+Hall	101
+Bonus	0
+Banker	None~
+Leader	Nobody~
+Flags 0
+
+
+Clan	Nosferatu~
+Who	Nosferatu{x~
+Type	1
+Bank	0
+Hall	101
+Bonus	0
+Banker	None~
+Leader	Nobody~
+Flags 0
+
+
+Clan	Toreador~
+Who	Toreador{x~
+Type	1
+Bank	0
+Hall	101
+Bonus	0
+Banker	None~
+Leader	Nobody~
+Flags 0
+
+
+Clan	Brujah~
+Who	Brujah{x~
+Type	1
+Bank	0
+Hall	101
+Bonus	0
+Banker	None~
+Leader	Nobody~
+Flags 0
+
+
+Clan	Ventrue~
+Who	Ventrue{x~
+Type	1
+Bank	0
+Hall	101
+Bonus	0
+Banker	None~
+Leader	Nobody~
+Flags 0
+
+
+Clan	Tremere~
+Who	Tremere{x~
+Type	1
+Bank	0
+Hall	101
+Bonus	0
+Banker	None~
+Leader	Nobody~
+Flags 0
+
+
+Clan	Lasombra~
+Who	Lasombra{x~
+Type	1
+Bank	0
+Hall	101
+Bonus	0
+Banker	None~
+Leader	Nobody~
+Flags 0
+
+
+Clan	Tzimisce~
+Who	Tzimisce{x~
+Type	1
+Bank	0
+Hall	101
+Bonus	0
+Banker	None~
+Leader	Nobody~
+Flags 0
+
+
+Clan	Mage~
+Who	Empty~
+Type	0
+Bank	0
+Hall	0
+Bonus	0
+Banker	None~
+Leader	Empty~
+Flags 0
+
+
+Clan	Blackfury~
+Who	Black Furies{x~
+Type	3
+Bank	0
+Hall	101
+Bonus	0
+Banker	None~
+Leader	Nobody~
+Flags 0
+
+
+Clan	Shadowlord~
+Who	Shadow Lord{x~
+Type	3
+Bank	0
+Hall	101
+Bonus	0
+Banker	None~
+Leader	Nobody~
+Flags 0
+
+
+Clan	fenrir~
+Who	Fenrir{x~
+Type	3
+Bank	0
+Hall	101
+Bonus	0
+Banker	None~
+Leader	Nobody~
+Flags 0
+
+
+Clan	Silverfang~
+Who	Silver Fang{x~
+Type	3
+Bank	0
+Hall	101
+Bonus	0
+Banker	None~
+Leader	Nobody~
+Flags 0
+
+
+Clan	Wardersofmen~
+Who	Warders of Men{x~
+Type	3
+Bank	0
+Hall	101
+Bonus	0
+Banker	None~
+Leader	Nobody~
+Flags 0
+
+
+Clan	Childrenofgaia~
+Who	Children of Gaia{x~
+Type	3
+Bank	0
+Hall	101
+Bonus	0
+Banker	None~
+Leader	Nobody~
+Flags 0
+
+
+Clan	Fianna~
+Who	Fianna{x~
+Type	3
+Bank	0
+Hall	101
+Bonus	0
+Banker	None~
+Leader	Nobody~
+Flags 0
+
+
+Clan	bonegnawer~
+Who	Bone Gnawers{x~
+Type	3
+Bank	0
+Hall	101
+Bonus	0
+Banker	None~
+Leader	Nobody~
+Flags 0
+
+
+Clan	Akashicbrotherhood~
+Who	Akashic Brotherhood{x~
+Type	2
+Bank	0
+Hall	101
+Bonus	0
+Banker	None~
+Leader	Nobody~
+Flags 0
+
+
+Clan	Dreamspeakers~
+Who	Dreamspeakers{x~
+Type	2
+Bank	0
+Hall	101
+Bonus	0
+Banker	None~
+Leader	Nobody~
+Flags 0
+
+
+Clan	Euthanatos~
+Who	Euthanatos{x~
+Type	2
+Bank	0
+Hall	101
+Bonus	0
+Banker	None~
+Leader	Nobody~
+Flags 0
+
+
+Clan	Verbena~
+Who	Verbena{x~
+Type	2
+Bank	0
+Hall	101
+Bonus	0
+Banker	None~
+Leader	Nobody~
+Flags 0
+
+
+Clan	Orderofhermes~
+Who	Order of Hermes{x~
+Type	2
+Bank	0
+Hall	101
+Bonus	0
+Banker	None~
+Leader	Nobody~
+Flags 0
+
+
+Clan	Ravnos~
+Who	Ravnos{x~
+Type	1
+Bank	0
+Hall	101
+Bonus	0
+Banker	None~
+Leader	Nobody~
+Flags 0
+
+
+Clan	Redtalon~
+Who	Red Talon{x~
+Type	3
+Bank	0
+Hall	101
+Bonus	0
+Banker	None~
+Leader	Nobody~
+Flags 0
+
+
+Clan	Silentstrider~
+Who	Silent Strider{x~
+Type	3
+Bank	0
+Hall	101
+Bonus	0
+Banker	None~
+Leader	Nobody~
+Flags 0
+
+
+Clan	Followerofset~
+Who	Setite{x~
+Type	1
+Bank	0
+Hall	101
+Bonus	0
+Banker	None~
+Leader	Nobody~
+Flags 0
+
+
+End

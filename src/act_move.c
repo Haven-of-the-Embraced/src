@@ -2401,34 +2401,38 @@ void do_hometown (CHAR_DATA *ch, char *argument)
 ROOM_INDEX_DATA  *get_random_room(CHAR_DATA *ch)
 {
     ROOM_INDEX_DATA *room;
-    int attempts = 0;
+    ROOM_INDEX_DATA *selected = NULL;
+    int hash;
+    int count = 0;
 
-    for ( ; ; )
+    for ( hash = 0; hash < MAX_KEY_HASH; hash++ )
     {
-        room = get_room_index( number_range( 0, 65535 ) );
-        if ( room != NULL )
-        if ( can_see_room(ch,room)
-	&&   !room_is_private(room)
-        &&  !IS_SET(room->area->area_flags, AREA_NOTELE)
-        &&  !IS_SET(room->area->area_flags, AREA_UNLINKED)
-        &&   !IS_SET(room->room_flags, ROOM_PRIVATE)
-        &&   !IS_SET(room->room_flags, ROOM_UMBRA)
-        &&   !IS_SET(room->room_flags, ROOM_SOLITARY)
-	&&   !IS_SET(room->room_flags, ROOM_SAFE)
-	&&   (IS_NPC(ch) || IS_SET(ch->act,ACT_AGGRESSIVE)
-	||   !IS_SET(room->room_flags,ROOM_LAW)))
-            break;
-
-        if ( ++attempts > 50000 )
+        for ( room = room_index_hash[hash]; room != NULL; room = room->next )
         {
-            room = get_room_index( ROOM_VNUM_TEMPLE );
-            if ( room == NULL )
-                room = get_room_index( ROOM_VNUM_LIMBO );
-            break;
+            if ( can_see_room(ch,room)
+            &&   !room_is_private(room)
+            &&   !IS_SET(room->area->area_flags, AREA_NOTELE)
+            &&   !IS_SET(room->area->area_flags, AREA_UNLINKED)
+            &&   !IS_SET(room->room_flags, ROOM_PRIVATE)
+            &&   !IS_SET(room->room_flags, ROOM_UMBRA)
+            &&   !IS_SET(room->room_flags, ROOM_SOLITARY)
+            &&   !IS_SET(room->room_flags, ROOM_SAFE)
+            &&   (IS_NPC(ch) || IS_SET(ch->act,ACT_AGGRESSIVE)
+            ||   !IS_SET(room->room_flags,ROOM_LAW)))
+            {
+                count++;
+                if ( number_range(1, count) == 1 )
+                    selected = room;
+            }
         }
     }
 
-    return room;
+    if ( selected == NULL )
+        selected = get_room_index( ROOM_VNUM_TEMPLE );
+    if ( selected == NULL )
+        selected = get_room_index( ROOM_VNUM_LIMBO );
+
+    return selected;
 }
 
 /* RT Enter portals */

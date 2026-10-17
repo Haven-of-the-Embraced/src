@@ -939,12 +939,12 @@ struct  kill_data
 #define MOB_VNUM_OBTEN_SERVANT          30
 #define MOB_VNUM_HOMUNCULUS             32
 #define MOB_VNUM_ATHANATOS              33
-#define MOB_VNUM_FIDO                   711
-#define MOB_VNUM_CITYGUARD              708
+#define MOB_VNUM_CITYGUARD              100
+#define MOB_VNUM_FIDO                   101
 //#define MOB_VNUM_VAMPIRE              3404
-#define MOB_VNUM_PATROLMAN              2106
-#define GROUP_VNUM_TROLLS               2100
-#define GROUP_VNUM_OGRES                2101
+#define MOB_VNUM_PATROLMAN              102
+#define GROUP_VNUM_TROLLS               108
+#define GROUP_VNUM_OGRES                109
 
 
 /*
@@ -1482,40 +1482,40 @@ struct  kill_data
 #define OBJ_VNUM_ROSE            26
 #define OBJ_VNUM_RIFT            50
 
-#define OBJ_VNUM_PIT           705
+#define OBJ_VNUM_PIT               120
 
-#define OBJ_VNUM_SCHOOL_MACE       802
-#define OBJ_VNUM_SCHOOL_DAGGER     827
-#define OBJ_VNUM_SCHOOL_SWORD      826
-#define OBJ_VNUM_SCHOOL_SPEAR      809
-#define OBJ_VNUM_SCHOOL_STAFF      808
-#define OBJ_VNUM_SCHOOL_AXE        807
-#define OBJ_VNUM_SCHOOL_FLAIL      806
-#define OBJ_VNUM_SCHOOL_WHIP       805
-#define OBJ_VNUM_SCHOOL_POLEARM    804
-#define OBJ_VNUM_SCHOOL_LANCE      836
+#define OBJ_VNUM_SCHOOL_MACE       130
+#define OBJ_VNUM_SCHOOL_DAGGER     131
+#define OBJ_VNUM_SCHOOL_SWORD      132
+#define OBJ_VNUM_SCHOOL_SPEAR      133
+#define OBJ_VNUM_SCHOOL_STAFF      134
+#define OBJ_VNUM_SCHOOL_AXE        135
+#define OBJ_VNUM_SCHOOL_FLAIL      136
+#define OBJ_VNUM_SCHOOL_WHIP       137
+#define OBJ_VNUM_SCHOOL_POLEARM    138
+#define OBJ_VNUM_SCHOOL_LANCE      139
 
-#define OBJ_VNUM_SCHOOL_VEST       825
-#define OBJ_VNUM_SCHOOL_SHIELD     824
-#define OBJ_VNUM_SCHOOL_BANNER     812
-#define OBJ_VNUM_MAP           715
-#define OBJ_VNUM_GUIDE         3733
+#define OBJ_VNUM_SCHOOL_VEST       140
+#define OBJ_VNUM_SCHOOL_SHIELD     141
+#define OBJ_VNUM_SCHOOL_BANNER     142
+#define OBJ_VNUM_MAP               121
+#define OBJ_VNUM_GUIDE             122
 
 /* vamp stuff */
-#define OBJ_VNUM_EMPTY_VIAL    29
-#define OBJ_VNUM_BROKEN_MIRROR      32
+#define OBJ_VNUM_EMPTY_VIAL        29
+#define OBJ_VNUM_BROKEN_MIRROR     32
 
-#define OBJ_VNUM_TOME      3310
+#define OBJ_VNUM_TOME              124
 
 /* crafting stuff */
-#define OBJ_VNUM_TREE       26500
-#define OBJ_VNUM_VEIN       26510
-#define OBJ_VNUM_PLANK      28850
-#define OBJ_VNUM_BLOCK      28855
-#define OBJ_VNUM_BANDAGE    3735
+#define OBJ_VNUM_TREE              200
+#define OBJ_VNUM_VEIN              210
+#define OBJ_VNUM_PLANK             102
+#define OBJ_VNUM_BLOCK             107
+#define OBJ_VNUM_BANDAGE           123
 
 /*Mage stuff*/
-#define OBJ_VNUM_TASS_MUSHROOM  30500
+#define OBJ_VNUM_TASS_MUSHROOM     125
 
 #define QUEST_OBJ 40
 
@@ -1769,16 +1769,16 @@ struct  kill_data
  * Defined in #ROOMS.
  */
 #define ROOM_VNUM_LIMBO           2
-//#define ROOM_VNUM_CHAT           1200
-#define ROOM_VNUM_TEMPLE       701
-#define ROOM_VNUM_ALTAR        703
-#define ROOM_VNUM_DONATE       705
-#define ROOM_VNUM_SCHOOL       3700
-#define ROOM_VNUM_BALANCE      4500
-#define ROOM_VNUM_CIRCLE       4400
-#define ROOM_VNUM_DEMISE       4201
-#define ROOM_VNUM_HONOR        4300
-#define ROOM_VNUM_PARADOX      30790
+#define ROOM_VNUM_CHAT          104
+#define ROOM_VNUM_TEMPLE        101
+#define ROOM_VNUM_ALTAR         102
+#define ROOM_VNUM_DONATE        103
+#define ROOM_VNUM_SCHOOL        100
+#define ROOM_VNUM_BALANCE       109
+#define ROOM_VNUM_CIRCLE        108
+#define ROOM_VNUM_DEMISE        106
+#define ROOM_VNUM_HONOR         107
+#define ROOM_VNUM_PARADOX       105
 
 
 

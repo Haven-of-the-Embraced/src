@@ -3064,8 +3064,8 @@ void do_buy( CHAR_DATA *ch, char *argument )
         argument = one_argument(argument,arg);
 
         /* hack to make new thalos pets work */
-        if (ch->in_room->vnum == 9621)
-            pRoomIndexNext = get_room_index(9706);
+        if (ch->in_room->vnum == 100)
+            pRoomIndexNext = get_room_index(101);
         else
             pRoomIndexNext = get_room_index( ch->in_room->vnum + 1 );
         if ( pRoomIndexNext == NULL )
@@ -3364,8 +3364,8 @@ void do_list( CHAR_DATA *ch, char *argument )
     bool found;
 
         /* hack to make new thalos pets work */
-        if (ch->in_room->vnum == 9621)
-            pRoomIndexNext = get_room_index(9706);
+        if (ch->in_room->vnum == 100)
+            pRoomIndexNext = get_room_index(101);
         else
             pRoomIndexNext = get_room_index( ch->in_room->vnum + 1 );
 
@@ -4400,7 +4400,7 @@ void do_rite( CHAR_DATA *ch, char *argument )
             return;
         }
 */
-        #define MOB_VNUM_SPIRITQUEST number_range(30720,30731)
+        #define MOB_VNUM_SPIRITQUEST number_range(120,131)
 /*
         if ( (pMobIndex = get_mob_index(number_range(30720,30731)) == NULL )
 */

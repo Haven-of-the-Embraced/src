@@ -1,0 +1,2822 @@
+#AREADATA
+Name Code Specific VNUMs II~
+Builders None~
+VNUMs 100 299
+Credits [  1 - 100] Core System Sanctuary~
+Security 9
+Flags 0
+Lvls 1 100
+Clan 0
+Tax 0
+Infl 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+Relation 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+End
+
+
+
+#MOBILES
+#100
+#MOBFORMAT dynamic
+Name constable man~
+ShD a constable~
+LnD A constable is here, patrolling the streets to keep peace.
+~
+Desc This constable wears a blue tabard over his shined breastplate.  He
+appears to be in his early twenties or late teens.  Hanging from his belt is
+a longsword, and in his hand he carries a hard wood club to subdue
+troublemakers.  The constables of the town are mildly annoyed at their
+duties being stripped from them by the Church and given to the knights of
+Saint John.  
+~
+Race human~
+Act AGT
+Act2 E
+Aff FV
+Align 750
+Group 0
+Level 50
+Hitroll 100
+HitDice 756d2+377
+ManaDice 1d1+1
+DamDice 1d42+33
+DamType slash
+AcPierce -39
+AcBash -39
+AcSlash -39
+AcExotic -14
+AttrFlags 0
+AbilFlags A
+OffFlags IKV
+ImmFlags Ta
+ResFlags 0
+VulnFlags P
+StartPos stand
+DefaultPos stand
+Sex male
+Wealth 24000
+Form AEHMV
+Parts ABCDEFGHIJK
+Size medium
+Material unknown~
+MaxLoad -1
+End
+#101
+#MOBFORMAT dynamic
+Name stray dog~
+ShD a stray dog~
+LnD A stray dog lopes about Chester, slinking through the shadows.
+~
+Desc Once a proud family pet, this stray dog has fallen from favor and lives
+its life on the streets.  Its matted brown fur is full of knots and tangles,
+and a foul smell emits from its body.  Wagging its tail, this poor beast
+begins foaming at the mouth.  
+~
+Race dog~
+Act AHU
+Act2 E
+Aff Z
+Align -200
+Group 0
+Level 3
+Hitroll 1
+HitDice 16d2+7
+ManaDice 0d0+0
+DamDice 1d3+2
+DamType bite
+AcPierce 6
+AcBash 6
+AcSlash 6
+AcExotic 8
+AttrFlags 0
+AbilFlags 0
+OffFlags 0
+ImmFlags a
+ResFlags 0
+VulnFlags T
+StartPos stand
+DefaultPos stand
+Sex either
+Wealth 0
+Form ABGV
+Parts ACDEFHJKQUV
+Size small
+Material unknown~
+MaxLoad -1
+F off H
+End
+#102
+#MOBFORMAT dynamic
+Name patrolman patrol man~
+ShD a patrolman~
+LnD A patrolman is trying to keep the peace.
+~
+Desc He'd rather be at the local pub then out here with these nasty kids.
+~
+Race human~
+Act AGT
+Act2 E
+Aff 0
+Align 700
+Group 0
+Level 6
+Hitroll 0
+HitDice 30d2+14
+ManaDice 1d1+99
+DamDice 1d6+3
+DamType punch
+AcPierce 4
+AcBash 4
+AcSlash 4
+AcExotic 7
+AttrFlags 0
+AbilFlags 0
+OffFlags KLU
+ImmFlags a
+ResFlags 0
+VulnFlags P
+StartPos stand
+DefaultPos stand
+Sex male
+Wealth 1500
+Form AHMV
+Parts ABCDEFGHIJK
+Size medium
+Material unknown~
+MaxLoad -1
+End
+#103
+#MOBFORMAT dynamic
+Name master trainer instructor~
+ShD the Master-at-Arms~
+LnD The Master-at-Arms stands ready to train and instruct initiates.
+~
+Desc A veteran instructor stands here ready to help you train and practice.
+~
+Race human~
+Act ABJKTVb
+Act2 E
+Aff 0
+Align 0
+Group 0
+Level 50
+Hitroll 0
+HitDice 10d10+500
+ManaDice 10d10+500
+DamDice 4d6+10
+DamType punch
+AcPierce 0
+AcBash 0
+AcSlash 0
+AcExotic 0
+AttrFlags 0
+AbilFlags 0
+OffFlags 0
+ImmFlags a
+ResFlags 0
+VulnFlags P
+StartPos stand
+DefaultPos stand
+Sex male
+Wealth 0
+Form AHMV
+Parts ABCDEFGHIJK
+Size medium
+Material flesh~
+MaxLoad 1
+End
+#104
+#MOBFORMAT dynamic
+Name sanctuary healer adept~
+ShD the Sanctuary Healer~
+LnD The Sanctuary Healer tends to the wounded here.
+~
+Desc Robed in simple linen, the healer offers restoration to weary travelers.
+~
+Race human~
+Act ABDFJKa
+Act2 E
+Aff 0
+Align 500
+Group 0
+Level 50
+Hitroll 0
+HitDice 10d10+500
+ManaDice 10d10+500
+DamDice 4d6+10
+DamType punch
+AcPierce 0
+AcBash 0
+AcSlash 0
+AcExotic 0
+AttrFlags 0
+AbilFlags 0
+OffFlags 0
+ImmFlags a
+ResFlags 0
+VulnFlags P
+StartPos stand
+DefaultPos stand
+Sex female
+Wealth 0
+Form AHMV
+Parts ABCDEFGHIJK
+Size medium
+Material flesh~
+MaxLoad 1
+End
+#105
+#MOBFORMAT dynamic
+Name grand questmaster steward~
+ShD the Grand Questmaster~
+LnD The Grand Questmaster awaits those seeking tasks of renown.
+~
+Desc A sharp-eyed steward records deeds and dispenses rewards to adventurers.
+~
+Race human~
+Act ABJKV
+Act2 E
+Aff 0
+Align 0
+Group 0
+Level 50
+Hitroll 0
+HitDice 10d10+500
+ManaDice 10d10+500
+DamDice 4d6+10
+DamType punch
+AcPierce 0
+AcBash 0
+AcSlash 0
+AcExotic 0
+AttrFlags 0
+AbilFlags 0
+OffFlags 0
+ImmFlags a
+ResFlags 0
+VulnFlags P
+StartPos stand
+DefaultPos stand
+Sex male
+Wealth 0
+Form AHMV
+Parts ABCDEFGHIJK
+Size medium
+Material flesh~
+MaxLoad 1
+End
+#106
+#MOBFORMAT dynamic
+Name town banker moneychanger~
+ShD the Town Banker~
+LnD The Town Banker stands behind a reinforced ledger desk.
+~
+Desc A meticulous clerk manages coin exchange and account ledgers.
+~
+Race human~
+Act ABJKVd
+Act2 E
+Aff 0
+Align 0
+Group 0
+Level 50
+Hitroll 0
+HitDice 10d10+500
+ManaDice 10d10+500
+DamDice 4d6+10
+DamType punch
+AcPierce 0
+AcBash 0
+AcSlash 0
+AcExotic 0
+AttrFlags 0
+AbilFlags 0
+OffFlags 0
+ImmFlags a
+ResFlags 0
+VulnFlags P
+StartPos stand
+DefaultPos stand
+Sex male
+Wealth 1000
+Form AHMV
+Parts ABCDEFGHIJK
+Size medium
+Material flesh~
+MaxLoad 1
+End
+#107
+#MOBFORMAT dynamic
+Name sanctuary provisioner shopkeeper~
+ShD the Sanctuary Provisioner~
+LnD The Sanctuary Provisioner arranges supplies along a wooden counter.
+~
+Desc The provisioner keeps basic tools, vials, and rations in stock.
+~
+Race human~
+Act ABJKV
+Act2 E
+Aff 0
+Align 0
+Group 0
+Level 50
+Hitroll 0
+HitDice 10d10+500
+ManaDice 10d10+500
+DamDice 4d6+10
+DamType punch
+AcPierce 0
+AcBash 0
+AcSlash 0
+AcExotic 0
+AttrFlags 0
+AbilFlags 0
+OffFlags 0
+ImmFlags a
+ResFlags 0
+VulnFlags P
+StartPos stand
+DefaultPos stand
+Sex female
+Wealth 5000
+Form AHMV
+Parts ABCDEFGHIJK
+Size medium
+Material flesh~
+MaxLoad 1
+End
+#108
+#MOBFORMAT dynamic
+Name fomori~
+ShD a Fomori~
+LnD A Wyrm-tainted Fomori is here, doing it's masters bidding.
+~
+Desc What a foul, disgusting creature the Fomori is.  It's eyes bulge out of
+it's head and it's skin is torn and shredded in several places.  The Fomori
+acts with no free will of it's own, only doing what the Wyrm tells it to. 
+Once a proud man or woman, now this pitiful creature can only pray to be
+released from the mortal coil.  
+~
+Race undead~
+Act AFGS
+Act2 E
+Aff FO
+Align -2000
+Group 0
+Level 88
+Hitroll 200
+HitDice 2162d2+1080
+ManaDice 0d0+0
+DamDice 1d74+58
+DamType slime
+AcPierce -77
+AcBash -77
+AcSlash -77
+AcExotic -33
+AttrFlags 0
+AbilFlags 0
+OffFlags DFKV
+ImmFlags JL
+ResFlags I
+VulnFlags N
+StartPos stand
+DefaultPos stand
+Sex none
+Wealth 28160
+Form AHMV
+Parts D
+Size medium
+Material unknown~
+MaxLoad -1
+F par ABCEFGHIJK
+End
+#109
+#MOBFORMAT dynamic
+Name troll gang member~
+ShD a troll gang member~
+LnD A member of the Trolls wanders about here.
+~
+Desc He's lived a life of violence ever since he was little.
+~
+Race human~
+Act ACEG
+Act2 E
+Aff 0
+Align -100
+Group 0
+Level 3
+Hitroll 0
+HitDice 16d2+7
+ManaDice 1d1+99
+DamDice 1d3+2
+DamType punch
+AcPierce 6
+AcBash 6
+AcSlash 6
+AcExotic 8
+AttrFlags 0
+AbilFlags 0
+OffFlags DFNU
+ImmFlags a
+ResFlags 0
+VulnFlags P
+StartPos stand
+DefaultPos stand
+Sex male
+Wealth 750
+Form AHMV
+Parts ABCDEFGHIJK
+Size medium
+Material unknown~
+MaxLoad -1
+End
+#120
+#MOBFORMAT dynamic
+Name ram spirit spiritquest ramspirit~
+ShD The Ram~
+LnD A great glowing golden Ram the size of a small house stands here peering down at you with red beady eyes.
+~
+Desc ~
+Race horse~
+Act AB
+Act2 E
+Aff FTZ
+Align 1000
+Group 0
+Level 110
+Hitroll 0
+HitDice 30000d1+0
+ManaDice 0d0+0
+DamDice 1d1+1
+DamType none
+AcPierce 0
+AcBash 0
+AcSlash 0
+AcExotic 0
+AttrFlags 0
+AbilFlags 0
+OffFlags 0
+ImmFlags CDE
+ResFlags L
+VulnFlags B
+StartPos stand
+DefaultPos stand
+Sex male
+Wealth 0
+Form AMV
+Parts ACDEFJKQ
+Size medium
+Material unknown~
+MaxLoad -1
+F af2 DL
+End
+#121
+#MOBFORMAT dynamic
+Name chameleon spirit spiritquest ramspirit~
+ShD The Chameleon~
+LnD A slight shimmer of color barely gives away the location of the Chameleon Spirit.
+~
+Desc ~
+Race lizard~
+Act AB
+Act2 E
+Aff FTZ
+Align 0
+Group 0
+Level 110
+Hitroll 0
+HitDice 30000d1+0
+ManaDice 0d0+0
+DamDice 1d1+1
+DamType none
+AcPierce 0
+AcBash 0
+AcSlash 0
+AcExotic 0
+AttrFlags 0
+AbilFlags 0
+OffFlags 0
+ImmFlags 0
+ResFlags L
+VulnFlags I
+StartPos stand
+DefaultPos stand
+Sex male
+Wealth 0
+Form AGXc
+Parts ACDEFHKQV
+Size medium
+Material unknown~
+MaxLoad -1
+F af2 D
+End
+#122
+#MOBFORMAT dynamic
+Name bat spirit spiritquest batspirit~
+ShD A giant bat~
+LnD With a giant shriek and a flap of mighty wing, the Bat Spirit peers at you with sightless eyes.
+~
+Desc ~
+Race bat~
+Act AB
+Act2 E
+Aff F
+Align 0
+Group 0
+Level 110
+Hitroll 0
+HitDice 30000d1+0
+ManaDice 0d0+0
+DamDice 1d1+1
+DamType none
+AcPierce 0
+AcBash 0
+AcSlash 0
+AcExotic 0
+AttrFlags 0
+AbilFlags 0
+OffFlags FH
+ImmFlags 0
+ResFlags 0
+VulnFlags S
+StartPos stand
+DefaultPos stand
+Sex male
+Wealth 0
+Form AGV
+Parts ACDEFHJKP
+Size medium
+Material unknown~
+MaxLoad -1
+F aff TZ
+F af2 D
+End
+#123
+#MOBFORMAT dynamic
+Name porcupine spirit porcupinespirit quest spiritquest~
+ShD The Porcupine~
+LnD A great Porcupine with shimmering quills stands here with an annoyed expression on it's face.
+~
+Desc ~
+Race fox~
+Act AB
+Act2 E
+Aff FTZ
+Align 0
+Group 0
+Level 110
+Hitroll 0
+HitDice 30000d1+1
+ManaDice 0d0+0
+DamDice 1d1+1
+DamType none
+AcPierce 0
+AcBash 0
+AcSlash 0
+AcExotic 0
+AttrFlags 0
+AbilFlags 0
+OffFlags FH
+ImmFlags CDE
+ResFlags 0
+VulnFlags 0
+StartPos stand
+DefaultPos stand
+Sex none
+Wealth 0
+Form AGV
+Parts ACDEFHJKQV
+Size medium
+Material unknown~
+MaxLoad -1
+F af2 D
+End
+#124
+#MOBFORMAT dynamic
+Name Leopard spirit spiritquest leopardspirit~
+ShD A golden Leopard~
+LnD A glimmering golden leopard stands here coiled to pounce at any second.
+~
+Desc ~
+Race cat~
+Act AB
+Act2 E
+Aff FTZ
+Align 0
+Group 0
+Level 110
+Hitroll 0
+HitDice 30000d1+0
+ManaDice 0d0+0
+DamDice 1d1+1
+DamType none
+AcPierce 0
+AcBash 0
+AcSlash 0
+AcExotic 0
+AttrFlags 0
+AbilFlags 0
+OffFlags FH
+ImmFlags 0
+ResFlags 0
+VulnFlags 0
+StartPos stand
+DefaultPos stand
+Sex none
+Wealth 0
+Form AGV
+Parts ACDEFHJKQUV
+Size medium
+Material unknown~
+MaxLoad -1
+F af2 D
+End
+#125
+#MOBFORMAT dynamic
+Name bear spirit bearspirit quest spiritquest~
+ShD The Bear~
+LnD A great and majestic bear spirit stands here on it's hind legs.
+~
+Desc ~
+Race bear~
+Act AB
+Act2 E
+Aff FTUZ
+Align 1000
+Group 0
+Level 110
+Hitroll 0
+HitDice 20000d1+1
+ManaDice 0d0+0
+DamDice 50d5+100
+DamType claw
+AcPierce -10
+AcBash -10
+AcSlash -10
+AcExotic -10
+AttrFlags 0
+AbilFlags 0
+OffFlags DE
+ImmFlags C
+ResFlags EI
+VulnFlags 0
+StartPos stand
+DefaultPos stand
+Sex none
+Wealth 0
+Form AGV
+Parts ABCDEFHJKUV
+Size medium
+Material unknown~
+MaxLoad -1
+F af2 D
+F off O
+End
+#126
+#MOBFORMAT dynamic
+Name wolf spirit spiritquest wolfspirit~
+ShD The Wolf Spirit~
+LnD A beautiful grey mountian wolf stares calmly at you with ancient eyes.
+~
+Desc ~
+Race wolf~
+Act AB
+Act2 E
+Aff FTZ
+Align 0
+Group 0
+Level 110
+Hitroll 0
+HitDice 30000d1+0
+ManaDice 0d0+0
+DamDice 1d1+1
+DamType none
+AcPierce 0
+AcBash 0
+AcSlash 0
+AcExotic 0
+AttrFlags 0
+AbilFlags 0
+OffFlags FH
+ImmFlags 0
+ResFlags 0
+VulnFlags 0
+StartPos stand
+DefaultPos stand
+Sex male
+Wealth 0
+Form AGV
+Parts ACDEFJKQV
+Size medium
+Material unknown~
+MaxLoad -1
+F af2 D
+End
+#127
+#MOBFORMAT dynamic
+Name badger spirit spiritquest badgerspirit~
+ShD A giant Badger~
+LnD A giant badger grumbles to himself here.
+~
+Desc ~
+Race rabbit~
+Act AB
+Act2 E
+Aff FTZ
+Align 0
+Group 0
+Level 110
+Hitroll 0
+HitDice 30000d1+0
+ManaDice 0d0+0
+DamDice 1d1+1
+DamType none
+AcPierce 0
+AcBash 0
+AcSlash 0
+AcExotic 0
+AttrFlags 0
+AbilFlags 0
+OffFlags FH
+ImmFlags 0
+ResFlags 0
+VulnFlags 0
+StartPos stand
+DefaultPos stand
+Sex male
+Wealth 0
+Form AGV
+Parts ACDEFHJKQV
+Size medium
+Material unknown~
+MaxLoad -1
+F af2 D
+End
+#128
+#MOBFORMAT dynamic
+Name incarna luna spirit spiritquest lunaspirit~
+ShD The Incarna of Luna~
+LnD Luna stands here wearing a glimmering white cloak.
+~
+Desc ~
+Race human~
+Act AB
+Act2 E
+Aff FZ
+Align 0
+Group 0
+Level 110
+Hitroll 0
+HitDice 30000d1+0
+ManaDice 0d0+0
+DamDice 1d1+1
+DamType none
+AcPierce 0
+AcBash 0
+AcSlash 0
+AcExotic 0
+AttrFlags 0
+AbilFlags 0
+OffFlags 0
+ImmFlags Ka
+ResFlags 0
+VulnFlags P
+StartPos stand
+DefaultPos stand
+Sex none
+Wealth 0
+Form AHMV
+Parts ABCDEFGHIJK
+Size medium
+Material unknown~
+MaxLoad -1
+F af2 D
+End
+#129
+#MOBFORMAT dynamic
+Name ancestor spirit spiritquest ancestorspirit~
+ShD The Ancestor Spirit~
+LnD An ancient Ancestor of a mighty Garou stands here to pass judgement upon your honor.
+~
+Desc ~
+Race human~
+Act AB
+Act2 E
+Aff FTZ
+Align 0
+Group 0
+Level 110
+Hitroll 0
+HitDice 30000d1+0
+ManaDice 0d0+0
+DamDice 1d1+1
+DamType none
+AcPierce 0
+AcBash 0
+AcSlash 0
+AcExotic 0
+AttrFlags 0
+AbilFlags 0
+OffFlags 0
+ImmFlags Pa
+ResFlags 0
+VulnFlags P
+StartPos stand
+DefaultPos stand
+Sex male
+Wealth 0
+Form AHMV
+Parts ABCDEFGHIJK
+Size medium
+Material unknown~
+MaxLoad -1
+F af2 D
+End
+#130
+#MOBFORMAT dynamic
+Name stargazer ancestor spirit spiritquest stargazerspirit~
+ShD An ancient Stargazer~
+LnD The Ancestor of an ancient and legendary Stargazer is prepared to instruct you.
+~
+Desc ~
+Race human~
+Act AB
+Act2 E
+Aff FT
+Align 0
+Group 0
+Level 110
+Hitroll 0
+HitDice 30000d1+0
+ManaDice 0d0+0
+DamDice 1d1+1
+DamType none
+AcPierce 0
+AcBash 0
+AcSlash 0
+AcExotic 0
+AttrFlags 0
+AbilFlags 0
+OffFlags 0
+ImmFlags a
+ResFlags 0
+VulnFlags P
+StartPos stand
+DefaultPos stand
+Sex male
+Wealth 0
+Form AHMV
+Parts ABCDEFGHIJK
+Size medium
+Material unknown~
+MaxLoad -1
+F af2 D
+End
+#131
+#MOBFORMAT dynamic
+Name Free Vnum (Yg)~
+ShD The Avatar to the Great Wendigo~
+LnD An Avatar of the Great Wendigo stands here being windy.
+~
+Desc ~
+Race placeholder~
+Act AB
+Act2 E
+Aff FTZ
+Align 0
+Group 0
+Level 110
+Hitroll 0
+HitDice 30000d1+0
+ManaDice 0d0+0
+DamDice 1d1+1
+DamType none
+AcPierce 0
+AcBash 0
+AcSlash 0
+AcExotic 0
+AttrFlags 0
+AbilFlags 0
+OffFlags 0
+ImmFlags 0
+ResFlags HI
+VulnFlags JP
+StartPos stand
+DefaultPos stand
+Sex male
+Wealth 0
+Form AHMV
+Parts ABCDEFGHIJK
+Size medium
+Material unknown~
+MaxLoad -1
+F af2 D
+End
+#0
+
+
+
+#OBJECTS
+#100
+old workbench oak bench~
+an old oak workbench~
+An old oak workbench sits here collecting dust and soot.~
+oak~
+0
+tool 0 0
+0 0 0 0
+20 'bench' 0 0 0
+0 0 0 P
+#101
+sharp carving knife~
+a sharp carving knife~
+A sharp edged carving knife has been left behind by someone.~
+iron~
+0
+tool 0 AN
+0 0 0 0
+100 'knife' 0 0 0
+1 2 500 P
+#102
+plank wood yew~
+a plank of yew wood~
+A long plank of yew lies here.~
+yew~
+0
+resource W A
+0 0 0 0
+0 0 0 0 0
+0 50 25000 P
+#103
+plank wood maple~
+a plank of maple wood~
+A long plank of maple lies here.~
+maple~
+0
+resource W A
+0 0 0 0
+0 0 0 0 0
+0 50 25000 P
+#104
+plank wood ash~
+a plank of ash wood~
+A long plank of ash lies here.~
+ash~
+0
+resource W A
+0 0 0 0
+0 0 0 0 0
+0 50 25000 P
+#105
+plank wood walnut~
+a plank of walnut wood~
+A long plank of walnut lies here.~
+walnut~
+0
+resource W A
+0 0 0 0
+0 0 0 0 0
+0 50 25000 P
+#106
+plank wood oak~
+a plank of oak wood~
+A long plank of oak lies here.~
+oak~
+0
+resource W A
+0 0 0 0
+0 0 0 0 0
+0 50 25000 P
+#107
+block wood yew~
+a block of yew wood~
+A long block of yew lies here.~
+yew~
+0
+resource W A
+0 0 0 0
+0 0 0 0 0
+0 25 40000 P
+#108
+block wood maple~
+a block of maple wood~
+A long block of maple lies here.~
+maple~
+0
+resource W A
+0 0 0 0
+0 0 0 0 0
+0 25 40000 P
+#109
+block wood ash~
+a block of ash wood~
+A long block of ash lies here.~
+ash~
+0
+resource W A
+0 0 0 0
+0 0 0 0 0
+0 25 40000 P
+#110
+block wood walnut~
+a block of walnut wood~
+A long block of walnut lies here.~
+walnut~
+0
+resource W A
+0 0 0 0
+0 0 0 0 0
+0 25 40000 P
+#111
+block wood oak~
+a block of oak wood~
+A long block of oak lies here.~
+oak~
+0
+resource W A
+0 0 0 0
+0 0 0 0 0
+0 25 40000 P
+#112
+wooden bowl~
+a wooden bowl~
+A wooden bowl sits here awaiting a new owner.~
+wood~
+0
+drink 0 A
+0 0 0 0
+200 200 'water' 0 0
+0 50 0 P
+#113
+walking stick~
+a walking stick~
+A walking stick rests on the ground here.~
+wood~
+0
+crafted 0 AO
+0 0 0 0
+0 'equipment' 0 0 0
+0 0 0 P
+A
+30 1
+#114
+wooden cross~
+a wooden cross~
+A wooden cross lies here in the dirt.~
+wood~
+0
+crafted 0 AO
+0 0 0 0
+0 'relic' 0 0 0
+0 0 0 P
+#115
+carving knife~
+a carving knife~
+A knife for carving wooden objects lies here.~
+unknown~
+0
+tool 0 AN
+0 0 0 0
+100 'knife' 0 0 0
+1 0 100 P
+#116
+carving plane~
+a carving plane~
+A plane for carving logs into blocks or planks lies here.~
+unknown~
+0
+tool 0 AN
+0 0 0 0
+100 'plane' 0 0 0
+1 0 100 P
+#117
+carving bench~
+a carving bench~
+A carving bench sits here, like carving benches do.~
+wood~
+0
+tool 0 0
+0 0 0 0
+100 'bench' 0 0 0
+1 0 100 P
+#120
+donation chest~
+the donation chest~
+A very large chest sits open, ready to receive donations.~
+unknown~
+0
+container 0 0
+4 0 0 0
+10000 0 0 10000 100
+1 10000 0 P
+E
+chest~
+A large oaken chest that fills half of this room.  The lid is open to
+reveal the donations left here.  A small inscription from Aesop is on the
+lid: No act of kindness, no matter how small, is ever wasted.  
+~
+#121
+map chester~
+a map of northern Chester~
+A rolled up map lies here.~
+unknown~
+0
+treasure 0 A
+1 0 0 0
+0 0 0 0 0
+1 1 500 P
+E
+map~
+{x                            {W*{C*{W*{wNorthern Chester{W*{C*{W*
+{x
+{x               {WNorth Gate
+{w                   |                        /{WTraining
+{w                   |                       / {WGrounds
+{w    {WAbandoned{w------|                      /
+{w      {WHouse        {w|             {WAbbey of Saint John
+{w                   |                      |
+{w                   |                      |
+{w              {WWanderer's{w---------------{WCity{w------------{WMerchants'{w--{WBar
+{w                  {WWay                 Square             Row
+{w                   |                      |              |
+{w       {WH  H  H     {w|                      |              |     {WH  H
+{w       |  |  |     |                      |              |     |  |
+{w   {WWest Gate{w-------|-------------{WMain Street{w-------------|------{WEast Gate 
+{w       |  |  |     |                      |              |     |  |
+{w       {WH  H  H {w    |                      |              |     {WH  H
+{w               {WWanderer's              Alley         Merchants'
+{w                  {WWay                                   Row
+{w                   |                                     |
+{w                   |                                     |
+{w    {WMoney Changer{w--|--{WPotions                           {w |--{WArmour
+{w                   |                                     |
+{w                   |                                     |
+{w      {WMystic Shop{w--|                            {WWeapons{w--|--{WLeather
+{w                   |                                     |
+{w                   |                                     |
+{w    {WGeneral Store{w--|--{WJeweller                           {w|--{WBaker
+{w                   |                                     |
+{w                   |                                     |
+{w              {WInn{w--|-----------{WInner Gate Road{w-----------|--------{WMaps
+{w                                      |
+{w                       {W*{C*{W*{wTo Southern Chester{W*{C*{W*{x
+{w
+{w Charted by the cartographer Gadira{x
+~
+#122
+newbie guide book~
+a newbie guide (type 'look book')~
+A book for newbies is lying on the ground.  (type 'get book', then 'look book')~
+metal~
+0
+trash GY A
+0 0 0 0
+0 0 0 0 0
+1 2 50 P
+E
+pagec~
+{c-------------------------------------------------------{x
+You must be bored, looking for pages that aren't supposed to
+be here. Newbie Guide Book written by Sargoth Neevosaiden,
+a.k.a. Maelstrome Neevosaiden.
+ 
+I hope that you have found this guide useful, if you have
+any questions please feel free to ask.
+
+{R--{xEdited and Updated by Gilean, the Red Robe of Balance 
+  January 2020
+{c-------------------------------------------------------{x
+~
+E
+pageb~
+Frequently Asked Questions
+{c-------------------------------------------------------{x
+Q:Where should I level?
+A:Type {Carea{x for a list of areas for your level range.
+ 
+Q:Where should I go for EQ(Equipment)?
+A:Look through the different areas, explore and see what
+  you find, that's really the only way to know. Many 
+  players already know where to go, and some of them don't
+  want to tell everyone where they found something. So
+  spend some time exploring and looking around.
+ 
+Q:Where can I get money?
+A:By killing Mobiles(monsters) you usually recieve a random
+  amount of money from the corpse. The players hoarde their
+  money because it can be hard to accumulate massive amounts
+  of money, and are reluctant to reveal the locations of
+  good money spots.
+ 
+Q:What happened to the spells?
+A:Spells on Haven are known as Prayers, type Pray (prayername)
+  to cast a prayer.
+ 
+Q:What's the best Clan/Tribe/Tradition?
+A:All of the coded affiliations each have distinct advantages
+  and disadvantages, and as such we try to not have any one specific
+  group or affiliation being better than any of the others.
+ 
+Q:How many alts can I have?
+A:You are allowed to have 4 alts on Haven, let's not confuse this
+  with Multiplaying, which is logging on multiple characters at
+  once, which is illegal.
+ 
+Q:Does Haven have a webpage?
+A:Haven does in fact have a webpage.  It also has a few other social
+  media sites.  Check out {yhelp website{x for an updated list of Haven's
+  social media and internet presence.
+
+Q:I love this place!  How can I help it flourish?
+A:Log in, play and learn about the MUD.  Spread the word to your friends.
+  Submit ideas to the immortal staff.  We enjoy talking to our players
+  and are more than willing to listen to constructive feedback.
+{c---------------------------------------------------------------------{x
+~
+E
+pagea~
+Message Boards
+{c-------------------------------------------------------{x
+There are several message boards available.
+ 
+News : is a message board from which you will see some
+       In Character announcements.
+Change : This message board is used to notify players
+       of any changes that the coders implement into the
+       mud.
+Note : This is a player message board, you may send
+       notes to everyone, or just one person.
+Idea : This message board is used to submit ideas of
+       things you would like to see put into Haven.
+RpNote: This is message board is used for IC notes and
+       global storylines.
+ 
+See 'help note' for more information on how to use
+the message boards.
+{c-------------------------------------------------------{x
+~
+E
+page9~
+Haven's Rules
+{c------------------------------------------------------------------{x
+These are the rules of Haven of the Embraced.  Read them, understand
+them, worship them.
+ 
+1: See the help pk file for Player Killing rules.
+ 
+2: Your presence here is a privilege not a right. Obey any orders
+   from gods, and you will be fine.  Deletion does not require a
+   reason, appeals should be sent to Matthew alone.
+ 
+3: Sitting around idle with a client is hazardous to your health.
+   We may choose to disconnect or forcequit you for your own safety.
+ 
+4: No multiple logins, multiple playing, or helping your own
+   characters with other characters you own -- by any arrangment.
+ 
+5: No kill stealing.  This means you cannot attack a mob someone else
+   is fighting, unless they ask you to. Also avoid attacking fleeing
+   mobs.
+ 
+6: Cheating will not be tolerated.  This includes accepting favors
+   from gods and exploiting bugs. If you find a bug, report it, then
+   do not use it.
+ 
+7: Changes to these rules are at the discretion of the immortals, and
+   may be done without warning, notice, or even evidence of sanity.
+ 
+8: On this mud, The Mad Hatter was god, is god, and will always be god. If he
+   says something, it's law. If he decides something, accept it. If
+   he rewards you, worship him. If he punishes you, be thankful he
+   didn't do worse.
+ 
+                Walk softly, and carry a big Stake.
+{c---------------------------------------------------------------------{x
+~
+E
+page8~
+Immortals and Administration
+{c-------------------------------------------------------{x
+Anyone who is above level 100, is an immortal, they are the
+builders and administration of the mud. If you need any
+assistiance please feel free to look for them, or use the
+OOC channel to ask for one. Immortals are here to help as
+well as work on Haven to make it a better place.
+
+You can also use the {Cplead{x command to attempt to contact
+an immortal who is logged in at the time.
+ 
+The {Cwizlist{x command will give the most current list of
+active Immortals.
+
+If you are looking to apply for a position on the immortal
+staff, please read the application that is located under
+'{chelp application{x'.  Answer the questions and write the
+required descriptions, then send them to the Immortals as
+instructed in the helpfile.  To be considered for an Immortal
+position, you must have played at least 10 hours.
+{c-------------------------------------------------------{x
+~
+E
+page7~
+Clans, Tribes, Traditions
+{c-------------------------------------------------------{x
+The different 'races' of Haven have a variety of affiliations
+available, depending on which type of character you are
+playing.  Each is unique, with its own pool of powers for
+you to have access to.
+ 
+Vampires begin the game as a member of a clan, selected
+during character creation.  See {yhelp clans{x for additional
+information on clans.
+
+Werewolf Tribes are more akin to an adopted family.  A
+werewolf must be inducted into one of the tribes by a
+senior member of that specific Tribe.  See {yhelp tribes{x
+for more information.
+
+Mages must be Awakened into a specific Tradition by a
+senior member of that Tradition.  See {yhelp traditions{x
+for Tradition information.
+
+At this time, there are no specific affiliations for general
+humans.  A human can become embraced into a clan by a
+vampire, inducted into a tribe by a werewolf, or inducted
+into a tradition by a mage.  In this respect, a normal
+basic human has a multitude of options to advance.
+{c-------------------------------------------------------{x
+~
+E
+page6~
+Skills and Prayers
+{c-------------------------------------------------------{x
+Typing 'skills' will show you a list of skills that you 
+have at your current level.  By typing 'skills all', you
+can see a list of your acquired skills, and what level
+they are accessed.
+ 
+Spells are known as prayers on Haven. By typing 'prayer'
+you will be shown a list of prayers that are available to
+you. By typing 'prayer all' you will be shown a list of 
+the prayers you have learned, and what level the prayer
+is able to be used.
+ 
+Your ability in a particular skill or prayer is respresented
+with a percentage.  This percentage has a small chance of
+increasing upon usage, whether it is successful for not.
+There are some skills that are considered "always on",
+such as 'second attack' or 'enhanced speed', and have the
+chance to increase upon triggering.
+ 
+In order to gain new skills and prayers, you must increase
+the portions of your character found on your Character
+Sheet.  Refer to the Freebies page of this guide for
+additional information.  Using the {Cskillmap{x command
+will give you a list of all skills in Haven, along with the
+corresponding character sheet statistic and dot level
+needed to learn the skill or prayer.
+{c-------------------------------------------------------{x
+~
+E
+page5~
+Communication on Haven
+{c-------------------------------------------------------{x
+There are a variety of ways in which you can communicate
+on Haven.
+ 
+OOC : is the Out of Character chat channel, this is used
+for general chat, and has absolutely nothing to do with
+any Roleplaying aspect of your character. The command for
+OOC is 'ooc (texthere)'
+OOC is broadcast to everyone on the mud.
+ 
+GOSSIP : This channel is for In Character chat, it is used
+for the Roleplaying aspect of your character. The command
+for GOSSIP is 'gossip (texthere)'
+GOSSIP is also broadcast to everyone on the mud.
+ 
+SAY : This is another of the In Character chat channels,
+that you may use in roleplaying your character.
+SAY will only be shown to those who are in the same room
+as you are. The command for SAY is 'say (texthere)'
+ 
+OSAY : This is much like the SAY command except that it is
+for out of charcter chatting to people in the same room as
+you are. The command for OSAY is 'osay (texthere)'
+ 
+TELL : This command is used to send a private message to
+another person. The TELL channel is an out of character
+channel. The command for TELL is, 'tell (person) (text)'
+ 
+Other channels available to you are SHOUT and YELL. Shout
+will send a message to all players who are awake in the 
+world. Yell will send a message to all awake players in
+the same area as you are.
+ 
+By typing 'channel' you will see a list of channels that
+are available to you. For help on a particular channel
+type 'help (channelhere)'
+{c-------------------------------------------------------{x
+~
+E
+page4~
+Items and Equipment
+{c-------------------------------------------------------{x
+You will start out with a few pieces of equipment. Type
+'{Cequipment{x' to see what you are currently wear{xing. Also
+type '{Cinventory{x' to see what you are currently carrying.
+ 
+To wear a particular piece of equipment, use the '{Cwear{x'
+command.  Example: '{Cwear dagger{x' '{Cwear all{x'
+ 
+To {Cremove{x a piece of equipment use the 'remove' command.
+Example : 'remove dagger' 'remove all'
+ 
+On occassion, you might not be able to remove a particular
+piece of equipment, this might be because the item is 
+cursed, in which case you might want to visit a healer, or
+convince someone to help you remove the curse upon the item.
+ 
+You will find various pieces of equipment throughout your
+travels, sometimes they will be weaker than what you might
+currently be wearing, sometimes they might be stronger
+than what you are currently wearing. You can only wear
+equipment that is equal to your current level or lower.
+{c-------------------------------------------------------{x
+~
+E
+page3~
+Freebies
+{c-------------------------------------------------------{x
+Once you have finished your 'Creation Process' to flesh
+out your character (or have used one of the three starter
+templates), you will be supplied with 15 Freebie Points
+to spend at your leisure.  Aside from your initial creation,
+these points will be your main source of advancement for
+your character here on Haven of the Embraced.  All of the
+Statistics that you find on your Character Sheet ({Ccs{x, {Ccs2{x,
+and {Ccs3{x) are all increased via these Freebie Points.
+
+Using the {Cfreebie{x command, you are able to bring up the
+Freebie Cost screen for your character.  The costs of
+increasing the different sections of your character sheet
+are shown.  All characters will see the costs for common
+statistics found among all characters (Attributes, Abilities,
+Willpower, just to name a few), but you will also see any
+costs for stats that are specific to your character's race
+(Disciplines, Spheres, etc.).  Your current Freebie Points
+are also listed here for convenience.
+
+In order to gain additional Freebie Points to advance your
+character, you must level up to Level 100.  Once you have
+reached Level 100, you have the option to 'remort' to
+become more powerful.  This resets your character level
+down to level 1, but increases your Freebie Points by 3.
+Freebies do not need to be spent immediately, and can be
+saved up to purchase more expensive upgrades as needed.
+See {yhelp remort{x for additional information on remorts.
+{c-------------------------------------------------------{x
+~
+E
+page2~
+Getting Started
+{c-------------------------------------------------------{x
+By using the 'Look' command, you can see what is in a room.
+The look command can also be used to look at an object, or
+a person.  ex: {C'look'{x, '{Clook knife{x', '{Clook (playername){x'
+ 
+Another command that is as useful as look, is 'examine'
+by using this you can take a closer look at an item, or
+player. 'examine book' 'examine (playername)'
+ 
+There are 6 movement commands available to you. They are
+'{Cnorth{x' '{Csouth{x' '{Ceast{x' '{Cwest{x' '{Cup{x' and '{Cdown{x' Use these
+commands to move around Haven.
+ 
+The '{Ckill{x' command will be one of the commands that you 
+use the most. It allows you to attempt to kill a monster.
+The kill command can also be used to attack a player,
+though this isn't recommeded at this time, type 'help pk'
+for more information on our rules for player killing.
+If you have any questions about it, feel free to ask an
+immortal.
+ 
+One of the most common sights in Haven is a corpse.
+If you die, your corpse will be in the place that you
+died at. You will need to go and retrieve anything from
+your corpse. This is where the '{Cget{x' command comes in,
+'{Cget all corpse{x' will get everything that you can see from
+the corpse you are looting. '{Cget (item) corpse{x' will get
+just a particular item from a corpse. The get command will
+also allow you to pick up something that might be lying on
+the ground.
+ 
+After you have read the Newbie Guide, the best thing for
+you to do, is to go through Newbie Training School, so that
+you become more familiar with the commands that you will be
+using.
+ 
+After you have completed Newbie Training School, the
+next area that you will find yourself in is Vantage Point.
+Use this area to gain some experience before moving on.
+{c-------------------------------------------------------{x
+~
+E
+page1~
+About Your Character
+{c-------------------------------------------------------{x
+At any time you wish to see the list of commands available
+to your character, simply type '{Ccommands{x' ({WBe sure to type{x
+{Wthe entire word, including the '{Ys{W'){x  This will give you a
+listing of all commands on Haven.  Be aware that some of
+the commands will not be available for use unless you meet
+certain requirements.
+
+By typing {Cscore{x, you will be shown a detailed report
+of your character's basic statistics.  Useful information,
+such as your health, gold, level, etc., will be displayed
+for your perusal.
+
+At any time, you can use the {Chelp{x menus, by simply typing
+{Chelp <command here>{x.  For example, {Chelp score{x will show
+you a help file on the 'score' command.  {Y*We are currently{x
+{Yin the process of updating and adding help files.*{x
+
+The {Cwho{x command will show you a list of players who are
+currently visible to you on Haven.  Some players may be
+invisible, or otherwise hidden from sight.
+ 
+Another useful command is {Carea{x, which shows a list of
+areas on Haven, and a general level range for those areas.
+This can help you judge proper areas to explore.
+
+Using {Cscan{x, you will glance at rooms adjacent to you and
+see any visible enemies or players there.
+{c-------------------------------------------------------{x
+~
+E
+guide~
+{c---------------------------------------------------------------------------{x
+Welcome to Haven of the Embraced.  This is a world loosely based on the
+World of Darkness by White Wolf.  You will see many things during your stay
+here, and there are some things you will need to know.  Below is a list of
+pages that are contained within this book.  To read a page type 'look page#'
+i.e.: {Clook page1{x
+{c---------------------------------------------------------------------------{x
+Table of Contents
+ 
+{MPage1 {x- About Your Character
+{MPage2 {x- Getting Started
+{MPage3 {x- Freebies
+{MPage4 {x- Items and Equipment
+{MPage5 {x- Communicating on Haven
+{MPage6 {x- Skills and Prayers
+{MPage7 {x- Clans, Tribes, Traditions
+{MPage8 {x- Immortals and Administration
+{MPage9 {x- Haven's Rules
+{MPageA {x- Message Boards
+{MPageB {x- Frequently Asked Questions
+~
+E
+newbie~
+{c---------------------------------------------------------------------------{x
+Welcome to Haven of the Embraced.  This is a world loosely based on the
+World of Darkness by White Wolf.  You will see many things during your stay
+here, and there are some things you will need to know.  Below is a list of
+pages that are contained within this book.  To read a page type 'look page#'
+i.e.: {Clook page1{x
+{c---------------------------------------------------------------------------{x
+Table of Contents
+ 
+{MPage1 {x- About Your Character
+{MPage2 {x- Getting Started
+{MPage3 {x- Freebies
+{MPage4 {x- Items and Equipment
+{MPage5 {x- Communicating on Haven
+{MPage6 {x- Skills and Prayers
+{MPage7 {x- Clans, Tribes, Traditions
+{MPage8 {x- Immortals and Administration
+{MPage9 {x- Haven's Rules
+{MPageA {x- Message Boards
+{MPageB {x- Frequently Asked Questions
+~
+E
+book~
+{c---------------------------------------------------------------------------{x
+Welcome to Haven of the Embraced.  This is a world loosely based on the
+World of Darkness by White Wolf.  You will see many things during your stay
+here, and there are some things you will need to know.  Below is a list of
+pages that are contained within this book.  To read a page type 'look page#'
+i.e.: {Clook page1{x
+{c---------------------------------------------------------------------------{x
+Table of Contents
+ 
+{MPage1 {x- About Your Character
+{MPage2 {x- Getting Started
+{MPage3 {x- Freebies
+{MPage4 {x- Items and Equipment
+{MPage5 {x- Communicating on Haven
+{MPage6 {x- Skills and Prayers
+{MPage7 {x- Clans, Tribes, Traditions
+{MPage8 {x- Immortals and Administration
+{MPage9 {x- Haven's Rules
+{MPageA {x- Message Boards
+{MPageB {x- Frequently Asked Questions
+~
+#123
+bandage roll ~
+a roll of bandages~
+A roll of clean bandages awaits use.~
+cloth~
+0
+trash 0 A
+0 0 0 0
+0 0 0 0 0
+1 10 100 P
+#124
+random tome~
+random tome (required by code)~
+An ancient tome lies here covered in the dust of ages.~
+unknown~
+0
+trash WY A
+1 0 0 0
+0 0 0 0 0
+1 0 0 P
+#125
+mushroom faerie tassmushroom~
+a Faerie mushroom~
+A small, luminescent mushroom shimmers lightly, covered in fresh morning dew.~
+fungus~
+0
+pill AGRc A
+0 0 0 0
+1 'tass: quintessence' 'reserved' 'reserved' 'reserved'
+1 1 0 P
+#126
+carnival doubloon~
+a {Mc{Ga{Yr{Mn{Gi{Yv{Ma{Gl{x doubloon~
+A carnival doubloon glints with color.~
+unknown~
+0
+trash 0 A
+0 0 0 0
+0 0 0 0 0
+1 0 0 P
+#127
+carnival bead~
+a brightly colored {Mcar{Gni{Yval{x bead~
+A brightly colored carnival bead has been thrown for the public.~
+unknown~
+0
+trash 0 A
+1 0 0 0
+0 0 0 0 0
+1 0 0 P
+E
+carnival~
+"Throw me something Mister!"
+~
+E
+bead~
+"Throw me something Mister!"
+~
+#130
+leather handled club weapon~
+a leather handled club~
+A leather handled club has been left here.~
+wood~
+0
+weapon U AN
+2 0 0 0
+mace 6 3 pound 0
+1 12 250 P
+#131
+dirk weapon~
+a dirk~
+A poorly-crafted dirk has been left here.~
+bronze~
+0
+weapon U AN
+1 0 0 0
+dagger 6 3 pierce 0
+1 9 210 P
+#132
+rattan practice sword weapon~
+a rattan practice sword~
+A sword fashioned out of rattan is lying here.~
+rattan~
+0
+weapon U AN
+3 0 0 0
+sword 6 3 thwack 0
+1 15 360 P
+#133
+wooden spear weapon~
+a wooden spear~
+A wooden spear lies here.~
+wood~
+0
+weapon U AN
+3 0 0 0
+staff 6 3 thrust 0
+1 25 111 P
+#134
+oaken quarterstaff weapon~
+an oaken quarterstaff~
+An oaken quarterstaff has been forgotten here.~
+wood~
+0
+weapon U AN
+3 0 0 0
+staff 11 3 pound F
+1 16 290 P
+#135
+dull axe weapon~
+a dull axe~
+A woodsman's axe has been dulled from constant use.~
+bronze~
+0
+weapon U AN
+2 0 0 0
+axe 6 3 chop 0
+1 56 350 P
+#136
+wooden flail weapon~
+a wooden flail~
+A wooden flail lies forgotten here.~
+unknown~
+0
+weapon U AN
+2 0 0 0
+flail 7 3 grep 0
+1 21 310 P
+#137
+leather whip weapon~
+a leather whip~
+A leather whip lies here.~
+leather~
+0
+weapon U AN
+2 0 0 0
+whip 6 3 whip 0
+1 7 330 P
+#138
+iron scythe weapon~
+an iron scythe~
+A well-used iron scythe lies here.~
+iron~
+0
+weapon U AN
+3 0 0 0
+polearm 11 3 slash F
+1 25 183 P
+#139
+cracked lance weapon~
+a cracked lance~
+A cracked lance lies here.~
+unknown~
+0
+weapon U AN
+3 0 0 0
+lance 11 3 thrust F
+1 74 183 P
+#140
+gray linen tunic~
+a gray linen tunic~
+A gray linen tunic has been left here.~
+linen~
+0
+armor U AD
+2 0 0 0
+A A A A 0
+1 8 144 P
+#141
+wooden shield~
+a wooden shield~
+A round piece of wood lies here.~
+wood~
+0
+armor U AJ
+2 0 0 0
+A A A A 0
+1 1 108 P
+#142
+flaming torch~
+a flaming torch~
+A flaming torch burns brightly, casting shadows about.~
+cloth wood~
+0
+light A AO
+2 0 0 0
+0 0 ACDE ACDE 0
+1 3 22 P
+#150
+tabard ancient mysteries~
+{D[{MQ{D] {CTa{Wba{wrd of {WAn{Cci{cen{wt M{wys{Wte{wri{Ces{x~
+An ordinary cloth, imbued with the power of the Ancients, has been sewn into a sturdy tabard.~
+cloth~
+0
+armor GY AK
+0 0 0 0
+CFG CFG CFG CFG 0
+1 0 1 P
+A
+13 300
+A
+18 15
+A
+19 15
+A
+14 50
+#151
+spirit guide~
+{D[{MQ{D] {Ra S{rpi{Rri{rt G{Rui{rde{x~
+A spirit guide from the past floats about to aid it's ancestors in their lives.~
+unknown~
+0
+armor GY AQ
+0 0 0 0
+ABDG ABDG ABDG ABDG 0
+1 0 1 P
+A
+13 100
+A
+14 50
+A
+18 40
+A
+19 40
+#152
+umbral pouch~
+{D[{MQ{D] {Gan U{cmbr{Gal {cPou{Gch{x~
+A small piece of the Umbra has been captured and contained within this leather belt pouch.~
+unknown~
+0
+container GY AL
+0 0 0 0
+500 A 0 200 100
+100 0 1 P
+#153
+arm bands purity~
+{D[{MQ{D] {WArm {YBands of {WPurity{x~
+The purest materials have been forged into arm bands and given magical properties.~
+unknown~
+0
+armor GY AI
+0 0 0 0
+BCEH BCEH BCEH BCEH 0
+1 0 1 P
+A
+18 10
+A
+19 15
+A
+13 100
+#154
+status ring~
+{D[{MQ{D] {Ba St{bat{Bus {bRi{Bng{x~
+Fashionable, and exquisite, this ring tells all who view it about the status of it's owner.~
+unknown~
+0
+armor GY AB
+0 0 0 0
+CFG CFG CFG CFG 0
+1 0 1 P
+A
+13 100
+A
+14 50
+A
+19 50
+A
+18 50
+#155
+shield avenging angel~
+{D[{MQ{D] {wShield {rof the {RAvenging {WAngel{x~
+A discarded shield is thought to have been blessed with the tears of Michael the Avenging Angel.~
+unknown~
+0
+armor GY AJ
+0 0 0 0
+BCEH BCEH BCEH BCEH 0
+1 0 1 P
+A
+18 55
+A
+19 55
+A
+14 25
+A
+13 100
+#156
+bracer of willpower~
+{D[{MQ{D] {yB{Yr{Wacer {yo{Yf {yW{Yi{Wllpower{x~
+Powerful magics have been forced into this leather bracer, granting it's owner inner strength.~
+unknown~
+0
+armor GY AM
+0 0 0 0
+CFG CFG CFG CFG 0
+1 0 1 P
+A
+19 50
+A
+18 50
+A
+13 100
+#157
+rerebrace frenzy~
+{D[{MQ{D] Re{wre{mbrace {Dof {MFre{mnzy{x~
+A forearm guard, rumored to enhance ferocity, is waiting for someone else to unleash its rage.~
+unknown~
+0
+armor GY AM
+0 0 0 0
+CFG CFG CFG CFG 0
+1 0 1 P
+A
+18 20
+A
+19 60
+#158
+face beast~
+{D[{MQ{D] {yFa{wce of {ythe Beast{x~
+A primitive mask has been magically crafted to bring the face of the inner Beast to all who would wear it.~
+unknown~
+0
+armor GY AE
+0 0 0 0
+DGH DGH DGH DGH 0
+1 0 1 P
+A
+18 20
+A
+19 20
+#159
+sandals prophet~
+{D[{MQ{D] {GSan{ydals{G of the {yPro{Gphet{x~
+A pair of sandals, once owned by a renowned travellng prophet, collect sand as they wait to be worn.~
+unknown~
+0
+armor GY AG
+0 0 0 0
+CFG CFG CFG CFG 0
+1 0 1 P
+A
+18 15
+A
+19 10
+#160
+greaves of stamina~
+{D[{MQ{D] Gre{waves {Wof {wSta{Dmina{x~
+Heavy greaves have been forged for those who have the endurance to wear them.~
+unknown~
+0
+armor GY AF
+0 0 0 0
+ABCDFH ABCDFH ABCDFH ABCDFH 0
+1 0 1 P
+A
+18 10
+A
+19 10
+A
+13 250
+#161
+Cloak of Subterfuge~
+{D[{MQ{D] {WC{wloak {Wo{wf {WS{wubterfuge{x~
+A large cloak is more than capable of hiding the less than scrupulous activities of it's owner.~
+unknown~
+0
+armor GY AC
+0 0 0 0
+CFG CFG CFG CFG 0
+1 0 1 P
+A
+13 300
+A
+18 15
+A
+19 15
+#162
+archonian plate~
+{D[{MQ{D] {mA{Drchonian {mP{Dlate{x~
+Held in awe and wonder, this breast plate is the mark of the ultimate hunter.~
+unknown~
+0
+armor GY AD
+0 0 0 0
+EHI EHI EHI EHI 0
+1 0 1 P
+A
+18 60
+A
+19 60
+A
+13 400
+A
+14 100
+#163
+Gauntlets of Antiquity~
+{D[{MQ{D] {gG{wauntlets {Wof {gA{wntiquity{x~
+A pair of tarnished brass gauntlets lie here, proclaiming victories in battles long forgotten.~
+unknown~
+0
+armor GY AH
+0 0 0 0
+CDFI CDFI CDFI CDFI 0
+1 0 1 P
+A
+19 25
+A
+18 25
+A
+13 100
+#164
+earrings of darkness~
+{D[{MQ{D] {WE{garrings of {DDarkness{x~
+A discarded piece of jewelry lays here gathering dust.~
+unknown~
+0
+armor GY AR
+0 0 0 0
+CFG CFG CFG CFG 0
+1 0 1 P
+A
+13 100
+#165
+mask of the damned~
+{D[{MQ{D] {GM{gask {Dof the {GD{gamned{x~
+A mask to conceal ones identity lies here forgotten.~
+unknown~
+0
+armor GY AS
+0 0 0 0
+ACGI ACGI ACGI ACGI 0
+0 0 1 P
+A
+13 300
+A
+14 100
+A
+18 25
+A
+19 25
+#166
+mystical orb~
+{D[{MQ{D] {mM{cystical {mO{crb{x~
+A mystical orb glows in the dark of night, illuminating the surrounding area.~
+unknown~
+0
+light AGY AO
+0 0 0 0
+AB DF CFG CFG G
+0 0 1 P
+A
+13 100
+A
+18 75
+A
+19 75
+#167
+emblem of power~
+{D[{MQ{D] {GE{ymblem {wof {GP{yower{x~
+An emblem of power radiates with an unseen power.~
+unknown~
+0
+armor GY AO
+0 0 0 0
+ABDG ABDG ABDG ABDG 0
+0 0 1 P
+A
+13 200
+A
+19 50
+A
+18 50
+#168
+potion escape true friend~
+a potion of Escape to a True Friend~
+An incorporal potion, offering escape, waits to be quaffed.~
+unknown~
+0
+potion U A
+0 0 0 0
+100 'intervention' 'wrath of god' 'reserved' 'reserved'
+40 10 750000 P
+#169
+potion experience boost xp~
+an XP Boost Potion~
+Quaff this bottle of profane, concentrated Lovecraftian horror to gain an xp boost.~
+unknown~
+0
+potion HMOYZ A
+1 0 0 0
+100 'XP Boost' 'reserved' 'reserved' 'reserved'
+1 1 0 P
+#170
+godly potion mana~
+the Godly Potion of Mana~
+A powerful potion lies here~
+unknown~
+0
+potion 0 AO
+1 0 0 0
+400 'mana' 'mana' 'tass: quintessence' 'reserved'
+1 1 100000 P
+#180
+metal flask spring water~
+a flask of pure spring water~
+A metal flask etched with symbols of purity lies on its side.~
+metal~
+0
+potion 0 AO
+1 0 0 0
+6 'refresh' 'reserved' 'reserved' 'reserved'
+6 1 83 P
+E
+flask~
+Etched on the side of the flask:
+---------  Purest spring water in the lands!
+~
+#181
+dusk poison ivy~
+a small dusk of poison ivy~
+Some poison ivy grows wildly, entangling anything within reach.~
+vegetation~
+0
+food 0 A
+0 0 0 0
+A A 0 A 0
+0 10 50 P
+E
+plant ivy~
+This plant has dark green juicy leaves.
+You notice some small white thorns on it.~
+#182
+flask antidote tonic~
+a flask of tonic~
+A blue flask lies here.~
+unknown~
+0
+potion 0 A
+0 0 0 0
+50 'cure poison' 'cure light' 'reserved' 'reserved'
+14 0 5500 P
+E
+flask~
+Written upon the flask is: Imbibe to cleanse your blood.  
+~
+#183
+glass brandy~
+a glass of brandy~
+A small glass lies here.~
+unknown~
+0
+drink 0 A
+0 0 0 0
+10 10 'brandy' 0 0
+3 0 50 P
+#184
+mug beer~
+a mug of beer~
+A mug has been left here.~
+unknown~
+0
+drink 0 A
+0 0 0 0
+10 10 'beer' 0 0
+1 0 10 P
+#185
+large eagle feather~
+a large feather~
+A large eagle's feather has fallen to the ground.~
+feather~
+0
+treasure 0 A
+0 0 0 0
+0 0 0 0 0
+1 1 500 P
+#186
+black lotus~
+a black lotus~
+A dark black flower lies blooming on the floor.~
+vegetation~
+0
+pill 0 AO
+1 0 0 0
+85 'cure poison' 'cure light' '' ''
+85 5 10000 P
+#187
+black bottle liquid~
+a black bottle~
+A clear liquid magically sparkles through a black bottle.~
+lotus dew~
+0
+potion 0 AO
+1 0 0 0
+90 'cure critical' 'cure critical' '' ''
+90 10 15000 P
+E
+bottle~
+A shiny black bottle has been left here.  It is filled with a mysterious
+substance that vaguely smells of fresh dew on the morning grass.  
+~
+#188
+herb white mint~
+a mint herb~
+A white herb with green flecks gives off a minty aroma.~
+unknown~
+0
+pill 0 AO
+0 0 0 0
+15 'refresh' 'reserved' 'reserved' 'reserved'
+15 0 400 P
+#189
+A Peach~
+a peach~
+A fuzzy peach is here.~
+unknown~
+0
+food 0 A
+0 0 0 0
+ABCD ABCD 0 0 0
+0 1 30 P
+#190
+A cup of coffee~
+a cup of coffee~
+A cup of steaming hot coffee is here.~
+unknown~
+0
+drink 0 A
+0 0 0 0
+25 25 'coffee' 0 0
+1 0 25 P
+#191
+A glass of milk~
+a glass of milk~
+A small glass is here, filled with cold milk.~
+unknown~
+0
+drink 0 A
+0 0 0 0
+20 20 'milk' 0 0
+1 0 50 P
+#192
+strawberries~
+some fresh, ripe strawberries~
+Here are some fresh, ripe, red strawberries, waiting to be eaten.~
+unknown~
+0
+food 0 A
+0 0 0 0
+ABCD ABCD 0 0 0
+1 0 20 P
+#200
+yew tree~
+a yew tree~
+A wispy yew tree grows here, reaching for the sky.~
+unknown~
+0
+resource 0 0
+0 0 0 0
+0 0 0 0 0
+3 0 0 P
+#201
+maple tree~
+a maple tree~
+A strong maple tree is heavily rooted into the ground here.~
+unknown~
+0
+resource 0 0
+0 0 0 0
+0 0 0 0 0
+4 0 0 P
+#202
+ash tree~
+an ash tree~
+A willowy ash tree sways in the wind.~
+unknown~
+0
+resource 0 0
+0 0 0 0
+0 0 0 0 0
+5 0 0 P
+#203
+walnut tree~
+a walnut tree~
+A tall and full walnut tree casts a large shady spot here on the ground.~
+unknown~
+0
+resource 0 0
+0 0 0 0
+0 0 0 0 0
+6 0 0 P
+#204
+oak tree~
+an oak tree~
+A stately oak towers over the flora and fauna in this part of the forest.~
+unknown~
+0
+resource 0 0
+0 0 0 0
+0 0 0 0 0
+7 0 0 P
+#205
+yew log~
+a log of yew~
+A log cut from a yew tree lies here.~
+unknown~
+0
+resource W A
+0 0 0 0
+0 0 0 0 0
+0 100 10000 P
+#206
+maple log~
+a log of maple~
+A log cut from a maple tree lies here.~
+unknown~
+0
+resource W A
+0 0 0 0
+0 0 0 0 0
+0 100 10000 P
+#207
+ash log~
+a log of ash~
+A log cut from an ash tree lies here.~
+unknown~
+0
+resource W A
+0 0 0 0
+0 0 0 0 0
+0 100 10000 P
+#208
+walnut log~
+a log of walnut~
+A log cut from a walnut tree lies here.~
+unknown~
+0
+resource W A
+0 0 0 0
+0 0 0 0 0
+0 100 10000 P
+#209
+oak log~
+a log of oak~
+A log cut from an oak tree lies here.~
+unknown~
+0
+resource W A
+0 0 0 0
+0 0 0 0 0
+0 100 10000 P
+#210
+vein iron~
+a vein of iron~
+A vein of iron is exposed here.~
+unknown~
+0
+resource D 0
+0 0 0 0
+0 0 0 0 0
+0 0 0 P
+#211
+vein copper~
+a vein of copper~
+A vein of copper is exposed here.~
+unknown~
+0
+resource D 0
+0 0 0 0
+0 0 0 0 0
+0 0 0 P
+#212
+vein tin~
+a vein of tin~
+A vein of tin is exposed here.~
+unknown~
+0
+resource D 0
+0 0 0 0
+0 0 0 0 0
+0 0 0 P
+#213
+vein nickel~
+a vein of nickel~
+A vein of nickel is exposed here.~
+unknown~
+0
+resource D 0
+0 0 0 0
+0 0 0 0 0
+0 0 0 P
+#214
+vein silver~
+a vein of silver~
+A vein of silver is exposed here.~
+unknown~
+0
+resource D 0
+0 0 0 0
+0 0 0 0 0
+0 0 0 P
+#215
+vein gold~
+a vein of gold~
+A vein of gold is exposed here.~
+unknown~
+0
+resource D 0
+0 0 0 0
+0 0 0 0 0
+0 0 0 P
+#216
+vein lead~
+a vein of lead~
+A vein of lead is exposed here.~
+unknown~
+0
+resource D 0
+0 0 0 0
+0 0 0 0 0
+0 0 0 P
+#217
+vein coal~
+a vein of coal~
+A vein of coal is exposed here.~
+unknown~
+0
+resource D 0
+0 0 0 0
+0 0 0 0 0
+0 0 0 P
+#218
+vein zinc~
+a vein of zinc~
+A vein of zinc is exposed here.~
+unknown~
+0
+resource D 0
+0 0 0 0
+0 0 0 0 0
+0 0 0 P
+#220
+chunk iron ore~
+a chunk of iron ore~
+A filthy piece of iron ore lies here in the dirt.~
+iron~
+0
+resource W A
+0 0 0 0
+0 0 0 0 0
+0 12 10000 P
+#221
+chunk copper ore~
+a chunk or copper ore~
+A greenish hunk of copper ore lies here.~
+copper~
+0
+resource W A
+0 0 0 0
+0 0 0 0 0
+0 12 15000 P
+#222
+chunk tin ore~
+a chunk or tin ore~
+A small, dull rock of tin ore sits in the dust.~
+tim~
+0
+resource W A
+0 0 0 0
+0 0 0 0 0
+0 12 35000 P
+#223
+chunk nickel ore~
+a chunk of nickel ore~
+A small piece of nickel pokes up out of the dirt.~
+nickel~
+0
+resource W A
+0 0 0 0
+0 0 0 0 0
+0 12 30000 P
+#224
+chunk silver ore~
+a chunk of silver ore~
+A small piece of silver gleams brightly despite a covering of dirt.~
+silver~
+0
+resource W A
+0 0 0 0
+0 0 0 0 0
+0 12 40000 P
+#225
+chunk gold ore~
+a chunk of gold ore~
+A valuable chunk of gold ore lies here.~
+gold~
+0
+resource W A
+0 0 0 0
+0 0 0 0 0
+0 12 45000 P
+#226
+chunk lead ore~
+a chunk of lead ore~
+A dark grey chunk of metal ore lies here.~
+lead~
+0
+resource W A
+0 0 0 0
+0 0 0 0 0
+0 12 25000 P
+#227
+chunk coal ore~
+a chunk of coal~
+A piece of coal lies here in the dirt.~
+coal~
+0
+resource W A
+0 0 0 0
+0 0 0 0 0
+0 12 5000 P
+#228
+chunk zinc ore~
+a chunk of zinc ore~
+A piece of rock that must have been broken off of a zinc deposit lies here.~
+zinc~
+0
+resource W A
+0 0 0 0
+0 0 0 0 0
+0 12 20000 P
+#230
+pick axe pickaxe~
+a pickaxe~
+A pickaxe lies here.~
+unknown~
+0
+tool 0 AN
+0 0 0 0
+100 'pickaxe' 0 0 0
+0 0 0 P
+#0
+
+
+
+#ROOMS
+#100
+Newbie Training Entrance~
+A quiet stone vestibule marks the entrance to the initiate training grounds.
+Warm torchlight flickers against rough-hewn walls. To the east lies the
+Central Temple of Recall.
+~
+0 12 0
+D1
+~
+~
+0 -1 101
+S
+#101
+The Central Temple of Recall~
+Tall marble pillars support a vaulted dome at the heart of the sanctuary.
+Travelers gather here in safety before venturing forth. The Altar of Sacrifice
+lies to the north, the Donation Chamber to the east, the Initiate Entrance to
+the west, and the Crafting Workshop to the south. Stairs lead up to the
+Council Hall and down to the Training Barracks.
+~
+0 1036 0
+D0
+~
+~
+0 -1 102
+D1
+~
+~
+0 -1 103
+D2
+~
+~
+0 -1 110
+D3
+~
+~
+0 -1 100
+D4
+~
+~
+0 -1 104
+D5
+~
+~
+0 -1 111
+S
+#102
+The Altar of Sacrifice~
+A solemn stone altar stands before a brazier of eternal flame. Those who fall
+in battle or offer tribute return here to recover their strength. The main
+Temple lies to the south.
+~
+0 1036 0
+D2
+~
+~
+0 -1 101
+S
+#103
+The Donation Chamber~
+Low stone benches surround a deep donation pit where adventurers leave spare
+weapons, armor, and supplies for newcomers. The Central Temple is west.
+~
+0 1036 0
+D3
+~
+~
+0 -1 101
+S
+#104
+The Hall of Council and Discourse~
+Tapestries line this quiet upper gallery, offering a peaceful commons for
+conversation away from the bustle of the main floor. Stairs lead back down to
+the Central Temple.
+~
+0 1036 0
+D5
+~
+~
+0 -1 101
+S
+#105
+The Paradox Realm~
+Fractured geometry and shifting currents of raw quintessence swirl through an
+isolated pocket outside normal space and time.
+~
+0 12 0
+D5
+~
+~
+0 -1 101
+S
+#106
+The River Styx~
+Dark, silent waters roll through a cavern of pale mist at the boundary between
+life and the underworld.
+~
+0 12 0
+D0
+~
+~
+0 -1 107
+S
+#107
+The Fringes of the Tempest~
+Howling spectral winds eddy around jagged islands of memory at the edge of the
+Tempest.
+~
+0 12 0
+D0
+~
+~
+0 -1 108
+D2
+~
+~
+0 -1 106
+S
+#108
+The Sea of Souls~
+An expanse of luminescent fog stretches toward the horizon, echoing with faint
+whispers.
+~
+0 12 0
+D2
+~
+~
+0 -1 107
+D4
+~
+~
+0 -1 102
+S
+#109
+The Balance Sanitarium~
+Cool stone walls and still air provide a place of quiet equilibrium and
+reflection.
+~
+0 1036 0
+D4
+~
+~
+0 -1 101
+S
+#110
+The Crafting Workshop and Forge~
+A roaring forge, heavy oak workbenches, timber racks, and mineral veins fill
+this vaulted workshop. Artisans gather here to felled timber, smelt ore, and
+shape equipment. The Central Temple lies north.
+~
+0 12 0
+D0
+~
+~
+0 -1 101
+S
+#111
+The Grand Training Barracks~
+Weapon racks and practice dummies line the walls of this spacious training
+hall. The Master-at-Arms oversees drills here. Stairs lead up to the Central
+Temple, the Healer's Sanctum lies east, and the Questmaster's Office is west.
+~
+0 1036 0
+D1
+~
+~
+0 -1 112
+D3
+~
+~
+0 -1 113
+D4
+~
+~
+0 -1 101
+S
+#112
+The Healer's Sanctum~
+Shelves of dried herbs and clean bandages line this calm infirmary, where the
+Sanctuary Healer and Provisioner tend to travelers. The Training Barracks lie
+to the west.
+~
+0 1036 0
+D3
+~
+~
+0 -1 111
+S
+#113
+The Questmaster's Office~
+Maps, ledgers, and sealed commissions cover a broad table at the center of the
+study. Both the Grand Questmaster and the Town Banker conduct business here.
+The Training Barracks lie east.
+~
+0 1036 0
+D1
+~
+~
+0 -1 111
+S
+#0
+
+
+
+#SPECIALS
+M 100 spec_guard
+M 101 spec_fido
+M 102 spec_patrolman
+M 105 spec_questmaster
+S
+
+
+
+#RESETS
+M 0 100 2 101 2
+M 0 101 2 101 2
+M 0 102 1 101 1
+O 0 120 0 103
+O 0 100 0 110
+O 0 200 0 110
+O 0 210 0 110
+M 0 103 1 111 1
+M 0 104 1 112 1
+M 0 107 1 112 1
+G 0 29 0
+G 0 115 0
+G 0 116 0
+G 0 121 0
+G 0 123 0
+G 0 180 0
+G 0 230 0
+M 0 105 1 113 1
+M 0 106 1 113 1
+S
+
+
+
+#SHOPS
+107 1 15 17 26 8 100 50 0 23
+0
+
+
+
+#MPCODE
+#0
+
+#OPCODE
+#0
+
+#RPCODE
+#0
+
+#$

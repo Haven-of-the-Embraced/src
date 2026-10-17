@@ -636,19 +636,19 @@ const   struct  race_type   race_table  []      =
  */
 const   struct  class_type  class_table [MAX_CLASS] =
 {             //Name     whoname    primeattr       begin weapon         guild rooms  max prac tha0 tha0 hpm hpx  mana     skills          groups
- /*0*/    {    "none", " ",      STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER,   { 3003, 9619 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
- /*1*/    {    "cleric", " ",    STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER,   { 3003, 9619 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
- /*2*/    {    "thief", " ",     STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER,   { 3003, 9619 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
- /*3*/    {    "warrior", " ",   STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER,   { 3003, 9619 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
- /*4*/    {    "bandit", "",     STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER,   { 3003, 9619 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
- /*5*/    {    "assassin", "",   STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER,   { 3003, 9619 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
- /*6*/    {    "trickster", "",  STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER,   { 3003, 9619 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
- /*7*/    {    "mercenary", "",  STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER,   { 3003, 9619 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
- /*8*/    {    "guardsman", "",  STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER,   { 3003, 9619 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
- /*9*/    {    "knight", "",     STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER,   { 3003, 9619 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
- /*10*/   {    "priest", "",     STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER,   { 3003, 9619 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
- /*11*/   {    "monk", "",       STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER,   { 3003, 9619 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
- /*12*/   {    "crusader", "",   STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER,   { 3003, 9619 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
+ /*0*/    {    "none", " ",      STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER,   { 101, 111 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
+ /*1*/    {    "cleric", " ",    STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER,   { 101, 111 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
+ /*2*/    {    "thief", " ",     STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER,   { 101, 111 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
+ /*3*/    {    "warrior", " ",   STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER,   { 101, 111 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
+ /*4*/    {    "bandit", "",     STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER,   { 101, 111 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
+ /*5*/    {    "assassin", "",   STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER,   { 101, 111 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
+ /*6*/    {    "trickster", "",  STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER,   { 101, 111 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
+ /*7*/    {    "mercenary", "",  STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER,   { 101, 111 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
+ /*8*/    {    "guardsman", "",  STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER,   { 101, 111 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
+ /*9*/    {    "knight", "",     STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER,   { 101, 111 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
+ /*10*/   {    "priest", "",     STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER,   { 101, 111 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
+ /*11*/   {    "monk", "",       STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER,   { 101, 111 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
+ /*12*/   {    "crusader", "",   STAT_INT,  OBJ_VNUM_SCHOOL_DAGGER,   { 101, 111 },  20,  20,  -15,  20,  25,  TRUE,   "rom basic", "rom basic"},
 };
 
 

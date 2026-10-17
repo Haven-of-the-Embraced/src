@@ -4321,7 +4321,7 @@ void spell_gift_cookery( int sn, int level, CHAR_DATA *ch, void *vo, int target)
     return;
   }
 
-  stew = create_object( get_obj_index( 20 ), 1 );
+  stew = create_object( get_obj_index( OBJ_VNUM_MUSHROOM ), 1 );
   stew->level = obj->level;
   stew->value[0] += (success * 5) + (stew->level / 10);
   stew->value[1] += (success * 5) + (stew->level / 10);

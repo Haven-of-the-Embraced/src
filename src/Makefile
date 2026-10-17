@@ -44,7 +44,10 @@ rom: $(OBJ_FILES)
 	$(RM) -f $(EXE)
 	$(CC) -o $(EXE) $(OBJ_FILES) $(L_FLAGS)
 
-$(OBJ_DIR)/%.o: %.c
+$(OBJ_DIR):
+	mkdir -p $(OBJ_DIR)
+
+$(OBJ_DIR)/%.o: %.c | $(OBJ_DIR)
 	$(CC) $(C_FLAGS) -c -o $@ $<
 
 clean:

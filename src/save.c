@@ -445,7 +445,7 @@ void fwrite_char( CHAR_DATA *ch, FILE *fp )
         (  ch->in_room == get_room_index( ROOM_VNUM_LIMBO )
         && ch->was_in_room != NULL )
             ? ch->was_in_room->vnum
-            : ch->in_room == NULL ? 3001 : ch->in_room->vnum );
+            : ch->in_room == NULL ? ROOM_VNUM_TEMPLE : ch->in_room->vnum );
 
     fprintf( fp, "HMV  %d %d %d %d %d %d\n",
     ch->hit, ch->max_hit, ch->mana, ch->max_mana, ch->move, ch->max_move );

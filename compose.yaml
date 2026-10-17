@@ -1,0 +1,24 @@
+services:
+  mud:
+    build: .
+    ports:
+      - "127.0.0.1:${HAVEN_PORT:-4000}:4000"
+    volumes:
+      - type: bind
+        source: ${HAVEN_AREA_DIR:-./area}
+        target: /opt/haven/area
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ${HAVEN_DATA_DIR:-./data}
+        target: /opt/haven/data
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ${HAVEN_PLAYER_DIR:-./player}
+        target: /opt/haven/player
+        bind:
+          create_host_path: false
+      - ./log:/opt/haven/log
+      - ./gods:/opt/haven/gods
+    stop_grace_period: 30s

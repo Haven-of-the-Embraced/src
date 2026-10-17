@@ -1,0 +1,19 @@
+[Unit]
+Description=Haven Code Server
+After=network.target
+
+[Service]
+Type=simple
+User=haven
+Group=haven
+WorkingDirectory=/home/havencode/area
+ExecStart=/bin/sh -c 'if [ -f /home/havencode/data/shutdown.txt ]; then exit 254; else exec /home/havencode/src/rom 2002; fi'
+Restart=always
+RestartSec=5
+RestartPreventExitStatus=254
+LimitCORE=infinity
+StandardOutput=append:/home/havencode/log/current.log
+StandardError=append:/home/havencode/log/current.log
+
+[Install]
+WantedBy=multi-user.target

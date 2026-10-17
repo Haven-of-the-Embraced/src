@@ -1,0 +1,19 @@
+[Unit]
+Description=Haven MUD Server
+After=network.target
+
+[Service]
+Type=simple
+User=haven
+Group=haven
+WorkingDirectory=/home/havenlive/area
+ExecStart=/bin/sh -c 'if [ -f /home/havenlive/data/shutdown.txt ]; then exit 254; else exec /home/havenlive/src/rom 2000; fi'
+Restart=always
+RestartSec=5
+RestartPreventExitStatus=254
+LimitCORE=infinity
+StandardOutput=append:/home/havenlive/log/current.log
+StandardError=append:/home/havenlive/log/current.log
+
+[Install]
+WantedBy=multi-user.target

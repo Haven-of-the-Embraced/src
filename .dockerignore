@@ -1,0 +1,13 @@
+.git
+.github
+.env
+area
+data
+player
+gods
+log
+memdump
+import
+src/obj/*.o
+src/rom
+src/core*

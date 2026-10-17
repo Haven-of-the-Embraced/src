@@ -915,7 +915,7 @@ End
 #MOBFORMAT dynamic
 Name sexton old gravedigger guide~
 ShD the Old Sexton~
-LnD The Old Sexton leans on a rusted spade beside the lychgate. ({cType '{Csay topics{c' for guidance{x)
+LnD The Old Sexton leans on a rusted spade beside the lychgate. ({cType '{Csay topics{c' for guidance{y)
 ~
 Desc A stooped, lantern-jawed man in a mud-caked cassock. He has buried more
 souls than he can count and is happy to explain the basics to the living.
@@ -952,17 +952,17 @@ Parts ABCDEFGHIJK
 Size medium
 Material unknown~
 MaxLoad -1
-M SPEECH 254 ooc~
-M SPEECH 253 movement~
-M SPEECH 252 commands~
-M SPEECH 251 topics~
 M GREET 250 100~
+M SPEECH 251 topics~
+M SPEECH 252 commands~
+M SPEECH 253 movement~
+M SPEECH 254 ooc~
 End
 #251
 #MOBFORMAT dynamic
 Name verger keeper ledgers guide~
 ShD the Verger of Ledgers~
-LnD The Verger of Ledgers stands beside a lectern heavy with parchment. ({cType '{Csay topics{c' for guidance{x)
+LnD The Verger of Ledgers stands beside a lectern heavy with parchment. ({cType '{Csay topics{c' for guidance{y)
 ~
 Desc A gaunt verger in black, ink staining every finger. Three great ledgers lie
 open on the lectern - each one a page of your soul.
@@ -999,20 +999,20 @@ Parts ABCDEFGHIJK
 Size medium
 Material unknown~
 MaxLoad -1
-M SPEECH 262 abilities~
-M SPEECH 261 attributes~
-M SPEECH 260 backgrounds~
-M SPEECH 259 page three~
-M SPEECH 258 page two~
-M SPEECH 257 sheet~
-M SPEECH 256 topics~
 M GREET 255 100~
+M SPEECH 256 topics~
+M SPEECH 257 sheet~
+M SPEECH 258 page two~
+M SPEECH 259 page three~
+M SPEECH 260 backgrounds~
+M SPEECH 261 attributes~
+M SPEECH 262 abilities~
 End
 #252
 #MOBFORMAT dynamic
 Name mason stone carver guide~
 ShD the Stone Mason~
-LnD The Stone Mason chisels at an unfinished statue in the nave. ({cType '{Csay topics{c' for guidance{x)
+LnD The Stone Mason chisels at an unfinished statue in the nave. ({cType '{Csay topics{c' for guidance{y)
 ~
 Desc A broad-shouldered mason white with stone dust. Half-carved saints line the
 nave around her, each waiting for a face.
@@ -1049,18 +1049,18 @@ Parts ABCDEFGHIJK
 Size medium
 Material unknown~
 MaxLoad -1
-M SPEECH 268 weapon_skills~
-M SPEECH 267 archetype~
-M SPEECH 266 priority~
-M SPEECH 265 create~
-M SPEECH 264 topics~
 M GREET 263 100~
+M SPEECH 264 topics~
+M SPEECH 265 create~
+M SPEECH 266 priority~
+M SPEECH 267 archetype~
+M SPEECH 268 weapon_skills~
 End
 #253
 #MOBFORMAT dynamic
 Name almoner chapel offerings guide~
 ShD the Almoner~
-LnD The Almoner tends a row of votive candles in the side chapel. ({cType '{Csay topics{c' for guidance{x)
+LnD The Almoner tends a row of votive candles in the side chapel. ({cType '{Csay topics{c' for guidance{y)
 ~
 Desc A soft-spoken almoner who keeps the chapel's offering box and the ledger
 of every freebie spent.
@@ -1097,17 +1097,17 @@ Parts ABCDEFGHIJK
 Size medium
 Material unknown~
 MaxLoad -1
-M SPEECH 273 weapon_skills~
-M SPEECH 272 costs~
-M SPEECH 271 freebie~
-M SPEECH 270 topics~
 M GREET 269 100~
+M SPEECH 270 topics~
+M SPEECH 271 freebie~
+M SPEECH 272 costs~
+M SPEECH 273 weapon_skills~
 End
 #254
 #MOBFORMAT dynamic
 Name scribe scriptorium monk guide~
 ShD the Scriptorium Monk~
-LnD A Scriptorium Monk copies skill charts by candlelight. ({cType '{Csay topics{c' for guidance{x)
+LnD A Scriptorium Monk copies skill charts by candlelight. ({cType '{Csay topics{c' for guidance{y)
 ~
 Desc A hooded monk bent over a vast illuminated chart linking every skill to the
 dots that unlock it.
@@ -1144,17 +1144,17 @@ Parts ABCDEFGHIJK
 Size medium
 Material unknown~
 MaxLoad -1
-M SPEECH 278 weapon_skills~
-M SPEECH 277 learning~
-M SPEECH 276 skillmap~
-M SPEECH 275 topics~
 M GREET 274 100~
+M SPEECH 275 topics~
+M SPEECH 276 skillmap~
+M SPEECH 277 learning~
+M SPEECH 278 weapon_skills~
 End
 #255
 #MOBFORMAT dynamic
 Name ossuary keeper bones guide~
 ShD the Keeper of Bones~
-LnD The Keeper of Bones arranges skulls in the ossuary niches. ({cType '{Csay topics{c' for guidance{x)
+LnD The Keeper of Bones arranges skulls in the ossuary niches. ({cType '{Csay topics{c' for guidance{y)
 ~
 Desc A pale, ageless figure surrounded by neatly stacked bones - every one a life
 lived and begun again.
@@ -1191,16 +1191,16 @@ Parts ABCDEFGHIJK
 Size medium
 Material unknown~
 MaxLoad -1
-M SPEECH 282 paths~
-M SPEECH 281 remort~
-M SPEECH 280 topics~
 M GREET 279 100~
+M SPEECH 280 topics~
+M SPEECH 281 remort~
+M SPEECH 282 paths~
 End
 #256
 #MOBFORMAT dynamic
 Name bishop belfry blessing guide~
 ShD the Bishop of the Belfry~
-LnD The Bishop of the Belfry waits beneath the great bronze bell. ({cType '{Csay topics{c' for guidance{x)
+LnD The Bishop of the Belfry waits beneath the great bronze bell. ({cType '{Csay topics{c' for guidance{y)
 ~
 Desc An elderly bishop in tattered violet vestments. Above him hangs the bell
 whose toll sends travelers on to the New Temple.
@@ -1237,12 +1237,12 @@ Parts ABCDEFGHIJK
 Size medium
 Material unknown~
 MaxLoad -1
-M SPEECH 288 graduate~
-M SPEECH 287 mortal~
-M SPEECH 286 vampire~
-M SPEECH 285 summary~
-M SPEECH 284 topics~
 M GREET 283 100~
+M SPEECH 284 topics~
+M SPEECH 285 summary~
+M SPEECH 286 vampire~
+M SPEECH 287 mortal~
+M SPEECH 288 graduate~
 End
 #0
 
@@ -3290,6 +3290,10 @@ path and a rusted spade leans against the gate.
 ~
 0 1036 0
 E
+graves grave~
+Simple mounds with wooden crosses. None of the names are legible.
+~
+E
 sign signpost post plaque placard tablet signboard weathered~
 {c+--------------------------------------------------+{x
 {c|{W                   THE LYCHGATE                   {c|{x
@@ -3304,10 +3308,6 @@ sign signpost post plaque placard tablet signboard weathered~
 
 {w  Walk {cnorth{w to enter the cathedral.{x
 {c+--------------------------------------------------+{x
-~
-E
-graves grave~
-Simple mounds with wooden crosses. None of the names are legible.
 ~
 D0
 The cathedral doors stand open to the north.
@@ -3324,6 +3324,10 @@ themselves in the candlelight.
 ~
 0 1036 0
 E
+ledgers ledger lectern~
+Three ledgers: CS, CS2 and CS3. Beneath them, a thin scroll marked BACKGROUNDS.
+~
+E
 sign signpost post plaque placard tablet signboard brass~
 {c+--------------------------------------------------+{x
 {c|{W               YOUR CHARACTER SHEET               {c|{x
@@ -3337,10 +3341,6 @@ sign signpost post plaque placard tablet signboard brass~
 {w  {Csay topics{w to the Verger for details.{x
 {w  Walk {cnorth{w into the nave.{x
 {c+--------------------------------------------------+{x
-~
-E
-ledgers ledger lectern~
-Three ledgers: CS, CS2 and CS3. Beneath them, a thin scroll marked BACKGROUNDS.
 ~
 D0
 The nave opens to the north.
@@ -3362,6 +3362,10 @@ will become.
 ~
 0 1036 0
 E
+statues statue saints~
+Smooth blank faces. One of them looks almost like you.
+~
+E
 sign signpost post plaque placard tablet signboard carved~
 {c+--------------------------------------------------+{x
 {c|{W                 SHAPE YOUR SOUL                  {c|{x
@@ -3376,10 +3380,6 @@ sign signpost post plaque placard tablet signboard carved~
 {w  {Csay topics{w to the Mason for details.{x
 {w  Walk {cnorth{w into the side chapel.{x
 {c+--------------------------------------------------+{x
-~
-E
-statues statue saints~
-Smooth blank faces. One of them looks almost like you.
 ~
 D0
 A side chapel glows with candles to the north.
@@ -3399,6 +3399,14 @@ with warm light and the smell of wax. An iron-bound offering box sits
 beneath a stained-glass window of a pilgrim climbing a hill.
 ~
 0 1036 0
+E
+box offering~
+Carved on the lid: 'Each soul reborn may offer three more.'
+~
+E
+window glass pilgrim~
+The pilgrim climbs, falls, and climbs again - higher each time.
+~
 E
 sign signpost post plaque placard tablet signboard gilded~
 {c+--------------------------------------------------+{x
@@ -3421,14 +3429,6 @@ sign signpost post plaque placard tablet signboard gilded~
 {w  Walk {cnorth{w into the scriptorium.{x
 {c+--------------------------------------------------+{x
 ~
-E
-window glass pilgrim~
-The pilgrim climbs, falls, and climbs again - higher each time.
-~
-E
-box offering~
-Carved on the lid: 'Each soul reborn may offer three more.'
-~
 D0
 Stairs lead north to the scriptorium.
 ~
@@ -3448,6 +3448,10 @@ from every attribute and ability to the skills they unlock.
 ~
 0 1036 0
 E
+chart illuminated~
+Gold lines run from Dexterity and Brawl to kick, from Wits and Dodge to dodge, and on through hundreds of skills.
+~
+E
 sign signpost post plaque placard tablet signboard painted~
 {c+--------------------------------------------------+{x
 {c|{W                      SKILLS                      {c|{x
@@ -3461,10 +3465,6 @@ sign signpost post plaque placard tablet signboard painted~
 
 {w  Walk {cnorth{w down into the ossuary.{x
 {c+--------------------------------------------------+{x
-~
-E
-chart illuminated~
-Gold lines run from Dexterity and Brawl to kick, from Wits and Dodge to dodge, and on through hundreds of skills.
 ~
 D0
 A stair winds north and down to the ossuary.
@@ -3485,6 +3485,10 @@ fresh flowers are left for each soul that has died and begun again.
 ~
 0 1036 0
 E
+skulls skull niches bones~
+Each skull bears a small number. Some are numbered in the hundreds.
+~
+E
 sign signpost post plaque placard tablet signboard bone-framed~
 {c+--------------------------------------------------+{x
 {c|{W                      REMORT                      {c|{x
@@ -3497,10 +3501,6 @@ sign signpost post plaque placard tablet signboard bone-framed~
 
 {w  Walk {cnorth{w up into the belfry.{x
 {c+--------------------------------------------------+{x
-~
-E
-skulls skull niches bones~
-Each skull bears a small number. Some are numbered in the hundreds.
 ~
 D0
 A narrow stair climbs north into the belfry.
@@ -3522,6 +3522,10 @@ to the New Temple.
 ~
 0 1036 0
 E
+bell bronze~
+The bell is carved with one word: BEGIN.
+~
+E
 sign signpost post plaque placard tablet signboard iron~
 {c+--------------------------------------------------+{x
 {c|{W                     THE BELL                     {c|{x
@@ -3532,10 +3536,6 @@ sign signpost post plaque placard tablet signboard iron~
 {w  Or walk {cnorth{w through the arch.{x
 {w  Stuck later? {Chelp <word>{w or {Cooc <question>{w.{x
 {c+--------------------------------------------------+{x
-~
-E
-bell bronze~
-The bell is carved with one word: BEGIN.
 ~
 D0
 An arch of light leads north to the New Temple.
@@ -3596,6 +3596,7 @@ O 0 255 0 255
 M 0 256 1 256 1
 O 0 256 0 256
 S
+
 
 
 

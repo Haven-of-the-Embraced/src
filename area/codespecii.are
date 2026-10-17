@@ -913,13 +913,13 @@ F af2 D
 End
 #250
 #MOBFORMAT dynamic
-Name herald awakening guide~
-ShD the Herald of Awakening~
-LnD The Herald of Awakening stands here amidst the celestial mist.
+Name sexton old gravedigger guide~
+ShD the Old Sexton~
+LnD The Old Sexton leans on a rusted spade beside the lychgate.
 ~
-Desc A shimmering celestial guide cloaked in soft luminescent robes. He stands
-ready to guide newly awakened souls through the fundamentals of existence.
-You may say 'commands', 'movement', or 'topics' to learn more.
+Desc A stooped, lantern-jawed man in a mud-caked cassock. He has buried more
+souls than he can count and is happy to explain the basics to the living.
+{GSay 'topics' to hear what he can teach.{x
 ~
 Race human~
 Act ABU
@@ -953,18 +953,20 @@ Size medium
 Material unknown~
 MaxLoad -1
 M GREET 250 100~
-M SPEECH 251 commands~
-M SPEECH 252 movement~
+M SPEECH 251 topics~
+M SPEECH 252 commands~
+M SPEECH 253 movement~
+M SPEECH 254 ooc~
 End
 #251
 #MOBFORMAT dynamic
-Name archivist forms scribe guide~
-ShD the Archivist of Forms~
-LnD An ancient archivist pores over crystalline ledgers of character traits.
+Name verger keeper ledgers guide~
+ShD the Verger of Ledgers~
+LnD The Verger of Ledgers stands beside a lectern heavy with parchment.
 ~
-Desc An ageless scribe surrounded by hovering sheets of parchment detailing
-Attributes, Abilities, Disciplines, and Virtues.
-Say 'sheet', 'attributes', or 'abilities' to learn more.
+Desc A gaunt verger in black, ink staining every finger. Three great ledgers lie
+open on the lectern - each one a page of your soul.
+{GSay 'topics' to hear what he can teach.{x
 ~
 Race human~
 Act ABU
@@ -997,20 +999,24 @@ Parts ABCDEFGHIJK
 Size medium
 Material unknown~
 MaxLoad -1
-M GREET 253 100~
-M SPEECH 254 sheet~
-M SPEECH 255 attributes~
-M SPEECH 256 abilities~
+M GREET 255 100~
+M SPEECH 256 topics~
+M SPEECH 257 sheet~
+M SPEECH 258 page two~
+M SPEECH 259 page three~
+M SPEECH 260 backgrounds~
+M SPEECH 261 attributes~
+M SPEECH 262 abilities~
 End
 #252
 #MOBFORMAT dynamic
-Name sculptor destiny artisan guide~
-ShD the Sculptor of Destiny~
-LnD A focused artisan shapes ethereal clay at a marble pedestal.
+Name mason stone carver guide~
+ShD the Stone Mason~
+LnD The Stone Mason chisels at an unfinished statue in the nave.
 ~
-Desc A master craftsperson capable of explaining the interactive 'create'
-process for those who chose a custom sheet.
-Say 'create', 'priority', or 'reset' to learn more.
+Desc A broad-shouldered mason white with stone dust. Half-carved saints line the
+nave around her, each waiting for a face.
+{GSay 'topics' to hear what she can teach.{x
 ~
 Race human~
 Act ABU
@@ -1037,96 +1043,6 @@ VulnFlags P
 StartPos stand
 DefaultPos stand
 Sex female
-Wealth 0
-Form AHMV
-Parts ABCDEFGHIJK
-Size medium
-Material unknown~
-MaxLoad -1
-M GREET 257 100~
-M SPEECH 258 create~
-M SPEECH 259 priority~
-End
-#253
-#MOBFORMAT dynamic
-Name benefactor essence mentor guide~
-ShD the Benefactor of Essence~
-LnD A radiant mentor sits here surrounded by glowing motes of freebie essence.
-~
-Desc A serene figure who oversees the allocation of mortal Backgrounds and
-Freebie points.
-Say 'freebie', 'backgrounds', or 'spending' to learn more.
-~
-Race human~
-Act ABU
-Act2 E
-Aff 0
-Align 0
-Group 0
-Level 50
-Hitroll 20
-HitDice 100d10+1000
-ManaDice 100d10+1000
-DamDice 1d1+1
-DamType beating
-AcPierce -30
-AcBash -30
-AcSlash -30
-AcExotic -30
-AttrFlags 0
-AbilFlags 0
-OffFlags 0
-ImmFlags a
-ResFlags 0
-VulnFlags P
-StartPos stand
-DefaultPos stand
-Sex either
-Wealth 0
-Form AHMV
-Parts ABCDEFGHIJK
-Size medium
-Material unknown~
-MaxLoad -1
-M GREET 260 100~
-M SPEECH 261 freebie~
-M SPEECH 262 backgrounds~
-End
-#254
-#MOBFORMAT dynamic
-Name master prowess instructor guide~
-ShD the Master of Prowess~
-LnD A veteran weaponmaster leans on a polished staff, observing you.
-~
-Desc A warrior-scholar who understands the relationship between World of
-Darkness traits and combat skills.
-Say 'skillmap', 'skills', or 'learning' to learn more.
-~
-Race human~
-Act ABU
-Act2 E
-Aff 0
-Align 0
-Group 0
-Level 50
-Hitroll 20
-HitDice 100d10+1000
-ManaDice 100d10+1000
-DamDice 1d1+1
-DamType beating
-AcPierce -30
-AcBash -30
-AcSlash -30
-AcExotic -30
-AttrFlags 0
-AbilFlags 0
-OffFlags 0
-ImmFlags a
-ResFlags 0
-VulnFlags P
-StartPos stand
-DefaultPos stand
-Sex male
 Wealth 0
 Form AHMV
 Parts ABCDEFGHIJK
@@ -1134,63 +1050,19 @@ Size medium
 Material unknown~
 MaxLoad -1
 M GREET 263 100~
-M SPEECH 264 skillmap~
-M SPEECH 265 learning~
+M SPEECH 264 topics~
+M SPEECH 265 create~
+M SPEECH 266 priority~
 End
-#255
+#253
 #MOBFORMAT dynamic
-Name sage cycles chronomancer guide~
-ShD the Sage of Cycles~
-LnD An ancient mystic gazes into a swirling pool of past and future lives.
+Name almoner chapel offerings guide~
+ShD the Almoner~
+LnD The Almoner tends a row of votive candles in the side chapel.
 ~
-Desc A wise guardian who explains the mechanics of Remort, Awakening, and the
-First Change.
-Say 'remort', 'awakening', or 'levels' to learn more.
-~
-Race human~
-Act ABU
-Act2 E
-Aff 0
-Align 0
-Group 0
-Level 50
-Hitroll 20
-HitDice 100d10+1000
-ManaDice 100d10+1000
-DamDice 1d1+1
-DamType beating
-AcPierce -30
-AcBash -30
-AcSlash -30
-AcExotic -30
-AttrFlags 0
-AbilFlags 0
-OffFlags 0
-ImmFlags a
-ResFlags 0
-VulnFlags P
-StartPos stand
-DefaultPos stand
-Sex female
-Wealth 0
-Form AHMV
-Parts ABCDEFGHIJK
-Size medium
-Material unknown~
-MaxLoad -1
-M GREET 266 100~
-M SPEECH 267 remort~
-M SPEECH 268 awakening~
-End
-#256
-#MOBFORMAT dynamic
-Name arbiter threshold graduation guide~
-ShD the Arbiter of the Threshold~
-LnD The Arbiter of the Threshold guards the final gateway to the mortal realm.
-~
-Desc An imposing figure clad in onyx and silver armor. The gateway to Sanctuary
-Recall stands directly behind him.
-Say 'vampire', 'mortal', or 'graduate' to learn more.
+Desc A soft-spoken almoner who keeps the chapel's offering box and the ledger
+of every freebie spent.
+{GSay 'topics' to hear what he can teach.{x
 ~
 Race human~
 Act ABU
@@ -1223,10 +1095,148 @@ Parts ABCDEFGHIJK
 Size medium
 Material unknown~
 MaxLoad -1
-M GREET 269 100~
-M SPEECH 270 vampire~
-M SPEECH 271 mortal~
-M SPEECH 272 graduate~
+M GREET 267 100~
+M SPEECH 268 topics~
+M SPEECH 269 freebie~
+M SPEECH 270 costs~
+End
+#254
+#MOBFORMAT dynamic
+Name scribe scriptorium monk guide~
+ShD the Scriptorium Monk~
+LnD A Scriptorium Monk copies skill charts by candlelight.
+~
+Desc A hooded monk bent over a vast illuminated chart linking every skill to the
+dots that unlock it.
+{GSay 'topics' to hear what he can teach.{x
+~
+Race human~
+Act ABU
+Act2 E
+Aff 0
+Align 0
+Group 0
+Level 50
+Hitroll 20
+HitDice 100d10+1000
+ManaDice 100d10+1000
+DamDice 1d1+1
+DamType beating
+AcPierce -30
+AcBash -30
+AcSlash -30
+AcExotic -30
+AttrFlags 0
+AbilFlags 0
+OffFlags 0
+ImmFlags a
+ResFlags 0
+VulnFlags P
+StartPos stand
+DefaultPos stand
+Sex male
+Wealth 0
+Form AHMV
+Parts ABCDEFGHIJK
+Size medium
+Material unknown~
+MaxLoad -1
+M GREET 271 100~
+M SPEECH 272 topics~
+M SPEECH 273 skillmap~
+M SPEECH 274 learning~
+End
+#255
+#MOBFORMAT dynamic
+Name ossuary keeper bones guide~
+ShD the Keeper of Bones~
+LnD The Keeper of Bones arranges skulls in the ossuary niches.
+~
+Desc A pale, ageless figure surrounded by neatly stacked bones - every one a life
+lived and begun again.
+{GSay 'topics' to hear what she can teach.{x
+~
+Race human~
+Act ABU
+Act2 E
+Aff 0
+Align 0
+Group 0
+Level 50
+Hitroll 20
+HitDice 100d10+1000
+ManaDice 100d10+1000
+DamDice 1d1+1
+DamType beating
+AcPierce -30
+AcBash -30
+AcSlash -30
+AcExotic -30
+AttrFlags 0
+AbilFlags 0
+OffFlags 0
+ImmFlags a
+ResFlags 0
+VulnFlags P
+StartPos stand
+DefaultPos stand
+Sex female
+Wealth 0
+Form AHMV
+Parts ABCDEFGHIJK
+Size medium
+Material unknown~
+MaxLoad -1
+M GREET 275 100~
+M SPEECH 276 topics~
+M SPEECH 277 remort~
+M SPEECH 278 paths~
+End
+#256
+#MOBFORMAT dynamic
+Name bishop belfry blessing guide~
+ShD the Bishop of the Belfry~
+LnD The Bishop of the Belfry waits beneath the great bronze bell.
+~
+Desc An elderly bishop in tattered violet vestments. Above him hangs the bell
+whose toll sends travelers on to the New Temple.
+{GSay 'topics' to hear what he can teach.{x
+~
+Race human~
+Act ABU
+Act2 E
+Aff 0
+Align 0
+Group 0
+Level 50
+Hitroll 20
+HitDice 100d10+1000
+ManaDice 100d10+1000
+DamDice 1d1+1
+DamType beating
+AcPierce -30
+AcBash -30
+AcSlash -30
+AcExotic -30
+AttrFlags 0
+AbilFlags 0
+OffFlags 0
+ImmFlags a
+ResFlags 0
+VulnFlags P
+StartPos stand
+DefaultPos stand
+Sex male
+Wealth 0
+Form AHMV
+Parts ABCDEFGHIJK
+Size medium
+Material unknown~
+MaxLoad -1
+M GREET 279 100~
+M SPEECH 280 topics~
+M SPEECH 281 summary~
+M SPEECH 282 graduate~
 End
 #0
 
@@ -2897,7 +2907,7 @@ D1
 0 -1 101
 S
 #101
-The Central Temple of Recall~
+The New Temple~
 Tall marble pillars support a vaulted dome at the heart of the sanctuary.
 Travelers gather here in safety before venturing forth. The Altar of Sacrifice
 lies to the north, the Donation Chamber to the east, the Initiate Entrance to
@@ -3085,365 +3095,271 @@ D1
 0 -1 111
 S
 #250
-The Threshold of Awakening~
-A crystalline platform hangs suspended in an endless expanse of swirling
-cerulean fog. Pillars of polished quartz rise at the four corners, inscribed
-with pulsing runes that catch the light. A carved guide post stands beside the
-path, offering guidance to those newly arrived in the World of Darkness. The
-ethereal mist coalesces northward into an illuminated grand hallway.
+The Lychgate in the Wood~
+Black pines crowd close on every side, their needles whispering in a wind
+you cannot feel. A crooked path ends at a roofed lychgate of rotting oak,
+beyond which a ruined gothic cathedral rises from the fog, its spires
+broken like old teeth. Lantern light glows within. Fresh graves line the
+path and a rusted spade leans against the gate.
+{Y>>> {RA {WWEATHERED SIGNPOST{R stands here. Type {G'look sign'{R to read it! {Y<<<{x
+{Y>>> {RTalk to the guide: {G'say topics'{R lists everything they know. {Y<<<{x
 ~
 0 1036 0
 E
-signpost post guide guidepost~
-{C+-------------------------------------------------------------------+{x
-{C|                  {WTHE THRESHOLD OF AWAKENING                     {C|{x
-{C+-------------------------------------------------------------------+{x
-{C| {YTopics available in this chamber:                                 {C|{x
-{C|   {Glook post{x       - View this overview plaque                     {C|{x
-{C|   {Glook pillars{x    - Inspect the four foundational stones           {C|{x
-{C|   {Glook mist{x       - Study the celestial currents                  {C|{x
-{C|   {Gsay commands{x    - Ask the Herald about core interface commands  {C|{x
-{C|   {Gsay movement{x    - Ask the Herald about navigation and exits     {C|{x
-{C|                                                                   {C|{x
-{C| {WTo proceed north, simply type {Y'north'{W (or {Y'n'{W).                   {C|{x
-{C+-------------------------------------------------------------------+{x
+sign signpost post plaque placard tablet signboard weathered signpost~
+{Y+==================================================+{x
+{Y|{W                   THE LYCHGATE                   {Y|{x
+{Y+==================================================+{x
+{W  Welcome to {YHaven of the Embraced{W.{x
+{W  This cathedral teaches you the game, room by room.{x
+
+{W  {Gsay topics{W   - the guide lists what he can teach{x
+{W  {Gsay commands{W - basic commands{x
+{W  {Gsay ooc{W      - in-character vs out-of-character{x
+
+{W  Walk {Gnorth{W to enter the cathedral.{x
+{Y+==================================================+{x
 ~
 E
-pillars pillar quartz~
-Four massive quartz pillars anchor the platform against the void. Each is
-etched with fundamental directives for the wayfarer:
-  {W[1] Perception:{x Type {Y'look'{x to examine your surroundings and objects.
-  {W[2] Movement:{x Type {Y'n', 's', 'e', 'w', 'u', 'd'{x to traverse exits.
-  {W[3] Discourse:{x Type {Y'say <text>'{x to speak with nearby guides.
-  {W[4] Awareness:{x Type {Y'score'{x or {Y'worth'{x to view vitality and coin.
-~
-E
-mist fog cerulean~
-Swirling ribbons of luminous blue vapor drift beneath your feet. They part
-gently as you step, revealing glimpses of forgotten realms and distant stars.
+graves grave~
+Simple mounds with wooden crosses. None of the names are legible.
 ~
 D0
-An illuminated passage leads north toward the Hall of Forms.
+The cathedral doors stand open to the north.
 ~
 ~
 0 0 251
 S
 #251
-The Hall of Forms~
-Crystalline displays line the walls of this vaulted gallery, each hovering
-before a towering mirror of silvered glass. Pages of ethereal script shimmer
-in mid-air, detailing the nine core Attributes, thirty mortal Abilities, and
-the supernatural traits that govern Kindred, Garou, and Awakened souls. A
-tall guide post rests beside a display lectern. The path extends north into
-the Chamber of Creation, while the Threshold lies south.
+The Narthex~
+Cold flagstones lead through the cathedral's entry hall. Faded murals of
+saints peel from the walls and a holy-water font has long since gone dry.
+A tall lectern holds three enormous ledgers, their pages turning by
+themselves in the candlelight.
+{Y>>> {RA {WBRASS PLAQUE{R stands here. Type {G'look sign'{R to read it! {Y<<<{x
+{Y>>> {RTalk to the guide: {G'say topics'{R lists everything they know. {Y<<<{x
 ~
 0 1036 0
 E
-signpost post guide guidepost~
-{C+-------------------------------------------------------------------+{x
-{C|                       {WTHE HALL OF FORMS                         {C|{x
-{C+-------------------------------------------------------------------+{x
-{C| {YTopics available in this chamber:                                 {C|{x
-{C|   {Glook sheet{x      - How Haven's Storyteller Sheet works           {C|{x
-{C|   {Glook traits{x     - Attributes vs Abilities overview               {C|{x
-{C|   {Glook displays{x   - The hovering crystalline ledgers              {C|{x
-{C|   {Gsay sheet{x       - Ask the Archivist how to view your sheet      {C|{x
-{C|   {Gsay attributes{x  - Learn about Physical, Social & Mental stats   {C|{x
-{C|   {Gsay abilities{x   - Learn about Talents, Skills & Knowledges      {C|{x
-{C|                                                                   {C|{x
-{C| {WCore Command:{x Type {Y'cs'{W (or {Y'sheet'{W) to open your Character Sheet!   {C|{x
-{C+-------------------------------------------------------------------+{x
+sign signpost post plaque placard tablet signboard brass plaque~
+{Y+==================================================+{x
+{Y|{W               YOUR CHARACTER SHEET               {Y|{x
+{Y+==================================================+{x
+{W  {Gcs{W (or {Gsheet{W) - page 1: attributes, abilities{x
+{W  {Gcs2{W           - page 2: advantages, virtues{x
+{W  {Gcs3{W           - page 3: secondary abilities{x
+{W  {Gbackgrounds{W   - your backgrounds{x
+{W  {Gbackground show{W - backgrounds you can pick{x
+
+{W  {Gsay topics{W to the Verger for details.{x
+{W  Walk {Gnorth{W into the nave.{x
+{Y+==================================================+{x
 ~
 E
-sheet charsheet traits~
-Haven of the Embraced uses White Wolf's 1-to-5 dot Storyteller system:
-  {WAttributes (1-5):{x Raw innate capability (e.g. Strength, Wits).
-  {WAbilities (0-5):{x Trained proficiencies (e.g. Brawl, Stealth, Occult).
-  {WVirtues (1-5):{x Moral anchors: Conscience, Self-Control, and Courage.
-  {WWillpower (1-10):{x Mental grit derived from Courage; fuels powers.
-  {WHumanity (0-10):{x The barrier preserving your soul from the Beast.
-Type {Y'cs'{x to inspect your active ratings at any time.
-~
-E
-displays mirrors crystalline~
-Luminous silver mirrors reflect not physical armor, but the spiritual anatomy
-of your character: their demeanor, clan bloodline, disciplines, and rating dots.
+ledgers ledger lectern~
+Three ledgers: CS, CS2 and CS3. Beneath them, a thin scroll marked BACKGROUNDS.
 ~
 D0
-The gallery opens north into the Chamber of Creation.
+The nave opens to the north.
 ~
 ~
 0 0 252
 D2
-The Threshold of Awakening lies south.
+The way back lies south.
 ~
 ~
 0 0 250
 S
 #252
-The Chamber of Creation~
-At the center of this domed pavilion stands a pedestal of white marble bathed
-in soft golden lamplight. Vessels of soft sculpting clay and silver calipers
-rest on its surface, symbolizing the deliberate molding of identity. A detailed
-guide post explains how to craft or adjust a character sheet using Haven's
-interactive builder. An arched portal leads north to the Crucible of Essence,
-while the Hall of Forms is south.
+The Nave of Unfinished Saints~
+Rows of shattered pews march toward a distant altar beneath a vaulted
+ceiling open to the stars. Along the aisle stand statues of saints, each
+with its face still uncarved, waiting for a sculptor to decide who they
+will become.
+{Y>>> {RA {WCARVED STONE TABLET{R stands here. Type {G'look sign'{R to read it! {Y<<<{x
+{Y>>> {RTalk to the guide: {G'say topics'{R lists everything they know. {Y<<<{x
 ~
 0 1036 0
 E
-signpost post guide guidepost~
-{C+-------------------------------------------------------------------+{x
-{C|                     {WTHE CHAMBER OF CREATION                     {C|{x
-{C+-------------------------------------------------------------------+{x
-{C| {YTopics available in this chamber:                                 {C|{x
-{C|   {Glook builder{x    - The step-by-step 'create' workflow            {C|{x
-{C|   {Glook pedestal{x   - The artisan tools and clay                     {C|{x
-{C|   {Gsay create{x      - Ask the Sculptor how to enter builder mode    {C|{x
-{C|   {Gsay priority{x    - Learn how Primary, Secondary & Tertiary work  {C|{x
-{C|                                                                   {C|{x
-{C| {WIf you picked a CUSTOM sheet at login, you MUST run {Y'create'{W!      {C|{x
-{C+-------------------------------------------------------------------+{x
+sign signpost post plaque placard tablet signboard carved stone tablet~
+{Y+==================================================+{x
+{Y|{W                 SHAPE YOUR SOUL                  {Y|{x
+{Y+==================================================+{x
+{W  Type {Gcreate{W and follow the steps.{x
+{W  {RUntil create is finished you have NO SKILLS{W{x
+{W  {Rand cannot spend freebies.{W{x
+
+{W  {Gsay topics{W to the Mason for details.{x
+{W  Walk {Gnorth{W into the side chapel.{x
+{Y+==================================================+{x
 ~
 E
-builder create workflow~
-{WInteractive Character Builder ('create' command):{x
-  {C1. Priorities:{x Assign 7/5/3 dots to Attributes (Physical/Social/Mental)
-     and 13/9/5 dots to Abilities (Talents/Skills/Knowledges).
-  {C2. Allocation:{x Type {Y'create <trait> +'{x to raise or {Y'create <trait> -'{x.
-  {C3. Virtues:{x Spend 7 dots across Conscience, Self-Control, and Courage.
-  {C4. Finalize:{x Once all pools hit 0, type {Y'create done'{x to seal traits!
-If you chose an Archetype (0-9), this was pre-set, but you can inspect it anytime.
-~
-E
-pedestal marble clay tools~
-A flawless plinth carved from Thessalian marble. Resting atop it is a bowl of
-ethereal clay that responds to the focused thoughts of the wayfarer.
+statues statue saints~
+Smooth blank faces. One of them looks almost like you.
 ~
 D0
-The arched portal opens north to the Crucible of Essence.
+A side chapel glows with candles to the north.
 ~
 ~
 0 0 253
 D2
-The Hall of Forms lies south.
+The way back lies south.
 ~
 ~
 0 0 251
 S
 #253
-The Crucible of Essence~
-Warm light radiates from floating brazier basins suspended above a floor of
-dark polished obsidian. Shimmering points of amber and sapphire light drift
-gently through the air, gathering into constellations of mortal Backgrounds
-and Freebie essence. A brass guide post stands near the center of the hall.
-An open archway continues north to the Spire of Prowess, while the Chamber of
-Creation lies south.
+The Chapel of Offerings~
+Hundreds of votive candles burn in iron racks, filling this small chapel
+with warm light and the smell of wax. An iron-bound offering box sits
+beneath a stained-glass window of a pilgrim climbing a hill.
+{Y>>> {RA {WGILDED PLACARD{R stands here. Type {G'look sign'{R to read it! {Y<<<{x
+{Y>>> {RTalk to the guide: {G'say topics'{R lists everything they know. {Y<<<{x
 ~
 0 1036 0
 E
-signpost post guide guidepost~
-{C+-------------------------------------------------------------------+{x
-{C|                    {WTHE CRUCIBLE OF ESSENCE                      {C|{x
-{C+-------------------------------------------------------------------+{x
-{C| {YTopics available in this chamber:                                 {C|{x
-{C|   {Glook freebies{x   - How to spend your 15 starting freebie points  {C|{x
-{C|   {Glook background{x - Retainers, Resources, Generation & more       {C|{x
-{C|   {Gsay freebie{x     - Ask the Benefactor about the 'freebie' menu   {C|{x
-{C|   {Gsay backgrounds{x - Ask about mortal advantages and backgrounds   {C|{x
-{C|                                                                   {C|{x
-{C| {WCommands:{x Type {Y'freebie'{W to customize stats, or {Y'backgrounds'{W!   {C|{x
-{C+-------------------------------------------------------------------+{x
+sign signpost post plaque placard tablet signboard gilded placard~
+{Y+==================================================+{x
+{Y|{W                     FREEBIES                     {Y|{x
+{Y+==================================================+{x
+{W  Type {Gfreebie{W to see costs and freebies left.{x
+{W  Type {Gfreebie <trait>{W to buy one dot.{x
+{W  Cost scales with your {Ycurrent{W dots:{x
+{W    Attributes x4, Abilities x2, Virtues x2,{x
+{W    Humanity x2, Willpower x1{x
+
+{W  {Gsay costs{W to the Almoner for the full list.{x
+{W  Walk {Gnorth{W into the scriptorium.{x
+{Y+==================================================+{x
 ~
 E
-freebies freebie spending~
-{WFreebie Point System ('freebie' command):{x
-Every character receives {Y15 Freebie points{x at creation to fine-tune stats:
-  {CAttributes:{x 5 Freebie points per dot
-  {CAbilities:{x  2 Freebie points per dot
-  {CDisciplines:{x 7 Freebie points per dot (Vampires)
-  {CVirtues:{x     2 Freebie points per dot
-  {CWillpower:{x   1 Freebie point per dot
-  {CHumanity:{x    1 Freebie point per dot
-Type {Y'freebie'{x with no arguments to view the interactive spending menu!
+box offering~
+Carved on the lid: 'Each soul reborn may offer three more.'
 ~
 E
-background backgrounds advantages~
-{WBackgrounds System ('backgrounds' command):{x
-Backgrounds represent mortal assets, allies, and social standing:
-  {CGeneration:{x Lowers your generation (Vampires start at 10th gen by default).
-  {CResources:{x  Wealth, investments, and independent income.
-  {CHerd:{x       Readily available vessels to slake your hunger.
-  {CRetainers:{x  Loyal mortal servants and ghoul bodyguards.
-  {CContacts:{x   Informants and allies across the mortal city.
+window glass pilgrim~
+The pilgrim climbs, falls, and climbs again - higher each time.
 ~
 D0
-The archway leads north to the Spire of Prowess.
+Stairs lead north to the scriptorium.
 ~
 ~
 0 0 254
 D2
-The Chamber of Creation lies south.
+The way back lies south.
 ~
 ~
 0 0 252
 S
 #254
-The Spire of Prowess~
-Racks of training armaments, sparring staves, and arcane diagrams line the
-perimeter of this lofty octagonal tower. Star charts overhead map the pathways
-between Storyteller attributes and the traditional Diku combat skills. A carved
-wooden guide post stands beside a weapon display. A broad stair ascends north
-to the Archive of Cycles, while the Crucible of Essence lies south.
+The Scriptorium~
+Tall windows light rows of slanted writing desks thick with dust. Across
+the far wall hangs an enormous illuminated chart: lines of gold ink run
+from every attribute and ability to the skills they unlock.
+{Y>>> {RA {WPAINTED SIGNBOARD{R stands here. Type {G'look sign'{R to read it! {Y<<<{x
+{Y>>> {RTalk to the guide: {G'say topics'{R lists everything they know. {Y<<<{x
 ~
 0 1036 0
 E
-signpost post guide guidepost~
-{C+-------------------------------------------------------------------+{x
-{C|                      {WTHE SPIRE OF PROWESS                       {C|{x
-{C+-------------------------------------------------------------------+{x
-{C| {YTopics available in this chamber:                                 {C|{x
-{C|   {Glook skillmap{x   - The Storyteller-to-Skill unlocking engine    {C|{x
-{C|   {Glook learning{x   - Practice vs check_improve & real combat use   {C|{x
-{C|   {Gsay skillmap{x    - Ask the Weaponmaster about unlocking skills   {C|{x
-{C|   {Gsay learning{x    - Learn how Haven's skills advance by use       {C|{x
-{C|                                                                   {C|{x
-{C| {WCommands:{x Type {Y'skillmap'{W to see unlock requirements, or {Y'skills'{W!{C|{x
-{C+-------------------------------------------------------------------+{x
+sign signpost post plaque placard tablet signboard painted signboard~
+{Y+==================================================+{x
+{Y|{W                      SKILLS                      {Y|{x
+{Y+==================================================+{x
+{W  There is {Rno practice and no train{W in Haven.{x
+{W  Your dots on {Gcs{W unlock skills automatically.{x
+{W  {Gskillmap{W - what each skill needs{x
+{W  {Gskills{W   - what you know now{x
+{W  Skills improve by {Yusing{W them.{x
+
+{W  Walk {Gnorth{W down into the ossuary.{x
+{Y+==================================================+{x
 ~
 E
-skillmap skill_map unlocks~
-{WHaven's Modern Skill Matrix ('skillmap' command):{x
-Unlike traditional MUDs where you spend 'train' or 'practice' sessions at a
-guildmaster, Haven unlocks skills dynamically based on your Storyteller sheet:
-  - Having sufficient dots in {WAttributes{x (e.g. Dexterity, Wits) or
-    {WAbilities{x (e.g. Brawl, Melee, Stealth) unlocks relevant skills.
-  - Type {Y'skillmap'{x to browse every skill, its required level, and its
-    governing Attribute/Ability dot thresholds.
-  - Skills flagged with {rX{x are locked until you raise the required CS trait.
-~
-E
-learning practice improve~
-{WSkill Advancement & Mastery:{x
-  - Once unlocked, skills start at a base competency.
-  - Using a skill in active gameplay (combat, crafting, foraging, stealth)
-    rolls checks against your stats. Successful use dynamically increases your
-    proficiency toward 100% via the {Wcheck_improve{x engine.
-  - Weapons improve with practice; secondary combat skills (blunt, light, heavy)
-    raise your weapon proficiency caps.
+chart illuminated~
+Gold lines run from Dexterity and Brawl to kick, from Wits and Dodge to dodge, and on through hundreds of skills.
 ~
 D0
-The broad stair ascends north to the Archive of Cycles.
+A stair winds north and down to the ossuary.
 ~
 ~
 0 0 255
 D2
-The Crucible of Essence lies south.
+The way back lies south.
 ~
 ~
 0 0 253
 S
 #255
-The Archive of Cycles~
-Ribbons of starlight weave through high archways, casting quiet reflections
-upon a basin of crystalline water at the room's core. Frescoes on the domed
-ceiling depict the endless wheel of life, undeath, rebirth, and ascension: the
-mortal walking the street, the Kindred prowling the night, the Garou howling at
-the moon, and the Mage rending reality. A bronze guide post stands beside the
-reflecting pool. A massive gate leads north to the Grand Crossroads, while the
-Spire of Prowess lies south.
+The Ossuary~
+Niches carved into the walls hold skulls stacked in tidy rows, thousands
+of them. This is no place of grief: candles burn before every niche, and
+fresh flowers are left for each soul that has died and begun again.
+{Y>>> {RA {WBONE-FRAMED PLAQUE{R stands here. Type {G'look sign'{R to read it! {Y<<<{x
+{Y>>> {RTalk to the guide: {G'say topics'{R lists everything they know. {Y<<<{x
 ~
 0 1036 0
 E
-signpost post guide guidepost~
-{C+-------------------------------------------------------------------+{x
-{C|                     {WTHE ARCHIVE OF CYCLES                       {C|{x
-{C+-------------------------------------------------------------------+{x
-{C| {YTopics available in this chamber:                                 {C|{x
-{C|   {Glook remort{x     - Level 100 reincarnation & Awakening           {C|{x
-{C|   {Glook paths{x      - Kindred, Garou (Werewolf), and Awakened Mage  {C|{x
-{C|   {Gsay remort{x      - Ask the Sage about the Remort process         {C|{x
-{C|   {Gsay awakening{x   - Learn how mortals transcend into supernatural {C|{x
-{C|                                                                   {C|{x
-{C| {WKnowledge:{x Remort preserves your character while expanding powers!    {C|{x
-{C+-------------------------------------------------------------------+{x
+sign signpost post plaque placard tablet signboard bone-framed plaque~
+{Y+==================================================+{x
+{Y|{W                      REMORT                      {Y|{x
+{Y+==================================================+{x
+{W  At {Ylevel 100{W, type {Gremort{W.{x
+{W  You return to level 1 but {YKEEP{W all{x
+{W  equipment, skills and traits.{x
+{W  Each remort grants {Y3 freebies{W.{x
+{W  {RThis is how characters progress in Haven.{W{x
+
+{W  Walk {Gnorth{W up into the belfry.{x
+{Y+==================================================+{x
 ~
 E
-remort reincarnation levels~
-{WThe Remort System ('remort' command):{x
-Upon reaching maximum level ({W100{x), a mortal or supernatural may choose to
-undergo Remort:
-  - Resets character level to 1, retaining earned fame and accomplishments.
-  - Grants additional bonus Freebie points to spend on higher-tier traits.
-  - Unlocks higher supernatural paths and bloodline potencies.
-~
-E
-paths awakening garou mage vampire~
-{WThe Three Great Supernatural Spheres:{x
-  {R[Kindred]:{x Masters of the Blood, Disciplines, and shadows. Vampires
-    thrive in urban nightscapes and manage hunger and humanity.
-  {G[Garou]:{x Shape-shifting warriors of Gaia who walk between the physical
-    world and the Umbra, fueled by Primal Rage and Gnosis.
-  {M[Mages]:{x Willworkers who manipulate the Nine Spheres of True Magick,
-    channeling Quintessence while balancing the dangers of Paradox.
+skulls skull niches bones~
+Each skull bears a small number. Some are numbered in the hundreds.
 ~
 D0
-The massive gate opens north to the Grand Crossroads.
+A narrow stair climbs north into the belfry.
 ~
 ~
 0 0 256
 D2
-The Spire of Prowess lies south.
+The way back lies south.
 ~
 ~
 0 0 254
 S
 #256
-The Grand Crossroads of Fate~
-You stand at the northern pinnacle of the Prelude upon a magnificent circular
-terrace of polished obsidian. Before you stands a grand arched portal swirling
-with warm golden light, leading directly into the Central Temple of Recall in
-the mortal city. Beside the archway, an iron guide post details the final
-divergence between mortal life and the undead curse. The Archive of Cycles lies
-to the south.
+The Belfry~
+Wind howls through the open arches of the bell tower. Far below, the
+forest stretches away into darkness, and beyond it the distant lights
+of the world. A great bronze bell hangs overhead; its toll will carry you
+to the New Temple.
+{Y>>> {RA {WIRON SIGN{R stands here. Type {G'look sign'{R to read it! {Y<<<{x
+{Y>>> {RTalk to the guide: {G'say topics'{R lists everything they know. {Y<<<{x
 ~
 0 1036 0
 E
-signpost post guide guidepost~
-{C+-------------------------------------------------------------------+{x
-{C|                  {WTHE GRAND CROSSROADS OF FATE                   {C|{x
-{C+-------------------------------------------------------------------+{x
-{C| {YTopics available in this chamber:                                 {C|{x
-{C|   {Glook portal{x     - The gateway to Sanctuary Central Temple       {C|{x
-{C|   {Glook rules{x      - In-character (IC) vs Out-of-character (OOC)  {C|{x
-{C|   {Gsay vampire{x     - Ask about vampire mechanics (blood, fangs)    {C|{x
-{C|   {Gsay mortal{x      - Ask about mortal progression and remort       {C|{x
-{C|   {Gsay graduate{x    - Request the Arbiter to transfer you to town!  {C|{x
-{C|                                                                   {C|{x
-{C| {WTo enter the world:{x Walk {Y'north'{W through the portal or say {Y'graduate'{W!{C|{x
-{C+-------------------------------------------------------------------+{x
+sign signpost post plaque placard tablet signboard iron sign~
+{Y+==================================================+{x
+{Y|{W                     THE BELL                     {Y|{x
+{Y+==================================================+{x
+{W  {Gsay graduate{W - ring the bell, enter the world{x
+{W  {Gsay summary{W  - one last recap{x
+
+{W  Or walk {Gnorth{W through the arch.{x
+{W  Stuck later? {Ghelp <word>{W or {Gooc <question>{W.{x
+{Y+==================================================+{x
 ~
 E
-portal archway gate recall~
-A shimmering archway of pure golden light connects the tutorial realm to the
-living World of Darkness. Stepping north through this portal deposits you in
-the Central Temple of Recall (Room #101) where your journey begins in earnest.
-~
-E
-rules ic ooc etiquette~
-{WHaven of the Embraced Roleplay Etiquette:{x
-  - {WIC vs OOC:{x Haven is an immersive roleplaying game. Keep modern talk
-    confined to the {Y'ooc'{x channel. In-character speech ({Y'say'{x, {Y'tell'{x)
-    should reflect your character's gothic persona.
-  - {WHelp System:{x Type {Y'help <topic>'{x for exhaustive documentation on
-    any spell, discipline, skill, clan, or system mechanic.
+bell bronze~
+The bell is carved with one word: BEGIN.
 ~
 D0
-The golden portal leads north to the Central Sanctuary Temple.
+An arch of light leads north to the New Temple.
 ~
 ~
 0 0 101
 D2
-The Archive of Cycles lies south.
+The way back lies south.
 ~
 ~
 0 0 255
@@ -3500,221 +3416,265 @@ S
 
 #MPCODE
 #250
-Prelude Herald Greet~
+Prelude the Old Sexton greet~
 if ispc $n
-  mob echoat $n {CThe Herald of Awakening greets you warmly.{x
-  mob echoat $n {W'Welcome, traveler, to the Threshold of Awakening.'{x
-  mob echoat $n {W'I am here to guide your first steps. Type {Ylook post{W to view the room index,'{x
-  mob echoat $n {W'or speak aloud: {Ysay commands{W or {Ysay movement{W to learn the basics.'{x
-  mob echoat $n {W'When you are ready, proceed {Ynorth{W into the Hall of Forms.'{x
+  mob echoat $n {CThe Old Sexton lifts his lantern and squints at you.{x
+  mob echoat $n {W'Another lost one wandering out of the woods. Welcome, child.'{x
+  mob echoat $n {W'This old cathedral will teach you how to survive in Haven.'{x
+  mob echoat $n {W{RIMPORTANT:{W read the {Gsign{W in every room ({Glook sign{W) and talk to every guide.{x
+  mob echoat $n {W'Say {Gtopics{W and I will list what I can teach you.'{x
 endif
 ~
 #251
-Prelude Herald Commands Speech~
-mob echoat $n {CThe Herald of Awakening smiles and speaks:{x
-mob echoat $n {W'Essential Haven commands to remember:'{x
-mob echoat $n {W'  {Ylook{W     - Examine your surroundings, objects, or players.'{x
-mob echoat $n {W'  {Yscore{W    - View your current health, blood, and vital status.'{x
-mob echoat $n {W'  {Yworth{W    - Check your accumulated silver and gold coins.'{x
-mob echoat $n {W'  {Yhelp{W     - Search the extensive help archive on any topic.'{x
-mob echoat $n {W'  {Ysay <msg>{W- Converse in-character with those in your room.'{x
+Prelude the Old Sexton topics~
+mob echoat $n {CThe Sexton counts on muddy fingers:{x
+mob echoat $n {W'Say any of these words aloud and I will explain:'{x
+mob echoat $n {W  {Gcommands{W  - the handful of commands you need first{x
+mob echoat $n {W  {Gmovement{W  - how to walk the world{x
+mob echoat $n {W  {Gooc{W       - in-character vs out-of-character chat{x
+mob echoat $n {W'When you are done, walk {Gnorth{W into the narthex.'{x
 ~
 #252
-Prelude Herald Movement Speech~
-mob echoat $n {CThe Herald of Awakening gestures toward the open passage:{x
-mob echoat $n {W'To move through Haven, use compass directions: {Ynorth{W, {Ysouth{W, {Yeast{W, {Ywest{W,'{x
-mob echoat $n {W'as well as {Yup{W and {Ydown{W (abbreviated {Yn, s, e, w, u, d{W).'{x
-mob echoat $n {W'Type {Yexits{W at any time to see obvious exits leading from your location.'{x
-mob echoat $n {W'Head {Ynorth{W now to inspect your Character Sheet.'{x
+Prelude the Old Sexton commands~
+mob echoat $n {CThe Sexton ticks them off one by one:{x
+mob echoat $n {W  {Glook{W        - see the room; {Glook <thing>{W examines anything{x
+mob echoat $n {W  {Gscore{W       - your health, level and vital statistics{x
+mob echoat $n {W  {Ginventory{W / {Gequipment{W - what you carry and wear{x
+mob echoat $n {W  {Gwho{W         - who else is awake in the world{x
+mob echoat $n {W  {Ghelp <word>{W - the help files cover nearly everything{x
+mob echoat $n {W  {Gcommands{W    - the full list of every command{x
 ~
 #253
-Prelude Archivist Greet~
-if ispc $n
-  mob echoat $n {CThe Archivist of Forms looks up from his crystalline ledgers.{x
-  mob echoat $n {W'Greetings. Here in the Hall of Forms, we measure the spiritual anatomy of souls.'{x
-  mob echoat $n {W'Haven uses the Storyteller System of Attributes and Abilities.'{x
-  mob echoat $n {W'Type {Ycs{W (or {Ysheet{W) right now to view your full Character Sheet!'{x
-  mob echoat $n {W'You may also say {Ysheet{W, {Yattributes{W, or {Yabilities{W to learn more.'{x
-endif
+Prelude the Old Sexton movement~
+mob echoat $n {CThe Sexton points his spade down the path:{x
+mob echoat $n {W'Walk with {Gnorth south east west up down{W (or {Gn s e w u d{W).'{x
+mob echoat $n {W'Type {Gexits{W to see which ways you can go.'{x
+mob echoat $n {W'In this cathedral, the way forward is always {Gnorth{W.'{x
 ~
 #254
-Prelude Archivist Sheet Speech~
-mob echoat $n {CThe Archivist unrolls a shimmering scroll before you:{x
-mob echoat $n {W'Your Character Sheet ({Ycs{W) displays:'{x
-mob echoat $n {W'  - {YAttributes:{W Physical (Str/Dex/Sta), Social (Cha/Man/App), Mental (Per/Int/Wit).'{x
-mob echoat $n {W'  - {YAbilities:{W Talents (instincts), Skills (training), and Knowledges (study).'{x
-mob echoat $n {W'  - {YVirtues:{W Conscience, Self-Control, and Courage (determine Humanity & Willpower).'{x
-mob echoat $n {W'  - {YDisciplines:{W Vampiric blood gifts, Clan affinity, and generation.'{x
+Prelude the Old Sexton ooc~
+mob echoat $n {CThe Sexton lowers his voice:{x
+mob echoat $n {W'Haven is a {Yroleplaying{W game. Most of what you say is {Yin-character{W.'{x
+mob echoat $n {W  {Gsay <text>{W  - speak IN character to the room{x
+mob echoat $n {W  {Gosay <text>{W - speak OUT of character to the room{x
+mob echoat $n {W  {Gooc <text>{W  - the global OUT of character channel{x
+mob echoat $n {W'Ask game questions on {Gooc{W - players are glad to help.'{x
+mob echoat $n {W'Keep modern chatter out of {Gsay{W.'{x
 ~
 #255
-Prelude Archivist Attributes Speech~
-mob echoat $n {CThe Archivist taps a glyph of three interlocking rings:{x
-mob echoat $n {W'Attributes represent your raw innate potential rated from 1 to 5 dots:'{x
-mob echoat $n {W'  {YPhysical:{W Strength (damage), Dexterity (accuracy & defense), Stamina (hit points).'{x
-mob echoat $n {W'  {YSocial:{W   Charisma (presence), Manipulation (influence), Appearance (first impression).'{x
-mob echoat $n {W'  {YMental:{W   Perception (awareness), Intelligence (reasoning), Wits (reaction time).'{x
+Prelude the Verger of Ledgers greet~
+if ispc $n
+  mob echoat $n {CThe Verger of Ledgers looks up from his lectern.{x
+  mob echoat $n {W'Your character is written on a Storyteller {Ycharacter sheet{W of dots.'{x
+  mob echoat $n {W'It has {YTHREE{W pages plus your backgrounds. Say {Gtopics{W to learn them.'{x
+endif
 ~
 #256
-Prelude Archivist Abilities Speech~
-mob echoat $n {CThe Archivist displays an array of thirty martial and scholarly disciplines:{x
-mob echoat $n {W'Abilities represent learned technique and knowledge, rated from 0 to 5 dots:'{x
-mob echoat $n {W'  {YTalents:{W    Brawl, Dodge, Alertness, Athletics, Intimidation, Subterfuge.'{x
-mob echoat $n {W'  {YSkills:{W     Melee, Stealth, Survival, Animal Ken, Crafts, Archery.'{x
-mob echoat $n {W'  {YKnowledges:{W Occult, Enigmas, Medicine, Investigation, Academics, Science.'{x
-mob echoat $n {W'These traits unlock your active combat skills! Head {Ynorth{W to see how they are shaped.'{x
+Prelude the Verger of Ledgers topics~
+mob echoat $n {CThe Verger taps each ledger in turn:{x
+mob echoat $n {W  {Gsheet{W       - page one: {Gcs{W (attributes and abilities){x
+mob echoat $n {W  {Gpage two{W    - {Gcs2{W: advantages, virtues, willpower, health{x
+mob echoat $n {W  {Gpage three{W  - {Gcs3{W: secondary abilities{x
+mob echoat $n {W  {Gbackgrounds{W - your backgrounds and how to set them{x
+mob echoat $n {W  {Gattributes{W / {Gabilities{W - what the dots mean{x
 ~
 #257
-Prelude Sculptor Greet~
-if ispc $n
-  mob echoat $n {CThe Sculptor of Destiny pauses her work at the marble pedestal.{x
-  mob echoat $n {W'Welcome, artisan. If you chose a custom sheet at creation, this is where your identity takes form.'{x
-  mob echoat $n {W'If you selected a pre-built Archetype (0-9), your base stats are already established.'{x
-  mob echoat $n {W'Speak aloud: {Ysay create{W or {Ysay priority{W to learn how the builder works.'{x
-endif
+Prelude the Verger of Ledgers sheet~
+mob echoat $n {CThe Verger opens the first ledger:{x
+mob echoat $n {W'Type {Gcs{W (or {Gsheet{W) for page one of your character sheet.'{x
+mob echoat $n {W'It shows your nine {YAttributes{W and your {YAbilities{W, rated in dots.'{x
+mob echoat $n {W'There is more: say {Gpage two{W and {Gpage three{W.'{x
 ~
 #258
-Prelude Sculptor Create Speech~
-mob echoat $n {CThe Sculptor of Destiny gestures to the marble plinth:{x
-mob echoat $n {W'The {Ycreate{W command is Haven\'s interactive character builder:'{x
-mob echoat $n {W'  1. If your stats are 0, type {Ycreate{W to begin prioritizing trait categories.'{x
-mob echoat $n {W'  2. Spend dots with {Ycreate <trait> +{W or remove dots with {Ycreate <trait> -{W.'{x
-mob echoat $n {W'  3. Once your primary, secondary, and tertiary pools reach 0, type {Ycreate done{W.'{x
-mob echoat $n {W'Archetype characters may inspect their current progress anytime with {Ycs{W.'{x
+Prelude the Verger of Ledgers page two~
+mob echoat $n {CThe Verger opens the second ledger:{x
+mob echoat $n {W'Type {Gcs2{W for your {YAdvantages{W:'{x
+mob echoat $n {W'  disciplines, gifts or spheres, backgrounds, virtues,'{x
+mob echoat $n {W'  humanity, willpower, blood or rage, and your health track.'{x
 ~
 #259
-Prelude Sculptor Priority Speech~
-mob echoat $n {CThe Sculptor of Destiny explains the priority triad:{x
-mob echoat $n {W'When building a custom sheet, you assign priority pools:'{x
-mob echoat $n {W'  - {YAttributes:{W 7 dots Primary, 5 dots Secondary, 3 dots Tertiary.'{x
-mob echoat $n {W'  - {YAbilities:{W  13 dots Primary, 9 dots Secondary, 5 dots Tertiary.'{x
-mob echoat $n {W'  - {YVirtues:{W    7 dots distributed across Conscience, Self-Control & Courage.'{x
-mob echoat $n {W'When satisfied, walk {Ynorth{W to learn about Backgrounds and Freebie points!'{x
+Prelude the Verger of Ledgers page three~
+mob echoat $n {CThe Verger opens the third ledger:{x
+mob echoat $n {W'Type {Gcs3{W for your {YSecondary Abilities{W:'{x
+mob echoat $n {W'  weapon skills (light, heavy, blunt, polearm), crafts,'{x
+mob echoat $n {W'  carving, mining, hedge magic. They appear as you unlock them.'{x
 ~
 #260
-Prelude Benefactor Greet~
-if ispc $n
-  mob echoat $n {CThe Benefactor of Essence welcomes you with an outstretched hand.{x
-  mob echoat $n {W'Hail, traveler. Beyond raw traits lie the personal advantages of your mortal life.'{x
-  mob echoat $n {W'Every new soul receives 15 Freebie points and 5 Background points.'{x
-  mob echoat $n {W'Speak aloud: {Ysay freebie{W or {Ysay backgrounds{W to learn how to allocate them.'{x
-endif
+Prelude the Verger of Ledgers backgrounds~
+mob echoat $n {CThe Verger draws a thin scroll from his sleeve:{x
+mob echoat $n {W'Type {Gbackgrounds{W to see the backgrounds you own.'{x
+mob echoat $n {W'Type {Gbackground show{W to list the ones available to you.'{x
+mob echoat $n {W'Spend starting points with {Gbackground <name>{W.'{x
+mob echoat $n {W{RBackground points are PERMANENT.{W 'If you plan to be Embraced,'{x
+mob echoat $n {W'ghouled, or remort into Garou or Mage, consider saving some.'{x
 ~
 #261
-Prelude Benefactor Freebie Speech~
-mob echoat $n {CThe Benefactor opens an ethereal menu in the air before you:{x
-mob echoat $n {W'Type {Yfreebie{W with no arguments to view the interactive Freebie Point menu!'{x
-mob echoat $n {W'You have 15 points to spend on anything you wish:'{x
-mob echoat $n {W'  - Attributes: 5 pts per dot | Abilities: 2 pts per dot'{x
-mob echoat $n {W'  - Virtues: 2 pts per dot    | Disciplines: 7 pts per dot'{x
-mob echoat $n {W'  - Willpower & Humanity: 1 pt per dot'{x
-mob echoat $n {W'Type {Yfreebie <trait>{W to invest a point directly into that stat.'{x
+Prelude the Verger of Ledgers attributes~
+mob echoat $n {CThe Verger traces three columns:{x
+mob echoat $n {W  {YPhysical{W: Strength, Dexterity, Stamina{x
+mob echoat $n {W  {YSocial{W:   Charisma, Manipulation, Appearance{x
+mob echoat $n {W  {YMental{W:   Perception, Intelligence, Wits{x
+mob echoat $n {W'Rated 1 to 5 dots. They help decide which skills you unlock.'{x
 ~
 #262
-Prelude Benefactor Backgrounds Speech~
-mob echoat $n {CThe Benefactor weaves a tapestry of mortal connections:{x
-mob echoat $n {W'Backgrounds represent mortal power and assets. Type {Ybackgrounds{W to view them:'{x
-mob echoat $n {W'  - {YGeneration:{W Lowers your vampire generation (more blood capacity and potency).'{x
-mob echoat $n {W'  - {YResources:{W  Mortal wealth, steady income, and high society standing.'{x
-mob echoat $n {W'  - {YHerd:{W       Reliable vessels to feed upon without hunting.'{x
-mob echoat $n {W'  - {YRetainers:{W  Loyal ghoul servants and mortal bodyguards.'{x
-mob echoat $n {W'Invest your background points in-game using the backgrounds command.'{x
-mob echoat $n {W'Continue {Ynorth{W into the Spire of Prowess to see how traits unlock skills.'{x
+Prelude the Verger of Ledgers abilities~
+mob echoat $n {CThe Verger turns a page:{x
+mob echoat $n {W'Abilities are {YTalents{W, {YSkills{W and {YKnowledges{W, rated 0 to 5.'{x
+mob echoat $n {W'Brawl, Melee, Dodge, Stealth, Occult and many more.'{x
+mob echoat $n {W'With attributes, they unlock your skills. The monk upstairs explains.'{x
 ~
 #263
-Prelude Master Prowess Greet~
+Prelude the Stone Mason greet~
 if ispc $n
-  mob echoat $n {CThe Master of Prowess salutes you crisply with his staff.{x
-  mob echoat $n {W'Stand tall! On Haven, combat mastery is not purchased from a trainer with gold.'{x
-  mob echoat $n {W'Your Storyteller traits unlock your skills, and real practice hones them.'{x
-  mob echoat $n {W'Speak aloud: {Ysay skillmap{W or {Ysay learning{W to understand our martial engine.'{x
+  mob echoat $n {CThe Stone Mason sets down her chisel.{x
+  mob echoat $n {W'Every soul is carved before it walks. Here you shape yours with {Gcreate{W.'{x
+  mob echoat $n {W{RIf you have not finished create, you have NO SKILLS.{W Say {Gtopics{W.{x
 endif
 ~
 #264
-Prelude Master Prowess Skillmap Speech~
-mob echoat $n {CThe Master of Prowess unrolls a complex tactical star chart:{x
-mob echoat $n {W'Type {Yskillmap{W (or {Yskillmap <trait>{W) to see the skill unlock matrix!'{x
-mob echoat $n {W'Every martial skill (kick, parry, dodge, second attack, backstab, etc.) requires:'{x
-mob echoat $n {W'  1. A minimum character level.'{x
-mob echoat $n {W'  2. A minimum rating in a Primary Storyteller trait (e.g. Dex 2, Brawl 2).'{x
-mob echoat $n {W'  3. Often a Secondary trait threshold.'{x
-mob echoat $n {W'If you lack the required dots, the skill is flagged {rX{W and remains dormant.'{x
+Prelude the Stone Mason topics~
+mob echoat $n {CThe Mason wipes dust from her hands:{x
+mob echoat $n {W  {Gcreate{W   - the interactive character builder{x
+mob echoat $n {W  {Gpriority{W - primary, secondary and tertiary choices{x
 ~
 #265
-Prelude Master Prowess Learning Speech~
-mob echoat $n {CThe Master of Prowess demonstrates a fluid parry and riposte:{x
-mob echoat $n {W'How skills advance on Haven:'{x
-mob echoat $n {W'  - {WNO PRACTICE SESSIONS:{x We do not use traditional mud \'practice\' commands.'{x
-mob echoat $n {W'  - {WLEARNING BY DOING:{x Every time you use a skill in combat or explore,'{x
-mob echoat $n {W'    the engine rolls an improvement check based on your stats.'{x
-mob echoat $n {W'  - {WPROFICIENCY CAPS:{x Training your secondary weapon skills (blunt, light, heavy)'{x
-mob echoat $n {W'    raises your mastery ceiling toward 100%.'{x
-mob echoat $n {W'Ascend {Ynorth{W to the Archive of Cycles to learn about Remort and Ascension.'{x
+Prelude the Stone Mason create~
+mob echoat $n {CThe Mason gestures at the unfinished statue:{x
+mob echoat $n {W'Type {Gcreate{W and follow the prompts step by step.'{x
+mob echoat $n {W'You choose priorities, then spend dots on attributes, abilities'{x
+mob echoat $n {W'and virtues. The builder tells you what is left at each step.'{x
+mob echoat $n {W{RYou cannot use freebies until create is finished.{W{x
 ~
 #266
-Prelude Sage Greet~
-if ispc $n
-  mob echoat $n {CThe Sage of Cycles gazes into the luminous reflecting pool.{x
-  mob echoat $n {W'Greetings, seeker. All mortal lives and undead journeys move in grand cycles.'{x
-  mob echoat $n {W'When you achieve greatness at level 100, the path of Remort opens before you.'{x
-  mob echoat $n {W'Speak aloud: {Ysay remort{W or {Ysay awakening{W to discover what awaits.'{x
-endif
+Prelude the Stone Mason priority~
+mob echoat $n {CThe Mason chalks three marks on the stone:{x
+mob echoat $n {W'You rank Physical, Social and Mental as primary, secondary, tertiary.'{x
+mob echoat $n {W'Then Talents, Skills and Knowledges the same way.'{x
+mob echoat $n {W'Primary gets the most dots. Pick what suits the character you want.'{x
 ~
 #267
-Prelude Sage Remort Speech~
-mob echoat $n {CThe Sage of Cycles gestures as concentric ripples spread across the pool:{x
-mob echoat $n {W'The Remort System ({Yremort{W command):'{x
-mob echoat $n {W'  - When you attain level 100, you may choose to undergo Remort.'{x
-mob echoat $n {W'  - Your level resets to 1, but you keep all equipment and renown.'{x
-mob echoat $n {W'  - You gain bonus Freebie points to further enhance your Storyteller sheet,'{x
-mob echoat $n {W'    growing significantly more powerful across successive incarnations.'{x
-~
-#268
-Prelude Sage Awakening Speech~
-mob echoat $n {CThe Sage of Cycles points to the celestial frescoes above:{x
-mob echoat $n {W'Beyond mortal limits lie three transcendent paths:'{x
-mob echoat $n {W'  {R[Kindred]:{W The Children of Caine. Feed on vitae, command disciplines,'{x
-mob echoat $n {W'               and rule the mortal night from the shadows.'{x
-mob echoat $n {W'  {G[Garou]:{W   Werewolves born of Gaia. Through remort, pure-blood mortals'{x
-mob echoat $n {W'               undergo the First Change to fight the Wyrm.'{x
-mob echoat $n {W'  {M[Mage]:{W    Enlightened Willworkers who Awaken to reshape reality through'{x
-mob echoat $n {W'               the Nine Spheres of True Magick.'{x
-mob echoat $n {W'Pass {Ynorth{W to the Grand Crossroads of Fate to begin your journey!'{x
-~
-#269
-Prelude Arbiter Greet~
+Prelude the Almoner greet~
 if ispc $n
-  mob echoat $n {CThe Arbiter of the Threshold stands before the golden gateway.{x
-  mob echoat $n {W'Halt, traveler. You stand at the threshold of the living world.'{x
-  mob echoat $n {W'Behind me lies the Central Temple of Recall in Sanctuary.'{x
-  mob echoat $n {W'Speak aloud: {Ysay vampire{W for Kindred tips, {Ysay mortal{W for mortal tips,'{x
-  mob echoat $n {W'or {Ysay graduate{W (or simply step {Ynorth{W) to enter the world!'{x
+  mob echoat $n {CThe Almoner looks up from the candles.{x
+  mob echoat $n {W'Freebies are how your character grows. Here you learn to spend them.'{x
+  mob echoat $n {W'Say {Gtopics{W, child.'{x
 endif
 ~
+#268
+Prelude the Almoner topics~
+mob echoat $n {CThe Almoner opens his ledger:{x
+mob echoat $n {W  {Gfreebie{W - how to spend freebies{x
+mob echoat $n {W  {Gcosts{W   - what each trait costs{x
+~
+#269
+Prelude the Almoner freebie~
+mob echoat $n {CThe Almoner turns the ledger toward you:{x
+mob echoat $n {W'Type {Gfreebie{W alone to see the cost table and how many you have.'{x
+mob echoat $n {W'Type {Gfreebie <trait>{W to raise it one dot, e.g. {Gfreebie dodge{W.'{x
+mob echoat $n {W'New freebies come from {Yremorting{W. Say {Gcosts{W for prices.'{x
+~
 #270
-Prelude Arbiter Vampire Speech~
-mob echoat $n {CThe Arbiter of the Threshold whispers of Kindred existence:{x
-mob echoat $n {W'Vampiric Survival Rules:'{x
-mob echoat $n {W'  - {Yfangs:{W Extend your fangs before feeding on a victim.'{x
-mob echoat $n {W'  - {Yfeed:{W Slake your hunger in combat to replenish your Blood Pool.'{x
-mob echoat $n {W'  - {Yregenerate:{W Heal aggravated wounds with vitae.'{x
-mob echoat $n {W'  - {Ydisclist:{W View your available vampiric disciplines.'{x
-mob echoat $n {W'  - {Ybloodbuff:{W Temporarily surge your physical attributes with blood.'{x
-mob echoat $n {W'Beware the sun and fire, Kindred. Keep your humanity intact.'{x
+Prelude the Almoner costs~
+mob echoat $n {CThe Almoner reads from the ledger:{x
+mob echoat $n {W'Costs scale with the dots you {Yalready have{W, like XP:'{x
+mob echoat $n {W  {YAttributes{W:        current rating x 4{x
+mob echoat $n {W  {YAbilities{W:         current rating x 2  (new ability: 3){x
+mob echoat $n {W  {YSecondary ability{W: current rating x 2  (new: 1){x
+mob echoat $n {W  {YVirtues{W:           current rating x 2{x
+mob echoat $n {W  {YHumanity{W:          current rating x 2{x
+mob echoat $n {W  {YWillpower{W:         current rating{x
+mob echoat $n {W  {YDisciplines{W:       clan x 5, out-of-clan x 6, new 10{x
+mob echoat $n {W'Type {Gfreebie{W for the exact table for your race.'{x
 ~
 #271
-Prelude Arbiter Mortal Speech~
-mob echoat $n {CThe Arbiter of the Threshold counsels the mortal traveler:{x
-mob echoat $n {W'Mortal Wayfarer Advice:'{x
-mob echoat $n {W'  - Equip yourself well: weapons, armor, and bandages save lives.'{x
-mob echoat $n {W'  - Explore towns, forge alliances, and learn crafting professions.'{x
-mob echoat $n {W'  - Strive for level 100 to undergo Remort, or seek out an elder vampire'{x
-mob echoat $n {W'    to receive the Embrace into Kindred undeath.'{x
+Prelude the Scriptorium Monk greet~
+if ispc $n
+  mob echoat $n {CThe Scriptorium Monk sets down his quill.{x
+  mob echoat $n {W'There is no {Rpractice{W and no {Rtrain{W in Haven. Your dots unlock skills.'{x
+  mob echoat $n {W'Say {Gtopics{W and I will show you.'{x
+endif
 ~
 #272
-Prelude Arbiter Graduate Speech~
-mob echoat $n {CThe Arbiter of the Threshold raises his hand in solemn blessing.{x
-mob echoat $n {Y'Go forth into the night. May your destiny be carved in legend.'{x
-mob echoat $n {CThe golden gateway blazes with light as you are transported to Recall!{x
+Prelude the Scriptorium Monk topics~
+mob echoat $n {CThe Monk unrolls his chart:{x
+mob echoat $n {W  {Gskillmap{W - see what unlocks each skill{x
+mob echoat $n {W  {Glearning{W - how skills improve{x
+~
+#273
+Prelude the Scriptorium Monk skillmap~
+mob echoat $n {CThe Monk smooths the great chart:{x
+mob echoat $n {W'Type {Gskillmap{W to see every skill and the attribute/ability dots'{x
+mob echoat $n {W'and level it needs. Raise those dots and the skill unlocks itself.'{x
+mob echoat $n {W'Type {Gskills{W to see what you already know.'{x
+~
+#274
+Prelude the Scriptorium Monk learning~
+mob echoat $n {CThe Monk nods slowly:{x
+mob echoat $n {W'Skills improve by {Yusing{W them - fighting, sneaking, crafting.'{x
+mob echoat $n {W'Each use has a chance to make you better.'{x
+mob echoat $n {W'Secondary abilities on {Gcs3{W raise how far weapon skills can go.'{x
+~
+#275
+Prelude the Keeper of Bones greet~
+if ispc $n
+  mob echoat $n {CThe Keeper of Bones turns a skull in her hands.{x
+  mob echoat $n {W'Death is not the end here. {YRemort{W is how every soul grows strong.'{x
+  mob echoat $n {W{RRemorting is the ONLY real way to earn freebies.{W Say {Gtopics{W.{x
+endif
+~
+#276
+Prelude the Keeper of Bones topics~
+mob echoat $n {CThe Keeper sets the skull down:{x
+mob echoat $n {W  {Gremort{W - what remorting is and why you must{x
+mob echoat $n {W  {Gpaths{W  - becoming Garou or Mage through remort{x
+~
+#277
+Prelude the Keeper of Bones remort~
+mob echoat $n {CThe Keeper speaks plainly:{x
+mob echoat $n {W'At {Ylevel 100{W, type {Gremort{W.'{x
+mob echoat $n {W'You return to {Ylevel 1{W, but {YKEEP{W all equipment, skills and traits.'{x
+mob echoat $n {W'Each remort grants {Y3 freebies{W. That is how you progress.'{x
+mob echoat $n {W{RRemorting is not optional - it is how characters grow in Haven.{W{x
+mob echoat $n {W'Level, remort, spend freebies, repeat.'{x
+~
+#278
+Prelude the Keeper of Bones paths~
+mob echoat $n {CThe Keeper gestures at two sealed tombs:{x
+mob echoat $n {W'A true-blood human may {Gremort garou{W or {Gremort mage <tradition>{W.'{x
+mob echoat $n {W'That rebuilds the sheet for the new path - you redo {Gcreate{W.'{x
+mob echoat $n {W'Vampires are made by being {YEmbraced{W by another player.'{x
+mob echoat $n {W'Read {Ghelp remort{W before choosing.'{x
+~
+#279
+Prelude the Bishop of the Belfry greet~
+if ispc $n
+  mob echoat $n {CThe Bishop of the Belfry rests a hand on the bell rope.{x
+  mob echoat $n {W'You have walked the whole cathedral. Well done.'{x
+  mob echoat $n {W'Say {Ggraduate{W and I will ring you on to the New Temple.'{x
+  mob echoat $n {W'Or say {Gtopics{W for a final summary first.'{x
+endif
+~
+#280
+Prelude the Bishop of the Belfry topics~
+mob echoat $n {CThe Bishop counts on his fingers:{x
+mob echoat $n {W  {Gsummary{W  - everything in one breath{x
+mob echoat $n {W  {Ggraduate{W - ring the bell and enter the world{x
+~
+#281
+Prelude the Bishop of the Belfry summary~
+mob echoat $n {CThe Bishop recites:{x
+mob echoat $n {W  {Gcs{W, {Gcs2{W, {Gcs3{W, {Gbackgrounds{W - your character sheet{x
+mob echoat $n {W  {Gcreate{W   - finish this first or you have no skills{x
+mob echoat $n {W  {Gfreebie{W  - spend freebies (cost scales with current dots){x
+mob echoat $n {W  {Gskillmap{W - see what unlocks each skill{x
+mob echoat $n {W  {Gremort{W   - at level 100; the way you earn freebies{x
+mob echoat $n {W  {Gooc{W / {Gosay{W - out-of-character chat, global / room{x
+mob echoat $n {W  {Ghelp <word>{W - when in doubt{x
+~
+#282
+Prelude the Bishop of the Belfry graduate~
+mob echoat $n {CThe Bishop hauls on the bell rope.{x
+mob echoat $n {W{YBOOOONG... The great bell tolls and the cathedral dissolves around you.{x{x
 mob transfer $n 101
 ~
 #0

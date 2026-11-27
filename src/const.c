@@ -1240,11 +1240,12 @@ void cskill_update(CHAR_DATA *ch, bool show)
             }
 
 
-        for (c = 0; c < MAX_SKILL; c++)
-        {
-            if (cskill_lookup(c) == -1)
-                ch->pcdata->learned[c] == 0;
-        }
+    }
+
+    for (c = 0; c < MAX_SKILL; c++)
+    {
+        if (cskill_lookup(c) == -1)
+            ch->pcdata->learned[c] = 0;
     }
 
 }

@@ -86,7 +86,7 @@ int find_spell( CHAR_DATA *ch, const char *name )
         if ( found == -1)
         found = *csskill_table[sn].gsn;
         if (ch->level >= csskill_table[sn].level
-        &&  ch->pcdata->learned[sn] > 0)
+        &&  ch->pcdata->learned[*csskill_table[sn].gsn] > 0)
             return *csskill_table[sn].gsn;
     }
     }
@@ -321,13 +321,22 @@ void do_cast( CHAR_DATA *ch, char *argument )
     }
 
     if ((sn = find_spell(ch,arg1)) < 1
-    ||  skill_table[sn].spell_fun == spell_null)
+    ||  skill_table[sn].spell_fun == spell_null
+    ||  (!IS_NPC(ch) && ch->pcdata->learned[sn] <= 0))
     {
     send_to_char( "You don't know any spells of that name.\n\r", ch );
     return;
     }
     csn = cskill_lookup(sn);
-    if (ch->level < csskill_table[csn].level)
+    if (csn < 0)
+    {
+        if (!IS_NPC(ch))
+        {
+            send_to_char("You don't know any spells of that name.\n\r", ch);
+            return;
+        }
+    }
+    else if (ch->level < csskill_table[csn].level)
     {
         send_to_char("You are not strong enough to use this spell yet.\n\r", ch);
     return;
@@ -350,8 +359,10 @@ void do_cast( CHAR_DATA *ch, char *argument )
         return;
     }
 
-    if (ch->level + 2 == csskill_table[csn].level)
-    mana = 50;
+    if (csn < 0)
+        mana = skill_table[sn].min_mana;
+    else if (ch->level + 2 == csskill_table[csn].level)
+        mana = 50;
     else
         mana = UMAX(
         skill_table[sn].min_mana,

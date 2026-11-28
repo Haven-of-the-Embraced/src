@@ -6476,22 +6476,42 @@ bool IN_LEVEL( CHAR_DATA *ch, CHAR_DATA *victim )
         return TRUE;
 }
 
-void do_ground( CHAR_DATA *ch, char *argument )
+void do_ground(CHAR_DATA *ch, char *argument)
 {
     CHAR_DATA *victim;
+    AFFECT_DATA af;
+    int dicesuccess = 0;
+    int damagesuccess = 0;
 
-        if ( get_skill(ch, gsn_ground) == 0)
-        {
-                send_to_char(
-                        "Your better off sticking to your own arts.\n\r", ch );
-                return;
-        }
+    if (get_skill(ch, gsn_ground) == 0)
+    {
+        send_to_char("You're better off sticking to your own arts.\n\r", ch);
+        return;
+    }
 
-        if ( ( victim = ch->fighting ) == NULL )
-        {
-                send_to_char( "You aren't fighting anyone.\n\r", ch );
-                return;
-        }
+    if ((victim = ch->fighting) == NULL)
+    {
+        send_to_char( "You aren't fighting anyone.\n\r", ch);
+        return;
+    }
+    
+    if (ch == victim)
+    {
+        send_to_char("Is that even physically possible?!\n\r", ch);
+        return;
+    }
+
+    if(IS_AFFECTED2(ch, AFF2_MIST) || IS_AFFECTED2(victim, AFF2_MIST))
+    {
+        send_to_char("You crash right through!\n\r",ch);
+        return;
+    }
+
+    if(victim->position == POS_SLEEPING || victim->position == POS_TORPOR)
+    {
+        send_to_char("They are already incapacitated!\n\r", ch);
+        return;
+    }
 
     if(is_affected(victim, gsn_gift_catfeet) && number_percent() > 45)
     {
@@ -6501,38 +6521,76 @@ void do_ground( CHAR_DATA *ch, char *argument )
     	return;
     }
 
-        WAIT_STATE( ch, skill_table[gsn_ground].beats );
+    dicesuccess = godice(get_attribute(ch, DEXTERITY) + ch->csabilities[CSABIL_BRAWL], 6);
 
-        act( "You crash into $N!",  ch, NULL, victim, TO_CHAR    );
-        act( "$n crashes into you!", ch, NULL, victim, TO_VICT    );
-        act( "$n crashes into $N!",  ch, NULL, victim, TO_NOTVICT );
+    WAIT_STATE(ch, skill_table[gsn_ground].beats);
 
-        if ( get_skill(ch,gsn_ground) > number_percent()+20)
-        {
-                damage(ch,victim,number_range( 1, ch->level ), gsn_ground,DAM_BASH,TRUE);
+    act("You crash into $N!", ch, NULL, victim, TO_CHAR);
+    act("$n crashes into you!", ch, NULL, victim, TO_VICT);
+    act("$n crashes into $N!", ch, NULL, victim, TO_NOTVICT);
 
-                if(IS_AFFECTED(victim, AFF_FLYING))
-                {
-                        affect_strip(victim,gsn_fly);
-                        REMOVE_BIT(victim->affected_by,AFF_FLYING);
-                        WAIT_STATE(victim, PULSE_VIOLENCE);
-                        act( "And knock $N out of the sky!",  ch, NULL, victim, TO_CHAR    );
-                        act( "$n knocks you out of the sky!", ch, NULL, victim, TO_VICT    );
-                        act( "$n knocks $N out of the sky!",  ch, NULL, victim, TO_NOTVICT );
-                }
+    if(dicesuccess < 0)
+    {
+        act("And fall flat on your face!", ch, NULL, victim, TO_CHAR);
+        act("$n falls flat on $s face!", ch, NULL, victim, TO_VICT);
+        act("$n falls flat on $s face!", ch, NULL, victim, TO_NOTVICT);
+        ch->position = POS_SITTING;
+        WAIT_STATE(ch, 2);
+        damage(victim, ch, 10, gsn_ground, DAM_BASH, TRUE);
+        check_improve(ch, gsn_ground, FALSE, 2);
+    }
 
-                check_improve(ch,gsn_ground,TRUE,2);
-        }
-        else
-        {
-                act( "And fall flat on your face!",  ch, NULL, victim, TO_CHAR    );
-                act( "$n falls flat on $s face!", ch, NULL, victim, TO_VICT    );
-                act( "$n falls flat on $s face!",  ch, NULL, victim, TO_NOTVICT );
-                ch->position = POS_SITTING;
-                damage( victim, ch, 10, gsn_ground,DAM_BASH,TRUE);
-                check_improve(ch,gsn_ground,FALSE,2);
-        }
+    if(dicesuccess == 0)
+    {
+        act("You miss your crash!", ch, NULL, victim, TO_CHAR);
+        act("$n tries to crash into you and misses!", ch, NULL, victim, TO_VICT);
+        act("$n tries to crash into $N.", ch, NULL, victim, TO_NOTVICT);
+        check_improve(ch, gsn_ground, FALSE, 5);
         return;
+    }
+
+    damagesuccess = godice(get_attribute(ch, STRENGTH) + ch->pcdata->discipline[POTENCE], 6);
+    if (damagesuccess < 0)
+        damagesuccess = 0;
+
+    act( "You crash into $N!", ch, NULL, victim, TO_CHAR );
+    act( "$n crashes $s body into yours!", ch, NULL, victim, TO_VICT );
+    act( "$n crashes $s body into $N's.", ch, NULL, victim, TO_ROOM );
+
+    gain_exp(ch, dicesuccess);
+    WAIT_STATE(victim, PULSE_VIOLENCE);
+    damage(ch, victim, damagesuccess * ch->level / 2, gsn_ground, DAM_BASH, TRUE);
+
+    if (IS_SET(victim->res_flags, RES_BASH))
+        dicesuccess--;
+
+    if(dicesuccess >= 4 && !IS_SET(victim->imm_flags, IMM_BASH))
+    {
+        if(IS_AFFECTED(victim, AFF_FLYING))
+        {
+            affect_strip(victim, gsn_fly);
+            REMOVE_BIT(victim->affected_by, AFF_FLYING);
+            WAIT_STATE(victim, PULSE_VIOLENCE);
+            act("And knock $N out of the sky!", ch, NULL, victim, TO_CHAR);
+            act("$n knocks you out of the sky!", ch, NULL, victim, TO_VICT);
+            act("$n knocks $N out of the sky!", ch, NULL, victim, TO_NOTVICT);
+        }
+
+        af.where = TO_AFFECTS;
+        af.type = gsn_ground;
+        af.level = ch->level;
+        af.duration = dicesuccess - 2;
+        af.location = APPLY_NONE;
+        af.modifier = 0;
+        af.bitvector = AFF_SLEEP;
+        affect_join(victim, &af);
+        gain_exp(ch, dicesuccess);
+        check_improve(ch, gsn_ground, TRUE, 2);
+        victim->position = POS_SITTING;
+    }
+    else check_improve(ch, gsn_ground, TRUE, 2);
+
+    return;
 }
 
 void do_headbutt( CHAR_DATA *ch, char *argument )

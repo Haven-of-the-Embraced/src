@@ -1,7 +1,43 @@
-rom
+# Compiled objects and binaries
+*.o
+src/obj/*.o
+src/rom
+src/core*
+core*
+
+# Secrets and local environment overrides
+.env
+!.env.template
+.bash_history
+.viminfo
+
+# Runtime player saves, logs, and generated spools
+player/*
+!player/.gitkeep
+!player/bk/
+player/bk/*
+!player/bk/.gitkeep
+gods/*
+!gods/.gitkeep
+log/*
+!log/.gitkeep
+memdump/
+import/
+data/*.not
+data/ban.txt
+data/bugs.txt
+data/typos.txt
+data/laston.txt
+data/last.txt
+data/player.lst
+data/shutdown.txt
+data/web_who.json
+data/*.bak
+data/*.pre-init
 nohup.out
-*.bak
-.ftpignore
-.ftpconfig
-.gitignore
-.vscode
+scripts/nohup.out
+
+# External / production area files (keep core defaults tracked)
+area/*.are
+!area/limbo.are
+!area/codespecii.are

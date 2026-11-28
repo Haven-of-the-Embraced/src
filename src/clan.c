@@ -176,6 +176,11 @@ void load_clans(void)
     fread_to_eol(fp);
     }
     fclose(fp);
+    for (i = 1; i <= count && i < MAX_CLAN; i++)
+    {
+        if (clan_table[i].clanhall > 0 && get_room_index(clan_table[i].clanhall) == NULL)
+            clan_table[i].clanhall = ROOM_VNUM_TEMPLE;
+    }
     return;
 }
 

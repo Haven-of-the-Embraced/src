@@ -342,7 +342,8 @@ void boot_db()
         *skill_table[sn].pgsn = sn;
     }
     }
-    /* Read in the clan file. */
+    /* Read in the config and clan files. */
+    load_config();
     load_clans();
     load_socials();
     load_helps();
@@ -436,6 +437,7 @@ void boot_db()
      /*
      * Read in commands.
      */
+    apply_vnum_config();
     load_cmd_list();
     fix_missing_rooms();
     fix_exits( );
@@ -452,6 +454,8 @@ void boot_db()
     load_bans();
     load_songs();
     load_laston();
+    /* Refresh clan fallbacks now that all area rooms exist */
+    load_clans();
     }
 
     return;
@@ -1746,6 +1750,15 @@ void fix_exits( void )
     }
     }
 
+    /* Dynamically link Prelude Belfry north exit to ROOM_VNUM_TEMPLE */
+    if ( ( pRoomIndex = get_room_index( ROOM_VNUM_PRELUDE + 6 ) ) != NULL
+    &&   ( pexit = pRoomIndex->exit[DIR_NORTH] ) != NULL
+    &&   ( to_room = get_room_index( ROOM_VNUM_TEMPLE ) ) != NULL )
+    {
+        pexit->u1.to_room = to_room;
+        pexit->orig_door = DIR_NORTH;
+    }
+
     return;
 }
 
@@ -2072,6 +2085,11 @@ void reset_room( ROOM_INDEX_DATA *pRoom )
 /* */
 
             pMob = create_mobile( pMobIndex );
+            if ( pMob == NULL )
+            {
+                last = FALSE;
+                break;
+            }
 
             pMob->zone = pRoomIndex->area;
 
@@ -2215,6 +2233,11 @@ void reset_room( ROOM_INDEX_DATA *pRoom )
 
             pObj = create_object( pObjIndex,              /* UMIN - ROM OLC */
                   UMIN(number_fuzzy( level ), LEVEL_HERO -1) );
+            if ( pObj == NULL )
+            {
+                last = FALSE;
+                break;
+            }
             pObj->cost = 0;
           last = TRUE;
         if(IS_OBJ_STAT(pObj,ITEM_RARE) && (number_range(1, 100) <= 50))
@@ -2265,6 +2288,8 @@ void reset_room( ROOM_INDEX_DATA *pRoom )
         while (count < pReset->arg4)
         {
             pObj = create_object( pObjIndex, number_fuzzy( LastObj->level ) );
+            if ( pObj == NULL )
+                break;
         if(IS_OBJ_STAT(pObj,ITEM_RARE) && (number_range(1, 100) <= 50))
         {
             extract_obj( pObj );
@@ -2391,6 +2416,8 @@ void reset_room( ROOM_INDEX_DATA *pRoom )
                 pObj = create_object( pObjIndex, number_fuzzy( level ) );
             }
 #endif /* envy else version */
+        if ( pObj == NULL )
+            break;
         if(IS_OBJ_STAT(pObj,ITEM_RARE) && (number_range(1, 100) <= 50))
         {
             extract_obj( pObj );
@@ -2466,7 +2493,7 @@ CHAR_DATA *create_mobile( MOB_INDEX_DATA *pMobIndex )
     if ( pMobIndex == NULL )
     {
     bug( "Create_mobile: NULL pMobIndex.", 0 );
-    exit( 1 );
+    return NULL;
     }
 
     mob = new_char();
@@ -3014,7 +3041,7 @@ OBJ_DATA *create_object( OBJ_INDEX_DATA *pObjIndex, int level )
     if ( pObjIndex == NULL )
     {
     bug( "Create_object: NULL pObjIndex.", 0 );
-    exit( 1 );
+    return NULL;
     }
 
     obj = new_obj();
@@ -5633,7 +5660,7 @@ void do_hotcopy( CHAR_DATA *ch, char *argument )
     sprintf(buf, "cp %s %s", import_path, area_path);
     system(buf);
 
-    safe_room = get_room_index(3001);
+    safe_room = get_room_index(ROOM_VNUM_TEMPLE);
 
     if ( pArea != NULL )
     {

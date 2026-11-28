@@ -1865,6 +1865,12 @@ void char_to_room( CHAR_DATA *ch, ROOM_INDEX_DATA *pRoomIndex )
 {
     OBJ_DATA *obj;
 
+    if ( ch == NULL )
+    {
+        bug( "Char_to_room: NULL ch.", 0 );
+        return;
+    }
+
     if ( pRoomIndex == NULL )
     {
     ROOM_INDEX_DATA *room;
@@ -1915,6 +1921,11 @@ void char_to_room( CHAR_DATA *ch, ROOM_INDEX_DATA *pRoomIndex )
  */
 void obj_to_char( OBJ_DATA *obj, CHAR_DATA *ch )
 {
+    if ( obj == NULL || ch == NULL )
+    {
+        bug( "Obj_to_char: NULL obj or ch.", 0 );
+        return;
+    }
     obj->next_content    = ch->carrying;
     ch->carrying     = obj;
     obj->carried_by  = ch;
@@ -2267,6 +2278,11 @@ void obj_from_room( OBJ_DATA *obj )
  */
 void obj_to_room( OBJ_DATA *obj, ROOM_INDEX_DATA *pRoomIndex )
 {
+    if ( obj == NULL || pRoomIndex == NULL )
+    {
+        bug( "Obj_to_room: NULL obj or pRoomIndex.", 0 );
+        return;
+    }
     obj->next_content       = pRoomIndex->contents;
     pRoomIndex->contents    = obj;
     obj->in_room        = pRoomIndex;
@@ -2286,6 +2302,11 @@ void obj_to_room( OBJ_DATA *obj, ROOM_INDEX_DATA *pRoomIndex )
  */
 void obj_to_obj( OBJ_DATA *obj, OBJ_DATA *obj_to )
 {
+    if ( obj == NULL || obj_to == NULL )
+    {
+        bug( "Obj_to_obj: NULL obj or obj_to.", 0 );
+        return;
+    }
     obj->next_content       = obj_to->contains;
     obj_to->contains        = obj;
     obj->in_obj         = obj_to;

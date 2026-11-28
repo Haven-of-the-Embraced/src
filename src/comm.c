@@ -2770,7 +2770,7 @@ void nanny( DESCRIPTOR_DATA *d, char *argument )
         if (get_obj_index(OBJ_VNUM_GUIDE) != NULL)
             obj_to_char(create_object(get_obj_index(OBJ_VNUM_GUIDE),0),ch);
 
-        char_to_room( ch, get_room_index( 30000 ) );
+        char_to_room( ch, get_room_index( 250 ) );
         send_to_char("\n\r{YWelcome to Haven MUD! You have entered the Prelude.{x\n\r",ch);
         send_to_char("{YType 'look' to see your surroundings, and follow the instructions to begin your journey.{x\n\r\n\r",ch);
         do_function(ch, &do_help, "info");

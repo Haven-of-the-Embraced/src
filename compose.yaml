@@ -2,7 +2,7 @@ services:
   mud:
     build: .
     ports:
-      - "127.0.0.1:${HAVEN_PORT:-4000}:4000"
+      - "${HAVEN_PORT:-4000}:4000"
     volumes:
       - type: bind
         source: ${HAVEN_AREA_DIR:-./area}
